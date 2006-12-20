@@ -1,0 +1,28 @@
+This is file that contains simple information about tools in this project.
+Each author of tool should write Nick and list of tools he participates (or participated) on.
+Another possible informations are web-page, ICQ and @-mail, but those informations are not compulsory.
+This file should be distributed with build of tools (Copy To Output Directory = Copy always).
+See the structure of the file and follow it. Its simple.
+======================================================================================================
+Project: Tools.vbproj
+Founder: Ðonny
+
+Ðonny==================================================================================================
+dzonny.dz@gmail.com; 273601495
+Tools:
+    Tools.Collections.Generic.IReadOnlyList(Of T)
+    Tools.Collections.Generic.ReadOnlyListAdapter(Of TFrom, TTo As TFrom)
+    Tools.Collections.Generic.ReadOnlyListAdapter(Of T)
+    Tools.DataStructures.Generic.IT1orT2(Of T1, T2)
+    Tools.DataStructures.Generic.T1orT2(Of T1, T2)
+    Tools.Internal.AuthorAttribute
+    Tools.Internal.VersionAttribute
+    Tools.Internal.DoNotApplyAuthorAndVersionAttributesAttribute
+    Tools.Internal.AttributesSpecificDeclarations
+    Tools.Math.Min
+    Tools.Math.Max
+    Tools.ICloneable(Of T)
+    Tools.Cloneable(Of T)
+    Tools.Box(Of T)
+    Tools.VisualBasic.Interaction.iif(Of T)
+==========================================================================================================
