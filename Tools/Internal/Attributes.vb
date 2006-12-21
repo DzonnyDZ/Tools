@@ -13,13 +13,13 @@ Namespace Internal
     <Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChange:="12/20/2006")> _
     Public Class AuthorAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Name As String
         ''' <summary>Contains value of the <see cref="eMail"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _eMail As String
         ''' <summary>Contains value of the <see cref="WWW"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _WWW As String
         ''' <summary>CTor</summary>
         ''' <param name="Name">Name or nick of the author</param>
@@ -69,19 +69,19 @@ Namespace Internal
     <Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(VersionAttribute), LastChange:="12/21/2006")> _
     Public Class VersionAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Major"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Major As Integer = 0
         ''' <summary>Contains value of the <see cref="Minor"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Minor As Integer = 0
         ''' <summary>Contains value of the <see cref="Build"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Build As Integer = 0
         ''' <summary>Contains value of the <see cref="Revision"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Revision As Integer = 0
         ''' <summary>Contains value of the <see cref="Note"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Note As String
 #Region "CTors"
         ''' <summary>CTor - initializes version as <paramref name="Major"/>.<paramref name="MajorRevision"/>.<paramref name="Minor"/>.<paramref name="MinorRevision"/></summary>

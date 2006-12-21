@@ -19,7 +19,7 @@ Namespace Collections.Generic
             _InnerList = AdaptThis
         End Sub
         ''' <summary>Contains value of the <see cref="InnerList"/> property</summary>
-        <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _InnerList As List(Of TFrom)
         ''' <summary>The <see cref="List(Of TFrom)"/> being adapted</summary>
         Public Overridable ReadOnly Property InnerList() As List(Of TFrom)

@@ -3,8 +3,12 @@ Namespace DataStructures.Generic
     ''' <summary>Represents type that can contain either value of type T1 or value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IT1orT2(Of Integer, Type)), LastChange:="12/20/2006")> _
+    ''' <remarks>
+    ''' Although this interface inherits <see cref="IPair(Of T1, T2)"/> be very careful when utilizing this inheritance because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different whnen storing values (it can contain only one value at the sam time). Consider utilizing this ihneritance only in read-only way.
+    ''' </remarks>
+    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(IT1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
     Public Interface IT1orT2(Of T1, T2)
+        Inherits IPair(Of T1, T2)
         ''' <summary>Gets or sets value of type <see cref="T1"/></summary>
         ''' <value>Non-null value to set value of type <see cref="T1"/> and delete value of type <see cref="T2"/> or nothing to delete value of type <see cref="T1"/></value>
         ''' <returns>If this instance contains value of type <see cref="T1"/> then returns it, otherwise return null</returns>
@@ -12,7 +16,7 @@ Namespace DataStructures.Generic
         ''' If <see cref="value1"/> retruns null it means that either value of type <see cref="T1"/> is not present in this instance or it is present but it is null. Check <see cref="contains1"/> property in order to determine actual situation.
         ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T1"/>.
         ''' </remarks>
-        Property value1() As T1
+        Overloads Property value1() As T1
         ''' <summary>Gets or sets value of type <see cref="T2"/></summary>
         ''' <value>Non-null value to set value of type <see cref="T2"/> and delete value of type <see cref="T2"/> or nothing to delete value of type <see cref="T2"/></value>
         ''' <returns>If this instance contains value of type <see cref="T2"/> then returns it, otherwise return null</returns>
@@ -20,7 +24,7 @@ Namespace DataStructures.Generic
         ''' If <see cref="value2"/> retruns null it means that either value of type <see cref="T2"/> is not present in this instance or it is present but it is null. Check <see cref="contains2"/> property in order to determine actual situation.
         ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T2"/>.
         ''' </remarks>
-        Property value2() As T2
+        Overloads Property value2() As T2
         ''' <summary>Get or sets stored value in type-unsafe way</summary>
         ''' <value>New value to be stored in this instance</value>
         ''' <returns>Value stored in this instance</returns>
@@ -63,12 +67,14 @@ Namespace DataStructures.Generic
     ''' <summary>Implements type that can contain either value of type T1 ore value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(T1orT2(Of Integer, Type)), LastChange:="12/20/2006")> _
+    ''' <remarks>
+    ''' Although rhis class implements <see cref="IPair(Of T1, T2)"/> through <see cref="IT1orT2(Of T1, T2)"/> be careful when utilizing this implementation because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different when storing values (it can contain only one value at the sam time). Consider utilizing this inheritance only in read-only way.
+    ''' </remarks>
+    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(T1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class T1orT2(Of T1, T2)
         Inherits Cloenable(Of IT1orT2(Of T1, T2))
         Implements IT1orT2(Of T1, T2)
-
         ''' <summary>Contains value of the <see cref="value1"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _value1 As Box(Of T1) = Nothing
@@ -95,7 +101,7 @@ Namespace DataStructures.Generic
         ''' If <see cref="value1"/> retruns null it means that either value of type <see cref="T1"/> is not present in this instance or it is present but it is null. Check <see cref="contains1"/> property in order to determine actual situation.
         ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T1"/>.
         ''' </remarks>
-        Public Overridable Property value1() As T1 Implements IT1orT2(Of T1, T2).value1
+        Public Overridable Property value1() As T1 Implements IT1orT2(Of T1, T2).value1, IPair(Of T1, T2).Value1
             Get
                 If _value1 Is Nothing Then Return Nothing Else Return CType(_value1, T1)
             End Get
@@ -111,7 +117,7 @@ Namespace DataStructures.Generic
         ''' If <see cref="value2"/> retruns null it means that either value of type <see cref="T2"/> is not present in this instance or it is present but it is null. Check <see cref="contains2"/> property in order to determine actual situation.
         ''' You must set this property to nothing and then set <see cref="contains1"/> property to true in order to store null value of type <see cref="T2"/>.
         ''' </remarks>
-        Public Overridable Property value2() As T2 Implements IT1orT2(Of T1, T2).value2
+        Public Overridable Property value2() As T2 Implements IT1orT2(Of T1, T2).value2, IPair(Of T1, T2).Value2
             Get
                 If value2 Is Nothing Then Return Nothing Else Return CType(_value2, T2)
             End Get
@@ -252,6 +258,12 @@ Namespace DataStructures.Generic
             Return ret
         End Function
 
+        ''' <summary>Swaps values <see cref="Value1"/> and <see cref="Value2"/></summary>        
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Function Swap1() As IPair(Of T2, T1) Implements IPair(Of T1, T2).Swap
+            Return Swap()
+        End Function
+
         ''' <summary>Returns new instance of <see cref="T1orT2(Of T1, T2)"/> inicialized by value of current instance</summary>
         Public Overrides Function Clone() As IT1orT2(Of T1, T2)
             Return value
@@ -298,6 +310,12 @@ Namespace DataStructures.Generic
             Else
                 Return "()"
             End If
+        End Function
+        ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+        ''' <returns>A new object that is a copy of this instance</returns>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Overloads Function Clone1() As IPair(Of T1, T2) Implements ICloneable(Of IPair(Of T1, T2)).Clone
+            Return Clone()
         End Function
     End Class
 #End If
