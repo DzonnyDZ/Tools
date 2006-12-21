@@ -1,4 +1,4 @@
-#If vDebug Or vAlpha Or vBeta Or vRC Or vFinal Then
+#If Config <= Release Then
 ''' <summary>This class can wrap everything to be class</summary>
 ''' <remarks>This removes limitation of <see cref="Nullable(Of T)"/> that limits wrapped object to be structure</remarks>
 <Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Box(Of Boolean)), LastChange:="12/20/2006")> _

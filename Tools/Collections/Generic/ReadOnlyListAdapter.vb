@@ -1,4 +1,4 @@
-﻿#If vDebug Or vAlpha Or vBeta Then 'TODO: vRC, vFinal
+﻿#If Config <= Beta Then 'TODO: vRC, vFinal
 Namespace Collections.Generic
     ''' <summary>Adapter that adapts <see cref="List(Of TFrom)"/> into <see cref="IReadOnlyList(Of TTo)"/> where TTo is cublass of TFrom</summary>
     ''' <typeparam name="TFrom">Type of items stored in <see cref="List(Of TFrom)"/> being adapted</typeparam>

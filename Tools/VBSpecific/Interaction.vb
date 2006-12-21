@@ -1,4 +1,4 @@
-#If vDebug Or vAlpha Or vBeta Or vRC Or vFinal Then
+#If COnfig <= Release Then
 Namespace VisualBasic
     ''' <summary>The Interaction module contains procedures used to interact with objects, applications, and systems.</summary>
     <DoNotApplyAuthorAndVersionAttributes()> _

@@ -1,4 +1,4 @@
-#If vDebug Or vAlpha Or vBeta Or vRC Or vFinal Then
+#If Config <= Release Then
 ''' <summary>Type-safe <see cref="ICloneable"/> interface</summary>
 <Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(ICloneable(Of Char)), LastChange:="12/20/2006")> _
 Public Interface ICloneable(Of T) : Inherits ICloneable

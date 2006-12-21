@@ -1,5 +1,5 @@
 Namespace DataStructures.Generic
-#If vDebug Or vAlpha Or vBeta Or vRC Or vFinal Then
+#If Config <= Release Then
     ''' <summary>Represents type that can contain either value of type T1 or value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>
@@ -59,7 +59,7 @@ Namespace DataStructures.Generic
     End Interface
 #End If
 
-#If vDebug Or vAlpha Or vBeta Then 'TODO: vRC Or vFinal
+#If Config <= Beta Then 'TODO: vRC Or vFinal
     ''' <summary>Implements type that can contain either value of type T1 ore value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>

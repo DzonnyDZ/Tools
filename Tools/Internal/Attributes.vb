@@ -1,5 +1,5 @@
 'Attributes used mainly internally by ÐTools are defined here
-#If vDebug Or vAplpa Or vBeta Or vRC Or vFinal Then
+#If Config <= Release Then
 Imports System.Reflection
 Namespace Internal
     ''' <summary>Marks person defined by instance of this attribute as author of marked part of code.</summary>
@@ -145,6 +145,7 @@ Namespace Internal
             Me.New(MajorAndMinor, MajorAndMinor, Build, Revision)
         End Sub
         ''' <summary>Represents something tha can be either <see cref="System.Type"/> or <see cref="System.Int32"/></summary>
+        ''' <remarks>This class is designed to be used only with <see cref="VersionAttribute"/>. If you are looking for general-purpose class try <see cref="Tools.DataStructures.Generic.T1orT2(Of T1, T2)"/> instead.</remarks>
         Public Class TypeOrInt32
             ''' <summary>Value when <see cref="TypeOrInt32"/> is <see cref="System.Type"/></summary>
             Friend ReadOnly Type As Box(Of Type) = Nothing

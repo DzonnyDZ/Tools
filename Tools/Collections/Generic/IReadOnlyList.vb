@@ -1,4 +1,4 @@
-﻿#If vDebug Or vAlpha Or vBeta Or vRC Then 'TODO: vFinal
+﻿#If Config <= RC Then 'TODO: vFinal
 Namespace Collections.Generic
     ''' <summary>Strongly typed read-only list that provides all applicable methods available in <see cref="List(Of T)"/></summary>
     ''' <typeparam name="T">Type of items in list</typeparam>

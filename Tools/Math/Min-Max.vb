@@ -1,4 +1,4 @@
-#If vDebug Or vAlpha Or vBeta Or vRC Or vFinal Then
+#If Config <= Release Then
 ''' <summary>Provides constants and static methods for trigonometric, logarithmic, and other common mathematical functions.</summary>
 <DoNotApplyAuthorAndVersionAttributes()> _
 Partial Public Class Math
