@@ -66,7 +66,7 @@ Namespace Internal
     ''' If you want to determine version of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyVersionAttribute"/>
     ''' </remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(VersionAttribute), LastChange:="12/20/2006")> _
+    <Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(VersionAttribute), LastChange:="12/21/2006")> _
     Public Class VersionAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Major"/> property</summary>
         <DebuggerBrowsable(DebuggerBrowsableState.Never)> _
@@ -285,7 +285,7 @@ Namespace Internal
         ''' <summary>Contains value of the <see cref="LastChange"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _LastChange As Date
-        ''' <summary>Date of last modification (date format in invariant culture)</summary>
+        ''' <summary>Date of last modification (date format in invariant culture: MM/DD/YYYY)</summary>
         Public Property LastChange() As String
             Get
                 Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
@@ -297,6 +297,15 @@ Namespace Internal
                 Threading.Thread.CurrentThread.CurrentCulture = c
                 _LastChange = value
                 Threading.Thread.CurrentThread.CurrentCulture = oldc
+            End Set
+        End Property
+        ''' <summary>Date of last modification</summary>
+        Public Property LastChangeDate() As Date
+            Get
+                Return _LastChange
+            End Get
+            Set(ByVal value As Date)
+                _LastChange = value
             End Set
         End Property
     End Class
