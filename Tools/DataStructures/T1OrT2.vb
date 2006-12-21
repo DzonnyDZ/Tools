@@ -63,7 +63,7 @@ Namespace DataStructures.Generic
     End Interface
 #End If
 
-#If Config <= Beta Then 'TODO: vRC Or vFinal
+#If Config <= Beta Then 'Stage: Beta
     ''' <summary>Implements type that can contain either value of type T1 ore value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>

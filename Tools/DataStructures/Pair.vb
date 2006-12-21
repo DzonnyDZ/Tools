@@ -14,7 +14,7 @@ Namespace DataStructures.Generic
     End Interface
 #End If
 
-#If Config <= Beta Then
+#If Config <= Beta Then 'Stage: Beta
     ''' <summary>Implements <see cref="IPair(Of T1,T2)"/> as reference type</summary>
     ''' <typeparam name="T1">Type of Value1</typeparam>
     ''' <typeparam name="T2">Type of Value2</typeparam>

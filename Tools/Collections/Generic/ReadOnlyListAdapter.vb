@@ -1,4 +1,4 @@
-﻿#If Config <= Beta Then 'TODO: vRC, vFinal
+﻿#If Config <= Beta Then 'Stage: Beta
 Namespace Collections.Generic
     ''' <summary>Adapter that adapts <see cref="List(Of TFrom)"/> into <see cref="IReadOnlyList(Of TTo)"/> where TTo is cublass of TFrom</summary>
     ''' <typeparam name="TFrom">Type of items stored in <see cref="List(Of TFrom)"/> being adapted</typeparam>
@@ -363,10 +363,10 @@ Namespace Collections.Generic
             Protected Sub Dispose(ByVal disposing As Boolean)
                 If Not Me.disposedValue Then
                     If disposing Then
-                        ' TODO: free unmanaged resources when explicitly called
+                        ' TODO_: free unmanaged resources when explicitly called
                     End If
 
-                    ' TODO: free shared unmanaged resources
+                    ' TODO_: free shared unmanaged resources
                     InnerEnumerator.Dispose()
                 End If
                 Me.disposedValue = True
