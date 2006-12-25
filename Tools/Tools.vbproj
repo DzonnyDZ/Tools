@@ -89,6 +89,7 @@
     <Import Include="Tools.Internal" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\HashTable.vb" />
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
     <Compile Include="DataStructures\Pair.vb" />
