@@ -24,11 +24,19 @@ Namespace Collections.Generic
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.splMain = New System.Windows.Forms.SplitContainer
+            Me.lstRW = New System.Windows.Forms.ListBox
+            Me.tosRW = New System.Windows.Forms.ToolStrip
+            Me.tstAdd = New System.Windows.Forms.ToolStripTextBox
+            Me.tsbAdd = New System.Windows.Forms.ToolStripButton
             Me.lblRW = New System.Windows.Forms.Label
+            Me.lstRO = New System.Windows.Forms.ListBox
+            Me.tosRO = New System.Windows.Forms.ToolStrip
             Me.lblRO = New System.Windows.Forms.Label
+            Me.tsbShowRO = New System.Windows.Forms.ToolStripButton
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
+            Me.tosRW.SuspendLayout()
             Me.SuspendLayout()
             '
             'splMain
@@ -39,14 +47,52 @@ Namespace Collections.Generic
             '
             'splMain.Panel1
             '
+            Me.splMain.Panel1.Controls.Add(Me.lstRW)
+            Me.splMain.Panel1.Controls.Add(Me.tosRW)
             Me.splMain.Panel1.Controls.Add(Me.lblRW)
             '
             'splMain.Panel2
             '
+            Me.splMain.Panel2.Controls.Add(Me.lstRO)
+            Me.splMain.Panel2.Controls.Add(Me.tosRO)
             Me.splMain.Panel2.Controls.Add(Me.lblRO)
             Me.splMain.Size = New System.Drawing.Size(688, 326)
             Me.splMain.SplitterDistance = 344
             Me.splMain.TabIndex = 0
+            '
+            'lstRW
+            '
+            Me.lstRW.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.lstRW.FormattingEnabled = True
+            Me.lstRW.Location = New System.Drawing.Point(0, 13)
+            Me.lstRW.Name = "lstRW"
+            Me.lstRW.Size = New System.Drawing.Size(344, 277)
+            Me.lstRW.TabIndex = 1
+            '
+            'tosRW
+            '
+            Me.tosRW.Dock = System.Windows.Forms.DockStyle.Bottom
+            Me.tosRW.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.tosRW.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tstAdd, Me.tsbAdd, Me.tsbShowRO})
+            Me.tosRW.Location = New System.Drawing.Point(0, 301)
+            Me.tosRW.Name = "tosRW"
+            Me.tosRW.Size = New System.Drawing.Size(344, 25)
+            Me.tosRW.TabIndex = 2
+            Me.tosRW.Text = "ToolStrip1"
+            '
+            'tstAdd
+            '
+            Me.tstAdd.Name = "tstAdd"
+            Me.tstAdd.Size = New System.Drawing.Size(100, 25)
+            '
+            'tsbAdd
+            '
+            Me.tsbAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.tsbAdd.Image = Global.Tools.Tests.My.Resources.Resources.AddTableHS
+            Me.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.tsbAdd.Name = "tsbAdd"
+            Me.tsbAdd.Size = New System.Drawing.Size(23, 22)
+            Me.tsbAdd.Text = "Add"
             '
             'lblRW
             '
@@ -58,6 +104,25 @@ Namespace Collections.Generic
             Me.lblRW.Text = "Read-Write"
             Me.lblRW.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
+            'lstRO
+            '
+            Me.lstRO.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.lstRO.FormattingEnabled = True
+            Me.lstRO.Location = New System.Drawing.Point(0, 13)
+            Me.lstRO.Name = "lstRO"
+            Me.lstRO.Size = New System.Drawing.Size(340, 277)
+            Me.lstRO.TabIndex = 1
+            '
+            'tosRO
+            '
+            Me.tosRO.Dock = System.Windows.Forms.DockStyle.Bottom
+            Me.tosRO.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+            Me.tosRO.Location = New System.Drawing.Point(0, 301)
+            Me.tosRO.Name = "tosRO"
+            Me.tosRO.Size = New System.Drawing.Size(340, 25)
+            Me.tosRO.TabIndex = 2
+            Me.tosRO.Text = "ToolStrip2"
+            '
             'lblRO
             '
             Me.lblRO.Dock = System.Windows.Forms.DockStyle.Top
@@ -68,6 +133,15 @@ Namespace Collections.Generic
             Me.lblRO.Text = "Read-Only"
             Me.lblRO.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
+            'tsbShowRO
+            '
+            Me.tsbShowRO.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+            Me.tsbShowRO.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+            Me.tsbShowRO.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.tsbShowRO.Name = "tsbShowRO"
+            Me.tsbShowRO.Size = New System.Drawing.Size(27, 22)
+            Me.tsbShowRO.Text = ">>"
+            '
             'frmReadOnlyListAdapter
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -77,13 +151,24 @@ Namespace Collections.Generic
             Me.Name = "frmReadOnlyListAdapter"
             Me.Text = "Testing Tools.Collections.Generic.ReadOnlyListAdapter"
             Me.splMain.Panel1.ResumeLayout(False)
+            Me.splMain.Panel1.PerformLayout()
             Me.splMain.Panel2.ResumeLayout(False)
+            Me.splMain.Panel2.PerformLayout()
             Me.splMain.ResumeLayout(False)
+            Me.tosRW.ResumeLayout(False)
+            Me.tosRW.PerformLayout()
             Me.ResumeLayout(False)
 
         End Sub
         Friend WithEvents splMain As System.Windows.Forms.SplitContainer
         Friend WithEvents lblRW As System.Windows.Forms.Label
         Friend WithEvents lblRO As System.Windows.Forms.Label
+        Friend WithEvents lstRW As System.Windows.Forms.ListBox
+        Friend WithEvents lstRO As System.Windows.Forms.ListBox
+        Friend WithEvents tosRW As System.Windows.Forms.ToolStrip
+        Friend WithEvents tstAdd As System.Windows.Forms.ToolStripTextBox
+        Friend WithEvents tsbAdd As System.Windows.Forms.ToolStripButton
+        Friend WithEvents tosRO As System.Windows.Forms.ToolStrip
+        Friend WithEvents tsbShowRO As System.Windows.Forms.ToolStripButton
     End Class
 End Namespace
