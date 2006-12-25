@@ -1,15 +1,15 @@
 ﻿#If Config <= Beta Then 'Stage: Beta
 Namespace Collections.Generic
-    ''' <summary>Adapter that adapts <see cref="List(Of TFrom)"/> into <see cref="IReadOnlyList(Of TTo)"/> where TTo is cublass of TFrom</summary>
+    ''' <summary>Adapter that adapts <see cref="List(Of TFrom)"/> into <see cref="IReadOnlyList(Of TTo)"/> where TFrom is cublass of TTo</summary>
     ''' <typeparam name="TFrom">Type of items stored in <see cref="List(Of TFrom)"/> being adapted</typeparam>
     ''' <typeparam name="TTo">
     ''' Type of items this <see cref="ReadOnlyListAdapter(Of TFrom, TTo)"/> should appear to be <see cref="IReadOnlyList(Of TTo)"/> of.
-    ''' TTo mus inherit of or implement TFrom
+    ''' TFrom must inherit from or implement TTo
     ''' </typeparam>
     ''' <remarks>If you doesn't need type conversion than you can use <seealso cref="ReadOnlyListAdapter(Of T)"/></remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ReadOnlyListAdapter(Of Object, Object)), LastChange:="12/20/2006")> _
     <DebuggerDisplay("Count = {Count}")> _
-    Public Class ReadOnlyListAdapter(Of TFrom, TTo As TFrom)
+    Public Class ReadOnlyListAdapter(Of TFrom As TTo, TTo)
         Implements IReadOnlyList(Of TTo)
         ''' <summary>CTor</summary>
         ''' <param name="AdaptThis">The <see cref="List(Of T)"/> to be adapted.</param>
