@@ -5,7 +5,7 @@ Namespace Collections.Generic
         ''' <summary>List with read-write access</summary>
         Private RWList As New List(Of clsRW)
         ''' <summary>List awith read-only acces</summary>
-        Private ROList As IReadOnlyList(Of clsRO)
+        Private ROList As IReadOnlyList(Of clsRO) = New ReadOnlyListAdapter(Of clsRW, clsRO)(New List(Of clsRW))
 
         ''' <summary>Shows test form for testing <see cref="ReadOnlyListAdapter(Of TFrom, TTo)"/></summary>
         Public Overloads Shared Sub Test()
@@ -115,6 +115,18 @@ Namespace Collections.Generic
         Private Function TextMatch(ByVal a As clsRO) As Boolean
             Return a.val = tstSrch.Text
         End Function
+
+        ''' <summary>Determines if each item in <see cref="ROList"/> contains character '?' using predicate <see cref="QPred"/></summary>
+        Private Sub tsbQAll1_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tsbQAll.Click
+            MsgBox(ROList.TrueForAll(AddressOf QPred))
+        End Sub
+        ''' <summary>Determines if value contains character '?'</summary>
+        ''' <param name="a"><see cref="clsRO"/> which's <see cref="clsRO.val"/> should contain the '?' character</param>
+        ''' <returns>True if <paramref name="a"/>'s <see cref="clsRO.val"/> contains the '?' character.</returns>
+        Private Function QPred(ByVal a As clsRO) As Boolean
+            Return a.val.Contains("?"c)
+        End Function
+
     End Class
 
 End Namespace

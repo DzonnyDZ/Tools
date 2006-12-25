@@ -28,7 +28,10 @@ Partial Class frmTests
         Dim TreeNode7 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("ReadOnlyListAdapter")
         Dim TreeNode8 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Generic", New System.Windows.Forms.TreeNode() {TreeNode7})
         Dim TreeNode9 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Collections", New System.Windows.Forms.TreeNode() {TreeNode8})
-        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tools", New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6, TreeNode9})
+        Dim TreeNode10 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("T1orT2")
+        Dim TreeNode11 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Generic", New System.Windows.Forms.TreeNode() {TreeNode10})
+        Dim TreeNode12 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("DataStructures", New System.Windows.Forms.TreeNode() {TreeNode11})
+        Dim TreeNode13 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tools", New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6, TreeNode9, TreeNode12})
         Me.tvwMain = New System.Windows.Forms.TreeView
         Me.SuspendLayout()
         '
@@ -59,9 +62,16 @@ Partial Class frmTests
         TreeNode8.Text = "Generic"
         TreeNode9.Name = "Collections"
         TreeNode9.Text = "Collections"
-        TreeNode10.Name = "Tools"
-        TreeNode10.Text = "Tools"
-        Me.tvwMain.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode10})
+        TreeNode10.Name = "T1orT2"
+        TreeNode10.Tag = "Tools.Tests.DataStructures.Generic.T1orT2.Test"
+        TreeNode10.Text = "T1orT2"
+        TreeNode11.Name = "Generic"
+        TreeNode11.Text = "Generic"
+        TreeNode12.Name = "DataStructures"
+        TreeNode12.Text = "DataStructures"
+        TreeNode13.Name = "Tools"
+        TreeNode13.Text = "Tools"
+        Me.tvwMain.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode13})
         Me.tvwMain.Size = New System.Drawing.Size(401, 249)
         Me.tvwMain.TabIndex = 0
         '

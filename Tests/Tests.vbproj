@@ -94,6 +94,7 @@
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="DataStructures\Generic\T1orT2.vb" />
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
     </Compile>

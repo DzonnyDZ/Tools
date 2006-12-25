@@ -63,7 +63,7 @@ Namespace DataStructures.Generic
     End Interface
 #End If
 
-#If Config <= Beta Then 'Stage: Beta
+#If Config <= RC Then 'Stage: RC
     ''' <summary>Implements type that can contain either value of type T1 ore value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>
@@ -84,7 +84,7 @@ Namespace DataStructures.Generic
         ''' <summary>CTor - initializes new instance of <see cref="T1orT2(Of T1, T2)"/> with value of type <see cref="T1"/></summary>
         ''' <param name="value">Value to be contained in new instance</param>
         Public Sub New(ByVal value As T1)
-            value = value
+            value1 = value
         End Sub
         ''' <summary>CTor - initializes en empty instance of <see cref="T1orT2(Of T1, T2)"/></summary>
         Public Sub New()
@@ -161,7 +161,7 @@ Namespace DataStructures.Generic
         ''' </remarks>
         Public Overridable Property contains2() As Boolean Implements IT1orT2(Of T1, T2).contains2
             Get
-                Return _value1 IsNot Nothing
+                Return _value2 IsNot Nothing
             End Get
             Set(ByVal value As Boolean)
                 If value AndAlso Not contains1 Then
@@ -305,7 +305,7 @@ Namespace DataStructures.Generic
                 If value2 Is Nothing Then
                     Return GetType(T2).Name & " ()"
                 Else
-                    Return GetType(T2).Name & " (" & value1.ToString & ")"
+                    Return GetType(T2).Name & " (" & value2.ToString & ")"
                 End If
             Else
                 Return "()"

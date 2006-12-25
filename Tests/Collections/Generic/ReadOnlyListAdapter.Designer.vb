@@ -23,18 +23,20 @@ Namespace Collections.Generic
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmReadOnlyListAdapter))
             Me.splMain = New System.Windows.Forms.SplitContainer
             Me.lstRW = New System.Windows.Forms.ListBox
             Me.tosRW = New System.Windows.Forms.ToolStrip
             Me.tstAdd = New System.Windows.Forms.ToolStripTextBox
+            Me.tsbAdd = New System.Windows.Forms.ToolStripButton
             Me.tsbShowRO = New System.Windows.Forms.ToolStripButton
             Me.lblRW = New System.Windows.Forms.Label
             Me.lstRO = New System.Windows.Forms.ListBox
             Me.tosRO = New System.Windows.Forms.ToolStrip
-            Me.lblRO = New System.Windows.Forms.Label
             Me.tstSrch = New System.Windows.Forms.ToolStripTextBox
-            Me.tsbAdd = New System.Windows.Forms.ToolStripButton
             Me.cmdSrch = New System.Windows.Forms.ToolStripButton
+            Me.lblRO = New System.Windows.Forms.Label
+            Me.tsbQAll = New System.Windows.Forms.ToolStripButton
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -88,6 +90,15 @@ Namespace Collections.Generic
             Me.tstAdd.Name = "tstAdd"
             Me.tstAdd.Size = New System.Drawing.Size(100, 25)
             '
+            'tsbAdd
+            '
+            Me.tsbAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.tsbAdd.Image = Global.Tools.Tests.My.Resources.Resources.AddTableHS
+            Me.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.tsbAdd.Name = "tsbAdd"
+            Me.tsbAdd.Size = New System.Drawing.Size(23, 22)
+            Me.tsbAdd.Text = "Add"
+            '
             'tsbShowRO
             '
             Me.tsbShowRO.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
@@ -120,12 +131,26 @@ Namespace Collections.Generic
             '
             Me.tosRO.Dock = System.Windows.Forms.DockStyle.Bottom
             Me.tosRO.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.tosRO.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tstSrch, Me.cmdSrch})
+            Me.tosRO.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tstSrch, Me.cmdSrch, Me.tsbQAll})
             Me.tosRO.Location = New System.Drawing.Point(0, 301)
             Me.tosRO.Name = "tosRO"
             Me.tosRO.Size = New System.Drawing.Size(340, 25)
             Me.tosRO.TabIndex = 2
             Me.tosRO.Text = "ToolStrip2"
+            '
+            'tstSrch
+            '
+            Me.tstSrch.Name = "tstSrch"
+            Me.tstSrch.Size = New System.Drawing.Size(100, 25)
+            '
+            'cmdSrch
+            '
+            Me.cmdSrch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+            Me.cmdSrch.Image = Global.Tools.Tests.My.Resources.Resources.FindHS
+            Me.cmdSrch.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.cmdSrch.Name = "cmdSrch"
+            Me.cmdSrch.Size = New System.Drawing.Size(23, 22)
+            Me.cmdSrch.Text = "Search"
             '
             'lblRO
             '
@@ -137,28 +162,13 @@ Namespace Collections.Generic
             Me.lblRO.Text = "Read-Only"
             Me.lblRO.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
-            'tstSrch
+            'tsbQAll
             '
-            Me.tstSrch.Name = "tstSrch"
-            Me.tstSrch.Size = New System.Drawing.Size(100, 25)
-            '
-            'tsbAdd
-            '
-            Me.tsbAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.tsbAdd.Image = Global.Tools.Tests.My.Resources.Resources.AddTableHS
-            Me.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.tsbAdd.Name = "tsbAdd"
-            Me.tsbAdd.Size = New System.Drawing.Size(23, 22)
-            Me.tsbAdd.Text = "Add"
-            '
-            'cmdSrch
-            '
-            Me.cmdSrch.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.cmdSrch.Image = Global.Tools.Tests.My.Resources.Resources.FindHS
-            Me.cmdSrch.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.cmdSrch.Name = "cmdSrch"
-            Me.cmdSrch.Size = New System.Drawing.Size(23, 22)
-            Me.cmdSrch.Text = "Search"
+            Me.tsbQAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+            Me.tsbQAll.Image = CType(resources.GetObject("tsbQAll.Image"), System.Drawing.Image)
+            Me.tsbQAll.Name = "tsbQAll"
+            Me.tsbQAll.Size = New System.Drawing.Size(31, 22)
+            Me.tsbQAll.Text = "'%'?"
             '
             'frmReadOnlyListAdapter
             '
@@ -192,5 +202,6 @@ Namespace Collections.Generic
         Friend WithEvents tsbShowRO As System.Windows.Forms.ToolStripButton
         Friend WithEvents tstSrch As System.Windows.Forms.ToolStripTextBox
         Friend WithEvents cmdSrch As System.Windows.Forms.ToolStripButton
+        Friend WithEvents tsbQAll As System.Windows.Forms.ToolStripButton
     End Class
 End Namespace
