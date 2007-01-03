@@ -99,6 +99,7 @@
     <Compile Include="Internal\Attributes.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="misc interfaces\ICloneable%28of T%29.vb" />
+    <Compile Include="misc interfaces\IReportsChange.vb" />
     <Compile Include="misc small classes\Box.vb" />
     <Compile Include="misc small classes\TriBool.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

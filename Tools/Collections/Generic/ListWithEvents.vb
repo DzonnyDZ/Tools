@@ -4,7 +4,8 @@ Namespace Collections.Generic
     Public Class ListWithEvents(Of T) : Implements IList(Of T)
         Private List As List(Of T)
         ''' <summary>Contains value of the <see cref="AddingReadOnly"/> property</summary>
-        Private _AddingReadOnly As Boolean
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _AddingReadOnly As Boolean = False
         ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> events</summary>
         Public ReadOnly Property AddingReadOnly() As Boolean
             Get
@@ -32,7 +33,34 @@ Namespace Collections.Generic
                 End If
             End Set
         End Property
-
+        ''' <summary>Contains value of the <see cref="Locked"/></summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _Locked As Boolean = False
+        ''' <summary>Determines if the <see cref="ListWithEvents(Of T)"/> isn locked (being locked prevents if from being edited)</summary>
+        ''' <remarks><para>
+        ''' <see cref="ListWithEvents(Of T)"/> is usually locked while some events' handlers are being invoked.
+        ''' </para><list>
+        ''' <listheader><see cref="Locked"/> set to True blocks following methods and causes <see cref="InvalidOperationException"/> exception to be thrown there:</listheader>
+        ''' <item><see cref="Add"/></item>
+        ''' <item><see cref="Insert"/></item>
+        ''' <item><see cref="Remove"/></item>
+        ''' <item><see cref="RemoveAt"/></item>
+        ''' <item><see cref="Clear"/></item>
+        ''' <item><see cref="Item"/> (only setter)</item>
+        ''' </list></remarks>
+        Public ReadOnly Property Locked() As Boolean
+            Get
+                Return _Locked
+            End Get
+        End Property
+        ''' <summary>Sets the <see cref="Locked"/> to True</summary>
+        Protected Sub Lock()
+            _Locked = True
+        End Sub
+        ''' <summary>Sets the <see cref="Locked"/> to False</summary>
+        Protected Sub Unlock()
+            _Locked = False
+        End Sub
 #Region "Add"
         ''' <summary>List of <see cref="ItemCancelEventHandler"/> delegates to be invoked when the <see cref="Adding"/> event is raised</summary>
         Private AddingEventHandlerList As New List(Of ItemCancelEventHandler)
@@ -73,20 +101,81 @@ Namespace Collections.Generic
         ''' <summary>Adds an item to the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to add to the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         Public Overridable Sub Add(ByVal item As T) Implements System.Collections.Generic.ICollection(Of T).Add
+            If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelableItemIndexEventArgs(item, List.Count, AddingReadOnly)
             OnAdding(e)
             If Not e.Cancel Then
                 List.Add(item)
                 OnAdded(New ItemIndexEventArgs(item, List.Count - 1))
+                If TypeOf item Is IReportsChange Then
+
+                End If
             End If
         End Sub
+        Protected Class IndexEventHandler : Implements IDisposable
+            Private index As Integer
+            Private item As IReportsChange
+            Public Sub New(ByVal index As Integer, ByVal item As IReportsChange)
+                Me.index = index
+                Me.item = item
+                AddHandler item.Changed, AddressOf item_ItemChanged
+            End Sub
+
+            Private Sub item_ItemChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
+
+            End Sub
+            Public Delegate Sub ItemChangedEventHandler(ByVal sender As IReportsChange, ByVal e As IndexEventArgs)
+            Public Custom Event ItemChanged As ItemChangedEventHandler
+                AddHandler(ByVal value As ItemChangedEventHandler)
+
+                End AddHandler
+
+                RemoveHandler(ByVal value As ItemChangedEventHandler)
+
+                End RemoveHandler
+
+                RaiseEvent()
+
+                End RaiseEvent
+            End Event
+
+
+
+            Private disposedValue As Boolean = False        ' To detect redundant calls
+
+            ' IDisposable
+            Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+                If Not Me.disposedValue Then
+                    If disposing Then
+                        RemoveHandler item.Changed, AddressOf item_ItemChanged
+                    End If
+                End If
+                Me.disposedValue = True
+            End Sub
+
+#Region " IDisposable Support "
+            ' This code added by Visual Basic to correctly implement the disposable pattern.
+            Public Sub Dispose() Implements IDisposable.Dispose
+                ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+                Dispose(True)
+                GC.SuppressFinalize(Me)
+            End Sub
+#End Region
+
+            Protected Overrides Sub Finalize()
+                MyBase.Finalize()
+            End Sub
+        End Class
         ''' <summary>Inserts an item to the <see cref="ListWithEvents(Of T)"/> at the specified index.</summary>
         ''' <param name="item">The object to insert into the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <param name="index">The zero-based index at which item should be inserted.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Sub Insert(ByVal index As Integer, ByVal item As T) Implements System.Collections.Generic.IList(Of T).Insert
+            If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelableItemIndexEventArgs(item, index, AddingReadOnly)
             OnAdding(e)
             If Not e.Cancel Then
@@ -145,8 +234,10 @@ Namespace Collections.Generic
         ''' <remarks><see cref="Removed"/> event is not raised when clearing list.</remarks>
         Public Event Cleared(ByVal sender As ListWithEvents(Of T), ByVal e As CountEventArgs)
         ''' <summary>Removes all items from the <see cref="ListWithEvents(Of T)"/>.</summary>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnClearing"/> before clearing of the list and <see cref="OnCleared"/> after clearing of the list,, do not forgot to check <see cref="CancelEventArgs.Cancel"/></remarks>
         Public Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear
+            If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelEventArgs
             OnClearing(e)
             If Not e.Cancel Then
@@ -206,7 +297,7 @@ Namespace Collections.Generic
         ''' This event can be canceled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that<see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
         ''' </para><para>
-        ''' Do not change content of list in handler!
+        ''' Do not change content of list in handler! List is locked.
         ''' </para><para>
         ''' <see cref="Removing"/> event is not raised when list is being cleared.
         ''' </para><para>
@@ -238,10 +329,12 @@ Namespace Collections.Generic
         Public Event Removed(ByVal sender As ListWithEvents(Of T), ByVal e As ItemIndexEventArgs)
         ''' <summary>Raises <see cref="Removing"/> event</summary>
         ''' <param name="e">Event arguments</param>
-        ''' <remarks>
+        ''' <remarks><para>
         ''' Note for inheritors: Always call base class method <see cref="OnRemoving"/> in order the event to be raised
-        ''' Do not change content of list in this method
-        ''' </remarks>
+        ''' </para><para>
+        ''' Do not change content of list in this method!
+        ''' </para><para>
+        ''' </para></remarks>
         Protected Overridable Sub OnRemoving(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent Removing(Me, e)
         End Sub
@@ -254,11 +347,18 @@ Namespace Collections.Generic
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to remove from the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <returns>true if item was successfully removed from the <see cref="ListWithEvents(Of T)"/>; otherwise, false. This method also returns false if item is not found in the original <see cref="ListWithEvents(Of T)"/>.</returns>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
+            If Locked Then Throw New InvalidOperationException("List is locked")
             If Contains(item) Then
                 Dim e As New CancelableItemIndexEventArgs(item, IndexOf(item), True)
-                OnRemoving(e)
+                Lock()
+                Try
+                    OnRemoving(e)
+                Finally
+                    Unlock()
+                End Try
                 If Not e.Cancel Then
                     Dim i As Integer = IndexOf(item)
                     If List.Remove(item) Then
@@ -275,11 +375,18 @@ Namespace Collections.Generic
         ''' <summary>Removes the <see cref="ListWithEvents(Of T)"/> item at the specified index.</summary>
         ''' <param name="index">The zero-based index of the item to remove.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt
+            If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelableItemIndexEventArgs(Me(index), index, True)
             If index >= 0 AndAlso index < Count Then
-                OnRemoving(e)
+                Lock()
+                Try
+                    OnRemoving(e)
+                Finally
+                    Unlock()
+                End Try
             End If
             If Not e.Cancel Then
                 Dim itm As T = Me(index)
@@ -315,7 +422,7 @@ Namespace Collections.Generic
         ''' </para><para>
         ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> can be changed if <see cref="AddingReadOnly"/> is False.
         ''' </para><para>
-        ''' Do not change content of list in handler!
+        ''' Do not change content of list in handler! List is locked.
         ''' </para><para>
         ''' <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> contains new value. Use <see cref="Item"/> to determine old value.
         ''' </para></remarks>
@@ -343,7 +450,11 @@ Namespace Collections.Generic
         Public Event ItemChanged(ByVal sender As ListWithEvents(Of T), ByVal e As ItemIndexEventArgs)
         ''' <summary>Raises <see cref="ItemChanging"/> event</summary>
         ''' <param name="e">Event argument</param>
-        ''' <remarks>Note for inheritors: Alway call base class method <see cref="OnItemChanging"/> in order the event to be raised.</remarks>
+        ''' <remarks><para>
+        ''' Note for inheritors: Alway call base class method <see cref="OnItemChanging"/> in order the event to be raised.
+        ''' </para><para>
+        ''' Do not change the content of the list in this method!
+        ''' </para></remarks>
         Protected Overridable Sub OnItemChanging(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent ItemChanging(Me, e)
         End Sub
@@ -357,14 +468,22 @@ Namespace Collections.Generic
         ''' <param name="index">The zero-based index of the element to get or set.</param>
         ''' <returns>The element at the specified index.</returns>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True (in setter)</exception>
         Default Public Overridable Property Item(ByVal index As Integer) As T Implements System.Collections.Generic.IList(Of T).Item
             Get
                 Return List(index)
             End Get
             Set(ByVal value As T)
+                If Locked Then Throw New InvalidOperationException("List is locked")
                 Dim e As New CancelableItemIndexEventArgs(value, index, AddingReadOnly)
-                If index >= 0 AndAlso index < List.Count Then _
-                    OnItemChanging(e)
+                If index >= 0 AndAlso index < List.Count Then
+                    Lock()
+                    Try
+                        OnItemChanging(e)
+                    Finally
+                        Unlock()
+                    End Try
+                End If
                 If Not e.Cancel Then
                     Dim old As T = List(index)
                     List(index) = e.Item
