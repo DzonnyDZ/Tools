@@ -69,14 +69,16 @@
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="PresentationCore, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=x86" />
-    <Reference Include="PresentationFramework, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
+    <Reference Include="Accessibility" />
     <Reference Include="System" />
+    <Reference Include="System.Configuration" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="UIAutomationProvider, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
-    <Reference Include="WindowsBase, Version=3.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -84,13 +86,13 @@
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
     <Import Include="System.ComponentModel" />
-    <Import Include="System.Data" />
     <Import Include="System.Diagnostics" />
     <Import Include="Tools.Internal" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Collections\Generic\HashTable.vb" />
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
+    <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
@@ -116,6 +118,12 @@
     </Compile>
     <Compile Include="Resources\Resources.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\LinkLabel.Designer.vb">
+      <DependentUpon>LinkLabel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\LinkLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
