@@ -1,9 +1,14 @@
-Imports System.Windows.Forms
+Imports System.Windows.Forms, Tools.Collections.Generic
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
     <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/2/2007")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
+        ''' <summary>List of all items in label</summary>
+        Private WithEvents Items As New ListWithEvents(Of LinkLabelItem)(True)
+        Public Sub New()
+            Items.AllowAddCancelableEventsHandlers = False
+        End Sub
         ''' <summary>Gets text currently displayed by this <see cref="LinkLabel"/></summary>
         ''' <value>Property is read-only, exception <see cref="NotSupportedException"/> will be thrown when trying to set it</value>
         ''' <exception cref="NotSupportedException">Trying to set this property</exception>
@@ -32,7 +37,7 @@ Namespace Windows.Forms
 #Region "Item classes"
         ''' <summary>Common base class for items of <see cref="LinkLabel"/></summary>
         <DebuggerDisplay("{ToString}"), DefaultProperty("Text")> _
-        Public MustInherit Class LinkLabelItem
+        Public MustInherit Class LinkLabelItem : Implements IReportsChange
             ''' <summary>Text to be shown</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Text As String
@@ -44,6 +49,7 @@ Namespace Windows.Forms
                     Return _Text
                 End Get
                 Set(ByVal value As String)
+                    Dim OldVal As String = Text
                     _Text = value
                 End Set
             End Property
@@ -51,6 +57,17 @@ Namespace Windows.Forms
             Public Overrides Function ToString() As String
                 Return Text
             End Function
+            ''' <summary>Raised when value of member changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Event information</param>
+            ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code</remarks>
+            Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
+            ''' <summary>Raises the <see cref="Changed"/> event</summary>
+            ''' <param name="e">Event parameters</param>
+            ''' <remarks>Note for inheritors: Always call base class <see cref="OnChanged"/> method in order the event to be raised</remarks>
+            Public Overridable Sub OnChanged(ByVal e As EventArgs)
+                RaiseEvent Changed(Me, e)
+            End Sub
         End Class
 
         ''' <summary>Non-link (text only) item of <see cref="LinkLabel"/></summary>

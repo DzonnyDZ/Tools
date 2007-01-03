@@ -1,12 +1,38 @@
-#If Config <= Nightly Then 'Stage: Nightly
+#If Config <= Alpha Then 'Stage: Nightly
 Namespace Collections.Generic
+    ''' <summary>List that provides events when changed</summary>
+    ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
+    ''' <remarks>If item of type tha implements the <see cref="IReportsChange"/> interface is passed to this list, than it's events <see cref="IReportsChange.Changed"/> are reported through <see cref="ListWithEvents.ItemValueChanged"/> event.</remarks>
     <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChange:="1/3/2007")> _
     Public Class ListWithEvents(Of T) : Implements IList(Of T)
+        ''' <summary>CTor</summary>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        Public Sub New(Optional ByVal AddingReadOnly As Boolean = False)
+            List = New List(Of T)
+        End Sub
+        ''' <summary>CTor - initializes from another <see cref="IEnumerable(Of T)"/></summary>
+        ''' <param name="collection"><see cref="IEnumerable(Of T)"/> to initialize new instance of <see cref="ListWithEvents(Of T)"/> with</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <exception cref="System.ArgumentNullException">collection is null</exception>
+        Public Sub New(ByVal collection As IEnumerable(Of T), Optional ByVal AddingReadOnly As Boolean = False)
+            List = New List(Of T)(collection)
+            AddAllItemHandlers()
+        End Sub
+        ''' <summary>Initializes a new instance of the <see cref="ListWithEvents(Of T)"/> class that is empty and has the specified initial capacity.</summary>
+        ''' <param name="capacity">The number of elements that the new list can initially store.</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0</exception>
+        Public Sub New(ByVal capacity As Integer, Optional ByVal AddingReadOnly As Boolean = False)
+            List = New List(Of T)(capacity)
+        End Sub
+
+        ''' <summary>Internal list that is used for soring values</summary>
         Private List As List(Of T)
+
         ''' <summary>Contains value of the <see cref="AddingReadOnly"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _AddingReadOnly As Boolean = False
-        ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> events</summary>
+        ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
         Public ReadOnly Property AddingReadOnly() As Boolean
             Get
                 Return _AddingReadOnly
@@ -15,10 +41,15 @@ Namespace Collections.Generic
         ''' <summary>Contains value of the <see cref="AllowAddCancelableEventsHandlers"/> property</summary>
         Private _AllowAddCancelableEventsHandlers As Boolean = True
         ''' <summary>Determines if it is allowed to add handlers for events that supports cancellation</summary>
+        ''' <exception cref="InvalidOperationException">Trying to set value to True when it if False</exception>
         ''' <remarks>
+        ''' Value can be changed only from True (default) to False
         ''' <list>
         ''' <listheader>Those are events:</listheader>
         ''' <item><see cref="Adding"/></item>
+        ''' <item><see cref="Removing"/></item>
+        ''' <item><see cref="Clearing"/></item>
+        ''' <item><see cref="ItemChanging"/></item>
         ''' </list>
         ''' </remarks>
         Public Property AllowAddCancelableEventsHandlers() As Boolean
@@ -108,66 +139,95 @@ Namespace Collections.Generic
             OnAdding(e)
             If Not e.Cancel Then
                 List.Add(item)
+                AddItemHandler(List.Count - 1)
                 OnAdded(New ItemIndexEventArgs(item, List.Count - 1))
-                If TypeOf item Is IReportsChange Then
-
-                End If
             End If
         End Sub
-        Protected Class IndexEventHandler : Implements IDisposable
-            Private index As Integer
-            Private item As IReportsChange
-            Public Sub New(ByVal index As Integer, ByVal item As IReportsChange)
-                Me.index = index
-                Me.item = item
-                AddHandler item.Changed, AddressOf item_ItemChanged
-            End Sub
+        '        ''' <summary>Handles events for concre item (represented by index), attaches index to them and passes them to <see cref="ListWithEvents(Of T)"/></summary>
+        '        Protected Class IndexEventHandler : Implements IDisposable
+        '            ''' <summary>Index of item in <see cref="ListWithEvents(Of T)"/></summary>
+        '            Private index As Integer
+        '            ''' <summary>Item that produces events to be handled</summary>
+        '            Private item As IReportsChange
+        '            ''' <summary>CTor</summary>
+        '            ''' <param name="index">Index of item in <see cref="ListWithEvents(Of T)"/></param>
+        '            ''' <param name="item">Item that produces events to be hendled</param>
+        '            Public Sub New(ByVal index As Integer, ByVal item As IReportsChange)
+        '                Me.index = index
+        '                Me.item = item
+        '                AddHandler item.Changed, AddressOf item_ItemChanged
+        '            End Sub
+        '            ''' <summary>Handles event from <see cref="item"/></summary>
+        '            Private Sub item_ItemChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
+        '                RaiseEvent ItemChanged(sender, New IndexEventArgs(e, index))
+        '            End Sub
+        '            ''' <summary>Delegate of handler of <see cref="ItemChanged"/> event</summary>
+        '            ''' <param name="sender">Object that originally produced the event</param>
+        '            ''' <param name="e">Event parameters (contains index and original parameters)</param>
+        '            Public Delegate Sub ItemChangedEventHandler(ByVal sender As IReportsChange, ByVal e As IndexEventArgs)
+        '            ''' <summary>List of handlers of the <see cref="ItemChanged"/> event</summary>
+        '            Private ItemChangedEventHandlerList As New List(Of ItemChangedEventHandler)
+        '            ''' <summary>Raised when <see cref="item"/> raises the <see cref="IReportsChange.Changed"/> event</summary>
+        '            Public Custom Event ItemChanged As ItemChangedEventHandler
+        '                AddHandler(ByVal value As ItemChangedEventHandler)
+        '                    ItemChangedEventHandlerList.Add(value)
+        '                End AddHandler
+        '                RemoveHandler(ByVal value As ItemChangedEventHandler)
+        '                    ItemChangedEventHandlerList.Remove(value)
+        '                End RemoveHandler
+        '                RaiseEvent(ByVal sender As IReportsChange, ByVal e As ListWithEvents(Of T).IndexEventHandler.IndexEventArgs)
+        '                    For Each Handler As ItemChangedEventHandler In ItemChangedEventHandlerList
+        '                        Handler.Invoke(sender, e)
+        '                    Next Handler
+        '                End RaiseEvent
+        '            End Event
+        '            ''' <summary>Arguments of the <see cref="ItemChanged"/> event</summary>
+        '            Public Class IndexEventArgs : Inherits EventArgs
+        '                ''' <summary>Arguments of original event</summary>
+        '                Public ReadOnly Internal As EventArgs
+        '                ''' <summary>Index of item that originally caused the event</summary>
+        '                Public ReadOnly Index As Integer
+        '                ''' <summary>CTor</summary>
+        '                ''' <param name="InternalEventArgs">Arguments of original event</param>
+        '                ''' <param name="Index">Index of item that originally caused the event</param>
+        '                Public Sub New(ByVal InternalEventArgs As EventArgs, ByVal Index As Integer)
+        '                    Me.Internal = InternalEventArgs
+        '                    Me.Index = Index
+        '                End Sub
+        '            End Class
 
-            Private Sub item_ItemChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
+        '#Region " IDisposable Support "
+        '            ''' <summary>To detect redundant calls</summary>
+        '            Private disposedValue As Boolean = False
+        '            ''' <summary>IDisposable</summary>
+        '            Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+        '                If Not Me.disposedValue Then
+        '                    If disposing Then
+        '                        FinalizeDispoze()
+        '                    End If
+        '                End If
+        '                Me.disposedValue = True
+        '            End Sub
+        '            ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        '            ''' <remarks>This code added by Visual Basic to correctly implement the disposable pattern.</remarks>
+        '            Public Sub Dispose() Implements IDisposable.Dispose
+        '                ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+        '                Dispose(True)
+        '                GC.SuppressFinalize(Me)
+        '            End Sub
+        '#End Region
+        '            ''' <summary>Allows an System.Object to attempt to free resources and perform other cleanup operations before the System.Object is reclaimed by garbage collection</summary>
+        '            Protected Overrides Sub Finalize()
+        '                MyBase.Finalize()
+        '                FinalizeDispoze()
+        '            End Sub
+        '            ''' <summary>Removes all handlers</summary>
+        '            Private Sub FinalizeDispoze()
+        '                RemoveHandler item.Changed, AddressOf item_ItemChanged
+        '                ItemChangedEventHandlerList.Clear()
+        '            End Sub
+        '        End Class
 
-            End Sub
-            Public Delegate Sub ItemChangedEventHandler(ByVal sender As IReportsChange, ByVal e As IndexEventArgs)
-            Public Custom Event ItemChanged As ItemChangedEventHandler
-                AddHandler(ByVal value As ItemChangedEventHandler)
-
-                End AddHandler
-
-                RemoveHandler(ByVal value As ItemChangedEventHandler)
-
-                End RemoveHandler
-
-                RaiseEvent()
-
-                End RaiseEvent
-            End Event
-
-
-
-            Private disposedValue As Boolean = False        ' To detect redundant calls
-
-            ' IDisposable
-            Protected Overridable Sub Dispose(ByVal disposing As Boolean)
-                If Not Me.disposedValue Then
-                    If disposing Then
-                        RemoveHandler item.Changed, AddressOf item_ItemChanged
-                    End If
-                End If
-                Me.disposedValue = True
-            End Sub
-
-#Region " IDisposable Support "
-            ' This code added by Visual Basic to correctly implement the disposable pattern.
-            Public Sub Dispose() Implements IDisposable.Dispose
-                ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-                Dispose(True)
-                GC.SuppressFinalize(Me)
-            End Sub
-#End Region
-
-            Protected Overrides Sub Finalize()
-                MyBase.Finalize()
-            End Sub
-        End Class
         ''' <summary>Inserts an item to the <see cref="ListWithEvents(Of T)"/> at the specified index.</summary>
         ''' <param name="item">The object to insert into the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <param name="index">The zero-based index at which item should be inserted.</param>
@@ -180,6 +240,7 @@ Namespace Collections.Generic
             OnAdding(e)
             If Not e.Cancel Then
                 List.Add(item)
+                AddItemHandler(index)
                 OnAdded(New ItemIndexEventArgs(item, index))
             End If
         End Sub
@@ -242,6 +303,7 @@ Namespace Collections.Generic
             OnClearing(e)
             If Not e.Cancel Then
                 Dim e2 As New CountEventArgs(List.Count)
+                RemoveAllItemHandlers()
                 List.Clear()
                 OnCleared(e2)
             End If
@@ -361,10 +423,12 @@ Namespace Collections.Generic
                 End Try
                 If Not e.Cancel Then
                     Dim i As Integer = IndexOf(item)
+                    RemoveItemHandler(i)
                     If List.Remove(item) Then
                         OnRemoved(New ItemIndexEventArgs(item, i))
                         Return True
                     Else
+                        AddItemHandler(i)
                         Return False
                     End If
                 End If
@@ -390,7 +454,13 @@ Namespace Collections.Generic
             End If
             If Not e.Cancel Then
                 Dim itm As T = Me(index)
-                List.RemoveAt(index)
+                RemoveItemHandler(index)
+                Try
+                    List.RemoveAt(index)
+                Catch ex As Exception
+                    AddItemHandler(index)
+                    Throw ex
+                End Try
                 OnRemoved(New ItemIndexEventArgs(itm, index))
             End If
         End Sub
@@ -486,7 +556,9 @@ Namespace Collections.Generic
                 End If
                 If Not e.Cancel Then
                     Dim old As T = List(index)
+                    RemoveItemHandler(index)
                     List(index) = e.Item
+                    AddItemHandler(index)
                     OnItemChanged(New ItemIndexEventArgs(old, index))
                 End If
             End Set
@@ -504,6 +576,48 @@ Namespace Collections.Generic
                 Return New ReadOnlyListAdapter(Of T)(List)
             End Get
         End Property
+        ''' <summary>Adds handler to item at specified index if the item is <see cref="IReportsChange"/></summary>
+        ''' <param name="Index">Index of item to try add handler</param>
+        ''' <remarks>Call after item is added</remarks>
+        Protected Overridable Sub AddItemHandler(ByVal Index As Integer)
+            If TypeOf Me(Index) Is IReportsChange Then
+                AddHandler CType(Me(Index), IReportsChange).Changed, AddressOf OnItemValueChanged
+            End If
+        End Sub
+        ''' <summary>Removes handler from item at specified index if the item is <see cref="IReportsChange"/></summary>
+        ''' <param name="Index">Index of item to try remove handler</param>
+        ''' <remarks>Call before item is removed</remarks>
+        Protected Overridable Sub RemoveItemHandler(ByVal Index As Integer)
+            If TypeOf Me(Index) Is IReportsChange Then
+                RemoveHandler CType(Me(Index), IReportsChange).Changed, AddressOf OnItemValueChanged
+            End If
+        End Sub
+        ''' <summary>Removes handlers from all item that are of type <see cref="IReportsChange"/></summary>
+        ''' <remarks>Call before clering list</remarks>
+        Protected Overridable Sub RemoveAllItemHandlers()
+            For i As Integer = 0 To Count - 1
+                RemoveItemHandler(i)
+            Next i
+        End Sub
+        ''' <summary>Adds ahndlers to all items that as of type <see cref="IReportsChange"/></summary>
+        ''' <remarks>Call only from CTor when no handlers have been added</remarks>
+        Protected Overridable Sub AddAllItemHandlers()
+            For i As Integer = 0 To Count - 1
+                AddItemHandler(i)
+            Next i
+        End Sub
+        ''' <summary>Raises the <see cref="ItemValueChanged"/> event and handles the <see cref="IReportsChange.Changed"/> event for items</summary>
+        ''' <param name="sender">Original source of the event</param>
+        ''' <param name="e">Original event parameters</param>
+        ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemValueChanged"/> in order the event to be raised</remarks>
+        Protected Overridable Sub OnItemValueChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
+            RaiseEvent ItemValueChanged(Me, New ItemValueChangedEventArgs(sender, e))
+        End Sub
+        ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
+        ''' <param name="sender">Source of the event</param>
+        ''' <param name="e">Event params (contains original source (item) and original arguments</param>
+        Public Event ItemValueChanged(ByVal sender As ListWithEvents(Of T), ByVal e As ItemValueChangedEventArgs)
+
 #Region "EventArgs"
         ''' <summary>Parameter of cancelable item events</summary>
         Public Class CancelableItemEventArgs : Inherits CancelEventArgs
@@ -586,7 +700,20 @@ Namespace Collections.Generic
             ''' <summary>Reported count</summary>
             Public ReadOnly Count As Integer
         End Class
-
+        ''' <summary>Parameter of the <see cref="ItemValueChanged"/> event</summary>
+        Public Class ItemValueChangedEventArgs : Inherits EventArgs
+            ''' <summary>Item that caused the event</summary>
+            Public ReadOnly Item As T
+            ''' <summary>Original argument of item's <see cref="IReportsChange.Changed"/> event</summary>
+            Public ReadOnly OriginalEventArgs As EventArgs
+            ''' <summary>CTor</summary>
+            ''' <param name="Item">Item that caused the event</param>
+            ''' <param name="OriginalEventArgs">Original argument of item's <see cref="IReportsChange.Changed"/> event</param>
+            Public Sub New(ByVal Item As T, ByVal OriginalEventArgs As EventArgs)
+                Me.Item = Item
+                Me.OriginalEventArgs = OriginalEventArgs
+            End Sub
+        End Class
 #End Region
     End Class
 End Namespace
