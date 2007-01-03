@@ -51,6 +51,7 @@ Namespace Windows.Forms
                 Set(ByVal value As String)
                     Dim OldVal As String = Text
                     _Text = value
+                    'TODO:OnChanged(New IReportsChange.ValueChangedEventArgs(Of String)(OldVal, value, )
                 End Set
             End Property
             ''' <summary>String representation of this instance</summary>
