@@ -412,6 +412,7 @@ Namespace Collections.Generic
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
+            Dim ax As Long
             If Locked Then Throw New InvalidOperationException("List is locked")
             If Contains(item) Then
                 Dim e As New CancelableItemIndexEventArgs(item, IndexOf(item), True)
@@ -435,6 +436,7 @@ Namespace Collections.Generic
             Else
                 Return False
             End If
+            ax = 7
         End Function
         ''' <summary>Removes the <see cref="ListWithEvents(Of T)"/> item at the specified index.</summary>
         ''' <param name="index">The zero-based index of the item to remove.</param>
