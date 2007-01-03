@@ -1,5 +1,5 @@
 Imports System.Windows.Forms
-#If Config <= Nightly Then
+#If Config <= Nightly Then 'Stage: Nightly
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
     <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/2/2007")> _
