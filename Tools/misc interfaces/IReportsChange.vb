@@ -1,4 +1,4 @@
-#If Config <= Beta Then 'Stage: Nightly
+#If Config <= Beta Then 'Stage: Alpha
 ''' <summary>Represents data type that reports change of values of its members</summary>
 <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="1/3/2007")> _
 Public Interface IReportsChange

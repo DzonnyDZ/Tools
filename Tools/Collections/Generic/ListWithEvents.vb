@@ -1,4 +1,4 @@
-#If Config <= Alpha Then 'Stage: Nightly
+#If Config <= Alpha Then 'Stage: Alpha
 Namespace Collections.Generic
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
