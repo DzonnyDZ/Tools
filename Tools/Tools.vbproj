@@ -124,9 +124,6 @@
     </Compile>
     <Compile Include="Resources\Resources.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Forms\LinkLabel.Designer.vb">
-      <DependentUpon>LinkLabel.vb</DependentUpon>
-    </Compile>
     <Compile Include="Windows\Forms\LinkLabel.vb">
       <SubType>Component</SubType>
     </Compile>
