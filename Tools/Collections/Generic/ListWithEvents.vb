@@ -143,6 +143,14 @@ Namespace Collections.Generic
                 OnAdded(New ItemIndexEventArgs(item, List.Count - 1))
             End If
         End Sub
+        ''' <summary>Adds range of items into list</summary>
+        ''' <param name="Items">Collection of items to be added</param>
+        ''' <remarks>Internally calls <see cref="Add"/> for each item</remarks>
+        Public Overridable Sub AddRange(ByVal Items As IEnumerable(Of T))
+            For Each itm As T In Items
+                Add(itm)
+            Next itm
+        End Sub
         '        ''' <summary>Handles events for concre item (represented by index), attaches index to them and passes them to <see cref="ListWithEvents(Of T)"/></summary>
         '        Protected Class IndexEventHandler : Implements IDisposable
         '            ''' <summary>Index of item in <see cref="ListWithEvents(Of T)"/></summary>
@@ -715,6 +723,7 @@ Namespace Collections.Generic
             End Sub
         End Class
 #End Region
+
     End Class
 End Namespace
 #End If

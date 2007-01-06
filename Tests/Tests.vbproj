@@ -119,6 +119,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\LinkLabel.Designer.vb">
+      <DependentUpon>LinkLabel.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\LinkLabel.vb">
+      <SubType>Form</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Collections\Generic\ReadOnlyListAdapter.resx">
@@ -134,6 +140,10 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>LinkLabel.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

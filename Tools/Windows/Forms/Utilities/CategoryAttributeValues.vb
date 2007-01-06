@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿#If Config <= Release Then
 Namespace Windows.Forms.Utilities
     ''' <summary>Common values used for <see cref="CategoryAttribute"/></summary>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(CategoryAttributeValues), LastChange:="1/6/2007")> _
@@ -28,6 +28,8 @@ Namespace Windows.Forms.Utilities
             Public Const Appearance$ = "Appearance"
             ''' <summary>Design category</summary>
             Public Const Design$ = "Design"
+            ''' <summary>Window Style category</summary>
+            public const WindowStyle$="Window Style"
         End Class
         ''' <summary>Common values used for <see cref="CategoryAttribute"/> on events</summary>
         <HideModuleName()> _
@@ -47,6 +49,7 @@ Namespace Windows.Forms.Utilities
             Public Const PropertyChanged$ = "Property Changed"
         End Class
         ''' <summary>Combines constants from <see cref="Properties"/> and <see cref="Events"/></summary>
+        <HideModuleName()> _
         Public NotInheritable Class All : Inherits CategoryAttributeValues
             ''' <summary>In order not to be able to construct it</summary>
             Private Sub New()
@@ -60,6 +63,9 @@ Namespace Windows.Forms.Utilities
             ''' <summary>Design category</summary>
             ''' <remarks>Inherited from <see cref="Properties"/></remarks>
             Public Const Design$ = Properties.Design
+            ''' <summary>Window Style category</summary>
+            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
+            Public Const WindowStyle$ = Properties.WindowStyle
             ''' <summary>Action category</summary>
             ''' <remarks>Inherited from <see cref="Events"/></remarks>
             Public Const Action$ = Events.Action

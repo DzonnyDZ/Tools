@@ -35,8 +35,8 @@ Namespace Collections.Generic
             Me.tosRO = New System.Windows.Forms.ToolStrip
             Me.tstSrch = New System.Windows.Forms.ToolStripTextBox
             Me.cmdSrch = New System.Windows.Forms.ToolStripButton
-            Me.lblRO = New System.Windows.Forms.Label
             Me.tsbQAll = New System.Windows.Forms.ToolStripButton
+            Me.lblRO = New System.Windows.Forms.Label
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -152,6 +152,14 @@ Namespace Collections.Generic
             Me.cmdSrch.Size = New System.Drawing.Size(23, 22)
             Me.cmdSrch.Text = "Search"
             '
+            'tsbQAll
+            '
+            Me.tsbQAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+            Me.tsbQAll.Image = CType(resources.GetObject("tsbQAll.Image"), System.Drawing.Image)
+            Me.tsbQAll.Name = "tsbQAll"
+            Me.tsbQAll.Size = New System.Drawing.Size(31, 22)
+            Me.tsbQAll.Text = "'%'?"
+            '
             'lblRO
             '
             Me.lblRO.Dock = System.Windows.Forms.DockStyle.Top
@@ -162,14 +170,6 @@ Namespace Collections.Generic
             Me.lblRO.Text = "Read-Only"
             Me.lblRO.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
-            'tsbQAll
-            '
-            Me.tsbQAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-            Me.tsbQAll.Image = CType(resources.GetObject("tsbQAll.Image"), System.Drawing.Image)
-            Me.tsbQAll.Name = "tsbQAll"
-            Me.tsbQAll.Size = New System.Drawing.Size(31, 22)
-            Me.tsbQAll.Text = "'%'?"
-            '
             'frmReadOnlyListAdapter
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -177,6 +177,7 @@ Namespace Collections.Generic
             Me.ClientSize = New System.Drawing.Size(688, 326)
             Me.Controls.Add(Me.splMain)
             Me.Name = "frmReadOnlyListAdapter"
+            Me.ShowInTaskbar = False
             Me.Text = "Testing Tools.Collections.Generic.ReadOnlyListAdapter"
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel1.PerformLayout()

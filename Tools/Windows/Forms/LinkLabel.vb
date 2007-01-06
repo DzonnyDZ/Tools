@@ -1,8 +1,12 @@
 Imports System.Windows.Forms, Tools.Collections.Generic, Tools.Windows.Forms.Utilities
+Imports System.Drawing.Design, System.ComponentModel.Design
 #If Config <= Alpha Then 'Stage: Alpha
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
     <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/2/2007")> _
+    <ToolboxItemFilter("System.Windows.Forms")> _
+    <Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
+    <DefaultEvent("LinkClicked")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
         ''' <summary>Contains value of the <see cref="Items"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -28,6 +32,7 @@ Namespace Windows.Forms
         ''' <value>Property is read-only, exception <see cref="NotSupportedException"/> will be thrown when trying to set it</value>
         ''' <returns>A System.Windows.Forms.LinkArea that represents the area treated as a link.</returns>
         <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Shadows Property LinkArea() As LinkArea
             Get
                 Return MyBase.LinkArea
@@ -39,6 +44,8 @@ Namespace Windows.Forms
         ''' <summary>List of all items in label</summary>
         ''' <remarks><see cref="ListWithEvents(Of LinkLabelItem).AllowAddCancelableEventsHandlers"/> is set to False</remarks>
         <Category(CategoryAttributeValues.Properties.Appearance), Description("List of all items in label")> _
+        <Editor(GetType(LinkLabelItemsEditor), GetType(UITypeEditor))> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         Public ReadOnly Property Items() As ListWithEvents(Of LinkLabelItem)
             Get
                 Return _Items
@@ -539,6 +546,54 @@ Namespace Windows.Forms
             End Property
         End Class
 #End Region
+
+        ''' <summary>Allows editing of the <see cref="Items"/> collection at design-time</summary>
+        Public Class LinkLabelItemsEditor : Inherits CollectionEditor
+            ''' <summary>CTor</summary>
+            ''' <remarks>Initializes base class <see cref="CollectionEditor"/> with type <see cref="ListWithEvents(Of LinkLabel.LinkLabelItem)"/></remarks>
+            Public Sub New()
+                MyBase.New(GetType(ListWithEvents(Of LinkLabel.LinkLabelItem)))
+            End Sub
+            Private Types As Type() = {GetType(TextItem), GetType(LinkItem), GetType(AutoLink)}
+            Protected Overrides Function CreateNewItemTypes() As System.Type()
+                Return Types
+                'return        mybase.CreateNewItemTypes(0)}
+            End Function
+
+            ''' <exception cref="ArgumentException"><paramref name="itemType"/> doesn't represent supported type - supported types are: <list><item><see cref="TextItem"/></item> <item><see cref="LinkItem"/></item> <see cref="AutoLink"/></list></exception>
+            Protected Overrides Function CreateInstance(ByVal itemType As System.Type) As Object
+                Dim ret As LinkLabelItem
+                If itemType Is GetType(TextItem) Then
+                    ret = New TextItem("TextItem")
+                ElseIf itemType Is GetType(AutoLink) Then
+                    ret = New AutoLink("AutoLink")
+                ElseIf itemType Is GetType(LinkItem) Then
+                    ret = New LinkItem("LinkItem")
+                ElseIf itemType Is GetType(LinkLabelItem) Then
+                    ret = New TextItem("textItem")
+                Else
+                    Throw New ArgumentException("Type " & itemType.FullName & " is not supported", "itemType")
+                End If
+                Return ret
+            End Function
+
+            Protected Overrides Function CreateCollectionItemType() As Type
+                Return GetType(LinkItem)
+            End Function
+
+            'Protected Overrides Function CreateCollectionForm() As System.ComponentModel.Design.CollectionEditor.CollectionForm
+            '    Return New CollectionForm(Me)
+            'End Function
+
+            'Protected Shadows Class CollectionForm : Inherits CollectionEditor.CollectionForm
+            '    Public Sub New(ByVal editor As LinkLabelItemsEditor)
+            '        MyBase.New(editor)
+            '    End Sub
+
+            '    Protected Overrides Sub OnEditValueChanged()
+            '    End Sub
+            'End Class
+        End Class
     End Class
 End Namespace
 #End If
