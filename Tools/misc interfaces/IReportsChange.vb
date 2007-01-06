@@ -8,39 +8,52 @@ Public Interface IReportsChange
     ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>
     Event Changed(ByVal sender As IReportsChange, ByVal e As EventArgs)
 
+    ''' <summary>Represents common base for all <see cref="ValueChangedEventArgs"/> generic's instances</summary>
+    MustInherit Class ValueChangedEventArgsBase : Inherits EventArgs
+        ''' <summary>Name of changed value</summary>
+        Public Overridable ReadOnly Property ValueName() As String
+            <DebuggerStepThrough()> Get
+                Return _ValueName
+            End Get
+        End Property
+        ''' <summary>Contains value of the<see cref="ValueName"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _ValueName As String
+        ''' <summary>CTor</summary>
+        ''' <param name="ValueName">Value of the <see cref="ValueName"/> property</param>
+        Public Sub New(ByVal ValueName As String)
+            _ValueName = ValueName
+        End Sub
+    End Class
+
     ''' <summary>Represents information about change of value</summary>
     ''' <typeparam name="T">Type of value contained in old and new value properties</typeparam>
-    Class ValueChangedEventArgs(Of T) : Inherits EventArgs
+    Class ValueChangedEventArgs(Of T) : Inherits ValueChangedEventArgsBase
         ''' <summary>Contains value of the<see cref="OldValue"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _OldValue As T
         ''' <summary>Contains value of the<see cref="NewValue"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _NewValue As T
-        ''' <summary>Contains value of the<see cref="ValueName"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _ValueName As String
-        Public Sub New(ByVal OldValue As T, ByVal NewValue As T, ByVal ValueName As String)
+        ''' <summary>CTor</summary>
+        ''' <param name="OldValue">Value of item before change</param>
+        ''' <param name="NewValue">Value of item after change</param>
+        ''' <param name="ValueName">Name of changed value</param>
+       Public Sub New(ByVal OldValue As T, ByVal NewValue As T, ByVal ValueName As String)
+            MyBase.New(ValueName)
             _OldValue = OldValue
             _NewValue = NewValue
-            _ValueName = ValueName
         End Sub
-        ''' <summary>Value fo item before change</summary>
-        Public ReadOnly Property OldValue() As T
+        ''' <summary>Value of item before change</summary>
+        Public Overridable ReadOnly Property OldValue() As T
             <DebuggerStepThrough()> Get
                 Return _OldValue
             End Get
         End Property
         ''' <summary>Current value of item (after chenge)</summary>
-        Public ReadOnly Property NewValue() As T
+        Public Overridable ReadOnly Property NewValue() As T
             <DebuggerStepThrough()> Get
                 Return _NewValue
-            End Get
-        End Property
-        ''' <summary>Name of changed value</summary>
-        Public ReadOnly Property ValueName() As String
-            <DebuggerStepThrough()> Get
-                Return _ValueName
             End Get
         End Property
     End Class

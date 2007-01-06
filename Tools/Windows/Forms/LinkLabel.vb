@@ -45,22 +45,64 @@ Namespace Windows.Forms
             End Get
         End Property
 #Region "List event handlers"
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private Sub _Items_Added(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).ItemIndexEventArgs) Handles _Items.Added
             RegenerateContent()
         End Sub
-
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private Sub _Items_Cleared(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).CountEventArgs) Handles _Items.Cleared
             RegenerateContent()
         End Sub
-
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private Sub _Items_ItemChanged(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).ItemIndexEventArgs) Handles _Items.ItemChanged
             RegenerateContent()
         End Sub
 
+        ''' <summary>
+        ''' Handles the <see cref="ListWithEvents(Of LinkLabelItem).ItemValueChanged"/> event of <see cref="_Items"/>.
+        ''' When property of item changes specific action is taken depending on the property.
+        ''' </summary>
+        ''' <param name="sender">The source of the event</param>
+        ''' <param name="e">Event parameters (expected to be <see cref="IReportsChange.ValueChangedEventArgs"/>)</param>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private Sub _Items_ItemValueChanged(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).ItemValueChangedEventArgs) Handles _Items.ItemValueChanged
-            RegenerateContent()
+            Dim l As Link = Nothing
+            If TypeOf e.Item Is LinkItem Then
+                Try
+                    l = Links(e.Item)
+                Catch ex As ArgumentException
+                    RegenerateContent()
+                    Return
+                Catch ex As InvalidOperationException
+                    RegenerateContent()
+                    Return
+                End Try
+            End If
+            If l IsNot Nothing AndAlso TypeOf e.Item Is LinkItem AndAlso TypeOf e.OriginalEventArgs Is IReportsChange.ValueChangedEventArgsBase Then
+                With CType(e.OriginalEventArgs, IReportsChange.ValueChangedEventArgsBase)
+                    Select Case .ValueName
+                        Case LinkItem.LinkDataPropertyName  'Do nothing
+                        Case LinkItem.DescriptionPropertyName
+                            l.Description = CType(e.OriginalEventArgs, IReportsChange.ValueChangedEventArgs(Of String)).NewValue
+                        Case LinkItem.NamePropertyName
+                            l.Name = CType(e.OriginalEventArgs, IReportsChange.ValueChangedEventArgs(Of String)).NewValue
+                        Case LinkItem.TagPropertyName
+                            l.Tag = CType(e.OriginalEventArgs, IReportsChange.ValueChangedEventArgs(Of Object)).NewValue
+                        Case LinkItem.VisitedPropertyName
+                            l.Visited = CType(e.OriginalEventArgs, IReportsChange.ValueChangedEventArgs(Of Boolean)).NewValue
+                        Case LinkItem.EnabledPropertyName
+                            l.Enabled = CType(e.OriginalEventArgs, IReportsChange.ValueChangedEventArgs(Of Boolean)).NewValue
+                        Case AutoLink.LinkURIPropertyName 'Normally do nothing
+                            If Not TypeOf e.Item Is AutoLink Then RegenerateContent() 'This handles situation caused by non-LinkLabel LinkItem-derived class
+                        Case Else 'This should not happen with LinkLabel-included classes
+                            RegenerateContent()
+                    End Select
+                End With
+            Else
+                RegenerateContent()
+            End If
         End Sub
-
+        <EditorBrowsable(EditorBrowsableState.Never)> _
         Private Sub _Items_Removed(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).ItemIndexEventArgs) Handles _Items.Removed
             RegenerateContent()
         End Sub
@@ -76,7 +118,14 @@ Namespace Windows.Forms
             Dim start As Integer = 0
             For Each itm As LinkLabelItem In Items
                 If TypeOf itm Is LinkItem Then
-                    MyBase.Links.Add(start, itm.Text.Length, itm)
+                    Dim l As Link = MyBase.Links.Add(start, itm.Text.Length, itm)
+                    With CType(itm, LinkItem)
+                        l.Description = .Description
+                        l.Enabled = .Enabled
+                        l.Visited = .Visited
+                        l.Name = .Name
+                        l.Tag = .Tag
+                    End With
                 End If
                 start += itm.Text.Length
             Next itm
@@ -206,9 +255,11 @@ Namespace Windows.Forms
         End Property
 
 #Region "Item classes"
-
-        <DebuggerDisplay("{ToString}"), DefaultProperty("Text")> _
+        ''' <summary>Common base for items in <see cref="LinkLabel.Items"/></summary>
+        <DebuggerDisplay("{ToString}"), DefaultProperty("Text"), DefaultEvent("Changed")> _
         Public MustInherit Class LinkLabelItem : Implements IReportsChange
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of String).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Text"/> property changes</summary>
+            Public Const TextPropertyName As String = "Text"
             ''' <summary>Text to be shown</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Text As String
@@ -223,7 +274,7 @@ Namespace Windows.Forms
                 Set(ByVal value As String)
                     Dim OldVal As String = Text
                     _Text = value
-                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of String)(OldVal, value, "Text"))
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of String)(OldVal, value, TextPropertyName))
                 End Set
             End Property
             ''' <summary>String representation of this instance</summary>
@@ -238,7 +289,7 @@ Namespace Windows.Forms
             ''' <summary>Raises the <see cref="Changed"/> event</summary>
             ''' <param name="e">Event parameters</param>
             ''' <remarks>Note for inheritors: Always call base class <see cref="OnChanged"/> method in order the event to be raised</remarks>
-            Public Overridable Sub OnChanged(ByVal e As EventArgs)
+            Protected Overridable Sub OnChanged(ByVal e As EventArgs)
                 RaiseEvent Changed(Me, e)
             End Sub
         End Class
@@ -258,6 +309,18 @@ Namespace Windows.Forms
 
         ''' <summary>Generic link</summary>
         Public Class LinkItem : Inherits LinkLabelItem
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Object).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="LinkData"/> property changes</summary>
+            Public Const LinkDataPropertyName As String = "LinkData"
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of String).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Description"/> property changes</summary>
+            Public Const DescriptionPropertyName As String = "Description"
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of String).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Name"/> property changes</summary>
+            Public Const NamePropertyName As String = "Name"
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Object).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Tag"/> property changes</summary>
+            Public Const TagPropertyName As String = "Tag"
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Boolean).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Visited"/> property changes</summary>
+            Public Const VisitedPropertyName As String = "Visited"
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Boolean).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Enabled"/> property changes</summary>
+            Public Const EnabledPropertyName As String = "Enabled"
             ''' <summary>CTor (initializes with an empty string as <see cref="Text"/> and null as <see cref="LinkData"/></summary>
             Public Sub New()
                 Me.New("")
@@ -275,7 +338,7 @@ Namespace Windows.Forms
             ''' <summary>Gets or sets data associated with the link</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after tha value is changed (unless calling base class setter <see cref="LinkData"/>)</remarks>
             <Category("Behavior"), Description("Data associated with this link")> _
-            <DefaultValue("")> _
+            <DefaultValue(GetType(Object), Nothing)> _
             Public Overridable Property LinkData() As Object
                 Get
                     Return _LinkData
@@ -283,20 +346,98 @@ Namespace Windows.Forms
                 Set(ByVal value As Object)
                     Dim old As Object = LinkData
                     _LinkData = value
-                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "LinkData"))
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, LinkDataPropertyName))
                 End Set
             End Property
-            Private _Description As String
-            Private _Name As String
-            Private _Tag As Object
-            Private _Visited As Boolean
-            Private _Enabled As Boolean
-
+#Region "Other props"
+            ''' <summary>Stores value for the <see cref="Link.Description"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
+            ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
+            <Category("Appearance"), Description("Stores value for the Link.Description of Link that represents this LinkItem")> _
+            <DefaultValue("")> _
+            Public Overridable Property Description() As String
+                <DebuggerStepThrough()> Get
+                    Return _Description
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As String)
+                    Dim old As String = Description
+                    _Description = value
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of String)(old, value, DescriptionPropertyName))
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Description"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Description As String = ""
+            ''' <summary>Stores value for the <see cref="Link.Name"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
+            ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
+            <Category("Misc"), Description("Stores value for the Link.Name of Link that represents this LinkItem")> _
+            <DefaultValue(""), DisplayName(NamePropertyName)> _
+            Public Overridable Property Name() As String
+                <DebuggerStepThrough()> Get
+                    Return _Name
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As String)
+                    Dim old As String = Name
+                    _Name = value
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of String)(old, value, NamePropertyName))
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Name"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Name As String = ""
+            ''' <summary>Stores value for the <see cref="Link.Tag"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
+            ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
+            <Category("Misc"), Description("Stores value for the Link.Tag of Link that represents this LinkItem")> _
+            <DefaultValue(GetType(Object), Nothing)> _
+            Public Overridable Property Tag() As Object
+                <DebuggerStepThrough()> Get
+                    Return _Tag
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As Object)
+                    Dim old As Object = Tag
+                    _Tag = value
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, TagPropertyName))
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As Object = Nothing
+            ''' <summary>Stores value for the <see cref="Link.Visited"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
+            ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
+            <Category("Appearance"), Description("Stores value for the Link.Visited of Link that represents this LinkItem")> _
+            <DefaultValue(False)> _
+            Public Overridable Property Visited() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _Visited
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As Boolean)
+                    Dim old As Boolean = Visited
+                    _Visited = value
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, VisitedPropertyName))
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Visited"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Visited As Boolean = False
+            ''' <summary>Stores value for the <see cref="Link.Enabled"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
+            ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
+            <Category("Appearance"), Description("Stores value for the Link.Enabled of Link that represents this LinkItem")> _
+            <DefaultValue(True)> _
+            Public Overridable Property Enabled() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _Enabled
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As Boolean)
+                    Dim old As Boolean = Enabled
+                    _Enabled = value
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, EnabledPropertyName))
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Enabled"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Enabled As Boolean = True
+#End Region
         End Class
 
         ''' <summary>Link that performs navigation automatically</summary>
         <DebuggerDisplay("{ToString} ({LinkPath})")> _
         Public Class AutoLink : Inherits LinkItem
+            ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="LinkURI"/> property changes</summary>
+            Public Const LinkURIPropertyName As String = "LinkURI"
 #Region "CTors"
             ''' <summary>CTor</summary>
             ''' <param name="Text">Text to display</param>
@@ -366,7 +507,7 @@ Namespace Windows.Forms
                     Dim old As Uri = LinkURI
                     _LinkURI = value
                     MyBase.LinkData = _LinkURI
-                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Uri)(old, value, "LinkURI"))
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Uri)(old, value, LinkURIPropertyName))
                 End Set
             End Property
             ''' <summary>Gets or sets URI (in form of path string) to navigate to</summary>
@@ -376,7 +517,7 @@ Namespace Windows.Forms
             ''' <remarks>
             ''' <para>Exceptions thrown by <see cref="Uri"/>'s CTor</para>
             ''' <para>Note for inheritors: Call <see cref="OnChanged"/> (unless callin base class setter <see cref="LinkPath"/> or <see cref="LinkURI"/></para>
-            ''' <para>Change of this value causes raising <see cref="Changed"/> event with <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> set to "LinkURI"</para>
+            ''' <para>Change of this value causes raising <see cref="Changed"/> event with <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> set to <see cref="LinkURIPropertyName"/></para>
             ''' </remarks>
             <Category("Behavior"), Description("Path (string representation of URI) of target of the link")> _
             <DefaultValue("")> _
@@ -388,10 +529,10 @@ Namespace Windows.Forms
                     Dim old As Uri = LinkURI
                     If value = "" Then
                         _LinkURI = Nothing
-                        OnChanged(New IReportsChange.ValueChangedEventArgs(Of Uri)(old, Nothing, "LinkURI"))
+                        OnChanged(New IReportsChange.ValueChangedEventArgs(Of Uri)(old, Nothing, LinkURIPropertyName))
                     Else
                         _LinkURI = New Uri(value)
-                        OnChanged(New IReportsChange.ValueChangedEventArgs(Of Uri)(old, LinkURI, "LinkURI"))
+                        OnChanged(New IReportsChange.ValueChangedEventArgs(Of Uri)(old, LinkURI, LinkURIPropertyName))
                     End If
                     MyBase.LinkData = _LinkURI
                 End Set
