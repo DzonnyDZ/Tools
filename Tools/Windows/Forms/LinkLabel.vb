@@ -1,4 +1,4 @@
-Imports System.Windows.Forms, Tools.Collections.Generic
+Imports System.Windows.Forms, Tools.Collections.Generic, Tools.Windows.Forms.Utilities
 #If Config <= Alpha Then 'Stage: Alpha
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
@@ -38,7 +38,7 @@ Namespace Windows.Forms
         End Property
         ''' <summary>List of all items in label</summary>
         ''' <remarks><see cref="ListWithEvents(Of LinkLabelItem).AllowAddCancelableEventsHandlers"/> is set to False</remarks>
-        <Category("Appearance"), Description("List of all items in label")> _
+        <Category(CategoryAttributeValues.Properties.Appearance), Description("List of all items in label")> _
         Public ReadOnly Property Items() As ListWithEvents(Of LinkLabelItem)
             Get
                 Return _Items
@@ -265,7 +265,7 @@ Namespace Windows.Forms
             Private _Text As String
             ''' <summary>Gets or sets text shown in place of this item</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after change of value (unless calling base class setter <see cref="Text"/>)</remarks>
-            <Description("Text to be show in place of this item"), Category("Appearance")> _
+            <Description("Text to be show in place of this item"), Category(CategoryAttributeValues.Properties.Appearance)> _
             <DefaultValue("")> _
             Public Overridable Property Text() As String
                 Get
@@ -337,7 +337,7 @@ Namespace Windows.Forms
             Private _LinkData As Object
             ''' <summary>Gets or sets data associated with the link</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after tha value is changed (unless calling base class setter <see cref="LinkData"/>)</remarks>
-            <Category("Behavior"), Description("Data associated with this link")> _
+            <Category(CategoryAttributeValues.Properties.Behavior), Description("Data associated with this link")> _
             <DefaultValue(GetType(Object), Nothing)> _
             Public Overridable Property LinkData() As Object
                 Get
@@ -352,7 +352,7 @@ Namespace Windows.Forms
 #Region "Other props"
             ''' <summary>Stores value for the <see cref="Link.Description"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category("Appearance"), Description("Stores value for the Link.Description of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Properties.Appearance), Description("Stores value for the Link.Description of Link that represents this LinkItem")> _
             <DefaultValue("")> _
             Public Overridable Property Description() As String
                 <DebuggerStepThrough()> Get
@@ -368,7 +368,7 @@ Namespace Windows.Forms
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Description As String = ""
             ''' <summary>Stores value for the <see cref="Link.Name"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category("Misc"), Description("Stores value for the Link.Name of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Properties.Misc), Description("Stores value for the Link.Name of Link that represents this LinkItem")> _
             <DefaultValue(""), DisplayName(NamePropertyName)> _
             Public Overridable Property Name() As String
                 <DebuggerStepThrough()> Get
@@ -384,7 +384,7 @@ Namespace Windows.Forms
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Name As String = ""
             ''' <summary>Stores value for the <see cref="Link.Tag"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category("Misc"), Description("Stores value for the Link.Tag of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Properties.Data), Description("Stores value for the Link.Tag of Link that represents this LinkItem")> _
             <DefaultValue(GetType(Object), Nothing)> _
             Public Overridable Property Tag() As Object
                 <DebuggerStepThrough()> Get
@@ -400,7 +400,7 @@ Namespace Windows.Forms
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As Object = Nothing
             ''' <summary>Stores value for the <see cref="Link.Visited"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category("Appearance"), Description("Stores value for the Link.Visited of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Properties.Appearance), Description("Stores value for the Link.Visited of Link that represents this LinkItem")> _
             <DefaultValue(False)> _
             Public Overridable Property Visited() As Boolean
                 <DebuggerStepThrough()> Get
@@ -416,7 +416,7 @@ Namespace Windows.Forms
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Visited As Boolean = False
             ''' <summary>Stores value for the <see cref="Link.Enabled"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category("Appearance"), Description("Stores value for the Link.Enabled of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Properties.Appearance), Description("Stores value for the Link.Enabled of Link that represents this LinkItem")> _
             <DefaultValue(True)> _
             Public Overridable Property Enabled() As Boolean
                 <DebuggerStepThrough()> Get
@@ -496,7 +496,7 @@ Namespace Windows.Forms
             ''' <value>Actuall URI or target of the link</value>
             ''' <returns>New URI of target of the link</returns>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after value is changed (unless calling base class setter <see cref="LinkURI"/>)</remarks>
-            <Category("Behavior"), Description("URI of target of the link")> _
+            <Category(CategoryAttributeValues.Properties.Behavior), Description("URI of target of the link")> _
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             <DefaultValue("")> _
             Public Overridable Property LinkURI() As Uri
@@ -519,7 +519,7 @@ Namespace Windows.Forms
             ''' <para>Note for inheritors: Call <see cref="OnChanged"/> (unless callin base class setter <see cref="LinkPath"/> or <see cref="LinkURI"/></para>
             ''' <para>Change of this value causes raising <see cref="Changed"/> event with <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> set to <see cref="LinkURIPropertyName"/></para>
             ''' </remarks>
-            <Category("Behavior"), Description("Path (string representation of URI) of target of the link")> _
+            <Category(CategoryAttributeValues.Properties.Behavior), Description("Path (string representation of URI) of target of the link")> _
             <DefaultValue("")> _
             Public Property LinkPath() As String
                 Get

@@ -1,7 +1,6 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
 Namespace Windows.Forms.Utilities
     ''' <summary>Common values used for <see cref="CategoryAttribute"/></summary>
-    ''' <remarks>Directly contains values used for both - events and properties</remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(CategoryAttributeValues), LastChange:="1/6/2007")> _
     Public Class CategoryAttributeValues
         ''' <summary>In order not to be able to construct it</summary>
@@ -46,6 +45,36 @@ Namespace Windows.Forms.Utilities
             Public Const Mouse$ = "Mouse"
             ''' <summary>Property changed category</summary>
             Public Const PropertyChanged$ = "Property Changed"
+        End Class
+        ''' <summary>Combines constants from <see cref="Properties"/> and <see cref="Events"/></summary>
+        Public NotInheritable Class All : Inherits CategoryAttributeValues
+            ''' <summary>In order not to be able to construct it</summary>
+            Private Sub New()
+            End Sub
+            ''' <summary>Accesibility category</summary>
+            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
+            Public Const Accessibility$ = Properties.Accessibility
+            ''' <summary>Appearance category</summary>
+            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
+            Public Const Appearance$ = Properties.Appearance
+            ''' <summary>Design category</summary>
+            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
+            Public Const Design$ = Properties.Design
+            ''' <summary>Action category</summary>
+            ''' <remarks>Inherited from <see cref="Events"/></remarks>
+            Public Const Action$ = Events.Action
+            ''' <summary>Drag Drop category</summary>
+            ''' <remarks>Inherited from <see cref="Events"/></remarks>
+            Public Const DragDrop$ = Events.DragDrop
+            ''' <summary>Key (keyboard) category</summary>
+            ''' <remarks>Inherited from <see cref="Events"/></remarks>
+            Public Const Key$ = Events.Key
+            ''' <summary>Mouse category</summary>
+            ''' <remarks>Inherited from <see cref="Events"/></remarks>
+            Public Const Mouse$ = Events.Mouse
+            ''' <summary>Property changed category</summary>
+            ''' <remarks>Inherited from <see cref="Events"/></remarks>
+            Public Const PropertyChanged$ = Events.PropertyChanged
         End Class
     End Class
 End Namespace
