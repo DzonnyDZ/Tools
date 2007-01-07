@@ -1,5 +1,5 @@
 Imports System.ComponentModel.Design.Serialization
-#If Config <= Beta Then 'Stage: Beta
+#If Config <= RC Then 'Stage: RC
 Namespace Collections.Generic
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
