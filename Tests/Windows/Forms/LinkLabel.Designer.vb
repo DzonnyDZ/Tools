@@ -27,6 +27,7 @@ Namespace Windows.Forms
             Dim TextItem2 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
             Dim LinkItem1 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
             Dim TextItem3 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
+            Dim TextItem4 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
             Me.llbLabel = New Tools.Windows.Forms.LinkLabel
             Me.pgrLabel = New System.Windows.Forms.PropertyGrid
             Me.SuspendLayout()
@@ -39,10 +40,12 @@ Namespace Windows.Forms
             LinkItem1.LinkData = "notepad.exe"
             LinkItem1.Text = "notepad"
             TextItem3.Text = "."
+            TextItem4.Text = "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "That's all."
             Me.llbLabel.Items.Add(TextItem1)
             Me.llbLabel.Items.Add(TextItem2)
             Me.llbLabel.Items.Add(LinkItem1)
             Me.llbLabel.Items.Add(TextItem3)
+            Me.llbLabel.Items.Add(TextItem4)
             Me.llbLabel.Location = New System.Drawing.Point(0, 0)
             Me.llbLabel.Name = "llbLabel"
             Me.llbLabel.Size = New System.Drawing.Size(200, 564)
