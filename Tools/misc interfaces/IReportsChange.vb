@@ -1,4 +1,4 @@
-#If Config <= Beta Then 'Stage: Alpha
+#If Config <= RC Then 'Stage: RC
 ''' <summary>Represents data type that reports change of values of its members</summary>
 <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="1/3/2007")> _
 Public Interface IReportsChange
@@ -39,7 +39,7 @@ Public Interface IReportsChange
         ''' <param name="OldValue">Value of item before change</param>
         ''' <param name="NewValue">Value of item after change</param>
         ''' <param name="ValueName">Name of changed value</param>
-       Public Sub New(ByVal OldValue As T, ByVal NewValue As T, ByVal ValueName As String)
+        Public Sub New(ByVal OldValue As T, ByVal NewValue As T, ByVal ValueName As String) ', ByVal [Property] As [Delegate])
             MyBase.New(ValueName)
             _OldValue = OldValue
             _NewValue = NewValue
@@ -54,6 +54,12 @@ Public Interface IReportsChange
         Public Overridable ReadOnly Property NewValue() As T
             <DebuggerStepThrough()> Get
                 Return _NewValue
+            End Get
+        End Property
+        Private _Prop As [Delegate]
+        Public Overridable ReadOnly Property Prop() As [Delegate]
+            Get
+                Return _Prop
             End Get
         End Property
     End Class

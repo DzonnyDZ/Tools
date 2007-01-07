@@ -95,6 +95,7 @@
     <Import Include="Tools.Internal" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\Wrapper.vb" />
     <Compile Include="Collections\Generic\HashTable.vb" />
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
@@ -128,6 +129,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
+    <Compile Include="ComponentModel\ObjectStringConverter.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">

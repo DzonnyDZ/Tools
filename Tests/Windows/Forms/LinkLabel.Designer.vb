@@ -23,19 +23,9 @@ Namespace Windows.Forms
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.llbLabel = New Tools.Windows.Forms.LinkLabel
             Me.pgrLabel = New System.Windows.Forms.PropertyGrid
+            Me.llbLabel = New Tools.Windows.Forms.LinkLabel
             Me.SuspendLayout()
-            '
-            'llbLabel
-            '
-            Me.llbLabel.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                        Or System.Windows.Forms.AnchorStyles.Left), System.Windows.Forms.AnchorStyles)
-            Me.llbLabel.AutoSize = True
-            Me.llbLabel.Location = New System.Drawing.Point(12, 109)
-            Me.llbLabel.Name = "llbLabel"
-            Me.llbLabel.Size = New System.Drawing.Size(0, 13)
-            Me.llbLabel.TabIndex = 2
             '
             'pgrLabel
             '
@@ -45,6 +35,17 @@ Namespace Windows.Forms
             Me.pgrLabel.SelectedObject = Me.llbLabel
             Me.pgrLabel.Size = New System.Drawing.Size(356, 300)
             Me.pgrLabel.TabIndex = 1
+            '
+            'llbLabel
+            '
+            Me.llbLabel.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.llbLabel.Items.AllowAddCancelableEventsHandlers = False
+            Me.llbLabel.Location = New System.Drawing.Point(0, 0)
+            Me.llbLabel.Name = "llbLabel"
+            Me.llbLabel.Size = New System.Drawing.Size(166, 300)
+            Me.llbLabel.TabIndex = 2
+            Me.llbLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            Me.llbLabel.UseCompatibleTextRendering = True
             '
             'frmLinkLabel
             '
@@ -57,7 +58,6 @@ Namespace Windows.Forms
             Me.ShowInTaskbar = False
             Me.Text = "Testing Tools.Windows.Forms.LinkLabel"
             Me.ResumeLayout(False)
-            Me.PerformLayout()
 
         End Sub
         Friend WithEvents pgrLabel As System.Windows.Forms.PropertyGrid

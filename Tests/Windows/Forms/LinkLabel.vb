@@ -15,5 +15,14 @@ Namespace Windows.Forms
             ' Add any initialization after the InitializeComponent() call.
             Me.Icon = Tools.Resources.ToolsIcon
         End Sub
+
+        Private Sub llbLabel_LinkClicked(ByVal sender As Tools.Windows.Forms.LinkLabel, ByVal e As Tools.Windows.Forms.LinkLabel.LinkClickedEventArgs) Handles llbLabel.LinkClicked
+            If Not TypeOf e.Item Is Tools.Windows.Forms.LinkLabel.AutoLink Then
+                Try
+                    Process.Start(CStr(e.Item.LinkData))
+                    e.Item.Visited = True
+                Catch : End Try
+            End If
+        End Sub
     End Class
 End Namespace

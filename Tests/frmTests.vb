@@ -1,7 +1,6 @@
 Imports System.Reflection
 Friend Class frmTests
     Public Sub New()
-
         ' This call is required by the Windows Form Designer.
         InitializeComponent()
 
