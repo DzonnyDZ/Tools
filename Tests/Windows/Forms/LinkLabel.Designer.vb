@@ -24,6 +24,7 @@ Namespace Windows.Forms
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Dim TextItem1 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
+            Dim AutoLink1 As Tools.Windows.Forms.LinkLabel.AutoLink = New Tools.Windows.Forms.LinkLabel.AutoLink
             Dim TextItem2 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
             Dim LinkItem1 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
             Dim TextItem3 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
@@ -36,12 +37,15 @@ Namespace Windows.Forms
             '
             Me.llbLabel.Dock = System.Windows.Forms.DockStyle.Fill
             TextItem1.Text = "This is smart LinkLabel from ÐTools." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "It contains link to "
+            AutoLink1.LinkURI = New System.Uri("http://codeplex.com", System.UriKind.Absolute)
+            AutoLink1.Text = "CodePlex"
             TextItem2.Text = " and link to run "
             LinkItem1.LinkData = "notepad.exe"
             LinkItem1.Text = "notepad"
             TextItem3.Text = "."
             TextItem4.Text = "" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "That's all."
             Me.llbLabel.Items.Add(TextItem1)
+            Me.llbLabel.Items.Add(AutoLink1)
             Me.llbLabel.Items.Add(TextItem2)
             Me.llbLabel.Items.Add(LinkItem1)
             Me.llbLabel.Items.Add(TextItem3)
