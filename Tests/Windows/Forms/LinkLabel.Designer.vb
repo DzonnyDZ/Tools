@@ -23,26 +23,31 @@ Namespace Windows.Forms
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Dim TextItem1 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
+            Dim TextItem2 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
             Dim LinkItem1 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
-            Dim LinkItem2 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
+            Dim TextItem3 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
             Me.llbLabel = New Tools.Windows.Forms.LinkLabel
             Me.pgrLabel = New System.Windows.Forms.PropertyGrid
             Me.SuspendLayout()
             '
             'llbLabel
             '
-            LinkItem1.Name = "I2"
-            LinkItem1.Text = "Item2!!!"
-            LinkItem2.Name = "I1"
-            LinkItem2.Text = "Item 1!!!"
-            Me.llbLabel.Delme.Add(LinkItem1)
-            Me.llbLabel.Delme.Add(LinkItem2)
             Me.llbLabel.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.llbLabel.Items.AllowAddCancelableEventsHandlers = False
+            TextItem1.Text = "This is smart LinkLabel from ÐTools." & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "It contains link to "
+            TextItem2.Text = " and link to run "
+            LinkItem1.LinkData = "notepad.exe"
+            LinkItem1.Text = "notepad"
+            TextItem3.Text = "."
+            Me.llbLabel.Items.Add(TextItem1)
+            Me.llbLabel.Items.Add(TextItem2)
+            Me.llbLabel.Items.Add(LinkItem1)
+            Me.llbLabel.Items.Add(TextItem3)
             Me.llbLabel.Location = New System.Drawing.Point(0, 0)
             Me.llbLabel.Name = "llbLabel"
             Me.llbLabel.Size = New System.Drawing.Size(200, 564)
             Me.llbLabel.TabIndex = 2
+            Me.llbLabel.TabStop = True
             Me.llbLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             Me.llbLabel.UseCompatibleTextRendering = True
             '

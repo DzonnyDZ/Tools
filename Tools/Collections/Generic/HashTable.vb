@@ -141,9 +141,9 @@ Namespace Collections.Generic
                 MyBase.Add(itm.Key, itm.Value)
             Next
         End Sub
-        ''' <summary>Initializes a new instance of the System.Collections.Hashtable class by copying the elements from the specified dictionary to a new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified System.Collections.IEqualityComparer object.</summary>
-        ''' <param name="d">The System.Collections.IDictionary object to copy to a new System.Collections.Hashtable object.</param>
-        ''' <param name="equalityComparer">The System.Collections.IEqualityComparer object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <summary>Initializes a new instance of the <see cref="System.Collections.Hashtable"/> class by copying the elements from the specified dictionary to a new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified <see cref="System.Collections.IEqualityComparer"/> object.</summary>
+        ''' <param name="d">The <see cref="System.Collections.IDictionary"/> object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
+        ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
         ''' <exception cref="System.ArgumentNullException">d is null.</exception>
         ''' <remarks>Use type-safe variant of this CTor instead</remarks>
         <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
@@ -153,9 +153,9 @@ Namespace Collections.Generic
                 MyClass.Add(itm.Key, itm.Value)
             Next
         End Sub
-        ''' <summary>Initializes a new instance of the System.Collections.Hashtable class by copying the elements from the specified dictionary to a new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified System.Collections.IEqualityComparer object.</summary>
-        ''' <param name="d">The System.Collections.IDictionary object to copy to a new System.Collections.Hashtable object.</param>
-        ''' <param name="equalityComparer">The System.Collections.IEqualityComparer object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <summary>Initializes a new instance of the <see cref="System.Collections.Hashtable"/> class by copying the elements from the specified dictionary to a new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified System.Collections.IEqualityComparer object.</summary>
+        ''' <param name="d">The <see cref="System.Collections.IDictionary"/> object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
+        ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the <see cref="System.Collections.Hashtable"/>.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
         ''' <exception cref="System.ArgumentNullException">d is null.</exception>
         Public Sub New(ByVal d As System.Collections.IDictionary, ByVal equalityComparer As IEqualityComparer(Of TKey))
             MyBase.New(d.Count, New EqualityComparerAdapter(equalityComparer))
@@ -163,14 +163,14 @@ Namespace Collections.Generic
                 MyBase.Add(itm.Key, itm.Value)
             Next
         End Sub
-        ''' <summary>Initializes a new, empty instance of the System.Collections.Hashtable class using the default initial capacity and load factor, and the specified System.Collections.IEqualityComparer object.</summary>
-        ''' <param name="equalityComparer">The System.Collections.IEqualityComparer object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable object.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <summary>Initializes a new, empty instance of the <see cref="System.Collections.Hashtable"/> class using the default initial capacity and load factor, and the specified System.Collections.IEqualityComparer object.</summary>
+        ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable object.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
         Public Sub New(ByVal equalityComparer As IEqualityComparer(Of TKey))
             MyBase.New(New EqualityComparerAdapter(equalityComparer))
         End Sub
-        ''' <summary>Initializes a new, empty instance of the System.Collections.Hashtable class that is serializable using the specified System.Runtime.Serialization.SerializationInfo and System.Runtime.Serialization.StreamingContext objects.</summary>
-        ''' <param name="context">A System.Runtime.Serialization.StreamingContext object containing the source and destination of the serialized stream associated with the System.Collections.Hashtable.</param>
-        ''' <param name="info">A System.Runtime.Serialization.SerializationInfo object containing the information required to serialize the System.Collections.Hashtable object.</param>
+        ''' <summary>Initializes a new, empty instance of the <see cref="System.Collections.Hashtable"/> class that is serializable using the specified System.Runtime.Serialization.SerializationInfo and System.Runtime.Serialization.StreamingContext objects.</summary>
+        ''' <param name="context">A <see cref="System.Runtime.Serialization.StreamingContext"/> object containing the source and destination of the serialized stream associated with the System.Collections.Hashtable.</param>
+        ''' <param name="info">A <see cref="System.Runtime.Serialization.SerializationInfo"/> object containing the information required to serialize the System.Collections.Hashtable object.</param>
         ''' <exception cref="System.ArgumentNullException">info is null.</exception>
         Protected Sub New(ByVal info As System.Runtime.Serialization.SerializationInfo, ByVal context As System.Runtime.Serialization.StreamingContext)
             MyBase.New(info, context)

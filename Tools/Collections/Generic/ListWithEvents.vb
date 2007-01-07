@@ -1,10 +1,19 @@
+Imports System.ComponentModel.Design.Serialization
 #If Config <= Beta Then 'Stage: Beta
 Namespace Collections.Generic
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
-    ''' <remarks>If item of type tha implements the <see cref="IReportsChange"/> interface is passed to this list, than it's events <see cref="IReportsChange.Changed"/> are reported through <see cref="ListWithEvents.ItemValueChanged"/> event.</remarks>
+    ''' <remarks><para>
+    ''' If item of type tha implements the <see cref="IReportsChange"/> interface is passed to this list, than it's events <see cref="IReportsChange.Changed"/> are reported through <see cref="ListWithEvents.ItemValueChanged"/> event.
+    ''' </para><para>
+    ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
+    ''' </para>
+    ''' </remarks>
     <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChange:="1/7/2007")> _
-    Public Class ListWithEvents(Of T) : Implements IList(Of T)
+    <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
+    Public Class ListWithEvents(Of T)
+        Implements IList(Of T)
+        Implements IList
         ''' <summary>CTor</summary>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         Public Sub New(Optional ByVal AddingReadOnly As Boolean = False)
@@ -33,8 +42,9 @@ Namespace Collections.Generic
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _AddingReadOnly As Boolean = False
         ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
+        <Browsable(False)> _
         Public ReadOnly Property AddingReadOnly() As Boolean
-            Get
+            <DebuggerStepThrough()> Get
                 Return _AddingReadOnly
             End Get
         End Property
@@ -52,8 +62,9 @@ Namespace Collections.Generic
         ''' <item><see cref="ItemChanging"/></item>
         ''' </list>
         ''' </remarks>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property AllowAddCancelableEventsHandlers() As Boolean
-            Get
+            <DebuggerStepThrough()> Get
                 Return _AllowAddCancelableEventsHandlers
             End Get
             Set(ByVal value As Boolean)
@@ -79,8 +90,9 @@ Namespace Collections.Generic
         ''' <item><see cref="Clear"/></item>
         ''' <item><see cref="Item"/> (only setter)</item>
         ''' </list></remarks>
+        <Browsable(False)> _
         Public ReadOnly Property Locked() As Boolean
-            Get
+            <DebuggerStepThrough()> Get
                 Return _Locked
             End Get
         End Property
@@ -151,90 +163,6 @@ Namespace Collections.Generic
                 Add(itm)
             Next itm
         End Sub
-        '        ''' <summary>Handles events for concre item (represented by index), attaches index to them and passes them to <see cref="ListWithEvents(Of T)"/></summary>
-        '        Protected Class IndexEventHandler : Implements IDisposable
-        '            ''' <summary>Index of item in <see cref="ListWithEvents(Of T)"/></summary>
-        '            Private index As Integer
-        '            ''' <summary>Item that produces events to be handled</summary>
-        '            Private item As IReportsChange
-        '            ''' <summary>CTor</summary>
-        '            ''' <param name="index">Index of item in <see cref="ListWithEvents(Of T)"/></param>
-        '            ''' <param name="item">Item that produces events to be hendled</param>
-        '            Public Sub New(ByVal index As Integer, ByVal item As IReportsChange)
-        '                Me.index = index
-        '                Me.item = item
-        '                AddHandler item.Changed, AddressOf item_ItemChanged
-        '            End Sub
-        '            ''' <summary>Handles event from <see cref="item"/></summary>
-        '            Private Sub item_ItemChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
-        '                RaiseEvent ItemChanged(sender, New IndexEventArgs(e, index))
-        '            End Sub
-        '            ''' <summary>Delegate of handler of <see cref="ItemChanged"/> event</summary>
-        '            ''' <param name="sender">Object that originally produced the event</param>
-        '            ''' <param name="e">Event parameters (contains index and original parameters)</param>
-        '            Public Delegate Sub ItemChangedEventHandler(ByVal sender As IReportsChange, ByVal e As IndexEventArgs)
-        '            ''' <summary>List of handlers of the <see cref="ItemChanged"/> event</summary>
-        '            Private ItemChangedEventHandlerList As New List(Of ItemChangedEventHandler)
-        '            ''' <summary>Raised when <see cref="item"/> raises the <see cref="IReportsChange.Changed"/> event</summary>
-        '            Public Custom Event ItemChanged As ItemChangedEventHandler
-        '                AddHandler(ByVal value As ItemChangedEventHandler)
-        '                    ItemChangedEventHandlerList.Add(value)
-        '                End AddHandler
-        '                RemoveHandler(ByVal value As ItemChangedEventHandler)
-        '                    ItemChangedEventHandlerList.Remove(value)
-        '                End RemoveHandler
-        '                RaiseEvent(ByVal sender As IReportsChange, ByVal e As ListWithEvents(Of T).IndexEventHandler.IndexEventArgs)
-        '                    For Each Handler As ItemChangedEventHandler In ItemChangedEventHandlerList
-        '                        Handler.Invoke(sender, e)
-        '                    Next Handler
-        '                End RaiseEvent
-        '            End Event
-        '            ''' <summary>Arguments of the <see cref="ItemChanged"/> event</summary>
-        '            Public Class IndexEventArgs : Inherits EventArgs
-        '                ''' <summary>Arguments of original event</summary>
-        '                Public ReadOnly Internal As EventArgs
-        '                ''' <summary>Index of item that originally caused the event</summary>
-        '                Public ReadOnly Index As Integer
-        '                ''' <summary>CTor</summary>
-        '                ''' <param name="InternalEventArgs">Arguments of original event</param>
-        '                ''' <param name="Index">Index of item that originally caused the event</param>
-        '                Public Sub New(ByVal InternalEventArgs As EventArgs, ByVal Index As Integer)
-        '                    Me.Internal = InternalEventArgs
-        '                    Me.Index = Index
-        '                End Sub
-        '            End Class
-
-        '#Region " IDisposable Support "
-        '            ''' <summary>To detect redundant calls</summary>
-        '            Private disposedValue As Boolean = False
-        '            ''' <summary>IDisposable</summary>
-        '            Protected Overridable Sub Dispose(ByVal disposing As Boolean)
-        '                If Not Me.disposedValue Then
-        '                    If disposing Then
-        '                        FinalizeDispoze()
-        '                    End If
-        '                End If
-        '                Me.disposedValue = True
-        '            End Sub
-        '            ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        '            ''' <remarks>This code added by Visual Basic to correctly implement the disposable pattern.</remarks>
-        '            Public Sub Dispose() Implements IDisposable.Dispose
-        '                ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-        '                Dispose(True)
-        '                GC.SuppressFinalize(Me)
-        '            End Sub
-        '#End Region
-        '            ''' <summary>Allows an System.Object to attempt to free resources and perform other cleanup operations before the System.Object is reclaimed by garbage collection</summary>
-        '            Protected Overrides Sub Finalize()
-        '                MyBase.Finalize()
-        '                FinalizeDispoze()
-        '            End Sub
-        '            ''' <summary>Removes all handlers</summary>
-        '            Private Sub FinalizeDispoze()
-        '                RemoveHandler item.Changed, AddressOf item_ItemChanged
-        '                ItemChangedEventHandlerList.Clear()
-        '            End Sub
-        '        End Class
 
         ''' <summary>Inserts an item to the <see cref="ListWithEvents(Of T)"/> at the specified index.</summary>
         ''' <param name="item">The object to insert into the <see cref="ListWithEvents(Of T)"/>.</param>
@@ -305,7 +233,7 @@ Namespace Collections.Generic
         ''' <summary>Removes all items from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnClearing"/> before clearing of the list and <see cref="OnCleared"/> after clearing of the list,, do not forgot to check <see cref="CancelEventArgs.Cancel"/></remarks>
-        Public Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear
+        Public Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear, System.Collections.IList.Clear
             If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelEventArgs
             OnClearing(e)
@@ -346,7 +274,7 @@ Namespace Collections.Generic
         End Sub
         ''' <summary>Gets the number of elements contained in the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <returns>The number of elements contained in the <see cref="ListWithEvents(Of T)"/>.</returns>
-        Public Overridable ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of T).Count
+        Public Overridable ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of T).Count, System.Collections.ICollection.Count
             Get
                 Return List.Count
             End Get
@@ -354,7 +282,7 @@ Namespace Collections.Generic
         ''' <summary>Gets a value indicating whether the <see cref="ListWithEvents(Of T)"/> is read-only (always false).</summary>
         ''' <returns>Always false because <see cref="ListWithEvents(Of T)"/> is not read-only</returns>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.Generic.ICollection(Of T).IsReadOnly
+        Public ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.Generic.ICollection(Of T).IsReadOnly, System.Collections.IList.IsReadOnly
             Get
                 Return False
             End Get
@@ -449,7 +377,7 @@ Namespace Collections.Generic
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
-        Public Overridable Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt
+        Public Overridable Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt, System.Collections.IList.RemoveAt
             If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelableItemIndexEventArgs(Me(index), index, True)
             If index >= 0 AndAlso index < Count Then
@@ -573,14 +501,16 @@ Namespace Collections.Generic
         End Property
 #End Region
         ''' <summary>Gives access to underlying <see cref="List(Of T)"/></summary>
+        <Browsable(False)> _
         Protected ReadOnly Property InternalList() As List(Of T)
-            Get
+            <DebuggerStepThrough()> Get
                 Return List
             End Get
         End Property
         ''' <summary>Gives read-only access to underlying <see cref="List(Of T)"/></summary>
+        <Browsable(False)> _
         Public ReadOnly Property AsReadOnly() As IReadOnlyList(Of T)
-            Get
+            <DebuggerStepThrough()> Get
                 Return New ReadOnlyListAdapter(Of T)(List)
             End Get
         End Property
@@ -723,7 +653,128 @@ Namespace Collections.Generic
             End Sub
         End Class
 #End Region
+#Region "IList implementation - completely type unsafe, provided for CollectionEditor compatibility"
+        ''' <summary>Copies the elements of the <see cref="System.Collections.ICollection"/> to an <see cref="System.Array"/>, starting at a particular <see cref="System.Array"/> index.</summary>
+        ''' <param name="array">The one-dimensional <see cref="System.Array"/> that is the destination of the elements copied from <see cref="System.Collections.ICollection"/>. The <see cref="System.Array"/> must have zero-based indexing.</param>
+        ''' <param name="index">The zero-based index in array at which copying begins.</param>
+        ''' <exception cref="System.ArgumentNullException">array is null.</exception>
+        ''' <exception cref="System.ArgumentOutOfRangeException">index is less than zero.</exception>
+        ''' <exception cref="System.ArgumentException">array is multidimensional.-or- index is equal to or greater than the length of array.-or- The number of elements in the source <see cref="System.Collections.ICollection"/> is greater than the available space from index to the end of the destination array.</exception>
+        ''' <exception cref="System.InvalidCastException">The type of the source <see cref="System.Collections.ICollection"/> cannot be cast automatically to the type of the destination array.</exception>
+        ''' <remarks>Do not use, use type-safe <see cref="CopyTo"/> instead. Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe CopyTo instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Sub CopyTo1(ByVal array As System.Array, ByVal index As Integer) Implements System.Collections.ICollection.CopyTo
+            CType(List, IList).CopyTo(array, index)
+        End Sub
 
+        ''' <summary>Gets a value indicating whether access to the <see cref="System.Collections.ICollection"/> is synchronized (thread safe).</summary>
+        ''' <returns>true if access to the <see cref="System.Collections.ICollection"/> is synchronized (thread safe); otherwise, false.</returns>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Although this is part of IList this is part of neither IList(Of T)  nor List(Of T)")> _
+        <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
+        Public ReadOnly Property IsSynchronized() As Boolean Implements System.Collections.ICollection.IsSynchronized
+            Get
+                Return CType(List, IList).IsSynchronized
+            End Get
+        End Property
+        ''' <summary>Gets an object that can be used to synchronize access to the <see cref="System.Collections.ICollection"/>.</summary>
+        ''' <returns>An object that can be used to synchronize access to the <see cref="System.Collections.ICollection"/></returns>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Although this is part of IList this is part of neither IList(Of T)  nor List(Of T)")> _
+        <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
+        Public ReadOnly Property SyncRoot() As Object Implements System.Collections.ICollection.SyncRoot
+            Get
+                Return Me
+            End Get
+        End Property
+        ''' <summary>Adds an item to the <see cref="System.Collections.IList"/>.</summary>
+        ''' <param name="value">The <see cref="System.Object"/> to add to the <see cref="System.Collections.IList"/>.</param>
+        ''' <returns>The position into which the new element was inserted.</returns>
+        ''' <exception cref="InvalidCastException"><paramref name="value"/> cannot be converted into type <see cref="T"/></exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe overload instead")> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Function Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
+            Add(CType(value, T))
+            Return List.Count - 1
+        End Function
+
+        ''' <summary>Determines whether the <see cref="System.Collections.IList"/> contains a specific value.</summary>
+        ''' <param name="value">The System.Object to locate in the <see cref="System.Collections.IList"/>.</param>
+        ''' <returns>true if the <see cref="System.Object"/> is found in the <see cref="System.Collections.IList"/>; otherwise, false.</returns>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe overload instead")> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Function Contains(ByVal value As Object) As Boolean Implements System.Collections.IList.Contains
+            Try
+                Return Contains(CType(value, T))
+            Catch ex As Exception
+                Return False
+            End Try
+        End Function
+        ''' <param name="value">The <see cref="System.Object"/> to locate in the <see cref="System.Collections.IList"/>.</param>
+        ''' <returns>The index of value if found in the list; otherwise, -1.</returns>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe overload instead")> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Function IndexOf(ByVal value As Object) As Integer Implements System.Collections.IList.IndexOf
+            Try
+                Return IndexOf(CType(value, T))
+            Catch ex As Exception
+                Return -1
+            End Try
+        End Function
+        ''' <param name="value">The <see cref="System.Object"/> to insert into the <see cref="System.Collections.IList"/>.</param>
+        ''' <param name="index">The zero-based index at which value should be inserted.</param>
+        ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="System.Collections.IList"/>.</exception>
+        ''' <exception cref="System.NullReferenceException">value is null reference in the <see cref="System.Collections.IList"/>.</exception>
+        ''' <exception cref="InvalidCastException"><paramref name="value"/> cannot be converted to the type <see cref="T"/></exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe overload instead")> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Sub Insert(ByVal index As Integer, ByVal value As Object) Implements System.Collections.IList.Insert
+            Insert(index, CType(value, T))
+        End Sub
+        ''' <summary>Gets a value indicating whether the <see cref="System.Collections.IList"/> has a fixed size.</summary>
+        ''' <returns>Always False</returns>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
+        Public ReadOnly Property IsFixedSize() As Boolean Implements System.Collections.IList.IsFixedSize
+            Get
+                Return False
+            End Get
+        End Property
+
+        ''' <summary>Removes the first occurrence of a specific object from the <see cref="System.Collections.IList"/>.</summary>
+        ''' <param name="value">The <see cref="System.Object"/> to remove from the <see cref="System.Collections.IList"/></param>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe overload instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Sub Remove(ByVal value As Object) Implements System.Collections.IList.Remove
+            Try
+                Remove(CType(value, T))
+            Catch : End Try
+        End Sub
+        ''' <summary>Gets or sets the element at the specified index.</summary>
+        ''' <param name="index">The zero-based index of the element to get or set.</param>
+        ''' <returns>The element at the specified index.</returns>
+        ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="System.Collections.IList"/>.</exception>
+        ''' <exception cref="InvalidCastException">When setting value that cannot be converted to <see cref="T"/></exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True (in setter)</exception>
+        ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
+        <Obsolete("Use type-safe Item property instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+        <Browsable(False)> _
+        Public Overloads Property Item1(ByVal index As Integer) As Object Implements System.Collections.IList.Item
+            Get
+                Return Item(index)
+            End Get
+            Set(ByVal value As Object)
+                Item(index) = value
+            End Set
+        End Property
+#End Region
     End Class
 End Namespace
 #End If
