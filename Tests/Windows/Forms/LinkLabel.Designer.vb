@@ -23,35 +23,43 @@ Namespace Windows.Forms
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.pgrLabel = New System.Windows.Forms.PropertyGrid
+            Dim LinkItem1 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
+            Dim LinkItem2 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
             Me.llbLabel = New Tools.Windows.Forms.LinkLabel
+            Me.pgrLabel = New System.Windows.Forms.PropertyGrid
             Me.SuspendLayout()
-            '
-            'pgrLabel
-            '
-            Me.pgrLabel.Dock = System.Windows.Forms.DockStyle.Right
-            Me.pgrLabel.Location = New System.Drawing.Point(166, 0)
-            Me.pgrLabel.Name = "pgrLabel"
-            Me.pgrLabel.SelectedObject = Me.llbLabel
-            Me.pgrLabel.Size = New System.Drawing.Size(356, 300)
-            Me.pgrLabel.TabIndex = 1
             '
             'llbLabel
             '
+            LinkItem1.Name = "I2"
+            LinkItem1.Text = "Item2!!!"
+            LinkItem2.Name = "I1"
+            LinkItem2.Text = "Item 1!!!"
+            Me.llbLabel.Delme.Add(LinkItem1)
+            Me.llbLabel.Delme.Add(LinkItem2)
             Me.llbLabel.Dock = System.Windows.Forms.DockStyle.Fill
             Me.llbLabel.Items.AllowAddCancelableEventsHandlers = False
             Me.llbLabel.Location = New System.Drawing.Point(0, 0)
             Me.llbLabel.Name = "llbLabel"
-            Me.llbLabel.Size = New System.Drawing.Size(166, 300)
+            Me.llbLabel.Size = New System.Drawing.Size(200, 564)
             Me.llbLabel.TabIndex = 2
             Me.llbLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             Me.llbLabel.UseCompatibleTextRendering = True
+            '
+            'pgrLabel
+            '
+            Me.pgrLabel.Dock = System.Windows.Forms.DockStyle.Right
+            Me.pgrLabel.Location = New System.Drawing.Point(200, 0)
+            Me.pgrLabel.Name = "pgrLabel"
+            Me.pgrLabel.SelectedObject = Me.llbLabel
+            Me.pgrLabel.Size = New System.Drawing.Size(356, 564)
+            Me.pgrLabel.TabIndex = 1
             '
             'frmLinkLabel
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(522, 300)
+            Me.ClientSize = New System.Drawing.Size(556, 564)
             Me.Controls.Add(Me.llbLabel)
             Me.Controls.Add(Me.pgrLabel)
             Me.Name = "frmLinkLabel"
