@@ -677,6 +677,7 @@ Namespace Windows.Forms
             End Function
             ''' <summary>Provides a modal dialog box for editing the contents of the <see cref="ListWithEvents(Of LinkLabelItem)"/>  using a <see cref="System.Drawing.Design.UITypeEditor"/>.</summary>
             <Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
+            <Localizable(True)> _
             Protected Shadows Class CollectionForm
                 Inherits CollectionEditor.CollectionForm
 
@@ -696,7 +697,9 @@ Namespace Windows.Forms
                 Private WithEvents lblItemInfo As System.Windows.Forms.Label
                 ''' <summary>Required by the Windows Form Designer</summary>
                 Private components As System.ComponentModel.IContainer
-
+                ''' <summary>Resources for this form</summary>
+                <EditorBrowsable(EditorBrowsableState.Advanced)> _
+                Private resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(LinkLabel))
                 ''' <summary>Initializes components</summary>
                 ''' <remarks>
                 ''' NOTE: The following procedure is required by the Windows Form Designer
@@ -719,8 +722,8 @@ Namespace Windows.Forms
                     Me.cmdCancel = New System.Windows.Forms.Button
                     Me.cmdOK = New System.Windows.Forms.Button
                     Me.pgrProperty = New System.Windows.Forms.PropertyGrid
-                    Me.totTT = New System.Windows.Forms.ToolTip(Me.components)
                     Me.lblItemInfo = New System.Windows.Forms.Label
+                    Me.totTT = New System.Windows.Forms.ToolTip(Me.components)
                     Me.splMain.Panel1.SuspendLayout()
                     Me.splMain.Panel2.SuspendLayout()
                     Me.splMain.SuspendLayout()
@@ -731,28 +734,41 @@ Namespace Windows.Forms
                     '
                     'splMain
                     '
-                    Me.splMain.Dock = System.Windows.Forms.DockStyle.Fill
-                    Me.splMain.Location = New System.Drawing.Point(0, 0)
+                    Me.splMain.AccessibleDescription = Nothing
+                    Me.splMain.AccessibleName = Nothing
+                    resources.ApplyResources(Me.splMain, "splMain")
+                    Me.splMain.BackgroundImage = Nothing
+                    Me.splMain.Font = Nothing
                     Me.splMain.Name = "splMain"
                     '
                     'splMain.Panel1
                     '
+                    Me.splMain.Panel1.AccessibleDescription = Nothing
+                    Me.splMain.Panel1.AccessibleName = Nothing
+                    resources.ApplyResources(Me.splMain.Panel1, "splMain.Panel1")
+                    Me.splMain.Panel1.BackgroundImage = Nothing
                     Me.splMain.Panel1.Controls.Add(Me.tlpItems)
+                    Me.splMain.Panel1.Font = Nothing
+                    Me.totTT.SetToolTip(Me.splMain.Panel1, resources.GetString("splMain.Panel1.ToolTip"))
                     '
                     'splMain.Panel2
                     '
+                    Me.splMain.Panel2.AccessibleDescription = Nothing
+                    Me.splMain.Panel2.AccessibleName = Nothing
+                    resources.ApplyResources(Me.splMain.Panel2, "splMain.Panel2")
+                    Me.splMain.Panel2.BackgroundImage = Nothing
                     Me.splMain.Panel2.Controls.Add(Me.pgrProperty)
                     Me.splMain.Panel2.Controls.Add(Me.lblItemInfo)
-                    Me.splMain.Size = New System.Drawing.Size(548, 459)
-                    Me.splMain.SplitterDistance = 248
-                    Me.splMain.TabIndex = 0
+                    Me.splMain.Panel2.Font = Nothing
+                    Me.totTT.SetToolTip(Me.splMain.Panel2, resources.GetString("splMain.Panel2.ToolTip"))
+                    Me.totTT.SetToolTip(Me.splMain, resources.GetString("splMain.ToolTip"))
                     '
                     'tlpItems
                     '
-                    Me.tlpItems.ColumnCount = 3
-                    Me.tlpItems.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-                    Me.tlpItems.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-                    Me.tlpItems.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+                    Me.tlpItems.AccessibleDescription = Nothing
+                    Me.tlpItems.AccessibleName = Nothing
+                    resources.ApplyResources(Me.tlpItems, "tlpItems")
+                    Me.tlpItems.BackgroundImage = Nothing
                     Me.tlpItems.Controls.Add(Me.lstItems, 0, 0)
                     Me.tlpItems.Controls.Add(Me.cmdUp, 2, 0)
                     Me.tlpItems.Controls.Add(Me.cmdDown, 2, 1)
@@ -760,176 +776,166 @@ Namespace Windows.Forms
                     Me.tlpItems.Controls.Add(Me.tosRemove, 1, 3)
                     Me.tlpItems.Controls.Add(Me.cmdCancel, 2, 3)
                     Me.tlpItems.Controls.Add(Me.cmdOK, 2, 2)
-                    Me.tlpItems.Dock = System.Windows.Forms.DockStyle.Fill
-                    Me.tlpItems.Location = New System.Drawing.Point(0, 0)
+                    Me.tlpItems.Font = Nothing
                     Me.tlpItems.Name = "tlpItems"
-                    Me.tlpItems.RowCount = 4
-                    Me.tlpItems.RowStyles.Add(New System.Windows.Forms.RowStyle)
-                    Me.tlpItems.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-                    Me.tlpItems.RowStyles.Add(New System.Windows.Forms.RowStyle)
-                    Me.tlpItems.RowStyles.Add(New System.Windows.Forms.RowStyle)
-                    Me.tlpItems.Size = New System.Drawing.Size(248, 459)
-                    Me.tlpItems.TabIndex = 1
+                    Me.totTT.SetToolTip(Me.tlpItems, resources.GetString("tlpItems.ToolTip"))
                     '
                     'lstItems
                     '
+                    Me.lstItems.AccessibleDescription = Nothing
+                    Me.lstItems.AccessibleName = Nothing
+                    resources.ApplyResources(Me.lstItems, "lstItems")
+                    Me.lstItems.BackgroundImage = Nothing
                     Me.tlpItems.SetColumnSpan(Me.lstItems, 2)
-                    Me.lstItems.Dock = System.Windows.Forms.DockStyle.Fill
+                    Me.lstItems.Font = Nothing
                     Me.lstItems.FormattingEnabled = True
-                    Me.lstItems.Location = New System.Drawing.Point(3, 3)
                     Me.lstItems.Name = "lstItems"
                     Me.tlpItems.SetRowSpan(Me.lstItems, 3)
                     Me.lstItems.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-                    Me.lstItems.Size = New System.Drawing.Size(186, 420)
-                    Me.lstItems.TabIndex = 0
+                    Me.totTT.SetToolTip(Me.lstItems, resources.GetString("lstItems.ToolTip"))
                     '
                     'cmdUp
                     '
-                    Me.cmdUp.Anchor = System.Windows.Forms.AnchorStyles.Top
-                    Me.cmdUp.AutoSize = True
-                    Me.cmdUp.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-                    Me.cmdUp.Enabled = False
-                    Me.cmdUp.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-                    Me.cmdUp.Location = New System.Drawing.Point(206, 3)
+                    Me.cmdUp.AccessibleDescription = Nothing
+                    Me.cmdUp.AccessibleName = Nothing
+                    resources.ApplyResources(Me.cmdUp, "cmdUp")
+                    Me.cmdUp.BackgroundImage = Nothing
                     Me.cmdUp.Name = "cmdUp"
-                    Me.cmdUp.Size = New System.Drawing.Size(28, 24)
-                    Me.cmdUp.TabIndex = 1
-                    Me.cmdUp.Text = "▲"
-                    Me.totTT.SetToolTip(Me.cmdUp, "Move up")
+                    Me.totTT.SetToolTip(Me.cmdUp, resources.GetString("cmdUp.ToolTip"))
                     Me.cmdUp.UseVisualStyleBackColor = True
                     '
                     'cmdDown
                     '
-                    Me.cmdDown.Anchor = System.Windows.Forms.AnchorStyles.Top
-                    Me.cmdDown.AutoSize = True
-                    Me.cmdDown.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-                    Me.cmdDown.Enabled = False
-                    Me.cmdDown.Font = New System.Drawing.Font("Arial", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
-                    Me.cmdDown.Location = New System.Drawing.Point(206, 33)
+                    Me.cmdDown.AccessibleDescription = Nothing
+                    Me.cmdDown.AccessibleName = Nothing
+                    resources.ApplyResources(Me.cmdDown, "cmdDown")
+                    Me.cmdDown.BackgroundImage = Nothing
                     Me.cmdDown.Name = "cmdDown"
-                    Me.cmdDown.Size = New System.Drawing.Size(28, 24)
-                    Me.cmdDown.TabIndex = 2
-                    Me.cmdDown.Text = "▼"
-                    Me.totTT.SetToolTip(Me.cmdDown, "Move down")
+                    Me.totTT.SetToolTip(Me.cmdDown, resources.GetString("cmdDown.ToolTip"))
                     Me.cmdDown.UseVisualStyleBackColor = True
                     '
                     'tosAdd
                     '
-                    Me.tosAdd.Anchor = System.Windows.Forms.AnchorStyles.None
+                    Me.tosAdd.AccessibleDescription = Nothing
+                    Me.tosAdd.AccessibleName = Nothing
+                    resources.ApplyResources(Me.tosAdd, "tosAdd")
+                    Me.tosAdd.BackgroundImage = Nothing
                     Me.tosAdd.CanOverflow = False
-                    Me.tosAdd.Dock = System.Windows.Forms.DockStyle.None
+                    Me.tosAdd.Font = Nothing
                     Me.tosAdd.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
                     Me.tosAdd.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbAdd})
                     Me.tosAdd.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
-                    Me.tosAdd.Location = New System.Drawing.Point(26, 434)
                     Me.tosAdd.Name = "tosAdd"
                     Me.tosAdd.ShowItemToolTips = False
-                    Me.tosAdd.Size = New System.Drawing.Size(43, 20)
-                    Me.tosAdd.TabIndex = 3
                     Me.tosAdd.TabStop = True
+                    Me.totTT.SetToolTip(Me.tosAdd, resources.GetString("tosAdd.ToolTip"))
                     '
                     'tsbAdd
                     '
+                    Me.tsbAdd.AccessibleDescription = Nothing
+                    Me.tsbAdd.AccessibleName = Nothing
+                    resources.ApplyResources(Me.tsbAdd, "tsbAdd")
                     Me.tsbAdd.AutoToolTip = False
+                    Me.tsbAdd.BackgroundImage = Nothing
                     Me.tsbAdd.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-                    Me.tsbAdd.ImageTransparentColor = System.Drawing.Color.Magenta
                     Me.tsbAdd.Name = "tsbAdd"
                     Me.tsbAdd.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never
-                    Me.tsbAdd.Size = New System.Drawing.Size(42, 17)
-                    Me.tsbAdd.Text = "&Add"
                     Me.tsbAdd.TextDirection = System.Windows.Forms.ToolStripTextDirection.Horizontal
                     '
                     'tosRemove
                     '
-                    Me.tosRemove.Anchor = System.Windows.Forms.AnchorStyles.None
+                    Me.tosRemove.AccessibleDescription = Nothing
+                    Me.tosRemove.AccessibleName = Nothing
+                    resources.ApplyResources(Me.tosRemove, "tosRemove")
+                    Me.tosRemove.BackgroundImage = Nothing
                     Me.tosRemove.CanOverflow = False
-                    Me.tosRemove.Dock = System.Windows.Forms.DockStyle.None
+                    Me.tosRemove.Font = Nothing
                     Me.tosRemove.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
                     Me.tosRemove.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbRemove})
                     Me.tosRemove.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow
-                    Me.tosRemove.Location = New System.Drawing.Point(118, 434)
                     Me.tosRemove.Name = "tosRemove"
                     Me.tosRemove.ShowItemToolTips = False
-                    Me.tosRemove.Size = New System.Drawing.Size(51, 20)
-                    Me.tosRemove.TabIndex = 4
                     Me.tosRemove.TabStop = True
+                    Me.totTT.SetToolTip(Me.tosRemove, resources.GetString("tosRemove.ToolTip"))
                     '
                     'tsbRemove
                     '
+                    Me.tsbRemove.AccessibleDescription = Nothing
+                    Me.tsbRemove.AccessibleName = Nothing
                     Me.tsbRemove.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right
+                    resources.ApplyResources(Me.tsbRemove, "tsbRemove")
                     Me.tsbRemove.AutoToolTip = False
+                    Me.tsbRemove.BackgroundImage = Nothing
                     Me.tsbRemove.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
                     Me.tsbRemove.DoubleClickEnabled = True
-                    Me.tsbRemove.ImageTransparentColor = System.Drawing.Color.Magenta
                     Me.tsbRemove.Name = "tsbRemove"
                     Me.tsbRemove.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never
-                    Me.tsbRemove.Size = New System.Drawing.Size(50, 17)
-                    Me.tsbRemove.Text = "&Remove"
                     '
                     'cmdCancel
                     '
-                    Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.None
-                    Me.cmdCancel.AutoSize = True
-                    Me.cmdCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+                    Me.cmdCancel.AccessibleDescription = Nothing
+                    Me.cmdCancel.AccessibleName = Nothing
+                    resources.ApplyResources(Me.cmdCancel, "cmdCancel")
+                    Me.cmdCancel.BackgroundImage = Nothing
                     Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-                    Me.cmdCancel.Location = New System.Drawing.Point(195, 433)
+                    Me.cmdCancel.Font = Nothing
                     Me.cmdCancel.Name = "cmdCancel"
-                    Me.cmdCancel.Size = New System.Drawing.Size(50, 23)
-                    Me.cmdCancel.TabIndex = 6
-                    Me.cmdCancel.Text = "&Cancel"
-                    Me.totTT.SetToolTip(Me.cmdCancel, "Closes editor and dicsard changes" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "Note: Changes on individual items are not disc" & _
-                            "areded" & Global.Microsoft.VisualBasic.ChrW(13) & Global.Microsoft.VisualBasic.ChrW(10) & "only Add, Up, Down, Remove operations can be canceled.")
+                    Me.totTT.SetToolTip(Me.cmdCancel, resources.GetString("cmdCancel.ToolTip"))
                     Me.cmdCancel.UseVisualStyleBackColor = True
                     '
                     'cmdOK
                     '
-                    Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.None
-                    Me.cmdOK.AutoSize = True
-                    Me.cmdOK.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-                    Me.cmdOK.Location = New System.Drawing.Point(204, 404)
+                    Me.cmdOK.AccessibleDescription = Nothing
+                    Me.cmdOK.AccessibleName = Nothing
+                    resources.ApplyResources(Me.cmdOK, "cmdOK")
+                    Me.cmdOK.BackgroundImage = Nothing
+                    Me.cmdOK.Font = Nothing
                     Me.cmdOK.Name = "cmdOK"
-                    Me.cmdOK.Size = New System.Drawing.Size(32, 23)
-                    Me.cmdOK.TabIndex = 5
-                    Me.cmdOK.Text = "&OK"
-                    Me.totTT.SetToolTip(Me.cmdOK, "Closes editor and applies changes")
+                    Me.totTT.SetToolTip(Me.cmdOK, resources.GetString("cmdOK.ToolTip"))
                     Me.cmdOK.UseVisualStyleBackColor = True
                     '
                     'pgrProperty
                     '
-                    Me.pgrProperty.Dock = System.Windows.Forms.DockStyle.Fill
-                    Me.pgrProperty.Location = New System.Drawing.Point(0, 13)
+                    Me.pgrProperty.AccessibleDescription = Nothing
+                    Me.pgrProperty.AccessibleName = Nothing
+                    resources.ApplyResources(Me.pgrProperty, "pgrProperty")
+                    Me.pgrProperty.BackgroundImage = Nothing
+                    Me.pgrProperty.Font = Nothing
                     Me.pgrProperty.Name = "pgrProperty"
-                    Me.pgrProperty.Size = New System.Drawing.Size(296, 446)
-                    Me.pgrProperty.TabIndex = 0
+                    Me.totTT.SetToolTip(Me.pgrProperty, resources.GetString("pgrProperty.ToolTip"))
                     '
                     'lblItemInfo
                     '
-                    Me.lblItemInfo.Dock = System.Windows.Forms.DockStyle.Top
-                    Me.lblItemInfo.Location = New System.Drawing.Point(0, 0)
-                    Me.lblItemInfo.Name = "lblItemInfo"
-                    Me.lblItemInfo.Size = New System.Drawing.Size(296, 13)
-                    Me.lblItemInfo.TabIndex = 1
-                    Me.lblItemInfo.Text = "Select item"
-                    Me.lblItemInfo.AutoSize = True
+                    Me.lblItemInfo.AccessibleDescription = Nothing
+                    Me.lblItemInfo.AccessibleName = Nothing
+                    resources.ApplyResources(Me.lblItemInfo, "lblItemInfo")
                     Me.lblItemInfo.AutoEllipsis = True
+                    Me.lblItemInfo.Font = Nothing
+                    Me.lblItemInfo.Name = "lblItemInfo"
+                    Me.totTT.SetToolTip(Me.lblItemInfo, resources.GetString("lblItemInfo.ToolTip"))
                     '
-                    'form
+                    'Class1
                     '
                     Me.AcceptButton = Me.cmdOK
-                    Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+                    Me.AccessibleDescription = Nothing
+                    Me.AccessibleName = Nothing
+                    resources.ApplyResources(Me, "$this")
                     Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+                    Me.BackgroundImage = Nothing
                     Me.CancelButton = Me.cmdCancel
-                    Me.ClientSize = New System.Drawing.Size(548, 459)
                     Me.Controls.Add(Me.splMain)
+                    Me.Font = Nothing
+                    Me.Icon = Nothing
                     Me.MaximizeBox = False
                     Me.MinimizeBox = False
-                    Me.Name = "form"
+                    Me.Name = "Class1"
                     Me.ShowIcon = False
                     Me.ShowInTaskbar = False
                     Me.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide
-                    Me.Text = "Tools.Windows.Forms.LinkLabel.Items Editor"
+                    Me.totTT.SetToolTip(Me, resources.GetString("$this.ToolTip"))
                     Me.splMain.Panel1.ResumeLayout(False)
                     Me.splMain.Panel2.ResumeLayout(False)
+                    Me.splMain.Panel2.PerformLayout()
                     Me.splMain.ResumeLayout(False)
                     Me.tlpItems.ResumeLayout(False)
                     Me.tlpItems.PerformLayout()
@@ -1080,14 +1086,14 @@ Namespace Windows.Forms
                     If lstItems.SelectedItems.Count < 1 Then
                         pgrProperty.SelectedObject = Nothing
                         Enable(False)
-                        lblItemInfo.Text = "Select item"
+                        lblItemInfo.Text = resources.GetString("lblItemInfo.Text")
                     Else
                         pgrProperty.SelectedObjects = (New ArrayList(lstItems.SelectedItems)).ToArray
                         Enable(VisualBasic.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
                         If lstItems.SelectedItems.Count = 1 Then
                             lblItemInfo.Text = lstItems.SelectedItems(0).GetType.Name & ": " & lstItems.SelectedItems(0).ToString.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ").Replace(vbTab, " ")
                         Else
-                            lblItemInfo.Text = "(multiple selected items)"
+                            lblItemInfo.Text = resources.GetString("lblItemInfo.Text multiple")
                         End If
                     End If
                 End Sub
@@ -1163,7 +1169,7 @@ Namespace Windows.Forms
                 End Sub
 
                 Private Sub CollectionForm_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
-                    resizelabel()
+                    ResizeLabel()
                 End Sub
 
                 Private Sub splMain_SplitterMoved(ByVal sender As Object, ByVal e As System.Windows.Forms.SplitterEventArgs) Handles splMain.SplitterMoved
