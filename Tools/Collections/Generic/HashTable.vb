@@ -1,9 +1,9 @@
-#If Config <= Alpha Then 'Stage: Alpha
+ï»¿#If Config <= Alpha Then 'Stage: Alpha
 Namespace Collections.Generic
     ''' <summary>type-safe class defived from <see cref="System.Collections.Hashtable"/></summary>
     ''' <typeparam name="TKey">Type of keys</typeparam>
     ''' <typeparam name="TValue">type of values</typeparam>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of String, Long)), LastChange:="12/25/2006")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of String, Long)), LastChange:="12/25/2006")> _
     Public Class HashTable(Of TKey, TValue)
         Inherits HashTable
         Implements IDictionary(Of TKey, TValue)
@@ -517,7 +517,7 @@ Namespace Collections.Generic
     End Class
     ''' <summary>Provides HashTable designed for storing only keys and quickly testing if key is in collection or not</summary>
     ''' <remarks>Internally uses <see cref="Hashtable"/></remarks>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of Long)), LastChange:="12/25/2006")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of Long)), LastChange:="12/25/2006")> _
     Public Class HashTable(Of T)
         Implements ICollection(Of T)
         ''' <summary><see cref="Hashtable"/> internally used by this instance</summary>

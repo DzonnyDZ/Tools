@@ -1,5 +1,5 @@
-Namespace Resources
-    ''' <summary>Provides access to various resources that should be publicly available for users of ĞTools</summary>
+ï»¿Namespace Resources
+    ''' <summary>Provides access to various resources that should be publicly available for users of ÄTools</summary>
     ''' <remarks>
     ''' Only calls to <see cref="My.Resources"/> are allowed here;
     ''' only properties are allowed here;
@@ -8,8 +8,8 @@ Namespace Resources
     <DoNotApplyAuthorAndVersionAttributes()> _
     Public Module Resources
 #If Config <= Release Then
-        ''' <summary>Icon reprecenting ĞTools project</summary>
-        ''' <remarks>The 'Ğ' letter</remarks>
+        ''' <summary>Icon reprecenting ÄTools project</summary>
+        ''' <remarks>The 'Ä' letter</remarks>
         Public ReadOnly Property ToolsIcon() As System.Drawing.Icon
             Get
                 Return My.Resources.ToolsIcon

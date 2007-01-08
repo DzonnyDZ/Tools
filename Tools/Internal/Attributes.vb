@@ -1,4 +1,4 @@
-'Attributes used mainly internally by –Tools are defined here
+Ôªø'Attributes used mainly internally by ƒêTools are defined here
 #If Config <= Release Then
 Imports System.Reflection
 Namespace Internal
@@ -10,7 +10,7 @@ Namespace Internal
     ''' If you want to determine author of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyCompanyAttribute"/>
     ''' </remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=True, Inherited:=False)> _
-    <Author("–onny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChange:="12/20/2006")> _
+    <Author("ƒêonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChange:="12/20/2006")> _
     Public Class AuthorAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -66,7 +66,7 @@ Namespace Internal
     ''' If you want to determine version of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyVersionAttribute"/>
     ''' </remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("–onny", "dzony.dz@gmail.com"), Version(1, 0, GetType(VersionAttribute), LastChange:="12/21/2006")> _
+    <Author("ƒêonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(VersionAttribute), LastChange:="12/21/2006")> _
     Public Class VersionAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Major"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -312,12 +312,12 @@ Namespace Internal
 
     ''' <summary>By applying this attribute you informs other programmers that tehy shouldn't apply <see cref="AuthorAttribute"/> and <see cref="VersionAttribute"/> at this declaration level. They should apply them to nested code elements.</summary>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("–onny", "dzony.dz@gmail.com"), Version(1, 0, GetType(DoNotApplyAuthorAndVersionAttributesAttribute), LastChange:="12/20/2006")> _
+    <Author("ƒêonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(DoNotApplyAuthorAndVersionAttributesAttribute), LastChange:="12/20/2006")> _
     Public Class DoNotApplyAuthorAndVersionAttributesAttribute : Inherits Attribute
     End Class
 
     ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.Internal"/> namespace</summary>
-    <Author("–onny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AttributesSpecificDeclarations), LastChange:="12/20/2006")> _
+    <Author("ƒêonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AttributesSpecificDeclarations), LastChange:="12/20/2006")> _
     Friend Module AttributesSpecificDeclarations
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>
         ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it.</remarks>

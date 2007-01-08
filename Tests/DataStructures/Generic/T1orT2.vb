@@ -1,4 +1,4 @@
-Imports Tools.DataStructures.Generic
+﻿Imports Tools.DataStructures.Generic
 Namespace DataStructures.Generic
     Module T1orT2
         Sub Test()

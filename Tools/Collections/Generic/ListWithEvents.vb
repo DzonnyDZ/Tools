@@ -1,4 +1,4 @@
-Imports System.ComponentModel.Design.Serialization
+﻿Imports System.ComponentModel.Design.Serialization
 #If Config <= RC Then 'Stage: RC
 Namespace Collections.Generic
     ''' <summary>List that provides events when changed</summary>
@@ -9,7 +9,7 @@ Namespace Collections.Generic
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("�onny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChange:="1/7/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChange:="1/7/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     Public Class ListWithEvents(Of T)
         Implements IList(Of T)

@@ -1,6 +1,6 @@
-#If Config <= RC Then 'Stage: RC
+﻿#If Config <= RC Then 'Stage: RC
 ''' <summary>Represents data type that reports change of values of its members</summary>
-<Author("�onny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="1/3/2007")> _
+<Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="1/3/2007")> _
 Public Interface IReportsChange
     ''' <summary>Raised when value of member changes</summary>
     ''' <param name="sender">The source of the event</param>

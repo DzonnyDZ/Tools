@@ -1,6 +1,6 @@
-#If Config <= Release Then
+ï»¿#If Config <= Release Then
 ''' <summary>Type-safe <see cref="ICloneable"/> interface</summary>
-<Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(ICloneable(Of Char)), LastChange:="12/20/2006")> _
+<Author("Äonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(ICloneable(Of Char)), LastChange:="12/20/2006")> _
 Public Interface ICloneable(Of T) : Inherits ICloneable
     ''' <summary>Creates a new object that is a copy of the current instance.</summary>
     ''' <returns>A new object that is a copy of this instance</returns>
@@ -12,7 +12,7 @@ End Interface
 ''' Inherit from this class instead of implementing <see cref="ICloneable(Of T)"/> and you will have to only implement <see cref="Tools.ICloneable.Clone"/> because <see cref="ICloneable.Clone"/> is already implemented.
 ''' <seealso cref="Cloenable.Clone1"/>
 ''' </remarks>
-<Author("Ðonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Cloenable(Of Char)))> _
+<Author("Äonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Cloenable(Of Char)))> _
 Public MustInherit Class Cloenable(Of T) : Implements ICloneable(Of T)
     ''' <summary>Implements <see cref="System.ICloneable.Clone"/></summary>
     ''' <returns>Returns the result of <see cref="Clone"/> function</returns>

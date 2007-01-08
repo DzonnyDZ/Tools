@@ -1,4 +1,4 @@
-Imports Tools.Collections.Generic
+﻿Imports Tools.Collections.Generic
 Namespace Collections.Generic
     ''' <summary>Tests selected functionality of <see cref="ReadOnlyListAdapter(Of TFrom, TTo)"/></summary>
     Public Class frmReadOnlyListAdapter

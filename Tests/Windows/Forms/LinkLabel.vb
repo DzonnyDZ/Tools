@@ -1,4 +1,4 @@
-Namespace Windows.Forms
+﻿Namespace Windows.Forms
     ''' <summary>Tests <see cref="Tools.Windows.Forms.LinkLabel"/></summary>
     Public Class frmLinkLabel
         ''' <summary>Show test form</summary>

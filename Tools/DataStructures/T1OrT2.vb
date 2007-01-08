@@ -1,4 +1,4 @@
-Namespace DataStructures.Generic
+ï»¿Namespace DataStructures.Generic
 #If Config <= Release Then
     ''' <summary>Represents type that can contain either value of type T1 or value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
@@ -6,7 +6,7 @@ Namespace DataStructures.Generic
     ''' <remarks>
     ''' Although this interface inherits <see cref="IPair(Of T1, T2)"/> be very careful when utilizing this inheritance because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different whnen storing values (it can contain only one value at the sam time). Consider utilizing this ihneritance only in read-only way.
     ''' </remarks>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(IT1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(IT1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
     Public Interface IT1orT2(Of T1, T2)
         Inherits IPair(Of T1, T2)
         ''' <summary>Gets or sets value of type <see cref="T1"/></summary>
@@ -70,7 +70,7 @@ Namespace DataStructures.Generic
     ''' <remarks>
     ''' Although rhis class implements <see cref="IPair(Of T1, T2)"/> through <see cref="IT1orT2(Of T1, T2)"/> be careful when utilizing this implementation because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different when storing values (it can contain only one value at the sam time). Consider utilizing this inheritance only in read-only way.
     ''' </remarks>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(T1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(T1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class T1orT2(Of T1, T2)
         Inherits Cloenable(Of IT1orT2(Of T1, T2))
