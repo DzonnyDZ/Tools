@@ -50,6 +50,7 @@ Namespace Collections.Generic
             End Sub
             ''' <summary>Gets the element in the collection at the current position of the enumerator.</summary>
             ''' <returns>The element in the collection at the current position of the enumerator.</returns>
+            ''' <exception cref="InvalidCastException">Current value from collection cannot be converted to <see cref="T"/>. Also another exception can be throw if thrown by cast operator.</exception>
             Public Overridable ReadOnly Property Current() As T Implements System.Collections.Generic.IEnumerator(Of T).Current
                 Get
                     Return Wrap.Current

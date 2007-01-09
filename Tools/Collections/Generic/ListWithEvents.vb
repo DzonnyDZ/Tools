@@ -11,6 +11,7 @@ Namespace Collections.Generic
     ''' </remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChange:="1/7/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
+    <DebuggerDisplay("Count = {Count}")> _
     Public Class ListWithEvents(Of T)
         Implements IList(Of T)
         Implements IList

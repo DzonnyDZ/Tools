@@ -4,6 +4,7 @@ Namespace Collections.Generic
     ''' <typeparam name="TKey">Type of keys</typeparam>
     ''' <typeparam name="TValue">type of values</typeparam>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of String, Long)), LastChange:="12/25/2006")> _
+    <DebuggerDisplay("Count = {Count}")> _
     Public Class HashTable(Of TKey, TValue)
         Inherits HashTable
         Implements IDictionary(Of TKey, TValue)
@@ -37,11 +38,23 @@ Namespace Collections.Generic
         ''' <param name="array">The one-dimensional System.Array that is the destination of the System.Collections.DictionaryEntry objects copied from System.Collections.Hashtable. The System.Array must have zero-based indexing.</param>
         ''' <param name="arrayIndex">The zero-based index in array at which copying begins.</param>
         ''' <exception cref="System.ArgumentNullException">array is null.</exception>
-        ''' <exception cref="System.InvalidCastException">The type of the source System.Collections.Hashtable cannot be cast automatically to the type of the destination array.</exception>
+        ''' <exception cref="System.InvalidCastException">The type of the source <see cref="System.Collections.Hashtable"/> cannot be cast automatically to the type of the destination array.</exception>
         ''' <exception cref="System.ArgumentOutOfRangeException">arrayIndex is less than zero.</exception>
         ''' <exception cref="System.ArgumentException">array is multidimensional.-or- arrayIndex is equal to or greater than the length of array.-or- The number of elements in the source System.Collections.Hashtable is greater than the available space from arrayIndex to the end of the destination array.</exception>
         Public Shadows Sub CopyTo(ByVal array As TValue(), ByVal arrayIndex As Integer)
-            MyBase.CopyTo(array, arrayIndex)
+            Try
+                MyBase.CopyTo(array, arrayIndex)
+            Catch ex As ArgumentNullException
+                Throw
+            Catch ex As ArgumentOutOfRangeException
+                Throw
+            Catch ex As ArgumentException
+                Throw
+            Catch ex As InvalidCastException
+                Throw
+            Catch ex As Exception
+                Throw New InvalidCastException("An exception occured when casting to array TValue()", ex)
+            End Try
         End Sub
 
         ''' <summary>Initializes a new, empty instance of the System.Collections.Hashtable class using the specified initial capacity, and the default load factor, hash code provider, and comparer.</summary>
@@ -109,15 +122,25 @@ Namespace Collections.Generic
         ''' <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">loadFactor is less than 0.1.-or- loadFactor is greater than 1.0.</exception>
         ''' <exception cref="System.ArgumentNullException">d is null.</exception>
+        ''' <exception cref="InvalidCastException">Value from collection cannot be converted to <see cref="TValue"/> -or- key from collection cannot pe converted to <see cref="TKey"/>.</exception>
+        ''' <remarks>Use type-safe variant of this CTor instead</remarks>
+        <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
         Public Sub New(ByVal d As System.Collections.IDictionary, ByVal loadFactor As Single)
             MyBase.New(d.Count, loadFactor)
-            For Each itm As KeyValuePair(Of TKey, TValue) In d
-                MyBase.Add(itm.Key, itm.Value)
-            Next itm
+            Try
+                For Each itm As KeyValuePair(Of TKey, TValue) In d
+
+                    MyBase.Add(itm.Key, itm.Value)
+                Next itm
+            Catch ex As InvalidCastException
+                Throw
+            Catch ex As Exception
+                Throw New InvalidCastException("Errow when casting value to be added to type of collection", ex)
+            End Try
         End Sub
-        ''' <summary>Initializes a new instance of the System.Collections.Hashtable class by copying the elements from the specified dictionary to the new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the specified load factor and System.Collections.IEqualityComparer object.</summary>
-        ''' <param name="d">The System.Collections.IDictionary object to copy to a new System.Collections.Hashtable object.</param>
-        ''' <param name="equalityComparer">The System.Collections.IEqualityComparer object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <summary>Initializes a new instance of the <see cref="System.Collections.Hashtable"/> class by copying the elements from the specified dictionary to the new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the specified load factor and System.Collections.IEqualityComparer object.</summary>
+        ''' <param name="d">The System.Collections.IDictionary object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
+        ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the <see cref="System.Collections.Hashtable"/>.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
         ''' <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">loadFactor is less than 0.1.-or- loadFactor is greater than 1.0.</exception>
         ''' <exception cref="System.ArgumentNullException">d is null.</exception>
@@ -129,13 +152,77 @@ Namespace Collections.Generic
                 MyClass.Add(itm.Key, itm.Value)
             Next
         End Sub
+        ''' <summary>Initializes a new instance of the <see cref="System.Collections.Hashtable"/> class by copying the elements from the specified dictionary to the new <see cref="System.Collections.Hashtable"/> object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the specified load factor and <see cref="System.Collections.IEqualityComparer"/> object.</summary>
+        ''' <param name="d">The <see cref="System.Collections.IDictionary"/> object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
+        ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the <see cref="System.Collections.Hashtable"/>.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
+        ''' <exception cref="System.ArgumentOutOfRangeException">loadFactor is less than 0.1.-or- loadFactor is greater than 1.0.</exception>
+        ''' <exception cref="System.ArgumentNullException">d is null.</exception>
+        ''' <exception cref="InvalidCastException">Value from collection cannot be converted to <see cref="TValue"/> -or- key from collection cannot pe converted to <see cref="TKey"/>.</exception>
+        ''' <remarks>Use type-safe variant of this CTor instead</remarks>
+        <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Sub New(ByVal d As System.Collections.IDictionary, ByVal loadFactor As Single, ByVal equalityComparer As IEqualityComparer(Of TKey))
+            MyBase.New(d.Count, loadFactor, New EqualityComparerAdapter(equalityComparer))
+            Try
+                For Each itm As KeyValuePair(Of TKey, TValue) In d
+                    MyBase.Add(itm.Key, itm.Value)
+                Next itm
+            Catch ex As InvalidCastException
+                Throw
+            Catch ex As Exception
+                Throw New InvalidCastException("Errow when casting value to be added to type of collection", ex)
+            End Try
+        End Sub
+        ''' <summary>Initializes a new instance of the <see cref="System.Collections.Hashtable"/> class by copying the elements from the specified dictionary to a new System.Collections.Hashtable object. The new <see cref="System.Collections.Hashtable"/> object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified <see cref="System.Collections.IEqualityComparer"/> object.</summary>
+        ''' <param name="d">The <see cref="System.Collections.IDictionary"/> object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
+        ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <exception cref="System.ArgumentNullException"><paramref name="d"/> is null.</exception>
+        ''' <exception cref="InvalidCastException">Value from collection cannot be converted to <see cref="TValue"/> -or- key from collection cannot pe converted to <see cref="TKey"/>.</exception>
+        ''' <remarks>Use type-safe variant of this CTor instead</remarks>
+        <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Sub New(ByVal d As System.Collections.IDictionary, ByVal equalityComparer As IEqualityComparer)
+            MyBase.New(d.Count, equalityComparer)
+            Try
+                For Each itm As KeyValuePair(Of TKey, TValue) In d
+                    MyClass.Add(itm.Key, itm.Value)
+                Next itm
+            Catch ex As InvalidCastException
+                Throw
+            Catch ex As Exception
+                Throw New InvalidCastException("Errow when casting value to be added to type of collection", ex)
+            End Try
+        End Sub
+        ''' <summary>Initializes a new instance of the System.Collections.Hashtable class by copying the elements from the specified dictionary to the new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the specified load factor, and the default hash code provider and comparer.</summary>
+        ''' <param name="d">The System.Collections.IDictionary object to copy to a new System.Collections.Hashtable object.</param>
+        ''' <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
+        ''' <exception cref="System.ArgumentOutOfRangeException">loadFactor is less than 0.1.-or- loadFactor is greater than 1.0.</exception>
+        ''' <exception cref="System.ArgumentNullException">d is null.</exception>
+        Public Sub New(ByVal d As IDictionary(Of TKey, TValue), ByVal loadFactor As Single)
+            MyBase.New(d.Count, loadFactor)
+            For Each itm As KeyValuePair(Of TKey, TValue) In d
+                MyBase.Add(itm.Key, itm.Value)
+            Next itm
+        End Sub
+        ''' <summary>Initializes a new instance of the System.Collections.Hashtable class by copying the elements from the specified dictionary to the new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the specified load factor and System.Collections.IEqualityComparer object.</summary>
+        ''' <param name="d">The System.Collections.IDictionary object to copy to a new System.Collections.Hashtable object.</param>
+        ''' <param name="equalityComparer">The System.Collections.IEqualityComparer object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
+        ''' <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
+        ''' <exception cref="System.ArgumentOutOfRangeException">loadFactor is less than 0.1.-or- loadFactor is greater than 1.0.</exception>
+        ''' <remarks>Use type-safe variant of this CTor instead</remarks>
+        <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Sub New(ByVal d As IDictionary(Of TKey, TValue), ByVal loadFactor As Single, ByVal equalityComparer As IEqualityComparer)
+            MyBase.New(d.Count, loadFactor, equalityComparer)
+            For Each itm As KeyValuePair(Of TKey, TValue) In d
+                MyClass.Add(itm.Key, itm.Value)
+            Next
+        End Sub
         ''' <summary>Initializes a new instance of the System.Collections.Hashtable class by copying the elements from the specified dictionary to the new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the specified load factor and System.Collections.IEqualityComparer object.</summary>
         ''' <param name="d">The System.Collections.IDictionary object to copy to a new System.Collections.Hashtable object.</param>
         ''' <param name="equalityComparer">The System.Collections.IEqualityComparer object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
         ''' <param name="loadFactor">A number in the range from 0.1 through 1.0 that is multiplied by the default value which provides the best performance. The result is the maximum ratio of elements to buckets.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">loadFactor is less than 0.1.-or- loadFactor is greater than 1.0.</exception>
         ''' <exception cref="System.ArgumentNullException">d is null.</exception>
-        Public Sub New(ByVal d As System.Collections.IDictionary, ByVal loadFactor As Single, ByVal equalityComparer As IEqualityComparer(Of TKey))
+        Public Sub New(ByVal d As IDictionary(Of TKey, TValue), ByVal loadFactor As Single, ByVal equalityComparer As IEqualityComparer(Of TKey))
             MyBase.New(d.Count, loadFactor, New EqualityComparerAdapter(equalityComparer))
             For Each itm As KeyValuePair(Of TKey, TValue) In d
                 MyBase.Add(itm.Key, itm.Value)
@@ -144,10 +231,10 @@ Namespace Collections.Generic
         ''' <summary>Initializes a new instance of the <see cref="System.Collections.Hashtable"/> class by copying the elements from the specified dictionary to a new System.Collections.Hashtable object. The new System.Collections.Hashtable object has an initial capacity equal to the number of elements copied, and uses the default load factor and the specified <see cref="System.Collections.IEqualityComparer"/> object.</summary>
         ''' <param name="d">The <see cref="System.Collections.IDictionary"/> object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
         ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the System.Collections.Hashtable.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
-        ''' <exception cref="System.ArgumentNullException">d is null.</exception>
+        ''' <exception cref="System.ArgumentNullException"><paramref name="d"/> is null.</exception>
         ''' <remarks>Use type-safe variant of this CTor instead</remarks>
         <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Sub New(ByVal d As System.Collections.IDictionary, ByVal equalityComparer As IEqualityComparer)
+        Public Sub New(ByVal d As IDictionary(Of TKey, TValue), ByVal equalityComparer As IEqualityComparer)
             MyBase.New(d.Count, equalityComparer)
             For Each itm As KeyValuePair(Of TKey, TValue) In d
                 MyClass.Add(itm.Key, itm.Value)
@@ -157,7 +244,7 @@ Namespace Collections.Generic
         ''' <param name="d">The <see cref="System.Collections.IDictionary"/> object to copy to a new <see cref="System.Collections.Hashtable"/> object.</param>
         ''' <param name="equalityComparer">The <see cref="System.Collections.IEqualityComparer"/> object that defines the hash code provider and the comparer to use with the <see cref="System.Collections.Hashtable"/>.-or- null to use the default hash code provider and the default comparer. The default hash code provider is each key's implementation of <see cref="System.Object.GetHashCode"/> and the default comparer is each key's implementation of <see cref="System.Object.Equals"/>.</param>
         ''' <exception cref="System.ArgumentNullException">d is null.</exception>
-        Public Sub New(ByVal d As System.Collections.IDictionary, ByVal equalityComparer As IEqualityComparer(Of TKey))
+        Public Sub New(ByVal d As IDictionary(Of TKey, TValue), ByVal equalityComparer As IEqualityComparer(Of TKey))
             MyBase.New(d.Count, New EqualityComparerAdapter(equalityComparer))
             For Each itm As KeyValuePair(Of TKey, TValue) In d
                 MyBase.Add(itm.Key, itm.Value)
@@ -215,10 +302,19 @@ Namespace Collections.Generic
         ''' <param name="key">The <see cref="System.Object"/> for which a hash code is to be returned.</param>
         ''' <returns>The hash code for key.</returns>
         ''' <exception cref="System.NullReferenceException">key is null.</exception>
+        ''' <exception cref="InvalidCastException">Value of <paramref name="key"/> cannot be converted to <see cref="TKey"/>.</exception>
         ''' <remarks>Internally calls type-safe overload of this function, use it instead.</remarks>
         <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
         Protected NotOverridable Overloads Overrides Function GetHash(ByVal key As Object) As Integer
-            Return GetHash(CType(key, TKey))
+            Try
+                Return GetHash(CType(key, TKey))
+            Catch ex As NullReferenceException
+                Throw
+            Catch ex As InvalidCastException
+                Throw
+            Catch ex As Exception
+                Throw New InvalidCastException("Error while casting key to TKey", ex)
+            End Try
         End Function
         ''' <summary>Compares a specific <see cref="TKey"/> with a specific key in the <see cref="System.Collections.Hashtable"/>.</summary>
         ''' <param name="item">The <see cref="TKey"/> to compare with key.</param>
@@ -245,16 +341,32 @@ Namespace Collections.Generic
         ''' <summary>Gets or sets the value associated with the specified key.</summary>
         ''' <param name="key">The key whose value to get or set.</param>
         ''' <returns>The value associated with the specified key. If the specified key is not found, attempting to get it returns null, and attempting to set it creates a new element using the specified key.</returns>
-        ''' <exception cref="System.NotSupportedException">The property is set and the <see cref="System.Collections.Hashtable"/> is read-only.-or- The property is set, key does not exist in the collection, and the <see cref="System.Collections.Hashtable"/> has a fixed size.</exception>
         ''' <exception cref="System.ArgumentNullException"><paramref name="key"/> is null.</exception>
+        ''' <exception cref="InvalidCastException">Value of <paramref name="key"/> cannot be converted to type <see cref="TKey"/> -or- value of new value cannot be casted to TValue</exception>
         ''' <remarks>Internaly uses type-safe overload of this property, use it instead</remarks>
         <Obsolete("Use type-safe variant instead"), EditorBrowsable(EditorBrowsableState.Never)> _
         Default Public Overrides Property Item(ByVal key As Object) As Object
             Get
-                Return Me.Item(CType(key, TKey))
+                Try
+                    Return Me.Item(CType(key, TKey))
+                Catch ex As ArgumentNullException
+                    Throw
+                Catch ex As InvalidCastException
+                    Throw
+                Catch ex As Exception
+                    Throw New InvalidCastException("Error while casting key into TKey", ex)
+                End Try
             End Get
             Set(ByVal value As Object)
-                Me.Item(CType(key, TKey)) = value
+                Try
+                    Me.Item(CType(key, TKey)) = value
+                Catch ex As ArgumentNullException
+                    Throw
+                Catch ex As InvalidCastException
+                    Throw
+                Catch ex As Exception
+                    Throw New InvalidCastException("Error while casting key into TKey", ex)
+                End Try
             End Set
         End Property
         ''' <summary>Gets or sets the value associated with the specified key.</summary>
