@@ -48,6 +48,7 @@ Namespace Windows.Forms
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <TypeConverter(GetType(ItemsNameTypeConverter))> _
         <RefreshProperties(RefreshProperties.All)> _
+        <Localizable(True)> _
         Public ReadOnly Property Items() As ListWithEvents(Of LinkLabelItem)
             Get
                 Return _Items
@@ -652,6 +653,7 @@ Namespace Windows.Forms
                 End If
                 Return ret
             End Function
+
             ''' <summary>Gets the data type that this collection contains.</summary>
             ''' <returns><see cref="LinkLabelItem"/> type</returns>
             Protected Overrides Function CreateCollectionItemType() As Type
@@ -681,6 +683,11 @@ Namespace Windows.Forms
                     MyBase.Context.OnComponentChanged()
                 End If
             End Function
+            
+        End Class
+
+#Region "CollectionClass"
+        Partial Class LinkLabelItemsEditor
             ''' <summary>Provides a modal dialog box for editing the contents of the <see cref="ListWithEvents(Of LinkLabelItem)"/>  using a <see cref="System.Drawing.Design.UITypeEditor"/>.</summary>
             <Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
             <Localizable(True)> _
@@ -1004,6 +1011,7 @@ Namespace Windows.Forms
                     MyClass.InitializeComponent()
                     lblItemInfo.MaximumSize = New Drawing.Size(lblItemInfo.MaximumSize.Width, lblItemInfo.Size.Height * 3)
 
+                    'Show types tha can be added into collection
                     For Each t As Type In Editor.NewItemTypes
                         If Not t.IsSubclassOf(GetType(LinkLabelItem)) AndAlso Not t.Equals(GetType(LinkLabelItem)) Then
                             Throw New ArgumentException("All types in Editor.NewItemTypes must inherit from LinkLabelItem")
@@ -1024,6 +1032,7 @@ Namespace Windows.Forms
                             AddHandler itm.Click, AddressOf Add_Click
                         End If
                     Next t
+                    'Acording to editor setting set whether multiple instances can be selected or not
                     If Not Editor.CanSelectMultipleInstances Then lstItems.SelectionMode = SelectionMode.One
                 End Sub
 
@@ -1031,9 +1040,10 @@ Namespace Windows.Forms
                 Private Sub Add_Click(ByVal sender As Object, ByVal e As [EventArgs])
                     Try
                         Dim index As Integer = _
-                                lstItems.Items.Add(Editor.CreateInstance(CType(sender, ToolStripItem).Tag))
+                                lstItems.Items.Add(MyBase.CreateInstance(CType(sender, ToolStripItem).Tag))
                         lstItems.SelectedItems.Clear()
                         lstItems.SelectedIndex = index
+                        MyBase.Items = New ArrayList(lstItems.Items).ToArray
                     Catch ex As Exception
                         MsgBox("Cannot create instance of type " & CType(CType(sender, ToolStripItem).Tag, Type).FullName & ". " & ex.GetType.FullName & " was thrown when obtaining new instance:" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "LinkLabel Items Editor")
                     End Try
@@ -1059,11 +1069,106 @@ Namespace Windows.Forms
                     End If
                     lstItems.Items.Clear()
                     If EditValue IsNot Nothing Then
-                        For Each itm As LinkLabelItem In EditValue
+                        pgrProperty.Site = New PropertyGridSite(MyBase.Context, pgrProperty)
+                        For Each itm As LinkLabelItem In Me.Editor.GetItems(EditValue)
                             lstItems.Items.Add(itm)
                         Next itm
                     End If
                 End Sub
+                ''' <summary>Shows the dialog box for the collection editor using the specified <see cref="System.Windows.Forms.Design.IWindowsFormsEditorService"/> object.</summary>
+                ''' <param name="edSvc">An <see cref="System.Windows.Forms.Design.IWindowsFormsEditorService"/> that can be used to show the dialog box.</param>
+                ''' <returns>A <see cref="System.Windows.Forms.DialogResult"/> that indicates the result code returned from the dialog box.</returns>
+                Protected Overrides Function ShowEditorDialog(ByVal edSvc As System.Windows.Forms.Design.IWindowsFormsEditorService) As System.Windows.Forms.DialogResult
+                    Dim service1 As IComponentChangeService = Nothing
+                    Dim result1 As DialogResult = DialogResult.OK
+                    Try
+                        service1 = DirectCast(Me.Editor.Context.GetService(GetType(IComponentChangeService)), IComponentChangeService)
+                        If (Not service1 Is Nothing) Then
+                            'AddHandler service1.ComponentChanged, New ComponentChangedEventHandler(AddressOf Me.OnComponentChanged)
+                        End If
+                        MyBase.ActiveControl = Me.lstItems
+                        result1 = MyBase.ShowEditorDialog(edSvc)
+                    Finally
+                        If (Not service1 Is Nothing) Then
+                            'RemoveHandler service1.ComponentChanged, New ComponentChangedEventHandler(AddressOf Me.OnComponentChanged)
+                        End If
+                    End Try
+                    Return result1
+                End Function
+                'Private Sub OnComponentChanged(ByVal sender As Object, ByVal e As ComponentChangedEventArgs)
+                'End Sub
+
+                ''' <summary>This class was copied from Friend Class System.ComponentModel.Design.CollectionEditor.PropertyGridSite using Reflector</summary>
+                ''' <remarks>
+                ''' I'm not very sure what exactly this class does or what exactly is used for. It supports <see cref="CollectionForm"/> functionality. Its instance is passed to <see cref="PropertyGrid.Site"/> property of <see cref="pgrProperty"/> in <see cref="OnEditValueChanged"/>
+                ''' IMHO it supports design-time interaction between <see cref="PropertyGrid"/> and the object being edited.
+                ''' </remarks>
+                <EditorBrowsable(EditorBrowsableState.Advanced)> _
+                <DebuggerNonUserCode()> _
+                Private Class PropertyGridSite : Implements ISite, IServiceProvider
+                    ''' <summary>Contains value of the <see cref="Component"/> property</summary>
+                    <EditorBrowsable(EditorBrowsableState.Never)> _
+                    Private comp As IComponent
+                    ''' <summary>Identifies if <see cref="GetService"/> is currently lying on callstack</summary>
+                    Private inGetService As Boolean
+                    ''' <summary>Contains instance of <see cref="IServiceProvider"/></summary>
+                    Private sp As IServiceProvider
+                    ''' <summary>Gets the component associated with the <see cref="System.ComponentModel.ISite"/> when implemented by a class.</summary>
+                    ''' <returns>The <see cref="System.ComponentModel.IComponent"/> instance associated with the <see cref="System.ComponentModel.ISite"/>.</returns>
+                    Public ReadOnly Property Component() As System.ComponentModel.IComponent Implements System.ComponentModel.ISite.Component
+                        <DebuggerHidden()> Get
+                            Return Me.comp
+                        End Get
+                    End Property
+                    ''' <summary>Gets the <see cref="System.ComponentModel.IContainer"/> associated with the <see cref="System.ComponentModel.ISite"/> when implemented by a class.</summary>
+                    ''' <returns>Always null in this implementation.</returns>
+                    Public ReadOnly Property Container() As System.ComponentModel.IContainer Implements System.ComponentModel.ISite.Container
+                        <DebuggerHidden()> Get
+                            Return Nothing
+                        End Get
+                    End Property
+                    ''' <summary>Determines whether the component is in design mode when implemented by a class.</summary>
+                    ''' <returns>Always false in this implementation</returns>
+                    Public ReadOnly Property DesignMode() As Boolean Implements System.ComponentModel.ISite.DesignMode
+                        <DebuggerHidden()> Get
+                            Return False
+                        End Get
+                    End Property
+
+                    ''' <summary>Gets or sets the name of the component associated with the <see cref="System.ComponentModel.ISite"/> when implemented by a class.</summary>
+                    ''' <returns>Always an empty string in this implementation</returns>
+                    ''' <value>Setting value has no effect</value>
+                    Public Property Name() As String Implements System.ComponentModel.ISite.Name
+                        <DebuggerHidden()> Get
+                            Return Nothing
+                        End Get
+                        <DebuggerHidden()> Set(ByVal value As String)
+                        End Set
+                    End Property
+                    ''' <summary>Gets the service object of the specified type.</summary>
+                    ''' <param name="serviceType">An object that specifies the type of service object to get.</param>
+                    ''' <returns>A service object of type serviceType.-or- null if there is no service object of type <paramref name="serviceType"/>.</returns>
+                    <DebuggerHidden()> Public Function GetService(ByVal serviceType As System.Type) As Object Implements System.IServiceProvider.GetService
+                        If (Not Me.inGetService AndAlso (Not Me.sp Is Nothing)) Then
+                            Try
+                                Me.inGetService = True
+                                Return Me.sp.GetService(serviceType)
+                            Finally
+                                Me.inGetService = False
+                            End Try
+                        End If
+                        Return Nothing
+                    End Function
+                    ''' <summary>CTor</summary>
+                    ''' <param name="sp">An instance of <see cref="IServiceProvider"/>. This value is never used.</param>
+                    ''' <param name="comp">Value that will be returned by the <see cref="Component"/> property</param>
+                    <DebuggerHidden()> Public Sub New(ByVal sp As IServiceProvider, ByVal comp As IComponent)
+                        Me.inGetService = False
+                        Me.sp = sp
+                        Me.comp = comp
+                    End Sub
+                End Class
+
                 ''' <summary>Gets or sets the collection object to edit.</summary>
                 ''' <returns>The collection object to edit.</returns>
                 Public Shadows Property EditValue() As ListWithEvents(Of LinkLabelItem)
@@ -1137,10 +1242,7 @@ Namespace Windows.Forms
                 End Sub
                 ''' <summary>Closes form and applies changes</summary>
                 Private Sub cmdOK_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdOK.Click
-                    EditValue.Clear()
-                    Me.Editor.SetItems(EditValue, New Object() {}) 'Is it necessary?
-                    EditValue.AddRange(New Wrapper(Of LinkLabelItem)(lstItems.Items))
-                    Me.Editor.Context.OnComponentChanged()
+                    Me.Editor.SetItems(Me.EditValue, New System.Collections.ArrayList(lstItems.Items).ToArray)
                     ClosingCancel = False
                     Me.Close()
                 End Sub
@@ -1150,7 +1252,8 @@ Namespace Windows.Forms
                     Dim OldMaxSI As Integer = -1
                     While lstItems.SelectedItems.Count > RemoveIndex
                         OldMaxSI = Math.Max(lstItems.SelectedIndices(RemoveIndex), OldMaxSI)
-                        If Editor.CanRemoveInstance(lstItems.SelectedItems(RemoveIndex)) Then
+                        If MyBase.CanRemoveInstance(lstItems.SelectedItems(RemoveIndex)) Then
+                            MyBase.DestroyInstance(lstItems.SelectedItems(RemoveIndex))
                             lstItems.Items.Remove(lstItems.SelectedItems(RemoveIndex))
                         Else
                             RemoveIndex += 1
@@ -1169,9 +1272,9 @@ Namespace Windows.Forms
 
                 Private Sub CollectionForm_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
                     If ClosingCancel Then
-                        Me.Editor.SetItems(EditValue, New ArrayList(EditValue).ToArray) 'Is it necessary?
                         Me.Editor.Context.OnComponentChanged()
                     End If
+                    MyBase.DialogResult = System.Windows.Forms.DialogResult.OK
                 End Sub
 
                 Private Sub CollectionForm_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Resize
@@ -1185,8 +1288,8 @@ Namespace Windows.Forms
                 Private Sub ResizeLabel()
                     lblItemInfo.MaximumSize = New Drawing.Size(splMain.Panel2.ClientSize.Width, lblItemInfo.MaximumSize.Height)
                 End Sub
-            End Class
-        End Class
+            End Class : End Class
+#End Region
     End Class
 End Namespace
 #End If
