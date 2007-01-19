@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel.Design.Serialization
-#If Config <= RC Then 'Stage: RC
+#If Config <= Release Then
 Namespace Collections.Generic
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
@@ -12,7 +12,8 @@ Namespace Collections.Generic
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChange:="1/7/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
-    Public Class ListWithEvents(Of T)
+    <Serializable()> _
+    Public Class ListWithEvents(Of T) : Implements Runtime.Serialization.ISerializable
         Implements IList(Of T)
         Implements IList
         ''' <summary>CTor</summary>
@@ -775,6 +776,49 @@ Namespace Collections.Generic
                 Item(index) = value
             End Set
         End Property
+#End Region
+#Region "ISerializable"
+        ''' <summary>Populates a <see cref="System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.</summary>
+        ''' <param name="context">The destination (see <see cref="System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+        ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+        ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission</exception>
+        ''' <remarks>
+        ''' Only items (see <see cref="Item"/>) are serialized.
+        ''' Note for inheritors: Call this base class method in order items to be serialized.
+        ''' </remarks>
+        <Security.Permissions.SecurityPermission(Security.Permissions.SecurityAction.LinkDemand, Flags:=Security.Permissions.SecurityPermissionFlag.SerializationFormatter)> _
+        Public Overridable Sub GetObjectData(ByVal info As System.Runtime.Serialization.SerializationInfo, ByVal context As System.Runtime.Serialization.StreamingContext) Implements System.Runtime.Serialization.ISerializable.GetObjectData
+            If info Is Nothing Then
+                Throw New System.ArgumentNullException("info", "info cannot be null")
+            End If
+            info.AddValue(ItemsName, Me.InternalList)
+        End Sub
+        ''' <summary>CTor - deserializes <see cref="ListWithEvents(Of T)"/></summary>
+        ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> that contains serialized object</param>
+        ''' <param name="context">The source (see <see cref="System.Runtime.Serialization.StreamingContext"/>) of this deserialization.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+        ''' <exception cref="InvalidCastException">Serialized value was found but cannot be converted to type of corresponding property</exception>
+        ''' <exception cref="Runtime.Serialization.SerializationException">An exception occured during deserialization</exception>
+        ''' <remarks>
+        ''' Only items (see <see cref="Item"/>) are deserialized.
+        ''' Note for inheritors: Call this base class CTor in order to deserialize items. Another way is to deserialize them into local variable and then use <see cref="List(Of T).Add"/> or <see cref="List(Of T).AddRange"/>.
+        ''' </remarks>
+        Protected Sub New(ByVal info As Runtime.Serialization.SerializationInfo, ByVal context As Runtime.Serialization.StreamingContext)
+            If info Is Nothing Then
+                Throw New System.ArgumentNullException("info", "info cannot be null")
+            End If
+            Try
+                MyClass.List = info.GetValue(ItemsName, GetType(List(Of T)))
+            Catch ex As InvalidCastException
+                Throw
+            Catch ex As Runtime.Serialization.SerializationException
+                Throw
+            Catch ex As Exception
+                Throw New Runtime.Serialization.SerializationException("Error while deserializing LinkLabelItem", ex)
+            End Try
+        End Sub
+        ''' <summary>Name used for serialization of the <see cref="InternalList"/> property</summary>
+        Protected Const ItemsName$ = "Items"
 #End Region
     End Class
 End Namespace

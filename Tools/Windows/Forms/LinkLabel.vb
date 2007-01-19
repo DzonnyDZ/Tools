@@ -1,6 +1,7 @@
 ﻿Imports System.Windows.Forms, Tools.Collections.Generic, Tools.Windows.Forms.Utilities
 Imports System.Drawing.Design, System.ComponentModel.Design, Tools.ComponentModel
-#If Config <= RC Then 'Stage: RC
+Imports System.Runtime.Serialization
+#If Config <= Release Then
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/7/2007")> _
@@ -289,8 +290,8 @@ Namespace Windows.Forms
 
 #Region "Item classes"
         ''' <summary>Common base for items in <see cref="LinkLabel.Items"/></summary>
-        <DebuggerDisplay("{ToString}"), DefaultProperty("Text"), DefaultEvent("Changed")> _
-        Public MustInherit Class LinkLabelItem : Implements IReportsChange
+        <DebuggerDisplay("{ToString}"), DefaultProperty("Text"), DefaultEvent("Changed"), Serializable()> _
+        Public MustInherit Class LinkLabelItem : Implements IReportsChange, ISerializable
             ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of String).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="Text"/> property changes</summary>
             Public Const TextPropertyName As String = "Text"
             ''' <summary>Text to be shown</summary>
@@ -327,10 +328,49 @@ Namespace Windows.Forms
             Protected Overridable Sub OnChanged(ByVal e As EventArgs)
                 RaiseEvent Changed(Me, e)
             End Sub
+
+            ''' <summary>Populates a <see cref="System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.</summary>
+            ''' <param name="context">The destination (see <see cref="System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+            ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+            ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission</exception>
+            ''' <remarks>Note to inheritors: If you like serialize more data then then <see cref="Text"/> property only, then override this method. If you want the <see cref="Text"/> property to be serialized either call base class method <see cref="GetObjectData"/> or serialize it in your code.</remarks>
+            <Security.Permissions.SecurityPermission(Security.Permissions.SecurityAction.LinkDemand, Flags:=Security.Permissions.SecurityPermissionFlag.SerializationFormatter)> _
+            Public Overridable Sub GetObjectData(ByVal info As System.Runtime.Serialization.SerializationInfo, ByVal context As System.Runtime.Serialization.StreamingContext) Implements System.Runtime.Serialization.ISerializable.GetObjectData
+                If info Is Nothing Then
+                    Throw New System.ArgumentNullException("info", "info cannot be null")
+                End If
+                info.AddValue(TextPropertyName, Text)
+            End Sub
+            ''' <summary>CTor - deserializes <see cref="LinkLabelItem"/></summary>
+            ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> that contains serialized object</param>
+            ''' <param name="context">The source (see <see cref="System.Runtime.Serialization.StreamingContext"/>) of this deserialization.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+            ''' <exception cref="InvalidCastException">Serialized value was found but cannot be converted to type of corresponding property</exception>
+            ''' <exception cref="SerializationException">An exception occured during deserialization</exception>
+            ''' <remarks>Note to inheritors: If you want perform deserialization (stronly recomended) provide your own version of this CTor. In order to deserialize the <see cref="Text"/> property you can either call this base class CTor or deserialize it by your own.</remarks>
+            Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+                If info Is Nothing Then
+                    Throw New System.ArgumentNullException("info", "info cannot be null")
+                End If
+                Try
+                    Text = info.GetValue(TextPropertyName, GetType(String))
+                Catch ex As InvalidCastException
+                    Throw
+                Catch ex As SerializationException
+                    Throw
+                Catch ex As Exception
+                    Throw New SerializationException("Error while deserializing LinkLabelItem", ex)
+                End Try
+            End Sub
+            ''' <summary>CTor</summary>
+            Sub New()
+            End Sub
         End Class
 
         ''' <summary>Non-link (text only) item of <see cref="LinkLabel"/></summary>
-        <Drawing.ToolboxBitmap(GetType(Label))> _
+        <Drawing.ToolboxBitmap(GetType(Label)), Serializable()> _
+        <DebuggerDisplay("{ToString}")> _
         Public Class TextItem : Inherits LinkLabelItem
             ''' <summary>CTor (initializes with an empty string)</summary>
             Sub New()
@@ -341,10 +381,21 @@ Namespace Windows.Forms
             Sub New(ByVal Text As String)
                 Me.Text = Text
             End Sub
+            ''' <summary>CTor - deserializes <see cref="LinkLabelItem"/></summary>
+            ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> that contains serialized object</param>
+            ''' <param name="context">The source (see <see cref="System.Runtime.Serialization.StreamingContext"/>) of this deserialization.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+            ''' <exception cref="InvalidCastException">Serialized value was found but cannot be converted to type of corresponding property</exception>
+            ''' <exception cref="SerializationException">An exception occured during deserialization</exception>
+            ''' <remarks>Note to inheritors: If you want perform deserialization (stronly recomended) provide your own version of this CTor. In order to deserialize the <see cref="Text"/> property you can either call thisw base class CTor or deserialize it by your own.</remarks>
+            Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+                MyBase.New(info, context)
+            End Sub
         End Class
 
         ''' <summary>Generic link</summary>
         <Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
+        <DebuggerDisplay("{ToString}"), Serializable()> _
         Public Class LinkItem : Inherits LinkLabelItem
             ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Object).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="LinkData"/> property changes</summary>
             Public Const LinkDataPropertyName As String = "LinkData"
@@ -374,6 +425,46 @@ Namespace Windows.Forms
             Public Sub New(ByVal Text As String, Optional ByVal LinkData As Object = Nothing)
                 Me.Text = Text
                 Me.LinkData = LinkData
+            End Sub
+            ''' <summary>CTor - deserializes <see cref="LinkLabelItem"/></summary>
+            ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> that contains serialized object</param>
+            ''' <param name="context">The source (see <see cref="System.Runtime.Serialization.StreamingContext"/>) of this deserialization.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+            ''' <exception cref="InvalidCastException">Serialized value was found but cannot be converted to type of corresponding property</exception>
+            ''' <exception cref="SerializationException">An exception occured during deserialization</exception>
+            ''' <remarks>Note to inheritors: If you want perform deserialization (stronly recomended) provide your own version of this CTor. In order to deserialize the properties of this class you can either call this base class CTor or deserialize them by your own.</remarks>
+            Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+                MyBase.New(info, context)
+                Try
+                    LinkData = info.GetValue(LinkDataPropertyName, GetType(Object))
+                    Description = info.GetValue(DescriptionPropertyName, GetType(String))
+                    Name = info.GetValue(NamePropertyName, GetType(String))
+                    Tag = info.GetValue(TagPropertyName, GetType(Object))
+                    Enabled = info.GetValue(EnabledPropertyName, GetType(Boolean))
+                    visited = info.GetValue(VisitedPropertyName, GetType(Boolean))
+                Catch ex As InvalidCastException
+                    Throw
+                Catch ex As SerializationException
+                    Throw
+                Catch ex As Exception
+                    Throw New SerializationException("Error while deserializing LinkLabelItem", ex)
+                End Try
+            End Sub
+            ''' <summary>Populates a <see cref="System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.</summary>
+            ''' <param name="context">The destination (see <see cref="System.Runtime.Serialization.StreamingContext"/>) for this serialization.</param>
+            ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> to populate with data.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+            ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission</exception>
+            ''' <remarks>Note to inheritors: If you like serialize more data then then properties of this class, then override this method. If you want the properties of this class to be serialized either call base class method <see cref="GetObjectData"/> or serialize them in your code.</remarks>
+            <Security.Permissions.SecurityPermission(Security.Permissions.SecurityAction.LinkDemand, Flags:=Security.Permissions.SecurityPermissionFlag.SerializationFormatter)> _
+            Public Overrides Sub GetObjectData(ByVal info As System.Runtime.Serialization.SerializationInfo, ByVal context As System.Runtime.Serialization.StreamingContext)
+                MyBase.GetObjectData(info, context)
+                info.AddValue(LinkDataPropertyName, LinkData)
+                info.AddValue(DescriptionPropertyName, Description)
+                info.AddValue(NamePropertyName, Name)
+                info.AddValue(TagPropertyName, Tag)
+                info.AddValue(EnabledPropertyName, Enabled)
+                info.AddValue(VisitedPropertyName, Visited)
             End Sub
             ''' <summary>Data associated with the link</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -478,9 +569,9 @@ Namespace Windows.Forms
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Enabled As Boolean = True
 #End Region
         End Class
-
         ''' <summary>Link that performs navigation automatically</summary>
         <DebuggerDisplay("{ToString} ({LinkPath})")> _
+        <DebuggerDisplay("{ToString}"), Serializable()> _
         Public Class AutoLink : Inherits LinkItem
             ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="LinkURI"/> property changes</summary>
             Public Const LinkURIPropertyName As String = "LinkURI"
@@ -515,6 +606,16 @@ Namespace Windows.Forms
             ''' <param name="LinkURI">URI of terger of new link</param>
             Public Sub New(ByVal LinkURI As Uri)
                 Me.New(LinkURI.ToString, LinkURI)
+            End Sub
+            ''' <summary>CTor - deserializes <see cref="LinkLabelItem"/></summary>
+            ''' <param name="info">The <see cref="System.Runtime.Serialization.SerializationInfo"/> that contains serialized object</param>
+            ''' <param name="context">The source (see <see cref="System.Runtime.Serialization.StreamingContext"/>) of this deserialization.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="info"/> is null</exception>
+            ''' <exception cref="InvalidCastException">Serialized value was found but cannot be converted to type of corresponding property</exception>
+            ''' <exception cref="SerializationException">An exception occured during deserialization</exception>
+            ''' <remarks>Note to inheritors: If you want perform deserialization (stronly recomended) provide your own version of this CTor. In order to deserialize the properties of this class you can either call this base class CTor or deserialize them by your own.</remarks>
+            Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
+                MyBase.New(info, context)
             End Sub
 #End Region
             ''' <summary>Target of link</summary>
@@ -683,7 +784,7 @@ Namespace Windows.Forms
                     MyBase.Context.OnComponentChanged()
                 End If
             End Function
-            
+
         End Class
 
 #Region "CollectionClass"
