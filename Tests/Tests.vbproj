@@ -95,6 +95,12 @@
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Collections\Generic\HashTable.Designer.vb">
+      <DependentUpon>HashTable.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Collections\Generic\HashTable.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStructures\Generic\T1orT2.vb" />
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
@@ -131,6 +137,10 @@
     <EmbeddedResource Include="Collections\Generic\ReadOnlyListAdapter.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ReadOnlyListAdapter.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Collections\Generic\HashTable.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>HashTable.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>
