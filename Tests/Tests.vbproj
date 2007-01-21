@@ -101,6 +101,12 @@
     <Compile Include="Collections\Generic\HashTable.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ComponentModel\Localizable attrs.designer.vb">
+      <DependentUpon>Localizable attrs.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ComponentModel\Localizable attrs.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStructures\Generic\T1orT2.vb" />
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
@@ -141,6 +147,10 @@
     <EmbeddedResource Include="Collections\Generic\HashTable.resx">
       <SubType>Designer</SubType>
       <DependentUpon>HashTable.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ComponentModel\Localizable attrs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>Localizable attrs.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>

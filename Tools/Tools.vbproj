@@ -100,6 +100,7 @@
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
+    <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
     <Compile Include="Internal\Attributes.vb" />

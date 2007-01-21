@@ -1,4 +1,4 @@
-﻿#If Config <= Release Then 'Stage: RC
+﻿#If Config <= Release Then
 Namespace Collections.Generic
     ''' <summary>Adapter that adapts <see cref="List(Of TFrom)"/> into <see cref="IReadOnlyList(Of TTo)"/> where TFrom is cublass of TTo</summary>
     ''' <typeparam name="TFrom">Type of items stored in <see cref="List(Of TFrom)"/> being adapted</typeparam>
