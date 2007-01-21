@@ -1,87 +1,54 @@
 ﻿#If Config <= Release Then
 Namespace Windows.Forms.Utilities
     ''' <summary>Common values used for <see cref="CategoryAttribute"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(CategoryAttributeValues), LastChange:="1/6/2007")> _
+    ''' <remarks>This class contains values that when used for <see cref="CategoryAttribute"/> are recognized by the .NET Framework and localized to current language.</remarks>
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 0, GetType(CategoryAttributeValues), LastChange:="1/21/2007")> _
     Public Class CategoryAttributeValues
-        ''' <summary>In order not to be able to construct it</summary>
+        ''' <summary>Private in order not to pe possible to create instance or inherit from this class</summary>
         Private Sub New()
         End Sub
-        ''' <summary>Behavior category</summary>
+        ''' <summary>The Action category</summary>
+        Public Const Action$ = "Action"
+        ''' <summary>The Appearance category</summary>
+        Public Const Appearance$ = "Appearance"
+        ''' <summary>The Asynchronous category</summary>
+        Public Const Asynchronous$ = "Asynchronous"
+        ''' <summary>The Behavior category</summary>
         Public Const Behavior$ = "Behavior"
-        ''' <summary>Data category</summary>
+        ''' <summary>The Configurations category</summary>
+        Public Const Configurations$ = "Config"
+        ''' <summary>The Data category</summary>
         Public Const Data$ = "Data"
-        ''' <summary>Focus category</summary>
+        ''' <summary>The DDE category</summary>
+        Public Const DDE$ = "DDE"
+        ''' <summary>The Misc category</summary>
+        Public Const Misc$ = "Default"
+        ''' <summary>The Design category</summary>
+        Public Const Design$ = "Design"
+        ''' <summary>The DragDrop category</summary>
+        Public Const DragDrop$ = "DragDrop"
+        ''' <summary>The Focus category</summary>
         Public Const Focus$ = "Focus"
-        ''' <summary>Lyout category</summary>
+        ''' <summary>The Font category</summary>
+        Public Const Font$ = "Font"
+        ''' <summary>The Format category</summary>
+        Public Const Format$ = "Format"
+        ''' <summary>The Key category</summary>
+        Public Const Key$ = "Key"
+        ''' <summary>The Layout category</summary>
         Public Const Layout$ = "Layout"
-        ''' <summary>Miscaleneous category</summary>
-        Public Const Misc$ = "Misc"
-        ''' <summary>Common values used for <see cref="CategoryAttribute"/> on properties</summary>
-        <HideModuleName()> _
-        Public NotInheritable Class Properties : Inherits CategoryAttributeValues
-            ''' <summary>In order not to be able to construct it</summary>
-            Private Sub New()
-            End Sub
-            ''' <summary>Accesibility category</summary>
-            Public Const Accessibility$ = "Accessibility"
-            ''' <summary>Appearance category</summary>
-            Public Const Appearance$ = "Appearance"
-            ''' <summary>Design category</summary>
-            Public Const Design$ = "Design"
-            ''' <summary>Window Style category</summary>
-            public const WindowStyle$="Window Style"
-        End Class
-        ''' <summary>Common values used for <see cref="CategoryAttribute"/> on events</summary>
-        <HideModuleName()> _
-        Public NotInheritable Class Events : Inherits CategoryAttributeValues
-            ''' <summary>In order not to be able to construct it</summary>
-            Private Sub New()
-            End Sub
-            ''' <summary>Action category</summary>
-            Public Const Action$ = "Action"
-            ''' <summary>Drag Drop category</summary>
-            Public Const DragDrop$ = "Drag Drop"
-            ''' <summary>Key (keyboard) category</summary>
-            Public Const Key$ = "Key"
-            ''' <summary>Mouse category</summary>
-            Public Const Mouse$ = "Mouse"
-            ''' <summary>Property changed category</summary>
-            Public Const PropertyChanged$ = "Property Changed"
-        End Class
-        ''' <summary>Combines constants from <see cref="Properties"/> and <see cref="Events"/></summary>
-        <HideModuleName()> _
-        Public NotInheritable Class All : Inherits CategoryAttributeValues
-            ''' <summary>In order not to be able to construct it</summary>
-            Private Sub New()
-            End Sub
-            ''' <summary>Accesibility category</summary>
-            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
-            Public Const Accessibility$ = Properties.Accessibility
-            ''' <summary>Appearance category</summary>
-            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
-            Public Const Appearance$ = Properties.Appearance
-            ''' <summary>Design category</summary>
-            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
-            Public Const Design$ = Properties.Design
-            ''' <summary>Window Style category</summary>
-            ''' <remarks>Inherited from <see cref="Properties"/></remarks>
-            Public Const WindowStyle$ = Properties.WindowStyle
-            ''' <summary>Action category</summary>
-            ''' <remarks>Inherited from <see cref="Events"/></remarks>
-            Public Const Action$ = Events.Action
-            ''' <summary>Drag Drop category</summary>
-            ''' <remarks>Inherited from <see cref="Events"/></remarks>
-            Public Const DragDrop$ = Events.DragDrop
-            ''' <summary>Key (keyboard) category</summary>
-            ''' <remarks>Inherited from <see cref="Events"/></remarks>
-            Public Const Key$ = Events.Key
-            ''' <summary>Mouse category</summary>
-            ''' <remarks>Inherited from <see cref="Events"/></remarks>
-            Public Const Mouse$ = Events.Mouse
-            ''' <summary>Property changed category</summary>
-            ''' <remarks>Inherited from <see cref="Events"/></remarks>
-            Public Const PropertyChanged$ = Events.PropertyChanged
-        End Class
+        ''' <summary>The List category</summary>
+        Public Const List$ = "List"
+        ''' <summary>The Mouse category</summary>
+        Public Const Mouse$ = "Mouse"
+        ''' <summary>The Position category</summary>
+        Public Const Position$ = "Position"
+        ''' <summary>The Scale category</summary>
+        Public Const Scale$ = "Scale"
+        ''' <summary>The Text category</summary>
+        Public Const Text$ = "Text"
+        ''' <summary>The Window Style category</summary>
+        Public Const WindowStyle$ = "WindowStyle"
     End Class
 End Namespace
 #End If
