@@ -14,12 +14,12 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-      <Nightly>1</Nightly>
-      <Alpha>2</Alpha>
-      <Beta>3</Beta>
-      <RC>4</RC>
-      <Release>5</Release>
-      <Config>1</Config>
+    <Nightly>1</Nightly>
+    <Alpha>2</Alpha>
+    <Beta>3</Beta>
+    <RC>4</RC>
+    <Release>5</Release>
+    <Config>1</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -30,7 +30,7 @@
     <DocumentationFile>Tools.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly</DefineConstants>
-      <Config>1</Config>
+    <Config>1</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -41,19 +41,19 @@
     <DocumentationFile>Tools.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release</DefineConstants>
-      <Config>5</Config>
+    <Config>5</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
-      <DebugSymbols>true</DebugSymbols>
-      <DefineDebug>true</DefineDebug>
-      <DefineTrace>true</DefineTrace>
-      <OutputPath>..\bin\Alpha\</OutputPath>
-      <DocumentationFile>Tools.xml</DocumentationFile>
-      <NoWarn>41999,42016</NoWarn>
-      <DebugType>full</DebugType>
-      <PlatformTarget>AnyCPU</PlatformTarget>
-      <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha</DefineConstants>
-      <Config>2</Config>
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Alpha\</OutputPath>
+    <DocumentationFile>Tools.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha</DefineConstants>
+    <Config>2</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -65,7 +65,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta</DefineConstants>
-      <Config>3</Config>
+    <Config>3</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -77,7 +77,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC</DefineConstants>
-      <Config>4</Config>
+    <Config>4</Config>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
@@ -112,6 +112,7 @@
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
+    <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
     <Compile Include="Internal\Attributes.vb" />
@@ -137,8 +138,11 @@
     </Compile>
     <Compile Include="Resources\Resources.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-      <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
-      <Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
+    <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
+    <Compile Include="Windows\Forms\EncodingSelector.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
@@ -173,6 +177,13 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\ĐTools.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Encoding.bmp" />
+    <EmbeddedResource Include="Windows\Forms\EncodingSelector.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingSelector.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

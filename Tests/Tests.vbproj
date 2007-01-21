@@ -132,6 +132,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\EncodingSelector.Designer.vb">
+      <DependentUpon>EncodingSelector.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\EncodingSelector.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\LinkLabel.Designer.vb">
       <DependentUpon>LinkLabel.vb</DependentUpon>
     </Compile>
@@ -161,6 +167,10 @@
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\EncodingSelector.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
       <SubType>Designer</SubType>
