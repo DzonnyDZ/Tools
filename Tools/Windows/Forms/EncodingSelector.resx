@@ -192,6 +192,9 @@
   <data name="cohCodePage.Text" xml:space="preserve">
     <value>Code page</value>
   </data>
+  <data name="cohCodePage.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
+    <value>Right</value>
+  </data>
   <data name="cohCodePage.Width" type="System.Int32, mscorlib">
     <value>70</value>
   </data>

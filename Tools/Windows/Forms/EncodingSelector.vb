@@ -1,5 +1,12 @@
 Imports System.Windows.Forms, tools.Windows.Forms.Utilities, System.Text, Tools.Collections.Generic
-#If Config <= Alpha Then 'Stage: Alpha
+'#If Config <= Beta Then
+'Stage: Beta
+'Conditional compilation directive is commented out because its presence caused compiler warning.
+'The conditionality of compilation of this file as well as of related files (which's name starts with 'LinkLabel.') is ensured by editing the Tools.vbproj file, where this file is marked as conditionally compiled.
+'To edit the Tools.vbproj right-click the Tools project and select Unload Project. Then right-click it again and select Edit Tools.vbproj.
+'Search for line like following:
+'<Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
+'Its preceded by comment.
 Namespace Windows.Forms
     ''' <summary>Control taht allows user to chose from available encoding</summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -84,6 +91,7 @@ Namespace Windows.Forms
             RefreshEncodings()
             BackColor = Drawing.SystemColors.Window
             ForeColor = Drawing.SystemColors.WindowText
+            lvwEncoding.ListViewItemSorter = New ListViewItemComparer()
         End Sub
         ''' <summary>Refreshes list of encodings</summary>
         Public Overridable Sub RefreshEncodings()
@@ -176,7 +184,7 @@ Namespace Windows.Forms
                             Case EncodingSelectorStyle.ListView
                                 lvwEncoding.Visible = True
                         End Select
-                        Throw New InvalidEnumArgumentException("Unknown value of Style", value, GetType(EncodingSelectorStyle))
+                        Throw New InvalidEnumArgumentException("value", value, GetType(EncodingSelectorStyle))
                 End Select
                 MaximumSize = MaximumSize
             End Set
@@ -511,9 +519,12 @@ Namespace Windows.Forms
                 lvwEncoding.BackgroundImageLayout = value
             End Set
         End Property
-#Region "Column headers" 'TODO: Comments and descriptions, maybe another properties
+#Region "Column headers" 
 #Region "Widths"
-        'TODO: ShouldSerialize / Reset for widths
+#Region "Name"
+        ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.Name"/></summary>
+        ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <Description("Defines width of ColumnHeader which displays Name of encoding. Applicable only when Style is ListView")> _
         <Category(CategoryAttributeValues.List)> _
         <DefaultValue(70), Localizable(True)> _
         Public Property NameColumnHeaderWidth() As Integer
@@ -524,6 +535,22 @@ Namespace Windows.Forms
                 cohName.Width = value
             End Set
         End Property
+        ''' <summary>Instructs designer if <see cref="NameColumnHeaderWidth"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
+        Private Function ShouldSerializeNameColumnHeaderWidth() As Boolean
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
+            Return cohName.Width <> resources.GetString("cohName.Width")
+        End Function
+        ''' <summary>Resets <see cref="NameColumnHeaderWidth"/> to its default value</summary>
+        Private Sub ResetNameColumnHeaderWidth()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
+            cohName.Width = resources.GetString("cohName.Width")
+        End Sub
+#End Region
+#Region "DisplayName"
+        ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.DisplayName"/></summary>
+        ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <Description("Defines width of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView")> _
         <Category(CategoryAttributeValues.List)> _
         <DefaultValue(120), Localizable(True)> _
         Public Property DisplayNameColumnHeaderWidth() As Integer
@@ -534,6 +561,22 @@ Namespace Windows.Forms
                 cohDisplayName.Width = value
             End Set
         End Property
+        ''' <summary>Instructs designer if <see cref="DisplayNameColumnHeaderWidth"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
+        Private Function ShouldSerializeDisplayNameColumnHeaderWidth() As Boolean
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
+            Return cohDisplayName.Width <> resources.GetString("cohDisplayName.Width")
+        End Function
+        ''' <summary>Resets <see cref="DisplayNameColumnHeaderWidth"/> to its default value</summary>
+        Private Sub ResetDisplayNameColumnHeaderWidth()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
+            cohDisplayName.Width = resources.GetString("cohDisplayName.Width")
+        End Sub
+#End Region
+#Region "CodePage"
+        ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.CodePage"/></summary>
+        ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <Description("Defines width of ColumnHeader which displays CodePage of encoding. Applicable only when Style is ListView")> _
         <Category(CategoryAttributeValues.List)> _
         <DefaultValue(70), Localizable(True)> _
         Public Property CodePageColumnHeaderWidth() As Integer
@@ -544,10 +587,26 @@ Namespace Windows.Forms
                 cohCodePage.Width = value
             End Set
         End Property
+        ''' <summary>Instructs designer if <see cref="CodePageColumnHeaderWidth"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
+        Private Function ShouldSerializeCodePageColumnHeaderWidth() As Boolean
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
+            Return cohCodePage.Width <> resources.GetString("cohCodePage.Width")
+        End Function
+        ''' <summary>Resets <see cref="CodePageColumnHeaderWidth"/> to its default value</summary>
+        Private Sub ResetCodePageColumnHeaderWidth()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
+            cohCodePage.Width = resources.GetString("cohCodePage.Width")
+        End Sub
+#End Region
 #End Region
 #Region "Header texts"
+#Region "Name"
+        ''' <summary>Gets or sets text of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.Name"/></summary>
+        ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <Description("Gets or sets text of ColumnHeader which displays Name of encoding. Applicable only when Style is ListView")> _
         <Category(CategoryAttributeValues.List), Localizable(True)> _
-       Public Property NameColumnHeaderText() As String
+        Public Property NameColumnHeaderText() As String
             Get
                 Return cohName.Text
             End Get
@@ -555,14 +614,22 @@ Namespace Windows.Forms
                 cohName.Text = value
             End Set
         End Property
+        ''' <summary>Instructs designer if <see cref="NameColumnHeaderText"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
         Private Function ShouldSerializeNameColumnHeaderText() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohName.Text <> resources.GetString("cohName.Text")
         End Function
+        ''' <summary>Resets <see cref="NameColumnHeaderText"/> to its default value</summary>
         Private Sub ResetNameColumnHeaderText()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohName.Text = resources.GetString("cohName.Text")
         End Sub
+#End Region
+#Region "Display Name"
+        ''' <summary>Gets or sets text of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.DisplayName"/></summary>
+        ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <Description("Gets or sets text of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView")> _
         <Category(CategoryAttributeValues.List), Localizable(True)> _
         Public Property DisplayNameColumnHeaderText() As String
             Get
@@ -572,14 +639,22 @@ Namespace Windows.Forms
                 cohDisplayName.Text = value
             End Set
         End Property
+        ''' <summary>Instructs designer if <see cref="DisplayNameColumnHeaderText"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
         Private Function ShouldSerializeDisplayNameColumnHeaderText() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohDisplayName.Text <> resources.GetString("cohDisplayName.Text")
         End Function
+        ''' <summary>Resets <see cref="DisplayNameColumnHeaderText"/> to its default value</summary>
         Private Sub ResetDisplayNameColumnHeaderText()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohDisplayName.Text = resources.GetString("cohDisplayName.Text")
         End Sub
+#End Region
+#Region "CodePage"
+        ''' <summary>Gets or sets text of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.CodePage"/></summary>
+        ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <Description("Gets or sets text of ColumnHeader which displays CodePage of encoding. Applicable only when Style is ListView")> _
         <Category(CategoryAttributeValues.List), Localizable(True)> _
         Public Property CodePageColumnHeaderText() As String
             Get
@@ -589,16 +664,80 @@ Namespace Windows.Forms
                 cohCodePage.Text = value
             End Set
         End Property
+        ''' <summary>Instructs designer if <see cref="CodePageColumnHeaderText"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
         Private Function ShouldSerializeCodePageColumnHeaderText() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohCodePage.Text <> resources.GetString("cohCodePage.Text")
         End Function
+        ''' <summary>Resets <see cref="CodePageColumnHeaderText"/> to its default value</summary>
         Private Sub ResetCodePageColumnHeaderText()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohCodePage.Text = resources.GetString("cohCodePage.Text")
         End Sub
 #End Region
 #End Region
+        ''' <summary>Specifies column and order of sorting</summary>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+        <Category(CategoryAttributeValues.List), Description("Specifies column and order of sorting")> _
+        Public ReadOnly Property Sorting() As ListViewItemComparer
+            'TODO: Show in PropertyGrid
+            Get
+                Return lvwEncoding.ListViewItemSorter
+            End Get
+        End Property
+        ''' <summary>Instructs designer if <see cref="Sorting"/> should be serialized</summary>
+        ''' <returns>True if value differs from default</returns>
+        Private Function ShouldSerializeSorting() As Boolean
+            Return Sorting.Column <> 0 OrElse Sorting.Descending
+        End Function
+        ''' <summary>Resets <see cref="Sorting"/> to its default value</summary>
+        Private Sub ResetSorting()
+            Sorting.Descending = False
+            Sorting.Column = 0
+        End Sub
+        ''' <summary>Specifies all possible orders of columns</summary>
+        ''' <remarks>
+        ''' Column order specification is <see cref="Short"/> number divided into 3 4-bits long groups.
+        ''' First group is position of DisplayName column, second is position of name column and third of code page column.
+        ''' Positions in groups are 1-based.
+        ''' </remarks>
+        Public Enum enmColumnOrder As Short
+            ''' <summary>Columns are ordered: display name - name - code page</summary>
+            DisplayName_Name_CodePage = 1S Or 2S << 4 Or 3S << 8
+            ''' <summary>Columns are ordered: display name - codepage - name</summary> 
+            DisplayName_CodePage_Name = 1S Or 3S << 4 Or 2S << 8
+            ''' <summary>Columns are ordered: name - display name - code page</summary>
+            Name_DisplayName_CodePage = 2S Or 1S << 4 Or 3S << 8
+            ''' <summary>Columns are ordered: name - code page - display name</summary>
+            Name_CodePage_DisplayName = 3S Or 1S << 4 Or 2S << 8
+            ''' <summary>Columns are ordered: code page - display name - name</summary>
+            CodePage_DisplayName_Name = 2S Or 3S << 4 Or 1S << 8
+            ''' <summary>Columns are ordered: code page - name - display name</summary>
+            CodePage_Name_DisplayName = 3S Or 2S << 4 Or 1s << 8
+        End Enum
+        ''' <summary>Gets or setrs order of columns of <see cref="ListView"/> if <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></summary>
+        <DefaultValue(GetType(enmColumnOrder), "DisplayName_Name_CodePage")> _
+        <Category(CategoryAttributeValues.List), Description("Gets or sets order of columns of ListView when Style is ListView")> _
+        Public Property ColumnOrder() As enmColumnOrder
+            Get
+                Return CShort(cohDisplayName.DisplayIndex + 1) Or CShort(cohName.DisplayIndex + 1) << 4 Or CShort(cohCodePage.DisplayIndex + 1) << 8
+            End Get
+            Set(ByVal value As enmColumnOrder)
+                If [Enum].IsDefined(GetType(enmColumnOrder), value) Then
+                    Dim DisplayName As Short = (value And &HFS) - 1
+                    Dim Name As Short = ((value And &HF0S) >> 4) - 1
+                    Dim CodePage As Short = ((value And &HF00S) >> 8) - 1
+                    cohDisplayName.DisplayIndex = DisplayName
+                    cohName.DisplayIndex = Name
+                    cohCodePage.DisplayIndex = CodePage
+                    lvwEncoding.Refresh()
+                Else
+                    Throw New InvalidEnumArgumentException("value", value, GetType(enmColumnOrder))
+                End If
+            End Set
+        End Property
+#End Region
     End Class
 End Namespace
-#End If
+'#End If 'See note at the beginning of this file
