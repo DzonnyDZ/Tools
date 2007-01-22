@@ -147,6 +147,7 @@
     </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
+    <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -180,6 +181,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Encoding.bmp" />
+    <EmbeddedResource Include="Windows\Forms\EncodingSelector.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingSelector.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\EncodingSelector.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingSelector.vb</DependentUpon>

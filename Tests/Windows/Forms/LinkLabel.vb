@@ -6,7 +6,7 @@
             Dim frm As New frmLinkLabel
             frm.ShowDialog()
         End Sub
-
+        ''' <summary>CTor</summary>
         Public Sub New()
 
             ' This call is required by the Windows Form Designer.

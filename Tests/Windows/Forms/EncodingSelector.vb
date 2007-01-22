@@ -1,3 +1,28 @@
-Public Class EncodingSelector
+Imports Tools.Windows.Forms
+Namespace Windows.Forms
+    ''' <summary>Test from for <see cref="EncodingSelector"/></summary>
+    Public Class frmEncodingSelector
+        ''' <summary>Show test form</summary>
+        Public Shared Sub Test()
+            Dim frm As New frmEncodingSelector
+            frm.ShowDialog()
+        End Sub
+        ''' <summary>CTor</summary>
+        Public Sub New()
 
-End Class
+            ' This call is required by the Windows Form Designer.
+            InitializeComponent()
+
+            ' Add any initialization after the InitializeComponent() call.
+            Me.Icon = Tools.Resources.ToolsIcon
+        End Sub
+
+        Private Sub ensSelect_SelectedIndexChanged(ByVal sender As Tools.Windows.Forms.EncodingSelector, ByVal e As System.EventArgs) Handles ensSelect.SelectedIndexChanged
+            If ensSelect.SelectedEncoding IsNot Nothing Then
+                lblSelected.Text = ensSelect.SelectedEncoding.DisplayName
+            Else
+                lblSelected.Text = ""
+            End If
+        End Sub
+    End Class
+End Namespace

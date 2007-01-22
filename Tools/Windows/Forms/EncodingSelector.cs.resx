@@ -117,139 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lstEncoding.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="lstEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="lstEncoding.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="lstEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 17</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="lstEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="lstEncoding.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;lstEncoding.Name" xml:space="preserve">
-    <value>lstEncoding</value>
-  </data>
-  <data name="&gt;&gt;lstEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lstEncoding.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lstEncoding.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="cmbEncoding.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="cmbEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="cmbEncoding.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="cmbEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
-  </data>
-  <data name="cmbEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;cmbEncoding.Name" xml:space="preserve">
-    <value>cmbEncoding</value>
-  </data>
-  <data name="&gt;&gt;cmbEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmbEncoding.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;cmbEncoding.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <data name="cohDisplayName.Text" xml:space="preserve">
-    <value>Encoding</value>
-  </data>
-  <data name="cohDisplayName.Width" type="System.Int32, mscorlib">
-    <value>120</value>
+    <value>Kódování</value>
   </data>
   <data name="cohName.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <data name="cohName.Width" type="System.Int32, mscorlib">
-    <value>70</value>
+    <value>Kód</value>
   </data>
   <data name="cohCodePage.Text" xml:space="preserve">
-    <value>Code page</value>
+    <value>Kódová stránka</value>
   </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="cohCodePage.Width" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="lvwEncoding.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lvwEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="lvwEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
-  </data>
-  <data name="lvwEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="lvwEncoding.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
-  </data>
-  <data name="&gt;&gt;lvwEncoding.Name" xml:space="preserve">
-    <value>lvwEncoding</value>
-  </data>
-  <data name="&gt;&gt;lvwEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;lvwEncoding.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;lvwEncoding.ZOrder" xml:space="preserve">
-    <value>0</value>
-  </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
-  </data>
-  <data name="&gt;&gt;cohDisplayName.Name" xml:space="preserve">
-    <value>cohDisplayName</value>
-  </data>
-  <data name="&gt;&gt;cohDisplayName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cohName.Name" xml:space="preserve">
-    <value>cohName</value>
-  </data>
-  <data name="&gt;&gt;cohName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cohCodePage.Name" xml:space="preserve">
-    <value>cohCodePage</value>
-  </data>
-  <data name="&gt;&gt;cohCodePage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>EncodingSelector</value>
-  </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+    <value>91</value>
   </data>
 </root>
