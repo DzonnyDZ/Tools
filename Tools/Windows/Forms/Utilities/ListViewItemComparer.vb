@@ -1,11 +1,9 @@
 Imports System.Windows.Forms
-'TODO: Add to wiki
-'TODO: Stage can be changed to Release
-#If Config <= Nightly Then 'Stage: Nightly
+#If Config <= Release Then
 Namespace Windows.Forms.Utilities
     ''' <summary>Implements the manual sorting of items in <see cref="ListView"/> by columns.</summary>
     ''' <remarks><seealso>http://msdn2.microsoft.com/en-us/library/system.windows.forms.listview.listviewitemsorter.aspx</seealso></remarks>
-    Public Class ListViewItemComparer : Implements IComparer
+    Public NotInheritable Class ListViewItemComparer : Implements IComparer
         ''' <summary>Contains value of the <see cref="Column"/> property</summary>
         Private _Column As Integer = 0
         ''' <summary>Contains value of the <see cref="Descending"/> property</summary>

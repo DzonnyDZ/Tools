@@ -107,6 +107,9 @@
     <Compile Include="ComponentModel\Localizable attrs.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ComponentModel\SettingsAttributes.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStructures\Generic\T1orT2.vb" />
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
@@ -158,6 +161,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>Localizable attrs.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ComponentModel\SettingsAttributes.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>SettingsAttributes.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmTests.vb</DependentUpon>
@@ -192,6 +199,10 @@
     <None Include="Resources\AddTableHS.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="ComponentModel\ComponetModel.SettingsAttributes.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+    </None>
     <None Include="Resources\FindHS.png" />
   </ItemGroup>
   <ItemGroup>

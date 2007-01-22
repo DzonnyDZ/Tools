@@ -1,0 +1,12 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="SettingsAttributes">
+  <Profiles />
+  <Settings>
+    <Setting Name="TestSetting1" Description="Property with default value &quot;Test default value&quot;" Type="System.String" Scope="User">
+      <Value Profile="(Default)">Test default value</Value>
+    </Setting>
+    <Setting Name="TestSetting2" Description="Property with default value 14; 25" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">14, 25</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>
