@@ -1,5 +1,5 @@
 ﻿''' <summary>Contains tests for <see cref="Tools.Math"/></summary>
-Partial Public Class Math
+Partial Friend Class Math
     ''' <summary>Test for <see cref="Tools.Math.Min"/></summary>
     Public Shared Sub Min()
         Dim arr As Long() = {7, 6, 5, -8, 12, 120, 501}

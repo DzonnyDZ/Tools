@@ -1,7 +1,7 @@
 Imports Tools.ComponentModel, System.ComponentModel
 Namespace ComponentModel
     ''' <summary>Tests <see cref="LCategoryAttribute"/>, <see cref="LDescriptionAttribute"/> and <see cref="LDisplayNameAttribute"/></summary>
-    Public Class frmLocalizableAttributes : Inherits Form
+    Friend Class frmLocalizableAttributes : Inherits Form
         ''' <summary>CTor</summary>
         Public Sub New()
             ' This call is required by the Windows Form Designer.

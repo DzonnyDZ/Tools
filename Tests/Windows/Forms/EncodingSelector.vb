@@ -1,7 +1,7 @@
 Imports Tools.Windows.Forms
 Namespace Windows.Forms
     ''' <summary>Test from for <see cref="EncodingSelector"/></summary>
-    Public Class frmEncodingSelector
+    Friend Class frmEncodingSelector
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
             Dim frm As New frmEncodingSelector

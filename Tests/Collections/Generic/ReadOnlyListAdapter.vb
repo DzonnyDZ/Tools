@@ -1,7 +1,7 @@
 ﻿Imports Tools.Collections.Generic
 Namespace Collections.Generic
     ''' <summary>Tests selected functionality of <see cref="ReadOnlyListAdapter(Of TFrom, TTo)"/></summary>
-    Public Class frmReadOnlyListAdapter
+    Friend Class frmReadOnlyListAdapter
         ''' <summary>List with read-write access</summary>
         Private RWList As New List(Of clsRW)
         ''' <summary>List awith read-only acces</summary>

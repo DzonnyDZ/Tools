@@ -1,6 +1,6 @@
 ﻿Imports Tools.DataStructures.Generic
 Namespace DataStructures.Generic
-    Module T1orT2
+    Friend Module T1orT2
         Sub Test()
             Dim t1 As T1orT2(Of String, Long)
             Dim t2 As T1orT2(Of String, Long)

@@ -1,6 +1,6 @@
 ﻿Namespace Windows.Forms
     ''' <summary>Tests <see cref="Tools.Windows.Forms.LinkLabel"/></summary>
-    Public Class frmLinkLabel
+    Friend Class frmLinkLabel
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
             Dim frm As New frmLinkLabel

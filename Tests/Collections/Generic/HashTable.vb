@@ -1,7 +1,7 @@
 Imports Tools.Collections.Generic
 Namespace Collections.Generic
     ''' <summary>Test Form for testing <see cref="HashTable(Of String)"/></summary>
-    Public Class frmHashTable
+    Friend Class frmHashTable
         ''' <summary>Test instance of <see cref="HashTable(Of String)"/></summary>
         Private Table As New HashTable(Of String)(New eqc)
         ''' <summary>CTor</summary>

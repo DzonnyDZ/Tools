@@ -1,5 +1,5 @@
 Imports System.ComponentModel, System.Configuration, Tools.VisualBasic
-#If Config <= Nightly Then 'Stage: Nightly
+#If Config <= Beta Then 'Stage: Beta
 Namespace ComponentModel
     ''' <summary><see cref="DescriptionAttribute"/> that takes its value from <see cref="System.Configuration.SettingsDescriptionAttribute"/></summary>
     <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
@@ -9,7 +9,7 @@ Namespace ComponentModel
         ''' <param name="Property">Name of the property which's <see cref="SettingsDescriptionAttribute"/> initializes this attribute</param>
         ''' <param name="AlternateDescription">Alternative description used in case of failure of getting description form specified property</param>
         Public Sub New(ByVal Settings As Type, ByVal [Property] As String, Optional ByVal AlternateDescription As String = "")
-            MyBase.New(IIf(AlternateDescription = "", [Property], AlternateDescription))
+            MyBase.New(iif(AlternateDescription = "", [Property], AlternateDescription))
             Me.Settings = Settings
             Me.Property = [Property]
         End Sub

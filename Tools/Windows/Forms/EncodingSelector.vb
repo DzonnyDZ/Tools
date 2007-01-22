@@ -512,6 +512,7 @@ Namespace Windows.Forms
             End Set
         End Property
 #Region "Column headers" 'TODO: Comments and descriptions, maybe another properties
+#Region "Widths"
         'TODO: ShouldSerialize / Reset for widths
         <Category(CategoryAttributeValues.List)> _
         <DefaultValue(70), Localizable(True)> _
@@ -543,7 +544,8 @@ Namespace Windows.Forms
                 cohCodePage.Width = value
             End Set
         End Property
-
+#End Region
+#Region "Header texts"
         <Category(CategoryAttributeValues.List), Localizable(True)> _
        Public Property NameColumnHeaderText() As String
             Get
@@ -595,6 +597,7 @@ Namespace Windows.Forms
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohCodePage.Text = resources.GetString("cohCodePage.Text")
         End Sub
+#End Region
 #End Region
     End Class
 End Namespace
