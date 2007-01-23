@@ -1,4 +1,4 @@
-Imports System.Windows.Forms, tools.Windows.Forms.Utilities, System.Text, Tools.Collections.Generic
+﻿Imports System.Windows.Forms, tools.Windows.Forms.Utilities, System.Text, Tools.Collections.Generic
 '#If Config <= Beta Then
 'Stage: Beta
 'Conditional compilation directive is commented out because its presence caused compiler warning.
@@ -11,7 +11,7 @@ Namespace Windows.Forms
     ''' <summary>Control taht allows user to chose from available encoding</summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     <Drawing.ToolboxBitmap("Encoding.bmp")> _
-    <Author("�onny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
     <DefaultEvent("SelectedIndexChanged")> _
     <Localizable(True)> _
     Public Class EncodingSelector : Inherits UserControl

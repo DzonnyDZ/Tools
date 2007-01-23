@@ -1,4 +1,4 @@
-Imports Tools.Collections.Generic
+﻿Imports Tools.Collections.Generic
 Namespace Collections.Generic
     ''' <summary>Test Form for testing <see cref="HashTable(Of String)"/></summary>
     Friend Class frmHashTable

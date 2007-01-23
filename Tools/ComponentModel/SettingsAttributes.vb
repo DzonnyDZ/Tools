@@ -1,8 +1,8 @@
-Imports System.ComponentModel, System.Configuration, Tools.VisualBasic
+ï»¿Imports System.ComponentModel, System.Configuration, Tools.VisualBasic
 #If Config <= Beta Then 'Stage: Beta
 Namespace ComponentModel
     ''' <summary><see cref="DescriptionAttribute"/> that takes its value from <see cref="System.Configuration.SettingsDescriptionAttribute"/></summary>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
     Public Class SettingsInheritDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name specified in <paramref name="Property"/></param>
@@ -31,7 +31,7 @@ Namespace ComponentModel
         End Property
     End Class
     ''' <summary><see cref="DefaultValueAttribute"/> that takes its value from <see cref="System.Configuration.DefaultSettingValueAttribute"/></summary>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
     Public Class SettingsInheritDefaultValueAttribute : Inherits DefaultValueAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name defined in <paramref name="Property"/></param>

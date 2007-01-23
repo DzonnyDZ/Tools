@@ -1,4 +1,4 @@
-Imports Tools.Windows.Forms
+﻿Imports Tools.Windows.Forms
 Namespace Windows.Forms
     ''' <summary>Test from for <see cref="EncodingSelector"/></summary>
     Friend Class frmEncodingSelector

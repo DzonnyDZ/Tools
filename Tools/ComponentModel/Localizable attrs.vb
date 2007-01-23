@@ -1,9 +1,9 @@
-Imports System.ComponentModel
+ï»¿Imports System.ComponentModel
 #If Config <= Beta Then 'Stage: Beta
 Namespace ComponentModel
     ''' <summary>Localizable version of <see cref="DescriptionAttribute"/>. Defines description shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
     ''' <remarks>Localizable means that value can be loaded from resources.</remarks>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
     Public Class LDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -50,7 +50,7 @@ Namespace ComponentModel
 
     ''' <summary>Localizable version of <see cref="DisplayNameAttribute"/>. Defines name shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
     ''' <remarks>Localizable means that value can be loaded from resources.</remarks>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
     Public Class LDisplayNameAttribute : Inherits DisplayNameAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -99,7 +99,7 @@ Namespace ComponentModel
     ''' Localizable means that value can be loaded from resources.
     ''' Note that some categories can be localized by .NET Framework itself.
     ''' </remarks>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
+    <Author("Äonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
     Public Class LCategoryAttribute : Inherits CategoryAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
