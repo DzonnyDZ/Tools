@@ -24,8 +24,9 @@ Namespace Windows.Forms
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.splMain = New System.Windows.Forms.SplitContainer
-            Me.lblSelected = New System.Windows.Forms.Label
             Me.ensSelect = New Tools.Windows.Forms.EncodingSelector
+            Me.lblSelected = New System.Windows.Forms.Label
+            Me.cmdRefresh = New System.Windows.Forms.Button
             Me.pgrProperties = New System.Windows.Forms.PropertyGrid
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
@@ -46,10 +47,20 @@ Namespace Windows.Forms
             '
             'splMain.Panel2
             '
+            Me.splMain.Panel2.Controls.Add(Me.cmdRefresh)
             Me.splMain.Panel2.Controls.Add(Me.pgrProperties)
             Me.splMain.Size = New System.Drawing.Size(287, 492)
             Me.splMain.SplitterDistance = 133
             Me.splMain.TabIndex = 1
+            '
+            'ensSelect
+            '
+            Me.ensSelect.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.ensSelect.Location = New System.Drawing.Point(0, 0)
+            Me.ensSelect.Name = "ensSelect"
+            Me.ensSelect.Size = New System.Drawing.Size(287, 108)
+            Me.ensSelect.Style = Tools.Windows.Forms.EncodingSelector.EncodingSelectorStyle.ListBox
+            Me.ensSelect.TabIndex = 0
             '
             'lblSelected
             '
@@ -60,14 +71,19 @@ Namespace Windows.Forms
             Me.lblSelected.TabIndex = 1
             Me.lblSelected.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
-            'ensSelect
+            'cmdRefresh
             '
-            Me.ensSelect.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.ensSelect.Location = New System.Drawing.Point(0, 0)
-            Me.ensSelect.Name = "ensSelect"
-            Me.ensSelect.Size = New System.Drawing.Size(287, 108)
-            Me.ensSelect.Style = Tools.Windows.Forms.EncodingSelector.EncodingSelectorStyle.ListBox
-            Me.ensSelect.TabIndex = 0
+            Me.cmdRefresh.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.cmdRefresh.AutoSize = True
+            Me.cmdRefresh.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdRefresh.Font = New System.Drawing.Font("Webdings", 15.0!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(2, Byte))
+            Me.cmdRefresh.ForeColor = System.Drawing.Color.Green
+            Me.cmdRefresh.Location = New System.Drawing.Point(246, 321)
+            Me.cmdRefresh.Name = "cmdRefresh"
+            Me.cmdRefresh.Size = New System.Drawing.Size(41, 34)
+            Me.cmdRefresh.TabIndex = 2
+            Me.cmdRefresh.Text = "q"
+            Me.cmdRefresh.UseVisualStyleBackColor = True
             '
             'pgrProperties
             '
@@ -91,6 +107,7 @@ Namespace Windows.Forms
             Me.Text = "Testing EncodingSelector"
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel2.ResumeLayout(False)
+            Me.splMain.Panel2.PerformLayout()
             Me.splMain.ResumeLayout(False)
             Me.ResumeLayout(False)
 
@@ -99,5 +116,6 @@ Namespace Windows.Forms
         Friend WithEvents splMain As System.Windows.Forms.SplitContainer
         Friend WithEvents pgrProperties As System.Windows.Forms.PropertyGrid
         Friend WithEvents lblSelected As System.Windows.Forms.Label
+        Friend WithEvents cmdRefresh As System.Windows.Forms.Button
     End Class
 End Namespace

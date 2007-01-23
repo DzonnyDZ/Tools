@@ -55,7 +55,6 @@ Namespace Windows.Forms
             Me.lvwEncoding.FullRowSelect = True
             Me.lvwEncoding.MultiSelect = False
             Me.lvwEncoding.Name = "lvwEncoding"
-            Me.lvwEncoding.Sorting = System.Windows.Forms.SortOrder.Ascending
             Me.lvwEncoding.UseCompatibleStateImageBehavior = False
             Me.lvwEncoding.View = System.Windows.Forms.View.Details
             '
@@ -92,8 +91,16 @@ Namespace Windows.Forms
             BackColor = Drawing.SystemColors.Window
             ForeColor = Drawing.SystemColors.WindowText
             lvwEncoding.ListViewItemSorter = New ListViewItemComparer()
+            AddHandler Sorting.Changed, AddressOf lvwEncodingListViewItemSorter_Changed
+            EncodingSelector_Resize(Me, EventArgs.Empty)
+            MyBase.ResumeLayout()
+        End Sub
+        ''' <summary>Handles <see cref="ListViewItemComparer.Changed"/> event of <see cref="ListView.ListViewItemSorter"/> of <see cref="lvwEncoding"/></summary>
+        Private Sub lvwEncodingListViewItemSorter_Changed(ByVal sender As IReportsChange, ByVal e As EventArgs)
+            lvwEncoding.Sort()
         End Sub
         ''' <summary>Refreshes list of encodings</summary>
+        ''' <remarks>Encodings are obtainded from <see cref="EncodingInfo.GetEncoding"/></remarks>
         Public Overridable Sub RefreshEncodings()
             Dim oldCP As Integer = SelectedCodepage
             lstEncoding.Items.Clear()
@@ -110,6 +117,72 @@ Namespace Windows.Forms
             Next inf
             SelectedCodepage = oldCP
         End Sub
+        ''' <summary>Removes first encoding with same <see cref="EncodingInfo.CodePage"/> as <paramref name="Encoding"/>'s one</summary>
+        ''' <param name="Encoding">Encoding to remove</param>
+        Public Overridable Sub RemoveEncoding(ByVal Encoding As EncodingInfo)
+            If Encoding Is Nothing Then Return
+            RemoveEncoding(Encoding.CodePage)
+        End Sub
+        ''' <summary>Removes first encoding with same <see cref="EncodingInfo.CodePage"/> as <paramref name="Encoding"/></summary>
+        ''' <param name="CodePage">Code page to search for</param>
+        Public Overridable Sub RemoveEncoding(ByVal CodePage As Integer)
+            Dim i As Integer = 0
+            For Each enc As EncodingInfoToDisplay In cmbEncoding.Items
+                If enc.Info.CodePage = CodePage Then
+                    cmbEncoding.Items.RemoveAt(i)
+                    Exit For
+                End If
+                i += 1
+            Next enc
+            i = 0
+            For Each enc As EncodingInfoToDisplay In lstEncoding.Items
+                If enc.Info.CodePage = CodePage Then
+                    lstEncoding.Items.RemoveAt(i)
+                    Exit For
+                End If
+                i += 1
+            Next enc
+            i = 0
+            For Each li As ListViewItem In lvwEncoding.Items
+                If DirectCast(li.Tag, EncodingInfoToDisplay).Info.CodePage = CodePage Then
+                    lvwEncoding.Items.RemoveAt(i)
+                    Exit For
+                End If
+                i += 1
+            Next li
+        End Sub
+        ''' <summary>Removes all encodings</summary>
+        Public Overridable Sub Clear()
+            lstEncoding.Items.Clear()
+            lvwEncoding.Items.Clear()
+            cmbEncoding.Items.Clear()
+        End Sub
+        ''' <summary>Adds given encoding (if encoding with same <see cref="EncodingInfo.CodePage"/> is not present in list)</summary>
+        ''' <param name="Encoding">Encoding to add</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Encoding"/> is null</exception>
+        Public Overridable Sub Add(ByVal Encoding As EncodingInfo)
+            If Encoding Is Nothing Then _
+                Throw New ArgumentNullException("Encoding cannot be added when its value is null", "Encoding")
+            If Not ContainsCodePage(Encoding.CodePage) Then
+                Dim dinf As New EncodingInfoToDisplay(Encoding)
+                dinf.DisplayStyle = DisplayStyle
+                lstEncoding.Items.Add(dinf)
+                cmbEncoding.Items.Add(dinf)
+                Dim itm As ListViewItem = lvwEncoding.Items.Add(Encoding.DisplayName)
+                itm.Tag = dinf
+                itm.SubItems.Add(Encoding.Name)
+                itm.SubItems.Add(Encoding.CodePage)
+            End If
+        End Sub
+        ''' <summary>Determines wheather encoding with <see cref="EncodingInfo.CodePage"/> equal to <paramref name="CP"/> is present in list</summary>
+        ''' <param name="CP">Code page to search for</param>
+        ''' <returns>True if encoding with same code page is found, otherwise not.</returns>
+        Public Function ContainsCodePage(ByVal CP As Integer) As Boolean
+            For Each enc As EncodingInfoToDisplay In lstEncoding.Items
+                If enc.Info.CodePage = CP Then Return True
+            Next enc
+            Return False
+        End Function
         ''' <summary>Contains value of the <see cref="DisplayStyle"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _DisplayStyle As String = "{0}"
@@ -186,28 +259,10 @@ Namespace Windows.Forms
                         End Select
                         Throw New InvalidEnumArgumentException("value", value, GetType(EncodingSelectorStyle))
                 End Select
-                MaximumSize = MaximumSize
+                EncodingSelector_Resize(Me, EventArgs.Empty)
             End Set
         End Property
-        ''' <summary>Contains value of the <see cref="MaximumSize"/> property</summary>
-        ''' <remarks>Actual <see cref="UserControl.MaximumSize"/> is equal to <see cref="_MaximumSize"/> only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListBox"/> otherwise its <see cref="Drawing.Size.Height"/> is set to <see cref="ComboBox.Height"/> of <see cref="cmbEncoding"/></remarks>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _MaximumSize As System.Drawing.Size
-        ''' <summary>Gets or sets the size that is the upper limit that <see cref="System.Windows.Forms.Control.GetPreferredSize"/> can specify.</summary>
-        ''' <returns>An ordered pair of type <see cref="System.Drawing.Size"/> representing the width and height of a rectangle.</returns>
-        Public NotOverridable Overrides Property MaximumSize() As System.Drawing.Size
-            Get
-                Return _MaximumSize
-            End Get
-            Set(ByVal value As System.Drawing.Size)
-                _MaximumSize = value
-                If Me.Style = EncodingSelectorStyle.ComboBox Then
-                    MyBase.MaximumSize = New Drawing.Size(value.Width, cmbEncoding.Height)
-                Else
-                    MyBase.MaximumSize = value
-                End If
-            End Set
-        End Property
+    
         ''' <summary>Gets the length and height, in pixels, that is specified as the default maximum size of a control.</summary>
         ''' <returns>A <see cref="System.Drawing.Size"/> representing the size of the control.</returns>
         ''' <remarks>If <see cref="Style"/> is <see cref="EncodingSelectorStyle.ComboBox"/> then height is limited to maximum height of <see cref="ComboBox"/></remarks>
@@ -251,80 +306,11 @@ Namespace Windows.Forms
                 Return lstEncoding.Items.Count
             End Get
         End Property
-        ''' <summary>Wrapper class aroun <see cref="EncodingInfo"/> in order to be displayed in list</summary>
-        <DebuggerDisplay("{ToString}")> _
-        Protected Class EncodingInfoToDisplay
-            ''' <summary>Copntains value of the <see cref="Info"/> property</summary>
-            Private _Info As EncodingInfo
-            ''' <summary>CTor</summary>
-            ''' <param name="Info"><see cref="EncodingInfo"/> to be wrapped</param>
-            Public Sub New(ByVal Info As EncodingInfo)
-                Me.Info = Info
-            End Sub
-            ''' <summary>Contains value of the <see cref="DisplayStyle"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> _
-            Private _DisplayStyle As String = "{0}"
-            ''' <summary>Gets or sets format string used to display name of encoding in the <see cref="ToString"/> function</summary>
-            ''' <remarks>
-            ''' <list>
-            ''' <listheader>There are 3 parameters tah can be passed to format string:</listheader>
-            ''' <item>{0} - <see cref="EncodingInfo.DisplayName"/></item>
-            ''' <item>{1} - <see cref="EncodingInfo.Name"/></item>
-            ''' <item>{2} - <see cref="EncodingInfo.CodePage"/></item>
-            ''' </list>
-            ''' <seealso cref="String.Format"/>
-            ''' </remarks>
-            <DefaultValue("{0}")> _
-            Public Property DisplayStyle() As String
-                <DebuggerStepThrough()> Get
-                    Return _DisplayStyle
-                End Get
-                <DebuggerStepThrough()> Set(ByVal value As String)
-                    _DisplayStyle = value
-                End Set
-            End Property
-            ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="EncodingInfoToDisplay"/>.</summary>
-            ''' <returns><see cref="EncodingInfo.DisplayName"/> of <see cref="Info"/></returns>
-            <DebuggerStepThrough()> Public Overrides Function ToString() As String
-                Return String.Format(DisplayStyle, Info.DisplayName, Info.Name, Info.CodePage)
-            End Function
-            ''' <summary>Gets or sets <see cref="EncodingInfo"/> being wrapped</summary>
-            ''' <exception cref="ArgumentNullException">value is being set to null</exception>
-            Public Property Info() As EncodingInfo
-                <DebuggerStepThrough()> Get
-                    Return _Info
-                End Get
-                Set(ByVal value As EncodingInfo)
-                    If value Is Nothing Then Throw New ArgumentNullException("value", "Info cannot be null")
-                    _Info = value
-                End Set
-            End Property
-            ''' <summary>Converts <see cref="EncodingInfo"/> to <see cref="EncodingInfoToDisplay"/></summary>
-            ''' <param name="a"><see cref="EncodingInfo"/> to be converted</param>
-            ''' <returns>New instance of <see cref="EncodingInfoToDisplay"/> initialized with <paramref name="a"/> or null when <paramref name="a"/> is null.</returns>
-            Public Shared Widening Operator CType(ByVal a As EncodingInfo) As EncodingInfoToDisplay
-                If a Is Nothing Then
-                    Return Nothing
-                Else
-                    Return New EncodingInfoToDisplay(a)
-                End If
-            End Operator
-            ''' <summary>Converts <see cref="EncodingInfoToDisplay"/> to <see cref="EncodingInfo"/></summary>
-            ''' <param name="a"><see cref="EncodingInfoToDisplay"/> to be converted</param>
-            ''' <returns>Value of the <see cref="Info"/> property of <paramref name="a"/> or null when <paramref name="a"/> is null.</returns>
-            Public Shared Widening Operator CType(ByVal a As EncodingInfoToDisplay) As EncodingInfo
-                If a Is Nothing Then
-                    Return Nothing
-                Else
-                    Return a.Info
-                End If
-            End Operator
-        End Class
-
+        ''' <summary>True while <see cref="ListView.SelectedItems"/> of <see cref="lvwEncoding"/> are being cleared. Prevents raising <see cref="ListView.SelectedIndexChanged"/> event multiple times</summary>
         Private ClearPending As Boolean = False
 
         Private Sub lstEncoding_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lstEncoding.SelectedIndexChanged
-            If cmbEncoding.SelectedItem IsNot lstEncoding.SelectedItem Then cmbEncoding.SelectedItem = lstEncoding.SelectedItem
+            If cmbEncoding.SelectedIndex >= cmbEncoding.Items.Count OrElse cmbEncoding.SelectedItem IsNot lstEncoding.SelectedItem Then cmbEncoding.SelectedItem = lstEncoding.SelectedItem
             If lstEncoding.SelectedItem IsNot Nothing Then
                 If (lvwEncoding.SelectedItems.Count > 0 AndAlso lstEncoding.SelectedItem IsNot lvwEncoding.SelectedItems(0).Tag) OrElse lvwEncoding.SelectedItems.Count = 0 Then
                     ClearPending = True
@@ -342,20 +328,50 @@ Namespace Windows.Forms
             End If
             OnSelectedIndexChanged()
         End Sub
+#Region "Events"
+        Private Sub cmbEncoding_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbEncoding.Click, lstEncoding.Click, lvwEncoding.Click
+            OnClick(e)
+        End Sub
+
+        Private Sub cmbEncoding_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles cmbEncoding.KeyDown, lstEncoding.KeyDown, lvwEncoding.KeyDown
+            OnKeyDown(e)
+            If e.KeyCode = Keys.Return AndAlso Me.SelectedEncoding IsNot Nothing Then
+                RaiseEvent ItemDoubleClick(Me, New EncodingSelectorItemClickEventArgs(Me.SelectedEncoding))
+            End If
+        End Sub
+
+        Private Sub cmbEncoding_KeyPress(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyPressEventArgs) Handles cmbEncoding.KeyPress, lstEncoding.KeyPress, lvwEncoding.KeyPress
+            OnKeyPress(e)
+        End Sub
+
+        Private Sub cmbEncoding_KeyUp(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles cmbEncoding.KeyUp, lstEncoding.KeyUp, lvwEncoding.KeyUp
+            OnKeyUp(e)
+        End Sub
+
+        Private Sub cmbEncoding_MouseDown(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbEncoding.MouseDown, lstEncoding.MouseDown, lvwEncoding.MouseDown
+            OnMouseDown(e)
+        End Sub
+
+        Private Sub cmbEncoding_MouseMove(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbEncoding.MouseMove, lstEncoding.MouseMove, lvwEncoding.MouseMove
+            OnMouseMove(e)
+        End Sub
+        Private Sub cmbEncoding_MouseUp(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles cmbEncoding.MouseUp, lstEncoding.MouseUp, lvwEncoding.MouseUp
+            OnMouseUp(e)
+        End Sub
+#End Region
         Private Sub cmbEncoding_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbEncoding.SelectedIndexChanged
             If lstEncoding.SelectedItem IsNot cmbEncoding.SelectedItem Then lstEncoding.SelectedItem = cmbEncoding.SelectedItem
         End Sub
 
         Private Sub lvwMain_ColumnClick(ByVal sender As Object, ByVal e As System.Windows.Forms.ColumnClickEventArgs) Handles lvwEncoding.ColumnClick
-            If lvwEncoding.ListViewItemSorter IsNot Nothing AndAlso TypeOf lvwEncoding.ListViewItemSorter Is ListViewItemComparer AndAlso CType(lvwEncoding.ListViewItemSorter, ListViewItemComparer).Column = e.Column Then
-                With CType(lvwEncoding.ListViewItemSorter, ListViewItemComparer)
-                    .Descending = Not .Descending
-                End With
-                lvwEncoding.Sort()
+            If Sorting.Column = e.Column Then
+                Sorting.Descending = Not Sorting.Descending
             Else
-                lvwEncoding.ListViewItemSorter = New ListViewItemComparer(e.Column)
-                lvwEncoding.Sorting = SortOrder.Ascending
-            End If
+                If e.Column = 2 Then
+                    Sorting.Set(e.Column, , ListViewItemComparer.SortModes.Numeric)
+                Else
+                    Sorting.Set(e.Column)
+                End If : End If
         End Sub
         Private Sub lvwMain_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwEncoding.SelectedIndexChanged
             If ClearPending Then Exit Sub
@@ -370,6 +386,7 @@ Namespace Windows.Forms
         ''' <summary>Raised after the <see cref="SelectedIndex"/> property is changed</summary>
         ''' <param name="sender">The source of the evemt</param> 
         ''' <param name="e">Arguments</param>
+        <Category(CategoryAttributeValues.List), Description("raised after the SelectedIndex property is changed")> _
         Public Event SelectedIndexChanged(ByVal sender As EncodingSelector, ByVal e As EventArgs)
 
         ''' <summary>Raises the <see cref="SelectedIndexChanged"/> event</summary>
@@ -467,6 +484,8 @@ Namespace Windows.Forms
             If Style = EncodingSelectorStyle.ListBox Then
                 lstEncoding.Height = Me.Height
                 If Me.Height > lstEncoding.Height Then Me.Height = lstEncoding.Height
+            ElseIf Style = EncodingSelectorStyle.ComboBox Then
+                Me.Height = cmbEncoding.Height
             End If
         End Sub
         ''' <summary>Gets or sets the background color for the control.</summary>
@@ -519,7 +538,7 @@ Namespace Windows.Forms
                 lvwEncoding.BackgroundImageLayout = value
             End Set
         End Property
-#Region "Column headers" 
+#Region "Column headers"
 #Region "Widths"
 #Region "Name"
         ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.Name"/></summary>
@@ -537,11 +556,13 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Instructs designer if <see cref="NameColumnHeaderWidth"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeNameColumnHeaderWidth() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohName.Width <> resources.GetString("cohName.Width")
         End Function
         ''' <summary>Resets <see cref="NameColumnHeaderWidth"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetNameColumnHeaderWidth()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohName.Width = resources.GetString("cohName.Width")
@@ -563,11 +584,13 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Instructs designer if <see cref="DisplayNameColumnHeaderWidth"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeDisplayNameColumnHeaderWidth() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohDisplayName.Width <> resources.GetString("cohDisplayName.Width")
         End Function
         ''' <summary>Resets <see cref="DisplayNameColumnHeaderWidth"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetDisplayNameColumnHeaderWidth()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohDisplayName.Width = resources.GetString("cohDisplayName.Width")
@@ -589,11 +612,13 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Instructs designer if <see cref="CodePageColumnHeaderWidth"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeCodePageColumnHeaderWidth() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohCodePage.Width <> resources.GetString("cohCodePage.Width")
         End Function
         ''' <summary>Resets <see cref="CodePageColumnHeaderWidth"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetCodePageColumnHeaderWidth()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohCodePage.Width = resources.GetString("cohCodePage.Width")
@@ -616,11 +641,13 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Instructs designer if <see cref="NameColumnHeaderText"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeNameColumnHeaderText() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohName.Text <> resources.GetString("cohName.Text")
         End Function
         ''' <summary>Resets <see cref="NameColumnHeaderText"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetNameColumnHeaderText()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohName.Text = resources.GetString("cohName.Text")
@@ -641,11 +668,13 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Instructs designer if <see cref="DisplayNameColumnHeaderText"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeDisplayNameColumnHeaderText() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohDisplayName.Text <> resources.GetString("cohDisplayName.Text")
         End Function
         ''' <summary>Resets <see cref="DisplayNameColumnHeaderText"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetDisplayNameColumnHeaderText()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohDisplayName.Text = resources.GetString("cohDisplayName.Text")
@@ -666,11 +695,13 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Instructs designer if <see cref="CodePageColumnHeaderText"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeCodePageColumnHeaderText() As Boolean
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             Return cohCodePage.Text <> resources.GetString("cohCodePage.Text")
         End Function
         ''' <summary>Resets <see cref="CodePageColumnHeaderText"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetCodePageColumnHeaderText()
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(EncodingSelector))
             cohCodePage.Text = resources.GetString("cohCodePage.Text")
@@ -678,20 +709,23 @@ Namespace Windows.Forms
 #End Region
 #End Region
         ''' <summary>Specifies column and order of sorting</summary>
+        ''' <remarks>Sorting can be changed by user by clicking column header. Sorting applies only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <Category(CategoryAttributeValues.List), Description("Specifies column and order of sorting")> _
+        <Category(CategoryAttributeValues.List), Description("Specifies column and order of sorting. Applies only when Style is ListBox.")> _
         Public ReadOnly Property Sorting() As ListViewItemComparer
-            'TODO: Show in PropertyGrid
             Get
                 Return lvwEncoding.ListViewItemSorter
             End Get
         End Property
         ''' <summary>Instructs designer if <see cref="Sorting"/> should be serialized</summary>
         ''' <returns>True if value differs from default</returns>
+        ''' <remarks>User by Windows Forms Designer to determine wheater property should be initialized in designer-generated code or not</remarks>
         Private Function ShouldSerializeSorting() As Boolean
             Return Sorting.Column <> 0 OrElse Sorting.Descending
         End Function
         ''' <summary>Resets <see cref="Sorting"/> to its default value</summary>
+        ''' <remarks>Used by <see cref="PropertyGrid"/></remarks>
         Private Sub ResetSorting()
             Sorting.Descending = False
             Sorting.Column = 0
@@ -714,7 +748,7 @@ Namespace Windows.Forms
             ''' <summary>Columns are ordered: code page - display name - name</summary>
             CodePage_DisplayName_Name = 2S Or 3S << 4 Or 1S << 8
             ''' <summary>Columns are ordered: code page - name - display name</summary>
-            CodePage_Name_DisplayName = 3S Or 2S << 4 Or 1s << 8
+            CodePage_Name_DisplayName = 3S Or 2S << 4 Or 1S << 8
         End Enum
         ''' <summary>Gets or setrs order of columns of <see cref="ListView"/> if <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></summary>
         <DefaultValue(GetType(enmColumnOrder), "DisplayName_Name_CodePage")> _
@@ -738,6 +772,112 @@ Namespace Windows.Forms
             End Set
         End Property
 #End Region
+        ''' <summary>Wrapper class aroun <see cref="EncodingInfo"/> in order to be displayed in list</summary>
+        <DebuggerDisplay("{ToString}")> _
+        Protected Class EncodingInfoToDisplay
+            ''' <summary>Copntains value of the <see cref="Info"/> property</summary>
+            Private _Info As EncodingInfo
+            ''' <summary>CTor</summary>
+            ''' <param name="Info"><see cref="EncodingInfo"/> to be wrapped</param>
+            Public Sub New(ByVal Info As EncodingInfo)
+                Me.Info = Info
+            End Sub
+            ''' <summary>Contains value of the <see cref="DisplayStyle"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Private _DisplayStyle As String = "{0}"
+            ''' <summary>Gets or sets format string used to display name of encoding in the <see cref="ToString"/> function</summary>
+            ''' <remarks>
+            ''' <list>
+            ''' <listheader>There are 3 parameters tah can be passed to format string:</listheader>
+            ''' <item>{0} - <see cref="EncodingInfo.DisplayName"/></item>
+            ''' <item>{1} - <see cref="EncodingInfo.Name"/></item>
+            ''' <item>{2} - <see cref="EncodingInfo.CodePage"/></item>
+            ''' </list>
+            ''' <seealso cref="String.Format"/>
+            ''' </remarks>
+            <DefaultValue("{0}")> _
+            Public Property DisplayStyle() As String
+                <DebuggerStepThrough()> Get
+                    Return _DisplayStyle
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As String)
+                    _DisplayStyle = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="EncodingInfoToDisplay"/>.</summary>
+            ''' <returns><see cref="EncodingInfo.DisplayName"/> of <see cref="Info"/></returns>
+            <DebuggerStepThrough()> Public Overrides Function ToString() As String
+                Return String.Format(DisplayStyle, Info.DisplayName, Info.Name, Info.CodePage)
+            End Function
+            ''' <summary>Gets or sets <see cref="EncodingInfo"/> being wrapped</summary>
+            ''' <exception cref="ArgumentNullException">value is being set to null</exception>
+            Public Property Info() As EncodingInfo
+                <DebuggerStepThrough()> Get
+                    Return _Info
+                End Get
+                Set(ByVal value As EncodingInfo)
+                    If value Is Nothing Then Throw New ArgumentNullException("value", "Info cannot be null")
+                    _Info = value
+                End Set
+            End Property
+            ''' <summary>Converts <see cref="EncodingInfo"/> to <see cref="EncodingInfoToDisplay"/></summary>
+            ''' <param name="a"><see cref="EncodingInfo"/> to be converted</param>
+            ''' <returns>New instance of <see cref="EncodingInfoToDisplay"/> initialized with <paramref name="a"/> or null when <paramref name="a"/> is null.</returns>
+            Public Shared Widening Operator CType(ByVal a As EncodingInfo) As EncodingInfoToDisplay
+                If a Is Nothing Then
+                    Return Nothing
+                Else
+                    Return New EncodingInfoToDisplay(a)
+                End If
+            End Operator
+            ''' <summary>Converts <see cref="EncodingInfoToDisplay"/> to <see cref="EncodingInfo"/></summary>
+            ''' <param name="a"><see cref="EncodingInfoToDisplay"/> to be converted</param>
+            ''' <returns>Value of the <see cref="Info"/> property of <paramref name="a"/> or null when <paramref name="a"/> is null.</returns>
+            Public Shared Widening Operator CType(ByVal a As EncodingInfoToDisplay) As EncodingInfo
+                If a Is Nothing Then
+                    Return Nothing
+                Else
+                    Return a.Info
+                End If
+            End Operator
+        End Class
+
+        ''' <summary>Raised when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListBox"/> or <see cref="EncodingSelectorStyle.ListView"/> and user doubleclicks on item or raised when use presses the enter key and some item is selected not depending on <see cref="Style"/></summary>
+        ''' <param name="sender">The source of the event</param>
+        ''' <param name="e">Event parameters</param>
+        <Category(CategoryAttributeValues.Mouse), Description("Raised when Style is ListView or ListBox and user double clicks some item or raised when item is selected and user presses the enter key not depending on Style.")> _
+        Public Event ItemDoubleClick(ByVal sender As EncodingSelector, ByVal e As EncodingSelectorItemClickEventArgs)
+
+        ''' <summary>Erguments of the <see cref="ItemDoubleClick"/> event</summary>
+        Public Class EncodingSelectorItemClickEventArgs : Inherits EventArgs
+            ''' <summary>CTor</summary>
+            ''' <param name="Item">Encoding being selected when event occured</param>
+            Public Sub New(ByVal Item As EncodingInfo)
+                _Item = Item
+            End Sub
+            ''' <summary>Contains value of the <see cref="Item"/> property</summary>
+            Private _Item As EncodingInfo
+            ''' <summary>Encoding being selected when event occured</summary>
+            Public ReadOnly Property Item() As EncodingInfo
+                Get
+                    Return _Item
+                End Get
+            End Property
+        End Class
+
+        Private Sub lvwEncoding_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lvwEncoding.MouseDoubleClick
+            If lvwEncoding.GetItemAt(e.X, e.Y) IsNot Nothing Then
+                RaiseEvent ItemDoubleClick(Me, New EncodingSelectorItemClickEventArgs(DirectCast(lvwEncoding.GetItemAt(e.X, e.Y).Tag, EncodingInfoToDisplay)))
+            End If
+        End Sub
+        Private Sub lstEncoding_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstEncoding.MouseDoubleClick
+            If lstEncoding.SelectedIndex >= 0 Then
+                Dim Rect As Drawing.Rectangle = lstEncoding.GetItemRectangle(lstEncoding.SelectedIndex)
+                If e.X >= Rect.Left AndAlso e.X <= Rect.Right AndAlso e.Y >= Rect.Top AndAlso e.Y <= Rect.Bottom Then
+                    RaiseEvent ItemDoubleClick(Me, New EncodingSelectorItemClickEventArgs(DirectCast(lstEncoding.Items(lstEncoding.SelectedIndex), EncodingInfoToDisplay)))
+                End If
+            End If
+        End Sub
     End Class
 End Namespace
 '#End If 'See note at the beginning of this file
