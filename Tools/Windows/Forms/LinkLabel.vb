@@ -10,10 +10,11 @@ Imports System.Runtime.Serialization
 'Its preceded by comment.
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/24/2007")> _
     <ToolboxItemFilter("System.Windows.Forms")> _
     <Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
     <DefaultEvent("LinkClicked"), ToolboxItem(True), DefaultProperty("Items")> _
+    <Prefix("llb")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
         ''' <summary>Contains value of the <see cref="Items"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _

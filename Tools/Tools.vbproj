@@ -112,6 +112,7 @@
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
+    <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
@@ -138,13 +139,16 @@
     </Compile>
     <Compile Include="Resources\Resources.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\EncodingDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
-        <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
+      <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
-        <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
-        <SubType>Component</SubType>
+      <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
@@ -182,6 +186,10 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Encoding.bmp" />
+    <EmbeddedResource Include="Windows\Forms\EncodingDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\EncodingSelector.cs.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingSelector.vb</DependentUpon>

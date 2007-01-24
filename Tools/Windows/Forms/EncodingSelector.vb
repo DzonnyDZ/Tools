@@ -1,4 +1,5 @@
 ﻿Imports System.Windows.Forms, tools.Windows.Forms.Utilities, System.Text, Tools.Collections.Generic
+Imports Tools.ComponentModel
 '#If Config <= Beta Then
 'Stage: Beta
 'Conditional compilation directive is commented out because its presence caused compiler warning.
@@ -11,9 +12,9 @@ Namespace Windows.Forms
     ''' <summary>Control taht allows user to chose from available encoding</summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     <Drawing.ToolboxBitmap("Encoding.bmp")> _
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/24/2007")> _
     <DefaultEvent("SelectedIndexChanged")> _
-    <Localizable(True)> _
+    <Localizable(True), Prefix("ens")> _
     Public Class EncodingSelector : Inherits UserControl
 #Region "Designer generated"
         Protected WithEvents cmbEncoding As System.Windows.Forms.ComboBox
@@ -262,7 +263,7 @@ Namespace Windows.Forms
                 EncodingSelector_Resize(Me, EventArgs.Empty)
             End Set
         End Property
-    
+
         ''' <summary>Gets the length and height, in pixels, that is specified as the default maximum size of a control.</summary>
         ''' <returns>A <see cref="System.Drawing.Size"/> representing the size of the control.</returns>
         ''' <remarks>If <see cref="Style"/> is <see cref="EncodingSelectorStyle.ComboBox"/> then height is limited to maximum height of <see cref="ComboBox"/></remarks>
