@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="" GeneratedClassName="ComponentModel.SettingsAttributes">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ComponentModel" GeneratedClassName="SettingsAttributesTestSettings">
   <Profiles />
   <Settings>
     <Setting Name="TestSetting1" Description="This is setting wizh default value &quot;Test&quot;" Type="System.String" Scope="User">
@@ -7,6 +7,14 @@
     </Setting>
     <Setting Name="TestSetting2" Description="This is setting with default value 14;23" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">14, 23</Value>
+    </Setting>
+    <Setting Name="TestSetting3" Description="This is setting with default value {First value; Second Value; Third value}" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;First value&lt;/string&gt;
+  &lt;string&gt;Second value&lt;/string&gt;
+  &lt;string&gt;Third value&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

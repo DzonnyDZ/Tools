@@ -148,6 +148,73 @@ Namespace ComponentModel
                 End Property
             End Class
 #End Region
+#Region "DeafultValue"
+            ''' <summary>Contains value of the <see cref="WithDefaultValue1"/></summary>
+            Private _WithDefaultValue1 As String = "This is not default value"
+            ''' <summary>Test property</summary>
+            <Category("DafaultValue"), LDefaultValue(GetType(DVSource), "DW1", "Alternative default value")> _
+            <DisplayName("Public")> _
+            Public Property WithDefaultValue1() As String
+                Get
+                    Return _WithDefaultValue1
+                End Get
+                Set(ByVal value As String)
+                    _WithDefaultValue1 = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="WithDefaultValue2"/></summary>
+            Private _WithDefaultValue2 As String = "This is not default value"
+            ''' <summary>Test property</summary>
+            <Category("DafaultValue"), LDefaultValue(GetType(DVSource), "DW2", "Alternative default value")> _
+            <DisplayName("Protected")> _
+            Public Property WithDefaultValue2() As String
+                Get
+                    Return _WithDefaultValue2
+                End Get
+                Set(ByVal value As String)
+                    _WithDefaultValue2 = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="WithDefaultValue3"/></summary>
+            Private _WithDefaultValue3 As String = "This is not default value"
+            ''' <summary>Test property</summary>
+            <Category("DafaultValue"), LDefaultValue(GetType(DVSource), "DW3", "Alternative default value")> _
+            <DisplayName("Private")> _
+            Public Property WithDefaultValue3() As String
+                Get
+                    Return _WithDefaultValue3
+                End Get
+                Set(ByVal value As String)
+                    _WithDefaultValue3 = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="WithDefaultValue4"/></summary>
+            Private _WithDefaultValue4 As String = "This is not default value"
+            ''' <summary>Test property</summary>
+            <Category("DafaultValue"), LDefaultValue(GetType(DVSource), "DW4", "Alternative default value")> _
+            <DisplayName("Optionally indexed")> _
+            Public Property WithDefaultValue4() As String
+                Get
+                    Return _WithDefaultValue4
+                End Get
+                Set(ByVal value As String)
+                    _WithDefaultValue4 = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="WithDefaultValue3"/></summary>
+            Private _WithDefaultValue5 As Uri = New Uri("http://This_is_not_default_value.com")
+            ''' <summary>Test property</summary>
+            <Category("DafaultValue"), LDefaultValue(GetType(DVSource), "DW5", GetType(Uri), "http://Alternative_default_value.com")> _
+            <DisplayName("URI")> _
+            Public Property WithDefaultValue5() As Uri
+                Get
+                    Return _WithDefaultValue5
+                End Get
+                Set(ByVal value As Uri)
+                    _WithDefaultValue5 = value
+                End Set
+            End Property
+#End Region
         End Class
 #Region "Sources"
         ''' <summary>Source for testing <see cref="LCategoryAttribute"/></summary>
@@ -220,6 +287,45 @@ Namespace ComponentModel
             End Property
         End Structure
 #End Region
+#Region "DVSources"
+        ''' <summary>Source for testing <see cref="LDefaultValueAttribute"/></summary>
+        Private Class DVSource
+            ''' <summary>Test source property</summary>
+            Public Shared ReadOnly Property DW1() As String
+                Get
+                    Return "This is default value"
+                End Get
+            End Property
+            ''' <summary>Test source property</summary>
+            Protected Shared ReadOnly Property DW2() As String
+                Get
+                    Return DW1
+                End Get
+            End Property
+            ''' <summary>Test source property</summary>
+            Private Shared ReadOnly Property DW3() As String
+                Get
+                    Return DW1
+                End Get
+            End Property
+            ''' <summary>Test source property</summary>
+            Public Shared ReadOnly Property DW4(Optional ByVal index As Long = 0) As String
+                Get
+                    Return DW1 & " " & index
+                End Get
+            End Property
+            ''' <summary>Test source property</summary>
+            Public Shared ReadOnly Property DW5() As Uri
+                Get
+                    Return New Uri("http://This_is_default_value.com")
+                End Get
+            End Property
+        End Class
+#End Region
+
+        Private Sub cmdReset_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdReset.Click
+            prgMain.ResetSelectedProperty()
+        End Sub
     End Class
     ''' <summary>Source for testing <see cref="LDescriptionAttribute"/> and <see cref="LDisplayNameAttribute"/> attributes' compatibility with modules</summary>
     Friend Module ModuleParamSource

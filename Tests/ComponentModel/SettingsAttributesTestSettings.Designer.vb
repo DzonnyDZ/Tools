@@ -50,12 +50,31 @@ Namespace ComponentModel
          Global.System.Configuration.SettingsDescriptionAttribute("This is setting with default value 14;23"),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("14, 23")>  _
-        Public Property TestSetting2() As System.Drawing.Point
+        Public Property TestSetting2() As Global.System.Drawing.Point
             Get
-                Return CType(Me("TestSetting2"),System.Drawing.Point)
+                Return CType(Me("TestSetting2"),Global.System.Drawing.Point)
             End Get
             Set
                 Me("TestSetting2") = value
+            End Set
+        End Property
+        
+        '''<summary>
+        '''This is setting with default value {First value; Second Value; Third value}
+        '''</summary>
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Configuration.SettingsDescriptionAttribute("This is setting with default value {First value; Second Value; Third value}"),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<ArrayOfString xmlns:xsi=""http://www.w3."& _ 
+            "org/2001/XMLSchema-instance"" xmlns:xsd=""http://www.w3.org/2001/XMLSchema"">"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <s"& _ 
+            "tring>First value</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>Second value</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"  <string>Third val"& _ 
+            "ue</string>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"</ArrayOfString>")>  _
+        Public Property TestSetting3() As Global.System.Collections.Specialized.StringCollection
+            Get
+                Return CType(Me("TestSetting3"),Global.System.Collections.Specialized.StringCollection)
+            End Get
+            Set
+                Me("TestSetting3") = value
             End Set
         End Property
     End Class

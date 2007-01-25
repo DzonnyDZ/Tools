@@ -31,7 +31,7 @@ Namespace ComponentModel
         End Property
     End Class
     ''' <summary><see cref="DefaultValueAttribute"/> that takes its value from <see cref="System.Configuration.DefaultSettingValueAttribute"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/25/2007")> _
     Public Class SettingsInheritDefaultValueAttribute : Inherits DefaultValueAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name defined in <paramref name="Property"/></param>
@@ -63,25 +63,14 @@ Namespace ComponentModel
             Get
                 Dim sds As Object() = Settings.GetProperty([Property]).GetCustomAttributes(GetType(DefaultSettingValueAttribute), True)
                 If sds IsNot Nothing AndAlso sds.Length > 0 Then
-                    Dim ssa As Object() = ValueType.GetCustomAttributes(GetType(SettingsSerializeAsAttribute), True)
-                    If ssa IsNot Nothing AndAlso ssa.Length > 0 Then
-                        Try
-                            Select Case CType(ssa(0), SettingsSerializeAsAttribute).SerializeAs
-                                Case SettingsSerializeAs.Xml
-                                    Dim mySerializer As Xml.Serialization.XmlSerializer = New Xml.Serialization.XmlSerializer(ValueType)
-                                    Dim stream As New IO.StringReader(CType(sds(0), DefaultSettingValueAttribute).Value)
-                                    Return mySerializer.Deserialize(stream)
-                                Case Else
-                                    Throw New NotSupportedException("Only values serialized as XML can be currently deserialized")
-                            End Select
-                        Catch
-                            Dim a As New DefaultValueAttribute(ValueType, CType(sds(0), DefaultSettingValueAttribute).Value)
-                            Return a.Value
-                        End Try
-                    Else
+                    Try
+                        Dim mySerializer As Xml.Serialization.XmlSerializer = New Xml.Serialization.XmlSerializer(ValueType)
+                        Dim stream As New IO.StringReader(CType(sds(0), DefaultSettingValueAttribute).Value)
+                        Return mySerializer.Deserialize(stream)
+                    Catch
                         Dim a As New DefaultValueAttribute(ValueType, CType(sds(0), DefaultSettingValueAttribute).Value)
                         Return a.Value
-                    End If
+                    End Try
                 Else
                     Return MyBase.Value
                 End If

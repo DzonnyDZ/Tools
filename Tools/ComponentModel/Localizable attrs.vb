@@ -2,7 +2,7 @@
 #If Config <= Beta Then 'Stage: Beta
 Namespace ComponentModel
     ''' <summary>Localizable version of <see cref="DescriptionAttribute"/>. Defines description shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
-    ''' <remarks>Localizable means that value can be loaded from resources.</remarks>
+    ''' <remarks>Localizable means that value can be loaded from resources (any Public Static (Shared in Visual Basic) Property).</remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
     Public Class LDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
@@ -96,7 +96,7 @@ Namespace ComponentModel
     End Class
     ''' <summary>Localizable version of <see cref="CategoryAttribute"/>. Defines category shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
     ''' <remarks>
-    ''' Localizable means that value can be loaded from resources.
+    ''' Localizable means that value can be loaded from resources (any Public Static (Shared in Visual Basic) Property).
     ''' Note that some categories can be localized by .NET Framework itself.
     ''' </remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/21/2007")> _
@@ -224,6 +224,72 @@ Namespace ComponentModel
         Public Overridable ReadOnly Property PropertyName() As String
             Get
                 Return _PropertyName
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Localizable version of <see cref="DefaultValueAttribute"/>. Defines default value of property. Used by <see cref="System.Windows.Forms.PropertyGrid"/> to visually indicate user that value was changed and by Windows Forms Designer to determine if property should be serialized or not.</summary>
+    ''' <remarks>
+    ''' Localizable means that value can be loaded from resources (any Public Static (Shared in Visual Basic) Property).
+    ''' This attribute can be used in simple cases. In more complicated cases use ShouldSerialize... and Reset... methods. <seealso>http://msdn2.microsoft.com/en-us/library/53b8022e.aspx</seealso>
+    ''' </remarks>
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/25/2007")> _
+    Public Class LDefaultValueAttribute : Inherits DefaultValueAttribute
+        ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
+        Private _Resource As Type
+        ''' <summary>Contains value of the <see cref="[Property]"/> property</summary>
+        Private _Property As String
+        ''' <summary>Type of default value</summary>
+        Private Type As Type
+        ''' <summary>CTor - only for default values of <see cref="String"/> type</summary>
+        ''' <param name="Resource">Type that contains property with name spacified in <paramref name="Property"/></param>
+        ''' <param name="Property">Name of Static (Shared in Visual Basic) Public property of type specified in <paramref name="Resource"/>. This property cannot be indexed.</param>
+        ''' <param name="Alternative">Alternative value used when obrainin from <paramref name="Resource"/> fails</param>
+        Public Sub New(ByVal Resource As Type, ByVal [Property] As String, Optional ByVal Alternative As String = "")
+            MyBase.New(Alternative)
+            Me.Resource = Resource
+            Me.Property = [Property]
+            Type = GetType(String)
+        End Sub
+        ''' <summary>CTor - only for default values of any type</summary>
+        ''' <param name="Resource">Type that contains property with name spacified in <paramref name="Property"/></param>
+        ''' <param name="Property">Name of Static (Shared in Visual Basic) Public property of type specified in <paramref name="Resource"/>. This property cannot be indexed.</param>
+        ''' <param name="Type">Type of default value</param>
+        ''' <param name="Alternative">Alternative value used when obrainin from <paramref name="Resource"/> fails</param>
+        Public Sub New(ByVal Resource As Type, ByVal [Property] As String, ByVal Type As Type, Optional ByVal Alternative As String = "")
+            MyBase.New(Type, Alternative)
+            Me.Resource = Resource
+            Me.Property = [Property]
+            Type = Type
+        End Sub
+        ''' <summary>Gets or sets type tah contains property named with name specified in the <see cref="[Property]"/> property</summary>
+        Public Property Resource() As Type
+            Get
+                Return _Resource
+            End Get
+            Set(ByVal value As Type)
+                _Resource = value
+            End Set
+        End Property
+        ''' <summary>Specifies name of Static (Shared in Visual Basic) Public property of type specified in the <see cref="Resource"/> property. This property returns the default value returned.</summary>
+        ''' <remarks>Property cannot be indexed (event with optional index)</remarks>
+        Public Property [Property]() As String
+            Get
+                Return _Property
+            End Get
+            Set(ByVal value As String)
+                _Property = value
+            End Set
+        End Property
+        ''' <summary>Gets the default value of the property this attribute is bound to.</summary>
+        ''' <returns>An <see cref="System.Object"/> that represents the default value of the property this attribute is bound to.</returns>
+        Public Overrides ReadOnly Property Value() As Object
+            Get
+                Try
+                    Return Resource.GetProperty([Property], Reflection.BindingFlags.GetProperty Or Reflection.BindingFlags.IgnoreCase Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.Static Or Reflection.BindingFlags.GetProperty, Type.DefaultBinder, Type, New Type() {}, Nothing).GetValue(Nothing, Nothing)
+                Catch
+                    Return MyBase.Value
+                End Try
             End Get
         End Property
     End Class
