@@ -63,14 +63,14 @@
     End Interface
 #End If
 
-#If Config <= RC Then 'Stage: RC
+#If Config <= Release Then
     ''' <summary>Implements type that can contain either value of type T1 ore value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>
     ''' <typeparam name="T2">One of alternativelly stored types</typeparam>
     ''' <remarks>
     ''' Although rhis class implements <see cref="IPair(Of T1, T2)"/> through <see cref="IT1orT2(Of T1, T2)"/> be careful when utilizing this implementation because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different when storing values (it can contain only one value at the sam time). Consider utilizing this inheritance only in read-only way.
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(T1orT2(Of Integer, Type)), LastChange:="12/21/2006")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(T1orT2(Of Integer, Type)), LastChange:="03/11/2007")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class T1orT2(Of T1, T2)
         Inherits Cloenable(Of IT1orT2(Of T1, T2))
