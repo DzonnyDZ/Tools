@@ -138,6 +138,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Resources\Resources.vb" />
+    <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
     <Compile Include="Windows\Forms\EncodingDialog.vb">
       <SubType>Form</SubType>
