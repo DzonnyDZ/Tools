@@ -65,7 +65,7 @@ Namespace ComponentModel
                 If sds IsNot Nothing AndAlso sds.Length > 0 Then
                     Try
                         Dim mySerializer As Xml.Serialization.XmlSerializer = New Xml.Serialization.XmlSerializer(ValueType)
-                        Dim stream As New IO.StringReader(CType(sds(0), DefaultSettingValueAttribute).Value)
+                        Dim stream As New System.IO.StringReader(CType(sds(0), DefaultSettingValueAttribute).Value)
                         Return mySerializer.Deserialize(stream)
                     Catch
                         Dim a As New DefaultValueAttribute(ValueType, CType(sds(0), DefaultSettingValueAttribute).Value)

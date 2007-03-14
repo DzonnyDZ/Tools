@@ -117,6 +117,7 @@
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
     <Compile Include="Internal\Attributes.vb" />
+    <Compile Include="IO\Path.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="misc interfaces\ICloneable%28of T%29.vb" />
     <Compile Include="misc interfaces\IReportsChange.vb" />
