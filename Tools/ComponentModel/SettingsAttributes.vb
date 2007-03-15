@@ -1,5 +1,5 @@
 ﻿Imports System.ComponentModel, System.Configuration, Tools.VisualBasic
-#If Config <= Beta Then 'Stage: Beta
+#If Config <= RC Then 'Stage: RC
 Namespace ComponentModel
     ''' <summary><see cref="DescriptionAttribute"/> that takes its value from <see cref="System.Configuration.SettingsDescriptionAttribute"/></summary>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/21/2007")> _
