@@ -3,7 +3,7 @@ Imports Tools.VisualBasic, System.IO
 Namespace IO
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>
-    <Version(1, 0, GetType(Path), LastChange:="03/14/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 1, GetType(Path), LastChange:="03/17/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <DebuggerDisplay("{Path}")> _
     Public Class Path
 #Region "Basic behavior"
@@ -599,6 +599,102 @@ Namespace IO
                 Return IsFile OrElse IsDirectory
             End Get
         End Property
+#End Region
+#Region "Manipulation"
+        ''' <summary>Deletes item represented by <see cref="IO.Path"/> Directories are deleted recursivelly</summary>
+        ''' <exception cref="System.IO.IOException">The specified file is in use.</exception>
+        ''' <exception cref="NotSupportedException">path is in an invalid format.</exception>
+        ''' <exception cref="UnauthorizedAccessException">The caller does not have the required permission. -or- path specified a read-only file.</exception>
+        Public Sub Delete()
+            If Me.IsFile Then
+                System.IO.File.Delete(Path)
+            ElseIf Me.IsDirectory Then
+                System.IO.Directory.Delete(Path, True)
+            End If
+        End Sub
+        ''' <summary>Copies file or directory from one location to another</summary>
+        ''' <param name="Target">Target location</param>
+        ''' <param name="SkipErrors">Applies only when copying directory. Suppresses exceptions occuring when copying individual items. It may result not exact copy.</param>
+        ''' <returns>When copying file always True, when copying directory and <paramref name="SkipErrors"/> is True returns true if no error occured during procces if <paramref name="SkipErrors"/> is false returns True or throws an exception.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Target"/> is null</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException">The path specified in <paramref name="Target"/> is invalid (for example, it is on an unmapped drive).</exception>
+        ''' <exception cref="System.ArgumentException"><paramref name="Target"/> specifies a directory when copying file</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.NotSupportedException"><see cref="Path.Path"/> of curent instance or of <paramref name="Target"/> is in an invalid format when copying file -or-
+        ''' An attempt was made to create a directory with only the colon character (:) when coping directory.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error has occurred when copying file. -or-
+        ''' The directory specified by <paramref name="Target"/> or one of its subdirectories is read-only or is not empty or a file with the same name and location specified by <paramref name="Target"/> or one of its subdirectories exists while copying directory.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
+        ''' <exception cref="System.IO.FileNotFoundException">Source file was not found.</exception>
+        Public Function Copy(ByVal Target As Path, Optional ByVal SkipErrors As Boolean = False) As Boolean
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            If Me.IsFile Then
+                If Target.IsFile Then Target.Delete()
+                System.IO.File.Copy(Path, Target)
+                Return True
+            ElseIf Me.IsDirectory Then
+                Dim ret As Boolean = True
+                If Not Target.IsDirectory Then
+                    Try : System.IO.Directory.CreateDirectory(Target)
+                    Catch : If Not SkipErrors Then Throw Else ret = False
+                    End Try
+                End If
+                For Each file As Path In System.IO.Directory.GetFiles(Path, "*", SearchOption.TopDirectoryOnly)
+                    Try : ret = ret And file.Copy(Target + file.FileName, SkipErrors)
+                    Catch : If Not SkipErrors Then Throw Else ret = False
+                    End Try
+                Next file
+                For Each dir As Path In System.IO.Directory.GetDirectories(Path, "*", SearchOption.TopDirectoryOnly)
+                    Try : ret = ret And dir.Copy(Target + dir.FileName, SkipErrors)
+                    Catch : If Not SkipErrors Then Throw Else ret = False
+                    End Try
+                Next dir
+                Return ret
+            Else
+                Throw New FileNotFoundException("Source file or directory not found", Path)
+            End If
+        End Function
+        ''' <summary>Moves file or directory from one location to another</summary>
+        ''' <param name="Target">Target location</param>
+        ''' <param name="SkipErrors">Applies only when moving directory. Suppresses exceptions occuring when moving individual items. It may result not exact copy.</param>
+        ''' <returns>When moving file always True, when moving directory and <paramref name="SkipErrors"/> is True returns true if no error occured during procces if <paramref name="SkipErrors"/> is false returns True or throws an exception.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Target"/> is null</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException">The path specified in <paramref name="Target"/> is invalid (for example, it is on an unmapped drive).</exception>
+        ''' <exception cref="System.ArgumentException"><paramref name="Target"/> specifies a directory when copying file</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.NotSupportedException"><see cref="Path.Path"/> of curent instance or of <paramref name="Target"/> is in an invalid format when copying file -or-
+        ''' An attempt was made to create a directory with only the colon character (:) when coping directory.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error has occurred when copying file. -or-
+        ''' The directory specified by <paramref name="Target"/> or one of its subdirectories is read-only or is not empty or a file with the same name and location specified by <paramref name="Target"/> or one of its subdirectories exists while copying directory.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
+        ''' <exception cref="System.IO.FileNotFoundException">Sorce file was not found.</exception>
+        Public Function Move(ByVal Target As Path, Optional ByVal skiperrors As Boolean = False) As Boolean
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            If Me.IsFile Then
+                If Target.IsFile Then Target.Delete()
+                System.IO.File.Move(Path, Target)
+                Return True
+            ElseIf Me.IsDirectory Then
+                Dim ret As Boolean = True
+                If Not Target.IsDirectory Then
+                    Try : System.IO.Directory.CreateDirectory(Target)
+                    Catch : If skiperrors Then ret = False Else Throw
+                    End Try
+                End If
+                For Each file As Path In System.IO.Directory.GetFiles(Path, "*", SearchOption.TopDirectoryOnly)
+                    Try : ret = ret And file.Move(Path + file.FileName)
+                    Catch : If Not skiperrors Then Throw Else ret = False
+                    End Try
+                Next file
+                For Each dir As Path In System.IO.Directory.GetDirectories(Path, "*", SearchOption.TopDirectoryOnly)
+                    Try : ret = ret And dir.Move(Path + dir.FileName)
+                    Catch : If Not skiperrors Then Throw Else ret = False
+                    End Try
+                Next dir
+            Else
+                Throw New FileNotFoundException("Source file or directory not found", Path)
+            End If
+        End Function
 #End Region
     End Class
 End Namespace
