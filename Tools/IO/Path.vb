@@ -430,7 +430,7 @@ Namespace IO
             Dim Segments As String() = Me.Segments
             If Levels >= Segments.Length Then Throw New ArgumentOutOfRangeException("Levels", String.Format("The path's depth is not enough to remove {0} levels", Levels))
             Dim NewArr(Segments.Length - Levels) As String
-            For i As Integer = 0 To NewArr.Length - 1
+            For i As Integer = 0 To NewArr.Length - Levels - 1
                 NewArr(i) = Segments(i)
             Next i
             Me.Path = IO.Path.Join(NewArr).Path
