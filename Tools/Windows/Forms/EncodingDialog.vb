@@ -1,6 +1,13 @@
 Imports System.Windows.Forms, System.ComponentModel, System.Text
 Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
-#If Config <= Nightly Then
+'#If Config <= Nightly Then
+'Stage: Nightly
+'Conditional compilation directive is commented out because its presence caused compiler warning.
+'The conditionality of compilation of this file as well as of related files (which's name starts with 'LinkLabel.') is ensured by editing the Tools.vbproj file, where this file is marked as conditionally compiled.
+'To edit the Tools.vbproj right-click the Tools project and select Unload Project. Then right-click it again and select Edit Tools.vbproj.
+'Search for line like following:
+'<Compile Include="Windows\Forms\EncodingDialog.vb" Condition="$(Config)&lt;=$(Release)">
+'Its preceded by comment.
 Namespace Windows.Forms
     ''' <summary>Representf dialog shown by <see cref="EncodingDialog"/></summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -544,4 +551,4 @@ Namespace Windows.Forms
         End Enum
     End Class
 End Namespace
-#End If
+'#End If 'See note at the beginning of this file

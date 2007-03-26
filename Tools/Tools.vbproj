@@ -141,8 +141,9 @@
     <Compile Include="Resources\Resources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Forms\EncodingDialog.vb">
-      <SubType>Form</SubType>
+    <Compile Include="Windows\Forms\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
+        <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
+        <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
       <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
