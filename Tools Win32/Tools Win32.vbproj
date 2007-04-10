@@ -94,7 +94,9 @@
     <Import Include="Tools.Internal" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="API\GUI.vb" />
+    <Compile Include="API\GUI.vb">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
