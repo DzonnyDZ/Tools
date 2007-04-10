@@ -22,9 +22,15 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win32", "Tools Win32\Tools Win32.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 8
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -34,6 +40,19 @@ Global
 		SccProjectUniqueName2 = Tools\\Tools.vbproj
 		SccProjectName2 = Tools
 		SccLocalPath2 = Tools
+		SccProjectUniqueName3 = Tools\u0020Win32\\Tools\u0020Win32.vbproj
+		SccProjectName3 = Tools\u0020Win32
+		SccLocalPath3 = Tools\u0020Win32
+		SccLocalPath4 = .
+		SccProjectUniqueName5 = Tests\\Tests.vbproj
+		SccProjectName5 = Tests
+		SccLocalPath5 = Tests
+		SccProjectUniqueName6 = Tools\\Tools.vbproj
+		SccProjectName6 = Tools
+		SccLocalPath6 = Tools
+		SccProjectUniqueName7 = Tools\u0020Win32\\Tools\u0020Win32.vbproj
+		SccProjectName7 = Tools\u0020Win32
+		SccLocalPath7 = Tools\u0020Win32
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
@@ -103,6 +122,31 @@ Global
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Release|Win32.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Alpha|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Alpha|Mixed Platforms.Build.0 = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Alpha|Win32.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Any CPU.Build.0 = Beta|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Mixed Platforms.Build.0 = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Win32.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Any CPU.Build.0 = Nightly|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Mixed Platforms.Build.0 = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Win32.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Any CPU.ActiveCfg = RC|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Any CPU.Build.0 = RC|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Mixed Platforms.Build.0 = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.RC|Win32.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -146,6 +146,12 @@
     <Compile Include="Windows\Forms\EncodingSelector.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\frmExtendedForm.Designer.vb">
+      <DependentUpon>frmExtendedForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\frmExtendedForm.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\LinkLabel.Designer.vb">
       <DependentUpon>LinkLabel.vb</DependentUpon>
     </Compile>
@@ -184,6 +190,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\frmExtendedForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmExtendedForm.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LinkLabel.vb</DependentUpon>
@@ -213,6 +223,10 @@
     <None Include="Resources\FindHS.png" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools Win32\Tools Win32.vbproj">
+      <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
+      <Name>Tools Win32</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
