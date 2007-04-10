@@ -191,8 +191,8 @@
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\frmExtendedForm.resx">
-      <SubType>Designer</SubType>
       <DependentUpon>frmExtendedForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
       <SubType>Designer</SubType>
