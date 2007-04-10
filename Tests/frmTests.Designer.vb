@@ -41,6 +41,10 @@ Partial Class frmTests
         Dim TreeNode19 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Forms", New System.Windows.Forms.TreeNode() {TreeNode17, TreeNode18})
         Dim TreeNode20 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows", New System.Windows.Forms.TreeNode() {TreeNode19})
         Dim TreeNode21 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tools", New System.Windows.Forms.TreeNode() {TreeNode3, TreeNode6, TreeNode10, TreeNode13, TreeNode16, TreeNode20})
+        Dim TreeNode22 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("ExtendedForm")
+        Dim TreeNode23 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Forms", New System.Windows.Forms.TreeNode() {TreeNode22})
+        Dim TreeNode24 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Windows", New System.Windows.Forms.TreeNode() {TreeNode23})
+        Dim TreeNode25 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tools Win32", New System.Windows.Forms.TreeNode() {TreeNode24})
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmTests))
         Me.tvwMain = New System.Windows.Forms.TreeView
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
@@ -147,7 +151,24 @@ Partial Class frmTests
         TreeNode21.Name = "Tools"
         TreeNode21.SelectedImageKey = "Assembly"
         TreeNode21.Text = "Tools"
-        Me.tvwMain.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode21})
+        TreeNode22.ImageKey = "Class"
+        TreeNode22.Name = "ExtendedForm"
+        TreeNode22.SelectedImageKey = "Class"
+        TreeNode22.Tag = "Tools.Tests.Windows.Forms.frmExtendedForm.Test"
+        TreeNode22.Text = "ExtendedForm"
+        TreeNode23.ImageKey = "Namespace"
+        TreeNode23.Name = "Forms"
+        TreeNode23.SelectedImageKey = "Namespace"
+        TreeNode23.Text = "Forms"
+        TreeNode24.ImageKey = "Namespace"
+        TreeNode24.Name = "Windows"
+        TreeNode24.SelectedImageKey = "Namespace"
+        TreeNode24.Text = "Windows"
+        TreeNode25.ImageKey = "Assembly"
+        TreeNode25.Name = "Node0"
+        TreeNode25.SelectedImageKey = "Assembly"
+        TreeNode25.Text = "Tools Win32"
+        Me.tvwMain.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode21, TreeNode25})
         Me.tvwMain.SelectedImageIndex = 0
         Me.tvwMain.Size = New System.Drawing.Size(401, 249)
         Me.tvwMain.TabIndex = 0
