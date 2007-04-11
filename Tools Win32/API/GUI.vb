@@ -1,17 +1,4 @@
 Namespace API
-    ''' <summary>Common Win32 API declarations</summary>
-    <DoNotApplyAuthorAndVersionAttributes()> _
-    Friend Module Common
-        ''' <summary>Value representing NULL</summary>
-        Friend Const NULL As Integer = 0
-        ''' <summary>Boolean type as used in Win32 API</summary>
-        Friend Enum APIBool As Integer
-            ''' <summary>True</summary>
-            [TRUE] = 1
-            ''' <summary>False</summary>
-            [FALSE] = 0
-        End Enum
-    End Module
     ''' <summary>Contains declarations of Win32 API related to GUI</summary>
     <DoNotApplyAuthorAndVersionAttributes()> _
     Friend Module GUI
@@ -22,7 +9,6 @@ Namespace API
         ''' If this parameter is <see cref="APIBool.TRUE"/>, <see cref="GetSystemMenu"/> resets the window menu back to the Windows default state. The previous window menu, if any, is destroyed.</param>
         ''' <returns>If the <paramref name="bRevert"/> parameter is <see cref="APIBool.FALSE"/>, the return value is the handle of a copy of the window menu. If the <paramref name="bRevert"/> parameter is <see cref="APIBool.TRUE"/>, the return value is <see cref="NULL"/>. </returns>
         Public Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Integer, ByVal revert As APIBool) As Integer
-
         ''' <summary>The <see cref="EnableMenuItem"/> function enables, disables, or grays the specified menu item.</summary>
         ''' <param name="menu">Handle to the menu</param>
         ''' <param name="ideEnableItem">Specifies the menu item to be enabled, disabled, or grayed, as determined by the <paramref name="uEnable"/> parameter. This parameter specifies an item in a menu bar, menu, or submenu. Some menu items that can be manipuleated when <paramref name="enable"/> is combination of <see cref="enmEnableMenuItemStatus.MF_BYCOMMAND"/> are listed in <see cref="SystemMenuItems"/></param>
@@ -65,12 +51,50 @@ Namespace API
         ''' <summary>Win32 window system menu standard items</summary>
         ''' <remarks>Used by <see cref="EnableMenuItem"/>'s ideEnableItem parameter when the enable parameter is combination of <see cref="enmEnableMenuItemStatus.MF_BYCOMMAND"/></remarks>
         Public Enum SystemMenuItems As Int32
+            ''' <summary>Close (X) button</summary>
             SC_CLOSE = &HF060I
+            ''' <summary>Move menu item (doesn't work)</summary>
             SC_MOVE = &HF010
+            ''' <summary>Maximize button (doesn't work)</summary>
             SC_MAXIMIZE = &HF030I
+            ''' <summary>Mninimize button (doesn't work)</summary>
             SC_MINIMIZE = &HF020I
+            ''' <summary>Resize menu item (doesn't work)</summary>
             SC_SIZE = &HF000
+            ''' <summary>Restore button (doesn't work)</summary>
             SC_RESTORE = &HF120
         End Enum
+
+        ''' <summary>Notifications connected with windows state changing passed to <see cref="System.Windows.Forms.Form.WndProc"/> with the <see cref="Messages.WM_SYSCOMMAND"/> message</summary>
+        Public Enum WindowStateChangedNotifications As Int32
+            ''' <summary>Windows size has been restored</summary>
+            SC_RESTORE = &HF120
+            ''' <summary>Window has been maximized</summary>
+            SC_MAXIMIZE = &HF030I
+            ''' <summary>Window has been minimized</summary>
+            SC_MINIMIZE = &HF020I
+        End Enum
+        ''' <summary>The <see cref="RemoveMenu"/> function deletes a menu item or detaches a submenu from the specified menu. If the menu item opens a drop-down menu or submenu, <see cref="RemoveMenu"/> does not destroy the menu or its handle, allowing the menu to be reused. Before this function is called, the GetSubMenu function should retrieve a handle to the drop-down menu or submenu. </summary>
+        ''' <param name="hMenu">Handle to the menu to be changed. </param>
+        ''' <param name="nPosition">Specifies the menu item to be deleted, as determined by the <paramref name="wFlags"/> parameter. </param>
+        ''' <param name="wFlags">Specifies how the <paramref name="nPosition"/> parameter is interpreted. This parameter must be one of the following values: <see cref="enmSelectMenuMethod.MF_BYCOMMAND"/> or <see cref="enmSelectMenuMethod.MF_BYPOSITION"/></param>
+        ''' <returns>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.
+        ''' </returns>
+        ''' <remarks>The application must call the <see cref="DrawMenuBar"/> function whenever a menu changes, whether or not the menu is in a displayed window.</remarks>
+        Public Declare Function RemoveMenu Lib "user32.dll" (ByVal hMenu As Int32, ByVal nPosition As Int32, ByVal wFlags As enmSelectMenuMethod) As Int32
+        ''' <summary>Values for <see cref="EnableMenuItem"/>'s enable parameter</summary>
+        Public Enum enmSelectMenuMethod As Integer
+            ''' <summary>Indicates that uIDEnableItem gives the identifier of the menu item. If neither the MF_BYCOMMAND nor MF_BYPOSITION flag is specified, the MF_BYCOMMAND flag is the default flag.</summary>
+            MF_BYCOMMAND = &H0I
+            ''' <summary>Indicates that uIDEnableItem gives the zero-based relative position of the menu item.</summary>
+            MF_BYPOSITION = &H400I
+        End Enum
+        ''' <summary>The DrawMenuBar function redraws the menu bar of the specified window. If the menu bar changes after the system has created the window, this function must be called to draw the changed menu bar. </summary>
+        ''' <param name="hwnd">Handle to the window whose menu bar needs redrawing.</param>
+        ''' <returns>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. 
+        ''' </returns>
+       Public Declare Function DrawMenuBar Lib "user32.dll" (ByVal hwnd As Int32) As Int32
     End Module
 End Namespace
