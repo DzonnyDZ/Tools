@@ -3,6 +3,7 @@ Imports System.ComponentModel
 Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
 #If Config <= Alpha Then 'Stage Alpha
 'TODO: Write to CodePlex Wiki!!!
+'TODO: Handle change of MinimizeBox and MaximizeBox (and ControlBox?)
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(ExtendedForm), LastChange:="10/4/2007")> _
