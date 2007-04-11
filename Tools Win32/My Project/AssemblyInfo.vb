@@ -8,7 +8,7 @@ Imports System.Runtime.InteropServices
 
 ' Review the values of the assembly attributes
 
-<Assembly: AssemblyTitle("Tools Win32")> 
+<Assembly: AssemblyTitle("Tools Win")> 
 <Assembly: AssemblyDescription("")> 
 <Assembly: AssemblyCompany("ĐTools team")> 
 <Assembly: AssemblyProduct("ĐTools")> 

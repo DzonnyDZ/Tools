@@ -22,7 +22,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win32", "Tools Win32\Tools Win32.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win", "Tools Win32\Tools Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
 	ProjectSection(WebsiteProperties) = preProject
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
@@ -30,7 +30,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win32", "Tools Win32\
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 3
+		SccNumberOfProjects = 7
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -40,6 +40,16 @@ Global
 		SccProjectUniqueName2 = Tools\\Tools.vbproj
 		SccProjectName2 = Tools
 		SccLocalPath2 = Tools
+		SccLocalPath3 = .
+		SccProjectUniqueName4 = Tests\\Tests.vbproj
+		SccProjectName4 = Tests
+		SccLocalPath4 = Tests
+		SccProjectUniqueName5 = Tools\\Tools.vbproj
+		SccProjectName5 = Tools
+		SccLocalPath5 = Tools
+		SccProjectUniqueName6 = Tools\u0020Win32\\Tools\u0020Win.vbproj
+		SccProjectName6 = Tools\u0020Win32
+		SccLocalPath6 = Tools\u0020Win32
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU

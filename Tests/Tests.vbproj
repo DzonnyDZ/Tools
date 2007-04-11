@@ -223,9 +223,9 @@
     <None Include="Resources\FindHS.png" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Tools Win32\Tools Win32.vbproj">
+    <ProjectReference Include="..\Tools Win32\Tools Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
-      <Name>Tools Win32</Name>
+      <Name>Tools Win</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>

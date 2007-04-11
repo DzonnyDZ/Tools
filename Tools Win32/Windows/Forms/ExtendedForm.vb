@@ -3,7 +3,6 @@ Imports System.ComponentModel
 Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
 #If Config <= Alpha Then 'Stage Alpha
 'TODO: Write to CodePlex Wiki!!!
-'TODO: Handle change of MinimizeBox and MaximizeBox (and ControlBox?)
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(ExtendedForm), LastChange:="10/4/2007")> _
@@ -11,11 +10,13 @@ Namespace Windows.Forms
 #Region "CloseBox"
         ''' <summary>Possible states of system menu</summary>
         Public Enum SystemMenuState
-            ''' <summary>Indicates that the menu item is disabled, but not grayed, so it cannot be selected, but visually seems like it can be selected. Button in title bar is greyed.  Note: User can press Alt+F4 to close window.</summary>
+            ''' <summary>Indicates that the menu item is disabled, but not grayed, so it cannot be selected, but visually seems like it can be selected. Button in title bar is greyed.
+            ''' Note: User CANNOT press Alt+F4 (or use another method exluding force methods (kill)) to close window if used by instance member (not static (shared)) <see cref="ExtendedForm.CloseBoxEnabled"/>; if used with static (shared) <see cref="CloseBoxEnabled"/> user CAN use Alt+F4 (or other 'soft' methods) to close window.</summary>
             Disabled = enmEnableMenuItemStatus.MF_DISABLED
             ''' <summary>Indicates that the menu item is enabled and restored from a grayed state so that it can be selected.</summary>
             Enabled = enmEnableMenuItemStatus.MF_ENABLED
-            ''' <summary>Indicates that the menu item is disabled and grayed so that it cannot be selected. Button in title bar is greyed. Note: User can press Alt+F4 to close window.</summary>
+            ''' <summary>Indicates that the menu item is disabled and grayed so that it cannot be selected. Button in title bar is greyed.
+            ''' Note: User CANNOT press Alt+F4 (or use another method exluding force methods (kill)) to close window if used by instance member (not static (shared)) <see cref="ExtendedForm.CloseBoxEnabled"/>; if used with static (shared) <see cref="CloseBoxEnabled"/> user CAN use Alt+F4 (or other 'soft' methods) to close window.</summary>
             Grayed = enmEnableMenuItemStatus.MF_GRAYED
         End Enum
 
@@ -49,6 +50,7 @@ Namespace Windows.Forms
         ''' <summary>Gets or sets state of the close button ('X') of current <see cref="ExtendedForm"/></summary>
         ''' <value>New state of button</value>
         ''' <returns>Curent state of button</returns>
+        ''' <remarks>Status of menu is not re-set after changing <see cref="MinimizeBox"/> or <see cref="MaximizeBox"/> property. You have to refresh user-visible status of this property manually!</remarks>
         ''' <exception cref="ArgumentException">Error while accessing system menu status (may be caused by no close item in system menu - e.g. because <see cref="CloseBox"/> is false)</exception>
         <Category(CategoryAttributeValues.WindowStyle), Description("Gets or sets state of the close button ('X') of current form. Cannot be chaged when CloseBox is False.")> _
         Public Property CloseBoxEnabled() As SystemMenuState
@@ -105,9 +107,10 @@ Namespace Windows.Forms
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _CloseBox As Boolean = True
         ''' <summary>Determines if form has close box in upper-right corner in its caption bar</summary>
-        ''' <remarks>Setting this property to false causes mennuitem "Close" disappearing and the X button being grayed. User can still use Alt+F4. Property <see cref="CloseBoxEnabled"/> cannot be changed while <see cref="CloseBox"/> is False.
-        ''' You'd better use <see cref="CloseBoxEnabled"/></remarks>
-        <DefaultValue(True), Category(CategoryAttributeValues.WindowStyle), Description("Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed. So, use rather CloseBoxEnabled.")> _
+        ''' <remarks>Setting this property to false causes mennuitem "Close" disappearing and the X button being grayed. User CANNOT use Alt+F4 or other 'non-killing' method to close the window. Property <see cref="CloseBoxEnabled"/> cannot be changed while <see cref="CloseBox"/> is False.
+        ''' You'd better use <see cref="CloseBoxEnabled"/>
+        ''' Windows Vista: The close (X) button is NOT grayed but does nothing when user click it.</remarks>
+        <DefaultValue(True), Category(CategoryAttributeValues.WindowStyle), Description("Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed (even not grayed on Vista). So, use rather CloseBoxEnabled.")> _
         Public Property CloseBox() As Boolean
             Get
                 Return _CloseBox
@@ -151,16 +154,28 @@ Namespace Windows.Forms
         End Sub
 #End Region
 #Region "Events"
-        ''' <summary>Used to process system messages</summary>
+        ''' <summary>Processes Windows messages.</summary>
+        ''' <param name="m">The Windows <see cref="Message"/> to process. </param>
         ''' <remarks>Note for inheritors: Always call base class's method <see cref="WndProc"/> unless you should block certain base class's functionality</remarks>
         Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+            'Pre process
+            Select Case m.Msg
+                Case Messages.WM_SYSCOMMAND
+                    Select Case m.WParam
+                        Case SystemMenuItems.SC_CLOSE
+                            If CloseBox = False OrElse CloseBoxEnabled <> SystemMenuState.Enabled Then _
+                                Return 'Disable possibility to close window using Alt+F4 when close button is disabled. This is not because the Vista issue related to the CloseBox property
+                    End Select
+            End Select
+
             MyBase.WndProc(m)
+
             'Post process
             Select Case m.Msg
                 Case Messages.WM_SYSCOMMAND
                     Select Case m.WParam
                         Case WindowStateChangedNotifications.SC_RESTORE, WindowStateChangedNotifications.SC_MAXIMIZE, WindowStateChangedNotifications.SC_MINIMIZE
-                            OnWindowStateChanged(EventArgs.Empty)
+                            OnWindowStateChanged(EventArgs.Empty) 'State change events
                     End Select
             End Select
         End Sub
