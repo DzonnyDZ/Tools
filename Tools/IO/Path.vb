@@ -362,6 +362,12 @@ Namespace IO
                     Return Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData)
                 End Get
             End Property
+            ''' <summary>The directory that serves as a common repository for application-specific data that is used by all users.</summary>
+            Public Shared ReadOnly Property AllUsersApplicationData() As Path
+                Get         'TODO:Test this newly added property
+                    Return Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData)
+                End Get
+            End Property
             ''' <summary>Path of the My Computer</summary>
             ''' <exception cref="ArgumentException"> When path is invalid, eg. empty which is common for Windows systems</exception>
             Public Shared ReadOnly Property MyComputer() As Path
