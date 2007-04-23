@@ -12,7 +12,7 @@ Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/24/2007")> _
     <ToolboxItemFilter("System.Windows.Forms")> _
-    <Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
+    <System.Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
     <DefaultEvent("LinkClicked"), ToolboxItem(True), DefaultProperty("Items")> _
     <Prefix("llb")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
@@ -376,7 +376,7 @@ Namespace Windows.Forms
         End Class
 
         ''' <summary>Non-link (text only) item of <see cref="LinkLabel"/></summary>
-        <Drawing.ToolboxBitmap(GetType(Label)), Serializable()> _
+        <System.Drawing.ToolboxBitmap(GetType(Label)), Serializable()> _
         <DebuggerDisplay("{ToString}")> _
         Public Class TextItem : Inherits LinkLabelItem
             ''' <summary>CTor (initializes with an empty string)</summary>
@@ -401,7 +401,7 @@ Namespace Windows.Forms
         End Class
 
         ''' <summary>Generic link</summary>
-        <Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
+        <System.Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
         <DebuggerDisplay("{ToString}"), Serializable()> _
         Public Class LinkItem : Inherits LinkLabelItem
             ''' <summary>Value of the <see cref="IReportsChange.ValueChangedEventArgs(Of Object).ValueName"/> passed in the <see cref="Changed"/> event when the <see cref="LinkData"/> property changes</summary>
@@ -1117,18 +1117,18 @@ Namespace Windows.Forms
                     Me.Editor = Editor
 
                     MyClass.InitializeComponent()
-                    lblItemInfo.MaximumSize = New Drawing.Size(lblItemInfo.MaximumSize.Width, lblItemInfo.Size.Height * 3)
+                    lblItemInfo.MaximumSize = New System.Drawing.Size(lblItemInfo.MaximumSize.Width, lblItemInfo.Size.Height * 3)
 
-                    'Show types tha can be added into collection
+                    'Show types that can be added into collection
                     For Each t As Type In Editor.NewItemTypes
                         If Not t.IsSubclassOf(GetType(LinkLabelItem)) AndAlso Not t.Equals(GetType(LinkLabelItem)) Then
                             Throw New ArgumentException("All types in Editor.NewItemTypes must inherit from LinkLabelItem")
                         Else
                             Dim itm As ToolStripItem = tsbAdd.DropDownItems.Add(t.Name)
                             itm.Tag = t
-                            Dim inhB As Object() = t.GetCustomAttributes(GetType(Drawing.ToolboxBitmapAttribute), True)
-                            Dim nInhB As Object() = t.GetCustomAttributes(GetType(Drawing.ToolboxBitmapAttribute), False)
-                            Dim Bitmap As Drawing.ToolboxBitmapAttribute = Nothing
+                            Dim inhB As Object() = t.GetCustomAttributes(GetType(System.Drawing.ToolboxBitmapAttribute), True)
+                            Dim nInhB As Object() = t.GetCustomAttributes(GetType(System.Drawing.ToolboxBitmapAttribute), False)
+                            Dim Bitmap As System.Drawing.ToolboxBitmapAttribute = Nothing
                             If nInhB IsNot Nothing AndAlso nInhB.Length > 0 Then
                                 Bitmap = nInhB(0)
                             ElseIf inhB IsNot Nothing AndAlso inhB.Length > 0 Then
@@ -1394,7 +1394,7 @@ Namespace Windows.Forms
                 End Sub
                 ''' <summary>Changes <see cref="Label.MaximumSize"/> of <see cref="lblItemInfo"/> in order not to be wider than its container.</summary>
                 Private Sub ResizeLabel()
-                    lblItemInfo.MaximumSize = New Drawing.Size(splMain.Panel2.ClientSize.Width, lblItemInfo.MaximumSize.Height)
+                    lblItemInfo.MaximumSize = New System.Drawing.Size(splMain.Panel2.ClientSize.Width, lblItemInfo.MaximumSize.Height)
                 End Sub
             End Class : End Class
 #End Region

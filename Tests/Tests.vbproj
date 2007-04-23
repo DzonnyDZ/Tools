@@ -116,6 +116,12 @@
       <DependentUpon>SettingsAttributesTestSettings.settings</DependentUpon>
     </Compile>
     <Compile Include="DataStructures\Generic\T1orT2.vb" />
+    <Compile Include="Drawing\IO\frmJPEG.Designer.vb">
+      <DependentUpon>frmJPEG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Drawing\IO\frmJPEG.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -175,6 +181,10 @@
     <EmbeddedResource Include="ComponentModel\SettingsAttributes.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SettingsAttributes.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drawing\IO\frmJPEG.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmJPEG.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>

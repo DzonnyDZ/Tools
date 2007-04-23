@@ -11,7 +11,7 @@ Imports Tools.ComponentModel
 Namespace Windows.Forms
     ''' <summary>Control taht allows user to chose from available encoding</summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-    <Drawing.ToolboxBitmap("Encoding.bmp")> _
+    <System.Drawing.ToolboxBitmap("Encoding.bmp")> _
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/24/2007")> _
     <DefaultEvent("SelectedIndexChanged")> _
     <Localizable(True), Prefix("ens")> _
@@ -89,8 +89,8 @@ Namespace Windows.Forms
 
             ' Add any initialization after the InitializeComponent() call.
             RefreshEncodings()
-            BackColor = Drawing.SystemColors.Window
-            ForeColor = Drawing.SystemColors.WindowText
+            BackColor = System.Drawing.SystemColors.Window
+            ForeColor = System.Drawing.SystemColors.WindowText
             lvwEncoding.ListViewItemSorter = New ListViewItemComparer()
             AddHandler Sorting.Changed, AddressOf lvwEncodingListViewItemSorter_Changed
             EncodingSelector_Resize(Me, EventArgs.Empty)
@@ -270,7 +270,7 @@ Namespace Windows.Forms
         Protected Overrides ReadOnly Property DefaultMaximumSize() As System.Drawing.Size
             Get
                 If cmbEncoding IsNot Nothing AndAlso Style = EncodingSelectorStyle.ComboBox Then
-                    Return New Drawing.Size(MyBase.DefaultMaximumSize.Width, cmbEncoding.Height)
+                    Return New System.Drawing.Size(MyBase.DefaultMaximumSize.Width, cmbEncoding.Height)
                 Else
                     Return MyBase.DefaultMaximumSize
                 End If
@@ -284,7 +284,7 @@ Namespace Windows.Forms
                 If cmbEncoding Is Nothing Then
                     Return MyBase.DefaultMinimumSize
                 Else
-                    Return New Drawing.Size(MyBase.DefaultMinimumSize.Width, cmbEncoding.Height)
+                    Return New System.Drawing.Size(MyBase.DefaultMinimumSize.Width, cmbEncoding.Height)
                 End If
             End Get
         End Property
@@ -491,7 +491,7 @@ Namespace Windows.Forms
         End Sub
         ''' <summary>Gets or sets the background color for the control.</summary>
         ''' <returns>A System.Drawing.Color that represents the background color of the control</returns>
-        <DefaultValue(GetType(Drawing.Color), "Window")> _
+        <DefaultValue(GetType(System.Drawing.Color), "Window")> _
         Public Overrides Property BackColor() As System.Drawing.Color
             Get
                 Return MyBase.BackColor
@@ -505,7 +505,7 @@ Namespace Windows.Forms
         End Property
         ''' <summary>Gets or sets the foreground color of the control.</summary>
         ''' <returns>The foreground <see cref="System.Drawing.Color"/> of the control.</returns>
-        <DefaultValue(GetType(Drawing.Color), "WindowText")> _
+        <DefaultValue(GetType(System.Drawing.Color), "WindowText")> _
         Public Overrides Property ForeColor() As System.Drawing.Color
             Get
                 Return MyBase.ForeColor
@@ -873,7 +873,7 @@ Namespace Windows.Forms
         End Sub
         Private Sub lstEncoding_MouseDoubleClick(ByVal sender As Object, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstEncoding.MouseDoubleClick
             If lstEncoding.SelectedIndex >= 0 Then
-                Dim Rect As Drawing.Rectangle = lstEncoding.GetItemRectangle(lstEncoding.SelectedIndex)
+                Dim Rect As System.Drawing.Rectangle = lstEncoding.GetItemRectangle(lstEncoding.SelectedIndex)
                 If e.X >= Rect.Left AndAlso e.X <= Rect.Right AndAlso e.Y >= Rect.Top AndAlso e.Y <= Rect.Bottom Then
                     RaiseEvent ItemDoubleClick(Me, New EncodingSelectorItemClickEventArgs(DirectCast(lstEncoding.Items(lstEncoding.SelectedIndex), EncodingInfoToDisplay)))
                 End If

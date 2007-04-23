@@ -106,6 +106,7 @@
     <Import Include="Tools.Internal" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\IIndexable.vb" />
     <Compile Include="Collections\Generic\Wrapper.vb" />
     <Compile Include="Collections\Generic\HashTable.vb" />
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
@@ -116,9 +117,13 @@
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
+    <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
     <Compile Include="Internal\Attributes.vb" />
+    <Compile Include="IO\BinaryReader.vb" />
+    <Compile Include="IO\ConstrainedReadonlyStream.vb" />
     <Compile Include="IO\Path.vb" />
     <Compile Include="Math\Min-Max.vb" />
+    <Compile Include="Math\LE-BE.vb" />
     <Compile Include="misc interfaces\ICloneable%28of T%29.vb" />
     <Compile Include="misc interfaces\IReportsChange.vb" />
     <Compile Include="misc small classes\Box.vb" />

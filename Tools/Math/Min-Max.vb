@@ -1,4 +1,5 @@
-﻿#If Config <= Release Then
+﻿'Minimums and maximums
+#If Config <= Release Then
 ''' <summary>Provides constants and static methods for trigonometric, logarithmic, and other common mathematical functions.</summary>
 <DoNotApplyAuthorAndVersionAttributes()> _
 Partial Public Class Math
