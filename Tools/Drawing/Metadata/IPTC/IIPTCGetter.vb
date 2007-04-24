@@ -1,4 +1,4 @@
-Namespace Drawing.Metadata 'TODO:Wiki
+Namespace Drawing.Metadata
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

@@ -51,6 +51,31 @@ Namespace Drawing.IO
                     Dim ExifNode As TreeNode = root.Nodes(ExifIndex).Nodes.Add(String.Format("Exif size {0}B", ExifStream.Length))
                     ExifNode.Tag = ExifStream
                     ExifNode.Text &= " " & ExifStream.ToString
+                    'Exif IFDs
+                    Dim Exif As New Tools.Drawing.Metadata.ExifReader(jpeg)
+                    Dim i As Integer = 0
+                    For Each IFD As Tools.Drawing.Metadata.ExifIFDReader In Exif.IFDs
+                        Dim IFDNode As TreeNode = ExifNode.Nodes.Add(String.Format("IFD {0} offset {1} next {2}", i, Hex(IFD.Offest), Hex(IFD.NextIFD)))
+                        IFDNode.Tag = IFD
+                        For Each Entry As Tools.Drawing.Metadata.ExifIFDReader.DirectoryEntry In IFD.Entries
+                            Dim EntryNode As TreeNode = IFDNode.Nodes.Add(String.Format( _
+                                "Entry {0} type {1} components {2} data {3}", Hex(Entry.Tag), Entry.DataType, Entry.Components, Entry.Data))
+                            EntryNode.Tag = Entry
+                        Next Entry
+                        i += 1
+                    Next IFD
+                    'EXIF Sub IFD
+                    If Exif.ExifSubIFDIndex >= 0 Then
+                        Dim ExifSubIFDNode As TreeNode = ExifNode.Nodes(0).Nodes(Exif.ExifSubIFDIndex).Nodes.Add(String.Format("Exif Sub IFD offset {0}", Hex(Exif.ExifSubIFDOffset)))
+                        ExifSubIFDNode.Tag = Exif.IFDs(0).Entries(Exif.ExifSubIFDIndex).Data
+                        Dim IFDNode As TreeNode = ExifSubIFDNode.Nodes.Add(String.Format("Exif Sub IFD offset {0} next {0}", Hex(Exif.ExifSubIFD.Offest), Hex(Exif.ExifSubIFD.NextIFD)))
+                        IFDNode.Tag = Exif.ExifSubIFD
+                        For Each Entry As Tools.Drawing.Metadata.ExifIFDReader.DirectoryEntry In Exif.ExifSubIFD.Entries
+                            Dim EntryNode As TreeNode = IFDNode.Nodes.Add(String.Format( _
+                                "Entry {0} type {1} components {2} data {3}", Hex(Entry.Tag), Entry.DataType, Entry.Components, Entry.Data))
+                            EntryNode.Tag = Entry
+                        Next Entry
+                    End If
                 End If
                 'PhotoShop block
                 Dim PhotoShopStream As System.IO.Stream = jpeg.GetPhotoShopStream
@@ -64,6 +89,21 @@ Namespace Drawing.IO
                         Node8.Tag = BIM8
                         Node8.Text &= " " & BIM8.Data.ToString
                     Next BIM8
+                End If
+                'IPTC block
+                Dim IPTCStream As System.IO.Stream = jpeg.GetIPTCStream
+                Dim IPTCIndex As Integer = jpeg.IPTC8BIMSegmentIndex
+                If IPTCIndex >= 0 Then
+                    Dim IPTCNode As TreeNode = root.Nodes(PhotoShopIndex).Nodes(0).Nodes(IPTCIndex).Nodes.Add _
+                        (String.Format("IPTC size {0}B", IPTCStream.Length))
+                    IPTCNode.Tag = IPTCStream
+                    IPTCNode.Text &= " " & IPTCStream.ToString
+                    'IPTC data
+                    Dim IPTC As New Tools.Drawing.Metadata.IPTCReader(jpeg)
+                    For Each Record As Tools.Drawing.Metadata.IPTCReader.IPTCRecord In IPTC.Records
+                        Dim RecordNode As TreeNode = IPTCNode.Nodes.Add(String.Format("{0}{1} size {2}B data {3}", Hex(Record.RecordNumber), Hex(Record.Tag), Record.Size, Record.StringData))
+                        RecordNode.Tag = Record
+                    Next Record
                 End If
             End If
         End Sub

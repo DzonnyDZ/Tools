@@ -1,5 +1,5 @@
 Imports System.IO, Tools.IO
-Namespace Drawing.IO.JPEG 'TODO:Wiki
+Namespace Drawing.IO.JPEG
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -79,7 +79,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
             If MarkerCode <> Markers.SOI AndAlso MarkerCode <> Markers.EOI Then
                 _Length = r.ReadUInt16
                 If Length < 2 Then Throw New InvalidDataException("Only SOI and EOI markers can have lenght set to zero, length 1 is not allowed")
-                _Data = New ConstrainedReadonlyStream(Stream, Offset + 4, Length - 2)
+                _Data = New ConstrainedReadOnlyStream(Stream, Offset + 4, Length - 2)
             Else
                 _Length = 0
                 _Data = Net.Sockets.NetworkStream.Null

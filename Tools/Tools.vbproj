@@ -119,13 +119,17 @@
     <Compile Include="DataStructures\T1OrT2.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
+    <Compile Include="Drawing\IO\JPEG\Rational.vb" />
+    <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
     <Compile Include="Internal\Attributes.vb" />
     <Compile Include="IO\BinaryReader.vb" />
     <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
     <Compile Include="IO\Path.vb" />
+    <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
     <Compile Include="misc interfaces\ICloneable%28of T%29.vb" />

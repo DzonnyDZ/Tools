@@ -1,5 +1,6 @@
-Namespace IO 'TODO:Wiki
+Namespace IO
 #If Config <= Nightly Then 'Stage:Nightly
+    ''' <summary>Extends <see cref="System.IO.BinaryReader"/> to be able to read numeric data in both little-endian and big-endian format</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(BinaryReader), LastChange:="4/23/2007")> _
     Public Class BinaryReader : Inherits System.IO.BinaryReader

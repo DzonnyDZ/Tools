@@ -1,5 +1,4 @@
 'LE-BE conversions
-'TODO:Wiki
 #If Config <= Nightly Then 'Stage:Nightly
 Partial Class Math
     ''' <summary>Converts <see cref="Short"/> from Little Endian to Big Endian or vice versa</summary>

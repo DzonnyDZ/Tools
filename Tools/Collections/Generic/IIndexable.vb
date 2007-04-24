@@ -1,6 +1,5 @@
 Namespace Collections.Generic
 #If Config <= RC Then 'Stage:RC
-    'TODO:Wiki
     ''' <summary>Rapresent anything that can be indexed by anything</summary>
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>

@@ -1,5 +1,5 @@
 Imports System.IO, Tools.IO
-Namespace Drawing.IO.JPEG 'TODO:Wiki
+Namespace Drawing.IO.JPEG
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -57,7 +57,8 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
         ''' <exception cref="InvalidDataException">
         ''' Invalid JPEG marker found (code doesn't start with FFh, length set to 0 or 2) -or-
         ''' JPEG stream doesn't start with corect SOI marker -or-
-        ''' JPEG stream doesn't end with corect EOI marker
+        ''' JPEG stream doesn't end with corect EOI marker -or-
+        ''' EOI not found at the end of image
         ''' </exception>
         Private Sub Parse()
             Dim SOI As New JPEGMarkerReader(Stream, 0)
@@ -71,8 +72,18 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
                 Pos += 2 + Marker.Length
                 _Markers.Add(Marker)
             Loop Until Marker.MarkerCode = JPEGMarkerReader.Markers.SOS
-            _ImageStream = New ConstrainedReadonlyStream(Stream, Pos, Stream.Length - Pos - 2)
-            Dim EOI As New JPEGMarkerReader(Stream, Stream.Length - 2)
+            Dim CS As New Tools.IO.ConstrainedReadOnlyStream(Stream, Pos, Stream.Length - Pos)
+            Dim EOI As JPEGMarkerReader = Nothing
+            For i As Long = CS.Length - 1 To 1 Step -1
+                Dim EOI1 As Byte = CS(i - 1)
+                Dim EOI2 As Byte = CS(i)
+                If EOI1 = &HFF AndAlso EOI2 = &HD9 Then
+                    EOI = New JPEGMarkerReader(Stream, Pos + i - 1)
+                    _ImageStream = New ConstrainedReadOnlyStream(Stream, Pos, i - 1)
+                    Exit For
+                End If
+            Next i
+            If EOI Is Nothing Then Throw New InvalidDataException("EOI not found")
             If EOI.MarkerCode <> JPEGMarkerReader.Markers.EOI OrElse EOI.Length <> 0 Then _
                 Throw New InvalidDataException("JPEG file doesn't end with correct EOI marker")
             _Markers.Add(EOI)
@@ -199,7 +210,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
             If PhotoshopMarkerIndex = -1 Then
                 Return Nothing
             ElseIf PhotoshopMarkerIndex >= 0 Then
-                Return New ConstrainedReadonlyStream(Me.Markers(PhotoshopMarkerIndex).Data, 14, Me.Markers(PhotoshopMarkerIndex).Data.Length - 14)
+                Return New ConstrainedReadOnlyStream(Me.Markers(PhotoshopMarkerIndex).Data, 14, Me.Markers(PhotoshopMarkerIndex).Data.Length - 14)
             End If
             Dim i As Integer = 0
             For Each m As JPEGMarkerReader In Me.Markers
@@ -210,7 +221,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
                         Dim PhotoshopH As String = System.Text.Encoding.ASCII.GetString(Bytes, 0, 13)
                         If PhotoshopH = PhotoShop AndAlso Bytes(13) = 0 Then
                             _PhotoshopMarkerIndex = i
-                            Return New ConstrainedReadonlyStream(m.Data, 14, m.Data.Length - 14)
+                            Return New ConstrainedReadOnlyStream(m.Data, 14, m.Data.Length - 14)
                         End If
                     End If
                 End If
@@ -235,7 +246,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
     ''' <summary>Represents Photoshop 8BIM segment</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Photoshop8BIMReader), LastChange:="4/24/2007")> _
-    Public Class Photoshop8BIMReader   'TODO:Wiki
+    Public Class Photoshop8BIMReader
         ''' <summary>CTor</summary>
         ''' <param name="Stream">Steam which contains segment data</param>
         ''' <param name="Offset">Offest of start of segment within <paramref name="Stream"/></param>

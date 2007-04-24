@@ -1,8 +1,8 @@
-Namespace IO 'TODO:Wiki
+Namespace IO
 #If Config <= Nightly Then 'Stage: nightly
     ''' <summary>Implements stream that reads only part of base stream</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ConstrainedReadonlyStream), LastChange:="4/24/2007")> _
+    <Version(1, 0, GetType(ConstrainedReadOnlyStream), LastChange:="4/24/2007")> _
     Public Class ConstrainedReadOnlyStream : Inherits System.IO.Stream
         Implements Collections.Generic.IReadOnlyIndexable(Of Byte)
         ''' <summary><see cref="System.IO.Stream"/> being constrained</summary>
@@ -206,8 +206,8 @@ Namespace IO 'TODO:Wiki
         ''' If <see cref="BaseStream"/> is <see cref="ConstrainedReadonlyStream"/> returns <see cref="Position"/> in <see cref="BaseStream"/>'s <see cref="BaseStream"/> recursively.
         ''' </returns>
         Public Function TranslatePosition(ByVal Position As Long) As Long
-            If TypeOf BaseStream Is ConstrainedReadonlyStream Then
-                Return DirectCast(BaseStream, ConstrainedReadonlyStream).TranslatePosition(ConstraintStart + Position)
+            If TypeOf BaseStream Is ConstrainedReadOnlyStream Then
+                Return DirectCast(BaseStream, ConstrainedReadOnlyStream).TranslatePosition(ConstraintStart + Position)
             Else
                 Return ConstraintStart + Position
             End If
