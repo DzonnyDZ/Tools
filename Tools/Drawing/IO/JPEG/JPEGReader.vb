@@ -5,8 +5,15 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGReader), LastChange:="4/23/2007")> _
     Public Class JPEGReader
+        Implements Matadata.IExifGetter, Matadata.IIPTCGetter
         ''' <summary>Stream of opened file</summary>
         Protected ReadOnly Stream As System.IO.Stream
+        ''' <summary>Stream of whole JPEG file</summary>
+        Public ReadOnly Property JPEGStream() As System.IO.Stream
+            Get
+                Return Stream
+            End Get
+        End Property
         ''' <summary>CTor from file</summary>
         ''' <param name="Path">Path to file to read from</param>
         ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <paramref name="path"/> is invalid, such as being on an unmapped drive.</exception>
@@ -64,10 +71,11 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
                 Pos += 2 + Marker.Length
                 _Markers.Add(Marker)
             Loop Until Marker.MarkerCode = JPEGMarkerReader.Markers.SOS
-            _ImageStream = New ConstrainedReadonlyStream(Stream, Pos, Stream.Length - 2)
+            _ImageStream = New ConstrainedReadonlyStream(Stream, Pos, Stream.Length - Pos - 2)
             Dim EOI As New JPEGMarkerReader(Stream, Stream.Length - 2)
             If EOI.MarkerCode <> JPEGMarkerReader.Markers.EOI OrElse EOI.Length <> 0 Then _
                 Throw New InvalidDataException("JPEG file doesn't end with correct EOI marker")
+            _Markers.Add(EOI)
         End Sub
         ''' <summary>List of markers this JPEG stream</summary>
         Public ReadOnly Property Markers() As Collections.Generic.IReadOnlyList(Of JPEGMarkerReader)
@@ -81,120 +89,242 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
                 Return _ImageStream
             End Get
         End Property
-    End Class
-    ''' <summary>Represernts marker (block of JPEG file)</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGMarkerReader), LastChange:="4/23/2007")> _
-    Public Class JPEGMarkerReader
-        ''' <summary>Known types of JPEG markers</summary>
-        Public Enum Markers As Byte
-            ''' <summary>Start Of Image marker</summary>
-            SOI = &HD8
-            ''' <summary>End Of Image marker</summary>
-            EOI = &HD9
-            ''' <summary>Start Of Stream marker</summary>
-            SOS = &HDA
-            ''' <summary>APP0 (JFIF) marker</summary>
-            APP0 = &HE0
-            ''' <summary>APP1 marker (used for Exif and XMP)</summary>
-            APP1 = &HE1
-            ''' <summary>APP2 marker (used for Exif extension)</summary>
-            APP2 = &HE2
-            ''' <summary>APP3 marker</summary>
-            APP3 = &HE3
-            ''' <summary>APP4 marker</summary>
-            APP4 = &HE4
-            ''' <summary>APP5 marker</summary>
-            APP5 = &HE5
-            ''' <summary>APP6 marker</summary>
-            APP6 = &HE6
-            ''' <summary>APP7 marker</summary>
-            APP7 = &HE7
-            ''' <summary>APP8 marker</summary>
-            APP8 = &HE8
-            ''' <summary>APP9 marker</summary>
-            APP9 = &HE9
-            ''' <summary>APP10 marker</summary>
-            APP10 = &HEA
-            ''' <summary>APP11 marker</summary>
-            APP11 = &HEB
-            ''' <summary>APP12 marker</summary>
-            APP12 = &HEC
-            ''' <summary>APP13 marker (used for PhoroShop 8BIM which contains EXIF)</summary>
-            APP13 = &HED
-            ''' <summary>APP14 marker</summary>
-            APP14 = &HEE
-            ''' <summary>APP15 marker</summary>
-            APP15 = &HEF
-            ''' <summary>Define Quantization Table marker</summary>
-            DQT = &HDB
-            ''' <summary>Define Huffman Table marker</summary>
-            DHT = &HC4
-            ''' <summary>JPEG comment marker</summary>
-            Comment = &HFE
-            ''' <summary>Start Of Frame marker</summary>
-            SOF = &HC0
-            ''' <summary>Unknown marker (not recognized by this application)</summary>
-            Unknown = &H0
-        End Enum
-        ''' <summary>Contains value of the <see cref="Code"/>property</summary>
-        Private _Code As UInt16
-        ''' <summary>Contains value of the <see cref="Length"/> property</summary>
-        Private _Length As UInt16
-        ''' <summary>Contains value of the <see cref="Data"/> property</summary>
-        Private _Data As Stream
-        ''' <summary>CTor - constructs JPEG marker from data present at given offset of given <see cref="System.IO.Stream"/></summary>
-        ''' <param name="Stream"><see cref="System.IO.Stream"/> to read data from, should be stream of whole JPEG file</param>
-        ''' <param name="Offset">Offset to start reading data at</param>
-        ''' <exception cref="InvalidDataException">
-        ''' Marker code doesn's start with FFh -or-
-        ''' Marker which's Lenght is set to 0 or 1 found (doesn't applly to SOI and EOI)
-        ''' </exception>
-        Public Sub New(ByVal Stream As Stream, ByVal Offset As Long)
-            Stream.Position = Offset
-            Dim r As New Tools.IO.BinaryReader(Stream, Tools.IO.BinaryReader.ByteAling.BigEndian)
-            _Code = r.ReadUInt16()
-            If (Code And &HFF00) >> 8 <> &HFF Then Throw New InvalidDataException("Given marker's code doesn't start with FFh")
-            If MarkerCode <> Markers.SOI AndAlso MarkerCode <> Markers.EOI Then
-                _Length = r.ReadUInt16
-                If Length < 2 Then Throw New InvalidDataException("Only SOI and EOI markers can have lenght set to zero, length 1 is not allowed")
-                _Data = New ConstrainedReadonlyStream(Stream, Stream.Position, Length - 2)
-            Else
-                _Length = 0
-                _Data = Net.Sockets.NetworkStream.Null
+        ''' <summary>Gets stream of Exif data</summary>
+        ''' <remarks>
+        ''' <para>Stream content starts with TIFF header</para>
+        ''' <para>If there is no Exif data in file stream can be null or have zero length</para>
+        ''' <para>Stream supports reading and seeking</para>
+        ''' </remarks>
+        Public Function GetExifStream() As System.IO.Stream Implements Matadata.IExifGetter.GetExifStream
+            Const Exif$ = "Exif"
+            If _ExifMarkerIndex = -1 Then
+                Return Nothing
+            ElseIf _ExifMarkerIndex >= 0 Then
+                Return New ConstrainedReadonlyStream(Me.Markers(ExifMarkerIndex).Data, 6, Me.Markers(ExifMarkerIndex).Data.Length - 6)
             End If
-        End Sub
-        ''' <summary>2 Bytes code of marker</summary>
-        <CLSCompliant(False)> _
-        Public ReadOnly Property Code() As UInt16
-            <DebuggerStepThrough()> Get
-                Return _Code
-            End Get
-        End Property
-        ''' <summary>Lenght of marker exluding marker code, including size specification</summary>
-        <CLSCompliant(False)> _
-        Public ReadOnly Property Length() As UInt16
-            <DebuggerStepThrough()> Get
-                Return _Length
-            End Get
-        End Property
-        ''' <summary>Stream of marker's data</summary>
-        Public ReadOnly Property Data() As Stream
-            <DebuggerStepThrough()> Get
-                Return _Data
-            End Get
-        End Property
-        ''' <summary>Code of marker</summary>
-        ''' <returns>Code of marker if marker was recognized a known marker, <see cref="Markers.Unknown"/> otherwise</returns>
-        ''' <remarks>See <see cref="Code"/> property for full code</remarks>
-        Public ReadOnly Property MarkerCode() As Markers
-            Get
-                Dim Marker As Byte = Code And &HFF
-                If Array.IndexOf(Of Markers)([Enum].GetValues(GetType(Markers)), Marker) >= 0 Then
-                    Return Marker
-                Else
-                    Return Markers.Unknown
+            Dim i As Integer = 0
+            For Each m As JPEGMarkerReader In Me.Markers
+                If m.MarkerCode = JPEGMarkerReader.Markers.APP1 Then
+                    m.Data.Position = 0
+                    Dim Bytes(5) As Byte
+                    If m.Data.Read(Bytes, 0, 6) = 6 Then
+                        Dim ExifH As String = System.Text.Encoding.ASCII.GetString(Bytes, 0, 4)
+                        If ExifH = Exif AndAlso Bytes(4) = 0 AndAlso Bytes(5) = 0 Then
+                            _ExifMarkerIndex = i
+                            Return New ConstrainedReadonlyStream(m.Data, 6, m.Data.Length - 6)
+                        End If
+                    End If
                 End If
+                i += 1
+            Next m
+            _ExifMarkerIndex = -1
+            Return Nothing
+        End Function
+        ''' <summary>Contains value of the <see cref="ExifMarkerIndex"/> property</summary>
+        ''' <remarks>If value is less than -1 <see cref="ExifMarkerIndex"/> has not been aquired, if value is -1 then there if no Exif data</remarks>
+        Private _ExifMarkerIndex As Integer = -2
+        ''' <summary>Gets index of marker which stores Exif data</summary>
+        ''' <returns>Index of marker into <see cref="Markers"/> collection in which Exif data are stored, -1 if there are no Exif data</returns>
+        Public ReadOnly Property ExifMarkerIndex() As Integer
+            Get
+                If _ExifMarkerIndex < -1 Then GetExifStream()
+                Return _ExifMarkerIndex
+            End Get
+        End Property
+        ''' <summary>Gets stream of IPTC data</summary>
+        ''' <remarks>
+        ''' <para>Stream content starts with first tag marker 1Ch of IPTC stream</para>
+        ''' <para>If there is no IPTC data in file stream can be null or have zero length</para>
+        ''' <para>Stream supports reading and seeking</para>
+        ''' </remarks>
+        ''' <exception cref="IOException">IO error while reding Photoshop block stream</exception>
+        ''' <exception cref="EndOfStreamException">End of stream Photoshop block stream reached unexpectedly</exception>
+        ''' <exception cref="InvalidDataException">
+        ''' An 8BIM segment doesn't start with string '8BIM'
+        ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
+        ''' </exception>
+        Public Function GetIPTCStream() As System.IO.Stream Implements Matadata.IIPTCGetter.GetIPTCStream
+            For Each BIM8 As Photoshop8BIMReader In Get8BIMSegments()
+                If BIM8.Type = IPTC8BIM Then
+                    Return BIM8.Data
+                End If
+            Next BIM8
+            Return Nothing
+        End Function
+        ''' <summary>Value of <see cref="Photoshop8BIMReader.Type"/> of 8BIM segment that contains IPTC stream</summary>
+        Private Const IPTC8BIM As UShort = &H404
+        ''' <summary>Gets index of 8BIM segment which stores IPTC data</summary>
+        ''' <returns>Index of 8BIM segment into <see cref="Get8BIMSegments"/> collection in which IPTC data are stored, -1 if there are no IPTC data</returns>
+        Public ReadOnly Property IPTC8BIMSegmentIndex() As Integer
+            Get
+                Dim i As Integer = 0
+                For Each BIM8 As Photoshop8BIMReader In Get8BIMSegments()
+                    If BIM8.Type = IPTC8BIM Then
+                        Return i
+                    End If
+                    i += 1
+                Next BIM8
+                Return -1
+            End Get
+        End Property
+        ''' <summary>Parses Photoshop segment in current JPEG image and return all 8BIM segments contained in it</summary>
+        ''' <returns>Collection of <see cref="Photoshop8BIMReader"/> representing all 8BIM segments contained in Photoshop block of current image, an empty collection if there are no 8BIM segments (or no Photoshop block or no APP13 marker)</returns>
+        ''' <exception cref="IOException">IO error while reding Photoshop block stream</exception>
+        ''' <exception cref="EndOfStreamException">End of stream Photoshop block stream reached unexpectedly</exception>
+        ''' <exception cref="InvalidDataException">
+        ''' An 8BIM segment doesn't start with string '8BIM'
+        ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
+        ''' </exception>
+        Public Function Get8BIMSegments() As Collections.Generic.IReadOnlyList(Of Photoshop8BIMReader)
+            Dim Segments As New List(Of Photoshop8BIMReader)
+            Dim Pos As Long = 0
+            Dim Photoshop As System.IO.Stream = GetPhotoShopStream()
+            If Photoshop Is Nothing OrElse Photoshop.Length = 0 Then _
+                Return New Collections.Generic.ReadOnlyListAdapter(Of Photoshop8BIMReader)(Segments)
+            Do
+                Dim Sgm As New Photoshop8BIMReader(Photoshop, Pos)
+                Pos += Sgm.WholeSize
+                Segments.Add(Sgm)
+            Loop While Pos < Photoshop.Length
+            Return New Collections.Generic.ReadOnlyListAdapter(Of Photoshop8BIMReader)(Segments)
+        End Function
+        ''' <summary>Gets stream of PhotoShop data</summary>
+        ''' <remarks>
+        ''' <para>Stream content starts with marker of first 8BIM segment</para>
+        ''' <para>If there is no Photoshop data in file stream can be null or have zero length</para>
+        ''' <para>Stream supports reading and seeking</para>
+        ''' </remarks>
+        Public Function GetPhotoShopStream() As System.IO.Stream
+            Const PhotoShop$ = "Photoshop 3.0"
+            If PhotoshopMarkerIndex = -1 Then
+                Return Nothing
+            ElseIf PhotoshopMarkerIndex >= 0 Then
+                Return New ConstrainedReadonlyStream(Me.Markers(PhotoshopMarkerIndex).Data, 14, Me.Markers(PhotoshopMarkerIndex).Data.Length - 14)
+            End If
+            Dim i As Integer = 0
+            For Each m As JPEGMarkerReader In Me.Markers
+                If m.MarkerCode = JPEGMarkerReader.Markers.APP13 Then
+                    m.Data.Position = 0
+                    Dim Bytes(13) As Byte
+                    If m.Data.Read(Bytes, 0, 14) = 14 Then
+                        Dim PhotoshopH As String = System.Text.Encoding.ASCII.GetString(Bytes, 0, 13)
+                        If PhotoshopH = PhotoShop AndAlso Bytes(13) = 0 Then
+                            _PhotoshopMarkerIndex = i
+                            Return New ConstrainedReadonlyStream(m.Data, 14, m.Data.Length - 14)
+                        End If
+                    End If
+                End If
+                i += 1
+            Next m
+            _PhotoshopMarkerIndex = -1
+            Return Nothing
+        End Function
+        ''' <summary>Contains value of the <see cref="PhotoshopMarkerIndex"/> property</summary>
+        ''' <remarks>If value is less than -1 <see cref="PhotoshopMarkerIndex"/> has not been aquired yet, if value is -1 then there if no Photoshop data</remarks>
+        Private _PhotoshopMarkerIndex As Integer = -2
+        ''' <summary>Gets index of marker which stores Photoshop data</summary>
+        ''' <returns>Index of marker into <see cref="Markers"/> collection in which Photoshop data are stored, -1 if there are no Photoshop data</returns>
+        Public ReadOnly Property PhotoshopMarkerIndex() As Integer
+            Get
+                If _PhotoshopMarkerIndex < -1 Then GetExifStream()
+                Return _PhotoshopMarkerIndex
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Represents Photoshop 8BIM segment</summary>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(Photoshop8BIMReader), LastChange:="4/24/2007")> _
+    Public Class Photoshop8BIMReader   'TODO:Wiki
+        ''' <summary>CTor</summary>
+        ''' <param name="Stream">Steam which contains segment data</param>
+        ''' <param name="Offset">Offest of start of segment within <paramref name="Stream"/></param>
+        ''' <exception cref="IOException">IO error while reding <paramref name="Stream"/></exception>
+        ''' <exception cref="EndOfStreamException">End of stream <paramref name="Stream"/> reached unexpectedly</exception>
+        ''' <exception cref="InvalidDataException">
+        ''' Segment doesn't start with string '8BIM'
+        ''' Sum of reported size and start of segment data exceeds length of <paramref name="Stream"/>
+        ''' </exception>
+        Public Sub New(ByVal Stream As System.IO.Stream, ByVal Offset As Long)
+            Const Header8BIM$ = "8BIM"
+            Stream.Position = Offset
+            Dim r As New Tools.IO.BinaryReader(Stream, System.Text.Encoding.ASCII, Tools.IO.BinaryReader.ByteAling.BigEndian)
+            Dim Bytes8BIM(3) As Byte
+            If Stream.Read(Bytes8BIM, 0, 4) = 4 Then
+                Dim Str8BIM As String = System.Text.Encoding.ASCII.GetString(Bytes8BIM, 0, 4)
+                If Str8BIM <> Header8BIM Then _
+                    Throw New InvalidDataException("8BIM segment doesn't start with sting '8BIM'")
+            Else
+                Throw New InvalidDataException("8BIM segment doesn't start with sting '8BIM'")
+            End If
+            _Type = r.ReadUInt16
+            _Name = r.ReadString
+            _NamePaddNeeded = Name.Length Mod 2 = 0
+            If NamePaddNeeded Then Stream.ReadByte()
+            _DataSize = r.ReadUInt32
+            If Stream.Position + DataSize > Stream.Length Then _
+                Throw New InvalidDataException("Reported length of 8BIM segment doesn'f fit into base stream")
+            _Data = New ConstrainedReadOnlyStream(Stream, Stream.Position, DataSize)
+        End Sub
+        ''' <summary>True when name is padded to odd lenght (event with size specification) by one null byte</summary>
+        Private _NamePaddNeeded As Boolean = False
+        ''' <summary>Contains value of the <see cref="Type"/> property</summary>
+        Private _Type As UShort
+        ''' <summary>Contains value of the <see cref="Name"/> property</summary>
+        Private _Name As String
+        ''' <summary>Contains value of the <see cref="DataSize"/> property</summary>
+        Private _DataSize As UInteger
+        ''' <summary>Contains value of the <see cref="Data"/> property</summary>
+        Private _Data As System.IO.Stream
+        ''' <summary>Size of whole 8BIM segment including all header information</summary>
+        ''' <remarks>See <see cref="DataSize"/> for size of data part of segment</remarks>
+        Public ReadOnly Property WholeSize() As Long
+            Get
+                Return DataSize + 2 + 1 + Name.Length + 4 + 4 + _
+                    Tools.VisualBasic.iif(NamePaddNeeded, 1, 0) + Tools.VisualBasic.iif(DataPadNeeded, 1, 0)
+                '2 - Type
+                '1 - Length of Pascal string
+                '4 - Size
+                '4 - '8BIM'
+            End Get
+        End Property
+        ''' <summary>True when data must be padded with one null byte to even lenght</summary>
+        Public ReadOnly Property DataPadNeeded() As Boolean
+            Get
+                Return DataSize Mod 2 <> 0
+            End Get
+        End Property
+        ''' <summary>True when name is padded to odd lenght (event with size specification) by one null byte</summary>
+        Public ReadOnly Property NamePaddNeeded() As Boolean
+            Get
+                Return _NamePaddNeeded
+            End Get
+        End Property
+        ''' <summary>Type of segment</summary>
+        <CLSCompliant(False)> _
+        Public ReadOnly Property Type() As UShort
+            Get
+                Return _Type
+            End Get
+        End Property
+        ''' <summary>Name of segment</summary>
+        Public ReadOnly Property Name() As String
+            Get
+                Return _Name
+            End Get
+        End Property
+        ''' <summary>Size of data part of segment</summary>
+        ''' <remarks>See <see cref="WholeSize"/> for size of whole segment including all header information</remarks>
+        <CLSCompliant(False)> _
+        Public ReadOnly Property DataSize() As UInteger
+            Get
+                Return _DataSize
+            End Get
+        End Property
+        ''' <summary>Stream of data part of segment</summary>
+        Public ReadOnly Property Data() As System.IO.Stream
+            Get
+                Return _Data
             End Get
         End Property
     End Class
