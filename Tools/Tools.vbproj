@@ -117,10 +117,14 @@
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
+    <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
+    <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
+    <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
     <Compile Include="Internal\Attributes.vb" />
     <Compile Include="IO\BinaryReader.vb" />
-    <Compile Include="IO\ConstrainedReadonlyStream.vb" />
+    <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
     <Compile Include="IO\Path.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
@@ -206,6 +210,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Drawing\Metadata\XMP\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

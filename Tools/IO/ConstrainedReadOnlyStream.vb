@@ -2,8 +2,8 @@ Namespace IO 'TODO:Wiki
 #If Config <= Nightly Then 'Stage: nightly
     ''' <summary>Implements stream that reads only part of base stream</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ConstrainedReadonlyStream), LastChange:="4/23/2007")> _
-    Public Class ConstrainedReadonlyStream : Inherits System.IO.Stream
+    <Version(1, 0, GetType(ConstrainedReadonlyStream), LastChange:="4/24/2007")> _
+    Public Class ConstrainedReadOnlyStream : Inherits System.IO.Stream
         Implements Collections.Generic.IReadOnlyIndexable(Of Byte)
         ''' <summary><see cref="System.IO.Stream"/> being constrained</summary>
         Protected ReadOnly Stream As System.IO.Stream
@@ -13,14 +13,14 @@ Namespace IO 'TODO:Wiki
         Protected ReadOnly ConstrainedLenght As Long
         ''' <summary>CTor</summary>
         ''' <param name="BaseStream">Stream to be constrained</param>
-        ''' <param name="StartPostion">Minimum position for seek (0-based)</param>
+        ''' <param name="StartPosition">Minimum position for seek (0-based)</param>
         ''' <param name="Lenght">Number of bytes allowed to read starting at <paramref name="StartPosition"/></param>
         ''' <exception cref="NotSupportedException"><paramref name="Stream"/> doesn't support read or seek (the <see cref="System.IO.Stream.CanRead"/> or <see cref="System.IO.Stream.CanSeek"/> returns false)</exception>
         ''' <exception cref="ArgumentException">
         ''' <paramref name="Lenght"/> is less than zero -or-
         ''' Position of end of constraint is after end of <paramref name="BaseStream"/> and <paramref name="Lenght"/> is greater than zero
         ''' </exception>
-        Public Sub New(ByVal BaseStream As System.IO.Stream, ByVal StartPostion As Long, ByVal Lenght As Long)
+        Public Sub New(ByVal BaseStream As System.IO.Stream, ByVal StartPosition As Long, ByVal Lenght As Long)
             If BaseStream.CanRead AndAlso BaseStream.CanSeek Then
                 Me.Stream = BaseStream
                 Me.StartPosition = StartPosition
@@ -29,7 +29,7 @@ Namespace IO 'TODO:Wiki
                 Throw New NotSupportedException("Stream must support reading and seeking")
             End If
             If Length < 0 Then Throw New ArgumentException("Lenght must be greater than or equal to zero", "Length")
-            If Length > 0 AndAlso StartPosition + Length >= Stream.Length Then Throw New ArgumentException("Size of constrained stream must fit into base stream.")
+            If Length > 0 AndAlso StartPosition + Length > Stream.Length Then Throw New ArgumentException("Size of constrained stream must fit into base stream.")
         End Sub
         ''' <summary>Gets a value indicating whether the current stream supports reading.</summary>
         ''' <returns>Always true</returns>
@@ -95,7 +95,7 @@ Namespace IO 'TODO:Wiki
             End Get
             Set(ByVal value As Long)
                 If ConstrainedLenght > 0 AndAlso value <= ConstrainedLenght Then
-                    Stream.Position = value
+                    Stream.Position = value + StartPosition
                 ElseIf ConstrainedLenght > 0 AndAlso value < 0 Then
                     Stream.Position = StartPosition
                 ElseIf ConstrainedLenght > 0 AndAlso value > ConstrainedLenght Then
@@ -190,6 +190,36 @@ Namespace IO 'TODO:Wiki
                 Return 0
             End Get
         End Property
+        ''' <summary>Returns <see cref="Position"/> translated into <see cref="System.IO.Stream.Position"/> in <see cref="BaseStream"/> or into <see cref="System.IO.Stream.Position"/> in its <see cref="BaseStream"/></summary>
+        ''' <returns>
+        ''' <see cref="Position"/> in this <see cref="ConstrainedReadonlyStream"/> + <see cref="ConstraintStart"/> if <see cref="BaseStream"/> is not <see cref="ConstrainedReadonlyStream"/>.
+        ''' If <see cref="BaseStream"/> is <see cref="ConstrainedReadonlyStream"/> returns <see cref="Position"/> in <see cref="BaseStream"/>'s <see cref="BaseStream"/> recursively.
+        ''' </returns>
+        Public ReadOnly Property TruePosition() As Long
+            Get
+                Return TranslatePosition(Position)
+            End Get
+        End Property
+        ''' <summary>Returns <paramref name="Position"/> translated into <see cref="System.IO.Stream.Position"/> in <see cref="BaseStream"/> or into <see cref="System.IO.Stream.Position"/> in its <see cref="BaseStream"/></summary>
+        ''' <returns>
+        ''' <see cref="Position"/> in this <see cref="ConstrainedReadonlyStream"/> + <see cref="ConstraintStart"/> if <see cref="BaseStream"/> is not <see cref="ConstrainedReadonlyStream"/>.
+        ''' If <see cref="BaseStream"/> is <see cref="ConstrainedReadonlyStream"/> returns <see cref="Position"/> in <see cref="BaseStream"/>'s <see cref="BaseStream"/> recursively.
+        ''' </returns>
+        Public Function TranslatePosition(ByVal Position As Long) As Long
+            If TypeOf BaseStream Is ConstrainedReadonlyStream Then
+                Return DirectCast(BaseStream, ConstrainedReadonlyStream).TranslatePosition(ConstraintStart + Position)
+            Else
+                Return ConstraintStart + Position
+            End If
+        End Function
+        ''' <summary>String representation</summary>
+        Public Overrides Function ToString() As String
+            If Me.Length > 0 Then
+                Return String.Format("start {0}, end {1}", Hex(TranslatePosition(0)), Hex(TranslatePosition(Length - 1)))
+            Else
+                Return "<0>"
+            End If
+        End Function
     End Class
 #End If
 End Namespace
