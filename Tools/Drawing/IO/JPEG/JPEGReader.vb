@@ -5,7 +5,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGReader), LastChange:="4/23/2007")> _
     Public Class JPEGReader
-        Implements Matadata.IExifGetter, Matadata.IIPTCGetter
+        Implements Metadata.IExifGetter, Metadata.IIPTCGetter
         ''' <summary>Stream of opened file</summary>
         Protected ReadOnly Stream As System.IO.Stream
         ''' <summary>Stream of whole JPEG file</summary>
@@ -95,12 +95,12 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
         ''' <para>If there is no Exif data in file stream can be null or have zero length</para>
         ''' <para>Stream supports reading and seeking</para>
         ''' </remarks>
-        Public Function GetExifStream() As System.IO.Stream Implements Matadata.IExifGetter.GetExifStream
+        Public Function GetExifStream() As System.IO.Stream Implements Metadata.IExifGetter.GetExifStream
             Const Exif$ = "Exif"
             If _ExifMarkerIndex = -1 Then
                 Return Nothing
             ElseIf _ExifMarkerIndex >= 0 Then
-                Return New ConstrainedReadonlyStream(Me.Markers(ExifMarkerIndex).Data, 6, Me.Markers(ExifMarkerIndex).Data.Length - 6)
+                Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, 6, Me.Markers(ExifMarkerIndex).Data.Length - 6)
             End If
             Dim i As Integer = 0
             For Each m As JPEGMarkerReader In Me.Markers
@@ -111,7 +111,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
                         Dim ExifH As String = System.Text.Encoding.ASCII.GetString(Bytes, 0, 4)
                         If ExifH = Exif AndAlso Bytes(4) = 0 AndAlso Bytes(5) = 0 Then
                             _ExifMarkerIndex = i
-                            Return New ConstrainedReadonlyStream(m.Data, 6, m.Data.Length - 6)
+                            Return New ConstrainedReadOnlyStream(m.Data, 6, m.Data.Length - 6)
                         End If
                     End If
                 End If
@@ -143,7 +143,7 @@ Namespace Drawing.IO.JPEG 'TODO:Wiki
         ''' An 8BIM segment doesn't start with string '8BIM'
         ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
         ''' </exception>
-        Public Function GetIPTCStream() As System.IO.Stream Implements Matadata.IIPTCGetter.GetIPTCStream
+        Public Function GetIPTCStream() As System.IO.Stream Implements Metadata.IIPTCGetter.GetIPTCStream
             For Each BIM8 As Photoshop8BIMReader In Get8BIMSegments()
                 If BIM8.Type = IPTC8BIM Then
                     Return BIM8.Data
