@@ -1,6 +1,6 @@
 Imports System.IO, Tools.IO
 Namespace Drawing.IO.JPEG
-#If Config <= Nightly Then 'Stage:Nightly
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGReader), LastChange:="4/23/2007")> _

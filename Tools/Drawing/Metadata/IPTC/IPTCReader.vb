@@ -1,6 +1,6 @@
 Imports System.IO
 Namespace Drawing.Metadata
-#If Config <= Nightly Then 'Stage: Nigtly
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides low level access to stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ExifReader), LastChange:="4/25/2007")> _

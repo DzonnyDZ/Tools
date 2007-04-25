@@ -1,5 +1,5 @@
 Namespace Drawing.Metadata
-#If Config <= Nightly Then 'Stage: Nightly
+#If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(IExifGetter), LastChange:="4/24/2007")> _

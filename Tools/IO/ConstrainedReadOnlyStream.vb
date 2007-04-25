@@ -1,5 +1,5 @@
 Namespace IO
-#If Config <= Nightly Then 'Stage: nightly
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Implements stream that reads only part of base stream</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ConstrainedReadOnlyStream), LastChange:="4/24/2007")> _

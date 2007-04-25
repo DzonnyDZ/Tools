@@ -1,10 +1,10 @@
 Namespace Drawing.Metadata
-#If Config <= Nightly Then 'Stage:Nightly
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represents unsigned rational number with numerator and denominator as used in Exif</summary>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Math), LastChange:="04/24/2007")> _
     <CLSCompliant(False)> _
-    Public Structure URational 'ASAP:Wiki
+    Public Structure URational
         Implements DataStructures.Generic.IPair(Of UInt16, UInt16)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -190,7 +190,7 @@ Namespace Drawing.Metadata
     ''' <summary>Represents signed rational number with numerator and denominator as used in Exif</summary>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Math), LastChange:="04/24/2007")> _
-    Public Structure SRational 'ASAP:Wiki
+    Public Structure SRational
         Implements DataStructures.Generic.IPair(Of Int16, Int16)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -264,7 +264,7 @@ Namespace Drawing.Metadata
         ''' <summary>Creates negative value of given <see cref="SRational"/></summary>
         ''' <param name="a">Value to negativize</param>
         ''' <returns>- <paramref name="a"/></returns>
-       Public Shared Operator -(ByVal a As SRational) As SRational
+        Public Shared Operator -(ByVal a As SRational) As SRational
             Return New SRational(a.Numerator * -1, a.Denominator)
         End Operator
         ''' <summary>Substracts two <see cref="SRational"/>s</summary>

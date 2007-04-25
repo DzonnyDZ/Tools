@@ -1,6 +1,6 @@
 Imports System.IO
 Namespace Drawing.Metadata
-#If Config <= Nightly Then 'Stage: Nigtly
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ExifIFDReader), LastChange:="4/24/2007")> _
@@ -29,6 +29,7 @@ Namespace Drawing.Metadata
                 Pos = Exif.Stream.Position
                 Me._Entries.Add(New DirectoryEntry(Tag, Kind, Components, Data, Exif))
             Next i
+            Exif.Stream.Position = Pos
             _NextIFD = r.ReadUInt32
         End Sub
         ''' <summary>Contains value of the <see cref="Entries"/> property</summary>

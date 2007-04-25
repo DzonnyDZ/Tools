@@ -1,6 +1,6 @@
 Imports System.IO, Tools.IO
 Namespace Drawing.IO.JPEG
-#If Config <= Nightly Then 'Stage:Nightly
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGMarkerReader), LastChange:="4/24/2007")> _
