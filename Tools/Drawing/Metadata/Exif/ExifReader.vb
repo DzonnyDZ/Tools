@@ -7,6 +7,13 @@ Namespace Drawing.Metadata
     Public Class ExifReader
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains Exif data</param>
+        ''' <exception cref="InvalidDataException">
+        ''' Invalid byte order mark (other than 'II' or 'MM') at the beginning of stream -or-
+        ''' Byte order test (2 bytes next to byte order mark, 3rd and 4th bytes in stream) don't avaluates to value 2Ah
+        ''' </exception>
+        ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
         Public Sub New(ByVal Stream As System.IO.Stream)
             _Stream = Stream
             If Stream Is Nothing OrElse Stream.Length = 0 Then Exit Sub
@@ -15,6 +22,13 @@ Namespace Drawing.Metadata
         ''' <summary>CTor from <see cref="IExifGetter"/></summary>
         ''' <param name="Container">Object that contains <see cref="System.IO.Stream"/> with Exif data</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Container"/> is null</exception>
+        ''' <exception cref="InvalidDataException">
+        ''' Invalid byte order mark (other than 'II' or 'MM') at the beginning of stream -or-
+        ''' Byte order test (2 bytes next to byte order mark, 3rd and 4th bytes in stream) don't avaluates to value 2Ah
+        ''' </exception>
+        ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
         Public Sub New(ByVal Container As IExifGetter)
             If Container Is Nothing Then Throw New ArgumentNullException("Container", "Container cannot be null")
             _Stream = Container.GetExifStream
@@ -26,7 +40,10 @@ Namespace Drawing.Metadata
         ''' Invalid byte order mark (other than 'II' or 'MM') at the beginning of stream -or-
         ''' Byte order test (2 bytes next to byte order mark, 3rd and 4th bytes in stream) don't avaluates to value 2Ah
         ''' </exception>
-        Private Sub Parse() 'ASAP:Excepotions and exceptions for callers
+        ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        Private Sub Parse()
             Stream.Position = 0
             Dim Reader As New Tools.IO.BinaryReader(Stream, Tools.IO.BinaryReader.ByteAling.BigEndian)
             Dim BOM1 As Char = Reader.ReadChar

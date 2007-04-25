@@ -7,6 +7,8 @@ Namespace Drawing.Metadata
     Public Class IPTCReader
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains IPTC data</param>
+        ''' <exception cref="InvalidDataException">Tag marker other than 1Ch found</exception>
+        ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         Public Sub New(ByVal Stream As System.IO.Stream)
             _Stream = Stream
             If Stream Is Nothing OrElse Stream.Length = 0 Then Exit Sub
@@ -15,6 +17,8 @@ Namespace Drawing.Metadata
         ''' <summary>CTor from <see cref="IIPTCGetter"/></summary>
         ''' <param name="Container">Object that contains <see cref="System.IO.Stream"/> with IPTC data</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Container"/> is null</exception>
+        ''' <exception cref="InvalidDataException">Tag marker other than 1Ch found</exception>
+        ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         Public Sub New(ByVal Container As IIPTCGetter)
             If Container Is Nothing Then Throw New ArgumentNullException("Container", "Container cannot be null")
             _Stream = Container.GetIPTCStream
@@ -24,7 +28,7 @@ Namespace Drawing.Metadata
         ''' <summary>Parses stream of IPTC data</summary>
         ''' <exception cref="InvalidDataException">Tag marker other than 1Ch found</exception>
         ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
-        Private Sub Parse() 'ASAP:Exceptions for callers
+        Private Sub Parse()
             Stream.Position = 0
             Dim r As New Tools.IO.BinaryReader(Stream, Tools.IO.BinaryReader.ByteAling.BigEndian)
             Do
