@@ -122,6 +122,11 @@
     <Compile Include="Drawing\IO\JPEG\Rational.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
+    <Compile Include="Drawing\Metadata\Exif\ExifTags.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ExifTags.xml</DependentUpon>
+    </Compile>
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
@@ -225,6 +230,7 @@
     <None Include="Drawing\Metadata\Exif\ExifTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <CustomToolNamespace>Drawing.Metadata</CustomToolNamespace>
+      <LastGenOutput>ExifTags.vb</LastGenOutput>
     </None>
     <None Include="Drawing\Metadata\Exif\ExifTags.xslt" />
   </ItemGroup>
