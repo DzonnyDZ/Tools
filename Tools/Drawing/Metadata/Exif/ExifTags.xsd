@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="ExifTags"
+                  targetNamespace="http://codeplex.com/DTools/ExifTags"
+                  elementFormDefault="qualified"
+                  xmlns="http://codeplex.com/DTools/ExifTags"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:et="http://codeplex.com/DTools/ExifTags"
+           >
+    <xs:simpleType name="types">
+        <xs:restriction base="xs:NCName">
+            <xs:enumeration value="Byte"/>
+            <xs:enumeration value="ASCII"/>
+            <xs:enumeration value="Double"/>
+            <xs:enumeration value="Int16"/>
+            <xs:enumeration value="Int32"/>
+            <xs:enumeration value="NA"/>
+            <xs:enumeration value="SByte"/>
+            <xs:enumeration value="Single"/>
+            <xs:enumeration value="SRational"/>
+            <xs:enumeration value="UInt16"/>
+            <xs:enumeration value="UInt32"/>
+            <xs:enumeration value="URational"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="IFD">
+        <xs:restriction base="xs:NCName">
+            <xs:enumeration value="IFD"/>
+            <xs:enumeration value="Exif"/>
+            <xs:enumeration value="GPS"/>
+            <xs:enumeration value="Interop"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="iCompCnt">
+        <xs:restriction base="xs:unsignedInt">
+            <xs:minExclusive value="0"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="any">
+        <xs:restriction base="xs:NCName">
+            <xs:enumeration value="any"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="CompCnt">
+        <xs:union memberTypes="iCompCnt any"/>        
+    </xs:simpleType>
+
+    <xs:simpleType name="hexa">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="0|([1-9A-Fa-f][0-9A-Fa-f]*)"/>
+            <xs:maxLength value="4"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="name">
+        <xs:restriction base="xs:NCName">
+            <xs:pattern value="[^-]+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <xs:element name="Tag">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element minOccurs="1" maxOccurs="1" name="summary" type="xs:token"/>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Type" type="types"/>
+                <xs:element minOccurs="0" maxOccurs="1" ref="enum"/>
+            </xs:sequence>
+            <xs:attribute name="Name" use="required" type="name"/>
+            <xs:attribute name="Tag" use="required" type="hexa"/>
+            <xs:attribute name="Components" use ="required" type="CompCnt"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Group">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element ref="Tag"/>
+            </xs:sequence>
+            <xs:attribute name="Name" type="xs:token" use="required"/>
+            <xs:attribute name="ShortName" type="name" use="required"/>
+            <xs:attribute name="IFD" type="IFD" use="required"/>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Root">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element minOccurs="0" maxOccurs="unbounded" ref="Group"/>
+            </xs:sequence>
+            <xs:attribute name="transformer" type="xs:string" use="required"/>
+        </xs:complexType>
+        <xs:unique name="UnqGroupShortName">
+            <xs:selector xpath="et:Group"/>
+            <xs:field xpath="@ShortName"/>
+        </xs:unique>
+        <xs:key name="KeyTag">
+            <xs:selector xpath="et:Group/et:Tag"/>
+            <xs:field xpath="@Name"/>
+        </xs:key>
+        <xs:keyref name="EnumRef" refer="KeyTag">
+            <xs:selector xpath="et:Group/et:Tag/et:enum/et:ref"/>
+            <xs:field xpath="@ref"/>
+        </xs:keyref>
+    </xs:element>
+
+    <xs:element name="enum">
+        <xs:complexType>
+            <xs:choice minOccurs="1" maxOccurs="1">
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="item">
+                    <xs:complexType>
+                        <xs:attribute name="name" type="name" use="required"/>
+                        <xs:attribute name="summary" type="xs:token" use ="required"/>
+                        <xs:attribute name="value" type="xs:token" use="required"/>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" name="ref">
+                    <xs:complexType>
+                        <xs:attribute name="ref" type="name"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

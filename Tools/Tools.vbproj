@@ -123,9 +123,9 @@
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifTags.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
       <DependentUpon>ExifTags.xml</DependentUpon>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
@@ -203,12 +203,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
-      <SubType>Designer</SubType>
-    </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xsx">
-      <DependentUpon>ExifTags.xsd</DependentUpon>
-    </None>
     <None Include="Resources\ĐTools.ico" />
   </ItemGroup>
   <ItemGroup>
@@ -229,10 +223,16 @@
   <ItemGroup>
     <None Include="Drawing\Metadata\Exif\ExifTags.xml">
       <Generator>TransformCodeGenerator</Generator>
-      <CustomToolNamespace>Drawing.Metadata</CustomToolNamespace>
       <LastGenOutput>ExifTags.vb</LastGenOutput>
+      <CustomToolNamespace>Drawing.Metadata</CustomToolNamespace>
+    </None>
+    <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
+      <SubType>Designer</SubType>
     </None>
     <None Include="Drawing\Metadata\Exif\ExifTags.xslt" />
+    <None Include="Drawing\Metadata\Exif\ExifTags.xsx">
+      <DependentUpon>ExifTags.xsd</DependentUpon>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Metadata\XMP\" />

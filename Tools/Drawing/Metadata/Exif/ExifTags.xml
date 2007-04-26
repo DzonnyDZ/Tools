@@ -1,0 +1,709 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--^{[A-Za-z0-9:b']+}:b{:i}:b:z:b{[A-Fa-f0-9]+}:b{[A-Z]+(:bor:b[A-Z]+)*}:b{.+}$-->
+<!--<Tag Name="\2" Tag="\3" Components="\5">\n<summary>\1</summary>\n\4\n</Tag>-->
+<Root xmlns="http://codeplex.com/DTools/ExifTags" transformer="ExifTags.xslt">
+    <Group Name="Sub IFD pointers" IFD="IFD" ShortName="PointersMain">
+        <Tag Name="ExifIFD" Components="1" Tag="8769">
+            <summary>Exif IFD Pointer</summary>
+            <Type>UInt32</Type>
+        </Tag>
+        <Tag Name="GPSIFD" Components="1" Tag="8825">
+            <summary>GPS Info IFD Pointer</summary>
+            <Type>UInt32</Type>
+        </Tag>
+    </Group>
+    <Group Name="Sub IFD pointers" IFD="Exif" ShortName="PointersExif">
+        <Tag Name="InteroperabilityIFD" Components="1" Tag="A005">
+            <summary>Interoperability IFD Pointer</summary>
+            <Type>UInt32</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tags relating to image data structure" IFD="IFD" ShortName="ImageDataStructure">
+        <Tag Name="ImageWidth" Tag="100" Components="1">
+            <summary>Image width</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="ImageLength" Tag="101" Components="1">
+            <summary>Image height</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="BitsPerSample" Tag="102" Components="3">
+            <summary>Number of bits per component</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="Compression" Tag="103" Components="1">
+            <summary>Compression scheme</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="uncompressed" value="1" summary="uncompressed"/>
+                <item name="JPEG" value="6" summary="JPEG compression (thumbnails only)"/>
+            </enum>
+        </Tag>
+        <Tag Name="PhotometricInterpretation" Tag="106" Components="1">
+            <summary>Pixel composition</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="RGB" value="2" summary="RGB"/>
+                <item name="YCbCr" value="6" summary="YCbCr"/>
+            </enum>
+        </Tag>
+        <Tag Name="Orientation" Tag="112" Components="1">
+            <summary>Orientation of image</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="TopLeft" value="1" summary="The 0th row is at the visual top of the image, and the 0th column is the visual left-hand side."/>
+                <item name="TopRight" value="2" summary="The 0th row is at the visual top of the image, and the 0th column is the visual right-hand side."/>
+                <item name="BottomRight" value="3" summary="The 0th row is at the visual bottom of the image, and the 0th column is the visual right-hand side."/>
+                <item name="BottomLeft" value="4" summary="The 0th row is at the visual bottom of the image, and the 0th column is the visual left-hand side."/>
+                <item name="LeftTop" value="5" summary="The 0th row is the visual left-hand side of the image, and the 0th column is the visual top."/>
+                <item name="RightTop" value="6" summary="The 0th row is the visual right-hand side of the image, and the 0th column is the visual top."/>
+                <item name="RightBottom" value="7" summary="The 0th row is the visual right-hand side of the image, and the 0th column is the visual bottom."/>
+                <item name="LeftBottom" value="8" summary="The 0th row is the visual left-hand side of the image, and the 0th column is the visual bottom."/>
+            </enum>
+        </Tag>
+        <Tag Name="SamplesPerPixel" Tag="115" Components="1">
+            <summary>Number of components</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="PlanarConfiguration" Tag="11C" Components="1">
+            <summary>Image data arrangement</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Chunky" value="1" summary="chunky format"/>
+                <item name="Planar" value="2" summary="planar format"/>
+            </enum>
+        </Tag>
+        <Tag Name="YCbCrSubSampling" Tag="212" Components="2">
+            <summary>Subsampling ratio of Y to C</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="YCbCrPositioning" Tag="213" Components="1">
+            <summary>Y and C positioning</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Centered" value="1" summary="centered"/>
+                <item name="Cosited" value="2" summary="co-sited"/>
+            </enum>
+        </Tag>
+        <Tag Name="XResolution" Tag="11A" Components="1">
+            <summary>Image resolution in width direction</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="YResolution" Tag="11B" Components="1">
+            <summary>Image resolution in height direction</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="ResolutionUnit" Tag="128" Components="1">
+            <summary>Unit of X and Y resolution</summary>
+            <Type>UInt16</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tags relating to recording offset" IFD="IFD" ShortName="RecordingOffset">
+        <Tag Name="StripOffsets" Tag="111" Components="any">
+            <summary>Image data location</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="RowsPerStrip" Tag="116" Components="1">
+            <summary>Number of rows per strip</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="StripByteCounts" Tag="117" Components="any">
+            <summary>Bytes per compressed strip</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="JPEGInterchangeFormat" Tag="201" Components="1">
+            <summary>Offset to JPEG SOI</summary>
+            <Type>UInt32</Type>
+        </Tag>
+        <Tag Name="JPEGInterchangeFormatLength" Tag="202" Components="1">
+            <summary>Bytes of JPEG data</summary>
+            <Type>UInt32</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tags relating to image data characteristics" IFD="IFD" ShortName="ImageDataCharacteristicsMain">
+        <Tag Name="TransferFunction" Tag="12D" Components="768">
+            <summary>Transfer function</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="WhitePoint" Tag="13E" Components="2">
+            <summary>White point chromaticity</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="PrimaryChromaticities" Tag="13F" Components="6">
+            <summary>Chromaticities of primaries</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="YCbCrCoefficients" Tag="211" Components="3">
+            <summary>Color space transformation matrix coefficients</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="ReferenceBlackWhite" Tag="214" Components="6">
+            <summary>Pair of black and white reference values</summary>
+            <Type>URational</Type>
+        </Tag>
+    </Group>
+    <Group Name="Other tags" IFD="IFD" ShortName="IFDOther">
+        <Tag Name="DateTime" Tag="132" Components="20">
+            <summary>File change date and time</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="ImageDescription" Tag="10E" Components="any">
+            <summary>Image title</summary>
+            <Type>ASCII</Type>
+        </Tag>
+
+        <Tag Name="Make" Tag="10F" Components="any">
+            <summary>Image input equipment manufacturer</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="Model" Tag="110" Components="any">
+            <summary>Image input equipment model</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="Software" Tag="131" Components="any">
+            <summary>Software used</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="Artist" Tag="13B" Components="any">
+            <summary>Person who created the image</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="Copyright" Tag="8298" Components="any">
+            <summary>Copyright holder</summary>
+            <Type>ASCII</Type>
+        </Tag>
+    </Group>
+
+    <Group Name="Tags Relating to Version" IFD="Exif" ShortName="Version">
+        <Tag Name="ExifVersion" Tag="9000" Components="4">
+            <summary>Exif version</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="FlashpixVersion" Tag="A000" Components="4">
+            <summary>Supported Flashpix version</summary>
+            <Type>NA</Type>
+            <enum>
+                <item name="Flashpix10" value="0100" summary="Flashpix Format Version 1.0"/>
+            </enum>
+        </Tag>
+    </Group>
+    <Group Name="Tag Relating to Image Data Characteristics" IFD="Exif" ShortName="ImageDataCharacteristicsExif">
+        <Tag Name="ColorSpace" Tag="A001" Components="1">
+            <summary>Color space information</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="sRGB" value="1" summary="sRGB"/>
+                <item name="Uncalibrated" value="&amp;hFFFF" summary="Uncalibrated"/>
+            </enum>
+        </Tag>
+    </Group>
+    <Group Name="Tags Relating to Image Configuration" IFD="Exif" ShortName="ImageConfiguration">
+        <Tag Name="ComponentsConfiguration" Tag="9101" Components="4">
+            <summary>Meaning of each component</summary>
+            <Type>NA</Type>
+            <enum>
+                <item name="DoesNotExist" value="0" summary="does not exist"/>
+                <item name="Y" value="1" summary="Y"/>
+                <item name="Cb" value="2" summary="Cb"/>
+                <item name="Cr" value="3" summary="Cr"/>
+                <item name="R" value="4" summary="R"/>
+                <item name="G" value="5" summary="G"/>
+                <item name="B" value="6" summary="B"/>
+            </enum>
+        </Tag>
+        <Tag Name="CompressedBitsPerPixel" Tag="9102" Components="1">
+            <summary>Image compression mode</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="PixelXDimension" Tag="A002" Components="1">
+            <summary>Valid image width</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="PixelYDimension" Tag="A003" Components="1">
+            <summary>Valid image height</summary>
+            <Type>UInt32</Type>
+            <Type>UInt16</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tags Relating to User Information" IFD="Exif" ShortName="UserInformation">
+        <Tag Name="MakerNote" Tag="927C" Components="any">
+            <summary>Manufacturer notes</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="UserComment" Tag="9286" Components="any">
+            <summary>User comments</summary>
+            <Type>NA</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tag Relating to Related File Information" IFD="Exif" ShortName="FileInformation">
+        <Tag Name="RelatedSoundFile" Tag="A004" Components="13">
+            <summary>Related audio file</summary>
+            <Type>ASCII</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tags Relating to Date and Time" IFD="Exif" ShortName="DateAndTime">
+        <Tag Name="DateTimeOriginal" Tag="9003" Components="20">
+            <summary>Date and time of original data generation</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="DateTimeDigitized" Tag="9004" Components="20">
+            <summary>Date and time of digital data generation</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="SubSecTime" Tag="9290" Components="any">
+            <summary>DateTime subseconds</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="SubSecTimeOriginal" Tag="9291" Components="any">
+            <summary>DateTimeOriginal subseconds</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="SubSecTimeDigitized" Tag="9292" Components="any">
+            <summary>DateTimeDigitized subseconds</summary>
+            <Type>ASCII</Type>
+        </Tag>
+    </Group>
+    <Group Name="Tags Relating to Picture-Taking Conditions" IFD="Exif" ShortName="PictureTakingConditions">
+        <Tag Name="ExposureTime" Tag="829A" Components="1">
+            <summary>Exposure time</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="FNumber" Tag="829D" Components="1">
+            <summary>F number</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="ExposureProgram" Tag="8822" Components="1">
+            <summary>Exposure program</summary>
+            <Type>URational</Type>
+            <enum>
+                <item name="NotDefined" value="0" summary="Not defined"/>
+                <item name="Manual" value="1" summary="Manual"/>
+                <item name="NormalProgram" value="2" summary="Normal program"/>
+                <item name="AperturePriority" value="3" summary="Aperture priority"/>
+                <item name="ShutterPriority" value="4" summary="Shutter priority"/>
+                <item name="CreativeProgram" value="5" summary="Creative program (biased toward depth of field)"/>
+                <item name="ActionProgram" value="6" summary="Action program (biased toward fast shutter speed)"/>
+                <item name="PortraitMode" value="7" summary="Portrait mode (for closeup photos with the background out of focus)"/>
+                <item name="LandscapeMode" value="8" summary="Landscape mode (for landscape photos with the background in focus)"/>
+            </enum>
+        </Tag>
+        <Tag Name="SpectralSensitivity" Tag="8824" Components="any">
+            <summary>Spectral sensitivity</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="ISOSpeedRatings" Tag="8827" Components="any">
+            <summary>ISO speed rating</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="OECF" Tag="8828" Components="any">
+            <summary>Optoelectric conversion factor</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="ShutterSpeedValue" Tag="9201" Components="1">
+            <summary>Shutter speed</summary>
+            <Type>SRational</Type>
+        </Tag>
+        <Tag Name="ApertureValue" Tag="9202" Components="1">
+            <summary>Aperture</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="BrightnessValue" Tag="9203" Components="1">
+            <summary>Brightness</summary>
+            <Type>SRational</Type>
+        </Tag>
+        <Tag Name="ExposureBiasValue" Tag="9204" Components="1">
+            <summary>Exposure bias</summary>
+            <Type>SRational</Type>
+        </Tag>
+        <Tag Name="MaxApertureValue" Tag="9205" Components="1">
+            <summary>Maximum lens aperture</summary>
+            <Type>SRational</Type>
+        </Tag>
+        <Tag Name="SubjectDistance" Tag="9206" Components="1">
+            <summary>Subject distance</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="MeteringMode" Tag="9207" Components="1">
+            <summary>Metering mode</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Unknown" value="0" summary="unknown"/>
+                <item name="Average" value="1" summary="Average"/>
+                <item name="CenterWeightedAverage" value="2" summary="Center weighted average"/>
+                <item name="Spot" value="3" summary="Spot"/>
+                <item name="MultiSpot" value="4" summary="MultiSpot"/>
+                <item name="Pattern" value="5" summary="Pattern"/>
+                <item name="Partial" value="6" summary="Partial"/>
+                <item name="Other" value="255" summary="Other"/>
+            </enum>
+        </Tag>
+        <Tag Name="LightSource" Tag="9208" Components="1">
+            <summary>Light source</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="unknown" value="0" summary="unknown"/>
+                <item name="Daylight" value="1" summary="Daylight"/>
+                <item name="Fluorescent" value="2" summary="Fluorescent"/>
+                <item name="Tungsten" value="3" summary="Tungsten (incandescent light)"/>
+                <item name="Flash" value="4" summary="Flash"/>
+                <item name="FineWeather" value="9" summary="Fine weather"/>
+                <item name="CloudyWeather" value="10" summary="Cloudy weather"/>
+                <item name="Shade" value="11" summary="Shade"/>
+                <item name="DaylightFluorescent" value="12" summary="Daylight fluorescent (D 5700 – 7100K)"/>
+                <item name="DayWhiteFluorescent" value="13" summary="Day white fluorescent (N 4600 – 5400K)"/>
+                <item name="CoolWhiteFluorescent" value="14" summary="Cool white fluorescent (W 3900 – 4500K)"/>
+                <item name="WhiteFluorescent" value="15" summary="White fluorescent (WW 3200 – 3700K)"/>
+                <item name="StandardLightA" value="17" summary="Standard light A"/>
+                <item name="StandardLightB" value="18" summary="Standard light B"/>
+                <item name="StandardLightC" value="19" summary="Standard light C"/>
+                <item name="D55" value="20" summary="D55"/>
+                <item name="D65" value="21" summary="D65"/>
+                <item name="D75" value="22" summary="D75"/>
+                <item name="D50" value="23" summary="D50"/>
+                <item name="ISOStudioTungsten" value="24" summary="ISO studio tungsten"/>
+                <item name="OtherLightSource" value="255" summary="other light source"/>
+            </enum>
+        </Tag>
+        <Tag Name="Flash" Tag="9209" Components="1">
+            <summary>Flash</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="FocalLength" Tag="920A" Components="1">
+            <summary>Lens focal length</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="SubjectArea" Tag="9214" Components="any">
+            <summary>Subject area</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="FlashEnergy" Tag="A20B" Components="1">
+            <summary>Flash energy</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="SpatialFrequencyResponse" Tag="A20C" Components="any">
+            <summary>Spatial frequency response</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="FocalPlaneXResolution" Tag="A20E" Components="1">
+            <summary>Focal plane X resolution</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="FocalPlaneYResolution" Tag="A20F" Components="1">
+            <summary>Focal plane Y resolution</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="FocalPlaneResolutionUnit" Tag="A210" Components="1">
+            <summary>Focal plane resolution unit</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="SubjectLocation" Tag="A214" Components="2">
+            <summary>Subject location</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="ExposureIndex" Tag="A215" Components="1">
+            <summary>Exposure index</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="SensingMethod" Tag="A217" Components="1">
+            <summary>Sensing method</summary>
+            <Type>Int16</Type>
+            <enum>
+                <item name="NotDefined" value="1" summary="Not defined"/>
+                <item name="OneChipColorAreaSensor" value="2" summary="One-chip color area sensor"/>
+                <item name="TwoChipColorAreaSensor" value="3" summary="Two-chip color area sensor"/>
+                <item name="ThreeChipColorAreaSensor" value="4" summary="Three-chip color area sensor"/>
+                <item name="ColorSequentialAreaSensor" value="5" summary="Color sequential area sensor"/>
+                <item name="TrilinearSensor" value="7" summary="Trilinear sensor"/>
+                <item name="ColorSequentialLinearSensor" value="8" summary="Color sequential linear sensor"/>
+            </enum>
+        </Tag>
+        <Tag Name="FileSource" Tag="A300" Components="1">
+            <summary>File source</summary>
+            <Type>NA</Type>
+            <enum>
+                <item name="DSC" value="3" summary="DSC"/>
+            </enum>
+        </Tag>
+        <Tag Name="SceneType" Tag="A301" Components="1">
+            <summary>Scene type</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="CFAPattern" Tag="A302" Components="any">
+            <summary>CFA pattern</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="CustomRendered" Tag="A401" Components="1">
+            <summary>Custom image processing</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="NormalProcess" value="0" summary="Normal process"/>
+                <item name="Customrocess" value="1" summary="Custom process"/>
+            </enum>
+        </Tag>
+        <Tag Name="ExposureMode" Tag="A402" Components="1">
+            <summary>Exposure mode</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="AutoExposure" value="0" summary="Auto exposure"/>
+                <item name="ManualExposure" value="1" summary="Manual exposure"/>
+                <item name="AutoBracket" value="2" summary="Auto bracket"/>
+            </enum>
+        </Tag>
+        <Tag Name="WhiteBalance" Tag="A403" Components="1">
+            <summary>White balance</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Auto" value="0" summary="Auto white balance"/>
+                <item name="Manual" value="1" summary="Manual white balance"/>
+            </enum>
+        </Tag>
+        <Tag Name="DigitalZoomRatio" Tag="A404" Components="1">
+            <summary>Digital zoom ratio</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="FocalLengthIn35mmFilm" Tag="A405" Components="1">
+            <summary>Focal length in 35 mm film</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Standard" value="0" summary="Standard"/>
+                <item name="Landscape" value="1" summary="Landscape"/>
+                <item name="Portrait" value="2" summary="Portrait"/>
+                <item name="NightScene" value="3" summary="Night scene"/>
+            </enum>
+        </Tag>
+        <Tag Name="SceneCaptureType" Tag="A406" Components="1">
+            <summary>Scene capture type</summary>
+            <Type>UInt16</Type>
+        </Tag>
+        <Tag Name="GainControl" Tag="A407" Components="1">
+            <summary>Gain control</summary>
+            <Type>URational</Type>
+            <enum>
+                <item name="None" value="0" summary="None"/>
+                <item name="LowGainUp" value="1" summary="Low gain up"/>
+                <item name="HighGainUp" value="2" summary="High gain up"/>
+                <item name="LowGainDown" value="3" summary="Low gain down"/>
+                <item name="HighGainDown" value="4" summary="High gain down"/>
+            </enum>
+        </Tag>
+        <Tag Name="Contrast" Tag="A408" Components="1">
+            <summary>Contrast</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Normal" value="0" summary="Normal"/>
+                <item name="Soft" value="1" summary="Soft"/>
+                <item name="Hard" value="2" summary="Hard"/>
+            </enum>
+        </Tag>
+        <Tag Name="Saturation" Tag="A409" Components="1">
+            <summary>Saturation</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Normal" value="0" summary="Normal"/>
+                <item name="Low" value="1" summary="Low saturation"/>
+                <item name="High" value="2" summary="High saturation"/>
+            </enum>
+        </Tag>
+        <Tag Name="Sharpness" Tag="A40A" Components="1">
+            <summary>Sharpness</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="Normal" value="0" summary="Normal"/>
+                <item name="Soft" value="1" summary="Soft"/>
+                <item name="Hard" value="2" summary="Hard"/>
+            </enum>
+        </Tag>
+        <Tag Name="DeviceSettingDescription" Tag="A40B" Components="any">
+            <summary>Device settings description</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="SubjectDistanceRange" Tag="A40C" Components="1">
+            <summary>Subject distance range</summary>
+            <Type>UInt16</Type>
+            <enum>
+                <item name="unknown" value="0" summary="unknown"/>
+                <item name="Macro" value="1" summary="Macro"/>
+                <item name="CloseView" value="2" summary="Close view"/>
+                <item name="DistantView" value="3" summary="Distant view"/>
+            </enum>
+        </Tag>
+    </Group>
+    <Group Name="Other tags" IFD="Exif" ShortName="OtherExif">
+        <Tag Name="ImageUniqueID" Tag="A420" Components="33">
+            <summary>Unique image ID</summary>
+            <Type>ASCII</Type>
+        </Tag>
+    </Group>
+
+    <Group Name="Tags Relating to GPS" IFD="GPS" ShortName="GPS">
+        <Tag Name="GPSVersionID" Tag="0" Components="4">
+            <summary>GPS tag version</summary>
+            <Type>Byte</Type>
+        </Tag>
+        <Tag Name="GPSLatitudeRef" Tag="1" Components="2">
+            <summary>North or South Latitude</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <item name="North" value="N" summary="Nort latitude"/>
+                <item name="South" value="S" summary="South latitude"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSLatitude" Tag="2" Components="3">
+            <summary>Latitude</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSLongitudeRef" Tag="3" Components="2">
+            <summary>East or West Longitude</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <item name="East" value="E" summary="East longitude"/>
+                <item name="West" value="W" summary="West longitude"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSLongitude" Tag="4" Components="3">
+            <summary>Longitude</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSAltitudeRef" Tag="5" Components="1">
+            <summary>Altitude reference</summary>
+            <Type>Byte</Type>
+            <enum>
+                <item name="SeaLevel" value="0" summary="Sea level"/>
+                <item name="SeaLevelReference" value="1" summary="Sea level reference (negative value)"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSAltitude" Tag="6" Components="1">
+            <summary>Altitude</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSTimeStamp" Components="3" Tag="7">
+            <summary>GPS time (atomic clock)</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSSatellites" Tag="8" Components="any">
+            <summary>GPS satellites used for measurement</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="GPSStatus" Tag="9" Components="2">
+            <summary>GPS receiver status</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <item name="InProgress" value="A" summary="Measurement in progress"/>
+                <item name="Interoperability" value="V" summary="Measurement Interoperability"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSMeasureMode" Tag="A" Components="2">
+            <summary>GPS measurement mode</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <item name="Measurement2D" value="2" summary="2-dimensional measurement"/>
+                <item name="Measurement3D" value="3" summary="3-dimensional measurement"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSDOP" Tag="B" Components="1">
+            <summary>Measurement precision</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSSpeedRef" Tag="C" Components="2">
+            <summary>Speed unit</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <item name="KilometersPeHour" value="K" summary="Kilometers per hour"/>
+                <item name="MilesPerHour" value="M" summary="Miles per hour"/>
+                <item name="Knots" value="N" summary="Knots"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSSpeed" Tag="D" Components="1">
+            <summary>Speed of GPS receiver</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSTrackRef" Tag="E" Components="2">
+            <summary>Reference for direction of movement</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <item name="TrueDirection" value="T" summary="True direction"/>
+                <item name="MagneticDirection" value="M" summary="Magnetic direction"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSTrack" Tag="F" Components="1">
+            <summary>Direction of movement</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSImgDirectionRef" Tag="10" Components="2">
+            <summary>Reference for direction of image</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <ref ref="GPSTrackRef"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSImgDirection" Tag="11" Components="1">
+            <summary>Direction of image</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSMapDatum" Tag="12" Components="any">
+            <summary>Geodetic survey data used</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="GPSDestLatitudeRef" Tag="13" Components="2">
+            <summary>Reference for latitude of destination</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <ref ref="GPSLatitudeRef"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSDestLatitude" Tag="14" Components="3">
+            <summary>Latitude of destination</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSDestLongitudeRef" Tag="15" Components="2">
+            <summary>Reference for longitude of destination</summary>
+            <Type>ASCII</Type>
+            <enum>
+                <ref ref="GPSLongitudeRef"/>
+            </enum>
+        </Tag>
+        <Tag Name="GPSDestLongitude" Tag="16" Components="3">
+            <summary>Longitude of destination</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSDestBearingRef" Tag="17" Components="2">
+            <summary>Reference for bearing of destination</summary>
+            <Type>ASCII</Type>
+            <enum><ref ref="GPSTrackRef"/></enum>
+        </Tag>
+        <Tag Name="GPSDestBearing" Tag="18" Components="1">
+            <summary>Bearing of destination</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSDestDistanceRef" Tag="19" Components="2">
+            <summary>Reference for distance to destination</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="GPSDestDistance" Tag="1A" Components="1">
+            <summary>Distance to destination</summary>
+            <Type>URational</Type>
+        </Tag>
+        <Tag Name="GPSProcessingMethod" Tag="1B" Components="any">
+            <summary>Name of GPS processing method</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="GPSAreaInformation" Tag="1C" Components="any">
+            <summary>Name of GPS area</summary>
+            <Type>NA</Type>
+        </Tag>
+        <Tag Name="GPSDateStamp" Tag="1D" Components="11">
+            <summary>GPS date</summary>
+            <Type>ASCII</Type>
+        </Tag>
+        <Tag Name="GPSDifferential" Tag="1E" Components="1">
+            <summary>GPS differential correction</summary>
+            <Type>UInt16</Type>
+        </Tag>
+    </Group>
+</Root>
