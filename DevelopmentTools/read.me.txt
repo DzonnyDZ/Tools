@@ -1,0 +1,2 @@
+This directory contains some tools that may be necessary to build ÐTools successfuly.
+Note taht codegenerators must be properly registered for each language (VB,C#,PHP) separatelly.
