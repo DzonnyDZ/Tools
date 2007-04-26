@@ -64,19 +64,29 @@ Namespace Drawing.IO
                         Next Entry
                         i += 1
                     Next IFD
-                    'EXIF Sub IFD
-                    If Exif.ExifSubIFDIndex >= 0 Then
-                        Dim ExifSubIFDNode As TreeNode = ExifNode.Nodes(0).Nodes(Exif.ExifSubIFDIndex).Nodes.Add(String.Format("Exif Sub IFD offset {0}", Hex(Exif.ExifSubIFDOffset)))
-                        ExifSubIFDNode.Tag = Exif.IFDs(0).Entries(Exif.ExifSubIFDIndex).Data
-                        Dim IFDNode As TreeNode = ExifSubIFDNode.Nodes.Add(String.Format("Exif Sub IFD offset {0} next {0}", Hex(Exif.ExifSubIFD.Offest), Hex(Exif.ExifSubIFD.NextIFD)))
+                    'Exif Sub IFD
+                    If Exif.ExifSubIFD IsNot Nothing Then
+                        Dim ExifSubIFDNode As TreeNode = ExifNode.Nodes(0).Nodes(Exif.ExifSubIFD.ParentRecord)
+                        Dim IFDNode As TreeNode = ExifSubIFDNode.Nodes.Add(String.Format("Exif Sub IFD offset {0} next {1}", Hex(Exif.ExifSubIFD.Offest), Hex(Exif.ExifSubIFD.NextIFD)))
                         IFDNode.Tag = Exif.ExifSubIFD
                         For Each Entry As Tools.Drawing.Metadata.ExifIFDReader.DirectoryEntry In Exif.ExifSubIFD.Entries
                             Dim EntryNode As TreeNode = IFDNode.Nodes.Add(String.Format( _
                                 "Entry {0} type {1} components {2} data {3}", Hex(Entry.Tag), Entry.DataType, Entry.Components, Entry.Data))
                             EntryNode.Tag = Entry
                         Next Entry
+                        'Exif Interoperability Sub IFD
+                        If Exif.ExifInteroperabilityIFD IsNot Nothing Then
+                            Dim InteropNode As TreeNode = IFDNode.Nodes(Exif.ExifInteroperabilityIFD.ParentRecord).Nodes.Add(String.Format("Exif Interoperability IFD offset {0} next {1}", Hex(Exif.ExifInteroperabilityIFD.Offest), Hex(Exif.ExifInteroperabilityIFD.NextIFD)))
+                            InteropNode.Tag = Exif.ExifInteroperabilityIFD
+                            For Each Entry As Tools.Drawing.Metadata.ExifIFDReader.DirectoryEntry In Exif.ExifInteroperabilityIFD.Entries
+                                Dim EntryNode As TreeNode = InteropNode.Nodes.Add(String.Format( _
+                                  "Entry {0} type {1} components {2} data {3}", Hex(Entry.Tag), Entry.DataType, Entry.Components, Entry.Data))
+                                EntryNode.Tag = Entry
+                            Next Entry
+                        End If
                     End If
                 End If
+                'TODO:Show additional IFDs
                 'PhotoShop block
                 Dim PhotoShopStream As System.IO.Stream = jpeg.GetPhotoShopStream
                 Dim PhotoShopIndex As Integer = jpeg.PhotoshopMarkerIndex
@@ -106,6 +116,14 @@ Namespace Drawing.IO
                     Next Record
                 End If
             End If
+        End Sub
+
+        Private Sub frmJPEG_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+            nudSize.Value = tvwResults.Font.SizeInPoints
+        End Sub
+
+        Private Sub nudSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSize.ValueChanged
+            tvwResults.Font = New Font(tvwResults.Font.FontFamily, nudSize.Value, tvwResults.Font.Strikeout, GraphicsUnit.Point)
         End Sub
     End Class
 End Namespace

@@ -27,20 +27,26 @@ Namespace Drawing.IO
             Me.ofdOpen = New System.Windows.Forms.OpenFileDialog
             Me.tvwResults = New System.Windows.Forms.TreeView
             Me.lblI = New System.Windows.Forms.Label
-            Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
-            Me.TableLayoutPanel1.SuspendLayout()
+            Me.tlpI = New System.Windows.Forms.TableLayoutPanel
+            Me.flpTop = New System.Windows.Forms.FlowLayoutPanel
+            Me.nudSize = New System.Windows.Forms.NumericUpDown
+            Me.tlpI.SuspendLayout()
+            Me.flpTop.SuspendLayout()
+            CType(Me.nudSize, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.SuspendLayout()
             '
             'cmdParse
             '
+            Me.cmdParse.Anchor = CType(((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Left) _
+                        Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.cmdParse.AutoSize = True
             Me.cmdParse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdParse.Dock = System.Windows.Forms.DockStyle.Top
             Me.cmdParse.Location = New System.Drawing.Point(0, 0)
+            Me.cmdParse.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdParse.Name = "cmdParse"
-            Me.cmdParse.Size = New System.Drawing.Size(543, 23)
+            Me.cmdParse.Size = New System.Drawing.Size(53, 23)
             Me.cmdParse.TabIndex = 0
-            Me.cmdParse.Text = "Parse"
+            Me.cmdParse.Text = "&Parse..."
             Me.cmdParse.UseVisualStyleBackColor = True
             '
             'ofdOpen
@@ -51,9 +57,9 @@ Namespace Drawing.IO
             'tvwResults
             '
             Me.tvwResults.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tvwResults.Location = New System.Drawing.Point(0, 23)
+            Me.tvwResults.Location = New System.Drawing.Point(0, 26)
             Me.tvwResults.Name = "tvwResults"
-            Me.tvwResults.Size = New System.Drawing.Size(543, 343)
+            Me.tvwResults.Size = New System.Drawing.Size(543, 320)
             Me.tvwResults.TabIndex = 1
             '
             'lblI
@@ -68,21 +74,44 @@ Namespace Drawing.IO
                 "dReadOnlyStream, Tools.Math.LEBE"
             Me.lblI.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
-            'TableLayoutPanel1
+            'tlpI
             '
-            Me.TableLayoutPanel1.AutoSize = True
-            Me.TableLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.TableLayoutPanel1.ColumnCount = 1
-            Me.TableLayoutPanel1.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            Me.TableLayoutPanel1.Controls.Add(Me.lblI, 0, 0)
-            Me.TableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Bottom
-            Me.TableLayoutPanel1.Location = New System.Drawing.Point(0, 366)
-            Me.TableLayoutPanel1.Margin = New System.Windows.Forms.Padding(0)
-            Me.TableLayoutPanel1.Name = "TableLayoutPanel1"
-            Me.TableLayoutPanel1.RowCount = 1
-            Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            Me.TableLayoutPanel1.Size = New System.Drawing.Size(543, 26)
-            Me.TableLayoutPanel1.TabIndex = 3
+            Me.tlpI.AutoSize = True
+            Me.tlpI.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.tlpI.ColumnCount = 1
+            Me.tlpI.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpI.Controls.Add(Me.lblI, 0, 0)
+            Me.tlpI.Dock = System.Windows.Forms.DockStyle.Bottom
+            Me.tlpI.Location = New System.Drawing.Point(0, 346)
+            Me.tlpI.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpI.Name = "tlpI"
+            Me.tlpI.RowCount = 2
+            Me.tlpI.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpI.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+            Me.tlpI.Size = New System.Drawing.Size(543, 46)
+            Me.tlpI.TabIndex = 3
+            '
+            'flpTop
+            '
+            Me.flpTop.AutoSize = True
+            Me.flpTop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.flpTop.Controls.Add(Me.cmdParse)
+            Me.flpTop.Controls.Add(Me.nudSize)
+            Me.flpTop.Dock = System.Windows.Forms.DockStyle.Top
+            Me.flpTop.Location = New System.Drawing.Point(0, 0)
+            Me.flpTop.Margin = New System.Windows.Forms.Padding(0)
+            Me.flpTop.Name = "flpTop"
+            Me.flpTop.Size = New System.Drawing.Size(543, 26)
+            Me.flpTop.TabIndex = 3
+            '
+            'nudSize
+            '
+            Me.nudSize.Location = New System.Drawing.Point(56, 3)
+            Me.nudSize.Minimum = New Decimal(New Integer() {1, 0, 0, 0})
+            Me.nudSize.Name = "nudSize"
+            Me.nudSize.Size = New System.Drawing.Size(58, 20)
+            Me.nudSize.TabIndex = 1
+            Me.nudSize.Value = New Decimal(New Integer() {8, 0, 0, 0})
             '
             'frmJPEG
             '
@@ -90,12 +119,15 @@ Namespace Drawing.IO
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(543, 392)
             Me.Controls.Add(Me.tvwResults)
-            Me.Controls.Add(Me.cmdParse)
-            Me.Controls.Add(Me.TableLayoutPanel1)
+            Me.Controls.Add(Me.flpTop)
+            Me.Controls.Add(Me.tlpI)
             Me.Name = "frmJPEG"
             Me.Text = "Testing Tools.IO.Drawing.JPEG"
-            Me.TableLayoutPanel1.ResumeLayout(False)
-            Me.TableLayoutPanel1.PerformLayout()
+            Me.tlpI.ResumeLayout(False)
+            Me.tlpI.PerformLayout()
+            Me.flpTop.ResumeLayout(False)
+            Me.flpTop.PerformLayout()
+            CType(Me.nudSize, System.ComponentModel.ISupportInitialize).EndInit()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -104,6 +136,8 @@ Namespace Drawing.IO
         Friend WithEvents ofdOpen As System.Windows.Forms.OpenFileDialog
         Friend WithEvents tvwResults As System.Windows.Forms.TreeView
         Friend WithEvents lblI As System.Windows.Forms.Label
-        Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents tlpI As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents flpTop As System.Windows.Forms.FlowLayoutPanel
+        Friend WithEvents nudSize As System.Windows.Forms.NumericUpDown
     End Class
 End Namespace
