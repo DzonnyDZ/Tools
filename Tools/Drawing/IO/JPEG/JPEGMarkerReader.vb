@@ -55,6 +55,8 @@ Namespace Drawing.IO.JPEG
             SOF = &HC0
             ''' <summary>Unknown marker (not recognized by this application)</summary>
             Unknown = &H0
+            ''' <summary>Define Restart Interoperability marker</summary>
+            DRI = &HDD
         End Enum
         ''' <summary>Contains value of the <see cref="Code"/>property</summary>
         Private _Code As UInt16
