@@ -122,7 +122,7 @@
     <Compile Include="Drawing\IO\JPEG\Rational.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifTags 2.vb" />
+    <None Include="Drawing\Metadata\Exif\ExifTags 2.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifTags.vb">
       <DependentUpon>ExifTags.xml</DependentUpon>
       <DesignTime>True</DesignTime>
