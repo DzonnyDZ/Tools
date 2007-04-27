@@ -6,112 +6,279 @@
                   xmlns:xs="http://www.w3.org/2001/XMLSchema"
                   xmlns:et="http://codeplex.com/DTools/ExifTags"
            >
+    <xs:annotation>
+        <xs:documentation>This XML schema defines structure of file used to generate classed and enums to work with Exif tags. This schema is designet for private use when developing this project only.</xs:documentation>
+    </xs:annotation>
     <xs:simpleType name="types">
+        <xs:annotation>
+            <xs:documentation>Exif data types</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:NCName">
-            <xs:enumeration value="Byte"/>
-            <xs:enumeration value="ASCII"/>
-            <xs:enumeration value="Double"/>
-            <xs:enumeration value="Int16"/>
-            <xs:enumeration value="Int32"/>
-            <xs:enumeration value="NA"/>
-            <xs:enumeration value="SByte"/>
-            <xs:enumeration value="Single"/>
-            <xs:enumeration value="SRational"/>
-            <xs:enumeration value="UInt16"/>
-            <xs:enumeration value="UInt32"/>
-            <xs:enumeration value="URational"/>
+            <xs:enumeration value="Byte">
+                <xs:annotation>
+                    <xs:documentation>Unsigned byte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ASCII">
+                <xs:annotation>
+                    <xs:documentation>ASCII string (1B per character)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Double">
+                <xs:annotation>
+                    <xs:documentation>Double precission floating point number</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Int16">
+                <xs:annotation>
+                    <xs:documentation>2 bytes signed integer (in Exif reffered as SShort)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Int32">
+                <xs:annotation>
+                    <xs:documentation>4 bytes signed integer (in Exif reffered as SLong)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NA">
+                <xs:annotation>
+                    <xs:documentation>Rxif data type array of bytes with usually unknown interpretation</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SByte">
+                <xs:annotation>
+                    <xs:documentation>Signed 1byte integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Single">
+                <xs:annotation>
+                    <xs:documentation>Single precision floating point number</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SRational">
+                <xs:annotation>
+                    <xs:documentation>Signed rational number</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UInt16">
+                <xs:annotation>
+                    <xs:documentation>Unsigned 2 bytes integer. Oftern reffered as UShort or simply Short</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UInt32">
+                <xs:annotation>
+                    <xs:documentation>Unsigned 4 bytes integer. Often reffered as ULong or simply Long</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="URational">
+                <xs:annotation>
+                    <xs:documentation>Unsigned rational number. Ofter reffered simply as Rational</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="IFD">
+        <xs:annotation>
+            <xs:documentation>List of Exif IFDs and Sub IFDs - only for grouping tags</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:NCName">
-            <xs:enumeration value="IFD"/>
-            <xs:enumeration value="Exif"/>
-            <xs:enumeration value="GPS"/>
-            <xs:enumeration value="Interop"/>
+            <xs:enumeration value="IFD">
+                <xs:annotation>
+                    <xs:documentation>Tags are used in IFD0 and IFD1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Exif">
+                <xs:annotation>
+                    <xs:documentation>Tags are used in Exif Sub IFD</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GPS">
+                <xs:annotation>
+                    <xs:documentation>Tags are used in GPS Sub IFD</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Interop">
+                <xs:annotation>
+                    <xs:documentation>Tags are used in interoperability Sub IFD</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="iCompCnt">
+        <xs:annotation>
+            <xs:documentation>Unsigned integer without zero</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:unsignedInt">
             <xs:minExclusive value="0"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="any">
+        <xs:annotation>
+            <xs:documentation>'any' value</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:NCName">
             <xs:enumeration value="any"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="CompCnt">
+        <xs:annotation>
+            <xs:documentation>Unsigned nonzero integer or 'any'</xs:documentation>
+        </xs:annotation>
         <xs:union memberTypes="iCompCnt any"/>        
     </xs:simpleType>
 
     <xs:simpleType name="hexa">
+        <xs:annotation>
+            <xs:documentation>2 bytes hexadecimal number</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:pattern value="0|([1-9A-Fa-f][0-9A-Fa-f]*)"/>
             <xs:maxLength value="4"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="name">
+        <xs:annotation>
+            <xs:documentation>NCName without -</xs:documentation>
+        </xs:annotation>
         <xs:restriction base="xs:NCName">
             <xs:pattern value="[^-]+"/>
         </xs:restriction>
     </xs:simpleType>
     
     <xs:element name="Tag">
+        <xs:annotation>
+            <xs:documentation>Repreesents one Exif tag</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
-                <xs:element minOccurs="1" maxOccurs="1" name="summary" type="xs:token"/>
-                <xs:element minOccurs="1" maxOccurs="unbounded" name="Type" type="types"/>
+                <xs:element minOccurs="1" maxOccurs="1" name="summary" type="xs:token">
+                    <xs:annotation>
+                        <xs:documentation>Tag desctiption (human readable in English)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="Type" type="types">
+                    <xs:annotation>
+                        <xs:documentation>Type of tag. If more types are specified than the most preffered must me the first. Second, third etc. types must be convertible to first one.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
                 <xs:element minOccurs="0" maxOccurs="1" ref="enum"/>
             </xs:sequence>
-            <xs:attribute name="Name" use="required" type="name"/>
-            <xs:attribute name="Tag" use="required" type="hexa"/>
-            <xs:attribute name="Components" use ="required" type="CompCnt"/>
+            <xs:attribute name="Name" use="required" type="name">
+                <xs:annotation>
+                    <xs:documentation>Officila name of tag according to Exif documentation (no spaces)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Tag" use="required" type="hexa">
+                <xs:annotation>
+                    <xs:documentation>Tag code in hexa</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Components" use ="required" type="CompCnt">
+                <xs:annotation>
+                    <xs:documentation>Number of components or any</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     <xs:element name="Group">
+        <xs:annotation>
+            <xs:documentation>Represents thematical group Exif tags</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="unbounded">
                 <xs:element ref="Tag"/>
             </xs:sequence>
-            <xs:attribute name="Name" type="xs:token" use="required"/>
-            <xs:attribute name="ShortName" type="name" use="required"/>
-            <xs:attribute name="IFD" type="IFD" use="required"/>
+            <xs:attribute name="Name" type="xs:token" use="required">
+                <xs:annotation>
+                    <xs:documentation>Descriptive name of group (in English)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="ShortName" type="name" use="required">
+                <xs:annotation>
+                    <xs:documentation>Short name of group (will be used in names of properties)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="IFD" type="IFD" use="required">
+                <xs:annotation>
+                    <xs:documentation>IFD reference that determines in which IFDs are tags from this group used</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
     <xs:element name="Root">
+        <xs:annotation>
+            <xs:documentation>Exif tags specification</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="Group"/>
             </xs:sequence>
-            <xs:attribute name="transformer" type="xs:string" use="required"/>
+            <xs:attribute name="transformer" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
         <xs:unique name="UnqGroupShortName">
+            <xs:annotation>
+                <xs:documentation>Short name of tags group must be unique</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="et:Group"/>
             <xs:field xpath="@ShortName"/>
         </xs:unique>
         <xs:key name="KeyTag">
+            <xs:annotation>
+                <xs:documentation>Name of tag must be unique</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="et:Group/et:Tag"/>
             <xs:field xpath="@Name"/>
         </xs:key>
         <xs:keyref name="EnumRef" refer="KeyTag">
+            <xs:annotation>
+                <xs:documentation>Enum can reffer to another enum defined in other tag by tagname of that tag</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="et:Group/et:Tag/et:enum/et:ref"/>
             <xs:field xpath="@ref"/>
         </xs:keyref>
     </xs:element>
 
     <xs:element name="enum">
+        <xs:annotation>
+            <xs:documentation>Enumeration of possible values of this tag. Name of enum will be derived from name of tag.</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:choice minOccurs="1" maxOccurs="1">
                 <xs:element minOccurs="1" maxOccurs="unbounded" name="item">
+                    <xs:annotation>
+                        <xs:documentation>Enum item</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
-                        <xs:attribute name="name" type="name" use="required"/>
-                        <xs:attribute name="summary" type="xs:token" use ="required"/>
-                        <xs:attribute name="value" type="xs:token" use="required"/>
+                        <xs:attribute name="name" type="name" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Name of enum item</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="summary" type="xs:token" use ="required">
+                            <xs:annotation>
+                                <xs:documentation>Description of enum item (in English)</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="value" type="xs:token" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Value enum item. Must be constantly convertible to datatype of tag and enum.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
                     </xs:complexType>
                 </xs:element>
                 <xs:element minOccurs="1" maxOccurs="1" name="ref">
+                    <xs:annotation>
+                        <xs:documentation>Reference to existing enum defined for another tag</xs:documentation>
+                    </xs:annotation>
                     <xs:complexType>
-                        <xs:attribute name="ref" type="name"/>
+                        <xs:attribute name="ref" type="name">
+                            <xs:annotation>
+                                <xs:documentation>Name of tag that constains definition of enum to be used</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
                     </xs:complexType>
                 </xs:element>
             </xs:choice>
