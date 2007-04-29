@@ -7,6 +7,8 @@ Namespace Drawing.Metadata
     Public Class ExifReader
         ''' <summary>Name of Exif Sub IFD (see <see cref="SubIFD.Desc"/>)</summary>
         Public Const ExifSubIFDName As String = "Exif Sub IFD"
+        ''' <summary>Name of Exif Sub IFD (see <see cref="SubIFD.Desc"/>)</summary>
+        Public Const GPSSubIFDName As String = "GPS Sub IFD"
         ''' <summary>Name of Exif Interoperability Sub IFD (see <see cref="ExifInteroperabilityIFD"/>)</summary>
         Public Const ExifInteroperabilityName As String = "Exif Interoperability IFD"
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
@@ -95,7 +97,19 @@ Namespace Drawing.Metadata
                     i += 1
                 Next Entry
             End If
-            'TODO:GPS IFD &h8825 In IFD0 or in Exif Sub IFD???
+            'Exif Sub IFD
+            If IFDs.Count >= 1 Then
+                Dim i As Integer = 0
+                For Each Entry As ExifIFDReader.DirectoryEntry In IFDs(0).Entries
+                    If Entry.Tag = &H8825 AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
+                        'TODO: Compare to constant
+                        _GPSSubIFD = New SubIFD(Me, Entry.Data, GPSSubIFDName, IFDs(0), i)
+                        ParseNextSubIFDs(_GPSSubIFD, IFDs(0), i)
+                        Exit For
+                    End If
+                    i += 1
+                Next Entry
+            End If
         End Sub
         ''' <summary>Founds Sub IFDs that follows passed Sub IFD and adds them into <see cref="_OtherSubIFDs"/></summary>
         ''' <param name="Previous">Sub IFD that may contain offset to other Sub IFDs</param>
@@ -190,12 +204,20 @@ Namespace Drawing.Metadata
         Private _IFDs As New List(Of ExifIFDReader)
         ''' <summary>Contains value for the <see cref="ExifSubIFD"/> property</summary>
         Private _ExifSubIFD As SubIFD = Nothing
+        ''' <summary>Contains value for the <see cref="GPSSubIFD"/> property</summary>
+        Private _GPSSubIFD As SubIFD = Nothing
         ''' <summary>Contains value for the <see cref="ExifInteroperabilityIFD"/> property</summary>
         Private _ExifInteroperabilityIFD As SubIFD = Nothing
         ''' <summary>Returns Exif Sub IFD that contains data that are usually called Exif like setting of camera etc.</summary>
         Public ReadOnly Property ExifSubIFD() As SubIFD
             Get
                 Return _ExifSubIFD
+            End Get
+        End Property
+        ''' <summary>Returns GPS Sub IFD that contains GPS information.</summary>
+        Public ReadOnly Property GPSSubIFD() As SubIFD
+            Get
+                Return _GPSSubIFD
             End Get
         End Property
         ''' <summary>Returns Exif Interoperability Sub IFD</summary>

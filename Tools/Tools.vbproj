@@ -120,6 +120,7 @@
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IO\JPEG\Rational.vb" />
+    <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
     <None Include="Drawing\Metadata\Exif\ExifTags 2.vb" />

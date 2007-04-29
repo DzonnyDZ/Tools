@@ -40,41 +40,49 @@ End Namespace
     </xsl:template>
 
     <xsl:template name="code-gen">
-    Partial Public Class <xsl:value-of select="$classname"/>
+    Partial Public Class Exif
         <xsl:call-template name="Tag-enums"/>
-        <xsl:call-template name="Tag-class"/>
-        <xsl:call-template name="Tag-types"/>
+        <!--<xsl:call-template name="Tag-class"/>
+        <xsl:call-template name="Tag-types"/>-->
     End Class
     </xsl:template>
 
     <xsl:template name="Tag-enums">
         <xsl:if test="/et:Root/et:Group[@IFD='IFD']">
-        &lt;CLSCompliant(False)> Public Enum IFDTags As UShor
+        Partial Public Class IFDMain
+            &lt;CLSCompliant(False)> Public Enum Tags As UShort
             <xsl:for-each select="/et:Root/et:Group[@IFD='IFD']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-        End Enum
+            End Enum
+        End Class
         </xsl:if>
         <xsl:if test="/et:Root/et:Group[@IFD='Exif']">
-        &lt;CLSCompliant(False)> Public Enum ExifTags As UShort
+        Partial Public Class IFDExif
+            &lt;CLSCompliant(False)> Public Enum Tags As UShort
             <xsl:for-each select="/et:Root/et:Group[@IFD='Exif']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-        End Enum
+            End Enum
+        End Class
         </xsl:if>
         <xsl:if test="/et:Root/et:Group[@IFD='GPS']">
-        &lt;CLSCompliant(False)> Public Enum GPSTags As UShort
+        Partial Public Class IFDGPS
+            &lt;CLSCompliant(False)> Public Enum Tags As UShort
             <xsl:for-each select="/et:Root/et:Group[@IFD='GPS']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-        End Enum
+            End Enum
+        End Class
         </xsl:if>
         <xsl:if test="/et:Root/et:Group[@IFD='Interop']">
-        &lt;CLSCompliant(False)> Public Enum InteropTags As UShort
+        Partial Public Class IFDInterop
+            &lt;CLSCompliant(False)> Public Enum Tags As UShort
             <xsl:for-each select="/et:Root/et:Group[@IFD='Interop']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-        End Enum
+            End Enum
+        End Class
         </xsl:if>
     </xsl:template>
     <xsl:template name="Tag-enum-content">
@@ -86,7 +94,7 @@ End Namespace
 #End Region
     </xsl:template>
 
-    <xsl:template name="Tag-class">
+ <!--   <xsl:template name="Tag-class">
         <![CDATA[
         Partial Public Class ExifTag
             ''' <summary>Tag number of this tag</summary>
@@ -222,5 +230,5 @@ End Namespace
             <xsl:text>&#10;&#13;</xsl:text>
         </xsl:for-each>
         <xsl:text>End Enum&#10;&#13;</xsl:text>
-    </xsl:template>
+    </xsl:template> -->
 </xsl:stylesheet>
