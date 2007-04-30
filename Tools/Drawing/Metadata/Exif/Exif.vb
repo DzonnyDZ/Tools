@@ -187,6 +187,14 @@ Namespace Drawing.Metadata
                 Me.NumberOfElements = NumberOfElements
             End Sub
         End Class
+        <CLSCompliant(False)> _
+        Public Class ExifTagFormat : Inherits ExifRecordDescription
+            Public Sub New(ByVal NumberOfElements As UShort, ByVal Name As String, ByVal ParamArray DataTypes As ExifIFDReader.DirectoryEntry.ExifDataTypes())
+                'TODO:Better ExifTagFormat CTor and whole class, VALUES are NOT stored!!!
+                MyBase.New(DataTypes(0), NumberOfElements)
+
+            End Sub
+        End Class
 
         ''' <summary>Represents one Exif record</summary>
         Public Class ExifRecord
@@ -195,7 +203,7 @@ Namespace Drawing.Metadata
             Private _Data As Object
             ''' <summary>Contains value of the <see cref="DataType"/> property</summary>
             Private _DataType As ExifRecordDescription
-            ''' <summary>Contains value of the <see cref="ConstantNumberOfComponents"/> property</summary>
+            ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
             Private _Fixed As Boolean
             ''' <summary>True if <see cref="ExifRecordDescription.NumberOfElements"/> of this record is fixed</summary>
             Public ReadOnly Property Fixed() As Boolean
