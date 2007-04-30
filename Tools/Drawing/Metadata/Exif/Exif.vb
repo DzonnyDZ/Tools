@@ -146,9 +146,48 @@ Namespace Drawing.Metadata
                     Return _Records
                 End Get
             End Property
+ ''' <summary>Gets or sets value of cpecified record</summary>
+ ''' <param name="Type">Type of record specifies data types of recor as well as number of components</param>
+ ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+ ''' <returns>Value of record with tag number specified in <paramref name="Type"/> if type specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+''' <exception cref="ArgumentNullException"><paramref name="Type"> is null</exception>
+CLSCompliant(False)> _
+            Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
+                Get
+if type is nothing then throw new ArgumentNullException("Type","Type cannot be null")                    
+If Records.ContainsKey(Type.Tag) Then
+                        With Records(Type.Tag)
+                            If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
+                                If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements  Then
+                                    return records(type.Tag)
+else
+return nothing
+
+                                End If
+                            Else
+                                Return Nothing
+                            End If
+                        End With
+                    Else
+                        Return Nothing
+                    End If
+               End Get
+                Set(ByVal value As ExifRecord)
+if type is nothing then throw new ArgumentNullException("Type","Type cannot be null")                    
+if value is nothing then
+if records.containskey(type.tag) then records.remove(type.tag)
+else              
+if records.containskey(type.tag) then
+records(type.tag)=value
+else
+records.add(type.tag,value)
+end if
+end if
+                End Set
+            End Property
         End Class
         ''' <summary>Describes one Exif record</summary>
-        ''' <remarks>Descibes which data type record actually contains, how many items of such datatype</remarks>
+        ''' <remarks>Descibes which data type record actually contains, how many items of such datatype. For recognized tags also possible format is specified via <see cref="ExifTagFormat"/></remarks>
         <CLSCompliant(False)> _
         Public Class ExifRecordDescription
             ''' <summary>Contains value of the <see cref="DataType"/> property</summary>
@@ -158,13 +197,11 @@ Namespace Drawing.Metadata
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _NumberOfElements As UShort
             ''' <summary>Number of elements of type <see cref="DataType"/> contained in record</summary>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value to 0.</exception>
             Public Property NumberOfElements() As UShort
                 Get
                     Return _NumberOfElements
                 End Get
                 Protected Friend Set(ByVal value As UShort)
-                    If value = 0 Then Throw New ArgumentOutOfRangeException("value", "Number of elements cannot be 0.")
                     _NumberOfElements = value
                 End Set
             End Property
@@ -186,14 +223,70 @@ Namespace Drawing.Metadata
                 Me.DataType = DataType
                 Me.NumberOfElements = NumberOfElements
             End Sub
+            ''' <summary>Protected CTor that allows <see cref="NumberOfElements"/> to be zero</summary>
+            ''' <param name="NumberOfElements">Number of elements of type <paramref name="DataType"/> in record.</param>
+            ''' <param name="DataType"></param>
+            Protected Sub New(ByVal NumberOfElements As UShort, ByVal DataType As ExifIFDReader.DirectoryEntry.ExifDataTypes)
+                Me.DataType = DataType
+                Me.NumberOfElements = NumberOfElements
+            End Sub
         End Class
+
+        ''' <summary>Describes which data can be stored in recognized Exif tag</summary>
+        ''' <remarks>Describas which datatype(s) and lengt if allowed for specific recognized Exif record. Actual content of record is described by <see cref="ExifRecordDescription"/></remarks>
         <CLSCompliant(False)> _
         Public Class ExifTagFormat : Inherits ExifRecordDescription
-            Public Sub New(ByVal NumberOfElements As UShort, ByVal Name As String, ByVal ParamArray DataTypes As ExifIFDReader.DirectoryEntry.ExifDataTypes())
-                'TODO:Better ExifTagFormat CTor and whole class, VALUES are NOT stored!!!
-                MyBase.New(DataTypes(0), NumberOfElements)
-
+            ''' <summary>CTor</summary>
+            ''' <param name="NumberOfElements">Number of elemets that must exactly be in tag. If number of elements can varry pass 0 here</param>
+            ''' <param name="Tag">Number of tag</param>
+            ''' <param name="Name">Short name of tag</param>
+            ''' <param name="DataTypes">Possible datatypes of tag. First datatype specified must be the widest and must be always specified and will be used as default</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
+            Public Sub New(ByVal NumberOfElements As UShort, ByVal Tag As UShort, ByVal Name As String, ByVal ParamArray DataTypes As ExifIFDReader.DirectoryEntry.ExifDataTypes())
+                MyBase.New(TestThrowReturn(DataTypes)(0), NumberOfElements)
+                _Tag = Tag
+                _Name = Name
+                OtherDatatypes.AddRange(DataTypes)
+                OtherDatatypes.RemoveAt(0)
             End Sub
+            ''' <summary>Test if <paramref name="DataTypes"/> is null or containc no element</summary>
+            ''' <param name="DataTypes">Array to test</param>
+            ''' <returns><paramref name="DataTypes"/></returns>
+            ''' <remarks>Used by ctor</remarks>
+            ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
+            Private Shared Function TestThrowReturn(ByVal DataTypes As ExifIFDReader.DirectoryEntry.ExifDataTypes()) As ExifIFDReader.DirectoryEntry.ExifDataTypes()
+                If DataTypes Is Nothing OrElse DataTypes.Length = 0 Then Throw New ArgumentNullException("DataTypes", "DataTypes cannot be null and must contain at lesat one element")
+                Return DataTypes
+            End Function
+            ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
+            Private _Tag As UShort
+            ''' <summary>Contains value of the <see cref="Name"/> property</summary>
+            Private _Name As String
+            ''' <summary>Contains list of possible datatypes for tag excepting datatype specified in <see cref="DataType"/></summary>
+            Private OtherDatatypes As New List(Of ExifIFDReader.DirectoryEntry.ExifDataTypes)
+            ''' <summary>Represents short unique name of tag used to reference it</summary>
+            Public ReadOnly Property Name() As String
+                Get
+                    Return _Name
+                End Get
+            End Property
+            ''' <summary>Represents tag code in Exif</summary>
+            Public ReadOnly Property Tag() As UShort
+                Get
+                    Return _Tag
+                End Get
+            End Property
+            ''' <summary>Datatypes allowed for this tag</summary>
+            ''' <returns>Array of datatypes allowed for this tag. First element of the array is same as <see cref="DataType"/> amd represents default and preffered datatype</returns>
+            Public ReadOnly Property DataTypes() As ExifIFDReader.DirectoryEntry.ExifDataTypes()
+                Get
+                    Dim arr(OtherDatatypes.Count) As ExifIFDReader.DirectoryEntry.ExifDataTypes
+                    If OtherDatatypes.Count > 0 Then _
+                        OtherDatatypes.CopyTo(0, arr, 1, OtherDatatypes.Count)
+                    arr(0) = DataType
+                    Return arr
+                End Get
+            End Property
         End Class
 
         ''' <summary>Represents one Exif record</summary>

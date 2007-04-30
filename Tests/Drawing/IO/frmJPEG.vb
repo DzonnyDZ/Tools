@@ -87,6 +87,7 @@ Namespace Drawing.IO
                     End If
                 End If
                 'TODO:Show additional IFDs
+                'TODO:Show GPS IFD
                 'PhotoShop block
                 Dim PhotoShopStream As System.IO.Stream = jpeg.GetPhotoShopStream
                 Dim PhotoShopIndex As Integer = jpeg.PhotoshopMarkerIndex

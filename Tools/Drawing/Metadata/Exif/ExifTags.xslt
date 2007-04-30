@@ -18,159 +18,159 @@
         <xsl:if test="$namespace!=''">
             <xsl:text>Namespace </xsl:text>
             <xsl:value-of select="$namespace"/>
+            <xsl:call-template name="nl"/>
         </xsl:if>
         <xsl:call-template name="code-gen"/>
         <xsl:if test="$namespace!=''">
             <xsl:text>End Namespace</xsl:text>
+            <xsl:call-template name="nl"/>
         </xsl:if>
     </xsl:template>
-
+    <!--Generates end of line-->
+    <xsl:template name="nl">
+        <xsl:text xml:space="preserve">&#xD;&#xA;</xsl:text>
+    </xsl:template>
     <xsl:template name="header-comment">
-        <xsl:text>' GENERATED FILE -- DO NOT EDIT
-' 
-' Generator: </xsl:text>
+        <xsl:text>' GENERATED FILE -- DO NOT EDIT&#xD;&#xA;</xsl:text>
+        <xsl:text>'&#xD;&#xA;</xsl:text>
+        <xsl:text>' Generator: </xsl:text>
         <xsl:value-of select="$generator"/>
-        <xsl:text>
-' Version: </xsl:text>
+        <xsl:call-template name="nl"/>        
+        <xsl:text>' Version: </xsl:text>
         <xsl:value-of select="$version"/>
-        <xsl:text>'
-'
-' Generated code from "</xsl:text>
+        <xsl:call-template name="nl"/>
+        <xsl:text>'&#xD;&#xA;</xsl:text>
+        <xsl:text>'&#xD;&#xA;</xsl:text>
+        <xsl:text>' Generated code from "</xsl:text>
         <xsl:value-of select="$filename"/>
-        <xsl:text>"
-'
-' Created: </xsl:text>
+        <xsl:text>"&#xD;&#xA;</xsl:text>
+        <xsl:text>'&#xD;&#xA;</xsl:text>
+        <xsl:text>' Created: </xsl:text>
         <xsl:value-of select="$date-created"/>
+        <xsl:call-template name="nl"/>
         <xsl:text>' By:</xsl:text>
         <xsl:value-of select="$created-by"/>
-        <xsl:text>'</xsl:text>
-
+        <xsl:call-template name="nl"/>
+        <xsl:text>'&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <xsl:template name="code-gen">
-        <xsl:text>Partial Public Class Exif</xsl:text>
+        <xsl:text>&#9;Partial Public Class Exif&#xD;&#xA;</xsl:text>
         <xsl:call-template name="Tag-enums"/>
-        <xsl:text>End Class</xsl:text>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
     </xsl:template>
-
+    <xsl:template name="end-class">
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;End Class&#xD;&#xA;</xsl:text>
+    </xsl:template>
+    <xsl:template name="property-head">
+        <xsl:text>&#9;&#9;&#9;''' &lt;summary>Gets format for tag specified&lt;/summary>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Tag"/> contains unknown value&lt;/exception>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public ReadOnly Property TagFormat(ByVal Tag As Tags) As ExifTagFormat&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;Const any As ushort=0&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;Select Case Tag&#xD;&#xA;</xsl:text>
+    </xsl:template>
     <!--For each supported IFD/Sub IFD generates partial class that contains enumeration of tag numbers used in that IFD-->
     <xsl:template name="Tag-enums">
         <xsl:if test="/et:Root/et:Group[@IFD='IFD']">
-        Partial Public Class IFDMain
-            ''' &lt;summary>Tag numbers used in IFD0 and IFD1&lt;/summary>
-            &lt;CLSCompliant(False)> Public Enum Tags As UShort
+            <xsl:text>&#9;&#9;Partial Public Class IFDMain&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;''' &lt;summary>Tag numbers used in IFD0 and IFD1&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='IFD']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-            End Enum
-            ''' &lt;summary>Gets format for tag specified&lt;/summary>
-            ''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Tag"/> contains unknown value&lt;/exception>
-            &lt;CLSCompliant(False)> Public ReadOnly Property TagFormat(ByVal Tag As Tags) As ExifTagFormat
-            Get
-            Const any As ushort=0
-            Select Case Tag
+            <xsl:text>&#9;&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
+            <xsl:call-template name="property-head"/>
             <xsl:for-each select="et:Root/et:Group[@IFD='IFD']/et:Tag">
                 <xsl:call-template name="Datatype-description"/>
             </xsl:for-each>
-                        Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
-                    End Select
-                End Get
-           End Property
-        End Class
+            <xsl:call-template name="end-class"/>            
         </xsl:if>
         <xsl:if test="/et:Root/et:Group[@IFD='Exif']">
-        Partial Public Class IFDExif
-            ''' &lt;summary>Tag numbers used in Exif Sub IFD&lt;/summary>
-            &lt;CLSCompliant(False)> Public Enum Tags As UShort
+            <xsl:text>&#9;&#9;Partial Public Class IFDExif&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;''' &lt;summary>Tag numbers used in Exif Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='Exif']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-            End Enum
-            ''' &lt;summary>Gets format for tag specified&lt;/summary>
-            ''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Tag"/> contains unknown value&lt;/exception>
-            &lt;CLSCompliant(False)> Public ReadOnly Property TagFormat(ByVal Tag As Tags) As ExifTagFormat
-            Get
-            Const any As ushort=0
-            Select Case Tag
+            <xsl:text>&#9;&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
+            <xsl:call-template name="property-head"/>
             <xsl:for-each select="et:Root/et:Group[@IFD='Exif']/et:Tag">
                 <xsl:call-template name="Datatype-description"/>
             </xsl:for-each>
-                        Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
-                    End Select
-                End Get
-           End Property
-        End Class
+            <xsl:call-template name="end-class"/>
         </xsl:if>
         <xsl:if test="/et:Root/et:Group[@IFD='GPS']">
-        Partial Public Class IFDGPS
-            ''' &lt;summary>Tag numbers used in GPS Sub IFD&lt;/summary>
-            &lt;CLSCompliant(False)> Public Enum Tags As UShort
+            <xsl:text>&#9;&#9;Partial Public Class IFDGPS&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;''' &lt;summary>Tag numbers used in GPS Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='GPS']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-            End Enum
-            ''' &lt;summary>Gets format for tag specified&lt;/summary>
-            ''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Tag"/> contains unknown value&lt;/exception>
-            &lt;CLSCompliant(False)> Public ReadOnly Property TagFormat(ByVal Tag As Tags) As ExifTagFormat
-            Get
-            Const any As ushort=0
-            Select Case Tag
+            <xsl:text>&#9;&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
+            <xsl:call-template name="property-head"/>
             <xsl:for-each select="et:Root/et:Group[@IFD='GPS']/et:Tag">
                 <xsl:call-template name="Datatype-description"/>
             </xsl:for-each>
-                        Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
-                    End Select
-                End Get
-           End Property
-        End Class
+            <xsl:call-template name="end-class"/>
         </xsl:if>
-        
-        Partial Public Class IFDInterop
-        <xsl:if test="/et:Root/et:Group[@IFD='Interop']">        
-            ''' &lt;summary>Tag numbers used in Exif Interoperability IFD&lt;/summary>
-            &lt;CLSCompliant(False)> Public Enum Tags As UShort
+
+
+        <xsl:if test="/et:Root/et:Group[@IFD='Interop']">
+            <xsl:text>&#9;&#9;Partial Public Class IFDInterop&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;''' &lt;summary>Tag numbers used in Exif Interoperability IFD&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='Interop']">
                 <xsl:call-template name="Tag-enum-content"/>
             </xsl:for-each>
-            End Enum
-            ''' &lt;summary>Gets format for tag specified&lt;/summary>
-            ''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Tag"/> contains unknown value&lt;/exception>
-            &lt;CLSCompliant(False)> Public ReadOnly Property TagFormat(ByVal Tag As Tags) As ExifTagFormat 
-                Get
-                    Const any As ushort=0
-                    Select Case Tag
+            <xsl:text>&#9;&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
+            <xsl:call-template name="property-head"/>
             <xsl:for-each select="et:Root/et:Group[@IFD='Interop']/et:Tag">
                 <xsl:call-template name="Datatype-description"/>
             </xsl:for-each>
-                        Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
-                    End Select
-                End Get
-           End Property
+            <xsl:call-template name="end-class"/>
         </xsl:if>
-        End Class
     </xsl:template>
     
     <!--Generates content of one group of tags in one IFD-->
     <xsl:template name="Tag-enum-content">
-#Region "<xsl:value-of select="@Name"/>"
+        <xsl:text>&#9;&#9;&#9;&#9;#Region "</xsl:text>
+        <xsl:value-of select="@Name"/>
+        <xsl:text>"&#xD;&#xA;</xsl:text>
         <xsl:for-each select="et:Tag">
-            ''' &lt;summary><xsl:value-of select="et:summary"/>&lt;/summary>
-            &lt;Category("<xsl:value-of select="../@ShortName"/>")> <xsl:value-of select="@Name"/> = &amp;h<xsl:value-of select="@Tag"/>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;''' &lt;summary></xsl:text>
+            <xsl:value-of select="et:summary"/>
+            <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;&lt;Category("</xsl:text>
+            <xsl:value-of select="../@ShortName"/>
+            <xsl:text>")></xsl:text>
+            <xsl:value-of select="@Name"/>
+            <xsl:text> = &amp;h</xsl:text>
+            <xsl:value-of select="@Tag"/>
+            <xsl:call-template name="nl"/>
         </xsl:for-each>
-#End Region
+        <xsl:text>&#9;&#9;&#9;&#9;#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Generates content of Select statement that returns description of tag datatype-->
     <xsl:template name="Datatype-description">
-        <xsl:text>Case Tags.</xsl:text><xsl:value-of select="@Name"/><xsl:text> : </xsl:text>
-        <xsl:text>Return New ExifTagFormat(</xsl:text><xsl:value-of select="@Components"/>
-        <xsl:text>,"</xsl:text><xsl:value-of select="@Name"/><xsl:text>"</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Case Tags.</xsl:text>
+        <xsl:value-of select="@Name"/>
+        <xsl:text> : Return New ExifTagFormat(</xsl:text>
+        <xsl:value-of select="@Components"/>
+        <xsl:text>, &amp;h</xsl:text>
+        <xsl:value-of select="@Tag"/>        
+        <xsl:text>, "</xsl:text>
+        <xsl:value-of select="@Name"/>
+        <xsl:text>"</xsl:text>
         <xsl:for-each select="et:Type">
-            <xsl:text>,ExifIFDReader.DirectoryEntry.ExifDataTypes.</xsl:text>
+            <xsl:text>, ExifIFDReader.DirectoryEntry.ExifDataTypes.</xsl:text>
             <xsl:value-of select="."/>
         </xsl:for-each>
-        <xsl:text>)
-        </xsl:text>
+        <xsl:text>)&#xD;&#xA;</xsl:text>
     </xsl:template>
-
 </xsl:stylesheet>

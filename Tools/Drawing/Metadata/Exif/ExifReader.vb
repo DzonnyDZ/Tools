@@ -75,8 +75,7 @@ Namespace Drawing.Metadata
             If IFDs.Count >= 1 Then
                 Dim i As Integer = 0
                 For Each Entry As ExifIFDReader.DirectoryEntry In IFDs(0).Entries
-                    If Entry.Tag = &H8769 AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
-                        'TODO: Compare to constant
+                    If Entry.Tag = Exif.IFDMain.Tags.ExifIFD AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
                         _ExifSubIFD = New SubIFD(Me, Entry.Data, ExifSubIFDName, IFDs(0), i)
                         ParseNextSubIFDs(_ExifSubIFD, IFDs(0), i)
                         Exit For
@@ -88,8 +87,7 @@ Namespace Drawing.Metadata
             If ExifSubIFD IsNot Nothing Then
                 Dim i As Integer = 0
                 For Each Entry As ExifIFDReader.DirectoryEntry In ExifSubIFD.Entries
-                    If Entry.Tag = &HA005 AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
-                        'TODO: Compare to constant
+                    If Entry.Tag = Exif.IFDExif.Tags.InteroperabilityIFD AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
                         _ExifInteroperabilityIFD = New SubIFD(Me, Entry.Data, ExifInteroperabilityName, ExifSubIFD, i)
                         ParseNextSubIFDs(_ExifInteroperabilityIFD, ExifSubIFD, i)
                         Exit For
@@ -101,8 +99,7 @@ Namespace Drawing.Metadata
             If IFDs.Count >= 1 Then
                 Dim i As Integer = 0
                 For Each Entry As ExifIFDReader.DirectoryEntry In IFDs(0).Entries
-                    If Entry.Tag = &H8825 AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
-                        'TODO: Compare to constant
+                    If Entry.Tag = Exif.IFDMain.Tags.GPSIFD AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
                         _GPSSubIFD = New SubIFD(Me, Entry.Data, GPSSubIFDName, IFDs(0), i)
                         ParseNextSubIFDs(_GPSSubIFD, IFDs(0), i)
                         Exit For
