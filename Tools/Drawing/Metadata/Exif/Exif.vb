@@ -146,23 +146,22 @@ Namespace Drawing.Metadata
                     Return _Records
                 End Get
             End Property
- ''' <summary>Gets or sets value of cpecified record</summary>
- ''' <param name="Type">Type of record specifies data types of recor as well as number of components</param>
- ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
- ''' <returns>Value of record with tag number specified in <paramref name="Type"/> if type specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
-''' <exception cref="ArgumentNullException"><paramref name="Type"> is null</exception>
-CLSCompliant(False)> _
+            ''' <summary>Gets or sets value of specified record</summary>
+            ''' <param name="Type">Type of record specifies data types of recor as well as number of components</param>
+            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+            ''' <returns>Value of record with tag number specified in <paramref name="Type"/> if type specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            <CLSCompliant(False)> _
             Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
                 Get
-if type is nothing then throw new ArgumentNullException("Type","Type cannot be null")                    
-If Records.ContainsKey(Type.Tag) Then
+                    If type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                    If Records.ContainsKey(Type.Tag) Then
                         With Records(Type.Tag)
                             If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
-                                If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements  Then
-                                    return records(type.Tag)
-else
-return nothing
-
+                                If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements Then
+                                    Return records(type.Tag)
+                                Else
+                                    Return Nothing
                                 End If
                             Else
                                 Return Nothing
@@ -171,18 +170,18 @@ return nothing
                     Else
                         Return Nothing
                     End If
-               End Get
+                End Get
                 Set(ByVal value As ExifRecord)
-if type is nothing then throw new ArgumentNullException("Type","Type cannot be null")                    
-if value is nothing then
-if records.containskey(type.tag) then records.remove(type.tag)
-else              
-if records.containskey(type.tag) then
-records(type.tag)=value
-else
-records.add(type.tag,value)
-end if
-end if
+                    If type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                    If value Is Nothing Then
+                        If records.containskey(type.tag) Then records.remove(type.tag)
+                    Else
+                        If records.containskey(type.tag) Then
+                            records(type.tag) = value
+                        Else
+                            records.add(type.tag, value)
+                        End If
+                    End If
                 End Set
             End Property
         End Class
@@ -390,7 +389,7 @@ end if
                 End Try
             End Sub
             ''' <summary>CTor</summary>
-            ''' <param name="Data">Initila value of this record</param>
+            ''' <param name="Data">Initial value of this record</param>
             ''' <param name="Type">Describes type of data contained in this flag</param>
             ''' <param name="Fixed">Determines if length of data can be changed</param>
             ''' <exception cref="InvalidCastException">Value passed to <paramref name="Data"/> is not compatible with <paramref name="Type"/> specified</exception>
@@ -425,6 +424,20 @@ end if
             Public Sub New(ByVal Reader As ExifIFDReader)
                 MyBase.New(Reader)
             End Sub
+            ''' <summary>Gets or sets value of specified record</summary>
+            ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
+            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+            ''' <returns>Value of record with tag number specified by <paramref name="Type"/> if type for this tag number specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            <CLSCompliant(False)> _
+            Default Public Overridable Overloads Property Record(ByVal Type As Tags) As ExifRecord
+                Get
+                    Return MyBase.Record(Me.TagFormat(Type))
+                End Get
+                Set(ByVal value As ExifRecord)
+                    MyBase.Record(Me.TagFormat(Type)) = value
+                End Set
+            End Property
         End Class
         ''' <summary>Exif Sub IFD</summary>
         Partial Class IFDExif : Inherits IFD
@@ -436,6 +449,20 @@ end if
             Public Sub New(ByVal Reader As ExifIFDReader)
                 MyBase.New(Reader)
             End Sub
+            ''' <summary>Gets or sets value of specified record</summary>
+            ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
+            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+            ''' <returns>Value of record with tag number specified by <paramref name="Type"/> if type for this tag number specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            <CLSCompliant(False)> _
+            Default Public Overridable Overloads Property Record(ByVal Type As Tags) As ExifRecord
+                Get
+                    Return MyBase.Record(Me.TagFormat(Type))
+                End Get
+                Set(ByVal value As ExifRecord)
+                    MyBase.Record(Me.TagFormat(Type)) = value
+                End Set
+            End Property
         End Class
         ''' <summary>Exif GPS IFD</summary>
         Partial Class IFDGPS : Inherits IFD
@@ -447,6 +474,20 @@ end if
             Public Sub New(ByVal Reader As ExifIFDReader)
                 MyBase.New(Reader)
             End Sub
+            ''' <summary>Gets or sets value of specified record</summary>
+            ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
+            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+            ''' <returns>Value of record with tag number specified by <paramref name="Type"/> if type for this tag number specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            <CLSCompliant(False)> _
+            Default Public Overridable Overloads Property Record(ByVal Type As Tags) As ExifRecord
+                Get
+                    Return MyBase.Record(Me.TagFormat(Type))
+                End Get
+                Set(ByVal value As ExifRecord)
+                    MyBase.Record(Me.TagFormat(Type)) = value
+                End Set
+            End Property
         End Class
         ''' <summary>Exif Interoperability IFD</summary>
         Partial Class IFDInterop : Inherits IFD
@@ -458,6 +499,20 @@ end if
             Public Sub New(ByVal Reader As ExifIFDReader)
                 MyBase.New(Reader)
             End Sub
+            ''' <summary>Gets or sets value of specified record</summary>
+            ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
+            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+            ''' <returns>Value of record with tag number specified by <paramref name="Type"/> if type for this tag number specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            <CLSCompliant(False)> _
+            Default Public Overridable Overloads Property Record(ByVal Type As Tags) As ExifRecord
+                Get
+                    Return MyBase.Record(Me.TagFormat(Type))
+                End Get
+                Set(ByVal value As ExifRecord)
+                    MyBase.Record(Me.TagFormat(Type)) = value
+                End Set
+            End Property
         End Class
 #End Region
     End Class

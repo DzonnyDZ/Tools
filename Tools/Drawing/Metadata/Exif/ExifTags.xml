@@ -280,7 +280,7 @@
         </Tag>
         <Tag Name="ExposureProgram" Tag="8822" Components="1">
             <summary>Exposure program</summary>
-            <Type>URational</Type>
+            <Type>UInt16</Type>
             <enum>
                 <item name="NotDefined" value="0" summary="Not defined"/>
                 <item name="Manual" value="1" summary="Manual"/>
@@ -339,7 +339,7 @@
                 <item name="Spot" value="3" summary="Spot"/>
                 <item name="MultiSpot" value="4" summary="MultiSpot"/>
                 <item name="Pattern" value="5" summary="Pattern"/>
-                <item name="Partial" value="6" summary="Partial"/>
+                <item name="PartialMode" value="6" summary="Partial"/>
                 <item name="Other" value="255" summary="Other"/>
             </enum>
         </Tag>
@@ -483,7 +483,7 @@
         </Tag>
         <Tag Name="GainControl" Tag="A407" Components="1">
             <summary>Gain control</summary>
-            <Type>URational</Type>
+            <Type>UInt16</Type>
             <enum>
                 <item name="None" value="0" summary="None"/>
                 <item name="LowGainUp" value="1" summary="Low gain up"/>
@@ -704,6 +704,13 @@
         <Tag Name="GPSDifferential" Tag="1E" Components="1">
             <summary>GPS differential correction</summary>
             <Type>UInt16</Type>
+        </Tag>
+    </Group>
+    <Group Name="Ineroperability Tags" ShortName="Interop" IFD="Interop">
+        <!--http://www.awaresystems.be/imaging/tiff/tifftags/privateifd/interoperability/interoperabilityindex.html-->
+        <Tag Name="InteroperabilityIndex" Components="any" Tag="1">
+            <summary>Indicates the identification of the Interoperability rule.</summary>
+            <Type>ASCII</Type>
         </Tag>
     </Group>
 </Root>
