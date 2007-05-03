@@ -444,6 +444,8 @@ Namespace Windows.Forms
         ''' <remarks>This enumeration is used to either include only encodings or exclude all encodings that falle into either at least one or all groups specified</remarks>
         Public Enum EncodingFilters As Long
             'TODO:Apply
+            'TODO: Remove this
+            'Encoding filters and encoding filtering was found being strange and will be removed when I'll have tim to finish this tool
             ''' <summary><see cref="Encoding.IsAlwaysNormalized"/> = True</summary>
             NormalizedYes = 2 ^ 0
             ''' <summary><see cref="Encoding.IsAlwaysNormalized"/> = False</summary>

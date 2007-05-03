@@ -3,7 +3,7 @@ Namespace Drawing.Metadata
     ''' <summary>Provides read-write acces to block of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Exif), LastChange:="2007/04/29")> _
-    Partial Public Class Exif 'ASAP:Wiki
+    Partial Public Class Exif
 #Region "CTors"
         ''' <summary>CTor</summary>
         Public Sub New()
@@ -154,12 +154,12 @@ Namespace Drawing.Metadata
             <CLSCompliant(False)> _
             Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
                 Get
-                    If type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                    If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
                     If Records.ContainsKey(Type.Tag) Then
                         With Records(Type.Tag)
                             If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
                                 If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements Then
-                                    Return records(type.Tag)
+                                    Return Records(Type.Tag)
                                 Else
                                     Return Nothing
                                 End If
@@ -172,14 +172,14 @@ Namespace Drawing.Metadata
                     End If
                 End Get
                 Set(ByVal value As ExifRecord)
-                    If type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                    If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
                     If value Is Nothing Then
-                        If records.containskey(type.tag) Then records.remove(type.tag)
+                        If Records.ContainsKey(Type.Tag) Then Records.Remove(Type.Tag)
                     Else
-                        If records.containskey(type.tag) Then
-                            records(type.tag) = value
+                        If Records.ContainsKey(Type.Tag) Then
+                            Records(Type.Tag) = value
                         Else
-                            records.add(type.tag, value)
+                            Records.Add(Type.Tag, value)
                         End If
                     End If
                 End Set

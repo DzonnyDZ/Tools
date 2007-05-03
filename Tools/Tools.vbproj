@@ -160,6 +160,12 @@
     <Compile Include="Resources\Resources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\DataBoundToolStripComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\DataBoundToolStripLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
       <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
@@ -234,6 +240,10 @@
     <None Include="Drawing\Metadata\Exif\ExifTags.xsx">
       <DependentUpon>ExifTags.xsd</DependentUpon>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\DataBoundToolStripComboBox.bmp" />
+    <EmbeddedResource Include="Resources\DataBoundToolStripLabel.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Metadata\XMP\" />
