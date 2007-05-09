@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="ExifTags"
+                  targetNamespace="http://codeplex.com/DTools/ISOLanguages"
+                  elementFormDefault="qualified"
+                  xmlns="http://codeplex.com/DTools/ISOLanguages"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:ISO="http://codeplex.com/DTools/ISOLanguages"
+           >
+    <xs:annotation>
+        <xs:documentation>This XML schema defines structure of file used to generate classes and enums to work with ISO language codes. This schema is designed for private use when developing this project only.</xs:documentation>
+    </xs:annotation>
+    <xs:simpleType name="code2">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z][a-z]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="code3">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[a-z][a-z][a-z]"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LangName">
+        <xs:restriction base="xs:token">
+            <xs:minLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="lng">
+        <xs:annotation>
+            <xs:documentation>Represents one language entry</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:attribute name="ISO639-1" type="code2" use="optional">
+                <xs:annotation>
+                    <xs:documentation>Language code according to ISO 639-1</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="ISO639-2" type="code3" use="required">
+                <xs:annotation>
+                    <xs:documentation>Language code according to ISO 639-2</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="English" type="LangName" use="required">
+                <xs:annotation>
+                    <xs:documentation>Language name in English</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Native" type="LangName" use="required">
+                <xs:annotation>
+                    <xs:documentation>Language name in itself (if native name is not available English is provided)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="ISOLanguages">
+        <xs:annotation>
+            <xs:documentation>Root element that contain list of laguage entries</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element minOccurs="1" maxOccurs="unbounded" ref="lng"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

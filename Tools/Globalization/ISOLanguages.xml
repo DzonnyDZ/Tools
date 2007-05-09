@@ -1,0 +1,507 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ISOLanguages xmlns="http://codeplex.com/DTools/ISOLanguages">
+    <lng ISO639-2="abk" ISO639-1="ab" English="Abkhaz" Native="Аҧсуа"/>
+    <lng ISO639-2="ace" English="Acehnese, Achinese" Native="Aceh"/>
+    <lng ISO639-2="ach" English="Acoli" Native="Acoli"/>
+    <lng ISO639-2="ada" English="Adangme" Native="Adangme"/>
+    <lng ISO639-2="ady" English="Adyghe" Native="адыгэбзэ"/>
+    <lng ISO639-2="aar" ISO639-1="aa" English="Afar" Native="Afaraf"/>
+    <lng ISO639-2="afh" English="Afrihili" Native="Afrihili"/>
+    <lng ISO639-2="afr" ISO639-1="af" English="Afrikaans" Native="Afrikaans"/>
+    <lng ISO639-2="afa" English="Afro-Asiatic (Other)" Native="Afro-Asiatic (Other)"/>
+    <lng ISO639-2="ain" English="Ainu" Native="アイヌ イタク(イタック)"/>
+    <lng ISO639-2="aka" ISO639-1="ak" English="Akan" Native="Akan"/>
+    <lng ISO639-2="akk" English="Akkadian" Native="akkadû"/>
+    <lng ISO639-2="alb" ISO639-1="sq" English="Albanian" Native="Shqip"/>
+    <lng ISO639-2="sqi" English="Albanian" Native="Shqip"/>
+    <lng ISO639-2="ale" English="Aleut" Native="Unangam Tunuu"/>
+    <lng ISO639-2="alg" English="Algonquian languages" Native="Algonquian languages"/>
+    <lng ISO639-2="tut" English="Altaic (Other)" Native="Altaic (Other)"/>
+    <lng ISO639-2="amh" ISO639-1="am" English="Amharic" Native="አማርኛ"/>
+    <lng ISO639-2="anp" English="Angika" Native="अङ्गिका"/>
+    <lng ISO639-2="apa" English="Apache languages" Native="Apache languages"/>
+    <lng ISO639-2="ara" ISO639-1="ar" English="Arabic" Native="العربية"/>
+    <lng ISO639-2="arg" ISO639-1="an" English="Aragonese" Native="Aragonés"/>
+    <lng ISO639-2="arc" English="Aramaic" Native="ܐܪܡܝܐ"/>
+    <lng ISO639-2="arp" English="Arapaho" Native="Hinono'eitiit"/>
+    <lng ISO639-2="arn" English="Araucanian" Native="mapudungun"/>
+    <lng ISO639-2="arw" English="Arawak" Native="Arawak"/>
+    <lng ISO639-2="arm" ISO639-1="hy" English="Armenian" Native="Հայերեն լեզու"/>
+    <lng ISO639-2="hye" English="Armenian" Native="Հայերեն լեզու"/>
+    <lng ISO639-2="rup" English="Aromanian" Native="limba armãneascã"/>
+    <lng ISO639-2="art" English="Artificial (Other)" Native="Artificial (Other)"/>
+    <lng ISO639-2="asm" ISO639-1="as" English="Assamese" Native="অসমীয়া"/>
+    <lng ISO639-2="ast" English="Asturian; Bable" Native="asturianu"/>
+    <lng ISO639-2="ath" English="Athapascan languages" Native="aðapaskāw"/>
+    <lng ISO639-2="aus" English="Australian languages" Native="Australian languages"/>
+    <lng ISO639-2="map" English="Austronesian (Other)" Native="Austronesian (Other)"/>
+    <lng ISO639-2="ava" ISO639-1="av" English="Avaric" Native="авар мацӀ"/>
+    <lng ISO639-2="ave" ISO639-1="ae" English="Avestan" Native="avesta"/>
+    <lng ISO639-2="awa" English="Awadhi" Native="अवधी"/>
+    <lng ISO639-2="aym" ISO639-1="ay" English="Aymara" Native="aymar aru"/>
+    <lng ISO639-2="aze" ISO639-1="az" English="Azerbaijani" Native="Azərbaycanca"/>
+    <lng ISO639-2="ban" English="Balinese" Native="Basa Bali"/>
+    <lng ISO639-2="bat" English="Baltic (Other)" Native="Baltic (Other)"/>
+    <lng ISO639-2="bal" English="Baluchi" Native="بلوچی"/>
+    <lng ISO639-2="bam" ISO639-1="bm" English="Bambara" Native="bamanankan"/>
+    <lng ISO639-2="bai" English="Bamileke languages" Native="Bamiléké"/>
+    <lng ISO639-2="bad" English="Banda" Native="Banda"/>
+    <lng ISO639-2="bnt" English="Bantu (Other)" Native="Bantu (Other)"/>
+    <lng ISO639-2="bas" English="Basa" Native="ɓasaá"/>
+    <lng ISO639-2="bak" ISO639-1="ba" English="Bashkir" Native="башҡорт теле"/>
+    <lng ISO639-2="baq" ISO639-1="eu" English="Basque" Native="euskara"/>
+    <lng ISO639-2="eus" English="Basque" Native="euskara"/>
+    <lng ISO639-2="btk" English="Batak (Indonesia)" Native="Batak"/>
+    <lng ISO639-2="bej" English="Beja" Native="بداوية"/>
+    <lng ISO639-2="bel" ISO639-1="be" English="Belarusian" Native="Беларуская мова"/>
+    <lng ISO639-2="bem" English="Bemba" Native="Chiwemba"/>
+    <lng ISO639-2="ben" ISO639-1="bn" English="Bengali" Native="বাংলা"/>
+    <lng ISO639-2="ber" English="Berber (Other)" Native="Tamazight"/>
+    <lng ISO639-2="bho" English="Bhojpuri" Native="भोजपुरी"/>
+    <lng ISO639-2="bih" ISO639-1="bh" English="Bihari" Native="Bihari"/>
+    <lng ISO639-2="bik" English="Bikol languages" Native="Bikol"/>
+    <lng ISO639-2="bin" English="Bini" Native="Edo"/>
+    <lng ISO639-2="bis" ISO639-1="bi" English="Bislama" Native="Bislama"/>
+    <lng ISO639-2="byn" English="Blin" Native="ብሊና"/>
+    <lng ISO639-2="bos" ISO639-1="bs" English="Bosnian" Native="bosanski jezik"/>
+    <lng ISO639-2="bra" English="Braj" Native="ब्रज भाषा"/>
+    <lng ISO639-2="bre" ISO639-1="br" English="Breton" Native="brezhoneg"/>
+    <lng ISO639-2="bug" English="Buginese" Native="ᨅᨔ ᨕᨘᨁᨗ"/>
+    <lng ISO639-2="bul" ISO639-1="bg" English="Bulgarian" Native="български език"/>
+    <lng ISO639-2="bua" English="Buriat" Native="буряад хэлэн"/>
+    <lng ISO639-2="bur" ISO639-1="my" English="Burmese" Native="မန္မာစာ"/>
+    <lng ISO639-2="mya" English="Burmese" Native="မန္မာစာ"/>
+    <lng ISO639-2="cad" English="Caddo" Native="Hasí:nay"/>
+    <lng ISO639-2="car" English="Carib" Native="Cariban"/>
+    <lng ISO639-2="cat" ISO639-1="ca" English="Catalan" Native="català"/>
+    <lng ISO639-2="cau" English="Caucasian (Other)" Native="Caucasian (Other)"/>
+    <lng ISO639-2="ceb" English="Cebuano" Native="Sinugboanon"/>
+    <lng ISO639-2="cel" English="Celtic (Other)" Native="Celtic (Other)"/>
+    <lng ISO639-2="cai" English="Central American Indian (Other)" Native="Central American Indian (Other)"/>
+    <lng ISO639-2="chg" English="Chagatai" Native="جغتای "/>
+    <lng ISO639-2="cmc" English="Chamic languages" Native="Chamic languages"/>
+    <lng ISO639-2="cha" ISO639-1="ch" English="Chamorro" Native="Chamoru"/>
+    <lng ISO639-2="che" ISO639-1="ce" English="Chechen" Native="нохчийн мотт"/>
+    <lng ISO639-2="chr" English="Cherokee" Native="ᏣᎳᎩ"/>
+    <lng ISO639-2="chy" English="Cheyenne" Native="Tsêhést"/>
+    <lng ISO639-2="chb" English="Chibcha" Native="muysca kubun"/>
+    <lng ISO639-2="nya" ISO639-1="ny" English="Chichewa; Chewa; Nyanja" Native="chiCheŵa; chinyanja"/>
+    <lng ISO639-2="chi" ISO639-1="zh" English="Chinese" Native="中文"/>
+    <lng ISO639-2="zho" English="Chinese" Native="中文"/>
+    <lng ISO639-2="chn" English="Chinook jargon" Native="Lelang"/>
+    <lng ISO639-2="cho" English="Choctaw" Native="Chahta Anumpa"/>
+    <lng ISO639-2="chu" ISO639-1="cu" English="Church Slavonic" Native="Ѩзыкъ словѣньскъ"/>
+    <lng ISO639-2="chk" English="Chuukese" Native="Trukese"/>
+    <lng ISO639-2="chv" ISO639-1="cv" English="Chuvash" Native="чӑваш чӗлхи"/>
+    <lng ISO639-2="nwc" English="Nepal Bhasa" Native="नेपाल भाषा"/>
+    <lng ISO639-2="syc" English="Classical Syriac" Native="ܣܘܪܝܝܐ"/>
+    <lng ISO639-2="cop" English="Coptic" Native="ⲙⲉⲧⲛ̀ⲣⲉⲙⲛ̀ⲭⲏⲙⲓ"/>
+    <lng ISO639-2="cor" ISO639-1="kw" English="Cornish" Native="Kernewek"/>
+    <lng ISO639-2="cos" ISO639-1="co" English="Corsican" Native="corsu"/>
+    <lng ISO639-2="cre" ISO639-1="cr" English="Cree" Native="ᓀᐦᐃᔭᐍᐏᐣ"/>
+    <lng ISO639-2="mus" English="Creek" Native="Maskoki"/>
+    <lng ISO639-2="crp" English="Creoles and Pidgins (Other)" Native="Creoles and Pidgins (Other)"/>
+    <lng ISO639-2="cpe" English="Creoles and Pidgins, English-based (Other)" Native="Creoles and Pidgins, English-based (Other)"/>
+    <lng ISO639-2="cpf" English="Creoles and Pidgins, French-based (Other)" Native="Creoles and Pidgins, French-based (Other)"/>
+    <lng ISO639-2="cpp" English="Creoles and Pidgins, Portuguese-based (Other)" Native="Creoles and Pidgins, Portuguese-based (Other)"/>
+    <lng ISO639-2="crh" English="Crimean Tatar" Native="къырымтатар тили"/>
+    <lng ISO639-2="scr" ISO639-1="hr" English="Croatian" Native="hrvatski jezik"/>
+    <lng ISO639-2="hrv" Native="Croatian" English="hrvatski jezik"/>
+    <lng ISO639-2="cus" English="Cushitic (Other)" Native="Cushitic (Other)"/>
+    <lng ISO639-2="cze" ISO639-1="cs" English="Czech" Native="čeština"/>
+    <lng ISO639-2="ces" English="Czech" Native="čeština"/>
+    <lng ISO639-2="dak" English="Dakota" Native="Lakhota"/>
+    <lng ISO639-2="dan" ISO639-1="da" English="Danish" Native="dansk"/>
+    <lng ISO639-2="dar" English="Dargwa" Native="дарган мез"/>
+    <lng ISO639-2="day" English="Dayak" Native="Dayak"/>
+    <lng ISO639-2="del" English="Delaware" Native="Lënape"/>
+    <lng ISO639-2="chp" English="Dene Suline" Native="ᑌᓀᓲᒢᕄᓀ"/>
+    <lng ISO639-2="din" English="Dinka" Native="Thuɔŋjäŋ"/>
+    <lng ISO639-2="div" ISO639-1="dv" English="Divehi" Native="ދިވެހިބަސ"/>
+    <lng ISO639-2="doi" English="Dogri" Native="डोगरी"/>
+    <lng ISO639-2="dgr" English="Dogrib" Native="Tłįchǫ"/>
+    <lng ISO639-2="dra" English="Dravidian (Other)" Native="Dravidian (Other)"/>
+    <lng ISO639-2="dua" English="Duala" Native="Douala"/>
+    <lng ISO639-2="dut" ISO639-1="nl" English="Dutch" Native="Nederlands"/>
+    <lng ISO639-2="nld" English="Dutch" Native="Nederlands"/>
+    <lng ISO639-2="dum" English="Dutch, Middle (ca. 1050–1350)" Native="Middelnederlands"/>
+    <lng ISO639-2="dyu" English="Dyula" Native="Julakan"/>
+    <lng ISO639-2="dzo" ISO639-1="dz" English="Dzongkha" Native="རྫོང་ཁ"/>
+    <lng ISO639-2="efi" English="Efik" Native="Ibibio"/>
+    <lng ISO639-2="egy" English="Egyptian (Ancient)" Native="r n km.t"/>
+    <lng ISO639-2="eka" English="Ekajuk" Native="Akajo"/>
+    <lng ISO639-2="elx" English="Elamite" Native="Elamite"/>
+    <lng ISO639-2="eng" ISO639-1="en" English="English" Native="English"/>
+    <lng ISO639-2="enm" English="English, Middle (ca. 1100–1500)" Native="English, Middle (ca. 1100–1500)"/>
+    <lng ISO639-2="ang" English="English, Old (ca. 450–1100)" Native="Englisc"/>
+    <lng ISO639-2="myv" English="Erzya" Native="эрзянь кель"/>
+    <lng ISO639-2="epo" ISO639-1="eo" English="Esperanto" Native="Esperanto"/>
+    <lng ISO639-2="est" ISO639-1="et" English="Estonian" Native="Eesti keel"/>
+    <lng ISO639-2="ewe" ISO639-1="ee" English="Ewe" Native="Ɛʋɛgbɛ"/>
+    <lng ISO639-2="ewo" English="Ewondo" Native="Ewondo"/>
+    <lng ISO639-2="fan" English="Fang" Native="Fang"/>
+    <lng ISO639-2="fat" English="Fanti" Native="Fanti"/>
+    <lng ISO639-2="fao" ISO639-1="fo" English="Faroese" Native="føroyskt"/>
+    <lng ISO639-2="fij" ISO639-1="fj" English="Fijian" Native="vosa Vakaviti"/>
+    <lng ISO639-2="fil" English="Filipino" Native="Filipino"/>
+    <lng ISO639-2="fin" ISO639-1="fi" English="Finnish" Native="suomi"/>
+    <lng ISO639-2="fiu" English="Finno-Ugrian (Other)" Native="Finno-Ugrian (Other)"/>
+    <lng ISO639-2="fon" English="Fon" Native="Fɔngbe"/>
+    <lng ISO639-2="fre" ISO639-1="fr" English="French" Native="français"/>
+    <lng ISO639-2="fra" English="French" Native="français"/>
+    <lng ISO639-2="frm" English="French, Middle (ca. 1400—1600)" Native="le moyen français"/>
+    <lng ISO639-2="fro" English="French, Old (842—ca. 1400)" Native="langue d'oïl"/>
+    <lng ISO639-2="frs" English="Frisian, Eastern" Native="Seeltersk Fräisk"/>
+    <lng ISO639-2="frr" English="Frisian, Northern" Native="Frasch"/>
+    <lng ISO639-2="fry" ISO639-1="fy" English="Frisian, Western" Native="frysk"/>
+    <lng ISO639-2="fur" English="Friulian" Native="furlan"/>
+    <lng ISO639-2="ful" ISO639-1="ff" English="Fulah" Native="Fulfulde"/>
+    <lng ISO639-2="gaa" English="Ga" Native="Gã"/>
+    <lng ISO639-2="glg" ISO639-1="gl" English="Galician" Native="Galego"/>
+    <lng ISO639-2="lug" ISO639-1="lg" English="Ganda" Native="Luganda"/>
+    <lng ISO639-2="gay" English="Gayo" Native="Bahasa Gayo"/>
+    <lng ISO639-2="gba" English="Gbaya" Native="Gbaya"/>
+    <lng ISO639-2="gez" English="Geez" Native="ግዕዝ"/>
+    <lng ISO639-2="geo" ISO639-1="ka" English="Georgian" Native="ქართული ენა "/>
+    <lng ISO639-2="kat" English="Georgian" Native="ქართული ენა "/>
+    <lng ISO639-2="ger" ISO639-1="de" English="German" Native="Deutsch"/>
+    <lng ISO639-2="deu" Native="Deutsch" English="German"/>
+    <lng ISO639-2="gsw" English="German, Alemannic" Native="Alemannisch, Schwyzerdütsch"/>
+    <lng ISO639-2="nds" English="German, Low" Native="Nederdüütsch"/>
+    <lng ISO639-2="gmh" English="German, Middle High (ca. 1050–1500)" Native="diutisk"/>
+    <lng ISO639-2="goh" English="German, Old High (ca. 750–1050)" Native="diutisc"/>
+    <lng ISO639-2="gem" English="Germanic (Other)" Native="Germanic (Other)"/>
+    <lng ISO639-2="gil" English="Gilbertese" Native="taetae ni Kiribati"/>
+    <lng ISO639-2="gon" English="Gondi" Native="Gondi"/>
+    <lng ISO639-2="gor" English="Gorontalo" Native="Grontalo"/>
+    <lng ISO639-2="got" English="Gothic" Native="𐌷𐌰𐌿𐌱𐌹𐌳𐌰𐍃𐌴𐌹𐌳𐍉"/>
+    <lng ISO639-2="grb" English="Grebo" Native="Grebo"/>
+    <lng ISO639-2="grc" English="Greek, Ancient (to 1453)" Native="Ἑλληνικά"/>
+    <lng ISO639-2="gre" ISO639-1="el" English="Greek, Modern (1453–)" Native="Ελληνικά"/>
+    <lng ISO639-2="ell" English="Greek, Modern (1453–)" Native="Ελληνικά"/>
+    <lng ISO639-2="kal" ISO639-1="kl" English="Greenlandic" Native="kalaallisut"/>
+    <lng ISO639-2="grn" ISO639-1="gn" English="Guarani" Native="Avañe'ẽ"/>
+    <lng ISO639-2="guj" ISO639-1="gu" English="Gujarati" Native="ગુજરાતી"/>
+    <lng ISO639-2="gwi" English="Gwichʼin" Native="Gwich’in"/>
+    <lng ISO639-2="hai" English="Haida" Native="X̲aat Kíl"/>
+    <lng ISO639-2="hat" ISO639-1="ht" English="Haitian Creole" Native="Kreyòl ayisyen"/>
+    <lng ISO639-2="hau" ISO639-1="ha" English="Hausa" Native="هَوُسَ"/>
+    <lng ISO639-2="haw" English="Hawaiian" Native="‘Ōlelo Hawai‘i"/>
+    <lng ISO639-2="heb" ISO639-1="he" English="Hebrew" Native="עִבְרִית; עברית"/>
+    <lng ISO639-2="her" ISO639-1="hz" English="Herero" Native="Otjiherero"/>
+    <lng ISO639-2="hil" English="Hiligaynon" Native="Ilonggo"/>
+    <lng ISO639-2="him" English="Himachali" Native="हिमाचल प्रदेश"/>
+    <lng ISO639-2="hin" ISO639-1="hi" English="Hindi" Native="हिन्दी"/>
+    <lng ISO639-2="hmo" ISO639-1="ho" English="Hiri Motu" Native="Hiri Motu"/>
+    <lng ISO639-2="hit" English="Hittite" Native="𒉈𒅆𒇷"/>
+    <lng ISO639-2="hmn" English="Hmong" Native="Hmoob"/>
+    <lng ISO639-2="hun" ISO639-1="hu" English="Hungarian" Native="Magyar"/>
+    <lng ISO639-2="hup" English="Hupa" Native="?"/>
+    <lng ISO639-2="iba" English="Iban" Native="Iban"/>
+    <lng ISO639-2="ice" ISO639-1="is" English="Icelandic" Native="íslenska"/>
+    <lng ISO639-2="isl" English="Icelandic" Native="íslenska"/>
+    <lng ISO639-2="ido" ISO639-1="io" English="Ido" Native="Ido"/>
+    <lng ISO639-2="ibo" ISO639-1="ig" English="Igbo" Native="Igbo"/>
+    <lng ISO639-2="ijo" English="Ijo" Native="Ijo"/>
+    <lng ISO639-2="ilo" English="Iloko" Native="Ilokano"/>
+    <lng ISO639-2="smn" English="Inari Sami" Native="säämegiella"/>
+    <lng ISO639-2="inc" English="Indic (Other)" Native="Indic (Other)"/>
+    <lng ISO639-2="ine" English="Indo-European (Other)" Native="Indo-European (Other)"/>
+    <lng ISO639-2="ind" ISO639-1="id" English="Indonesian" Native="Bahasa Indonesia"/>
+    <lng ISO639-2="inh" English="Ingush" Native="гӀалгӀай мотт"/>
+    <lng ISO639-2="ina" ISO639-1="ia" English="Interlingua" Native="interlingua"/>
+    <lng ISO639-2="ile" ISO639-1="ie" English="Interlingue" Native="Interlingue"/>
+    <lng ISO639-2="iku" ISO639-1="iu" English="Inuktitut" Native="ᐃᓄᒃᑎᑐᑦ"/>
+    <lng ISO639-2="ipk" ISO639-1="ik" English="Inupiaq" Native="Iñupiaq"/>
+    <lng ISO639-2="ira" English="Iranian (Other)" Native="Iranian (Other)"/>
+    <lng ISO639-2="gle" ISO639-1="ga" English="Irish" Native="Gaeilge"/>
+    <lng ISO639-2="mga" English="Irish, Middle (900–1200)" Native="Gaoidhealg"/>
+    <lng ISO639-2="sga" English="Irish, Old (to 900)" Native="Goídelc"/>
+    <lng ISO639-2="iro" English="Iroquoian languages" Native="Iroquoian languages"/>
+    <lng ISO639-2="ita" ISO639-1="it" English="Italian" Native="italiano"/>
+    <lng ISO639-2="jpn" ISO639-1="ja" English="Japanese" Native="日本語"/>
+    <lng ISO639-2="jav" ISO639-1="jv" English="Javanese" Native="basa Jawa"/>
+    <lng ISO639-2="jrb" English="Judeo-Arabic" Native="Judeo-Arabic"/>
+    <lng ISO639-2="jpr" English="Judeo-Persian" Native="Judeo-Persian"/>
+    <lng ISO639-2="kbd" English="Kabardian" Native="къэбэрдеибзэ"/>
+    <lng ISO639-2="kab" English="Kabyle" Native="Taqbaylit"/>
+    <lng ISO639-2="kac" English="Kachin" Native="Jinghpaw"/>
+    <lng ISO639-2="xal" English="Kalmyk" Native="хальмг келн"/>
+    <lng ISO639-2="kam" English="Kamba" Native="Kikamba"/>
+    <lng ISO639-2="kan" ISO639-1="kn" English="Kannada" Native="ಕನ್ನಡ"/>
+    <lng ISO639-2="kau" ISO639-1="kr" English="Kanuri" Native="Kanuri"/>
+    <lng ISO639-2="krc" English="Karachay-Balkar" Native="къарачай-малкъар тил"/>
+    <lng ISO639-2="kaa" English="Kara-Kalpak" Native="қарақалпақ тили"/>
+    <lng ISO639-2="krl" English="Karelian" Native="karjalan kieli"/>
+    <lng ISO639-2="kar" English="Karen" Native="Karen languages"/>
+    <lng ISO639-2="kas" ISO639-1="ks" English="Kashmiri" Native="कॉशुर; کٲشُر"/>
+    <lng ISO639-2="csb" English="Kashubian" Native="kaszëbsczi jãzëk"/>
+    <lng ISO639-2="kaw" English="Kawi" Native="Bhāṣa Kawi"/>
+    <lng ISO639-2="kaz" ISO639-1="kk" English="Kazakh" Native="Қазақ тілі"/>
+    <lng ISO639-2="kha" English="Khasi" Native="Khasi"/>
+    <lng ISO639-2="khm" ISO639-1="km" English="Khmer" Native="ភាសាខ្មែរ"/>
+    <lng ISO639-2="khi" English="Khoisan (Other)" Native="Khoisan"/>
+    <lng ISO639-2="kho" English="Khotanese" Native="Khotanese"/>
+    <lng ISO639-2="kik" ISO639-1="ki" English="Kikuyu" Native="Gĩkũyũ"/>
+    <lng ISO639-2="kmb" English="Kimbundu" Native="Kimbundu"/>
+    <lng ISO639-2="kin" ISO639-1="rw" English="Kinyarwanda" Native="kinyaRwanda"/>
+    <lng ISO639-2="kir" ISO639-1="ky" English="Kirghiz" Native="кыргыз тили"/>
+    <lng ISO639-2="tlh" English="Klingon" Native="tlhIngan Hol"/>
+    <lng ISO639-2="kom" ISO639-1="kv" English="Komi" Native="коми кыв"/>
+    <lng ISO639-2="kon" ISO639-1="kg" English="Kongo" Native="Kikongo"/>
+    <lng ISO639-2="kok" English="Konkani" Native="कोंकणी"/>
+    <lng ISO639-2="kor" ISO639-1="ko" English="Korean" Native="한국어"/>
+    <lng ISO639-2="kos" English="Kosraean" Native="Kosrae"/>
+    <lng ISO639-2="kpe" English="Kpelle" Native="kpele"/>
+    <lng ISO639-2="kro" English="Kru" Native="Kru"/>
+    <lng ISO639-2="kua" ISO639-1="kj" English="Kuanyama" Native="Oshikwanyama"/>
+    <lng ISO639-2="kum" English="Kumyk" Native="къумукъ тил"/>
+    <lng ISO639-2="kur" ISO639-1="ku" English="Kurdish" Native="Kurdî"/>
+    <lng ISO639-2="kru" English="Kurukh" Native="Kurux"/>
+    <lng ISO639-2="kut" English="Kutenai" Native="Kootenai "/>
+    <lng ISO639-2="lad" English="Ladino" Native="ג'ודיאו-איספאנייול"/>
+    <lng ISO639-2="lah" English="Lahnda" Native="ਪੰਜਾਬੀ"/>
+    <lng ISO639-2="lam" English="Lamba" Native="Lamba"/>
+    <lng ISO639-2="lao" ISO639-1="lo" English="Lao" Native="ພາສາລາວ"/>
+    <lng ISO639-2="lat" ISO639-1="la" English="Latin" Native="latine"/>
+    <lng ISO639-2="lav" ISO639-1="lv" English="Latvian" Native="latviešu valoda"/>
+    <lng ISO639-2="lez" English="Lezghian" Native="лезги чӀал"/>
+    <lng ISO639-2="lim" ISO639-1="li" English="Limburgish" Native="Limburgs"/>
+    <lng ISO639-2="lin" ISO639-1="ln" English="Lingala" Native="lingala"/>
+    <lng ISO639-2="lit" ISO639-1="lt" English="Lithuanian" Native="lietuvių kalba"/>
+    <lng ISO639-2="jbo" English="Lojban" Native="la lojban."/>
+    <lng ISO639-2="loz" English="Lozi" Native="Silozi"/>
+    <lng ISO639-2="lub" ISO639-1="lu" English="Luba-Katanga" Native="Luba-Katanga"/>
+    <lng ISO639-2="lua" English="Luba-Lulua" Native="lwaà:"/>
+    <lng ISO639-2="lui" English="Luiseno" Native="Luiseño"/>
+    <lng ISO639-2="smj" English="Lule Sami" Native="sámegiella"/>
+    <lng ISO639-2="lun" English="Lunda" Native="Chilunda"/>
+    <lng ISO639-2="luo" English="Luo" Native="Dholuo"/>
+    <lng ISO639-2="lus" English="Lushai" Native="Lushai"/>
+    <lng ISO639-2="ltz" ISO639-1="lb" English="Luxembourgish" Native="Lëtzebuergesch"/>
+    <lng ISO639-2="mac" ISO639-1="mk" English="Macedonian" Native="македонски јазик"/>
+    <lng ISO639-2="mkd" English="Macedonian" Native="македонски јазик"/>
+    <lng ISO639-2="mad" English="Madurese" Native="Basa Mathura"/>
+    <lng ISO639-2="mag" English="Magahi" Native="मगही"/>
+    <lng ISO639-2="mai" English="Maithili" Native="मैथिली"/>
+    <lng ISO639-2="mak" English="Makasar" Native="Makasar"/>
+    <lng ISO639-2="mlg" ISO639-1="mg" English="Malagasy" Native="Malagasy fiteny"/>
+    <lng ISO639-2="may" ISO639-1="ms" English="Malay" Native="بهاس ملايو"/>
+    <lng ISO639-2="msa" English="Malay" Native="بهاس ملايو"/>
+    <lng ISO639-2="mal" ISO639-1="ml" English="Malayalam" Native="മലയാളം"/>
+    <lng ISO639-2="mlt" ISO639-1="mt" English="Maltese" Native="Malti"/>
+    <lng ISO639-2="mnc" English="Manchu" Native="ᠮᠠᠨᠵᡠ"/>
+    <lng ISO639-2="mdr" English="Mandar" Native="Mandar"/>
+    <lng ISO639-2="man" English="Mandingo" Native="Mandinka"/>
+    <lng ISO639-2="mni" English="Manipuri" Native="মৈইতৈইলোন"/>
+    <lng ISO639-2="mno" English="Manobo languages" Native="Manobo languages"/>
+    <lng ISO639-2="glv" ISO639-1="gv" English="Manx" Native="Gaelg"/>
+    <lng ISO639-2="mao" ISO639-1="mi" English="Māori" Native="te reo Māori"/>
+    <lng ISO639-2="mri" English="Māori" Native="te reo Māori"/>
+    <lng ISO639-2="mar" ISO639-1="mr" English="Marathi" Native="मराठी"/>
+    <lng ISO639-2="chm" English="Mari" Native="марий йылме"/>
+    <lng ISO639-2="mah" ISO639-1="mh" English="Marshallese" Native="Kajin M̧ajeļ"/>
+    <lng ISO639-2="mwr" English="Marwari" Native="मारवाड़ी"/>
+    <lng ISO639-2="mas" English="Masai" Native="ɔl Maa"/>
+    <lng ISO639-2="myn" English="Mayan languages" Native="Mayan languages"/>
+    <lng ISO639-2="men" English="Mende" Native="Mɛnde yia"/>
+    <lng ISO639-2="mic" English="Mi'kmaq" Native="Mi'gmaq"/>
+    <lng ISO639-2="min" English="Minangkabau" Native="Baso Minangkabau"/>
+    <lng ISO639-2="mwl" English="Mirandese" Native="Lhéngua Mirandesa"/>
+    <lng ISO639-2="moh" English="Mohawk" Native="Kanien’keha"/>
+    <lng ISO639-2="mdf" English="Moksha" Native="мокшень кяль"/>
+    <lng ISO639-2="mol" ISO639-1="mo" English="Moldavian" Native="лимба молдовеняскэ"/>
+    <lng ISO639-2="mkh" English="Mon-Khmer (Other)" Native="Mon-Khmer (Other)"/>
+    <lng ISO639-2="lol" English="Mongo" Native="Mongo"/>
+    <lng ISO639-2="mon" ISO639-1="mn" English="Mongolian" Native="монгол хэл"/>
+    <lng ISO639-2="mos" English="Mossi" Native="Mòoré"/>
+    <lng ISO639-2="mun" English="Munda languages" Native="Munda languages"/>
+    <lng ISO639-2="nah" English="Nahuatl" Native="nāhuatl"/>
+    <lng ISO639-2="nau" ISO639-1="na" English="Nauruan" Native="Ekakairũ Naoero"/>
+    <lng ISO639-2="nav" ISO639-1="nv" English="Navajo; Navaho" Native="Diné bizaad"/>
+    <lng ISO639-2="nde" ISO639-1="nd" English="Ndebele, North" Native="isiNdebele"/>
+    <lng ISO639-2="nbl" ISO639-1="nr" English="Ndebele, South" Native="Ndébélé"/>
+    <lng ISO639-2="ndo" ISO639-1="ng" English="Ndonga" Native="Owambo"/>
+    <lng ISO639-2="nap" English="Neapolitan" Native="napulitano"/>
+    <lng ISO639-2="new" English="Nepal Bhasa; Newari" Native="Nepal Bhasa"/>
+    <lng ISO639-2="nep" ISO639-1="ne" English="Nepali" Native="नेपाली"/>
+    <lng ISO639-2="nia" English="Nias" Native="Nias"/>
+    <lng ISO639-2="nic" English="Niger-Kordofanian (Other)" Native="Niger-Kordofanian (Other)"/>
+    <lng ISO639-2="ssa" English="Nilo-Saharan (Other)" Native="Nilo-Saharan (Other)"/>
+    <lng ISO639-2="niu" English="Niuean" Native="ko e vagahau Niuē"/>
+    <lng ISO639-2="nqo" English="N'Ko" Native="N'Ko"/>
+    <lng ISO639-2="nog" English="Nogai" Native="ногай тили"/>
+    <lng ISO639-2="non" English="Norse, Old" Native="norskr"/>
+    <lng ISO639-2="nai" English="North American Indian (Other)" Native="North American Indian (Other)"/>
+    <lng ISO639-2="sme" ISO639-1="se" English="Northern Sami" Native="sámi"/>
+    <lng ISO639-2="nor" ISO639-1="no" English="Norwegian" Native="Norsk"/>
+    <lng ISO639-2="nob" ISO639-1="nb" English="Norwegian Bokmål" Native="Norsk bokmål"/>
+    <lng ISO639-2="nno" ISO639-1="nn" English="Norwegian Nynorsk" Native="Norsk nynorsk"/>
+    <lng ISO639-2="nub" English="Nubian languages" Native="Nubian languages"/>
+    <lng ISO639-2="nym" English="Nyamwezi" Native="Kinyamwezi"/>
+    <lng ISO639-2="nyn" English="Nyankole" Native="Nyankole"/>
+    <lng ISO639-2="nyo" English="Nyoro" Native="Runyoro"/>
+    <lng ISO639-2="nzi" English="Nzima" Native="Nzima"/>
+    <lng ISO639-2="oci" ISO639-1="oc" English="Occitan (post 1500); Provençal" Native="Occitan"/>
+    <lng ISO639-2="oji" ISO639-1="oj" English="Ojibwa" Native="ᐊᓂᔑᓇᐯᒧᐏᐣ"/>
+    <lng ISO639-2="ori" ISO639-1="or" English="Oriya" Native="ଓଡ଼ିଆ"/>
+    <lng ISO639-2="orm" ISO639-1="om" English="Oromo" Native="Afaan Oromoo"/>
+    <lng ISO639-2="osa" English="Osage" Native="Osage"/>
+    <lng ISO639-2="oss" ISO639-1="os" English="Ossetian" Native="ирон ӕвзаг"/>
+    <lng ISO639-2="oto" English="Otomian languages" Native="Otomian languages"/>
+    <lng ISO639-2="pal" English="Pahlavi" Native="Pahlavi"/>
+    <lng ISO639-2="pau" English="Palauan" Native="tekoi ra Belau"/>
+    <lng ISO639-2="pli" ISO639-1="pi" English="Pali" Native="पालि"/>
+    <lng ISO639-2="pam" English="Pampanga" Native="Kapampangan"/>
+    <lng ISO639-2="pag" English="Pangasinan" Native="salitan Pangasinan"/>
+    <lng ISO639-2="pap" English="Papiamento" Native="Papiamentu"/>
+    <lng ISO639-2="paa" English="Papuan (Other)" Native="Papuan (Other)"/>
+    <lng ISO639-2="per" ISO639-1="fa" English="Persian" Native="فارسی"/>
+    <lng ISO639-2="fas" English="Persian" Native="فارسی"/>
+    <lng ISO639-2="peo" English="Persian, Old (ca. 600–400 BC)" Native="Persian, Old (ca. 600–400 BC)"/>
+    <lng ISO639-2="phi" English="Philippine (Other)" Native="Philippine (Other)"/>
+    <lng ISO639-2="phn" English="Phoenician" Native="𐤃𐤁𐤓𐤉𐤌𐤟𐤊𐤍𐤏𐤍𐤉𐤌"/>
+    <lng ISO639-2="pon" English="Pohnpeian" Native="Pohnpeian"/>
+    <lng ISO639-2="pol" ISO639-1="pl" English="Polish" Native="polski"/>
+    <lng ISO639-2="por" ISO639-1="pt" English="Portuguese" Native="Português"/>
+    <lng ISO639-2="pra" English="Prakrit languages" Native="Prakrit languages"/>
+    <lng ISO639-2="pro" English="Provençal, Old (to 1500)" Native="Provençal, Old (to 1500)"/>
+    <lng ISO639-2="pan" ISO639-1="pa" English="Punjabi; Panjabi" Native="ਪੰਜਾਬੀ; پنجابی"/>
+    <lng ISO639-2="pus" ISO639-1="ps" English="Pushto" Native="پښت"/>
+    <!--<lng ISO639-2="qaa-qtz" English="Reserved for local use" Native=""/>-->
+    <lng ISO639-2="que" ISO639-1="qu" English="Quechua" Native="Runa Simi"/>
+    <lng ISO639-2="roh" ISO639-1="rm" English="Raeto-Romance" Native="rumantsch grischun"/>
+    <lng ISO639-2="raj" English="Rajasthani" Native="राजस्थानी"/>
+    <lng ISO639-2="rap" English="Rapanui" Native="rapanui"/>
+    <lng ISO639-2="rar" English="Rarotongan" Native="Māori Kūki 'Āirani"/>
+    <lng ISO639-2="roa" English="Romance (Other)" Native="Romance (Other)"/>
+    <lng ISO639-2="rum" ISO639-1="ro" English="Romanian" Native="română"/>
+    <lng ISO639-2="ron" English="Romanian" Native="română"/>
+    <lng ISO639-2="rom" English="Romany" Native="Romani šib"/>
+    <lng ISO639-2="run" ISO639-1="rn" English="Rundi" Native="kiRundi"/>
+    <lng ISO639-2="rus" ISO639-1="ru" English="Russian" Native="русский язык"/>
+    <lng ISO639-2="sal" English="Salishan languages" Native="Salishan languages"/>
+    <lng ISO639-2="sam" English="Samaritan Aramaic" Native="ארמית, ܐܪܡܝܐ"/>
+    <lng ISO639-2="smi" English="Sami languages (Other)" Native="Sami languages (Other)"/>
+    <lng ISO639-2="smo" ISO639-1="sm" English="Samoan" Native="gagana fa'a Samoa"/>
+    <lng ISO639-2="sad" English="Sandawe" Native="Sandawe"/>
+    <lng ISO639-2="sag" ISO639-1="sg" English="Sango" Native="yângâ tî sängö"/>
+    <lng ISO639-2="san" ISO639-1="sa" English="Sanskrit" Native="संस्कृतम्"/>
+    <lng ISO639-2="sat" English="Santali" Native="संथाली"/>
+    <lng ISO639-2="srd" ISO639-1="sc" English="Sardinian" Native="sardu"/>
+    <lng ISO639-2="sas" English="Sasak" Native="Sasak"/>
+    <lng ISO639-2="sco" English="Scots" Native="Scoats leid"/>
+    <lng ISO639-2="gla" ISO639-1="gd" English="Scottish Gaelic" Native="Gàidhlig"/>
+    <lng ISO639-2="sel" English="Selkup" Native="шӧльӄумыт әты"/>
+    <lng ISO639-2="sem" English="Semitic (Other)" Native="Semitic (Other)"/>
+    <lng ISO639-2="scc" ISO639-1="sr" English="Serbian" Native="српски језик"/>
+    <lng ISO639-2="srp" English="Serbian" Native="српски језик"/>
+    <lng ISO639-1="sh" English="Serbo-Croatian" Native="Српскохрватски"/>
+    <lng ISO639-2="srr" English="Serer" Native="Sérère"/>
+    <lng ISO639-2="shn" English="Shan" Native="Shan"/>
+    <lng ISO639-2="sna" ISO639-1="sn" English="Shona" Native="chiShona"/>
+    <lng ISO639-2="iii" ISO639-1="ii" English="Sichuan Yi" Native="ꆇꉙ"/>
+    <lng ISO639-2="scn" English="Sicilian" Native="Sicilianu"/>
+    <lng ISO639-2="sid" English="Sidamo" Native="Sidámo 'Afó"/>
+    <lng ISO639-2="sgn" English="Sign languages" Native="Sign languages"/>
+    <lng ISO639-2="bla" English="Siksika" Native="siksiká;"/>
+    <lng ISO639-2="snd" ISO639-1="sd" English="Sindhi" Native="سنڌي، سندھی"/>
+    <lng ISO639-2="sin" ISO639-1="si" English="Sinhalese" Native="සිංහල"/>
+    <lng ISO639-2="sit" English="Sino-Tibetan (Other)" Native="Sino-Tibetan (Other)"/>
+    <lng ISO639-2="sio" English="Siouan languages" Native="Siouan languages"/>
+    <lng ISO639-2="sms" English="Skolt Sami" Native="sääʼmǩiõll"/>
+    <lng ISO639-2="den" English="Slave (Athapascan)" Native="Slave"/>
+    <lng ISO639-2="sla" English="Slavic (Other)" Native="Slavic (Other)"/>
+    <lng ISO639-2="slo" ISO639-1="sk" English="Slovak" Native="slovenčina"/>
+    <lng ISO639-2="slk" English="Slovak" Native="slovenčina"/>
+    <lng ISO639-2="slv" ISO639-1="sl" English="Slovenian" Native="slovenščina"/>
+    <lng ISO639-2="sog" English="Sogdian" Native="Sogdian"/>
+    <lng ISO639-2="som" ISO639-1="so" English="Somali" Native="Soomaaliga"/>
+    <lng ISO639-2="son" English="Songhai" Native="Songhay languages"/>
+    <lng ISO639-2="snk" English="Soninke" Native="Soninkanxaane"/>
+    <lng ISO639-2="wen" English="Sorbian languages" Native="Sorbian languages"/>
+    <lng ISO639-2="dsb" English="Sorbian, Lower" Native="dolnoserbski"/>
+    <lng ISO639-2="hsb" English="Sorbian, Upper" Native="hornjoserbsce"/>
+    <lng ISO639-2="nso" English="Sotho, Northern; Pedi; Sepedi" Native="sePêdi"/>
+    <lng ISO639-2="sot" ISO639-1="st" English="Sotho, Southern" Native="seSotho"/>
+    <lng ISO639-2="sai" English="South American Indian (Other)" Native="South American Indian (Other)"/>
+    <lng ISO639-2="alt" English="Southern Altai" Native="алтай тили"/>
+    <lng ISO639-2="sma" English="Southern Sami" Native="saemien giele"/>
+    <lng ISO639-2="spa" ISO639-1="es" English="Spanish" Native="español"/>
+    <lng ISO639-2="srn" English="Sranan Tongo" Native="Sranan Tongo"/>
+    <lng ISO639-2="suk" English="Sukuma" Native="Sukuma"/>
+    <lng ISO639-2="sux" English="Sumerian" Native="eme-ĝir"/>
+    <lng ISO639-2="sun" ISO639-1="su" English="Sundanese" Native="basa Sunda"/>
+    <lng ISO639-2="sus" English="Susu" Native="Sosokui"/>
+    <lng ISO639-2="swa" ISO639-1="sw" English="Swahili" Native="kiswahili"/>
+    <lng ISO639-2="ssw" ISO639-1="ss" English="Swati" Native="siSwati"/>
+    <lng ISO639-2="swe" ISO639-1="sv" English="Swedish" Native="Svenska"/>
+    <lng ISO639-2="syr" English="Syriac" Native="ܣܘܪܝܝܐ"/>
+    <lng ISO639-2="tgl" ISO639-1="tl" English="Tagalog" Native="Tagalog"/>
+    <lng ISO639-2="tah" ISO639-1="ty" English="Tahitian" Native="te reo Tahiti; te reo Māʼohi"/>
+    <lng ISO639-2="tai" English="Tai (Other)" Native="´Tai (Other)"/>
+    <lng ISO639-2="tgk" ISO639-1="tg" English="Tajik" Native="тоҷикӣ"/>
+    <lng ISO639-2="tmh" English="Tamashek" Native="ɫ[ǂ…"/>
+    <lng ISO639-2="tam" ISO639-1="ta" English="Tamil" Native="தமிழ்"/>
+    <lng ISO639-2="tat" ISO639-1="tt" English="Tatar" Native="татарча"/>
+    <lng ISO639-2="tel" ISO639-1="te" English="Telugu" Native="తెలుగు"/>
+    <lng ISO639-2="ter" English="Tereno" Native="Tereno"/>
+    <lng ISO639-2="tet" English="Tetum, Lia-Tetun" Native="Tetun"/>
+    <lng ISO639-2="tha" ISO639-1="th" English="Thai" Native="ภาษาไทย"/>
+    <lng ISO639-2="tib" ISO639-1="bo" English="Tibetan" Native="བོད་ཡིག"/>
+    <lng ISO639-2="bod" English="Tibetan" Native="བོད་ཡིག"/>
+    <lng ISO639-2="tig" English="Tigre" Native="Tigré"/>
+    <lng ISO639-2="tir" ISO639-1="ti" English="Tigrinya" Native="ትግርኛ"/>
+    <lng ISO639-2="tem" English="Timne" Native="Timne"/>
+    <lng ISO639-2="tiv" English="Tiv" Native="Tiv"/>
+    <lng ISO639-2="tli" English="Tlingit" Native="Lingít"/>
+    <lng ISO639-2="tpi" English="Tok Pisin" Native="Tok Pisin"/>
+    <lng ISO639-2="tkl" English="Tokelau" Native="Tokelauan"/>
+    <lng ISO639-2="tog" English="Tonga (Malawi)" Native="chiTonga"/>
+    <lng ISO639-2="ton" ISO639-1="to" English="Tongan" Native="faka-Tonga"/>
+    <lng ISO639-2="tsi" English="Tsimshian" Native="Tsimshianic languages"/>
+    <lng ISO639-2="tso" ISO639-1="ts" English="Tsonga" Native="xiTsonga"/>
+    <lng ISO639-2="tsn" ISO639-1="tn" English="Tswana" Native="seTswana"/>
+    <lng ISO639-2="tum" English="Tumbuka" Native="chiTumbuka"/>
+    <lng ISO639-2="tup" English="Tupi languages" Native="Nheengatu"/>
+    <lng ISO639-2="tur" ISO639-1="tr" English="Turkish" Native="Türkçe"/>
+    <lng ISO639-2="ota" English="Turkish, Ottoman (1500–1928)" Native="لسان عثمان"/>
+    <lng ISO639-2="tuk" ISO639-1="tk" English="Turkmen" Native="Түркмен"/>
+    <lng ISO639-2="tvl" English="Tuvalu" Native="'gana Tuvalu"/>
+    <lng ISO639-2="tyv" English="Tuvinian" Native="тыва дыл"/>
+    <lng ISO639-2="twi" ISO639-1="tw" English="Twi" Native="Twi"/>
+    <lng ISO639-2="udm" English="Udmurt" Native="удмурт кыл"/>
+    <lng ISO639-2="uga" English="Ugaritic" Native="Ugaritic"/>
+    <lng ISO639-2="uig" ISO639-1="ug" English="Uighur" Native="Uyƣurqə"/>
+    <lng ISO639-2="ukr" ISO639-1="uk" English="Ukrainian" Native="українська мова"/>
+    <lng ISO639-2="umb" English="Umbundu" Native="úmbúndú"/>
+    <lng ISO639-2="urd" ISO639-1="ur" English="Urdu" Native="اردو"/>
+    <lng ISO639-2="uzb" ISO639-1="uz" English="Uzbek" Native="O'zbek; Ўзбек; أۇزبېك"/>
+    <lng ISO639-2="vai" English="Vai" Native="Vai"/>
+    <lng ISO639-2="ven" ISO639-1="ve" English="Venda" Native="tshiVenḓa"/>
+    <lng ISO639-2="vie" ISO639-1="vi" English="Vietnamese" Native="Tiếng Việt"/>
+    <lng ISO639-2="vol" ISO639-1="vo" English="Volapük" Native="Volapük"/>
+    <lng ISO639-2="vot" English="Votic" Native="vaďďa tšeeli"/>
+    <lng ISO639-2="wak" English="Wakashan languages" Native="Wakashan languages"/>
+    <lng ISO639-2="wal" English="Walamo" Native="Walamo"/>
+    <lng ISO639-2="wln" ISO639-1="wa" English="Walloon" Native="walon"/>
+    <lng ISO639-2="war" English="Waray" Native="Winaray"/>
+    <lng ISO639-2="was" English="Washo" Native="Washoe"/>
+    <lng ISO639-2="wel" ISO639-1="cy" English="Welsh" Native="Cymraeg"/>
+    <lng ISO639-2="cym" English="Welsh" Native="Cymraeg"/>
+    <lng ISO639-2="wol" ISO639-1="wo" English="Wolof" Native="Wolof"/>
+    <lng ISO639-2="xho" ISO639-1="xh" English="Xhosa" Native="isiXhosa"/>
+    <lng ISO639-2="sah" English="Yakut" Native="Саха тыла"/>
+    <lng ISO639-2="yao" English="Yao" Native="Chiyao"/>
+    <lng ISO639-2="yap" English="Yapese" Native="Yapese"/>
+    <lng ISO639-2="yid" ISO639-1="yi" English="Yiddish" Native="ייִדיש"/>
+    <lng ISO639-2="yor" ISO639-1="yo" English="Yoruba" Native="Yorùbá"/>
+    <lng ISO639-2="ypk" English="Yupik languages" Native=""/>
+    <lng ISO639-2="znd" English="Zande" Native="Zande"/>
+    <lng ISO639-2="zza" English="Zaza" Native="So-Bé"/>
+    <lng ISO639-2="zap" English="Zapotec" Native="Zapotec"/>
+    <lng ISO639-2="zen" English="Zenaga" Native="Tuḍḍungiyya"/>
+    <lng ISO639-2="zha" ISO639-1="za" English="Zhuang; Chuang" Native="Saɯ cueŋƅ; Saw cuengh"/>
+    <lng ISO639-2="zul" ISO639-1="zu" English="Zulu" Native="isiZulu"/>
+    <lng ISO639-2="zun" English="Zuni" Native="Shiwi"/>
+</ISOLanguages> 
