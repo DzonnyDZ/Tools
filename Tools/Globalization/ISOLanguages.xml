@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
-<ISOLanguages xmlns="http://codeplex.com/DTools/ISOLanguages">
+<Root xmlns="http://codeplex.com/DTools/ISOLanguages" transformer="ISOLanguages.xslt">
     <lng ISO639-2="abk" ISO639-1="ab" English="Abkhaz" Native="Аҧсуа"/>
     <lng ISO639-2="ace" English="Acehnese, Achinese" Native="Aceh"/>
     <lng ISO639-2="ach" English="Acoli" Native="Acoli"/>
@@ -504,4 +504,4 @@
     <lng ISO639-2="zha" ISO639-1="za" English="Zhuang; Chuang" Native="Saɯ cueŋƅ; Saw cuengh"/>
     <lng ISO639-2="zul" ISO639-1="zu" English="Zulu" Native="isiZulu"/>
     <lng ISO639-2="zun" English="Zuni" Native="Shiwi"/>
-</ISOLanguages> 
+</Root> 

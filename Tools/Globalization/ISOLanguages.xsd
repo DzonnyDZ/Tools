@@ -51,7 +51,7 @@
             </xs:attribute>
         </xs:complexType>
     </xs:element>
-    <xs:element name="ISOLanguages">
+    <xs:element name="Root">
         <xs:annotation>
             <xs:documentation>Root element that contain list of laguage entries</xs:documentation>
         </xs:annotation>
@@ -59,6 +59,11 @@
             <xs:sequence minOccurs="1" maxOccurs="1">
                 <xs:element minOccurs="1" maxOccurs="unbounded" ref="lng"/>
             </xs:sequence>
+            <xs:attribute name="transformer" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
 </xs:schema>
