@@ -131,6 +131,7 @@
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
+    <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Internal\Attributes.vb" />
     <Compile Include="IO\BinaryReader.vb" />
     <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
