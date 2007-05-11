@@ -139,10 +139,11 @@
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
-    <Compile Include="misc interfaces\ICloneable%28of T%29.vb" />
-    <Compile Include="misc interfaces\IReportsChange.vb" />
-    <Compile Include="misc small classes\Box.vb" />
-    <Compile Include="misc small classes\TriBool.vb" />
+    <Compile Include="misc\ICloneable%28of T%29.vb" />
+    <Compile Include="misc\IReportsChange.vb" />
+    <Compile Include="misc\Box.vb" />
+    <Compile Include="misc\TimeSpanFormattable.vb" />
+    <Compile Include="misc\TriBool.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
