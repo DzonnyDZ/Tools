@@ -24,6 +24,54 @@
             <xs:minLength value="1"/>
         </xs:restriction>
     </xs:simpleType>
+    
+    <!--Flags-->
+    <xs:simpleType name="flag">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="spoken">
+                <xs:annotation>
+                    <xs:documentation>Marks language as spoken (currently in use, not extinct)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="extinct">
+                <xs:annotation>
+                    <xs:documentation>Marks language as formerly spoken, but now dead (extinct)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="historic">
+                <xs:annotation>
+                    <xs:documentation>Marks language as historic variant of current language</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="artificial">
+                <xs:annotation>
+                    <xs:documentation>Marks language as artificial</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="group">
+                <xs:annotation>
+                    <xs:documentation>Marks item as group of languages - not one distinct langauge that can be spoken</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="special">
+                <xs:annotation>
+                    <xs:documentation>Marks item as special language code with no language meaning</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="reserverd">
+                <xs:annotation>
+                    <xs:documentation>Marks language code as reserved for local use (applies to codes qaa-qtz, those codes are not listed)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="scale">
+        <xs:restriction base="xs:unsignedLong">
+            <xs:pattern value="\d{1,3}0*"></xs:pattern>
+        </xs:restriction>
+    </xs:simpleType>
+        
     <xs:element name="lng">
         <xs:annotation>
             <xs:documentation>Represents one language entry</xs:documentation>
@@ -49,6 +97,16 @@
                     <xs:documentation>Language name in itself (if native name is not available English is provided)</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="flag" type="flag" use="required">
+                <xs:annotation>
+                    <xs:documentation>Language state oif this language</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="scale" use="optional" type="scale">
+                <xs:annotation>
+                    <xs:documentation>Very approximate number of speakers of language. 3 meaningfull digits maximally. Not provided for groups and languages without speakers as well as for special and reserved codes.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute> 
         </xs:complexType>
     </xs:element>
     <xs:element name="Root">
@@ -57,7 +115,26 @@
         </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
-                <xs:element minOccurs="1" maxOccurs="unbounded" ref="lng"/>
+                <xs:choice minOccurs="1" maxOccurs="unbounded">
+                    <xs:element ref="lng"/>
+                    <xs:element name="duplicate">
+                        <xs:annotation>
+                            <xs:documentation>Defines code duplicit to another</xs:documentation>
+                        </xs:annotation>
+                        <xs:complexType>
+                            <xs:attribute name="of" type="code3">
+                                <xs:annotation>
+                                    <xs:documentation>Code which's this code is duplicate</xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                            <xs:attribute name="ISO639-2" type="code3">
+                                <xs:annotation>
+                                    <xs:documentation>Duplicate language code</xs:documentation>
+                                </xs:annotation>
+                            </xs:attribute>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
             </xs:sequence>
             <xs:attribute name="transformer" type="xs:string" use="required">
                 <xs:annotation>
@@ -65,5 +142,21 @@
                 </xs:annotation>
             </xs:attribute>
         </xs:complexType>
+        <xs:unique name="ISO639-1">
+            <xs:selector xpath="ISO:lng"/>
+            <xs:field xpath="@ISO639-1"/>
+        </xs:unique>
+        <xs:key name="ISO639-2">
+            <xs:selector xpath="ISO:lng"/>
+            <xs:field xpath="@ISO639-2"/>
+        </xs:key>
+        <xs:unique name="ISO639-2_unq">
+            <xs:selector xpath="ISO:lng|ISO:duplicate"/>
+            <xs:field xpath="@ISO369-2"/>
+        </xs:unique>
+        <xs:keyref name="duplicate" refer="ISO639-2">
+            <xs:selector xpath="ISO:duplicate"/>
+            <xs:field xpath="@of"/>
+        </xs:keyref>
     </xs:element>
 </xs:schema>

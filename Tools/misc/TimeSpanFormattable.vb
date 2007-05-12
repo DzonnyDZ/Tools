@@ -2,7 +2,7 @@ Imports System.Text, system.Math
 #If Config <= rc Then 'Stage:RC
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-<Version(1, 0, GetType(TimeSpanFormattable), LastChange:="2007/05/11")> _
+<Version(1, 0, GetType(TimeSpanFormattable), LastChange:="2007/05/12")> _
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable
@@ -424,7 +424,7 @@ Public Structure TimeSpanFormattable
     '''         <description>The time separator defined in the current <see cref="System.Globalization.DateTimeFormatInfo.TimeSeparator"/> property that is used to differentiate hours, minutes, and seconds.</description>
     '''     </item>
     '''     <item><term>.</term>
-    '''         <description>The actual character used as the decimal separator is determined by the <see cref="NumberFormatInfo.NumberDecimalSeparator"/> property of the <see cref="NumberFormatInfo"/> that controls formatting.</description>
+    '''         <description>The actual character used as the decimal separator is determined by the <see cref="Globalization.NumberFormatInfo.NumberDecimalSeparator"/> property of the <see cref="Globalization.NumberFormatInfo"/> that controls formatting.</description>
     '''     </item>
     '''     <item><term>"</term>
     '''         <description>Quoted string (quotation mark). Displays the literal value of any string between two quotation marks (").</description>

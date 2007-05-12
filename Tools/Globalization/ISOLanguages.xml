@@ -1,45 +1,46 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<!--Data here comes from http://en.wikipedia.org/wiki/List_of_ISO_639-2_codes-->
 <Root xmlns="http://codeplex.com/DTools/ISOLanguages" transformer="ISOLanguages.xslt">
-    <lng ISO639-2="abk" ISO639-1="ab" English="Abkhaz" Native="Аҧсуа"/>
-    <lng ISO639-2="ace" English="Acehnese, Achinese" Native="Aceh"/>
-    <lng ISO639-2="ach" English="Acoli" Native="Acoli"/>
-    <lng ISO639-2="ada" English="Adangme" Native="Adangme"/>
-    <lng ISO639-2="ady" English="Adyghe" Native="адыгэбзэ"/>
-    <lng ISO639-2="aar" ISO639-1="aa" English="Afar" Native="Afaraf"/>
-    <lng ISO639-2="afh" English="Afrihili" Native="Afrihili"/>
-    <lng ISO639-2="afr" ISO639-1="af" English="Afrikaans" Native="Afrikaans"/>
-    <lng ISO639-2="afa" English="Afro-Asiatic (Other)" Native="Afro-Asiatic (Other)"/>
-    <lng ISO639-2="ain" English="Ainu" Native="アイヌ イタク(イタック)"/>
-    <lng ISO639-2="aka" ISO639-1="ak" English="Akan" Native="Akan"/>
-    <lng ISO639-2="akk" English="Akkadian" Native="akkadû"/>
-    <lng ISO639-2="alb" ISO639-1="sq" English="Albanian" Native="Shqip"/>
-    <lng ISO639-2="sqi" English="Albanian" Native="Shqip"/>
-    <lng ISO639-2="ale" English="Aleut" Native="Unangam Tunuu"/>
-    <lng ISO639-2="alg" English="Algonquian languages" Native="Algonquian languages"/>
-    <lng ISO639-2="tut" English="Altaic (Other)" Native="Altaic (Other)"/>
-    <lng ISO639-2="amh" ISO639-1="am" English="Amharic" Native="አማርኛ"/>
-    <lng ISO639-2="anp" English="Angika" Native="अङ्गिका"/>
-    <lng ISO639-2="apa" English="Apache languages" Native="Apache languages"/>
-    <lng ISO639-2="ara" ISO639-1="ar" English="Arabic" Native="العربية"/>
-    <lng ISO639-2="arg" ISO639-1="an" English="Aragonese" Native="Aragonés"/>
-    <lng ISO639-2="arc" English="Aramaic" Native="ܐܪܡܝܐ"/>
-    <lng ISO639-2="arp" English="Arapaho" Native="Hinono'eitiit"/>
-    <lng ISO639-2="arn" English="Araucanian" Native="mapudungun"/>
-    <lng ISO639-2="arw" English="Arawak" Native="Arawak"/>
-    <lng ISO639-2="arm" ISO639-1="hy" English="Armenian" Native="Հայերեն լեզու"/>
-    <lng ISO639-2="hye" English="Armenian" Native="Հայերեն լեզու"/>
-    <lng ISO639-2="rup" English="Aromanian" Native="limba armãneascã"/>
-    <lng ISO639-2="art" English="Artificial (Other)" Native="Artificial (Other)"/>
-    <lng ISO639-2="asm" ISO639-1="as" English="Assamese" Native="অসমীয়া"/>
-    <lng ISO639-2="ast" English="Asturian; Bable" Native="asturianu"/>
-    <lng ISO639-2="ath" English="Athapascan languages" Native="aðapaskāw"/>
-    <lng ISO639-2="aus" English="Australian languages" Native="Australian languages"/>
-    <lng ISO639-2="map" English="Austronesian (Other)" Native="Austronesian (Other)"/>
-    <lng ISO639-2="ava" ISO639-1="av" English="Avaric" Native="авар мацӀ"/>
-    <lng ISO639-2="ave" ISO639-1="ae" English="Avestan" Native="avesta"/>
-    <lng ISO639-2="awa" English="Awadhi" Native="अवधी"/>
-    <lng ISO639-2="aym" ISO639-1="ay" English="Aymara" Native="aymar aru"/>
-    <lng ISO639-2="aze" ISO639-1="az" English="Azerbaijani" Native="Azərbaycanca"/>
+    <lng ISO639-2="abk" ISO639-1="ab" English="Abkhaz" Native="Аҧсуа" flag="spoken" scale="200000"/>
+    <lng ISO639-2="ace" English="Acehnese, Achinese" Native="Aceh" flag="spoken" scale="3000000"/>
+    <lng ISO639-2="ach" English="Acoli" Native="Acoli" flag="spoken" scale="800000"/>
+    <lng ISO639-2="ada" English="Adangme" Native="Adangme" flag="spoken" scale="800000"/>
+    <lng ISO639-2="ady" English="Adyghe" Native="адыгэбзэ" flag="spoken" scale="300000"/>
+    <lng ISO639-2="aar" ISO639-1="aa" English="Afar" Native="Qafár af" flag="spoken" scale="1500000"/>
+    <lng ISO639-2="afh" English="Afrihili" Native="Afrihili" flag="artificial"/>
+    <lng ISO639-2="afr" ISO639-1="af" English="Afrikaans" Native="Afrikaans" flag="spoken" scale="10000000"/>
+    <lng ISO639-2="afa" English="Afro-Asiatic (Other)" Native="Afro-Asiatic (Other)" flag="group"/>
+    <lng ISO639-2="ain" English="Ainu" Native="アイヌ イタク" flag="spoken" scale="15"/>
+    <lng ISO639-2="aka" ISO639-1="ak" English="Akan" Native="Akan" flag="group"/>
+    <lng ISO639-2="akk" English="Akkadian" Native="akkadû" flag="extinct"/>
+    <lng ISO639-2="alb" ISO639-1="sq" English="Albanian" Native="Shqip" flag="spoken" scale="6000000"/>
+    <duplicate of="alb" ISO639-2="sqi"/>
+    <lng ISO639-2="ale" English="Aleut" Native="Unangam Tunuu" flag="spoken" scale="470"/>
+    <lng ISO639-2="alg" English="Algonquian languages" Native="Algonquian languages" flag="group"/>
+    <lng ISO639-2="tut" English="Altaic (Other)" Native="Altaic (Other)" flag="group"/>
+    <lng ISO639-2="amh" ISO639-1="am" English="Amharic" Native="አማርኛ" flag="spoken" scale="35000000"/>
+    <lng ISO639-2="anp" English="Angika" Native="अङ्गिका" flag="spoken" scale="50000000"/>
+    <lng ISO639-2="apa" English="Apache languages" Native="Apache languages" flag="group"/>
+    <lng ISO639-2="ara" ISO639-1="ar" English="Arabic" Native="العربية" flag="spoken" scale="422000000"/>
+    <lng ISO639-2="arg" ISO639-1="an" English="Aragonese" Native="Aragonés" flag="spoken" scale="30000"/>
+    <lng ISO639-2="arc" English="Aramaic" Native="ܐܪܡܝܐ" flag="spoken" scale="445000"/>
+    <lng ISO639-2="arp" English="Arapaho" Native="Hinono'eitiit" flag="spoken" scale="1000"/>
+    <lng ISO639-2="arn" English="Araucanian" Native="mapudungun" flag="spoken" scale="440000"/>
+    <lng ISO639-2="arw" English="Arawak" Native="Arawak" flag="group"/>
+    <lng ISO639-2="arm" ISO639-1="hy" English="Armenian" Native="Հայերեն լեզու" flag="spoken" scale="7000000"/>
+    <duplicate of="arm" ISO639-2="hye"/>
+    <lng ISO639-2="rup" English="Aromanian" Native="limba armãneascã" flag="spoken" scale="4000000"/>
+    <lng ISO639-2="art" English="Artificial (Other)" Native="Artificial (Other)" flag="group"/>
+    <lng ISO639-2="asm" ISO639-1="as" English="Assamese" Native="অসমীয়া" flag="spoken" scale="20000000"/>
+    <lng ISO639-2="ast" English="Asturian" Native="asturianu" flag="spoken" scale="1000000"/>
+    <lng ISO639-2="ath" English="Athapascan languages" Native="aðapaskāw" flag="group"/>
+    <lng ISO639-2="aus" English="Australian languages" Native="Australian languages" flag="group"/>
+    <lng ISO639-2="map" English="Austronesian (Other)" Native="Austronesian (Other)" flag="group"/>
+    <lng ISO639-2="ava" ISO639-1="av" English="Avaric" Native="авар мацӀ" flag="spoken" scale="600000"/>
+    <lng ISO639-2="ave" ISO639-1="ae" English="Avestan" Native="avesta" flag="extinct"/>
+    <lng ISO639-2="awa" English="Awadhi" Native="अवधी" flag="spoken" scale="20000000"/>
+    <lng ISO639-2="aym" ISO639-1="ay" English="Aymara" Native="aymar aru" flag="spoken" scale="2230000"/>
+    <lng ISO639-2="aze" ISO639-1="az" English="Azerbaijani" Native="Azərbaycanca" flag="spoken" scale="27000000"/>
     <lng ISO639-2="ban" English="Balinese" Native="Basa Bali"/>
     <lng ISO639-2="bat" English="Baltic (Other)" Native="Baltic (Other)"/>
     <lng ISO639-2="bal" English="Baluchi" Native="بلوچی"/>
@@ -504,4 +505,9 @@
     <lng ISO639-2="zha" ISO639-1="za" English="Zhuang; Chuang" Native="Saɯ cueŋƅ; Saw cuengh"/>
     <lng ISO639-2="zul" ISO639-1="zu" English="Zulu" Native="isiZulu"/>
     <lng ISO639-2="zun" English="Zuni" Native="Shiwi"/>
+    <!--Special codes-->
+    <lng ISO639-2="mis" English="miscellaneous languages" Native="miscellaneous languages" flag="special"/>
+    <lng ISO639-2="mul" English="multiple languages" Native="multiple languages" flag="special"/>
+    <lng ISO639-2="und" English="undetermined language" Native="undetermined language" flag="special"/>
+    <lng ISO639-2="zxx" English="no linguistic content" Native="no linguistic content" flag="special"/>
 </Root> 
