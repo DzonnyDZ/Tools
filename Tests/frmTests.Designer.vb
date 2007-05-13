@@ -1,3 +1,4 @@
+'Ahoj
 <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
 Partial Class frmTests
     Inherits System.Windows.Forms.Form
