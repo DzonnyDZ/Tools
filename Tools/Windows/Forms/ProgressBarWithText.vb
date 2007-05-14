@@ -4,7 +4,7 @@ Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModel
 Imports tools.Windows.Forms.Utilities
 #If Config <= RC Then 'Stage:RC
-Namespace Windows.Forms 'ASAP:WiKi
+Namespace Windows.Forms
     ''' <summary>Implements <see cref="ProgressBar"/> with overlay text</summary>
     <DefaultEvent("ValueChanged"), DefaultProperty("Value")> _
     <DefaultBindingProperty("Value")> _
