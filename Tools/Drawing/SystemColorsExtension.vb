@@ -1,5 +1,5 @@
 Imports System.Drawing, System.Windows.Forms
-Namespace Drawing 'ASAP:Wiki
+Namespace Drawing
 #If Config <= Release Then
     ''' <summary>Gives access to aditional system-defined colors</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _

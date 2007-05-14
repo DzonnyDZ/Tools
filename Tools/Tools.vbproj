@@ -160,6 +160,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Resources\Resources.vb" />
+    <Compile Include="Resources\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
     <Compile Include="Windows\Forms\DataBoundToolStripComboBox.vb">
@@ -219,7 +220,7 @@
     <None Include="Resources\ĐTools.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Encoding.bmp" />
+    <EmbeddedResource Include="Resources\Windows.Forms.TransparentLabel.bmp" />
     <EmbeddedResource Include="Windows\Forms\EncodingDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingDialog.vb</DependentUpon>
@@ -254,14 +255,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\DataBoundToolStripComboBox.bmp" />
-    <EmbeddedResource Include="Resources\DataBoundToolStripLabel.bmp" />
+    <EmbeddedResource Include="Resources\Windows.Forms.DataBoundToolStripComboBox.bmp" />
+    <EmbeddedResource Include="Resources\Windows.Forms.DataBoundToolStripLabel.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Globalization\ISOLanguages.xml" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\TransparentLabel.bmp" />
+    <EmbeddedResource Include="Resources\Windows.Forms.Encoding.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\Windows.Forms.ProgressBarWithText.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Metadata\XMP\" />

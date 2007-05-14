@@ -7,6 +7,8 @@ Namespace Windows.Forms.Utilities
         ''' <summary>Private in order not to pe possible to create instance or inherit from this class</summary>
         Private Sub New()
         End Sub
+        ''' <summary>The Accessibility category</summary>
+        Public Const Accessibility$ = "Accessibility"
         ''' <summary>The Action category</summary>
         Public Const Action$ = "Action"
         ''' <summary>The Appearance category</summary>
@@ -49,6 +51,18 @@ Namespace Windows.Forms.Utilities
         Public Const Text$ = "Text"
         ''' <summary>The Window Style category</summary>
         Public Const WindowStyle$ = "WindowStyle"
+        ''' <summary>The Colors category</summary>
+        Friend Const Colors$ = "Colors"
+        ''' <summary>The Display category</summary>
+        Friend Const Display$ = "Display"
+        ''' <summary>The Folder Browsing category</summary>
+        Friend Const FolderBrowsing$ = "Folder Browsing"
+        ''' <summary>The Items category</summary>
+        Friend Const Items$ = "Items"
+        ''' <summary>The Private category</summary>
+        Friend Const Private$ = "Private"
+        ''' <summary>The Property Chenged category</summary>
+        Friend Const PropertyChanged$ = "Property Changed"
     End Class
 End Namespace
 #End If

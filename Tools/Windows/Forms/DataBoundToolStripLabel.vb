@@ -3,11 +3,11 @@ Namespace Windows.Forms
 #If Config <= RC Then 'Stage:RC
     ''' <summary><see cref="ToolStripLabel"/> that allows databinding</summary>
     ''' <remarks><seealso>http://forums.devx.com/archive/index.php/t-153607.html</seealso></remarks>
-    <System.Drawing.ToolboxBitmap("DataBoundToolStripLabel.bmp")> _
+    <System.Drawing.ToolboxBitmap(GetType(DataBoundToolStripLabel), "DataBoundToolStripLabel.bmp")> _
     <DefaultBindingProperty("Text")> _
     <ComponentModel.Prefix("dtl")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(DataBoundToolStripLabel), LastChange:="2007/05/03")> _
+    <Version(1, 0, GetType(DataBoundToolStripLabel), LastChange:="2007/05/13")> _
     Public Class DataBoundToolStripLabel : Inherits ToolStripLabel
         Implements IBindableComponent
         ''' <summary>Contains value of the <see cref="BindingContext"/> property</summary>
@@ -35,7 +35,7 @@ Namespace Windows.Forms
         ''' <returns>The <see cref="System.Windows.Forms.ControlBindingsCollection"/> for this <see cref="DataBoundToolStripLabel"/>.</returns>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <ParenthesizePropertyName(True), RefreshProperties(RefreshProperties.All)> _
-        <Category("Data")> _
+        <Category(Tools.Windows.Forms.Utilities.CategoryAttributeValues.Data)> _
         <Description("Gets the collection of data-binding objects for this DataBoundToolStripLabel")> _
         Public ReadOnly Property DataBindings() As System.Windows.Forms.ControlBindingsCollection Implements System.Windows.Forms.IBindableComponent.DataBindings
             Get
@@ -65,7 +65,7 @@ Namespace Windows.Forms
         ''' <summary>Fired when <see cref="System.Windows.Forms.ComboBox.BindingContextChanged"/> of <see cref="ComboBox"/> occures</summary>
         ''' <param name="sender">Source of the event - rhis isntance of <see cref="DataBoundToolStripComboBox"/></param>
         ''' <param name="e">Event parameters</param>
-        <Category("Data"), Description("Fired when BindingContextChanged of internal ComboBox occurs")> _
+        <Category(Tools.Windows.Forms.Utilities.CategoryAttributeValues.Data), Description("Fired when BindingContextChanged of internal ComboBox occurs")> _
         Public Event BindingContextChanged(ByVal sender As Object, ByVal e As EventArgs)
     End Class
 #End If

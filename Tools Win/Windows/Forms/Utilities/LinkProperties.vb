@@ -2,7 +2,6 @@ Imports Microsoft.Win32
 Imports System.Security.Permissions, System.Security
 Imports System.Globalization
 Namespace Windows.Forms.Utilities
-    'ASAP:Wiki
 #If Config <= Release Then
     ''' <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
     ''' <remarks>See also <seealso cref="Tools.Drawing.SystemColorsExtension"/></remarks>

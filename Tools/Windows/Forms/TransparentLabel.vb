@@ -2,17 +2,16 @@ Imports System.Windows.Forms
 Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModel
-'ASAP: Wiki
 #If Config <= RC Then 'Stage:RC
 Namespace Windows.Forms
     ''' <summary><see cref="Label"/> which's background *really* transparent</summary>
     ''' <remarks>To make this contro, transparent or semi-transparent se background color to color with alpha chanel</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentLabel), lastchange:="2007/05/13")> _
+    <Version(1, 0, GetType(TransparentLabel), LastChange:="2007/05/13")> _
     <Prefix("tlb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _
-    <ToolboxBitmap("TransparentLabel.bmp")> _
+    <ToolboxBitmap(GetType(TransparentLabel), "TransparentLabel.bmp")> _
     Public Class TransparentLabel : Inherits Label
 #Region "CTors"
         ''' <summary>CTor</summary>
@@ -61,13 +60,19 @@ Namespace Windows.Forms
                 Return cp
             End Get
         End Property
+        ''' <summary>Raisest the <see cref="TextChanged"/> event</summary>
+        ''' <param name="e">Event parameters</param>
+        Protected Overrides Sub OnTextChanged(ByVal e As System.EventArgs)
+            Me.RecreateHandle()
+            MyBase.OnTextChanged(e)
+        End Sub
 #End Region
 #Region "Properties"
         ''' <summary>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</summary>
         ''' <returns>true if the control adjusts its width to closely fit its contents; otherwise, false. The default is false.</returns>
         <DefaultValue(True), EditorBrowsable(EditorBrowsableState.Always)> _
         <Description("Gets or sets a value indicating whether the control is automatically resized to display its entire contents.")> _
-        <Category("Layout"), RefreshProperties(RefreshProperties.All), Localizable(True)> _
+        <Category(Tools.Windows.Forms.Utilities.CategoryAttributeValues.Layout), RefreshProperties(RefreshProperties.All), Localizable(True)> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), Browsable(True)> _
         Public Overrides Property AutoSize() As Boolean
             Get
