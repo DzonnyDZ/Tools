@@ -9,7 +9,7 @@ Namespace Windows.Forms
     <DefaultEvent("ValueChanged"), DefaultProperty("Value")> _
     <DefaultBindingProperty("Value")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentLabel), LastChange:="2007/05/13")> _
+    <Version(1, 0, GetType(TransparentLabel), LastChange:="2007/05/15")> _
     <Prefix("pwt")> _
     <ToolboxBitmap(GetType(ProgressBarWithText), "ProgressBarWithText.bmp")> _
     Public Class ProgressBarWithText : Inherits ProgressBar
@@ -55,8 +55,9 @@ Namespace Windows.Forms
                 Return _AutoText
             End Get
             Set(ByVal value As Boolean)
+                Dim Changed As Boolean = value <> AutoText
                 _AutoText = value
-                OnAutoTextChanged(EventArgs.Empty)
+                If Changed Then OnAutoTextChanged(EventArgs.Empty)
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="AutoTextFormat"/> property</summary>
@@ -71,8 +72,9 @@ Namespace Windows.Forms
                 Return _AutoTextFormat
             End Get
             Set(ByVal value As String)
+                Dim Changed As Boolean = value <> AutoTextFormat
                 _AutoTextFormat = value
-                OnAutoTextFormatChanged(EventArgs.Empty)
+                If Changed Then OnAutoTextFormatChanged(EventArgs.Empty)
             End Set
         End Property
 #End Region
