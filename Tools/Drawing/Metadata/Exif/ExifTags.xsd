@@ -217,6 +217,40 @@
                     <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="Stage" use="required">
+                <xs:annotation>
+                    <xs:documentation>Stage of dicumment used for conditiona compilation</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Nightly">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Nightly stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Alpha">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Alpha stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Beta">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Beta stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="RC">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release Candidate stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Release">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
         </xs:complexType>
         <xs:unique name="UnqGroupShortName">
             <xs:annotation>

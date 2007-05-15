@@ -181,7 +181,9 @@
       <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\ProgressBarWithText.vb" />
+    <Compile Include="Windows\Forms\ProgressBarWithText.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>

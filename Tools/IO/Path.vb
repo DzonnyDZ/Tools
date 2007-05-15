@@ -1,5 +1,5 @@
 Imports Tools.VisualBasic, System.IO
-#If Config <= Nightly Then 'Stage:Beta
+#If Config <= RC Then 'Stage:RC
 Namespace IO
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>

@@ -1,5 +1,5 @@
 'LE-BE conversions
-#If Config <= Beta Then 'Stage: Beta
+#If Config <= RC Then 'Stage: RC
 Partial Class Math
     ''' <summary>Converts <see cref="Short"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--^{[A-Za-z0-9:b']+}:b{:i}:b:z:b{[A-Fa-f0-9]+}:b{[A-Z]+(:bor:b[A-Z]+)*}:b{.+}$-->
 <!--<Tag Name="\2" Tag="\3" Components="\5">\n<summary>\1</summary>\n\4\n</Tag>-->
-<Root xmlns="http://codeplex.com/DTools/ExifTags" transformer="ExifTags.xslt">
+<Root xmlns="http://codeplex.com/DTools/ExifTags" transformer="ExifTags.xslt" Stage="Nightly">
     <Group Name="Sub IFD pointers" IFD="IFD" ShortName="PointersMain">
         <Tag Name="ExifIFD" Components="1" Tag="8769">
             <summary>Exif IFD Pointer</summary>

@@ -1,15 +1,16 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2672.41774, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2672.41774
+' Generator: TransformCodeGenerator, Version=1.0.2691.18014, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2691.18014
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 1. kv?tna 2007
-' By:DZONNY\Honza
+' Created: 15. kv?tna 2007
+' By:noutbuk\Honza
 '
 Namespace Drawing.Metadata
+#If Congig <= Nightly 'Stage: Nightly
 	Partial Public Class Exif
 		Partial Public Class IFDMain
 			''' <summary>Tag numbers used in IFD0 and IFD1</summary>
@@ -2743,4 +2744,5 @@ Namespace Drawing.Metadata
 			End Property
 		End Class
 	End Class
+#End If
 End Namespace

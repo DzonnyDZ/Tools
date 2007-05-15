@@ -1,5 +1,5 @@
 Namespace Collections.Generic
-#If Config <= RC Then 'Stage:RC
+#If Config <= Release Then
     ''' <summary>Rapresent anything that can be indexed by anything</summary>
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>
@@ -47,7 +47,7 @@ Namespace Collections.Generic
         ReadOnly Property Maximum() As Long
     End Interface
 #End If
-#If Config <= Alpha Then 'Stage: Alpha
+#If Config <= Beta Then 'Stage: Beta
     ''' <summary>Implements enumerator of <see cref="IReadOnlyIndexable(Of TItem)"/></summary>
     Public Class IndexableEnumerator(Of TItem)
         Implements IEnumerator(Of TItem)

@@ -2,7 +2,7 @@ Imports System.Windows.Forms
 Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModel
-#If Config <= RC Then 'Stage:RC
+#If Config <= Release Then
 Namespace Windows.Forms
     ''' <summary><see cref="Label"/> which's background *really* transparent</summary>
     ''' <remarks>To make this contro, transparent or semi-transparent se background color to color with alpha chanel</remarks>
