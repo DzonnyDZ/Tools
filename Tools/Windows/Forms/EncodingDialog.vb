@@ -257,7 +257,7 @@ Namespace Windows.Forms
     End Class
     'TODO:ToolboxBitmap
     ''' <summary>Dialog that allows user to select encoding</summary>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/24/2007")> _
+    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/24/2007")> _
     <Prefix("end")> _
     Public Class EncodingDialog : Inherits CommonDialog
         ''' <summary>CTor</summary>

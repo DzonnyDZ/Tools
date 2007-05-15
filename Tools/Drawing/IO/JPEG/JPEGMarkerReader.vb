@@ -3,7 +3,7 @@ Namespace Drawing.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGMarkerReader), LastChange:="4/24/2007")> _
+    <Version(1, 0, GetType(JPEGMarkerReader), LastChMMDDYYYY:="04/24/2007")> _
     Public Class JPEGMarkerReader
         ''' <summary>Known types of JPEG markers</summary>
         Public Enum Markers As Byte

@@ -2,7 +2,7 @@ Namespace Drawing.Metadata
 #If Config <= Nightly Then
     ''' <summary>Provides read-write acces to block of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Exif), LastChange:="2007/04/29")> _
+    <Version(1, 0, GetType(Exif), LastChMMDDYYYY:="04/29/2007")> _
     Partial Public Class Exif
 #Region "CTors"
         ''' <summary>CTor</summary>

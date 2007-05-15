@@ -10,7 +10,7 @@ Partial Public Class Math
     ''' <exception cref="ArgumentNullException">If <paramref name="Numbers"/> is Null (Nothing)</exception>
     ''' <exception cref="ArgumentException">If <paramref name="Numbers"/> contains no item</exception>
     ''' <remarks><seealso cref="Max"/></remarks>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="12/20/2006")> _
     Public Shared Function Min(Of T As IComparable(Of T))(ByVal ParamArray Numbers As T()) As T
         Return Min(CType(Numbers, IEnumerable(Of T)))
     End Function
@@ -21,7 +21,7 @@ Partial Public Class Math
     ''' <exception cref="ArgumentNullException">If <paramref name="Numbers"/> is Null (Nothing)</exception>
     ''' <exception cref="ArgumentException">If <paramref name="Numbers"/> contains no item</exception>
     ''' <remarks><seealso cref="Max"/></remarks>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="12/20/2006")> _
     Public Shared Function Min(Of T As IComparable(Of T))(ByVal Numbers As IEnumerable(Of T)) As T
         If Numbers Is Nothing Then Throw New ArgumentNullException("Numbers", "Numbers cannot be null")
         Dim Current As Box(Of T) = Nothing
@@ -40,7 +40,7 @@ Partial Public Class Math
     ''' <exception cref="ArgumentNullException">If <paramref name="Numbers"/> is Null (Nothing)</exception>
     ''' <exception cref="ArgumentException">If <paramref name="Numbers"/> contains no item</exception>
     ''' <remarks><seealso cref="Min"/></remarks>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="12/20/2006")> _
     Public Shared Function Max(Of T As IComparable(Of T))(ByVal ParamArray Numbers As T()) As T
         Return Max(CType(Numbers, IEnumerable(Of T)))
     End Function
@@ -51,7 +51,7 @@ Partial Public Class Math
     ''' <exception cref="ArgumentNullException">If <paramref name="Numbers"/> is Null (Nothing)</exception>
     ''' <exception cref="ArgumentException">If <paramref name="Numbers"/> contains no item</exception>
     ''' <remarks><seealso cref="Min"/></remarks>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="12/20/2006")> _
     Public Shared Function Max(Of T As IComparable(Of T))(ByVal Numbers As IEnumerable(Of T)) As T
         If Numbers Is Nothing Then Throw New ArgumentNullException("Numbers", "Numbers cannot be null")
         Dim Current As Box(Of T) = Nothing

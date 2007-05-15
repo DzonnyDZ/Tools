@@ -1,4 +1,5 @@
 Namespace Drawing.IO
+    '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmJPEG
         Inherits System.Windows.Forms.Form

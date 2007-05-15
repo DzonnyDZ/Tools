@@ -15,6 +15,12 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <Nightly>1</Nightly>
+    <Alpha>2</Alpha>
+    <Beta>3</Beta>
+    <RC>4</RC>
+    <Release>5</Release>
+    <Config>1</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -25,6 +31,7 @@
     <DocumentationFile>Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly</DefineConstants>
+    <Config>1</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -35,6 +42,7 @@
     <DocumentationFile>Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release</DefineConstants>
+    <Config>5</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -46,6 +54,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha</DefineConstants>
+    <Config>2</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -57,6 +66,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta</DefineConstants>
+    <Config>3</Config>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -68,6 +78,7 @@
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC</DefineConstants>
+    <Config>4</Config>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -98,16 +109,19 @@
     <Compile Include="Collections\Generic\HashTable.Designer.vb">
       <DependentUpon>HashTable.vb</DependentUpon>
     </Compile>
-    <Compile Include="Collections\Generic\HashTable.vb">
+    <Compile Include="Collections\Generic\HashTable.vb" Condition="$(Config)&lt;=$(Beta)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ComponentModel\Localizable attrs.designer.vb">
       <DependentUpon>Localizable attrs.vb</DependentUpon>
     </Compile>
-    <Compile Include="ComponentModel\Localizable attrs.vb">
+    <Compile Include="ComponentModel\Localizable attrs.vb" Condition="$(Config)&lt;=$(RC)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="ComponentModel\SettingsAttributes.vb">
+    <Compile Include="ComponentModel\SettingsAttributes.vb" Condition="$(Config)&lt;=$(RC)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ComponentModel\SettingsAttributesTestSettings.Designer.vb">
@@ -119,7 +133,9 @@
     <Compile Include="Drawing\IO\frmJPEG.Designer.vb">
       <DependentUpon>frmJPEG.vb</DependentUpon>
     </Compile>
-    <Compile Include="Drawing\IO\frmJPEG.vb">
+    <Compile Include="Drawing\IO\frmJPEG.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
@@ -128,11 +144,13 @@
       <DependentUpon>frmTests.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Internal\VersionAttribute.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="misc\frmTimeSpanFormattable.Designer.vb">
       <DependentUpon>frmTimeSpanFormattable.vb</DependentUpon>
     </Compile>
-    <Compile Include="misc\frmTimeSpanFormattable.vb">
+    <Compile Include="misc\frmTimeSpanFormattable.vb" Condition="$(Config)&lt;=$(RC)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -160,13 +178,15 @@
     <Compile Include="Windows\Forms\EncodingSelector.Designer.vb">
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\EncodingSelector.vb">
+    <Compile Include="Windows\Forms\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\ExtendedForm.Designer.vb">
       <DependentUpon>ExtendedForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\ExtendedForm.vb">
+    <Compile Include="Windows\Forms\ExtendedForm.vb" Condition="$(Config)&lt;=$(RC)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\ProgressBarWithText.Designer.vb">

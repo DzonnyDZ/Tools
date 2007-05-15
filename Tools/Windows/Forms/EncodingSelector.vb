@@ -12,7 +12,7 @@ Namespace Windows.Forms
     ''' <summary>Control taht allows user to chose from available encoding</summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "Encoding.bmp")> _
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="5/13/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="05/13/2007")> _
     <DefaultEvent("SelectedIndexChanged")> _
     <Localizable(True), Prefix("ens")> _
     Public Class EncodingSelector : Inherits UserControl

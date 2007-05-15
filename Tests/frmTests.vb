@@ -41,7 +41,14 @@ Friend Class frmTests
                     BindingFlags.Static Or BindingFlags.Public Or BindingFlags.InvokeMethod, _
                     Type.DefaultBinder, Nothing, Nothing)
         Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
+            MsgBox(BuildException(ex), MsgBoxStyle.Critical, "Error")
         End Try
     End Sub
+    ''' <summary>Contactenates messages from <paramref name="ex"/> and all its <see cref="Exception.InnerException"/>s</summary>
+    ''' <param name="ex"><see cref="Exception"/> to contactenate messages from</param>
+    Private Function BuildException(ByVal ex As Exception) As String
+        Dim ret As String = ex.Message
+        If ex.InnerException IsNot Nothing Then ret &= ":" & vbCrLf & BuildException(ex.InnerException)
+        Return ret
+    End Function
 End Class

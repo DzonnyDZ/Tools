@@ -6,7 +6,7 @@ Namespace Windows.Forms.Utilities
     ''' <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
     ''' <remarks>See also <seealso cref="Tools.Drawing.SystemColorsExtension"/></remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _
-    <Version(1, 0, GetType(LinkProperties), LastChange:="2007/05/10")> _
+    <Version(1, 0, GetType(LinkProperties), LastChMMDDYYYY:="05/10/2007")> _
     Public NotInheritable Class LinkProperties
         ''' <summary>Color of not visited not hovered hyperlink</summary>
         ''' <remarks>This system value can be also accesed via <see cref="System.Windows.Forms.ToolstripLabel.LinkColor"/></remarks>

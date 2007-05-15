@@ -7,7 +7,7 @@ Namespace Windows.Forms
     <LookupBindingProperties("DataSource", "DisplayMember", "ValueMember", "SelectedValue")> _
     <ComponentModel.Prefix("dtc")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(DataBoundToolStripComboBox), LastChange:="2007/05/13")> _
+    <Version(1, 0, GetType(DataBoundToolStripComboBox), LastChMMDDYYYY:="05/13/2007")> _
     Public Class DataBoundToolStripComboBox
         Inherits System.Windows.Forms.ToolStripComboBox
         Implements IBindableComponent

@@ -2,7 +2,7 @@ Namespace Drawing.Metadata
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIPTCGetter), LastChange:="4/24/2007")> _
+    <Version(1, 0, GetType(IIPTCGetter), LastChMMDDYYYY:="04/24/2007")> _
     Public Interface IIPTCGetter
         ''' <summary>Gets stream of IPTC data</summary>
         ''' <remarks>

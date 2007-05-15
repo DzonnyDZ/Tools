@@ -9,7 +9,7 @@ Namespace Windows.Forms
     <DefaultEvent("ValueChanged"), DefaultProperty("Value")> _
     <DefaultBindingProperty("Value")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentLabel), LastChange:="2007/05/15")> _
+    <Version(1, 0, GetType(TransparentLabel), LastChMMDDYYYY:="05/15/2007")> _
     <Prefix("pwt")> _
     <ToolboxBitmap(GetType(ProgressBarWithText), "ProgressBarWithText.bmp")> _
     Public Class ProgressBarWithText : Inherits ProgressBar

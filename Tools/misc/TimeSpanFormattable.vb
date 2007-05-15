@@ -2,7 +2,7 @@ Imports System.Text, system.Math
 #If Config <= rc Then 'Stage:RC
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-<Version(1, 0, GetType(TimeSpanFormattable), LastChange:="2007/05/12")> _
+<Version(1, 0, GetType(TimeSpanFormattable), LastChMMDDYYYY:="05/12/2007")> _
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable

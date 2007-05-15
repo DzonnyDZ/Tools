@@ -3,7 +3,7 @@ Namespace Drawing.Metadata
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ExifReader), LastChange:="4/25/2007")> _
+    <Version(1, 0, GetType(ExifReader), LastChMMDDYYYY:="04/25/2007")> _
     Public Class ExifReader
         ''' <summary>Name of Exif Sub IFD (see <see cref="SubIFD.Desc"/>)</summary>
         Public Const ExifSubIFDName As String = "Exif Sub IFD"

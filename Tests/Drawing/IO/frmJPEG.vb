@@ -1,5 +1,5 @@
 Namespace Drawing.IO
-#If Config <= Nightly Then
+    '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.Drawing.IO.JPEG"/></summary>
     Public Class frmJPEG
         ''' <summary>CTor</summary>
@@ -128,5 +128,4 @@ Namespace Drawing.IO
             tvwResults.Font = New Font(tvwResults.Font.FontFamily, nudSize.Value, tvwResults.Font.Strikeout, GraphicsUnit.Point)
         End Sub
     End Class
-#End If
 End Namespace

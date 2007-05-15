@@ -3,7 +3,7 @@ Namespace ComponentModel
     ''' <summary>Inform programmer that he should name instances of class market wiht this attribute with names beginning with prefix</summary>
     ''' <remarks>This is ONLY recomendation. This attribute is here to allow control author to select prefix. Of course users of controls can either use own prefix or use no prefix.</remarks>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, lastchange:="1/24/2007")> _
+    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/24/2007")> _
     Public Class PrefixAttribute : Inherits Attribute
         ''' <summary>CTor</summary>
         ''' <param name="Prefix">Prefix associated with control</param>

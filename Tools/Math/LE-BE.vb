@@ -4,7 +4,7 @@ Partial Class Math
     ''' <summary>Converts <see cref="Short"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChange:="04/23/2007")> _
+    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/23/2007")> _
     Public Overloads Shared Function LEBE(ByVal value As Short) As Short
         Dim B1 As Byte = (value And &HFF00) >> 8
         Dim B2 As Byte = value And &HFF
@@ -13,7 +13,7 @@ Partial Class Math
     ''' <summary>Converts <see cref="UShort"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChange:="04/23/2007")> _
+    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/23/2007")> _
     <CLSCompliant(False)> _
     Public Overloads Shared Function LEBE(ByVal value As UShort) As UShort
         Dim B1 As Byte = (value And &HFF00) >> 8
@@ -23,7 +23,7 @@ Partial Class Math
     ''' <summary>Converts <see cref="Integer"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChange:="04/23/2007")> _
+    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/23/2007")> _
     Public Overloads Shared Function LEBE(ByVal value As Integer) As Integer
         Dim B1 As Byte = (value And &HFF000000) >> (3 * 8)
         Dim B2 As Byte = (value And &HFF0000) >> (2 * 8)
@@ -34,7 +34,7 @@ Partial Class Math
     ''' <summary>Converts <see cref="UInteger"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChange:="04/23/2007")> _
+    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/23/2007")> _
     <CLSCompliant(False)> _
     Public Overloads Shared Function LEBE(ByVal value As UInteger) As UInteger
         Dim B1 As Byte = (value And &HFF000000) >> (3 * 8)
@@ -46,7 +46,7 @@ Partial Class Math
     ''' <summary>Converts <see cref="Long"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChange:="04/23/2007")> _
+    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/23/2007")> _
     Public Overloads Shared Function LEBE(ByVal value As Long) As Long
         Dim B1 As Byte = (value And &HFF00000000000000) >> (7 * 8)
         Dim B2 As Byte = (value And &HFF000000000000) >> (6 * 8)
@@ -61,7 +61,7 @@ Partial Class Math
     ''' <summary>Converts <see cref="ULong"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChange:="04/23/2007")> _
+    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/23/2007")> _
     <CLSCompliant(False)> _
     Public Overloads Shared Function LEBE(ByVal value As ULong) As ULong
         Dim B1 As Byte = (value And &HFF00000000000000) >> (7 * 8)

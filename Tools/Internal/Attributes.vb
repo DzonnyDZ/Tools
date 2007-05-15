@@ -10,7 +10,8 @@ Namespace Internal
     ''' If you want to determine author of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyCompanyAttribute"/>
     ''' </remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=True, Inherited:=False)> _
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChMMDDYYYY:="12/20/2006")> _
+    <MainTool(GetType(ToolAttribute), FirstVerMMDDYYYY:="12/20/2006")> _
     Public Class AuthorAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -66,7 +67,9 @@ Namespace Internal
     ''' If you want to determine version of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyVersionAttribute"/>
     ''' </remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(VersionAttribute), LastChange:="12/21/2006")> _
+    <Author("Đonny", "dzony@dzonny.cz")> _
+    <Version(1, 1, GetType(VersionAttribute), LastChMMDDYYYY:="05/15/2007")> _
+    <MainTool(GetType(ToolAttribute), FirstVerMMDDYYYY:="12/20/2006")> _
     Public Class VersionAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Major"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -282,11 +285,12 @@ Namespace Internal
                 _Note = value
             End Set
         End Property
-        ''' <summary>Contains value of the <see cref="LastChange"/> property</summary>
+        ''' <summary>Contains value of the <see cref="LastChangeDate"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _LastChange As Date
         ''' <summary>Date of last modification (date format in invariant culture: MM/DD/YYYY)</summary>
-        Public Property LastChange() As String
+        ''' <remarks>Be carefull when setting this attribute property. If you make mistake if will cause exception when reading it at runtime.</remarks>
+        Public Property LastChMMDDYYYY() As String
             Get
                 Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
                 Return _LastChange.ToString(c.DateTimeFormat)
@@ -312,16 +316,125 @@ Namespace Internal
 
     ''' <summary>By applying this attribute you informs other programmers that tehy shouldn't apply <see cref="AuthorAttribute"/> and <see cref="VersionAttribute"/> at this declaration level. They should apply them to nested code elements.</summary>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(DoNotApplyAuthorAndVersionAttributesAttribute), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(DoNotApplyAuthorAndVersionAttributesAttribute), LastChMMDDYYYY:="12/20/2006")> _
+    <Tool(GetType(AuthorAttribute), FirstVerMMDDYYYY:="12/20/2006")> _
     Public Class DoNotApplyAuthorAndVersionAttributesAttribute : Inherits Attribute
     End Class
 
     ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.Internal"/> namespace</summary>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AttributesSpecificDeclarations), LastChange:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="12/20/2006")> _
     Friend Module AttributesSpecificDeclarations
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>
         ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it.</remarks>
         Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct
     End Module
+#Region "ToolAttribute"
+    'ASAP:Wiki
+    ''' <summary>Defines additional informations about tool and allows tool grouping. Apply this attribute on dependent tool.</summary>
+    <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
+    <Author("Đonny", "dzony@dzonny.cz")> _
+    <Version(1, 0, GetType(ToolAttribute), LastChMMDDYYYY:="05/15/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="05/15/2007")> _
+    Public Class ToolAttribute : Inherits Attribute
+        ''' <summary>Initializes ToolAttributte that marks tool as dependent</summary>
+        ''' <param name="Group">Main tool for this tool (root of groups of tools). Main tools can be only types. Main tool should be decorated with <see cref="MainToolAttribute"/>.</param>
+        Sub New(ByVal Group As Type)
+            _Group = Group
+        End Sub
+        ''' <summary>Contains value of the <see cref="FirstVersionDate"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _FirstVersion As Date
+        ''' <summary>Date when first version the tool was created</summary>
+        Public Property FirstVersionDate() As Date
+            Get
+                Return _FirstVersion
+            End Get
+            Set(ByVal value As Date)
+                _FirstVersion = value
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="Name"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _Name As String
+        ''' <summary>Optional descriptive name of tool if different of name of declaring element</summary>
+        Public Property Name() As String
+            Get
+                Return _Name
+            End Get
+            Set(ByVal value As String)
+                _Name = value
+            End Set
+        End Property
+        ''' <summary>Date when first version of tool was created (date format in invariant culture: MM/DD/YYYY)</summary>
+        ''' <remarks>Be carefull when setting this attribute property. If you make mistake if will cause exception when reading it at runtime.</remarks>
+        Public Property FirstVerMMDDYYYY() As String
+            Get
+                Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+                Return FirstVersionDate.ToString(c.DateTimeFormat)
+            End Get
+            Set(ByVal value As String)
+                Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
+                Dim oldc As Globalization.CultureInfo = Threading.Thread.CurrentThread.CurrentCulture
+                Threading.Thread.CurrentThread.CurrentCulture = c
+                FirstVersionDate = value
+                Threading.Thread.CurrentThread.CurrentCulture = oldc
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="Group"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _Group As Type
+        ''' <summary>Tool this tool depends on</summary>
+        ''' <returns>Type of parent tool. Null for independent tools.</returns>
+        ''' <remarks>Only types can be parent tools.</remarks>
+        Public ReadOnly Property Group() As Type
+            Get
+                Return _Group
+            End Get
+        End Property
+    End Class
+    ''' <summary>Defines main tool. Only types can be main tools</summary>
+    ''' <remarks>Also type that is not tool itself (is marked with <see cref="DoNotApplyAuthorAndVersionAttributesAttribute"/>) can be marked as root (if it is not nested within another tool).</remarks>
+    <AttributeUsage(AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Class Or AttributeTargets.Interface Or AttributeTargets.Struct)> _
+    <Author("Đonny", "dzony@dzonny.cz")> _
+    <Version(1, 0, GetType(MainToolAttribute), LastChMMDDYYYY:="05/15/2007")> _
+    <Tool(GetType(ToolAttribute), FirstVerMMDDYYYY:="05/15/2007")> _
+    Public Class MainToolAttribute : Inherits ToolAttribute
+        ''' <summary>Marks tool as indemendent ungrouped main tool</summary>
+        Sub New()
+            MyBase.New(Nothing)
+        End Sub
+        ''' <summary>Marks tool as main tool of group that has multiple main tools.</summary>
+        ''' <param name="Group">Another main tool of group. Only types can be main tools. Main tool should be decorated with <see cref="MainToolAttribute"/></param>
+        Sub New(ByVal Group As Type)
+            MyBase.New(Group)
+        End Sub
+        ''' <summary>Contains value of the <see cref="GroupName"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _GroupName As String
+        ''' <summary>Name of group of tools</summary>
+        ''' <remarks>Defines name of group of tools. Used when there are more Main tools in group. If there are more main tools in group it should have same <see cref="GroupName"/> or only one tool should have <see cref="GroupName"/> defined.</remarks>
+        Public Property GroupName() As String
+            Get
+                Return _GroupName
+            End Get
+            Set(ByVal value As String)
+                _GroupName = value
+            End Set
+        End Property
+
+    End Class
+    ''' <summary>Marks tool as stand-alone tool. Stand-alone tool is tool that cannot have tools dependent on it and is dependent on no tool.</summary>
+    ''' <remarks>This attribute should be applyed on tools that are not grouped and are not types</remarks>
+    <Author("Đonny", "dzony@dzonny.cz")> _
+    <Version(1, 0, GetType(StandAloneToolAttribute), LastChMMDDYYYY:="05/15/2007")> _
+    <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
+    <Tool(GetType(ToolAttribute), FirstVerMMDDYYYY:="05/15/2007")> _
+    Public Class StandAloneToolAttribute : Inherits ToolAttribute
+        ''' <summary>CTor</summary>
+        Sub New()
+            MyBase.New(Nothing)
+        End Sub
+    End Class
+#End Region
 End Namespace
 #End If

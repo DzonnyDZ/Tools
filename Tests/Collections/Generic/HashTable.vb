@@ -1,6 +1,6 @@
 ﻿Imports Tools.Collections.Generic
 Namespace Collections.Generic
-#If Config <= RC Then
+    '#If Config <= Nightly This conditional compilation is done in Tests.vbproj
     ''' <summary>Test Form for testing <see cref="HashTable(Of String)"/></summary>
     Friend Class frmHashTable
         ''' <summary>Test instance of <see cref="HashTable(Of String)"/></summary>
@@ -66,5 +66,4 @@ Namespace Collections.Generic
             frm.ShowDialog()
         End Sub
     End Class
-#End If
 End Namespace

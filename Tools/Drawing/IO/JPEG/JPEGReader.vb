@@ -3,7 +3,7 @@ Namespace Drawing.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGReader), LastChange:="4/23/2007")> _
+    <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="04/23/2007")> _
     Public Class JPEGReader
         Implements Metadata.IExifGetter, Metadata.IIPTCGetter
         ''' <summary>Stream of opened file</summary>
@@ -245,7 +245,7 @@ Namespace Drawing.IO.JPEG
 
     ''' <summary>Represents Photoshop 8BIM segment</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Photoshop8BIMReader), LastChange:="4/24/2007")> _
+    <Version(1, 0, GetType(Photoshop8BIMReader), LastChMMDDYYYY:="04/24/2007")> _
     Public Class Photoshop8BIMReader
         ''' <summary>CTor</summary>
         ''' <param name="Stream">Steam which contains segment data</param>

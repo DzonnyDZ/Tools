@@ -2,7 +2,7 @@ Namespace IO
 #If Config <= Alpha Then 'Stage:Alpha
     ''' <summary>Extends <see cref="System.IO.BinaryReader"/> to be able to read numeric data in both little-endian and big-endian format</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(BinaryReader), LastChange:="4/23/2007")> _
+    <Version(1, 0, GetType(BinaryReader), LastChMMDDYYYY:="04/23/2007")> _
     Public Class BinaryReader : Inherits System.IO.BinaryReader
         ''' <summary>Possible byte orders</summary>
         Public Enum ByteAling

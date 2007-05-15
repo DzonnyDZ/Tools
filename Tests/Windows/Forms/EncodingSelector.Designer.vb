@@ -1,5 +1,5 @@
 Namespace Windows.Forms
-#If Config <= Beta Then
+    '#If Config <= Beta Then Stage conditional compilation of this file is set in Tests.vbproj
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmEncodingSelector
         Inherits System.Windows.Forms.Form
@@ -119,5 +119,4 @@ Namespace Windows.Forms
         Friend WithEvents lblSelected As System.Windows.Forms.Label
         Friend WithEvents cmdRefresh As System.Windows.Forms.Button
     End Class
-#End If
 End Namespace

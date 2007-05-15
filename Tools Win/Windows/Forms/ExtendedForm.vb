@@ -4,7 +4,7 @@ Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
 #If Config <= RC Then 'Stage: RC
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(ExtendedForm), LastChange:="10/4/2007")> _
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(ExtendedForm), LastChMMDDYYYY:="04/10/2007")> _
     Public Class ExtendedForm : Inherits System.Windows.Forms.Form
 #Region "CloseBox"
         ''' <summary>Possible states of system menu</summary>

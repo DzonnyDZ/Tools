@@ -3,7 +3,7 @@ Imports Tools.VisualBasic, System.IO
 Namespace IO
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>
-    <Version(1, 1, GetType(Path), LastChange:="05/03/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 1, GetType(Path), LastChMMDDYYYY:="03/05/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <DebuggerDisplay("{Path}")> _
     Public Class Path
 #Region "Basic behavior"

@@ -1,6 +1,6 @@
 ﻿Imports Tools.ComponentModel, System.ComponentModel
 Namespace ComponentModel
-#If Config <= RC Then
+    '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="LCategoryAttribute"/>, <see cref="LDescriptionAttribute"/> and <see cref="LDisplayNameAttribute"/></summary>
     Friend Class frmLocalizableAttributes : Inherits Form
         ''' <summary>CTor</summary>
@@ -17,7 +17,7 @@ Namespace ComponentModel
             frm.ShowDialog()
         End Sub
 
-        ''' <summary>Objest used for testing. Diplayed in <see cref="PropertyGrid"/></summary>
+        ''' <summary>Object used for testing. Diplayed in <see cref="PropertyGrid"/></summary>
         Private Class Obj
             ''' <summary>Test only property</summary>
             <LDescription(GetType(ParamSource), "PublicRO", "Alternative")> _
@@ -337,5 +337,4 @@ Namespace ComponentModel
             End Get
         End Property
     End Module
-#End If
 End Namespace

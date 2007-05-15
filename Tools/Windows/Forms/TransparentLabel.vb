@@ -7,7 +7,7 @@ Namespace Windows.Forms
     ''' <summary><see cref="Label"/> which's background *really* transparent</summary>
     ''' <remarks>To make this contro, transparent or semi-transparent se background color to color with alpha chanel</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentLabel), LastChange:="2007/05/13")> _
+    <Version(1, 0, GetType(TransparentLabel), LastChMMDDYYYY:="05/13/2007")> _
     <Prefix("tlb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _

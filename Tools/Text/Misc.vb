@@ -7,7 +7,7 @@ Namespace Text
         ''' <param name="Str"><see cref="String"/> to normalize</param>
         ''' <param name="KeepType">True to keep type of whitespace (Endline, Tab, Space; first in group is used) or False to replace all whitespaces with spaces</param>
         ''' <returns><see cref="String"/> with removed white characters at the beginning and at the end and reduced all groups of whitespaces to one white space</returns>
-        <Author("Ðonny", "dzonny.dz@gmail.com", "http://dzonny.cz"), Version(1, 0, GetType(Misc), LastChange:="2007/03/11")> _
+        <Author("Ðonny", "dzonny.dz@gmail.com", "http://dzonny.cz"), Version(1, 0, GetType(Misc), LastChMMDDYYYY:="03/11/2007")> _
         Public Function MTrim$(ByVal Str$, Optional ByVal KeepType As Boolean = False)
             Str = Str.Trim(New Char() {" "c, vbTab, vbCr, vbLf})
             Dim ret As New System.Text.StringBuilder

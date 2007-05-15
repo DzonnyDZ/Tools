@@ -1,6 +1,7 @@
 ﻿#If Config <= Release Then
 Namespace ComponentModel
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ObjectStringConverter), lastchange:="1/7/2007")> _
+    'ASAP:Comments
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ObjectStringConverter), LastChMMDDYYYY:="01/07/2007")> _
     Public Class ObjectStringConverter : Inherits TypeConverter
         Public Overrides Function CanConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal sourceType As System.Type) As Boolean
             If sourceType.Equals(GetType(String)) Then

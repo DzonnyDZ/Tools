@@ -10,7 +10,7 @@ Imports System.Runtime.Serialization
 'Its preceded by comment.
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="1/24/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/24/2007")> _
     <ToolboxItemFilter("System.Windows.Forms")> _
     <System.Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
     <DefaultEvent("LinkClicked"), ToolboxItem(True), DefaultProperty("Items")> _
