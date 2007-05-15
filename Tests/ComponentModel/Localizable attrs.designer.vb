@@ -1,4 +1,5 @@
 Namespace ComponentModel
+#If Config <= RC Then
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmLocalizableAttributes
         Friend WithEvents prgMain As System.Windows.Forms.PropertyGrid
@@ -44,4 +45,5 @@ Namespace ComponentModel
         End Sub
         Friend WithEvents cmdReset As System.Windows.Forms.Button
     End Class
+#End If
 End Namespace

@@ -1,4 +1,5 @@
 Namespace Windows.Forms
+#If Config <= RC Then
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmExtendedForm
         Inherits Tools.Windows.Forms.ExtendedForm
@@ -44,4 +45,5 @@ Namespace Windows.Forms
         Friend WithEvents pgrProperty As System.Windows.Forms.PropertyGrid
 
     End Class
+#End If
 End Namespace

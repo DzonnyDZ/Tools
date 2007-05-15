@@ -1,5 +1,6 @@
 ﻿Imports Tools.ComponentModel, System.ComponentModel
 Namespace ComponentModel
+#If Config <= RC Then
     ''' <summary>Tests <see cref="LCategoryAttribute"/>, <see cref="LDescriptionAttribute"/> and <see cref="LDisplayNameAttribute"/></summary>
     Friend Class frmLocalizableAttributes : Inherits Form
         ''' <summary>CTor</summary>
@@ -336,4 +337,5 @@ Namespace ComponentModel
             End Get
         End Property
     End Module
+#End If
 End Namespace

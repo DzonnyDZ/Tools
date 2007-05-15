@@ -1,6 +1,6 @@
 Imports System.Windows.Forms, System.ComponentModel
-#If Config <= RC Then 'Stage: RC
 Namespace Windows.Forms
+#If Config <= RC Then 'Stage: RC
     ''' <summary><see cref="System.Windows.Forms.ToolStripComboBox"/> that allows databinding</summary>
     <System.Drawing.ToolboxBitmap(GetType(DataBoundToolStripComboBox), "DataBoundToolStripComboBox.bmp")> _
     <DefaultBindingProperty("Text")> _

@@ -1,4 +1,5 @@
 Namespace Windows.Forms
+#If Config <= RC Then
     ''' <summary>Test functionality of <see cref="Tools.Windows.Forms.ExtendedForm"/></summary>
     Public Class frmExtendedForm
         ''' <summary>Runs test GUI</summary>
@@ -17,4 +18,5 @@ Namespace Windows.Forms
             Me.Icon = Tools.Resources.ToolsIcon
         End Sub
     End Class
+#End If
 End Namespace

@@ -1,6 +1,6 @@
 Imports System.IO
 Namespace Drawing.Metadata
-#If Config <= Alpha Then 'Stage: Alpha
+#If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ExifIFDReader), LastChange:="4/24/2007")> _

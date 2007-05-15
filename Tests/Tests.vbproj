@@ -120,7 +120,6 @@
       <DependentUpon>frmJPEG.vb</DependentUpon>
     </Compile>
     <Compile Include="Drawing\IO\frmJPEG.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>

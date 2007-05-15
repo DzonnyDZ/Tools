@@ -1,5 +1,6 @@
 ﻿Imports Tools.Windows.Forms
 Namespace Windows.Forms
+#If Config <= Beta Then
     ''' <summary>Test from for <see cref="EncodingSelector"/></summary>
     Friend Class frmEncodingSelector
         ''' <summary>Show test form</summary>
@@ -38,4 +39,5 @@ Namespace Windows.Forms
             MsgBox(e.Item.DisplayName)
         End Sub
     End Class
+#End If
 End Namespace

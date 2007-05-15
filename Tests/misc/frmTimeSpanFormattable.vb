@@ -1,3 +1,4 @@
+#If Config <= RC Then
 ''' <summary>Testing <see cref="TimeSpanFormattable"/></summary>
 Public Class frmTimeSpanFormattable
     Private Sub cmdFormat_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdFormat.Click
@@ -30,3 +31,4 @@ Public Class frmTimeSpanFormattable
         frm.Show()
     End Sub
 End Class
+#End If

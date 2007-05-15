@@ -1,5 +1,6 @@
 ﻿Imports Tools.ComponentModel, System.ComponentModel
 Namespace ComponentModel
+#If Config <= RC Then
     ''' <summary>Test form for <see cref="SettingsInheritDescriptionAttribute"/> and <see cref="SettingsInheritDefaultValueAttribute"/></summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Friend Class frmSettingsAttributes : Inherits Form
@@ -82,7 +83,6 @@ Namespace ComponentModel
             End Property
         End Class
     End Class
-
-    
+#End If
 End Namespace
 
