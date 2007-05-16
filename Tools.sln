@@ -440,4 +440,29 @@ Global
 		SccProjectName7 = Tools\u0020Win
 		SccLocalPath7 = Tools\u0020Win
 	EndGlobalSection
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 8
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://tfs01.codeplex.com/
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = Tests\\Tests.vbproj
+		SccProjectName1 = Tests
+		SccLocalPath1 = Tests
+		SccProjectUniqueName2 = Tools\\Tools.vbproj
+		SccProjectName2 = Tools
+		SccLocalPath2 = Tools
+		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
+		SccProjectName3 = Tools\u0020Win
+		SccLocalPath3 = Tools\u0020Win
+		SccLocalPath4 = .
+		SccProjectUniqueName5 = Tests\\Tests.vbproj
+		SccProjectName5 = Tests
+		SccLocalPath5 = Tests
+		SccProjectUniqueName6 = Tools\\Tools.vbproj
+		SccProjectName6 = Tools
+		SccLocalPath6 = Tools
+		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
+		SccProjectName7 = Tools\u0020Win
+		SccLocalPath7 = Tools\u0020Win
+	EndGlobalSection
 EndGlobal
