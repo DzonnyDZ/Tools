@@ -4,7 +4,7 @@ Namespace Resources
     ''' <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
     ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(SystemResources), LastChange:="2007/05/14")> _
+    <Version(1, 0, GetType(SystemResources), LastChMMDDYYYY:="05/14/2007")> _
     Public NotInheritable Class SystemResources
         ''' <summary>CTor</summary>
         ''' <remarks>In order not to be possible to create instance</remarks>
@@ -3044,6 +3044,6 @@ Namespace Resources
 
 #End Region
         End Structure
-End Class
+    End Class
 End Namespace
 #End If

@@ -144,6 +144,7 @@
       <DependentUpon>frmTests.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Internal\ToolAssembly.vb" />
     <Compile Include="Internal\VersionAttribute.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="misc\frmTimeSpanFormattable.Designer.vb">

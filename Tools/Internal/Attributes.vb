@@ -322,11 +322,11 @@ Namespace Internal
     End Class
 
     ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.Internal"/> namespace</summary>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="12/20/2006")> _
-    Friend Module AttributesSpecificDeclarations
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 1, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="05/16/2007")> _
+    Friend Module AttributesSpecificDeclarations 'Original 12/20/2006
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>
-        ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it.</remarks>
-        Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct
+        ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it. (since version 1.1 there is no need to add constants.</remarks>
+        Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct Or AttributeTargets.Property Or AttributeTargets.Event
     End Module
 #Region "ToolAttribute"
     'ASAP:Wiki
