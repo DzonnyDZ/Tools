@@ -729,6 +729,115 @@ Namespace Internal 'ASAP:WiKi & forum
             Return CObj(Tool).ToString
         End Function
 #End Region
+        ''' <summary>Contains value of the <see cref="SubTools"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _SubTools As New List(Of Tool)
+        ''' <summary>Returns all <see cref="Tool"/>s which's <see cref="RelatedTool"/> point to thes tool and <see cref="ToolAttribute"/> applyed is not <see cref="MainToolAttribute"/></summary>
+        ''' <returns>An empty <see cref="List(Of Tool)"/> unless the <see cref="ToolAssembly"/> this tool belongs too is parsed by <see cref="ToolAssemblyStructure"/>'s ctor</returns>
+        Public ReadOnly Property SubTools() As List(Of Tool)
+            Get
+                Return _SubTools
+            End Get
+        End Property
+        ''' <summary>Contains value of the <see cref="Group"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Group As ToolAssemblyStructure.ToolGroup
+        ''' <summary>Group this tool belongs too</summary>
+        ''' <returns>Null unless the <see cref="ToolAssembly"/> this tool belongs too is parsed by <see cref="ToolAssemblyStructure"/>'s ctor</returns>
+        Public Property Group() As ToolAssemblyStructure.ToolGroup
+            Get
+                Return _Group
+            End Get
+            Set(ByVal value As ToolAssemblyStructure.ToolGroup)
+                _Group = value
+            End Set
+        End Property
+
+    End Class
+    ''' <summary>Represents parsed structure of assembly of <see cref="Tools"/>. This class allow to read relations between tools</summary>
+    Public Class ToolAssemblyStructure 'ASAP:Wiki, Mark, Forum
+        ''' <summary>CTor from <see cref="ToolAssembly"/></summary>
+        ''' <param name="Asm"><see cref="ToolAssembly"/> that should be parsed</param>
+        Public Sub New(ByVal Asm As ToolAssembly)
+            Dim SubTools As New List(Of Tool)
+            For Each Tool As Tool In Asm.GetAllTools
+                If Tool.IsStandAloneTool Then
+                    StandAloneTools.Add(Tool)
+                ElseIf Tool.IsMainTool Then
+                    FindGroup(Tool)
+                Else
+                    SubTools.Add(Tool)
+                End If
+            Next Tool
+            For Each SubTool As Tool In SubTools
+                SubTool.Group = FindSubToolGroup(SubTool)
+            Next SubTool
+            _NotToolsShouldBeTools = New List(Of Tool)(Asm.ShouldBeTools)
+        End Sub
+        ''' <summary>Searches for <see cref="ToolGroup"/> that <see cref="Tool"/> belongs to</summary>
+        ''' <param name="Tool"><see cref="Tool"/> which's <see cref="ToolGroup"/> should be found</param>
+        ''' <returns><see cref="ToolGroup"/> that <paramref name="Tool"/> belongs to</returns>
+        ''' <remarks>If no group is found new group is founded</remarks>
+        Private Function FindGroup(ByVal Tool As Tool) As ToolGroup
+            If Tool.Group IsNot Nothing Then Return Tool.Group
+            If Tool.RelatedTool Is Nothing Then
+                Dim G As New ToolGroup
+                Groups.Add(G)
+                G.MainTools.Add(Tool)
+                Tool.Group = G
+            Else
+                Tool.Group = FindGroup(Tool.RelatedTool)
+            End If
+            Return Tool.Group
+        End Function
+        ''' <summary>Finds <see cref="ToolGroup"/> that <see cref="Tool"/> belongs to</summary>
+        ''' <param name="SubTool"><see cref="Tool"/> which's <see cref="ToolGroup"/> should be found</param>
+        ''' <returns><see cref="ToolGroup"/> that <paramref name="Tool"/> belongs to or null is no <see cref="ToolGroup"/> is found</returns>
+        Private Function FindSubToolGroup(ByVal SubTool As Tool) As ToolGroup
+            If SubTool.Group IsNot Nothing Then
+                Return SubTool.Group
+            ElseIf SubTool.RelatedTool Is Nothing Then
+                Return Nothing
+            ElseIf SubTool.RelatedTool.Group IsNot Nothing Then
+                Return SubTool.RelatedTool.Group
+            Else
+                Return FindSubToolGroup(SubTool.RelatedTool)
+            End If
+        End Function
+        ''' <summary>All stand-alone tools in assembly</summary>
+        Public ReadOnly Property StandAloneTools() As List(Of Tool)
+            Get
+                Return _StandAloneTools
+            End Get
+        End Property
+        ''' <summary>Contains value of the <see cref="StandAloneTools"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _StandAloneTools As List(Of Tool)
+        ''' <summary>All toolgroups in assembly</summary>
+        Public ReadOnly Property Groups() As List(Of ToolGroup)
+            Get
+                Return _Groups
+            End Get
+        End Property
+        ''' <summary>Contains value of the <see cref="Groups"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Groups As List(Of ToolGroup)
+        ''' <summary>Represents group of tools</summary>
+        Public Class ToolGroup
+            ''' <summary>Contains value of the <see cref="MainTools"/> property</summary>
+            Private _MainTools As New List(Of Tool)
+            ''' <summary>Retuns main tools of group</summary>
+            Public ReadOnly Property MainTools() As List(Of Tool)
+                Get
+                    Return _MainTools
+                End Get
+            End Property
+            'TODO:Name
+        End Class
+        ''' <summary>Contains value of the <see cref="NotToolsShouldBeTools"/> property</summary>
+        Private _NotToolsShouldBeTools As List(Of Tool)
+        ''' <summary>Retuns same value as <see cref="ToolAssembly.ShouldBeTools"/> (element that are not marked as tools but are not nested within tools and are not marked with <see cref="DoNotApplyAuthorAndVersionAttributesAttribute"/></summary>
+        Public ReadOnly Property NotToolsShouldBeTools() As List(Of Tool)
+            Get
+                Return _NotToolsShouldBeTools
+            End Get
+        End Property
     End Class
 #End If
 End Namespace
