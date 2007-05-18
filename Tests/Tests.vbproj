@@ -144,7 +144,12 @@
       <DependentUpon>frmTests.vb</DependentUpon>
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Internal\ToolAssembly.vb" />
+    <Compile Include="Internal\ToolAssembly.designer.vb">
+      <DependentUpon>ToolAssembly.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Internal\ToolAssembly.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Internal\VersionAttribute.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="misc\frmTimeSpanFormattable.Designer.vb">
@@ -240,6 +245,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>frmTests.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Internal\ToolAssembly.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ToolAssembly.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="misc\frmTimeSpanFormattable.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmTimeSpanFormattable.vb</DependentUpon>
@@ -311,6 +320,15 @@
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CriticalError.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\infoBubble.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

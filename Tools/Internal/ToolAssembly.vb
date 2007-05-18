@@ -2,8 +2,10 @@ Imports System.Reflection, Microsoft.VisualBasic.CompilerServices
 Imports Tools.Collections.Generic
 Namespace Internal 'ASAP:WiKi & forum
 #If Config <= Nightly Then 'Stage: Nightly
-    'ASAP:Decorate as tool
     ''' <summary>Represents assembly of <see cref="Tools"/> project</summary>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(ToolAssembly), LastChMMDDYYYY:="05/18/2007")> _
+    <Tool(GetType(Tool), FirstVerMMDDYYYY:="05/18/2007")> _
     Public Class ToolAssembly
         ''' <summary>Contains value of the <see cref="Assembly"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -110,7 +112,10 @@ Namespace Internal 'ASAP:WiKi & forum
         End Function
     End Class
     ''' <summary>Represents one tool</summary>
-    Public Class Tool 'ASAP:Wiki, Forum, Decorate
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(Tool), LastChMMDDYYYY:="05/18/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="05/18/2007")> _
+    Public Class Tool 'ASAP:Wiki,  Decorate
         Implements IEquatable(Of Tool)
 #Region "Enums"
         ''' <summary>Main type of tool</summary>
@@ -753,7 +758,10 @@ Namespace Internal 'ASAP:WiKi & forum
 
     End Class
     ''' <summary>Represents parsed structure of assembly of <see cref="Tools"/>. This class allow to read relations between tools</summary>
-    Public Class ToolAssemblyStructure 'ASAP:Wiki, Mark, Forum
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(ToolAssemblyStructure), LastChMMDDYYYY:="05/18/2007")> _
+    <Tool(GetType(Tool), FirstVerMMDDYYYY:="05/18/2007")> _
+    Public Class ToolAssemblyStructure 'ASAP:Wiki,  Forum
         ''' <summary>CTor from <see cref="ToolAssembly"/></summary>
         ''' <param name="Asm"><see cref="ToolAssembly"/> that should be parsed</param>
         Public Sub New(ByVal Asm As ToolAssembly)
@@ -828,7 +836,23 @@ Namespace Internal 'ASAP:WiKi & forum
                     Return _MainTools
                 End Get
             End Property
-            'TODO:Name
+            ''' <summary>Name of group</summary>
+            ''' <returns>Name fo group if exactly one distinct <see cref="MainToolAttribute.GroupName"/> is found in <see cref="MainTools"/>. In case no name is found returns an empty <see cref="String"/>. In case more names are specified throws an <see cref="InvalidOperationException"/></returns>
+            ''' <exception cref="InvalidOperationException">There are more distinc names of group specified</exception>
+            Public ReadOnly Property Name() As String
+                Get
+                    Dim GName As String = ""
+                    For Each t As Tool In MainTools
+                        If t.ToolInfo IsNot Nothing AndAlso TypeOf t.ToolInfo Is MainToolAttribute AndAlso DirectCast(t.ToolInfo, MainToolAttribute).GroupName <> "" Then
+                            With DirectCast(t.ToolInfo, MainToolAttribute)
+                                If GName = "" Then : GName = .GroupName
+                                Else : Throw New InvalidOperationException("More than one group names specified") : End If
+                            End With
+                        End If
+                    Next t
+                    Return GName
+                End Get
+            End Property
         End Class
         ''' <summary>Contains value of the <see cref="NotToolsShouldBeTools"/> property</summary>
         Private _NotToolsShouldBeTools As List(Of Tool)
