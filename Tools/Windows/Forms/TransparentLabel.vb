@@ -19,6 +19,7 @@ Namespace Windows.Forms
             Me.SetStyle(ControlStyles.SupportsTransparentBackColor, True)
             Me.SetStyle(ControlStyles.ResizeRedraw, True)
             Me.SetStyle(ControlStyles.OptimizedDoubleBuffer, False)
+            Me.ResetBackColor()
         End Sub
         ''' <summary>CTor with text</summary>
         ''' <param name="Text">Default text of control</param>
@@ -46,7 +47,7 @@ Namespace Windows.Forms
         ''' <param name="pevent">A <see cref="System.Windows.Forms.PaintEventArgs"/> that contains information about the control to paint</param>
         Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
             If MyBase.BackgroundImage Is Nothing Then
-                pevent.Graphics.DrawRectangle(New Pen(Me.BackColor, 1), pevent.ClipRectangle)
+                pevent.Graphics.FillRectangle(New SolidBrush(Me.BackColor), pevent.ClipRectangle)
             Else
                 MyBase.OnPaintBackground(pevent)
             End If
@@ -65,6 +66,12 @@ Namespace Windows.Forms
         Protected Overrides Sub OnTextChanged(ByVal e As System.EventArgs)
             Me.RecreateHandle()
             MyBase.OnTextChanged(e)
+        End Sub
+        ''' <summary>Raises the <see cref="BackColorChanged"/> event.</summary>
+        ''' <param name="e">An <see cref="EventArgs"/> that contains the event data.</param>
+        Protected Overrides Sub OnBackColorChanged(ByVal e As System.EventArgs)
+            RecreateHandle()
+            MyBase.OnBackColorChanged(e)
         End Sub
 #End Region
 #Region "Properties"
@@ -93,6 +100,15 @@ Namespace Windows.Forms
                 MyBase.BackColor = value
             End Set
         End Property
+        ''' <summary>Returns value indicatin if <see cref="BackColor"/> differs from its default value</summary>
+        ''' <returns>True if <see cref="BackColor"/> is not <see cref="Color.Transparent"/></returns>
+        Private Function ShouldSerializeBackColor() As Boolean
+            Return Me.BackColor <> Color.Transparent
+        End Function
+        ''' <summary>Sets <see cref="BackColor"/> to <see cref="Color.Transparent"/></summary>
+        Public Overrides Sub ResetBackColor()
+            Me.BackColor = Color.Transparent
+        End Sub
 #End Region
     End Class
 End Namespace

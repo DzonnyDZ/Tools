@@ -188,6 +188,9 @@
     <Compile Include="Windows\Forms\TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\TransparentTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />

@@ -207,6 +207,12 @@
     <Compile Include="Windows\Forms\TransparentLabel.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\TransparentTextBox.designer.vb">
+      <DependentUpon>TransparentTextBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\TransparentTextBox.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\Utilities\frmLinkProperties.Designer.vb">
       <DependentUpon>frmLinkProperties.vb</DependentUpon>
     </Compile>
@@ -278,6 +284,10 @@
     <EmbeddedResource Include="Windows\Forms\TransparentLabel.resx">
       <SubType>Designer</SubType>
       <DependentUpon>TransparentLabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\TransparentTextBox.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>TransparentTextBox.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Utilities\frmLinkProperties.resx">
       <SubType>Designer</SubType>

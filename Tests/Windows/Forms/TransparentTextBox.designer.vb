@@ -1,6 +1,6 @@
 Namespace Windows.Forms
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-    Partial Class frmTransparentLabel
+    Partial Class frmTransparentTextBox
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.
@@ -23,34 +23,26 @@ Namespace Windows.Forms
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.panContainer = New System.Windows.Forms.Panel
             Me.lblBg = New System.Windows.Forms.Label
             Me.BottomToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.TopToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.RightToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.ContentPanel = New System.Windows.Forms.ToolStripContentPanel
-            Me.tlbLabel = New Tools.Windows.Forms.TransparentLabel
+            Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
+            Me.trb = New Tools.Windows.Forms.TransparentTextBox
             Me.pgrGrid = New System.Windows.Forms.PropertyGrid
-            Me.panContainer.SuspendLayout()
+            Me.SplitContainer1.Panel1.SuspendLayout()
+            Me.SplitContainer1.Panel2.SuspendLayout()
+            Me.SplitContainer1.SuspendLayout()
             Me.SuspendLayout()
-            '
-            'panContainer
-            '
-            Me.panContainer.Controls.Add(Me.tlbLabel)
-            Me.panContainer.Controls.Add(Me.lblBg)
-            Me.panContainer.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.panContainer.Location = New System.Drawing.Point(0, 0)
-            Me.panContainer.Name = "panContainer"
-            Me.panContainer.Size = New System.Drawing.Size(123, 443)
-            Me.panContainer.TabIndex = 0
             '
             'lblBg
             '
             Me.lblBg.AutoSize = True
             Me.lblBg.BackColor = System.Drawing.Color.Red
             Me.lblBg.ForeColor = System.Drawing.Color.Yellow
-            Me.lblBg.Location = New System.Drawing.Point(12, 3)
+            Me.lblBg.Location = New System.Drawing.Point(12, 29)
             Me.lblBg.Name = "lblBg"
             Me.lblBg.Size = New System.Drawing.Size(65, 13)
             Me.lblBg.TabIndex = 1
@@ -92,41 +84,56 @@ Namespace Windows.Forms
             '
             Me.ContentPanel.Size = New System.Drawing.Size(150, 150)
             '
-            'tlbLabel
+            'SplitContainer1
             '
-            Me.tlbLabel.AutoSize = False
-            Me.tlbLabel.Location = New System.Drawing.Point(3, 3)
-            Me.tlbLabel.Name = "tlbLabel"
-            Me.tlbLabel.Size = New System.Drawing.Size(90, 13)
-            Me.tlbLabel.TabIndex = 0
-            Me.tlbLabel.TabStop = True
-            Me.tlbLabel.Text = "TransparentLabel"
+            Me.SplitContainer1.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.SplitContainer1.Location = New System.Drawing.Point(0, 0)
+            Me.SplitContainer1.Name = "SplitContainer1"
+            '
+            'SplitContainer1.Panel1
+            '
+            Me.SplitContainer1.Panel1.Controls.Add(Me.trb)
+            Me.SplitContainer1.Panel1.Controls.Add(Me.lblBg)
+            '
+            'SplitContainer1.Panel2
+            '
+            Me.SplitContainer1.Panel2.Controls.Add(Me.pgrGrid)
+            Me.SplitContainer1.Size = New System.Drawing.Size(524, 494)
+            Me.SplitContainer1.SplitterDistance = 174
+            Me.SplitContainer1.TabIndex = 2
+            '
+            'trb
+            '
+            Me.trb.Location = New System.Drawing.Point(3, 3)
+            Me.trb.Name = "trb"
+            Me.trb.Size = New System.Drawing.Size(161, 295)
+            Me.trb.TabIndex = 2
+            Me.trb.Text = "TransparentTextBox"
             '
             'pgrGrid
             '
-            Me.pgrGrid.Dock = System.Windows.Forms.DockStyle.Right
-            Me.pgrGrid.Location = New System.Drawing.Point(123, 0)
+            Me.pgrGrid.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.pgrGrid.Location = New System.Drawing.Point(0, 0)
             Me.pgrGrid.Name = "pgrGrid"
-            Me.pgrGrid.SelectedObject = Me.tlbLabel
-            Me.pgrGrid.Size = New System.Drawing.Size(223, 443)
+            Me.pgrGrid.SelectedObject = Me.trb
+            Me.pgrGrid.Size = New System.Drawing.Size(346, 494)
             Me.pgrGrid.TabIndex = 1
             '
-            'frmTransparentLabel
+            'frmTransparentTextBox
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(346, 443)
-            Me.Controls.Add(Me.panContainer)
-            Me.Controls.Add(Me.pgrGrid)
-            Me.Name = "frmTransparentLabel"
-            Me.Text = "Testing Tools.Windows.Forms.TransparentLabel"
-            Me.panContainer.ResumeLayout(False)
-            Me.panContainer.PerformLayout()
+            Me.ClientSize = New System.Drawing.Size(524, 494)
+            Me.Controls.Add(Me.SplitContainer1)
+            Me.Name = "frmTransparentTextBox"
+            Me.Text = "Testing Tools.Windows.Forms.TransparentTextBox"
+            Me.SplitContainer1.Panel1.ResumeLayout(False)
+            Me.SplitContainer1.Panel1.PerformLayout()
+            Me.SplitContainer1.Panel2.ResumeLayout(False)
+            Me.SplitContainer1.ResumeLayout(False)
             Me.ResumeLayout(False)
 
         End Sub
-        Friend WithEvents panContainer As System.Windows.Forms.Panel
-        Friend WithEvents tlbLabel As Tools.Windows.Forms.TransparentLabel
         Friend WithEvents lblBg As System.Windows.Forms.Label
         Friend WithEvents pgrGrid As System.Windows.Forms.PropertyGrid
         Friend WithEvents BottomToolStripPanel As System.Windows.Forms.ToolStripPanel
@@ -134,5 +141,7 @@ Namespace Windows.Forms
         Friend WithEvents RightToolStripPanel As System.Windows.Forms.ToolStripPanel
         Friend WithEvents LeftToolStripPanel As System.Windows.Forms.ToolStripPanel
         Friend WithEvents ContentPanel As System.Windows.Forms.ToolStripContentPanel
+        Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
+        Friend WithEvents trb As Tools.Windows.Forms.TransparentTextBox
     End Class
 End Namespace
