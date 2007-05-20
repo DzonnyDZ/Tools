@@ -148,10 +148,16 @@
       <DependentUpon>ToolAssembly.vb</DependentUpon>
     </Compile>
     <Compile Include="Internal\ToolAssembly.vb" Condition="$(Config)&lt;=$(Nightly)">
-        <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Internal\VersionAttribute.vb" />
+    <Compile Include="Math\LEBE.Designer.vb">
+      <DependentUpon>LEBE.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Math\LEBE.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="misc\frmTimeSpanFormattable.Designer.vb">
       <DependentUpon>frmTimeSpanFormattable.vb</DependentUpon>
@@ -212,7 +218,7 @@
       <DependentUpon>TransparentTextBox.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\Forms\TransparentTextBox.vb" Condition="$(Config)&lt;=$(Alpha)">
-        <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\frmLinkProperties.Designer.vb">
@@ -256,6 +262,10 @@
     <EmbeddedResource Include="Internal\ToolAssembly.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ToolAssembly.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Math\LEBE.resx">
+      <DependentUpon>LEBE.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="misc\frmTimeSpanFormattable.resx">
       <SubType>Designer</SubType>
