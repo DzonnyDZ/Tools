@@ -329,7 +329,6 @@ Namespace Internal
         Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct Or AttributeTargets.Property Or AttributeTargets.Event
     End Module
 #Region "ToolAttribute"
-    'ASAP:Wiki
     ''' <summary>Defines additional informations about tool and allows tool grouping. Apply this attribute on dependent tool.</summary>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
     <Author("Đonny", "dzony@dzonny.cz")> _

@@ -1,3 +1,4 @@
+'#If Config <= Alpha This conditional compilation is done in Tests.vbproj
 Namespace Windows.Forms
     ''' <summary>Tests <see cref="Tools.Windows.Forms.TransparentTextBox"/></summary>
     Public Class frmTransparentTextBox

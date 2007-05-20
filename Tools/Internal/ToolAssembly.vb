@@ -1,6 +1,7 @@
+
 Imports System.Reflection, Microsoft.VisualBasic.CompilerServices
 Imports Tools.Collections.Generic
-Namespace Internal 'ASAP:WiKi & forum
+Namespace Internal
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Represents assembly of <see cref="Tools"/> project</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -48,7 +49,7 @@ Namespace Internal 'ASAP:WiKi & forum
             Return Tool.InitInvalid(Assembly)
         End Function
         ''' <summary>Gets list of all items that are decorated with either <see cref="AuthorAttribute"/> or <see cref="VersionAttribute"/> within assembly</summary>
-        ''' <remarks>Returned tools can be invalid</remarks>
+        ''' <remarks>Returned tools can be invalid. Methods and fierlds declared directly in portable executable module are ignored.</remarks>
         Public Function GetAllTools() As IReadOnlyIndexable(Of Tool)
             Dim ret As New List(Of Tool)
             Dim ShouldBeTools As New List(Of Tool)
@@ -115,7 +116,7 @@ Namespace Internal 'ASAP:WiKi & forum
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Tool), LastChMMDDYYYY:="05/18/2007")> _
     <MainTool(FirstVerMMDDYYYY:="05/18/2007")> _
-    Public Class Tool 'ASAP:Wiki,  Decorate
+    Public Class Tool
         Implements IEquatable(Of Tool)
 #Region "Enums"
         ''' <summary>Main type of tool</summary>
@@ -761,7 +762,7 @@ Namespace Internal 'ASAP:WiKi & forum
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ToolAssemblyStructure), LastChMMDDYYYY:="05/18/2007")> _
     <Tool(GetType(Tool), FirstVerMMDDYYYY:="05/18/2007")> _
-    Public Class ToolAssemblyStructure 'ASAP:Wiki,  Forum
+    Public Class ToolAssemblyStructure
         ''' <summary>CTor from <see cref="ToolAssembly"/></summary>
         ''' <param name="Asm"><see cref="ToolAssembly"/> that should be parsed</param>
         Public Sub New(ByVal Asm As ToolAssembly)

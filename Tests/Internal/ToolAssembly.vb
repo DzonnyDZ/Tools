@@ -1,5 +1,5 @@
 Imports System.Reflection
-#If Config <= Nightly Then
+'#If Config <= Nightly This conditional compilation is done in Tests.vbproj
 Namespace Internal
     Public Class ToolAssembly : Inherits Form
         Shared Sub Test()
@@ -18,7 +18,7 @@ Namespace Internal
             frm.ShowDialog()
         End Sub
 
-       
+
     End Class
     '#Region "TestClasses"
     '    Class [Class]
@@ -83,4 +83,3 @@ Namespace Internal
     '    End Class
     '#End Region
 End Namespace
-#End If

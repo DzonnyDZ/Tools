@@ -1,4 +1,4 @@
-﻿Imports System.ComponentModel.Design.Serialization
+﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModel, Tools.VisualBasic
 #If Config <= Release Then
 Namespace Collections.Generic
     ''' <summary>List that provides events when changed</summary>
@@ -9,23 +9,29 @@ Namespace Collections.Generic
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChMMDDYYYY:="01/07/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of String)), LastChMMDDYYYY:="05/18/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
+    <StandAloneTool(FirstVerMMDDYYYY:="01/07/2007")> _
     Public Class ListWithEvents(Of T) : Implements Runtime.Serialization.ISerializable
         Implements IList(Of T)
         Implements IList
         ''' <summary>CTor</summary>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
-        Public Sub New(Optional ByVal AddingReadOnly As Boolean = False)
+        ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
+        Public Sub New(Optional ByVal AddingReadOnly As Boolean = False, Optional ByVal CancelError As Boolean = False)
+            _AddingReadOnly = AddingReadOnly
+            _CancelError = CancelError
             List = New List(Of T)
         End Sub
         ''' <summary>CTor - initializes from another <see cref="IEnumerable(Of T)"/></summary>
         ''' <param name="collection"><see cref="IEnumerable(Of T)"/> to initialize new instance of <see cref="ListWithEvents(Of T)"/> with</param>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <exception cref="System.ArgumentNullException">collection is null</exception>
-        Public Sub New(ByVal collection As IEnumerable(Of T), Optional ByVal AddingReadOnly As Boolean = False)
+        Public Sub New(ByVal collection As IEnumerable(Of T), Optional ByVal AddingReadOnly As Boolean = False, Optional ByVal CancelError As Boolean = False)
+            _AddingReadOnly = AddingReadOnly
+            _CancelError = CancelError
             List = New List(Of T)(collection)
             AddAllItemHandlers()
         End Sub
@@ -33,7 +39,9 @@ Namespace Collections.Generic
         ''' <param name="capacity">The number of elements that the new list can initially store.</param>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0</exception>
-        Public Sub New(ByVal capacity As Integer, Optional ByVal AddingReadOnly As Boolean = False)
+        Public Sub New(ByVal capacity As Integer, Optional ByVal AddingReadOnly As Boolean = False, Optional ByVal CancelError As Boolean = False)
+            _AddingReadOnly = AddingReadOnly
+            _CancelError = CancelError
             List = New List(Of T)(capacity)
         End Sub
 
@@ -42,7 +50,7 @@ Namespace Collections.Generic
 
         ''' <summary>Contains value of the <see cref="AddingReadOnly"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _AddingReadOnly As Boolean = False
+        Private ReadOnly _AddingReadOnly As Boolean = False
         ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
         <Browsable(False)> _
         Public ReadOnly Property AddingReadOnly() As Boolean
@@ -50,6 +58,18 @@ Namespace Collections.Generic
                 Return _AddingReadOnly
             End Get
         End Property
+
+        ''' <summary>Contains value of the <see cref="CancelError"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private ReadOnly _CancelError As Boolean = False
+        ''' <summary>Gets value indicating if an <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</summary>
+        <Browsable(False)> _
+        Public ReadOnly Property CancelError() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _CancelError
+            End Get
+        End Property
+
         ''' <summary>Contains value of the <see cref="AllowAddCancelableEventsHandlers"/> property</summary>
         Private _AllowAddCancelableEventsHandlers As Boolean = True
         ''' <summary>Determines if it is allowed to add handlers for events that supports cancellation</summary>
@@ -115,11 +135,12 @@ Namespace Collections.Generic
         Public Delegate Sub ItemCancelEventHandler(ByVal sender As ListWithEvents(Of T), ByVal e As CancelableItemIndexEventArgs)
         ''' <summary>Raised before an item is added to the list. Raised by <see cref="Add"/> and <see cref="Insert"/> methods.</summary>
         ''' <remarks><para>
-        ''' This event can be canceled (see <see cref="AllowAddCancelableEventsHandlers"/>.
+        ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that <see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
         ''' </para><para>
         ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> can be changed if <see cref="AddingReadOnly"/> is False.
         ''' </para></remarks>
+        ''' <exception cref="InvalidOperationException">Adding handler when <see cref="AllowAddCancelableEventsHandlers"/> is false</exception>
         Public Custom Event Adding As ItemCancelEventHandler
             AddHandler(ByVal value As ItemCancelEventHandler)
                 If AllowAddCancelableEventsHandlers Then
@@ -147,6 +168,8 @@ Namespace Collections.Generic
         ''' <param name="item">The object to add to the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         Public Overridable Sub Add(ByVal item As T) Implements System.Collections.Generic.ICollection(Of T).Add
             If Locked Then Throw New InvalidOperationException("List is locked")
             Dim e As New CancelableItemIndexEventArgs(item, List.Count, AddingReadOnly)
@@ -171,6 +194,8 @@ Namespace Collections.Generic
         ''' <param name="index">The zero-based index at which item should be inserted.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Sub Insert(ByVal index As Integer, ByVal item As T) Implements System.Collections.Generic.IList(Of T).Insert
             If Locked Then Throw New InvalidOperationException("List is locked")
@@ -185,8 +210,11 @@ Namespace Collections.Generic
         ''' <summary>Raises <see cref="Adding"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnAdding"/> in order the event to be raised</remarks>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         Protected Overridable Sub OnAdding(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent Adding(Me, e)
+            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(ifnull(e.CancelMessage, "Adding was canceled in event handler"))
         End Sub
         ''' <summary>Raises <see cref="Added"/> event</summary>
         ''' <param name="e">Event arguments</param>
@@ -201,14 +229,15 @@ Namespace Collections.Generic
         ''' <summary>Delegate of handler of <see cref="Clearing"/> event</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters</param>
-        Public Delegate Sub ClearingEventHandler(ByVal sender As ListWithEvents(Of T), ByVal e As CancelEventArgs)
+        Public Delegate Sub ClearingEventHandler(ByVal sender As ListWithEvents(Of T), ByVal e As CancelMessageEventArgs)
         ''' <summary>Raised before the list is cleared. Raised by <see cref="Clear"/> method.</summary>
         ''' <remarks><para>
-        ''' This event can be canceled (see <see cref="AllowAddCancelableEventsHandlers"/>.
+        ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that<see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
         ''' </para><para>
         ''' <see cref="Removing"/> Event is not raised when clearing list.
         ''' </para></remarks>
+        ''' <exception cref="InvalidOperationException">Adding handler when <see cref="AllowAddCancelableEventsHandlers"/> is false</exception>
         Public Custom Event Clearing As ClearingEventHandler
             AddHandler(ByVal value As ClearingEventHandler)
                 If AllowAddCancelableEventsHandlers Then
@@ -221,7 +250,7 @@ Namespace Collections.Generic
             RemoveHandler(ByVal value As ClearingEventHandler)
                 ClearingEventHandlerList.Remove(value)
             End RemoveHandler
-            RaiseEvent(ByVal sender As ListWithEvents(Of T), ByVal e As CancelEventArgs)
+            RaiseEvent(ByVal sender As ListWithEvents(Of T), ByVal e As CancelMessageEventArgs)
                 For Each Handler As ClearingEventHandler In ClearingEventHandlerList
                     Handler.Invoke(sender, e)
                 Next Handler
@@ -231,16 +260,18 @@ Namespace Collections.Generic
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters</param>
         ''' <remarks><see cref="Removed"/> event is not raised when clearing list.</remarks>
-        Public Event Cleared(ByVal sender As ListWithEvents(Of T), ByVal e As CountEventArgs)
+        Public Event Cleared(ByVal sender As ListWithEvents(Of T), ByVal e As ItemsEventArgs)
         ''' <summary>Removes all items from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnClearing"/> before clearing of the list and <see cref="OnCleared"/> after clearing of the list,, do not forgot to check <see cref="CancelEventArgs.Cancel"/></remarks>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
         Public Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear, System.Collections.IList.Clear
             If Locked Then Throw New InvalidOperationException("List is locked")
-            Dim e As New CancelEventArgs
+            Dim e As New CancelMessageEventArgs
             OnClearing(e)
             If Not e.Cancel Then
-                Dim e2 As New CountEventArgs(List.Count)
+                Dim e2 As New ItemsEventArgs(List.ToArray)
                 RemoveAllItemHandlers()
                 List.Clear()
                 OnCleared(e2)
@@ -249,13 +280,16 @@ Namespace Collections.Generic
         ''' <summary>Raises <see cref="Clearing"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnClearing"/> in order the event to be raised</remarks>
-        Protected Overridable Sub OnClearing(ByVal e As CancelEventArgs)
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
+        Protected Overridable Sub OnClearing(ByVal e As CancelMessageEventArgs)
             RaiseEvent Clearing(Me, e)
+            If e.Cancel AndAlso Me.CancelError Then Throw New OperationCanceledException(IfNull(e.Cancelmessage, "Clearing was canceled in eventhendler"))
         End Sub
         ''' <summary>Raises <see cref="Cleared"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnCleared"/> in order the event to be raised</remarks>
-        Protected Overridable Sub OnCleared(ByVal e As CountEventArgs)
+        Protected Overridable Sub OnCleared(ByVal e As ItemsEventArgs)
             RaiseEvent Cleared(Me, e)
         End Sub
 #End Region
@@ -294,7 +328,7 @@ Namespace Collections.Generic
         Private RemovingEventHandlerList As New List(Of ItemCancelEventHandler)
         ''' <summary>Raised before item is removed from the list. Raised by <see cref="Remove"/> and <see cref="RemoveAt"/> methods.</summary>
         ''' <remarks><para>
-        ''' This event can be canceled (see <see cref="AllowAddCancelableEventsHandlers"/>.
+        ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that<see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
         ''' </para><para>
         ''' Do not change content of list in handler! List is locked.
@@ -304,6 +338,7 @@ Namespace Collections.Generic
         ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> cannot be changed.
         ''' </para>
         ''' </remarks>
+        ''' <exception cref="InvalidOperationException">Adding handler when <see cref="AllowAddCancelableEventsHandlers"/> is false</exception>
         Public Custom Event Removing As ItemCancelEventHandler
             AddHandler(ByVal value As ItemCancelEventHandler)
                 If AllowAddCancelableEventsHandlers Then
@@ -335,8 +370,11 @@ Namespace Collections.Generic
         ''' Do not change content of list in this method!
         ''' </para><para>
         ''' </para></remarks>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         Protected Overridable Sub OnRemoving(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent Removing(Me, e)
+            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Removing was cenceled in event handler"))
         End Sub
         ''' <summary>Raises <see cref="Removed"/> event</summary>
         ''' <param name="e">Event arguments</param>
@@ -348,6 +386,8 @@ Namespace Collections.Generic
         ''' <param name="item">The object to remove from the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <returns>true if item was successfully removed from the <see cref="ListWithEvents(Of T)"/>; otherwise, false. This method also returns false if item is not found in the original <see cref="ListWithEvents(Of T)"/>.</returns>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
             If Locked Then Throw New InvalidOperationException("List is locked")
@@ -378,6 +418,8 @@ Namespace Collections.Generic
         ''' <param name="index">The zero-based index of the item to remove.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt, System.Collections.IList.RemoveAt
             If Locked Then Throw New InvalidOperationException("List is locked")
@@ -425,7 +467,7 @@ Namespace Collections.Generic
         Private ItemChangingEventHandlerList As List(Of ItemCancelEventHandler)
         ''' <summary>Raised before an item is changed. Raised by setter of <see cref="Item"/> property.</summary>
         ''' <remarks><para>
-        ''' This event can be canceled (see <see cref="AllowAddCancelableEventsHandlers"/>.
+        ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that <see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
         ''' </para><para>
         ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> can be changed if <see cref="AddingReadOnly"/> is False.
@@ -434,6 +476,7 @@ Namespace Collections.Generic
         ''' </para><para>
         ''' <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> contains new value. Use <see cref="Item"/> to determine old value.
         ''' </para></remarks>
+        ''' <exception cref="InvalidOperationException">Adding handler when <see cref="AllowAddCancelableEventsHandlers"/> is false</exception>
         Public Custom Event ItemChanging As ItemCancelEventHandler
             AddHandler(ByVal value As ItemCancelEventHandler)
                 If AllowAddCancelableEventsHandlers Then
@@ -455,7 +498,7 @@ Namespace Collections.Generic
         ''' <summary>Raised after item in the list is changed. Raised by setter of <see cref="Item"/> property.</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters (<see cref="ItemIndexEventArgs.Item"/> contains old value, use <see cref="Item"/> to determine new value.)</param>
-        Public Event ItemChanged(ByVal sender As ListWithEvents(Of T), ByVal e As ItemIndexEventArgs)
+        Public Event ItemChanged(ByVal sender As ListWithEvents(Of T), ByVal e As OldNewItemEvetArgs)
         ''' <summary>Raises <see cref="ItemChanging"/> event</summary>
         ''' <param name="e">Event argument</param>
         ''' <remarks><para>
@@ -463,13 +506,16 @@ Namespace Collections.Generic
         ''' </para><para>
         ''' Do not change the content of the list in this method!
         ''' </para></remarks>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event</exception>
         Protected Overridable Sub OnItemChanging(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent ItemChanging(Me, e)
+            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Changing was canceled in eventhandler"))
         End Sub
         ''' <summary>Raises <see cref="ItemChanged"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemChanged"/> in order the event to be raised.</remarks>
-        Protected Overridable Sub OnItemChanged(ByVal e As ItemIndexEventArgs)
+        Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEvetArgs)
             RaiseEvent ItemChanged(Me, e)
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
@@ -477,6 +523,8 @@ Namespace Collections.Generic
         ''' <returns>The element at the specified index.</returns>
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True (in setter)</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event</exception>
         Default Public Overridable Property Item(ByVal index As Integer) As T Implements System.Collections.Generic.IList(Of T).Item
             Get
                 Return List(index)
@@ -497,7 +545,7 @@ Namespace Collections.Generic
                     RemoveItemHandler(index)
                     List(index) = e.Item
                     AddItemHandler(index)
-                    OnItemChanged(New ItemIndexEventArgs(old, index))
+                    OnItemChanged(New OldNewItemEvetArgs(old, List(index), index))
                 End If
             End Set
         End Property
@@ -560,7 +608,7 @@ Namespace Collections.Generic
 
 #Region "EventArgs"
         ''' <summary>Parameter of cancelable item events</summary>
-        Public Class CancelableItemEventArgs : Inherits CancelEventArgs
+        Public Class CancelableItemEventArgs : Inherits CancelMessageEventArgs
             ''' <summary>Contains value of the <see cref="Item"/> property</summary>
             Private _Item As T
             ''' <summary>Contains value of the <see cref="[ReadOnly]"/> property</summary>
@@ -620,7 +668,7 @@ Namespace Collections.Generic
         End Class
         ''' <summary>Parameter of the <see cref="Added"/> event</summary>
         Public Class ItemIndexEventArgs : Inherits ItemEventArgs
-            ''' <summary>Index ow newly added item</summary>
+            ''' <summary>Index ow newly added or changed item</summary>
             Public ReadOnly Index As Integer
             ''' <summary>CTor</summary>
             ''' <param name="Item">Newly added item</param>
@@ -628,6 +676,19 @@ Namespace Collections.Generic
             Public Sub New(ByVal Item As T, ByVal index As Integer)
                 MyBase.New(Item)
                 Me.Index = index
+            End Sub
+        End Class
+        ''' <summary>Parameter of the <see cref="ItemChanged"/> event</summary>
+        Public Class OldNewItemEvetArgs : Inherits ItemIndexEventArgs
+            ''' <summary>Old item previosly on <see cref="Index"/></summary>
+            Public ReadOnly OldItem As T
+            ''' <summary>CTor</summary>
+            ''' <param name="OldItem">Old item present at position</param>
+            ''' <param name="NewItem">New item present at postion</param>
+            ''' <param name="index">Position index</param>
+            Public Sub New(ByVal OldItem As T, ByVal NewItem As T, ByVal index As Integer)
+                MyBase.New(NewItem, index)
+                Me.OldItem = OldItem
             End Sub
         End Class
         ''' <summary>Parameter of events that reports count</summary>
@@ -639,6 +700,17 @@ Namespace Collections.Generic
             End Sub
             ''' <summary>Reported count</summary>
             Public ReadOnly Count As Integer
+        End Class
+        ''' <summary>Parameter of event that report items</summary>
+        Public Class ItemsEventArgs : Inherits CountEventArgs
+            ''' <summary>CTor</summary>
+            ''' <param name="Items">Items to be reported</param>
+            Public Sub New(ByVal Items As T())
+                MyBase.New(Items.Length)
+                Me.Items = Items
+            End Sub
+            ''' <summary>Items reported by this event</summary>
+            Public ReadOnly Items() As T
         End Class
         ''' <summary>Parameter of the <see cref="ItemValueChanged"/> event</summary>
         Public Class ItemValueChangedEventArgs : Inherits EventArgs

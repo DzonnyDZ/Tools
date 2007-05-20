@@ -112,11 +112,13 @@
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
+    <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="DataStructures\Pair.vb" />
     <Compile Include="DataStructures\T1OrT2.vb" />
+    <Compile Include="DataStructures\Tree.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IO\JPEG\Rational.vb" />

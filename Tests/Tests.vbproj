@@ -147,7 +147,8 @@
     <Compile Include="Internal\ToolAssembly.designer.vb">
       <DependentUpon>ToolAssembly.vb</DependentUpon>
     </Compile>
-    <Compile Include="Internal\ToolAssembly.vb">
+    <Compile Include="Internal\ToolAssembly.vb" Condition="$(Config)&lt;=$(Nightly)">
+        <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Internal\VersionAttribute.vb" />
@@ -210,7 +211,8 @@
     <Compile Include="Windows\Forms\TransparentTextBox.designer.vb">
       <DependentUpon>TransparentTextBox.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\TransparentTextBox.vb">
+    <Compile Include="Windows\Forms\TransparentTextBox.vb" Condition="$(Config)&lt;=$(Alpha)">
+        <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\frmLinkProperties.Designer.vb">

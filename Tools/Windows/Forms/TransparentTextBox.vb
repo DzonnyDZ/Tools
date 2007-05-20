@@ -3,13 +3,13 @@ Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModel
 Imports System.Reflection
-#If Config <= Alpha Then
-Namespace Windows.Forms 'ASAP:Wiki,forum
+#If Config <= Alpha Then 'Stage:Alpha
+Namespace Windows.Forms
     ''' <summary><see cref="RichTextBox"/> with transparent background</summary>
-    ''' <remarks>This control is 100% transaprent and cannot have any other than transparent <see cref="BackColor"/>. To make it semi-transparent, put it onto semitransparent panel.</remarks>
+    ''' <remarks>This control is 100% transaprent and cannot have any other than transparent <see cref="TransparentTextBox.BackColor"/>. To make it semi-transparent, put it onto semitransparent panel.</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(TransparentTextBox), LastChMMDDYYYY:="05/19/2007")> _
-    <Prefix("tbx")> _
+    <Prefix("trb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _
     <ToolboxBitmap(GetType(TransparentLabel), "TransparentTextBox.bmp")> _
@@ -141,7 +141,8 @@ Namespace Windows.Forms 'ASAP:Wiki,forum
 #Region "Properties"
         ''' <summary>Gets or sets the background color for the control.</summary>
         ''' <returns>A <see cref="System.Drawing.Color"/> that represents the background color of the control.</returns>
-        <DefaultValue(GetType(Color), "Transparent"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+        <DefaultValue(GetType(Color), "Transparent"), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <Browsable(False), EditorBrowsable(EditorBrowsableState.Never)> _
         Public Overrides Property BackColor() As System.Drawing.Color
             Get
                 Return MyBase.BackColor

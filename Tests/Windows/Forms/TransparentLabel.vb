@@ -1,3 +1,4 @@
+'#If Config <= Release This conditional compilation is done in Tests.vbproj
 Namespace Windows.Forms
     ''' <summary>Tests <see cref="Tools.Windows.Forms.TransparentLabel"/></summary>
     Public Class frmTransparentLabel

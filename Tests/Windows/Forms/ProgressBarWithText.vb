@@ -1,5 +1,6 @@
+'#If Config <= Release This conditional compilation is done in Tests.vbproj
 Namespace Windows.Forms
-    ''' <summary>Tests <see cref="Tools.Windows.Forms.TransparentLabel"/></summary>
+    ''' <summary>Tests <see cref="Tools.Windows.Forms.ProgressBarWithText"/></summary>
     Public Class frmProgressBarWithText
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()

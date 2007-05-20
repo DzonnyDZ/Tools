@@ -10,11 +10,12 @@ Imports System.Runtime.Serialization
 'Its preceded by comment.
 Namespace Windows.Forms
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/24/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="05/20/2007")> _
     <ToolboxItemFilter("System.Windows.Forms")> _
     <System.Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
     <DefaultEvent("LinkClicked"), ToolboxItem(True), DefaultProperty("Items")> _
     <Prefix("llb")> _
+    <StandAloneTool(FirstVerMMDDYYYY:="01/24/2007")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
         ''' <summary>Contains value of the <see cref="Items"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -87,11 +88,11 @@ Namespace Windows.Forms
             RegenerateContent()
         End Sub
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private Sub _Items_Cleared(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).CountEventArgs) Handles _Items.Cleared
+        Private Sub _Items_Cleared(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).ItemsEventArgs) Handles _Items.Cleared
             RegenerateContent()
         End Sub
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private Sub _Items_ItemChanged(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).ItemIndexEventArgs) Handles _Items.ItemChanged
+        Private Sub _Items_ItemChanged(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).OldNewItemEvetArgs) Handles _Items.ItemChanged
             RegenerateContent()
         End Sub
 
