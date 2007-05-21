@@ -142,7 +142,6 @@
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
-    <Compile Include="misc\Convert.vb" />
     <Compile Include="misc\ICloneable%28of T%29.vb" />
     <Compile Include="misc\IReportsChange.vb" />
     <Compile Include="misc\Box.vb" />
