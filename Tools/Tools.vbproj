@@ -116,9 +116,9 @@
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
-    <Compile Include="DataStructures\Pair.vb" />
-    <Compile Include="DataStructures\T1OrT2.vb" />
-    <Compile Include="DataStructures\Tree.vb" />
+    <Compile Include="DataStructures\Generic\Pair.vb" />
+    <Compile Include="DataStructures\Generic\T1OrT2.vb" />
+    <Compile Include="DataStructures\Generic\Tree.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IO\JPEG\Rational.vb" />
@@ -142,6 +142,7 @@
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
+    <Compile Include="misc\Convert.vb" />
     <Compile Include="misc\ICloneable%28of T%29.vb" />
     <Compile Include="misc\IReportsChange.vb" />
     <Compile Include="misc\Box.vb" />
@@ -274,6 +275,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Windows.Forms.ProgressBarWithText.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Windows.Forms.TransparentTextBox.bmp" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Metadata\XMP\" />

@@ -3,12 +3,13 @@ Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
 Imports Tools.ComponentModel
 Imports System.Reflection
-#If Config <= Alpha Then 'Stage:Alpha
+#If Config <= Beta Then 'Stage:Beta
 Namespace Windows.Forms
     ''' <summary><see cref="RichTextBox"/> with transparent background</summary>
     ''' <remarks>This control is 100% transaprent and cannot have any other than transparent <see cref="TransparentTextBox.BackColor"/>. To make it semi-transparent, put it onto semitransparent panel.</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentTextBox), LastChMMDDYYYY:="05/19/2007")> _
+    <Version(1, 0, GetType(TransparentTextBox), LastChMMDDYYYY:="05/21/2007")> _
+    <StandAloneTool(FirstVerMMDDYYYY:="05/19/2007")> _
     <Prefix("trb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _
@@ -131,11 +132,11 @@ Namespace Windows.Forms
             InvalidateParent(Me.ClientRectangle)
             MyBase.OnSelectionChanged(e)
         End Sub
-        Protected Overrides Sub OnKeyPress(ByVal e As System.Windows.Forms.KeyPressEventArgs)
-            MyBase.OnKeyPress(e)
-        End Sub
-        Protected Overrides Sub OnKeyDown(ByVal e As System.Windows.Forms.KeyEventArgs)
-            MyBase.OnKeyDown(e)
+        ''' <summary>Raises the System.Windows.Forms.Control.Move event.</summary>
+        ''' <param name="e">An System.EventArgs that contains the event data.</param>
+        Protected Overrides Sub OnMove(ByVal e As System.EventArgs)
+            RecreateHandle()
+            MyBase.OnMove(e)
         End Sub
 #End Region
 #Region "Properties"

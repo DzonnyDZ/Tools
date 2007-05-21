@@ -1,11 +1,9 @@
 Imports Tools.Collections.Generic, Tools.ComponentModel
-Namespace DataStructures
+Namespace DataStructures.Generic
 #If Config <= Nightly Then 'Stage:Nightly
-    'ASAP:Wiki & forum
-    'TODO:In-oder, Pre-order and post-order enumerators
     ''' <summary>Represents tree or sub-tree</summary>
     <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _
-    <Version(1, 0, GetType(Tree(Of DBNull)), LastChMMDDYYYY:="05/19/2007")> _
+    <Version(1, 0, GetType(Tree(Of DBNull)), LastChMMDDYYYY:="05/21/2007")> _
     <StandAloneTool(FirstVerMMDDYYYY:="05/19/2007")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class Tree(Of T) : Implements ICloneable(Of Tree(Of T))
@@ -247,39 +245,39 @@ Namespace DataStructures
         ''' <summary>Gets enumerator that itterates through tree in pre-order manner</summary>
         Public ReadOnly Property PreOrder() As IEnumerable(Of Tree(Of T))
             Get
-                Return New TreeEnumerator(Me, DataStructures.Tree.EnumOrders.PreOrder, DataStructures.Tree.EnumDirections.FirstToLast)
+                Return New TreeEnumerator(Me, Tree.EnumOrders.PreOrder, Tree.EnumDirections.FirstToLast)
             End Get
         End Property
         ''' <summary>Gets enumerator that itterates through tree in post-order manner</summary>
         Public ReadOnly Property PostOrder() As IEnumerable(Of Tree(Of T))
             Get
-                Return New TreeEnumerator(Me, DataStructures.Tree.EnumOrders.PostOrder, DataStructures.Tree.EnumDirections.FirstToLast)
+                Return New TreeEnumerator(Me, Tree.EnumOrders.PostOrder, Tree.EnumDirections.FirstToLast)
             End Get
         End Property
         ''' <summary>Gets enumerator that itterates through tree in in-order manner</summary>
         ''' <remarks>You should use in-order enumerator only on binary trees. Otherwise in-order semantic is ugly: First the bigger half of children from left to right is returned, then parent and then remaining children.</remarks>
         Public ReadOnly Property InOrder() As IEnumerable(Of Tree(Of T))
             Get
-                Return New TreeEnumerator(Me, DataStructures.Tree.EnumOrders.InOrder, DataStructures.Tree.EnumDirections.FirstToLast)
+                Return New TreeEnumerator(Me, Tree.EnumOrders.InOrder, Tree.EnumDirections.FirstToLast)
             End Get
         End Property
         ''' <summary>Gets enumerator that itterates through tree in pre-order manner from last to first item (from right to left)</summary>
         Public ReadOnly Property PreOrderBackward() As IEnumerable(Of Tree(Of T))
             Get
-                Return New TreeEnumerator(Me, DataStructures.Tree.EnumOrders.PreOrder, DataStructures.Tree.EnumDirections.LastToFirst)
+                Return New TreeEnumerator(Me, Tree.EnumOrders.PreOrder, Tree.EnumDirections.LastToFirst)
             End Get
         End Property
         ''' <summary>Gets enumerator that itterates through tree in post-order manner from last to first item (from right to left)</summary>
         Public ReadOnly Property PostOrderBackward() As IEnumerable(Of Tree(Of T))
             Get
-                Return New TreeEnumerator(Me, DataStructures.Tree.EnumOrders.PostOrder, DataStructures.Tree.EnumDirections.LastToFirst)
+                Return New TreeEnumerator(Me, Tree.EnumOrders.PostOrder, Tree.EnumDirections.LastToFirst)
             End Get
         End Property
         ''' <summary>Gets enumerator that itterates through tree in in-order manner from last to first item (from right to left)</summary>
         ''' <remarks>You should use in-order enumerator only on binary trees. Otherwise in-order semantic is ugly: First the bigger half of children from right to left is returned, then parent and then remaining children.</remarks>
         Public ReadOnly Property InOrderBackward() As IEnumerable(Of Tree(Of T))
             Get
-                Return New TreeEnumerator(Me, DataStructures.Tree.EnumOrders.InOrder, DataStructures.Tree.EnumDirections.LastToFirst)
+                Return New TreeEnumerator(Me, Tree.EnumOrders.InOrder, Tree.EnumDirections.LastToFirst)
             End Get
         End Property
 #End Region
@@ -399,13 +397,14 @@ Namespace DataStructures
             End Get
         End Property
 #End Region
-        'ASAP:Comment
+        ''' <summary>Gets nearest node on the right (after) current node at same level of tree (not necessaryly under same parent)</summary>
+        ''' <remarks>Node on the same level as current node on the right or null if no node found</remarks>
         Public ReadOnly Property Right() As Tree(Of T)
             Get
                 Dim Neighbour As Tree(Of T) = Me.RightNeighbour
                 If Neighbour IsNot Nothing Then Return Neighbour
                 If Parent IsNot Nothing Then
-                    Dim IT As New TreeEnumerator(Me.Root, DataStructures.Tree.EnumOrders.PreOrder, DataStructures.Tree.EnumDirections.FirstToLast)
+                    Dim IT As New TreeEnumerator(Me.Root, Tree.EnumOrders.PreOrder, Tree.EnumDirections.FirstToLast)
                     IT.CurrentNode = Me
                     While IT.MoveNext
                         If IT.CurrentNode.Depth = Me.Depth Then Return IT.CurrentNode
@@ -415,13 +414,51 @@ Namespace DataStructures
                 End If
             End Get
         End Property
-        'ASAP:Left
-        'ASAP:Comment
+        ''' <summary>Gets nearest node on the left (before) current node at same level of tree (not necessaryly under same parent)</summary>
+        ''' <remarks>Node on the same level as current node on the left or null if no node found</remarks>
+        Public ReadOnly Property Left() As Tree(Of T)
+            Get
+                Dim Neighbour As Tree(Of T) = Me.RightNeighbour
+                If Neighbour IsNot Nothing Then Return Neighbour
+                If Parent IsNot Nothing Then
+                    Dim IT As New TreeEnumerator(Me.Root, Tree.EnumOrders.PreOrder, Tree.EnumDirections.LastToFirst)
+                    IT.CurrentNode = Me
+                    While IT.MoveNext
+                        If IT.CurrentNode.Depth = Me.Depth Then Return IT.CurrentNode
+                    End While
+                    Return Nothing
+                Else : Return Nothing
+                End If
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if current node contains given node</summary>
+        ''' <param name="Node">Node to be found</param>
+        ''' <returns>True if current node is <paramref name="Node"/> or <paramref name="Node"/> is sub-node of current node</returns>
         Public Function Contains(ByVal Node As Tree(Of T)) As Boolean
             For Each n As Tree(Of T) In Me.PreOrder
                 If n Is Node Then Return True
             Next n
             Return False
+        End Function
+        ''' <summary>Gets value indicating if current node contains given value</summary>
+        ''' <param name="Value">Value to be found</param>
+        ''' <returns>True if <see cref="Value"/> of current node or one of it'S subnodes returns true for the <see cref="System.Object.Equals"/> function.</returns>
+        ''' <remarks>If you want to get node that contains such value, use the <see cref="Find"/> function</remarks>
+        Public Function Contains(ByVal Value As T) As Boolean
+            For Each n As Tree(Of T) In Me.PreOrder
+                If n.Value.Equals(Value) Then Return True
+            Next n
+            Return False
+        End Function
+        ''' <summary>Searches for given value in current tree</summary>
+        ''' <param name="Value">Value to be found</param>
+        ''' <returns>First node which's <see cref="Value"/>'s <see cref="System.Object.Equals"/> returns true for <paramref name="Value"/></returns>
+        ''' <remarks>This function uses <see cref="PreOrder"/> enumerator.</remarks>
+        Public Function Find(ByVal Value As T) As Tree(Of T)
+            For Each n As Tree(Of T) In Me.PreOrder
+                If n.Value.Equals(Value) Then Return n
+            Next n
+            Return Nothing
         End Function
         ''' <summary>Enumerates through <see cref="Tree(Of T)"/> (or its sub-tree) in given order</summary>
         Public Class TreeEnumerator : Implements IEnumerator(Of T), IEnumerable(Of T), IEnumerator(Of Tree(Of T)), IEnumerable(Of Tree(Of T))
@@ -527,10 +564,10 @@ Namespace DataStructures
                     If Current Is Nothing AndAlso Before Then
                         'Get first node
                         Select Case Order
-                            Case DataStructures.Tree.EnumOrders.PreOrder
+                            Case Tree.EnumOrders.PreOrder
                                 Current = Root
                             Case Else
-                                If Direction = DataStructures.Tree.EnumDirections.FirstToLast Then
+                                If Direction = Tree.EnumDirections.FirstToLast Then
                                     Current = Root.LeftMost
                                 Else
                                     Current = Root.RightMost
@@ -542,16 +579,16 @@ Namespace DataStructures
                         Return False
                     Else 'Get next node
                         Select Case Order
-                            Case DataStructures.Tree.EnumOrders.PreOrder
-                                If Direction = DataStructures.Tree.EnumDirections.FirstToLast Then
+                            Case Tree.EnumOrders.PreOrder
+                                If Direction = Tree.EnumDirections.FirstToLast Then
                                     Current = Me.Current.PreOrderNextRight(Root)
                                 Else
                                     Current = Me.Current.PreOrderNextLeft(Root)
                                 End If
-                            Case DataStructures.Tree.EnumOrders.PostOrder
+                            Case Tree.EnumOrders.PostOrder
                                 If Current Is Root Then
                                     Current = Nothing
-                                ElseIf Direction = DataStructures.Tree.EnumDirections.FirstToLast Then
+                                ElseIf Direction = Tree.EnumDirections.FirstToLast Then
                                     Dim Right As Tree(Of T) = Me.Current.RightNeighbour
                                     If Right IsNot Nothing Then
                                         Current = Right.LeftMost
@@ -566,7 +603,7 @@ Namespace DataStructures
                                 End If
                             Case Else 'In-order
                                 Dim Index As Integer
-                                If Direction = DataStructures.Tree.EnumDirections.FirstToLast Then
+                                If Direction = Tree.EnumDirections.FirstToLast Then
                                     Index = Me.Current.InOrderNextChildIndex
                                 Else
                                     Index = Me.Current.InOrderPrevChildIndex
@@ -577,18 +614,18 @@ Namespace DataStructures
                                     Current = Nothing
                                 Else
                                     Dim MyIndex As Integer = Me.Current.Index
-                                    If (Index = Me.Current.Parent.InOrderPrevChildIndex AndAlso Direction = DataStructures.Tree.EnumDirections.FirstToLast) OrElse (Index = Me.Current.Parent.InOrderNextChildIndex AndAlso Direction = DataStructures.Tree.EnumDirections.LastToFirst) Then
+                                    If (Index = Me.Current.Parent.InOrderPrevChildIndex AndAlso Direction = Tree.EnumDirections.FirstToLast) OrElse (Index = Me.Current.Parent.InOrderNextChildIndex AndAlso Direction = Tree.EnumDirections.LastToFirst) Then
                                         Current = Current.Parent
                                     Else
                                         Dim NextNode As Tree(Of T)
-                                        If Direction = DataStructures.Tree.EnumDirections.FirstToLast Then
+                                        If Direction = Tree.EnumDirections.FirstToLast Then
                                             NextNode = Me.Current.RightNeighbour
                                         Else
                                             NextNode = Me.Current.LeftNeighbour
                                         End If
                                         If NextNode IsNot Nothing Then
                                             Current = NextNode
-                                        ElseIf Direction = DataStructures.Tree.EnumDirections.FirstToLast Then
+                                        ElseIf Direction = Tree.EnumDirections.FirstToLast Then
                                             Current = Current.PreOrderNextRight(Root)
                                         Else
                                             Current = Current.PreOrderNextLeft(Root)
