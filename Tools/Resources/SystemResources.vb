@@ -1,5 +1,5 @@
 Imports System.Reflection
-#If Config <= Nightly Then 'Stage:Nightly
+#If Config <= Release Then
 Namespace Resources
     ''' <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
     ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework</remarks>
@@ -104,16 +104,6 @@ Namespace Resources
                 ret.Value = a
                 Return ret
             End Operator
-            ''' <summary>
-            ''' 
-            ''' </summary>
-            ''' <typeparam name="T1"></typeparam>
-            ''' <typeparam name="t2"></typeparam>
-            ''' <remarks></remarks>
-            Sub mm(Of T1, t2)()
-
-            End Sub
-
 #Region "Consts"
             ''' <summary>Key for resource getting something like "RTL_False"</summary>
             Public Const RTL$ = "RTL"
@@ -3041,9 +3031,14 @@ Namespace Resources
             Public Const SoundAPILoadTimeout$ = "SoundAPILoadTimeout"
             ''' <summary>Key for resource getting something like "There was an error reading the file located at {0}. Please make sure that a valid wave file exists at the specified location."</summary>
             Public Const SoundAPIReadError$ = "SoundAPIReadError"
-
 #End Region
         End Structure
     End Class
 End Namespace
 #End If
+''' <summary>
+''' 
+''' </summary>
+Class X
+
+End Class
