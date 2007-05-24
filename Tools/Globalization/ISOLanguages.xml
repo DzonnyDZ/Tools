@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--Data here comes from -->
+<!--TODO: Verify that all languages mentioned at http://en.wikipedia.org/wiki/ISO_639-2 as colective are marked as group!-->
 <Root xmlns="http://codeplex.com/DTools/ISOLanguages" transformer="ISOLanguages.xslt">
     <lng ISO639-2="abk" ISO639-1="ab" English="Abkhaz" Native="Аҧсуа" flag="spoken" scale="200000"/>
     <lng ISO639-2="ace" English="Acehnese, Achinese" Native="Aceh" flag="spoken" scale="3000000"/>
@@ -50,7 +51,7 @@
     <lng ISO639-2="bnt" English="Bantu (Other)" Native="Bantu (Other)" flag="group"/>
     <lng ISO639-2="bas" English="Basa" Native="ɓasaá" flag="spoken" scale="230000"/>
     <lng ISO639-2="bak" ISO639-1="ba" English="Bashkir" Native="башҡорт теле" flag="spoken" scale="1400000"/>
-    <lng ISO639-2="baq" ISO639-1="eu" English="Basque" Native="euskara"/>
+    <lng ISO639-2="baq" ISO639-1="eu" English="Basque" Native="euskara" flag="spoken" scale="900000"/>
     <lng ISO639-2="eus" English="Basque" Native="euskara" flag="spoken" scale="1030000"/>
     <lng ISO639-2="btk" English="Batak (Indonesia)" Native="Batak" flag="group"/>
     <lng ISO639-2="bej" English="Beja" Native="بداوية" flag="spoken" scale="1180000"/>
@@ -198,101 +199,101 @@
     <lng ISO639-2="hmn" English="Hmong" Native="Hmoob" flag="spoken" scale="4000000"/>
     <lng ISO639-2="hun" ISO639-1="hu" English="Hungarian" Native="Magyar" flag="spoken" scale="13000000"/>
     <lng ISO639-2="hup" English="Hupa" Native="?" flag="spoken" scale="100"/>
-    <lng ISO639-2="iba" English="Iban" Native="Iban"/>
-    <lng ISO639-2="ice" ISO639-1="is" English="Icelandic" Native="íslenska"/>
-    <lng ISO639-2="isl" English="Icelandic" Native="íslenska"/>
-    <lng ISO639-2="ido" ISO639-1="io" English="Ido" Native="Ido"/>
-    <lng ISO639-2="ibo" ISO639-1="ig" English="Igbo" Native="Igbo"/>
-    <lng ISO639-2="ijo" English="Ijo" Native="Ijo"/>
-    <lng ISO639-2="ilo" English="Iloko" Native="Ilokano"/>
-    <lng ISO639-2="smn" English="Inari Sami" Native="säämegiella"/>
-    <lng ISO639-2="inc" English="Indic (Other)" Native="Indic (Other)"/>
-    <lng ISO639-2="ine" English="Indo-European (Other)" Native="Indo-European (Other)"/>
-    <lng ISO639-2="ind" ISO639-1="id" English="Indonesian" Native="Bahasa Indonesia"/>
-    <lng ISO639-2="inh" English="Ingush" Native="гӀалгӀай мотт"/>
-    <lng ISO639-2="ina" ISO639-1="ia" English="Interlingua" Native="interlingua"/>
-    <lng ISO639-2="ile" ISO639-1="ie" English="Interlingue" Native="Interlingue"/>
-    <lng ISO639-2="iku" ISO639-1="iu" English="Inuktitut" Native="ᐃᓄᒃᑎᑐᑦ"/>
-    <lng ISO639-2="ipk" ISO639-1="ik" English="Inupiaq" Native="Iñupiaq"/>
-    <lng ISO639-2="ira" English="Iranian (Other)" Native="Iranian (Other)"/>
-    <lng ISO639-2="gle" ISO639-1="ga" English="Irish" Native="Gaeilge"/>
-    <lng ISO639-2="mga" English="Irish, Middle (900–1200)" Native="Gaoidhealg"/>
-    <lng ISO639-2="sga" English="Irish, Old (to 900)" Native="Goídelc"/>
-    <lng ISO639-2="iro" English="Iroquoian languages" Native="Iroquoian languages"/>
-    <lng ISO639-2="ita" ISO639-1="it" English="Italian" Native="italiano"/>
-    <lng ISO639-2="jpn" ISO639-1="ja" English="Japanese" Native="日本語"/>
-    <lng ISO639-2="jav" ISO639-1="jv" English="Javanese" Native="basa Jawa"/>
-    <lng ISO639-2="jrb" English="Judeo-Arabic" Native="Judeo-Arabic"/>
-    <lng ISO639-2="jpr" English="Judeo-Persian" Native="Judeo-Persian"/>
-    <lng ISO639-2="kbd" English="Kabardian" Native="къэбэрдеибзэ"/>
-    <lng ISO639-2="kab" English="Kabyle" Native="Taqbaylit"/>
-    <lng ISO639-2="kac" English="Kachin" Native="Jinghpaw"/>
-    <lng ISO639-2="xal" English="Kalmyk" Native="хальмг келн"/>
-    <lng ISO639-2="kam" English="Kamba" Native="Kikamba"/>
-    <lng ISO639-2="kan" ISO639-1="kn" English="Kannada" Native="ಕನ್ನಡ"/>
-    <lng ISO639-2="kau" ISO639-1="kr" English="Kanuri" Native="Kanuri"/>
-    <lng ISO639-2="krc" English="Karachay-Balkar" Native="къарачай-малкъар тил"/>
-    <lng ISO639-2="kaa" English="Kara-Kalpak" Native="қарақалпақ тили"/>
-    <lng ISO639-2="krl" English="Karelian" Native="karjalan kieli"/>
-    <lng ISO639-2="kar" English="Karen" Native="Karen languages"/>
-    <lng ISO639-2="kas" ISO639-1="ks" English="Kashmiri" Native="कॉशुर; کٲشُر"/>
-    <lng ISO639-2="csb" English="Kashubian" Native="kaszëbsczi jãzëk"/>
-    <lng ISO639-2="kaw" English="Kawi" Native="Bhāṣa Kawi"/>
-    <lng ISO639-2="kaz" ISO639-1="kk" English="Kazakh" Native="Қазақ тілі"/>
-    <lng ISO639-2="kha" English="Khasi" Native="Khasi"/>
-    <lng ISO639-2="khm" ISO639-1="km" English="Khmer" Native="ភាសាខ្មែរ"/>
-    <lng ISO639-2="khi" English="Khoisan (Other)" Native="Khoisan"/>
-    <lng ISO639-2="kho" English="Khotanese" Native="Khotanese"/>
-    <lng ISO639-2="kik" ISO639-1="ki" English="Kikuyu" Native="Gĩkũyũ"/>
-    <lng ISO639-2="kmb" English="Kimbundu" Native="Kimbundu"/>
-    <lng ISO639-2="kin" ISO639-1="rw" English="Kinyarwanda" Native="kinyaRwanda"/>
-    <lng ISO639-2="kir" ISO639-1="ky" English="Kirghiz" Native="кыргыз тили"/>
-    <lng ISO639-2="tlh" English="Klingon" Native="tlhIngan Hol"/>
-    <lng ISO639-2="kom" ISO639-1="kv" English="Komi" Native="коми кыв"/>
-    <lng ISO639-2="kon" ISO639-1="kg" English="Kongo" Native="Kikongo"/>
-    <lng ISO639-2="kok" English="Konkani" Native="कोंकणी"/>
-    <lng ISO639-2="kor" ISO639-1="ko" English="Korean" Native="한국어"/>
-    <lng ISO639-2="kos" English="Kosraean" Native="Kosrae"/>
-    <lng ISO639-2="kpe" English="Kpelle" Native="kpele"/>
-    <lng ISO639-2="kro" English="Kru" Native="Kru"/>
-    <lng ISO639-2="kua" ISO639-1="kj" English="Kuanyama" Native="Oshikwanyama"/>
-    <lng ISO639-2="kum" English="Kumyk" Native="къумукъ тил"/>
-    <lng ISO639-2="kur" ISO639-1="ku" English="Kurdish" Native="Kurdî"/>
-    <lng ISO639-2="kru" English="Kurukh" Native="Kurux"/>
-    <lng ISO639-2="kut" English="Kutenai" Native="Kootenai "/>
-    <lng ISO639-2="lad" English="Ladino" Native="ג'ודיאו-איספאנייול"/>
-    <lng ISO639-2="lah" English="Lahnda" Native="ਪੰਜਾਬੀ"/>
-    <lng ISO639-2="lam" English="Lamba" Native="Lamba"/>
-    <lng ISO639-2="lao" ISO639-1="lo" English="Lao" Native="ພາສາລາວ"/>
-    <lng ISO639-2="lat" ISO639-1="la" English="Latin" Native="latine"/>
-    <lng ISO639-2="lav" ISO639-1="lv" English="Latvian" Native="latviešu valoda"/>
-    <lng ISO639-2="lez" English="Lezghian" Native="лезги чӀал"/>
-    <lng ISO639-2="lim" ISO639-1="li" English="Limburgish" Native="Limburgs"/>
-    <lng ISO639-2="lin" ISO639-1="ln" English="Lingala" Native="lingala"/>
-    <lng ISO639-2="lit" ISO639-1="lt" English="Lithuanian" Native="lietuvių kalba"/>
-    <lng ISO639-2="jbo" English="Lojban" Native="la lojban."/>
-    <lng ISO639-2="loz" English="Lozi" Native="Silozi"/>
-    <lng ISO639-2="lub" ISO639-1="lu" English="Luba-Katanga" Native="Luba-Katanga"/>
-    <lng ISO639-2="lua" English="Luba-Lulua" Native="lwaà:"/>
-    <lng ISO639-2="lui" English="Luiseno" Native="Luiseño"/>
-    <lng ISO639-2="smj" English="Lule Sami" Native="sámegiella"/>
-    <lng ISO639-2="lun" English="Lunda" Native="Chilunda"/>
-    <lng ISO639-2="luo" English="Luo" Native="Dholuo"/>
-    <lng ISO639-2="lus" English="Lushai" Native="Lushai"/>
-    <lng ISO639-2="ltz" ISO639-1="lb" English="Luxembourgish" Native="Lëtzebuergesch"/>
-    <lng ISO639-2="mac" ISO639-1="mk" English="Macedonian" Native="македонски јазик"/>
-    <lng ISO639-2="mkd" English="Macedonian" Native="македонски јазик"/>
-    <lng ISO639-2="mad" English="Madurese" Native="Basa Mathura"/>
-    <lng ISO639-2="mag" English="Magahi" Native="मगही"/>
-    <lng ISO639-2="mai" English="Maithili" Native="मैथिली"/>
-    <lng ISO639-2="mak" English="Makasar" Native="Makasar"/>
-    <lng ISO639-2="mlg" ISO639-1="mg" English="Malagasy" Native="Malagasy fiteny"/>
-    <lng ISO639-2="may" ISO639-1="ms" English="Malay" Native="بهاس ملايو"/>
-    <lng ISO639-2="msa" English="Malay" Native="بهاس ملايو"/>
-    <lng ISO639-2="mal" ISO639-1="ml" English="Malayalam" Native="മലയാളം"/>
-    <lng ISO639-2="mlt" ISO639-1="mt" English="Maltese" Native="Malti"/>
-    <lng ISO639-2="mnc" English="Manchu" Native="ᠮᠠᠨᠵᡠ"/>
-    <lng ISO639-2="mdr" English="Mandar" Native="Mandar"/>
+    <lng ISO639-2="iba" English="Iban" Native="Iban" flag="spoken" scale=""/>
+    <lng ISO639-2="ice" ISO639-1="is" English="Icelandic" Native="íslenska" flag="spoken" scale="300000"/>
+    <duplicate ISO639-2="isl" of="ice"/>
+    <lng ISO639-2="ido" ISO639-1="io" English="Ido" Native="Ido" flag="artificial" scale="2500"/>
+    <lng ISO639-2="ibo" ISO639-1="ig" English="Igbo" Native="Igbo" flag="spoken" scale="18000000"/>
+    <lng ISO639-2="ijo" English="Ijo" Native="Ijo" flag="group"/>
+    <lng ISO639-2="ilo" English="Iloko" Native="Ilokano" flag="spoken" scale="8500000"/>
+    <lng ISO639-2="smn" English="Inari Sami" Native="säämegiella" flag="spoken" scale="400"/>
+    <lng ISO639-2="inc" English="Indic (Other)" Native="Indic (Other)" flag="group"/>
+    <lng ISO639-2="ine" English="Indo-European (Other)" Native="Indo-European (Other)" flag="group"/>
+    <lng ISO639-2="ind" ISO639-1="id" English="Indonesian" Native="Bahasa Indonesia" flag="spoken" scale="200000000"/>
+    <lng ISO639-2="inh" English="Ingush" Native="гӀалгӀай мотт" flag="spoken" scale="400000"/>
+    <lng ISO639-2="ina" ISO639-1="ia" English="Interlingua" Native="interlingua" flag="artificial"/>
+    <lng ISO639-2="ile" ISO639-1="ie" English="Interlingue" Native="Interlingue" flag="artificial"/>
+    <lng ISO639-2="iku" ISO639-1="iu" English="Inuktitut" Native="ᐃᓄᒃᑎᑐᑦ" flag="spoken" scale="30000"/>
+    <lng ISO639-2="ipk" ISO639-1="ik" English="Inupiaq" Native="Iñupiaq" flag="spoken" scale="3500"/>
+    <lng ISO639-2="ira" English="Iranian (Other)" Native="Iranian (Other)" flag="group"/>
+    <lng ISO639-2="gle" ISO639-1="ga" English="Irish" Native="Gaeilge" flag="spoken" scale="1800000"/>
+    <lng ISO639-2="mga" English="Irish, Middle (900–1200)" Native="Gaoidhealg" flag="historic"/>
+    <lng ISO639-2="sga" English="Irish, Old (to 900)" Native="Goídelc" flag="historic"/>
+    <lng ISO639-2="iro" English="Iroquoian languages" Native="Iroquoian languages" flag="group"/>
+    <lng ISO639-2="ita" ISO639-1="it" English="Italian" Native="italiano" flag="spoken" scale="90000000"/>
+    <lng ISO639-2="jpn" ISO639-1="ja" English="Japanese" Native="日本語" flag="spoken" scale="130000000"/>
+    <lng ISO639-2="jav" ISO639-1="jv" English="Javanese" Native="basa Jawa" scale="90000000" flag="spoken"/>
+    <lng ISO639-2="jrb" English="Judeo-Arabic" Native="Judeo-Arabic" flag="group"/>
+    <lng ISO639-2="jpr" English="Judeo-Persian" Native="Jidi" flag="spoken" scale="60000"/>
+    <lng ISO639-2="kbd" English="Kabardian" Native="къэбэрдеибзэ" flag="spoken" scale="1010000"/>
+    <lng ISO639-2="kab" English="Kabyle" Native="Taqbaylit" flag="spoken" scale="3120000"/>
+    <lng ISO639-2="kac" English="Kachin" Native="Jinghpaw" flag="spoken" scale="900000"/>
+    <lng ISO639-2="xal" English="Kalmyk" Native="хальмг келн" flag="spoken" scale="519000"/>
+    <lng ISO639-2="kam" English="Kamba" Native="Kikamba" flag="spoken" scale="2450000"/>
+    <lng ISO639-2="kan" ISO639-1="kn" English="Kannada" Native="ಕನ್ನಡ" flag="spoken" scale="39000000"/>
+    <lng ISO639-2="kau" ISO639-1="kr" English="Kanuri" Native="Kanuri" flag="spoken" scale="4000000"/>
+    <lng ISO639-2="krc" English="Karachay-Balkar" Native="къарачай-малкъар тил" flag="spoken" scale="400000"/>
+    <lng ISO639-2="kaa" English="Kara-Kalpak" Native="қарақалпақ тили" flag="spoken" scale="412000"/>
+    <lng ISO639-2="krl" English="Karelian" Native="karjalan kieli" flag="spoken" scale="118000"/>
+    <lng ISO639-2="kar" English="Karen" Native="Karen languages" flag="group"/>
+    <lng ISO639-2="kas" ISO639-1="ks" English="Kashmiri" Native="कॉशुर; کٲشُر" flag="spoken" scale="4600000"/>
+    <lng ISO639-2="csb" English="Kashubian" Native="kaszëbsczi jãzëk" flag="spoken" scale="50000"/>
+    <lng ISO639-2="kaw" English="Kawi" Native="Bhāṣa Kawi" flag="extinct"/>
+    <lng ISO639-2="kaz" ISO639-1="kk" English="Kazakh" Native="Қазақ тілі" flag="spoken" scale="12000000"/>
+    <lng ISO639-2="kha" English="Khasi" Native="Khasi" flag="spoken" scale="865000"/>
+    <lng ISO639-2="khm" ISO639-1="km" English="Khmer" Native="ភាសាខ្មែរ" flag="spoken" scale="18000000"/>
+    <lng ISO639-2="khi" English="Khoisan (Other)" Native="Khoisan" flag="group"/>
+    <lng ISO639-2="kho" English="Khotanese" Native="Khotanese" flag="extinct"/>
+    <lng ISO639-2="kik" ISO639-1="ki" English="Kikuyu" Native="Gĩkũyũ" flag="spoken" scale="6000000"/>
+    <lng ISO639-2="kmb" English="Kimbundu" Native="Kimbundu" flag="spoken" scale="3000000"/>
+    <lng ISO639-2="kin" ISO639-1="rw" English="Kinyarwanda" Native="kinyaRwanda" flag="spoken" scale="7000000"/>
+    <lng ISO639-2="kir" ISO639-1="ky" English="Kirghiz" Native="кыргыз тили" flag="spoken" scale="3140000"/>
+    <lng ISO639-2="tlh" English="Klingon" Native="tlhIngan Hol" flag="artificial" scale="7500"/>
+    <lng ISO639-2="kom" ISO639-1="kv" English="Komi" Native="коми кыв" flag="spoken" scale="350000"/>
+    <lng ISO639-2="kon" ISO639-1="kg" English="Kongo" Native="Kikongo" flag="spoken" scale="7000000"/>
+    <lng ISO639-2="kok" English="Konkani" Native="कोंकणी" flag="spoken" scale="7600000"/>
+    <lng ISO639-2="kor" ISO639-1="ko" English="Korean" Native="한국어" flag="spoken" scale="78000000"/>
+    <lng ISO639-2="kos" English="Kosraean" Native="Kosrae" flag="spoken" scale="8000"/>
+    <lng ISO639-2="kpe" English="Kpelle" Native="kpele" flag="group"/>
+    <lng ISO639-2="kro" English="Kru" Native="Kru" flag="group"/>
+    <lng ISO639-2="kua" ISO639-1="kj" English="Kuanyama" Native="Oshikwanyama" flag="spoken" scale="671000"/>
+    <lng ISO639-2="kum" English="Kumyk" Native="къумукъ тил" flag="spoken" scale="282000"/>
+    <lng ISO639-2="kur" ISO639-1="ku" English="Kurdish" Native="Kurdî" flag="spoken" scale="31400000"/>
+    <lng ISO639-2="kru" English="Kurukh" Native="Kurux" flag="spoken" scale="2050000"/>
+    <lng ISO639-2="kut" English="Kutenai" Native="Kootenai" flag="spoken" scale="322"/>
+    <lng ISO639-2="lad" English="Ladino" Native="ג'ודיאו-איספאנייול" flag="spoken" scale="109000"/>
+    <lng ISO639-2="lah" English="Lahnda" Native="ਪੰਜਾਬੀ" flag="spoken" scale="208000000"/>
+    <lng ISO639-2="lam" English="Lamba" Native="Lamba" flag="spoken" scale="210000"/>
+    <lng ISO639-2="lao" ISO639-1="lo" English="Lao" Native="ພາສາລາວ" flag="spoken" scale="3190000"/>
+    <lng ISO639-2="lat" ISO639-1="la" English="Latin" Native="latine" flag="extinct"/>
+    <lng ISO639-2="lav" ISO639-1="lv" English="Latvian" Native="latviešu valoda" flag="spoken" scale="2800000"/>
+    <lng ISO639-2="lez" English="Lezghian" Native="лезги чӀал" flag="spoken" scale="450000"/>
+    <lng ISO639-2="lim" ISO639-1="li" English="Limburgish" Native="Limburgs" flag="spoken" scale="1600000"/>
+    <lng ISO639-2="lin" ISO639-1="ln" English="Lingala" Native="lingala" flag="spoken" scale="7000000"/>
+    <lng ISO639-2="lit" ISO639-1="lt" English="Lithuanian" Native="lietuvių kalba" flag="spoken" scale="30000000"/>
+    <lng ISO639-2="jbo" English="Lojban" Native="la lojban." flag="artificial"/>
+    <lng ISO639-2="loz" English="Lozi" Native="Silozi" flag="spoken" scale="500000"/>
+    <lng ISO639-2="lub" ISO639-1="lu" English="Luba-Katanga" Native="Luba-Katanga" flag="spoken" scale="1510000"/>
+    <lng ISO639-2="lua" English="Luba-Lulua" Native="lwaà:" flag="spoken" scale="6300000"/>
+    <lng ISO639-2="lui" English="Luiseno" Native="Luiseño" flag="spoken" scale="35"/>
+    <lng ISO639-2="smj" English="Lule Sami" Native="sámegiella" flag="spoken" scale="2000"/>
+    <lng ISO639-2="lun" English="Lunda" Native="Chilunda" flag="spoken" scale="222000"/>
+    <lng ISO639-2="luo" English="Luo" Native="Dholuo" flag="group"/>
+    <lng ISO639-2="lus" English="Lushai" Native="Lushai" flag="spoken" scale="900000"/>
+    <lng ISO639-2="ltz" ISO639-1="lb" English="Luxembourgish" Native="Lëtzebuergesch" flag="spoken" scale="300000"/>
+    <lng ISO639-2="mac" ISO639-1="mk" English="Macedonian" Native="македонски јазик" flag="spoken" scale="2000000"/>
+    <duplicate ISO639-2="mkd" of="mac"/>
+    <lng ISO639-2="mad" English="Madurese" Native="Basa Mathura" flag="spoken" scale="13700000"/>
+    <lng ISO639-2="mag" English="Magahi" Native="मगही" flag="spoken" scale="11400000"/>
+    <lng ISO639-2="mai" English="Maithili" Native="मैथिली" flag="spoken" scale="45000000"/>
+    <lng ISO639-2="mak" English="Makasar" Native="Makasar" flag="spoken" scale="1600000"/>
+    <lng ISO639-2="mlg" ISO639-1="mg" English="Malagasy" Native="Malagasy fiteny" flag="spoken" scale="17000000"/>
+    <lng ISO639-2="may" ISO639-1="ms" English="Malay" Native="بهاس ملايو" flag="spoken" scale="25000000"/>
+    <duplicate ISO639-2="msa" of="may"/>
+    <lng ISO639-2="mal" ISO639-1="ml" English="Malayalam" Native="മലയാളം" flag="spoken" scale="35800000"/>
+    <lng ISO639-2="mlt" ISO639-1="mt" English="Maltese" Native="Malti" flag="spoken" scale="372000"/>
+    <lng ISO639-2="mnc" English="Manchu" Native="ᠮᠠᠨᠵᡠ" flag="spoken" scale="60"/>
+    <lng ISO639-2="mdr" English="Mandar" Native="Mandar" flag="spoken" scale="200000"/>
     <lng ISO639-2="man" English="Mandingo" Native="Mandinka"/>
     <lng ISO639-2="mni" English="Manipuri" Native="মৈইতৈইলোন"/>
     <lng ISO639-2="mno" English="Manobo languages" Native="Manobo languages"/>
