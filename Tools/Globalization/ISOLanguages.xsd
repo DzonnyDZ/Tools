@@ -58,7 +58,7 @@
                     <xs:documentation>Marks item as special language code with no language meaning</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="reserverd">
+            <xs:enumeration value="reserved">
                 <xs:annotation>
                     <xs:documentation>Marks language code as reserved for local use (applies to codes qaa-qtz, those codes are not listed)</xs:documentation>
                 </xs:annotation>
@@ -141,20 +141,67 @@
                     <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="Stage" use="required">
+                <xs:annotation>
+                    <xs:documentation>Stage of dicumment used for conditiona compilation</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Nightly">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Nightly stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Alpha">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Alpha stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Beta">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Beta stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="RC">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release Candidate stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Release">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
         </xs:complexType>
+        <!--Constraints-->
         <xs:unique name="ISO639-1">
+            <xs:annotation>
+                <xs:documentation>ISO 639-1 code must be unique</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="ISO:lng"/>
             <xs:field xpath="@ISO639-1"/>
         </xs:unique>
         <xs:key name="ISO639-2">
+            <xs:annotation>
+                <xs:documentation>ISO639-2 of &lt;lng> is key that &lt;duplicate>s reffers to</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="ISO:lng"/>
             <xs:field xpath="@ISO639-2"/>
         </xs:key>
         <xs:unique name="ISO639-2_unq">
+            <xs:annotation>
+                <xs:documentation>ISO 639-2 code must be unique</xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="ISO:lng|ISO:duplicate"/>
             <xs:field xpath="@ISO369-2"/>
         </xs:unique>
         <xs:keyref name="duplicate" refer="ISO639-2">
+            <xs:annotation>
+                <xs:documentation>Attribute of of &lt;duplicate> must point to attribute ISO639-2 of &lt;lng></xs:documentation>
+            </xs:annotation>
             <xs:selector xpath="ISO:duplicate"/>
             <xs:field xpath="@of"/>
         </xs:keyref>

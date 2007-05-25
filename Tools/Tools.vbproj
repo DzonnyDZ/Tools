@@ -134,6 +134,11 @@
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
+    <Compile Include="Globalization\ISOLanguages.vb">
+      <DependentUpon>ISOLanguages.xml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
     <Compile Include="Internal\Attributes.vb" />
     <Compile Include="Internal\ToolAssembly.vb" />
     <Compile Include="IO\BinaryReader.vb" />
@@ -267,7 +272,11 @@
     <EmbeddedResource Include="Resources\Windows.Forms.DataBoundToolStripLabel.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Globalization\ISOLanguages.xml" />
+    <None Include="Globalization\ISOLanguages.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>ISOLanguages.vb</LastGenOutput>
+      <CustomToolNamespace>Globalization_</CustomToolNamespace>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Windows.Forms.Encoding.bmp" />
@@ -276,6 +285,7 @@
     <EmbeddedResource Include="Resources\Windows.Forms.ProgressBarWithText.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Globalization\ISOLanguages.xslt" />
     <Content Include="Resources\Windows.Forms.TransparentTextBox.bmp" />
   </ItemGroup>
   <ItemGroup>
