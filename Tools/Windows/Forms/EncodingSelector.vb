@@ -1,5 +1,5 @@
-﻿Imports System.Windows.Forms, tools.Windows.Forms.Utilities, System.Text, Tools.Collections.Generic
-Imports Tools.ComponentModel
+﻿Imports System.Windows.Forms, Tools.WindowsT.FormsT.UtilitiesT, System.Text, Tools.CollectionsT.GenericT
+Imports Tools.ComponentModelT
 '#If Config <= Beta Then
 'Stage: Beta
 'Conditional compilation directive is commented out because its presence caused compiler warning.
@@ -8,7 +8,7 @@ Imports Tools.ComponentModel
 'Search for line like following:
 '<Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
 'Its preceded by comment.
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary>Control taht allows user to chose from available encoding</summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "Encoding.bmp")> _

@@ -1,5 +1,5 @@
 ﻿#If Config <= Release Then
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     ''' <summary>Adapter that adapts <see cref="List(Of TFrom)"/> into <see cref="IReadOnlyList(Of TTo)"/> where TFrom is cublass of TTo</summary>
     ''' <typeparam name="TFrom">Type of items stored in <see cref="List(Of TFrom)"/> being adapted</typeparam>
     ''' <typeparam name="TTo">

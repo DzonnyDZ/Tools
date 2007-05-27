@@ -1,5 +1,5 @@
 ﻿#If Config <= Release Then
-Namespace ComponentModel
+Namespace ComponentModelT
     ''' <summary>Allows editing <see cref="Object"/> as <see cref="String"/> in <see cref="System.Windows.Forms.PropertyGrid"/></summary>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ObjectStringConverter), LastChMMDDYYYY:="05/17/2007")> _
     <StandAloneTool(FirstVerMMDDYYYY:="01/07/2007")> _

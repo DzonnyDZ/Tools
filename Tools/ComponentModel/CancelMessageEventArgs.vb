@@ -1,4 +1,4 @@
-Namespace ComponentModel
+Namespace ComponentModelT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary><see cref="CancelEventArgs"/> with message witn reason for cancellation</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

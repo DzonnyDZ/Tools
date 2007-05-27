@@ -1,5 +1,5 @@
-﻿Imports Tools.Collections.Generic
-Namespace Collections.Generic
+﻿Imports Tools.CollectionsT.GenericT
+Namespace CollectionsT.GenericT
     '#If Config <= Nightly This conditional compilation is done in Tests.vbproj
     ''' <summary>Test Form for testing <see cref="HashTable(Of String)"/></summary>
     Friend Class frmHashTable
@@ -12,7 +12,7 @@ Namespace Collections.Generic
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
         ''' <summary>Simple case-insencitive string comparer</summary>
         Private Class eqc : Implements IEqualityComparer(Of String)

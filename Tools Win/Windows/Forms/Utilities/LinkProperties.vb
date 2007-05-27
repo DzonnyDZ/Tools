@@ -1,10 +1,10 @@
 Imports Microsoft.Win32
 Imports System.Security.Permissions, System.Security
 Imports System.Globalization
-Namespace Windows.Forms.Utilities
+Namespace WindowsT.FormsT.UtilitiesT
 #If Config <= Release Then
     ''' <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
-    ''' <remarks>See also <seealso cref="Tools.Drawing.SystemColorsExtension"/></remarks>
+    ''' <remarks>See also <seealso cref="Tools.DrawingT.SystemColorsExtension"/></remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _
     <Version(1, 0, GetType(LinkProperties), LastChMMDDYYYY:="05/10/2007")> _
     Public NotInheritable Class LinkProperties

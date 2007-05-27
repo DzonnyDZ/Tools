@@ -1,5 +1,5 @@
 Imports System.IO
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream of Exif data</summary>
     <Author("–onny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -51,13 +51,13 @@ Namespace Drawing.Metadata
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
         Private Sub Parse()
             Stream.Position = 0
-            Dim Reader As New Tools.IO.BinaryReader(Stream, Tools.IO.BinaryReader.ByteAling.BigEndian)
+            Dim Reader As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             Dim BOM1 As Char = Reader.ReadChar
             Dim BOM2 As Char = Reader.ReadChar
             If BOM1 = "I"c AndAlso BOM2 = "I"c Then
-                Reader.ByteOrder = Tools.IO.BinaryReader.ByteAling.LittleEndian
+                Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAling.LittleEndian
             ElseIf BOM1 = "M"c AndAlso BOM2 = "M"c Then
-                Reader.ByteOrder = Tools.IO.BinaryReader.ByteAling.BigEndian
+                Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAling.BigEndian
             Else
                 Throw New InvalidDataException("Unknown byte order mark " & BOM1 & BOM2)
             End If
@@ -183,9 +183,9 @@ Namespace Drawing.Metadata
         Private _OtherSubIFDs As New List(Of SubIFD)
         ''' <summary>Contains all unexpectedly (by chance) found Sub IFDs that cannot be recognized as starndard one. Those Sub IFDs are usually found as successors of standard ones</summary>
         ''' <remarks>This collection doesnù contain standard Sub IFDs that was recognized like Exif Sub IFD</remarks>
-        Public ReadOnly Property OtherSubIFDs() As Tools.Collections.Generic.IReadOnlyList(Of SubIFD)
+        Public ReadOnly Property OtherSubIFDs() As Tools.CollectionsT.GenericT.IReadOnlyList(Of SubIFD)
             Get
-                Return New Tools.Collections.Generic.Wrapper(Of SubIFD)(_OtherSubIFDs)
+                Return New Tools.CollectionsT.GenericT.Wrapper(Of SubIFD)(_OtherSubIFDs)
             End Get
         End Property
 
@@ -224,17 +224,17 @@ Namespace Drawing.Metadata
             End Get
         End Property
         ''' <summary>Contains value of the <see cref="ByteOrder"/> property</summary>
-        Private _ByteOrder As Tools.IO.BinaryReader.ByteAling
+        Private _ByteOrder As Tools.IOt.BinaryReader.ByteAling
         ''' <summary>Byte order used by this <see cref="ExifReader"/></summary>
-        Public ReadOnly Property ByteOrder() As Tools.IO.BinaryReader.ByteAling
+        Public ReadOnly Property ByteOrder() As Tools.IOt.BinaryReader.ByteAling
             Get
                 Return _ByteOrder
             End Get
         End Property
         ''' <summary>Collection of IFDs (Image File Directories) in this Exif block</summary>
-        Public ReadOnly Property IFDs() As Collections.Generic.IReadOnlyList(Of ExifIFDReader)
+        Public ReadOnly Property IFDs() As CollectionsT.GenericT.IReadOnlyList(Of ExifIFDReader)
             Get
-                Return New Collections.Generic.ReadOnlyListAdapter(Of ExifIFDReader)(_IFDs)
+                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of ExifIFDReader)(_IFDs)
             End Get
         End Property
     End Class

@@ -1,4 +1,4 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmLinkLabel
         Inherits System.Windows.Forms.Form
@@ -23,13 +23,13 @@ Namespace Windows.Forms
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Dim TextItem1 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
-            Dim AutoLink1 As Tools.Windows.Forms.LinkLabel.AutoLink = New Tools.Windows.Forms.LinkLabel.AutoLink
-            Dim TextItem2 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
-            Dim LinkItem1 As Tools.Windows.Forms.LinkLabel.LinkItem = New Tools.Windows.Forms.LinkLabel.LinkItem
-            Dim TextItem3 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
-            Dim TextItem4 As Tools.Windows.Forms.LinkLabel.TextItem = New Tools.Windows.Forms.LinkLabel.TextItem
-            Me.llbLabel = New Tools.Windows.Forms.LinkLabel
+            Dim TextItem1 As Tools.WindowsT.FormsT.LinkLabel.TextItem = New Tools.WindowsT.FormsT.LinkLabel.TextItem
+            Dim AutoLink1 As Tools.Windowst.Formst.LinkLabel.AutoLink = New Tools.Windowst.Formst.LinkLabel.AutoLink
+            Dim TextItem2 As Tools.WindowsT.FormsT.LinkLabel.TextItem = New Tools.WindowsT.FormsT.LinkLabel.TextItem
+            Dim LinkItem1 As Tools.WindowsT.Formst.LinkLabel.LinkItem = New Tools.Windowst.Formst.LinkLabel.LinkItem
+            Dim TextItem3 As Tools.WindowsT.FormsT.LinkLabel.TextItem = New Tools.WindowsT.Formst.LinkLabel.TextItem
+            Dim TextItem4 As Tools.WindowsT.FormsT.LinkLabel.TextItem = New Tools.WindowsT.FormsT.LinkLabel.TextItem
+            Me.llbLabel = New Tools.WindowsT.FormsT.LinkLabel
             Me.pgrLabel = New System.Windows.Forms.PropertyGrid
             Me.SuspendLayout()
             '
@@ -81,6 +81,6 @@ Namespace Windows.Forms
 
         End Sub
         Friend WithEvents pgrLabel As System.Windows.Forms.PropertyGrid
-        Friend WithEvents llbLabel As Tools.Windows.Forms.LinkLabel
+        Friend WithEvents llbLabel As Tools.WindowsT.FormsT.LinkLabel
     End Class
 End Namespace

@@ -1,4 +1,4 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmTransparentTextBox
         Inherits System.Windows.Forms.Form
@@ -30,7 +30,7 @@ Namespace Windows.Forms
             Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.ContentPanel = New System.Windows.Forms.ToolStripContentPanel
             Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
-            Me.trb = New Tools.Windows.Forms.TransparentTextBox
+            Me.trb = New Tools.WindowsT.FormsT.TransparentTextBox
             Me.pgrGrid = New System.Windows.Forms.PropertyGrid
             Me.SplitContainer1.Panel1.SuspendLayout()
             Me.SplitContainer1.Panel2.SuspendLayout()
@@ -142,6 +142,6 @@ Namespace Windows.Forms
         Friend WithEvents LeftToolStripPanel As System.Windows.Forms.ToolStripPanel
         Friend WithEvents ContentPanel As System.Windows.Forms.ToolStripContentPanel
         Friend WithEvents SplitContainer1 As System.Windows.Forms.SplitContainer
-        Friend WithEvents trb As Tools.Windows.Forms.TransparentTextBox
+        Friend WithEvents trb As Tools.WindowsT.FormsT.TransparentTextBox
     End Class
 End Namespace

@@ -1,8 +1,8 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmExtendedForm
-        Inherits Tools.Windows.Forms.ExtendedForm
+        Inherits Tools.WindowsT.FormsT.ExtendedForm
 
         'Form overrides dispose to clean up the component list.
         <System.Diagnostics.DebuggerNonUserCode()> _

@@ -1,17 +1,16 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2691.18445, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2691.18445
+' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2701.36373
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 15. kv?tna 2007
-' By:noutbuk\Honza
+' Created: 27. května 2007
+' By:DZONNY\Honza
 '
-#If Config <= Nightly 'Stage: Nightly
-#Region "Generated code"
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
+#If Congig <= Nightly 'Stage: Nightly
 	Partial Public Class Exif
 		Partial Public Class IFDMain
 			''' <summary>Tag numbers used in IFD0 and IFD1</summary>
@@ -1300,13 +1299,13 @@ Namespace Drawing.Metadata
 				CloudyWeather = 10
 				''' <summary>Shade</summary>
 				Shade = 11
-				''' <summary>Daylight fluorescent (D 5700 ? 7100K)</summary>
+				''' <summary>Daylight fluorescent (D 5700 – 7100K)</summary>
 				DaylightFluorescent = 12
-				''' <summary>Day white fluorescent (N 4600 ? 5400K)</summary>
+				''' <summary>Day white fluorescent (N 4600 – 5400K)</summary>
 				DayWhiteFluorescent = 13
-				''' <summary>Cool white fluorescent (W 3900 ? 4500K)</summary>
+				''' <summary>Cool white fluorescent (W 3900 – 4500K)</summary>
 				CoolWhiteFluorescent = 14
-				''' <summary>White fluorescent (WW 3200 ? 3700K)</summary>
+				''' <summary>White fluorescent (WW 3200 – 3700K)</summary>
 				WhiteFluorescent = 15
 				''' <summary>Standard light A</summary>
 				StandardLightA = 17
@@ -2745,6 +2744,5 @@ Namespace Drawing.Metadata
 			End Property
 		End Class
 	End Class
-End Namespace
-#End Region
 #End If
+End Namespace

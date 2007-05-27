@@ -1,6 +1,6 @@
 '#If Config <= Alpha This conditional compilation is done in Tests.vbproj
-Namespace Windows.Forms
-    ''' <summary>Tests <see cref="Tools.Windows.Forms.TransparentTextBox"/></summary>
+Namespace WindowsT.FormsT
+    ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.TransparentTextBox"/></summary>
     Public Class frmTransparentTextBox
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
@@ -14,7 +14,7 @@ Namespace Windows.Forms
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
 
     End Class

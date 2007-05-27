@@ -5,7 +5,7 @@ Friend Class frmTests
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        Me.Icon = Tools.Resources.ToolsIcon
+        Me.Icon = Tools.ResourcesT.ToolsIcon
         For Each nd As TreeNode In tvwMain.Nodes
             nd.Expand()
         Next nd

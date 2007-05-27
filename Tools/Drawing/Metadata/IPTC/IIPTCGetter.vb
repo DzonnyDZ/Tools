@@ -1,4 +1,4 @@
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

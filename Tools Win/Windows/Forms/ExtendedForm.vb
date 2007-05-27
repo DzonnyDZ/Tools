@@ -1,8 +1,8 @@
 Imports Tools.API
 Imports System.ComponentModel
-Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
+Imports Tools.ComponentModelt, Tools.Windowst.Formst.Utilitiest
 #If Config <= RC Then 'Stage: RC
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary><see cref="System.Windows.Forms.Form"/> with additional functionality based on Win32 API</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz"), Version(1, 0, GetType(ExtendedForm), LastChMMDDYYYY:="04/10/2007")> _
     Public Class ExtendedForm : Inherits System.Windows.Forms.Form

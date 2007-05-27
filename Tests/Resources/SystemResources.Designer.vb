@@ -1,4 +1,4 @@
-Namespace Resources
+Namespace ResourcesT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmSystemResources
         Inherits System.Windows.Forms.Form

@@ -1,4 +1,4 @@
-Namespace Internal
+Namespace InternalT
     Partial Class ToolAssembly : Inherits Form
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container

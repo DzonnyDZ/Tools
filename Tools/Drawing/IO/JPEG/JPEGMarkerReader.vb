@@ -1,5 +1,5 @@
-Imports System.IO, Tools.IO
-Namespace Drawing.IO.JPEG
+Imports System.IO, Tools.IOt
+Namespace DrawingT.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -75,7 +75,7 @@ Namespace Drawing.IO.JPEG
         ''' <exception cref="EndOfStreamException">End of stream <paramref name="Stream"/> reached unexpectedly</exception>
         Public Sub New(ByVal Stream As Stream, ByVal Offset As Long)
             Stream.Position = Offset
-            Dim r As New Tools.IO.BinaryReader(Stream, Tools.IO.BinaryReader.ByteAling.BigEndian)
+            Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             _Code = r.ReadUInt16()
             If (Code And &HFF00) >> 8 <> &HFF Then Throw New InvalidDataException("Given marker's code doesn't start with FFh")
             If MarkerCode <> Markers.SOI AndAlso MarkerCode <> Markers.EOI Then

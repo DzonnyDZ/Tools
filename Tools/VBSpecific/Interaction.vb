@@ -1,5 +1,5 @@
 ﻿#If COnfig <= Release Then
-Namespace VisualBasic
+Namespace VisualBasicT
     ''' <summary>The Interaction module contains procedures used to interact with objects, applications, and systems.</summary>
     <DoNotApplyAuthorAndVersionAttributes()> _
     Public Module Interaction

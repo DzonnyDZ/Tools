@@ -1,5 +1,5 @@
 ﻿#If Config <= Release Then
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     ''' <summary>Strongly typed read-only list that provides all applicable methods available in <see cref="List(Of T)"/></summary>
     ''' <typeparam name="T">Type of items in list</typeparam>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReadOnlyList(Of String)), LastChMMDDYYYY:="12/20/2006")> _

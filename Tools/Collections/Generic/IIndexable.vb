@@ -1,4 +1,4 @@
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
 #If Config <= Release Then
     ''' <summary>Rapresent anything that can be indexed by anything</summary>
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>

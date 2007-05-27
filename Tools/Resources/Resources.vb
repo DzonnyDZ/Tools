@@ -1,4 +1,4 @@
-﻿Namespace Resources
+﻿Namespace ResourcesT
     ''' <summary>Provides access to various resources that should be publicly available for users of ĐTools</summary>
     ''' <remarks>
     ''' Only calls to <see cref="My.Resources"/> are allowed here;

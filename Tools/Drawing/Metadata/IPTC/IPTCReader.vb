@@ -1,5 +1,5 @@
 Imports System.IO
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides low level access to stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -30,7 +30,7 @@ Namespace Drawing.Metadata
         ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         Private Sub Parse()
             Stream.Position = 0
-            Dim r As New Tools.IO.BinaryReader(Stream, Tools.IO.BinaryReader.ByteAling.BigEndian)
+            Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             Do
                 Dim TagMarker As Byte = r.ReadByte
                 If TagMarker <> &H1C Then Throw New InvalidDataException("Tag marker must be 1Ch")
@@ -53,9 +53,9 @@ Namespace Drawing.Metadata
             End Get
         End Property
         ''' <summary>Records in IPTC stream</summary>
-        Public ReadOnly Property Records() As Collections.Generic.IReadOnlyList(Of IPTCRecord)
+        Public ReadOnly Property Records() As CollectionsT.GenericT.IReadOnlyList(Of IPTCRecord)
             Get
-                Return New Collections.Generic.ReadOnlyListAdapter(Of IPTCRecord)(_Records)
+                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of IPTCRecord)(_Records)
             End Get
         End Property
 

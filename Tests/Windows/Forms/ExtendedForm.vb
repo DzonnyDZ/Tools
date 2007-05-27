@@ -1,6 +1,6 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
-    ''' <summary>Test functionality of <see cref="Tools.Windows.Forms.ExtendedForm"/></summary>
+    ''' <summary>Test functionality of <see cref="Tools.WindowsT.FormsT.ExtendedForm"/></summary>
     Public Class frmExtendedForm
         ''' <summary>Runs test GUI</summary>
         Public Shared Sub Test()
@@ -15,7 +15,7 @@ Namespace Windows.Forms
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
     End Class
 End Namespace

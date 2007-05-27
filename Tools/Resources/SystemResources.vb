@@ -1,6 +1,6 @@
 Imports System.Reflection
 #If Config <= Release Then
-Namespace Resources
+Namespace ResourcesT
     ''' <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
     ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -3036,9 +3036,3 @@ Namespace Resources
     End Class
 End Namespace
 #End If
-''' <summary>
-''' 
-''' </summary>
-Class X
-
-End Class

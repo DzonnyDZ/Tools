@@ -2,7 +2,7 @@
 #If Config <= Release Then
 ''' <summary>Provides constants and static methods for trigonometric, logarithmic, and other common mathematical functions.</summary>
 <DoNotApplyAuthorAndVersionAttributes()> _
-Partial Public Class Math
+Partial Public Class MathT
     ''' <summary>Finds the smallest of parameters</summary>
     ''' <typeparam name="T">The type of parameters that implements <see cref="IComparable(Of T)"/></typeparam>
     ''' <param name="Numbers">Objects one of which should be the smallest found</param>

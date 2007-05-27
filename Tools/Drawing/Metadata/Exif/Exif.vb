@@ -1,4 +1,4 @@
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
 #If Config <= Nightly Then
     ''' <summary>Provides read-write acces to block of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

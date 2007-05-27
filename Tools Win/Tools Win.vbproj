@@ -95,7 +95,7 @@
     <Import Include="System.Diagnostics" />
     <Import Include="System.Drawing" />
     <Import Include="System.Windows.Forms" />
-    <Import Include="Tools.Internal" />
+    <Import Include="Tools.InternalT" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\GUI.vb">

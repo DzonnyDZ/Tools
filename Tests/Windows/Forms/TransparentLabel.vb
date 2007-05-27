@@ -1,6 +1,6 @@
 '#If Config <= Release This conditional compilation is done in Tests.vbproj
-Namespace Windows.Forms
-    ''' <summary>Tests <see cref="Tools.Windows.Forms.TransparentLabel"/></summary>
+Namespace WindowsT.FormsT
+    ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.TransparentLabel"/></summary>
     Public Class frmTransparentLabel
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
@@ -14,7 +14,7 @@ Namespace Windows.Forms
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
 
     End Class

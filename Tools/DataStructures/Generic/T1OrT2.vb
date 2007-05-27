@@ -1,4 +1,4 @@
-﻿Namespace DataStructures.Generic
+﻿Namespace DataStructuresT.GenericT
 #If Config <= Release Then
     ''' <summary>Represents type that can contain either value of type T1 or value of type T2. It cannot contain both values at the same time.</summary>
     ''' <typeparam name="T1">One of alternativelly stored types</typeparam>

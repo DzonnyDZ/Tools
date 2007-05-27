@@ -1,5 +1,5 @@
-﻿Imports System.Windows.Forms, Tools.Collections.Generic, Tools.Windows.Forms.Utilities
-Imports System.Drawing.Design, System.ComponentModel.Design, Tools.ComponentModel
+﻿Imports System.Windows.Forms, Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT
+Imports System.Drawing.Design, System.ComponentModel.Design, Tools.ComponentModelT
 Imports System.Runtime.Serialization
 '#If Config <= Release Then 
 'Conditional compilation directive is commented out because its presence caused compiler warning.
@@ -8,7 +8,7 @@ Imports System.Runtime.Serialization
 'Search for line like following:
 '<Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
 'Its preceded by comment.
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="05/20/2007")> _
     <ToolboxItemFilter("System.Windows.Forms")> _
@@ -1309,7 +1309,7 @@ Namespace Windows.Forms
                         lblItemInfo.Text = resources.GetString("lblItemInfo.Text")
                     Else
                         pgrProperty.SelectedObjects = (New ArrayList(lstItems.SelectedItems)).ToArray
-                        Enable(VisualBasic.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
+                        Enable(VisualBasicT.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
                         If lstItems.SelectedItems.Count = 1 Then
                             lblItemInfo.Text = lstItems.SelectedItems(0).GetType.Name & ": " & lstItems.SelectedItems(0).ToString.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ").Replace(vbTab, " ")
                         Else

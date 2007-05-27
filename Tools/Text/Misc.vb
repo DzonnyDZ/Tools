@@ -1,5 +1,5 @@
 #If Config <= Nightly Then 'Stage: Nightly
-Namespace Text
+Namespace TextT
     ''' <summary>Miscaleneous text tools</summary>
     <DoNotApplyAuthorAndVersionAttributes()> _
   Public Module Misc

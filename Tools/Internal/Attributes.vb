@@ -1,7 +1,7 @@
 ﻿'Attributes used mainly internally by ĐTools are defined here
 #If Config <= Release Then
 Imports System.Reflection
-Namespace Internal
+Namespace InternalT
     ''' <summary>Marks person defined by instance of this attribute as author of marked part of code.</summary>
     ''' <remarks>
     ''' Use this attribute to mark yourself as author of code you have written.
@@ -148,7 +148,7 @@ Namespace Internal
             Me.New(MajorAndMinor, MajorAndMinor, Build, Revision)
         End Sub
         ''' <summary>Represents something tha can be either <see cref="System.Type"/> or <see cref="System.Int32"/></summary>
-        ''' <remarks>This class is designed to be used only with <see cref="VersionAttribute"/>. If you are looking for general-purpose class try <see cref="Tools.DataStructures.Generic.T1orT2(Of T1, T2)"/> instead.</remarks>
+        ''' <remarks>This class is designed to be used only with <see cref="VersionAttribute"/>. If you are looking for general-purpose class try <see cref="Tools.DataStructuresT.GenericT.T1orT2(Of T1, T2)"/> instead.</remarks>
         Public Class TypeOrInt32
             ''' <summary>Value when <see cref="TypeOrInt32"/> is <see cref="System.Type"/></summary>
             Friend ReadOnly Type As Box(Of Type) = Nothing
@@ -321,7 +321,7 @@ Namespace Internal
     Public Class DoNotApplyAuthorAndVersionAttributesAttribute : Inherits Attribute
     End Class
 
-    ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.Internal"/> namespace</summary>
+    ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.InternalT"/> namespace</summary>
     <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 1, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="05/16/2007")> _
     Friend Module AttributesSpecificDeclarations 'Original 12/20/2006
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>

@@ -1,6 +1,6 @@
 #If Config <= RC Then
-Imports Tools.Math
-''' <summary>Tests <see cref="Tools.Windows.Forms.LinkLabel"/></summary>
+Imports Tools.MathT
+''' <summary>Tests <see cref="Tools.WindowsT.FormsT.LinkLabel"/></summary>
 Friend Class frmLEBE
     ''' <summary>Show test form</summary>
     Public Shared Sub Test()
@@ -14,7 +14,7 @@ Friend Class frmLEBE
         InitializeComponent()
 
         ' Add any initialization after the InitializeComponent() call.
-        Me.Icon = Tools.Resources.ToolsIcon
+        Me.Icon = Tools.ResourcesT.ToolsIcon
     End Sub
 
    

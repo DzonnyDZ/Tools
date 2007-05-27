@@ -1,4 +1,4 @@
-Namespace IO
+Namespace IOt
 #If Config <= Alpha Then 'Stage:Alpha
     ''' <summary>Extends <see cref="System.IO.BinaryReader"/> to be able to read numeric data in both little-endian and big-endian format</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -35,7 +35,7 @@ Namespace IO
                 _ByteOrder = value
             End Set
         End Property
-        ''' <summary>Initializes a new instance of the <see cref="Tools.IO.BinaryReader"/> class based on the supplied stream and using <see cref="System.Text.UTF8Encoding"/>.</summary>
+        ''' <summary>Initializes a new instance of the <see cref="Tools.IOt.BinaryReader"/> class based on the supplied stream and using <see cref="System.Text.UTF8Encoding"/>.</summary>
         ''' <param name="input">A stream.</param>
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed</exception>
@@ -43,7 +43,7 @@ Namespace IO
             MyBase.New(input)
             ByteOrder = Align
         End Sub
-        ''' <summary>Initializes a new instance of the <see cref="Tools.IO.BinaryReader"/> class based on the supplied stream and a specific character encoding.</summary>
+        ''' <summary>Initializes a new instance of the <see cref="Tools.IOt.BinaryReader"/> class based on the supplied stream and a specific character encoding.</summary>
         ''' <param name="encoding">The character encoding.</param>
         ''' <param name="input">The supplied stream.</param>
         ''' <param name="Align">Format in which numeric data are read</param>
@@ -60,7 +60,7 @@ Namespace IO
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         Public Overrides Function ReadInt16() As Short
             If ByteOrder = ByteAling.BigEndian Then
-                Return Math.LEBE(MyBase.ReadInt16())
+                Return MathT.LEBE(MyBase.ReadInt16())
             Else
                 Return MyBase.ReadInt16()
             End If
@@ -72,7 +72,7 @@ Namespace IO
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         Public Overrides Function ReadInt32() As Integer
             If ByteOrder = ByteAling.BigEndian Then
-                Return Math.LEBE(MyBase.ReadInt32())
+                Return MathT.LEBE(MyBase.ReadInt32())
             Else
                 Return MyBase.ReadInt32()
             End If
@@ -84,7 +84,7 @@ Namespace IO
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         Public Overrides Function ReadInt64() As Long
             If ByteOrder = ByteAling.BigEndian Then
-                Return Math.LEBE(MyBase.ReadInt64())
+                Return MathT.LEBE(MyBase.ReadInt64())
             Else
                 Return MyBase.ReadInt64()
             End If
@@ -97,7 +97,7 @@ Namespace IO
         <CLSCompliant(False)> _
         Public Overrides Function ReadUInt16() As UShort
             If ByteOrder = ByteAling.BigEndian Then
-                Return Math.LEBE(MyBase.ReadUInt16())
+                Return MathT.LEBE(MyBase.ReadUInt16())
             Else
                 Return MyBase.ReadUInt16()
             End If
@@ -110,7 +110,7 @@ Namespace IO
         <CLSCompliant(False)> _
         Public Overrides Function ReadUInt32() As UInteger
             If ByteOrder = ByteAling.BigEndian Then
-                Return Math.LEBE(MyBase.ReadUInt32())
+                Return MathT.LEBE(MyBase.ReadUInt32())
             Else
                 Return MyBase.ReadUInt32()
             End If
@@ -123,7 +123,7 @@ Namespace IO
         <CLSCompliant(False)> _
         Public Overrides Function ReadUInt64() As ULong
             If ByteOrder = ByteAling.BigEndian Then
-                Return Math.LEBE(MyBase.ReadUInt64())
+                Return MathT.LEBE(MyBase.ReadUInt64())
             Else
                 Return MyBase.ReadUInt64()
             End If

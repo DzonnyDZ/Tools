@@ -1,5 +1,5 @@
 Imports System.IO
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -15,7 +15,7 @@ Namespace Drawing.Metadata
         <CLSCompliant(False)> _
         Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32)
             _Offset = Offset
-            Dim r As New Tools.IO.BinaryReader(Exif.Stream, Exif.ByteOrder)
+            Dim r As New Tools.IOt.BinaryReader(Exif.Stream, Exif.ByteOrder)
             Exif.Stream.Position = Offset
             Dim Entries As UShort = r.ReadUInt16
 
@@ -44,9 +44,9 @@ Namespace Drawing.Metadata
             End Get
         End Property
         ''' <summary>Entries in this IFD</summary>
-        Public ReadOnly Property Entries() As Collections.Generic.IReadOnlyList(Of DirectoryEntry)
+        Public ReadOnly Property Entries() As CollectionsT.GenericT.IReadOnlyList(Of DirectoryEntry)
             Get
-                Return New Collections.Generic.ReadOnlyListAdapter(Of DirectoryEntry)(_Entries)
+                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of DirectoryEntry)(_Entries)
             End Get
         End Property
         ''' <summary>Contains value of the <see cref="Offest"/> property</summary>
@@ -88,7 +88,7 @@ Namespace Drawing.Metadata
                 Dim TagData As Byte()
                 If _DataIsStoredOutside Then
                     Dim Str As New MemoryStream(Data, False)
-                    Dim r As New Tools.IO.BinaryReader(Str, Exif.ByteOrder)
+                    Dim r As New Tools.IOt.BinaryReader(Str, Exif.ByteOrder)
                     Str.Position = 0
                     Dim Offset As UInt32 = r.ReadUInt32
                     Exif.Stream.Position = Offset
@@ -108,10 +108,10 @@ Namespace Drawing.Metadata
             ''' <param name="Components">Number of components to be read</param>
             ''' <returns>Data read from buffer. If <paramref name="Components"/> is 1 scalar of specified type is returned, <see cref="Array"/> otherwise with exceptions: 1 component of type <see cref="ExifDataTypes.ASCII"/> resuts to <see cref="Char"/>, more components results to <see cref="String"/>; <see cref="ExifDataTypes.NA"/> always results to <see cref="Array"/> of <see cref="Byte"/>s</returns>
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/></exception>
-            Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IO.BinaryReader.ByteAling) As Object
+            Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAling) As Object
                 Dim Str As New MemoryStream(Buffer, False)
                 Str.Position = 0
-                Dim r As New Tools.IO.BinaryReader(Str, System.Text.Encoding.Default, Align)
+                Dim r As New Tools.IOt.BinaryReader(Str, System.Text.Encoding.Default, Align)
                 Select Case Type
                     Case ExifDataTypes.Byte
                         If Components = 1 Then Return CByte(Buffer(0)) Else Return Buffer.Clone

@@ -1,4 +1,4 @@
-Namespace Windows.Forms.Utilities
+Namespace WindowsT.FormsT.UtilitiesT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmLinkProperties
         Inherits System.Windows.Forms.Form

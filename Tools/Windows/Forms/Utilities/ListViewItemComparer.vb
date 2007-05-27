@@ -1,6 +1,6 @@
 ﻿Imports System.Windows.Forms, System.ComponentModel
 #If Config <= Release Then
-Namespace Windows.Forms.Utilities
+Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Implements the manual sorting of items in <see cref="ListView"/> by columns.</summary>
     ''' <remarks>
     ''' <seealso>http://msdn2.microsoft.com/en-us/library/system.windows.forms.listview.listviewitemsorter.aspx</seealso>
@@ -141,7 +141,7 @@ Namespace Windows.Forms.Utilities
             ElseIf a Is Nothing OrElse b Is Nothing Then
                 Return False
             Else
-                Return a.Column = b.Column AndAlso a.Descending = b.Descending andalso a.SortMode=b.SortMode andalso a.ZerofillWidth=b.ZerofillWidth 
+                Return a.Column = b.Column AndAlso a.Descending = b.Descending AndAlso a.SortMode = b.SortMode AndAlso a.ZerofillWidth = b.ZerofillWidth
             End If
         End Operator
         ''' <summary>Compares two <see cref="ListViewItemComparer"/>s</summary>
@@ -181,7 +181,7 @@ Namespace Windows.Forms.Utilities
                     strY = ""
                 End If
             End If
-            Dim mul As Integer = Tools.VisualBasic.iif(Descending, -1, 1)
+            Dim mul As Integer = Tools.VisualBasicT.iif(Descending, -1, 1)
             Select Case SortMode
                 Case SortModes.Numeric
                     If strX = "" Or strY = "" Then Return mul * String.Compare(strX, strY)

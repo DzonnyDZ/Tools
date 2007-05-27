@@ -1,10 +1,10 @@
 Imports System.Windows.Forms
 Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
-Imports Tools.ComponentModel
+Imports Tools.ComponentModelT
 Imports System.Reflection
 #If Config <= Beta Then 'Stage:Beta
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary><see cref="RichTextBox"/> with transparent background</summary>
     ''' <remarks>This control is 100% transaprent and cannot have any other than transparent <see cref="TransparentTextBox.BackColor"/>. To make it semi-transparent, put it onto semitransparent panel.</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

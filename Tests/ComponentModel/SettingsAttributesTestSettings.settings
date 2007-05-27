@@ -1,5 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ComponentModel" GeneratedClassName="SettingsAttributesTestSettings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="ComponentModelT" GeneratedClassName="SettingsAttributesTestSettings">
   <Profiles />
   <Settings>
     <Setting Name="TestSetting1" Description="This is setting wizh default value &quot;Test&quot;" Type="System.String" Scope="User">

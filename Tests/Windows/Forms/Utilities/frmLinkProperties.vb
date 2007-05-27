@@ -1,6 +1,6 @@
-Imports Tools.Windows.Forms.Utilities, Tools.Drawing
-Namespace Windows.Forms.Utilities
-    ''' <summary>Testing <see cref="Tools.Windows.Forms.Utilities.LinkProperties"/></summary>
+Imports Tools.WindowsT.FormsT.UtilitiesT, Tools.DrawingT
+Namespace WindowsT.FormsT.UtilitiesT
+    ''' <summary>Testing <see cref="Tools.WindowsT.FormsT.UtilitiesT.LinkProperties"/></summary>
     Public Class frmLinkProperties
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
@@ -14,7 +14,7 @@ Namespace Windows.Forms.Utilities
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
 
             lblLink.ForeColor = LinkProperties.Color
             lblVisited.ForeColor = LinkProperties.VisitedColor

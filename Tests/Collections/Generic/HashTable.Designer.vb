@@ -1,4 +1,4 @@
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmHashTable
         Inherits System.Windows.Forms.Form

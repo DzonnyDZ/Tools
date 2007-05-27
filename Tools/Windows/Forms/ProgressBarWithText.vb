@@ -1,10 +1,10 @@
 Imports System.Windows.Forms
 Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
-Imports Tools.ComponentModel
-Imports tools.Windows.Forms.Utilities
+Imports Tools.ComponentModelT
+Imports Tools.WindowsT.FormsT.UtilitiesT
 #If Config <= Release Then
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary>Implements <see cref="ProgressBar"/> with overlay text</summary>
     <DefaultEvent("ValueChanged"), DefaultProperty("Value")> _
     <DefaultBindingProperty("Value")> _

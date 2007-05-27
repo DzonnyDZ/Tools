@@ -1,5 +1,5 @@
-Imports Tools.Resources
-Namespace Resources
+Imports Tools.ResourcesT
+Namespace ResourcesT
     Public Class frmSystemResources
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
@@ -13,7 +13,7 @@ Namespace Resources
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
 
             Dim b As New System.Text.StringBuilder
             For Each kName As String In SystemResources.KeyNames

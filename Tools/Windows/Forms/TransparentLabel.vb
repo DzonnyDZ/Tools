@@ -1,9 +1,9 @@
 Imports System.Windows.Forms
 Imports System.ComponentModel, System.ComponentModel.Design
 Imports System.Drawing, System.Drawing.Design
-Imports Tools.ComponentModel
+Imports Tools.ComponentModelT
 #If Config <= Release Then
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary><see cref="Label"/> which's background *really* transparent</summary>
     ''' <remarks>To make this contro, transparent or semi-transparent se background color to color with alpha chanel</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -79,7 +79,7 @@ Namespace Windows.Forms
         ''' <returns>true if the control adjusts its width to closely fit its contents; otherwise, false. The default is false.</returns>
         <DefaultValue(True), EditorBrowsable(EditorBrowsableState.Always)> _
         <Description("Gets or sets a value indicating whether the control is automatically resized to display its entire contents.")> _
-        <Category(Tools.Windows.Forms.Utilities.CategoryAttributeValues.Layout), RefreshProperties(RefreshProperties.All), Localizable(True)> _
+        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Layout), RefreshProperties(RefreshProperties.All), Localizable(True)> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), Browsable(True)> _
         Public Overrides Property AutoSize() As Boolean
             Get

@@ -1,11 +1,11 @@
-Namespace Drawing.Metadata
+Namespace DrawingT.MetadataT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represents unsigned rational number with numerator and denominator as used in Exif</summary>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/24/2007")> _
     <CLSCompliant(False)> _
     Public Structure URational
-        Implements DataStructures.Generic.IPair(Of UInt16, UInt16)
+        Implements DataStructuresT.GenericT.IPair(Of UInt16, UInt16)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Numerator As UInt16
@@ -26,11 +26,11 @@ Namespace Drawing.Metadata
             Return Me
         End Function
         ''' <summary>Swaps values <see cref="Numerator"/> and <see cref="Denominator"/></summary>
-        Public Function Swap() As DataStructures.Generic.IPair(Of UShort, UShort) Implements DataStructures.Generic.IPair(Of UShort, UShort).Swap
+        Public Function Swap() As DataStructuresT.GenericT.IPair(Of UShort, UShort) Implements DataStructuresT.GenericT.IPair(Of UShort, UShort).Swap
             Return New URational(Denominator, Numerator)
         End Function
         ''' <summary>Numerator (1 in 1/2)</summary>
-        Public Property Numerator() As UShort Implements DataStructures.Generic.IPair(Of UShort, UShort).Value1
+        Public Property Numerator() As UShort Implements DataStructuresT.GenericT.IPair(Of UShort, UShort).Value1
             Get
                 Return _Numerator
             End Get
@@ -39,7 +39,7 @@ Namespace Drawing.Metadata
             End Set
         End Property
         ''' <summary>Denominator (2 in 1/2)</summary>
-        Public Property Denominator() As UShort Implements DataStructures.Generic.IPair(Of UShort, UShort).Value2
+        Public Property Denominator() As UShort Implements DataStructuresT.GenericT.IPair(Of UShort, UShort).Value2
             Get
                 Return _Denominator
             End Get
@@ -49,14 +49,14 @@ Namespace Drawing.Metadata
         End Property
         ''' <summary>Creates a new object that is a copy of the current instance.</summary>
         ''' <returns>A new object that is a copy of this instance</returns>
-        Private Function Clone() As DataStructures.Generic.IPair(Of UShort, UShort) Implements ICloneable(Of DataStructures.Generic.IPair(Of UShort, UShort)).Clone
+        Private Function Clone() As DataStructuresT.GenericT.IPair(Of UShort, UShort) Implements ICloneable(Of DataStructuresT.GenericT.IPair(Of UShort, UShort)).Clone
             Return Clone()
         End Function
         ''' <summary>Simplyfies <see cref="URational"/> to contain smallest possible <see cref="Numerator"/> and <see cref="Denominator"/></summary>
         Public Function Simplyfy() As URational
             If Numerator = 0 Then Return New URational(0, 1)
             If Denominator = 0 Then Return Me
-            Dim GCD As UInt32 = Math.GCD(Numerator, Denominator)
+            Dim GCD As UInt32 = MathT.GCD(Numerator, Denominator)
             Return New URational(Numerator / GCD, Denominator / GCD)
         End Function
 #Region "Operators"
@@ -67,7 +67,7 @@ Namespace Drawing.Metadata
         Public Shared Operator +(ByVal a As URational, ByVal b As URational) As URational
             If a.Numerator = 0 Then Return b.Simplyfy
             If b.Numerator = 0 Then Return a.Simplyfy
-            Dim LCM As UInt32 = Math.LCM(a.Denominator, b.Denominator)
+            Dim LCM As UInt32 = MathT.LCM(a.Denominator, b.Denominator)
             Dim ANum As UInt32 = a.Numerator * (LCM / a.Denominator)
             Dim BNum As UInt32 = b.Numerator * (LCM / b.Denominator)
             Return New URational(ANum + BNum, LCM).Simplyfy
@@ -119,7 +119,7 @@ Namespace Drawing.Metadata
             If a = 0 Then Return New URational(0, 1)
             If System.Math.Truncate(a) = a Then Return New URational(a, 1)
             Dim Multiplied As Double = a * UInt16.MaxValue
-            Dim GCD As Long = Math.GCD(Multiplied, UInt16.MaxValue)
+            Dim GCD As Long = MathT.GCD(Multiplied, UInt16.MaxValue)
             Return New URational(Multiplied / GCD, UInt16.MaxValue / GCD)
         End Operator
         ''' <summary>Converts <see cref="Single"/> to <see cref="URational"/></summary>
@@ -191,7 +191,7 @@ Namespace Drawing.Metadata
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/24/2007")> _
     Public Structure SRational
-        Implements DataStructures.Generic.IPair(Of Int16, Int16)
+        Implements DataStructuresT.GenericT.IPair(Of Int16, Int16)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Numerator As Int16
@@ -212,11 +212,11 @@ Namespace Drawing.Metadata
             Return Me
         End Function
         ''' <summary>Swaps values <see cref="Numerator"/> and <see cref="Denominator"/></summary>
-        Public Function Swap() As DataStructures.Generic.IPair(Of Short, Short) Implements DataStructures.Generic.IPair(Of Short, Short).Swap
+        Public Function Swap() As DataStructuresT.GenericT.IPair(Of Short, Short) Implements DataStructuresT.GenericT.IPair(Of Short, Short).Swap
             Return New SRational(Denominator, Numerator)
         End Function
         ''' <summary>Numerator (1 in 1/2)</summary>
-        Public Property Numerator() As Short Implements DataStructures.Generic.IPair(Of Short, Short).Value1
+        Public Property Numerator() As Short Implements DataStructuresT.GenericT.IPair(Of Short, Short).Value1
             Get
                 Return _Numerator
             End Get
@@ -225,7 +225,7 @@ Namespace Drawing.Metadata
             End Set
         End Property
         ''' <summary>Denominator (2 in 1/2)</summary>
-        Public Property Denominator() As Short Implements DataStructures.Generic.IPair(Of Short, Short).Value2
+        Public Property Denominator() As Short Implements DataStructuresT.GenericT.IPair(Of Short, Short).Value2
             Get
                 Return _Denominator
             End Get
@@ -235,7 +235,7 @@ Namespace Drawing.Metadata
         End Property
         ''' <summary>Creates a new object that is a copy of the current instance.</summary>
         ''' <returns>A new object that is a copy of this instance</returns>
-        Private Function Clone() As DataStructures.Generic.IPair(Of Short, Short) Implements ICloneable(Of DataStructures.Generic.IPair(Of Short, Short)).Clone
+        Private Function Clone() As DataStructuresT.GenericT.IPair(Of Short, Short) Implements ICloneable(Of DataStructuresT.GenericT.IPair(Of Short, Short)).Clone
             Return Clone()
         End Function
         ''' <summary>Simplyfies <see cref="SRational"/> to contain smallest possible <see cref="Numerator"/> and <see cref="Denominator"/></summary>
@@ -243,8 +243,8 @@ Namespace Drawing.Metadata
             If Numerator = 0 Then Return New SRational(0, 1)
             If Denominator = 0 Then Return Me
             Dim Negative As Boolean = Numerator < 0 Xor Denominator < 0
-            Dim GCD As UInt32 = Math.GCD(System.Math.Abs(Numerator), System.Math.Abs(Denominator))
-            Return New SRational(Tools.VisualBasic.iif(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
+            Dim GCD As UInt32 = MathT.GCD(System.Math.Abs(Numerator), System.Math.Abs(Denominator))
+            Return New SRational(Tools.VisualBasicT.iif(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
         End Function
 #Region "Operators"
         ''' <summary>Adds two <see cref="SRational"/>s</summary>
@@ -256,7 +256,7 @@ Namespace Drawing.Metadata
             If b.Numerator = 0 Then Return a.Simplyfy
             If a.Denominator < 0 Then a.Numerator *= -1
             If b.Denominator < 0 Then b.Numerator *= -1
-            Dim LCM As Int32 = Math.LCM(a.Denominator, b.Denominator)
+            Dim LCM As Int32 = MathT.LCM(a.Denominator, b.Denominator)
             Dim ANum As Int32 = a.Numerator * (LCM / a.Denominator)
             Dim BNum As Int32 = b.Numerator * (LCM / b.Denominator)
             Return New SRational(ANum + BNum, LCM).Simplyfy
@@ -296,7 +296,7 @@ Namespace Drawing.Metadata
             If a = 0 Then Return New SRational(0, 1)
             If System.Math.Truncate(a) = a Then Return New SRational(a, 1)
             Dim Multiplied As Double = a * UInt16.MaxValue
-            Dim GCD As Long = Math.GCD(System.Math.Abs(Multiplied), UInt16.MaxValue)
+            Dim GCD As Long = MathT.GCD(System.Math.Abs(Multiplied), UInt16.MaxValue)
             Return New SRational(Multiplied / GCD, UInt16.MaxValue / GCD)
         End Operator
         ''' <summary>Converts <see cref="Single"/> to <see cref="URational"/></summary>

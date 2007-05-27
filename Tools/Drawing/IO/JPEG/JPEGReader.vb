@@ -1,11 +1,11 @@
-Imports System.IO, Tools.IO
-Namespace Drawing.IO.JPEG
+Imports System.IO, Tools.IOt
+Namespace DrawingT.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="04/23/2007")> _
     Public Class JPEGReader
-        Implements Metadata.IExifGetter, Metadata.IIPTCGetter
+        Implements MetadataT.IExifGetter, MetadataT.IIPTCGetter
         ''' <summary>Stream of opened file</summary>
         Protected ReadOnly Stream As System.IO.Stream
         ''' <summary>Stream of whole JPEG file</summary>
@@ -72,7 +72,7 @@ Namespace Drawing.IO.JPEG
                 Pos += 2 + Marker.Length
                 _Markers.Add(Marker)
             Loop Until Marker.MarkerCode = JPEGMarkerReader.Markers.SOS
-            Dim CS As New Tools.IO.ConstrainedReadOnlyStream(Stream, Pos, Stream.Length - Pos)
+            Dim CS As New Tools.IOt.ConstrainedReadOnlyStream(Stream, Pos, Stream.Length - Pos)
             Dim EOI As JPEGMarkerReader = Nothing
             For i As Long = CS.Length - 1 To 1 Step -1
                 Dim EOI1 As Byte = CS(i - 1)
@@ -89,9 +89,9 @@ Namespace Drawing.IO.JPEG
             _Markers.Add(EOI)
         End Sub
         ''' <summary>List of markers this JPEG stream</summary>
-        Public ReadOnly Property Markers() As Collections.Generic.IReadOnlyList(Of JPEGMarkerReader)
+        Public ReadOnly Property Markers() As CollectionsT.GenericT.IReadOnlyList(Of JPEGMarkerReader)
             Get
-                Return New Collections.Generic.ReadOnlyListAdapter(Of JPEGMarkerReader)(_Markers)
+                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of JPEGMarkerReader)(_Markers)
             End Get
         End Property
         ''' <summary>Stream constrained to Image stream part of JPEG stream</summary>
@@ -106,7 +106,7 @@ Namespace Drawing.IO.JPEG
         ''' <para>If there is no Exif data in file stream can be null or have zero length</para>
         ''' <para>Stream supports reading and seeking</para>
         ''' </remarks>
-        Public Function GetExifStream() As System.IO.Stream Implements Metadata.IExifGetter.GetExifStream
+        Public Function GetExifStream() As System.IO.Stream Implements MetadataT.IExifGetter.GetExifStream
             Const Exif$ = "Exif"
             If _ExifMarkerIndex = -1 Then
                 Return Nothing
@@ -154,7 +154,7 @@ Namespace Drawing.IO.JPEG
         ''' An 8BIM segment doesn't start with string '8BIM'
         ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
         ''' </exception>
-        Public Function GetIPTCStream() As System.IO.Stream Implements Metadata.IIPTCGetter.GetIPTCStream
+        Public Function GetIPTCStream() As System.IO.Stream Implements MetadataT.IIPTCGetter.GetIPTCStream
             For Each BIM8 As Photoshop8BIMReader In Get8BIMSegments()
                 If BIM8.Type = IPTC8BIM Then
                     Return BIM8.Data
@@ -186,18 +186,18 @@ Namespace Drawing.IO.JPEG
         ''' An 8BIM segment doesn't start with string '8BIM'
         ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
         ''' </exception>
-        Public Function Get8BIMSegments() As Collections.Generic.IReadOnlyList(Of Photoshop8BIMReader)
+        Public Function Get8BIMSegments() As CollectionsT.GenericT.IReadOnlyList(Of Photoshop8BIMReader)
             Dim Segments As New List(Of Photoshop8BIMReader)
             Dim Pos As Long = 0
             Dim Photoshop As System.IO.Stream = GetPhotoShopStream()
             If Photoshop Is Nothing OrElse Photoshop.Length = 0 Then _
-                Return New Collections.Generic.ReadOnlyListAdapter(Of Photoshop8BIMReader)(Segments)
+                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of Photoshop8BIMReader)(Segments)
             Do
                 Dim Sgm As New Photoshop8BIMReader(Photoshop, Pos)
                 Pos += Sgm.WholeSize
                 Segments.Add(Sgm)
             Loop While Pos < Photoshop.Length
-            Return New Collections.Generic.ReadOnlyListAdapter(Of Photoshop8BIMReader)(Segments)
+            Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of Photoshop8BIMReader)(Segments)
         End Function
         ''' <summary>Gets stream of PhotoShop data</summary>
         ''' <remarks>
@@ -259,7 +259,7 @@ Namespace Drawing.IO.JPEG
         Public Sub New(ByVal Stream As System.IO.Stream, ByVal Offset As Long)
             Const Header8BIM$ = "8BIM"
             Stream.Position = Offset
-            Dim r As New Tools.IO.BinaryReader(Stream, System.Text.Encoding.ASCII, Tools.IO.BinaryReader.ByteAling.BigEndian)
+            Dim r As New Tools.IOt.BinaryReader(Stream, System.Text.Encoding.ASCII, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             Dim Bytes8BIM(3) As Byte
             If Stream.Read(Bytes8BIM, 0, 4) = 4 Then
                 Dim Str8BIM As String = System.Text.Encoding.ASCII.GetString(Bytes8BIM, 0, 4)
@@ -292,7 +292,7 @@ Namespace Drawing.IO.JPEG
         Public ReadOnly Property WholeSize() As Long
             Get
                 Return DataSize + 2 + 1 + Name.Length + 4 + 4 + _
-                    Tools.VisualBasic.iif(NamePaddNeeded, 1, 0) + Tools.VisualBasic.iif(DataPadNeeded, 1, 0)
+                    Tools.VisualBasicT.iif(NamePaddNeeded, 1, 0) + Tools.VisualBasicT.iif(DataPadNeeded, 1, 0)
                 '2 - Type
                 '1 - Length of Pascal string
                 '4 - Size

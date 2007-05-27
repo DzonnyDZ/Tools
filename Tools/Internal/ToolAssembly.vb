@@ -1,7 +1,6 @@
-
 Imports System.Reflection, Microsoft.VisualBasic.CompilerServices
-Imports Tools.Collections.Generic
-Namespace Internal
+Imports Tools.CollectionsT.GenericT
+Namespace InternalT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Represents assembly of <see cref="Tools"/> project</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

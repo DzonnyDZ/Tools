@@ -1,5 +1,5 @@
-﻿Namespace Windows.Forms
-    ''' <summary>Tests <see cref="Tools.Windows.Forms.LinkLabel"/></summary>
+﻿Namespace WindowsT.FormsT
+    ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.LinkLabel"/></summary>
     Friend Class frmLinkLabel
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
@@ -13,11 +13,11 @@
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
 
-        Private Sub llbLabel_LinkClicked(ByVal sender As Tools.Windows.Forms.LinkLabel, ByVal e As Tools.Windows.Forms.LinkLabel.LinkClickedEventArgs) Handles llbLabel.LinkClicked
-            If Not TypeOf e.Item Is Tools.Windows.Forms.LinkLabel.AutoLink Then
+        Private Sub llbLabel_LinkClicked(ByVal sender As Tools.WindowsT.FormsT.LinkLabel, ByVal e As Tools.WindowsT.FormsT.LinkLabel.LinkClickedEventArgs) Handles llbLabel.LinkClicked
+            If Not TypeOf e.Item Is Tools.WindowsT.FormsT.LinkLabel.AutoLink Then
                 Try
                     Process.Start(CStr(e.Item.LinkData))
                     e.Item.Visited = True

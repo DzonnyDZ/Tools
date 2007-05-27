@@ -1,5 +1,5 @@
 ﻿#If Config <= RC Then 'Stage: RC
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     'HashTable(Of TKey, TValue) cancele due to being duplicate of Dictionary(Of TKey, TValue)
     '    ''' <summary>type-safe class defived from <see cref="System.Collections.Hashtable"/></summary>
     '    ''' <typeparam name="TKey">Type of keys</typeparam>

@@ -1,5 +1,5 @@
 #If Config <= Release Then
-Namespace ComponentModel
+Namespace ComponentModelT
     ''' <summary>Inform programmer that he should name instances of class market wiht this attribute with names beginning with prefix</summary>
     ''' <remarks>This is ONLY recomendation. This attribute is here to allow control author to select prefix. Of course users of controls can either use own prefix or use no prefix.</remarks>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=False)> _

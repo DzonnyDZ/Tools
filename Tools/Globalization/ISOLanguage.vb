@@ -1,10 +1,12 @@
 Imports System.ComponentModel
-'ASAP:Wiki,comment,mark,forum
-Namespace Globalization_ 'ASAP:Namespace
-#If Config <= Nightly Then
+'ASAP:Wiki,forum
+Namespace GlobalizationT 'ASAP:Namespace
+#If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represents language represented by ISO 639 language code and provides list of all defined ISO 639-1 and ISO 639-2 language codes</summary>
     ''' <completionlist cref="ISOLanguage"/>
-    Partial Public Class ISOLanguage
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(ISOLanguage), LastChMMDDYYYY:="05/28/2007")> _
+    Partial Public Class ISOLanguage : Implements IEquatable(Of ISOLanguage)
         ''' <summary>Possible "kinds" of languages</summary>
         Public Enum CodeTypes
             ''' <summary>Marks language as spoken (currently in use, not extinct)</summary>
@@ -58,7 +60,7 @@ Namespace Globalization_ 'ASAP:Namespace
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not valid <see cref="CodeTypes"/> value</exception>
         <CLSCompliant(False)> _
         Public Sub New(ByVal ISO2 As String, ByVal English As String, Optional ByVal Native As String = Nothing, Optional ByVal ISO1 As String = Nothing, Optional ByVal Type As CodeTypes = CodeTypes.Spoken, Optional ByVal Scale As UInteger = 0, Optional ByVal Duplicate As String = Nothing)
-            Me.new(ISO1, ISO2, English, Tools.VisualBasic.Interaction.iif(Native Is Nothing, English, Native), Scale, Type, Duplicate)
+            Me.new(ISO1, ISO2, English, Tools.VisualBasicT.Interaction.iif(Native Is Nothing, English, Native), Scale, Type, Duplicate)
         End Sub
         ''' <summary>Contains value of the <see cref="ISO1"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -219,8 +221,11 @@ Namespace Globalization_ 'ASAP:Namespace
                 Return Nothing
             End If
         End Function
- 'ASAP: Comment
-Public Shared Narrowing Operator CType(ByVal a As String) As ISOLanguage
+        ''' <summary>Converts <see cref="String"/> into <see cref="ISOLanguage"/></summary>
+        ''' <param name="a"><see cref="String"/> to be converted</param>
+        ''' <returns><see cref="ISOLanguage"/> with specified code (same as result of <see cref="GetByCode"/> whan it returns non-null)</returns>
+        ''' <exception cref="InvalidCastException"><paramref name="a"/> is unknown code -or- <paramref name="a"/> is invalid code</exception>
+        Public Shared Narrowing Operator CType(ByVal a As String) As ISOLanguage
             Dim ret As ISOLanguage
             Try
                 ret = GetByCode(a)
@@ -228,8 +233,103 @@ Public Shared Narrowing Operator CType(ByVal a As String) As ISOLanguage
                 Throw New InvalidCastException(String.Format("Cannot convert string {0} to ISOLanguage"), ex)
             End Try
             If ret Is Nothing Then Throw New InvalidCastException(String.Format("Cannot convert string {0} to ISOLanguage"))
-            return ret
+            Return ret
         End Operator
+        ''' <summary>String representation (code(s) and english name)</summary>
+        Public Overrides Function ToString() As String
+            Dim ret As New System.Text.StringBuilder
+            If ISO1 IsNot Nothing Then ret.Append(ISO1 & " "c)
+            If ISO2 IsNot Nothing Then ret.Append(ISO2 & " "c)
+            If Duplicate IsNot Nothing Then ret.Append(Duplicate & " "c)
+            ret.Append("("c & English & ")"c)
+            Return ret.ToString
+        End Function
+        ''' <summary>Compares two instances of <see cref="ISOLanguage"/></summary>
+        ''' <param name="a">A <see cref="ISOLanguage"/> to be compared</param>
+        ''' <param name="b">A <see cref="ISOLanguage"/> to be compared</param>
+        ''' <returns>True if both instances have same both codes (<see cref="ISO1"/> and <see cref="ISO2"/>). If one of codes of one operand if null then it is ignored. For <see cref="ISO2"/> also <see cref="Duplicate"/> is compared. Result is Ture when at least one pair of cross comparison of both <see cref="ISO2"/>s and <see cref="Duplicate"/>s retuns true. Result is ignored if both <see cref="ISO2"/> and <see cref="Duplicate"/> of one operand are null. If comparison of <see cref="ISO1"/> leads to true and comparison of <see cref="ISO2"/> leads to false (or vice versa) an <see cref="InvalidOperationException"/> is thrown.</returns>
+        ''' <exception cref="InvalidOperationException"><see cref="ISO1"/> of both operands are considered equal while <see cref="ISO2"/> not.</exception>
+        Public Shared Operator =(ByVal a As ISOLanguage, ByVal b As ISOLanguage) As Boolean
+            Dim State As CompState = CompState.Null
+            State = Compare(a.ISO1, b.ISO1, State)
+            State = Compare(a.ISO2, a.Duplicate, b.ISO2, b.Duplicate, State)
+            Return State <> CompState.NotEqual
+        End Operator
+        ''' <summary>Compares two <see cref="String"/>s while ignoring nulls</summary>
+        ''' <param name="a">A <see cref="String"/> to compare</param>
+        ''' <param name="b">A <see cref="String"/> to compare</param>
+        ''' <param name="State">State of previous comparison</param>
+        ''' <returns>New state of comparison</returns>
+        ''' <exception cref="InvalidOperationException">State of comparison is abou to be changed when it is <see cref="CompState.Equal"/> or <see cref="CompState.NotEqual"/></exception>
+        Private Shared Function Compare(ByVal a As String, ByVal b As String, ByVal State As CompState) As CompState
+            If a = b AndAlso a IsNot Nothing Then
+                If State = CompState.NotEqual Then Throw New InvalidOperationException("Cannot change state from NotEqual to Equal")
+                Return CompState.Equal
+            ElseIf a Is Nothing OrElse b Is Nothing Then
+                Return State
+            Else
+                If State = CompState.Equal Then Throw New InvalidOperationException("Cannot change state from Equal to NotEqual")
+                Return CompState.NotEqual
+            End If
+        End Function
+        ''' <summary>Compares two pairs of <see cref="String"/> while ignoring nulls</summary>
+        ''' <param name="a1">A <see cref="String"/> from first pair to compare</param>
+        ''' <param name="a2">A <see cref="String"/> from first pair to compare</param>
+        ''' <param name="b1">A <see cref="String"/> from second pair to compare</param>
+        ''' <param name="b2">A <see cref="String"/> from second pair to compare</param>
+        ''' <param name="State">State of previous comparison</param>
+        ''' <returns>New state of comparison</returns>
+        ''' <exception cref="InvalidOperationException">State of comparison is abou to be changed when it is <see cref="CompState.Equal"/> or <see cref="CompState.NotEqual"/></exception>
+        Private Shared Function Compare(ByVal a1 As String, ByVal a2 As String, ByVal b1 As String, ByVal b2 As String, ByVal State As CompState) As CompState
+            If (a1 = b1 AndAlso a1 IsNot Nothing) OrElse (a2 = b2 AndAlso a2 IsNot Nothing) OrElse (a1 = b2 AndAlso b2 IsNot Nothing) OrElse (a2 = b1 AndAlso a2 IsNot Nothing) Then
+                If State = CompState.NotEqual Then Throw New InvalidOperationException("Cannot change state from NotEqual to Equal")
+                Return CompState.Equal
+            ElseIf a1 Is Nothing AndAlso a2 Is Nothing OrElse b1 Is Nothing AndAlso b2 Is Nothing Then
+                Return State
+            Else
+                If State = CompState.Equal Then Throw New InvalidOperationException("Cannot change state from Equal to NotEqual")
+                Return CompState.NotEqual
+            End If
+        End Function
+        ''' <summary>States of comparison</summary>
+        Private Enum CompState
+            ''' <summary>Operand equal</summary>
+            Equal
+            ''' <summary>Unknown state</summary>
+            Null
+            ''' <summary>Operands did not equal</summary>
+            NotEqual
+        End Enum
+        ''' <summary>Compares two instances of <see cref="ISOLanguage"/></summary>
+        ''' <param name="a">A <see cref="ISOLanguage"/> to be compared</param>
+        ''' <param name="b">A <see cref="ISOLanguage"/> to be compared</param>
+        ''' <returns>False if both instances have same both codes (<see cref="ISO1"/> and <see cref="ISO2"/>). If one of codes of one operand if null then it is ignored. For <see cref="ISO2"/> also <see cref="Duplicate"/> is compared. Result is Ture when at least one pair of cross comparison of both <see cref="ISO2"/>s and <see cref="Duplicate"/>s retuns true. Result is ignored if both <see cref="ISO2"/> and <see cref="Duplicate"/> of one operand are null. If comparison of <see cref="ISO1"/> leads to true and comparison of <see cref="ISO2"/> leads to false (or vice versa) an <see cref="InvalidOperationException"/> is thrown.</returns>
+        ''' <exception cref="InvalidOperationException"><see cref="ISO1"/> of both operands are considered equal while <see cref="ISO2"/> not.</exception>
+        Public Shared Operator <>(ByVal a As ISOLanguage, ByVal b As ISOLanguage) As Boolean
+            Return Not a = b
+        End Operator
+        ''' <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="System.Object"/>.</summary>
+        ''' <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
+        ''' <returns>true if the specified System.Object is equal to the current <see cref="System.Object"/>; otherwise, false.</returns>
+        ''' <remarks>Use type safe overload <see cref="Equals"/> instead. This function uses it internally</remarks>
+        <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type safe ovcerload instead")> _
+        Public NotOverridable Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
+            If TypeOf obj Is ISOLanguage Then
+                Return Equals(DirectCast(obj, ISOLanguage))
+            Else
+                Return MyBase.Equals(obj)
+            End If
+        End Function
+        ''' <summary>Compares this instance of <see cref="ISOLanguage"/> to another. Unlike the = operator does not throw an exception but rather returns false</summary>
+        ''' <param name="other">Another instance to compare this instance with</param>
+        ''' <returns>True if instances are considered equal. See the = operator for details</returns>
+        Public Overridable Overloads Function Equals(ByVal other As ISOLanguage) As Boolean Implements System.IEquatable(Of ISOLanguage).Equals
+            Try
+                Return Me = other
+            Catch ex As InvalidOperationException
+                Return False
+            End Try
+        End Function
     End Class
 #End If
 End Namespace

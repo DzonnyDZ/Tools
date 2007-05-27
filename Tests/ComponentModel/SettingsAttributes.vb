@@ -1,5 +1,5 @@
-﻿Imports Tools.ComponentModel, System.ComponentModel
-Namespace ComponentModel
+﻿Imports Tools.ComponentModelT, System.ComponentModel
+Namespace ComponentModelT
     '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Test form for <see cref="SettingsInheritDescriptionAttribute"/> and <see cref="SettingsInheritDefaultValueAttribute"/></summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
@@ -12,7 +12,7 @@ Namespace ComponentModel
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
             pgrMain.SelectedObject = New SettingsWrapper
         End Sub
         ''' <summary>Shows test form</summary>

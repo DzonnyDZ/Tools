@@ -1,6 +1,6 @@
-﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModel, Tools.VisualBasic
+﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT
 #If Config <= Release Then
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
     ''' <remarks><para>
@@ -214,7 +214,7 @@ Namespace Collections.Generic
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         Protected Overridable Sub OnAdding(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent Adding(Me, e)
-            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(ifnull(e.CancelMessage, "Adding was canceled in event handler"))
+            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Adding was canceled in event handler"))
         End Sub
         ''' <summary>Raises <see cref="Added"/> event</summary>
         ''' <param name="e">Event arguments</param>
@@ -284,7 +284,7 @@ Namespace Collections.Generic
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
         Protected Overridable Sub OnClearing(ByVal e As CancelMessageEventArgs)
             RaiseEvent Clearing(Me, e)
-            If e.Cancel AndAlso Me.CancelError Then Throw New OperationCanceledException(IfNull(e.Cancelmessage, "Clearing was canceled in eventhendler"))
+            If e.Cancel AndAlso Me.CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Clearing was canceled in eventhendler"))
         End Sub
         ''' <summary>Raises <see cref="Cleared"/> event</summary>
         ''' <param name="e">Event arguments</param>

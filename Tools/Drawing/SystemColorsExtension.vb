@@ -1,5 +1,5 @@
 Imports System.Drawing, System.Windows.Forms
-Namespace Drawing
+Namespace DrawingT
 #If Config <= Release Then
     ''' <summary>Gives access to aditional system-defined colors</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _

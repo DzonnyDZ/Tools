@@ -1,5 +1,5 @@
-Imports Tools.Internal
-Namespace Internal
+Imports Tools.InternalT
+Namespace InternalT
 #If Config <= Release Then
     <Version(1, 0, GetType(VersionAttributeTest), LastChMMDDYYYY:="05/15/2007")> _
     Public Class VersionAttributeTest

@@ -14,7 +14,7 @@
     
     In list that follows the Native attribute contains native name if it is available. Otherwise english name is provided.
     -->
-<Root xmlns="http://codeplex.com/DTools/ISOLanguages" transformer="ISOLanguages.xslt" Stage="Nightly">
+<Root xmlns="http://codeplex.com/DTools/ISOLanguages" transformer="ISOLanguages.xslt" Stage="Alpha">
     <lng ISO639-2="abk" ISO639-1="ab" English="Abkhaz" Native="Аҧсуа" flag="spoken" scale="200000"/>
     <lng ISO639-2="ace" English="Acehnese, Achinese" Native="Aceh" flag="spoken" scale="3000000"/>
     <lng ISO639-2="ach" English="Acoli" Native="Acoli" flag="spoken" scale="800000"/>

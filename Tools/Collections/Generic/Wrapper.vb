@@ -1,5 +1,5 @@
 ﻿#If Config <= release Then
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     ''' <summary>Wpars type-unsafe <see cref="IEnumerable"/> as type-safe <see cref="IEnumerable(Of T)"/></summary>
     ''' <typeparam name="T">Type that each item of wrapped collection must be of or convertible to</typeparam>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(Wrapper(Of Long)), LastChMMDDYYYY:="01/07/2007")> _

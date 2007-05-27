@@ -1,6 +1,6 @@
-Imports Tools.VisualBasic, System.IO
+Imports Tools.VisualBasicT, System.IO
 #If Config <= RC Then 'Stage:RC
-Namespace IO
+Namespace IOt
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>
     <Version(1, 1, GetType(Path), LastChMMDDYYYY:="03/05/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -439,7 +439,7 @@ Namespace IO
             For i As Integer = 0 To NewArr.Length - Levels - 1
                 NewArr(i) = Segments(i)
             Next i
-            Me.Path = IO.Path.Join(NewArr).Path
+            Me.Path = IOt.Path.Join(NewArr).Path
         End Sub
         ''' <summary>Removes <paramref name="Levels"/> parts from end of <paramref name="Path"/></summary>
         ''' <param name="Levels">Number of levels to be removed</param>

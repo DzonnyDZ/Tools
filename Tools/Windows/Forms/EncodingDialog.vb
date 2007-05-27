@@ -1,5 +1,5 @@
 Imports System.Windows.Forms, System.ComponentModel, System.Text
-Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
+Imports Tools.ComponentModelT, Tools.WindowsT.FormsT.UtilitiesT
 '#If Config <= Nightly Then
 'Stage: Nightly
 'Conditional compilation directive is commented out because its presence caused compiler warning.
@@ -8,12 +8,12 @@ Imports Tools.ComponentModel, Tools.Windows.Forms.Utilities
 'Search for line like following:
 '<Compile Include="Windows\Forms\EncodingDialog.vb" Condition="$(Config)&lt;=$(Release)">
 'Its preceded by comment.
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     ''' <summary>Representf dialog shown by <see cref="EncodingDialog"/></summary>
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Public Class frmEncodingDialog : Inherits Form  'TODO: Move into EncodingDialog and mark Protected
 #Region "Designer generated"
-        Protected WithEvents ensMain As Tools.Windows.Forms.EncodingSelector
+        Protected WithEvents ensMain As Tools.WindowsT.FormsT.EncodingSelector
         Protected WithEvents splMain As System.Windows.Forms.SplitContainer
         Protected WithEvents totToolTip As System.Windows.Forms.ToolTip
         Private components As System.ComponentModel.IContainer
@@ -28,7 +28,7 @@ Namespace Windows.Forms
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmEncodingDialog))
-            Me.ensMain = New Tools.Windows.Forms.EncodingSelector
+            Me.ensMain = New Tools.WindowsT.FormsT.EncodingSelector
             Me.tlpButtons = New System.Windows.Forms.TableLayoutPanel
             Me.cmdCancel = New System.Windows.Forms.Button
             Me.cmdOK = New System.Windows.Forms.Button
@@ -49,7 +49,7 @@ Namespace Windows.Forms
             '
             resources.ApplyResources(Me.ensMain, "ensMain")
             Me.ensMain.Name = "ensMain"
-            Me.ensMain.Style = Tools.Windows.Forms.EncodingSelector.EncodingSelectorStyle.ListView
+            Me.ensMain.Style = Tools.WindowsT.FormsT.EncodingSelector.EncodingSelectorStyle.ListView
             '
             'tlpButtons
             '
@@ -153,7 +153,7 @@ Namespace Windows.Forms
         End Sub
 
         Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
-            If ServesFor.SelectedEncoding IsNot Nothing AndAlso ValidateEncoding Then
+            If ServesFor.SelectedEncoding IsNot Nothing AndAlso ValidateEncoding() Then
                 Me.DialogResult = System.Windows.Forms.DialogResult.OK
             ElseIf ServesFor.SelectedEncoding Is Nothing Then
                 MsgBox("Select encoding please.", , "No encoding selected") 'TODO:Localize

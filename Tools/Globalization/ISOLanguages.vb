@@ -9,8 +9,8 @@
 ' Created: 27. května 2007
 ' By:DZONNY\Honza
 '
-Namespace Globalization_
-#If Congig <= Nightly 'Stage: Nightly
+Namespace GlobalizationT
+#If Congig <= Alpha 'Stage: Alpha
 	Partial Public Class ISOLanguage
 		''' <summary>Code for Afar (Qafár af)</summary>
 		<DebuggerNonUserCode()> Public Shared Readonly Property [aar]() As ISOLanguage

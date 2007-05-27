@@ -328,7 +328,7 @@
     <None Include="app.config" />
     <None Include="ComponentModel\SettingsAttributesTestSettings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
-      <CustomToolNamespace>ComponentModel</CustomToolNamespace>
+      <CustomToolNamespace>ComponentModelT</CustomToolNamespace>
       <LastGenOutput>SettingsAttributesTestSettings.Designer.vb</LastGenOutput>
     </None>
     <None Include="Resources\FindHS.png" />

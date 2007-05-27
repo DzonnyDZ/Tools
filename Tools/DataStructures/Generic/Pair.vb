@@ -1,4 +1,4 @@
-﻿Namespace DataStructures.Generic
+﻿Namespace DataStructuresT.GenericT
 #If Config <= Release Then
     ''' <summary>Type tha contains value of two distinct types</summary>
     ''' <typeparam name="T1">Type of first value</typeparam>

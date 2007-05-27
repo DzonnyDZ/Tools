@@ -1,4 +1,4 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmProgressBarWithText
         Inherits System.Windows.Forms.Form
@@ -24,7 +24,7 @@ Namespace Windows.Forms
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.splMain = New System.Windows.Forms.SplitContainer
-            Me.pbtPgb = New Tools.Windows.Forms.ProgressBarWithText
+            Me.pbtPgb = New Tools.WindowsT.FormsT.ProgressBarWithText
             Me.pgrGrid = New System.Windows.Forms.PropertyGrid
             Me.txtLog = New System.Windows.Forms.TextBox
             Me.splMain.Panel1.SuspendLayout()
@@ -100,7 +100,7 @@ Namespace Windows.Forms
         End Sub
         Friend WithEvents splMain As System.Windows.Forms.SplitContainer
         Friend WithEvents pgrGrid As System.Windows.Forms.PropertyGrid
-        Friend WithEvents pbtPgb As Tools.Windows.Forms.ProgressBarWithText
+        Friend WithEvents pbtPgb As Tools.WindowsT.FormsT.ProgressBarWithText
         Friend WithEvents txtLog As System.Windows.Forms.TextBox
     End Class
 End Namespace

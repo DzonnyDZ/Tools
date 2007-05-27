@@ -1,5 +1,5 @@
-﻿Imports Tools.Collections.Generic
-Namespace Collections.Generic
+﻿Imports Tools.CollectionsT.GenericT
+Namespace CollectionsT.GenericT
     ''' <summary>Tests selected functionality of <see cref="ReadOnlyListAdapter(Of TFrom, TTo)"/></summary>
     Friend Class frmReadOnlyListAdapter
         ''' <summary>List with read-write access</summary>
@@ -20,7 +20,7 @@ Namespace Collections.Generic
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
 
         ''' <summary>Deletes selected item from <see cref="RWList"/></summary>

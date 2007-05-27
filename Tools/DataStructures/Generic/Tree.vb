@@ -1,5 +1,5 @@
-Imports Tools.Collections.Generic, Tools.ComponentModel
-Namespace DataStructures.Generic
+Imports Tools.CollectionsT.GenericT, Tools.ComponentModelT
+Namespace DataStructuresT.GenericT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Represents tree or sub-tree</summary>
     <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _

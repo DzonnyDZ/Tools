@@ -1,6 +1,6 @@
 Imports System.Reflection
 '#If Config <= Nightly This conditional compilation is done in Tests.vbproj
-Namespace Internal
+Namespace InternalT
     Public Class ToolAssembly : Inherits Form
         Shared Sub Test()
             'Dim [Class] As Type = GetType([Class])

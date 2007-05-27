@@ -1,4 +1,4 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmTransparentLabel
         Inherits System.Windows.Forms.Form
@@ -30,7 +30,7 @@ Namespace Windows.Forms
             Me.RightToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.LeftToolStripPanel = New System.Windows.Forms.ToolStripPanel
             Me.ContentPanel = New System.Windows.Forms.ToolStripContentPanel
-            Me.tlbLabel = New Tools.Windows.Forms.TransparentLabel
+            Me.tlbLabel = New Tools.WindowsT.FormsT.TransparentLabel
             Me.pgrGrid = New System.Windows.Forms.PropertyGrid
             Me.panContainer.SuspendLayout()
             Me.SuspendLayout()
@@ -126,7 +126,7 @@ Namespace Windows.Forms
 
         End Sub
         Friend WithEvents panContainer As System.Windows.Forms.Panel
-        Friend WithEvents tlbLabel As Tools.Windows.Forms.TransparentLabel
+        Friend WithEvents tlbLabel As Tools.WindowsT.FormsT.TransparentLabel
         Friend WithEvents lblBg As System.Windows.Forms.Label
         Friend WithEvents pgrGrid As System.Windows.Forms.PropertyGrid
         Friend WithEvents BottomToolStripPanel As System.Windows.Forms.ToolStripPanel

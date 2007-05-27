@@ -1,5 +1,5 @@
-﻿Imports Tools.Windows.Forms
-Namespace Windows.Forms
+﻿Imports Tools.WindowsT.FormsT
+Namespace WindowsT.FormsT
     '#If Config <= Beta Then Stage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Test from for <see cref="EncodingSelector"/></summary>
     Friend Class frmEncodingSelector
@@ -15,10 +15,10 @@ Namespace Windows.Forms
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.Resources.ToolsIcon
+            Me.Icon = Tools.ResourcesT.ToolsIcon
         End Sub
 
-        Private Sub ensSelect_SelectedIndexChanged(ByVal sender As Tools.Windows.Forms.EncodingSelector, ByVal e As System.EventArgs) Handles ensSelect.SelectedIndexChanged
+        Private Sub ensSelect_SelectedIndexChanged(ByVal sender As Tools.WindowsT.FormsT.EncodingSelector, ByVal e As System.EventArgs) Handles ensSelect.SelectedIndexChanged
             If ensSelect.SelectedEncoding IsNot Nothing Then
                 lblSelected.Text = ensSelect.SelectedEncoding.DisplayName
             Else
@@ -35,7 +35,7 @@ Namespace Windows.Forms
             ensSelect.RefreshEncodings()
         End Sub
 
-        Private Sub ensSelect_ItemClick(ByVal sender As Tools.Windows.Forms.EncodingSelector, ByVal e As Tools.Windows.Forms.EncodingSelector.EncodingSelectorItemClickEventArgs) Handles ensSelect.ItemDoubleClick
+        Private Sub ensSelect_ItemClick(ByVal sender As Tools.WindowsT.FormsT.EncodingSelector, ByVal e As Tools.WindowsT.FormsT.EncodingSelector.EncodingSelectorItemClickEventArgs) Handles ensSelect.ItemDoubleClick
             MsgBox(e.Item.DisplayName)
         End Sub
     End Class

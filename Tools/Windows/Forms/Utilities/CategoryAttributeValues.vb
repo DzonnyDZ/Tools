@@ -1,5 +1,5 @@
 ﻿#If Config <= Release Then
-Namespace Windows.Forms.Utilities
+Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Common values used for <see cref="CategoryAttribute"/></summary>
     ''' <remarks>This class contains values that when used for <see cref="CategoryAttribute"/> are recognized by the .NET Framework and localized to current language.</remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 1, GetType(CategoryAttributeValues), LastChMMDDYYYY:="05/14/2007")> _

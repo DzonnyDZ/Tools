@@ -1,4 +1,4 @@
-Namespace Windows.Forms
+Namespace WindowsT.FormsT
     '#If Config <= Beta Then Stage conditional compilation of this file is set in Tests.vbproj
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmEncodingSelector
@@ -25,7 +25,7 @@ Namespace Windows.Forms
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.splMain = New System.Windows.Forms.SplitContainer
-            Me.ensSelect = New Tools.Windows.Forms.EncodingSelector
+            Me.ensSelect = New Tools.WindowsT.FormsT.EncodingSelector
             Me.lblSelected = New System.Windows.Forms.Label
             Me.cmdRefresh = New System.Windows.Forms.Button
             Me.pgrProperties = New System.Windows.Forms.PropertyGrid
@@ -60,7 +60,7 @@ Namespace Windows.Forms
             Me.ensSelect.Location = New System.Drawing.Point(0, 0)
             Me.ensSelect.Name = "ensSelect"
             Me.ensSelect.Size = New System.Drawing.Size(287, 108)
-            Me.ensSelect.Style = Tools.Windows.Forms.EncodingSelector.EncodingSelectorStyle.ListBox
+            Me.ensSelect.Style = Tools.WindowsT.FormsT.EncodingSelector.EncodingSelectorStyle.ListBox
             Me.ensSelect.TabIndex = 0
             '
             'lblSelected
@@ -113,7 +113,7 @@ Namespace Windows.Forms
             Me.ResumeLayout(False)
 
         End Sub
-        Friend WithEvents ensSelect As Tools.Windows.Forms.EncodingSelector
+        Friend WithEvents ensSelect As Tools.WindowsT.FormsT.EncodingSelector
         Friend WithEvents splMain As System.Windows.Forms.SplitContainer
         Friend WithEvents pgrProperties As System.Windows.Forms.PropertyGrid
         Friend WithEvents lblSelected As System.Windows.Forms.Label

@@ -1,10 +1,10 @@
-Namespace IO
+Namespace IOt
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Implements stream that reads only part of base stream</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ConstrainedReadOnlyStream), LastChMMDDYYYY:="04/24/2007")> _
     Public Class ConstrainedReadOnlyStream : Inherits System.IO.Stream
-        Implements Collections.Generic.IReadOnlyIndexable(Of Byte)
+        Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte)
         ''' <summary><see cref="System.IO.Stream"/> being constrained</summary>
         Protected ReadOnly Stream As System.IO.Stream
         ''' <summary>Minimum position for seek (0-based)</summary>
@@ -154,7 +154,7 @@ Namespace IO
         ''' <summary>Returns an enumerator that iterates through the collection.</summary>
         ''' <returns>A <see cref="System.Collections.Generic.IEnumerator(Of T1)"/> that can be used to iterate through the collection.</returns>
         Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of Byte) Implements System.Collections.Generic.IEnumerable(Of Byte).GetEnumerator
-            Return New Collections.Generic.IndexableEnumerator(Of Byte)(Me)
+            Return New CollectionsT.GenericT.IndexableEnumerator(Of Byte)(Me)
         End Function
         ''' <summary>Returns an enumerator that iterates through a collection.</summary>
         ''' <returns>An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.</returns>
@@ -166,7 +166,7 @@ Namespace IO
         ''' <param name="index">Index to obtain value</param>
         ''' <returns>value lying on specified <paramref name="index"/></returns>
         ''' <exception cref="ArgumentException">Specified <paramref name="index"/> is invalid</exception>
-        Default Public ReadOnly Property Item(ByVal index As Long) As Byte Implements Collections.Generic.IReadOnlyIndexable(Of Byte, Long).Item
+        Default Public ReadOnly Property Item(ByVal index As Long) As Byte Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte, Long).Item
             Get
                 If index < 0 OrElse index >= ConstrainedLenght Then Throw New ArgumentOutOfRangeException("index", "index is out of range")
                 Dim OldP As Long = Position
@@ -179,13 +179,13 @@ Namespace IO
             End Get
         End Property
         ''' <summary>Maximal valid value for index</summary>
-        Public ReadOnly Property Maximum() As Long Implements Collections.Generic.IReadOnlyIndexable(Of Byte).Maximum
+        Public ReadOnly Property Maximum() As Long Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte).Maximum
             Get
                 Return ConstrainedLenght - 1
             End Get
         End Property
         ''' <summary>Minimal valid value for index</summary>
-        Public ReadOnly Property Minimum() As Long Implements Collections.Generic.IReadOnlyIndexable(Of Byte).Minimum
+        Public ReadOnly Property Minimum() As Long Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte).Minimum
             Get
                 Return 0
             End Get
