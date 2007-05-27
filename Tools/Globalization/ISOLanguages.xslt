@@ -66,14 +66,20 @@
     <xsl:template name="code-gen">
         <xsl:text>&#9;Partial Public Class ISOLanguage&#xD;&#xA;</xsl:text>
         <xsl:call-template name="Properties"/>
-        <!--TODO: Call more templates-->
+        <xsl:call-template name="All"/>
         <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Generates shared properties for languages-->
     <xsl:template name="Properties">
-        <xsl:for-each select="ISO:Root/ISO:lng">
-            <xsl:text>&#9;&#9;Public Shared Readonly Property [</xsl:text>
+        <xsl:for-each select="/ISO:Root/ISO:lng">
+            <xsl:sort data-type="text" order="ascending" select="@ISO639-2"/>
+            <xsl:text>&#9;&#9;''' &lt;summary>Code for </xsl:text>
+            <xsl:value-of select="@English"/>
+            <xsl:text> (</xsl:text>
+            <xsl:value-of select="@Native"/>
+            <xsl:text>)&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&lt;DebuggerNonUserCode()> Public Shared Readonly Property [</xsl:text>
             <xsl:value-of select="@ISO639-2"/>
             <xsl:text>]() As ISOLanguage&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
@@ -86,14 +92,40 @@
             <xsl:text>", "</xsl:text>
             <xsl:value-of select="@Native"/>
             <xsl:text>", </xsl:text>
-            <xsl:value-of select="@Scale"/>
-            <xsl:text>, CodeTypes.</xsl:text>
+            <xsl:choose>
+                <xsl:when test="@scale">
+                    <xsl:value-of select="normalize-space(@scale)"/>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>0</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:text>UI, CodeTypes.</xsl:text>
             <xsl:value-of select="@flag"/>
             <xsl:text>, "</xsl:text>
-            <xsl:value-of select="../ISO:duplicate[@of=/@ISO639-2]/@ISO639-2"/>
+            <xsl:variable name="current" select="@ISO639-2"/>
+            <xsl:value-of select="../ISO:duplicate[@of=$current]/@ISO639-2"/>
             <xsl:text>")&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
         </xsl:for-each>
+    </xsl:template>
+
+    <xsl:template name="All">
+        <xsl:text>&#9;&#9;''' &lt;summary>Returns list of all predefined ISO 639-2 and ISO 639-1 language codes&lt;/summary>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;remarks>Reserved code from range qaa÷qtz are not returned. Duplicate codes are returnet only in &lt;see cref="Duplicate"/> property of other codes.&lt;/remarks>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&lt;DebuggerNonUserCode()> Public Shared Function GetAllCodes() As ISOLanguage()&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;Return New ISOLanguage() {</xsl:text>
+        <xsl:for-each select="/ISO:Root/ISO:lng">
+            <xsl:sort data-type="text" order="ascending" select="@ISO639-2"/>
+            <xsl:if test="position() != 1">
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+            <xsl:text>[</xsl:text>
+            <xsl:value-of select="@ISO639-2"/>
+            <xsl:text>]</xsl:text>
+        </xsl:for-each>
+        <xsl:text>}&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
     </xsl:template>
 </xsl:stylesheet>

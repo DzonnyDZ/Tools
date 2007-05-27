@@ -134,6 +134,7 @@
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
+    <Compile Include="Globalization\ISOLanguage.vb" />
     <Compile Include="Globalization\ISOLanguages.vb">
       <DependentUpon>ISOLanguages.xml</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -261,7 +262,8 @@
       <DependentUpon>ExifTags.xsd</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xsd">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Globalization\ISOLanguages.xsx">
       <DependentUpon>ISOLanguages.xsd</DependentUpon>
