@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Root xmlns="http://codeplex.com/DTools/IPTCTags" Stage="Nightly" transformer="IPTCTags.xslt">
+    <record number="1" name="Envelope" human-name="Envelope record">
+        <desc>Contains internal IPTC data used formerly in telecommunications. Now it is considered being deprecated and is not widely in use.</desc>
+        <tag number="0" name="ModelVersion" human-name="Model Version" type="UShort-binary" fixed="true" length="2" mandatory="true" repeatable="false">
+            <desc>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider. Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</desc>
+        </tag>
+        <tag number="5" name="Destination" human-name="Destination" type="GraphicCharacters" fixed="false" length="1024" mandatory="false" repeatable="true">
+            <desc>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</desc>
+        </tag>
+        <tag number="20" name="FileFormat" human-name="File Format" type="Enum-binary" enum="FileFormats" fixed="true" length="2" mandatory="true" repeatable="false">
+            <desc>A number representing the file format. The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</desc>
+        </tag>
+        <enum name="FileFormats" type="UShort" desc="Registered file formats by IPTC and NAA">
+            <item name="NoObjectData" value="0" desc="No Object Data"/>
+            <item name="NewsphotoParameterRecord" value="01" desc="IPTC-NAA Digital Newsphoto Parameter Record"/>
+            <item name="RecommendedMessageFormat" value="02" desc="IPTC7901 Recommended Message Format"/>
+            <item name="TIFF" value="03" desc="Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)"/>
+            <item name="AdobeIllustrator" value="04" desc="Illustrator (Adobe Graphics data)"/>
+            <item name="AppleSingle" value="05" desc="AppleSingle (Apple Computer Inc)"/>
+            <item name="NAA89_3" value="06" desc="NAA 89-3 (ANPA 1312)"/>
+            <item name="MacBinary" value="07" desc="MacBinary II"/>
+            <item name="UCOFF" value="08" desc="IPTC Unstructured Character Oriented File Format (UCOFF)"/>
+            <item name="UnitedPressInternationalANPA1312" value="09" desc="United Press International ANPA 1312 variant"/>
+            <item name="UnitedPressInternationalDownLoadMessage" value="10" desc="United Press International Down-Load Message"/>
+            <item name="JPEG" value="11" desc="¤ JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)"/>
+            <item name="PhotoCDImagePac" value="12" desc="Photo-CD Image-Pac (Eastman Kodak)"/>
+            <item name="BMP" value="13" desc="¤ Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)"/>
+            <item name="WAV" value="14" desc="Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)"/>
+            <item name="AVI" value="15" desc="Audio plus Moving Video [*.AVI] (Microsoft)"/>
+            <item name="EXE" value="16" desc="PC DOS/Windows Executable Files [*.COM][*.EXE]"/>
+            <item name="ZIP" value="17" desc="Compressed Binary File [*.ZIP] (PKWare Inc)"/>
+            <item name="AIFF" value="18" desc="Audio Interchange File Format AIFF (Apple Computer Inc)"/>
+            <item name="RIFFWave" value="19" desc="RIFF Wave (Microsoft Corporation)"/>
+            <item name="Freehand" value="20" desc="Freehand (Macromedia/Aldus)"/>
+            <item name="HTML" value="21" desc='Hypertext Markup Language "HTML" (The Internet Society)'/>
+            <item name="MP2" value="22" desc="MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"/>
+            <item name="MP3" value="23" desc="MPEG 2 Audio Layer 3, ISO/IEC"/>
+            <item name="PDF" value="24" desc="Portable Document File (*.PDF) Adobe"/>
+            <item name="NITF" value="25" desc="News Industry Text Format (NITF)"/>
+            <item name="TAR" value="26" desc="Tape Archive (*.TAR)"/>
+            <item name="TTNITF_DTD" value="27" desc="Tidningarnas Telegrambyrå NITF version (TTNITF DTD)"/>
+            <item name="RBNITF_DTD" value="28" desc="Ritzaus Bureau NITF version (RBNITF DTD)"/>
+            <item name="CorelDraw" value="29" desc="Corel Draw [*.CDR]"/>
+        </enum>
+        <tag number="22" name="FileFormatVersion" human-name="File Format Version" type="Enum-binary" enum="FileFormatVersions" fixed="true" length="2" mandatory="true" repeatable="false">
+            <desc>A binary number representing the particular version of the &lt;see cref='FileFormat'/></desc>
+        </tag>
+        <enum name="FileFormatVersions" type="UShort" desc="File formta version registered for NAA and IPTC">
+            <item name="V0" value="0" desc='Version 1 for FileFormat &lt;see cref="FileFormats.NoObjectData"/>'/>
+            <item name="V1" value="1" desc='Version 1 for file fromat &lt;see cref="FileFormats.NewsphotoParameterRecord"/> and &lt;see cref="FileFormats.NAA89_3"/>, 5.0 for &lt;see cref="FileFormats.TIFF"/>, 1.40 for &lt;see cref="FileFormats.AdobeIllustrator"/>, 2 for &lt;see cref="FileFormats.AppleSingle"/>, 1.02 for &lt;see cref="FileFormats.JPEG"/> and 3.1 for &lt;see cref="FileFormats.Freehand"/>'/>
+            <item name='V2' value='2' desc='Version 2 for file format &lt;see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for &lt;see cref="FileFormats.TIFF"/>, 4.0 for &lt;see cref="FileFormats.Freehand"/> and 2.0 for &lt;see cref="FileFormats.HTML"/>'/>
+            <item name='V3' value='3' desc='Version 3 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for &lt;see cref="FileFormats.Freehand"/>'/>
+            <item name='V4' value='4' desc='Version 4 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and &lt;see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for &lt;see cref="FileFormats.Freehand"/>'/>
+        </enum>
+        <tag number="30" name="ServiceIdentifier" human-name="Service Identifier" type="GraphicCharacters"  fixed="false" mandatory="true" repeatable="false" length="10">
+            <desc>Identifies the provider and product.</desc>
+        </tag>
+        <tag number="40" name="EnvelopeNumber" human-name="Envelope Number" type="NumericChar" fixed="true" mandatory="true" repeatable="false" length="8">
+            <desc>The characters form a number that will be unique for the date specified in &lt;see cref='DateSent'/> and for the Service Identifier specified in &lt;see cref='ServiceIdentifier'/>. If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</desc>
+        </tag>
+        <tag number="50" name="ProductID" human-name="Product I.D." type="GraphicCharacters" fixed="false" mandatory="false" repeatable="true" length="32">
+            <desc>Allows a provider to identify subsets of its overall service. Used to provide receiving organisation data on which to select, route, or otherwise handle data.</desc>
+        </tag>
+        <tag number="60" name="EnvelopePriority" human-name="Envelope Priority" type="NumericChar" fixed="true" mandatory="false" repeatable="false" length="1">
+            <desc>Specifies the envelope handling priority and not the editorial urgency (see 2:10, &lt;see cref='Urgency'/>). '1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</desc>
+        </tag>
+        <tag number="70" name="DateSent" human-name="Date Sent" type="CCYYMMDD" fixed="true" mandatory="true" repeatable="false" length="8">
+            <desc>Uses the format CCYYMMDD (century, year, month, day) as defined in ISO 8601 to indicate year, month and day the service sent the material.</desc>
+        </tag>
+    </record>
+</Root>

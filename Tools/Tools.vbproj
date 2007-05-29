@@ -286,7 +286,14 @@
     <EmbeddedResource Include="Resources\WindowsT.FormsT.ProgressBarWithText.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Drawing\Metadata\IPTC\IPTCTags.xsx">
+      <DependentUpon>IPTCTags.xsd</DependentUpon>
+    </None>
     <None Include="Globalization\ISOLanguages.xslt" />
+    <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml" />
     <Content Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
   </ItemGroup>
   <ItemGroup>

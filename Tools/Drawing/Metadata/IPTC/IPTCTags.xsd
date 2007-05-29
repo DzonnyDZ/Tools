@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<xs:schema id="ExifTags"
+                  targetNamespace="http://codeplex.com/DTools/IPTCTags"
+                  elementFormDefault="qualified"
+                  xmlns="http://codeplex.com/DTools/IPTCTags"
+                  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+                  xmlns:IPTC="http://codeplex.com/DTools/IPTCTags"
+           >
+    <xs:annotation>
+        <xs:documentation>This XML schema defines structure of file used to generate classes and enums to work with IPTC tags. This schema is designed for private use when developing this project only.</xs:documentation>
+    </xs:annotation>
+    
+    <!--Simple types:-->
+    <xs:simpleType name="IPTCRecordNumber">
+        <xs:annotation>
+            <xs:documentation>Valid values for IPTC records numbers</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:unsignedByte">
+            <xs:minInclusive value="1"/>
+            <xs:maxExclusive value="9"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="LengthSpec">
+        <xs:annotation>
+            <xs:documentation>Valid lengths for IPTC tags (datasets) lengths</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:unsignedInt">
+            <xs:maxInclusive value="32767"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TagType">
+        <xs:annotation>
+            <xs:documentation>Known types of IPTC data</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:NCName">
+            <xs:enumeration value="Byte-binary">
+                <xs:annotation>
+                    <xs:documentation>1 Byte unsigned integer stored binary (must have fixed length 1 byte)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UShort-binary">
+                <xs:annotation>
+                    <xs:documentation>2 Byte unsigned integer stored binary (must have fixed length 2 bytes)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NumericChar">
+                <xs:annotation>
+                    <xs:documentation>Numeric characters (number stored as ASCII string)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GraphicCharacters">
+                <xs:annotation>
+                    <xs:documentation>Graphic characters (no whitespaces, no cotrol characters)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Enum-binary">
+                <xs:annotation>
+                    <xs:documentation>Enumeration choice stored binary (actual enumeration is reffered by enum attribute)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CCYYMMDD">
+                <xs:annotation>
+                    <xs:documentation>Date format YYYYMMDD as of ISO 8601 stored as ASCII numeric string (must have fixed length 8 bytes)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Name">
+        <xs:annotation>
+            <xs:documentation>Name for programming language</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="xs:NCName">
+            <xs:pattern value="[^-_][^-]*"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="NETIntegrals">
+        <xs:annotation>
+            <xs:documentation>Integrl types defined in .NET</xs:documentation>
+        </xs:annotation>
+        <xs:restriction base="Name">
+            <xs:enumeration value="Byte">
+                <xs:annotation>
+                    <xs:documentation>Unsigned 1-Byte integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SByte">
+                <xs:annotation>
+                    <xs:documentation>Signed 1-Byte integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Short">
+                <xs:annotation>
+                    <xs:documentation>Signed 2-Bytes integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UShort">
+                <xs:annotation>
+                    <xs:documentation>Unsigned 2-Bytes integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Integer">
+                <xs:annotation>
+                    <xs:documentation>Signed 4-Bytes integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UInteger">
+                <xs:annotation>
+                    <xs:documentation>Unsigned 4-Bytes integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Long">
+                <xs:annotation>
+                    <xs:documentation>Signed 8-Bytes integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ULong">
+                <xs:annotation>
+                    <xs:documentation>Unsigned 8-Bytes integer</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!--Root:-->
+    <xs:element name="Root">
+        <xs:annotation>
+            <xs:documentation>IPTC tags specification</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element ref="record" minOccurs="0" maxOccurs="unbounded"/>
+            </xs:choice>
+            <xs:attribute name="transformer" type="xs:string" use="required">
+                <xs:annotation>
+                    <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Stage" use="required">
+                <xs:annotation>
+                    <xs:documentation>Stage of dicumment used for conditiona compilation</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Nightly">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Nightly stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Alpha">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Alpha stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Beta">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Beta stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="RC">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release Candidate stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Release">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+        <!--Constraints-->
+        <xs:unique name="unqTagName">
+            <xs:selector xpath="IPTC:record/IPTC:tag"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="unqTagHumanName">
+            <xs:selector xpath="IPTC:record/IPTC:tag"/>
+            <xs:field xpath="@human-name"/>
+        </xs:unique>
+        <xs:unique name="unqRecordNumber">
+            <xs:selector xpath="IPTC:record"/>
+            <xs:field xpath="@number"/>
+        </xs:unique>
+        <xs:unique name="unqRecordName">
+            <xs:selector xpath="IPTC:record"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="unqRecordHumanName">
+            <xs:selector xpath="IPTC:record"/>
+            <xs:field xpath="@human-name"/>
+        </xs:unique>
+        <xs:key name="keyEnum">
+            <xs:selector xpath="IPTC:record/IPTC:enum"/>
+            <xs:field xpath="@name"/>
+        </xs:key>
+        <xs:keyref name="EnumReference" refer="keyEnum">
+            <xs:selector xpath="IPTC:record/IPTC:tag"/>
+            <xs:field xpath="@enum"/>
+        </xs:keyref>
+    </xs:element>
+
+    <!--Elements:-->
+    <xs:element name="tag">
+        <xs:annotation>
+            <xs:documentation>Definition of one IPTC tag (dataset)</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                <xs:element name="desc" type="xs:token" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Description of meaning of data contained in this tag (dataset)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="number" type="xs:unsignedByte" use="required">
+                <xs:annotation>
+                    <xs:documentation>Number of this tag (dataset)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="mandatory" type="xs:boolean" use="required">
+                <xs:annotation>
+                    <xs:documentation>Defines if tag is mandatory (accorting to IPTC standard) or not</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="repeatable" type="xs:boolean" use="required">
+                <xs:annotation>
+                    <xs:documentation>Defines if tag is repeatable or not</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="fixed" type="xs:boolean" use="required">
+                <xs:annotation>
+                    <xs:documentation>Defines of tag data has fixed length (if true length is specified in length)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="length" type="LengthSpec" use="required">
+                <xs:annotation>
+                    <xs:documentation>Maximum (if fixed is false) length in bytes of tag data. 0 for no limit (same effect 32767). For fixed 0 is prohibited.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="name" type="Name" use="required">
+                <xs:annotation>
+                    <xs:documentation>Name of record used in programming langauge</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="human-name" type="xs:token" use="required">
+                <xs:annotation>
+                    <xs:documentation>Human-readable name</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="type" type="TagType" use="required">
+                <xs:annotation>
+                    <xs:documentation>Type of contained data</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="enum" type="Name" use="optional">
+                <xs:annotation>
+                    <xs:documentation>If type is enum then put reference to enum here</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+    
+    <xs:element name="record">
+        <xs:annotation>
+            <xs:documentation>Definition of one IPTC record (group of tags)</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element name="desc" type="xs:token" minOccurs="1" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Description of meaning of data contained in this tag (dataset)</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:sequence minOccurs="1" maxOccurs="unbounded">
+                    <xs:element minOccurs="1" maxOccurs="unbounded" ref="tag"/>
+                    <xs:element ref="enum" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+            </xs:sequence>
+            <xs:attribute name="number" type="IPTCRecordNumber" use="required">
+                <xs:annotation>
+                    <xs:documentation>Number of this record (group of tags). Range 1÷9</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="name" type="Name" use="required">
+                <xs:annotation>
+                    <xs:documentation>Name of record used in programming langauge</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="human-name" type="xs:token" use="required">
+                <xs:annotation>
+                    <xs:documentation>Human-readable name</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:unique name="unqTag">
+            <xs:selector xpath="IPTC:tag"/>
+            <xs:field xpath="@number"/>
+        </xs:unique>
+    </xs:element>
+
+    <xs:element name="enum">
+        <xs:annotation>
+            <xs:documentation>Represents enumeration of values</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="item">
+                    <xs:annotation>
+                        <xs:documentation>Item of enumeration</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:attribute name="name" type="Name" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Name of enumeration item</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="value" type="xs:long" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Value of enum item</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="desc" type="xs:token" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Description of enum item</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>                    
+                </xs:element>
+            </xs:sequence>
+            <xs:attribute name="name" type="Name" use="required">
+                <xs:annotation>
+                    <xs:documentation>Name of this enumeration for programming language</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="desc" type="xs:token" use="required">
+                <xs:annotation>
+                    <xs:documentation>Descriptio of tihis enumeration</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="type" type="NETIntegrals" use="required">
+                <xs:annotation>
+                    <xs:documentation>Type of this enumeration</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:unique name="unqInEnumName">
+            <xs:selector xpath="IPTC:item"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="unqInEnumValue">
+            <xs:selector xpath="IPTC:item"/>
+            <xs:field xpath="@value"/>
+        </xs:unique>
+    </xs:element>
+</xs:schema>

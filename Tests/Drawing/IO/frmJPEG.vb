@@ -86,9 +86,19 @@ Namespace DrawingT.IO
                             Next Entry
                         End If
                     End If
+                    'GPS SUb IFD
+                    If Exif.GPSSubIFD IsNot Nothing Then
+                        Dim GPSSubIFDNode As TreeNode = ExifNode.Nodes(0).Nodes(Exif.GPSSubIFD.ParentRecord)
+                        Dim GPSNode As TreeNode = GPSSubIFDNode.Nodes.Add(String.Format("GPS Sub IFD offset {0} next {1}", Hex(Exif.GPSSubIFD.Offest), Hex(Exif.GPSSubIFD.NextIFD)))
+                        GPSNode.Tag = Exif.GPSSubIFD
+                        For Each Entry As Tools.DrawingT.MetadataT.ExifIFDReader.DirectoryEntry In Exif.ExifSubIFD.Entries
+                            Dim EntryNode As TreeNode = GPSNode.Nodes.Add(String.Format( _
+                              "Entry {0} type {1} components {2} data {3}", Hex(Entry.Tag), Entry.DataType, Entry.Components, Entry.Data))
+                            EntryNode.Tag = Entry
+                        Next Entry
+                    End If
                 End If
                 'TODO:Show additional IFDs
-                'TODO:Show GPS IFD
                 'PhotoShop block
                 Dim PhotoShopStream As System.IO.Stream = jpeg.GetPhotoShopStream
                 Dim PhotoShopIndex As Integer = jpeg.PhotoshopMarkerIndex
