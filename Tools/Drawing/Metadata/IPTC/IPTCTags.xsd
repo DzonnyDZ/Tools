@@ -98,6 +98,11 @@
                     <xs:documentation>3 numeric characters followed by mandatory colon (so, lenght is minimally 4) and optional text part of variable lenght. It can be specified that number must be from specific enumeration by the enum attribute. Target enum must contain only maximally 3 digits long numbers!</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="SubjectReference">
+                <xs:annotation>
+                    <xs:documentation>Structured description of amtter of objectstored as graphic characters (as defined by IPTC)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="Name">
@@ -361,6 +366,11 @@
                         <xs:attribute name="desc" type="xs:token" use="required">
                             <xs:annotation>
                                 <xs:documentation>Description of enum item</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="human-name" type="xs:token" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Human readable name</xs:documentation>
                             </xs:annotation>
                         </xs:attribute>
                     </xs:complexType>                    

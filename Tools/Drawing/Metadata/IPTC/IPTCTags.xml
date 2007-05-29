@@ -12,46 +12,46 @@
             <desc>A number representing the file format. The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</desc>
         </tag>
         <enum name="FileFormats" type="UShort" desc="Registered file formats by IPTC and NAA">
-            <item name="NoObjectData" value="0" desc="No Object Data"/>
-            <item name="NewsphotoParameterRecord" value="01" desc="IPTC-NAA Digital Newsphoto Parameter Record"/>
-            <item name="RecommendedMessageFormat" value="02" desc="IPTC7901 Recommended Message Format"/>
-            <item name="TIFF" value="03" desc="Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)"/>
-            <item name="AdobeIllustrator" value="04" desc="Illustrator (Adobe Graphics data)"/>
-            <item name="AppleSingle" value="05" desc="AppleSingle (Apple Computer Inc)"/>
-            <item name="NAA89_3" value="06" desc="NAA 89-3 (ANPA 1312)"/>
-            <item name="MacBinary" value="07" desc="MacBinary II"/>
-            <item name="UCOFF" value="08" desc="IPTC Unstructured Character Oriented File Format (UCOFF)"/>
-            <item name="UnitedPressInternationalANPA1312" value="09" desc="United Press International ANPA 1312 variant"/>
-            <item name="UnitedPressInternationalDownLoadMessage" value="10" desc="United Press International Down-Load Message"/>
-            <item name="JPEG" value="11" desc="¤ JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)"/>
-            <item name="PhotoCDImagePac" value="12" desc="Photo-CD Image-Pac (Eastman Kodak)"/>
-            <item name="BMP" value="13" desc="¤ Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)"/>
-            <item name="WAV" value="14" desc="Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)"/>
-            <item name="AVI" value="15" desc="Audio plus Moving Video [*.AVI] (Microsoft)"/>
-            <item name="EXE" value="16" desc="PC DOS/Windows Executable Files [*.COM][*.EXE]"/>
-            <item name="ZIP" value="17" desc="Compressed Binary File [*.ZIP] (PKWare Inc)"/>
-            <item name="AIFF" value="18" desc="Audio Interchange File Format AIFF (Apple Computer Inc)"/>
-            <item name="RIFFWave" value="19" desc="RIFF Wave (Microsoft Corporation)"/>
-            <item name="Freehand" value="20" desc="Freehand (Macromedia/Aldus)"/>
-            <item name="HTML" value="21" desc='Hypertext Markup Language "HTML" (The Internet Society)'/>
-            <item name="MP2" value="22" desc="MPEG 2 Audio Layer 2 (Musicom), ISO/IEC"/>
-            <item name="MP3" value="23" desc="MPEG 2 Audio Layer 3, ISO/IEC"/>
-            <item name="PDF" value="24" desc="Portable Document File (*.PDF) Adobe"/>
-            <item name="NITF" value="25" desc="News Industry Text Format (NITF)"/>
-            <item name="TAR" value="26" desc="Tape Archive (*.TAR)"/>
-            <item name="TTNITF_DTD" value="27" desc="Tidningarnas Telegrambyrå NITF version (TTNITF DTD)"/>
-            <item name="RBNITF_DTD" value="28" desc="Ritzaus Bureau NITF version (RBNITF DTD)"/>
-            <item name="CorelDraw" value="29" desc="Corel Draw [*.CDR]"/>
+            <item name="NoObjectData" value="0" human-name="No Object Data" desc="No Object Data"/>
+            <item name="NewsphotoParameterRecord" value="01" human-name="Digital Newsphoto Parameter Record" desc="IPTC-NAA Digital Newsphoto Parameter Record"/>
+            <item name="RecommendedMessageFormat" human-name="recomended Message Format" value="02" desc="IPTC7901 Recommended Message Format"/>
+            <item name="TIFF" value="03" human-name="TIFF" desc="Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)"/>
+            <item name="AdobeIllustrator" value="04" human-name="Adobe Illustrator" desc="Illustrator (Adobe Graphics data)"/>
+            <item name="AppleSingle" value="05" human-name="Apple Single" desc="AppleSingle (Apple Computer Inc)"/>
+            <item name="NAA89_3" value="06" desc="NAA 89-3 (ANPA 1312)" human-name="NAA 89-3"/>
+            <item name="MacBinary" value="07" desc="MacBinary II" human-name="MAcBinary II"/>
+            <item name="UCOFF" value="08" desc="IPTC Unstructured Character Oriented File Format (UCOFF)" human-name="IPTC Unstructured Character Oriented File Format"/>
+            <item name="UnitedPressInternationalANPA1312" value="09" desc="United Press International ANPA 1312 variant" human-name="United Press International ANPA 1312"/>
+            <item name="UnitedPressInternationalDownLoadMessage" value="10" desc="United Press International Down-Load Message" human-name="Down-Load message"/>
+            <item name="JPEG" value="11" desc="¤ JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)" human-name="JPEG"/>
+            <item name="PhotoCDImagePac" value="12" desc="Photo-CD Image-Pac (Eastman Kodak)" human-name="Koned Photo-CD Image-Pac"/>
+            <item name="BMP" value="13" desc="¤ Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)" human-name="BMP"/>
+            <item name="WAV" value="14" desc="Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)" human-name="WAV"/>
+            <item name="AVI" value="15" desc="Audio plus Moving Video [*.AVI] (Microsoft)" human-name="AVI"/>
+            <item name="EXE" value="16" desc="PC DOS/Windows Executable Files [*.COM][*.EXE]" human-name="EXE, COM"/>
+            <item name="ZIP" value="17" desc="Compressed Binary File [*.ZIP] (PKWare Inc)" human-name="ZIP"/>
+            <item name="AIFF" value="18" desc="Audio Interchange File Format AIFF (Apple Computer Inc)" human-name="AIFF (Apple)"/>
+            <item name="RIFFWave" value="19" desc="RIFF Wave (Microsoft Corporation)" human-name="RIFF Wave"/>
+            <item name="Freehand" value="20" desc="Freehand (Macromedia/Aldus)" human-name="Freehand"/>
+            <item name="HTML" value="21" desc='Hypertext Markup Language "HTML" (The Internet Society)' human-name='HTML'/>
+            <item name="MP2" value="22" desc="MPEG 2 Audio Layer 2 (Musicom), ISO/IEC" human-name="MPEG 2 Audio"/>
+            <item name="MP3" value="23" desc="MPEG 2 Audio Layer 3, ISO/IEC" human-name="MP3"/>
+            <item name="PDF" value="24" desc="Portable Document File (*.PDF) Adobe" human-name="PDF"/>
+            <item name="NITF" value="25" desc="News Industry Text Format (NITF)" human-name="News Industry Text Format"/>
+            <item name="TAR" value="26" desc="Tape Archive (*.TAR)" human-name="TAR"/>
+            <item name="TTNITF_DTD" value="27" desc="Tidningarnas Telegrambyrå NITF version (TTNITF DTD)" human-name="TINITF DTD"/>
+            <item name="RBNITF_DTD" value="28" desc="Ritzaus Bureau NITF version (RBNITF DTD)" human-name="RBNITF DTD"/>
+            <item name="CorelDraw" value="29" desc="Corel Draw [*.CDR]" human-name="Corel Draw"/>
         </enum>
         <tag number="22" name="FileFormatVersion" human-name="File Format Version" type="Enum-binary" enum="FileFormatVersions" fixed="true" length="2" mandatory="true" repeatable="false">
             <desc>A binary number representing the particular version of the &lt;see cref='FileFormat'/></desc>
         </tag>
         <enum name="FileFormatVersions" type="UShort" desc="File formta version registered for NAA and IPTC">
-            <item name="V0" value="0" desc='Version 1 for FileFormat &lt;see cref="FileFormats.NoObjectData"/>'/>
-            <item name="V1" value="1" desc='Version 1 for file fromat &lt;see cref="FileFormats.NewsphotoParameterRecord"/> and &lt;see cref="FileFormats.NAA89_3"/>, 5.0 for &lt;see cref="FileFormats.TIFF"/>, 1.40 for &lt;see cref="FileFormats.AdobeIllustrator"/>, 2 for &lt;see cref="FileFormats.AppleSingle"/>, 1.02 for &lt;see cref="FileFormats.JPEG"/> and 3.1 for &lt;see cref="FileFormats.Freehand"/>'/>
-            <item name='V2' value='2' desc='Version 2 for file format &lt;see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for &lt;see cref="FileFormats.TIFF"/>, 4.0 for &lt;see cref="FileFormats.Freehand"/> and 2.0 for &lt;see cref="FileFormats.HTML"/>'/>
-            <item name='V3' value='3' desc='Version 3 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for &lt;see cref="FileFormats.Freehand"/>'/>
-            <item name='V4' value='4' desc='Version 4 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and &lt;see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for &lt;see cref="FileFormats.Freehand"/>'/>
+            <item name="V0" value="0" desc='Version 1 for FileFormat &lt;see cref="FileFormats.NoObjectData"/>' human-name='1 (No Object Data)'/>
+            <item name="V1" value="1" desc='Version 1 for file fromat &lt;see cref="FileFormats.NewsphotoParameterRecord"/> and &lt;see cref="FileFormats.NAA89_3"/>, 5.0 for &lt;see cref="FileFormats.TIFF"/>, 1.40 for &lt;see cref="FileFormats.AdobeIllustrator"/>, 2 for &lt;see cref="FileFormats.AppleSingle"/>, 1.02 for &lt;see cref="FileFormats.JPEG"/> and 3.1 for &lt;see cref="FileFormats.Freehand"/>' human-name="1 (IPTC-NAA Digital Newsphoto Parameter Record, NAA 89-3), 5.0 (TIFF), 1.40 (Adobe Illustrator), 2 (Apple Single), 1.02 (JPEG), 3.1 (Freehand)"/>
+            <item name='V2' value='2' desc='Version 2 for file format &lt;see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for &lt;see cref="FileFormats.TIFF"/>, 4.0 for &lt;see cref="FileFormats.Freehand"/> and 2.0 for &lt;see cref="FileFormats.HTML"/>' human-name='2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)'/>
+            <item name='V3' value='3' desc='Version 3 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for &lt;see cref="FileFormats.Freehand"/>' human-name='3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)'/>
+            <item name='V4' value='4' desc='Version 4 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and &lt;see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for &lt;see cref="FileFormats.Freehand"/>' human-name='4 (IPTC-NAA Digital Newsphoto Parameter Record, Recomended Message Format), 5.5 (Freehand)'/>
         </enum>
         <tag number="30" name="ServiceIdentifier" human-name="Service Identifier" type="GraphicCharacters"  fixed="false" mandatory="true" repeatable="false" length="10">
             <desc>Identifies the provider and product.</desc>
@@ -190,11 +190,11 @@
             </tag>
         </group>
         <enum name="ARMMethods" type="UShort" desc="Abstract Relation Methods Identifiers">
-            <item value="1" name="IPTCMethod1" desc="Using DataSets 2:45, 2:47 and 2:50 (&lt;see cref='ReferenceService'/>, &lt;see cref='ReferenceDate'/> and &lt;see cref='ReferenceNumber'/>)"/>
-            <item value="2" name="IPTCMethod2" desc="Using DataSet 1:100 (&lt;see cref='UNO'/>)"/>
+            <item value="1" name="IPTCMethod1" desc="Using DataSets 2:45, 2:47 and 2:50 (&lt;see cref='ReferenceService'/>, &lt;see cref='ReferenceDate'/> and &lt;see cref='ReferenceNumber'/>)" human-name="Method 1 (Reference service, date, number)"/>
+            <item value="2" name="IPTCMethod2" desc="Using DataSet 1:100 (&lt;see cref='UNO'/>)" human-name="Method 2 (UNO)"/>
         </enum>
         <enum name="ARMVersions" type="UShort" desc="Abstract Relation Method Versions">
-            <item value="1" name="ARM1" desc="The only ARM version"/>
+            <item value="1" name="ARM1" desc="The only ARM version" human-name="Version 1"/>
         </enum>
     </record>
 
@@ -207,36 +207,36 @@
             <desc>The Object Type is used to distinguish between different types of objects within the IIM. The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</desc>
         </tag>
         <enum name="ObjectTypes" type="Byte" desc="Object Type Number and Object Type Name relationship">
-            <item value="1" name="News" desc="News"/>
-            <item value="2" name="Data" desc="Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate."/>
-            <item value="3" name="Advisory" desc="Advisory"/>
+            <item value="1" name="News" desc="News" human-name="News"/>
+            <item value="2" name="Data" desc="Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate." human-name="Data"/>
+            <item value="3" name="Advisory" desc="Advisory" human-name="Advisory"/>
         </enum>
         <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes">
             <desc>The Object Attribute defines the nature of the object independent of the Subject. The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</desc>
         </tag>
         <enum name="ObjectAttributes" type="Byte" desc="Object Attribute Number abd Object Name relationship">
-            <item value="1" name="Current" desc="Current"/>
-            <item value="2" name="Analysis" desc="Analysis"/>
-            <item value="3" name="ArchiveMaterial" desc="Archive material"/>
-            <item value="4" name="Background" desc="Background"/>
-            <item value="5" name="Feature" desc="Feature"/>
-            <item value="6" name="Forecast" desc="Forecast"/>
-            <item value="7" name="History" desc="History"/>
-            <item value="8" name="Obituary" desc="Obituary"/>
-            <item value="9" name="Opinion" desc="Opinion"/>
-            <item value="10" name="PollsAndSurveys" desc="Polls &amp; Surveys"/>
-            <item value="11" name="Profile" desc="Profile"/>
-            <item value="12" name="ResultsListingsAndTables" desc="Results Listings &amp; Tables"/>
-            <item value="13" name="SideBarAndSupportingInformation" desc="Side bar &amp; Supporting information"/>
-            <item value="14" name="Summary" desc="Summary"/>
-            <item value="15" name="TranscriptAndVerbatim" desc="Transcript &amp; Verbatim"/>
-            <item value="16" name="Interview" desc="Interview"/>
-            <item value="17" name="FromTheScene" desc="From the Scene"/>
-            <item value="18" name="Retrospective" desc="Retrospective"/>
-            <item value="19" name="Statistics" desc="Statistics"/>
-            <item value="20" name="Update" desc="Update"/>
-            <item value="21" name="WrapUp" desc="Wrap-up"/>
-            <item value="22" name="PressRelease" desc="Press Release"/>
+            <item value="01" name="Current" desc="Current" human-name="Current"/>
+            <item value="02" name="Analysis" desc="Analysis" human-name="Analysis"/>
+            <item value="03" name="ArchiveMaterial" desc="Archive material" human-name="Archive material"/>
+            <item value="04" name="Background" desc="Background" human-name="Background"/>
+            <item value="05" name="Feature" desc="Feature" human-name="Feature"/>
+            <item value="06" name="Forecast" desc="Forecast" human-name="Forecast"/>
+            <item value="07" name="History" desc="History" human-name="History"/>
+            <item value="08" name="Obituary" desc="Obituary" human-name="Obituary"/>
+            <item value="09" name="Opinion" desc="Opinion" human-name="Opinion"/>
+            <item value="10" name="PollsAndSurveys" desc="Polls &amp; Surveys" human-name="Polls &amp; Survays"/>
+            <item value="11" name="Profile" desc="Profile" human-name="Profile"/>
+            <item value="12" name="ResultsListingsAndTables" desc="Results Listings &amp; Tables" human-name="Results Listings &amp; Tables"/>
+            <item value="13" name="SideBarAndSupportingInformation" desc="Side bar &amp; Supporting information" human-name="Side bar &amp; Supporting information"/>
+            <item value="14" name="Summary" desc="Summary" human-name="Summary"/>
+            <item value="15" name="TranscriptAndVerbatim" desc="Transcript &amp; Verbatim" human-name="Transcript &amp; Verbatim"/>
+            <item value="16" name="Interview" desc="Interview" human-name="Interview"/>
+            <item value="17" name="FromTheScene" desc="From the Scene" human-name="From the Scene"/>
+            <item value="18" name="Retrospective" desc="Retrospective" human-name="Retrospective"/>
+            <item value="19" name="Statistics" desc="Statistics" human-name="Statistics"/>
+            <item value="20" name="Update" desc="Update" human-name="Update"/>
+            <item value="21" name="WrapUp" desc="Wrap-up" human-name="Wrap-up"/>
+            <item value="22" name="PressRelease" desc="Press Release" human-name="Press Release"/>
         </enum>
         <tag number="7" name="EditStatus" human-name="Edit Status" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64">
             <desc>Status of the objectdata, according to the practice of the provider.</desc>
@@ -245,10 +245,389 @@
             <desc>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (&lt;see cref='ARM'/>)), according to the practices of the provider.</desc>
         </tag>
         <enum name="EditorialUpdateValues" type="Byte" desc="Values for &lt;see cref='EditorialUpdate'/>">
-            <item value="1" name="AdditionalLanguage" desc="Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - &lt;see cref='LanguageIdentifier'/>)."/>
+            <item value="1" name="AdditionalLanguage" desc="Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - &lt;see cref='LanguageIdentifier'/>)." human-name="Additional language"/>
         </enum>
         <tag number="10" name="Urgency" human-name="Urgency" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="1">
             <desc>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, Envelope Priority). The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</desc>
         </tag>
+        <tag number="12" name="SubjectReference" human-name="Subject Reference" type="SubjectReference" mandatory="false" repeatable="true" fixed="false" length="236">
+            <desc>The Subject Reference is a structured definition of the subject matter. It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</desc>
+        </tag>
+        <enum name="SubjectReferenceNumbers" desc="Subject Reference Number and Subject Name relationship (version IPTC/1)" type="Integer">
+            <item value="01000000" name="ArtsCultureEntertainment" human-name="Arts, Culture &amp; Entertainment" desc="Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions"/>
+            <item value="02000000" human-name="Crime, Law &amp; Justice" name="CrimeLawJustice" desc="Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities."/>
+            <item value="03000000" human-name="Disasters &amp; Accidents" name="DisastersAccidents" desc="Man made and natural events resulting in loss of life or injury to living creatures and/or damage to inanimate objects or property."/>
+            <item value="04000000" human-name="Economy, Business &amp; Finance" name="EconomyBusinessFinance" desc="All matters concerning the planning, production and exchange of wealth."/>
+            <item value="05000000" human-name="Education" name="Education" desc="All aspects of furthering knowledge of human individuals from birth to death."/>
+            <item value="06000000" human-name="Environmental Issues" name="EnvironmentalIssues" desc="All aspects of protection, damage, and condition of the ecosystem of the planet earth and its surroundings."/>
+            <item value="07000000" human-name="Health" name="Health" desc="All aspects pertaining to the physical and mental welfare of human beings."/>
+            <item value="08000000" human-name="Human Interest" name="HumanInterest" desc="Lighter items about individuals, groups, animals or objects."/>
+            <item value="09000000" human-name="Labour" name="Labour" desc="Social aspects, organisations, rules and conditions affecting the employment of human effort for the generation of wealth or provision of services and the economic support of the unemployed."/>
+            <item value="10000000" human-name="Lifestyle &amp; Leisure" name="LifestyleAndLeisure" desc="Activities undertaken for pleasure, relaxation or recreation outside paid employment, including eating and travel."/>
+            <item value="11000000" human-name="Politics" name="Politics" desc="Local, regional, national and international exercise of power, or struggle for power, and the relationships between governing bodies and states."/>
+            <item value="12000000" human-name="Religion &amp; Belief" name="ReligionBelief" desc="All aspects of human existence involving theology, philosophy, ethics and spirituality."/>
+            <item value="13000000" human-name="Science &amp; Technology" name="ScienceTechnology" desc="All aspects pertaining to human understanding of nature and the physical world and the development and application of this knowledge"/>
+            <item value="14000000" human-name="Social Issues" name="SocialIssues" desc="Aspects of the behaviour of humans affecting the quality of life."/>
+            <item value="15000000" human-name="Sport" name="Sport" desc="Competitive exercise involving physical effort. Organisations and bodies involved in these activities."/>
+            <item value="16000000" human-name="Unrest, Conflicts &amp; War" name="UnrestConflictsWar" desc="Acts of socially or politically motivated protest and/or violence."/>
+            <item value="17000000" human-name="Weather" name="Weather" desc="The study, reporting and predic meteorological phenomena."/>
+        </enum>
+        <enum name="SubjectMatterMembers" type="Integer" desc="Subject Matter Name and Subject Reference Number relationship">
+            <!--Arts, Culture & Entertainment 01000000-->
+            <item value="01001000" name="Archaeology" human-name="Archaeology" desc="Archaeology"/>
+            <item value="01002000" name="Architecture" human-name="Architecture" desc="Architecture"/>
+            <item value="01003000" name="Bullfighting" human-name="Bullfighting" desc="Bullfighting"/>
+            <item value="01004000" name="Carnival" human-name="Carnival" desc="Carnival"/>
+            <item value="01005000" name="Cinema" human-name="Cinema" desc="Cinema"/>
+            <item value="01006000" name="Dance" human-name="Dance" desc="Dance"/>
+            <item value="01007000" name="Fashion" human-name="Fashion" desc="Fashion"/>
+            <item value="01008000" name="Language" human-name="Language" desc="Language"/>
+            <item value="01009000" name="LibrariesMuseums" human-name="Libraries &amp; Museums" desc="Libraries &amp; Museums"/>
+            <item value="01010000" name="Literature" human-name="Literature" desc="Literature"/>
+            <item value="01011000" name="Music" human-name="Music" desc="Music"/>
+            <item value="01012000" name="Painting" human-name="Painting" desc="Painting"/>
+            <item value="01013000" name="Photography" human-name="Photography" desc="Photography"/>
+            <item value="01014000" name="Radio" human-name="Radio" desc="Radio"/>
+            <item value="01015000" name="Sculpture" human-name="Sculpture" desc="Sculpture"/>
+            <item value="01016000" name="Television" human-name="Television" desc="Television"/>
+            <item value="01017000" name="Theatre" human-name="Theatre" desc="Theatre"/>
+            <!--Crime, Law & Justice 02000000-->
+            <item value="02001000" name="Crime" human-name="Crime" desc="Crime"/>
+            <item value="02002000" name="Judiciary" human-name="Judiciary" desc="Judiciary"/>
+            <item value="02003000" name="Police" human-name="Police" desc="Police"/>
+            <item value="02004000" name="Punishment" human-name="Punishment" desc="Punishment"/>
+            <item value="02005000" name="Prison" human-name="Prison" desc="Prison"/>
+            <!--Disasters & Accidents 03000000-->
+            <item value="03001000" name="Drought" human-name="Drought" desc="Drought"/>
+            <item value="03002000" name="Earthquake" human-name="Earthquake" desc="Earthquake"/>
+            <item value="03003000" name="Famine" human-name="Famine" desc="Famine"/>
+            <item value="03004000" name="Fire" human-name="Fire" desc="Fire"/>
+            <item value="03005000" name="Flood" human-name="Flood" desc="Flood"/>
+            <item value="03006000" name="IndustrialAccident" human-name="Industrial accident" desc="Industrial accident"/>
+            <item value="03007000" name="MeteorologicalDisaster" human-name="Meteorological disaster" desc="Meteorological disaster"/>
+            <item value="03008000" name="NuclearAccident" human-name="Nuclear accident" desc="Nuclear accident"/>
+            <item value="03009000" name="Pollution" human-name="Pollution" desc="Pollution"/>
+            <item value="03010000" name="TransportAccident" human-name="Transport accident" desc="Transport accident"/>
+            <item value="03011000" name="VolcanicEruption" human-name="Volcanic eruption" desc="Volcanic eruption"/>
+            <!--Economy, Business & Finance 04000000-->
+            <item value="04001000" name="Agriculture" human-name="Agriculture" desc="Agriculture"/>
+            <item value="04002000" name="Chemicals" human-name="Chemicals" desc="Chemicals"/>
+            <item value="04003000" name="ComputingAndInformationTechnology" human-name="Computing &amp; Information Technology" desc="Computing &amp; Information Technology"/>
+            <item value="04004000" name="ConstructionAndProperty" human-name="Construction &amp; Property" desc="Construction &amp; Property"/>
+            <item value="04005000" name="EnergyAndResources" human-name="Energy &amp; Resources" desc="Energy &amp; Resources"/>
+            <item value="04006000" name="FinancialAndBusinessServices" human-name="Financial &amp; Business Services" desc="Financial &amp; Business Services"/>
+            <item value="04007000" name="GoodsDistribution" human-name="Goods Distribution" desc="Goods Distribution"/>
+            <item value="04008000" name="MacroEconomics" human-name="Macro Economics" desc="Macro Economics"/>
+            <item value="04009000" name="Markets" human-name="Markets" desc="Markets"/>
+            <item value="04010000" name="Media" human-name="Media" desc="Media"/>
+            <item value="04011000" name="MetalGoodsAndEngineering" human-name="Metal Goods &amp; Engineering" desc="Metal Goods &amp; Engineering"/>
+            <item value="04012000" name="MetalsAndMinerals" human-name="Metals &amp; Minerals" desc="Metals &amp; Minerals"/>
+            <item value="04013000" name="ProcessIndustries" human-name="Process Industries" desc="Process Industries"/>
+            <item value="04014000" name="TourismAndLeisure" human-name="Tourism &amp; Leisure" desc="Tourism &amp; Leisure"/>
+            <item value="04015000" name="Transport" human-name="Transport" desc="Transport"/>
+            <!--Education 05000000-->
+            <item value="05001000" name="AdultEducation" human-name="Adult Education" desc="Adult Education"/>
+            <item value="05002000" name="FurtherEducation" human-name="Further Education" desc="Further Education"/>
+            <item value="05003000" name="ParentOrganisations" human-name="Parent Organisations" desc="Parent Organisations"/>
+            <item value="05004000" name="Preschooling" human-name="Preschooling" desc="Preschooling"/>
+            <item value="05005000" name="Schools" human-name="Schools" desc="Schools"/>
+            <item value="05006000" name="TeachersUnions" human-name="Teachers Unions" desc="Teachers Unions"/>
+            <item value="05007000" name="University" human-name="University" desc="University"/>
+            <!--Environmental Issues 06000000-->
+            <item value="06001000" name="AlternativeEnergy" human-name="Alternative Energy" desc="Alternative Energy"/>
+            <item value="06002000" name="Conservation" human-name="Conservation" desc="Conservation"/>
+            <item value="06003000" name="EnergySavings" human-name="Energy Savings" desc="Energy Savings"/>
+            <item value="06004000" name="EnvironmentalPolitics" human-name="Environmental Politics" desc="Environmental Politics"/>
+            <item value="06005000" name="EnvironmentalPollution" human-name="Environmental pollution" desc="Environmental pollution"/>
+            <item value="06006000" name="NaturalResources" human-name="Natural resources" desc="Natural resources"/>
+            <item value="06007000" name="Nature" human-name="Nature" desc="Nature"/>
+            <item value="06008000" name="Population" human-name="Population" desc="Population"/>
+            <item value="06009000" name="Waste" human-name="Waste" desc="Waste"/>
+            <item value="06010000" name="WaterSupplies" human-name="Water Supplies" desc="Water Supplies"/>
+            <!--Health 07000000-->
+            <item value="07001000" name="Diseases" human-name="Diseases" desc="Diseases"/>
+            <item value="07002000" name="EpidemicAndPlague" human-name="Epidemic &amp; Plague" desc="Epidemic &amp; Plague"/>
+            <item value="07003000" name="HealthTreatment" human-name="Health treatment" desc="Health treatment"/>
+            <item value="07004000" name="HealthOrganisations" human-name="Health organisations" desc="Health organisations"/>
+            <item value="07005000" name="MedicalResearch" human-name="Medical research" desc="Medical research"/>
+            <item value="07006000" name="MedicalStaff" human-name="Medical staff" desc="Medical staff"/>
+            <item value="07007000" name="Medicines" human-name="Medicines" desc="Medicines"/>
+            <item value="07008000" name="PreventativeMedicine" human-name="Preventative medicine" desc="Preventative medicine"/>
+            <!--Human Interest 08000000-->
+            <item value="08001000" name="Animals" human-name="Animals" desc="Animals"/>
+            <item value="08002000" name="Curiosities" human-name="Curiosities" desc="Curiosities"/>
+            <item value="08003000" name="People" human-name="People" desc="People"/>
+            <!--Labour 09000000-->
+            <item value="09001000" name="Apprentices" human-name="Apprentices" desc="Apprentices"/>
+            <item value="09002000" name="CollectiveContracts" human-name="Collective contracts" desc="Collective contracts"/>
+            <item value="09003000" name="Employment" human-name="Employment" desc="Employment"/>
+            <item value="09004000" name="LabourDispute" human-name="Labour dispute" desc="Labour dispute"/>
+            <item value="09005000" name="LabourLegislation" human-name="Labour legislation" desc="Labour legislation"/>
+            <item value="09006000" name="Retirement" human-name="Retirement" desc="Retirement"/>
+            <item value="09007000" name="Retraining" human-name="Retraining" desc="Retraining"/>
+            <item value="09008000" name="Strike" human-name="Strike" desc="Strike"/>
+            <item value="09009000" name="Unemployment" human-name="Unemployment" desc="Unemployment"/>
+            <item value="09010000" name="Unions" human-name="Unions" desc="Unions"/>
+            <item value="09011000" name="WagesAndPensions" human-name="Wages &amp; Pensions" desc="Wages &amp; Pensions"/>
+            <item value="09012000" name="WorkRelations" human-name="Work Relations" desc="Work Relations"/>
+            <!--Lifestyle & Leisure 10000000-->
+            <item value="10001000" name="Games" human-name="Games" desc="Games"/>
+            <item value="10002000" name="GamingAndLotteries" human-name="Gaming &amp; Lotteries" desc="Gaming &amp; Lotteries"/>
+            <item value="10003000" name="Gastronomy" human-name="Gastronomy" desc="Gastronomy"/>
+            <item value="10004000" name="Hobbies" human-name="Hobbies" desc="Hobbies"/>
+            <item value="10005000" name="HolidaysOrVacations" human-name="Holidays or vacations" desc="Holidays or vacations"/>
+            <item value="10006000" name="Tourism" human-name="Tourism" desc="Tourism"/>
+            <!--Politics 11000000-->
+            <item value="11001000" name="Defence" human-name="Defence" desc="Defence"/>
+            <item value="11002000" name="Diplomacy" human-name="Diplomacy" desc="Diplomacy"/>
+            <item value="11003000" name="Elections" human-name="Elections" desc="Elections"/>
+            <item value="11004000" name="EspionageAndIntelligence" human-name="Espionage &amp; Intelligence" desc="Espionage &amp; Intelligence"/>
+            <item value="11005000" name="ForeignAid" human-name="Foreign Aid" desc="Foreign Aid"/>
+            <item value="11006000" name="Government" human-name="Government" desc="Government"/>
+            <item value="11007000" name="HumanRights" human-name="Human Rights" desc="Human Rights"/>
+            <item value="11008000" name="LocalAuthorities" human-name="Local authorities" desc="Local authorities"/>
+            <item value="11009000" name="Parliament" human-name="Parliament" desc="Parliament"/>
+            <item value="11010000" name="Parties" human-name="Parties" desc="Parties"/>
+            <item value="11011000" name="Refugees" human-name="Refugees" desc="Refugees"/>
+            <item value="11012000" name="RegionalAuthorities" human-name="Regional authorities" desc="Regional authorities"/>
+            <item value="11013000" name="StateBudget" human-name="State Budget" desc="State Budget"/>
+            <item value="11014000" name="TreatiesAndOrganisations" human-name="Treaties &amp; Organisations" desc="Treaties &amp; Organisations"/>
+            <!--Religion & Belief 12000000-->
+            <item value="12001000" name="CultsAndSects" human-name="Cults &amp; sects" desc="Cults &amp; sects"/>
+            <item value="12002000" name="Faith" human-name="Faith" desc="Faith"/>
+            <item value="12003000" name="FreeMasonry" human-name="Free masonry" desc="Free masonry"/>
+            <item value="12004000" name="ReligiousInstitutions" human-name="Religious institutions" desc="Religious institutions"/>
+            <!--Science & Technology 13000000-->
+            <item value="13001000" name="AppliedSciences" human-name="Applied Sciences" desc="Applied Sciences"/>
+            <item value="13002000" name="Engineering" human-name="Engineering" desc="Engineering"/>
+            <item value="13003000" name="HumanSciences" human-name="Human Sciences" desc="Human Sciences"/>
+            <item value="13004000" name="NaturalSciences" human-name="Natural Sciences" desc="Natural Sciences"/>
+            <item value="13005000" name="PhilosophicalSciences" human-name="Philosophical Sciences" desc="Philosophical Sciences"/>
+            <item value="13006000" name="Research" human-name="Research" desc="Research"/>
+            <item value="13007000" name="ScientificExploration" human-name="Scientific exploration" desc="Scientific exploration"/>
+            <item value="13008000" name="SpaceProgrammes" human-name="Space programmes" desc="Space programmes"/>
+            <!--Social Issues 14000000-->
+            <item value="14001000" name="Addiction" human-name="Addiction" desc="Addiction"/>
+            <item value="14002000" name="Charity" human-name="Charity" desc="Charity"/>
+            <item value="14003000" name="Demographics" human-name="Demographics" desc="Demographics"/>
+            <item value="14004000" name="Disabled" human-name="Disabled" desc="Disabled"/>
+            <item value="14005000" name="Euthanasia" human-name="Euthanasia" desc="Euthanasia"/>
+            <item value="14006000" name="Family" human-name="Family" desc="Family"/>
+            <item value="14007000" name="FamilyPlanning" human-name="Family planning" desc="Family planning"/>
+            <item value="14008000" name="HealthInsurance" human-name="Health insurance" desc="Health insurance"/>
+            <item value="14009000" name="Homelessness" human-name="Homelessness" desc="Homelessness"/>
+            <item value="14010000" name="MinorityGroups" human-name="Minority groups" desc="Minority groups"/>
+            <item value="14011000" name="Pornography" human-name="Pornography" desc="Pornography"/>
+            <item value="14012000" name="Poverty" human-name="Poverty" desc="Poverty"/>
+            <item value="14013000" name="Prostitution" human-name="Prostitution" desc="Prostitution"/>
+            <item value="14014000" name="Racism" human-name="Racism" desc="Racism"/>
+            <item value="14015000" name="Welfare" human-name="Welfare" desc="Welfare"/>
+            <!--Sport 15000000-->
+            <item value="15001000" name="Aero" human-name="Aero and Aviation Sports" desc="Aero and Aviation Sports"/>
+            <item value="15002000" name="AlpineSkiing" human-name="Alpine Skiing" desc="Alpine Skiing"/>
+            <item value="15003000" name="AmericanFootball" human-name="American Football" desc="American Football"/>
+            <item value="15004000" name="Archery" human-name="Archery" desc="Archery"/>
+            <item value="15005000" name="AthleticsTrackAndField" human-name="Athletics, Track &amp; Field" desc="Athletics, Track &amp; Field"/>
+            <item value="15006000" name="Badminton" human-name="Badminton" desc="Badminton"/>
+            <item value="15007000" name="Baseball" human-name="Baseball" desc="Baseball"/>
+            <item value="15008000" name="Basketball" human-name="Basketball" desc="Basketball"/>
+            <item value="15009000" name="Biathlon" human-name="Biathlon" desc="Biathlon"/>
+            <item value="15010000" name="BilliardsSnookerPool" human-name="Billiards, Snooker and Pool" desc="Billiards, Snooker and Pool"/>
+            <item value="15011000" name="Bobsleigh" human-name="Bobsleigh" desc="Bobsleigh"/>
+            <item value="15012000" name="Bowling" human-name="Bowling" desc="Bowling"/>
+            <item value="15013000" name="BowlsAndPetanque" human-name="Bowls &amp; Petanque" desc="Bowls &amp; Petanque"/>
+            <item value="15014000" name="Boxing" human-name="Boxing" desc="Boxing"/>
+            <item value="15015000" name="CanoeingAndKayaking" human-name="Canoeing &amp; Kayaking" desc="Canoeing &amp; Kayaking"/>
+            <item value="15016000" name="Climbing" human-name="Climbing" desc="Climbing"/>
+            <item value="15017000" name="Cricket" human-name="Cricket" desc="Cricket"/>
+            <item value="15018000" name="Curling" human-name="Curling" desc="Curling"/>
+            <item value="15019000" name="Cycling" human-name="Cycling" desc="Cycling"/>
+            <item value="15020000" name="Dancing" human-name="Dancing" desc="Dancing"/>
+            <item value="15021000" name="Diving" human-name="Diving" desc="Diving"/>
+            <item value="15022000" name="Equestrian" human-name="Equestrian" desc="Equestrian"/>
+            <item value="15023000" name="Fencing" human-name="Fencing" desc="Fencing"/>
+            <item value="15024000" name="FieldHockey" human-name="Field Hockey" desc="Field Hockey"/>
+            <item value="15025000" name="FigureSkating" human-name="Figure Skating" desc="Figure Skating"/>
+            <item value="15026000" name="FreestyleSkiing" human-name="Freestyle Skiing" desc="Freestyle Skiing"/>
+            <item value="15027000" name="Golf" human-name="Golf" desc="Golf"/>
+            <item value="15028000" name="Gymnastics" human-name="Gymnastics" desc="Gymnastics"/>
+            <item value="15029000" name="Handball" human-name="Handball" desc="Handball (Team)"/>
+            <item value="15030000" name="Horse" human-name="Horse Racing, Harness Racing" desc="Horse Racing, Harness Racing"/>
+            <item value="15031000" name="IceHockey" human-name="Ice Hockey" desc="Ice Hockey"/>
+            <item value="15032000" name="JaiAlai" human-name="Jai Alai (Pelota)" desc="Jai Alai (Pelota)"/>
+            <item value="15033000" name="Judo" human-name="Judo" desc="Judo"/>
+            <item value="15034000" name="Karate" human-name="Karate" desc="Karate"/>
+            <item value="15035000" name="Lacrosse" human-name="Lacrosse" desc="Lacrosse"/>
+            <item value="15036000" name="Luge" human-name="Luge" desc="Luge"/>
+            <item value="15037000" name="Marathon" human-name="Marathon" desc="Marathon"/>
+            <item value="15038000" name="ModernPentathlon" human-name="Modern Pentathlon" desc="Modern Pentathlon"/>
+            <item value="15039000" name="MotorRacing" human-name="Motor Racing" desc="Motor Racing"/>
+            <item value="15040000" name="MotorRallying" human-name="Motor Rallying" desc="Motor Rallying"/>
+            <item value="15041000" name="Motorcycling" human-name="Motorcycling" desc="Motorcycling"/>
+            <item value="15042000" name="Netball" human-name="Netball" desc="Netball"/>
+            <item value="15043000" name="NordicSkiing" human-name="Nordic Skiing" desc="Nordic Skiing"/>
+            <item value="15044000" name="Orienteering" human-name="Orienteering" desc="Orienteering"/>
+            <item value="15045000" name="Polo" human-name="Polo" desc="Polo"/>
+            <item value="15046000" name="PowerBoating" human-name="Power Boating" desc="Power Boating"/>
+            <item value="15047000" name="Rowing" human-name="Rowing" desc="Rowing"/>
+            <item value="15048000" name="RugbyLeague" human-name="Rugby League" desc="Rugby League"/>
+            <item value="15049000" name="RugbyUnion" human-name="Rugby Union" desc="Rugby Union"/>
+            <item value="15050000" name="Sailing" human-name="Sailing" desc="Sailing"/>
+            <item value="15051000" name="Shooting" human-name="Shooting" desc="Shooting"/>
+            <item value="15052000" name="SkiJumping" human-name="Ski Jumping" desc="Ski Jumping"/>
+            <item value="15053000" name="SnowBoarding" human-name="Snow Boarding" desc="Snow Boarding"/>
+            <item value="15054000" name="Soccer" human-name="Soccer" desc="Soccer"/>
+            <item value="15055000" name="Softball" human-name="Softball" desc="Softball"/>
+            <item value="15056000" name="SpeedSkating" human-name="Speed Skating" desc="Speed Skating"/>
+            <item value="15057000" name="Speedway" human-name="Speedway" desc="Speedway"/>
+            <item value="15058000" name="SportsOrganisations" human-name="Sports Organisations" desc="Sports Organisations"/>
+            <item value="15059000" name="Squash" human-name="Squash" desc="Squash"/>
+            <item value="15060000" name="SumoWrestling" human-name="Sumo Wrestling" desc="Sumo Wrestling"/>
+            <item value="15061000" name="Surfing" human-name="Surfing" desc="Surfing"/>
+            <item value="15062000" name="Swimming" human-name="Swimming" desc="Swimming"/>
+            <item value="15063000" name="TableTennis" human-name="Table Tennis" desc="Table Tennis"/>
+            <item value="15064000" name="TaekwonDo" human-name="Taekwon-Do" desc="Taekwon-Do"/>
+            <item value="15065000" name="Tennis" human-name="Tennis" desc="Tennis"/>
+            <item value="15066000" name="Triathlon" human-name="Triathlon" desc="Triathlon"/>
+            <item value="15067000" name="Volleyball" human-name="Volleyball" desc="Volleyball"/>
+            <item value="15068000" name="WaterPolo" human-name="Water Polo" desc="Water Polo"/>
+            <item value="15069000" name="WaterSkiing" human-name="Water Skiing" desc="Water Skiing"/>
+            <item value="15070000" name="Weightlifting" human-name="Weightlifting" desc="Weightlifting"/>
+            <item value="15071000" name="Windsurfing" human-name="Windsurfing" desc="Windsurfing"/>
+            <item value="15072000" name="Wrestling" human-name="Wrestling" desc="Wrestling"/>
+            <!--Unrest, Conflicts & War 16000000-->
+            <item value="16001000" name="ActsOfTerror" human-name="Acts of terror" desc="Acts of terror"/>
+            <item value="16002000" name="ArmedConflict" human-name="Armed conflict" desc="Armed conflict"/>
+            <item value="16003000" name="CivilUnrest" human-name="Civil unrest" desc="Civil unrest"/>
+            <item value="16004000" name="CoupDEtat" human-name="Coup d'Etat" desc="Coup d'Etat"/>
+            <item value="16005000" name="GuerrillaActivities" human-name="Guerrilla activities" desc="Guerrilla activities"/>
+            <item value="16006000" name="Massacre" human-name="Massacre" desc="Massacre"/>
+            <item value="16007000" name="Riots" human-name="Riots" desc="Riots"/>
+            <item value="16008000" name="ViolentDemonstrations" human-name="Violent demonstrations" desc="Violent demonstrations"/>
+            <item value="16009000" name="War" human-name="War" desc="War"/>
+            <!--Weather 17000000-->
+            <item value="17001000" name="Forecasts" human-name="Forecasts" desc="Forecasts"/>
+            <item value="17002000" name="GlobalChange" human-name="Global change" desc="Global change"/>
+            <item value="17003000" name="Reports" human-name="Reports" desc="Reports"/>
+            <item value="17004000" name="Statistics" human-name="Statistics" desc="Statistics"/>
+            <item value="17005000" name="Warnings" human-name="Warnings" desc="Warnings"/>
+        </enum>
+        <enum name="EconomySubjectDetail" desc="Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)" type="Integer">
+            <!--AGRICULTURE 04001000-->
+            <item value="04001001" name="ArableFarming" human-name="Arable Farming" desc="Arable Farming"/>
+            <item value="04001002" name="FishingIndustry" human-name="Fishing Industry" desc="Fishing Industry"/>
+            <item value="04001003" name="ForestryAndTimber" human-name="Forestry &amp; Timber" desc="Forestry &amp; Timber"/>
+            <item value="04001004" name="LivestockFarming" human-name="Livestock Farming" desc="Livestock Farming"/>
+            <!--CHEMICALS 04002000-->
+            <item value="04002001" name="Biotechnology" human-name="Biotechnology" desc="Biotechnology"/>
+            <item value="04002002" name="Fertilisers" human-name="Fertilisers" desc="Fertilisers"/>
+            <item value="04002003" name="HealthAndBeautyProducts" human-name="Health &amp; Beauty products" desc="Health &amp; Beauty products"/>
+            <item value="04002004" name="InorganicChemicals" human-name="Inorganic chemicals" desc="Inorganic chemicals"/>
+            <item value="04002005" name="OrganicChemicals" human-name="Organic chemicals" desc="Organic chemicals"/>
+            <item value="04002006" name="Pharmaceuticals" human-name="Pharmaceuticals" desc="Pharmaceuticals"/>
+            <item value="04002007" name="SyntheticsAndPlastics" human-name="Synthetics &amp; Plastics" desc="Synthetics &amp; Plastics"/>
+            <!--COMPUTING & INFORMATION TECHNOLOGY 04003000-->
+            <item value="04003001" name="Hardware" human-name="Hardware" desc="Hardware"/>
+            <item value="04003002" name="Networking" human-name="Networking" desc="Networking"/>
+            <item value="04003003" name="SatelliteTechnology" human-name="Satellite technology" desc="Satellite technology"/>
+            <item value="04003004" name="SemiconductorsAndActiveComponents" human-name="Semiconductors &amp; active components" desc="Semiconductors &amp; active components"/>
+            <item value="04003005" name="Software" human-name="Software" desc="Software"/>
+            <item value="04003006" name="TelecommunicationsEquipment" human-name="Telecommunications Equipment" desc="Telecommunications Equipment"/>
+            <item value="04003007" name="TelecommunicationsServices" human-name="Telecommunications Services" desc="Telecommunications Services"/>
+            <!--CONSTRUCTION & PROPERTY 04004000-->
+            <item value="04004001" name="HeavyConstruction" human-name="Heavy construction" desc="Heavy construction"/>
+            <item value="04004002" name="HouseBuilding" human-name="House building" desc="House building"/>
+            <item value="04004003" name="RealEstate" human-name="Real Estate" desc="Real Estate"/>
+            <!--ENERGY & RESOURCES 04005000-->
+            <item value="04005001" name="AlternativeEnergy" human-name="Alternative energy" desc="Alternative energy"/>
+            <item value="04005002" name="Coal" human-name="Coal" desc="Coal"/>
+            <item value="04005003" name="OilAndGasDownstreamActivities" human-name="Oil &amp; Gas - Downstream activities" desc="Oil &amp; Gas - Downstream activities"/>
+            <item value="04005004" name="OilAndGasUpstreamActivities" human-name="Oil &amp; Gas - Upstream activities" desc="Oil &amp; Gas - Upstream activities"/>
+            <item value="04005005" name="NuclearPower" human-name="Nuclear power" desc="Nuclear power"/>
+            <item value="04005006" name="ElectricityProductionAndDistribution" human-name="Electricity Production &amp; Distribution" desc="Electricity Production &amp; Distribution"/>
+            <item value="04005007" name="WasteManagementAndPollutionControl" human-name="Waste Management &amp; Pollution Control" desc="Waste Management &amp; Pollution Control"/>
+            <item value="04005008" name="WaterSupply" human-name="Water Supply" desc="Water Supply"/>
+            <!--FINANCIAL & BUSINESS SERVICES 04006000-->
+            <item value="04006001" name="AccountancyAndAuditing" human-name="Accountancy &amp; Auditing" desc="Accountancy &amp; Auditing"/>
+            <item value="04006002" name="Banking" human-name="Banking" desc="Banking"/>
+            <item value="04006003" name="ConsultancyServices" human-name="Consultancy Services" desc="Consultancy Services"/>
+            <item value="04006004" name="EmploymentAgencies" human-name="Employment Agencies" desc="Employment Agencies"/>
+            <item value="04006005" name="HealthcareProviders" human-name="Healthcare Providers" desc="Healthcare Providers"/>
+            <item value="04006006" name="Insurance" human-name="Insurance" desc="Insurance"/>
+            <item value="04006007" name="LegalServices" human-name="Legal services" desc="Legal services"/>
+            <item value="04006008" name="MarketResearch" human-name="Market research" desc="Market research"/>
+            <item value="04006009" name="StockBroking" human-name="Stock broking" desc="Stock broking"/>
+            <!--GOODS DISTRIBUTION 04007000-->
+            <item value="04007001" name="Clothing" human-name="Clothing" desc="Clothing"/>
+            <item value="04007002" name="DepartmentStores" human-name="Department stores" desc="Department stores"/>
+            <item value="04007003" name="FoodDistribution" human-name="Food (distribution)" desc="Food"/>
+            <item value="04007004" name="MailOrder" human-name="Mail Order" desc="Mail Order"/>
+            <item value="04007005" name="Retail" human-name="Retail" desc="Retail"/>
+            <item value="04007006" name="SpecialityAtores" human-name="Speciality stores" desc="Speciality stores"/>
+            <item value="04007007" name="Wholesale" human-name="Wholesale" desc="Wholesale"/>
+            <!--MACRO-ECONOMICS 04008000-->
+            <item value="04008001" name="CentralBanks" human-name="Central Banks" desc="Central Banks"/>
+            <item value="04008002" name="ConsumerIssues" human-name="Consumer Issues" desc="Consumer Issues"/>
+            <item value="04008003" name="DebtMarkets" human-name="Debt Markets" desc="Debt Markets"/>
+            <item value="04008004" name="EconomicIndicators" human-name="Economic Indicators" desc="Economic Indicators"/>
+            <item value="04008005" name="EmergingMarketsDebt" human-name="Emerging Markets Debt" desc="Emerging Markets Debt"/>
+            <item value="04008006" name="ForeignExchangeMarkets" human-name="Foreign Exchange Markets" desc="Foreign Exchange Markets"/>
+            <item value="04008007" name="GovernmentAid" human-name="Government Aid" desc="Government Aid"/>
+            <item value="04008008" name="GovernmentDebt" human-name="Government Debt" desc="Government Debt"/>
+            <item value="04008009" name="InterestRates" human-name="Interest Rates" desc="Interest Rates"/>
+            <item value="04008010" name="InternationalEconomicInstitutions" human-name="International Economic Institutions" desc="International Economic Institutions"/>
+            <item value="04008011" name="InternationalTradeIssues" human-name="International Trade Issues" desc="International Trade Issues"/>
+            <item value="04008012" name="LoanMarkets" human-name="Loan Markets" desc="Loan Markets"/>
+            <!--MARKETS 04009000-->
+            <item value="04009001" name="Energy" human-name="Energy" desc="Energy"/>
+            <item value="04009002" name="Metals" human-name="Metals" desc="Metals"/>
+            <item value="04009003" name="Securities" human-name="Securities" desc="Securities"/>
+            <item value="04009004" name="SoftCommodities" human-name="Soft Commodities" desc="Soft Commodities"/>
+            <!--MEDIA 04010000-->
+            <item value="04010001" name="Advertising" human-name="Advertising" desc="Advertising"/>
+            <item value="04010002" name="Books" human-name="Books" desc="Books"/>
+            <item value="04010003" name="Cinema" human-name="Cinema" desc="Cinema"/>
+            <item value="04010004" name="NewsAgencies" human-name="News Agencies" desc="News Agencies"/>
+            <item value="04010005" name="NewspaperAndMagazines" human-name="Newspaper &amp; Magazines" desc="Newspaper &amp; Magazines"/>
+            <item value="04010006" name="Online" human-name="Online" desc="Online"/>
+            <item value="04010007" name="PublicRelations" human-name="Public Relations" desc="Public Relations"/>
+            <item value="04010008" name="Radio" human-name="Radio" desc="Radio"/>
+            <item value="04010009" name="SatelliteAndCableServices" human-name="Satellite &amp; Cable Services" desc="Satellite &amp; Cable Services"/>
+            <item value="04010010" name="Television" human-name="Television" desc="Television"/>
+            <!--METAL GOODS & ENGINEERING 04011000-->
+            <item value="04011001" name="Aerospace" human-name="Aerospace" desc="Aerospace"/>
+            <item value="04011002" name="AutomotiveEquipment" human-name="Automotive Equipment" desc="Automotive Equipment"/>
+            <item value="04011003" name="DefenceEquipment" human-name="Defence Equipment" desc="Defence Equipment"/>
+            <item value="04011004" name="ElectricalAppliances" human-name="Electrical Appliances" desc="Electrical Appliances"/>
+            <item value="04011005" name="HeavyEngineering" human-name="Heavy engineering" desc="Heavy engineering"/>
+            <item value="04011006" name="IndustrialComponents" human-name="Industrial components" desc="Industrial components"/>
+            <item value="04011007" name="InstrumentEngineering" human-name="Instrument engineering" desc="Instrument engineering"/>
+            <item value="04011008" name="Shipbuilding" human-name="Shipbuilding" desc="Shipbuilding"/>
+            <!--METALS & MINERAL 04012000-->
+            <item value="04012001" name="BuildingMaterials" human-name="Building materials" desc="Building materials"/>
+            <item value="04012002" name="GoldAndPreciousMaterials" human-name="Gold &amp; Precious Materials" desc="Gold &amp; Precious Materials"/>
+            <item value="04012003" name="IronAndSteel" human-name="Iron &amp; Steel" desc="Iron &amp; Steel"/>
+            <item value="04012004" name="NonFerrousMetals" human-name="Non ferrous metals" desc="Non ferrous metals"/>
+            <!--PROCESS INDUSTRIES 04013000-->
+            <item value="04013001" name="AlcoholicDrinks" human-name="Alcoholic Drinks" desc="Alcoholic Drinks"/>
+            <item value="04013002" name="FoodIndustry" human-name="Food (industry)" desc="Food"/>
+            <item value="04013003" name="FurnishingsAndFurniture" human-name="Furnishings &amp; Furniture" desc="Furnishings &amp; Furniture"/>
+            <item value="04013004" name="PaperAndPackagingProducts" human-name="Paper &amp; packaging products" desc="Paper &amp; packaging products"/>
+            <item value="04013005" name="Rubberproducts" human-name="Rubber products" desc="Rubber products"/>
+            <item value="04013006" name="SoftDrinks" human-name="Soft Drinks" desc="Soft Drinks"/>
+            <item value="04013007" name="TextilesAndClothing" human-name="Textiles &amp; Clothing" desc="Textiles &amp; Clothing"/>
+            <item value="04013008" name="Tobacco" human-name="Tobacco" desc="Tobacco"/>
+            <!--TOURISM & LEISURE 04014000-->
+            <item value="04014001" name="CasinosAndGambling" human-name="Casinos &amp; Gambling" desc="Casinos &amp; Gambling"/>
+            <item value="04014002" name="HotelsAndAccommodation" human-name="Hotels &amp; mp; accommodation" desc="Hotels &amp; accommodation"/>
+            <item value="04014003" name="RecreationalAndSportsGoods" human-name="Recreational &amp; Sports goods" desc="Recreational &amp; Sports goods"/>
+            <item value="04014004" name="RestaurantsAndCatering" human-name="Restaurants &amp; catering" desc="Restaurants &amp; catering"/>
+            <item value="04014005" name="TourOperators" human-name="Tour operators" desc="Tour operators"/>
+            <!--TRANSPORT 04015000-->
+            <item value="04015001" name="AirTransport" human-name="Air Transport" desc="Air Transport"/>
+            <item value="04015002" name="Railway" human-name="Railway" desc="Railway"/>
+            <item value="04015003" name="RoadTransport" human-name="Road Transport" desc="Road Transport"/>
+            <item value="04015004" name="WaterwayAndMaritimeTransport" human-name="Waterway &amp; Maritime Transport" desc="Waterway &amp; Maritime Transport"/>
+        </enum>
     </record>
 </Root>
