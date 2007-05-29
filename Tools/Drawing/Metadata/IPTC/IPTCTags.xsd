@@ -53,14 +53,49 @@
                     <xs:documentation>Graphic characters (no whitespaces, no cotrol characters)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="TextWithSpaces">
+                <xs:annotation>
+                    <xs:documentation>Graphic characters and spaces (no tabs, endlines or control characters)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="Enum-binary">
                 <xs:annotation>
                     <xs:documentation>Enumeration choice stored binary (actual enumeration is reffered by enum attribute)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="Enum-NumChar">
+                <xs:annotation>
+                    <xs:documentation>Enumeration choice stored as numeric characters (actual enumeration is reffred by enum attribute), names contained in enums must fit into number of bytes reserved.)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="CCYYMMDD">
                 <xs:annotation>
                     <xs:documentation>Date format YYYYMMDD as of ISO 8601 stored as ASCII numeric string (must have fixed length 8 bytes)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HHMMSS-HHMM">
+                <xs:annotation>
+                    <xs:documentation>Time in format HHMMSS±HHMM where HHMMSS reffers to local time and ±HHMM offset from UTC (as described in ISO 8601). (stored as numeric characters must have fixed size 11)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ByteAray">
+                <xs:annotation>
+                    <xs:documentation>Array of unsigned bytes</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="UNO">
+                <xs:annotation>
+                    <xs:documentation>Graphic characters where '*' and '?' are not allowed and ':' and '/' have special meaning. UNO consists of UCD, IPR, ODE and OVI separated by ':'. There are inner structure and rules for UNO.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Num2-Str">
+                <xs:annotation>
+                    <xs:documentation>2 numeric characters followed by mandatory colon (so, lenght is minimally 3) and optional text part of variable lenght. It can be specified that number must be from specific enumeration by the enum attribute. Target enum must contain only maximally 2 digits long numbers!</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Num3-Str">
+                <xs:annotation>
+                    <xs:documentation>3 numeric characters followed by mandatory colon (so, lenght is minimally 4) and optional text part of variable lenght. It can be specified that number must be from specific enumeration by the enum attribute. Target enum must contain only maximally 3 digits long numbers!</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
@@ -172,11 +207,11 @@
         </xs:complexType>
         <!--Constraints-->
         <xs:unique name="unqTagName">
-            <xs:selector xpath="IPTC:record/IPTC:tag"/>
+            <xs:selector xpath="IPTC:record/IPTC:tag | IPTC:record/IPTC:group/IPTC:tag"/>
             <xs:field xpath="@name"/>
         </xs:unique>
         <xs:unique name="unqTagHumanName">
-            <xs:selector xpath="IPTC:record/IPTC:tag"/>
+            <xs:selector xpath="IPTC:record/IPTC:tag | IPTC:record/IPTC:group/IPTC:tag"/>
             <xs:field xpath="@human-name"/>
         </xs:unique>
         <xs:unique name="unqRecordNumber">
@@ -196,7 +231,7 @@
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="EnumReference" refer="keyEnum">
-            <xs:selector xpath="IPTC:record/IPTC:tag"/>
+            <xs:selector xpath="IPTC:record/IPTC:tag | IPTC:record/IPTC:group/IPTC:tag"/>
             <xs:field xpath="@enum"/>
         </xs:keyref>
     </xs:element>
@@ -221,12 +256,12 @@
             </xs:attribute>
             <xs:attribute name="mandatory" type="xs:boolean" use="required">
                 <xs:annotation>
-                    <xs:documentation>Defines if tag is mandatory (accorting to IPTC standard) or not</xs:documentation>
+                    <xs:documentation>Defines if tag is mandatory (accorting to IPTC standard) or not (valid in context of group or record). There must be at least one mandatory tag in each group.</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute name="repeatable" type="xs:boolean" use="required">
                 <xs:annotation>
-                    <xs:documentation>Defines if tag is repeatable or not</xs:documentation>
+                    <xs:documentation>Defines if tag is repeatable or not (valid within record or group)</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute name="fixed" type="xs:boolean" use="required">
@@ -273,9 +308,11 @@
                         <xs:documentation>Description of meaning of data contained in this tag (dataset)</xs:documentation>
                     </xs:annotation>
                 </xs:element>
+                <xs:element minOccurs="1" maxOccurs="1" ref="tag"/>
                 <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                    <xs:element minOccurs="1" maxOccurs="unbounded" ref="tag"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="tag"/>
                     <xs:element ref="enum" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element minOccurs="0" maxOccurs="unbounded" ref="group"/>
                 </xs:sequence>
             </xs:sequence>
             <xs:attribute name="number" type="IPTCRecordNumber" use="required">
@@ -295,7 +332,7 @@
             </xs:attribute>
         </xs:complexType>
         <xs:unique name="unqTag">
-            <xs:selector xpath="IPTC:tag"/>
+            <xs:selector xpath="IPTC:tag | IPTC:group/IPTC:tag"/>
             <xs:field xpath="@number"/>
         </xs:unique>
     </xs:element>
@@ -353,5 +390,41 @@
             <xs:selector xpath="IPTC:item"/>
             <xs:field xpath="@value"/>
         </xs:unique>
+    </xs:element>
+
+    <xs:element name="group">
+        <xs:annotation>
+            <xs:documentation>Group of tags (records) that has some ralation between</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element ref="tag" minOccurs="2" maxOccurs="unbounded"/>
+            </xs:sequence>
+            <xs:attribute name="name" type="Name" use="required">
+                <xs:annotation>
+                    <xs:documentation>Name of the group (will be rendered as property)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="human-name" type="xs:token" use="required">
+                <xs:annotation>
+                    <xs:documentation>Human-readable name of group</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="mandatory" type="xs:boolean" use="required">
+                <xs:annotation>
+                    <xs:documentation>Is this group required?</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="desc" type="xs:token" use="required">
+                <xs:annotation>
+                    <xs:documentation>Description of group</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="repeatable" type="xs:boolean" use="required">
+                <xs:annotation>
+                    <xs:documentation>Can this group appear multiple times?</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
     </xs:element>
 </xs:schema>

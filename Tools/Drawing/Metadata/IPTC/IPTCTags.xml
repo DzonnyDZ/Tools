@@ -66,7 +66,189 @@
             <desc>Specifies the envelope handling priority and not the editorial urgency (see 2:10, &lt;see cref='Urgency'/>). '1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</desc>
         </tag>
         <tag number="70" name="DateSent" human-name="Date Sent" type="CCYYMMDD" fixed="true" mandatory="true" repeatable="false" length="8">
-            <desc>Uses the format CCYYMMDD (century, year, month, day) as defined in ISO 8601 to indicate year, month and day the service sent the material.</desc>
+            <desc>Indicates year, month and day the service sent the material.</desc>
+        </tag>
+        <tag number="80" name="TimeSent" human-name="Time Sent" type="HHMMSS-HHMM" fixed="true" mandatory="false" repeatable="false" length="11">
+            <desc>This is the time the service sent the material.</desc>
+        </tag>
+        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteAray" fixed="false" mandatory="false" repeatable="false" length="32">
+            <desc>
+                &lt;para>Array of bytes consisting of one or
+                more control functions used for the announcement, invocation or
+                designation of coded character sets. The control functions follow
+                the ISO 2022 standard and may consist of the escape control
+                character and one or more graphic characters. For more details
+                see Appendix C, the IPTC-NAA Code Library.&lt;/para>
+                &lt;para>The control functions apply to character oriented DataSets in
+                records 2-6. They also apply to record 8, unless the objectdata
+                explicitly, or the File Format implicitly, defines character sets
+                otherwise.&lt;/para>
+                &lt;para>If this DataSet contains the designation function for Unicode in
+                UTF-8 then no other announcement, designation or invocation
+                functions are permitted in this DataSet or in records 2-6.
+                For all other character sets, one or more escape sequences are
+                used:&lt;para/>
+                &lt;list>
+                &lt;item>for the announcement of the code extension facilities used in
+                the data which follows,&lt;/item>
+                &lt;item>for the initial designation of the G0, G1, G2 and G3 graphic
+                character sets and&lt;/item>
+                &lt;item>for the initial invocation of the graphic set (7 bits) or the lefthand
+                and the right-hand graphic set (8 bits) and for the initial
+                invocation of the C0 (7 bits) or of the C0 and the C1 control
+                character sets (8 bits).&lt;/item>&lt;/list>
+                &lt;para>The announcement of the code extension facilities, if
+                transmitted, must appear in this data set. Designation and
+                invocation of graphic and control function sets (shifting) may be
+                transmitted anywhere where the escape and the other
+                necessary control characters are permitted. However, it is
+                recommended to transmit in this DataSet an initial designation
+                and invocation, i.e. to define all designations and the shift status
+                currently in use by transmitting the appropriate escape
+                sequences and locking-shift functions.&lt;/para>
+                &lt;para>If &lt;see cref='CodedCharacterSet'/> is omitted, the default for records 2-6 and 8 is ISO 646
+                IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use
+                ISO 646 IRV or ISO 4873 DV respectively.&lt;/para>
+                <!--
+                    ECMA as the ISO Registration Authority for escape sequences maintains the
+                    International Register of Coded Character Sets to be used with escape sequences, a
+                    register of Codes and allocated standardised escape sequences, which are
+                    recognised by IPTC-NAA without further approval procedure. The registration
+                    procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and
+                    allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as
+                    Sponsoring Authority, submit such private sequence Codes for approval as
+                    standardised sequence Codes. The registers consist of a Graphic repertoire, a Control
+                    function repertoire and a Repertoire of other coding systems (e.g. complete Codes).
+                    Together they represent the IPTC-NAA Code Library.
+                    Graphic Repertoire
+                    ==================
+                    94-character sets (intermediate character 2/8 to 2/11):
+                        002 ISO 646 IRV 4/0
+                        004 ISO 646 British Version 4/1
+                        006 ISO 646 USA Version (ASCII) 4/2
+                        008-1 NATS Primary Set for Finland and Sweden 4/3
+                        008-2 NATS Secondary Set for Finland and Sweden 4/4
+                        009-1 NATS Primary Set for Denmark and Norway 4/5
+                        009-2 NATS Secondary Set for Denmark and Norway 4/6
+                        010 ISO 646 Swedish Version (SEN 850200) 4/7
+                        015 ISO 646 Italian Version (ECMA) 5/9
+                        016 ISO 646 Portuguese Version (ECMA Olivetti) 4/12
+                        017 ISO 646 Spanish Version (ECMA Olivetti) 5/10
+                        018 ISO 646 Greek Version (ECMA) 5/11
+                        021 ISO 646 German Version (DIN 66003) 4/11
+                        037 Basic Cyrillic Character Set (ISO 5427) 4/14
+                        060 ISO 646 Norwegian Version (NS 4551) 6/0
+                        069 ISO 646 French Version (NF Z 62010-1982) 6/6
+                        084 ISO 646 Portuguese Version (ECMA IBM) 6/7
+                        085 ISO 646 Spanish Version (ECMA IBM) 6/8
+                        086 ISO 646 Hungarian Version (HS 7795/3) 6/9
+                        121 Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7
+                        122 Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/8
+                    96-character sets (intermediate character 2/12 to 2/15):
+                        100 Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1
+                        101 Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2
+                        109 Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3
+                        110 Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4
+                        111 Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0
+                        125 Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6
+                        127 Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7
+                        138 Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8
+                        139 Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9
+                    Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)
+                        87 Japanese characters (JIS X 0208-1983) 4/2
+                    Control Function Repertoire
+                    ===========================
+                    C0 Control Function Sets (intermediate character 2/1):
+                        001 C0 Set of ISO 646 4/0
+                        026 IPTC C0 Set for newspaper text transmission 4/3
+                        036 C0 Set of ISO 646 with SS2 instead of IS4 4/4
+                        104 Minimum C0 Set for ISO 4873 4/7
+                    C1 Control Function Sets (intermediate character 2/2):
+                        077 C1 Control Set of ISO 6429 4/3
+                        105 Minimum C1 Set for ISO 4873 4/7
+                    Single Additional Control Functions:
+                        062 Locking-Shift Two (LS2), ISO 2022 6/14
+                        063 Locking-Shift Three (LS3), ISO 2022 6/15
+                        064 Locking-Shift Three Right (LS3R), ISO 2022 7/12
+                        065 Locking-Shift Two Right (LS2R), ISO 2022 7/13
+                        066 Locking-Shift One Right (LS1R), ISO 2022 7/14
+                    Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )
+                    =====================================================================================
+                        196 UCS Transformation Format (UTF-8) 4/7
+                -->
+        </desc>
+        </tag>
+        <tag number="100" name="UNO" human-name="UNO" type="UNO" fixed="false" mandatory="false" repeatable="false" length="80">
+            <desc>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form. The provider must ensure the UNO is unique. Objects with the same UNO are identical.</desc>
+        </tag>
+        <group name="ARM" human-name="ARM" desc="Abstract Relation Method" repeatable="false" mandatory="false">
+            <tag number="120" name="ARMIdentifier" human-name="ARM Identifier" type="Enum-binary" enum="ARMMethods" mandatory="true" repeatable="false" fixed="true" length="2">
+                <desc>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</desc>
+            </tag>
+            <tag number="122" name="ARMVersion" human-name="ARM Version" type="Enum-binary" enum="ARMVersions" mandatory="true" repeatable="false" fixed="true" length="2">
+                <desc>A number representing the particular version of the ARM specified in DataSet &lt;see cref='ARMIdentified'/>.</desc>
+            </tag>
+        </group>
+        <enum name="ARMMethods" type="UShort" desc="Abstract Relation Methods Identifiers">
+            <item value="1" name="IPTCMethod1" desc="Using DataSets 2:45, 2:47 and 2:50 (&lt;see cref='ReferenceService'/>, &lt;see cref='ReferenceDate'/> and &lt;see cref='ReferenceNumber'/>)"/>
+            <item value="2" name="IPTCMethod2" desc="Using DataSet 1:100 (&lt;see cref='UNO'/>)"/>
+        </enum>
+        <enum name="ARMVersions" type="UShort" desc="Abstract Relation Method Versions">
+            <item value="1" name="ARM1" desc="The only ARM version"/>
+        </enum>
+    </record>
+
+    <record name="Application" human-name="Application Record No. 2" number="2">
+        <desc>This record contain informative data about content. Whole record is optional, but when any tag is used then mandatory tags are mandatory.</desc>
+        <tag number="0" name="RecordVersion" human-name="Record Version" type="UShort-binary" mandatory="true" repeatable="false" fixed="true" length="2">
+            <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider. Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</desc>
+        </tag>
+        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes">
+            <desc>The Object Type is used to distinguish between different types of objects within the IIM. The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</desc>
+        </tag>
+        <enum name="ObjectTypes" type="Byte" desc="Object Type Number and Object Type Name relationship">
+            <item value="1" name="News" desc="News"/>
+            <item value="2" name="Data" desc="Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate."/>
+            <item value="3" name="Advisory" desc="Advisory"/>
+        </enum>
+        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes">
+            <desc>The Object Attribute defines the nature of the object independent of the Subject. The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</desc>
+        </tag>
+        <enum name="ObjectAttributes" type="Byte" desc="Object Attribute Number abd Object Name relationship">
+            <item value="1" name="Current" desc="Current"/>
+            <item value="2" name="Analysis" desc="Analysis"/>
+            <item value="3" name="ArchiveMaterial" desc="Archive material"/>
+            <item value="4" name="Background" desc="Background"/>
+            <item value="5" name="Feature" desc="Feature"/>
+            <item value="6" name="Forecast" desc="Forecast"/>
+            <item value="7" name="History" desc="History"/>
+            <item value="8" name="Obituary" desc="Obituary"/>
+            <item value="9" name="Opinion" desc="Opinion"/>
+            <item value="10" name="PollsAndSurveys" desc="Polls &amp; Surveys"/>
+            <item value="11" name="Profile" desc="Profile"/>
+            <item value="12" name="ResultsListingsAndTables" desc="Results Listings &amp; Tables"/>
+            <item value="13" name="SideBarAndSupportingInformation" desc="Side bar &amp; Supporting information"/>
+            <item value="14" name="Summary" desc="Summary"/>
+            <item value="15" name="TranscriptAndVerbatim" desc="Transcript &amp; Verbatim"/>
+            <item value="16" name="Interview" desc="Interview"/>
+            <item value="17" name="FromTheScene" desc="From the Scene"/>
+            <item value="18" name="Retrospective" desc="Retrospective"/>
+            <item value="19" name="Statistics" desc="Statistics"/>
+            <item value="20" name="Update" desc="Update"/>
+            <item value="21" name="WrapUp" desc="Wrap-up"/>
+            <item value="22" name="PressRelease" desc="Press Release"/>
+        </enum>
+        <tag number="7" name="EditStatus" human-name="Edit Status" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64">
+            <desc>Status of the objectdata, according to the practice of the provider.</desc>
+        </tag>
+        <tag number="8" name="EditorialUpdate" human-name="Editorial Update" type="Enum-NumChar" enum="EditorialUpdateValues" mandatory="false" repeatable="false" fixed="true" length="2">
+            <desc>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (&lt;see cref='ARM'/>)), according to the practices of the provider.</desc>
+        </tag>
+        <enum name="EditorialUpdateValues" type="Byte" desc="Values for &lt;see cref='EditorialUpdate'/>">
+            <item value="1" name="AdditionalLanguage" desc="Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - &lt;see cref='LanguageIdentifier'/>)."/>
+        </enum>
+        <tag number="10" name="Urgency" human-name="Urgency" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="1">
+            <desc>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, Envelope Priority). The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</desc>
         </tag>
     </record>
 </Root>
