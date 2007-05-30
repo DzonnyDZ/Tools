@@ -2,16 +2,19 @@
 <Root xmlns="http://codeplex.com/DTools/IPTCTags" Stage="Nightly" transformer="IPTCTags.xslt">
     <record number="1" name="Envelope" human-name="Envelope record">
         <desc>Contains internal IPTC data used formerly in telecommunications. Now it is considered being deprecated and is not widely in use.</desc>
-        <tag number="0" name="ModelVersion" human-name="Model Version" type="UShort-binary" fixed="true" length="2" mandatory="true" repeatable="false">
-            <desc>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider. Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</desc>
+        <tag number="0" name="ModelVersion" human-name="Model Version" type="UShort-binary" fixed="true" length="2" mandatory="true" repeatable="false" category="Internal">
+            <desc>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</desc>
+            <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
         </tag>
-        <tag number="5" name="Destination" human-name="Destination" type="GraphicCharacters" fixed="false" length="1024" mandatory="false" repeatable="true">
+        <tag number="5" name="Destination" human-name="Destination" type="GraphicCharacters" fixed="false" length="1024" mandatory="false" repeatable="true" category="Old IPTC">
             <desc>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</desc>
         </tag>
-        <tag number="20" name="FileFormat" human-name="File Format" type="Enum-binary" enum="FileFormats" fixed="true" length="2" mandatory="true" repeatable="false">
-            <desc>A number representing the file format. The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</desc>
+        <tag number="20" name="FileFormat" human-name="File Format" type="Enum-binary" enum="FileFormats" fixed="true" length="2" mandatory="true" repeatable="false" category="Old IPTC">
+            <desc>A number representing the file format.</desc>
+            <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</remarks>
         </tag>
-        <enum name="FileFormats" type="UShort" desc="Registered file formats by IPTC and NAA">
+        <enum name="FileFormats" type="UShort">
+            <desc>Registered file formats by IPTC and NAA</desc>
             <item name="NoObjectData" value="0" human-name="No Object Data" desc="No Object Data"/>
             <item name="NewsphotoParameterRecord" value="01" human-name="Digital Newsphoto Parameter Record" desc="IPTC-NAA Digital Newsphoto Parameter Record"/>
             <item name="RecommendedMessageFormat" human-name="recomended Message Format" value="02" desc="IPTC7901 Recommended Message Format"/>
@@ -43,73 +46,100 @@
             <item name="RBNITF_DTD" value="28" desc="Ritzaus Bureau NITF version (RBNITF DTD)" human-name="RBNITF DTD"/>
             <item name="CorelDraw" value="29" desc="Corel Draw [*.CDR]" human-name="Corel Draw"/>
         </enum>
-        <tag number="22" name="FileFormatVersion" human-name="File Format Version" type="Enum-binary" enum="FileFormatVersions" fixed="true" length="2" mandatory="true" repeatable="false">
-            <desc>A binary number representing the particular version of the &lt;see cref='FileFormat'/></desc>
+        <tag number="22" name="FileFormatVersion" human-name="File Format Version" type="Enum-binary" enum="FileFormatVersions" fixed="true" length="2" mandatory="true" repeatable="false" category="Old IPTC">
+            <desc>
+                A binary number representing the particular version of the <see cref='FileFormat'/>
+            </desc>
         </tag>
-        <enum name="FileFormatVersions" type="UShort" desc="File formta version registered for NAA and IPTC">
+        <enum name="FileFormatVersions" type="UShort">
+            <desc>File format version registered for NAA and IPTC</desc>
             <item name="V0" value="0" desc='Version 1 for FileFormat &lt;see cref="FileFormats.NoObjectData"/>' human-name='1 (No Object Data)'/>
             <item name="V1" value="1" desc='Version 1 for file fromat &lt;see cref="FileFormats.NewsphotoParameterRecord"/> and &lt;see cref="FileFormats.NAA89_3"/>, 5.0 for &lt;see cref="FileFormats.TIFF"/>, 1.40 for &lt;see cref="FileFormats.AdobeIllustrator"/>, 2 for &lt;see cref="FileFormats.AppleSingle"/>, 1.02 for &lt;see cref="FileFormats.JPEG"/> and 3.1 for &lt;see cref="FileFormats.Freehand"/>' human-name="1 (IPTC-NAA Digital Newsphoto Parameter Record, NAA 89-3), 5.0 (TIFF), 1.40 (Adobe Illustrator), 2 (Apple Single), 1.02 (JPEG), 3.1 (Freehand)"/>
             <item name='V2' value='2' desc='Version 2 for file format &lt;see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for &lt;see cref="FileFormats.TIFF"/>, 4.0 for &lt;see cref="FileFormats.Freehand"/> and 2.0 for &lt;see cref="FileFormats.HTML"/>' human-name='2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)'/>
             <item name='V3' value='3' desc='Version 3 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for &lt;see cref="FileFormats.Freehand"/>' human-name='3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)'/>
             <item name='V4' value='4' desc='Version 4 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and &lt;see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for &lt;see cref="FileFormats.Freehand"/>' human-name='4 (IPTC-NAA Digital Newsphoto Parameter Record, Recomended Message Format), 5.5 (Freehand)'/>
         </enum>
-        <tag number="30" name="ServiceIdentifier" human-name="Service Identifier" type="GraphicCharacters"  fixed="false" mandatory="true" repeatable="false" length="10">
+        <tag number="30" name="ServiceIdentifier" human-name="Service Identifier" type="GraphicCharacters"  fixed="false" mandatory="true" repeatable="false" length="10" category="Old IPTC">
             <desc>Identifies the provider and product.</desc>
         </tag>
-        <tag number="40" name="EnvelopeNumber" human-name="Envelope Number" type="NumericChar" fixed="true" mandatory="true" repeatable="false" length="8">
-            <desc>The characters form a number that will be unique for the date specified in &lt;see cref='DateSent'/> and for the Service Identifier specified in &lt;see cref='ServiceIdentifier'/>. If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</desc>
+        <tag number="40" name="EnvelopeNumber" human-name="Envelope Number" type="NumericChar" fixed="true" mandatory="true" repeatable="false" length="8" category="Old IPTC">
+            <desc>
+                The characters form a number that will be unique for the date specified in <see cref='DateSent'/> and for the Service Identifier specified in <see cref='ServiceIdentifier'/>.
+            </desc>
+            <remarks>If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</remarks>
         </tag>
-        <tag number="50" name="ProductID" human-name="Product I.D." type="GraphicCharacters" fixed="false" mandatory="false" repeatable="true" length="32">
-            <desc>Allows a provider to identify subsets of its overall service. Used to provide receiving organisation data on which to select, route, or otherwise handle data.</desc>
+        <tag number="50" name="ProductID" human-name="Product I.D." type="GraphicCharacters" fixed="false" mandatory="false" repeatable="true" length="32" category="Old IPTC">
+            <desc>Allows a provider to identify subsets of its overall service.</desc>
+            <remarks>Used to provide receiving organisation data on which to select, route, or otherwise handle data.</remarks>
         </tag>
-        <tag number="60" name="EnvelopePriority" human-name="Envelope Priority" type="NumericChar" fixed="true" mandatory="false" repeatable="false" length="1">
-            <desc>Specifies the envelope handling priority and not the editorial urgency (see 2:10, &lt;see cref='Urgency'/>). '1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</desc>
+        <tag number="60" name="EnvelopePriority" human-name="Envelope Priority" type="NumericChar" fixed="true" mandatory="false" repeatable="false" length="1" category="Status">
+            <desc>
+                Specifies the envelope handling priority and not the editorial urgency (see 2:10, <see cref='Urgency'/>).
+            </desc>
+            <remarks>'1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</remarks>
         </tag>
-        <tag number="70" name="DateSent" human-name="Date Sent" type="CCYYMMDD" fixed="true" mandatory="true" repeatable="false" length="8">
+        <tag number="70" name="DateSent" human-name="Date Sent" type="CCYYMMDD" fixed="true" mandatory="true" repeatable="false" length="8" category="Date">
             <desc>Indicates year, month and day the service sent the material.</desc>
         </tag>
-        <tag number="80" name="TimeSent" human-name="Time Sent" type="HHMMSS-HHMM" fixed="true" mandatory="false" repeatable="false" length="11">
+        <tag number="80" name="TimeSent" human-name="Time Sent" type="HHMMSS-HHMM" fixed="true" mandatory="false" repeatable="false" length="11" category="Date">
             <desc>This is the time the service sent the material.</desc>
         </tag>
-        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteAray" fixed="false" mandatory="false" repeatable="false" length="32">
+        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteAray" fixed="false" mandatory="false" repeatable="false" length="32" category="Old IPTC">
             <desc>
-                &lt;para>Array of bytes consisting of one or
+                Array of bytes consisting of one or
                 more control functions used for the announcement, invocation or
                 designation of coded character sets. The control functions follow
                 the ISO 2022 standard and may consist of the escape control
                 character and one or more graphic characters. For more details
-                see Appendix C, the IPTC-NAA Code Library.&lt;/para>
-                &lt;para>The control functions apply to character oriented DataSets in
-                records 2-6. They also apply to record 8, unless the objectdata
-                explicitly, or the File Format implicitly, defines character sets
-                otherwise.&lt;/para>
-                &lt;para>If this DataSet contains the designation function for Unicode in
-                UTF-8 then no other announcement, designation or invocation
-                functions are permitted in this DataSet or in records 2-6.
-                For all other character sets, one or more escape sequences are
-                used:&lt;para/>
-                &lt;list>
-                &lt;item>for the announcement of the code extension facilities used in
-                the data which follows,&lt;/item>
-                &lt;item>for the initial designation of the G0, G1, G2 and G3 graphic
-                character sets and&lt;/item>
-                &lt;item>for the initial invocation of the graphic set (7 bits) or the lefthand
-                and the right-hand graphic set (8 bits) and for the initial
-                invocation of the C0 (7 bits) or of the C0 and the C1 control
-                character sets (8 bits).&lt;/item>&lt;/list>
-                &lt;para>The announcement of the code extension facilities, if
-                transmitted, must appear in this data set. Designation and
-                invocation of graphic and control function sets (shifting) may be
-                transmitted anywhere where the escape and the other
-                necessary control characters are permitted. However, it is
-                recommended to transmit in this DataSet an initial designation
-                and invocation, i.e. to define all designations and the shift status
-                currently in use by transmitting the appropriate escape
-                sequences and locking-shift functions.&lt;/para>
-                &lt;para>If &lt;see cref='CodedCharacterSet'/> is omitted, the default for records 2-6 and 8 is ISO 646
-                IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use
-                ISO 646 IRV or ISO 4873 DV respectively.&lt;/para>
-                <!--
+                see Appendix C, the IPTC-NAA Code Library.
+            </desc>
+            <remarks>
+                <para>
+                    The control functions apply to character oriented DataSets in
+                    records 2-6. They also apply to record 8, unless the objectdata
+                    explicitly, or the File Format implicitly, defines character sets
+                    otherwise.
+                </para>
+                <para>
+                    If this DataSet contains the designation function for Unicode in
+                    UTF-8 then no other announcement, designation or invocation
+                    functions are permitted in this DataSet or in records 2-6.
+                    For all other character sets, one or more escape sequences are
+                    used:
+                </para>
+                <list>
+                    <item>
+                        for the announcement of the code extension facilities used in
+                        the data which follows,
+                    </item>
+                    <item>
+                        for the initial designation of the G0, G1, G2 and G3 graphic
+                        character sets and
+                    </item>
+                    <item>
+                        for the initial invocation of the graphic set (7 bits) or the lefthand
+                        and the right-hand graphic set (8 bits) and for the initial
+                        invocation of the C0 (7 bits) or of the C0 and the C1 control
+                        character sets (8 bits).
+                    </item>
+                </list>
+                <para>
+                    The announcement of the code extension facilities, if
+                    transmitted, must appear in this data set. Designation and
+                    invocation of graphic and control function sets (shifting) may be
+                    transmitted anywhere where the escape and the other
+                    necessary control characters are permitted. However, it is
+                    recommended to transmit in this DataSet an initial designation
+                    and invocation, i.e. to define all designations and the shift status
+                    currently in use by transmitting the appropriate escape
+                    sequences and locking-shift functions.
+                </para>
+                <para>
+                    If <see cref='CodedCharacterSet'/> is omitted, the default for records 2-6 and 8 is ISO 646
+                    IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use
+                    ISO 646 IRV or ISO 4873 DV respectively.
+                </para>
+                <para>
                     ECMA as the ISO Registration Authority for escape sequences maintains the
                     International Register of Coded Character Sets to be used with escape sequences, a
                     register of Codes and allocated standardised escape sequences, which are
@@ -120,101 +150,268 @@
                     standardised sequence Codes. The registers consist of a Graphic repertoire, a Control
                     function repertoire and a Repertoire of other coding systems (e.g. complete Codes).
                     Together they represent the IPTC-NAA Code Library.
-                    Graphic Repertoire
-                    ==================
-                    94-character sets (intermediate character 2/8 to 2/11):
-                        002 ISO 646 IRV 4/0
-                        004 ISO 646 British Version 4/1
-                        006 ISO 646 USA Version (ASCII) 4/2
-                        008-1 NATS Primary Set for Finland and Sweden 4/3
-                        008-2 NATS Secondary Set for Finland and Sweden 4/4
-                        009-1 NATS Primary Set for Denmark and Norway 4/5
-                        009-2 NATS Secondary Set for Denmark and Norway 4/6
-                        010 ISO 646 Swedish Version (SEN 850200) 4/7
-                        015 ISO 646 Italian Version (ECMA) 5/9
-                        016 ISO 646 Portuguese Version (ECMA Olivetti) 4/12
-                        017 ISO 646 Spanish Version (ECMA Olivetti) 5/10
-                        018 ISO 646 Greek Version (ECMA) 5/11
-                        021 ISO 646 German Version (DIN 66003) 4/11
-                        037 Basic Cyrillic Character Set (ISO 5427) 4/14
-                        060 ISO 646 Norwegian Version (NS 4551) 6/0
-                        069 ISO 646 French Version (NF Z 62010-1982) 6/6
-                        084 ISO 646 Portuguese Version (ECMA IBM) 6/7
-                        085 ISO 646 Spanish Version (ECMA IBM) 6/8
-                        086 ISO 646 Hungarian Version (HS 7795/3) 6/9
-                        121 Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7
-                        122 Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/8
-                    96-character sets (intermediate character 2/12 to 2/15):
-                        100 Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1
-                        101 Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2
-                        109 Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3
-                        110 Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4
-                        111 Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0
-                        125 Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6
-                        127 Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7
-                        138 Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8
-                        139 Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9
-                    Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)
-                        87 Japanese characters (JIS X 0208-1983) 4/2
-                    Control Function Repertoire
-                    ===========================
-                    C0 Control Function Sets (intermediate character 2/1):
-                        001 C0 Set of ISO 646 4/0
-                        026 IPTC C0 Set for newspaper text transmission 4/3
-                        036 C0 Set of ISO 646 with SS2 instead of IS4 4/4
-                        104 Minimum C0 Set for ISO 4873 4/7
-                    C1 Control Function Sets (intermediate character 2/2):
-                        077 C1 Control Set of ISO 6429 4/3
-                        105 Minimum C1 Set for ISO 4873 4/7
-                    Single Additional Control Functions:
-                        062 Locking-Shift Two (LS2), ISO 2022 6/14
-                        063 Locking-Shift Three (LS3), ISO 2022 6/15
-                        064 Locking-Shift Three Right (LS3R), ISO 2022 7/12
-                        065 Locking-Shift Two Right (LS2R), ISO 2022 7/13
-                        066 Locking-Shift One Right (LS1R), ISO 2022 7/14
-                    Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )
-                    =====================================================================================
-                        196 UCS Transformation Format (UTF-8) 4/7
+                </para>
+                <list>
+                    <listheader>Graphic Repertoire</listheader>
+                    <item>
+                        <list type='table'>
+                            <listheader>94-character sets (intermediate character 2/8 to 2/11)</listheader>
+                            <item>
+                                <term>002</term>
+                                <description>ISO 646 IRV 4/0</description>
+                            </item>
+                            <item>
+                                <term>004</term>
+                                <description>ISO 646 British Version 4/1</description>
+                            </item>
+                            <item>
+                                <term>006</term>
+                                <description>ISO 646 USA Version (ASCII) 4/2</description>
+                            </item>
+                            <item>
+                                <term>008-1</term>
+                                <description>NATS Primary Set for Finland and Sweden 4/3</description>
+                            </item>
+                            <item>
+                                <term>008-2</term>
+                                <description>NATS Secondary Set for Finland and Sweden 4/4</description>
+                            </item>
+                            <item>
+                                <term>009-1</term>
+                                <description>NATS Primary Set for Denmark and Norway 4/5</description>
+                            </item>
+                            <item>
+                                <term>009-2</term>
+                                <description>NATS Secondary Set for Denmark and Norway 4/6</description>
+                            </item>
+                            <item>
+                                <term>010</term>
+                                <description>ISO 646 Swedish Version (SEN 850200) 4/7</description>
+                            </item>
+                            <item>
+                                <term>015</term>
+                                <description>ISO 646 Italian Version (ECMA) 5/9</description>
+                            </item>
+                            <item>
+                                <term>016</term>
+                                <description>ISO 646 Portuguese Version (ECMA Olivetti) 4/12</description>
+                            </item>
+                            <item>
+                                <term>017</term>
+                                <description>ISO 646 Spanish Version (ECMA Olivetti) 5/10</description>
+                            </item>
+                            <item>
+                                <term>018</term>
+                                <description>ISO 646 Greek Version (ECMA) 5/11</description>
+                            </item>
+                            <item>
+                                <term>021</term>
+                                <description>ISO 646 German Version (DIN 66003) 4/11</description>
+                            </item>
+                            <item>
+                                <term>037</term>
+                                <description>Basic Cyrillic Character Set (ISO 5427) 4/14</description>
+                            </item>
+                            <item>
+                                <term>060</term>
+                                <description>ISO 646 Norwegian Version (NS 4551) 6/0</description>
+                            </item>
+                            <item>
+                                <term>069</term>
+                                <description>ISO 646 French Version (NF Z 62010-1982) 6/6</description>
+                            </item>
+                            <item>
+                                <term>084</term>
+                                <description>ISO 646 Portuguese Version (ECMA IBM) 6/7</description>
+                            </item>
+                            <item>
+                                <term>085</term>
+                                <description>ISO 646 Spanish Version (ECMA IBM) 6/8</description>
+                            </item>
+                            <item>
+                                <term>086</term>
+                                <description>ISO 646 Hungarian Version (HS 7795/3) 6/9</description>
+                            </item>
+                            <item>
+                                <term>121</term>
+                                <description>Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7</description>
+                            </item>
+                            <item>
+                                <term>122</term>
+                                <description>Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/8</description>
+                            </item>
+
+                        </list>
+                    </item>
+                    <item>
+                        <list type="table">
+                            <listheader>96-character sets (intermediate character 2/12 to 2/15):</listheader>
+                            <item>
+                                <term>100</term>
+                                <description>Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1</description>
+                            </item>
+                            <item>
+                                <term>101</term>
+                                <description>Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2</description>
+                            </item>
+                            <item>
+                                <term>109</term>
+                                <description>Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3</description>
+                            </item>
+                            <item>
+                                <term>110</term>
+                                <description>Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4</description>
+                            </item>
+                            <item>
+                                <term>111</term>
+                                <description>Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0</description>
+                            </item>
+                            <item>
+                                <term>125</term>
+                                <description>Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6</description>
+                            </item>
+                            <item>
+                                <term>127</term>
+                                <description>Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7</description>
+                            </item>
+                            <item>
+                                <term>138</term>
+                                <description>Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8</description>
+                            </item>
+                            <item>
+                                <term>139</term>
+                                <description>Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9</description>
+                            </item>
+                        </list>
+                    </item>
+                    <item>
+                        <list type="table">
+                            <listheader>Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)</listheader>
+                            <item>
+                                <term>87</term>
+                                <description>Japanese characters (JIS X 0208-1983) 4/2</description>
+                            </item>
+                        </list>
+                    </item>
+                </list>
+                <list>
+                    <listheader>Control Function Repertoire</listheader>
+                    <item>
+                        <list type="table">
+                            <listheader>C0 Control Function Sets (intermediate character 2/1)</listheader>
+
+                            <item>
+                                <term>001</term>
+                                <description>C0 Set of ISO 646 4/0</description>
+                            </item>
+                            <item>
+                                <term>026</term>
+                                <description>IPTC C0 Set for newspaper text transmission 4/3</description>
+                            </item>
+                            <item>
+                                <term>036</term>
+                                <description>C0 Set of ISO 646 with SS2 instead of IS4 4/4</description>
+                            </item>
+                            <item>
+                                <term>104</term>
+                                <description>Minimum C0 Set for ISO 4873 4/7</description>
+                            </item>
+                        </list>
+                    </item>
+                    <item>
+                        <list type="table">
+                            <listheader> C1 Control Function Sets (intermediate character 2/2)</listheader>
+                            <item>
+                                <term>077</term>
+                                <description>C1 Control Set of ISO 6429 4/3</description>
+                            </item>
+                            <item>
+                                <term>105</term>
+                                <description>Minimum C1 Set for ISO 4873 4/7</description>
+                            </item>
+                        </list>
+                    </item>
+                    <item>
+                        <list>
+                            <listheader> Single Additional Control Functions</listheader>
+                            <item>
+                                <term>062</term>
+                                <description>Locking-Shift Two (LS2), ISO 2022 6/14</description>
+                            </item>
+                            <item>
+                                <term>063</term>
+                                <description>Locking-Shift Three (LS3), ISO 2022 6/15</description>
+                            </item>
+                            <item>
+                                <term>064</term>
+                                <description>Locking-Shift Three Right (LS3R), ISO 2022 7/12</description>
+                            </item>
+                            <item>
+                                <term>065</term>
+                                <description>Locking-Shift Two Right (LS2R), ISO 2022 7/13</description>
+                            </item>
+                            <item>
+                                <term>066</term>
+                                <description>Locking-Shift One Right (LS1R), ISO 2022 7/14</description>
+                            </item>
+                        </list>
+                    </item>
+                </list>
+                <list type="table">
+                    <listheader>Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )</listheader>
+                    <item>
+                        <term>196</term>
+                        <description>UCS Transformation Format (UTF-8) 4/7</description>
+                    </item>
+                </list>
                 -->
-        </desc>
+            </remarks>
         </tag>
-        <tag number="100" name="UNO" human-name="UNO" type="UNO" fixed="false" mandatory="false" repeatable="false" length="80">
-            <desc>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form. The provider must ensure the UNO is unique. Objects with the same UNO are identical.</desc>
+        <tag number="100" name="UNO" human-name="UNO" type="UNO" fixed="false" mandatory="false" repeatable="false" length="80" category="Old IPTC">
+            <desc>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</desc>
+            <remarks>The provider must ensure the UNO is unique. Objects with the same UNO are identical.</remarks>
         </tag>
-        <group name="ARM" human-name="ARM" desc="Abstract Relation Method" repeatable="false" mandatory="false">
-            <tag number="120" name="ARMIdentifier" human-name="ARM Identifier" type="Enum-binary" enum="ARMMethods" mandatory="true" repeatable="false" fixed="true" length="2">
+        <group name="ARM" human-name="ARM" repeatable="false" mandatory="false" category="Old IPTC">
+            <desc>Abstract Relation Method</desc>
+            <tag number="120" name="ARMIdentifier" human-name="ARM Identifier" type="Enum-binary" enum="ARMMethods" mandatory="true" repeatable="false" fixed="true" length="2" category="Old IPTC">
                 <desc>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</desc>
             </tag>
-            <tag number="122" name="ARMVersion" human-name="ARM Version" type="Enum-binary" enum="ARMVersions" mandatory="true" repeatable="false" fixed="true" length="2">
+            <tag number="122" name="ARMVersion" human-name="ARM Version" type="Enum-binary" enum="ARMVersions" mandatory="true" repeatable="false" fixed="true" length="2" category="Old IPTC">
                 <desc>A number representing the particular version of the ARM specified in DataSet &lt;see cref='ARMIdentified'/>.</desc>
             </tag>
         </group>
-        <enum name="ARMMethods" type="UShort" desc="Abstract Relation Methods Identifiers">
+        <enum name="ARMMethods" type="UShort">
+            <desc>Abstract Relation Methods Identifiers</desc>
             <item value="1" name="IPTCMethod1" desc="Using DataSets 2:45, 2:47 and 2:50 (&lt;see cref='ReferenceService'/>, &lt;see cref='ReferenceDate'/> and &lt;see cref='ReferenceNumber'/>)" human-name="Method 1 (Reference service, date, number)"/>
             <item value="2" name="IPTCMethod2" desc="Using DataSet 1:100 (&lt;see cref='UNO'/>)" human-name="Method 2 (UNO)"/>
         </enum>
-        <enum name="ARMVersions" type="UShort" desc="Abstract Relation Method Versions">
+        <enum name="ARMVersions" type="UShort">
+            <desc>Abstract Relation Method Versions</desc>
             <item value="1" name="ARM1" desc="The only ARM version" human-name="Version 1"/>
         </enum>
     </record>
-
     <record name="Application" human-name="Application Record No. 2" number="2">
         <desc>This record contain informative data about content. Whole record is optional, but when any tag is used then mandatory tags are mandatory.</desc>
-        <tag number="0" name="RecordVersion" human-name="Record Version" type="UShort-binary" mandatory="true" repeatable="false" fixed="true" length="2">
-            <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider. Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</desc>
+        <tag number="0" name="RecordVersion" human-name="Record Version" type="UShort-binary" mandatory="true" repeatable="false" fixed="true" length="2" category="Internal">
+            <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</desc>
+            <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
         </tag>
-        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes">
-            <desc>The Object Type is used to distinguish between different types of objects within the IIM. The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</desc>
+        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category">
+            <desc>The Object Type is used to distinguish between different types of objects within the IIM.</desc>
+            <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</remarks>
         </tag>
-        <enum name="ObjectTypes" type="Byte" desc="Object Type Number and Object Type Name relationship">
+        <enum name="ObjectTypes" type="Byte">
+            <desc>Object Type Number and Object Type Name relationship</desc>
             <item value="1" name="News" desc="News" human-name="News"/>
             <item value="2" name="Data" desc="Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate." human-name="Data"/>
             <item value="3" name="Advisory" desc="Advisory" human-name="Advisory"/>
         </enum>
-        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes">
-            <desc>The Object Attribute defines the nature of the object independent of the Subject. The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</desc>
+        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes" category="Category">
+            <desc>The Object Attribute defines the nature of the object independent of the Subject.</desc>
+            <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</remarks>
         </tag>
-        <enum name="ObjectAttributes" type="Byte" desc="Object Attribute Number abd Object Name relationship">
+        <enum name="ObjectAttributes" type="Byte">
+            <desc>Object Attribute Number abd Object Name relationship</desc>
             <item value="01" name="Current" desc="Current" human-name="Current"/>
             <item value="02" name="Analysis" desc="Analysis" human-name="Analysis"/>
             <item value="03" name="ArchiveMaterial" desc="Archive material" human-name="Archive material"/>
@@ -238,22 +435,30 @@
             <item value="21" name="WrapUp" desc="Wrap-up" human-name="Wrap-up"/>
             <item value="22" name="PressRelease" desc="Press Release" human-name="Press Release"/>
         </enum>
-        <tag number="7" name="EditStatus" human-name="Edit Status" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64">
+        <tag number="7" name="EditStatus" human-name="Edit Status" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64" category="Status">
             <desc>Status of the objectdata, according to the practice of the provider.</desc>
         </tag>
-        <tag number="8" name="EditorialUpdate" human-name="Editorial Update" type="Enum-NumChar" enum="EditorialUpdateValues" mandatory="false" repeatable="false" fixed="true" length="2">
+        <tag number="8" name="EditorialUpdate" human-name="Editorial Update" type="Enum-NumChar" enum="EditorialUpdateValues" mandatory="false" repeatable="false" fixed="true" length="2" category="Status">
             <desc>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (&lt;see cref='ARM'/>)), according to the practices of the provider.</desc>
         </tag>
-        <enum name="EditorialUpdateValues" type="Byte" desc="Values for &lt;see cref='EditorialUpdate'/>">
+        <enum name="EditorialUpdateValues" type="Byte">
+            <desc>
+                Values for <see cref='EditorialUpdate'/>
+            </desc>
             <item value="1" name="AdditionalLanguage" desc="Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - &lt;see cref='LanguageIdentifier'/>)." human-name="Additional language"/>
         </enum>
-        <tag number="10" name="Urgency" human-name="Urgency" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="1">
-            <desc>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, Envelope Priority). The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</desc>
+        <tag number="10" name="Urgency" human-name="Urgency" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="1" category="Status">
+            <desc>
+                Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, <see cref="EnvelopePriority"/>).
+            </desc>
+            <remarks> The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</remarks>
         </tag>
-        <tag number="12" name="SubjectReference" human-name="Subject Reference" type="SubjectReference" mandatory="false" repeatable="true" fixed="false" length="236">
-            <desc>The Subject Reference is a structured definition of the subject matter. It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</desc>
+        <tag number="12" name="SubjectReference" human-name="Subject Reference" type="SubjectReference" mandatory="false" repeatable="true" fixed="false" length="236" category="Old IPTC">
+            <desc>The Subject Reference is a structured definition of the subject matter.</desc>
+            <remarks>It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</remarks>
         </tag>
-        <enum name="SubjectReferenceNumbers" desc="Subject Reference Number and Subject Name relationship (version IPTC/1)" type="Integer">
+        <enum name="SubjectReferenceNumbers" type="Integer">
+            <desc>Subject Reference Number and Subject Name relationship (version IPTC/1)</desc>
             <item value="01000000" name="ArtsCultureEntertainment" human-name="Arts, Culture &amp; Entertainment" desc="Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions"/>
             <item value="02000000" human-name="Crime, Law &amp; Justice" name="CrimeLawJustice" desc="Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities."/>
             <item value="03000000" human-name="Disasters &amp; Accidents" name="DisastersAccidents" desc="Man made and natural events resulting in loss of life or injury to living creatures and/or damage to inanimate objects or property."/>
@@ -272,7 +477,8 @@
             <item value="16000000" human-name="Unrest, Conflicts &amp; War" name="UnrestConflictsWar" desc="Acts of socially or politically motivated protest and/or violence."/>
             <item value="17000000" human-name="Weather" name="Weather" desc="The study, reporting and predic meteorological phenomena."/>
         </enum>
-        <enum name="SubjectMatterMembers" type="Integer" desc="Subject Matter Name and Subject Reference Number relationship">
+        <enum name="SubjectMatterMembers" type="Integer">
+            <desc>Subject Matter Name and Subject Reference Number relationship</desc>
             <!--Arts, Culture & Entertainment 01000000-->
             <item value="01001000" name="Archaeology" human-name="Archaeology" desc="Archaeology"/>
             <item value="01002000" name="Architecture" human-name="Architecture" desc="Architecture"/>
@@ -512,7 +718,8 @@
             <item value="17004000" name="Statistics" human-name="Statistics" desc="Statistics"/>
             <item value="17005000" name="Warnings" human-name="Warnings" desc="Warnings"/>
         </enum>
-        <enum name="EconomySubjectDetail" desc="Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)" type="Integer">
+        <enum name="EconomySubjectDetail" type="Integer">
+            <desc>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</desc>
             <!--AGRICULTURE 04001000-->
             <item value="04001001" name="ArableFarming" human-name="Arable Farming" desc="Arable Farming"/>
             <item value="04001002" name="FishingIndustry" human-name="Fishing Industry" desc="Fishing Industry"/>
@@ -629,5 +836,486 @@
             <item value="04015003" name="RoadTransport" human-name="Road Transport" desc="Road Transport"/>
             <item value="04015004" name="WaterwayAndMaritimeTransport" human-name="Waterway &amp; Maritime Transport" desc="Waterway &amp; Maritime Transport"/>
         </enum>
+        <tag number="15" name="Category" human-name="Category" type="Aplha" mandatory="false" repeatable="false" fixed="false" length="3" attributes='&lt;Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")>' category='Category'>
+            <desc>Identifies the subject of the objectdata in the opinion of the provider.</desc>
+            <remarks>A list of categories will be maintained by a regional registry, where available, otherwise by the provider.</remarks>
+        </tag>
+        <tag number="20" name="SupplementalCategory" human-name="Supplemental Category" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="32" attributes='&lt;Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")>' category='Category'>
+            <desc>Supplemental categories further refine the subject of an objectdata.</desc>
+            <remarks>
+                Only a single supplemental category may be contained in each DataSet. A supplemental category may include any of the recognised categories as used in <see cref='Category'/>. Otherwise, selection of supplemental categories are left to the provider.
+            </remarks>
+        </tag>
+        <tag number="22" name="FixtureIdentifier" human-name="Fixture Identifier" type="GraphicCharacters" mandatory="false" repeatable="false" fixed="false" length="32" category="Category">
+            <desc>Identifies objectdata that recurs often and predictably.</desc>
+            <remarks>Enables users to immediately find or recall such an object.</remarks>
+        </tag>
+        <tag number="25" name="Keywords" human-name="Keywords" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="64" category="Category">
+            <desc>Used to indicate specific information retrieval words.</desc>
+            <remarks>Each keyword uses a single Keywords DataSet. Multiple keywords use multiple Keywords DataSets. It is expected that a provider of various types of data that are related in subject matter uses the same keyword, enabling the receiving system or subsystems to search across all types of data for related material.</remarks>
+        </tag>
+        <group name="ContentLocation" human-name="Content Location" mandatory="false" repeatable="true" category="Location">
+            <desc>Country/geographical location referenced by the content of the object</desc>
+            <tag number="26" name="ContentLocationCode" human-name="Content Location Code" type="StringEnum" mandatory="true" fixed="true" repeatable="false" length="3" enum="ISO3166" category="Location">
+                <desc>Indicates the code of a country/geographical location referenced by the content of the object.</desc>
+                <remarks>
+                    Where ISO has established an appropriate country code under
+                    ISO 3166, that code will be used. When ISO3166 does not
+                    adequately provide for identification of a location or a country,
+                    e.g. ships at sea, space, IPTC will assign an appropriate threecharacter
+                    code under the provisions of ISO3166 to avoid
+                    conflicts. (see Appendix D) .
+                </remarks>
+            </tag>
+            <tag number="27" name="ContentLocationName" human-name="Content Location Name" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64" category="Location">
+                <desc>Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.</desc>
+                <remarks>
+                    If used in the same object with DataSet <see cref="ContentLocationCode"/>, must immediately follow and correspond to it.
+                </remarks>
+            </tag>
+        </group>
+        <senum name="ISO3166" type="String" restrict="false">
+            <desc>
+                ISO 3166-1 alpha-3 codes used by <see cref="ContentLocationCode"/> with addition of some spacial codes used there.
+            </desc>
+            <remarks>Reserved code elements are codes which, while not ISO 3166-1 codes, are in use for some applications in conjunction with the ISO 3166 codes. The ISO 3166/MA therefore reserves them, so that they are not used for new official ISO 3166 codes, thereby creating conflicts between the standard and those applications.</remarks>
+            <item name="Aruba" human-name="Aruba" value="ABW" desc="Aruba"/>
+            <item name="Afghanistan" human-name="Afghanistan" value="AFG" desc="Afghanistan"/>
+            <item name="Angola" human-name="Angola" value="AGO" desc="Angola"/>
+            <item name="Anguilla" human-name="Anguilla" value="AIA" desc="Anguilla"/>
+            <item name="Åland" human-name="Åland" value="ALA" desc="Åland Islands"/>
+            <item name="Albania" human-name="Albania" value="ALB" desc="Albania"/>
+            <item name="Andorra" human-name="Andorra" value="AND" desc="Andorra"/>
+            <item name="NetherlandsAntilles" human-name="Netherlands Antilles" value="ANT" desc="Netherlands Antilles"/>
+            <item name="UnitedArabEmirates" human-name="United Arab Emirates" value="ARE" desc="United Arab Emirates"/>
+            <item name="Argentina" human-name="Argentina" value="ARG" desc="Argentina"/>
+            <item name="Armenia" human-name="Armenia" value="ARM" desc="Armenia"/>
+            <item name="AmericanSamoa" human-name="American Samoa" value="ASM" desc="American Samoa"/>
+            <item name="Antarctica" human-name="Antarctica" value="ATA" desc="Antarctica"/>
+            <item name="FrenchSouthernTerritories" human-name="French Southern Territories" value="ATF" desc="French Southern Territories"/>
+            <item name="AntiguaAndBarbuda" human-name="Antigua and Barbuda" value="ATG" desc="Antigua and Barbuda"/>
+            <item name="Australia" human-name="Australia" value="AUS" desc="Australia"/>
+            <item name="Austria" human-name="Austria" value="AUT" desc="Austria"/>
+            <item name="Azerbaijan" human-name="Azerbaijan" value="AZE" desc="Azerbaijan"/>
+            <item name="Burundi" human-name="Burundi" value="BDI" desc="Burundi"/>
+            <item name="Belgium" human-name="Belgium" value="BEL" desc="Belgium"/>
+            <item name="Benin" human-name="Benin" value="BEN" desc="Benin"/>
+            <item name="BurkinaFaso" human-name="Burkina Faso" value="BFA" desc="Burkina Faso"/>
+            <item name="Bangladesh" human-name="Bangladesh" value="BGD" desc="Bangladesh"/>
+            <item name="Bulgaria" human-name="Bulgaria" value="BGR" desc="Bulgaria"/>
+            <item name="Bahrain" human-name="Bahrain" value="BHR" desc="Bahrain"/>
+            <item name="Bahamas" human-name="Bahamas" value="BHS" desc="Bahamas"/>
+            <item name="BosniaAndHerzegovina" human-name="Bosnia and Herzegovina" value="BIH" desc="Bosnia and Herzegovina"/>
+            <item name="Belarus" human-name="Belarus" value="BLR" desc="Belarus"/>
+            <item name="Belize" human-name="Belize" value="BLZ" desc="Belize"/>
+            <item name="Bermuda" human-name="Bermuda" value="BMU" desc="Bermuda"/>
+            <item name="Bolivia" human-name="Bolivia" value="BOL" desc="Bolivia"/>
+            <item name="Brazil" human-name="Brazil" value="BRA" desc="Brazil"/>
+            <item name="Barbados" human-name="Barbados" value="BRB" desc="Barbados"/>
+            <item name="Brunei" human-name="Brunei" value="BRN" desc="Brunei Darussalam"/>
+            <item name="Bhutan" human-name="Bhutan" value="BTN" desc="Bhutan"/>
+            <item name="BouvetIsland" human-name="Bouvet Island" value="BVT" desc="Bouvet Island"/>
+            <item name="Botswana" human-name="Botswana" value="BWA" desc="Botswana"/>
+            <item name="CentralAfricanRepublic" human-name="Central African Republic" value="CAF" desc="Central African Republic"/>
+            <item name="Canada" human-name="Canada" value="CAN" desc="Canada"/>
+            <item name="CocosIslands" human-name="Cocos Islands" value="CCK" desc="Cocos (Keeling) Islands"/>
+            <item name="Switzerland" human-name="Switzerland" value="CHE" desc="Switzerland"/>
+            <item name="Chile" human-name="Chile" value="CHL" desc="Chile"/>
+            <item name="China" human-name="China" value="CHN" desc="China"/>
+            <item name="CôteDIvoire" human-name="Côte d'Ivoire" value="CIV" desc="Côte d'Ivoire"/>
+            <item name="Cameroon" human-name="Cameroon" value="CMR" desc="Cameroon"/>
+            <item name="Zaire" human-name="Congo-Zaire" value="COD" desc="Congo, the Democratic Republic of the[1]"/>
+            <item name="Congo" human-name="Congo" value="COG" desc="Congo"/>
+            <item name="CookIslands" human-name="Cook Islands" value="COK" desc="Cook Islands"/>
+            <item name="Colombia" human-name="Colombia" value="COL" desc="Colombia"/>
+            <item name="Comoros" human-name="Comoros" value="COM" desc="Comoros"/>
+            <item name="CapeVerde" human-name="Cape Verde" value="CPV" desc="Cape Verde"/>
+            <item name="CostaRica" human-name="Costa Rica" value="CRI" desc="Costa Rica"/>
+            <item name="Cuba" human-name="Cuba" value="CUB" desc="Cuba"/>
+            <item name="ChristmasIsland" human-name="Christmas Island" value="CXR" desc="Christmas Island"/>
+            <item name="CaymanIslands" human-name="Cayman Islands" value="CYM" desc="Cayman Islands"/>
+            <item name="Cyprus" human-name="Cyprus" value="CYP" desc="Cyprus"/>
+            <item name="CzechRepublic" human-name="Czech Republic" value="CZE" desc="Czech Republic"/>
+            <item name="Germany" human-name="Germany" value="DEU" desc="Germany"/>
+            <item name="Djibouti" human-name="Djibouti" value="DJI" desc="Djibouti"/>
+            <item name="Dominica" human-name="Dominica" value="DMA" desc="Dominica"/>
+            <item name="Denmark" human-name="Denmark" value="DNK" desc="Denmark"/>
+            <item name="DominicanRepublic" human-name="Dominican Republic" value="DOM" desc="Dominican Republic"/>
+            <item name="Algeria" human-name="Algeria" value="DZA" desc="Algeria"/>
+            <item name="Ecuador" human-name="Ecuador" value="ECU" desc="Ecuador"/>
+            <item name="Egypt" human-name="Egypt" value="EGY" desc="Egypt"/>
+            <item name="Eritrea" human-name="Eritrea" value="ERI" desc="Eritrea"/>
+            <item name="WesternSahara" human-name="Western Sahara" value="ESH" desc="Western Sahara"/>
+            <item name="Spain" human-name="Spain" value="ESP" desc="Spain"/>
+            <item name="Estonia" human-name="Estonia" value="EST" desc="Estonia"/>
+            <item name="Ethiopia" human-name="Ethiopia" value="ETH" desc="Ethiopia"/>
+            <item name="Finland" human-name="Finland" value="FIN" desc="Finland"/>
+            <item name="Fiji" human-name="Fiji" value="FJI" desc="Fiji"/>
+            <item name="FalklandIslands" human-name="Falkland Islands (Malvinas)" value="FLK" desc="Falkland Islands (Malvinas)"/>
+            <item name="France" human-name="France" value="FRA" desc="France"/>
+            <item name="FaroeIslands" human-name="Faroe Islands" value="FRO" desc="Faroe Islands"/>
+            <item name="Micronesia" human-name="Micronesia" value="FSM" desc="Micronesia, Federated States of"/>
+            <item name="Gabon" human-name="Gabon" value="GAB" desc="Gabon"/>
+            <item name="UnitedKingdom" human-name="United Kingdom" value="GBR" desc="United Kingdom"/>
+            <item name="Georgia" human-name="Georgia" value="GEO" desc="Georgia"/>
+            <item name="Guernsey" human-name="Guernsey" value="GGY" desc="Guernsey"/>
+            <item name="Ghana" human-name="Ghana" value="GHA" desc="Ghana"/>
+            <item name="Gibraltar" human-name="Gibraltar" value="GIB" desc="Gibraltar"/>
+            <item name="Guinea" human-name="Guinea" value="GIN" desc="Guinea"/>
+            <item name="Guadeloupe" human-name="Guadeloupe" value="GLP" desc="Guadeloupe"/>
+            <item name="Gambia" human-name="Gambia" value="GMB" desc="Gambia"/>
+            <item name="GuineaBissau" human-name="Guinea-Bissau" value="GNB" desc="Guinea-Bissau"/>
+            <item name="EquatorialGuinea" human-name="Equatorial Guinea" value="GNQ" desc="Equatorial Guinea"/>
+            <item name="Greece" human-name="Greece" value="GRC" desc="Greece"/>
+            <item name="Grenada" human-name="Grenada" value="GRD" desc="Grenada"/>
+            <item name="Greenland" human-name="Greenland" value="GRL" desc="Greenland"/>
+            <item name="Guatemala" human-name="Guatemala" value="GTM" desc="Guatemala"/>
+            <item name="FrenchGuiana" human-name="French Guiana" value="GUF" desc="French Guiana"/>
+            <item name="Guam" human-name="Guam" value="GUM" desc="Guam"/>
+            <item name="Guyana" human-name="Guyana" value="GUY" desc="Guyana"/>
+            <item name="HongKong" human-name="Hong Kong" value="HKG" desc="Hong Kong"/>
+            <item name="HeardIslandAndMcDonaldIslands" human-name="Heard Island and McDonald Islands" value="HMD" desc="Heard Island and McDonald Islands"/>
+            <item name="Honduras" human-name="Honduras" value="HND" desc="Honduras"/>
+            <item name="Croatia" human-name="Croatia" value="HRV" desc="Croatia"/>
+            <item name="Haiti" human-name="Haiti" value="HTI" desc="Haiti"/>
+            <item name="Hungary" human-name="Hungary" value="HUN" desc="Hungary"/>
+            <item name="Indonesia" human-name="Indonesia" value="IDN" desc="Indonesia"/>
+            <item name="Man" human-name="Isle of Man" value="IMN" desc="Isle of Man"/>
+            <item name="India" human-name="India" value="IND" desc="India"/>
+            <item name="BritishIndianOceanTerritory" human-name="British Indian Ocean Territory" value="IOT" desc="British Indian Ocean Territory"/>
+            <item name="Ireland" human-name="Ireland" value="IRL" desc="Ireland"/>
+            <item name="Iran" human-name="Iran" value="IRN" desc="Iran, Islamic Republic of"/>
+            <item name="Iraq" human-name="Iraq" value="IRQ" desc="Iraq"/>
+            <item name="Iceland" human-name="Iceland" value="ISL" desc="Iceland"/>
+            <item name="Israel" human-name="Israel" value="ISR" desc="Israel"/>
+            <item name="Italy" human-name="Italy" value="ITA" desc="Italy"/>
+            <item name="Jamaica" human-name="Jamaica" value="JAM" desc="Jamaica"/>
+            <item name="Jersey" human-name="Jersey" value="JEY" desc="Jersey"/>
+            <item name="Jordan" human-name="Jordan" value="JOR" desc="Jordan"/>
+            <item name="Japan" human-name="Japan" value="JPN" desc="Japan"/>
+            <item name="Kazakhstan" human-name="Kazakhstan" value="KAZ" desc="Kazakhstan"/>
+            <item name="Kenya" human-name="Kenya" value="KEN" desc="Kenya"/>
+            <item name="Kyrgyzstan" human-name="Kyrgyzstan" value="KGZ" desc="Kyrgyzstan"/>
+            <item name="Cambodia" human-name="Cambodia" value="KHM" desc="Cambodia"/>
+            <item name="Kiribati" human-name="Kiribati" value="KIR" desc="Kiribati"/>
+            <item name="SaintKittsAndNevis" human-name="Saint Kitts and Nevis" value="KNA" desc="Saint Kitts and Nevis"/>
+            <item name="Korea" human-name="Korea" value="KOR" desc="Korea, Republic of"/>
+            <item name="Kuwait" human-name="Kuwait" value="KWT" desc="Kuwait"/>
+            <item name="Laos" human-name="Laos" value="LAO" desc="Lao People's Democratic Republic"/>
+            <item name="Lebanon" human-name="Lebanon" value="LBN" desc="Lebanon"/>
+            <item name="Liberia" human-name="Liberia" value="LBR" desc="Liberia"/>
+            <item name="Libya" human-name="Libya" value="LBY" desc="Libyan Arab Jamahiriya"/>
+            <item name="SaintLucia" human-name="Saint Lucia" value="LCA" desc="Saint Lucia"/>
+            <item name="Liechtenstein" human-name="Liechtenstein" value="LIE" desc="Liechtenstein"/>
+            <item name="SriLanka" human-name="Sri Lanka" value="LKA" desc="Sri Lanka"/>
+            <item name="Lesotho" human-name="Lesotho" value="LSO" desc="Lesotho"/>
+            <item name="Lithuania" human-name="Lithuania" value="LTU" desc="Lithuania"/>
+            <item name="Luxembourg" human-name="Luxembourg" value="LUX" desc="Luxembourg"/>
+            <item name="Latvia" human-name="Latvia" value="LVA" desc="Latvia"/>
+            <item name="Macao" human-name="Macao" value="MAC" desc="Macao"/>
+            <item name="Morocco" human-name="Morocco" value="MAR" desc="Morocco"/>
+            <item name="Monaco" human-name="Monaco" value="MCO" desc="Monaco"/>
+            <item name="Moldova" human-name="Moldova" value="MDA" desc="Moldova, Republic of"/>
+            <item name="Madagascar" human-name="Madagascar" value="MDG" desc="Madagascar"/>
+            <item name="Maldives" human-name="Maldives" value="MDV" desc="Maldives"/>
+            <item name="Mexico" human-name="Mexico" value="MEX" desc="Mexico"/>
+            <item name="MarshallIslands" human-name="Marshall Islands" value="MHL" desc="Marshall Islands"/>
+            <item name="Macedonia" human-name="Macedonia" value="MKD" desc="Macedonia"/>
+            <item name="Mali" human-name="Mali" value="MLI" desc="Mali"/>
+            <item name="Malta" human-name="Malta" value="MLT" desc="Malta"/>
+            <item name="Myanmar" human-name="Myanmar" value="MMR" desc="Myanmar"/>
+            <item name="Montenegro" human-name="Montenegro" value="MNE" desc="Montenegro"/>
+            <item name="Mongolia" human-name="Mongolia" value="MNG" desc="Mongolia"/>
+            <item name="NorthernMarianaIslands" human-name="Northern Mariana Islands" value="MNP" desc="Northern Mariana Islands"/>
+            <item name="Mozambique" human-name="Mozambique" value="MOZ" desc="Mozambique"/>
+            <item name="Mauritania" human-name="Mauritania" value="MRT" desc="Mauritania"/>
+            <item name="Montserrat" human-name="Montserrat" value="MSR" desc="Montserrat"/>
+            <item name="Martinique" human-name="Martinique" value="MTQ" desc="Martinique"/>
+            <item name="Mauritius" human-name="Mauritius" value="MUS" desc="Mauritius"/>
+            <item name="Malawi" human-name="Malawi" value="MWI" desc="Malawi"/>
+            <item name="Malaysia" human-name="Malaysia" value="MYS" desc="Malaysia"/>
+            <item name="Mayotte" human-name="Mayotte" value="MYT" desc="Mayotte"/>
+            <item name="Namibia" human-name="Namibia" value="NAM" desc="Namibia"/>
+            <item name="NewCaledonia" human-name="New Caledonia" value="NCL" desc="New Caledonia"/>
+            <item name="Niger" human-name="Niger" value="NER" desc="Niger"/>
+            <item name="Norfolk" human-name="Norfolk" value="NFK" desc="Norfolk Island"/>
+            <item name="Nigeria" human-name="Nigeria" value="NGA" desc="Nigeria"/>
+            <item name="Nicaragua" human-name="Nicaragua" value="NIC" desc="Nicaragua"/>
+            <item name="Niue" human-name="Niue" value="NIU" desc="Niue"/>
+            <item name="Netherlands" human-name="Netherlands" value="NLD" desc="Netherlands"/>
+            <item name="Norway" human-name="Norway" value="NOR" desc="Norway"/>
+            <item name="Nepal" human-name="Nepal" value="NPL" desc="Nepal"/>
+            <item name="Nauru" human-name="Nauru" value="NRU" desc="Nauru"/>
+            <item name="NewZealand" human-name="New Zealand" value="NZL" desc="New Zealand"/>
+            <item name="Oman" human-name="Oman" value="OMN" desc="Oman"/>
+            <item name="Pakistan" human-name="Pakistan" value="PAK" desc="Pakistan"/>
+            <item name="Panama" human-name="Panama" value="PAN" desc="Panama"/>
+            <item name="Pitcairn" human-name="Pitcairn" value="PCN" desc="Pitcairn"/>
+            <item name="Peru" human-name="Peru" value="PER" desc="Peru"/>
+            <item name="Philippines" human-name="Philippines" value="PHL" desc="Philippines"/>
+            <item name="Palau" human-name="Palau" value="PLW" desc="Palau"/>
+            <item name="PapuaNewGuinea" human-name="Papua New Guinea" value="PNG" desc="Papua New Guinea"/>
+            <item name="Poland" human-name="Poland" value="POL" desc="Poland"/>
+            <item name="PuertoRico" human-name="Puerto Rico" value="PRI" desc="Puerto Rico"/>
+            <item name="NortKorea" human-name="North Korea" value="PRK" desc="Korea, Democratic People's Republic of"/>
+            <item name="Portugal" human-name="Portugal" value="PRT" desc="Portugal"/>
+            <item name="Paraguay" human-name="Paraguay" value="PRY" desc="Paraguay"/>
+            <item name="Palestina" human-name="Palestina" value="PSE" desc="Palestinian Territory, Occupied"/>
+            <item name="FrenchPolynesia" human-name="French Polynesia" value="PYF" desc="French Polynesia"/>
+            <item name="Qatar" human-name="Qatar" value="QAT" desc="Qatar"/>
+            <item name="Réunion" human-name="Réunion" value="REU" desc="Réunion"/>
+            <item name="Romania" human-name="Romania" value="ROU" desc="Romania"/>
+            <item name="Russiaa" human-name="Russia" value="RUS" desc="Russian Federation"/>
+            <item name="Rwanda" human-name="Rwanda" value="RWA" desc="Rwanda"/>
+            <item name="SaudiArabia" human-name="Saudi Arabia" value="SAU" desc="Saudi Arabia"/>
+            <item name="Sudan" human-name="Sudan" value="SDN" desc="Sudan"/>
+            <item name="Senegal" human-name="Senegal" value="SEN" desc="Senegal"/>
+            <item name="Singapore" human-name="Singapore" value="SGP" desc="Singapore"/>
+            <item name="SouthGeorgiaAndTheSouthSandwichIslands" human-name="South Georgia and the South Sandwich Islands" value="SGS" desc="South Georgia and the South Sandwich Islands"/>
+            <item name="SaintHelena" human-name="Saint Helena" value="SHN" desc="Saint Helena"/>
+            <item name="SvalbardAndJanMayen" human-name="Svalbard and Jan Mayen" value="SJM" desc="Svalbard and Jan Mayen"/>
+            <item name="SolomonIslands" human-name="Solomon Islands" value="SLB" desc="Solomon Islands"/>
+            <item name="SierraLeone" human-name="Sierra Leone" value="SLE" desc="Sierra Leone"/>
+            <item name="Salvador" human-name="El Salvador" value="SLV" desc="El Salvador"/>
+            <item name="SanMarino" human-name="San Marino" value="SMR" desc="San Marino"/>
+            <item name="Somalia" human-name="Somalia" value="SOM" desc="Somalia"/>
+            <item name="SaintPierreAndMiquelon" human-name="Saint Pierre and Miquelon" value="SPM" desc="Saint Pierre and Miquelon"/>
+            <item name="Serbia" human-name="Serbia" value="SRB" desc="Serbia"/>
+            <item name="SaoTomeAndPrincipe" human-name="Sao Tome and Principe" value="STP" desc="Sao Tome and Principe"/>
+            <item name="Suriname" human-name="Suriname" value="SUR" desc="Suriname"/>
+            <item name="Slovakia" human-name="Slovakia" value="SVK" desc="Slovakia"/>
+            <item name="Slovenia" human-name="Slovenia" value="SVN" desc="Slovenia"/>
+            <item name="Sweden" human-name="Sweden" value="SWE" desc="Sweden"/>
+            <item name="Swaziland" human-name="Swaziland" value="SWZ" desc="Swaziland"/>
+            <item name="Seychelles" human-name="Seychelles" value="SYC" desc="Seychelles"/>
+            <item name="Syria" human-name="Syria" value="SYR" desc="Syrian Arab Republic"/>
+            <item name="TurksAndCaicos" human-name="Turks and Caicos" value="TCA" desc="Turks and Caicos Islands"/>
+            <item name="Chad" human-name="Chad" value="TCD" desc="Chad"/>
+            <item name="Togo" human-name="Togo" value="TGO" desc="Togo"/>
+            <item name="Thailand" human-name="Thailand" value="THA" desc="Thailand"/>
+            <item name="Tajikistan" human-name="Tajikistan" value="TJK" desc="Tajikistan"/>
+            <item name="Tokelau" human-name="Tokelau" value="TKL" desc="Tokelau"/>
+            <item name="Turkmenistan" human-name="Turkmenistan" value="TKM" desc="Turkmenistan"/>
+            <item name="TimorLeste" human-name="Timor-Leste" value="TLS" desc="Timor-Leste"/>
+            <item name="Tonga" human-name="Tonga" value="TON" desc="Tonga"/>
+            <item name="TrinidadAndTobago" human-name="Trinidad and Tobago" value="TTO" desc="Trinidad and Tobago"/>
+            <item name="Tunisia" human-name="Tunisia" value="TUN" desc="Tunisia"/>
+            <item name="Turkey" human-name="Turkey" value="TUR" desc="Turkey"/>
+            <item name="Tuvalu" human-name="Tuvalu" value="TUV" desc="Tuvalu"/>
+            <item name="Taiwan" human-name="Taiwan" value="TWN" desc="Taiwan (ROC)"/>
+            <item name="Tanzania" human-name="Tanzania" value="TZA" desc="Tanzania, United Republic of"/>
+            <item name="Uganda" human-name="Uganda" value="UGA" desc="Uganda"/>
+            <item name="Ukraine" human-name="Ukraine" value="UKR" desc="Ukraine"/>
+            <item name="UnitedStatesMinorOutlyingIslands" human-name="United States Minor Outlying Islands" value="UMI" desc="United States Minor Outlying Islands"/>
+            <item name="Uruguay" human-name="Uruguay" value="URY" desc="Uruguay"/>
+            <item name="USA" human-name="United States" value="USA" desc="United States"/>
+            <item name="Uzbekistan" human-name="Uzbekistan" value="UZB" desc="Uzbekistan"/>
+            <item name="Vatican" human-name="Vatican" value="VAT" desc="Vatican City State (Holy See)"/>
+            <item name="SaintVincentAndTheGrenadines" human-name="Saint Vincent and the Grenadines" value="VCT" desc="Saint Vincent and the Grenadines"/>
+            <item name="Venezuela" human-name="Venezuela" value="VEN" desc="Venezuela"/>
+            <item name="BritishVirginIslands" human-name="Virgin Islands, British" value="VGB" desc="Virgin Islands, British"/>
+            <item name="AmericanVirginIslands" human-name="Virgin Islands, U.S." value="VIR" desc="Virgin Islands, U.S."/>
+            <item name="VietNam" human-name="Viet Nam" value="VNM" desc="Viet Nam"/>
+            <item name="Vanuatu" human-name="Vanuatu" value="VUT" desc="Vanuatu"/>
+            <item name="WallisAndFutuna" human-name="Wallis and Futuna" value="WLF" desc="Wallis and Futuna"/>
+            <item name="Samoa" human-name="Samoa" value="WSM" desc="Samoa"/>
+            <item name="Yemen" human-name="Yemen" value="YEM" desc="Yemen"/>
+            <item name="SouthAfrica" human-name="South Africa" value="ZAF" desc="South Africa"/>
+            <item name="Zambia" human-name="Zambia" value="ZMB" desc="Zambia"/>
+            <item name="Zimbabwe" human-name="Zimbabwe" value="ZWE" desc="Zimbabwe"/>
+            <!--Reserved-->
+            <item name="Ascension" human-name="Ascension" value="ASC" desc="Ascension Island — Reserved on request of UPU, also used by ITU"/>
+            <item name="Clipperton" human-name="Clipperton" value="CPT" desc="Clipperton Island — Reserved on request of ITU"/>
+            <item name="DiegoGarcia" human-name="Diego Garcia" value="DGA" desc="Diego Garcia — Reserved on request of ITU"/>
+            <item name="FranceMetropolitan" human-name="France, Metropolitan" value="FXX" desc="France, Metropolitan — Reserved on request of France"/>
+            <item name="TristanDaCunha" human-name="Tristan da Cunha" value="TAA" desc="Tristan da Cunha — Reserved on request of UPU"/>
+            <!--Additions by IPTC-->
+            <item name="UnitedNations" human-name="United Nations" value="XUN" desc="United Nations"/>
+            <item name="EuropeanUnion" human-name="European Union" value="XEU" desc="European Union (formerly known as the EC and before that the EEC)"/>
+            <item name="Space" human-name="Space" value="XSP" desc="Space"/>
+            <item name="AtSea" human-name="at Sea" value="XSE" desc="at Sea"/>
+            <item name="InFlight" human-name="In Flight" value="XIF" desc="In Flight"/>
+            <item name="England" human-name="England" value="XEN" desc="England (where greater granularity than Great Britain is desired)"/>
+            <item name="Scotland" human-name="- Scotland" value="XSC" desc="- Scotland"/>
+            <item name="NorthernIreland" human-name="NorthernIreland" value="XNI" desc="Northern Ireland"/>
+            <item name="Wales" human-name="Wales" value="XWA" desc="Wales"/>
+        </senum>
+        <tag number="30" name="ReleaseDate" human-name="Release Date" type="CCYYMMDD" mandatory="false" repeatable="false" fixed="true" length="8" category="Date">
+            <desc>The earliest date the provider intends the object to be used.</desc>
+        </tag>
+        <tag number="32" name="ReleaseTime" human-name="Release Time" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
+            <desc>The earliest time the provider intends the object to be used.</desc>
+        </tag>
+        <tag number="37" name="ExpirationDate" human-name="Expiration Date" type="CCYYMMDD" mandatory="false" repeatable="false" fixed="true" length="8" category="Date">
+            <desc>The latest date the provider or owner intends the objectdata to be used.</desc>
+        </tag>
+        <tag number="38" name="ExpirationTime" human-name="Expiration Time" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
+            <desc>The latest time the provider or owner intends the objectdata to be used.</desc>
+        </tag>
+        <tag number="40" name="SpecialInstructions" human-name="Special Instructions" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="256" category="Other">
+            <desc>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</desc>
+        </tag>
+        <tag number="42" name="ActionAdvised" human-name="Action Advised" type="Enum-NumChar" mandatory="false" repeatable="false" fixed="true" length="2" enum="AdvisedActions" category="Other">
+            <desc>Indicates the type of action that this object provides to a previous object.</desc>
+            <remarks>The link to the previous object is made using the <see cref="ARM"/> (DataSets 1:120 (<see cref="ARMIdentifier"/>) and 1:122 (<see cref="ARMVersion"/>)), according to the practices of the provider.</remarks>
+        </tag>
+        <enum name="AdvisedActions" type="Byte">
+            <desc>Possible values of <see cref="ActionAdvised"/></desc>
+            <item value="1" name="ObjectKill" human-name="Object Kill" desc="Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.">
+                <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
+            </item>
+            <item value="2" name="ObjectReplace" human-name="Object Replace" desc="Object Replace. Signifies that the provider wants to replace the referenced object with the object provided under the current envelope."/>
+            <item value="3" name="ObjectAppend" human-name="Object Append" desc="Object Append. Signifies that the provider wants to append to the referenced object information provided in the objectdata of the current envelope."/>
+            <item value="4" name="ObjectReference" human-name="Object Reference" desc="Object Reference. Signifies that the provider wants to make reference to objectdata in a different envelope."/>
+        </enum>
+        <group name="Reference" human-name="Reference" mandatory="false" repeatable="true" category="Old IPTC">
+            <desc>Identifies a prior envelope to which the current object refers.</desc>
+            <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
+            <tag number="45" name="ReferenceService" human-name="Reference Service" type="GraphicCharacters" mandatory="true" repeatable="false" fixed="false" length="10" category="Old IPTC">
+                <desc>Identifies the Service Identifier of a prior envelope to which the current object refers.</desc>
+            </tag>
+            <tag number="47" name="ReferenceDate" human-name="Reference Date" mandatory="true" repeatable="false" type="CCYYMMDD" fixed="true" length="8" category="Old IPTC">
+                <desc>Identifies the date of a prior envelope to which the current object refers.</desc>
+            </tag>
+            <tag number="50" name="ReferenceNumber" human-name="Reference Number" mandatory="true" repeatable="false" type="NumericChar" fixed="true" length="8" category="Old IPTC">
+                <desc>Identifies the Envelope Number of a prior envelope to which the current object refers.</desc>
+            </tag>
+        </group>
+        <tag number="55" name="DateCreated" human-name="Date Created" type="CCYYMMDDommitable" mandatory="false" repeatable="false" fixed="true" length="8" category="Date">
+            <desc>The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.</desc>
+            <remarks>Thus a photo taken during the American Civil War would carry a creation date during that epoch (1861-1865) rather than the date the photo was digitised for archiving.</remarks>
+        </tag>
+        <tag number="60" name="TimeCreated" human-name="Time Created" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
+            <desc>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</desc>
+            <remarks>Where the time cannot be precisely determined, the closest approximation should be used.</remarks>
+        </tag>
+        <tag number="62" name="DigitalCreationDate" human-name="Digital Creation Date" type="CCYYMMDD" mandatory="false" repeatable="false" fixed="true" length="8" category="Date">
+            <desc>The date the digital representation of the objectdata was created.</desc>
+            <remarks>Thus a photo taken during the American Civil War would carry a Digital Creation Date within the past several years rather than the date where the image was captured on film, glass plate or other substrate during that epoch (1861-1865).</remarks>
+        </tag>
+        <tag number="63" name="DigitalCreationTime" human-name="Digital Creation Time" type="HHMMSS-HHMM" mandatory="false" repeatable="false" fixed="true" length="11" category="Date">
+            <desc>The time the digital representation of the objectdata was created.</desc>
+        </tag>
+        <tag number="65" name="OriginatingProgram" human-name="Originating Program" mandatory="false" repeatable="false" type="TextWithSpaces" fixed="false" length="32" category="Other">
+            <desc>Identifies the type of program used to originate the objectdata.</desc>
+            <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
+        </tag>
+        <tag number="70" name="ProgramVersion" human-name="Program Version" mandatory="false" repeatable="false" type="TextWithSpaces" fixed="false" length="10" category="Other">
+            <desc>Identifies the type of program used to originate the objectdata.</desc>
+            <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
+        </tag>
+        <tag number="75" name="ObjectCycle" human-name="Object Cycle" type="StringEnum" mandatory="false" repeatable="false" fixed="true" length="1" enum="ObjectCycleValues" category="Status">
+            <desc>Virtually only used in North America.</desc>
+        </tag>
+        <senum name="ObjectCycleValues" type="String">
+            <desc>Values of <see cref="ObjectCycle"/></desc>
+            <item name="Morning" human-name="morning" value="a" desc="Morning"/>
+            <item name="Evening" human-name="evening" value="p" desc="Evening"/>
+            <item name="Both" human-name="both" value="b" desc="Both"/>
+        </senum>
+        <group name="ByLine" human-name="By-line" mandatory="false" repeatable="true" category="Author">
+            <desc>Creator of the object data</desc>
+            <tag number="80" name="ByLine" human-name="By-line" type="TextWithSpaces" mandatory="true" repeatable="false" fixed="false" length="32" category="Author">
+                <desc>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</desc>
+            </tag>
+            <tag number="85" name="ByLineTitle" human-name="By-line Title" type="TextWithSpaces" mandatory="false" repeatable="false" length="32" fixed="false" category="Author">
+                <desc>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</desc>
+                <remarks>Examples: <example>"Staff Photographer", "Corresponsal", "Envoyé Spécial"</example></remarks>
+            </tag>
+        </group>
+        <tag number="90" name="City" human-name="City" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Location">
+            <desc>Identifies city of objectdata origin according to guidelines established by the provider.</desc>
+        </tag>
+        <tag number="92" name="SubLocation" human-name="Sublocation" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Location">
+            <desc>Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.</desc>
+        </tag>
+        <tag number="95" name="ProvinceState" human-name="Province/State" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Location">
+            <desc>Identifies Province/State of origin according to guidelines established by the provider.</desc>
+        </tag>
+        <tag number="100" name="CountryPrimaryLocationCode" human-name="Country/Primary Location Code" type="StringEnum" mandatory="false" repeatable="false" fixed="true" length="3" enum="ISO3166" category="Location">
+            <desc>Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.</desc>
+            <remarks>
+                Where ISO has established an appropriate country code under
+                ISO 3166, that code will be used. When ISO3166 does not
+                adequately provide for identification of a location or a new
+                country, e.g. ships at sea, space, IPTC will assign an
+                appropriate three-character code under the provisions of
+                ISO3166 to avoid conflicts. (see Appendix D)
+            </remarks>
+        </tag>
+        <tag number="101" name="CountryPrimaryLocationName" human-name="Country/Primary Location Name" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64" category="Location">
+            <desc>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</desc>
+        </tag>
+        <tag number="103" name="OriginalTransmissionReference" human-name="Original Transmission Refrence" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Location">
+            <desc>A code representing the location of original transmission according to practices of the provider.</desc>
+            <remarks>Examples: <example>BER-5, PAR-12-11-01</example></remarks>
+        </tag>
+        <tag number="105" name="Headline" human-name="Headline" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="256" category="Title">
+            <desc>A publishable entry providing a synopsis of the contents of the objectdata.</desc>
+        </tag>
+        <tag number="110" name="Credit" human-name="Credit" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Author">
+            <desc>Identifies the provider of the objectdata, not necessarily the owner/creator.</desc>
+        </tag>
+        <tag number="115" name="Source" human-name="Source" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="32" category="Author">
+            <desc>Identifies the original owner of the intellectual content of the objectdata.</desc>
+            <remarks>This could be an agency, a member of an agency or an individual.</remarks>
+        </tag>
+        <tag number="116" name="CopyrightNotice" human-name="Copyright Notice" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="128" category="Author">
+            <desc>Contains any necessary copyright notice.</desc>
+        </tag>
+        <tag number="118" name="Contact" human-name="Contact" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="128" category="Author">
+            <desc>Identifies the person or organisation which can provide further background information on the objectdata.</desc>
+        </tag>
+        <tag number="120" name="CaptionAbstract" human-name="Caption/Abstract" type="Text" mandatory="false" repeatable="false" fixed="false" length="2000" category="Title">
+            <desc>A textual description of the objectdata, particularly used where the object is not text.</desc>
+        </tag>
+        <tag number="122" name="WriterEditor" human-name="Writer/Editor" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="32" category="Author">
+            <desc>Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.</desc>
+        </tag>
+        <tag number="125" name="RasterizedeCaption" human-name="Rasterized Caption" type="BW460" mandatory="true" repeatable="false" fixed="true" length="7360" category="Title">
+            <desc>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</desc>
+            <remarks>Contains the rasterized objectdata description and is used where characters that have not been coded are required for the caption.</remarks>
+        </tag>
+        <tag number="130" name="ImageType" human-name="Image Type" type="ImageType" mandatory="false" repeatable="false" fixed="true" length="2" category="Image">
+            <desc>Image Type</desc>
+        </tag>
+        <enum name="ImageTypeComponents" type="Byte">
+            <desc>Number of components in image and special meanings of some numbers</desc>
+            <item value="1" name="BW" human-name="Black and White" desc="Image has 1 component"/>
+            <item value="2" name="Component2" human-name="2 components" desc="Image has 2 components"/>
+            <item value="3" name="Component3" human-name="3 components" desc="Image has 3 components"/>
+            <item value="4" name="Component4" human-name="4 components" desc="Image has 4 components"/>
+            <item value="0" name="NoObjectData" human-name="NoObjectData" desc="Record 2 caption for specific image"/>
+            <item value="9" name="SuplementaryData" human-name="Suplementary data" desc="the objectdata contains supplementary data to an image"/>
+        </enum>
+        <senum name="ImageTypeContents" type="String">
+            <desc>Exact content of the current objectdata in terms of colour composition.</desc>
+            <item value="W" name="Monochrome" human-name="Monochrome" desc="Monochrome"/>
+            <item value="Y" name="Yellow" human-name="Yellow" desc="Yellow component"/>
+            <item value="M" name="Magenta" human-name="Magenta" desc="Magenta component"/>
+            <item value="C" name="Cyan" human-name="Cyan" desc="Cyan component"/>
+            <item value="K" name="Black" human-name="Black" desc="Black component"/>
+            <item value="R" name="Red" human-name="Red" desc="Red component"/>
+            <item value="G" name="Green" human-name="Green" desc="Green component"/>
+            <item value="B" name="Blue" human-name="Blue" desc="Blue component"/>
+            <item value="T" name="Text" human-name="text only" desc="Text only"/>
+            <item value="F" name="FrameSequential" human-name="Frame Sequential" desc="Full colour composite, frame sequential"/>
+            <item value="L" name="LineSequential" human-name="Line Sequential" desc="Full colour composite, line sequential"/>
+            <item value="P" name="PixesSequential" human-name="Pixel Sequential" desc="Full colour composite, pixel sequential"/>
+            <item value="S" name="SpecialSequential" human-name="Special Sequential" desc="Full colour composite, special sequential"/>
+        </senum>
+        <tag number="131" name="ImageOrientation" human-name="Image Orientation" type="StringEnum" mandatory="false" repeatable="false" fixed="true" length="1" category="Image" enum="Orientations">
+            <desc>Indicates the layout of the image area.</desc>
+        </tag>
+        <senum name="Orientations" type="String">
+            <desc>Possible orientations of image</desc>
+            <item value="P" name="Portrait" human-name="Portrait" desc="Portrait"/>
+            <item value="L" name="Landscape" human-name="Landscape" desc="Landscape"/>
+            <item value="S" name="Square" human-name="Square" desc="Square"/>
+        </senum>
+        <tag number="135" name="LanguageIdentifier" human-name="Language Identifier" type="Aplha" mandatory="true" repeatable="false" fixed="false" length="135" category="Other">
+            <desc>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</desc>
+            <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
+        </tag>
     </record>
 </Root>

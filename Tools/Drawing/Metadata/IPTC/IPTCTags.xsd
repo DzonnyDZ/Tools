@@ -11,6 +11,67 @@
     </xs:annotation>
     
     <!--Simple types:-->
+    <xs:simpleType name="Categories">
+        <xs:restriction base="xs:token">
+            <xs:enumeration value="Old IPTC">
+                <xs:annotation>
+                    <xs:documentation>IPTC data that is not widely in use today.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Date">
+                <xs:annotation>
+                    <xs:documentation>Date and time fields</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Status">
+                <xs:annotation>
+                    <xs:documentation>Status and priority fields</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Category">
+                <xs:annotation>
+                    <xs:documentation>Categorization</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Location">
+                <xs:annotation>
+                    <xs:documentation>Localization</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Title">
+                <xs:annotation>
+                    <xs:documentation>Titles and descriptions</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Other">
+                <xs:annotation>
+                    <xs:documentation>Miscaleneous information</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Internal">
+                <xs:annotation>
+                    <xs:documentation>Internal IPTC information used for service purpuses</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Author">
+                <xs:annotation>
+                    <xs:documentation>Author and ©opyright information</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Image">
+                <xs:annotation>
+                    <xs:documentation>Image related data</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--Sepecification of attribute-->
+    <xs:simpleType name="Attributes">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="(&lt;[\p{L}_]+(\.[\p{L}_]+)* *\([^\n\r\t]*\)>)+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <!--Record number 1÷9-->
     <xs:simpleType name="IPTCRecordNumber">
         <xs:annotation>
             <xs:documentation>Valid values for IPTC records numbers</xs:documentation>
@@ -20,6 +81,7 @@
             <xs:maxExclusive value="9"/>
         </xs:restriction>
     </xs:simpleType>
+    <!--Length of dataset up to 32767-->
     <xs:simpleType name="LengthSpec">
         <xs:annotation>
             <xs:documentation>Valid lengths for IPTC tags (datasets) lengths</xs:documentation>
@@ -28,6 +90,7 @@
             <xs:maxInclusive value="32767"/>
         </xs:restriction>
     </xs:simpleType>
+    <!--Tag types-->
     <xs:simpleType name="TagType">
         <xs:annotation>
             <xs:documentation>Known types of IPTC data</xs:documentation>
@@ -58,6 +121,16 @@
                     <xs:documentation>Graphic characters and spaces (no tabs, endlines or control characters)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="Text">
+                <xs:annotation>
+                    <xs:documentation>Graphic cgaracters, spaces and enters (no tabs, no control characters)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BW460">
+                <xs:annotation>
+                    <xs:documentation>Monochrome bitmap of width 460px</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
             <xs:enumeration value="Enum-binary">
                 <xs:annotation>
                     <xs:documentation>Enumeration choice stored binary (actual enumeration is reffered by enum attribute)</xs:documentation>
@@ -71,6 +144,11 @@
             <xs:enumeration value="CCYYMMDD">
                 <xs:annotation>
                     <xs:documentation>Date format YYYYMMDD as of ISO 8601 stored as ASCII numeric string (must have fixed length 8 bytes)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="CCYYMMDDommitable">
+                <xs:annotation>
+                    <xs:documentation>Date format YYYYMMDD as of ISO 8601 stored as ASCII numeric string (must have fixed length 8 bytes). Where the month or day cannot be determined, the information will be represented by “00”. Where the year cannot be determined, the information for century and year will be represented by “00”.</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="HHMMSS-HHMM">
@@ -103,8 +181,24 @@
                     <xs:documentation>Structured description of amtter of objectstored as graphic characters (as defined by IPTC)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
+            <xs:enumeration value="Aplha">
+                <xs:annotation>
+                    <xs:documentation>Alphabetic (Latin) character(s)</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="StringEnum">
+                <xs:annotation>
+                    <xs:documentation>String enumeration. Actual type specified in enum attribute.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ImageType">
+                <xs:annotation>
+                    <xs:documentation>Two octets. The first octet is a numeric character and the second is an alphabetic character.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
+    <!--Name for VB (without leading _)-->
     <xs:simpleType name="Name">
         <xs:annotation>
             <xs:documentation>Name for programming language</xs:documentation>
@@ -113,6 +207,7 @@
             <xs:pattern value="[^-_][^-]*"/>
         </xs:restriction>
     </xs:simpleType>
+    <!--VB integers-->
     <xs:simpleType name="NETIntegrals">
         <xs:annotation>
             <xs:documentation>Integrl types defined in .NET</xs:documentation>
@@ -160,7 +255,20 @@
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    
+
+    <!--<xs:simpleType name="Int-Str">
+        <xs:union memberTypes="NETIntegrals">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="String">
+                        <xs:annotation>
+                            <xs:documentation>Special type of enum thal enlists string values</xs:documentation>
+                        </xs:annotation>
+                    </xs:enumeration>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:union>
+    </xs:simpleType>    -->
     <!--Root:-->
     <xs:element name="Root">
         <xs:annotation>
@@ -170,6 +278,7 @@
             <xs:choice minOccurs="0" maxOccurs="unbounded">
                 <xs:element ref="record" minOccurs="0" maxOccurs="unbounded"/>
             </xs:choice>
+            <!--Attributes for XSLT-->
             <xs:attribute name="transformer" type="xs:string" use="required">
                 <xs:annotation>
                     <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
@@ -232,7 +341,7 @@
             <xs:field xpath="@human-name"/>
         </xs:unique>
         <xs:key name="keyEnum">
-            <xs:selector xpath="IPTC:record/IPTC:enum"/>
+            <xs:selector xpath="IPTC:record/IPTC:enum | IPTC:record/IPTC:senum"/>
             <xs:field xpath="@name"/>
         </xs:key>
         <xs:keyref name="EnumReference" refer="keyEnum">
@@ -242,23 +351,22 @@
     </xs:element>
 
     <!--Elements:-->
+    <!--Tag-->
     <xs:element name="tag">
         <xs:annotation>
             <xs:documentation>Definition of one IPTC tag (dataset)</xs:documentation>
         </xs:annotation>
         <xs:complexType>
-            <xs:sequence minOccurs="1" maxOccurs="unbounded">
-                <xs:element name="desc" type="xs:token" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                        <xs:documentation>Description of meaning of data contained in this tag (dataset)</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
-            </xs:sequence>
+            <xs:group ref="XMLDoc" minOccurs="1" maxOccurs="1"/>
+            <xs:attributeGroup ref="attributes"/>
+            <!--Basic info-->
             <xs:attribute name="number" type="xs:unsignedByte" use="required">
                 <xs:annotation>
                     <xs:documentation>Number of this tag (dataset)</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attributeGroup ref="Names"/>
+            <!--Flags-->
             <xs:attribute name="mandatory" type="xs:boolean" use="required">
                 <xs:annotation>
                     <xs:documentation>Defines if tag is mandatory (accorting to IPTC standard) or not (valid in context of group or record). There must be at least one mandatory tag in each group.</xs:documentation>
@@ -274,21 +382,12 @@
                     <xs:documentation>Defines of tag data has fixed length (if true length is specified in length)</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="length" type="LengthSpec" use="required">
+            <xs:attribute name="category" type="Categories" use="required">
                 <xs:annotation>
-                    <xs:documentation>Maximum (if fixed is false) length in bytes of tag data. 0 for no limit (same effect 32767). For fixed 0 is prohibited.</xs:documentation>
+                    <xs:documentation>Category of rendered property</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="name" type="Name" use="required">
-                <xs:annotation>
-                    <xs:documentation>Name of record used in programming langauge</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="human-name" type="xs:token" use="required">
-                <xs:annotation>
-                    <xs:documentation>Human-readable name</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
+            <!--Type-->
             <xs:attribute name="type" type="TagType" use="required">
                 <xs:annotation>
                     <xs:documentation>Type of contained data</xs:documentation>
@@ -299,24 +398,26 @@
                     <xs:documentation>If type is enum then put reference to enum here</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="length" type="LengthSpec" use="required">
+                <xs:annotation>
+                    <xs:documentation>Maximum (if fixed is false) length in bytes of tag data. 0 for no limit (same effect 32767). For fixed 0 is prohibited.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
-    
+    <!--Record (number group of tags)-->
     <xs:element name="record">
         <xs:annotation>
             <xs:documentation>Definition of one IPTC record (group of tags)</xs:documentation>
         </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
-                <xs:element name="desc" type="xs:token" minOccurs="1" maxOccurs="1">
-                    <xs:annotation>
-                        <xs:documentation>Description of meaning of data contained in this tag (dataset)</xs:documentation>
-                    </xs:annotation>
-                </xs:element>
+                <xs:group ref="XMLDoc" minOccurs="1" maxOccurs="1"/>
                 <xs:element minOccurs="1" maxOccurs="1" ref="tag"/>
                 <xs:sequence minOccurs="1" maxOccurs="unbounded">
                     <xs:element minOccurs="0" maxOccurs="unbounded" ref="tag"/>
                     <xs:element ref="enum" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element ref="senum" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element minOccurs="0" maxOccurs="unbounded" ref="group"/>
                 </xs:sequence>
             </xs:sequence>
@@ -325,67 +426,41 @@
                     <xs:documentation>Number of this record (group of tags). Range 1÷9</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
-            <xs:attribute name="name" type="Name" use="required">
-                <xs:annotation>
-                    <xs:documentation>Name of record used in programming langauge</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="human-name" type="xs:token" use="required">
-                <xs:annotation>
-                    <xs:documentation>Human-readable name</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
+            <xs:attributeGroup ref="Names"/>
         </xs:complexType>
         <xs:unique name="unqTag">
             <xs:selector xpath="IPTC:tag | IPTC:group/IPTC:tag"/>
             <xs:field xpath="@number"/>
         </xs:unique>
     </xs:element>
-
+    <!--Enum definition-->
     <xs:element name="enum">
         <xs:annotation>
             <xs:documentation>Represents enumeration of values</xs:documentation>
         </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:group maxOccurs="1" minOccurs="1" ref="XMLDoc"/>
                 <xs:element minOccurs="1" maxOccurs="unbounded" name="item">
                     <xs:annotation>
                         <xs:documentation>Item of enumeration</xs:documentation>
                     </xs:annotation>
                     <xs:complexType>
-                        <xs:attribute name="name" type="Name" use="required">
-                            <xs:annotation>
-                                <xs:documentation>Name of enumeration item</xs:documentation>
-                            </xs:annotation>
-                        </xs:attribute>
+                        <xs:sequence minOccurs="1" maxOccurs="1">
+                            <xs:group minOccurs="0" maxOccurs="1" ref="remarks"/>
+                        </xs:sequence>
+                        <xs:attributeGroup ref="Names"/>
+                        <xs:attributeGroup ref="attributes"/>
                         <xs:attribute name="value" type="xs:long" use="required">
                             <xs:annotation>
                                 <xs:documentation>Value of enum item</xs:documentation>
                             </xs:annotation>
                         </xs:attribute>
-                        <xs:attribute name="desc" type="xs:token" use="required">
-                            <xs:annotation>
-                                <xs:documentation>Description of enum item</xs:documentation>
-                            </xs:annotation>
-                        </xs:attribute>
-                        <xs:attribute name="human-name" type="xs:token" use="required">
-                            <xs:annotation>
-                                <xs:documentation>Human readable name</xs:documentation>
-                            </xs:annotation>
-                        </xs:attribute>
+                        <xs:attributeGroup ref="desc"/>
                     </xs:complexType>                    
                 </xs:element>
             </xs:sequence>
-            <xs:attribute name="name" type="Name" use="required">
-                <xs:annotation>
-                    <xs:documentation>Name of this enumeration for programming language</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="desc" type="xs:token" use="required">
-                <xs:annotation>
-                    <xs:documentation>Descriptio of tihis enumeration</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
+            <xs:attributeGroup ref="EnumAttrs"/>
             <xs:attribute name="type" type="NETIntegrals" use="required">
                 <xs:annotation>
                     <xs:documentation>Type of this enumeration</xs:documentation>
@@ -401,33 +476,82 @@
             <xs:field xpath="@value"/>
         </xs:unique>
     </xs:element>
-
+    <xs:attributeGroup name="EnumAttrs">
+        <xs:attributeGroup ref="attributes"/>
+        <xs:attribute name="name" type="Name" use="required">
+            <xs:annotation>
+                <xs:documentation>Name of this enumeration for programming language</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="restrict" type="xs:boolean" default="true" use="optional">
+            <xs:annotation>
+                <xs:documentation>Indicates if only listed values can be assigned to field. Default value is true.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <xs:element name="senum">
+        <xs:annotation>
+            <xs:documentation>Represents enumeration of string values</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:group maxOccurs="1" minOccurs="1" ref="XMLDoc"/>
+                <xs:element minOccurs="1" maxOccurs="unbounded" name="item">
+                    <xs:annotation>
+                        <xs:documentation>Item of enumeration</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="1">
+                            <xs:group minOccurs="0" maxOccurs="1" ref="remarks"/>
+                        </xs:sequence>
+                        <xs:attributeGroup ref="Names"/>
+                        <xs:attributeGroup ref="attributes"/>
+                        <xs:attribute name="value" type="xs:string" use="required">
+                            <xs:annotation>
+                                <xs:documentation>Value of enum item</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attributeGroup ref="desc"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+            <xs:attributeGroup ref="EnumAttrs"/>
+            <xs:attribute name="type" use="required" fixed="String">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="String">
+                            <xs:annotation>
+                                <xs:documentation>Type of senum must be always string</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+        </xs:complexType>
+        <xs:unique name="unqInSEnumName">
+            <xs:selector xpath="IPTC:item"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="unqInSEnumValue">
+            <xs:selector xpath="IPTC:item"/>
+            <xs:field xpath="@value"/>
+        </xs:unique>
+    </xs:element>
+    <!--Logical group of tags-->
     <xs:element name="group">
         <xs:annotation>
             <xs:documentation>Group of tags (records) that has some ralation between</xs:documentation>
         </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:group minOccurs="1" maxOccurs="1" ref="XMLDoc"/>
                 <xs:element ref="tag" minOccurs="2" maxOccurs="unbounded"/>
             </xs:sequence>
-            <xs:attribute name="name" type="Name" use="required">
-                <xs:annotation>
-                    <xs:documentation>Name of the group (will be rendered as property)</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="human-name" type="xs:token" use="required">
-                <xs:annotation>
-                    <xs:documentation>Human-readable name of group</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
+            <xs:attributeGroup ref="Names"/>
+            <xs:attributeGroup ref="attributes"/>
             <xs:attribute name="mandatory" type="xs:boolean" use="required">
                 <xs:annotation>
                     <xs:documentation>Is this group required?</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="desc" type="xs:token" use="required">
-                <xs:annotation>
-                    <xs:documentation>Description of group</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute name="repeatable" type="xs:boolean" use="required">
@@ -435,6 +559,207 @@
                     <xs:documentation>Can this group appear multiple times?</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="category" type="Categories" use="required">
+                <xs:annotation>
+                    <xs:documentation>Category of rendered property</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
         </xs:complexType>
     </xs:element>
+    
+    <!--Attribute groups:-->
+    <!--name and human-name-->
+    <xs:attributeGroup name="Names">
+        <xs:attribute name="name" type="Name" use="required">
+            <xs:annotation>
+                <xs:documentation>Name of the group (will be rendered as property)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="human-name" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Human-readable name of group</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!--<! - -desc and remarks- ->
+    <xs:attributeGroup name="XMLDoc">
+        <xs:attributeGroup ref="desc"/>
+        <xs:attributeGroup ref="remarks"/>
+    </xs:attributeGroup>-->
+    <!--desc-->
+    <xs:attributeGroup name="desc">
+        <xs:attribute name="desc" type="xs:token" use="required">
+            <xs:annotation>
+                <xs:documentation>Description of item (will be rendered as XML-doc comment summary)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+    <!--remarks
+    <xs:attributeGroup name="remarks">
+        <xs:attribute name="remarks" type="xs:token" use="optional">
+            <xs:annotation>
+                <xs:documentation>Additional info for item (will be rendered as XML-doc comment remarks)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>-->
+    <!--attributes-->
+    <xs:attributeGroup name="attributes">
+        <xs:attribute name="attributes" type="Attributes" use="optional">
+            <xs:annotation>
+                <xs:documentation>.NET attributes applyed on element</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+   
+    <!--Embeded XML docummentation:-->
+    <xs:group name="XMLDoc">
+        <xs:sequence>
+            <xs:element name="desc" type="XMLDoc" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Description of this item. Content of this element will be rendered as is into XML-doc &lt;summary/></xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:group ref="remarks" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:group>
+    <xs:group name="remarks">
+        <xs:sequence>
+            <xs:element name="remarks" type="XMLDoc" minOccurs="0" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Additional info for this item. Content of this element will be rendered as is into XML-doc &lt;remarks/></xs:documentation>
+                </xs:annotation>
+            </xs:element>
+        </xs:sequence>
+    </xs:group>
+    <xs:complexType name="XMLDoc" mixed="true">
+        <xs:annotation>
+            <xs:documentation>Represents item which's content is XML documentation</xs:documentation>
+        </xs:annotation>
+        <xs:choice minOccurs="0" maxOccurs="unbounded">
+            <xs:element name="see" type="reference">
+                <xs:annotation>
+                    <xs:documentation>Reference to code member</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="seealso" type="reference">
+                <xs:annotation>
+                    <xs:documentation>Reference to code members (this will be shown in the seealso list)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="para" type="XMLDoc">
+                <xs:annotation>
+                    <xs:documentation>Renders as paragraph</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="list">
+                <xs:annotation>
+                    <xs:documentation>Renders as list or table</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:sequence minOccurs="1" maxOccurs="1">
+                        <xs:element name="listheader" minOccurs="0" maxOccurs="1" type="listItem">
+                            <xs:annotation>
+                                <xs:documentation>Header of the list</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                        <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="listItem">
+                            <xs:annotation>
+                                <xs:documentation>Item of the list</xs:documentation>
+                            </xs:annotation>
+                        </xs:element>
+                    </xs:sequence>
+                    <xs:attribute name="type" use="optional">
+                        <xs:annotation>
+                            <xs:documentation>Type of the list</xs:documentation>
+                        </xs:annotation>
+                        <xs:simpleType>
+                            <xs:restriction base="xs:string">
+                                <xs:enumeration value="table">
+                                    <xs:annotation>
+                                        <xs:documentation>Two columns table with pairs term and description</xs:documentation>
+                                    </xs:annotation>
+                                </xs:enumeration>
+                                <xs:enumeration value="bullet">
+                                    <xs:annotation>
+                                        <xs:documentation>Bulleted list</xs:documentation>
+                                    </xs:annotation>
+                                </xs:enumeration>
+                                <xs:enumeration value="number">
+                                    <xs:annotation>
+                                        <xs:documentation>Numbered list</xs:documentation>
+                                    </xs:annotation>
+                                </xs:enumeration>
+                            </xs:restriction>
+                        </xs:simpleType>
+                    </xs:attribute>
+                </xs:complexType>
+            </xs:element>
+            <xs:element name="c" type="XMLDoc">
+                <xs:annotation>
+                    <xs:documentation>Short code</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="code" type="XMLDoc">
+                <xs:annotation>
+                    <xs:documentation>Longer code</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="example" type="XMLDoc">
+                <xs:annotation>
+                    <xs:documentation>Example</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="paramref">
+                <xs:annotation>
+                    <xs:documentation>Reference to parameter</xs:documentation>
+                </xs:annotation>
+                <xs:complexType>
+                    <xs:complexContent>
+                        <xs:extension base="XMLDoc">
+                            <xs:attribute name="name">
+                                <xs:annotation>
+                                    <xs:documentation>Name of parameter</xs:documentation>
+                                </xs:annotation>
+                                <xs:simpleType>
+                                    <xs:restriction base="xs:string">
+                                        <xs:pattern value="[\p{L}_]+|\[[\p{L}_]+\]"/>
+                                    </xs:restriction>
+                                </xs:simpleType>
+                            </xs:attribute>
+                        </xs:extension>
+                    </xs:complexContent>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+    </xs:complexType>
+    <xs:complexType name="reference">
+        <xs:attribute name="cref" use="required">
+            <xs:annotation>
+                <xs:documentation>Referenced item</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="([\p{L}_]+|\[[\p{L}_]+\])(\.[\p{L}_]+)*"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+    <xs:complexType name="listItem">
+        <xs:complexContent mixed="true">
+            <xs:extension base="XMLDoc">
+                <xs:sequence minOccurs="0" maxOccurs="1">
+                    <xs:element name="term" type="XMLDoc" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Defines left table column (term being described in right one)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                    <xs:element name="description" type="XMLDoc" minOccurs="1" maxOccurs="1">
+                        <xs:annotation>
+                            <xs:documentation>Defines right table column (definition)</xs:documentation>
+                        </xs:annotation>
+                    </xs:element>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 </xs:schema>
