@@ -293,6 +293,7 @@
       <DependentUpon>IPTCTags.xsd</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xslt" />
+    <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt" />
     <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml" />
     <Content Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
   </ItemGroup>

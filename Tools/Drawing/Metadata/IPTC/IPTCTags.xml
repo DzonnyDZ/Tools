@@ -1317,5 +1317,85 @@
             <desc>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</desc>
             <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
         </tag>
+        <tag number="150" name="AudioType" human-name="Audio Type" type="AudioType" mandatory="false" repeatable="false" fixed="true" length="2" category="Audio">
+            <desc>Type of audio in objectdata</desc>
+            <remarks>Note: When '0' or 'T' is used, the only authorised combination is "0T". This is the mechanism for sending a caption either to supplement an audio cut sent previously without a caption or to correct a previously sent caption.</remarks>
+        </tag>
+        <senum name="AudioDataType" type="String">
+            <desc>The exact type of audio contained in the current objectdata.</desc>
+            <item value="A" name="Actuality" human-name="Actuality" desc="Actuality"/>
+            <item name="QuestionAndAnswer" human-name="Question and answer session" value="C" desc="Question and answer session"/>
+            <item name="Music" human-name="Music" value="M" desc="Music, transmitted by itself"/>
+            <item name="Response" human-name="Response to a question" value="Q" desc="Response to a question"/>
+            <item name="RawSound" human-name="Raw sound" value="R" desc="Raw sound"/>
+            <item name="Scener" human-name="Scener" value="S" desc="Scener"/>
+            <item name="TextOnly" human-name="Text only" value="T" desc="Text only"/>
+            <item name="Voicer" human-name="Voicer" value="V" desc="Voicer"/>
+            <item name="Wrap" human-name="Wrap" value="W" desc="Wrap"/>
+        </senum>
+        <tag number="151" name="AudioSamplingRate" human-name="Audio Sampling Rate" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="6" category="Audio">
+            <desc>Sampling rate, representing the sampling rate in hertz (Hz).</desc>
+        </tag>
+        <tag number="152" name="AudioSamplingResolution" human-name="Audio Sampling Resolution" type="NumericChar" mandatory="false" repeatable="false" length="2" fixed="true" category="Audio">
+            <desc>The number of bits in each audio sample.</desc>
+        </tag>
+        <tag number="153" name="AudioDuration" human-name="Audio Duration" type="HHMMSS" mandatory="false" repeatable="false" fixed="true" length="6" category="Audio">
+            <desc>The running time of an audio objectdata when played back at the speed at which it was recorded.</desc>
+        </tag>
+        <tag number="154" name="AudioOutcue" human-name="Audio Outcue" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64" category="Audio">
+            <desc>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</desc>
+            <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
+        </tag>
+        <group name="ObjectDataPreview" human-name="ObjectData Preview" category="Embeded object" mandatory="false" repeatable="false">
+            <desc>Preview of embeded object</desc>
+            <tag number="200" name="ObjectDataPreviewFileFormat" human-name="ObjectData Preview File Format" type="Enum-binary" enum="FileFormats" fixed="true" mandatory="true" repeatable="false" length="2" category="Embeded object">
+                <desc>The file format of the ObjectData Preview.</desc>
+                <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
+            </tag>
+            <tag number="201" name="ObjectDataPreviewFileFormatVersion" human-name="ObjectData Preview File Format Version" mandatory="true" fixed="true" type="Enum-binary" enum="FileFormatVersions" category="Embeded object" length="2" repeatable="false">
+                <desc>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></desc>
+                <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
+            </tag>
+            <tag number="202" name="ObjectDataPreviewData" human-name="ObjectData Preview Data" type="ByteAray" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+                <desc>Maximum size of 256000 octets consisting of binary data.</desc>
+            </tag>
+        </group>
+    </record>
+    <record number="7" name="PreObjectDataDescriptorRecord" human-name="Pre-ObjectData descriptor record">
+        <desc>Information about ObjectData (before object has been sent)</desc>
+        <tag number="10" name="SizeMode" human-name="Size Mode" type="Boolean-binary" mandatory="true" fixed="true" length="1" repeatable="false" category="Embeded object">
+            <desc>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</desc>
+        </tag>
+        <tag number="20" name="MaxSubfileSize" human-name="Max Subfile Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+            <desc>The maximum size for the following Subfile DataSet(s).</desc>
+            <remarks>
+                The largest number is not defined, but programmers should provide
+                at least for the largest binary number contained in four
+                octets taken together. If the entire object is to be transferred
+                together within a single DataSet 8:10, the number equals the size
+                of the object.
+            </remarks>
+        </tag>
+        <tag number="90" name="ObjectDataSizeAnnounced" human-name="ObjectData Size Announced" mandatory="false" repeatable="false" fixed="false" length="0" type="UnsignedBinaryNumber" category="Embeded object">
+            <desc>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</desc>
+            <remarks>Mandatory if DataSet <see cref="SizeMode"/> has value '1' and not allowed if DataSet <see cref="SizeMode"/> has value '0'.</remarks>
+        </tag>
+        <tag number="95" name="MaximumObjectDataSize" human-name="Maximum ObjectData Size" mandatory="false" repeatable="false" fixed="false" type="UnsignedBinaryNumber" category="Embeded object" length="0">
+            <desc>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</desc>
+        </tag>
+    </record>
+    <record number="8" name="ObjectDataRecord" human-name="ObjectData Record">
+        <desc>Contains embeded object</desc>
+        <tag number="10" human-name="Subfile" name="Subfile" type="ByteAray" category="Embeded object" fixed="false" length="0" mandatory="true" repeatable="false">
+            <desc>Subfile DataSet containing the objectdata itself.</desc>
+            <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
+        </tag>
+    </record>
+    <record number="9" name="PostObjectDataDescriptorRecord" human-name="Pos-ObjectData Descriptor Record">
+        <desc>Confirmation of size of ObjectData</desc>
+        <tag number="10" name="ConfirmedObjectDataSize" human-name="Confirmed ObjectData Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+            <desc>Total size of the objectdata, in octets, without tags.</desc>
+            <remarks>This number should equal the number in DataSet <see cref="ObjectDataSizeAnnounced"/> if the size of the objectdata is known and has been provided.</remarks>
+        </tag>
     </record>
 </Root>
