@@ -113,6 +113,7 @@
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
     <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
+    <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
@@ -133,6 +134,11 @@
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\IPTCTags.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPTCTags.xml</DependentUpon>
+    </Compile>
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Globalization\ISOLanguage.vb" />
     <Compile Include="Globalization\ISOLanguages.vb">
@@ -294,7 +300,11 @@
     </None>
     <None Include="Globalization\ISOLanguages.xslt" />
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt" />
-    <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml" />
+    <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>IPTCTags.vb</LastGenOutput>
+      <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
+    </Content>
     <Content Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
   </ItemGroup>
   <ItemGroup>

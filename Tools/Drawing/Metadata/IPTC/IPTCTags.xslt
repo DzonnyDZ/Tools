@@ -72,7 +72,8 @@
     
     <!--Generates imports-->
     <xsl:template name="Imports">
-        <xsl:text>Import System.ComponentModel&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports System.ComponentModel&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.ComponentModelT&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Generates enums for tags-->
@@ -83,9 +84,8 @@
         <xsl:for-each select="/I:Root/I:record">
             <xsl:sort data-type="number" order="ascending" select="@number"/>
             <xsl:call-template name="Summary"/>
-            <xsl:text>&#9;&#9;&#9;&lt;DisplayName("</xsl:text>
-            <xsl:value-of select="@human-name"/>
-            <xsl:text>")> </xsl:text>
+            <xsl:text>&#9;&#9;&#9;</xsl:text>
+            <xsl:call-template name="DisplayName"/>
             <xsl:value-of select="@name"/>
             <xsl:text> = </xsl:text>
             <xsl:value-of select="@number"/>
@@ -96,7 +96,7 @@
             <xsl:sort data-type="number" order="ascending" select="@number"/>
             <xsl:text>&#9;&#9;''' &lt;summary>Numbers of data sets (tags) inside record &lt;see cref="RecordNumbers.</xsl:text>
             <xsl:value-of select="@name"/>
-            <xsl:text>/> (</xsl:text>
+            <xsl:text>"/> (</xsl:text>
             <xsl:value-of select="@number"/>
             <xsl:text>)&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;Public Enum </xsl:text>
@@ -108,38 +108,56 @@
                 <xsl:text>&#9;&#9;&#9;''' &lt;remarks>See &lt;seealso cref="IPTC.</xsl:text>
                 <xsl:value-of select="@name"/>
                 <xsl:text>"/> for more info.&lt;/remarks>&#xD;&#xA;</xsl:text>
-                <xsl:if test="local-name(./..)='group'">
-                    <xsl:text>&#9;&#9;&#9;&lt;EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _&#xD;&#xA;</xsl:text>
-                </xsl:if>
                 <xsl:text>&#9;&#9;&#9;</xsl:text>
+                <xsl:if test="local-name(./..)='group'">
+                    <xsl:text>&lt;EditorBrowsable(EditorBrowsableState.Advanced)> </xsl:text>
+                </xsl:if>
+                <xsl:call-template name="DisplayName"/>
+                <xsl:call-template name="Category"/>
                 <xsl:value-of select="@name"/>
                 <xsl:text> = </xsl:text>
                 <xsl:value-of select="@number"/>
                 <xsl:call-template name="nl"/>
             </xsl:for-each>
-            <xsl:text>&#9;&#9;End Enum</xsl:text>            
+            <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>            
         </xsl:for-each>
+        <xsl:text>&#9;&#9;''' &lt;summary>Gets Enum that contains list of tags for specific record (group of tags)&lt;/summary>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;param name="Record">Number of record to get enum for&lt;/param>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;exception name="InvalidEnumArgumentException">Value of &lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/>&lt;/exception>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;Public Shared Function GetEnum(ByVal Record As RecordNumbers) As Type&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;Select Case Record&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="/I:Root/I:record">
+            <xsl:sort data-type="number" order="ascending" select="@number"/>
+            <xsl:text>&#9;&#9;&#9;&#9;Case RecordNumbers.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text> : Return GetType(</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Tags)&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+        <xsl:text>&#9;&#9;&#9;&#9;Case Else : Throw New InvalidEnumArgumentException("Record", Record, GetType(RecordNumbers))&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Creates <summary> from <desc>-->
     <xsl:template name="Tag-Summary">
         <xsl:text>&#9;&#9;&#9;''' &lt;summary></xsl:text>
-        <xsl:value-of select="I:desc" disable-output-escaping="yes"/>
+        <xsl:value-of select="normalize-space(I:desc)" disable-output-escaping="yes"/>
         <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Creates <remarks> from <remarks>-->
     <xsl:template name="Tag-Remarks">
         <xsl:if test="I:remarks">
             <xsl:text>&#9;&#9;&#9;''' &lt;remarks></xsl:text>
-            <xsl:value-of select="I:remarks" disable-output-escaping="yes"/>
+            <xsl:value-of select="normalize-space(I:remarks)" disable-output-escaping="yes"/>
             <xsl:text>&lt;/remarks>&#xD;&#xA;</xsl:text>
         </xsl:if>
     </xsl:template>
     <!--Creates <summary> from desc=""-->
     <xsl:template name="Attr-Summary">
         <xsl:text>&#9;&#9;&#9;''' &lt;summary></xsl:text>
-        <xsl:value-of select="@desc"/>
+        <xsl:value-of select="normalize-space(@desc)"/>
         <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>    
     </xsl:template>
     <!--Universally creates <summary>-->
@@ -158,7 +176,16 @@
         <xsl:call-template name="Summary"/>
         <xsl:call-template name="Tag-Remarks"/>
     </xsl:template>
-
+    <xsl:template name="DisplayName">
+        <xsl:text>&lt;FieldDisplayName("</xsl:text>
+        <xsl:value-of select="@human-name"/>
+        <xsl:text>")> </xsl:text>
+    </xsl:template>
+    <xsl:template name="Category">
+        <xsl:text>&lt;Category("</xsl:text>
+        <xsl:value-of select="@human-name"/>
+        <xsl:text>")> </xsl:text>
+    </xsl:template>
 </xsl:stylesheet>
 
 
