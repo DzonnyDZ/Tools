@@ -1,9 +1,11 @@
+Imports Tools.CollectionsT.GenericT
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly Then 'Stage: Nightly
     'ASAP:Wiki, Forum, Mark
     Partial Public Class IPTC
         ''' <summary>Describes IPTC dataset's (tag) properties</summary>
         Public Class IPTCTag
+            'TODO: CTor, Properies
             Private _Number As Byte
             Private _Record As RecordNumbers
             Private _Name As String
@@ -60,11 +62,11 @@ Namespace DrawingT.MetadataT
             HHMMSS_HHMM
             ''' <summary>Generic array of bytes (represented by array of <see cref="Byte"/></summary>
             ByteArray
-            'TODO:UNO
+            ''' <summary>Unique Object Identifier (represented by <see cref="UNO"/>)</summary>
             UNO
-            'TODO:Num2_Str
+            ''' <summary>Combination of 2-digits number and optional <see cref="String"/> (represented by <see cref="NumStr2"/>)</summary>
             Num2_Str
-            'TODO:Num3_Str
+            ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="NumStr3"/>)</summary>
             Num3_Str
             'TODO:Subject reference
             SubjectReference
@@ -79,40 +81,173 @@ Namespace DrawingT.MetadataT
             ''' <summary>Duration in hours, minutes and seconds. Represented by <see cref="TimeSpan"/></summary>
             HHMMSS
         End Enum
+        ''' <summary>Indicates if given string contains only graphic characters</summary>
+        ''' <param name="Str">String to be verified</param>
+        ''' <returns>True if string contains only graphic characters, false otherwise</returns>
+        ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
+        Public Shared Function IsGraphicCharacters(ByVal Str As String) As Boolean
+            For Each ch As Char In Str
+                If AscW(ch) <= AscW(" "c) Then Return False
+            Next ch
+            Return True
+        End Function
 #Region "Implementation"
+        ''' <summary>Represents IPTC UNO unique object identifier</summary>
+        ''' <remarks>
+        ''' <para>The first three elements of the UNO (the UCD, the IPR and the ODE) together are allocated to the editorial content of the object.</para>
+        ''' <para>Any technical variants or changes in the presentation of an object, e.g. a picture being presented by a different file format, does not require the allocation of a new ODE but can be indicated by only generating a new OVI.</para>
+        ''' <para>Links may be set up to the complete UNO but the structure provides for linking to selected elements, e.g. to all objects of a specified provider.</para>
+        ''' </remarks>
+        Public Class UNO
+            ''' <summary>Contains value of the <see cref="UCD"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _UCD As Date = Now.Date
+            ''' <summary>UNO Creation Date Specifies a 24 hour period in which the further elements of the UNO have to be unique.</summary>            
+            ''' <remarks>It also provides a search facility.</remarks>
+            Public Property UCD() As Date
+                Get
+                    Return _UCD
+                End Get
+                Set(ByVal value As Date)
+                    _UCD = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="IPR"/> property</summary>            
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _IPR As String = " "c
+            ''' <summary>Information Provider Reference A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO</summary>            
+            ''' <remarks>A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO</remarks>
+            ''' <value>A minimum of one and a maximum of 32 octets. A string of graphic characters, except colon ‘:’ solidus ‘/’, asterisk ‘*’ and question mark ‘?’, registered with, and approved by, the IPTC.</value>
+            ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters)</exception>
+            Public Property IPR() As String
+                Get
+                    Return _IPR
+                End Get
+                Set(ByVal value As String)
+                    If Not IsGraphicCharacters(value) Then Throw New ArgumentException("Only graphic characters are allowd in IPR")
+                    If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException("IPR cannot contain characters *, /, ? and :")
+                    _IPR = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="ODE"/> property</summary>            
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _ODE As New ListWithEvents(Of String)(New String() {" "c}, , True)
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                AddHandler _ODE.Adding, AddressOf ODE_Adding
+                AddHandler _ODE.ItemChanging, AddressOf ODE_Adding
+                AddHandler _ODE.Removing, AddressOf ODE_Removing
+                AddHandler _ODE.Clearing, AddressOf ODE_Clearing
+                _ODE.AllowAddCancelableEventsHandlers = False
+            End Sub
+            ''' <summary>Block <see cref="ODE"/>'s last item from being removed</summary>
+            ''' <param name="sender"><see cref="_ODE"/></param>
+            ''' <param name="e">Event parameters</param>
+            Private Sub ODE_Removing(ByVal sender As ListWithEvents(Of String), ByVal e As ListWithEvents(Of String).CancelableItemIndexEventArgs)
+                If _ODE.Count = 0 Then
+                    e.Cancel = True
+                    e.CancelMessage = "Cannot remove last item from ODE"
+                End If
+            End Sub
+            ''' <summary>Block <see cref="ODE"/> from being cleared</summary>
+            ''' <param name="sender"><see cref="_ODE"/></param>
+            ''' <param name="e">Event parameters</param>
+            Private Sub ODE_Clearing(ByVal sender As ListWithEvents(Of String), ByVal e As ComponentModelT.CancelMessageEventArgs)
+                e.Cancel = True
+                e.CancelMessage = "ODE cannot be cleared"
+            End Sub
+            ''' <summary>Controls if item added to <see cref="ODE"/> are valid</summary>
+            ''' <param name="sender"><see cref="_ODE"/></param>
+            ''' <param name="e">parameters of event</param>
+            Private Sub ODE_Adding(ByVal sender As ListWithEvents(Of String), ByVal e As ListWithEvents(Of String).CancelableItemIndexEventArgs)
+                If Not IsGraphicCharacters(e.Item) Then
+                    e.CancelMessage = "ODE can consist only of graphic characters"
+                    e.CancelMessage = True
+                End If
+                If e.Item.Contains("*"c) OrElse e.Item.Contains("/"c) OrElse e.Item.Contains("?"c) OrElse e.Item.Contains(":"c) Then
+                    e.Cancel = True
+                    e.CancelMessage = "ODE cannot contain /, *, ? or :"
+                End If
+            End Sub
+            '' <summary>Object Descriptor Element In conjunction with the UCD and the IPR, a string of characters ensuring the uniqueness of the UNO.</summary>            
+            ''' <value>A minimum of one and a maximum of 60 minus the number of IPR octets, consisting of graphic characters, except colon ‘:’ asterisk ‘*’ and question mark ‘?’. The provider bears the responsibility for the uniqueness of the ODE within a 24 hour cycle.</value>
+            ''' <exception cref="OperationCanceledException">The <see cref="ListWithEvents(Of String).Add"/> and <see cref="ListWithEvents(Of String).Item"/>'s setter can throw an <see cref="OperationCanceledException"/> when trying to add invalid item, <see cref="ListWithEvents(Of String).Remove"/> and <see cref="ListWithEvents(Of String).RemoveAt"/> throws <see cref="OperationCanceledException"/> when trying to remove last item from <see cref="ODE"/> and <see cref="ListWithEvents(Of String).Clear"/> throws <see cref="OperationCanceledException"/> everywhen</exception>
+            Public ReadOnly Property ODE() As IList(Of String)
+                Get
+                    Return _ODE
+                End Get
+            End Property
+            ''' <summary>Contains value of the <see cref="OVI"/> property</summary>            
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _OVI As String = "0"c
+            ''' <summary>Object Variant Indicator A string of characters indicating technical variants of the object such as partial objects, or changes of file formats, and coded character sets.</summary>             
+            ''' <value>A minimum of one and a maximum of 9 octets, consisting of graphic characters, except colon ‘:’, asterisk ‘*’ and question mark ‘?’. To indicate a technical variation of the object as so far identified by the first three elements. Such variation may be required, for instance, for the indication of part of the object, or variations of the file format, or coded character set. The default value is a single ‘0’ (zero) character indicating no further use of the OVI.</value>
+            ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters)</exception>
+            Public Property OVI() As String
+                Get
+                    Return _OVI
+                End Get
+                Set(ByVal value As String)
+                    If Not IsGraphicCharacters(value) Then Throw New ArgumentException("Only graphic characters are allowd in OVI")
+                    If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException("OVI cannot contain characters *, /, ? and :")
+                    _OVI = value
+                End Set
+            End Property
+            ''' <summary>String representation in form UCD:IPR:ODE1/ODE2/ODE3:OVI</summary>
+            Overrides Function ToString() As String
+                Return String.Format("{0:YYYYMMDD}:{1}:{2}:{3}", UCD, IPR, String.Join("/"c, ODE), OVI)
+            End Function
+        End Class
+        ''' <summary>Represents combination of number and string</summary>
+        ''' <remarks>This class is abstract, derived class mus specify number of digits of <see cref="NumStr.Number"/></remarks>
         Public MustInherit Class NumStr
-''' <summary>Contains value of the <see cref="Number"/> property</summary>            
-<EditorBrowsable(EditorBrowsableState.Never)> Private _Number As Integer
-''' <summary>Contains value of the <see cref="[String]"/> property</summary>
-<EditorBrowsable(EditorBrowsableState.Never)>             Private _String As String
-''' <summary>If overriden in derived class returns number of digits in number. Should not be zero.</summary>            
- Protected MustOverride readonly Property NumberDigits() As Byte
-''' <summary>Number in this <see cref="NumStr"/></summary>            
-Public Property Number() As Integer
+            ''' <summary>Contains value of the <see cref="Number"/> property</summary>            
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Number As Integer
+            ''' <summary>Contains value of the <see cref="[String]"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _String As String
+            ''' <summary>If overriden in derived class returns number of digits in number. Should not be zero.</summary>            
+            Protected MustOverride ReadOnly Property NumberDigits() As Byte
+            ''' <summary>Number in this <see cref="NumStr"/></summary>            
+            Public Property Number() As Integer
                 Get
                     Return _Number
                 End Get
                 Set(ByVal value As Integer)
-if number.ToString(new String("0"c,numberdigits)&).Length >numberdigits then throw new ArgumentException ("Number has to many digits")
-_Number = value
+                    If Number.ToString(New String("0"c, NumberDigits)).Length > NumberDigits Then Throw New ArgumentException("Number has to many digits")
+                    _Number = value
                 End Set
             End Property
-''' <summary>Text of this <see cref="NumStr"/></summary>                        
-Public Property [String] As String
-                        		Get
-                        				Return _String
-                        		End Get
-                        		Set
-                        				_String = value
-                        		End Set
-                        End Property
-''' <summary>string representation in format number;string</summary>
-notoverridable Public  Overrides    Function ToString() As String 
-            return string.format("{0:"&new string("0"c,numberdigits)&"};{1}",number,[string])
-            end funmction
-        End Function
+            ''' <summary>Text of this <see cref="NumStr"/></summary>                        
+            Public Property [String]() As String
+                Get
+                    Return _String
+                End Get
+                Set(ByVal value As String)
+                    _String = value
+                End Set
+            End Property
+            ''' <summary>String representation in format number;string</summary>
+            Public NotOverridable Overrides Function ToString() As String
+                Return String.Format("{0:" & New String("0"c, NumberDigits) & "};{1}", Number, [String])
+            End Function
         End Class
-        ''' <summary>represents common interface for media types</summary>
+        ''' <summary>Represents combination of 2-digits numer and string</summary>
+        Public Class NumStr2 : Inherits NumStr
+            ''' <summary>Number of digits in number</summary>
+            ''' <returns>2</returns>
+            Protected Overrides ReadOnly Property NumberDigits() As Byte
+                Get
+                    Return 2
+                End Get
+            End Property
+        End Class
+        ''' <summary>Represents combination of 3-digits numer and string</summary>
+        Public Class NumStr3 : Inherits NumStr
+            ''' <summary>Number of digits in number</summary>
+            ''' <returns>3</returns>
+            Protected Overrides ReadOnly Property NumberDigits() As Byte
+                Get
+                    Return 2
+                End Get
+            End Property
+        End Class
+        ''' <summary>Represents common interface for media types</summary>
         <CLSCompliant(False)> _
         Public Interface IMediaType(Of TNumChar As {IConvertible, Structure}, TAlpha As {IConvertible, Structure})
             ''' <summary>Count fo components</summary>
