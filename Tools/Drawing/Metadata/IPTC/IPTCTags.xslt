@@ -67,6 +67,8 @@
     <xsl:template name="code-gen">
         <xsl:text>&#9;Partial Public Class IPTC&#xD;&#xA;</xsl:text>
         <xsl:call-template name="Tag-enums"/>
+        <xsl:call-template name="Enums"/>
+        <xsl:call-template name="sEnums"/>
         <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
     </xsl:template>
     
@@ -74,11 +76,12 @@
     <xsl:template name="Imports">
         <xsl:text>Imports System.ComponentModel&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.ComponentModelT&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports System.XML.Serialization&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Generates enums for tags-->
     <xsl:template name="Tag-enums">
-        <xsl:text>#Region "Enums"&#xD;&#xA;</xsl:text>
+        <xsl:text>#Region "Tag Enums"&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;summary>Numbers of IPTC records (groups of tags)&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Public Enum RecordNumbers As Byte&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record">
@@ -157,8 +160,29 @@
     <!--Creates <summary> from desc=""-->
     <xsl:template name="Attr-Summary">
         <xsl:text>&#9;&#9;&#9;''' &lt;summary></xsl:text>
-        <xsl:value-of select="normalize-space(@desc)"/>
+        <xsl:call-template name="Amp2Entity">
+            <xsl:with-param name="Text" select="normalize-space(@desc)"/>
+        </xsl:call-template>
         <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>    
+    </xsl:template>
+    <xsl:template name="Amp2Entity">
+        <xsl:param name="Text"/>
+        <xsl:if test="string-length($Text)>0">
+            <xsl:choose>
+                <xsl:when test="starts-with($Text,'&amp;') and not(starts-with($Text,'&amp;amp;'))">
+                    <xsl:text>&amp;amp;</xsl:text>
+                    <xsl:call-template name="Amp2Entity">
+                        <xsl:with-param name="Text" select="substring-after($Text,'&amp;')"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="substring($Text,1,1)"/>
+                    <xsl:call-template name="Amp2Entity">
+                        <xsl:with-param name="Text" select="substring($Text,2)"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>            
+        </xsl:if>        
     </xsl:template>
     <!--Universally creates <summary>-->
     <xsl:template name="Summary">
@@ -176,16 +200,105 @@
         <xsl:call-template name="Summary"/>
         <xsl:call-template name="Tag-Remarks"/>
     </xsl:template>
+    <!--Renders DisplayNameAttribute-->
     <xsl:template name="DisplayName">
         <xsl:text>&lt;FieldDisplayName("</xsl:text>
         <xsl:value-of select="@human-name"/>
         <xsl:text>")> </xsl:text>
     </xsl:template>
+    <!--Renders CategoryAttribute-->
     <xsl:template name="Category">
         <xsl:text>&lt;Category("</xsl:text>
         <xsl:value-of select="@human-name"/>
         <xsl:text>")> </xsl:text>
     </xsl:template>
+    <!--Renders attributes-->
+    <xsl:template name="Attributes">
+        <xsl:if test="@attributes">
+            <xsl:value-of select="@attributes"/>
+            <xsl:text>&#32;</xsl:text>
+        </xsl:if>
+    </xsl:template>
+    
+    <!--generates all enums declared in XML-->
+    <xsl:template name="Enums">
+        <xsl:text>#Region "Enums"&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="I:Root/I:record/I:enum">
+            <xsl:sort select="@name" order="ascending" data-type="text"/>
+            <xsl:call-template name="XML-Doc"/>
+            <xsl:text>&#9;&#9;</xsl:text>
+            <xsl:call-template name="Attributes"/>
+            <xsl:choose>
+                <xsl:when test="(self::node()[@restrict] and boolean(@restrict)) or (not (self::node()[@restrict]))">
+                    <xsl:text>&lt;Restrict(True)> </xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>&lt;Restrict(False)> </xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:if test="@type='SByte' or @type='UShort' or @type='UInteger' or @type='ULong'">
+                <xsl:text>&lt;CLSCompliant(False)> </xsl:text>
+            </xsl:if>
+            <xsl:text>Public Enum </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text> As </xsl:text>
+            <xsl:value-of select="@type"/>
+            <xsl:call-template name="nl"/>
+            <xsl:for-each select="I:item">
+                <xsl:sort order="ascending" data-type="number" select="@value"/>
+                <xsl:call-template name="XML-Doc"/>
+                <xsl:text>&#9;&#9;&#9;</xsl:text>
+                <xsl:call-template name="Attributes"/>
+                <xsl:call-template name="DisplayName"/>
+                <xsl:value-of select="@name"/>
+                <xsl:text> = </xsl:text>
+                <xsl:value-of select="@value"/>
+                <xsl:call-template name="nl"/>
+            </xsl:for-each>
+            <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+    </xsl:template>
+
+    <!--generates all string enums declared in XML-->
+    <xsl:template name="sEnums">
+        <xsl:text>#Region "String enums"&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="I:Root/I:record/I:senum">
+            <xsl:sort select="@name" order="ascending" data-type="text"/>
+            <xsl:call-template name="XML-Doc"/>
+            <xsl:text>&#9;&#9;</xsl:text>
+            <xsl:call-template name="Attributes"/>
+            <xsl:choose>
+                <xsl:when test="(self::node()[@restrict] and boolean(@restrict)) or (not (self::node()[@restrict]))">
+                    <xsl:text>&lt;Restrict(True)> </xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>&lt;Restrict(False)> </xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
+            <xsl:if test="@type='SByte' or @type='UShort' or @type='UInteger' or @type='ULong'">
+                <xsl:text>&lt;CLSCompliant(False)> </xsl:text>
+            </xsl:if>
+            <xsl:text>Public Enum </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:call-template name="nl"/>
+            <xsl:for-each select="I:item">
+                <xsl:sort order="ascending" data-type="number" select="@value"/>
+                <xsl:call-template name="XML-Doc"/>
+                <xsl:text>&#9;&#9;&#9;</xsl:text>
+                <xsl:call-template name="Attributes"/>
+                <xsl:call-template name="DisplayName"/>
+                <xsl:text>&lt;XmlEnum("</xsl:text>
+                <xsl:value-of select="@value"/>
+                <xsl:text>")> </xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:call-template name="nl"/>
+            </xsl:for-each>
+            <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+    </xsl:template>
+    
 </xsl:stylesheet>
 
 
