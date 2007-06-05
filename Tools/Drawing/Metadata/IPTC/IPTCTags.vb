@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 4. června 2007
+' Created: 5. června 2007
 ' By:DZONNY\Honza
 '
 Imports System.ComponentModel
@@ -667,7 +667,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Advisory")> Advisory = 3
 		End Enum
 			''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
-		<Restrict(True)> Public Enum SubjectMatterMembers As Integer
+		<Restrict(True)> Public Enum SubjectMatterNumbers As Integer
 			''' <summary>Archaeology</summary>
 			<FieldDisplayName("Archaeology")> Archaeology = 01001000
 			''' <summary>Architecture</summary>
@@ -1199,6 +1199,49 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Pixel Sequential")> <XmlEnum("P")> PixesSequential
 			''' <summary>Full colour composite, special sequential</summary>
 			<FieldDisplayName("Special Sequential")> <XmlEnum("S")> SpecialSequential
+		End Enum
+			''' <summary>Information Providers Reference</summary>
+		<Restrict(True)> Public Enum InformationProviders
+			''' <summary>Agence France Presse</summary>
+			<FieldDisplayName("AFP")> <XmlEnum("AFP")> AFP
+			''' <summary>Associated Press</summary>
+			<FieldDisplayName("AP")> <XmlEnum("AP")> AP
+			''' <summary>Associated Press</summary>
+			<FieldDisplayName("APD")> <XmlEnum("APD")> APD
+			''' <summary>Associated Press</summary>
+			<FieldDisplayName("APE")> <XmlEnum("APE")> APE
+			''' <summary>Associated Press</summary>
+			<FieldDisplayName("APF")> <XmlEnum("APF")> APF
+			''' <summary>Associated Press</summary>
+			<FieldDisplayName("APS")> <XmlEnum("APS")> APS
+			''' <summary>Canadian Press</summary>
+			<FieldDisplayName("BN")> <XmlEnum("BN")> BN
+			''' <summary>Canadian Press</summary>
+			<FieldDisplayName("CP")> <XmlEnum("CP")> CP
+			''' <summary>Czech News Agency</summary>
+			<FieldDisplayName("CTK")> <XmlEnum("CTK")> CTK
+			''' <summary>Deutsche Presse-Agentur GmbH</summary>
+			<FieldDisplayName("dpa")> <XmlEnum("dpa")> dpa
+			''' <summary>Croatian News Agency</summary>
+			<FieldDisplayName("HNA")> <XmlEnum("HNA")> HNA
+			''' <summary>International Press Telecommunications Council</summary>
+			<FieldDisplayName("IPTC")> <XmlEnum("IPTC")> IPTC
+			''' <summary>Magyar Távirati Iroda / Hungarian News Agency</summary>
+			<FieldDisplayName("MTI")> <XmlEnum("MTI")> MTI
+			''' <summary>Canadian Press</summary>
+			<FieldDisplayName("PC")> <XmlEnum("PC")> PC
+			''' <summary>Canadian Press</summary>
+			<FieldDisplayName("PN")> <XmlEnum("PN")> PN
+			''' <summary>Reuters</summary>
+			<FieldDisplayName("REUTERS")> <XmlEnum("REUTERS")> REUTERS
+			''' <summary>Slovenska Tiskovna Agencija</summary>
+			<FieldDisplayName("STA")> <XmlEnum("STA")> STA
+			''' <summary>Tidningarnas Telegrambyrå</summary>
+			<FieldDisplayName("TT")> <XmlEnum("TT")> TT
+			''' <summary>United Press International</summary>
+			<FieldDisplayName("UP")> <XmlEnum("UP")> UP
+			''' <summary>United Press International</summary>
+			<FieldDisplayName("UPI")> <XmlEnum("UPI")> UPI
 		End Enum
 			''' <summary>ISO 3166-1 alpha-3 codes used by with addition of some spacial codes used there.</summary>
 			''' <remarks>Reserved code elements are codes which, while not ISO 3166-1 codes, are in use for some applications in conjunction with the ISO 3166 codes. The ISO 3166/MA therefore reserves them, so that they are not used for new official ISO 3166 codes, thereby creating conflicts between the standard and those applications.</remarks>

@@ -371,6 +371,29 @@
             <desc>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</desc>
             <remarks>The provider must ensure the UNO is unique. Objects with the same UNO are identical.</remarks>
         </tag>
+        <senum name="InformationProviders" type="String" restrict="false">
+            <desc>Information Providers Reference</desc>
+            <item value="AFP" human-name="AFP" name="AFP" desc="Agence France Presse"/>
+            <item value="AP" human-name="AP" name="AP" desc="Associated Press"/>
+            <item value="APD" human-name="APD" name="APD" desc="Associated Press"/>
+            <item value="APE" human-name="APE" name="APE" desc="Associated Press"/>
+            <item value="APF" human-name="APF" name="APF" desc="Associated Press"/>
+            <item value="APS" human-name="APS" name="APS" desc="Associated Press"/>
+            <item value="BN" human-name="BN" name="BN" desc="Canadian Press"/>
+            <item value="CP" human-name="CP" name="CP" desc="Canadian Press"/>
+            <item value="CTK" human-name="CTK" name="CTK" desc="Czech News Agency"/>
+            <item value="dpa" human-name="dpa" name="dpa" desc="Deutsche Presse-Agentur GmbH"/>
+            <item value="HNA" human-name="HNA" name="HNA" desc="Croatian News Agency"/>
+            <item value="IPTC" human-name="IPTC" name="IPTC" desc="International Press Telecommunications Council"/>
+            <item value="MTI" human-name="MTI" name="MTI" desc="Magyar Távirati Iroda / Hungarian News Agency"/>
+            <item value="PC" human-name="PC" name="PC" desc="Canadian Press"/>
+            <item value="PN" human-name="PN" name="PN" desc="Canadian Press"/>
+            <item value="REUTERS" human-name="REUTERS" name="REUTERS" desc="Reuters"/>
+            <item value="STA" human-name="STA" name="STA" desc="Slovenska Tiskovna Agencija"/>
+            <item value="TT" human-name="TT" name="TT" desc="Tidningarnas Telegrambyrå"/>
+            <item value="UP" human-name="UP" name="UP" desc="United Press International"/>
+            <item value="UPI" human-name="UPI" name="UPI" desc="United Press International"/>
+        </senum>
         <group name="ARM" human-name="ARM" repeatable="false" mandatory="false" category="Old IPTC">
             <desc>Abstract Relation Method</desc>
             <tag number="120" name="ARMIdentifier" human-name="ARM Identifier" type="Enum-binary" enum="ARMMethods" mandatory="true" repeatable="false" fixed="true" length="2" category="Old IPTC">
@@ -442,9 +465,7 @@
             <desc>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (&lt;see cref='ARM'/>)), according to the practices of the provider.</desc>
         </tag>
         <enum name="EditorialUpdateValues" type="Byte">
-            <desc>
-                Values for <see cref='EditorialUpdate'/>
-            </desc>
+            <desc>Values for <see cref='EditorialUpdate'/></desc>
             <item value="1" name="AdditionalLanguage" desc="Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - &lt;see cref='LanguageIdentifier'/>)." human-name="Additional language"/>
         </enum>
         <tag number="10" name="Urgency" human-name="Urgency" type="NumericChar" mandatory="false" repeatable="false" fixed="true" length="1" category="Status">
@@ -477,7 +498,7 @@
             <item value="16000000" human-name="Unrest, Conflicts &amp; War" name="UnrestConflictsWar" desc="Acts of socially or politically motivated protest and/or violence."/>
             <item value="17000000" human-name="Weather" name="Weather" desc="The study, reporting and predic meteorological phenomena."/>
         </enum>
-        <enum name="SubjectMatterMembers" type="Integer">
+        <enum name="SubjectMatterNumbers" type="Integer">
             <desc>Subject Matter Name and Subject Reference Number relationship</desc>
             <!--Arts, Culture & Entertainment 01000000-->
             <item value="01001000" name="Archaeology" human-name="Archaeology" desc="Archaeology"/>
