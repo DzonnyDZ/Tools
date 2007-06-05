@@ -176,7 +176,7 @@
                     <xs:documentation>Time in format HHMMSS±HHMM where HHMMSS reffers to local time and ±HHMM offset from UTC (as described in ISO 8601). (stored as numeric characters must have fixed size 11)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="ByteAray">
+            <xs:enumeration value="ByteArray">
                 <xs:annotation>
                     <xs:documentation>Array of unsigned bytes</xs:documentation>
                 </xs:annotation>
@@ -201,7 +201,7 @@
                     <xs:documentation>Structured description of amtter of objectstored as graphic characters (as defined by IPTC)</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Aplha">
+            <xs:enumeration value="Alpha">
                 <xs:annotation>
                     <xs:documentation>Alphabetic (Latin) character(s)</xs:documentation>
                 </xs:annotation>

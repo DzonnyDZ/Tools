@@ -1,4 +1,4 @@
-Imports Tools.CollectionsT.GenericT
+Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class IPTC
@@ -9,9 +9,9 @@ Namespace DrawingT.MetadataT
             UnsignedBinaryNumber
             ''' <summary>Binary stored boolean value (can be stored in multiple bytes. If any of bytes is nonzero, value is true) (represented by <see cref="Boolean"/></summary>
             Boolean_Binary
-            ''' <summary>Binary stored 1 byte long unsigned integer (represented by <see cref="Byte"/></summary>
+            ''' <summary>Binary stored 1 byte long unsigned integer (represented by <see cref="Byte"/>)</summary>
             Byte_Binary
-            ''' <summary>Binary stored 2 byte long unsigned integer (represented by <see cref="UShort"/></summary>
+            ''' <summary>Binary stored 2 byte long unsigned integer (represented by <see cref="UShort"/>)</summary>
             UShort_Binary
             ''' <summary>Number of variable length stored as string.</summary>
             ''' <remarks>
@@ -21,7 +21,7 @@ Namespace DrawingT.MetadataT
             ''' <item><term>9</term><description><see cref="Integer"/></description></item>
             ''' <item><term>19</term><description><see cref="Long"/></description></item>
             ''' <item><term>29</term><description><see cref="Decimal"/></description></item>
-            ''' <item><term>unknown</term><description><see cref="Long"/></description></item>
+            ''' <item><term>unknown</term><description><see cref="Decimal"/></description></item>
             ''' </list>
             ''' </remarks>
             NumericChar
@@ -31,19 +31,19 @@ Namespace DrawingT.MetadataT
             TextWithSpaces
             ''' <summary>Printable text (no tabs, no control characters) (represented by <see cref="String"/>)</summary>
             Text
-            ''' <summary>Black and white bitma with width 460px (represented <see cref="Drawing.Bitmap"/>)</summary>
+            ''' <summary>Black and white bitmap with width 460px (represented <see cref="Drawing.Bitmap"/>)</summary>
             BW460
             ''' <summary>Enumeration stored as binary number (represented by various enums)</summary>
-            Enum_Binary
+            Enum_Binary 'TODO:This can be enumeration
             ''' <summary>Enumeration stored as numeric string (represented by various enums)</summary>
-            Enum_NumChar
+            Enum_NumChar 'TODO:This can be enumeration
             ''' <summary>Date stored as numeric characters in the YYYYMMDD format (represented by <see cref="Date"/>)</summary>
             CCYYMMDD
             ''' <summary>Date stored as numeric characters in the YYYYMMDD format (represented by <see cref="OmmitableDate"/>) Each component YYYY, MM and DD can be set to 0 is unknown</summary>
             CCYYMMDDOmmitable
             ''' <summary>Time stored as numeric characters (and the ± sign) in format HHMMSS±HHMM (with time-zone offset from UTC) (represented by <see cref="Time"/></summary>
             HHMMSS_HHMM
-            ''' <summary>Generic array of bytes (represented by array of <see cref="Byte"/></summary>
+            ''' <summary>Generic array of bytes (represented by array of <see cref="Byte"/>)</summary>
             ByteArray
             ''' <summary>Unique Object Identifier (represented by <see cref="UNO"/>)</summary>
             UNO
@@ -51,7 +51,7 @@ Namespace DrawingT.MetadataT
             Num2_Str
             ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="NumStr3"/>)</summary>
             Num3_Str
-            'TODO:Subject reference
+            ''' <summary>Subject reference (combination of IPR, subject number and description) (represented by <see cref="SubjectReference"/>)</summary>
             SubjectReference
             ''' <summary>Alphabetic characters from latin alphabet (A-Z and a-z) (represented by <see cref="String"/>)</summary>
             Alpha
@@ -77,6 +77,8 @@ Namespace DrawingT.MetadataT
 #Region "Implementation"
         ''' <summary>IPTC Subject Reference</summary>
         Public Class SubjectReference : Inherits WithIPR
+            Private Const SubjRefNMask As Integer = 1000000
+            Private Const SubjMatterMask As Integer = 1000
             ''' <summary>Gets lenght limit for <see cref="IPR"/></summary>
             ''' <returns>32</returns>
             Protected Overrides ReadOnly Property IPRLengthLimit() As Byte
@@ -103,37 +105,102 @@ Namespace DrawingT.MetadataT
                     End If
                 End Set
             End Property
-            'TODO:Names!!!
-''' <summary>Contains value of the <see cref="SubjectName"/> property</summary>            
-<EditorBrowsable(EditorBrowsableState.Never)>Private _SubjectName As String
+            ''' <summary>Subject component of <see cref="SubjectReferenceNumber"/></summary>
+            ''' <remarks>The Subject identifies the general content of the objectdata as determined by the provider.</remarks>
+            ''' <value>New value for subject number. Setting this property resets <see cref="SubjectMatterNumber"/> and <see cref="SubjectDetailNumber"/> to zero</value>
+            ''' <returns>Subject number value or zero if none specified</returns>
+            ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="SubjectReferenceNumbers"/> and it is not zero</exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            Public Property SubjectNumber() As SubjectReferenceNumbers
+                Get
+                    Return (SubjectReferenceNumber \ SubjRefNMask) * SubjRefNMask
+                End Get
+                Set(ByVal value As SubjectReferenceNumbers)
+                    If value <> 0 AndAlso Array.IndexOf([Enum].GetValues(GetType(SubjectReferenceNumbers)), value) < 0 Then Throw New InvalidEnumArgumentException("value", value, GetType(SubjectReferenceNumbers))
+                    SubjectReferenceNumber = value
+                End Set
+            End Property
+            ''' <summary>Matter component of <see cref="SubjectReferenceNumber"/></summary>
+            ''' <remarks>A Subject Matter further refines the Subject of a News Object.</remarks>
+            ''' <value>New value for subject matter number. Setting this properry resets <see cref="SubjectDetailNumber"/> to zero</value>
+            ''' <returns>Subject matter number value or zero if none specified</returns>
+            ''' <exception cref="InvalidEnumArgumentException">Valùue being set is not member of <see cref="SubjectMatterNumbers"/> and it is not zero</exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            Public Property SubjectMatterNumber() As SubjectMatterNumbers
+                Get
+                    Return ((SubjectReferenceNumber Mod SubjRefNMask) \ SubjMatterMask) * SubjMatterMask
+                End Get
+                Set(ByVal value As SubjectMatterNumbers)
+                    If value <> 0 AndAlso Array.IndexOf([Enum].GetValues(GetType(SubjectMatterNumbers)), value) < 0 Then Throw New InvalidEnumArgumentException("value", value, GetType(SubjectMatterNumbers))
+                    SubjectReferenceNumber = SubjectNumber + (value Mod SubjRefNMask)
+                End Set
+            End Property
+            ''' <summary>Detail component of <see cref="SubjectReferenceNumber"/></summary>
+            ''' <remarks>A Subject Detail further refines the Subject Matter of a News Object.</remarks>
+            ''' <value>New value for subject detail number</value>
+            ''' <returns>Subject detail number value or zero if none specified</returns>
+            ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="EconomySubjectDetail"/> and it is not zero</exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            Public Property SubjectDetailNumber() As EconomySubjectDetail
+                Get
+                    Return SubjectReferenceNumber Mod SubjMatterMask
+                End Get
+                Set(ByVal value As EconomySubjectDetail)
+                    If value <> 0 AndAlso Array.IndexOf([Enum].GetValues(GetType(EconomySubjectDetail)), value) < 0 Then Throw New InvalidEnumArgumentException("value", value, GetType(EconomySubjectDetail))
+                    SubjectReferenceNumber = SubjectNumber + (SubjectMatterNumber Mod SubjRefNMask) + (value Mod SubjMatterMask)
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="SubjectName"/> property</summary>              
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _SubjectName As String
+            ''' <summary>A text representation of the Subject Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix H, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)</summary>
+            ''' <remarks>The Subject identifies the general content of the objectdata as determined by the provider.</remarks>
+            ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
             Public Property SubjectName() As String
                 Get
                     Return _SubjectName
                 End Get
                 Set(ByVal value As String)
+                    If value.Length > 64 Then Throw New ArgumentException("Lenght of SubjectName must fit into 64")
+                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException("SubjectName can contain only graphic characters except :, ? and *")
                     _SubjectName = value
                 End Set
             End Property
-''' <summary>Contains value of the <see cref="SubjectMatterName"/> property</summary>                        
-<EditorBrowsable(EditorBrowsableState.Never)>Private _SubjectMatterName As String
-            Public Property SubjectMatterName As String
-            		Get
-            				Return _SubjectMatterName
-            		End Get
-            		Set
-            				_SubjectMatterName = value
-            		End Set
+            ''' <summary>Contains value of the <see cref="SubjectMatterName"/> property</summary>                         
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _SubjectMatterName As String
+            ''' <summary>a text representation of the Subject Matter Number</summary>
+            ''' <remarks>Maximum 64 octets consisting of graphic characters plus spaces either in English, as defined in Appendix I, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135). A Subject Matter further refines the Subject of a News Object.</remarks>
+            ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
+            Public Property SubjectMatterName() As String
+                Get
+                    Return _SubjectMatterName
+                End Get
+                Set(ByVal value As String)
+                    If value.Length > 64 Then Throw New ArgumentException("Lenght of SubjectReference must fit into 64")
+                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException("SubjectReference can contain only graphic characters except :, ? and *")
+                    _SubjectMatterName = value
+                End Set
             End Property
-''' <summary>Contains value of the <see cref="SubjectDetailName"/> property</summary>                        
-<EditorBrowsable(EditorBrowsableState.Never)>Private _SubjectDetailName As String
-                                                Public Property SubjectDetailName As String
-                                                		Get
-                                                				Return _SubjectDetailName
-                                                		End Get
-                                                		Set
-                                                				_SubjectDetailName = value
-                                                		End Set
-                                                End Property
+            ''' <summary>Contains value of the <see cref="SubjectDetailName"/> property</summary>                         
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _SubjectDetailName As String
+            ''' <summary>A text representation of the SubjectDetail Number</summary>
+            ''' <remarks>
+            ''' Maximum 64 octets consisting of graphic characters plus spaces either in English, as defined in Appendix J, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)
+            ''' <para>A Subject Detail further refines the Subject Matter of a News Object. A registry of Subject Reference Numbers, Subject Matter Names and Subject Detail Names, descriptions (if available) and their corresponding parent Subjects will be held by the IPTC in different languages, with translations as supplied by members. See Appendices I and J.</para></remarks>
+            ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
+            Public Property SubjectDetailName() As String
+                Get
+                    Return _SubjectDetailName
+                End Get
+                Set(ByVal value As String)
+                    If value.Length > 64 Then Throw New ArgumentException("Lenght of SubjectDetailName must fit into 64")
+                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException("SubjectDetailName can contain only graphic characters except :, ? and *")
+                    _SubjectDetailName = value
+                End Set
+            End Property
+            ''' <summary>String representation if form <see cref="IPR"/>:<see cref="SubjectReferenceNumber"/>:<see cref="SubjectName"/>:<see cref="SubjectMatterName"/>:<see cref="SubjectDetailName"/></summary>
+            Public Overrides Function ToString() As String
+                Return String.Format(InvariantCulture, "{0}:{1:00000000}:{2}:{3}:{4}", IPR, SubjectReferenceNumber, SubjectName, SubjectMatterName, SubjectDetailName)
+            End Function
         End Class
         ''' <summary>Common base for classes that have the <see cref="WithIPR.IPR"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -294,7 +361,7 @@ Namespace DrawingT.MetadataT
             Overrides Function ToString() As String
                 Dim ODEArr(ODE.Count - 1) As String
                 ODE.CopyTo(ODEArr, 0)
-                Return String.Format("{0:YYYYMMDD}:{1}:{2}:{3}", UCD, IPR, String.Join("/"c, ODEArr), OVI)
+                Return String.Format(InvariantCulture, "{0:YYYYMMDD}:{1}:{2}:{3}", UCD, IPR, String.Join("/"c, ODEArr), OVI)
             End Function
         End Class
         ''' <summary>Represents combination of number and string</summary>
@@ -327,7 +394,7 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>String representation in format number;string</summary>
             Public NotOverridable Overrides Function ToString() As String
-                Return String.Format("{0:" & New String("0"c, NumberDigits) & "};{1}", Number, [String])
+                Return String.Format(InvariantCulture, "{0:" & New String("0"c, NumberDigits) & "};{1}", Number, [String])
             End Function
         End Class
         ''' <summary>Represents combination of 2-digits numer and string</summary>
@@ -444,7 +511,7 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>String representation in YYYYMMDD format</summary>
             Public Overrides Function ToString() As String
-                Return String.Format("{0:0000}{1:00}{2:00}", Year, Month, Day)
+                Return String.Format(InvariantCulture, "{0:0000}{1:00}{2:00}", Year, Month, Day)
             End Function
         End Structure
 
@@ -539,7 +606,7 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>String representation in the HHMMSS±HHMM format</summary>
             Public Overrides Function ToString() As String
-                Return String.Format("{0:00}{1:00}{2:00}{3:+00;-00}{4:00}", Hour, Minute, Second, OffsetHour, OffsetMinute)
+                Return String.Format(InvariantCulture, "{0:00}{1:00}{2:00}{3:+00;-00}{4:00}", Hour, Minute, Second, OffsetHour, OffsetMinute)
             End Function
             ''' <summary>CTor</summary>
             ''' <param name="Hours">Hour component</param>
@@ -641,7 +708,7 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>String representation in form 0T (components, type)</summary>
             Public Overrides Function ToString() As String
-                Return String.Format("{0}{1}", CByte(Components), TypeCode)
+                Return String.Format(InvariantCulture, "{0}{1}", CByte(Components), TypeCode)
             End Function
         End Structure
 
@@ -694,10 +761,157 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>String representation in form 0T (components, type)</summary>
             Public Overrides Function ToString() As String
-                Return String.Format("{0}{1}", Components, TypeCode)
+                Return String.Format(InvariantCulture, "{0}{1}", Components, TypeCode)
             End Function
         End Structure
 #End Region
+        ''' <summary>Returns <see cref="Type"/> that is used to store values of particular <see cref="IPTCTypes">IPTC type</see></summary>
+        ''' <param name="IPTCType">IPTC type to get <see cref="Type"/> for</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="IPTCType"/> is not member of <see cref="IPTCTypes"/></exception>
+        Public Shared Function GetUnderlyingType(ByVal IPTCType As IPTCTypes) As Type
+            Select Case IPTCType
+                Case IPTCTypes.Alpha : Return GetType(String)
+                Case IPTCTypes.AudioType : Return GetType(AudioType)
+                Case IPTCTypes.Boolean_Binary : Return GetType(Boolean)
+                Case IPTCTypes.BW460 : Return GetType(Drawing.Bitmap)
+                Case IPTCTypes.Byte_Binary : Return GetType(Byte)
+                Case IPTCTypes.ByteArray : Return GetType(Byte())
+                Case IPTCTypes.CCYYMMDD : Return GetType(Date)
+                Case IPTCTypes.CCYYMMDDOmmitable : Return GetType(OmmitableDate)
+                Case IPTCTypes.Enum_Binary : Return GetType([Enum])
+                Case IPTCTypes.Enum_NumChar : Return GetType([Enum])
+                Case IPTCTypes.GraphicCharacters : Return GetType(String)
+                Case IPTCTypes.HHMMSS : Return GetType(TimeSpan)
+                Case IPTCTypes.HHMMSS_HHMM : Return GetType(Time)
+                Case IPTCTypes.ImageType : Return GetType(ImageType)
+                Case IPTCTypes.Num2_Str : Return GetType(NumStr2)
+                Case IPTCTypes.Num3_Str : Return GetType(NumStr3)
+                Case IPTCTypes.NumericChar : Return GetType(IConvertible)
+                Case IPTCTypes.StringEnum : Return GetType([Enum])
+                Case IPTCTypes.SubjectReference : Return GetType(SubjectReference)
+                Case IPTCTypes.Text : Return GetType(String)
+                Case IPTCTypes.TextWithSpaces : Return GetType(String)
+                Case IPTCTypes.UNO : Return GetType(UNO)
+                Case IPTCTypes.UnsignedBinaryNumber : Return GetType(ULong)
+                Case IPTCTypes.UShort_Binary : Return GetType(UShort)
+                Case Else : Throw New InvalidEnumArgumentException("IPTCType", IPTCType, GetType(IPTCTypes))
+            End Select
+        End Function
+        ''' <summary>Gets details about tag format</summary>
+        ''' <param name="Tag">tag to get details for</param>
+        ''' <exception cref="InvalidEnumArgumentException">Either <see cref="DataSetIdentification.RecordNumber"/> of <paramref name="Tag"/> is unknown or <see cref="DataSetIdentification.DatasetNumber"/> of <paramref name="Tag"/> is unknown within <see cref="DataSetIdentification.RecordNumber"/> of <paramref name="Tag"/></exception>
+        Public Shared Function GetTag(ByVal Tag As DataSetIdentification) As IPTCTag
+            Return GetTag(Tag.RecordNumber, Tag.DatasetNumber)
+        End Function
+        ''' <summary>Information about group of tags</summary>
+        Public Class GroupInfo
+            ''' <summary>Contains value of the <see cref="Tags"/> Proeprty</summary>
+            Private _Tags As IPTCTag()
+            ''' <summary>Contains value of the <see cref="Mandatory"/> Proeprty</summary>
+            Private _Mandatory As Boolean
+            ''' <summary>Contains value of the <see cref="Repeatable"/> Proeprty</summary>
+            Private _Repeatable As Boolean
+            ''' <summary>Contains value of the <see cref="Name"/> Proeprty</summary>
+            Private _Name As String
+            ''' <summary>Contains value of the <see cref="HumanName"/> Proeprty</summary>
+            Private _HumanName As String
+            ''' <summary>Contains value of the <see cref="Group"/> Proeprty</summary>
+            Private _Group As Groups
+            ''' <summary>Contains value of the <see cref="Category"/> Proeprty</summary>
+            Private _Category As String
+            ''' <summary>Contains value of the <see cref="Description"/> Proeprty</summary>
+            Private _Description As String
+            ''' <summary>Contains value of the <see cref="Type"/> Proeprty</summary>
+            Private _Type As Type
+            ''' <summary>CTor</summary>
+            ''' <param name="Name">Name of group used in object structure</param>
+            ''' <param name="HumanName">Human-friendly name of group</param>
+            ''' <param name="Group">Group number</param>
+            ''' <param name="Type">Type that represents this group</param>
+            ''' <param name="Category">Category of this group</param>
+            ''' <param name="Description">Description</param>
+            ''' <param name="Mandatory">Group is mandatory according to IPTC standard</param>
+            ''' <param name="Repeatable">Group is repeatable</param>
+            ''' <param name="Tags">Tags the group consists of</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Group"/> is not member of <see cref="Groups"/></exception>
+            ''' <exception cref="ArgumentException"><paramref name="Tags"/> is null or have less than 2 items</exception>
+            Public Sub New(ByVal Name As String, ByVal HumanName As String, ByVal Group As Groups, ByVal Type As Type, ByVal Category As String, ByVal Description As String, ByVal Mandatory As Boolean, ByVal Repeatable As Boolean, ByVal ParamArray Tags As IPTCTag())
+                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException("Each group must have at least 2 tags")
+                If Not InEnum(Group) Then Throw New InvalidEnumArgumentException("Group", Group, GetType(Groups))
+                If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                _Tags = Tags
+                _Mandatory = Mandatory
+                _Repeatable = Repeatable
+                _Name = Name
+                _HumanName = HumanName
+                _Group = Group
+                _Category = _Category
+                _Description = Description
+                _Type = Type
+            End Sub
+            ''' <summary>Type that realizes object representation of this group</summary>
+            Public ReadOnly Property Type() As Type
+                Get
+                    Return _Type
+                End Get
+            End Property
+            ''' <summary>Tags present in this group</summary>
+            Public ReadOnly Property Tags() As IPTCTag()
+                Get
+                    Dim Arr(_Tags.Length - 1) As IPTCTag
+                    _Tags.CopyTo(Arr, 0)
+                    Return Arr
+                End Get
+            End Property
+            ''' <summary>True if this group is mandatory according to IPTC standard</summary>
+            Public ReadOnly Property Mandatory() As Boolean
+                Get
+                    Return _Mandatory
+                End Get
+            End Property
+            ''' <summary>True if this group is repeatable</summary>
+            Public ReadOnly Property Repeatable() As Boolean
+                Get
+                    Return _Repeatable
+                End Get
+            End Property
+            ''' <summary>Name of group used in object structure</summary>
+            Public ReadOnly Property Name() As String
+                Get
+                    Return _Name
+                End Get
+            End Property
+            ''' <summary>Human-friendly name of this group</summary>
+            Public ReadOnly Property HumanName() As String
+                Get
+                    Return _HumanName
+                End Get
+            End Property
+            ''' <summary>Code of this group</summary>
+            Public ReadOnly Property Group() As Groups
+                Get
+                    Return _Group
+                End Get
+            End Property
+            ''' <summary>Name of category of this group</summary>
+            Public ReadOnly Property Category() As String
+                Get
+                    Return _Category
+                End Get
+            End Property
+            ''' <summary>Description of this group</summary>
+            Public ReadOnly Property Description() As String
+                Get
+                    Return _Description
+                End Get
+            End Property
+        End Class
+        ''' <summary>Common base for all tag groups</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public MustInherit Class Group
+
+        End Class
 #End Region
     End Class
 #End If

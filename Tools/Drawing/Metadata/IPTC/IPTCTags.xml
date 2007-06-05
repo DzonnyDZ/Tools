@@ -84,7 +84,7 @@
         <tag number="80" name="TimeSent" human-name="Time Sent" type="HHMMSS-HHMM" fixed="true" mandatory="false" repeatable="false" length="11" category="Date">
             <desc>This is the time the service sent the material.</desc>
         </tag>
-        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteAray" fixed="false" mandatory="false" repeatable="false" length="32" category="Old IPTC">
+        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteArray" fixed="false" mandatory="false" repeatable="false" length="32" category="Old IPTC">
             <desc>
                 Array of bytes consisting of one or
                 more control functions used for the announcement, invocation or
@@ -857,7 +857,7 @@
             <item value="04015003" name="RoadTransport" human-name="Road Transport" desc="Road Transport"/>
             <item value="04015004" name="WaterwayAndMaritimeTransport" human-name="Waterway &amp; Maritime Transport" desc="Waterway &amp; Maritime Transport"/>
         </enum>
-        <tag number="15" name="Category" human-name="Category" type="Aplha" mandatory="false" repeatable="false" fixed="false" length="3" attributes='&lt;Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")>' category='Category'>
+        <tag number="15" name="Category" human-name="Category" type="Alpha" mandatory="false" repeatable="false" fixed="false" length="3" attributes='&lt;Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")>' category='Category'>
             <desc>Identifies the subject of the objectdata in the opinion of the provider.</desc>
             <remarks>A list of categories will be maintained by a regional registry, where available, otherwise by the provider.</remarks>
         </tag>
@@ -1334,7 +1334,7 @@
             <item value="L" name="Landscape" human-name="Landscape" desc="Landscape"/>
             <item value="S" name="Square" human-name="Square" desc="Square"/>
         </senum>
-        <tag number="135" name="LanguageIdentifier" human-name="Language Identifier" type="Aplha" mandatory="true" repeatable="false" fixed="false" length="135" category="Other">
+        <tag number="135" name="LanguageIdentifier" human-name="Language Identifier" type="Alpha" mandatory="true" repeatable="false" fixed="false" length="135" category="Other">
             <desc>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</desc>
             <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
         </tag>
@@ -1377,7 +1377,7 @@
                 <desc>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></desc>
                 <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
             </tag>
-            <tag number="202" name="ObjectDataPreviewData" human-name="ObjectData Preview Data" type="ByteAray" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+            <tag number="202" name="ObjectDataPreviewData" human-name="ObjectData Preview Data" type="ByteArray" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
                 <desc>Maximum size of 256000 octets consisting of binary data.</desc>
             </tag>
         </group>
@@ -1407,7 +1407,7 @@
     </record>
     <record number="8" name="ObjectDataRecord" human-name="ObjectData Record">
         <desc>Contains embeded object</desc>
-        <tag number="10" human-name="Subfile" name="Subfile" type="ByteAray" category="Embeded object" fixed="false" length="0" mandatory="true" repeatable="false">
+        <tag number="10" human-name="Subfile" name="Subfile" type="ByteArray" category="Embeded object" fixed="false" length="0" mandatory="true" repeatable="false">
             <desc>Subfile DataSet containing the objectdata itself.</desc>
             <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
         </tag>

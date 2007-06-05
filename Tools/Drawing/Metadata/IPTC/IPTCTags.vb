@@ -285,9 +285,526 @@ Namespace DrawingT.MetadataT
 				Case Else : Throw New InvalidEnumArgumentException("Record", Record, GetType(RecordNumbers))
 			End Select
 		End Function
+		Partial Public Structure DataSetIdentification
+			''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
+			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+			Public Shared ReadOnly Property ModelVersion As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ModelVersion)
+				End Get
+			End Property
+			''' <summary>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</summary>
+			Public Shared ReadOnly Property Destination As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.Destination)
+				End Get
+			End Property
+			''' <summary>A number representing the file format.</summary>
+			''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</remarks>
+			Public Shared ReadOnly Property FileFormat As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.FileFormat)
+				End Get
+			End Property
+			''' <summary>A binary number representing the particular version of the</summary>
+			Public Shared ReadOnly Property FileFormatVersion As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.FileFormatVersion)
+				End Get
+			End Property
+			''' <summary>Identifies the provider and product.</summary>
+			Public Shared ReadOnly Property ServiceIdentifier As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ServiceIdentifier)
+				End Get
+			End Property
+			''' <summary>The characters form a number that will be unique for the date specified in and for the Service Identifier specified in .</summary>
+			''' <remarks>If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</remarks>
+			Public Shared ReadOnly Property EnvelopeNumber As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.EnvelopeNumber)
+				End Get
+			End Property
+			''' <summary>Allows a provider to identify subsets of its overall service.</summary>
+			''' <remarks>Used to provide receiving organisation data on which to select, route, or otherwise handle data.</remarks>
+			Public Shared ReadOnly Property ProductID As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ProductID)
+				End Get
+			End Property
+			''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, ).</summary>
+			''' <remarks>'1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</remarks>
+			Public Shared ReadOnly Property EnvelopePriority As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.EnvelopePriority)
+				End Get
+			End Property
+			''' <summary>Indicates year, month and day the service sent the material.</summary>
+			Public Shared ReadOnly Property DateSent As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.DateSent)
+				End Get
+			End Property
+			''' <summary>This is the time the service sent the material.</summary>
+			Public Shared ReadOnly Property TimeSent As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.TimeSent)
+				End Get
+			End Property
+			''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
+			''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
+			Public Shared ReadOnly Property CodedCharacterSet As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.CodedCharacterSet)
+				End Get
+			End Property
+			''' <summary>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</summary>
+			''' <remarks>The provider must ensure the UNO is unique. Objects with the same UNO are identical.</remarks>
+			Public Shared ReadOnly Property UNO As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.UNO)
+				End Get
+			End Property
+			''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ARMIdentifier As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ARMIdentifier)
+				End Get
+			End Property
+			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentified'/>.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ARMVersion As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ARMVersion)
+				End Get
+			End Property
+			''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
+			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+			Public Shared ReadOnly Property RecordVersion As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.RecordVersion)
+				End Get
+			End Property
+			''' <summary>The Object Type is used to distinguish between different types of objects within the IIM.</summary>
+			''' <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see='LanguageIdentifier'/>)</remarks>
+			Public Shared ReadOnly Property ObjectTypeReference As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectTypeReference)
+				End Get
+			End Property
+			''' <summary>The Object Attribute defines the nature of the object independent of the Subject.</summary>
+			''' <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see='LanguageIdentifier'/>)</remarks>
+			Public Shared ReadOnly Property ObjectAttributeReference As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectAttributeReference)
+				End Get
+			End Property
+			''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
+			Public Shared ReadOnly Property EditStatus As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.EditStatus)
+				End Get
+			End Property
+			''' <summary>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.</summary>
+			Public Shared ReadOnly Property EditorialUpdate As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.EditorialUpdate)
+				End Get
+			End Property
+			''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, ).</summary>
+			''' <remarks>The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</remarks>
+			Public Shared ReadOnly Property Urgency As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Urgency)
+				End Get
+			End Property
+			''' <summary>The Subject Reference is a structured definition of the subject matter.</summary>
+			''' <remarks>It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</remarks>
+			Public Shared ReadOnly Property SubjectReference As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SubjectReference)
+				End Get
+			End Property
+			''' <summary>Identifies the subject of the objectdata in the opinion of the provider.</summary>
+			''' <remarks>A list of categories will be maintained by a regional registry, where available, otherwise by the provider.</remarks>
+			Public Shared ReadOnly Property Category As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Category)
+				End Get
+			End Property
+			''' <summary>Supplemental categories further refine the subject of an objectdata.</summary>
+			''' <remarks>Only a single supplemental category may be contained in each DataSet. A supplemental category may include any of the recognised categories as used in . Otherwise, selection of supplemental categories are left to the provider.</remarks>
+			Public Shared ReadOnly Property SupplementalCategory As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SupplementalCategory)
+				End Get
+			End Property
+			''' <summary>Identifies objectdata that recurs often and predictably.</summary>
+			''' <remarks>Enables users to immediately find or recall such an object.</remarks>
+			Public Shared ReadOnly Property FixtureIdentifier As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.FixtureIdentifier)
+				End Get
+			End Property
+			''' <summary>Used to indicate specific information retrieval words.</summary>
+			''' <remarks>Each keyword uses a single Keywords DataSet. Multiple keywords use multiple Keywords DataSets. It is expected that a provider of various types of data that are related in subject matter uses the same keyword, enabling the receiving system or subsystems to search across all types of data for related material.</remarks>
+			Public Shared ReadOnly Property Keywords As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Keywords)
+				End Get
+			End Property
+			''' <summary>Indicates the code of a country/geographical location referenced by the content of the object.</summary>
+			''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a country, e.g. ships at sea, space, IPTC will assign an appropriate threecharacter code under the provisions of ISO3166 to avoid conflicts. (see Appendix D) .</remarks>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ContentLocationCode As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ContentLocationCode)
+				End Get
+			End Property
+			''' <summary>Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.</summary>
+			''' <remarks>If used in the same object with DataSet , must immediately follow and correspond to it.</remarks>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ContentLocationName As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ContentLocationName)
+				End Get
+			End Property
+			''' <summary>The earliest date the provider intends the object to be used.</summary>
+			Public Shared ReadOnly Property ReleaseDate As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReleaseDate)
+				End Get
+			End Property
+			''' <summary>The earliest time the provider intends the object to be used.</summary>
+			Public Shared ReadOnly Property ReleaseTime As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReleaseTime)
+				End Get
+			End Property
+			''' <summary>The latest date the provider or owner intends the objectdata to be used.</summary>
+			Public Shared ReadOnly Property ExpirationDate As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ExpirationDate)
+				End Get
+			End Property
+			''' <summary>The latest time the provider or owner intends the objectdata to be used.</summary>
+			Public Shared ReadOnly Property ExpirationTime As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ExpirationTime)
+				End Get
+			End Property
+			''' <summary>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</summary>
+			Public Shared ReadOnly Property SpecialInstructions As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SpecialInstructions)
+				End Get
+			End Property
+			''' <summary>Indicates the type of action that this object provides to a previous object.</summary>
+			''' <remarks>The link to the previous object is made using the (DataSets 1:120 () and 1:122 ()), according to the practices of the provider.</remarks>
+			Public Shared ReadOnly Property ActionAdvised As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ActionAdvised)
+				End Get
+			End Property
+			''' <summary>Identifies the Service Identifier of a prior envelope to which the current object refers.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ReferenceService As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReferenceService)
+				End Get
+			End Property
+			''' <summary>Identifies the date of a prior envelope to which the current object refers.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ReferenceDate As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReferenceDate)
+				End Get
+			End Property
+			''' <summary>Identifies the Envelope Number of a prior envelope to which the current object refers.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ReferenceNumber As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReferenceNumber)
+				End Get
+			End Property
+			''' <summary>The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.</summary>
+			''' <remarks>Thus a photo taken during the American Civil War would carry a creation date during that epoch (1861-1865) rather than the date the photo was digitised for archiving.</remarks>
+			Public Shared ReadOnly Property DateCreated As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.DateCreated)
+				End Get
+			End Property
+			''' <summary>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</summary>
+			''' <remarks>Where the time cannot be precisely determined, the closest approximation should be used.</remarks>
+			Public Shared ReadOnly Property TimeCreated As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.TimeCreated)
+				End Get
+			End Property
+			''' <summary>The date the digital representation of the objectdata was created.</summary>
+			''' <remarks>Thus a photo taken during the American Civil War would carry a Digital Creation Date within the past several years rather than the date where the image was captured on film, glass plate or other substrate during that epoch (1861-1865).</remarks>
+			Public Shared ReadOnly Property DigitalCreationDate As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.DigitalCreationDate)
+				End Get
+			End Property
+			''' <summary>The time the digital representation of the objectdata was created.</summary>
+			Public Shared ReadOnly Property DigitalCreationTime As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.DigitalCreationTime)
+				End Get
+			End Property
+			''' <summary>Identifies the type of program used to originate the objectdata.</summary>
+			''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
+			Public Shared ReadOnly Property OriginatingProgram As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.OriginatingProgram)
+				End Get
+			End Property
+			''' <summary>Identifies the type of program used to originate the objectdata.</summary>
+			''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
+			Public Shared ReadOnly Property ProgramVersion As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ProgramVersion)
+				End Get
+			End Property
+			''' <summary>Virtually only used in North America.</summary>
+			Public Shared ReadOnly Property ObjectCycle As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectCycle)
+				End Get
+			End Property
+			''' <summary>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ByLine As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ByLine)
+				End Get
+			End Property
+			''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
+			''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ByLineTitle As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ByLineTitle)
+				End Get
+			End Property
+			''' <summary>Identifies city of objectdata origin according to guidelines established by the provider.</summary>
+			Public Shared ReadOnly Property City As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.City)
+				End Get
+			End Property
+			''' <summary>Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.</summary>
+			Public Shared ReadOnly Property SubLocation As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SubLocation)
+				End Get
+			End Property
+			''' <summary>Identifies Province/State of origin according to guidelines established by the provider.</summary>
+			Public Shared ReadOnly Property ProvinceState As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ProvinceState)
+				End Get
+			End Property
+			''' <summary>Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.</summary>
+			''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a new country, e.g. ships at sea, space, IPTC will assign an appropriate three-character code under the provisions of ISO3166 to avoid conflicts. (see Appendix D)</remarks>
+			Public Shared ReadOnly Property CountryPrimaryLocationCode As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CountryPrimaryLocationCode)
+				End Get
+			End Property
+			''' <summary>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</summary>
+			Public Shared ReadOnly Property CountryPrimaryLocationName As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CountryPrimaryLocationName)
+				End Get
+			End Property
+			''' <summary>A code representing the location of original transmission according to practices of the provider.</summary>
+			''' <remarks>Examples: BER-5, PAR-12-11-01</remarks>
+			Public Shared ReadOnly Property OriginalTransmissionReference As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.OriginalTransmissionReference)
+				End Get
+			End Property
+			''' <summary>A publishable entry providing a synopsis of the contents of the objectdata.</summary>
+			Public Shared ReadOnly Property Headline As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Headline)
+				End Get
+			End Property
+			''' <summary>Identifies the provider of the objectdata, not necessarily the owner/creator.</summary>
+			Public Shared ReadOnly Property Credit As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Credit)
+				End Get
+			End Property
+			''' <summary>Identifies the original owner of the intellectual content of the objectdata.</summary>
+			''' <remarks>This could be an agency, a member of an agency or an individual.</remarks>
+			Public Shared ReadOnly Property Source As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Source)
+				End Get
+			End Property
+			''' <summary>Contains any necessary copyright notice.</summary>
+			Public Shared ReadOnly Property CopyrightNotice As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CopyrightNotice)
+				End Get
+			End Property
+			''' <summary>Identifies the person or organisation which can provide further background information on the objectdata.</summary>
+			Public Shared ReadOnly Property Contact As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Contact)
+				End Get
+			End Property
+			''' <summary>A textual description of the objectdata, particularly used where the object is not text.</summary>
+			Public Shared ReadOnly Property CaptionAbstract As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CaptionAbstract)
+				End Get
+			End Property
+			''' <summary>Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.</summary>
+			Public Shared ReadOnly Property WriterEditor As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.WriterEditor)
+				End Get
+			End Property
+			''' <summary>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</summary>
+			''' <remarks>Contains the rasterized objectdata description and is used where characters that have not been coded are required for the caption.</remarks>
+			Public Shared ReadOnly Property RasterizedeCaption As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.RasterizedeCaption)
+				End Get
+			End Property
+			''' <summary>Image Type</summary>
+			Public Shared ReadOnly Property ImageType As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ImageType)
+				End Get
+			End Property
+			''' <summary>Indicates the layout of the image area.</summary>
+			Public Shared ReadOnly Property ImageOrientation As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ImageOrientation)
+				End Get
+			End Property
+			''' <summary>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</summary>
+			''' <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
+			Public Shared ReadOnly Property LanguageIdentifier As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.LanguageIdentifier)
+				End Get
+			End Property
+			''' <summary>Type of audio in objectdata</summary>
+			''' <remarks>Note: When '0' or 'T' is used, the only authorised combination is "0T". This is the mechanism for sending a caption either to supplement an audio cut sent previously without a caption or to correct a previously sent caption.</remarks>
+			Public Shared ReadOnly Property AudioType As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioType)
+				End Get
+			End Property
+			''' <summary>Sampling rate, representing the sampling rate in hertz (Hz).</summary>
+			Public Shared ReadOnly Property AudioSamplingRate As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioSamplingRate)
+				End Get
+			End Property
+			''' <summary>The number of bits in each audio sample.</summary>
+			Public Shared ReadOnly Property AudioSamplingResolution As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioSamplingResolution)
+				End Get
+			End Property
+			''' <summary>The running time of an audio objectdata when played back at the speed at which it was recorded.</summary>
+			Public Shared ReadOnly Property AudioDuration As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioDuration)
+				End Get
+			End Property
+			''' <summary>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</summary>
+			''' <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
+			Public Shared ReadOnly Property AudioOutcue As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioOutcue)
+				End Get
+			End Property
+			''' <summary>The file format of the ObjectData Preview.</summary>
+			''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ObjectDataPreviewFileFormat As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewFileFormat)
+				End Get
+			End Property
+			''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+			''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ObjectDataPreviewFileFormatVersion As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewFileFormatVersion)
+				End Get
+			End Property
+			''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
+			<EditorBrowsable(EditorBrowsableState.Advanced)> _
+			Public Shared ReadOnly Property ObjectDataPreviewData As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewData)
+				End Get
+			End Property
+			''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
+			Public Shared ReadOnly Property SizeMode As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.SizeMode)
+				End Get
+			End Property
+			''' <summary>The maximum size for the following Subfile DataSet(s).</summary>
+			''' <remarks>The largest number is not defined, but programmers should provide at least for the largest binary number contained in four octets taken together. If the entire object is to be transferred together within a single DataSet 8:10, the number equals the size of the object.</remarks>
+			Public Shared ReadOnly Property MaxSubfileSize As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.MaxSubfileSize)
+				End Get
+			End Property
+			''' <summary>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</summary>
+			''' <remarks>Mandatory if DataSet has value '1' and not allowed if DataSet has value '0'.</remarks>
+			Public Shared ReadOnly Property ObjectDataSizeAnnounced As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.ObjectDataSizeAnnounced)
+				End Get
+			End Property
+			''' <summary>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</summary>
+			Public Shared ReadOnly Property MaximumObjectDataSize As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.MaximumObjectDataSize)
+				End Get
+			End Property
+			''' <summary>Subfile DataSet containing the objectdata itself.</summary>
+			''' <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
+			Public Shared ReadOnly Property Subfile As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.ObjectDataRecord, ObjectDataRecordtags.Subfile)
+				End Get
+			End Property
+			''' <summary>Total size of the objectdata, in octets, without tags.</summary>
+			''' <remarks>This number should equal the number in DataSet if the size of the objectdata is known and has been provided.</remarks>
+			Public Shared ReadOnly Property ConfirmedObjectDataSize As DataSetIdentification
+				Get
+					Return New DataSetIdentification(RecordNumbers.PostObjectDataDescriptorRecord, PostObjectDataDescriptorRecordtags.ConfirmedObjectDataSize)
+				End Get
+			End Property
+			''' <summary>Returns all known data sets</summary>
+			''' <param name="Hidden">Returns also datasets that are within groups</param>
+			Public Shared Function KnownDataSets(Optional ByVal Hidden As Boolean = False) As DataSetIdentification()
+				If Hidden Then
+					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, ARMIdentifier, ARMVersion, RecordVersion, ObjectTypeReference, ObjectAttributeReference, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ContentLocationCode, ContentLocationName, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, ReferenceService, ReferenceDate, ReferenceNumber, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, ByLine, ByLineTitle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, ObjectDataPreviewFileFormat, ObjectDataPreviewFileFormatVersion, ObjectDataPreviewData, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
+				Else
+					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, RecordVersion, ObjectTypeReference, ObjectAttributeReference, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
+				End If
+			End Function
+		End Structure
 #End Region
 #Region "Enums"
-			''' <summary>Possible values of</summary>
+		''' <summary>Possible values of</summary>
 		<Restrict(True)> Public Enum AdvisedActions As Byte
 			''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
 			''' <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
@@ -299,19 +816,19 @@ Namespace DrawingT.MetadataT
 			''' <summary>Object Reference. Signifies that the provider wants to make reference to objectdata in a different envelope.</summary>
 			<FieldDisplayName("Object Reference")> ObjectReference = 4
 		End Enum
-			''' <summary>Abstract Relation Methods Identifiers</summary>
+		''' <summary>Abstract Relation Methods Identifiers</summary>
 		<Restrict(True)> <CLSCompliant(False)> Public Enum ARMMethods As UShort
 			''' <summary>Using DataSets 2:45, 2:47 and 2:50 (<see cref='ReferenceService'/>, <see cref='ReferenceDate'/> and <see cref='ReferenceNumber'/>)</summary>
 			<FieldDisplayName("Method 1 (Reference service, date, number)")> IPTCMethod1 = 1
 			''' <summary>Using DataSet 1:100 (<see cref='UNO'/>)</summary>
 			<FieldDisplayName("Method 2 (UNO)")> IPTCMethod2 = 2
 		End Enum
-			''' <summary>Abstract Relation Method Versions</summary>
+		''' <summary>Abstract Relation Method Versions</summary>
 		<Restrict(True)> <CLSCompliant(False)> Public Enum ARMVersions As UShort
 			''' <summary>The only ARM version</summary>
 			<FieldDisplayName("Version 1")> ARM1 = 1
 		End Enum
-			''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business & Finnance)</summary>
+		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business & Finnance)</summary>
 		<Restrict(True)> Public Enum EconomySubjectDetail As Integer
 			''' <summary>Arable Farming</summary>
 			<FieldDisplayName("Arable Farming")> ArableFarming = 04001001
@@ -514,12 +1031,12 @@ Namespace DrawingT.MetadataT
 			''' <summary>Waterway &amp; Maritime Transport</summary>
 			<FieldDisplayName("Waterway & Maritime Transport")> WaterwayAndMaritimeTransport = 04015004
 		End Enum
-			''' <summary>Values for</summary>
+		''' <summary>Values for</summary>
 		<Restrict(True)> Public Enum EditorialUpdateValues As Byte
 			''' <summary>Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - <see cref='LanguageIdentifier'/>).</summary>
 			<FieldDisplayName("Additional language")> AdditionalLanguage = 1
 		End Enum
-			''' <summary>Registered file formats by IPTC and NAA</summary>
+		''' <summary>Registered file formats by IPTC and NAA</summary>
 		<Restrict(True)> <CLSCompliant(False)> Public Enum FileFormats As UShort
 			''' <summary>No Object Data</summary>
 			<FieldDisplayName("No Object Data")> NoObjectData = 0
@@ -582,7 +1099,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Corel Draw [*.CDR]</summary>
 			<FieldDisplayName("Corel Draw")> CorelDraw = 29
 		End Enum
-			''' <summary>File format version registered for NAA and IPTC</summary>
+		''' <summary>File format version registered for NAA and IPTC</summary>
 		<Restrict(True)> <CLSCompliant(False)> Public Enum FileFormatVersions As UShort
 			''' <summary>Version 1 for FileFormat <see cref="FileFormats.NoObjectData"/></summary>
 			<FieldDisplayName("1 (No Object Data)")> V0 = 0
@@ -595,7 +1112,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Version 4 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and <see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for <see cref="FileFormats.Freehand"/></summary>
 			<FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recomended Message Format), 5.5 (Freehand)")> V4 = 4
 		End Enum
-			''' <summary>Number of components in image and special meanings of some numbers</summary>
+		''' <summary>Number of components in image and special meanings of some numbers</summary>
 		<Restrict(True)> Public Enum ImageTypeComponents As Byte
 			''' <summary>Record 2 caption for specific image</summary>
 			<FieldDisplayName("NoObjectData")> NoObjectData = 0
@@ -610,7 +1127,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>the objectdata contains supplementary data to an image</summary>
 			<FieldDisplayName("Suplementary data")> SuplementaryData = 9
 		End Enum
-			''' <summary>Object Attribute Number abd Object Name relationship</summary>
+		''' <summary>Object Attribute Number abd Object Name relationship</summary>
 		<Restrict(True)> Public Enum ObjectAttributes As Byte
 			''' <summary>Current</summary>
 			<FieldDisplayName("Current")> Current = 01
@@ -657,7 +1174,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Press Release</summary>
 			<FieldDisplayName("Press Release")> PressRelease = 22
 		End Enum
-			''' <summary>Object Type Number and Object Type Name relationship</summary>
+		''' <summary>Object Type Number and Object Type Name relationship</summary>
 		<Restrict(True)> Public Enum ObjectTypes As Byte
 			''' <summary>News</summary>
 			<FieldDisplayName("News")> News = 1
@@ -666,7 +1183,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Advisory</summary>
 			<FieldDisplayName("Advisory")> Advisory = 3
 		End Enum
-			''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
+		''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
 		<Restrict(True)> Public Enum SubjectMatterNumbers As Integer
 			''' <summary>Archaeology</summary>
 			<FieldDisplayName("Archaeology")> Archaeology = 01001000
@@ -1111,7 +1628,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Warnings</summary>
 			<FieldDisplayName("Warnings")> Warnings = 17005000
 		End Enum
-			''' <summary>Subject Reference Number and Subject Name relationship (version IPTC/1)</summary>
+		''' <summary>Subject Reference Number and Subject Name relationship (version IPTC/1)</summary>
 		<Restrict(True)> Public Enum SubjectReferenceNumbers As Integer
 			''' <summary>Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions</summary>
 			<FieldDisplayName("Arts, Culture & Entertainment")> ArtsCultureEntertainment = 01000000
@@ -1150,7 +1667,7 @@ Namespace DrawingT.MetadataT
 		End Enum
 #End Region
 #Region "String enums"
-			''' <summary>The exact type of audio contained in the current objectdata.</summary>
+		''' <summary>The exact type of audio contained in the current objectdata.</summary>
 		<Restrict(True)> Public Enum AudioDataType
 			''' <summary>Actuality</summary>
 			<FieldDisplayName("Actuality")> <XmlEnum("A")> Actuality
@@ -1171,7 +1688,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Wrap</summary>
 			<FieldDisplayName("Wrap")> <XmlEnum("W")> Wrap
 		End Enum
-			''' <summary>Exact content of the current objectdata in terms of colour composition.</summary>
+		''' <summary>Exact content of the current objectdata in terms of colour composition.</summary>
 		<Restrict(True)> Public Enum ImageTypeContents
 			''' <summary>Monochrome</summary>
 			<FieldDisplayName("Monochrome")> <XmlEnum("W")> Monochrome
@@ -1200,7 +1717,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Full colour composite, special sequential</summary>
 			<FieldDisplayName("Special Sequential")> <XmlEnum("S")> SpecialSequential
 		End Enum
-			''' <summary>Information Providers Reference</summary>
+		''' <summary>Information Providers Reference</summary>
 		<Restrict(True)> Public Enum InformationProviders
 			''' <summary>Agence France Presse</summary>
 			<FieldDisplayName("AFP")> <XmlEnum("AFP")> AFP
@@ -1243,8 +1760,8 @@ Namespace DrawingT.MetadataT
 			''' <summary>United Press International</summary>
 			<FieldDisplayName("UPI")> <XmlEnum("UPI")> UPI
 		End Enum
-			''' <summary>ISO 3166-1 alpha-3 codes used by with addition of some spacial codes used there.</summary>
-			''' <remarks>Reserved code elements are codes which, while not ISO 3166-1 codes, are in use for some applications in conjunction with the ISO 3166 codes. The ISO 3166/MA therefore reserves them, so that they are not used for new official ISO 3166 codes, thereby creating conflicts between the standard and those applications.</remarks>
+		''' <summary>ISO 3166-1 alpha-3 codes used by with addition of some spacial codes used there.</summary>
+		''' <remarks>Reserved code elements are codes which, while not ISO 3166-1 codes, are in use for some applications in conjunction with the ISO 3166 codes. The ISO 3166/MA therefore reserves them, so that they are not used for new official ISO 3166 codes, thereby creating conflicts between the standard and those applications.</remarks>
 		<Restrict(True)> Public Enum ISO3166
 			''' <summary>Aruba</summary>
 			<FieldDisplayName("Aruba")> <XmlEnum("ABW")> Aruba
@@ -1763,7 +2280,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Wales</summary>
 			<FieldDisplayName("Wales")> <XmlEnum("XWA")> Wales
 		End Enum
-			''' <summary>Values of</summary>
+		''' <summary>Values of</summary>
 		<Restrict(True)> Public Enum ObjectCycleValues
 			''' <summary>Morning</summary>
 			<FieldDisplayName("morning")> <XmlEnum("a")> Morning
@@ -1772,7 +2289,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Both</summary>
 			<FieldDisplayName("both")> <XmlEnum("b")> Both
 		End Enum
-			''' <summary>Possible orientations of image</summary>
+		''' <summary>Possible orientations of image</summary>
 		<Restrict(True)> Public Enum Orientations
 			''' <summary>Portrait</summary>
 			<FieldDisplayName("Portrait")> <XmlEnum("P")> Portrait
@@ -1781,6 +2298,168 @@ Namespace DrawingT.MetadataT
 			''' <summary>Square</summary>
 			<FieldDisplayName("Square")> <XmlEnum("S")> Square
 		End Enum
+#End Region
+#Region "Tag types"
+		''' <summary>Gets details about tag format by tag record and number</summary>
+		''' <param name="Record">Recor number</param>
+		''' <param name="TagNumber">Number of tag within <paramref name="Record"/></param>
+		''' <exception cref="InvalidEnumArgumentException"><paramref name="Record"/> is not member of <see cref="RecordNumbers"/> -or- <paramref name="TagNumber"/> is not tag within <paramref name="record"/></exception/>
+		Public Shared Function GetTag(ByVal Record As RecordNumbers, TagNumber As Byte) As IPTCTag
+			Select Case Record
+				Case RecordNumbers.Envelope
+					Select Case TagNumber
+						Case EnvelopeTags.ModelVersion : Return New IPTCTag(Number:=0, Record:=1, Name:="ModelVersion", HumanName:="Model Version", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Internal", Description:="A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.", Lock:=True)
+						Case EnvelopeTags.Destination : Return New IPTCTag(Number:=5, Record:=1, Name:="Destination", HumanName:="Destination", Type:=IPTCTypes.GraphicCharacters, Mandatory:=true, Repeatable:=true, Length:=1024, Fixed:=true, Category:="Old IPTC", Description:="This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.", Lock:=True)
+						Case EnvelopeTags.FileFormat : Return New IPTCTag(Number:=20, Record:=1, Name:="FileFormat", HumanName:="File Format", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Old IPTC", Description:="A number representing the file format.", [Enum]:=GetType(FileFormats), Lock:=True)
+						Case EnvelopeTags.FileFormatVersion : Return New IPTCTag(Number:=22, Record:=1, Name:="FileFormatVersion", HumanName:="File Format Version", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Old IPTC", Description:="A binary number representing the particular version of the FileFormat", [Enum]:=GetType(FileFormatVersions), Lock:=True)
+						Case EnvelopeTags.ServiceIdentifier : Return New IPTCTag(Number:=30, Record:=1, Name:="ServiceIdentifier", HumanName:="Service Identifier", Type:=IPTCTypes.GraphicCharacters, Mandatory:=true, Repeatable:=true, Length:=10, Fixed:=true, Category:="Old IPTC", Description:="Identifies the provider and product.", Lock:=True)
+						Case EnvelopeTags.EnvelopeNumber : Return New IPTCTag(Number:=40, Record:=1, Name:="EnvelopeNumber", HumanName:="Envelope Number", Type:=IPTCTypes.NumericChar, Mandatory:=true, Repeatable:=true, Length:=8, Fixed:=true, Category:="Old IPTC", Description:="The characters form a number that will be unique for the date specified in DateSent and for the Service Identifier specified in ServiceIdentifier.", Lock:=True)
+						Case EnvelopeTags.ProductID : Return New IPTCTag(Number:=50, Record:=1, Name:="ProductID", HumanName:="Product I.D.", Type:=IPTCTypes.GraphicCharacters, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Old IPTC", Description:="Allows a provider to identify subsets of its overall service.", Lock:=True)
+						Case EnvelopeTags.EnvelopePriority : Return New IPTCTag(Number:=60, Record:=1, Name:="EnvelopePriority", HumanName:="Envelope Priority", Type:=IPTCTypes.NumericChar, Mandatory:=true, Repeatable:=true, Length:=1, Fixed:=true, Category:="Status", Description:="Specifies the envelope handling priority and not the editorial urgency (see 2:10, Urgency).", Lock:=True)
+						Case EnvelopeTags.DateSent : Return New IPTCTag(Number:=70, Record:=1, Name:="DateSent", HumanName:="Date Sent", Type:=IPTCTypes.CCYYMMDD, Mandatory:=true, Repeatable:=true, Length:=8, Fixed:=true, Category:="Date", Description:="Indicates year, month and day the service sent the material.", Lock:=True)
+						Case EnvelopeTags.TimeSent : Return New IPTCTag(Number:=80, Record:=1, Name:="TimeSent", HumanName:="Time Sent", Type:=IPTCTypes.HHMMSS_HHMM, Mandatory:=true, Repeatable:=true, Length:=11, Fixed:=true, Category:="Date", Description:="This is the time the service sent the material.", Lock:=True)
+						Case EnvelopeTags.CodedCharacterSet : Return New IPTCTag(Number:=90, Record:=1, Name:="CodedCharacterSet", HumanName:="CodedCharacterSet", Type:=IPTCTypes.ByteArray, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Old IPTC", Description:="Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.", Lock:=True)
+						Case EnvelopeTags.UNO : Return New IPTCTag(Number:=100, Record:=1, Name:="UNO", HumanName:="UNO", Type:=IPTCTypes.UNO, Mandatory:=true, Repeatable:=true, Length:=80, Fixed:=true, Category:="Old IPTC", Description:="UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.", Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(EnvelopeTags))
+					End Select
+				Case RecordNumbers.Application
+					Select Case TagNumber
+						Case ApplicationTags.RecordVersion : Return New IPTCTag(Number:=0, Record:=2, Name:="RecordVersion", HumanName:="Record Version", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Internal", Description:="A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.", Lock:=True)
+						Case ApplicationTags.ObjectTypeReference : Return New IPTCTag(Number:=3, Record:=2, Name:="ObjectTypeReference", HumanName:="Object Type Reference", Type:=IPTCTypes.Num2_Str, Mandatory:=true, Repeatable:=true, Length:=67, Fixed:=true, Category:="Category", Description:="The Object Type is used to distinguish between different types of objects within the IIM.", [Enum]:=GetType(ObjectTypes), Lock:=True)
+						Case ApplicationTags.ObjectAttributeReference : Return New IPTCTag(Number:=4, Record:=2, Name:="ObjectAttributeReference", HumanName:="Object Attribute Reference", Type:=IPTCTypes.Num3_Str, Mandatory:=true, Repeatable:=true, Length:=68, Fixed:=true, Category:="Category", Description:="The Object Attribute defines the nature of the object independent of the Subject.", [Enum]:=GetType(ObjectAttributes), Lock:=True)
+						Case ApplicationTags.EditStatus : Return New IPTCTag(Number:=7, Record:=2, Name:="EditStatus", HumanName:="Edit Status", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=64, Fixed:=true, Category:="Status", Description:="Status of the objectdata, according to the practice of the provider.", Lock:=True)
+						Case ApplicationTags.EditorialUpdate : Return New IPTCTag(Number:=8, Record:=2, Name:="EditorialUpdate", HumanName:="Editorial Update", Type:=IPTCTypes.Enum_NumChar, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Status", Description:="Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.", [Enum]:=GetType(EditorialUpdateValues), Lock:=True)
+						Case ApplicationTags.Urgency : Return New IPTCTag(Number:=10, Record:=2, Name:="Urgency", HumanName:="Urgency", Type:=IPTCTypes.NumericChar, Mandatory:=true, Repeatable:=true, Length:=1, Fixed:=true, Category:="Status", Description:="Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, EnvelopePriority).", Lock:=True)
+						Case ApplicationTags.SubjectReference : Return New IPTCTag(Number:=12, Record:=2, Name:="SubjectReference", HumanName:="Subject Reference", Type:=IPTCTypes.SubjectReference, Mandatory:=true, Repeatable:=true, Length:=236, Fixed:=true, Category:="Old IPTC", Description:="The Subject Reference is a structured definition of the subject matter.", Lock:=True)
+						Case ApplicationTags.Category : Return New IPTCTag(Number:=15, Record:=2, Name:="Category", HumanName:="Category", Type:=IPTCTypes.Alpha, Mandatory:=true, Repeatable:=true, Length:=3, Fixed:=true, Category:="Category", Description:="Identifies the subject of the objectdata in the opinion of the provider.", Lock:=True)
+						Case ApplicationTags.SupplementalCategory : Return New IPTCTag(Number:=20, Record:=2, Name:="SupplementalCategory", HumanName:="Supplemental Category", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Category", Description:="Supplemental categories further refine the subject of an objectdata.", Lock:=True)
+						Case ApplicationTags.FixtureIdentifier : Return New IPTCTag(Number:=22, Record:=2, Name:="FixtureIdentifier", HumanName:="Fixture Identifier", Type:=IPTCTypes.GraphicCharacters, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Category", Description:="Identifies objectdata that recurs often and predictably.", Lock:=True)
+						Case ApplicationTags.Keywords : Return New IPTCTag(Number:=25, Record:=2, Name:="Keywords", HumanName:="Keywords", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=64, Fixed:=true, Category:="Category", Description:="Used to indicate specific information retrieval words.", Lock:=True)
+						Case ApplicationTags.ReleaseDate : Return New IPTCTag(Number:=30, Record:=2, Name:="ReleaseDate", HumanName:="Release Date", Type:=IPTCTypes.CCYYMMDD, Mandatory:=true, Repeatable:=true, Length:=8, Fixed:=true, Category:="Date", Description:="The earliest date the provider intends the object to be used.", Lock:=True)
+						Case ApplicationTags.ReleaseTime : Return New IPTCTag(Number:=32, Record:=2, Name:="ReleaseTime", HumanName:="Release Time", Type:=IPTCTypes.HHMMSS_HHMM, Mandatory:=true, Repeatable:=true, Length:=11, Fixed:=true, Category:="Date", Description:="The earliest time the provider intends the object to be used.", Lock:=True)
+						Case ApplicationTags.ExpirationDate : Return New IPTCTag(Number:=37, Record:=2, Name:="ExpirationDate", HumanName:="Expiration Date", Type:=IPTCTypes.CCYYMMDD, Mandatory:=true, Repeatable:=true, Length:=8, Fixed:=true, Category:="Date", Description:="The latest date the provider or owner intends the objectdata to be used.", Lock:=True)
+						Case ApplicationTags.ExpirationTime : Return New IPTCTag(Number:=38, Record:=2, Name:="ExpirationTime", HumanName:="Expiration Time", Type:=IPTCTypes.HHMMSS_HHMM, Mandatory:=true, Repeatable:=true, Length:=11, Fixed:=true, Category:="Date", Description:="The latest time the provider or owner intends the objectdata to be used.", Lock:=True)
+						Case ApplicationTags.SpecialInstructions : Return New IPTCTag(Number:=40, Record:=2, Name:="SpecialInstructions", HumanName:="Special Instructions", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=256, Fixed:=true, Category:="Other", Description:="Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.", Lock:=True)
+						Case ApplicationTags.ActionAdvised : Return New IPTCTag(Number:=42, Record:=2, Name:="ActionAdvised", HumanName:="Action Advised", Type:=IPTCTypes.Enum_NumChar, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Other", Description:="Indicates the type of action that this object provides to a previous object.", [Enum]:=GetType(AdvisedActions), Lock:=True)
+						Case ApplicationTags.DateCreated : Return New IPTCTag(Number:=55, Record:=2, Name:="DateCreated", HumanName:="Date Created", Type:=IPTCTypes.CCYYMMDDommitable, Mandatory:=true, Repeatable:=true, Length:=8, Fixed:=true, Category:="Date", Description:="The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.", Lock:=True)
+						Case ApplicationTags.TimeCreated : Return New IPTCTag(Number:=60, Record:=2, Name:="TimeCreated", HumanName:="Time Created", Type:=IPTCTypes.HHMMSS_HHMM, Mandatory:=true, Repeatable:=true, Length:=11, Fixed:=true, Category:="Date", Description:="The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.", Lock:=True)
+						Case ApplicationTags.DigitalCreationDate : Return New IPTCTag(Number:=62, Record:=2, Name:="DigitalCreationDate", HumanName:="Digital Creation Date", Type:=IPTCTypes.CCYYMMDD, Mandatory:=true, Repeatable:=true, Length:=8, Fixed:=true, Category:="Date", Description:="The date the digital representation of the objectdata was created.", Lock:=True)
+						Case ApplicationTags.DigitalCreationTime : Return New IPTCTag(Number:=63, Record:=2, Name:="DigitalCreationTime", HumanName:="Digital Creation Time", Type:=IPTCTypes.HHMMSS_HHMM, Mandatory:=true, Repeatable:=true, Length:=11, Fixed:=true, Category:="Date", Description:="The time the digital representation of the objectdata was created.", Lock:=True)
+						Case ApplicationTags.OriginatingProgram : Return New IPTCTag(Number:=65, Record:=2, Name:="OriginatingProgram", HumanName:="Originating Program", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Other", Description:="Identifies the type of program used to originate the objectdata.", Lock:=True)
+						Case ApplicationTags.ProgramVersion : Return New IPTCTag(Number:=70, Record:=2, Name:="ProgramVersion", HumanName:="Program Version", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=10, Fixed:=true, Category:="Other", Description:="Identifies the type of program used to originate the objectdata.", Lock:=True)
+						Case ApplicationTags.ObjectCycle : Return New IPTCTag(Number:=75, Record:=2, Name:="ObjectCycle", HumanName:="Object Cycle", Type:=IPTCTypes.StringEnum, Mandatory:=true, Repeatable:=true, Length:=1, Fixed:=true, Category:="Status", Description:="Virtually only used in North America.", [Enum]:=GetType(ObjectCycleValues), Lock:=True)
+						Case ApplicationTags.City : Return New IPTCTag(Number:=90, Record:=2, Name:="City", HumanName:="City", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Location", Description:="Identifies city of objectdata origin according to guidelines established by the provider.", Lock:=True)
+						Case ApplicationTags.SubLocation : Return New IPTCTag(Number:=92, Record:=2, Name:="SubLocation", HumanName:="Sublocation", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Location", Description:="Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.", Lock:=True)
+						Case ApplicationTags.ProvinceState : Return New IPTCTag(Number:=95, Record:=2, Name:="ProvinceState", HumanName:="Province/State", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Location", Description:="Identifies Province/State of origin according to guidelines established by the provider.", Lock:=True)
+						Case ApplicationTags.CountryPrimaryLocationCode : Return New IPTCTag(Number:=100, Record:=2, Name:="CountryPrimaryLocationCode", HumanName:="Country/Primary Location Code", Type:=IPTCTypes.StringEnum, Mandatory:=true, Repeatable:=true, Length:=3, Fixed:=true, Category:="Location", Description:="Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.", [Enum]:=GetType(ISO3166), Lock:=True)
+						Case ApplicationTags.CountryPrimaryLocationName : Return New IPTCTag(Number:=101, Record:=2, Name:="CountryPrimaryLocationName", HumanName:="Country/Primary Location Name", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=64, Fixed:=true, Category:="Location", Description:="Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.", Lock:=True)
+						Case ApplicationTags.OriginalTransmissionReference : Return New IPTCTag(Number:=103, Record:=2, Name:="OriginalTransmissionReference", HumanName:="Original Transmission Refrence", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Location", Description:="A code representing the location of original transmission according to practices of the provider.", Lock:=True)
+						Case ApplicationTags.Headline : Return New IPTCTag(Number:=105, Record:=2, Name:="Headline", HumanName:="Headline", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=256, Fixed:=true, Category:="Title", Description:="A publishable entry providing a synopsis of the contents of the objectdata.", Lock:=True)
+						Case ApplicationTags.Credit : Return New IPTCTag(Number:=110, Record:=2, Name:="Credit", HumanName:="Credit", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Author", Description:="Identifies the provider of the objectdata, not necessarily the owner/creator.", Lock:=True)
+						Case ApplicationTags.Source : Return New IPTCTag(Number:=115, Record:=2, Name:="Source", HumanName:="Source", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Author", Description:="Identifies the original owner of the intellectual content of the objectdata.", Lock:=True)
+						Case ApplicationTags.CopyrightNotice : Return New IPTCTag(Number:=116, Record:=2, Name:="CopyrightNotice", HumanName:="Copyright Notice", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=128, Fixed:=true, Category:="Author", Description:="Contains any necessary copyright notice.", Lock:=True)
+						Case ApplicationTags.Contact : Return New IPTCTag(Number:=118, Record:=2, Name:="Contact", HumanName:="Contact", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=128, Fixed:=true, Category:="Author", Description:="Identifies the person or organisation which can provide further background information on the objectdata.", Lock:=True)
+						Case ApplicationTags.CaptionAbstract : Return New IPTCTag(Number:=120, Record:=2, Name:="CaptionAbstract", HumanName:="Caption/Abstract", Type:=IPTCTypes.Text, Mandatory:=true, Repeatable:=true, Length:=2000, Fixed:=true, Category:="Title", Description:="A textual description of the objectdata, particularly used where the object is not text.", Lock:=True)
+						Case ApplicationTags.WriterEditor : Return New IPTCTag(Number:=122, Record:=2, Name:="WriterEditor", HumanName:="Writer/Editor", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=32, Fixed:=true, Category:="Author", Description:="Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.", Lock:=True)
+						Case ApplicationTags.RasterizedeCaption : Return New IPTCTag(Number:=125, Record:=2, Name:="RasterizedeCaption", HumanName:="Rasterized Caption", Type:=IPTCTypes.BW460, Mandatory:=true, Repeatable:=true, Length:=7360, Fixed:=true, Category:="Title", Description:="Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.", Lock:=True)
+						Case ApplicationTags.ImageType : Return New IPTCTag(Number:=130, Record:=2, Name:="ImageType", HumanName:="Image Type", Type:=IPTCTypes.ImageType, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Image", Description:="Image Type", Lock:=True)
+						Case ApplicationTags.ImageOrientation : Return New IPTCTag(Number:=131, Record:=2, Name:="ImageOrientation", HumanName:="Image Orientation", Type:=IPTCTypes.StringEnum, Mandatory:=true, Repeatable:=true, Length:=1, Fixed:=true, Category:="Image", Description:="Indicates the layout of the image area.", [Enum]:=GetType(Orientations), Lock:=True)
+						Case ApplicationTags.LanguageIdentifier : Return New IPTCTag(Number:=135, Record:=2, Name:="LanguageIdentifier", HumanName:="Language Identifier", Type:=IPTCTypes.Alpha, Mandatory:=true, Repeatable:=true, Length:=135, Fixed:=true, Category:="Other", Description:="Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.", Lock:=True)
+						Case ApplicationTags.AudioType : Return New IPTCTag(Number:=150, Record:=2, Name:="AudioType", HumanName:="Audio Type", Type:=IPTCTypes.AudioType, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Audio", Description:="Type of audio in objectdata", Lock:=True)
+						Case ApplicationTags.AudioSamplingRate : Return New IPTCTag(Number:=151, Record:=2, Name:="AudioSamplingRate", HumanName:="Audio Sampling Rate", Type:=IPTCTypes.NumericChar, Mandatory:=true, Repeatable:=true, Length:=6, Fixed:=true, Category:="Audio", Description:="Sampling rate, representing the sampling rate in hertz (Hz).", Lock:=True)
+						Case ApplicationTags.AudioSamplingResolution : Return New IPTCTag(Number:=152, Record:=2, Name:="AudioSamplingResolution", HumanName:="Audio Sampling Resolution", Type:=IPTCTypes.NumericChar, Mandatory:=true, Repeatable:=true, Length:=2, Fixed:=true, Category:="Audio", Description:="The number of bits in each audio sample.", Lock:=True)
+						Case ApplicationTags.AudioDuration : Return New IPTCTag(Number:=153, Record:=2, Name:="AudioDuration", HumanName:="Audio Duration", Type:=IPTCTypes.HHMMSS, Mandatory:=true, Repeatable:=true, Length:=6, Fixed:=true, Category:="Audio", Description:="The running time of an audio objectdata when played back at the speed at which it was recorded.", Lock:=True)
+						Case ApplicationTags.AudioOutcue : Return New IPTCTag(Number:=154, Record:=2, Name:="AudioOutcue", HumanName:="Audio Outcue", Type:=IPTCTypes.TextWithSpaces, Mandatory:=true, Repeatable:=true, Length:=64, Fixed:=true, Category:="Audio", Description:="Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.", Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(ApplicationTags))
+					End Select
+				Case RecordNumbers.PreObjectDataDescriptorRecord
+					Select Case TagNumber
+						Case PreObjectDataDescriptorRecordTags.SizeMode : Return New IPTCTag(Number:=10, Record:=7, Name:="SizeMode", HumanName:="Size Mode", Type:=IPTCTypes.Boolean_binary, Mandatory:=true, Repeatable:=true, Length:=1, Fixed:=true, Category:="Embeded object", Description:="The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.", Lock:=True)
+						Case PreObjectDataDescriptorRecordTags.MaxSubfileSize : Return New IPTCTag(Number:=20, Record:=7, Name:="MaxSubfileSize", HumanName:="Max Subfile Size", Type:=IPTCTypes.UnsignedBinaryNumber, Mandatory:=true, Repeatable:=true, Length:=0, Fixed:=true, Category:="Embeded object", Description:="The maximum size for the following Subfile DataSet(s).", Lock:=True)
+						Case PreObjectDataDescriptorRecordTags.ObjectDataSizeAnnounced : Return New IPTCTag(Number:=90, Record:=7, Name:="ObjectDataSizeAnnounced", HumanName:="ObjectData Size Announced", Type:=IPTCTypes.UnsignedBinaryNumber, Mandatory:=true, Repeatable:=true, Length:=0, Fixed:=true, Category:="Embeded object", Description:="A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.", Lock:=True)
+						Case PreObjectDataDescriptorRecordTags.MaximumObjectDataSize : Return New IPTCTag(Number:=95, Record:=7, Name:="MaximumObjectDataSize", HumanName:="Maximum ObjectData Size", Type:=IPTCTypes.UnsignedBinaryNumber, Mandatory:=true, Repeatable:=true, Length:=0, Fixed:=true, Category:="Embeded object", Description:="Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.", Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(PreObjectDataDescriptorRecordTags))
+					End Select
+				Case RecordNumbers.ObjectDataRecord
+					Select Case TagNumber
+						Case ObjectDataRecordTags.Subfile : Return New IPTCTag(Number:=10, Record:=8, Name:="Subfile", HumanName:="Subfile", Type:=IPTCTypes.ByteArray, Mandatory:=true, Repeatable:=true, Length:=0, Fixed:=true, Category:="Embeded object", Description:="Subfile DataSet containing the objectdata itself.", Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(ObjectDataRecordTags))
+					End Select
+				Case RecordNumbers.PostObjectDataDescriptorRecord
+					Select Case TagNumber
+						Case PostObjectDataDescriptorRecordTags.ConfirmedObjectDataSize : Return New IPTCTag(Number:=10, Record:=9, Name:="ConfirmedObjectDataSize", HumanName:="Confirmed ObjectData Size", Type:=IPTCTypes.UnsignedBinaryNumber, Mandatory:=true, Repeatable:=true, Length:=0, Fixed:=true, Category:="Embeded object", Description:="Total size of the objectdata, in octets, without tags.", Lock:=True)
+						Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(PostObjectDataDescriptorRecordTags))
+					End Select
+				Case Else : Throw New InvalidEnumArgumentException("Record",Record,GetType(RecordNumbers))
+			End Select
+		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.Envelope"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="EnvelopeTags"/></exception>
+		Public Shared Function GetTag(ByVal Number As EnvelopeTags) As IPTCTag
+			Return GetTag(RecordNumbers.Envelope, Number)
+		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.Application"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="ApplicationTags"/></exception>
+		Public Shared Function GetTag(ByVal Number As ApplicationTags) As IPTCTag
+			Return GetTag(RecordNumbers.Application, Number)
+		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.PreObjectDataDescriptorRecord"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="PreObjectDataDescriptorRecordTags"/></exception>
+		Public Shared Function GetTag(ByVal Number As PreObjectDataDescriptorRecordTags) As IPTCTag
+			Return GetTag(RecordNumbers.PreObjectDataDescriptorRecord, Number)
+		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.ObjectDataRecord"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="ObjectDataRecordTags"/></exception>
+		Public Shared Function GetTag(ByVal Number As ObjectDataRecordTags) As IPTCTag
+			Return GetTag(RecordNumbers.ObjectDataRecord, Number)
+		End Function
+		''' <summary>Get details about tag format for tag from record <see cref="RecordNumbers.PostObjectDataDescriptorRecord"/></summary>
+		''' <param name="Number">Number of tag within record</param>		''' <exception cref="InvalidEnumargumentException"><paramref name="Number"/> is not member of <see cref="PostObjectDataDescriptorRecordTags"/></exception>
+		Public Shared Function GetTag(ByVal Number As PostObjectDataDescriptorRecordTags) As IPTCTag
+			Return GetTag(RecordNumbers.PostObjectDataDescriptorRecord, Number)
+		End Function
+#End Region
+#Region "Groups"
+		''' <summary>Groups of tags</summary>
+		Public Enum Groups
+			''' <summary>Abstract Relation Method</summary>
+			<Category("ARM")> <FieldDisplayName("ARM")> ARM
+			''' <summary>Country/geographical location referenced by the content of the object</summary>
+			<Category("Content Location")> <FieldDisplayName("Content Location")> ContentLocation
+			''' <summary>Identifies a prior envelope to which the current object refers.</summary>
+			<Category("Reference")> <FieldDisplayName("Reference")> Reference
+			''' <summary>Creator of the object data</summary>
+			<Category("By-line")> <FieldDisplayName("By-line")> ByLine
+			''' <summary>Preview of embeded object</summary>
+			<Category("ObjectData Preview")> <FieldDisplayName("ObjectData Preview")> ObjectDataPreview
+		End Enum
+		''' <summary>Gets information about known group of IPTC tags</summary>
+		''' <param name="Group">Code of group to get information about</param>
+		Public Shared Function GetGroup(ByVal Group As Groups) As GroupInfo
+			Select Case Group
+				Case Groups.ARM : Return New GroupInfo("ARM", "ARM", Groups.ARM, GetType(ARMGroup), "Old IPTC", "Abstract Relation Method", true, true, GetTag(RecordNumbers.Envelope, EnvelopeTags.ARMIdentifier), GetTag(RecordNumbers.Envelope, EnvelopeTags.ARMVersion))
+				Case Groups.ContentLocation : Return New GroupInfo("ContentLocation", "ContentLocation", Groups.ContentLocation, GetType(ContentLocationGroup), "Location", "Country/geographical location referenced by the content of the object", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ContentLocationCode), GetTag(RecordNumbers.Application, ApplicationTags.ContentLocationName))
+				Case Groups.Reference : Return New GroupInfo("Reference", "Reference", Groups.Reference, GetType(ReferenceGroup), "Old IPTC", "Identifies a prior envelope to which the current object refers.", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ReferenceService), GetTag(RecordNumbers.Application, ApplicationTags.ReferenceDate), GetTag(RecordNumbers.Application, ApplicationTags.ReferenceNumber))
+				Case Groups.ByLine : Return New GroupInfo("ByLine", "ByLine", Groups.ByLine, GetType(ByLineGroup), "Author", "Creator of the object data", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ByLine), GetTag(RecordNumbers.Application, ApplicationTags.ByLineTitle))
+				Case Groups.ObjectDataPreview : Return New GroupInfo("ObjectDataPreview", "ObjectDataPreview", Groups.ObjectDataPreview, GetType(ObjectDataPreviewGroup), "Embeded object", "Preview of embeded object", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ObjectDataPreviewFileFormat), GetTag(RecordNumbers.Application, ApplicationTags.ObjectDataPreviewFileFormatVersion), GetTag(RecordNumbers.Application, ApplicationTags.ObjectDataPreviewData))
+				Case Else : Throw New InvalidEnumArgumentException("Group", Group, GetType(Groups))
+			End Select
+		End Function
+		Partial Public Class ARMGroup : Inherits Group
+			'TODO: Properties and CTor
+		End Class
+		Partial Public Class ContentLocationGroup : Inherits Group
+			'TODO: Properties and CTor
+		End Class
+		Partial Public Class ReferenceGroup : Inherits Group
+			'TODO: Properties and CTor
+		End Class
+		Partial Public Class ByLineGroup : Inherits Group
+			'TODO: Properties and CTor
+		End Class
+		Partial Public Class ObjectDataPreviewGroup : Inherits Group
+			'TODO: Properties and CTor
+		End Class
 #End Region
 	End Class
 #End If
