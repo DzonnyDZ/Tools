@@ -79,6 +79,7 @@
         <xsl:text>Imports System.ComponentModel&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.ComponentModelT&#xD;&#xA;</xsl:text>
         <xsl:text>Imports System.XML.Serialization&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.DataStructuresT.GenericT&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Generates enums for tags-->
@@ -615,7 +616,7 @@
 
     <!--getenretes underlying type from IPTC type-->
     <!--Returns
-        <x:type type="", verify="", exception="">
+        <x:type type="" verify="" exception="" to-byte="" from-byte="">
     -->
     <xsl:template name="UnderlyingType">
         <xsl:param name="type"/><!--IPTC type-->
@@ -623,29 +624,127 @@
         <xsl:param name="len"/><!--Lenght-->
         <xsl:param name="param"/><!--Reference to parameter for exception XML-doc-->
         <xsl:param name="variable"/><!--name of variable to text-->
+        <xsl:param name="byte-data"/><!--Name of variable where the byte data are stored in-->
         <xsl:element name="type" namespace="x">
             <xsl:choose>
-                <xsl:when test="$type='Enum-binary' or $type='Enum-NumChar' or $type='StringEnum'">
+                <!--Enum-binary-->
+                <xsl:when test="$type='Enum-binary'">
                     <xsl:attribute name="type">
                         <xsl:value-of select="@enum"/>
                     </xsl:attribute>
-                    <!--TODO:verify & exception-->
+                    <xsl:if test="I:Root/I:record/I:enum[@name=$enum]/@restrict">
+                        <xsl:attribute name="verify">
+                            <xsl:text>VerifyNumericEnum(</xsl:text>
+                            <xsl:value-of select="$variable"/>
+                            <xsl:text>)</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="exception">
+                            <xsl:text>''' &lt;exception cref="InvalidEnumArgumentException"></xsl:text>
+                            <xsl:value-of select="$param"/>
+                            <xsl:text> is not member of &lt;see cref="</xsl:text>
+                            <xsl:value-of select="$enum"/>
+                            <xsl:text>/>&lt;/exception></xsl:text>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:attribute name="from-byte">
+                        <xsl:text>UIntFromBytes(</xsl:text>
+                        <xsl:value-of select="len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$byte-data"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="to-byte">
+                        <xsl:text>ToBytes(</xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, CULng(</xsl:text>
+                        <xsl:value-of select="$variable"/>
+                        <xsl:text>))</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
+                <!--Enum-NumChar-->
+                <xsl:when test="$type='Enum-NumChar'">
+                    <xsl:attribute name="type">
+                        <xsl:value-of select="@enum"/>
+                    </xsl:attribute>
+                    <xsl:if test="I:Root/I:record/I:enum[@name=$enum]/@restrict">
+                        <xsl:attribute name="verify">
+                            <xsl:text>VerifyNumericEnum(</xsl:text>
+                            <xsl:value-of select="$variable"/>
+                            <xsl:text>)</xsl:text>
+                        </xsl:attribute>
+                        <xsl:attribute name="exception">
+                            <xsl:text>''' &lt;exception cref="InvalidEnumArgumentException"></xsl:text>
+                            <xsl:value-of select="$param"/>
+                            <xsl:text> is not member of &lt;see cref="</xsl:text>
+                            <xsl:value-of select="$enum"/>
+                            <xsl:text>/>&lt;/exception></xsl:text>
+                        </xsl:attribute>
+                    </xsl:if>
+                    <xsl:attribute name="from-byte">
+                        <xsl:text>NumCharFromBytes(</xsl:text>
+                        <xsl:value-of select="$byte-data"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="to-byte">
+                        <xsl:text>ToBytes(</xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>,CDec(</xsl:text>
+                        <xsl:value-of select="$variable"/>
+                        <xsl:text>))</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <!--StringEnum-->
+                <xsl:when test="$type='StringEnum'">
+                    <!--TODO:-->
+                    <xsl:choose>
+                        <!--Only enumerated values are possible-->
+                        <xsl:when test="I:Root/I:record/I:enum[@name=$enum]/@restrict">
+                            <xsl:attribute name="type">
+                                <xsl:value-of select="@enum"/>
+                            </xsl:attribute>
+                            <xsl:attribute name="verify">
+                                <xsl:text>VerifyNumericEnum(</xsl:text>
+                                <xsl:value-of select="$variable"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="exception">
+                                <xsl:text>''' &lt;exception cref="InvalidEnumArgumentException"></xsl:text>
+                                <xsl:value-of select="$param"/>
+                                <xsl:text> is not member of &lt;see cref="</xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>/>&lt;/exception></xsl:text>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <!--All values are possible-->
+                        <xsl:otherwise>
+                            <xsl:attribute name="type">
+                                <xsl:text>T1orT2(Of </xsl:text>
+                                <xsl:value-of select="@enum"/>
+                                <xsl:text>, String)</xsl:text>
+                            </xsl:attribute>
+                            
+                        </xsl:otherwise>
+                    </xsl:choose>
+                </xsl:when>
+                <!--UnsignedBinaryNumber-->
                 <xsl:when test="$type='UnsignedBinaryNumber'">
                     <xsl:attribute name="type">
                         <xsl:text>ULong</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--Boolean-binary-->
                 <xsl:when test="$type='Boolean-binary'">
                     <xsl:attribute name="type">
                         <xsl:text>Boolean</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--UShort-binary-->
                 <xsl:when test="$type='UShort-binary'">
                     <xsl:attribute name="type">
                         <xsl:text>UShort</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--NumericChar-->
                 <xsl:when test="$type='NumericChar'">
                     <xsl:choose>
                         <xsl:when test="$len=0 or $len>19">
@@ -674,20 +773,38 @@
                             </xsl:attribute>
                         </xsl:when>
                     </xsl:choose>
-                    <!--TODO:verify & exception-->
                 </xsl:when>
-                <xsl:when test="$type='GraphicCharacters' or $type='TextWithSpaces' or $type='Text' or $type='Alpha'">
+                <!--GraphicCharacters-->
+                <xsl:when test="$type='GraphicCharacters'">
                     <xsl:attribute name="type">
                         <xsl:text>String</xsl:text>
                     </xsl:attribute>
-                    <!--TODO:verify & exception-->
                 </xsl:when>
+                <!--TextWithSpaces-->
+                <xsl:when test="$type='TextWithSpaces'">
+                    <xsl:attribute name="type">
+                        <xsl:text>String</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <!--Text-->
+                <xsl:when test="$type='Text'">
+                    <xsl:attribute name="type">
+                        <xsl:text>String</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <!--Alpha-->
+                <xsl:when test="$type='Alpha'">
+                    <xsl:attribute name="type">
+                        <xsl:text>String</xsl:text>
+                    </xsl:attribute>
+                </xsl:when>
+                <!--BW460-->
                 <xsl:when test="$type='BW460'">
                     <xsl:attribute name="type">
                         <xsl:text>Drawing.Bitmap</xsl:text>
                     </xsl:attribute>
-                    <!--TODO:verify & exception-->
                 </xsl:when>
+                <!--CCYYMMDD-->
                 <xsl:when test="$type='CCYYMMDD'">
                     <xsl:attribute name="type">
                         <xsl:text>Date</xsl:text>
@@ -703,53 +820,63 @@
                         <xsl:text>.Day)&#xD;&#xA;</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--CCYYMMDDOmmitable-->
                 <xsl:when test="$type='CCYYMMDDOmmitable'">
                     <xsl:attribute name="type">
                         <xsl:text>OmmitableDate</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--HHMMSS-HHMM-->
                 <xsl:when test="$type='HHMMSS-HHMM'">
                     <xsl:attribute name="type">
                         <xsl:text>Time</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--ByteArray-->
                 <xsl:when test="$type='ByteArray'">
                     <xsl:attribute name="type">
                         <xsl:text>Byte()</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--UNO-->
                 <xsl:when test="$type='UNO'">
                     <xsl:attribute name="type">
                         <xsl:text>UNO</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--Num2-Str-->
                 <xsl:when test="$type='Num2-Str'">
                     <xsl:attribute name="type">
                         <xsl:text>NumStr2</xsl:text>
                     </xsl:attribute>
                     <!--TODO:verify & exception, enum-->
                 </xsl:when>
+                <!--Num3-Str-->
                 <xsl:when test="$type='Num3-Str'">
                     <xsl:attribute name="type">
                         <xsl:text>NumStr3</xsl:text>
                     </xsl:attribute>
                     <!--TODO:verify & exception, enum-->
                 </xsl:when>
+                <!--SubjectReference-->
                 <xsl:when test="$type='SubjectReference'">
                     <xsl:attribute name="type">
                         <xsl:text>SubjectReference</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--ImageType-->
                 <xsl:when test="$type='ImageType'">
                     <xsl:attribute name="type">
                         <xsl:text>ImageType</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--AudioType-->
                 <xsl:when test="$type='AudioType'">
                     <xsl:attribute name="type">
                         <xsl:text>AudioType</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
+                <!--HHMMSS-->
                 <xsl:when test="$type='HHMMSS'">
                     <xsl:attribute name="type">
                         <xsl:text>TimeSpan</xsl:text>
