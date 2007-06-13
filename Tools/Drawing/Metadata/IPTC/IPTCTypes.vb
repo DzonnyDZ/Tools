@@ -232,6 +232,60 @@ Namespace DrawingT.MetadataT
             Public Overrides Function ToString() As String
                 Return String.Format(InvariantCulture, "{0}:{1:00000000}:{2}:{3}:{4}", IPR, SubjectReferenceNumber, SubjectName, SubjectMatterName, SubjectDetailName)
             End Function
+            ''' <summary>CTor</summary>
+            Public Sub New()
+            End Sub
+            ''' <summary>CTor from array of bytes</summary>
+            ''' <param name="Bytes">Bytes to construct new instance from</param>
+            ''' <param name="Encoding">Encoding used to decode names</param>
+            ''' <exception cref="IndexOutOfRangeException">There are more than 5 :-separated parts in <paramref name="Bytes"/></exception>
+            ''' <exception cref="ArgumentException">There are less or more :-separated parts in <paramref name="Bytes"/></exception>
+            Public Sub New(ByVal Bytes As Byte(), ByVal Encoding As System.Text.Encoding)
+                Dim Parts(4) As Pair(Of Integer)
+                Dim LastColon As Integer = -1
+                Dim PartI As Integer = 0
+                For i As Integer = 0 To Bytes.Length - 1
+                    If Bytes(i) = AscW(":"c) Then
+                        Parts(PartI) = New Pair(Of Integer)(LastColon + 1, i - LastColon + 1)
+                        PartI += 1
+                        LastColon = i
+                    End If
+                Next i
+                If PartI <> 5 Then Throw New ArgumentException("SubjectReference must contain exactly of 5 parts")
+                Me.IPR = System.Text.Encoding.ASCII.GetString(Bytes, Parts(0).Value1, Parts(0).Value2)
+                Me.SubjectReferenceNumber = System.Text.Encoding.ASCII.GetString(Bytes, Parts(1).Value1, Parts(1).Value2)
+                If Parts(2).Value2 > 0 Then
+                    Me.SubjectName = Encoding.GetString(Bytes, Parts(2).Value1, Parts(2).Value2)
+                End If
+                If Parts(3).Value2 > 0 Then
+                    Me.SubjectMatterName = Encoding.GetString(Bytes, Parts(3).Value1, Parts(3).Value2)
+                End If
+                If Parts(4).Value2 > 0 Then
+                    Me.SubjectDetailName = Encoding.GetString(Bytes, Parts(4).Value1, Parts(4).Value2)
+                End If
+            End Sub
+            ''' <summary>Serializes current instance into array of bytes</summary>
+            ''' <param name="Encoding">Encoding used to encode names</param>
+            ''' <returns>Array of bytes containing serialization of this instance according to the IPTC standard</returns>
+            ''' <exception cref="InvalidOperationException">Length of any serialized part violates IPTC specification (that is <see cref="IPR"/> must serialize to array of 1÷32 items, <see cref="SubjectReferenceNumber"/> must serialize into array of 8 items and names must serialize into array of 0 to 64 items)</exception>
+            Public Function ToBytes(ByVal Encoding As System.Text.Encoding) As Byte()
+                Dim Bytes(4)() As Byte
+                Bytes(0) = System.Text.Encoding.ASCII.GetBytes(Me.IPR)
+                Bytes(1) = System.Text.Encoding.ASCII.GetBytes(Me.SubjectReferenceNumber.ToString(New String("0"c, 8), InvariantCulture))
+                Bytes(2) = Encoding.GetBytes(Me.SubjectName)
+                Bytes(3) = Encoding.GetBytes(Me.SubjectMatterName)
+                Bytes(4) = Encoding.GetBytes(Me.SubjectDetailName)
+                If Bytes(0).Length > 32 Or Bytes(0).Length < 1 Then Throw New InvalidOperationException("Length of serialized IPR is not within range 1÷32 bytes")
+                If Bytes(1).Length <> 8 Then Throw New InvalidOperationException("Lenght of serialized SubjectreferenceNumber diffrs from 8 bytes")
+                If Bytes(2).Length > 64 OrElse Bytes(3).Length > 64 OrElse Bytes(4).Length > 64 Then Throw New InvalidOperationException("Lenght of serialized name exceeds 64 bytes")
+                Dim arr(Bytes(0).Length + Bytes(1).Length + Bytes(2).Length + Bytes(3).Length + Bytes(4).Length - 1) As Byte
+                Dim CurrPos As Integer = 0
+                For i As Integer = 0 To 4
+                    Bytes(i).CopyTo(arr, CurrPos)
+                    CurrPos += Bytes(i).Length
+                Next i
+                Return arr
+            End Function
         End Class
         ''' <summary>Common base for classes that have the <see cref="WithIPR.IPR"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -241,7 +295,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>Information Provider Reference A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO</summary>            
             ''' <remarks>A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO</remarks>
             ''' <value>A minimum of one and a maximum of 32 octets. A string of graphic characters, except colon ‘:’ solidus ‘/’, asterisk ‘*’ and question mark ‘?’, registered with, and approved by, the IPTC.</value>
-            ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its <see cref="String.Length"/> if more than 32 -or- length of value being set exceeds <see cref="IPRLengthLimit"/></exception>
+            ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its <see cref="String.Length"/> if more than 32 -or- length of value being set exceeds <see cref="IPRLengthLimit"/> -or- value being set contains character with code higher than 127</exception>
             Public Overridable Property IPR() As String
                 Get
                     Return _IPR
@@ -251,6 +305,9 @@ Namespace DrawingT.MetadataT
                     If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException("IPR cannot contain characters *, /, ? and :")
                     If value = "" OrElse value.Length > 32 Then Throw New ArgumentException("IPR must be string with length from 1 to 32 characters")
                     If value.Length > IPRLengthLimit Then Throw New ArgumentException("The lenght of IPR exceeds limit")
+                    For Each ch As Char In value
+                        If AscW(ch) > 127 Then Throw New ArgumentException("IPR text must be encodeable by ASCII")
+                    Next ch
                     _IPR = value
                 End Set
             End Property
@@ -315,6 +372,50 @@ Namespace DrawingT.MetadataT
                 AddHandler _ODE.Clearing, AddressOf ODE_Clearing
                 _ODE.AllowAddCancelableEventsHandlers = False
             End Sub
+            ''' <summary>CTor</summary>
+            ''' <param name="UCD">UNO Creation Date</param>
+            ''' <param name="IPR">Information Provider Reference</param>
+            ''' <param name="ODE">Object Descriptor element</param>
+            ''' <param name="OVI">Object Variant Indicator</param>
+            ''' <exception cref="ArgumentException">
+            ''' <paramref name="IPR"/> contains unallowed characters (white space, *, :, /, ? or control characters or over code 127) -or- <paramref name="IPR"/> set is an empty <see cref="String"/> or its <see cref="String.Length"/> if more than 32 -or- length of <paramref name="IPR"/> exceeds <see cref="IPRLengthLimit"/> -or-
+            ''' <paramref name="OVI"/> contains unallowed characters (white space, *, :, /, ? or control characters or over code 127) -or- <paramref name="OVI"/> is an empty <see cref="String"/> or its lenght is larger than 9
+            ''' </exception>
+            ''' <exception cref="OperationCanceledException">
+            ''' <paramref name="ODE"/> contains and invalid item (containing invalid characters (?,:,?,* or code over 127), too long or an empty string) or accumulated lenght of <see cref="IPR"/> and <see cref="ODE"/> (including <see cref="IPR"/>-<see cref="ODE"/> separator and separators of items of <see cref="ODE"/>) is greater than 61 -or- <paramref name="ODE"/> contains no item</exception>
+            Public Sub New(ByVal UCD As Date, ByVal IPR As String, ByVal ODE As IEnumerable(Of String), ByVal OVI As String)
+                Me.New()
+                Me.UCD = UCD
+                Me.IPR = IPR
+                For Each item As String In ODE
+                    Me.ODE.Add(item)
+                Next item
+                Me.ODE.RemoveAt(0)
+                Me.OVI = OVI
+            End Sub
+            ''' <summary>CTor from byte array</summary>
+            ''' <param name="Bytes">Bytes to initialize new instance by</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="Bytes"/> is null or empty</exception>
+            ''' <exception cref="ArgumentException">IPR or OVI part is invalid: contains unallowed charactes (white space, *, :, /, ? or over code 127), is empty or violates lenght constraint. See <seealso cref="OVI"/> and <seealso cref="IPR"/> for more information</exception>
+            ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in <paramref name="Bytes"/></exception>
+            ''' <exception cref="ArgumentException">UCD component is to short or contains invalid date</exception>
+            ''' <exception cref="InvalidCastException">UCD component contains non-numeric character</exception>
+            ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="ODE"/> for more information.</exception>
+            Public Sub New(ByVal Bytes As Byte())
+                Me.New()
+                If Bytes Is Nothing OrElse Bytes.Length = 0 Then Throw New ArgumentNullException("Bytes")
+                Dim Text As String = System.Text.Encoding.ASCII.GetString(Bytes)
+                Dim Parts As String() = Text.Split(":"c)
+                'UCD:IPR:ODE1/ODE2/ODE3:OVI
+                Me.UCD = New Date(Parts(0).Substring(0, 4), Parts(0).Substring(4, 2), Parts(0).Substring(6, 2))
+                Me.IPR = Parts(1)
+                Dim ODEs As String() = Parts(2).Split("/"c)
+                For Each ODE As String In ODEs
+                    Me.ODE.Add(ODE)
+                Next ODE
+                Me.ODE.RemoveAt(0)
+                Me.OVI = Parts(3)
+            End Sub
             ''' <summary>Block <see cref="ODE"/>'s last item from being removed</summary>
             ''' <param name="sender"><see cref="_ODE"/></param>
             ''' <param name="e">Event parameters</param>
@@ -345,6 +446,12 @@ Namespace DrawingT.MetadataT
                     e.Cancel = True
                     e.CancelMessage = "ODE component cannot be an empty string"
                 Else
+                    For Each ch As Char In e.Item
+                        If AscW(ch) > 127 Then
+                            e.Cancel = True
+                            e.CancelMessage = "ODE component must be encodeable by ASCII"
+                        End If
+                    Next ch
                     Dim Arr() As String
                     If e.NewIndex >= ODE.Count Then
                         ReDim Arr(ODE.Count)
@@ -363,7 +470,7 @@ Namespace DrawingT.MetadataT
             '' <summary>Object Descriptor Element In conjunction with the UCD and the IPR, a string of characters ensuring the uniqueness of the UNO.</summary>            
             ''' <value>A minimum of one and a maximum of 60 minus the number of IPR octets, consisting of graphic characters, except colon ‘:’ asterisk ‘*’ and question mark ‘?’. The provider bears the responsibility for the uniqueness of the ODE within a 24 hour cycle.</value>
             ''' <exception cref="OperationCanceledException">
-            ''' The <see cref="ListWithEvents(Of String).Add"/> and <see cref="ListWithEvents(Of String).Item"/>'s setter can throw an <see cref="OperationCanceledException"/> when trying to add invalid item (containing invalid characters (?,:,?,*), too long or an empty string) or accumulated lenght of <see cref="IPR"/> and <see cref="ODE"/> (including <see cref="IPR"/>-<see cref="ODE"/> separator and separators of items of <see cref="ODE"/>) is greater than 61
+            ''' The <see cref="ListWithEvents(Of String).Add"/> and <see cref="ListWithEvents(Of String).Item"/>'s setter can throw an <see cref="OperationCanceledException"/> when trying to add invalid item (containing invalid characters (?,:,?,* or with code over 127), too long or an empty string) or accumulated lenght of <see cref="IPR"/> and <see cref="ODE"/> (including <see cref="IPR"/>-<see cref="ODE"/> separator and separators of items of <see cref="ODE"/>) is greater than 61
             ''' -and- <see cref="ListWithEvents(Of String).Remove"/> and <see cref="ListWithEvents(Of String).RemoveAt"/> throws <see cref="OperationCanceledException"/> when trying to remove last item from <see cref="ODE"/>
             ''' -and- <see cref="ListWithEvents(Of String).Clear"/> throws <see cref="OperationCanceledException"/> everywhen
             ''' </exception>
@@ -376,7 +483,7 @@ Namespace DrawingT.MetadataT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _OVI As String = "0"c
             ''' <summary>Object Variant Indicator A string of characters indicating technical variants of the object such as partial objects, or changes of file formats, and coded character sets.</summary>             
             ''' <value>A minimum of one and a maximum of 9 octets, consisting of graphic characters, except colon ‘:’, asterisk ‘*’ and question mark ‘?’. To indicate a technical variation of the object as so far identified by the first three elements. Such variation may be required, for instance, for the indication of part of the object, or variations of the file format, or coded character set. The default value is a single ‘0’ (zero) character indicating no further use of the OVI.</value>
-            ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its lenght is larger than 9</exception>
+            ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its lenght is larger than 9 -or- value being set contains character with code higher than 127</exception>
             Public Property OVI() As String
                 Get
                     Return _OVI
@@ -385,6 +492,9 @@ Namespace DrawingT.MetadataT
                     If Not IsGraphicCharacters(value) Then Throw New ArgumentException("Only graphic characters are allowd in OVI")
                     If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException("OVI cannot contain characters *, /, ? and :")
                     If value.Length > 9 OrElse value = "" Then Throw New ArgumentException("OVI must be string with length from 1 to 9")
+                    For Each ch As Char In value
+                        If AscW(ch) > 127 Then Throw New ArgumentException("OVI text must be encodeable by ASCII")
+                    Next ch
                     _OVI = value
                 End Set
             End Property
@@ -405,12 +515,15 @@ Namespace DrawingT.MetadataT
             ''' <summary>If overriden in derived class returns number of digits in number. Should not be zero.</summary>            
             Protected MustOverride ReadOnly Property NumberDigits() As Byte
             ''' <summary>Number in this <see cref="NumStr"/></summary>            
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/></exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             Public Property Number() As Integer
                 Get
                     Return _Number
                 End Get
                 Set(ByVal value As Integer)
-                    If Number.ToString(New String("0"c, NumberDigits)).Length > NumberDigits Then Throw New ArgumentException("Number has to many digits")
+                    If Number.ToString(New String("0"c, NumberDigits), InvariantCulture).Length > NumberDigits Then Throw New ArgumentException("Number has to many digits")
+                    If Number < 0 Then Throw New ArgumentOutOfRangeException("Number cannot be negative")
                     _Number = value
                 End Set
             End Property
@@ -645,7 +758,7 @@ Namespace DrawingT.MetadataT
             ''' <param name="Seconds">Second component</param>
             ''' <param name="HourOffset">Hour component of offset</param>
             ''' <param name="MinuteOffset">Minute component of offset</param>
-            ''' <exception cref="ArgumentNullException"><paramref name="Hours"/> is greater than 23 -or- <paramref name="Minutes"/> or <paramref name="Seconds"/> or <paramref name="MinuteOffset"/> is greater than 59 -or- <paramref name="HourOffset"/> is not within range -13 ÷ +12</exception>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Hours"/> is greater than 23 -or- <paramref name="Minutes"/> or <paramref name="Seconds"/> or <paramref name="MinuteOffset"/> is greater than 59 -or- <paramref name="HourOffset"/> is not within range -13 ÷ +12</exception>
             <CLSCompliant(False)> _
             Public Sub New(ByVal Hours As Byte, ByVal Minutes As Byte, ByVal Seconds As Byte, Optional ByVal HourOffset As SByte = 0, Optional ByVal MinuteOffset As Byte = 0)
                 Me.Hour = Hours
