@@ -106,7 +106,7 @@ Namespace DrawingT.MetadataT
             Return True
         End Function
 #Region "Implementation"
-        ''' <summary>IPTC Subject Reference</summary>
+        ''' <summary>IPTC Subject Reference (IPTC type <see cref="IPTCTypes.SubjectReference"/>)</summary>
         Public Class SubjectReference : Inherits WithIPR
             Private Const SubjRefNMask As Integer = 1000000
             Private Const SubjMatterMask As Integer = 1000
@@ -251,7 +251,7 @@ Namespace DrawingT.MetadataT
                         LastColon = i
                     End If
                 Next i
-                If PartI <> 5 Then Throw New ArgumentException("SubjectReference must contain exactly of 5 parts")
+                If PartI <> 5 Then Throw New ArgumentException("SubjectReference must contain exactly 5 parts")
                 Me.IPR = System.Text.Encoding.ASCII.GetString(Bytes, Parts(0).Value1, Parts(0).Value2)
                 Me.SubjectReferenceNumber = System.Text.Encoding.ASCII.GetString(Bytes, Parts(1).Value1, Parts(1).Value2)
                 If Parts(2).Value2 > 0 Then
@@ -334,7 +334,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>When overriden in derived class gets actual lenght limit for <see cref="IPR"/></summary>
             Protected MustOverride ReadOnly Property IPRLengthLimit() As Byte
         End Class
-        ''' <summary>Represents IPTC UNO unique object identifier</summary>
+        ''' <summary>Represents IPTC UNO unique object identifier (IPTC type <see cref="IPTCTypes.UNO"/>)</summary>
         ''' <remarks>
         ''' <para>The first three elements of the UNO (the UCD, the IPR and the ODE) together are allocated to the editorial content of the object.</para>
         ''' <para>Any technical variants or changes in the presentation of an object, e.g. a picture being presented by a different file format, does not require the allocation of a new ODE but can be indicated by only generating a new OVI.</para>
@@ -517,7 +517,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>Number in this <see cref="NumStr"/></summary>            
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
-            Public Property Number() As Integer
+            Public Overridable Property Number() As Integer
                 Get
                     Return _Number
                 End Get
@@ -528,7 +528,7 @@ Namespace DrawingT.MetadataT
                 End Set
             End Property
             ''' <summary>Text of this <see cref="NumStr"/></summary>                        
-            Public Property [String]() As String
+            Public Overridable Property [String]() As String
                 Get
                     Return _String
                 End Get
@@ -541,7 +541,7 @@ Namespace DrawingT.MetadataT
                 Return String.Format(InvariantCulture, "{0:" & New String("0"c, NumberDigits) & "};{1}", Number, [String])
             End Function
         End Class
-        ''' <summary>Represents combination of 2-digits numer and string</summary>
+        ''' <summary>Represents combination of 2-digits numer and string (IPTC type <see cref="IPTCTypes.Num2_Str"/>)</summary>
         Public Class NumStr2 : Inherits NumStr
             ''' <summary>Number of digits in number</summary>
             ''' <returns>2</returns>
@@ -551,7 +551,73 @@ Namespace DrawingT.MetadataT
                 End Get
             End Property
         End Class
-        ''' <summary>Represents combination of 3-digits numer and string</summary>
+        ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr2"/> with numbers from enum</summary>
+        <CLSCompliant(False)> _
+        Public Class NumStr2(Of T As {IConvertible, Structure}) : Inherits NumStr2
+            ''' <summary>Number in this <see cref="NumStr2(Of T)"/></summary>            
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
+            ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+            Public Overridable Property EnumNumber() As T
+                Get
+                    Return CObj(MyBase.Number)
+                End Get
+                Set(ByVal value As T)
+                    Dim Attrs As Object() = GetType(T).GetCustomAttributes(GetType(RestrictAttribute), True)
+                    If ((Attrs IsNot Nothing AndAlso Attrs.Length > 0 AndAlso DirectCast(Attrs(0), RestrictAttribute).Restrict) OrElse (Attrs Is Nothing OrElse Attrs.Length = 0)) AndAlso Not InEnum(value) Then
+                        Throw New InvalidEnumArgumentException("value", value.ToInt32(InvariantCulture), GetType(T))
+                    End If
+                    MyBase.Number = CObj(value)
+                End Set
+            End Property
+            ''' <summary>Number in this <see cref="NumStr"/></summary>            
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
+            ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Public NotOverridable Overrides Property Number() As Integer
+                Get
+                    Return EnumNumber.ToInt32(InvariantCulture)
+                End Get
+                Set(ByVal value As Integer)
+                    EnumNumber = CObj(Number)
+                End Set
+            End Property
+        End Class
+        ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr3"/> with numbers from enum</summary>
+        <CLSCompliant(False)> _
+        Public Class NumStr3(Of T As {IConvertible, Structure}) : Inherits NumStr2
+            ''' <summary>Number in this <see cref="NumStr3(Of T)"/></summary>            
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
+            ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+            Public Overridable Property EnumNumber() As T
+                Get
+                    Return CObj(MyBase.Number)
+                End Get
+                Set(ByVal value As T)
+                    Dim Attrs As Object() = GetType(T).GetCustomAttributes(GetType(RestrictAttribute), True)
+                    If ((Attrs IsNot Nothing AndAlso Attrs.Length > 0 AndAlso DirectCast(Attrs(0), RestrictAttribute).Restrict) OrElse (Attrs Is Nothing OrElse Attrs.Length = 0)) AndAlso Not InEnum(value) Then
+                        Throw New InvalidEnumArgumentException("value", value.ToInt32(InvariantCulture), GetType(T))
+                    End If
+                    MyBase.Number = CObj(value)
+                End Set
+            End Property
+            ''' <summary>Number in this <see cref="NumStr"/></summary>            
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
+            ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Public NotOverridable Overrides Property Number() As Integer
+                Get
+                    Return EnumNumber.ToInt32(InvariantCulture)
+                End Get
+                Set(ByVal value As Integer)
+                    EnumNumber = CObj(Number)
+                End Set
+            End Property
+        End Class
+        ''' <summary>Represents combination of 3-digits numer and string (IPTC type <see cref="IPTCTypes.Num3_Str"/>)</summary>
         Public Class NumStr3 : Inherits NumStr
             ''' <summary>Number of digits in number</summary>
             ''' <returns>3</returns>
@@ -571,7 +637,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>Type code as character</summary>
             Property CodeString() As Char
         End Interface
-        ''' <summary>Represents date (Year, Month and Day) which's parts can be ommited by setting value to 0</summary>
+        ''' <summary>Represents date (Year, Month and Day) which's parts can be ommited by setting value to 0 (IPTC type <see cref="IPTCTypes.CCYYMMDDOmmitable"/>)</summary>
         ''' <remarks>Date represented by this structure can be invalid (e.g. 31.2.2008)</remarks>
         Public Structure OmmitableDate
             ''' <summary>Contains value of the <see cref="Year"/> property</summary>
@@ -659,7 +725,7 @@ Namespace DrawingT.MetadataT
             End Function
         End Structure
 
-        ''' <summary>Contains time as hours, minutes and seconds and offset to UTC in hours and minutes</summary>
+        ''' <summary>Contains time as hours, minutes and seconds and offset to UTC in hours and minutes (IPTC type <see cref="IPTCTypes.HHMMSS_HHMM"/>)</summary>
         Public Structure Time
             ''' <summary>Contains value of the <see cref="Hour"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Hour As Byte
@@ -803,7 +869,7 @@ Namespace DrawingT.MetadataT
             'TODO:Extract as separate tool
             Return GetType(T).GetField([Enum].GetName(GetType(T), value))
         End Function
-        ''' <summary>IPTC image type</summary>
+        ''' <summary>IPTC image type (IPTC type <see cref="IPTCTypes.ImageType"/>)</summary>
         Public Structure ImageType : Implements IMediaType(Of ImageTypeComponents, ImageTypeContents)
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -856,7 +922,7 @@ Namespace DrawingT.MetadataT
             End Function
         End Structure
 
-        ''' <summary>IPTC audio type</summary>
+        ''' <summary>IPTC audio type (IPTC type <see cref="IPTCTypes.AudioType"/>)</summary>
         Public Structure AudioType : Implements IMediaType(Of Byte, AudioDataType)
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -893,14 +959,14 @@ Namespace DrawingT.MetadataT
                     Return DirectCast(GetConstant(Type).GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)(0), Xml.Serialization.XmlEnumAttribute).Name
                 End Get
                 Set(ByVal value As Char)
-                    For Each Constant As Reflection.FieldInfo In GetType(ImageTypeContents).GetFields()
+                    For Each Constant As Reflection.FieldInfo In GetType(AudioDataType).GetFields()
                         Dim Attrs As Object() = Constant.GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)
                         If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then
                             Type = Constant.GetValue(Nothing)
                             Return
                         End If
                     Next Constant
-                    Throw New ArgumentException(String.Format("{0} cannot be interpreted as ImageTypeContents", value))
+                    Throw New ArgumentException(String.Format("{0} cannot be interpreted as AudioDataType", value))
                 End Set
             End Property
             ''' <summary>String representation in form 0T (components, type)</summary>
@@ -908,6 +974,267 @@ Namespace DrawingT.MetadataT
                 Return String.Format(InvariantCulture, "{0}{1}", Components, TypeCode)
             End Function
         End Structure
+
+        ''' <summary>Common base for all <see cref="StringEnum(Of TEnum)"/>s</summary>
+        Public MustInherit Class StringEnum
+            Implements IT1orT2(Of Decimal, String)
+            ''' <summary>CTor</summary>
+            ''' <remarks>Nobody else can inherit this class</remarks>
+            Friend Sub New()
+            End Sub
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
+            ''' <remarks>Use type-safe <see cref="Clone"/> instead</remarks>
+            <Obsolete("Use type-safe Clone instead")> _
+            Private Function Clone1() As Object Implements System.ICloneable.Clone
+                Return CloneDec()
+            End Function
+            ''' <summary>Swaps values <see cref="Value1"/> and <see cref="Value2"/></summary>            
+            Private Function Swap() As DataStructuresT.GenericT.IPair(Of String, Decimal) Implements DataStructuresT.GenericT.IPair(Of Decimal, String).Swap
+                Return New Pair(Of String, Decimal)(StringValue, DecimalValue)
+            End Function
+            ''' <summary>Gets or sets enumerated value as <see cref="Decimal"/></summary>
+            ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="EnumType"/></exception>
+            Public MustOverride Property DecimalValue() As Decimal Implements DataStructuresT.GenericT.IPair(Of Decimal, String).Value1, DataStructuresT.GenericT.IT1orT2(Of Decimal, String).value1
+            ''' <summary>Gets or sets string value</summary>
+            ''' <exception cref="ArgumentNullException">Value being set is null</exception>
+            Public MustOverride Property StringValue() As String Implements DataStructuresT.GenericT.IPair(Of Decimal, String).Value2, DataStructuresT.GenericT.IT1orT2(Of Decimal, String).value2
+            ''' <summary>Gets type of enumeration derived class contains</summary>
+            Public MustOverride ReadOnly Property EnumType() As Type
+            ''' <summary>Gets value indicating if this instance contains value of specified type</summary>
+            ''' <returns>True oif derived class's <see cref="contains"/> returns true for <paramref name="T"/> or if <paramref name="T"/> is <see cref="Decimal"/> and derived class's <see cref="contains"/> returns true for <see cref="EnumType"/></returns>
+            Private ReadOnly Property containsImpl(ByVal T As System.Type) As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of Decimal, String).contains
+                Get
+                    Return (T.Equals(GetType(Decimal)) AndAlso contains(EnumType)) OrElse contains(T)
+                End Get
+            End Property
+            ''' <summary>Gets value indicating if derived class contains value of givent type</summary>
+            ''' <param name="T">Type of value to be contained</param>
+            ''' <remarks>It can return false for <see cref="Decimal"/> even if <see cref="ContainsEnum"/> returns true</remarks>
+            Public MustOverride ReadOnly Property contains(ByVal T As Type) As Boolean
+            ''' <summary>Gets value indicating if derived class contains enumerated value</summary>
+            Public MustOverride Property ContainsEnum() As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of Decimal, String).contains1
+            ''' <summary>Gets value indicating if derived class contains <see cref="String"/> value</summary>
+            Public MustOverride Property ContainsString() As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of Decimal, String).contains2
+            ''' <summary>Gets value indicating if derived class is empty</summary>
+            Public MustOverride ReadOnly Property IsEmpty() As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of Decimal, String).IsEmpty
+            ''' <summary>Gets value containde in derived class in type-unsafe way</summary>
+            Public MustOverride Property objValue() As Object Implements DataStructuresT.GenericT.IT1orT2(Of Decimal, String).objValue
+            ''' <summary>Clones instance of derived class as <see cref="IPair(Of Decimal, String)"/></summary>
+            Public MustOverride Function CloneDec() As DataStructuresT.GenericT.IPair(Of Decimal, String) Implements ICloneable(Of DataStructuresT.GenericT.IPair(Of Decimal, String)).Clone
+            ''' <summary>Creates instance <see cref="StringEnum(Of TEnum)"/> with TEnum set to given <see cref="Type"/> and initialized with given <see cref="String"/></summary>
+            ''' <param name="Type">Type to pass to generic type parameter TEnum of <see cref="StringEnum(Of TEnum)"/></param>
+            ''' <param name="Value"><see cref="String"/> to initialize new instance with</param>
+            ''' <returns>New instance of <see cref="StringEnum(Of TEnum)"/> where TEnum is <paramref name="Type"/> initialized with <paramref name="Value"/></returns>
+            ''' <exception cref="ArgumentException">Error while creating generic instance</exception>
+            ''' <exception cref="ArgumentNullException"><paramref name="Value"/> or <paramref name="Type"/> is null</exception>
+            Public Shared Function GetInstance(ByVal Type As Type, ByVal Value As String) As StringEnum
+                Dim SEType As Type = GetType(StringEnum(Of )).MakeGenericType(Type)
+                Dim instance As StringEnum = Activator.CreateInstance(SEType)
+                instance.StringValue = Value
+                Return instance
+            End Function
+        End Class
+        ''' <summary>Type that can contain value of "string enum" even when such value is not member of this enum</summary>
+        ''' <typeparam name="TEnum">Type of <see cref="StringEnum(Of TEnum).EnumValue"/>. Must inherit from <see cref="Enum"/></typeparam>
+        <CLSCompliant(False), DebuggerDisplay("{ToString}")> _
+        Public Class StringEnum(Of TEnum As {IConvertible, Structure})
+            Inherits StringEnum
+            Implements IT1orT2(Of TEnum, String)
+            ''' <summary>Contains value of the <see cref="StringValue"/> property</summary>
+            Private _StringValue As String
+            ''' <summary>Contains value of the <see cref="EnumValue"/> property</summary>
+            Private _EnumValue As TEnum
+            ''' <summary>Contains value of the <see cref="ContainsEnum"/> property</summary>
+            Private _ContainsEnum As Boolean
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
+            Public Function CloneEnum() As DataStructuresT.GenericT.IPair(Of TEnum, String) Implements ICloneable(Of DataStructuresT.GenericT.IPair(Of TEnum, String)).Clone
+                Dim ret As New StringEnum(Of TEnum)
+                ret._StringValue = Me._StringValue
+                ret._EnumValue = Me._EnumValue
+                ret._ContainsEnum = Me._ContainsEnum
+                Return ret
+            End Function
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
+            Public Overrides Function CloneDec() As DataStructuresT.GenericT.IPair(Of Decimal, String)
+                Return CloneEnum()
+            End Function
+
+            ''' <summary>Swaps values <see cref="EnumValue"/> and <see cref="StringValue"/></summary>            
+            Private Function Swap() As DataStructuresT.GenericT.IPair(Of String, TEnum) Implements DataStructuresT.GenericT.IPair(Of TEnum, String).Swap
+                Return New Pair(Of String, TEnum)(StringValue, EnumValue)
+            End Function
+
+            ''' <summary>Gets or sets enumerated value</summary>
+            ''' <value>Anything to set enumerated value and delete string value</value>
+            ''' <returns>If this instance contains enumerated value then returns it, otherwise return 0</returns>
+            ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="TEnum"/></exception>
+            Public Property EnumValue() As TEnum Implements DataStructuresT.GenericT.IPair(Of TEnum, String).Value1, IT1orT2(Of TEnum, String).value1
+                Get
+                    If ContainsEnum Then Return _EnumValue Else Return CObj(0)
+                End Get
+                Set(ByVal value As TEnum)
+                    If Not InEnum(value) Then Throw New InvalidEnumArgumentException("EnumValue must be member of enumeration " & GetType(TEnum).Name)
+                    ContainsEnum = True
+                    _EnumValue = value
+                    StringValue = Nothing
+                End Set
+            End Property
+            ''' <summary>Gets or sets string value</summary>
+            ''' <value>Anything non-null to set string value and delete enumerated value (if string value is name of enum item then <see cref="EnumValue"/> is set instead of <see cref="StringValue"/>. Value is considered to be name of enum if enum item has <see cref="Xml.Serialization.XmlEnumAttribute"/> and <see cref="Xml.Serialization.XmlEnumAttribute.Name"/> equals to value or when enum member has not <see cref="Xml.Serialization.XmlElementAttribute"/> and it's name is same as value.</value>
+            ''' <returns>If this instance contains string value then returns it, otherwise returns name of enum item contained in this instace</returns>
+            ''' <exception cref="ArgumentNullException">Value being set is null</exception>
+            ''' <exception cref="ArgumentException">Value being set contains unallowed character (non-grapic-non-space-non-ASCII)</exception>
+            Public Overrides Property StringValue() As String Implements DataStructuresT.GenericT.IPair(Of TEnum, String).Value2, IT1orT2(Of TEnum, String).value2
+                Get
+                    If ContainsEnum Then Return [Enum].GetName(GetType(TEnum), EnumValue) Else Return _StringValue
+                End Get
+                Set(ByVal value As String)
+                    If value Is Nothing Then Throw New ArgumentNullException("value", "StringValue cannot be null")
+                    Dim Vals As Array = [Enum].GetValues(GetType(TEnum))
+                    For Each Constant As TEnum In Vals
+                        Dim Cns As Reflection.FieldInfo = GetConstant(Constant)
+                        Dim attrs As Object() = Cns.GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)
+                        Dim CnsName As String
+                        If attrs IsNot Nothing AndAlso attrs.Length > 0 Then
+                            CnsName = DirectCast(attrs(0), Xml.Serialization.XmlEnumAttribute).Name
+                        Else
+                            CnsName = Cns.Name
+                        End If
+                        If value = CnsName Then
+                            EnumValue = Cns.GetValue(Nothing)
+                            Exit Property
+                        End If
+                    Next Constant
+                    For Each ch As Char In value
+                        If AscW(ch) < AscW(" ") OrElse AscW(ch) > 127 Then Throw New ArgumentException("StringValue can contain only ASCII-encodable graphic characters and spaces")
+                    Next ch
+                    _EnumValue = CObj(0)
+                    _StringValue = value
+                    ContainsEnum = False
+                End Set
+            End Property
+
+            ''' <summary>Identifies whether this instance contains value of specified type</summary>
+            ''' <param name="T">Type to be contained</param>
+            ''' <returns>True if this instance contais value of type <paramref name="T"/> otherwise False</returns>
+            Public Overrides ReadOnly Property contains(ByVal T As System.Type) As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of TEnum, String).contains
+                Get
+                    Return T.Equals(GetType(TEnum)) AndAlso ContainsEnum OrElse T.Equals(GetType(String))
+                End Get
+            End Property
+
+            ''' <summary>Determines if currrent instance contains enumerated value</summary>
+            ''' <value>This property cannot be set</value>
+            ''' <returns>True if this instance contains enumerated value</returns>
+            ''' <exception cref="NotSupportedException">An attempt to change value</exception>
+            Public Overrides Property ContainsEnum() As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of TEnum, String).contains1
+                Get
+                    Return _ContainsEnum
+                End Get
+                <EditorBrowsable(EditorBrowsableState.Never)> _
+                Set(ByVal value As Boolean)
+                    If value <> ContainsEnum Then Throw New NotSupportedException("StringEnum.ContainsEnum cannot be changed")
+                End Set
+            End Property
+
+            ''' <summary>Determines if currrent instance contains string value</summary>
+            ''' <value>This property cannot be set</value>
+            ''' <returns>Always True</returns>
+            ''' <exception cref="NotSupportedException">An attempt to set value to false</exception>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Public Overrides Property ContainsString() As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of TEnum, String).contains2
+                Get
+                    Return True
+                End Get
+                Set(ByVal value As Boolean)
+                    If value <> True Then Throw New NotSupportedException("StringEnum.ContainsString cannot be set to false")
+                End Set
+            End Property
+
+            ''' <summary>Determines whether instance contains neither string nor enumerated value</summary>
+            ''' <returns>True when both values are not present. False if one of values is present (even if it contains null)</returns>
+            Public Overrides ReadOnly Property IsEmpty() As Boolean Implements DataStructuresT.GenericT.IT1orT2(Of TEnum, String).IsEmpty
+                Get
+                    Return Not ContainsEnum AndAlso StringValue Is Nothing
+                End Get
+            End Property
+
+            ''' <summary>Get or sets stored value in type-unsafe way</summary>
+            ''' <value>New value to be stored in this instance</value>
+            ''' <returns>Value stored in this instance</returns>
+            ''' <exception cref="NullReferenceException">When trying to set null value</exception>
+            ''' <exception cref="ArgumentException">When trying to set value of type other than <see cref="String"/> and <see cref="IConvertible"/></exception>
+            Public Overrides Property objValue() As Object Implements DataStructuresT.GenericT.IT1orT2(Of TEnum, String).objValue
+                Get
+                    If ContainsEnum Then Return EnumValue Else Return StringValue
+                End Get
+                Set(ByVal value As Object)
+                    If value Is Nothing Then Throw New ArgumentNullException("value")
+                    If TypeOf value Is String Then
+                        StringValue = value
+                    ElseIf TypeOf value Is IConvertible Then
+                        EnumValue = CObj(DirectCast(value, IConvertible).ToDecimal(InvariantCulture))
+                    Else
+                        Throw New ArgumentException("Value of incompatible type is being set")
+                    End If
+                End Set
+            End Property
+            ''' <summary>Converts <see cref="String"/> into <see cref="StringEnum(Of TEnum)"/></summary>
+            ''' <param name="From">A <see cref="String"/> to be converted</param>
+            ''' <returns>New instance of <see cref="StringEnum(Of TEnum)"/> initialized with <paramref name="From"/> as <see cref="StringValue"/></returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="From"/> is null</exception>
+            Public Shared Widening Operator CType(ByVal From As String) As StringEnum(Of TEnum)
+                Dim ret As New StringEnum(Of TEnum)
+                ret.StringValue = From
+                Return ret
+            End Operator
+            ''' <summary>Converts <see cref="TEnum"/> into <see cref="StringEnum(Of TEnum)"/></summary>
+            ''' <param name="From">A <see cref="String"/> to be converted</param>
+            ''' <returns>New instance of <see cref="StringEnum(Of TEnum)"/> initialized with <paramref name="From"/> as <see cref="StringValue"/></returns>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="From"/> is not member of <see cref="TEnum"/></exception>
+            Public Shared Narrowing Operator CType(ByVal From As TEnum) As StringEnum(Of TEnum)
+                Dim ret As New StringEnum(Of TEnum)
+                ret.EnumValue = From
+                Return ret
+            End Operator
+            ''' <summary>Converts <see cref="StringEnum(Of TEnum)"/> to <see cref="String"/></summary>
+            ''' <param name="From">A <see cref="StringEnum(Of TEnum)"/> to be converted</param>
+            ''' <returns><see cref="StringEnum(Of TEnum).StringValue"/> of <paramref name="From"/></returns>
+            Public Shared Widening Operator CType(ByVal From As StringEnum(Of TEnum)) As String
+                Return From.StringValue
+            End Operator
+            ''' <summary>Converts <see cref="StringEnum(Of TEnum)"/> to <see cref="TEnum"/></summary>
+            ''' <param name="From">A <see cref="StringEnum(Of TEnum)"/> to be converted</param>
+            ''' <returns><see cref="StringEnum(Of TEnum).EnumValue"/> of <paramref name="From"/> (it can be 0 if <paramref name="From"/> does not contain enum value)</returns>
+            Public Shared Widening Operator CType(ByVal From As StringEnum(Of TEnum)) As TEnum
+                Return From.EnumValue
+            End Operator
+            ''' <summary>String representation</summary>
+            ''' <returns><see cref="StringValue"/></returns>
+            Public Overrides Function ToString() As String
+                Return StringValue
+            End Function
+            ''' <summary>Gets or sets <see cref="EnumValue"/> as decimal</summary>
+            ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="TEnum"/></exception>
+            Public Overrides Property DecimalValue() As Decimal
+                Get
+                    Return EnumValue.ToDecimal(InvariantCulture)
+                End Get
+                Set(ByVal value As Decimal)
+                    EnumValue = CObj(value)
+                End Set
+            End Property
+            ''' <summary>Returns type of <see cref="TEnum"/></summary>
+            Public Overrides ReadOnly Property EnumType() As System.Type
+                Get
+                    Return GetType(TEnum)
+                End Get
+            End Property
+        End Class
+
 #End Region
         ''' <summary>Returns <see cref="Type"/> that is used to store values of particular <see cref="IPTCTypes">IPTC type</see></summary>
         ''' <param name="IPTCType">IPTC type to get <see cref="Type"/> for</param>
@@ -1056,42 +1383,42 @@ Namespace DrawingT.MetadataT
         Public MustInherit Class Group
 
         End Class
-#Region "Verificators"
-        ''' <summary>Verifies if given value belongs to specific enumeration.</summary>
-        ''' <param name="verify">Value to be verified</param>
-        ''' <typeparam name="T">Type of enum to verify <paramref name="verify"/> in</typeparam>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="verify"/> is not member of <paramref name="T"/> and <paramref name="T"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> se to false.</exception>
-        ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/> and <paramref name="T"/> has <see cref="RestrictAttribute"/> set to True or it has no <see cref="RestrictAttribute"/></exception>
-        <CLSCompliant(False)> _
-        Public Sub VerifyNumericEnum(Of T As {IConvertible, Structure})(ByVal verify As T)
-            Dim Attrs As Object() = GetType(T).GetCustomAttributes(GetType(RestrictAttribute), False)
-            If Attrs Is Nothing OrElse Attrs.Length = 0 OrElse DirectCast(Attrs(0), RestrictAttribute).Restrict = True Then _
-                If Not InEnum(verify) Then Throw New InvalidEnumArgumentException("verify", verify.ToInt32(InvariantCulture), GetType(T))
-        End Sub
-        ''' <summary>Verifies if given value if valid fro unrestricted string enum</summary>
-        ''' <param name="verify">Value to be verified</param>
-        ''' <param name="Len">Maximal lenght of string</param>
-        ''' <param name="Fixed">Is <paramref name="Len"/> fixed lenght</param>
-        ''' <typeparam name="T">Type of enumeration</typeparam>
-        ''' <exception cref="ArgumentException"><paramref name="T"/> is not enumeration -or- string value violates lenght constraint -or- string value contains invalid (non-aplha) character</exception>
-        ''' <exception cref="InvalidEnumArgumentException">Enum value is not member of <paramref name="T"/></exception>
-        <CLSCompliant(False)> _
-        Public Sub VerifyStringEnumNR(Of T As {IConvertible, Structure})(ByVal verify As T1orT2(Of T, String), ByVal Len As Byte, ByVal Fixed As Boolean)
-            If verify.contains1 Then
-                VerifyNumericEnum(DirectCast(verify.value1, T))
-            Else
-                VerifyAlpha(verify.value2, Len, Fixed)
-            End If
-        End Sub
-        ''' <summary>Verifye if given string contains only alpha characters</summary>
-        ''' <param name="verify"><see cref="String"/> to be verified</param>
-        ''' <param name="Len">Maximal allowed length of string</param>
-        ''' <param name="Fixed">Is <paramref name="Len"/> fixed length</param>
-        ''' <exception cref="ArgumentException"><paramref name="verify"/> contains non-alpha character or violates lenght constraint</exception>
-        Public Sub VerifyAlpha(ByVal verify As String, ByVal Len As Byte, ByVal Fixed As Boolean)
-            If (Fixed AndAlso verify.Length <> Len OrElse Len <> 0 AndAlso verify.Length > Len) OrElse Not IsAlpha(verify) Then Throw New ArgumentException("Non alpha character")
-        End Sub
-#End Region
+        '#Region "Verificators"
+        '        ''' <summary>Verifies if given value belongs to specific enumeration.</summary>
+        '        ''' <param name="verify">Value to be verified</param>
+        '        ''' <typeparam name="T">Type of enum to verify <paramref name="verify"/> in</typeparam>
+        '        ''' <exception cref="InvalidEnumArgumentException"><paramref name="verify"/> is not member of <paramref name="T"/> and <paramref name="T"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> se to false.</exception>
+        '        ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/> and <paramref name="T"/> has <see cref="RestrictAttribute"/> set to True or it has no <see cref="RestrictAttribute"/></exception>
+        '        <CLSCompliant(False)> _
+        '        Public Sub VerifyNumericEnum(Of T As {IConvertible, Structure})(ByVal verify As T)
+        '            Dim Attrs As Object() = GetType(T).GetCustomAttributes(GetType(RestrictAttribute), False)
+        '            If Attrs Is Nothing OrElse Attrs.Length = 0 OrElse DirectCast(Attrs(0), RestrictAttribute).Restrict = True Then _
+        '                If Not InEnum(verify) Then Throw New InvalidEnumArgumentException("verify", verify.ToInt32(InvariantCulture), GetType(T))
+        '        End Sub
+        '        ''' <summary>Verifies if given value if valid fro unrestricted string enum</summary>
+        '        ''' <param name="verify">Value to be verified</param>
+        '        ''' <param name="Len">Maximal lenght of string</param>
+        '        ''' <param name="Fixed">Is <paramref name="Len"/> fixed lenght</param>
+        '        ''' <typeparam name="T">Type of enumeration</typeparam>
+        '        ''' <exception cref="ArgumentException"><paramref name="T"/> is not enumeration -or- string value violates lenght constraint -or- string value contains invalid (non-aplha) character</exception>
+        '        ''' <exception cref="InvalidEnumArgumentException">Enum value is not member of <paramref name="T"/></exception>
+        '        <CLSCompliant(False)> _
+        '        Public Sub VerifyStringEnumNR(Of T As {IConvertible, Structure})(ByVal verify As T1orT2(Of T, String), ByVal Len As Byte, ByVal Fixed As Boolean)
+        '            If verify.contains1 Then
+        '                VerifyNumericEnum(DirectCast(verify.value1, T))
+        '            Else
+        '                VerifyAlpha(verify.value2, Len, Fixed)
+        '            End If
+        '        End Sub
+        '        ''' <summary>Verifye if given string contains only alpha characters</summary>
+        '        ''' <param name="verify"><see cref="String"/> to be verified</param>
+        '        ''' <param name="Len">Maximal allowed length of string</param>
+        '        ''' <param name="Fixed">Is <paramref name="Len"/> fixed length</param>
+        '        ''' <exception cref="ArgumentException"><paramref name="verify"/> contains non-alpha character or violates lenght constraint</exception>
+        '        Public Sub VerifyAlpha(ByVal verify As String, ByVal Len As Byte, ByVal Fixed As Boolean)
+        '            If (Fixed AndAlso verify.Length <> Len OrElse Len <> 0 AndAlso verify.Length > Len) OrElse Not IsAlpha(verify) Then Throw New ArgumentException("Non alpha character")
+        '        End Sub
+        '#End Region
 #Region "Serializers and deserializers"
 #Region "Deserializers"
         ''' <summary>Ready signed ingere from byte array</summary>

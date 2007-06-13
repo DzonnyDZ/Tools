@@ -618,6 +618,7 @@
     <!--Returns
         <x:type type="" verify="" exception="" to-byte="" from-byte="">
     -->
+    <!--TODO:Completely rebuild way how properties are stored and retrieved!!!-->
     <xsl:template name="UnderlyingType">
         <xsl:param name="type"/><!--IPTC type-->
         <xsl:param name="enum"/><!--Optional enum name (required for enum types)-->

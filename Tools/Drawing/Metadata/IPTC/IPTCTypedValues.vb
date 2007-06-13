@@ -589,15 +589,15 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="ArgumentException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 2 bytes</exception> 
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Num2_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr2)
-            Get 'TODO:Enums?
-                If encoding Is Nothing Then encoding = Me.Encoding
+            Get
+                If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of NumStr2)(values.Count)
                 For Each item As Byte() In values
                     Dim itm As New NumStr2
                     itm.Number = System.Text.Encoding.ASCII.GetString(item, 0, 2)
-                    itm.String = encoding.GetString(item, 2, item.Length - 2)
+                    itm.String = Encoding.GetString(item, 2, item.Length - 2)
                     ret.Add(itm)
                 Next item
                 Return ret
@@ -627,13 +627,13 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="ArgumentException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 3 bytes</exception> 
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Num3_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr3)
-            Get 'TODO:Enums?
+            Get
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of NumStr3)(values.Count)
                 For Each item As Byte() In values
-                    Dim itm As New NumStr2
+                    Dim itm As New NumStr3
                     itm.Number = System.Text.Encoding.ASCII.GetString(item, 0, 3)
                     itm.String = Encoding.GetString(item, 3, item.Length - 3)
                     ret.Add(itm)
@@ -728,40 +728,142 @@ Namespace DrawingT.MetadataT
                 Tag(Key) = values
             End Set
         End Property
-
-        Public Property StringEnum_Value(ByVal Key As DataSetIdentification) As List(Of T1orT2(Of [Enum], String))
+        ''' <summary>Gets or sets value of <see cref="IPTCTypes.StringEnum"/> type</summary>
+        ''' <param name="Key">Record or dataset number</param>
+        ''' <param name="Type">Type of enum in value</param>
+        ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
+        ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="StringEnum.EnumType"/> (in Setter)</exception>
+        ''' <exception cref="ArrayTypeMismatchException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> differs from <paramref name="Type"/> (in setter)</exception>
+        ''' <exception cref="ArgumentException">
+        ''' Error while creating generic instance - caused by wrong <paramref name="Type"/> (in Getter) -or-
+        ''' Stored value contains invalid character (non-graphic-non-space-non-ASCII) (in getter) -or-
+        ''' Value violates length constaraint after serialization (in Setter) -or-
+        ''' <paramref name="Fixed"/> is true and <paramref name="Len"/> is 0
+        ''' </exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Property StringEnum_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of StringEnum)
             Get
-
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
+                Dim values As List(Of Byte()) = Tag(Key)
+                If values Is Nothing OrElse values.Count = 0 Then Return Nothing
+                Dim ret As New List(Of StringEnum)(values.Count)
+                For Each item As Byte() In values
+                    Dim str As String = System.Text.Encoding.ASCII.GetString(item)
+                    ret.Add(StringEnum.GetInstance(Type, str))
+                Next item
+                Return ret
             End Get
-            Set(ByVal value As T1orT2(Of [Enum], String))
-
+            Set(ByVal value As List(Of StringEnum))
+                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
+                Dim values As New List(Of Byte())
+                If value IsNot Nothing Then
+                    For Each item As StringEnum In value
+                        If Not Type.Equals(item.GetType) Then Throw New ArrayTypeMismatchException("EnumType of items passed to StringEnum_Value most be same as that in the Type parameter")
+                        Dim Attrs As Object() = item.EnumType.GetCustomAttributes(GetType(RestrictAttribute), False)
+                        Dim ra As RestrictAttribute = Nothing
+                        If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then ra = Attrs(0)
+                        If Not item.ContainsEnum AndAlso (ra Is Nothing OrElse ra.Restrict) Then Throw New InvalidEnumArgumentException("This enumeration does not allow values that are not member of it")
+                        Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.StringValue)
+                        If Fixed AndAlso Bytes.Length <> Len OrElse Len <> 0 AndAlso Bytes.Length > Len Then Throw New ArgumentException("Lenght constraint violation")
+                        values.Add(Bytes)
+                    Next item
+                End If
+                Tag(Key) = values
+            End Set
+        End Property
+        ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.ImageType"/> type</summary>
+        ''' <param name="Key">Record and dataset number</param>
+        ''' <exception cref="ArgumentException">
+        ''' Stored value has length different than 2B (in Getter) -or-
+        ''' 2nd byte of stored value cannot be interpreted as <see cref="ImageTypeContents"/> (in Getter)
+        ''' </exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of ImageType)
+            Get
+                Dim values As List(Of Byte()) = Tag(Key)
+                If values Is Nothing OrElse values.Count = 0 Then Return Nothing
+                Dim ret As New List(Of ImageType)(values.Count)
+                For Each item As Byte() In values
+                    Dim val As New ImageType
+                    If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
+                    val.Components = CStr(ChrW(item(0)))
+                    val.TypeCode = ChrW(item(1))
+                    ret.Add(val)
+                Next item
+                Return ret
+            End Get
+            Set(ByVal value As List(Of ImageType))
+                Dim values As New List(Of Byte())
+                If value IsNot Nothing Then
+                    For Each item As ImageType In value
+                        values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
+                    Next item
+                End If
+                Tag(Key) = values
             End Set
         End Property
 
-        Public Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of ImageType)
+        ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.ImageType"/> type</summary>
+        ''' <param name="Key">Record and dataset number</param>
+        ''' <exception cref="ArgumentException">
+        ''' Stored value has length different than 2B (in Getter) -or-
+        ''' 2nd byte of stored value cannot be interpreted as <see cref="AudioDataType"/> (in Getter)
+        ''' </exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of AudioType)
             Get
-
+                Dim values As List(Of Byte()) = Tag(Key)
+                If values Is Nothing OrElse values.Count = 0 Then Return Nothing
+                Dim ret As New List(Of AudioType)(values.Count)
+                For Each item As Byte() In values
+                    Dim val As New AudioType
+                    If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
+                    val.Components = CStr(ChrW(item(0)))
+                    val.TypeCode = ChrW(item(1))
+                    ret.Add(val)
+                Next item
+                Return ret
             End Get
-            Set(ByVal value As ImageType)
-
+            Set(ByVal value As List(Of AudioType))
+                Dim values As New List(Of Byte())
+                If value IsNot Nothing Then
+                    For Each item As AudioType In value
+                        values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
+                    Next item
+                End If
+                Tag(Key) = values
             End Set
         End Property
-
-        Public Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of AudioDataType)
+        ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.HHMMSS"/> type</summary>
+        ''' <param name="Key">Record and dataset number</param>
+        ''' <exception cref="ArgumentException">Stored item's length differs from 6 (in Getter)</exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><see cref="TimeSpan"/> to be stored is less than <see cref="TimeSpan.Zero"/> or it's <see cref="TimeSpan.TotalDays"/> is greater than or equal to 1 (in setter)</exception>
+        ''' <exception cref="InvalidCastException">Stored item contains non-numeric character (in Getter)</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Property HHMMSS_Value(ByVal Key As DataSetIdentification) As List(Of TimeSpan)
             Get
-
+                Dim values As List(Of Byte()) = Tag(Key)
+                If values Is Nothing OrElse values.Count = 0 Then Return Nothing
+                Dim ret As New List(Of TimeSpan)(values.Count)
+                For Each item As Byte() In values
+                    If item.Length <> 6 Then Throw New ArgumentException("Stored item's lenght must be 6")
+                    Dim Str As String = System.Text.Encoding.ASCII.GetString(item)
+                    ret.Add(New TimeSpan(Str.Substring(0, 2), Str.Substring(2, 2), Str.Substring(4, 2)))
+                Next item
+                Return ret
             End Get
-            Set(ByVal value As AudioDataType)
-
-            End Set
-        End Property
-
-        Public Property HHMMSS_Value(ByVal Key As DataSetIdentification) As List(Of TimeSpan)
-            Get
-
-            End Get
-            Set(ByVal value As TimeSpan)
-
+            Set(ByVal value As List(Of TimeSpan))
+                Dim values As New List(Of Byte())
+                If value IsNot Nothing Then
+                    For Each item As TimeSpan In value
+                        If item < TimeSpan.Zero OrElse item.TotalDays > 1 Then Throw New ArgumentOutOfRangeException("Time must be non-negative and less then 1 day")
+                        values.Add(System.Text.Encoding.ASCII.GetBytes(String.Format("{0:00}{1:00}{2:00}", item.Hours, item.Minutes, item.Seconds)))
+                    Next item
+                End If
+                Tag(Key) = values
             End Set
         End Property
 #End Region
