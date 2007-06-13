@@ -140,6 +140,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </Compile>
+    <Compile Include="Drawing\Metadata\IPTC\IPTCTypedValues.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCTypes.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Globalization\ISOLanguage.vb" />

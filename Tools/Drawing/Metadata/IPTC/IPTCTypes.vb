@@ -2,7 +2,6 @@ Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.Dat
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class IPTC
-#Region "IPTC types"
         ''' <summary>Types od data used by IPTC tags</summary>
         Public Enum IPTCTypes
             ''' <summary>Unsigned binary number of unknown length (represented by <see cref="ULong"/>)</summary>
@@ -34,9 +33,9 @@ Namespace DrawingT.MetadataT
             ''' <summary>Black and white bitmap with width 460px (represented <see cref="Drawing.Bitmap"/>)</summary>
             BW460
             ''' <summary>Enumeration stored as binary number (represented by various enums)</summary>
-            Enum_Binary 'TODO:This can be enumeration
+            Enum_Binary
             ''' <summary>Enumeration stored as numeric string (represented by various enums)</summary>
-            Enum_NumChar 'TODO:This can be enumeration
+            Enum_NumChar
             ''' <summary>Date stored as numeric characters in the YYYYMMDD format (represented by <see cref="Date"/>)</summary>
             CCYYMMDD
             ''' <summary>Date stored as numeric characters in the YYYYMMDD format (represented by <see cref="OmmitableDate"/>) Each component YYYY, MM and DD can be set to 0 is unknown</summary>
@@ -48,9 +47,9 @@ Namespace DrawingT.MetadataT
             ''' <summary>Unique Object Identifier (represented by <see cref="UNO"/>)</summary>
             UNO
             ''' <summary>Combination of 2-digits number and optional <see cref="String"/> (represented by <see cref="NumStr2"/>)</summary>
-            Num2_Str
+            Num2_Str 'TODO:Enum?
             ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="NumStr3"/>)</summary>
-            Num3_Str
+            Num3_Str 'TODO:Enum?
             ''' <summary>Subject reference (combination of IPR, subject number and description) (represented by <see cref="SubjectReference"/>)</summary>
             SubjectReference
             ''' <summary>Alphabetic characters from latin alphabet (A-Z and a-z) (represented by <see cref="String"/>)</summary>
@@ -64,13 +63,33 @@ Namespace DrawingT.MetadataT
             ''' <summary>Duration in hours, minutes and seconds. Represented by <see cref="TimeSpan"/></summary>
             HHMMSS
         End Enum
+        ''' <summary>Indicates if given string contains only graphic characters and spaces</summary>
+        ''' <param name="Str">String to be verified</param>
+        ''' <returns>True if string contains only graphic characters and spaces, false otherwise</returns>
+        ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
+        Public Shared Function IsTextWithSpaces(ByVal Str As String) As Boolean
+            For Each ch As Char In Str
+                If AscW(ch) <= AscW(" "c) Then Return False
+            Next ch
+            Return True
+        End Function
+        ''' <summary>Indicates if given string contains only graphic characters, spaces, Crs and Lfs</summary>
+        ''' <param name="Str">String to be verified</param>
+        ''' <returns>True if string contains only graphic characters, spaces, Crs and Lfs, false otherwise</returns>
+        ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
+        Public Shared Function IsText(ByVal Str As String) As Boolean
+            For Each ch As Char In Str
+                If AscW(ch) <= AscW(" "c) AndAlso AscW(ch) <> AscW(vbCr) AndAlso AscW(ch) <> AscW(vbLf) Then Return False
+            Next ch
+            Return True
+        End Function
         ''' <summary>Indicates if given string contains only graphic characters</summary>
         ''' <param name="Str">String to be verified</param>
         ''' <returns>True if string contains only graphic characters, false otherwise</returns>
         ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
         Public Shared Function IsGraphicCharacters(ByVal Str As String) As Boolean
             For Each ch As Char In Str
-                If AscW(ch) <= AscW(" "c) Then Return False
+                If AscW(ch) < AscW(" "c) Then Return False
             Next ch
             Return True
         End Function
@@ -948,7 +967,7 @@ Namespace DrawingT.MetadataT
             If verify.contains1 Then
                 VerifyNumericEnum(DirectCast(verify.value1, T))
             Else
-                VerifyAlpha(verify.value2, Len, fixed)
+                VerifyAlpha(verify.value2, Len, Fixed)
             End If
         End Sub
         ''' <summary>Verifye if given string contains only alpha characters</summary>
@@ -968,7 +987,7 @@ Namespace DrawingT.MetadataT
         ''' <returns>Signed integer stored in given byte array</returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
-        Private Function IntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As Long
+        Protected Shared Function IntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As Long
             Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAling.BigEndian)
             Select Case Count
                 Case 1 'SByte
@@ -989,7 +1008,7 @@ Namespace DrawingT.MetadataT
         ''' <returns>Unsigned integer stored in given byte array</returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
-        Private Function UIntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As ULong
+        Protected Shared Function UIntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As ULong
             Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAling.BigEndian)
             Select Case Count
                 Case 1 'Byte
@@ -1008,18 +1027,32 @@ Namespace DrawingT.MetadataT
         ''' <param name="Bytes">Bytest to be converted</param>
         ''' <returns>Number that can be converted at least to <see cref="Long"/> or <see cref="ULong"/></returns>
         ''' <exception cref="InvalidCastException">Cannot convert string stored in <paramref name="Bytes"/> to <see cref="Decimal"/></exception>
-        Private Function NumCharFromBytes(ByVal Bytes As Byte()) As Decimal
+        Protected Shared Function NumCharFromBytes(ByVal Bytes As Byte()) As Decimal
             Dim Str As String = System.Text.Encoding.ASCII.GetString(Bytes)
             Return Str
         End Function
 #End Region
 #Region "Serializers"
         ''' <summary>Converts number to array of bytes in which the number is stored as ASCII string</summary>
-        ''' <param name="Count">Number of bytes to get</param>
+        ''' <param name="Count">Number of bytes to get (0 means no limit)</param>
         ''' <param name="Number">Number to be stored</param>
         ''' <returns>Array of bytes that contains <paramref name="Count"/> bytes consisting of string representation of <paramref name="Number"/></returns>
-        Private Function ToBytes(ByVal Count As Byte, ByVal Number As Decimal) As Byte()
-            Return System.Text.Encoding.ASCII.GetBytes(Number.ToString(New String("0"c, Count), InvariantCulture))
+        ''' <param name="Fixed"><paramref name="Count"/> represents fixed lenght of returned byte array (True) or maximal variable lenght (False)</param>
+        ''' <exception cref="ArgumentException">
+        ''' <paramref name="Count"/> is 0 and <paramref name="Fixed"/> is True -or-
+        ''' <paramref name="Count"/> is not 0 and number cannot be stored in number of bytes specified in <paramref name="Count"/>
+        ''' </exception>
+        Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Number As Decimal, Optional ByVal Fixed As Boolean = True) As Byte()
+            If Count = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+            Try
+                If Fixed Then
+                    Return System.Text.Encoding.ASCII.GetBytes(Number.ToString(New String("0"c, Count), InvariantCulture))
+                Else
+                    Return System.Text.Encoding.ASCII.GetBytes(Number.ToString("0", InvariantCulture))
+                End If
+            Finally
+                If Count <> 0 AndAlso ToBytes.Length > Count Then Throw New ArgumentException(String.Format("Number {0} cannot be stored in {1} bytes", Number, Count))
+            End Try
         End Function
         ''' <summary>Converts signed integer to array of bytes</summary>
         ''' <param name="Count">Length of integral value and returned array (can be 1,2,4,8)</param>
@@ -1027,7 +1060,7 @@ Namespace DrawingT.MetadataT
         ''' <returns>Array of bytes representing <paramref name="Int"/></returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="OverflowAction"><paramref name="Int"/>'s value does not fit into integral value of <paramref name="Count"/> bytes</exception>
-        Private Function ToBytes(ByVal Count As Byte, ByVal Int As Long) As Byte()
+        Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Int As Long) As Byte()
             Dim Str As New System.IO.BinaryWriter(New System.IO.MemoryStream(Count))
             Select Case Count
                 Case 1 'SByte
@@ -1052,7 +1085,7 @@ Namespace DrawingT.MetadataT
         ''' <returns>Array of bytes representing <paramref name="Int"/></returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="OverflowAction"><paramref name="Int"/>'s value does not fit into integral value of <paramref name="Count"/> bytes</exception>
-        Private Function ToBytes(ByVal Count As Byte, ByVal Int As ULong) As Byte()
+        Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Int As ULong) As Byte()
             Dim Str As New System.IO.BinaryWriter(New System.IO.MemoryStream(Count))
             Select Case Count
                 Case 1 'SByte
@@ -1061,7 +1094,7 @@ Namespace DrawingT.MetadataT
                     Str.Write(MathT.LEBE(CUShort(Int)))
                 Case 4 'Integer
                     Str.Write(MathT.LEBE(CUInt(Int)))
-                Case 5 'Long
+                Case 8 'Long
                     Str.Write(MathT.LEBE(CULng(Int)))
                 Case Else
                     Throw New ArgumentException("Only 1,2,4 and 8-bytes integers can be read via ToBytes")
@@ -1071,7 +1104,6 @@ Namespace DrawingT.MetadataT
             Array.ConstrainedCopy(Buff, 0, Arr, 0, Count)
             Return Arr
         End Function
-#End Region
 #End Region
 #End Region
     End Class

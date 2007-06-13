@@ -9,44 +9,61 @@ Namespace DrawingT.MetadataT
         End Sub
         ''' <summary>Contains value of the <see cref="Tags"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Tags As New Dictionary(Of DataSetIdentification, List(Of Byte()))
+        Private _Tags As New List(Of KeyValuePair(Of DataSetIdentification, Byte()))
 
         ''' <summary>CTor from <see cref="IPTCReader"/></summary>
         ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from</param>
         Public Sub New(ByVal Reader As IPTCReader)
             For Each t As IPTCReader.IPTCRecord In Reader.Records
-                'TODO:Grouped tags should be places in separate List
-                If Tags.ContainsKey(New DataSetIdentification(t.RecordNumber, t.Tag)) Then
-                    Tags(New DataSetIdentification(t.RecordNumber, t.Tag)).Add(t.Data)
-                Else
-                    Tags.Add(New DataSetIdentification(t.RecordNumber, t.Tag), New List(Of Byte())(New Byte()() {t.Data}))
-                End If
+                Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(New DataSetIdentification(t.RecordNumber, t.Tag), t.Data))
             Next t
         End Sub
         ''' <summary>Gets or sets values associated with particular tag</summary>
         ''' <param name="Key">Tag identification</param>
-        ''' <remarks>This property does no checks if tag <paramref name="Key"/> is repeatable or not and does not checks structure of byte arrays that represents values of tags, so you can totally corrupt structure if some fields. Also tag grouping is not checked</remarks>
-        ''' <value>New values for particular tag</value>
+        ''' <remarks>This property does no checks if tag <paramref name="Key"/> is repeatable or not and does not checks structure of byte arrays that represents values of tags, so you can totally corrupt structure if some fields. Also tag grouping is not checked. You should use this property very carefully or you can damage internal structure of IPTC data</remarks>
+        ''' <value>New values for particular tag. Values of tags are replaced with new values. If there was more tags with same <paramref name="Key"/> than is being set then the next tags are removed. If there was less tags with same <paramref name="Key"/> necessary items are added at the end of the stream</value>
         ''' <returns>List of values of tag or null if tag is missing</returns>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Default Public Property Tag(ByVal Key As DataSetIdentification) As List(Of Byte())
+        Default Protected Property Tag(ByVal Key As DataSetIdentification) As List(Of Byte())
             Get
-                If Tags.ContainsKey(Key) Then
-                    Return Tags(Key)
+                Dim ret As List(Of KeyValuePair(Of DataSetIdentification, Byte())) = Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
+                If ret IsNot Nothing AndAlso ret.Count > 0 Then
+                    Dim ret2 As New List(Of Byte())
+                    For Each Item As KeyValuePair(Of DataSetIdentification, Byte()) In ret
+                        ret2.Add(Item.Value)
+                    Next Item
+                    Return ret2
                 Else
                     Return Nothing
                 End If
             End Get
             Set(ByVal value As List(Of Byte()))
-                If Tags.ContainsKey(Key) Then
-                    Tags(Key) = value
+                Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(DataSetIdentification.Keywords).GetIndices(Tags)
+                Dim i As Integer = 0
+                'Replace values of existing tags with same key
+                For Each Item As Byte() In value
+                    If i < Already.Count Then
+                        Tags(Already(i)) = New KeyValuePair(Of DataSetIdentification, Byte())(Tags(Already(i)).Key, value(i))
+                        i += 1
+                    Else
+                        Exit For
+                    End If
+                Next Item
+                If i < Already.Count Then
+                    'Remove tags (if value is shorter than Already)
+                    For j As Integer = Already.Count - 1 To i Step -1
+                        Tags.RemoveAt(j)
+                    Next j
                 Else
-                    Tags.Add(Key, value)
+                    'Add tags (if value is longer than Already)
+                    For j As Integer = i To value.Count - 1
+                        Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(Key, value(j)))
+                    Next j
                 End If
             End Set
         End Property
         ''' <summary>All tags and their values in IPTC stream</summary>
-        Public ReadOnly Property Tags() As Dictionary(Of DataSetIdentification, List(Of Byte()))
+        Protected ReadOnly Property Tags() As List(Of KeyValuePair(Of DataSetIdentification, Byte()))
             Get
                 Return _Tags
             End Get
@@ -145,6 +162,42 @@ Namespace DrawingT.MetadataT
             Public Overrides Function GetHashCode() As Integer
                 Return Me.DatasetNumber * 256 + Me.RecordNumber
             End Function
+            ''' <summary>Gives acctess to <see cref="System.Predicate"/> that matches <see cref="KeyValuePair(Of DataSetIdentification, T)"/> which's <see cref="KeyValuePair.Key"/> is same as given <see cref="DataSetIdentification"/></summary>
+            Public Class PairMatch
+                ''' <summary><see cref="DataSetIdentification"/> to compare <see cref="KeyValuePair.Key"/> with</summary>
+                Public ReadOnly Match As DataSetIdentification
+                ''' <summary>CTor</summary>
+                ''' <param name="Match"><see cref="DataSetIdentification"/> to compare <see cref="KeyValuePair.Key"/> with</param>
+                Public Sub New(ByVal Match As DataSetIdentification)
+                    Me.Match = Match
+                End Sub
+                ''' <summary>Function which's delegate can be passed for example to <see cref="List.FindAll"/></summary>
+                ''' <param name="Pair">Item to match with <see cref="Match"/></param>
+                ''' <typeparam name="T">Type of value stored in <see cref="KeyValuePair"/></typeparam>
+                Public Function Predicate(Of T)(ByVal Pair As KeyValuePair(Of DataSetIdentification, T)) As Boolean
+                    Return Pair.Key = Match
+                End Function
+                ''' <summary>Returns delegate of <see cref="PairMatch.Predicate"/> of newly created instance of <see cref="PairMatch"/></summary>
+                ''' <param name="Match">Key to compare with</param>
+                ''' <returns>Delegate of <see cref="PairMatch.Predicate"/></returns>
+                ''' <typeparam name="T">Type of value of <see cref="KeyValuePair"/> that can be passed to returned <see cref="System.Predicate"/></typeparam>
+                Public Shared Function GetPredicate(Of T)(ByVal Match As DataSetIdentification) As System.Predicate(Of KeyValuePair(Of DataSetIdentification, T))
+                    Return AddressOf New PairMatch(Match).Predicate(Of T)
+                End Function
+                ''' <summary>Gets indices of items in given <see cref="IEnumerable(Of KeyValuePair(Of DataSetIdentification, T))"/> which's <see cref="KeyValuePair.Key"/> matches <see cref="Match"/></summary>
+                ''' <param name="List">List to search within</param>
+                ''' <returns>List of indices of items which's <see cref="KeyValuePair.Key"/> matches <see cref="Match"/></returns>
+                ''' <typeparam name="T">Type of value of <see cref="KeyValuePair(Of DataSetIdentification, T)"/></typeparam>
+                Public Function GetIndices(Of T)(ByVal List As IEnumerable(Of KeyValuePair(Of DataSetIdentification, T))) As IReadOnlyList(Of Integer)
+                    Dim i As Integer = 0
+                    Dim ret As New List(Of Integer)
+                    For Each Item As KeyValuePair(Of DataSetIdentification, T) In List
+                        If Item.Key = Match Then ret.Add(i)
+                        i += 1
+                    Next Item
+                    Return New ReadOnlyListAdapter(Of Integer)(ret)
+                End Function
+            End Class
         End Structure
 
         ''' <summary>Returns value indicating if givel value if member of enumeration</summary>
