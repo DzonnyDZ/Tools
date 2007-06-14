@@ -390,59 +390,60 @@
 
     <!--Elements:-->
     <!--Tag-->
-    <xs:element name="tag">
+    <xs:element name="tag" type="tagType">
         <xs:annotation>
             <xs:documentation>Definition of one IPTC tag (dataset)</xs:documentation>
         </xs:annotation>
-        <xs:complexType>
-            <xs:group ref="XMLDoc" minOccurs="1" maxOccurs="1"/>
-            <xs:attributeGroup ref="attributes"/>
-            <!--Basic info-->
-            <xs:attribute name="number" type="xs:unsignedByte" use="required">
-                <xs:annotation>
-                    <xs:documentation>Number of this tag (dataset)</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attributeGroup ref="Names"/>
-            <!--Flags-->
-            <xs:attribute name="mandatory" type="xs:boolean" use="required">
-                <xs:annotation>
-                    <xs:documentation>Defines if tag is mandatory (accorting to IPTC standard) or not (valid in context of group or record). There must be at least one mandatory tag in each group.</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="repeatable" type="xs:boolean" use="required">
-                <xs:annotation>
-                    <xs:documentation>Defines if tag is repeatable or not (valid within record or group)</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="fixed" type="xs:boolean" use="required">
-                <xs:annotation>
-                    <xs:documentation>Defines of tag data has fixed length (if true length is specified in length)</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="category" type="Categories" use="required">
-                <xs:annotation>
-                    <xs:documentation>Category of rendered property</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <!--Type-->
-            <xs:attribute name="type" type="TagType" use="required">
-                <xs:annotation>
-                    <xs:documentation>Type of contained data</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="enum" type="Name" use="optional">
-                <xs:annotation>
-                    <xs:documentation>If type is enum then put reference to enum here</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-            <xs:attribute name="length" type="LengthSpec" use="required">
-                <xs:annotation>
-                    <xs:documentation>Maximum (if fixed is false) length in bytes of tag data. 0 for no limit (same effect 32767). For fixed 0 is prohibited.</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
-        </xs:complexType>
     </xs:element>
+    <xs:complexType name="tagType">
+        <xs:group ref="XMLDoc" minOccurs="1" maxOccurs="1"/>
+        <xs:attributeGroup ref="attributes"/>
+        <!--Basic info-->
+        <xs:attribute name="number" type="xs:unsignedByte" use="required">
+            <xs:annotation>
+                <xs:documentation>Number of this tag (dataset)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="Names"/>
+        <!--Flags-->
+        <xs:attribute name="mandatory" type="xs:boolean" use="required">
+            <xs:annotation>
+                <xs:documentation>Defines if tag is mandatory (accorting to IPTC standard) or not (valid in context of group or record). There must be at least one mandatory tag in each group.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="repeatable" type="xs:boolean" use="required">
+            <xs:annotation>
+                <xs:documentation>Defines if tag is repeatable or not (valid within record or group)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="fixed" type="xs:boolean" use="required">
+            <xs:annotation>
+                <xs:documentation>Defines of tag data has fixed length (if true length is specified in length)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="category" type="Categories" use="required">
+            <xs:annotation>
+                <xs:documentation>Category of rendered property</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <!--Type-->
+        <xs:attribute name="type" type="TagType" use="required">
+            <xs:annotation>
+                <xs:documentation>Type of contained data</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="enum" type="Name" use="optional">
+            <xs:annotation>
+                <xs:documentation>If type is enum then put reference to enum here</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="length" type="LengthSpec" use="required">
+            <xs:annotation>
+                <xs:documentation>Maximum (if fixed is false) length in bytes of tag data. 0 for no limit (same effect 32767). For fixed 0 is prohibited.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+    
     <!--Record (number group of tags)-->
     <xs:element name="record">
         <xs:annotation>
@@ -583,7 +584,22 @@
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
                 <xs:group minOccurs="1" maxOccurs="1" ref="XMLDoc"/>
-                <xs:element ref="tag" minOccurs="2" maxOccurs="unbounded"/>
+                <xs:element name="tag" minOccurs="2" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:complexContent>
+                            <xs:restriction base="tagType">
+                                <xs:group ref="XMLDoc" minOccurs="1" maxOccurs="1"/>
+                                <xs:attribute name="repeatable" use="required">
+                                    <xs:simpleType>
+                                        <xs:restriction base="xs:boolean">
+                                            <xs:pattern value="0|false"/> 
+                                        </xs:restriction>
+                                    </xs:simpleType>
+                                </xs:attribute>
+                            </xs:restriction>
+                        </xs:complexContent>
+                    </xs:complexType>
+                </xs:element>
             </xs:sequence>
             <xs:attributeGroup ref="Names"/>
             <xs:attributeGroup ref="attributes"/>

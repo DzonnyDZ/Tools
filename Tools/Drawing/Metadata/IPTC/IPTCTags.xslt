@@ -652,7 +652,7 @@
             <xsl:for-each select="I:tag">
                 <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;If item(</xsl:text>
                 <xsl:value-of select="position()-1"/>
-                <xsl:text>) >= 0 Then ret(ret.Count - 1).</xsl:text>                
+                <xsl:text>) >= 0 Then ret(ret.Count - 1).</xsl:text>
                 <xsl:value-of select="@name"/>
                 <xsl:text> = _all_</xsl:text>
                 <xsl:value-of select="@name"/>
@@ -743,6 +743,7 @@
                 <xsl:text>()</xsl:text>
             </xsl:if>
             <xsl:call-template name="nl"/>
+            <!--Get-->
             <xsl:text>&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;Dim v As List(Of </xsl:text>
             <xsl:value-of select="@name"/>
@@ -759,7 +760,80 @@
                 </xsl:otherwise>
             </xsl:choose>
             <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+            <!--Set-->
             <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
+            <xsl:choose>
+                <xsl:when test="@repeatable">
+                    <xsl:text>&#9;&#9;&#9;&#9;Dim Items As </xsl:text>
+                    <xsl:value-of select="@name"/>
+                    <xsl:text>Group() = </xsl:text>
+                    <xsl:text>value&#xD;&#xA;</xsl:text>
+                    <xsl:for-each select="I:tag">
+                        <xsl:text>&#9;&#9;&#9;&#9;Clear(dataSetIdentification.</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>)&#xD;&#xA;</xsl:text>
+                    </xsl:for-each>
+                    <xsl:text>&#9;&#9;&#9;&#9;If Items IsNot Nothing Then&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;For Each item As </xsl:text>
+                    <xsl:value-of select="@name"/>
+                    <xsl:text>Group In Items&#xD;&#xA;</xsl:text>
+                    <xsl:for-each select="I:tag">
+                        <xsl:if test="position()>1"><xsl:call-template name="nl"/></xsl:if>
+                        <xsl:variable name="type">
+                            <xsl:call-template name="UnderlyingType">
+                                <xsl:with-param name="type" select="@type"/>
+                                <xsl:with-param name="enum" select="@enum"/>
+                                <xsl:with-param name="len" select="@length"/>
+                                <xsl:with-param name="name" select="@name"/>
+                                <xsl:with-param name="fixed" select="@fixed"/>
+                            </xsl:call-template>
+                        </xsl:variable>
+                        <xsl:variable name="Type" select="msxsl:node-set($type)"/>
+                        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Dim </xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Values As </xsl:text>
+                        <xsl:value-of select="$Type/type/@type"/>
+                        <xsl:text>() = </xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:call-template name="nl"/>
+                        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;If </xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Values Is Nothing Then </xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Values = New </xsl:text>
+                        <xsl:value-of select="$Type/type/@type"/>
+                        <xsl:text>(){}&#xD;&#xA;</xsl:text>
+                        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;ReDim Preserve </xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Values(</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>.Length)&#xD;&#xA;</xsl:text>
+                        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Values(</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>.Length - 1) = item.</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:call-template name="nl"/>
+                        <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text> = </xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text>Values&#xD;&#xA;</xsl:text>
+                    </xsl:for-each>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;Next item&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;End If&#xD;&#xA;</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:for-each select="I:tag">
+                        <xsl:text>&#9;&#9;&#9;&#9;</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:text> = value.</xsl:text>
+                        <xsl:value-of select="@name"/>
+                        <xsl:call-template name="nl"/>
+                    </xsl:for-each>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:text>&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
         </xsl:for-each>
@@ -767,7 +841,9 @@
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
 
+    <!--Generates properties for all IPTC tags-->
     <xsl:template name="Properties">
+        <!--Stand Alone-->
         <xsl:text>#Region "Properties"&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record/I:tag">
             <xsl:sort data-type="number" order="ascending" select="../@number"/>
@@ -776,6 +852,7 @@
                 <xsl:with-param name="access" select="'Public'"/>
             </xsl:call-template>
         </xsl:for-each>
+        <!--Of groups-->
         <xsl:text>#Region "Grouped" 'Those propertiers can be accessed via groups, do not use them directly!&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record/I:group/I:tag">
             <xsl:sort data-type="number" order="ascending" select="../../@number"/>
@@ -814,7 +891,7 @@
         <xsl:value-of select="@name"/>
         <xsl:text> As </xsl:text>
         <xsl:value-of select="$Type/type/@type"/>
-        <xsl:if test="@multiple">
+        <xsl:if test="@repeatable | ancestor::I:group/@repeatable">
             <xsl:text>()</xsl:text>
         </xsl:if>
         <xsl:call-template name="nl"/>
@@ -826,8 +903,8 @@
         <xsl:value-of select="$Type/type/@get"/>
         <xsl:call-template name="nl"/>
         <xsl:choose>
-            <xsl:when test="@multiple">
-                <xsl:text>&#9;&#9;&#9;&#9;AllValues.ToArray&#xD;&#xA;</xsl:text>
+            <xsl:when test="@repeatable">
+                <xsl:text>&#9;&#9;&#9;&#9;Return AllValues.ToArray&#xD;&#xA;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
                 <xsl:text>&#9;&#9;&#9;&#9;If AllValues IsNot Nothing AndAlso AllValues.Count &lt;> 0 Then Return AllValues(0) Else Return Nothing&#xD;&#xA;</xsl:text>
@@ -844,7 +921,7 @@
             <xsl:text>(</xsl:text>
         </xsl:if>
         <xsl:choose>
-            <xsl:when test="@multiple">
+            <xsl:when test="@repeatable">
                 <xsl:text>New List(Of </xsl:text>
                 <xsl:value-of select="$Type/type/@type"/>
                 <xsl:text>)(value)</xsl:text>
@@ -870,12 +947,18 @@
         <type type="" get="" set="" attr="" convert-back=""/>
     -->
     <xsl:template name="UnderlyingType">
-        <xsl:param name="type"/><!--IPTC type-->
-        <xsl:param name="enum"/><!--Optional enum name (required for enum types)-->
-        <xsl:param name="len"/><!--Lenght-->
-        <xsl:param name="fixed"/><!--Fixed-->
-        <xsl:param name="name"/><!--Name of property-->
-        <xsl:param name="instance"/><!--Instance to get data from (e.g. Me.; Me. can be ommited)-->
+        <xsl:param name="type"/>
+        <!--IPTC type-->
+        <xsl:param name="enum"/>
+        <!--Optional enum name (required for enum types)-->
+        <xsl:param name="len"/>
+        <!--Lenght-->
+        <xsl:param name="fixed"/>
+        <!--Fixed-->
+        <xsl:param name="name"/>
+        <!--Name of property-->
+        <xsl:param name="instance"/>
+        <!--Instance to get data from (e.g. Me.; Me. can be ommited)-->
         <xsl:element name="type">
             <xsl:choose>
                 <!--Enum-binary-->
