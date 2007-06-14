@@ -137,6 +137,12 @@
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Drawing\Metadata\frmIPTC.Designer.vb">
+      <DependentUpon>frmIPTC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Drawing\Metadata\frmIPTC.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmTests.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -254,6 +260,10 @@
     <EmbeddedResource Include="Drawing\IO\frmJPEG.resx">
       <SubType>Designer</SubType>
       <DependentUpon>frmJPEG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drawing\Metadata\frmIPTC.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>frmIPTC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>
