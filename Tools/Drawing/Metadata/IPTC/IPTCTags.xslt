@@ -738,8 +738,26 @@
             <xsl:value-of select="@name"/>
             <xsl:text> As </xsl:text>
             <xsl:value-of select="@name"/>
-            <xsl:text>Group&#xD;&#xA;</xsl:text>
+            <xsl:text>Group</xsl:text>
+            <xsl:if test="@repeatable">
+                <xsl:text>()</xsl:text>
+            </xsl:if>
+            <xsl:call-template name="nl"/>
             <xsl:text>&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;Dim v As List(Of </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group)=</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group.Load(Me)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;If v Is Nothing OrElse v.Count = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
+            <xsl:choose>
+                <xsl:when test="@repeatable">
+                    <xsl:text>&#9;&#9;&#9;&#9;Return v.ToArray&#xD;&#xA;</xsl:text>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>&#9;&#9;&#9;&#9;Return v(0)&#xD;&#xA;</xsl:text>
+                </xsl:otherwise>
+            </xsl:choose>
             <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>

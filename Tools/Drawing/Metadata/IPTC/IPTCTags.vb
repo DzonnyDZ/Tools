@@ -2734,37 +2734,52 @@ Namespace DrawingT.MetadataT
 #End Region
 #Region "Properties"
 		''' <summary>Abstract Relation Method</summary>
-		<FieldDisplayName("ARM")> <Category("ARM")> Public Property ARM As ARMGroup
+		<FieldDisplayName("ARM")> <Category("ARM")> Public Property ARM As ARMGroup()
 			Get
+				Dim v As List(Of ARMGroup)=ARMGroup.Load(Me)
+				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
+				Return v.ToArray
 			End Get
 			Set
 			End Set
 		End Property
 		''' <summary>Country/geographical location referenced by the content of the object</summary>
-		<FieldDisplayName("Content Location")> <Category("Content Location")> Public Property ContentLocation As ContentLocationGroup
+		<FieldDisplayName("Content Location")> <Category("Content Location")> Public Property ContentLocation As ContentLocationGroup()
 			Get
+				Dim v As List(Of ContentLocationGroup)=ContentLocationGroup.Load(Me)
+				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
+				Return v.ToArray
 			End Get
 			Set
 			End Set
 		End Property
 		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
 		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
-		<FieldDisplayName("Reference")> <Category("Reference")> Public Property Reference As ReferenceGroup
+		<FieldDisplayName("Reference")> <Category("Reference")> Public Property Reference As ReferenceGroup()
 			Get
+				Dim v As List(Of ReferenceGroup)=ReferenceGroup.Load(Me)
+				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
+				Return v.ToArray
 			End Get
 			Set
 			End Set
 		End Property
 		''' <summary>Creator of the object data</summary>
-		<FieldDisplayName("By-line info")> <Category("By-line info")> Public Property ByLineInfo As ByLineInfoGroup
+		<FieldDisplayName("By-line info")> <Category("By-line info")> Public Property ByLineInfo As ByLineInfoGroup()
 			Get
+				Dim v As List(Of ByLineInfoGroup)=ByLineInfoGroup.Load(Me)
+				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
+				Return v.ToArray
 			End Get
 			Set
 			End Set
 		End Property
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("ObjectData Preview")> Public Property ObjectDataPreview As ObjectDataPreviewGroup
+		<FieldDisplayName("ObjectData Preview")> <Category("ObjectData Preview")> Public Property ObjectDataPreview As ObjectDataPreviewGroup()
 			Get
+				Dim v As List(Of ObjectDataPreviewGroup)=ObjectDataPreviewGroup.Load(Me)
+				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
+				Return v.ToArray
 			End Get
 			Set
 			End Set
