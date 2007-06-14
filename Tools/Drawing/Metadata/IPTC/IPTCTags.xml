@@ -17,7 +17,7 @@
             <desc>Registered file formats by IPTC and NAA</desc>
             <item name="NoObjectData" value="0" human-name="No Object Data" desc="No Object Data"/>
             <item name="NewsphotoParameterRecord" value="01" human-name="Digital Newsphoto Parameter Record" desc="IPTC-NAA Digital Newsphoto Parameter Record"/>
-            <item name="RecommendedMessageFormat" human-name="recomended Message Format" value="02" desc="IPTC7901 Recommended Message Format"/>
+            <item name="RecommendedMessageFormat" human-name="Recommended Message Format" value="02" desc="IPTC7901 Recommended Message Format"/>
             <item name="TIFF" value="03" human-name="TIFF" desc="Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)"/>
             <item name="AdobeIllustrator" value="04" human-name="Adobe Illustrator" desc="Illustrator (Adobe Graphics data)"/>
             <item name="AppleSingle" value="05" human-name="Apple Single" desc="AppleSingle (Apple Computer Inc)"/>
@@ -57,7 +57,7 @@
             <item name="V1" value="1" desc='Version 1 for file fromat &lt;see cref="FileFormats.NewsphotoParameterRecord"/> and &lt;see cref="FileFormats.NAA89_3"/>, 5.0 for &lt;see cref="FileFormats.TIFF"/>, 1.40 for &lt;see cref="FileFormats.AdobeIllustrator"/>, 2 for &lt;see cref="FileFormats.AppleSingle"/>, 1.02 for &lt;see cref="FileFormats.JPEG"/> and 3.1 for &lt;see cref="FileFormats.Freehand"/>' human-name="1 (IPTC-NAA Digital Newsphoto Parameter Record, NAA 89-3), 5.0 (TIFF), 1.40 (Adobe Illustrator), 2 (Apple Single), 1.02 (JPEG), 3.1 (Freehand)"/>
             <item name='V2' value='2' desc='Version 2 for file format &lt;see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for &lt;see cref="FileFormats.TIFF"/>, 4.0 for &lt;see cref="FileFormats.Freehand"/> and 2.0 for &lt;see cref="FileFormats.HTML"/>' human-name='2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)'/>
             <item name='V3' value='3' desc='Version 3 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for &lt;see cref="FileFormats.Freehand"/>' human-name='3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)'/>
-            <item name='V4' value='4' desc='Version 4 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and &lt;see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for &lt;see cref="FileFormats.Freehand"/>' human-name='4 (IPTC-NAA Digital Newsphoto Parameter Record, Recomended Message Format), 5.5 (Freehand)'/>
+            <item name='V4' value='4' desc='Version 4 for file format &lt;see cref="FileFormats.NewsphotoparameterRecord"/> and &lt;see cref="FileFormats.RecommendedMessageFormat"/> and 5.5 for &lt;see cref="FileFormats.Freehand"/>' human-name='4 (IPTC-NAA Digital Newsphoto Parameter Record, Recommended Message Format), 5.5 (Freehand)'/>
         </enum>
         <tag number="30" name="ServiceIdentifier" human-name="Service Identifier" type="GraphicCharacters"  fixed="false" mandatory="true" repeatable="false" length="10" category="Old IPTC">
             <desc>Identifies the provider and product.</desc>
@@ -400,7 +400,7 @@
                 <desc>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</desc>
             </tag>
             <tag number="122" name="ARMVersion" human-name="ARM Version" type="Enum-binary" enum="ARMVersions" mandatory="true" repeatable="false" fixed="true" length="2" category="Old IPTC">
-                <desc>A number representing the particular version of the ARM specified in DataSet &lt;see cref='ARMIdentified'/>.</desc>
+                <desc>A number representing the particular version of the ARM specified in DataSet &lt;see cref='ARMIdentifier'/>.</desc>
             </tag>
         </group>
         <enum name="ARMMethods" type="UShort">
@@ -421,7 +421,7 @@
         </tag>
         <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category">
             <desc>The Object Type is used to distinguish between different types of objects within the IIM.</desc>
-            <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</remarks>
+            <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
         <enum name="ObjectTypes" type="Byte">
             <desc>Object Type Number and Object Type Name relationship</desc>
@@ -431,7 +431,7 @@
         </enum>
         <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes" category="Category">
             <desc>The Object Attribute defines the nature of the object independent of the Subject.</desc>
-            <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see='LanguageIdentifier'/>)</remarks>
+            <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
         <enum name="ObjectAttributes" type="Byte">
             <desc>Object Attribute Number abd Object Name relationship</desc>
@@ -1234,7 +1234,7 @@
             <item name="Evening" human-name="evening" value="p" desc="Evening"/>
             <item name="Both" human-name="both" value="b" desc="Both"/>
         </senum>
-        <group name="ByLine" human-name="By-line" mandatory="false" repeatable="true" category="Author">
+        <group name="ByLineInfo" human-name="By-line info" mandatory="false" repeatable="true" category="Author">
             <desc>Creator of the object data</desc>
             <tag number="80" name="ByLine" human-name="By-line" type="TextWithSpaces" mandatory="true" repeatable="false" fixed="false" length="32" category="Author">
                 <desc>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</desc>

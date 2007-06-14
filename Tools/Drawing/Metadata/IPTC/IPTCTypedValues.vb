@@ -175,9 +175,10 @@ Namespace DrawingT.MetadataT
         ''' One of values being set contains non-graphic character (in setter) -or-
         ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded
         ''' </exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+        Protected Overridable Property GraphicCharacters_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -191,6 +192,7 @@ Namespace DrawingT.MetadataT
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", "Len cannot be negative")
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
@@ -214,11 +216,12 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="ArgumentException">
         ''' <paramref name="Len"/> is 0 and <paramref name="Fixed"/> is true (in Setter) -or- 
         ''' One of values being set contains non-graphic-non-space character (in setter) -or-
-        ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded
+        ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded -or-
+        ''' <paramref name="Len"/> is negative (in setter)
         ''' </exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property TextWithSpaces_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+        Protected Overridable Property TextWithSpaces_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -232,6 +235,7 @@ Namespace DrawingT.MetadataT
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len < 0 Then Throw New ArgumentException("Len cannot be negative")
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
@@ -258,9 +262,10 @@ Namespace DrawingT.MetadataT
         ''' One of values being set contains non-graphic-non-space-non-cr-non-lf character (in setter) -or-
         ''' One of values being set violates <paramref name="Len"/> and/or <paramref name="Fixed"/> constraint after being encoded
         ''' </exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
+        Protected Overridable Property Text_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of String)
             Get
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -274,6 +279,7 @@ Namespace DrawingT.MetadataT
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", "Len cannot be negative")
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
@@ -289,6 +295,8 @@ Namespace DrawingT.MetadataT
                 Tag(Key) = values
             End Set
         End Property
+        ''' <summary>Bitmap of type <see cref="IPTCTypes.BW460"/> has 460 columns</summary>
+        Private Const BW460_460 As Integer = 460
         ''' <summary>Gets or sets value(s) of <see cref="IPTCTypes.BW460"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="Len">Maximal or fixed length of serialized bitmap (ignored in Getter)</param>
@@ -298,20 +306,21 @@ Namespace DrawingT.MetadataT
         ''' Bitmap being set has width different form 460 (in Setter) -or-
         ''' Bitmap violates lenght constraint after serialization (in Setter)
         ''' </exception>
+        ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Len"/> is negative (in Setter)</exception>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
+        Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
             Get
-                Dim values As List(Of Byte()) = Tag(key)
+                Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Drawing.Bitmap)(values.Count)
                 For Each item As Byte() In values
                     Dim ba As New BitArray(item)
-                    If ba.Length Mod 460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
-                    Dim bmp As New Drawing.Bitmap(460, ba.Length / 460, Drawing.Imaging.PixelFormat.Format1bppIndexed)
-                    For i As Integer = 0 To ba.Length - 1 Step 460
-                        For j As Integer = i To i + 460 - 1
-                            bmp.SetPixel(j - i, i / 460, VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White))
+                    If ba.Length Mod BW460_460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
+                    Dim bmp As New Drawing.Bitmap(BW460_460, ba.Length / BW460_460, Drawing.Imaging.PixelFormat.Format1bppIndexed)
+                    For i As Integer = 0 To ba.Length - 1 Step BW460_460
+                        For j As Integer = i To i + BW460_460 - 1
+                            bmp.SetPixel(j - i, i / BW460_460, VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White))
                         Next j
                     Next i
                     ret.Add(bmp)
@@ -320,14 +329,15 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of Drawing.Bitmap))
                 If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", "Len cannot be negative")
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As Drawing.Bitmap In value
-                        If item.Width <> 460 Then Throw New ArgumentException("Bitmap's width must be 460px")
+                        If item.Width <> BW460_460 Then Throw New ArgumentException("Bitmap's width must be 460px")
                         Dim ba As New BitArray(item.Width * item.Height)
                         For i As Integer = 0 To item.Height
                             For j As Integer = 0 To item.Width
-                                ba(i * 460 + j) = Not item.GetPixel(j, i) = Drawing.Color.Wheat
+                                ba(i * BW460_460 + j) = Not item.GetPixel(j, i) = Drawing.Color.Wheat
                             Next j
                         Next i
                         values.Add(Ba2Bytes(ba))
@@ -335,7 +345,7 @@ Namespace DrawingT.MetadataT
                         If (BLen > Len AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then Throw New ArgumentException("Bitmap violates lenght constraint")
                     Next item
                 End If
-                Tag(key) = values
+                Tag(Key) = values
             End Set
         End Property
         ''' <summary>Converts <see cref="BitArray"/> into <see cref="Byte()"/></summary>
@@ -351,16 +361,15 @@ Namespace DrawingT.MetadataT
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Enum_Binary"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="Type">Type of neumeration </param>
-        ''' <param name="Restrict">Value can be only one of enumerated constants (ignored in Getter)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         ''' <exception cref="ArgumentException">
         ''' Underlying type of enumeration is neither <see cref="Byte"/>, <see cref="UShort"/>, <see cref="UInteger"/>, <see cref="ULong"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="Integer"/> nor <see cref="Long"/> (in Setter) -or-
         ''' <paramref name="Type"/> is not <see cref="System.Enum"/> (in Setter)</exception>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Restrict"/> is True and value being set is not member of <paramref name="Type"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException">Enum is restricted and value being set is not member of <paramref name="Type"/></exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <exception cref="MissingMethodException">Failed to create instance of given enumeration (in Getter; sohold not occure if norma enumeration is passed to <paramref name="Type"/>)</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property Enum_Binary_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Restrict As Boolean = True) As List(Of [Enum])
+        Protected Overridable Property Enum_Binary_Value(ByVal Key As DataSetIdentification, ByVal Type As Type) As List(Of [Enum])
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -373,6 +382,9 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of [Enum]))
                 If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                Dim Attrs As Object() = Type.GetCustomAttributes(GetType(RestrictAttribute), False)
+                Dim Restrict As Boolean
+                If Attrs Is Nothing OrElse Attrs.Length = 0 Then Restrict = True Else Restrict = DirectCast(Attrs(0), RestrictAttribute).Restrict
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As [Enum] In value
@@ -406,7 +418,6 @@ Namespace DrawingT.MetadataT
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Enum_NumChar"/></summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="Type">Type of neumeration </param>
-        ''' <param name="Restrict">Value can be only one of enumerated constants (ignored in Getter)</param>
         ''' <param name="Len">Maximal or fixed length of serialized bitmap (ignored in Getter)</param>
         ''' <param name="Fixed"><paramref name="Len"/> represents fixed lenght of serialized bitmap (ignored in Getter)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
@@ -417,7 +428,7 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <exception cref="MissingMethodException">Failed to create instance of given enumeration (in Getter; sohold not occure if norma enumeration is passed to <paramref name="Type"/>)</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False, Optional ByVal Restrict As Boolean = True) As List(Of [Enum])
+        Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
                 Dim values As List(Of Byte()) = Tag(Key)
@@ -432,6 +443,9 @@ Namespace DrawingT.MetadataT
                 If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
                 If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
                 Dim values As New List(Of Byte())
+                Dim Attrs As Object() = Type.GetCustomAttributes(GetType(RestrictAttribute), False)
+                Dim Restrict As Boolean
+                If Attrs Is Nothing OrElse Attrs.Length = 0 Then Restrict = True Else Restrict = DirectCast(Attrs(0), RestrictAttribute).Restrict
                 If value IsNot Nothing Then
                     For Each item As [Enum] In value
                         If Restrict AndAlso Not Array.IndexOf([Enum].GetValues(Type), value) >= 0 Then Throw New InvalidEnumArgumentException("value", CObj(item), Type)
@@ -542,40 +556,50 @@ Namespace DrawingT.MetadataT
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Byte_Binary"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
+        ''' <param name="Len">Maximal or fixed length of data (ignored in Getter)</param>
+        ''' <param name="Fixed"><paramref name="Len"/> is fixed length (ignored in Getter)</param>
+        ''' <exception cref="ArgumentException">
+        ''' <paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter) -or-
+        ''' Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True
+        ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Always)> _
-        Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification) As List(Of Byte())
+        Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Byte())
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Return values
             End Get
             Set(ByVal value As List(Of Byte()))
+                If Len = 0 AndAlso Fixed Then Throw New ArgumentException("When Fixed is True Len cannot be 0")
+                For Each item As Byte() In value
+                    If (Len <> 0 AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then Throw New ArgumentException("Lenght constraint violation")
+                Next item
                 Tag(Key) = value
             End Set
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.UNO"/> type</summary>
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentNullException">Stored value is null or empty (in Getter)</exception>
-        ''' <exception cref="ArgumentException">IPR or OVI part of stored value is invalid: contains unallowed charactes (white space, *, :, /, ?), is empty or violates lenght constraint. See <seealso cref="UNO.OVI"/> and <seealso cref="UNO.IPR"/> for more information (in Getter)</exception>
+        ''' <exception cref="ArgumentException">IPR or OVI part of stored value is invalid: contains unallowed charactes (white space, *, :, /, ?), is empty or violates lenght constraint. See <seealso cref="iptcUNO.OVI"/> and <seealso cref="iptcUNO.IPR"/> for more information (in Getter)</exception>
         ''' <exception cref="IndexOutOfRangeException">There is not enough (4) parts separated by : in stored value (in Getter)</exception>
         ''' <exception cref="ArgumentException">UCD component of stored value is to short or contains invalid date (in Getter)</exception>
         ''' <exception cref="InvalidCastException">UCD component odf stored value contains non-numeric character (in Getter)</exception>
-        ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="UNO.ODE"/> for more information. (in Getter)</exception>
+        ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="iptcUNO.ODE"/> for more information. (in Getter)</exception>
         <EditorBrowsable(EditorBrowsableState.Always)> _
-        Protected Overridable Property UNO_Value(ByVal Key As DataSetIdentification) As List(Of UNO)
+        Protected Overridable Property UNO_Value(ByVal Key As DataSetIdentification) As List(Of iptcUNO)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of UNO)(values.Count)
+                Dim ret As New List(Of iptcUNO)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(New UNO(item))
+                    ret.Add(New iptcUNO(item))
                 Next item
                 Return ret
             End Get
-            Set(ByVal value As List(Of UNO))
+            Set(ByVal value As List(Of iptcUNO))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As UNO In value
+                    For Each item As iptcUNO In value
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
@@ -662,24 +686,24 @@ Namespace DrawingT.MetadataT
         ''' <param name="Encoding">Encoding used to encode and decode names</param>
         ''' <exception cref="IndexOutOfRangeException">Stored value have more than 5 :-separated parts (in Getter)</exception>
         ''' <exception cref="ArgumentException">Stored value have less then 5 :-separated parts (in Getter)</exception>
-        ''' <exception cref="InvalidOperationException">Setting value which's part(s) serializes into byte array of bad lengths (allowed lenghts are 1÷32 for <see cref="SubjectReference.IPR"/>, 8 for <see cref="SubjectReference.SubjectReferenceNumber"/> and 0÷64 for names) (in setter)</exception>
+        ''' <exception cref="InvalidOperationException">Setting value which's part(s) serializes into byte array of bad lengths (allowed lenghts are 1÷32 for <see cref="iptcSubjectReference.IPR"/>, 8 for <see cref="iptcSubjectReference.SubjectReferenceNumber"/> and 0÷64 for names) (in setter)</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Overridable Property SubjectReference_Value(ByVal Key As DataSetIdentification, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of SubjectReference)
+        Protected Overridable Property SubjectReference_Value(ByVal Key As DataSetIdentification, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of iptcSubjectReference)
             Get
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of SubjectReference)(values.Count)
+                Dim ret As New List(Of iptcSubjectReference)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(New SubjectReference(item, Encoding))
+                    ret.Add(New iptcSubjectReference(item, Encoding))
                 Next item
                 Return ret
             End Get
-            Set(ByVal value As List(Of SubjectReference))
+            Set(ByVal value As List(Of iptcSubjectReference))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As SubjectReference In value
+                    For Each item As iptcSubjectReference In value
                         values.Add(item.ToBytes(Encoding))
                     Next item
                 End If
@@ -733,7 +757,7 @@ Namespace DrawingT.MetadataT
         ''' <param name="Type">Type of enum in value</param>
         ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="StringEnum.EnumType"/> (in Setter)</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> (in Setter)</exception>
         ''' <exception cref="ArrayTypeMismatchException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> differs from <paramref name="Type"/> (in setter)</exception>
         ''' <exception cref="ArgumentException">
         ''' Error while creating generic instance - caused by wrong <paramref name="Type"/> (in Getter) -or-
@@ -781,13 +805,13 @@ Namespace DrawingT.MetadataT
         ''' 2nd byte of stored value cannot be interpreted as <see cref="ImageTypeContents"/> (in Getter)
         ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of ImageType)
+        Protected Property ImageType_Value(ByVal Key As DataSetIdentification) As List(Of iptcImageType)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of ImageType)(values.Count)
+                Dim ret As New List(Of iptcImageType)(values.Count)
                 For Each item As Byte() In values
-                    Dim val As New ImageType
+                    Dim val As New iptcImageType
                     If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = ChrW(item(1))
@@ -795,10 +819,10 @@ Namespace DrawingT.MetadataT
                 Next item
                 Return ret
             End Get
-            Set(ByVal value As List(Of ImageType))
+            Set(ByVal value As List(Of iptcImageType))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As ImageType In value
+                    For Each item As iptcImageType In value
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
@@ -813,13 +837,13 @@ Namespace DrawingT.MetadataT
         ''' 2nd byte of stored value cannot be interpreted as <see cref="AudioDataType"/> (in Getter)
         ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of AudioType)
+        Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of iptcAudioType)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
-                Dim ret As New List(Of AudioType)(values.Count)
+                Dim ret As New List(Of iptcAudioType)(values.Count)
                 For Each item As Byte() In values
-                    Dim val As New AudioType
+                    Dim val As New iptcAudioType
                     If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = ChrW(item(1))
@@ -827,10 +851,10 @@ Namespace DrawingT.MetadataT
                 Next item
                 Return ret
             End Get
-            Set(ByVal value As List(Of AudioType))
+            Set(ByVal value As List(Of iptcAudioType))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
-                    For Each item As AudioType In value
+                    For Each item As iptcAudioType In value
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
@@ -866,6 +890,77 @@ Namespace DrawingT.MetadataT
                 Tag(Key) = values
             End Set
         End Property
+#Region "Helpers"
+        ''' <summary>Converts <see cref="List(Of [Enum])"/> into <see cref="List"/> of any <see cref="[Enum]"/></summary>
+        ''' <param name="From"><see cref="List(Of [Enum])"/> to be converted</param>
+        ''' <typeparam name="TEnum">Type of <see cref="[Enum]"/></typeparam>
+        Private Shared Function ConvertEnumList(Of TEnum As {IConvertible, Structure})(ByVal From As List(Of [Enum])) As List(Of TEnum)
+            If From Is Nothing Then Return Nothing
+            Dim ret As New List(Of TEnum)(From.Count)
+            For Each item As [Enum] In From
+                ret.Add(CObj(item))
+            Next item
+            Return ret
+        End Function
+        ''' <summary>Converts <see cref="List"/> of any <see cref="[Enum]"/> into <see cref="List(Of [Enum])"/></summary>
+        ''' <param name="From"><see cref="List"/> to be converted</param>
+        ''' <typeparam name="TEnum">Type of <see cref="[Enum]"/></typeparam>
+        Private Shared Function ConvertEnumList(Of TEnum As {IConvertible, Structure})(ByVal From As List(Of TEnum)) As List(Of [Enum])
+            If From Is Nothing Then Return Nothing
+            Dim ret As New List(Of [Enum])(From.Count)
+            For Each item As TEnum In From
+                ret.Add(CObj(item))
+            Next item
+            Return ret
+        End Function
+        ''' <summary>Converts <see cref="List"/> of <see cref="NumStr"/> to <see cref="List"/> of another <see cref="NumStr"/> that drives from first one</summary>
+        ''' <param name="From"><see cref="List"/> to be converted</param>
+        ''' <typeparam name="TNumStr1">Type of items in <paramref name="From"/></typeparam>
+        ''' <typeparam name="TNumStr2">Type of items in return value</typeparam>
+        Private Shared Function ConvertNumStrList(Of TNumStr1 As NumStr, TNumStr2 As TNumStr1)(ByVal From As List(Of TNumStr1)) As List(Of TNumStr2)
+            If From Is Nothing Then Return Nothing
+            Dim ret As New List(Of TNumStr2)(From.Count)
+            For Each item As TNumStr1 In From
+                ret.Add(item)
+            Next item
+            Return ret
+        End Function
+        ''' <summary>Converts <see cref="List"/> of <see cref="NumStr"/> that derives from another <see cref="NumStr"/> to list of that another <see cref="NumStr"/></summary>
+        ''' <param name="From"><see cref="List"/> to be converted</param>
+        ''' <typeparam name="TNumStr1">Type of items in return value</typeparam>
+        ''' <typeparam name="TNumStr2">Type of item in <paramref name="From"/></typeparam>
+        Private Shared Function ConvertNumStrList(Of TNumStr1 As NumStr, TNumStr2 As TNumStr1)(ByVal From As List(Of TNumStr2)) As List(Of TNumStr1)
+            If From Is Nothing Then Return Nothing
+            Dim ret As New List(Of TNumStr1)(From.Count)
+            For Each item As TNumStr2 In From
+                ret.Add(item)
+            Next item
+            Return ret
+        End Function
+
+        ''' <summary>Converts <see cref="List(Of [Enum])"/> into <see cref="List"/> of any <see cref="[Enum]"/></summary>
+        ''' <param name="From"><see cref="List(Of [Enum])"/> to be converted</param>
+        ''' <typeparam name="TEnum">Type of <see cref="[Enum]"/></typeparam>
+        Private Shared Function ConvertEnumList(Of TEnum As {IConvertible, Structure})(ByVal From As List(Of StringEnum)) As List(Of StringEnum(Of TEnum))
+            If From Is Nothing Then Return Nothing
+            Dim ret As New List(Of StringEnum(Of TEnum))(From.Count)
+            For Each item As stringenum In From
+                ret.Add(item)
+            Next item
+            Return ret
+        End Function
+        ''' <summary>Converts <see cref="List"/> of any <see cref="[Enum]"/> into <see cref="List(Of [Enum])"/></summary>
+        ''' <param name="From"><see cref="List"/> to be converted</param>
+        ''' <typeparam name="TEnum">Type of <see cref="[Enum]"/></typeparam>
+        Private Shared Function ConvertEnumList(Of TEnum As {IConvertible, Structure})(ByVal From As List(Of StringEnum(Of TEnum))) As List(Of StringEnum)
+            If From Is Nothing Then Return Nothing
+            Dim ret As New List(Of StringEnum)(From.Count)
+            For Each item As StringEnum(Of TEnum) In From
+                ret.Add(item)
+            Next item
+            Return ret
+        End Function
+#End Region
 #End Region
     End Class
 #End If

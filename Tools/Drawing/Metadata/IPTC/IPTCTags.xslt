@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<xsl:stylesheet version="1.0" xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:I="http://codeplex.com/DTools/IPTCTags">
+<xsl:stylesheet version="1.0"
+                xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
+                xmlns:I="http://codeplex.com/DTools/IPTCTags"
+                xmlns:msxsl="urn:schemas-microsoft-com:xslt"
+                >
 
     <xsl:output method="text" version="1.0" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
 
@@ -71,6 +75,7 @@
         <xsl:call-template name="sEnums"/>
         <xsl:call-template name="TagTypes"/>
         <xsl:call-template name="Groups"/>
+        <xsl:call-template name="Properties"/>
         <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
     </xsl:template>
 
@@ -136,7 +141,7 @@
         <!--GetEnum-->
         <xsl:text>&#9;&#9;''' &lt;summary>Gets Enum that contains list of tags for specific record (group of tags)&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Record">Number of record to get enum for&lt;/param>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;''' &lt;exception name="InvalidEnumArgumentException">Value of &lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/>&lt;/exception>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">Value of &lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/>&lt;/exception>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Public Shared Function GetEnum(ByVal Record As RecordNumbers) As Type&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;Select Case Record&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record">
@@ -215,7 +220,12 @@
             <xsl:with-param name="Count" select="$Tab"/>
         </xsl:call-template>
         <xsl:text>''' &lt;summary></xsl:text>
-        <xsl:value-of select="normalize-space(I:desc)" disable-output-escaping="yes"/>
+        <xsl:variable name="content">
+            <xsl:call-template name="Amp2Entity">
+                <xsl:with-param name="Text" select="normalize-space(I:desc)"/>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:value-of select="$content" disable-output-escaping="yes"/>
         <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Generates given number of tabs-->
@@ -411,7 +421,7 @@
         <xsl:text>&#9;&#9;''' &lt;summary>Gets details about tag format by tag record and number&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Record">Recor number&lt;/param>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="TagNumber">Number of tag within &lt;paramref name="Record"/>&lt;/param>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/> -or- &lt;paramref name="TagNumber"/> is not tag within &lt;paramref name="record"/>&lt;/exception/>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/> -or- &lt;paramref name="TagNumber"/> is not tag within &lt;paramref name="record"/>&lt;/exception>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Public Shared Function GetTag(ByVal Record As RecordNumbers, TagNumber As Byte) As IPTCTag&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;Select Case Record&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record">
@@ -578,88 +588,309 @@
         <xsl:text>&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
         <!--Groups' classes-->
+        <xsl:text>#Region "Classes"&#xD;&#xA;</xsl:text>
         <xsl:for-each select="I:Root/I:record/I:group">
             <xsl:sort order="ascending" data-type="number" select="ancestor::I:record/@number"/>
             <xsl:sort order="ascending" data-type="number" select="I:tag[1]/@number"/>
-            <xsl:text>&#9;&#9;Partial Public Class </xsl:text>
+            <xsl:call-template name="XML-Doc">
+                <xsl:with-param name="Tab" select="2"/>
+            </xsl:call-template>
+            <xsl:text>&#9;&#9;</xsl:text>
+            <xsl:call-template name="DisplayName"/>
+            <xsl:call-template name="Category"/>
+            <xsl:text>Partial Public NotInheritable Class </xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text>Group : Inherits Group&#xD;&#xA;</xsl:text>
-            <!--TODO: Generate properties and CTor-->
-            <xsl:text>&#9;&#9;&#9;'TODO: Properties and CTor&#xD;&#xA;</xsl:text>
+            <!--<xsl:text>&#9;&#9;&#9;&#9;''' &lt;summary>CTor&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;Public Sub New()&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;End Sub&#xD;&#xA;</xsl:text>-->
+            <!--Load-->
+            <xsl:text>&#9;&#9;&#9;&#9;''' &lt;summary>Loads groups from IPTC&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;''' &lt;param name="IPTC">&lt;see cref="IPTC"/> to load groups from&lt;/param>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;''' &lt;exception cref="ArgumentNullException">&lt;paramref name="IPTC"/> is null&lt;/exception>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;Public Shared Function Load(ByVal IPTC As IPTC) As List(Of </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Dim Map as List(Of Integer()) = GetGroupMap(IPTC</xsl:text>
+            <xsl:for-each select="I:tag">
+                <xsl:text>, GetTag(</xsl:text>
+                <xsl:value-of select="../../@number"/>
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="@number"/>
+                <xsl:text>)</xsl:text>
+            </xsl:for-each>
+            <xsl:text>)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;If Map Is Nothing OrElse Map.Count = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Dim ret As New List(Of </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group)&#xD;&#xA;</xsl:text>
+            <xsl:for-each select="I:tag">
+                <xsl:variable name="type">
+                    <xsl:call-template name="UnderlyingType">
+                        <xsl:with-param name="type" select="@type"/>
+                        <xsl:with-param name="enum" select="@enum"/>
+                        <xsl:with-param name="len" select="@length"/>
+                        <xsl:with-param name="name" select="@name"/>
+                        <xsl:with-param name="fixed" select="@fixed"/>
+                        <xsl:with-param name="instance" select="'IPTC.'"/>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="Type" select="msxsl:node-set($type)"/>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;Dim _all_</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text>s As List(Of </xsl:text>
+                <xsl:value-of select="$Type/type/@type"/>
+                <xsl:text>) = </xsl:text>
+                <xsl:value-of select="$Type/type/@get"/>
+                <xsl:call-template name="nl"/>
+            </xsl:for-each>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;For Each item As Integer() In Map&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;ret.add(New </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group)&#xD;&#xA;</xsl:text>
+            <xsl:for-each select="I:tag">
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;If item(</xsl:text>
+                <xsl:value-of select="position()-1"/>
+                <xsl:text>) >= 0 Then ret(ret.Count - 1).</xsl:text>                
+                <xsl:value-of select="@name"/>
+                <xsl:text> = _all_</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text>s(item(</xsl:text>
+                <xsl:value-of select="position()-1"/>
+                <xsl:text>))&#xD;&#xA;</xsl:text>
+            </xsl:for-each>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Next Item&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Return ret&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;End Function&#xD;&#xA;</xsl:text>
+            <!--GetGroup-->
+            <xsl:text>&#9;&#9;&#9;&#9;''' &lt;summary>Gets information about this group&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;Public Shared ReadOnly Property GroupInfo As GroupInfo&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return GetGroup(Groups.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
+            <!--Properties-->
+            <xsl:for-each select="I:tag">
+                <xsl:sort data-type="number" order="ascending" select="@number"/>
+                <xsl:variable name="type">
+                    <xsl:call-template name="UnderlyingType">
+                        <xsl:with-param name="type" select="@type"/>
+                        <xsl:with-param name="enum" select="@enum"/>
+                        <xsl:with-param name="len" select="@length"/>
+                        <xsl:with-param name="name" select="@name"/>
+                        <xsl:with-param name="fixed" select="@fixed"/>
+                    </xsl:call-template>
+                </xsl:variable>
+                <xsl:variable name="Type" select="msxsl:node-set($type)"/>
+                <xsl:text>&#9;&#9;&#9;&#9;''' &lt;summary>Contains value of the &lt;see cref="</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text>"/> property&lt;/summary>&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&lt;EditorBrowsable(EditorBrowsableState.Never)> Private Dim _</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text> As </xsl:text>
+                <xsl:value-of select="$Type/type/@type"/>
+                <xsl:call-template name="nl"/>
+                <xsl:call-template name="XML-Doc">
+                    <xsl:with-param name="Tab" select="4"/>
+                </xsl:call-template>
+                <xsl:text>&#9;&#9;&#9;&#9;</xsl:text>
+                <xsl:call-template name="Attributes"/>
+                <xsl:call-template name="Category"/>
+                <xsl:call-template name="DisplayName"/>
+                <xsl:value-of select="$Type/type/@attr"/>
+                <xsl:text>Public Property </xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text> As </xsl:text>
+                <xsl:value-of select="$Type/type/@type"/>
+                <xsl:call-template name="nl"/>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return _</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:call-template name="nl"/>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;_</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text> = value&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
+                <xsl:call-template name="nl"/>
+            </xsl:for-each>
             <xsl:text>&#9;&#9;End Class&#xD;&#xA;</xsl:text>
         </xsl:for-each>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+        <!--Group properties-->
+        <xsl:text>#Region "Properties"&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="I:Root/I:record/I:group">
+            <xsl:sort order="ascending" data-type="number" select="ancestor::I:record/@number"/>
+            <xsl:sort order="ascending" data-type="number" select="I:tag[1]/@number"/>
+            <xsl:call-template name="XML-Doc">
+                <xsl:with-param name="Tab" select="2"/>
+            </xsl:call-template>
+            <xsl:text>&#9;&#9;</xsl:text>
+            <xsl:call-template name="DisplayName"/>
+            <xsl:call-template name="Category"/>
+            <xsl:call-template name="Attributes"/>
+            <xsl:text>Public Property </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text> As </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+    </xsl:template>
+
+    <xsl:template name="Properties">
+        <xsl:text>#Region "Properties"&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="/I:Root/I:record/I:tag">
+            <xsl:sort data-type="number" order="ascending" select="../@number"/>
+            <xsl:sort data-type="number" order="ascending" select="@number"/>
+            <xsl:call-template name="Property">
+                <xsl:with-param name="access" select="'Public'"/>
+            </xsl:call-template>
+        </xsl:for-each>
+        <xsl:text>#Region "Grouped" 'Those propertiers can be accessed via groups, do not use them directly!&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="/I:Root/I:record/I:group/I:tag">
+            <xsl:sort data-type="number" order="ascending" select="../../@number"/>
+            <xsl:sort data-type="number" order="ascending" select="@number"/>
+            <xsl:call-template name="Property">
+                <xsl:with-param name="access" select="'&lt;EditorBrowsable(EditorBrowsableState.Never)> Private'"/>
+            </xsl:call-template>
+        </xsl:for-each>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--Generates property-->
     <xsl:template name="Property">
-        <xsl:call-template name="XML-Doc"/>
-        <xsl:call-template name="Category"/>
-        <xsl:call-template name="DisplayName"/>
-        <xsl:call-template name="Attributes"/>
-        <xsl:text>&#9;&#9;Public Property </xsl:text>
-        <xsl:value-of select="@name"/>
-        <xsl:variable name="Type">
+        <xsl:param name="access"/>
+        <xsl:variable name="type">
             <xsl:call-template name="UnderlyingType">
                 <xsl:with-param name="type" select="@type"/>
                 <xsl:with-param name="enum" select="@enum"/>
                 <xsl:with-param name="len" select="@length"/>
-                <xsl:with-param name="param" select="'Value being set'"/>
-                <xsl:with-param name="variable" select="'value'"/>
+                <xsl:with-param name="name" select="@name"/>
+                <xsl:with-param name="fixed" select="@fixed"/>
             </xsl:call-template>
         </xsl:variable>
+        <xsl:variable name="Type" select="msxsl:node-set($type)"/>
+        <xsl:call-template name="XML-Doc">
+            <xsl:with-param name="Tab" select="2"/>
+        </xsl:call-template>
+        <xsl:text>&#9;&#9;</xsl:text>
+        <xsl:call-template name="Category"/>
+        <xsl:call-template name="DisplayName"/>
+        <xsl:value-of select="$Type/type/@attr"/>
+        <xsl:call-template name="Attributes"/>
+        <xsl:value-of select="$access"/>
+        <xsl:text> Property </xsl:text>
+        <xsl:value-of select="@name"/>
         <xsl:text> As </xsl:text>
-        <xsl:value-of select="$Type"/>
+        <xsl:value-of select="$Type/type/@type"/>
+        <xsl:if test="@multiple">
+            <xsl:text>()</xsl:text>
+        </xsl:if>
         <xsl:call-template name="nl"/>
-        <xsl:text>&#9;&#9;End Property</xsl:text>
+        <!--Get-->
+        <xsl:text>&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;Dim AllValues As List(Of </xsl:text>
+        <xsl:value-of select="$Type/type/@type"/>
+        <xsl:text>) = </xsl:text>
+        <xsl:value-of select="$Type/type/@get"/>
+        <xsl:call-template name="nl"/>
+        <xsl:choose>
+            <xsl:when test="@multiple">
+                <xsl:text>&#9;&#9;&#9;&#9;AllValues.ToArray&#xD;&#xA;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>&#9;&#9;&#9;&#9;If AllValues IsNot Nothing AndAlso AllValues.Count &lt;> 0 Then Return AllValues(0) Else Return Nothing&#xD;&#xA;</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+        <!--Set-->
+        <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;</xsl:text>
+        <xsl:value-of select="$Type/type/@set"/>
+        <xsl:text> = </xsl:text>
+        <xsl:if test="$Type/type/@convert-back">
+            <xsl:value-of select="$Type/type/@convert-back"/>
+            <xsl:text>(</xsl:text>
+        </xsl:if>
+        <xsl:choose>
+            <xsl:when test="@multiple">
+                <xsl:text>New List(Of </xsl:text>
+                <xsl:value-of select="$Type/type/@type"/>
+                <xsl:text>)(value)</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>New List(Of </xsl:text>
+                <xsl:value-of select="$Type/type/@type"/>
+                <xsl:text>)(New </xsl:text>
+                <xsl:value-of select="$Type/type/@type"/>
+                <xsl:text>(){value})</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:if test="$Type/type/@convert-back">
+            <xsl:text>)</xsl:text>
+        </xsl:if>
+        <xsl:call-template name="nl"/>
+        <xsl:text>&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
     </xsl:template>
 
     <!--getenretes underlying type from IPTC type-->
     <!--Returns
-        <x:type type="" verify="" exception="" to-byte="" from-byte="">
+        <type type="" get="" set="" attr="" convert-back=""/>
     -->
-    <!--TODO:Completely rebuild way how properties are stored and retrieved!!!-->
     <xsl:template name="UnderlyingType">
         <xsl:param name="type"/><!--IPTC type-->
         <xsl:param name="enum"/><!--Optional enum name (required for enum types)-->
         <xsl:param name="len"/><!--Lenght-->
-        <xsl:param name="param"/><!--Reference to parameter for exception XML-doc-->
-        <xsl:param name="variable"/><!--name of variable to text-->
-        <xsl:param name="byte-data"/><!--Name of variable where the byte data are stored in-->
-        <xsl:element name="type" namespace="x">
+        <xsl:param name="fixed"/><!--Fixed-->
+        <xsl:param name="name"/><!--Name of property-->
+        <xsl:param name="instance"/><!--Instance to get data from (e.g. Me.; Me. can be ommited)-->
+        <xsl:element name="type">
             <xsl:choose>
                 <!--Enum-binary-->
                 <xsl:when test="$type='Enum-binary'">
                     <xsl:attribute name="type">
                         <xsl:value-of select="@enum"/>
                     </xsl:attribute>
-                    <xsl:if test="I:Root/I:record/I:enum[@name=$enum]/@restrict">
-                        <xsl:attribute name="verify">
-                            <xsl:text>VerifyNumericEnum(</xsl:text>
-                            <xsl:value-of select="$variable"/>
-                            <xsl:text>)</xsl:text>
-                        </xsl:attribute>
-                        <xsl:attribute name="exception">
-                            <xsl:text>''' &lt;exception cref="InvalidEnumArgumentException"></xsl:text>
-                            <xsl:value-of select="$param"/>
-                            <xsl:text> is not member of &lt;see cref="</xsl:text>
-                            <xsl:value-of select="$enum"/>
-                            <xsl:text>/>&lt;/exception></xsl:text>
+                    <xsl:attribute name="get">
+                        <xsl:text>ConvertEnumList(Of </xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)(</xsl:text>
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Enum_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, GetType(</xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)))</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Enum_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, GetType(</xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>))</xsl:text>
+                    </xsl:attribute>
+                    <xsl:if test="/I:Root/I:record/I:enum[@name=$enum]/@type='SByte' or /I:Root/I:record/I:enum[@name=$enum]/@type='UShort' or /I:Root/I:record/I:enum[@name=$enum]/@type='UInteger' or /I:Root/I:record/I:enum[@name=$enum]/@type='ULong'">
+                        <xsl:attribute name="attr">
+                            <xsl:text>&lt;CLSCompliant(False)></xsl:text>
                         </xsl:attribute>
                     </xsl:if>
-                    <xsl:attribute name="from-byte">
-                        <xsl:text>UIntFromBytes(</xsl:text>
-                        <xsl:value-of select="len"/>
-                        <xsl:text>, </xsl:text>
-                        <xsl:value-of select="$byte-data"/>
-                        <xsl:text>)</xsl:text>
-                    </xsl:attribute>
-                    <xsl:attribute name="to-byte">
-                        <xsl:text>ToBytes(</xsl:text>
-                        <xsl:value-of select="$len"/>
-                        <xsl:text>, CULng(</xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text>))</xsl:text>
+                    <xsl:attribute name="convert-back">
+                        <xsl:text>ConvertEnumList</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--Enum-NumChar-->
@@ -667,70 +898,96 @@
                     <xsl:attribute name="type">
                         <xsl:value-of select="@enum"/>
                     </xsl:attribute>
-                    <xsl:if test="I:Root/I:record/I:enum[@name=$enum]/@restrict">
-                        <xsl:attribute name="verify">
-                            <xsl:text>VerifyNumericEnum(</xsl:text>
-                            <xsl:value-of select="$variable"/>
-                            <xsl:text>)</xsl:text>
-                        </xsl:attribute>
-                        <xsl:attribute name="exception">
-                            <xsl:text>''' &lt;exception cref="InvalidEnumArgumentException"></xsl:text>
-                            <xsl:value-of select="$param"/>
-                            <xsl:text> is not member of &lt;see cref="</xsl:text>
-                            <xsl:value-of select="$enum"/>
-                            <xsl:text>/>&lt;/exception></xsl:text>
-                        </xsl:attribute>
-                    </xsl:if>
-                    <xsl:attribute name="from-byte">
-                        <xsl:text>NumCharFromBytes(</xsl:text>
-                        <xsl:value-of select="$byte-data"/>
+                    <xsl:attribute name="get">
+                        <xsl:text>ConvertEnumList(Of </xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)(</xsl:text>
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Enum_NumChar_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, GetType(</xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)))</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Enum_NumChar_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, GetType(</xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>), </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
-                    <xsl:attribute name="to-byte">
-                        <xsl:text>ToBytes(</xsl:text>
-                        <xsl:value-of select="$len"/>
-                        <xsl:text>,CDec(</xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text>))</xsl:text>
+                    <xsl:attribute name="convert-back">
+                        <xsl:text>ConvertEnumList</xsl:text>
                     </xsl:attribute>
+                    <xsl:if test="/I:Root/I:record/I:enum[@name=$enum]/@type='SByte' or /I:Root/I:record/I:enum[@name=$enum]/@type='UShort' or /I:Root/I:record/I:enum[@name=$enum]/@type='UInteger' or /I:Root/I:record/I:enum[@name=$enum]/@type='ULong'">
+                        <xsl:attribute name="attr">
+                            <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                        </xsl:attribute>
+                    </xsl:if>
                 </xsl:when>
                 <!--StringEnum-->
                 <xsl:when test="$type='StringEnum'">
-                    <!--TODO:-->
-                    <xsl:choose>
-                        <!--Only enumerated values are possible-->
-                        <xsl:when test="I:Root/I:record/I:enum[@name=$enum]/@restrict">
-                            <xsl:attribute name="type">
-                                <xsl:value-of select="@enum"/>
-                            </xsl:attribute>
-                            <xsl:attribute name="verify">
-                                <xsl:text>VerifyNumericEnum(</xsl:text>
-                                <xsl:value-of select="$variable"/>
-                                <xsl:text>)</xsl:text>
-                            </xsl:attribute>
-                            <xsl:attribute name="exception">
-                                <xsl:text>''' &lt;exception cref="InvalidEnumArgumentException"></xsl:text>
-                                <xsl:value-of select="$param"/>
-                                <xsl:text> is not member of &lt;see cref="</xsl:text>
-                                <xsl:value-of select="$enum"/>
-                                <xsl:text>/>&lt;/exception></xsl:text>
-                            </xsl:attribute>
-                        </xsl:when>
-                        <!--All values are possible-->
-                        <xsl:otherwise>
-                            <xsl:attribute name="type">
-                                <xsl:text>T1orT2(Of </xsl:text>
-                                <xsl:value-of select="@enum"/>
-                                <xsl:text>, String)</xsl:text>
-                            </xsl:attribute>
-                            
-                        </xsl:otherwise>
-                    </xsl:choose>
+                    <xsl:attribute name="type">
+                        <xsl:text>StringEnum(Of </xsl:text>
+                        <xsl:value-of select="@enum"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:text>ConvertEnumList(Of </xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)(</xsl:text>
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>StringEnum_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, GetType(</xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)))</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="convert-back">
+                        <xsl:text>ConvertEnumList(Of </xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>StringEnum_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, GetType(</xsl:text>
+                        <xsl:value-of select="$enum"/>
+                        <xsl:text>), </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="attr">
+                        <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--UnsignedBinaryNumber-->
                 <xsl:when test="$type='UnsignedBinaryNumber'">
                     <xsl:attribute name="type">
                         <xsl:text>ULong</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UnsignedBinaryNumber_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UnsignedBinaryNumber_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="attr">
+                        <xsl:text>&lt;CLSCompliant(False)></xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--Boolean-binary-->
@@ -738,47 +995,84 @@
                     <xsl:attribute name="type">
                         <xsl:text>Boolean</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Boolean_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Boolean_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--UShort-binary-->
                 <xsl:when test="$type='UShort-binary'">
                     <xsl:attribute name="type">
                         <xsl:text>UShort</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UShort_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UShort_Binary_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="attr">
+                        <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--NumericChar-->
                 <xsl:when test="$type='NumericChar'">
-                    <xsl:choose>
-                        <xsl:when test="$len=0 or $len>19">
-                            <xsl:attribute name="type">
-                                <xsl:text>Decimal</xsl:text>
-                            </xsl:attribute>                            
-                        </xsl:when>
-                        <xsl:when test="$len&lt;=2">
-                            <xsl:attribute name="type">
-                                <xsl:text>Byte</xsl:text>
-                            </xsl:attribute>
-                        </xsl:when>
-                        <xsl:when test="$len&lt;=4">
-                            <xsl:attribute name="type">
-                                <xsl:text>Short</xsl:text>
-                            </xsl:attribute>
-                        </xsl:when>
-                        <xsl:when test="$len&lt;=9">
-                            <xsl:attribute name="type">
-                                <xsl:text>Integer</xsl:text>
-                            </xsl:attribute>
-                        </xsl:when>
-                        <xsl:when test="$len&lt;=19">
-                            <xsl:attribute name="type">
-                                <xsl:text>Long</xsl:text>
-                            </xsl:attribute>
-                        </xsl:when>
-                    </xsl:choose>
+                    <xsl:attribute name="type">
+                        <xsl:text>Decimal</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>NumericChar_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>NumericChar_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--GraphicCharacters-->
                 <xsl:when test="$type='GraphicCharacters'">
                     <xsl:attribute name="type">
                         <xsl:text>String</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>GraphicCharacters_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>GraphicCharacters_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--TextWithSpaces-->
@@ -786,11 +1080,43 @@
                     <xsl:attribute name="type">
                         <xsl:text>String</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>TextWithSpaces_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>TextWithSpaces_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--Text-->
                 <xsl:when test="$type='Text'">
                     <xsl:attribute name="type">
                         <xsl:text>String</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Text_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Text_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--Alpha-->
@@ -798,11 +1124,43 @@
                     <xsl:attribute name="type">
                         <xsl:text>String</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Alpha_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Alpha_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--BW460-->
                 <xsl:when test="$type='BW460'">
                     <xsl:attribute name="type">
                         <xsl:text>Drawing.Bitmap</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>BW460_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>BW460_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--CCYYMMDD-->
@@ -810,21 +1168,35 @@
                     <xsl:attribute name="type">
                         <xsl:text>Date</xsl:text>
                     </xsl:attribute>
-                    <xsl:attribute name="verify">
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text> = New Date(</xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text>.Year, </xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text>.Month, </xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text>.Day)&#xD;&#xA;</xsl:text>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>CCYYMMDD_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>CCYYMMDD_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
-                <!--CCYYMMDDOmmitable-->
-                <xsl:when test="$type='CCYYMMDDOmmitable'">
+                <!--CCYYMMDDommitable-->
+                <xsl:when test="$type='CCYYMMDDommitable'">
                     <xsl:attribute name="type">
                         <xsl:text>OmmitableDate</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>CCYYMMDDOmmitable_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>CCYYMMDDOmmitable_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--HHMMSS-HHMM-->
@@ -832,49 +1204,223 @@
                     <xsl:attribute name="type">
                         <xsl:text>Time</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>HHMMSS_HHMM_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>HHMMSS_HHMM_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--ByteArray-->
                 <xsl:when test="$type='ByteArray'">
                     <xsl:attribute name="type">
                         <xsl:text>Byte()</xsl:text>
                     </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>ByteArray_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Bytearray_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="$len"/>
+                        <xsl:text>, </xsl:text>
+                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
                 </xsl:when>
                 <!--UNO-->
                 <xsl:when test="$type='UNO'">
                     <xsl:attribute name="type">
-                        <xsl:text>UNO</xsl:text>
+                        <xsl:text>iptcUNO</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UNO_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>UNO_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--Num2-Str-->
                 <xsl:when test="$type='Num2-Str'">
-                    <xsl:attribute name="type">
-                        <xsl:text>NumStr2</xsl:text>
-                    </xsl:attribute>
-                    <!--TODO:verify & exception, enum-->
+                    <xsl:choose>
+                        <xsl:when test="$enum!=''">
+                            <xsl:attribute name="type">
+                                <xsl:text>NumStr2(Of </xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="attr">
+                                <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="get">
+                                <xsl:text>ConvertNumStrList(Of NumStr2, NumStr2(Of </xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>))(</xsl:text>
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num2_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>))</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="set">
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num2_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="$len"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="convert-back">
+                                <xsl:text>ConvertNumStrList(Of NumStr2, NumStr2(Of </xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>))</xsl:text>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="type">
+                                <xsl:text>NumStr2</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="get">
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num2_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="set">
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num2_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="$len"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:when>
                 <!--Num3-Str-->
                 <xsl:when test="$type='Num3-Str'">
-                    <xsl:attribute name="type">
-                        <xsl:text>NumStr3</xsl:text>
-                    </xsl:attribute>
-                    <!--TODO:verify & exception, enum-->
+                    <xsl:choose>
+                        <xsl:when test="$enum!=''">
+                            <xsl:attribute name="type">
+                                <xsl:text>NumStr3(Of </xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="attr">
+                                <xsl:text>&lt;CLSCompliant(False)></xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="get">
+                                <xsl:text>ConvertNumStrList(Of NumStr3, NumStr3(Of </xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>))(</xsl:text>
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num3_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>))</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="set">
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num3_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="$len"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="convert-back">
+                                <xsl:text>ConvertNumStrList(Of NumStr3, NumStr3(Of </xsl:text>
+                                <xsl:value-of select="$enum"/>
+                                <xsl:text>))</xsl:text>
+                            </xsl:attribute>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:attribute name="type">
+                                <xsl:text>NumStr3</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="get">
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num3_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                            <xsl:attribute name="set">
+                                <xsl:value-of select="$instance"/>
+                                <xsl:text>Num3_Str_Value(DataSetIdentification.</xsl:text>
+                                <xsl:value-of select="$name"/>
+                                <xsl:text>, </xsl:text>
+                                <xsl:value-of select="$len"/>
+                                <xsl:text>)</xsl:text>
+                            </xsl:attribute>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </xsl:when>
                 <!--SubjectReference-->
                 <xsl:when test="$type='SubjectReference'">
                     <xsl:attribute name="type">
-                        <xsl:text>SubjectReference</xsl:text>
+                        <xsl:text>iptcSubjectReference</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>SubjectReference_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>SubjectReference_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--ImageType-->
                 <xsl:when test="$type='ImageType'">
                     <xsl:attribute name="type">
-                        <xsl:text>ImageType</xsl:text>
+                        <xsl:text>iptcImageType</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>ImageType_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>ImageType_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--AudioType-->
                 <xsl:when test="$type='AudioType'">
                     <xsl:attribute name="type">
-                        <xsl:text>AudioType</xsl:text>
+                        <xsl:text>iptcAudioType</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Audiotype_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
+                    </xsl:attribute>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>Audiotype_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <!--HHMMSS-->
@@ -882,22 +1428,23 @@
                     <xsl:attribute name="type">
                         <xsl:text>TimeSpan</xsl:text>
                     </xsl:attribute>
-                    <xsl:attribute name="verify">
-                        <xsl:text>If </xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text> &lt; TimeSpan.Zero OrElse </xsl:text>
-                        <xsl:value-of select="$variable"/>
-                        <xsl:text>.TotalDays > 1 Then Throw New ArgumentException("HHMMSS type can be only non-negative TimeSpan shorter than 1 day")&#xD;&#xA;</xsl:text>
+                    <xsl:attribute name="get">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>HHMMSS_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
-                    <xsl:attribute name="exception">
-                        <xsl:text>''' &lt;exception cref="ArgumentException"></xsl:text>
-                        <xsl:value-of select="$param"/>
-                        <xsl:text> is less than &lt;see cref="TimeSpan.zero"/> or its &lt;see cref="TimeSpan.TotalDays"/> is greater than or equal to 1&lt;exception/></xsl:text>
+                    <xsl:attribute name="set">
+                        <xsl:value-of select="$instance"/>
+                        <xsl:text>HHMMSS_Value(DataSetIdentification.</xsl:text>
+                        <xsl:value-of select="$name"/>
+                        <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
                 <xsl:otherwise>
                     <xsl:message>
-                        Unknown type <xsl:value-of select="@type"/>
+                        <xsl:text>Unknown type </xsl:text>
+                        <xsl:value-of select="@type"/>
                     </xsl:message>
                 </xsl:otherwise>
             </xsl:choose>

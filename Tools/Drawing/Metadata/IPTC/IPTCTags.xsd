@@ -358,6 +358,14 @@
             <xs:selector xpath="IPTC:record/IPTC:tag | IPTC:record/IPTC:group/IPTC:tag"/>
             <xs:field xpath="@human-name"/>
         </xs:unique>
+        <xs:unique name="allNames">
+            <xs:selector xpath="IPTC:record/IPTC:tag | IPTC:record/IPTC:group/IPTC:tag | IPTC:record/IPTC:group"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="allHuman-Names">
+            <xs:selector xpath="IPTC:record/IPTC:tag | IPTC:record/IPTC:group/IPTC:tag | IPTC:record/IPTC:group"/>
+            <xs:field xpath="@human-name"/>
+        </xs:unique>
         <xs:unique name="unqRecordNumber">
             <xs:selector xpath="IPTC:record"/>
             <xs:field xpath="@number"/>

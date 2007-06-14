@@ -46,9 +46,9 @@ Namespace DrawingT.MetadataT
             ByteArray
             ''' <summary>Unique Object Identifier (represented by <see cref="UNO"/>)</summary>
             UNO
-            ''' <summary>Combination of 2-digits number and optional <see cref="String"/> (represented by <see cref="NumStr2"/>)</summary>
+            ''' <summary>Combination of 2-digits number and optional <see cref="String"/> (represented by <see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr2"/>)</summary>
             Num2_Str 'TODO:Enum?
-            ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="NumStr3"/>)</summary>
+            ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr3"/>)</summary>
             Num3_Str 'TODO:Enum?
             ''' <summary>Subject reference (combination of IPR, subject number and description) (represented by <see cref="SubjectReference"/>)</summary>
             SubjectReference
@@ -107,7 +107,7 @@ Namespace DrawingT.MetadataT
         End Function
 #Region "Implementation"
         ''' <summary>IPTC Subject Reference (IPTC type <see cref="IPTCTypes.SubjectReference"/>)</summary>
-        Public Class SubjectReference : Inherits WithIPR
+        Public Class iptcSubjectReference : Inherits WithIPR
             Private Const SubjRefNMask As Integer = 1000000
             Private Const SubjMatterMask As Integer = 1000
             ''' <summary>Gets lenght limit for <see cref="IPR"/></summary>
@@ -340,7 +340,7 @@ Namespace DrawingT.MetadataT
         ''' <para>Any technical variants or changes in the presentation of an object, e.g. a picture being presented by a different file format, does not require the allocation of a new ODE but can be indicated by only generating a new OVI.</para>
         ''' <para>Links may be set up to the complete UNO but the structure provides for linking to selected elements, e.g. to all objects of a specified provider.</para>
         ''' </remarks>
-        Public Class UNO : Inherits WithIPR
+        Public Class iptcUNO : Inherits WithIPR
             ''' <summary>Contains value of the <see cref="UCD"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _UCD As Date = Now.Date
             ''' <summary>UNO Creation Date Specifies a 24 hour period in which the further elements of the UNO have to be unique.</summary>            
@@ -555,7 +555,7 @@ Namespace DrawingT.MetadataT
         <CLSCompliant(False)> _
         Public Class NumStr2(Of T As {IConvertible, Structure}) : Inherits NumStr2
             ''' <summary>Number in this <see cref="NumStr2(Of T)"/></summary>            
-            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
             Public Overridable Property EnumNumber() As T
@@ -571,7 +571,7 @@ Namespace DrawingT.MetadataT
                 End Set
             End Property
             ''' <summary>Number in this <see cref="NumStr"/></summary>            
-            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -586,9 +586,9 @@ Namespace DrawingT.MetadataT
         End Class
         ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr3"/> with numbers from enum</summary>
         <CLSCompliant(False)> _
-        Public Class NumStr3(Of T As {IConvertible, Structure}) : Inherits NumStr2
+        Public Class NumStr3(Of T As {IConvertible, Structure}) : Inherits NumStr3
             ''' <summary>Number in this <see cref="NumStr3(Of T)"/></summary>            
-            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
             Public Overridable Property EnumNumber() As T
@@ -604,7 +604,7 @@ Namespace DrawingT.MetadataT
                 End Set
             End Property
             ''' <summary>Number in this <see cref="NumStr"/></summary>            
-            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="Enum"/></exception>
+            ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -781,7 +781,7 @@ Namespace DrawingT.MetadataT
                 End Set
             End Property
             ''' <summary>Absolute value of hour component of offset in range -13 to +12</summary>
-            ''' <remarks>This property is here in order to keep this structure CLS compliant. Internaly uses <see cref="OffsetHours"/></remarks>
+            ''' <remarks>This property is here in order to keep this structure CLS compliant. Internaly uses <see cref="OffsetHour"/></remarks>
             ''' <exception cref="ArgumentOutOfRangeException">Setting value otside of range -13 ÷ +12</exception>
             Public Property AbsoluteOffsetHour() As Byte
                 Get
@@ -792,8 +792,8 @@ Namespace DrawingT.MetadataT
                 End Set
             End Property
             ''' <summary>Sign of hour component of offset in range -13 to +12</summary>
-            ''' <remarks>This property is here in order to keep this structure CLS compliant. Internaly uses <see cref="OffsetHours"/></remarks>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting sign to + when <see cref="AbsoluteOffsetHours"/> is 13</exception>
+            ''' <remarks>This property is here in order to keep this structure CLS compliant. Internaly uses <see cref="OffsetHour"/></remarks>
+            ''' <exception cref="ArgumentOutOfRangeException">Setting sign to + when <see cref="AbsoluteOffsetHour"/> is 13</exception>
             Public Property NegativeOffset() As Boolean
                 Get
                     Return OffsetHour < 0
@@ -870,7 +870,7 @@ Namespace DrawingT.MetadataT
             Return GetType(T).GetField([Enum].GetName(GetType(T), value))
         End Function
         ''' <summary>IPTC image type (IPTC type <see cref="IPTCTypes.ImageType"/>)</summary>
-        Public Structure ImageType : Implements IMediaType(Of ImageTypeComponents, ImageTypeContents)
+        Public Structure iptcImageType : Implements IMediaType(Of ImageTypeComponents, ImageTypeContents)
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Type As ImageTypeContents
@@ -923,7 +923,7 @@ Namespace DrawingT.MetadataT
         End Structure
 
         ''' <summary>IPTC audio type (IPTC type <see cref="IPTCTypes.AudioType"/>)</summary>
-        Public Structure AudioType : Implements IMediaType(Of Byte, AudioDataType)
+        Public Structure iptcAudioType : Implements IMediaType(Of Byte, AudioDataType)
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Type As AudioDataType
@@ -989,7 +989,7 @@ Namespace DrawingT.MetadataT
             Private Function Clone1() As Object Implements System.ICloneable.Clone
                 Return CloneDec()
             End Function
-            ''' <summary>Swaps values <see cref="Value1"/> and <see cref="Value2"/></summary>            
+            ''' <summary>Swaps values <see cref="DecimalValue"/> and <see cref="StringValue"/></summary>            
             Private Function Swap() As DataStructuresT.GenericT.IPair(Of String, Decimal) Implements DataStructuresT.GenericT.IPair(Of Decimal, String).Swap
                 Return New Pair(Of String, Decimal)(StringValue, DecimalValue)
             End Function
@@ -1036,7 +1036,7 @@ Namespace DrawingT.MetadataT
             End Function
         End Class
         ''' <summary>Type that can contain value of "string enum" even when such value is not member of this enum</summary>
-        ''' <typeparam name="TEnum">Type of <see cref="StringEnum(Of TEnum).EnumValue"/>. Must inherit from <see cref="Enum"/></typeparam>
+        ''' <typeparam name="TEnum">Type of <see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum`0.EnumValue"/>. Must inherit from <see cref="[Enum]"/></typeparam>
         <CLSCompliant(False), DebuggerDisplay("{ToString}")> _
         Public Class StringEnum(Of TEnum As {IConvertible, Structure})
             Inherits StringEnum
@@ -1242,7 +1242,7 @@ Namespace DrawingT.MetadataT
         Public Shared Function GetUnderlyingType(ByVal IPTCType As IPTCTypes) As Type
             Select Case IPTCType
                 Case IPTCTypes.Alpha : Return GetType(String)
-                Case IPTCTypes.AudioType : Return GetType(AudioType)
+                Case IPTCTypes.AudioType : Return GetType(iptcAudioType)
                 Case IPTCTypes.Boolean_Binary : Return GetType(Boolean)
                 Case IPTCTypes.BW460 : Return GetType(Drawing.Bitmap)
                 Case IPTCTypes.Byte_Binary : Return GetType(Byte)
@@ -1254,15 +1254,15 @@ Namespace DrawingT.MetadataT
                 Case IPTCTypes.GraphicCharacters : Return GetType(String)
                 Case IPTCTypes.HHMMSS : Return GetType(TimeSpan)
                 Case IPTCTypes.HHMMSS_HHMM : Return GetType(Time)
-                Case IPTCTypes.ImageType : Return GetType(ImageType)
+                Case IPTCTypes.ImageType : Return GetType(iptcImageType)
                 Case IPTCTypes.Num2_Str : Return GetType(NumStr2)
                 Case IPTCTypes.Num3_Str : Return GetType(NumStr3)
                 Case IPTCTypes.NumericChar : Return GetType(IConvertible)
                 Case IPTCTypes.StringEnum : Return GetType(DataStructuresT.GenericT.T1orT2(Of [Enum], String))
-                Case IPTCTypes.SubjectReference : Return GetType(SubjectReference)
+                Case IPTCTypes.SubjectReference : Return GetType(iptcSubjectReference)
                 Case IPTCTypes.Text : Return GetType(String)
                 Case IPTCTypes.TextWithSpaces : Return GetType(String)
-                Case IPTCTypes.UNO : Return GetType(UNO)
+                Case IPTCTypes.UNO : Return GetType(iptcUNO)
                 Case IPTCTypes.UnsignedBinaryNumber : Return GetType(ULong)
                 Case IPTCTypes.UShort_Binary : Return GetType(UShort)
                 Case Else : Throw New InvalidEnumArgumentException("IPTCType", IPTCType, GetType(IPTCTypes))
@@ -1381,7 +1381,38 @@ Namespace DrawingT.MetadataT
         ''' <summary>Common base for all tag groups</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Public MustInherit Class Group
-
+            ''' <summary>Gets assignmenst between group indexes of tags and indexes of groups</summary>
+            ''' <param name="Tags">Tags contained in this group</param>
+            ''' <param name="IPTC"><see cref="IPTC"/> to create map for</param>
+            ''' <returns><see cref="List(Of Integer())"/> where each item of list means one group instance and contains indexes of tags when obtained via tag properties</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Tags"/> is null or contains less then 2 items -or- <paramref name="IPTC"/> is null</exception>
+            Protected Shared Function GetGroupMap(ByVal IPTC As IPTC, ByVal ParamArray Tags As IPTCTag()) As List(Of Integer())
+                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException("tags", "Tags must contain at least 2 items")
+                If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
+                Dim Counters(Tags.Length - 1) As Integer 'Count of searched tags
+                Dim Stage As Integer = Integer.MaxValue 'Index of tag expected to be found
+                Dim ListIndex As Integer = -1 'Current index in ret
+                Dim ret As New List(Of Integer())
+                For Each item As KeyValuePair(Of DataSetIdentification, Byte()) In IPTC.Tags
+                    'Is this tag that I'm searching for?
+                    Dim Searching As Integer = -1
+                    For i As Integer = 0 To Tags.Length - 1
+                        If Tags(i).Identification = item.Key Then Searching = i : Exit For
+                    Next i
+                    If Searching >= 0 Then
+                        If Stage < Searching Then 'New group
+                            Dim arr(Tags.Length - 1) As Integer
+                            For j As Integer = 0 To Tags.Length - 1 : arr(j) = -1 : Next j
+                            ret.Add(arr)
+                            ListIndex += 1
+                        End If
+                        ret(ListIndex)(Searching) = Counters(Searching)
+                        Counters(Searching) += 1
+                        Stage = Searching + 1
+                    End If
+                Next item
+                If ret.Count = 0 Then Return Nothing Else Return ret
+            End Function
         End Class
         '#Region "Verificators"
         '        ''' <summary>Verifies if given value belongs to specific enumeration.</summary>
@@ -1448,6 +1479,7 @@ Namespace DrawingT.MetadataT
         ''' <returns>Unsigned integer stored in given byte array</returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
+        <CLSCompliant(False)> _
         Protected Shared Function UIntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As ULong
             Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAling.BigEndian)
             Select Case Count
@@ -1484,6 +1516,7 @@ Namespace DrawingT.MetadataT
         ''' </exception>
         Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Number As Decimal, Optional ByVal Fixed As Boolean = True) As Byte()
             If Count = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+            ToBytes = Nothing
             Try
                 If Fixed Then
                     Return System.Text.Encoding.ASCII.GetBytes(Number.ToString(New String("0"c, Count), InvariantCulture))
@@ -1491,6 +1524,7 @@ Namespace DrawingT.MetadataT
                     Return System.Text.Encoding.ASCII.GetBytes(Number.ToString("0", InvariantCulture))
                 End If
             Finally
+                If ToBytes Is Nothing Then ToBytes = New Byte() {}
                 If Count <> 0 AndAlso ToBytes.Length > Count Then Throw New ArgumentException(String.Format("Number {0} cannot be stored in {1} bytes", Number, Count))
             End Try
         End Function
@@ -1525,6 +1559,7 @@ Namespace DrawingT.MetadataT
         ''' <returns>Array of bytes representing <paramref name="Int"/></returns>
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="OverflowAction"><paramref name="Int"/>'s value does not fit into integral value of <paramref name="Count"/> bytes</exception>
+        <CLSCompliant(False)> _
         Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Int As ULong) As Byte()
             Dim Str As New System.IO.BinaryWriter(New System.IO.MemoryStream(Count))
             Select Case Count

@@ -6,12 +6,13 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 5. června 2007
+' Created: 14. června 2007
 ' By:DZONNY\Honza
 '
 Imports System.ComponentModel
 Imports Tools.ComponentModelT
 Imports System.XML.Serialization
+Imports Tools.DataStructuresT.GenericT
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly 'Stage: Nightly
 	Partial Public Class IPTC
@@ -70,7 +71,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
 			''' <remarks>See <seealso cref="IPTC.ARMIdentifier"/> for more info.</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ARM Identifier")> <Category("ARM Identifier")> ARMIdentifier = 120
-			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentified'/>.</summary>
+			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
 			''' <remarks>See <seealso cref="IPTC.ARMVersion"/> for more info.</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ARM Version")> <Category("ARM Version")> ARMVersion = 122
 		End Enum
@@ -274,7 +275,7 @@ Namespace DrawingT.MetadataT
 		End Enum
 		''' <summary>Gets Enum that contains list of tags for specific record (group of tags)</summary>
 		''' <param name="Record">Number of record to get enum for</param>
-		''' <exception name="InvalidEnumArgumentException">Value of <paramref name="Record"/> is not member of <see cref="RecordNumbers"/></exception>
+		''' <exception cref="InvalidEnumArgumentException">Value of <paramref name="Record"/> is not member of <see cref="RecordNumbers"/></exception>
 		Public Shared Function GetEnum(ByVal Record As RecordNumbers) As Type
 			Select Case Record
 				Case RecordNumbers.Envelope : Return GetType(EnvelopeTags)
@@ -372,7 +373,7 @@ Namespace DrawingT.MetadataT
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ARMIdentifier)
 				End Get
 			End Property
-			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentified'/>.</summary>
+			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ARMVersion As DataSetIdentification
 				Get
@@ -387,14 +388,14 @@ Namespace DrawingT.MetadataT
 				End Get
 			End Property
 			''' <summary>The Object Type is used to distinguish between different types of objects within the IIM.</summary>
-			''' <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see='LanguageIdentifier'/>)</remarks>
+			''' <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
 			Public Shared ReadOnly Property ObjectTypeReference As DataSetIdentification
 				Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectTypeReference)
 				End Get
 			End Property
 			''' <summary>The Object Attribute defines the nature of the object independent of the Subject.</summary>
-			''' <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see='LanguageIdentifier'/>)</remarks>
+			''' <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
 			Public Shared ReadOnly Property ObjectAttributeReference As DataSetIdentification
 				Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectAttributeReference)
@@ -828,7 +829,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>The only ARM version</summary>
 			<FieldDisplayName("Version 1")> ARM1 = 1
 		End Enum
-		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business & Finnance)</summary>
+		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</summary>
 		<Restrict(True)> Public Enum EconomySubjectDetail As Integer
 			''' <summary>Arable Farming</summary>
 			<FieldDisplayName("Arable Farming")> ArableFarming = 04001001
@@ -1043,7 +1044,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>IPTC-NAA Digital Newsphoto Parameter Record</summary>
 			<FieldDisplayName("Digital Newsphoto Parameter Record")> NewsphotoParameterRecord = 01
 			''' <summary>IPTC7901 Recommended Message Format</summary>
-			<FieldDisplayName("recomended Message Format")> RecommendedMessageFormat = 02
+			<FieldDisplayName("Recommended Message Format")> RecommendedMessageFormat = 02
 			''' <summary>Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)</summary>
 			<FieldDisplayName("TIFF")> TIFF = 03
 			''' <summary>Illustrator (Adobe Graphics data)</summary>
@@ -1109,8 +1110,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)")> V2 = 2
 			''' <summary>Version 3 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for <see cref="FileFormats.Freehand"/></summary>
 			<FieldDisplayName("3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)")> V3 = 3
-			''' <summary>Version 4 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and <see cref="FileFormats.RecomendedMessageFormat"/> and 5.5 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recomended Message Format), 5.5 (Freehand)")> V4 = 4
+			''' <summary>Version 4 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and <see cref="FileFormats.RecommendedMessageFormat"/> and 5.5 for <see cref="FileFormats.Freehand"/></summary>
+			<FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recommended Message Format), 5.5 (Freehand)")> V4 = 4
 		End Enum
 		''' <summary>Number of components in image and special meanings of some numbers</summary>
 		<Restrict(True)> Public Enum ImageTypeComponents As Byte
@@ -2303,7 +2304,7 @@ Namespace DrawingT.MetadataT
 		''' <summary>Gets details about tag format by tag record and number</summary>
 		''' <param name="Record">Recor number</param>
 		''' <param name="TagNumber">Number of tag within <paramref name="Record"/></param>
-		''' <exception cref="InvalidEnumArgumentException"><paramref name="Record"/> is not member of <see cref="RecordNumbers"/> -or- <paramref name="TagNumber"/> is not tag within <paramref name="record"/></exception/>
+		''' <exception cref="InvalidEnumArgumentException"><paramref name="Record"/> is not member of <see cref="RecordNumbers"/> -or- <paramref name="TagNumber"/> is not tag within <paramref name="record"/></exception>
 		Public Shared Function GetTag(ByVal Record As RecordNumbers, TagNumber As Byte) As IPTCTag
 			Select Case Record
 				Case RecordNumbers.Envelope
@@ -2429,7 +2430,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Identifies a prior envelope to which the current object refers.</summary>
 			<Category("Reference")> <FieldDisplayName("Reference")> Reference
 			''' <summary>Creator of the object data</summary>
-			<Category("By-line")> <FieldDisplayName("By-line")> ByLine
+			<Category("By-line info")> <FieldDisplayName("By-line info")> ByLineInfo
 			''' <summary>Preview of embeded object</summary>
 			<Category("ObjectData Preview")> <FieldDisplayName("ObjectData Preview")> ObjectDataPreview
 		End Enum
@@ -2440,26 +2441,1137 @@ Namespace DrawingT.MetadataT
 				Case Groups.ARM : Return New GroupInfo("ARM", "ARM", Groups.ARM, GetType(ARMGroup), "Old IPTC", "Abstract Relation Method", true, true, GetTag(RecordNumbers.Envelope, EnvelopeTags.ARMIdentifier), GetTag(RecordNumbers.Envelope, EnvelopeTags.ARMVersion))
 				Case Groups.ContentLocation : Return New GroupInfo("ContentLocation", "ContentLocation", Groups.ContentLocation, GetType(ContentLocationGroup), "Location", "Country/geographical location referenced by the content of the object", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ContentLocationCode), GetTag(RecordNumbers.Application, ApplicationTags.ContentLocationName))
 				Case Groups.Reference : Return New GroupInfo("Reference", "Reference", Groups.Reference, GetType(ReferenceGroup), "Old IPTC", "Identifies a prior envelope to which the current object refers.", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ReferenceService), GetTag(RecordNumbers.Application, ApplicationTags.ReferenceDate), GetTag(RecordNumbers.Application, ApplicationTags.ReferenceNumber))
-				Case Groups.ByLine : Return New GroupInfo("ByLine", "ByLine", Groups.ByLine, GetType(ByLineGroup), "Author", "Creator of the object data", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ByLine), GetTag(RecordNumbers.Application, ApplicationTags.ByLineTitle))
+				Case Groups.ByLineInfo : Return New GroupInfo("ByLineInfo", "ByLineInfo", Groups.ByLineInfo, GetType(ByLineInfoGroup), "Author", "Creator of the object data", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ByLine), GetTag(RecordNumbers.Application, ApplicationTags.ByLineTitle))
 				Case Groups.ObjectDataPreview : Return New GroupInfo("ObjectDataPreview", "ObjectDataPreview", Groups.ObjectDataPreview, GetType(ObjectDataPreviewGroup), "Embeded object", "Preview of embeded object", true, true, GetTag(RecordNumbers.Application, ApplicationTags.ObjectDataPreviewFileFormat), GetTag(RecordNumbers.Application, ApplicationTags.ObjectDataPreviewFileFormatVersion), GetTag(RecordNumbers.Application, ApplicationTags.ObjectDataPreviewData))
 				Case Else : Throw New InvalidEnumArgumentException("Group", Group, GetType(Groups))
 			End Select
 		End Function
-		Partial Public Class ARMGroup : Inherits Group
-			'TODO: Properties and CTor
+#Region "Classes"
+		''' <summary>Abstract Relation Method</summary>
+		<FieldDisplayName("ARM")> <Category("ARM")> Partial Public NotInheritable Class ARMGroup : Inherits Group
+				''' <summary>Loads groups from IPTC</summary>
+				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
+				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
+				Public Shared Function Load(ByVal IPTC As IPTC) As List(Of ARMGroup)
+					If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
+					Dim Map as List(Of Integer()) = GetGroupMap(IPTC, GetTag(1, 120), GetTag(1, 122))
+					If Map Is Nothing OrElse Map.Count = 0 Then Return Nothing
+					Dim ret As New List(Of ARMGroup)
+					Dim _all_ARMIdentifiers As List(Of ARMMethods) = ConvertEnumList(Of ARMMethods)(IPTC.Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)))
+					Dim _all_ARMVersions As List(Of ARMVersions) = ConvertEnumList(Of ARMVersions)(IPTC.Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)))
+					For Each item As Integer() In Map
+						ret.add(New ARMGroup)
+						If item(0) >= 0 Then ret(ret.Count - 1).ARMIdentifier = _all_ARMIdentifiers(item(0))
+						If item(1) >= 0 Then ret(ret.Count - 1).ARMVersion = _all_ARMVersions(item(1))
+					Next Item
+					Return ret
+				End Function
+				''' <summary>Gets information about this group</summary>
+				Public Shared ReadOnly Property GroupInfo As GroupInfo
+					Get
+						Return GetGroup(Groups.ARM)
+					End Get
+				End Property
+				''' <summary>Contains value of the <see cref="ARMIdentifier"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ARMIdentifier As ARMMethods
+				''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
+				<Category("ARM Identifier")> <FieldDisplayName("ARM Identifier")> <CLSCompliant(False)>Public Property ARMIdentifier As ARMMethods
+					Get
+						Return _ARMIdentifier
+					End Get
+					Set
+						_ARMIdentifier = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ARMVersion"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ARMVersion As ARMVersions
+				''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
+				<Category("ARM Version")> <FieldDisplayName("ARM Version")> <CLSCompliant(False)>Public Property ARMVersion As ARMVersions
+					Get
+						Return _ARMVersion
+					End Get
+					Set
+						_ARMVersion = value
+					End Set
+				End Property
+
 		End Class
-		Partial Public Class ContentLocationGroup : Inherits Group
-			'TODO: Properties and CTor
+		''' <summary>Country/geographical location referenced by the content of the object</summary>
+		<FieldDisplayName("Content Location")> <Category("Content Location")> Partial Public NotInheritable Class ContentLocationGroup : Inherits Group
+				''' <summary>Loads groups from IPTC</summary>
+				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
+				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
+				Public Shared Function Load(ByVal IPTC As IPTC) As List(Of ContentLocationGroup)
+					If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
+					Dim Map as List(Of Integer()) = GetGroupMap(IPTC, GetTag(2, 26), GetTag(2, 27))
+					If Map Is Nothing OrElse Map.Count = 0 Then Return Nothing
+					Dim ret As New List(Of ContentLocationGroup)
+					Dim _all_ContentLocationCodes As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(IPTC.StringEnum_Value(DataSetIdentification.ContentLocationCode, GetType(ISO3166)))
+					Dim _all_ContentLocationNames As List(Of String) = IPTC.TextWithSpaces_Value(DataSetIdentification.ContentLocationName)
+					For Each item As Integer() In Map
+						ret.add(New ContentLocationGroup)
+						If item(0) >= 0 Then ret(ret.Count - 1).ContentLocationCode = _all_ContentLocationCodes(item(0))
+						If item(1) >= 0 Then ret(ret.Count - 1).ContentLocationName = _all_ContentLocationNames(item(1))
+					Next Item
+					Return ret
+				End Function
+				''' <summary>Gets information about this group</summary>
+				Public Shared ReadOnly Property GroupInfo As GroupInfo
+					Get
+						Return GetGroup(Groups.ContentLocation)
+					End Get
+				End Property
+				''' <summary>Contains value of the <see cref="ContentLocationCode"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ContentLocationCode As StringEnum(Of ISO3166)
+				''' <summary>Indicates the code of a country/geographical location referenced by the content of the object.</summary>
+				''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a country, e.g. ships at sea, space, IPTC will assign an appropriate threecharacter code under the provisions of ISO3166 to avoid conflicts. (see Appendix D) .</remarks>
+				<Category("Content Location Code")> <FieldDisplayName("Content Location Code")> <CLSCompliant(False)>Public Property ContentLocationCode As StringEnum(Of ISO3166)
+					Get
+						Return _ContentLocationCode
+					End Get
+					Set
+						_ContentLocationCode = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ContentLocationName"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ContentLocationName As String
+				''' <summary>Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.</summary>
+				''' <remarks>If used in the same object with DataSet , must immediately follow and correspond to it.</remarks>
+				<Category("Content Location Name")> <FieldDisplayName("Content Location Name")> Public Property ContentLocationName As String
+					Get
+						Return _ContentLocationName
+					End Get
+					Set
+						_ContentLocationName = value
+					End Set
+				End Property
+
 		End Class
-		Partial Public Class ReferenceGroup : Inherits Group
-			'TODO: Properties and CTor
+		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
+		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
+		<FieldDisplayName("Reference")> <Category("Reference")> Partial Public NotInheritable Class ReferenceGroup : Inherits Group
+				''' <summary>Loads groups from IPTC</summary>
+				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
+				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
+				Public Shared Function Load(ByVal IPTC As IPTC) As List(Of ReferenceGroup)
+					If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
+					Dim Map as List(Of Integer()) = GetGroupMap(IPTC, GetTag(2, 45), GetTag(2, 47), GetTag(2, 50))
+					If Map Is Nothing OrElse Map.Count = 0 Then Return Nothing
+					Dim ret As New List(Of ReferenceGroup)
+					Dim _all_ReferenceServices As List(Of String) = IPTC.GraphicCharacters_Value(DataSetIdentification.ReferenceService)
+					Dim _all_ReferenceDates As List(Of Date) = IPTC.CCYYMMDD_Value(DataSetIdentification.ReferenceDate)
+					Dim _all_ReferenceNumbers As List(Of Decimal) = IPTC.NumericChar_Value(DataSetIdentification.ReferenceNumber)
+					For Each item As Integer() In Map
+						ret.add(New ReferenceGroup)
+						If item(0) >= 0 Then ret(ret.Count - 1).ReferenceService = _all_ReferenceServices(item(0))
+						If item(1) >= 0 Then ret(ret.Count - 1).ReferenceDate = _all_ReferenceDates(item(1))
+						If item(2) >= 0 Then ret(ret.Count - 1).ReferenceNumber = _all_ReferenceNumbers(item(2))
+					Next Item
+					Return ret
+				End Function
+				''' <summary>Gets information about this group</summary>
+				Public Shared ReadOnly Property GroupInfo As GroupInfo
+					Get
+						Return GetGroup(Groups.Reference)
+					End Get
+				End Property
+				''' <summary>Contains value of the <see cref="ReferenceService"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ReferenceService As String
+				''' <summary>Identifies the Service Identifier of a prior envelope to which the current object refers.</summary>
+				<Category("Reference Service")> <FieldDisplayName("Reference Service")> Public Property ReferenceService As String
+					Get
+						Return _ReferenceService
+					End Get
+					Set
+						_ReferenceService = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ReferenceDate"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ReferenceDate As Date
+				''' <summary>Identifies the date of a prior envelope to which the current object refers.</summary>
+				<Category("Reference Date")> <FieldDisplayName("Reference Date")> Public Property ReferenceDate As Date
+					Get
+						Return _ReferenceDate
+					End Get
+					Set
+						_ReferenceDate = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ReferenceNumber"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ReferenceNumber As Decimal
+				''' <summary>Identifies the Envelope Number of a prior envelope to which the current object refers.</summary>
+				<Category("Reference Number")> <FieldDisplayName("Reference Number")> Public Property ReferenceNumber As Decimal
+					Get
+						Return _ReferenceNumber
+					End Get
+					Set
+						_ReferenceNumber = value
+					End Set
+				End Property
+
 		End Class
-		Partial Public Class ByLineGroup : Inherits Group
-			'TODO: Properties and CTor
+		''' <summary>Creator of the object data</summary>
+		<FieldDisplayName("By-line info")> <Category("By-line info")> Partial Public NotInheritable Class ByLineInfoGroup : Inherits Group
+				''' <summary>Loads groups from IPTC</summary>
+				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
+				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
+				Public Shared Function Load(ByVal IPTC As IPTC) As List(Of ByLineInfoGroup)
+					If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
+					Dim Map as List(Of Integer()) = GetGroupMap(IPTC, GetTag(2, 80), GetTag(2, 85))
+					If Map Is Nothing OrElse Map.Count = 0 Then Return Nothing
+					Dim ret As New List(Of ByLineInfoGroup)
+					Dim _all_ByLines As List(Of String) = IPTC.TextWithSpaces_Value(DataSetIdentification.ByLine)
+					Dim _all_ByLineTitles As List(Of String) = IPTC.TextWithSpaces_Value(DataSetIdentification.ByLineTitle)
+					For Each item As Integer() In Map
+						ret.add(New ByLineInfoGroup)
+						If item(0) >= 0 Then ret(ret.Count - 1).ByLine = _all_ByLines(item(0))
+						If item(1) >= 0 Then ret(ret.Count - 1).ByLineTitle = _all_ByLineTitles(item(1))
+					Next Item
+					Return ret
+				End Function
+				''' <summary>Gets information about this group</summary>
+				Public Shared ReadOnly Property GroupInfo As GroupInfo
+					Get
+						Return GetGroup(Groups.ByLineInfo)
+					End Get
+				End Property
+				''' <summary>Contains value of the <see cref="ByLine"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ByLine As String
+				''' <summary>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</summary>
+				<Category("By-line")> <FieldDisplayName("By-line")> Public Property ByLine As String
+					Get
+						Return _ByLine
+					End Get
+					Set
+						_ByLine = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ByLineTitle"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ByLineTitle As String
+				''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
+				''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
+				<Category("By-line Title")> <FieldDisplayName("By-line Title")> Public Property ByLineTitle As String
+					Get
+						Return _ByLineTitle
+					End Get
+					Set
+						_ByLineTitle = value
+					End Set
+				End Property
+
 		End Class
-		Partial Public Class ObjectDataPreviewGroup : Inherits Group
-			'TODO: Properties and CTor
+		''' <summary>Preview of embeded object</summary>
+		<FieldDisplayName("ObjectData Preview")> <Category("ObjectData Preview")> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
+				''' <summary>Loads groups from IPTC</summary>
+				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
+				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
+				Public Shared Function Load(ByVal IPTC As IPTC) As List(Of ObjectDataPreviewGroup)
+					If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
+					Dim Map as List(Of Integer()) = GetGroupMap(IPTC, GetTag(2, 200), GetTag(2, 201), GetTag(2, 202))
+					If Map Is Nothing OrElse Map.Count = 0 Then Return Nothing
+					Dim ret As New List(Of ObjectDataPreviewGroup)
+					Dim _all_ObjectDataPreviewFileFormats As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(IPTC.Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)))
+					Dim _all_ObjectDataPreviewFileFormatVersions As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(IPTC.Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)))
+					Dim _all_ObjectDataPreviewDatas As List(Of Byte()) = IPTC.ByteArray_Value(DataSetIdentification.ObjectDataPreviewData)
+					For Each item As Integer() In Map
+						ret.add(New ObjectDataPreviewGroup)
+						If item(0) >= 0 Then ret(ret.Count - 1).ObjectDataPreviewFileFormat = _all_ObjectDataPreviewFileFormats(item(0))
+						If item(1) >= 0 Then ret(ret.Count - 1).ObjectDataPreviewFileFormatVersion = _all_ObjectDataPreviewFileFormatVersions(item(1))
+						If item(2) >= 0 Then ret(ret.Count - 1).ObjectDataPreviewData = _all_ObjectDataPreviewDatas(item(2))
+					Next Item
+					Return ret
+				End Function
+				''' <summary>Gets information about this group</summary>
+				Public Shared ReadOnly Property GroupInfo As GroupInfo
+					Get
+						Return GetGroup(Groups.ObjectDataPreview)
+					End Get
+				End Property
+				''' <summary>Contains value of the <see cref="ObjectDataPreviewFileFormat"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewFileFormat As FileFormats
+				''' <summary>The file format of the ObjectData Preview.</summary>
+				''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
+				<Category("ObjectData Preview File Format")> <FieldDisplayName("ObjectData Preview File Format")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormat As FileFormats
+					Get
+						Return _ObjectDataPreviewFileFormat
+					End Get
+					Set
+						_ObjectDataPreviewFileFormat = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ObjectDataPreviewFileFormatVersion"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewFileFormatVersion As FileFormatVersions
+				''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+				''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
+				<Category("ObjectData Preview File Format Version")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
+					Get
+						Return _ObjectDataPreviewFileFormatVersion
+					End Get
+					Set
+						_ObjectDataPreviewFileFormatVersion = value
+					End Set
+				End Property
+
+				''' <summary>Contains value of the <see cref="ObjectDataPreviewData"/> property</summary>
+				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewData As Byte()
+				''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
+				<Category("ObjectData Preview Data")> <FieldDisplayName("ObjectData Preview Data")> Public Property ObjectDataPreviewData As Byte()
+					Get
+						Return _ObjectDataPreviewData
+					End Get
+					Set
+						_ObjectDataPreviewData = value
+					End Set
+				End Property
+
 		End Class
+#End Region
+#Region "Properties"
+		''' <summary>Abstract Relation Method</summary>
+		<FieldDisplayName("ARM")> <Category("ARM")> Public Property ARM As ARMGroup
+			Get
+			End Get
+			Set
+			End Set
+		End Property
+		''' <summary>Country/geographical location referenced by the content of the object</summary>
+		<FieldDisplayName("Content Location")> <Category("Content Location")> Public Property ContentLocation As ContentLocationGroup
+			Get
+			End Get
+			Set
+			End Set
+		End Property
+		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
+		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
+		<FieldDisplayName("Reference")> <Category("Reference")> Public Property Reference As ReferenceGroup
+			Get
+			End Get
+			Set
+			End Set
+		End Property
+		''' <summary>Creator of the object data</summary>
+		<FieldDisplayName("By-line info")> <Category("By-line info")> Public Property ByLineInfo As ByLineInfoGroup
+			Get
+			End Get
+			Set
+			End Set
+		End Property
+		''' <summary>Preview of embeded object</summary>
+		<FieldDisplayName("ObjectData Preview")> <Category("ObjectData Preview")> Public Property ObjectDataPreview As ObjectDataPreviewGroup
+			Get
+			End Get
+			Set
+			End Set
+		End Property
+#End Region
+#End Region
+#Region "Properties"
+		''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
+		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+		<Category("Model Version")> <FieldDisplayName("Model Version")> <CLSCompliant(False)>Public Property ModelVersion As UShort
+			Get
+				Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.ModelVersion)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UShort_Binary_Value(DataSetIdentification.ModelVersion) = New List(Of UShort)(New UShort(){value})
+			End Set
+		End Property
+		''' <summary>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</summary>
+		<Category("Destination")> <FieldDisplayName("Destination")> Public Property Destination As String
+			Get
+				Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.Destination)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				GraphicCharacters_Value(DataSetIdentification.Destination, 1024, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>A number representing the file format.</summary>
+		''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</remarks>
+		<Category("File Format")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Property FileFormat As FileFormats
+			Get
+				Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)) = ConvertEnumList(New List(Of FileFormats)(New FileFormats(){value}))
+			End Set
+		End Property
+		''' <summary>A binary number representing the particular version of the</summary>
+		<Category("File Format Version")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Property FileFormatVersion As FileFormatVersions
+			Get
+				Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)) = ConvertEnumList(New List(Of FileFormatVersions)(New FileFormatVersions(){value}))
+			End Set
+		End Property
+		''' <summary>Identifies the provider and product.</summary>
+		<Category("Service Identifier")> <FieldDisplayName("Service Identifier")> Public Property ServiceIdentifier As String
+			Get
+				Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier, 10, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>The characters form a number that will be unique for the date specified in and for the Service Identifier specified in .</summary>
+		''' <remarks>If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</remarks>
+		<Category("Envelope Number")> <FieldDisplayName("Envelope Number")> Public Property EnvelopeNumber As Decimal
+			Get
+				Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopeNumber)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				NumericChar_Value(DataSetIdentification.EnvelopeNumber, 8, true) = New List(Of Decimal)(New Decimal(){value})
+			End Set
+		End Property
+		''' <summary>Allows a provider to identify subsets of its overall service.</summary>
+		''' <remarks>Used to provide receiving organisation data on which to select, route, or otherwise handle data.</remarks>
+		<Category("Product I.D.")> <FieldDisplayName("Product I.D.")> Public Property ProductID As String
+			Get
+				Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ProductID)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				GraphicCharacters_Value(DataSetIdentification.ProductID, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, ).</summary>
+		''' <remarks>'1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</remarks>
+		<Category("Envelope Priority")> <FieldDisplayName("Envelope Priority")> Public Property EnvelopePriority As Decimal
+			Get
+				Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopePriority)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				NumericChar_Value(DataSetIdentification.EnvelopePriority, 1, true) = New List(Of Decimal)(New Decimal(){value})
+			End Set
+		End Property
+		''' <summary>Indicates year, month and day the service sent the material.</summary>
+		<Category("Date Sent")> <FieldDisplayName("Date Sent")> Public Property DateSent As Date
+			Get
+				Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DateSent)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				CCYYMMDD_Value(DataSetIdentification.DateSent) = New List(Of Date)(New Date(){value})
+			End Set
+		End Property
+		''' <summary>This is the time the service sent the material.</summary>
+		<Category("Time Sent")> <FieldDisplayName("Time Sent")> Public Property TimeSent As Time
+			Get
+				Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeSent)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				HHMMSS_HHMM_Value(DataSetIdentification.TimeSent) = New List(Of Time)(New Time(){value})
+			End Set
+		End Property
+		''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
+		''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
+		<Category("CodedCharacterSet")> <FieldDisplayName("CodedCharacterSet")> Public Property CodedCharacterSet As Byte()
+			Get
+				Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.CodedCharacterSet)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Bytearray_Value(DataSetIdentification.CodedCharacterSet, 32, true) = New List(Of Byte())(New Byte()(){value})
+			End Set
+		End Property
+		''' <summary>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</summary>
+		''' <remarks>The provider must ensure the UNO is unique. Objects with the same UNO are identical.</remarks>
+		<Category("UNO")> <FieldDisplayName("UNO")> Public Property UNO As iptcUNO
+			Get
+				Dim AllValues As List(Of iptcUNO) = UNO_Value(DataSetIdentification.UNO)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UNO_Value(DataSetIdentification.UNO) = New List(Of iptcUNO)(New iptcUNO(){value})
+			End Set
+		End Property
+		''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
+		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
+		<Category("Record Version")> <FieldDisplayName("Record Version")> <CLSCompliant(False)>Public Property RecordVersion As UShort
+			Get
+				Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.RecordVersion)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UShort_Binary_Value(DataSetIdentification.RecordVersion) = New List(Of UShort)(New UShort(){value})
+			End Set
+		End Property
+		''' <summary>The Object Type is used to distinguish between different types of objects within the IIM.</summary>
+		''' <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
+		<Category("Object Type Reference")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)>Public Property ObjectTypeReference As NumStr2(Of ObjectTypes)
+			Get
+				Dim AllValues As List(Of NumStr2(Of ObjectTypes)) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(Num2_Str_Value(DataSetIdentification.ObjectTypeReference))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Num2_Str_Value(DataSetIdentification.ObjectTypeReference, 67) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(New List(Of NumStr2(Of ObjectTypes))(New NumStr2(Of ObjectTypes)(){value}))
+			End Set
+		End Property
+		''' <summary>The Object Attribute defines the nature of the object independent of the Subject.</summary>
+		''' <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
+		<Category("Object Attribute Reference")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)>Public Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)
+			Get
+				Dim AllValues As List(Of NumStr3(Of ObjectAttributes)) = ConvertNumStrList(Of NumStr3, NumStr3(Of ObjectAttributes))(Num3_Str_Value(DataSetIdentification.ObjectAttributeReference))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Num3_Str_Value(DataSetIdentification.ObjectAttributeReference, 68) = ConvertNumStrList(Of NumStr3, NumStr3(Of ObjectAttributes))(New List(Of NumStr3(Of ObjectAttributes))(New NumStr3(Of ObjectAttributes)(){value}))
+			End Set
+		End Property
+		''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
+		<Category("Edit Status")> <FieldDisplayName("Edit Status")> Public Property EditStatus As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.EditStatus)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.EditStatus, 64, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.</summary>
+		<Category("Editorial Update")> <FieldDisplayName("Editorial Update")> Public Property EditorialUpdate As EditorialUpdateValues
+			Get
+				Dim AllValues As List(Of EditorialUpdateValues) = ConvertEnumList(Of EditorialUpdateValues)(Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues), 2, true) = ConvertEnumList(New List(Of EditorialUpdateValues)(New EditorialUpdateValues(){value}))
+			End Set
+		End Property
+		''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, ).</summary>
+		''' <remarks>The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</remarks>
+		<Category("Urgency")> <FieldDisplayName("Urgency")> Public Property Urgency As Decimal
+			Get
+				Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.Urgency)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				NumericChar_Value(DataSetIdentification.Urgency, 1, true) = New List(Of Decimal)(New Decimal(){value})
+			End Set
+		End Property
+		''' <summary>The Subject Reference is a structured definition of the subject matter.</summary>
+		''' <remarks>It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</remarks>
+		<Category("Subject Reference")> <FieldDisplayName("Subject Reference")> Public Property SubjectReference As iptcSubjectReference
+			Get
+				Dim AllValues As List(Of iptcSubjectReference) = SubjectReference_Value(DataSetIdentification.SubjectReference)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				SubjectReference_Value(DataSetIdentification.SubjectReference) = New List(Of iptcSubjectReference)(New iptcSubjectReference(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the subject of the objectdata in the opinion of the provider.</summary>
+		''' <remarks>A list of categories will be maintained by a regional registry, where available, otherwise by the provider.</remarks>
+		<Category("Category")> <FieldDisplayName("Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property Category As String
+			Get
+				Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.Category)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Alpha_Value(DataSetIdentification.Category, 3, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Supplemental categories further refine the subject of an objectdata.</summary>
+		''' <remarks>Only a single supplemental category may be contained in each DataSet. A supplemental category may include any of the recognised categories as used in . Otherwise, selection of supplemental categories are left to the provider.</remarks>
+		<Category("Supplemental Category")> <FieldDisplayName("Supplemental Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property SupplementalCategory As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SupplementalCategory)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.SupplementalCategory, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies objectdata that recurs often and predictably.</summary>
+		''' <remarks>Enables users to immediately find or recall such an object.</remarks>
+		<Category("Fixture Identifier")> <FieldDisplayName("Fixture Identifier")> Public Property FixtureIdentifier As String
+			Get
+				Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Used to indicate specific information retrieval words.</summary>
+		''' <remarks>Each keyword uses a single Keywords DataSet. Multiple keywords use multiple Keywords DataSets. It is expected that a provider of various types of data that are related in subject matter uses the same keyword, enabling the receiving system or subsystems to search across all types of data for related material.</remarks>
+		<Category("Keywords")> <FieldDisplayName("Keywords")> Public Property Keywords As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Keywords)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.Keywords, 64, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>The earliest date the provider intends the object to be used.</summary>
+		<Category("Release Date")> <FieldDisplayName("Release Date")> Public Property ReleaseDate As Date
+			Get
+				Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ReleaseDate)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				CCYYMMDD_Value(DataSetIdentification.ReleaseDate) = New List(Of Date)(New Date(){value})
+			End Set
+		End Property
+		''' <summary>The earliest time the provider intends the object to be used.</summary>
+		<Category("Release Time")> <FieldDisplayName("Release Time")> Public Property ReleaseTime As Time
+			Get
+				Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime) = New List(Of Time)(New Time(){value})
+			End Set
+		End Property
+		''' <summary>The latest date the provider or owner intends the objectdata to be used.</summary>
+		<Category("Expiration Date")> <FieldDisplayName("Expiration Date")> Public Property ExpirationDate As Date
+			Get
+				Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ExpirationDate)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				CCYYMMDD_Value(DataSetIdentification.ExpirationDate) = New List(Of Date)(New Date(){value})
+			End Set
+		End Property
+		''' <summary>The latest time the provider or owner intends the objectdata to be used.</summary>
+		<Category("Expiration Time")> <FieldDisplayName("Expiration Time")> Public Property ExpirationTime As Time
+			Get
+				Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime) = New List(Of Time)(New Time(){value})
+			End Set
+		End Property
+		''' <summary>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</summary>
+		<Category("Special Instructions")> <FieldDisplayName("Special Instructions")> Public Property SpecialInstructions As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SpecialInstructions)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.SpecialInstructions, 256, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Indicates the type of action that this object provides to a previous object.</summary>
+		''' <remarks>The link to the previous object is made using the (DataSets 1:120 () and 1:122 ()), according to the practices of the provider.</remarks>
+		<Category("Action Advised")> <FieldDisplayName("Action Advised")> Public Property ActionAdvised As AdvisedActions
+			Get
+				Dim AllValues As List(Of AdvisedActions) = ConvertEnumList(Of AdvisedActions)(Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions), 2, true) = ConvertEnumList(New List(Of AdvisedActions)(New AdvisedActions(){value}))
+			End Set
+		End Property
+		''' <summary>The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.</summary>
+		''' <remarks>Thus a photo taken during the American Civil War would carry a creation date during that epoch (1861-1865) rather than the date the photo was digitised for archiving.</remarks>
+		<Category("Date Created")> <FieldDisplayName("Date Created")> Public Property DateCreated As OmmitableDate
+			Get
+				Dim AllValues As List(Of OmmitableDate) = CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated) = New List(Of OmmitableDate)(New OmmitableDate(){value})
+			End Set
+		End Property
+		''' <summary>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</summary>
+		''' <remarks>Where the time cannot be precisely determined, the closest approximation should be used.</remarks>
+		<Category("Time Created")> <FieldDisplayName("Time Created")> Public Property TimeCreated As Time
+			Get
+				Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated) = New List(Of Time)(New Time(){value})
+			End Set
+		End Property
+		''' <summary>The date the digital representation of the objectdata was created.</summary>
+		''' <remarks>Thus a photo taken during the American Civil War would carry a Digital Creation Date within the past several years rather than the date where the image was captured on film, glass plate or other substrate during that epoch (1861-1865).</remarks>
+		<Category("Digital Creation Date")> <FieldDisplayName("Digital Creation Date")> Public Property DigitalCreationDate As Date
+			Get
+				Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate) = New List(Of Date)(New Date(){value})
+			End Set
+		End Property
+		''' <summary>The time the digital representation of the objectdata was created.</summary>
+		<Category("Digital Creation Time")> <FieldDisplayName("Digital Creation Time")> Public Property DigitalCreationTime As Time
+			Get
+				Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime) = New List(Of Time)(New Time(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the type of program used to originate the objectdata.</summary>
+		''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
+		<Category("Originating Program")> <FieldDisplayName("Originating Program")> Public Property OriginatingProgram As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginatingProgram)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.OriginatingProgram, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the type of program used to originate the objectdata.</summary>
+		''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
+		<Category("Program Version")> <FieldDisplayName("Program Version")> Public Property ProgramVersion As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProgramVersion)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.ProgramVersion, 10, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Virtually only used in North America.</summary>
+		<Category("Object Cycle")> <FieldDisplayName("Object Cycle")> <CLSCompliant(False)>Public Property ObjectCycle As StringEnum(Of ObjectCycleValues)
+			Get
+				Dim AllValues As List(Of StringEnum(Of ObjectCycleValues)) = ConvertEnumList(Of ObjectCycleValues)(StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues), 1, true) = ConvertEnumList(Of ObjectCycleValues)(New List(Of StringEnum(Of ObjectCycleValues))(New StringEnum(Of ObjectCycleValues)(){value}))
+			End Set
+		End Property
+		''' <summary>Identifies city of objectdata origin according to guidelines established by the provider.</summary>
+		<Category("City")> <FieldDisplayName("City")> Public Property City As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.City)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.City, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.</summary>
+		<Category("Sublocation")> <FieldDisplayName("Sublocation")> Public Property SubLocation As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SubLocation)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.SubLocation, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies Province/State of origin according to guidelines established by the provider.</summary>
+		<Category("Province/State")> <FieldDisplayName("Province/State")> Public Property ProvinceState As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProvinceState)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.ProvinceState, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.</summary>
+		''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a new country, e.g. ships at sea, space, IPTC will assign an appropriate three-character code under the provisions of ISO3166 to avoid conflicts. (see Appendix D)</remarks>
+		<Category("Country/Primary Location Code")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
+			Get
+				Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166), 3, true) = ConvertEnumList(Of ISO3166)(New List(Of StringEnum(Of ISO3166))(New StringEnum(Of ISO3166)(){value}))
+			End Set
+		End Property
+		''' <summary>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</summary>
+		<Category("Country/Primary Location Name")> <FieldDisplayName("Country/Primary Location Name")> Public Property CountryPrimaryLocationName As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName, 64, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>A code representing the location of original transmission according to practices of the provider.</summary>
+		''' <remarks>Examples: BER-5, PAR-12-11-01</remarks>
+		<Category("Original Transmission Refrence")> <FieldDisplayName("Original Transmission Refrence")> Public Property OriginalTransmissionReference As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>A publishable entry providing a synopsis of the contents of the objectdata.</summary>
+		<Category("Headline")> <FieldDisplayName("Headline")> Public Property Headline As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Headline)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.Headline, 256, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the provider of the objectdata, not necessarily the owner/creator.</summary>
+		<Category("Credit")> <FieldDisplayName("Credit")> Public Property Credit As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Credit)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.Credit, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the original owner of the intellectual content of the objectdata.</summary>
+		''' <remarks>This could be an agency, a member of an agency or an individual.</remarks>
+		<Category("Source")> <FieldDisplayName("Source")> Public Property Source As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Source)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.Source, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Contains any necessary copyright notice.</summary>
+		<Category("Copyright Notice")> <FieldDisplayName("Copyright Notice")> Public Property CopyrightNotice As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CopyrightNotice)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.CopyrightNotice, 128, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the person or organisation which can provide further background information on the objectdata.</summary>
+		<Category("Contact")> <FieldDisplayName("Contact")> Public Property Contact As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Contact)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.Contact, 128, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>A textual description of the objectdata, particularly used where the object is not text.</summary>
+		<Category("Caption/Abstract")> <FieldDisplayName("Caption/Abstract")> Public Property CaptionAbstract As String
+			Get
+				Dim AllValues As List(Of String) = Text_Value(DataSetIdentification.CaptionAbstract)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Text_Value(DataSetIdentification.CaptionAbstract, 2000, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.</summary>
+		<Category("Writer/Editor")> <FieldDisplayName("Writer/Editor")> Public Property WriterEditor As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.WriterEditor)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.WriterEditor, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</summary>
+		''' <remarks>Contains the rasterized objectdata description and is used where characters that have not been coded are required for the caption.</remarks>
+		<Category("Rasterized Caption")> <FieldDisplayName("Rasterized Caption")> Public Property RasterizedeCaption As Drawing.Bitmap
+			Get
+				Dim AllValues As List(Of Drawing.Bitmap) = BW460_Value(DataSetIdentification.RasterizedeCaption)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				BW460_Value(DataSetIdentification.RasterizedeCaption, 7360, true) = New List(Of Drawing.Bitmap)(New Drawing.Bitmap(){value})
+			End Set
+		End Property
+		''' <summary>Image Type</summary>
+		<Category("Image Type")> <FieldDisplayName("Image Type")> Public Property ImageType As iptcImageType
+			Get
+				Dim AllValues As List(Of iptcImageType) = ImageType_Value(DataSetIdentification.ImageType)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				ImageType_Value(DataSetIdentification.ImageType) = New List(Of iptcImageType)(New iptcImageType(){value})
+			End Set
+		End Property
+		''' <summary>Indicates the layout of the image area.</summary>
+		<Category("Image Orientation")> <FieldDisplayName("Image Orientation")> <CLSCompliant(False)>Public Property ImageOrientation As StringEnum(Of Orientations)
+			Get
+				Dim AllValues As List(Of StringEnum(Of Orientations)) = ConvertEnumList(Of Orientations)(StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations), 1, true) = ConvertEnumList(Of Orientations)(New List(Of StringEnum(Of Orientations))(New StringEnum(Of Orientations)(){value}))
+			End Set
+		End Property
+		''' <summary>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</summary>
+		''' <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
+		<Category("Language Identifier")> <FieldDisplayName("Language Identifier")> Public Property LanguageIdentifier As String
+			Get
+				Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.LanguageIdentifier)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Alpha_Value(DataSetIdentification.LanguageIdentifier, 135, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Type of audio in objectdata</summary>
+		''' <remarks>Note: When '0' or 'T' is used, the only authorised combination is "0T". This is the mechanism for sending a caption either to supplement an audio cut sent previously without a caption or to correct a previously sent caption.</remarks>
+		<Category("Audio Type")> <FieldDisplayName("Audio Type")> Public Property AudioType As iptcAudioType
+			Get
+				Dim AllValues As List(Of iptcAudioType) = Audiotype_Value(DataSetIdentification.AudioType)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Audiotype_Value(DataSetIdentification.AudioType) = New List(Of iptcAudioType)(New iptcAudioType(){value})
+			End Set
+		End Property
+		''' <summary>Sampling rate, representing the sampling rate in hertz (Hz).</summary>
+		<Category("Audio Sampling Rate")> <FieldDisplayName("Audio Sampling Rate")> Public Property AudioSamplingRate As Decimal
+			Get
+				Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingRate)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				NumericChar_Value(DataSetIdentification.AudioSamplingRate, 6, true) = New List(Of Decimal)(New Decimal(){value})
+			End Set
+		End Property
+		''' <summary>The number of bits in each audio sample.</summary>
+		<Category("Audio Sampling Resolution")> <FieldDisplayName("Audio Sampling Resolution")> Public Property AudioSamplingResolution As Decimal
+			Get
+				Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingResolution)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				NumericChar_Value(DataSetIdentification.AudioSamplingResolution, 2, true) = New List(Of Decimal)(New Decimal(){value})
+			End Set
+		End Property
+		''' <summary>The running time of an audio objectdata when played back at the speed at which it was recorded.</summary>
+		<Category("Audio Duration")> <FieldDisplayName("Audio Duration")> Public Property AudioDuration As TimeSpan
+			Get
+				Dim AllValues As List(Of TimeSpan) = HHMMSS_Value(DataSetIdentification.AudioDuration)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				HHMMSS_Value(DataSetIdentification.AudioDuration) = New List(Of TimeSpan)(New TimeSpan(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</summary>
+		''' <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
+		<Category("Audio Outcue")> <FieldDisplayName("Audio Outcue")> Public Property AudioOutcue As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.AudioOutcue)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.AudioOutcue, 64, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
+		<Category("Size Mode")> <FieldDisplayName("Size Mode")> Public Property SizeMode As Boolean
+			Get
+				Dim AllValues As List(Of Boolean) = Boolean_Binary_Value(DataSetIdentification.SizeMode)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Boolean_Binary_Value(DataSetIdentification.SizeMode, 1) = New List(Of Boolean)(New Boolean(){value})
+			End Set
+		End Property
+		''' <summary>The maximum size for the following Subfile DataSet(s).</summary>
+		''' <remarks>The largest number is not defined, but programmers should provide at least for the largest binary number contained in four octets taken together. If the entire object is to be transferred together within a single DataSet 8:10, the number equals the size of the object.</remarks>
+		<Category("Max Subfile Size")> <FieldDisplayName("Max Subfile Size")> <CLSCompliant(False)>Public Property MaxSubfileSize As ULong
+			Get
+				Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize) = New List(Of ULong)(New ULong(){value})
+			End Set
+		End Property
+		''' <summary>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</summary>
+		''' <remarks>Mandatory if DataSet has value '1' and not allowed if DataSet has value '0'.</remarks>
+		<Category("ObjectData Size Announced")> <FieldDisplayName("ObjectData Size Announced")> <CLSCompliant(False)>Public Property ObjectDataSizeAnnounced As ULong
+			Get
+				Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced) = New List(Of ULong)(New ULong(){value})
+			End Set
+		End Property
+		''' <summary>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</summary>
+		<Category("Maximum ObjectData Size")> <FieldDisplayName("Maximum ObjectData Size")> <CLSCompliant(False)>Public Property MaximumObjectDataSize As ULong
+			Get
+				Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize) = New List(Of ULong)(New ULong(){value})
+			End Set
+		End Property
+		''' <summary>Subfile DataSet containing the objectdata itself.</summary>
+		''' <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
+		<Category("Subfile")> <FieldDisplayName("Subfile")> Public Property Subfile As Byte()
+			Get
+				Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.Subfile)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Bytearray_Value(DataSetIdentification.Subfile, 0, true) = New List(Of Byte())(New Byte()(){value})
+			End Set
+		End Property
+		''' <summary>Total size of the objectdata, in octets, without tags.</summary>
+		''' <remarks>This number should equal the number in DataSet if the size of the objectdata is known and has been provided.</remarks>
+		<Category("Confirmed ObjectData Size")> <FieldDisplayName("Confirmed ObjectData Size")> <CLSCompliant(False)>Public Property ConfirmedObjectDataSize As ULong
+			Get
+				Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize) = New List(Of ULong)(New ULong(){value})
+			End Set
+		End Property
+#Region "Grouped" 'Those propertiers can be accessed via groups, do not use them directly!
+		''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
+		<Category("ARM Identifier")> <FieldDisplayName("ARM Identifier")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMIdentifier As ARMMethods
+			Get
+				Dim AllValues As List(Of ARMMethods) = ConvertEnumList(Of ARMMethods)(Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)) = ConvertEnumList(New List(Of ARMMethods)(New ARMMethods(){value}))
+			End Set
+		End Property
+		''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
+		<Category("ARM Version")> <FieldDisplayName("ARM Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMVersion As ARMVersions
+			Get
+				Dim AllValues As List(Of ARMVersions) = ConvertEnumList(Of ARMVersions)(Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)) = ConvertEnumList(New List(Of ARMVersions)(New ARMVersions(){value}))
+			End Set
+		End Property
+		''' <summary>Indicates the code of a country/geographical location referenced by the content of the object.</summary>
+		''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a country, e.g. ships at sea, space, IPTC will assign an appropriate threecharacter code under the provisions of ISO3166 to avoid conflicts. (see Appendix D) .</remarks>
+		<Category("Content Location Code")> <FieldDisplayName("Content Location Code")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationCode As StringEnum(Of ISO3166)
+			Get
+				Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.ContentLocationCode, GetType(ISO3166)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				StringEnum_Value(DataSetIdentification.ContentLocationCode, GetType(ISO3166), 3, true) = ConvertEnumList(Of ISO3166)(New List(Of StringEnum(Of ISO3166))(New StringEnum(Of ISO3166)(){value}))
+			End Set
+		End Property
+		''' <summary>Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.</summary>
+		''' <remarks>If used in the same object with DataSet , must immediately follow and correspond to it.</remarks>
+		<Category("Content Location Name")> <FieldDisplayName("Content Location Name")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationName As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ContentLocationName)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.ContentLocationName, 64, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the Service Identifier of a prior envelope to which the current object refers.</summary>
+		<Category("Reference Service")> <FieldDisplayName("Reference Service")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceService As String
+			Get
+				Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ReferenceService)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				GraphicCharacters_Value(DataSetIdentification.ReferenceService, 10, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the date of a prior envelope to which the current object refers.</summary>
+		<Category("Reference Date")> <FieldDisplayName("Reference Date")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceDate As Date
+			Get
+				Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ReferenceDate)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				CCYYMMDD_Value(DataSetIdentification.ReferenceDate) = New List(Of Date)(New Date(){value})
+			End Set
+		End Property
+		''' <summary>Identifies the Envelope Number of a prior envelope to which the current object refers.</summary>
+		<Category("Reference Number")> <FieldDisplayName("Reference Number")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceNumber As Decimal
+			Get
+				Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.ReferenceNumber)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				NumericChar_Value(DataSetIdentification.ReferenceNumber, 8, true) = New List(Of Decimal)(New Decimal(){value})
+			End Set
+		End Property
+		''' <summary>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</summary>
+		<Category("By-line")> <FieldDisplayName("By-line")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLine As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ByLine)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.ByLine, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
+		''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
+		<Category("By-line Title")> <FieldDisplayName("By-line Title")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLineTitle As String
+			Get
+				Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ByLineTitle)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				TextWithSpaces_Value(DataSetIdentification.ByLineTitle, 32, true) = New List(Of String)(New String(){value})
+			End Set
+		End Property
+		''' <summary>The file format of the ObjectData Preview.</summary>
+		''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
+		<Category("ObjectData Preview File Format")> <FieldDisplayName("ObjectData Preview File Format")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormat As FileFormats
+			Get
+				Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)) = ConvertEnumList(New List(Of FileFormats)(New FileFormats(){value}))
+			End Set
+		End Property
+		''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+		''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
+		<Category("ObjectData Preview File Format Version")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
+			Get
+				Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)))
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)) = ConvertEnumList(New List(Of FileFormatVersions)(New FileFormatVersions(){value}))
+			End Set
+		End Property
+		''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
+		<Category("ObjectData Preview Data")> <FieldDisplayName("ObjectData Preview Data")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()
+			Get
+				Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.ObjectDataPreviewData)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			End Get
+			Set
+				Bytearray_Value(DataSetIdentification.ObjectDataPreviewData, 0, true) = New List(Of Byte())(New Byte()(){value})
+			End Set
+		End Property
+#End Region
 #End Region
 	End Class
 #End If

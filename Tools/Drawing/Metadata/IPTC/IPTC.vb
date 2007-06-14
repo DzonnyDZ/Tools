@@ -270,6 +270,18 @@ Namespace DrawingT.MetadataT
                     Return _Locked
                 End Get
             End Property
+            ''' <summary>Gets or sets record and dataset number</summary>
+            ''' <exception cref="InvalidOperationException">Changing value when <see cref="Locked"/> is true</exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            Public Property Identification() As DataSetIdentification
+                Get
+                    Return New DataSetIdentification(Me.Record, Me.Number)
+                End Get
+                Set(ByVal value As DataSetIdentification)
+                    Me.Record = value.RecordNumber
+                    Me.Number = value.DatasetNumber
+                End Set
+            End Property
 
             ''' <summary>Contains value of the <see cref="Number"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Number As Byte
