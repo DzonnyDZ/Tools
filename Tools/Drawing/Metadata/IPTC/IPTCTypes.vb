@@ -1077,9 +1077,9 @@ Namespace DrawingT.MetadataT
                 End Get
                 Set(ByVal value As TEnum)
                     If Not InEnum(value) Then Throw New InvalidEnumArgumentException("EnumValue must be member of enumeration " & GetType(TEnum).Name)
-                    ContainsEnum = True
+                    _ContainsEnum = True
                     _EnumValue = value
-                    StringValue = Nothing
+                    _StringValue = Nothing
                 End Set
             End Property
             ''' <summary>Gets or sets string value</summary>
@@ -1390,7 +1390,7 @@ Namespace DrawingT.MetadataT
                 If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException("tags", "Tags must contain at least 2 items")
                 If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
                 Dim Counters(Tags.Length - 1) As Integer 'Count of searched tags
-                Dim Stage As Integer = Integer.MaxValue 'Index of tag expected to be found
+                Dim Stage As Integer = -1 'Index of tag expected to be found
                 Dim ListIndex As Integer = -1 'Current index in ret
                 Dim ret As New List(Of Integer())
                 For Each item As KeyValuePair(Of DataSetIdentification, Byte()) In IPTC.Tags

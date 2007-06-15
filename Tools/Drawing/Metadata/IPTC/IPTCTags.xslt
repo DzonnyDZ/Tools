@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" ?>
+<!--
+This XSLT transform file is used to transform IPTCTags.xml to IPTCTags.vb.
+This should be tested and should work with current IPTCTags.xml, but it cannot be guaranteed that it will work correctly with any valid IPTCTags.xsd instance.
+-->
 <xsl:stylesheet version="1.0"
                 xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
                 xmlns:I="http://codeplex.com/DTools/IPTCTags"
@@ -164,6 +168,7 @@
             <xsl:call-template name="XML-Doc">
                 <xsl:with-param name="Tab" select="3"/>
             </xsl:call-template>
+            <xsl:text>&#9;&#9;&#9;&lt;DebuggerStepperBoundary()> _&#xD;&#xA;</xsl:text>
             <xsl:if test="local-name(parent::node())='group'">
                 <xsl:text>&#9;&#9;&#9;&lt;EditorBrowsable(EditorBrowsableState.Advanced)> _&#xD;&#xA;</xsl:text>
             </xsl:if>
@@ -316,7 +321,7 @@
     <!--Renders CategoryAttribute-->
     <xsl:template name="Category">
         <xsl:text>&lt;Category("</xsl:text>
-        <xsl:value-of select="@human-name"/>
+        <xsl:value-of select="@category"/>
         <xsl:text>")> </xsl:text>
     </xsl:template>
     <!--Renders attributes-->
@@ -338,7 +343,7 @@
             <xsl:text>&#9;&#9;</xsl:text>
             <xsl:call-template name="Attributes"/>
             <xsl:choose>
-                <xsl:when test="(self::node()[@restrict] and boolean(@restrict)) or (not (self::node()[@restrict]))">
+                <xsl:when test="(self::node()[@restrict] and (@restrict=1 or @restrict='true')) or (not (self::node()[@restrict]))">
                     <xsl:text>&lt;Restrict(True)> </xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
@@ -382,7 +387,7 @@
             <xsl:text>&#9;&#9;</xsl:text>
             <xsl:call-template name="Attributes"/>
             <xsl:choose>
-                <xsl:when test="(self::node()[@restrict] and boolean(@restrict)) or (not (self::node()[@restrict]))">
+                <xsl:when test="(self::node()[@restrict] and (@restrict=1 or @restrict='true')) or (not (self::node()[@restrict]))">
                     <xsl:text>&lt;Restrict(True)> </xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
@@ -430,16 +435,18 @@
             <xsl:value-of select="@name"/>
             <xsl:call-template name="nl"/>
             <xsl:text>&#9;&#9;&#9;&#9;&#9;Select Case TagNumber&#xD;&#xA;</xsl:text>
-            <xsl:for-each select="I:tag">
+            <xsl:for-each select="I:tag | I:group/I:tag">
                 <xsl:sort data-type="number" order="ascending" select="@number"/>
                 <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Case </xsl:text>
                 <xsl:value-of select="ancestor::I:record/@name"/>
                 <xsl:text>Tags.</xsl:text>
                 <xsl:value-of select="@name"/>
                 <xsl:text> : Return New IPTCTag(Number:=</xsl:text>
-                <xsl:value-of select="@number"/>
-                <xsl:text>, Record:=</xsl:text>
-                <xsl:value-of select="./../@number"/>
+                <xsl:value-of select="ancestor::I:record/@name"/>
+                <xsl:text>Tags.</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text>, Record:=RecordNumbers.</xsl:text>
+                <xsl:value-of select="ancestor::I:record/@name"/>
                 <xsl:text>, Name:="</xsl:text>
                 <xsl:value-of select="@name"/>
                 <xsl:text>", HumanName:="</xsl:text>
@@ -449,13 +456,13 @@
                     <xsl:with-param name="Type" select="@type"/>
                 </xsl:call-template>
                 <xsl:text>, Mandatory:=</xsl:text>
-                <xsl:value-of select="boolean(@mandatory)"/>
+                <xsl:value-of select="@mandatory"/>
                 <xsl:text>, Repeatable:=</xsl:text>
-                <xsl:value-of select="boolean(@repeatable)"/>
+                <xsl:value-of select="@repeatable"/>
                 <xsl:text>, Length:=</xsl:text>
                 <xsl:value-of select="@length"/>
                 <xsl:text>, Fixed:=</xsl:text>
-                <xsl:value-of select="boolean(@fixed)"/>
+                <xsl:value-of select="@fixed"/>
                 <xsl:text>, Category:="</xsl:text>
                 <xsl:value-of select="normalize-space(@category)"/>
                 <xsl:text>", Description:="</xsl:text>
@@ -569,9 +576,9 @@
                 <xsl:with-param name="Node" select="I:desc"/>
             </xsl:call-template>
             <xsl:text>", </xsl:text>
-            <xsl:value-of select="boolean(@mandatory)"/>
+            <xsl:value-of select="@mandatory"/>
             <xsl:text>, </xsl:text>
-            <xsl:value-of select="boolean(@repeatable)"/>
+            <xsl:value-of select="@repeatable"/>
             <xsl:for-each select="I:tag">
                 <xsl:sort data-type="number" order="ascending" select="@number"/>
                 <xsl:text>, GetTag(RecordNumbers.</xsl:text>
@@ -615,9 +622,9 @@
             <xsl:text>&#9;&#9;&#9;&#9;&#9;Dim Map as List(Of Integer()) = GetGroupMap(IPTC</xsl:text>
             <xsl:for-each select="I:tag">
                 <xsl:text>, GetTag(</xsl:text>
-                <xsl:value-of select="../../@number"/>
-                <xsl:text>, </xsl:text>
-                <xsl:value-of select="@number"/>
+                <xsl:value-of select="../../@name"/>
+                <xsl:text>Tags.</xsl:text>
+                <xsl:value-of select="@name"/>
                 <xsl:text>)</xsl:text>
             </xsl:for-each>
             <xsl:text>)&#xD;&#xA;</xsl:text>
@@ -881,6 +888,16 @@
         <xsl:call-template name="XML-Doc">
             <xsl:with-param name="Tab" select="2"/>
         </xsl:call-template>
+        <xsl:choose>
+            <xsl:when test="@repeatable | ancestor::I:group/@repeatable">
+                <xsl:text>&#9;&#9;''' &lt;returns>If this instance contains this tag(s) retuns them. Otherwise returns null&lt;/returns>&#xD;&#xA;</xsl:text>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>&#9;&#9;''' &lt;returns>If this instance contains this tag retuns it. Otherwise returns null&lt;/returns>&#xD;&#xA;</xsl:text>
+            </xsl:otherwise>
+        </xsl:choose>
+        <xsl:text>&#9;&#9;''' &lt;exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.&lt;/exception>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured&lt;/exception>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;</xsl:text>
         <xsl:call-template name="Category"/>
         <xsl:call-template name="DisplayName"/>
@@ -897,23 +914,29 @@
         <xsl:call-template name="nl"/>
         <!--Get-->
         <xsl:text>&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;&#9;&#9;Dim AllValues As List(Of </xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;Try&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;Dim AllValues As List(Of </xsl:text>
         <xsl:value-of select="$Type/type/@type"/>
         <xsl:text>) = </xsl:text>
         <xsl:value-of select="$Type/type/@get"/>
         <xsl:call-template name="nl"/>
         <xsl:choose>
-            <xsl:when test="@repeatable">
-                <xsl:text>&#9;&#9;&#9;&#9;Return AllValues.ToArray&#xD;&#xA;</xsl:text>
+            <xsl:when test="@repeatable | ancestor::I:group/@repeatable">
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;Return AllValues.ToArray&#xD;&#xA;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
-                <xsl:text>&#9;&#9;&#9;&#9;If AllValues IsNot Nothing AndAlso AllValues.Count &lt;> 0 Then Return AllValues(0) Else Return Nothing&#xD;&#xA;</xsl:text>
+                <xsl:text>&#9;&#9;&#9;&#9;&#9;If AllValues IsNot Nothing AndAlso AllValues.Count &lt;> 0 Then Return AllValues(0) Else Return Nothing&#xD;&#xA;</xsl:text>
             </xsl:otherwise>
         </xsl:choose>
+        <xsl:text>&#9;&#9;&#9;&#9;Catch ex As Exception&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;Throw New IPTCGetException(ex)&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;End Try&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
         <!--Set-->
         <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;&#9;&#9;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;Try&#xD;&#xA;</xsl:text>        
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;</xsl:text>
         <xsl:value-of select="$Type/type/@set"/>
         <xsl:text> = </xsl:text>
         <xsl:if test="$Type/type/@convert-back">
@@ -921,7 +944,7 @@
             <xsl:text>(</xsl:text>
         </xsl:if>
         <xsl:choose>
-            <xsl:when test="@repeatable">
+            <xsl:when test="@repeatable | ancestor::I:group/@repeatable">
                 <xsl:text>New List(Of </xsl:text>
                 <xsl:value-of select="$Type/type/@type"/>
                 <xsl:text>)(value)</xsl:text>
@@ -938,6 +961,9 @@
             <xsl:text>)</xsl:text>
         </xsl:if>
         <xsl:call-template name="nl"/>
+        <xsl:text>&#9;&#9;&#9;&#9;Catch ex As Exception&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;&#9;Throw New IPTCSetException(ex)&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;End Try&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
     </xsl:template>
@@ -1019,7 +1045,7 @@
                         <xsl:text>), </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="convert-back">
@@ -1063,7 +1089,7 @@
                         <xsl:text>), </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                     <xsl:attribute name="attr">
@@ -1150,7 +1176,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
@@ -1172,7 +1198,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
@@ -1194,7 +1220,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
@@ -1216,7 +1242,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
@@ -1238,7 +1264,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
@@ -1260,7 +1286,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>
@@ -1336,7 +1362,7 @@
                         <xsl:text>, </xsl:text>
                         <xsl:value-of select="$len"/>
                         <xsl:text>, </xsl:text>
-                        <xsl:value-of select="boolean($fixed)"/>
+                        <xsl:value-of select="$fixed"/>
                         <xsl:text>)</xsl:text>
                     </xsl:attribute>
                 </xsl:when>

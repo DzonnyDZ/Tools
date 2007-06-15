@@ -18,6 +18,11 @@ Namespace DrawingT.MetadataT
                 Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(New DataSetIdentification(t.RecordNumber, t.Tag), t.Data))
             Next t
         End Sub
+        ''' <summary>CTor from <see cref="IIPTCGetter"/></summary>
+        ''' <param name="Getter"><see cref="IIPTCGetter"/> that contains IPTC stream</param>
+        Public Sub New(ByVal Getter As IIPTCGetter)
+            Me.New(New IPTCReader(Getter))
+        End Sub
         ''' <summary>Removes all occurences of specified tag</summary>         
         ''' <param name="Key">Tag to remove</param>                            
         Public Sub Clear(ByVal Key As DataSetIdentification)
@@ -78,7 +83,7 @@ Namespace DrawingT.MetadataT
         End Property
         ''' <summary>All tags and their values in IPTC stream</summary>
         Protected ReadOnly Property Tags() As List(Of KeyValuePair(Of DataSetIdentification, Byte()))
-            Get
+            <DebuggerStepperBoundary()> Get
                 Return _Tags
             End Get
         End Property
@@ -97,7 +102,7 @@ Namespace DrawingT.MetadataT
                 Get
                     Return _RecordNumber
                 End Get
-                Set(ByVal value As RecordNumbers)
+                <DebuggerStepperBoundary()> Set(ByVal value As RecordNumbers)
                     If value > 9 Then Throw New ArgumentOutOfRangeException("DataSetNumber must be less than or equal to 9")
                     _RecordNumber = value
                 End Set
@@ -107,7 +112,7 @@ Namespace DrawingT.MetadataT
                 Get
                     Return _DataSetNumber
                 End Get
-                Set(ByVal value As Byte)
+                <DebuggerStepperBoundary()> Set(ByVal value As Byte)
                     _DataSetNumber = value
                 End Set
             End Property
@@ -120,6 +125,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>CTor</summary>
             ''' <param name="RecordNumber">Number of record (tag group)</param>
             ''' <param name="DataSetNumber">Number of dataset (tag)</param>
+            <DebuggerStepperBoundary()> _
             Public Sub New(ByVal RecordNumber As RecordNumbers, ByVal DataSetNumber As Byte)
                 Me.RecordNumber = RecordNumber
                 Me.DatasetNumber = DataSetNumber
@@ -177,11 +183,13 @@ Namespace DrawingT.MetadataT
                 Return Me.DatasetNumber * 256 + Me.RecordNumber
             End Function
             ''' <summary>Gives acctess to <see cref="System.Predicate"/> that matches <see cref="KeyValuePair(Of DataSetIdentification, T)"/> which's <see cref="KeyValuePair.Key"/> is same as given <see cref="DataSetIdentification"/></summary>
+            <DebuggerDisplay("{RecordNumber}:{DatasetNumber}")> _
             Public Class PairMatch
                 ''' <summary><see cref="DataSetIdentification"/> to compare <see cref="KeyValuePair.Key"/> with</summary>
                 Public ReadOnly Match As DataSetIdentification
                 ''' <summary>CTor</summary>
                 ''' <param name="Match"><see cref="DataSetIdentification"/> to compare <see cref="KeyValuePair.Key"/> with</param>
+                <DebuggerStepperBoundary()> _
                 Public Sub New(ByVal Match As DataSetIdentification)
                     Me.Match = Match
                 End Sub
@@ -195,6 +203,7 @@ Namespace DrawingT.MetadataT
                 ''' <param name="Match">Key to compare with</param>
                 ''' <returns>Delegate of <see cref="PairMatch.Predicate"/></returns>
                 ''' <typeparam name="T">Type of value of <see cref="KeyValuePair"/> that can be passed to returned <see cref="System.Predicate"/></typeparam>
+                <DebuggerStepperBoundary()> _
                 Public Shared Function GetPredicate(Of T)(ByVal Match As DataSetIdentification) As System.Predicate(Of KeyValuePair(Of DataSetIdentification, T))
                     Return AddressOf New PairMatch(Match).Predicate(Of T)
                 End Function
@@ -490,6 +499,30 @@ Namespace DrawingT.MetadataT
                     Return _Restrict
                 End Get
             End Property
+        End Class
+        ''' <summary>Represents common base for <see cref="IPTCGetException"/> and <see cref="IPTCSetException"/></summary>
+        Public MustInherit Class IPTCException : Inherits Exception
+            ''' <summary>CTor</summary>
+            ''' <param name="InnerException">Inner exception</param>
+            Friend Sub New(ByVal InnerException As Exception)
+                MyBase.New(InnerException.Message, InnerException)
+            End Sub
+        End Class
+        ''' <summary>Thrown when an error occurs when geting IPTC tag value</summary>
+        Public Class IPTCGetException : Inherits IPTCException
+            ''' <summary>CTor</summary>
+            ''' <param name="InnerException">Inner exception</param>
+            Public Sub New(ByVal InnerException As Exception)
+                MyBase.New(InnerException)
+            End Sub
+        End Class
+        ''' <summary>Thrown when an error occurs when setting IPTC tag value</summary>
+        Public Class IPTCSetException : Inherits IPTCException
+            ''' <summary>CTor</summary>
+            ''' <param name="InnerException">Inner exception</param>
+            Public Sub New(ByVal InnerException As Exception)
+                MyBase.New(InnerException)
+            End Sub
         End Class
     End Class
 #End If

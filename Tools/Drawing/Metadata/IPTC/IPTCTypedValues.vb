@@ -6,8 +6,9 @@ Namespace DrawingT.MetadataT
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Encoding As System.Text.Encoding = System.Text.Encoding.Default
         ''' <summary>Encoding used for encoding and decoding some texts</summary>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property Encoding() As System.Text.Encoding
-            Get
+            <DebuggerStepperBoundary()> Get
                 Return _Encoding
             End Get
             Set(ByVal value As System.Text.Encoding)

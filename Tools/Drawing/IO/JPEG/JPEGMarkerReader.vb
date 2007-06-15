@@ -4,6 +4,7 @@ Namespace DrawingT.IO.JPEG
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGMarkerReader), LastChMMDDYYYY:="04/24/2007")> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public Class JPEGMarkerReader
         ''' <summary>Known types of JPEG markers</summary>
         Public Enum Markers As Byte

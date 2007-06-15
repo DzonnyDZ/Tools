@@ -246,6 +246,7 @@ Namespace DrawingT.IO.JPEG
     ''' <summary>Represents Photoshop 8BIM segment</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Photoshop8BIMReader), LastChMMDDYYYY:="04/24/2007")> _
+    <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public Class Photoshop8BIMReader
         ''' <summary>CTor</summary>
         ''' <param name="Stream">Steam which contains segment data</param>
