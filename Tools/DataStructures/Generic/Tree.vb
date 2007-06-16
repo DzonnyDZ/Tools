@@ -3,7 +3,7 @@ Namespace DataStructuresT.GenericT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Represents tree or sub-tree</summary>
     <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _
-    <Version(1, 0, GetType(Tree(Of DBNull)), LastChMMDDYYYY:="05/21/2007")> _
+    <Version(1, 0, GetType(Tree(Of DBNull)), LastChMMDDYYYY:="06/16/2007")> _
     <StandAloneTool(FirstVerMMDDYYYY:="05/19/2007")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class Tree(Of T) : Implements ICloneable(Of Tree(Of T))
@@ -74,7 +74,7 @@ Namespace DataStructuresT.GenericT
         ''' <returns>parent node of this node or null when this node is root</returns>
         ''' <value>New parent node of this node. Setting root to another value causes moving current node and whole its sub-tree into node specified in <paramref name="value"/>, so it is no longer present in old parent</value>
         Public Overridable Property Parent() As Tree(Of T)
-            <DebuggerStepperBoundary()> Get
+            <DebuggerStepThrough()> Get
                 Return _Parent
             End Get
             Set(ByVal value As Tree(Of T))

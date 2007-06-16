@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 15. června 2007
+' Created: 16. června 2007
 ' By:DZONNY\Honza
 '
 Imports System.ComponentModel
@@ -41,19 +41,19 @@ Namespace DrawingT.MetadataT
 			''' <summary>A number representing the file format.</summary>
 			''' <remarks>See <seealso cref="IPTC.FileFormat"/> for more info.</remarks>
 			<FieldDisplayName("File Format")> <Category("Old IPTC")> FileFormat = 20
-			''' <summary>A binary number representing the particular version of the</summary>
+			''' <summary>A binary number representing the particular version of the <see cref="FileFormat"/></summary>
 			''' <remarks>See <seealso cref="IPTC.FileFormatVersion"/> for more info.</remarks>
 			<FieldDisplayName("File Format Version")> <Category("Old IPTC")> FileFormatVersion = 22
 			''' <summary>Identifies the provider and product.</summary>
 			''' <remarks>See <seealso cref="IPTC.ServiceIdentifier"/> for more info.</remarks>
 			<FieldDisplayName("Service Identifier")> <Category("Old IPTC")> ServiceIdentifier = 30
-			''' <summary>The characters form a number that will be unique for the date specified in and for the Service Identifier specified in .</summary>
+			''' <summary>The characters form a number that will be unique for the date specified in <see cref="DateSent"/> and for the Service Identifier specified in <see cref="ServiceIdentifier"/>.</summary>
 			''' <remarks>See <seealso cref="IPTC.EnvelopeNumber"/> for more info.</remarks>
 			<FieldDisplayName("Envelope Number")> <Category("Old IPTC")> EnvelopeNumber = 40
 			''' <summary>Allows a provider to identify subsets of its overall service.</summary>
 			''' <remarks>See <seealso cref="IPTC.ProductID"/> for more info.</remarks>
 			<FieldDisplayName("Product I.D.")> <Category("Old IPTC")> ProductID = 50
-			''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, ).</summary>
+			''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, <see cref="Urgency"/>).</summary>
 			''' <remarks>See <seealso cref="IPTC.EnvelopePriority"/> for more info.</remarks>
 			<FieldDisplayName("Envelope Priority")> <Category("Status")> EnvelopePriority = 60
 			''' <summary>Indicates year, month and day the service sent the material.</summary>
@@ -92,7 +92,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.EditorialUpdate"/> for more info.</remarks>
 			<FieldDisplayName("Editorial Update")> <Category("Status")> EditorialUpdate = 8
-			''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, ).</summary>
+			''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, <see cref="EnvelopePriority"/>).</summary>
 			''' <remarks>See <seealso cref="IPTC.Urgency"/> for more info.</remarks>
 			<FieldDisplayName("Urgency")> <Category("Status")> Urgency = 10
 			''' <summary>The Subject Reference is a structured definition of the subject matter.</summary>
@@ -239,7 +239,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>The file format of the ObjectData Preview.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectDataPreviewFileFormat"/> for more info.</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ObjectData Preview File Format")> <Category("Embeded object")> ObjectDataPreviewFileFormat = 200
-			''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+			''' <summary>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectDataPreviewFileFormatVersion"/> for more info.</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> <FieldDisplayName("ObjectData Preview File Format Version")> <Category("Embeded object")> ObjectDataPreviewFileFormatVersion = 201
 			''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
@@ -290,168 +290,168 @@ Namespace DrawingT.MetadataT
 			''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
 			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
 			Public Shared ReadOnly Property ModelVersion As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ModelVersion)
 				End Get
 			End Property
 			''' <summary>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</summary>
 			Public Shared ReadOnly Property Destination As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.Destination)
 				End Get
 			End Property
 			''' <summary>A number representing the file format.</summary>
 			''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</remarks>
 			Public Shared ReadOnly Property FileFormat As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.FileFormat)
 				End Get
 			End Property
-			''' <summary>A binary number representing the particular version of the</summary>
+			''' <summary>A binary number representing the particular version of the <see cref="FileFormat"/></summary>
 			Public Shared ReadOnly Property FileFormatVersion As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.FileFormatVersion)
 				End Get
 			End Property
 			''' <summary>Identifies the provider and product.</summary>
 			Public Shared ReadOnly Property ServiceIdentifier As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ServiceIdentifier)
 				End Get
 			End Property
-			''' <summary>The characters form a number that will be unique for the date specified in and for the Service Identifier specified in .</summary>
+			''' <summary>The characters form a number that will be unique for the date specified in <see cref="DateSent"/> and for the Service Identifier specified in <see cref="ServiceIdentifier"/>.</summary>
 			''' <remarks>If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</remarks>
 			Public Shared ReadOnly Property EnvelopeNumber As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.EnvelopeNumber)
 				End Get
 			End Property
 			''' <summary>Allows a provider to identify subsets of its overall service.</summary>
 			''' <remarks>Used to provide receiving organisation data on which to select, route, or otherwise handle data.</remarks>
 			Public Shared ReadOnly Property ProductID As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ProductID)
 				End Get
 			End Property
-			''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, ).</summary>
+			''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, <see cref="Urgency"/>).</summary>
 			''' <remarks>'1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</remarks>
 			Public Shared ReadOnly Property EnvelopePriority As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.EnvelopePriority)
 				End Get
 			End Property
 			''' <summary>Indicates year, month and day the service sent the material.</summary>
 			Public Shared ReadOnly Property DateSent As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.DateSent)
 				End Get
 			End Property
 			''' <summary>This is the time the service sent the material.</summary>
 			Public Shared ReadOnly Property TimeSent As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.TimeSent)
 				End Get
 			End Property
 			''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
 			''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
 			Public Shared ReadOnly Property CodedCharacterSet As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.CodedCharacterSet)
 				End Get
 			End Property
 			''' <summary>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</summary>
 			''' <remarks>The provider must ensure the UNO is unique. Objects with the same UNO are identical.</remarks>
 			Public Shared ReadOnly Property UNO As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.UNO)
 				End Get
 			End Property
 			''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ARMIdentifier As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ARMIdentifier)
 				End Get
 			End Property
 			''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ARMVersion As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ARMVersion)
 				End Get
 			End Property
 			''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
 			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
 			Public Shared ReadOnly Property RecordVersion As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.RecordVersion)
 				End Get
 			End Property
 			''' <summary>The Object Type is used to distinguish between different types of objects within the IIM.</summary>
 			''' <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
 			Public Shared ReadOnly Property ObjectTypeReference As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectTypeReference)
 				End Get
 			End Property
 			''' <summary>The Object Attribute defines the nature of the object independent of the Subject.</summary>
 			''' <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
 			Public Shared ReadOnly Property ObjectAttributeReference As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectAttributeReference)
 				End Get
 			End Property
 			''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
 			Public Shared ReadOnly Property EditStatus As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.EditStatus)
 				End Get
 			End Property
 			''' <summary>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.</summary>
 			Public Shared ReadOnly Property EditorialUpdate As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.EditorialUpdate)
 				End Get
 			End Property
-			''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, ).</summary>
+			''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, <see cref="EnvelopePriority"/>).</summary>
 			''' <remarks>The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</remarks>
 			Public Shared ReadOnly Property Urgency As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Urgency)
 				End Get
 			End Property
 			''' <summary>The Subject Reference is a structured definition of the subject matter.</summary>
 			''' <remarks>It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</remarks>
 			Public Shared ReadOnly Property SubjectReference As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SubjectReference)
 				End Get
 			End Property
 			''' <summary>Identifies the subject of the objectdata in the opinion of the provider.</summary>
 			''' <remarks>A list of categories will be maintained by a regional registry, where available, otherwise by the provider.</remarks>
 			Public Shared ReadOnly Property Category As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Category)
 				End Get
 			End Property
 			''' <summary>Supplemental categories further refine the subject of an objectdata.</summary>
 			''' <remarks>Only a single supplemental category may be contained in each DataSet. A supplemental category may include any of the recognised categories as used in . Otherwise, selection of supplemental categories are left to the provider.</remarks>
 			Public Shared ReadOnly Property SupplementalCategory As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SupplementalCategory)
 				End Get
 			End Property
 			''' <summary>Identifies objectdata that recurs often and predictably.</summary>
 			''' <remarks>Enables users to immediately find or recall such an object.</remarks>
 			Public Shared ReadOnly Property FixtureIdentifier As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.FixtureIdentifier)
 				End Get
 			End Property
 			''' <summary>Used to indicate specific information retrieval words.</summary>
 			''' <remarks>Each keyword uses a single Keywords DataSet. Multiple keywords use multiple Keywords DataSets. It is expected that a provider of various types of data that are related in subject matter uses the same keyword, enabling the receiving system or subsystems to search across all types of data for related material.</remarks>
 			Public Shared ReadOnly Property Keywords As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Keywords)
 				End Get
 			End Property
@@ -459,7 +459,7 @@ Namespace DrawingT.MetadataT
 			''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a country, e.g. ships at sea, space, IPTC will assign an appropriate threecharacter code under the provisions of ISO3166 to avoid conflicts. (see Appendix D) .</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ContentLocationCode As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ContentLocationCode)
 				End Get
 			End Property
@@ -467,119 +467,119 @@ Namespace DrawingT.MetadataT
 			''' <remarks>If used in the same object with DataSet , must immediately follow and correspond to it.</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ContentLocationName As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ContentLocationName)
 				End Get
 			End Property
 			''' <summary>The earliest date the provider intends the object to be used.</summary>
 			Public Shared ReadOnly Property ReleaseDate As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReleaseDate)
 				End Get
 			End Property
 			''' <summary>The earliest time the provider intends the object to be used.</summary>
 			Public Shared ReadOnly Property ReleaseTime As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReleaseTime)
 				End Get
 			End Property
 			''' <summary>The latest date the provider or owner intends the objectdata to be used.</summary>
 			Public Shared ReadOnly Property ExpirationDate As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ExpirationDate)
 				End Get
 			End Property
 			''' <summary>The latest time the provider or owner intends the objectdata to be used.</summary>
 			Public Shared ReadOnly Property ExpirationTime As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ExpirationTime)
 				End Get
 			End Property
 			''' <summary>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</summary>
 			Public Shared ReadOnly Property SpecialInstructions As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SpecialInstructions)
 				End Get
 			End Property
 			''' <summary>Indicates the type of action that this object provides to a previous object.</summary>
 			''' <remarks>The link to the previous object is made using the (DataSets 1:120 () and 1:122 ()), according to the practices of the provider.</remarks>
 			Public Shared ReadOnly Property ActionAdvised As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ActionAdvised)
 				End Get
 			End Property
 			''' <summary>Identifies the Service Identifier of a prior envelope to which the current object refers.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ReferenceService As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReferenceService)
 				End Get
 			End Property
 			''' <summary>Identifies the date of a prior envelope to which the current object refers.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ReferenceDate As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReferenceDate)
 				End Get
 			End Property
 			''' <summary>Identifies the Envelope Number of a prior envelope to which the current object refers.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ReferenceNumber As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ReferenceNumber)
 				End Get
 			End Property
 			''' <summary>The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.</summary>
 			''' <remarks>Thus a photo taken during the American Civil War would carry a creation date during that epoch (1861-1865) rather than the date the photo was digitised for archiving.</remarks>
 			Public Shared ReadOnly Property DateCreated As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.DateCreated)
 				End Get
 			End Property
 			''' <summary>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</summary>
 			''' <remarks>Where the time cannot be precisely determined, the closest approximation should be used.</remarks>
 			Public Shared ReadOnly Property TimeCreated As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.TimeCreated)
 				End Get
 			End Property
 			''' <summary>The date the digital representation of the objectdata was created.</summary>
 			''' <remarks>Thus a photo taken during the American Civil War would carry a Digital Creation Date within the past several years rather than the date where the image was captured on film, glass plate or other substrate during that epoch (1861-1865).</remarks>
 			Public Shared ReadOnly Property DigitalCreationDate As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.DigitalCreationDate)
 				End Get
 			End Property
 			''' <summary>The time the digital representation of the objectdata was created.</summary>
 			Public Shared ReadOnly Property DigitalCreationTime As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.DigitalCreationTime)
 				End Get
 			End Property
 			''' <summary>Identifies the type of program used to originate the objectdata.</summary>
 			''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
 			Public Shared ReadOnly Property OriginatingProgram As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.OriginatingProgram)
 				End Get
 			End Property
 			''' <summary>Identifies the type of program used to originate the objectdata.</summary>
 			''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
 			Public Shared ReadOnly Property ProgramVersion As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ProgramVersion)
 				End Get
 			End Property
 			''' <summary>Virtually only used in North America.</summary>
 			Public Shared ReadOnly Property ObjectCycle As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectCycle)
 				End Get
 			End Property
 			''' <summary>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ByLine As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ByLine)
 				End Get
 			End Property
@@ -587,146 +587,146 @@ Namespace DrawingT.MetadataT
 			''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ByLineTitle As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ByLineTitle)
 				End Get
 			End Property
 			''' <summary>Identifies city of objectdata origin according to guidelines established by the provider.</summary>
 			Public Shared ReadOnly Property City As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.City)
 				End Get
 			End Property
 			''' <summary>Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.</summary>
 			Public Shared ReadOnly Property SubLocation As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.SubLocation)
 				End Get
 			End Property
 			''' <summary>Identifies Province/State of origin according to guidelines established by the provider.</summary>
 			Public Shared ReadOnly Property ProvinceState As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ProvinceState)
 				End Get
 			End Property
 			''' <summary>Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.</summary>
 			''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a new country, e.g. ships at sea, space, IPTC will assign an appropriate three-character code under the provisions of ISO3166 to avoid conflicts. (see Appendix D)</remarks>
 			Public Shared ReadOnly Property CountryPrimaryLocationCode As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CountryPrimaryLocationCode)
 				End Get
 			End Property
 			''' <summary>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</summary>
 			Public Shared ReadOnly Property CountryPrimaryLocationName As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CountryPrimaryLocationName)
 				End Get
 			End Property
 			''' <summary>A code representing the location of original transmission according to practices of the provider.</summary>
 			''' <remarks>Examples: BER-5, PAR-12-11-01</remarks>
 			Public Shared ReadOnly Property OriginalTransmissionReference As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.OriginalTransmissionReference)
 				End Get
 			End Property
 			''' <summary>A publishable entry providing a synopsis of the contents of the objectdata.</summary>
 			Public Shared ReadOnly Property Headline As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Headline)
 				End Get
 			End Property
 			''' <summary>Identifies the provider of the objectdata, not necessarily the owner/creator.</summary>
 			Public Shared ReadOnly Property Credit As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Credit)
 				End Get
 			End Property
 			''' <summary>Identifies the original owner of the intellectual content of the objectdata.</summary>
 			''' <remarks>This could be an agency, a member of an agency or an individual.</remarks>
 			Public Shared ReadOnly Property Source As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Source)
 				End Get
 			End Property
 			''' <summary>Contains any necessary copyright notice.</summary>
 			Public Shared ReadOnly Property CopyrightNotice As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CopyrightNotice)
 				End Get
 			End Property
 			''' <summary>Identifies the person or organisation which can provide further background information on the objectdata.</summary>
 			Public Shared ReadOnly Property Contact As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.Contact)
 				End Get
 			End Property
 			''' <summary>A textual description of the objectdata, particularly used where the object is not text.</summary>
 			Public Shared ReadOnly Property CaptionAbstract As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.CaptionAbstract)
 				End Get
 			End Property
 			''' <summary>Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.</summary>
 			Public Shared ReadOnly Property WriterEditor As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.WriterEditor)
 				End Get
 			End Property
 			''' <summary>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</summary>
 			''' <remarks>Contains the rasterized objectdata description and is used where characters that have not been coded are required for the caption.</remarks>
 			Public Shared ReadOnly Property RasterizedeCaption As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.RasterizedeCaption)
 				End Get
 			End Property
 			''' <summary>Image Type</summary>
 			Public Shared ReadOnly Property ImageType As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ImageType)
 				End Get
 			End Property
 			''' <summary>Indicates the layout of the image area.</summary>
 			Public Shared ReadOnly Property ImageOrientation As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ImageOrientation)
 				End Get
 			End Property
 			''' <summary>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</summary>
 			''' <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
 			Public Shared ReadOnly Property LanguageIdentifier As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.LanguageIdentifier)
 				End Get
 			End Property
 			''' <summary>Type of audio in objectdata</summary>
 			''' <remarks>Note: When '0' or 'T' is used, the only authorised combination is "0T". This is the mechanism for sending a caption either to supplement an audio cut sent previously without a caption or to correct a previously sent caption.</remarks>
 			Public Shared ReadOnly Property AudioType As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioType)
 				End Get
 			End Property
 			''' <summary>Sampling rate, representing the sampling rate in hertz (Hz).</summary>
 			Public Shared ReadOnly Property AudioSamplingRate As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioSamplingRate)
 				End Get
 			End Property
 			''' <summary>The number of bits in each audio sample.</summary>
 			Public Shared ReadOnly Property AudioSamplingResolution As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioSamplingResolution)
 				End Get
 			End Property
 			''' <summary>The running time of an audio objectdata when played back at the speed at which it was recorded.</summary>
 			Public Shared ReadOnly Property AudioDuration As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioDuration)
 				End Get
 			End Property
 			''' <summary>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</summary>
 			''' <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
 			Public Shared ReadOnly Property AudioOutcue As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.AudioOutcue)
 				End Get
 			End Property
@@ -734,62 +734,62 @@ Namespace DrawingT.MetadataT
 			''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ObjectDataPreviewFileFormat As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewFileFormat)
 				End Get
 			End Property
-			''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+			''' <summary>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></summary>
 			''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ObjectDataPreviewFileFormatVersion As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewFileFormatVersion)
 				End Get
 			End Property
 			''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ObjectDataPreviewData As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectDataPreviewData)
 				End Get
 			End Property
 			''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
 			Public Shared ReadOnly Property SizeMode As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.SizeMode)
 				End Get
 			End Property
 			''' <summary>The maximum size for the following Subfile DataSet(s).</summary>
 			''' <remarks>The largest number is not defined, but programmers should provide at least for the largest binary number contained in four octets taken together. If the entire object is to be transferred together within a single DataSet 8:10, the number equals the size of the object.</remarks>
 			Public Shared ReadOnly Property MaxSubfileSize As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.MaxSubfileSize)
 				End Get
 			End Property
 			''' <summary>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</summary>
 			''' <remarks>Mandatory if DataSet has value '1' and not allowed if DataSet has value '0'.</remarks>
 			Public Shared ReadOnly Property ObjectDataSizeAnnounced As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.ObjectDataSizeAnnounced)
 				End Get
 			End Property
 			''' <summary>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</summary>
 			Public Shared ReadOnly Property MaximumObjectDataSize As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.PreObjectDataDescriptorRecord, PreObjectDataDescriptorRecordtags.MaximumObjectDataSize)
 				End Get
 			End Property
 			''' <summary>Subfile DataSet containing the objectdata itself.</summary>
 			''' <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
 			Public Shared ReadOnly Property Subfile As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.ObjectDataRecord, ObjectDataRecordtags.Subfile)
 				End Get
 			End Property
 			''' <summary>Total size of the objectdata, in octets, without tags.</summary>
 			''' <remarks>This number should equal the number in DataSet if the size of the objectdata is known and has been provided.</remarks>
 			Public Shared ReadOnly Property ConfirmedObjectDataSize As DataSetIdentification
-				Get
+				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.PostObjectDataDescriptorRecord, PostObjectDataDescriptorRecordtags.ConfirmedObjectDataSize)
 				End Get
 			End Property
@@ -805,7 +805,7 @@ Namespace DrawingT.MetadataT
 		End Structure
 #End Region
 #Region "Enums"
-		''' <summary>Possible values of</summary>
+		''' <summary>Possible values of <see cref="ActionAdvised"/></summary>
 		<Restrict(True)> Public Enum AdvisedActions As Byte
 			''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
 			''' <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
@@ -1032,7 +1032,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Waterway &amp; Maritime Transport</summary>
 			<FieldDisplayName("Waterway & Maritime Transport")> WaterwayAndMaritimeTransport = 04015004
 		End Enum
-		''' <summary>Values for</summary>
+		''' <summary>Values for <see cref="EditorialUpdate"/></summary>
 		<Restrict(True)> Public Enum EditorialUpdateValues As Byte
 			''' <summary>Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - <see cref='LanguageIdentifier'/>).</summary>
 			<FieldDisplayName("Additional language")> AdditionalLanguage = 1
@@ -1761,7 +1761,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>United Press International</summary>
 			<FieldDisplayName("UPI")> <XmlEnum("UPI")> UPI
 		End Enum
-		''' <summary>ISO 3166-1 alpha-3 codes used by with addition of some spacial codes used there.</summary>
+		''' <summary>ISO 3166-1 alpha-3 codes used by <see cref="ContentLocationCode"/> with addition of some spacial codes used there.</summary>
 		''' <remarks>Reserved code elements are codes which, while not ISO 3166-1 codes, are in use for some applications in conjunction with the ISO 3166 codes. The ISO 3166/MA therefore reserves them, so that they are not used for new official ISO 3166 codes, thereby creating conflicts between the standard and those applications.</remarks>
 		<Restrict(False)> Public Enum ISO3166
 			''' <summary>Aruba</summary>
@@ -2281,7 +2281,7 @@ Namespace DrawingT.MetadataT
 			''' <summary>Wales</summary>
 			<FieldDisplayName("Wales")> <XmlEnum("XWA")> Wales
 		End Enum
-		''' <summary>Values of</summary>
+		''' <summary>Values of <see cref="ObjectCycle"/></summary>
 		<Restrict(True)> Public Enum ObjectCycleValues
 			''' <summary>Morning</summary>
 			<FieldDisplayName("morning")> <XmlEnum("a")> Morning
@@ -2719,7 +2719,7 @@ Namespace DrawingT.MetadataT
 
 				''' <summary>Contains value of the <see cref="ObjectDataPreviewFileFormatVersion"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewFileFormatVersion As FileFormatVersions
-				''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+				''' <summary>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></summary>
 				''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
 				<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)>Public Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
 					Get
@@ -2746,31 +2746,15 @@ Namespace DrawingT.MetadataT
 #End Region
 #Region "Properties"
 		''' <summary>Abstract Relation Method</summary>
-		<FieldDisplayName("ARM")> <Category("Old IPTC")> Public Property ARM As ARMGroup()
+		<FieldDisplayName("ARM")> <Category("Old IPTC")> Public Property ARM As ARMGroup
 			Get
 				Dim v As List(Of ARMGroup)=ARMGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
-				Return v.ToArray
+				Return v(0)
 			End Get
 			Set
-				Dim Items As ARMGroup() = value
-				Clear(dataSetIdentification.ARMIdentifier)
-				Clear(dataSetIdentification.ARMVersion)
-				If Items IsNot Nothing Then
-					For Each item As ARMGroup In Items
-						Dim ARMIdentifierValues As ARMMethods() = ARMIdentifier
-						If ARMIdentifierValues Is Nothing Then ARMIdentifierValues = New ARMMethods(){}
-						ReDim Preserve ARMIdentifierValues(ARMIdentifier.Length)
-						ARMIdentifierValues(ARMIdentifier.Length - 1) = item.ARMIdentifier
-						ARMIdentifier = ARMIdentifierValues
-
-						Dim ARMVersionValues As ARMVersions() = ARMVersion
-						If ARMVersionValues Is Nothing Then ARMVersionValues = New ARMVersions(){}
-						ReDim Preserve ARMVersionValues(ARMVersion.Length)
-						ARMVersionValues(ARMVersion.Length - 1) = item.ARMVersion
-						ARMVersion = ARMVersionValues
-					Next item
-				End If
+				ARMIdentifier = value.ARMIdentifier
+				ARMVersion = value.ARMVersion
 			End Set
 		End Property
 		''' <summary>Country/geographical location referenced by the content of the object</summary>
@@ -2866,38 +2850,16 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> Public Property ObjectDataPreview As ObjectDataPreviewGroup()
+		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> Public Property ObjectDataPreview As ObjectDataPreviewGroup
 			Get
 				Dim v As List(Of ObjectDataPreviewGroup)=ObjectDataPreviewGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
-				Return v.ToArray
+				Return v(0)
 			End Get
 			Set
-				Dim Items As ObjectDataPreviewGroup() = value
-				Clear(dataSetIdentification.ObjectDataPreviewFileFormat)
-				Clear(dataSetIdentification.ObjectDataPreviewFileFormatVersion)
-				Clear(dataSetIdentification.ObjectDataPreviewData)
-				If Items IsNot Nothing Then
-					For Each item As ObjectDataPreviewGroup In Items
-						Dim ObjectDataPreviewFileFormatValues As FileFormats() = ObjectDataPreviewFileFormat
-						If ObjectDataPreviewFileFormatValues Is Nothing Then ObjectDataPreviewFileFormatValues = New FileFormats(){}
-						ReDim Preserve ObjectDataPreviewFileFormatValues(ObjectDataPreviewFileFormat.Length)
-						ObjectDataPreviewFileFormatValues(ObjectDataPreviewFileFormat.Length - 1) = item.ObjectDataPreviewFileFormat
-						ObjectDataPreviewFileFormat = ObjectDataPreviewFileFormatValues
-
-						Dim ObjectDataPreviewFileFormatVersionValues As FileFormatVersions() = ObjectDataPreviewFileFormatVersion
-						If ObjectDataPreviewFileFormatVersionValues Is Nothing Then ObjectDataPreviewFileFormatVersionValues = New FileFormatVersions(){}
-						ReDim Preserve ObjectDataPreviewFileFormatVersionValues(ObjectDataPreviewFileFormatVersion.Length)
-						ObjectDataPreviewFileFormatVersionValues(ObjectDataPreviewFileFormatVersion.Length - 1) = item.ObjectDataPreviewFileFormatVersion
-						ObjectDataPreviewFileFormatVersion = ObjectDataPreviewFileFormatVersionValues
-
-						Dim ObjectDataPreviewDataValues As Byte()() = ObjectDataPreviewData
-						If ObjectDataPreviewDataValues Is Nothing Then ObjectDataPreviewDataValues = New Byte()(){}
-						ReDim Preserve ObjectDataPreviewDataValues(ObjectDataPreviewData.Length)
-						ObjectDataPreviewDataValues(ObjectDataPreviewData.Length - 1) = item.ObjectDataPreviewData
-						ObjectDataPreviewData = ObjectDataPreviewDataValues
-					Next item
-				End If
+				ObjectDataPreviewFileFormat = value.ObjectDataPreviewFileFormat
+				ObjectDataPreviewFileFormatVersion = value.ObjectDataPreviewFileFormatVersion
+				ObjectDataPreviewData = value.ObjectDataPreviewData
 			End Set
 		End Property
 #End Region
@@ -2905,22 +2867,22 @@ Namespace DrawingT.MetadataT
 #Region "Properties"
 		''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
 		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Internal")> <FieldDisplayName("Model Version")> <CLSCompliant(False)>Public Property ModelVersion As UShort()
+		<Description("A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.")> _
+		<Category("Internal")> <FieldDisplayName("Model Version")> <CLSCompliant(False)>Public Property ModelVersion As UShort
 			Get
 				Try
 					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.ModelVersion)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UShort_Binary_Value(DataSetIdentification.ModelVersion) = New List(Of UShort)(value)
+					UShort_Binary_Value(DataSetIdentification.ModelVersion) = New List(Of UShort)(New UShort(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -2930,6 +2892,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.")> _
 		<Category("Old IPTC")> <FieldDisplayName("Destination")> Public Property Destination As String()
 			Get
 				Try
@@ -2950,89 +2913,89 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>A number representing the file format.</summary>
 		''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Property FileFormat As FileFormats()
+		<Description("A number representing the file format.")> _
+		<Category("Old IPTC")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Property FileFormat As FileFormats
 			Get
 				Try
 					Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)) = ConvertEnumList(New List(Of FileFormats)(value))
+					Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)) = ConvertEnumList(New List(Of FileFormats)(New FileFormats(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
-		''' <summary>A binary number representing the particular version of the</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <summary>A binary number representing the particular version of the <see cref="FileFormat"/></summary>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Property FileFormatVersion As FileFormatVersions()
+		<Description("A binary number representing the particular version of the File Format")> _
+		<Category("Old IPTC")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Property FileFormatVersion As FileFormatVersions
 			Get
 				Try
 					Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)) = ConvertEnumList(New List(Of FileFormatVersions)(value))
+					Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)) = ConvertEnumList(New List(Of FileFormatVersions)(New FileFormatVersions(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Identifies the provider and product.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("Service Identifier")> Public Property ServiceIdentifier As String()
+		<Description("Identifies the provider and product.")> _
+		<Category("Old IPTC")> <FieldDisplayName("Service Identifier")> Public Property ServiceIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier, 10, false) = New List(Of String)(value)
+					GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier, 10, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
-		''' <summary>The characters form a number that will be unique for the date specified in and for the Service Identifier specified in .</summary>
+		''' <summary>The characters form a number that will be unique for the date specified in <see cref="DateSent"/> and for the Service Identifier specified in <see cref="ServiceIdentifier"/>.</summary>
 		''' <remarks>If identical envelope numbers appear with the same date and with the same Service Identifier, records 2-9 must be unchanged from the original. This is not intended to be a sequential serial number reception check.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("Envelope Number")> Public Property EnvelopeNumber As Decimal()
+		<Description("The characters form a number that will be unique for the date specified in Date Sentand for the Service Identifier specified in Service Identifier.")> _
+		<Category("Old IPTC")> <FieldDisplayName("Envelope Number")> Public Property EnvelopeNumber As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopeNumber)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					NumericChar_Value(DataSetIdentification.EnvelopeNumber, 8, true) = New List(Of Decimal)(value)
+					NumericChar_Value(DataSetIdentification.EnvelopeNumber, 8, true) = New List(Of Decimal)(New Decimal(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3043,6 +3006,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Allows a provider to identify subsets of its overall service.")> _
 		<Category("Old IPTC")> <FieldDisplayName("Product I.D.")> Public Property ProductID As String()
 			Get
 				Try
@@ -3061,68 +3025,68 @@ Namespace DrawingT.MetadataT
 				End Try
 			End Set
 		End Property
-		''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, ).</summary>
+		''' <summary>Specifies the envelope handling priority and not the editorial urgency (see 2:10, <see cref="Urgency"/>).</summary>
 		''' <remarks>'1' indicates the most urgent, '5' the normal urgency, and '8' the least urgent copy. The numeral '9' indicates a User Defined Priority. The numeral '0' is reserved for future use.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Status")> <FieldDisplayName("Envelope Priority")> Public Property EnvelopePriority As Decimal()
+		<Description("Specifies the envelope handling priority and not the editorial urgency (see 2:10, Urgency).")> _
+		<Category("Status")> <FieldDisplayName("Envelope Priority")> Public Property EnvelopePriority As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopePriority)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					NumericChar_Value(DataSetIdentification.EnvelopePriority, 1, true) = New List(Of Decimal)(value)
+					NumericChar_Value(DataSetIdentification.EnvelopePriority, 1, true) = New List(Of Decimal)(New Decimal(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Indicates year, month and day the service sent the material.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Date Sent")> Public Property DateSent As Date()
+		<Description("Indicates year, month and day the service sent the material.")> _
+		<Category("Date")> <FieldDisplayName("Date Sent")> Public Property DateSent As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DateSent)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					CCYYMMDD_Value(DataSetIdentification.DateSent) = New List(Of Date)(value)
+					CCYYMMDD_Value(DataSetIdentification.DateSent) = New List(Of Date)(New Date(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>This is the time the service sent the material.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Time Sent")> Public Property TimeSent As Time()
+		<Description("This is the time the service sent the material.")> _
+		<Category("Date")> <FieldDisplayName("Time Sent")> Public Property TimeSent As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeSent)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					HHMMSS_HHMM_Value(DataSetIdentification.TimeSent) = New List(Of Time)(value)
+					HHMMSS_HHMM_Value(DataSetIdentification.TimeSent) = New List(Of Time)(New Time(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3130,22 +3094,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
 		''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> Public Property CodedCharacterSet As Byte()()
+		<Description("Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.")> _
+		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> Public Property CodedCharacterSet As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.CodedCharacterSet)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Bytearray_Value(DataSetIdentification.CodedCharacterSet, 32, false) = New List(Of Byte())(value)
+					Bytearray_Value(DataSetIdentification.CodedCharacterSet, 32, false) = New List(Of Byte())(New Byte()(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3153,22 +3117,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.</summary>
 		''' <remarks>The provider must ensure the UNO is unique. Objects with the same UNO are identical.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("UNO")> Public Property UNO As iptcUNO()
+		<Description("UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.")> _
+		<Category("Old IPTC")> <FieldDisplayName("UNO")> Public Property UNO As iptcUNO
 			Get
 				Try
 					Dim AllValues As List(Of iptcUNO) = UNO_Value(DataSetIdentification.UNO)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UNO_Value(DataSetIdentification.UNO) = New List(Of iptcUNO)(value)
+					UNO_Value(DataSetIdentification.UNO) = New List(Of iptcUNO)(New iptcUNO(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3176,22 +3140,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</summary>
 		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Internal")> <FieldDisplayName("Record Version")> <CLSCompliant(False)>Public Property RecordVersion As UShort()
+		<Description("A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.")> _
+		<Category("Internal")> <FieldDisplayName("Record Version")> <CLSCompliant(False)>Public Property RecordVersion As UShort
 			Get
 				Try
 					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.RecordVersion)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UShort_Binary_Value(DataSetIdentification.RecordVersion) = New List(Of UShort)(value)
+					UShort_Binary_Value(DataSetIdentification.RecordVersion) = New List(Of UShort)(New UShort(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3199,22 +3163,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>The Object Type is used to distinguish between different types of objects within the IIM.</summary>
 		''' <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (<see cref='LanguageIdentifier'/>)</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)>Public Property ObjectTypeReference As NumStr2(Of ObjectTypes)()
+		<Description("The Object Type is used to distinguish between different types of objects within the IIM.")> _
+		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)>Public Property ObjectTypeReference As NumStr2(Of ObjectTypes)
 			Get
 				Try
 					Dim AllValues As List(Of NumStr2(Of ObjectTypes)) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(Num2_Str_Value(DataSetIdentification.ObjectTypeReference))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Num2_Str_Value(DataSetIdentification.ObjectTypeReference, 67) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(New List(Of NumStr2(Of ObjectTypes))(value))
+					Num2_Str_Value(DataSetIdentification.ObjectTypeReference, 67) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(New List(Of NumStr2(Of ObjectTypes))(New NumStr2(Of ObjectTypes)(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3225,6 +3189,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("The Object Attribute defines the nature of the object independent of the Subject.")> _
 		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)>Public Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
 			Get
 				Try
@@ -3244,67 +3209,67 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Status")> <FieldDisplayName("Edit Status")> Public Property EditStatus As String()
+		<Description("Status of the objectdata, according to the practice of the provider.")> _
+		<Category("Status")> <FieldDisplayName("Edit Status")> Public Property EditStatus As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.EditStatus)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.EditStatus, 64, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.EditStatus, 64, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Status")> <FieldDisplayName("Editorial Update")> Public Property EditorialUpdate As EditorialUpdateValues()
+		<Description("Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.")> _
+		<Category("Status")> <FieldDisplayName("Editorial Update")> Public Property EditorialUpdate As EditorialUpdateValues
 			Get
 				Try
 					Dim AllValues As List(Of EditorialUpdateValues) = ConvertEnumList(Of EditorialUpdateValues)(Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues), 2, true) = ConvertEnumList(New List(Of EditorialUpdateValues)(value))
+					Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues), 2, true) = ConvertEnumList(New List(Of EditorialUpdateValues)(New EditorialUpdateValues(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
-		''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, ).</summary>
+		''' <summary>Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, <see cref="EnvelopePriority"/>).</summary>
 		''' <remarks>The '1' is most urgent, '5' normal and '8' denotes the least-urgent copy. The numerals '9' and '0' are reserved for future use.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Status")> <FieldDisplayName("Urgency")> Public Property Urgency As Decimal()
+		<Description("Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, Envelope Priority).")> _
+		<Category("Status")> <FieldDisplayName("Urgency")> Public Property Urgency As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.Urgency)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					NumericChar_Value(DataSetIdentification.Urgency, 1, true) = New List(Of Decimal)(value)
+					NumericChar_Value(DataSetIdentification.Urgency, 1, true) = New List(Of Decimal)(New Decimal(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3315,6 +3280,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("The Subject Reference is a structured definition of the subject matter.")> _
 		<Category("Old IPTC")> <FieldDisplayName("Subject Reference")> Public Property SubjectReference As iptcSubjectReference()
 			Get
 				Try
@@ -3335,22 +3301,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies the subject of the objectdata in the opinion of the provider.</summary>
 		''' <remarks>A list of categories will be maintained by a regional registry, where available, otherwise by the provider.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Category")> <FieldDisplayName("Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property Category As String()
+		<Description("Identifies the subject of the objectdata in the opinion of the provider.")> _
+		<Category("Category")> <FieldDisplayName("Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property Category As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.Category)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Alpha_Value(DataSetIdentification.Category, 3, false) = New List(Of String)(value)
+					Alpha_Value(DataSetIdentification.Category, 3, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3361,6 +3327,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Supplemental categories further refine the subject of an objectdata.")> _
 		<Category("Category")> <FieldDisplayName("Supplemental Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property SupplementalCategory As String()
 			Get
 				Try
@@ -3381,22 +3348,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies objectdata that recurs often and predictably.</summary>
 		''' <remarks>Enables users to immediately find or recall such an object.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Category")> <FieldDisplayName("Fixture Identifier")> Public Property FixtureIdentifier As String()
+		<Description("Identifies objectdata that recurs often and predictably.")> _
+		<Category("Category")> <FieldDisplayName("Fixture Identifier")> Public Property FixtureIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier, 32, false) = New List(Of String)(value)
+					GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3407,6 +3374,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Used to indicate specific information retrieval words.")> _
 		<Category("Category")> <FieldDisplayName("Keywords")> Public Property Keywords As String()
 			Get
 				Try
@@ -3426,110 +3394,110 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>The earliest date the provider intends the object to be used.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Release Date")> Public Property ReleaseDate As Date()
+		<Description("The earliest date the provider intends the object to be used.")> _
+		<Category("Date")> <FieldDisplayName("Release Date")> Public Property ReleaseDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ReleaseDate)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					CCYYMMDD_Value(DataSetIdentification.ReleaseDate) = New List(Of Date)(value)
+					CCYYMMDD_Value(DataSetIdentification.ReleaseDate) = New List(Of Date)(New Date(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The earliest time the provider intends the object to be used.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Release Time")> Public Property ReleaseTime As Time()
+		<Description("The earliest time the provider intends the object to be used.")> _
+		<Category("Date")> <FieldDisplayName("Release Time")> Public Property ReleaseTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime) = New List(Of Time)(value)
+					HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime) = New List(Of Time)(New Time(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The latest date the provider or owner intends the objectdata to be used.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Expiration Date")> Public Property ExpirationDate As Date()
+		<Description("The latest date the provider or owner intends the objectdata to be used.")> _
+		<Category("Date")> <FieldDisplayName("Expiration Date")> Public Property ExpirationDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ExpirationDate)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					CCYYMMDD_Value(DataSetIdentification.ExpirationDate) = New List(Of Date)(value)
+					CCYYMMDD_Value(DataSetIdentification.ExpirationDate) = New List(Of Date)(New Date(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The latest time the provider or owner intends the objectdata to be used.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Expiration Time")> Public Property ExpirationTime As Time()
+		<Description("The latest time the provider or owner intends the objectdata to be used.")> _
+		<Category("Date")> <FieldDisplayName("Expiration Time")> Public Property ExpirationTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime) = New List(Of Time)(value)
+					HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime) = New List(Of Time)(New Time(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Other")> <FieldDisplayName("Special Instructions")> Public Property SpecialInstructions As String()
+		<Description("Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.")> _
+		<Category("Other")> <FieldDisplayName("Special Instructions")> Public Property SpecialInstructions As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SpecialInstructions)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.SpecialInstructions, 256, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.SpecialInstructions, 256, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3537,22 +3505,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Indicates the type of action that this object provides to a previous object.</summary>
 		''' <remarks>The link to the previous object is made using the (DataSets 1:120 () and 1:122 ()), according to the practices of the provider.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Other")> <FieldDisplayName("Action Advised")> Public Property ActionAdvised As AdvisedActions()
+		<Description("Indicates the type of action that this object provides to a previous object.")> _
+		<Category("Other")> <FieldDisplayName("Action Advised")> Public Property ActionAdvised As AdvisedActions
 			Get
 				Try
 					Dim AllValues As List(Of AdvisedActions) = ConvertEnumList(Of AdvisedActions)(Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions), 2, true) = ConvertEnumList(New List(Of AdvisedActions)(value))
+					Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions), 2, true) = ConvertEnumList(New List(Of AdvisedActions)(New AdvisedActions(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3560,22 +3528,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.</summary>
 		''' <remarks>Thus a photo taken during the American Civil War would carry a creation date during that epoch (1861-1865) rather than the date the photo was digitised for archiving.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Date Created")> Public Property DateCreated As OmmitableDate()
+		<Description("The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.")> _
+		<Category("Date")> <FieldDisplayName("Date Created")> Public Property DateCreated As OmmitableDate
 			Get
 				Try
 					Dim AllValues As List(Of OmmitableDate) = CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated) = New List(Of OmmitableDate)(value)
+					CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated) = New List(Of OmmitableDate)(New OmmitableDate(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3583,22 +3551,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.</summary>
 		''' <remarks>Where the time cannot be precisely determined, the closest approximation should be used.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Time Created")> Public Property TimeCreated As Time()
+		<Description("The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.")> _
+		<Category("Date")> <FieldDisplayName("Time Created")> Public Property TimeCreated As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated) = New List(Of Time)(value)
+					HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated) = New List(Of Time)(New Time(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3606,44 +3574,44 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>The date the digital representation of the objectdata was created.</summary>
 		''' <remarks>Thus a photo taken during the American Civil War would carry a Digital Creation Date within the past several years rather than the date where the image was captured on film, glass plate or other substrate during that epoch (1861-1865).</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Digital Creation Date")> Public Property DigitalCreationDate As Date()
+		<Description("The date the digital representation of the objectdata was created.")> _
+		<Category("Date")> <FieldDisplayName("Digital Creation Date")> Public Property DigitalCreationDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate) = New List(Of Date)(value)
+					CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate) = New List(Of Date)(New Date(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The time the digital representation of the objectdata was created.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Date")> <FieldDisplayName("Digital Creation Time")> Public Property DigitalCreationTime As Time()
+		<Description("The time the digital representation of the objectdata was created.")> _
+		<Category("Date")> <FieldDisplayName("Digital Creation Time")> Public Property DigitalCreationTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime) = New List(Of Time)(value)
+					HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime) = New List(Of Time)(New Time(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3651,22 +3619,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies the type of program used to originate the objectdata.</summary>
 		''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Other")> <FieldDisplayName("Originating Program")> Public Property OriginatingProgram As String()
+		<Description("Identifies the type of program used to originate the objectdata.")> _
+		<Category("Other")> <FieldDisplayName("Originating Program")> Public Property OriginatingProgram As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginatingProgram)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.OriginatingProgram, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.OriginatingProgram, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3674,110 +3642,110 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies the type of program used to originate the objectdata.</summary>
 		''' <remarks>Note: This DataSet to form an advisory to the user and are not "computer" fields. Programmers should not expect to find computer-readable information in this DataSet.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Other")> <FieldDisplayName("Program Version")> Public Property ProgramVersion As String()
+		<Description("Identifies the type of program used to originate the objectdata.")> _
+		<Category("Other")> <FieldDisplayName("Program Version")> Public Property ProgramVersion As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProgramVersion)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.ProgramVersion, 10, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.ProgramVersion, 10, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Virtually only used in North America.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Status")> <FieldDisplayName("Object Cycle")> <CLSCompliant(False)>Public Property ObjectCycle As StringEnum(Of ObjectCycleValues)()
+		<Description("Virtually only used in North America.")> _
+		<Category("Status")> <FieldDisplayName("Object Cycle")> <CLSCompliant(False)>Public Property ObjectCycle As StringEnum(Of ObjectCycleValues)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ObjectCycleValues)) = ConvertEnumList(Of ObjectCycleValues)(StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues), 1, true) = ConvertEnumList(Of ObjectCycleValues)(New List(Of StringEnum(Of ObjectCycleValues))(value))
+					StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues), 1, true) = ConvertEnumList(Of ObjectCycleValues)(New List(Of StringEnum(Of ObjectCycleValues))(New StringEnum(Of ObjectCycleValues)(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Identifies city of objectdata origin according to guidelines established by the provider.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Location")> <FieldDisplayName("City")> Public Property City As String()
+		<Description("Identifies city of objectdata origin according to guidelines established by the provider.")> _
+		<Category("Location")> <FieldDisplayName("City")> Public Property City As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.City)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.City, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.City, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Location")> <FieldDisplayName("Sublocation")> Public Property SubLocation As String()
+		<Description("Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.")> _
+		<Category("Location")> <FieldDisplayName("Sublocation")> Public Property SubLocation As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SubLocation)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.SubLocation, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.SubLocation, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Identifies Province/State of origin according to guidelines established by the provider.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Location")> <FieldDisplayName("Province/State")> Public Property ProvinceState As String()
+		<Description("Identifies Province/State of origin according to guidelines established by the provider.")> _
+		<Category("Location")> <FieldDisplayName("Province/State")> Public Property ProvinceState As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProvinceState)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.ProvinceState, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.ProvinceState, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3785,44 +3753,44 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.</summary>
 		''' <remarks>Where ISO has established an appropriate country code under ISO 3166, that code will be used. When ISO3166 does not adequately provide for identification of a location or a new country, e.g. ships at sea, space, IPTC will assign an appropriate three-character code under the provisions of ISO3166 to avoid conflicts. (see Appendix D)</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)()
+		<Description("Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.")> _
+		<Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166), 3, true) = ConvertEnumList(Of ISO3166)(New List(Of StringEnum(Of ISO3166))(value))
+					StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166), 3, true) = ConvertEnumList(Of ISO3166)(New List(Of StringEnum(Of ISO3166))(New StringEnum(Of ISO3166)(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Name")> Public Property CountryPrimaryLocationName As String()
+		<Description("Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.")> _
+		<Category("Location")> <FieldDisplayName("Country/Primary Location Name")> Public Property CountryPrimaryLocationName As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName, 64, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName, 64, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3830,66 +3798,66 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>A code representing the location of original transmission according to practices of the provider.</summary>
 		''' <remarks>Examples: BER-5, PAR-12-11-01</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Location")> <FieldDisplayName("Original Transmission Refrence")> Public Property OriginalTransmissionReference As String()
+		<Description("A code representing the location of original transmission according to practices of the provider.")> _
+		<Category("Location")> <FieldDisplayName("Original Transmission Refrence")> Public Property OriginalTransmissionReference As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>A publishable entry providing a synopsis of the contents of the objectdata.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Title")> <FieldDisplayName("Headline")> Public Property Headline As String()
+		<Description("A publishable entry providing a synopsis of the contents of the objectdata.")> _
+		<Category("Title")> <FieldDisplayName("Headline")> Public Property Headline As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Headline)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.Headline, 256, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.Headline, 256, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Identifies the provider of the objectdata, not necessarily the owner/creator.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Author")> <FieldDisplayName("Credit")> Public Property Credit As String()
+		<Description("Identifies the provider of the objectdata, not necessarily the owner/creator.")> _
+		<Category("Author")> <FieldDisplayName("Credit")> Public Property Credit As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Credit)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.Credit, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.Credit, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3897,44 +3865,44 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies the original owner of the intellectual content of the objectdata.</summary>
 		''' <remarks>This could be an agency, a member of an agency or an individual.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Author")> <FieldDisplayName("Source")> Public Property Source As String()
+		<Description("Identifies the original owner of the intellectual content of the objectdata.")> _
+		<Category("Author")> <FieldDisplayName("Source")> Public Property Source As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Source)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.Source, 32, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.Source, 32, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Contains any necessary copyright notice.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Author")> <FieldDisplayName("Copyright Notice")> Public Property CopyrightNotice As String()
+		<Description("Contains any necessary copyright notice.")> _
+		<Category("Author")> <FieldDisplayName("Copyright Notice")> Public Property CopyrightNotice As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CopyrightNotice)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.CopyrightNotice, 128, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.CopyrightNotice, 128, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3944,6 +3912,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Identifies the person or organisation which can provide further background information on the objectdata.")> _
 		<Category("Author")> <FieldDisplayName("Contact")> Public Property Contact As String()
 			Get
 				Try
@@ -3963,22 +3932,22 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>A textual description of the objectdata, particularly used where the object is not text.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Title")> <FieldDisplayName("Caption/Abstract")> Public Property CaptionAbstract As String()
+		<Description("A textual description of the objectdata, particularly used where the object is not text.")> _
+		<Category("Title")> <FieldDisplayName("Caption/Abstract")> Public Property CaptionAbstract As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Text_Value(DataSetIdentification.CaptionAbstract)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Text_Value(DataSetIdentification.CaptionAbstract, 2000, false) = New List(Of String)(value)
+					Text_Value(DataSetIdentification.CaptionAbstract, 2000, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -3988,6 +3957,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.")> _
 		<Category("Author")> <FieldDisplayName("Writer/Editor")> Public Property WriterEditor As String()
 			Get
 				Try
@@ -4008,66 +3978,66 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</summary>
 		''' <remarks>Contains the rasterized objectdata description and is used where characters that have not been coded are required for the caption.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Title")> <FieldDisplayName("Rasterized Caption")> Public Property RasterizedeCaption As Drawing.Bitmap()
+		<Description("Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.")> _
+		<Category("Title")> <FieldDisplayName("Rasterized Caption")> Public Property RasterizedeCaption As Drawing.Bitmap
 			Get
 				Try
 					Dim AllValues As List(Of Drawing.Bitmap) = BW460_Value(DataSetIdentification.RasterizedeCaption)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					BW460_Value(DataSetIdentification.RasterizedeCaption, 7360, true) = New List(Of Drawing.Bitmap)(value)
+					BW460_Value(DataSetIdentification.RasterizedeCaption, 7360, true) = New List(Of Drawing.Bitmap)(New Drawing.Bitmap(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Image Type</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Image")> <FieldDisplayName("Image Type")> Public Property ImageType As iptcImageType()
+		<Description("Image Type")> _
+		<Category("Image")> <FieldDisplayName("Image Type")> Public Property ImageType As iptcImageType
 			Get
 				Try
 					Dim AllValues As List(Of iptcImageType) = ImageType_Value(DataSetIdentification.ImageType)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					ImageType_Value(DataSetIdentification.ImageType) = New List(Of iptcImageType)(value)
+					ImageType_Value(DataSetIdentification.ImageType) = New List(Of iptcImageType)(New iptcImageType(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Indicates the layout of the image area.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Image")> <FieldDisplayName("Image Orientation")> <CLSCompliant(False)>Public Property ImageOrientation As StringEnum(Of Orientations)()
+		<Description("Indicates the layout of the image area.")> _
+		<Category("Image")> <FieldDisplayName("Image Orientation")> <CLSCompliant(False)>Public Property ImageOrientation As StringEnum(Of Orientations)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of Orientations)) = ConvertEnumList(Of Orientations)(StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations), 1, true) = ConvertEnumList(Of Orientations)(New List(Of StringEnum(Of Orientations))(value))
+					StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations), 1, true) = ConvertEnumList(Of Orientations)(New List(Of StringEnum(Of Orientations))(New StringEnum(Of Orientations)(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4075,22 +4045,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.</summary>
 		''' <remarks>Does not define or imply any coded character set, but is used for internal routing, e.g. to various editorial desks. Implementation note: Programmers should provide for three octets for Language Identifier because the ISO is expected to provide for 3-letter codes in the future.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Other")> <FieldDisplayName("Language Identifier")> Public Property LanguageIdentifier As String()
+		<Description("Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.")> _
+		<Category("Other")> <FieldDisplayName("Language Identifier")> Public Property LanguageIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.LanguageIdentifier)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Alpha_Value(DataSetIdentification.LanguageIdentifier, 135, false) = New List(Of String)(value)
+					Alpha_Value(DataSetIdentification.LanguageIdentifier, 135, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4098,88 +4068,88 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Type of audio in objectdata</summary>
 		''' <remarks>Note: When '0' or 'T' is used, the only authorised combination is "0T". This is the mechanism for sending a caption either to supplement an audio cut sent previously without a caption or to correct a previously sent caption.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Audio")> <FieldDisplayName("Audio Type")> Public Property AudioType As iptcAudioType()
+		<Description("Type of audio in objectdata")> _
+		<Category("Audio")> <FieldDisplayName("Audio Type")> Public Property AudioType As iptcAudioType
 			Get
 				Try
 					Dim AllValues As List(Of iptcAudioType) = Audiotype_Value(DataSetIdentification.AudioType)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Audiotype_Value(DataSetIdentification.AudioType) = New List(Of iptcAudioType)(value)
+					Audiotype_Value(DataSetIdentification.AudioType) = New List(Of iptcAudioType)(New iptcAudioType(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Sampling rate, representing the sampling rate in hertz (Hz).</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Audio")> <FieldDisplayName("Audio Sampling Rate")> Public Property AudioSamplingRate As Decimal()
+		<Description("Sampling rate, representing the sampling rate in hertz (Hz).")> _
+		<Category("Audio")> <FieldDisplayName("Audio Sampling Rate")> Public Property AudioSamplingRate As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingRate)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					NumericChar_Value(DataSetIdentification.AudioSamplingRate, 6, true) = New List(Of Decimal)(value)
+					NumericChar_Value(DataSetIdentification.AudioSamplingRate, 6, true) = New List(Of Decimal)(New Decimal(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The number of bits in each audio sample.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Audio")> <FieldDisplayName("Audio Sampling Resolution")> Public Property AudioSamplingResolution As Decimal()
+		<Description("The number of bits in each audio sample.")> _
+		<Category("Audio")> <FieldDisplayName("Audio Sampling Resolution")> Public Property AudioSamplingResolution As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingResolution)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					NumericChar_Value(DataSetIdentification.AudioSamplingResolution, 2, true) = New List(Of Decimal)(value)
+					NumericChar_Value(DataSetIdentification.AudioSamplingResolution, 2, true) = New List(Of Decimal)(New Decimal(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The running time of an audio objectdata when played back at the speed at which it was recorded.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Audio")> <FieldDisplayName("Audio Duration")> Public Property AudioDuration As TimeSpan()
+		<Description("The running time of an audio objectdata when played back at the speed at which it was recorded.")> _
+		<Category("Audio")> <FieldDisplayName("Audio Duration")> Public Property AudioDuration As TimeSpan
 			Get
 				Try
 					Dim AllValues As List(Of TimeSpan) = HHMMSS_Value(DataSetIdentification.AudioDuration)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					HHMMSS_Value(DataSetIdentification.AudioDuration) = New List(Of TimeSpan)(value)
+					HHMMSS_Value(DataSetIdentification.AudioDuration) = New List(Of TimeSpan)(New TimeSpan(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4187,44 +4157,44 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</summary>
 		''' <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Audio")> <FieldDisplayName("Audio Outcue")> Public Property AudioOutcue As String()
+		<Description("Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.")> _
+		<Category("Audio")> <FieldDisplayName("Audio Outcue")> Public Property AudioOutcue As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.AudioOutcue)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.AudioOutcue, 64, false) = New List(Of String)(value)
+					TextWithSpaces_Value(DataSetIdentification.AudioOutcue, 64, false) = New List(Of String)(New String(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("Size Mode")> Public Property SizeMode As Boolean()
+		<Description("The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.")> _
+		<Category("Embeded object")> <FieldDisplayName("Size Mode")> Public Property SizeMode As Boolean
 			Get
 				Try
 					Dim AllValues As List(Of Boolean) = Boolean_Binary_Value(DataSetIdentification.SizeMode)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Boolean_Binary_Value(DataSetIdentification.SizeMode, 1) = New List(Of Boolean)(value)
+					Boolean_Binary_Value(DataSetIdentification.SizeMode, 1) = New List(Of Boolean)(New Boolean(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4232,22 +4202,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>The maximum size for the following Subfile DataSet(s).</summary>
 		''' <remarks>The largest number is not defined, but programmers should provide at least for the largest binary number contained in four octets taken together. If the entire object is to be transferred together within a single DataSet 8:10, the number equals the size of the object.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("Max Subfile Size")> <CLSCompliant(False)>Public Property MaxSubfileSize As ULong()
+		<Description("The maximum size for the following Subfile DataSet(s).")> _
+		<Category("Embeded object")> <FieldDisplayName("Max Subfile Size")> <CLSCompliant(False)>Public Property MaxSubfileSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize) = New List(Of ULong)(value)
+					UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize) = New List(Of ULong)(New ULong(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4255,44 +4225,44 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</summary>
 		''' <remarks>Mandatory if DataSet has value '1' and not allowed if DataSet has value '0'.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Size Announced")> <CLSCompliant(False)>Public Property ObjectDataSizeAnnounced As ULong()
+		<Description("A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.")> _
+		<Category("Embeded object")> <FieldDisplayName("ObjectData Size Announced")> <CLSCompliant(False)>Public Property ObjectDataSizeAnnounced As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced) = New List(Of ULong)(value)
+					UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced) = New List(Of ULong)(New ULong(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("Maximum ObjectData Size")> <CLSCompliant(False)>Public Property MaximumObjectDataSize As ULong()
+		<Description("Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.")> _
+		<Category("Embeded object")> <FieldDisplayName("Maximum ObjectData Size")> <CLSCompliant(False)>Public Property MaximumObjectDataSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize) = New List(Of ULong)(value)
+					UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize) = New List(Of ULong)(New ULong(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4300,22 +4270,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Subfile DataSet containing the objectdata itself.</summary>
 		''' <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("Subfile")> Public Property Subfile As Byte()()
+		<Description("Subfile DataSet containing the objectdata itself.")> _
+		<Category("Embeded object")> <FieldDisplayName("Subfile")> Public Property Subfile As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.Subfile)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Bytearray_Value(DataSetIdentification.Subfile, 0, false) = New List(Of Byte())(value)
+					Bytearray_Value(DataSetIdentification.Subfile, 0, false) = New List(Of Byte())(New Byte()(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4323,22 +4293,22 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Total size of the objectdata, in octets, without tags.</summary>
 		''' <remarks>This number should equal the number in DataSet if the size of the objectdata is known and has been provided.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("Confirmed ObjectData Size")> <CLSCompliant(False)>Public Property ConfirmedObjectDataSize As ULong()
+		<Description("Total size of the objectdata, in octets, without tags.")> _
+		<Category("Embeded object")> <FieldDisplayName("Confirmed ObjectData Size")> <CLSCompliant(False)>Public Property ConfirmedObjectDataSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize) = New List(Of ULong)(value)
+					UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize) = New List(Of ULong)(New ULong(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4346,44 +4316,44 @@ Namespace DrawingT.MetadataT
 		End Property
 #Region "Grouped" 'Those propertiers can be accessed via groups, do not use them directly!
 		''' <summary>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("ARM Identifier")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMIdentifier As ARMMethods()
+		<Description("The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.")> _
+		<Category("Old IPTC")> <FieldDisplayName("ARM Identifier")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMIdentifier As ARMMethods
 			Get
 				Try
 					Dim AllValues As List(Of ARMMethods) = ConvertEnumList(Of ARMMethods)(Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)) = ConvertEnumList(New List(Of ARMMethods)(value))
+					Enum_Binary_Value(DataSetIdentification.ARMIdentifier, GetType(ARMMethods)) = ConvertEnumList(New List(Of ARMMethods)(New ARMMethods(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Old IPTC")> <FieldDisplayName("ARM Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMVersion As ARMVersions()
+		<Description("A number representing the particular version of the ARM specified in DataSet <see cref='ARMIdentifier'/>.")> _
+		<Category("Old IPTC")> <FieldDisplayName("ARM Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ARMVersion As ARMVersions
 			Get
 				Try
 					Dim AllValues As List(Of ARMVersions) = ConvertEnumList(Of ARMVersions)(Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)) = ConvertEnumList(New List(Of ARMVersions)(value))
+					Enum_Binary_Value(DataSetIdentification.ARMVersion, GetType(ARMVersions)) = ConvertEnumList(New List(Of ARMVersions)(New ARMVersions(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
@@ -4394,6 +4364,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Indicates the code of a country/geographical location referenced by the content of the object.")> _
 		<Category("Location")> <FieldDisplayName("Content Location Code")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationCode As StringEnum(Of ISO3166)()
 			Get
 				Try
@@ -4417,6 +4388,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Provides a full, publishable name of a country/geographical location referenced by the content of the object, according to guidelines of the provider.")> _
 		<Category("Location")> <FieldDisplayName("Content Location Name")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ContentLocationName As String()
 			Get
 				Try
@@ -4439,6 +4411,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Identifies the Service Identifier of a prior envelope to which the current object refers.")> _
 		<Category("Old IPTC")> <FieldDisplayName("Reference Service")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceService As String()
 			Get
 				Try
@@ -4461,6 +4434,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Identifies the date of a prior envelope to which the current object refers.")> _
 		<Category("Old IPTC")> <FieldDisplayName("Reference Date")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceDate As Date()
 			Get
 				Try
@@ -4483,6 +4457,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Identifies the Envelope Number of a prior envelope to which the current object refers.")> _
 		<Category("Old IPTC")> <FieldDisplayName("Reference Number")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ReferenceNumber As Decimal()
 			Get
 				Try
@@ -4505,6 +4480,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.")> _
 		<Category("Author")> <FieldDisplayName("By-line")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLine As String()
 			Get
 				Try
@@ -4528,6 +4504,7 @@ Namespace DrawingT.MetadataT
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.")> _
 		<Category("Author")> <FieldDisplayName("By-line Title")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ByLineTitle As String()
 			Get
 				Try
@@ -4548,67 +4525,67 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>The file format of the ObjectData Preview.</summary>
 		''' <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it.</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormat As FileFormats()
+		<Description("The file format of the ObjectData Preview.")> _
+		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormat As FileFormats
 			Get
 				Try
 					Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)) = ConvertEnumList(New List(Of FileFormats)(value))
+					Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormat, GetType(FileFormats)) = ConvertEnumList(New List(Of FileFormats)(New FileFormats(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
-		''' <summary>The particular version of the ObjectData Preview File Format specified in</summary>
+		''' <summary>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></summary>
 		''' <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormatVersion As FileFormatVersions()
+		<Description("The particular version of the ObjectData Preview File Format specified in ObjectData Preview File Format")> _
+		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview File Format Version")> <CLSCompliant(False)><EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewFileFormatVersion As FileFormatVersions
 			Get
 				Try
 					Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)))
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)) = ConvertEnumList(New List(Of FileFormatVersions)(value))
+					Enum_Binary_Value(DataSetIdentification.ObjectDataPreviewFileFormatVersion, GetType(FileFormatVersions)) = ConvertEnumList(New List(Of FileFormatVersions)(New FileFormatVersions(){value}))
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try
 			End Set
 		End Property
 		''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
-		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()()
+		<Description("Maximum size of 256000 octets consisting of binary data.")> _
+		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.ObjectDataPreviewData)
-					If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing
-					Return AllValues.ToArray
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
 				Catch ex As Exception
 					Throw New IPTCGetException(ex)
 				End Try
 			End Get
 			Set
 				Try
-					Bytearray_Value(DataSetIdentification.ObjectDataPreviewData, 0, false) = New List(Of Byte())(value)
+					Bytearray_Value(DataSetIdentification.ObjectDataPreviewData, 0, false) = New List(Of Byte())(New Byte()(){value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try

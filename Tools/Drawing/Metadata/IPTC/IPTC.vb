@@ -83,7 +83,7 @@ Namespace DrawingT.MetadataT
         End Property
         ''' <summary>All tags and their values in IPTC stream</summary>
         Protected ReadOnly Property Tags() As List(Of KeyValuePair(Of DataSetIdentification, Byte()))
-            <DebuggerStepperBoundary()> Get
+            <DebuggerStepThrough()> Get
                 Return _Tags
             End Get
         End Property
@@ -102,7 +102,7 @@ Namespace DrawingT.MetadataT
                 Get
                     Return _RecordNumber
                 End Get
-                <DebuggerStepperBoundary()> Set(ByVal value As RecordNumbers)
+                <DebuggerStepThrough()> Set(ByVal value As RecordNumbers)
                     If value > 9 Then Throw New ArgumentOutOfRangeException("DataSetNumber must be less than or equal to 9")
                     _RecordNumber = value
                 End Set
@@ -112,7 +112,7 @@ Namespace DrawingT.MetadataT
                 Get
                     Return _DataSetNumber
                 End Get
-                <DebuggerStepperBoundary()> Set(ByVal value As Byte)
+                <DebuggerStepThrough()> Set(ByVal value As Byte)
                     _DataSetNumber = value
                 End Set
             End Property
@@ -125,7 +125,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>CTor</summary>
             ''' <param name="RecordNumber">Number of record (tag group)</param>
             ''' <param name="DataSetNumber">Number of dataset (tag)</param>
-            <DebuggerStepperBoundary()> _
+            <DebuggerStepThrough()> _
             Public Sub New(ByVal RecordNumber As RecordNumbers, ByVal DataSetNumber As Byte)
                 Me.RecordNumber = RecordNumber
                 Me.DatasetNumber = DataSetNumber
@@ -189,7 +189,7 @@ Namespace DrawingT.MetadataT
                 Public ReadOnly Match As DataSetIdentification
                 ''' <summary>CTor</summary>
                 ''' <param name="Match"><see cref="DataSetIdentification"/> to compare <see cref="KeyValuePair.Key"/> with</param>
-                <DebuggerStepperBoundary()> _
+                <DebuggerStepThrough()> _
                 Public Sub New(ByVal Match As DataSetIdentification)
                     Me.Match = Match
                 End Sub
@@ -203,7 +203,7 @@ Namespace DrawingT.MetadataT
                 ''' <param name="Match">Key to compare with</param>
                 ''' <returns>Delegate of <see cref="PairMatch.Predicate"/></returns>
                 ''' <typeparam name="T">Type of value of <see cref="KeyValuePair"/> that can be passed to returned <see cref="System.Predicate"/></typeparam>
-                <DebuggerStepperBoundary()> _
+                <DebuggerStepThrough()> _
                 Public Shared Function GetPredicate(Of T)(ByVal Match As DataSetIdentification) As System.Predicate(Of KeyValuePair(Of DataSetIdentification, T))
                     Return AddressOf New PairMatch(Match).Predicate(Of T)
                 End Function

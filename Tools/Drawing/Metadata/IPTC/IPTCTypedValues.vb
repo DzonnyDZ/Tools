@@ -8,7 +8,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Encoding used for encoding and decoding some texts</summary>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property Encoding() As System.Text.Encoding
-            <DebuggerStepperBoundary()> Get
+            <DebuggerStepThrough()> Get
                 Return _Encoding
             End Get
             Set(ByVal value As System.Text.Encoding)
@@ -27,7 +27,11 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of ULong)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(UIntFromBytes(item.Length, item))
+                    If item Is Nothing OrElse item.Length = 0 Then
+                        ret.Add(0)
+                    Else
+                        ret.Add(UIntFromBytes(item.Length, item))
+                    End If
                 Next item
                 Return ret
             End Get
@@ -55,16 +59,18 @@ Namespace DrawingT.MetadataT
         ''' <param name="Bytes">Number of bytes per one boolean item (ignored in Getter)</param>
         ''' <remarks><seealso cref="Tag"/> for behavior details</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-       Protected Overridable Property Boolean_Binary_Value(ByVal Key As DataSetIdentification, Optional ByVal Bytes As Byte = 1) As List(Of Boolean)
+        Protected Overridable Property Boolean_Binary_Value(ByVal Key As DataSetIdentification, Optional ByVal Bytes As Byte = 1) As List(Of Boolean)
             Get
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Boolean)(values.Count)
                 For Each item As Byte() In values
                     Dim val As Boolean = False
-                    For Each b As Byte In item
-                        If b <> 0 Then val = True : Exit For
-                    Next b
+                    If item IsNot Nothing Then
+                        For Each b As Byte In item
+                            If b <> 0 Then val = True : Exit For
+                        Next b
+                    End If
                     ret.Add(val)
                 Next item
                 Return ret
@@ -93,8 +99,10 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Byte)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     ret.Add(UIntFromBytes(item.Length, item))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of Byte))
@@ -118,8 +126,10 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of UShort)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     ret.Add(UIntFromBytes(item.Length, item))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of UShort))
@@ -150,7 +160,11 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Decimal)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(NumCharFromBytes(item))
+                    If item Is Nothing OrElse item.Length = 0 Then
+                        ret.Add(0)
+                    Else
+                        ret.Add(NumCharFromBytes(item))
+                    End If
                 Next item
                 Return ret
             End Get
@@ -186,7 +200,8 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(Encoding.GetString(item))
+                    If item Is Nothing OrElse item.Length = 0 Then ret.Add("") _
+                    Else ret.Add(Encoding.GetString(item))
                 Next item
                 Return ret
             End Get
@@ -229,7 +244,8 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(Encoding.GetString(item))
+                    If item Is Nothing OrElse item.Length = 0 Then ret.Add("") _
+                    Else ret.Add(Encoding.GetString(item))
                 Next item
                 Return ret
             End Get
@@ -273,7 +289,8 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(Encoding.GetString(item))
+                    If item Is Nothing OrElse item.Length = 0 Then ret.Add("") _
+                    Else ret.Add(Encoding.GetString(item))
                 Next item
                 Return ret
             End Get
@@ -316,6 +333,7 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Drawing.Bitmap)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ba As New BitArray(item)
                     If ba.Length Mod BW460_460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
                     Dim bmp As New Drawing.Bitmap(BW460_460, ba.Length / BW460_460, Drawing.Imaging.PixelFormat.Format1bppIndexed)
@@ -326,6 +344,7 @@ Namespace DrawingT.MetadataT
                     Next i
                     ret.Add(bmp)
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of Drawing.Bitmap))
@@ -377,8 +396,10 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of [Enum])(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     ret.Add(Type.Assembly.CreateInstance(Type.FullName, False, Reflection.BindingFlags.CreateInstance Or Reflection.BindingFlags.Public, Nothing, New Object() {UIntFromBytes(item.Length, item)}, Nothing, Nothing))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of [Enum]))
@@ -436,8 +457,10 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of [Enum])(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     ret.Add(Type.Assembly.CreateInstance(Type.FullName, False, Reflection.BindingFlags.CreateInstance Or Reflection.BindingFlags.Public, Nothing, New Object() {CDec(NumCharFromBytes(item))}, Nothing, Nothing))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of [Enum]))
@@ -469,10 +492,12 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Date)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
                     If ItemStr.Length <> 8 Then Throw New ArgumentException("Length of data stored under this tag is different from 8 which is necessary for datatype CCYYMMDD")
                     ret.Add(New Date(ItemStr.Substring(0, 4), ItemStr.Substring(4, 2), ItemStr.Substring(6)))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of Date))
@@ -502,10 +527,12 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of OmmitableDate)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
                     If ItemStr.Length <> 8 Then Throw New ArgumentException("Length of data stored under this tag is different from 8 which is necessary for datatype CCYYMMDD")
                     ret.Add(New OmmitableDate(ItemStr.Substring(0, 4), ItemStr.Substring(4, 2), ItemStr.Substring(6)))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of OmmitableDate))
@@ -538,12 +565,14 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Time)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
                     If ItemStr.Length <> 11 Then Throw New ArgumentException("Length of data stored under this tag is different then 11 which is necessary for datatype HHMMSS_HHMM")
                     Dim Sig As String = ItemStr(6)
                     If Sig <> "-"c AndAlso Sig <> "+"c Then Throw New ArgumentException("Stored time does not contain valied character on time zone offset sign position")
                     ret.Add(New Time(ItemStr.Substring(0, 2), ItemStr.Substring(2, 2), ItemStr.Substring(4, 2), VisualBasicT.iif(Sig = "+"c, 1, -1) * ItemStr.Substring(7, 2), ItemStr.Substring(9, 2)))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of Time))
@@ -593,8 +622,10 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of iptcUNO)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     ret.Add(New iptcUNO(item))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of iptcUNO))
@@ -620,11 +651,13 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of NumStr2)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim itm As New NumStr2
                     itm.Number = System.Text.Encoding.ASCII.GetString(item, 0, 2)
                     itm.String = Encoding.GetString(item, 2, item.Length - 2)
                     ret.Add(itm)
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of NumStr2))
@@ -658,11 +691,13 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of NumStr3)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim itm As New NumStr3
                     itm.Number = System.Text.Encoding.ASCII.GetString(item, 0, 3)
                     itm.String = Encoding.GetString(item, 3, item.Length - 3)
                     ret.Add(itm)
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of NumStr3))
@@ -696,8 +731,10 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of iptcSubjectReference)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     ret.Add(New iptcSubjectReference(item, Encoding))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of iptcSubjectReference))
@@ -731,7 +768,8 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of String)(values.Count)
                 For Each item As Byte() In values
-                    ret.Add(Encoding.GetString(item))
+                    If item Is Nothing OrElse item.Length = 0 Then ret.Add("") _
+                    Else ret.Add(Encoding.GetString(item))
                 Next item
                 Return ret
             End Get
@@ -775,8 +813,12 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of StringEnum)(values.Count)
                 For Each item As Byte() In values
-                    Dim str As String = System.Text.Encoding.ASCII.GetString(item)
-                    ret.Add(StringEnum.GetInstance(Type, str))
+                    If item Is Nothing OrElse item.Length = 0 Then
+                        ret.Add(StringEnum.GetInstance(Type, ""))
+                    Else
+                        Dim str As String = System.Text.Encoding.ASCII.GetString(item)
+                        ret.Add(StringEnum.GetInstance(Type, str))
+                    End If
                 Next item
                 Return ret
             End Get
@@ -812,12 +854,14 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of iptcImageType)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim val As New iptcImageType
                     If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = ChrW(item(1))
                     ret.Add(val)
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of iptcImageType))
@@ -844,12 +888,14 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of iptcAudioType)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim val As New iptcAudioType
                     If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = ChrW(item(1))
                     ret.Add(val)
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of iptcAudioType))
@@ -874,10 +920,12 @@ Namespace DrawingT.MetadataT
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of TimeSpan)(values.Count)
                 For Each item As Byte() In values
+                    If item Is Nothing OrElse item.Length = 0 Then Continue For
                     If item.Length <> 6 Then Throw New ArgumentException("Stored item's lenght must be 6")
                     Dim Str As String = System.Text.Encoding.ASCII.GetString(item)
                     ret.Add(New TimeSpan(Str.Substring(0, 2), Str.Substring(2, 2), Str.Substring(4, 2)))
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of TimeSpan))

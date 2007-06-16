@@ -1,4 +1,5 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT
+Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class IPTC
@@ -108,7 +109,9 @@ Namespace DrawingT.MetadataT
 #Region "Implementation"
         ''' <summary>IPTC Subject Reference (IPTC type <see cref="IPTCTypes.SubjectReference"/>)</summary>
         Public Class iptcSubjectReference : Inherits WithIPR
+            ''' <summary>This masks <see cref="SubjectReferenceNumber"/></summary>
             Private Const SubjRefNMask As Integer = 1000000
+            ''' <summary>Thsi masks <see cref="SubjectMatterNumber"/></summary>
             Private Const SubjMatterMask As Integer = 1000
             ''' <summary>Gets lenght limit for <see cref="IPR"/></summary>
             ''' <returns>32</returns>
@@ -123,6 +126,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>Provides a numeric code to indicate the Subject Name plus optional Subject Matter and Subject Detail Names in the language of the service.</summary>
             ''' <remarks>Subject Reference Numbers consist of 8 octets in the range 01000000 to 17999999 and represent a language independent international reference to a Subject. A Subject is identified by its Reference Number and corresponding Names taken from a standard lists given in Appendix H,I &amp; J.These lists are the English language reference versions.</remarks>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is member neither of <see cref="SubjectMatterNumbers"/> nor of <see cref="SubjectReferenceNumbers"/> nor of <see cref="EconomySubjectDetail"/> nor it is 0</exception>
+            <Browsable(False)> _
             Public Property SubjectReferenceNumber() As Integer
                 Get
                     Return _SubjectReferenceNumber
@@ -142,7 +146,8 @@ Namespace DrawingT.MetadataT
             ''' <returns>Subject number value or zero if none specified</returns>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="SubjectReferenceNumbers"/> and it is not zero</exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            Public Property SubjectNumber() As SubjectReferenceNumbers
+            <DisplayName("Subject Number"), Description("Subject component of Subject Reference Number")> _
+            Public Property SubjectNumber() As SubjectReferenceNumbers 'Localize: Description and DisplayName
                 Get
                     Return (SubjectReferenceNumber \ SubjRefNMask) * SubjRefNMask
                 End Get
@@ -157,7 +162,8 @@ Namespace DrawingT.MetadataT
             ''' <returns>Subject matter number value or zero if none specified</returns>
             ''' <exception cref="InvalidEnumArgumentException">Valùue being set is not member of <see cref="SubjectMatterNumbers"/> and it is not zero</exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            Public Property SubjectMatterNumber() As SubjectMatterNumbers
+            <DisplayName("Subject Matter Number"), Description("Matter component of Subject Reference Number")> _
+            Public Property SubjectMatterNumber() As SubjectMatterNumbers 'Localize: Description and DisplayName
                 Get
                     Return ((SubjectReferenceNumber Mod SubjRefNMask) \ SubjMatterMask) * SubjMatterMask
                 End Get
@@ -172,7 +178,8 @@ Namespace DrawingT.MetadataT
             ''' <returns>Subject detail number value or zero if none specified</returns>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="EconomySubjectDetail"/> and it is not zero</exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            Public Property SubjectDetailNumber() As EconomySubjectDetail
+            <DisplayName("Subject Detail Number"), Description("Detail component of Subject Reference Number")> _
+            Public Property SubjectDetailNumber() As EconomySubjectDetail 'Localize: Description and DisplayName
                 Get
                     Return SubjectReferenceNumber Mod SubjMatterMask
                 End Get
@@ -183,10 +190,11 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Contains value of the <see cref="SubjectName"/> property</summary>              
             <EditorBrowsable(EditorBrowsableState.Never)> Private _SubjectName As String
-            ''' <summary>A text representation of the Subject Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix H, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)</summary>
+            ''' <summary>A text representation of the <see cref="SubjectNumber"/> (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix H, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)</summary>
             ''' <remarks>The Subject identifies the general content of the objectdata as determined by the provider.</remarks>
             ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
-            Public Property SubjectName() As String
+            <DisplayName("Subject Name"), Description("A text representation of the Subject Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix H, or in the language of the service as indicated in DataSet Language Identifier (2:135)")> _
+            Public Property SubjectName() As String 'Localize: DisplayName and Description
                 Get
                     Return _SubjectName
                 End Get
@@ -198,10 +206,11 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Contains value of the <see cref="SubjectMatterName"/> property</summary>                         
             <EditorBrowsable(EditorBrowsableState.Never)> Private _SubjectMatterName As String
-            ''' <summary>a text representation of the Subject Matter Number</summary>
+            ''' <summary>A text representation of the <see cref="SubjectMatterNumber"/></summary>
             ''' <remarks>Maximum 64 octets consisting of graphic characters plus spaces either in English, as defined in Appendix I, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135). A Subject Matter further refines the Subject of a News Object.</remarks>
             ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
-            Public Property SubjectMatterName() As String
+            <DisplayName("Subject Matter Name"), Description("A text representation of the Subject Matter Number")> _
+            Public Property SubjectMatterName() As String 'Localize: DisplayName and Description
                 Get
                     Return _SubjectMatterName
                 End Get
@@ -213,12 +222,13 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Contains value of the <see cref="SubjectDetailName"/> property</summary>                         
             <EditorBrowsable(EditorBrowsableState.Never)> Private _SubjectDetailName As String
-            ''' <summary>A text representation of the SubjectDetail Number</summary>
+            ''' <summary>A text representation of the <see cref="SubjectDetailNumber"/></summary>
             ''' <remarks>
             ''' Maximum 64 octets consisting of graphic characters plus spaces either in English, as defined in Appendix J, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)
             ''' <para>A Subject Detail further refines the Subject Matter of a News Object. A registry of Subject Reference Numbers, Subject Matter Names and Subject Detail Names, descriptions (if available) and their corresponding parent Subjects will be held by the IPTC in different languages, with translations as supplied by members. See Appendices I and J.</para></remarks>
             ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
-            Public Property SubjectDetailName() As String
+            <DisplayName("Subject Detail Name"), Description("A text representation of the Subject Detail Number")> _
+            Public Property SubjectDetailName() As String 'Localize: DisplayName and Description
                 Get
                     Return _SubjectDetailName
                 End Get
@@ -296,7 +306,8 @@ Namespace DrawingT.MetadataT
             ''' <remarks>A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO</remarks>
             ''' <value>A minimum of one and a maximum of 32 octets. A string of graphic characters, except colon ‘:’ solidus ‘/’, asterisk ‘*’ and question mark ‘?’, registered with, and approved by, the IPTC.</value>
             ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its <see cref="String.Length"/> if more than 32 -or- length of value being set exceeds <see cref="IPRLengthLimit"/> -or- value being set contains character with code higher than 127</exception>
-            Public Overridable Property IPR() As String
+            <Description("Information Provider Reference A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO")> _
+            Public Overridable Property IPR() As String 'Localize: Description
                 Get
                     Return _IPR
                 End Get
@@ -726,129 +737,347 @@ Namespace DrawingT.MetadataT
         End Structure
 
         ''' <summary>Contains time as hours, minutes and seconds and offset to UTC in hours and minutes (IPTC type <see cref="IPTCTypes.HHMMSS_HHMM"/>)</summary>
+        <TypeConverter(GetType(Time.Converter))> _
         Public Structure Time
-            ''' <summary>Contains value of the <see cref="Hour"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Hour As Byte
-            ''' <summary>Hour component of time</summary>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value greater than 23</exception>
-            Public Property Hour() As Byte
+            ''' <summary>Contains value of the <see cref="Time"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Private _Time As TimeSpan
+            ''' <summary>Contains value of the <see cref="Offset"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Private _Offset As TimeSpan
+            ''' <summary>Minimal allowed value of the <see cref="Offset"/> property</summary>
+            Public Shared ReadOnly MinOffset As TimeSpan = TimeSpan.FromHours(-12)
+            ''' <summary>Maximal allowed value of the <see cref="Offset"/> property</summary>
+            Public Shared ReadOnly MaxOffset As TimeSpan = TimeSpan.FromHours(14)
+            ''' <summary>Minimal allowed value of the <see cref="Time"/> property</summary>
+            ''' <remarks>It's 23:59:59</remarks>
+            Public Shared ReadOnly Maximum As New TimeSpan(23, 59, 59)
+            ''' <summary>maximal allowed value of the <see cref="Time"/> property</summary>
+            ''' <remarks>It's zero</remarks>
+            Public Shared ReadOnly Minimum As TimeSpan = TimeSpan.Zero
+            ''' <summary>Local time</summary>
+            ''' <value>Sub-second part of value is ignored (truncated)</value>
+            ''' <exception cref="ArgumentOutOfRangeException">Settign value otside of range <see cref="Minimum"/>÷<see cref="Maximum"/></exception>
+            Public Property Time() As TimeSpan
                 Get
-                    Return _Hour
+                    Return _Time
+                End Get
+                Set(ByVal value As TimeSpan)
+                    If value < Minimum OrElse value > Maximum Then Throw New ArgumentOutOfRangeException("value", "Time must be positive and less than 99:59:59")
+                    _Time = TimeSpan.FromSeconds(Math.Truncate(value.TotalSeconds))
+                End Set
+            End Property
+            ''' <summary>Time zone offset of <see cref="Time"/></summary>
+            ''' <exception cref="ArgumentException">Setting offset to time with non-zero sub-minute component</exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Setting offset outside of range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
+            Public Property Offset() As TimeSpan
+                Get
+                    Return _Offset
+                End Get
+                Set(ByVal value As TimeSpan)
+                    If Offset.TotalMinutes <> Int(Offset.TotalMinutes) Then Throw New ArgumentException("Offset must be in whole minutes")
+                    If value < MinOffset OrElse value > MaxOffset Then Throw New ArgumentOutOfRangeException(String.Format("value", "Offset must be within range {0}÷{1}", MinOffset, MaxOffset))
+                    _Offset = value
+                End Set
+            End Property
+#Region "Component properties"
+            ''' <summary>Hour component of <see cref="Time"/></summary>
+            ''' <exception cref="ArgumentOutOfRangeException">setting such value that <see cref="Time"/> leves range <see cref="Minimum"/>÷<see cref="Maximum"/></exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            Public Property Hours() As Byte
+                Get
+                    Return Time.Hours
                 End Get
                 Set(ByVal value As Byte)
-                    If value > 23 Then Throw New ArgumentOutOfRangeException("value", "Hour must be less than 24")
-                    _Hour = value
+                    Time = New TimeSpan(value, 0, Math.Truncate(Time.TotalSeconds) - Math.Truncate(Time.TotalHours) * 60 * 60)
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="Minute"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Minute As Byte
-            ''' <summary>Hour component of time</summary>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value greater than 59</exception>
-            Public Property Minute() As Byte
+            ''' <summary>Hour component of <see cref="Time"/></summary>
+            ''' <exception cref="ArgumentOutOfRangeException">setting such value that <see cref="Time"/> leves range <see cref="Minimum"/>÷<see cref="Maximum"/></exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            Public Property Minutes() As Byte
                 Get
-                    Return _Minute
+                    Return Time.Minutes
                 End Get
                 Set(ByVal value As Byte)
-                    If value > 59 Then Throw New ArgumentOutOfRangeException("value", "Minute must be less than 60")
-                    _Minute = value
+                    Time = New TimeSpan(Math.Truncate(Time.TotalHours), value, Time.Seconds)
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="Second"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _Second As Byte
-            ''' <summary>Second component of time</summary>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value greater than 59</exception>
-            Public Property Second() As Byte
+            ''' <summary>Second component of <see cref="Time"/></summary>
+            ''' <exception cref="ArgumentOutOfRangeException">setting such value that <see cref="Time"/> leves range <see cref="Minimum"/>÷<see cref="Maximum"/></exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            Public Property Seconds() As Byte
                 Get
-                    Return _Second
+                    Return Time.Seconds
                 End Get
                 Set(ByVal value As Byte)
-                    If value > 59 Then Throw New ArgumentOutOfRangeException("value", "Second must be less than 60")
-                    _Second = value
+                    Time = New TimeSpan(0, Math.Truncate(Time.TotalMinutes), value)
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="OffsetHour"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _OffsetHour As SByte
-            ''' <summary>Hour component of offset in range -13 to +12</summary>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value otside of range -13 ÷ +12</exception>
-            <CLSCompliant(False)> _
-            Public Property OffsetHour() As SByte
+            ''' <summary>Absolute value of hour component of <see cref="Offset"/></summary>
+            ''' <exception cref="ArgumentOutOfRangeException">Setting value such that <see cref="Offset"/> leaves range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            Public Property OffsetHourAbs() As Byte
                 Get
-                    Return _OffsetHour
-                End Get
-                Set(ByVal value As SByte)
-                    If value < -13 OrElse value > 12 Then Throw New ArgumentOutOfRangeException("value", "OffsetHours must be within range -13 ÷ +12")
-                    _OffsetHour = value
-                End Set
-            End Property
-            ''' <summary>Absolute value of hour component of offset in range -13 to +12</summary>
-            ''' <remarks>This property is here in order to keep this structure CLS compliant. Internaly uses <see cref="OffsetHour"/></remarks>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value otside of range -13 ÷ +12</exception>
-            Public Property AbsoluteOffsetHour() As Byte
-                Get
-                    Return Math.Abs(OffsetHour)
+                    Return Math.Abs(Offset.Hours)
                 End Get
                 Set(ByVal value As Byte)
-                    If OffsetHour < 0 Then OffsetHour = -value Else OffsetHour = value
+                    Offset = New TimeSpan(value, Math.Truncate(Offset.TotalMinutes) - Math.Truncate(Offset.TotalHours) * 60, 0)
                 End Set
             End Property
-            ''' <summary>Sign of hour component of offset in range -13 to +12</summary>
-            ''' <remarks>This property is here in order to keep this structure CLS compliant. Internaly uses <see cref="OffsetHour"/></remarks>
-            ''' <exception cref="ArgumentOutOfRangeException">Setting sign to + when <see cref="AbsoluteOffsetHour"/> is 13</exception>
+            ''' <summary>Sign of <see cref="Offset"/></summary>
+            ''' <exception cref="ArgumentOutOfRangeException">Setting value such that <see cref="Offset"/> leaves range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
             Public Property NegativeOffset() As Boolean
                 Get
-                    Return OffsetHour < 0
+                    Return Offset < TimeSpan.Zero
                 End Get
                 Set(ByVal value As Boolean)
-                    OffsetHour = Math.Abs(OffsetHour) * VisualBasicT.iif(value, -1, 1)
+                    If value <> NegativeOffset Then Offset = -Offset
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="OffsetMinute"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private _OffsetMinute As Byte
-            ''' <exception cref="ArgumentOutOfRangeException">Setting value greater than 59</exception>
-            Public Property OffsetMinute() As Byte
+            ''' <summary>Absolute value of minute part of <see cref="Offset"/></summary>
+            ''' <exception cref="ArgumentOutOfRangeException">Setting value such that <see cref="Offset"/> leaves range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            Public Property OffsetMinuteAbs() As Byte
                 Get
-                    Return _OffsetMinute
+                    Return Math.Abs(Offset.Minutes)
                 End Get
                 Set(ByVal value As Byte)
-                    If value > 59 Then Throw New ArgumentOutOfRangeException("value", "OffsetMinutes must be less than 60")
-                    _OffsetMinute = value
+                    Offset = New TimeSpan(Math.Truncate(Offset.TotalHours), value, 0)
                 End Set
             End Property
+#End Region
             ''' <summary>String representation in the HHMMSS±HHMM format</summary>
             Public Overrides Function ToString() As String
-                Return String.Format(InvariantCulture, "{0:00}{1:00}{2:00}{3:+00;-00}{4:00}", Hour, Minute, Second, OffsetHour, OffsetMinute)
+                Return String.Format(InvariantCulture, "{0:00}{1:00}{2:00}{3}{4:00}{5:00}", Hours, Minutes, Seconds, iif(Time < TimeSpan.Zero, "-"c, "+"c), OffsetHourAbs, OffsetMinuteAbs)
             End Function
+#Region "CTors"
             ''' <summary>CTor</summary>
             ''' <param name="Hours">Hour component</param>
             ''' <param name="Minutes">Minute component</param>
             ''' <param name="Seconds">Second component</param>
             ''' <param name="HourOffset">Hour component of offset</param>
             ''' <param name="MinuteOffset">Minute component of offset</param>
-            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Hours"/> is greater than 23 -or- <paramref name="Minutes"/> or <paramref name="Seconds"/> or <paramref name="MinuteOffset"/> is greater than 59 -or- <paramref name="HourOffset"/> is not within range -13 ÷ +12</exception>
+            ''' <exception cref="ArgumentOutOfRangeException">Time component exceeds range <see cref="Minimum"/>÷<see cref="Maximum"/> -or- offset component exceds range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
             <CLSCompliant(False)> _
             Public Sub New(ByVal Hours As Byte, ByVal Minutes As Byte, ByVal Seconds As Byte, Optional ByVal HourOffset As SByte = 0, Optional ByVal MinuteOffset As Byte = 0)
-                Me.Hour = Hours
-                Me.Minute = Minutes
-                Me.Second = Seconds
-                Me.OffsetHour = HourOffset
-                Me.OffsetMinute = MinuteOffset
+                Me.New(New TimeSpan(Hours, Minutes, Seconds), New TimeSpan(HourOffset, MinuteOffset, 0))
             End Sub
             ''' <summary>CTor from <see cref="TimeSpan"/></summary>
-            ''' <param name="Time"><see cref="TimeSpan"/> to initialize zhis instance</param>
-            ''' <remarks>Offset is not initialized</remarks>
+            ''' <param name="Time"><see cref="TimeSpan"/> to initialize this instance (time local in UTC+0:00)</param>
+            ''' <remarks>Offset is initialized to <see cref="TimeSpan.Zero"/></remarks>
+            ''' <exception cref="ArgumentOutOfRangeException">Time component exceeds range <see cref="Minimum"/>÷<see cref="Maximum"/> -or- offset component exceds range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
             Public Sub New(ByVal Time As TimeSpan)
-                Me.Hour = Time.Hours
-                Me.Second = Time.Seconds
-                Me.Minute = Time.Minutes
+                Me.New(Time, TimeSpan.Zero)
+            End Sub
+            ''' <summary>CTor from <see cref="TimeSpan"/></summary>
+            ''' <param name="Time"><see cref="TimeSpan"/> to initialize this instance (local time)</param>
+            ''' <param name="Offset">Time zone offset</param>
+            ''' <exception cref="ArgumentOutOfRangeException">Time component exceeds range <see cref="Minimum"/>÷<see cref="Maximum"/> -or- offset component exceds range <see cref="MinOffset"/>÷<see cref="MaxOffset"/></exception>
+            ''' <exception cref="ArgumentException"><paramref name="Offset"/> contains non-zero sub-minute component</exception>
+            Public Sub New(ByVal Time As TimeSpan, ByVal Offset As TimeSpan)
+                Me.Time = Time
+                Me.Offset = Offset
             End Sub
             ''' <summary>CTor from <see cref="Date"/></summary>
             ''' <param name="Date"><see cref="Date"/> which time path will be used to initialize this instance</param>
-            ''' <remarks>Offset is not initialized</remarks>
+            ''' <remarks>Offset is initialized to <see cref="TimeSpan.Zero"/> (UTC+0:00)</remarks>
             Public Sub New(ByVal [Date] As Date)
-                Me.Hour = [Date].Hour
-                Me.Minute = [Date].Minute
-                Me.Second = [Date].Second
+                Me.New([Date].TimeOfDay)
             End Sub
+#End Region
+            ''' <summary>Converter of <see cref="Time"/> values</summary>
+            Public Class Converter : Inherits TypeConverter(Of Time, String)
+
+                ''' <summary>State of automat that parses string</summary>
+                Private Enum ParseAutomat
+                    ''' <summary>*HH:MM:SS±HH:MM</summary>
+                    H1
+                    ''' <summary>H*H:MM:SS±HH:MM</summary>
+                    H2
+                    ''' <summary>HH*:MM:SS±HH:MM</summary>
+                    H3
+                    ''' <summary>HH:*MM:SS±HH:MM</summary>
+                    M1
+                    ''' <summary>HH:M*M:SS±HH:MM</summary>
+                    M2
+                    ''' <summary>HH:MM*:SS±HH:MM</summary>
+                    M3
+                    ''' <summary>HH:MM:*SS±HH:MM</summary>
+                    S1
+                    ''' <summary>HH:MM:S*S±HH:MM</summary>
+                    S2
+                    ''' <summary>HH:MM:SS*±HH:MM</summary>
+                    S3
+                    ''' <summary>HH:MM:SS±*HH:MM</summary>
+                    OH1
+                    ''' <summary>HH:MM:SS±H*H:MM</summary>
+                    OH2
+                    ''' <summary>HH:MM:SS±HH*:MM</summary>
+                    OH3
+                    ''' <summary>HH:MM:SS±HH:*MM</summary>
+                    OM1
+                    ''' <summary>HH:MM:SS±HH:M*M</summary>
+                    OM2
+                    ''' <summary>HH:MM:SS±HH:MM*</summary>
+                    All
+                End Enum
+                Public Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As Time
+                    Dim state As ParseAutomat = ParseAutomat.H1
+                    Dim i As Integer = 0
+                    Dim rMinus As Boolean = False
+                    Dim rH, rM, rS, rOH, rOM As Byte
+                    For Each ch As Char In CStr(value)
+                        Select Case state
+                            Case ParseAutomat.H1
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        state = ParseAutomat.H2
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.H2
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        rH = CStr(value).Substring(i - 1, 2)
+                                        state = ParseAutomat.H3
+                                    Case ":"c
+                                        rH = CStr(value).Substring(i - 1, 1)
+                                        state = ParseAutomat.M1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.H3
+                                Select Case ch
+                                    Case ":"c : state = ParseAutomat.M1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.M1
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        state = ParseAutomat.M2
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.M2
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        rM = CStr(value).Substring(i - 1, 2)
+                                        state = ParseAutomat.M3
+                                    Case ":"c
+                                        rM = CStr(value).Substring(i - 1, 1)
+                                        state = ParseAutomat.S1
+                                    Case "-"c
+                                        rM = CStr(value).Substring(i - 1, 1)
+                                        rMinus = True
+                                        state = ParseAutomat.OH1
+                                    Case "+"c
+                                        rM = CStr(value).Substring(i - 1, 1)
+                                        state = ParseAutomat.OH1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.M3
+                                Select Case ch
+                                    Case ":"c : state = ParseAutomat.S1
+                                    Case "-"c
+                                        rMinus = True
+                                        state = ParseAutomat.OH1
+                                    Case "+"c : state = ParseAutomat.OH1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.S1
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        state = ParseAutomat.S2
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.S2
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        rS = CStr(value).Substring(i - 1, 2)
+                                        state = ParseAutomat.S3
+                                    Case "-"c
+                                        rS = CStr(value).Substring(i - 1, 1)
+                                        rMinus = True
+                                        state = ParseAutomat.OH1
+                                    Case "+"c
+                                        rS = CStr(value).Substring(i - 1, 1)
+                                        state = ParseAutomat.OH1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.S3
+                                Select Case ch
+                                    Case "-"c
+                                        rMinus = True
+                                        state = ParseAutomat.OH1
+                                    Case "+"c : state = ParseAutomat.OH1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.OH1
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        state = ParseAutomat.OH2
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.OH2
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        rOH = CStr(value).Substring(i - 1, 2)
+                                        state = ParseAutomat.OH3
+                                    Case ":"c
+                                        rOH = CStr(value).Substring(i - 1, 1)
+                                        state = ParseAutomat.OM1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.OH3
+                                Select Case ch
+                                    Case ":"c : state = ParseAutomat.OM1
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.OM1
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        state = ParseAutomat.OM2
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.OM2
+                                Select Case ch
+                                    Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
+                                        rOM = CStr(value).Substring(i - 1, 2)
+                                        state = ParseAutomat.All
+                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                End Select
+                            Case ParseAutomat.All
+                                Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                        End Select
+                        i += 1
+                    Next ch
+                    Select Case state
+                        Case ParseAutomat.OM2
+                            rOM = CStr(value).Substring(CStr(value).Length - 1)
+                        Case ParseAutomat.OH2
+                            rOH = CStr(value).Substring(CStr(value).Length - 1)
+                        Case ParseAutomat.S2
+                            rS = CStr(value).Substring(CStr(value).Length - 1)
+                        Case ParseAutomat.M2
+                            rM = CStr(value).Substring(CStr(value).Length - 1)
+                        Case ParseAutomat.All, ParseAutomat.OH3, ParseAutomat.S3, ParseAutomat.M3
+                        Case Else
+                            Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                    End Select
+                    Try
+                        Dim Time As New TimeSpan(rH, rM, rS)
+                        Dim Offset As New TimeSpan(rOH, rOM, 0)
+                        If rMinus Then Offset = -Offset
+                        Return New Time(Time, Offset)
+                    Catch ex As Exception
+                        Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value), ex)
+                    End Try
+                End Function
+                Public Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Time) As String
+                    With DirectCast(value, Time)
+                        Return String.Format(InvariantCulture, "{0:0}:{1:00}:{2:00}{3}{4:0}:{5:00}", .Hours, .Minutes, .Seconds, VisualBasicT.iif(.NegativeOffset, "-"c, "+"c), .OffsetHourAbs, .OffsetMinuteAbs)
+                    End With
+                End Function
+            End Class
         End Structure
         ''' <summary>Checks if specified value is member of an enumeration</summary>
         ''' <param name="value">Value to be chcked</param>
@@ -870,6 +1099,7 @@ Namespace DrawingT.MetadataT
             Return GetType(T).GetField([Enum].GetName(GetType(T), value))
         End Function
         ''' <summary>IPTC image type (IPTC type <see cref="IPTCTypes.ImageType"/>)</summary>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Structure iptcImageType : Implements IMediaType(Of ImageTypeComponents, ImageTypeContents)
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -879,7 +1109,8 @@ Namespace DrawingT.MetadataT
             Private _Components As ImageTypeComponents
             ''' <summary>Type of components</summary>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ImageTypeContents"/></exception>
-            Public Property Type() As ImageTypeContents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Code
+            <Description("Type of components")> _
+            Public Property Type() As ImageTypeContents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Code 'Localize:Description
                 Get
                     Return _Type
                 End Get
@@ -890,7 +1121,8 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Number of components</summary>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ImageTypeComponents"/></exception>
-            Public Property Components() As ImageTypeComponents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Count
+            <Description("Number of components")> _
+            Public Property Components() As ImageTypeComponents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Count 'Localize:Description
                 Get
                     Return _Components
                 End Get
@@ -901,6 +1133,7 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Gets or sets <see cref="Type"/> as <see cref="String"/></summary>
             ''' <exception cref="ArgumentException">Value being set cannot be interpreted member of <see cref="ImageTypeContents"/></exception>
+            <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             Public Property TypeCode() As Char Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).CodeString
                 Get
                     Return DirectCast(GetConstant(Type).GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)(0), Xml.Serialization.XmlEnumAttribute).Name
@@ -923,6 +1156,7 @@ Namespace DrawingT.MetadataT
         End Structure
 
         ''' <summary>IPTC audio type (IPTC type <see cref="IPTCTypes.AudioType"/>)</summary>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Structure iptcAudioType : Implements IMediaType(Of Byte, AudioDataType)
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -932,7 +1166,8 @@ Namespace DrawingT.MetadataT
             Private _Components As Byte
             ''' <summary>Type of components</summary>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ImageTypeContents"/></exception>
-            Public Property Type() As AudioDataType Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Code
+            <Description("Type of components")> _
+            Public Property Type() As AudioDataType Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Code 'Localize:Description
                 Get
                     Return _Type
                 End Get
@@ -943,7 +1178,8 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Number of components</summary>
             ''' <exception cref="ArgumentOutOfRangeException">Value being set is ot of range 0÷9</exception>
-            Public Property Components() As Byte Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Count
+            <Description("Number of components")> _
+            Public Property Components() As Byte Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Count 'Localize:Description
                 Get
                     Return _Components
                 End Get
@@ -954,6 +1190,7 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Gets or sets <see cref="Type"/> as <see cref="String"/></summary>
             ''' <exception cref="ArgumentException">Value being set cannot be interpreted member of <see cref="ImageTypeContents"/></exception>
+            <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             Public Property TypeCode() As Char Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).CodeString
                 Get
                     Return DirectCast(GetConstant(Type).GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)(0), Xml.Serialization.XmlEnumAttribute).Name

@@ -117,6 +117,7 @@
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
+    <Compile Include="ComponentModel\TypeConverter.vb" />
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />

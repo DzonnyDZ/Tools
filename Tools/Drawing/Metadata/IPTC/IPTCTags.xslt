@@ -21,6 +21,8 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <xsl:param name="namespace"></xsl:param>
     <xsl:param name="classname"></xsl:param>
 
+    <!--Header templates:_-->
+    <!--Main template-->
     <xsl:template match="/">
         <xsl:call-template name="header-comment"/>
         <xsl:call-template name="Imports"/>
@@ -42,10 +44,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>End Namespace</xsl:text>
             <xsl:call-template name="nl"/>
         </xsl:if>
-    </xsl:template>
-    <!--Generates end of line-->
-    <xsl:template name="nl">
-        <xsl:text xml:space="preserve">&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Generates header comment-->
     <xsl:template name="header-comment">
@@ -70,8 +68,9 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:value-of select="$created-by"/>
         <xsl:call-template name="nl"/>
         <xsl:text>'&#xD;&#xA;</xsl:text>
+        <xsl:text>'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages&#xD;&#xA;</xsl:text>
     </xsl:template>
-
+    <!--Runs other templates-->
     <xsl:template name="code-gen">
         <xsl:text>&#9;Partial Public Class IPTC&#xD;&#xA;</xsl:text>
         <xsl:call-template name="Tag-enums"/>
@@ -82,7 +81,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:call-template name="Properties"/>
         <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--Generates imports-->
     <xsl:template name="Imports">
         <xsl:text>Imports System.ComponentModel&#xD;&#xA;</xsl:text>
@@ -90,7 +88,8 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>Imports System.XML.Serialization&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.DataStructuresT.GenericT&#xD;&#xA;</xsl:text>
     </xsl:template>
-
+    
+    <!--Main content-creating templates:-->
     <!--Generates enums for tags-->
     <xsl:template name="Tag-enums">
         <xsl:text>#Region "Tag Enums"&#xD;&#xA;</xsl:text>
@@ -168,14 +167,13 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:call-template name="XML-Doc">
                 <xsl:with-param name="Tab" select="3"/>
             </xsl:call-template>
-            <xsl:text>&#9;&#9;&#9;&lt;DebuggerStepperBoundary()> _&#xD;&#xA;</xsl:text>
             <xsl:if test="local-name(parent::node())='group'">
                 <xsl:text>&#9;&#9;&#9;&lt;EditorBrowsable(EditorBrowsableState.Advanced)> _&#xD;&#xA;</xsl:text>
             </xsl:if>
             <xsl:text>&#9;&#9;&#9;Public Shared ReadOnly Property </xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text> As DataSetIdentification&#xD;&#xA;</xsl:text>
-            <xsl:text>&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&lt;DebuggerStepThrough()> Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;&#9;Return New DataSetIdentification(RecordNumbers.</xsl:text>
             <xsl:value-of select="ancestor::I:record/@name"/>
             <xsl:text>, </xsl:text>
@@ -217,121 +215,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;End Structure&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-
-    <!--Creates <summary> from <desc>-->
-    <xsl:template name="Tag-Summary">
-        <xsl:param name="Tab"/>
-        <xsl:call-template name="Tabs">
-            <xsl:with-param name="Count" select="$Tab"/>
-        </xsl:call-template>
-        <xsl:text>''' &lt;summary></xsl:text>
-        <xsl:variable name="content">
-            <xsl:call-template name="Amp2Entity">
-                <xsl:with-param name="Text" select="normalize-space(I:desc)"/>
-            </xsl:call-template>
-        </xsl:variable>
-        <xsl:value-of select="$content" disable-output-escaping="yes"/>
-        <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
-    </xsl:template>
-    <!--Generates given number of tabs-->
-    <xsl:template name="Tabs">
-        <xsl:param name="Count"/>
-        <xsl:if test="$Count>0">
-            <xsl:text>&#9;</xsl:text>
-            <xsl:call-template name="Tabs">
-                <xsl:with-param name="Count" select="$Count - 1"/>
-            </xsl:call-template>
-        </xsl:if>
-    </xsl:template>
-    <!--Creates <remarks> from <remarks>-->
-    <xsl:template name="Tag-Remarks">
-        <xsl:param name="Tab"/>
-        <xsl:if test="I:remarks">
-            <xsl:call-template name="Tabs">
-                <xsl:with-param name="Count" select="$Tab"/>
-            </xsl:call-template>
-            <xsl:text>''' &lt;remarks></xsl:text>
-            <xsl:value-of select="normalize-space(I:remarks)" disable-output-escaping="yes"/>
-            <xsl:text>&lt;/remarks>&#xD;&#xA;</xsl:text>
-        </xsl:if>
-    </xsl:template>
-    <!--Creates <summary> from desc=""-->
-    <xsl:template name="Attr-Summary">
-        <xsl:param name="Tab"/>
-        <xsl:call-template name="Tabs">
-            <xsl:with-param name="Count" select="$Tab"/>
-        </xsl:call-template>
-        <xsl:text>''' &lt;summary></xsl:text>
-        <xsl:call-template name="Amp2Entity">
-            <xsl:with-param name="Text" select="normalize-space(@desc)"/>
-        </xsl:call-template>
-        <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
-    </xsl:template>
-    <xsl:template name="Amp2Entity">
-        <xsl:param name="Text"/>
-        <xsl:if test="string-length($Text)>0">
-            <xsl:choose>
-                <xsl:when test="starts-with($Text,'&amp;') and not(starts-with($Text,'&amp;amp;'))">
-                    <xsl:text>&amp;amp;</xsl:text>
-                    <xsl:call-template name="Amp2Entity">
-                        <xsl:with-param name="Text" select="substring-after($Text,'&amp;')"/>
-                    </xsl:call-template>
-                </xsl:when>
-                <xsl:otherwise>
-                    <xsl:value-of select="substring($Text,1,1)"/>
-                    <xsl:call-template name="Amp2Entity">
-                        <xsl:with-param name="Text" select="substring($Text,2)"/>
-                    </xsl:call-template>
-                </xsl:otherwise>
-            </xsl:choose>
-        </xsl:if>
-    </xsl:template>
-    <!--Universally creates <summary>-->
-    <xsl:template name="Summary">
-        <xsl:param name="Tab"/>
-        <xsl:choose>
-            <xsl:when test="I:desc">
-                <xsl:call-template name="Tag-Summary">
-                    <xsl:with-param name="Tab" select="$Tab"/>
-                </xsl:call-template>
-            </xsl:when>
-            <xsl:when test="@desc">
-                <xsl:call-template name="Attr-Summary">
-                    <xsl:with-param name="Tab" select="$Tab"/>
-                </xsl:call-template>
-            </xsl:when>
-        </xsl:choose>
-    </xsl:template>
-    <!--Creates XML-doc comments <summary> and <remarks>-->
-    <xsl:template name="XML-Doc">
-        <xsl:param name="Tab"/>
-        <xsl:call-template name="Summary">
-            <xsl:with-param name="Tab" select="$Tab"/>
-        </xsl:call-template>
-        <xsl:call-template name="Tag-Remarks">
-            <xsl:with-param name="Tab" select="$Tab"/>
-        </xsl:call-template>
-    </xsl:template>
-    <!--Renders DisplayNameAttribute-->
-    <xsl:template name="DisplayName">
-        <xsl:text>&lt;FieldDisplayName("</xsl:text>
-        <xsl:value-of select="@human-name"/>
-        <xsl:text>")> </xsl:text>
-    </xsl:template>
-    <!--Renders CategoryAttribute-->
-    <xsl:template name="Category">
-        <xsl:text>&lt;Category("</xsl:text>
-        <xsl:value-of select="@category"/>
-        <xsl:text>")> </xsl:text>
-    </xsl:template>
-    <!--Renders attributes-->
-    <xsl:template name="Attributes">
-        <xsl:if test="@attributes">
-            <xsl:value-of select="@attributes"/>
-            <xsl:text>&#32;</xsl:text>
-        </xsl:if>
-    </xsl:template>
-
     <!--Generates all enums declared in XML-->
     <xsl:template name="Enums">
         <xsl:text>#Region "Enums"&#xD;&#xA;</xsl:text>
@@ -375,7 +258,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:for-each>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--Generates all string enums declared in XML-->
     <xsl:template name="sEnums">
         <xsl:text>#Region "String enums"&#xD;&#xA;</xsl:text>
@@ -418,7 +300,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:for-each>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--Generates GetTag functions-->
     <xsl:template name="TagTypes">
         <xsl:text>#Region "Tag types"&#xD;&#xA;</xsl:text>
@@ -505,33 +386,11 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:for-each>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--Translates IPTC tag type name used in XML into IPTC tag type name used in VB-->
     <xsl:template name="GetType">
         <xsl:param name="Type"/>
         <xsl:value-of select="translate($Type,'-','_')"/>
     </xsl:template>
-    <!--Translates docummentation into simple string-->
-    <xsl:template name="SummaryString">
-        <xsl:param name="Node"/>
-        <xsl:variable name="Ret">
-            <xsl:for-each select="$Node/child::node()">
-                <xsl:choose>
-                    <xsl:when test="string(.)='' and @cref">
-                        <xsl:value-of select="@cref"/>
-                    </xsl:when>
-                    <xsl:when test="string(.)='' and @name">
-                        <xsl:value-of select="@name"/>
-                    </xsl:when>
-                    <xsl:otherwise>
-                        <xsl:value-of select="string(.)"/>
-                    </xsl:otherwise>
-                </xsl:choose>
-            </xsl:for-each>
-        </xsl:variable>
-        <xsl:value-of select="normalize-space($Ret)"/>
-    </xsl:template>
-
     <!--Generates tag groups-->
     <xsl:template name="Groups">
         <xsl:text>#Region "Groups"&#xD;&#xA;</xsl:text>
@@ -746,7 +605,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text> As </xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text>Group</xsl:text>
-            <xsl:if test="@repeatable">
+            <xsl:if test="@repeatable=1 or @repeatable='true'">
                 <xsl:text>()</xsl:text>
             </xsl:if>
             <xsl:call-template name="nl"/>
@@ -759,7 +618,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>Group.Load(Me)&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;If v Is Nothing OrElse v.Count = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
             <xsl:choose>
-                <xsl:when test="@repeatable">
+                <xsl:when test="@repeatable=1 or @repeatable='true'">
                     <xsl:text>&#9;&#9;&#9;&#9;Return v.ToArray&#xD;&#xA;</xsl:text>
                 </xsl:when>
                 <xsl:otherwise>
@@ -770,7 +629,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <!--Set-->
             <xsl:text>&#9;&#9;&#9;Set&#xD;&#xA;</xsl:text>
             <xsl:choose>
-                <xsl:when test="@repeatable">
+                <xsl:when test="@repeatable=1 or @repeatable='true'">
                     <xsl:text>&#9;&#9;&#9;&#9;Dim Items As </xsl:text>
                     <xsl:value-of select="@name"/>
                     <xsl:text>Group() = </xsl:text>
@@ -847,7 +706,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--Generates properties for all IPTC tags-->
     <xsl:template name="Properties">
         <!--Stand Alone-->
@@ -871,7 +729,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--Generates property-->
     <xsl:template name="Property">
         <xsl:param name="access"/>
@@ -889,7 +746,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:with-param name="Tab" select="2"/>
         </xsl:call-template>
         <xsl:choose>
-            <xsl:when test="@repeatable | ancestor::I:group/@repeatable">
+            <xsl:when test="(@repeatable=1 or @repeatable='true') or (ancestor::I:group/@repeatable=1 or ancestor::I:group/@repeatable='true')">
                 <xsl:text>&#9;&#9;''' &lt;returns>If this instance contains this tag(s) retuns them. Otherwise returns null&lt;/returns>&#xD;&#xA;</xsl:text>
             </xsl:when>
             <xsl:otherwise>
@@ -898,6 +755,9 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         </xsl:choose>
         <xsl:text>&#9;&#9;''' &lt;exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.&lt;/exception>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured&lt;/exception>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;</xsl:text>
+        <xsl:call-template name="Description"/>
+        <xsl:text> _&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;</xsl:text>
         <xsl:call-template name="Category"/>
         <xsl:call-template name="DisplayName"/>
@@ -908,7 +768,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:value-of select="@name"/>
         <xsl:text> As </xsl:text>
         <xsl:value-of select="$Type/type/@type"/>
-        <xsl:if test="@repeatable | ancestor::I:group/@repeatable">
+        <xsl:if test="(@repeatable=1 or @repeatable='true') or (ancestor::I:group/@repeatable=1 or ancestor::I:group/@repeatable='true')">
             <xsl:text>()</xsl:text>
         </xsl:if>
         <xsl:call-template name="nl"/>
@@ -921,7 +781,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:value-of select="$Type/type/@get"/>
         <xsl:call-template name="nl"/>
         <xsl:choose>
-            <xsl:when test="@repeatable | ancestor::I:group/@repeatable">
+            <xsl:when test="(@repeatable=1 or @repeatable='true') or (ancestor::I:group/@repeatable=1 or ancestor::I:group/@repeatable='true')">
                 <xsl:text>&#9;&#9;&#9;&#9;&#9;If AllValues Is Nothing OrElse AllValues.Count = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
                 <xsl:text>&#9;&#9;&#9;&#9;&#9;Return AllValues.ToArray&#xD;&#xA;</xsl:text>
             </xsl:when>
@@ -944,7 +804,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>(</xsl:text>
         </xsl:if>
         <xsl:choose>
-            <xsl:when test="@repeatable | ancestor::I:group/@repeatable">
+            <xsl:when test="(@repeatable=1 or @repeatable='true') or (ancestor::I:group/@repeatable=1 or ancestor::I:group/@repeatable='true')">
                 <xsl:text>New List(Of </xsl:text>
                 <xsl:value-of select="$Type/type/@type"/>
                 <xsl:text>)(value)</xsl:text>
@@ -967,7 +827,6 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;&#9;End Set&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
     </xsl:template>
-
     <!--getenretes underlying type from IPTC type-->
     <!--Returns
         <type type="" get="" set="" attr="" convert-back=""/>
@@ -1576,6 +1435,269 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:element>
+    </xsl:template>
+    
+    <!--Supporting templates (common):-->
+    <!--Generates end of line-->
+    <xsl:template name="nl">
+        <xsl:text xml:space="preserve">&#xD;&#xA;</xsl:text>
+    </xsl:template>
+    <!--Converts & to &amp;-->
+    <xsl:template name="Amp2Entity">
+        <xsl:param name="Text"/>
+        <xsl:if test="string-length($Text)>0">
+            <xsl:choose>
+                <xsl:when test="starts-with($Text,'&amp;') and not(starts-with($Text,'&amp;amp;'))">
+                    <xsl:text>&amp;amp;</xsl:text>
+                    <xsl:call-template name="Amp2Entity">
+                        <xsl:with-param name="Text" select="substring-after($Text,'&amp;')"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:value-of select="substring($Text,1,1)"/>
+                    <xsl:call-template name="Amp2Entity">
+                        <xsl:with-param name="Text" select="substring($Text,2)"/>
+                    </xsl:call-template>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:if>
+    </xsl:template>
+    <!--Generates given number of tabs-->
+    <xsl:template name="Tabs">
+        <xsl:param name="Count"/>
+        <xsl:if test="$Count>0">
+            <xsl:text>&#9;</xsl:text>
+            <xsl:call-template name="Tabs">
+                <xsl:with-param name="Count" select="$Count - 1"/>
+            </xsl:call-template>
+        </xsl:if>
+    </xsl:template>
+    <!--Replaces " with ""-->
+    <xsl:template name="Quot">
+        <xsl:param name="str"/>
+        <xsl:choose>
+            <xsl:when test="contains($str,'&quot;')">
+                <xsl:value-of select="substring-before($str,'&quot;')"/>
+                <xsl:text>""</xsl:text>
+                <xsl:call-template name="Quot">
+                    <xsl:with-param name="str" select="substring-after($str,'&quot;')"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$str"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!--Supporting templates (specific):-->
+    <!--Creates <summary> from <desc>-->
+    <xsl:template name="Tag-Summary">
+        <xsl:param name="Tab"/>
+        <xsl:call-template name="Tabs">
+            <xsl:with-param name="Count" select="$Tab"/>
+        </xsl:call-template>
+        <xsl:text>''' &lt;summary></xsl:text>
+        <xsl:variable name="content">
+            <xsl:call-template name="Amp2Entity">
+                <xsl:with-param name="Text">
+                    <xsl:call-template name="DocText">
+                        <xsl:with-param name="node" select="I:desc"/>
+                    </xsl:call-template>
+                </xsl:with-param>
+            </xsl:call-template>
+        </xsl:variable>
+        <xsl:value-of select="normalize-space($content)" disable-output-escaping="yes"/>
+        <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
+    </xsl:template>
+    <!--Rewrites content of <summary> or <remarks>-->
+    <xsl:template name="DocText">
+        <xsl:param name="node"/>
+        <xsl:for-each select="$node/child::node()">
+            <xsl:call-template name="DocTextBody"/>
+        </xsl:for-each>
+    </xsl:template>
+    <!--Work-doing part of DocText-->
+    <xsl:template name="DocTextBody">
+        <xsl:choose>
+            <xsl:when test="count(self::text())>0">
+                <xsl:value-of select="."/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:text>&lt;</xsl:text>
+                <xsl:value-of select="local-name(.)"/>
+                <xsl:for-each select="attribute::*">
+                    <xsl:text>&#32;</xsl:text>
+                    <xsl:value-of select="local-name(.)"/>
+                    <xsl:text>="</xsl:text>
+                    <xsl:value-of select="."/>
+                    <xsl:text>"</xsl:text>
+                </xsl:for-each>
+                <xsl:choose>
+                    <xsl:when test="self::text() or child::*">
+                        <xsl:text>></xsl:text>
+                        <xsl:for-each select="child::node()">
+                            <xsl:call-template name="DocTextBody"/>
+                        </xsl:for-each>
+                        <xsl:text>&lt;/</xsl:text>
+                        <xsl:value-of select="local-name(.)"/>
+                        <xsl:text>></xsl:text>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:text>/></xsl:text>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    <!--Creates <remarks> from <remarks>-->
+    <xsl:template name="Tag-Remarks">
+        <xsl:param name="Tab"/>
+        <xsl:if test="I:remarks">
+            <xsl:call-template name="Tabs">
+                <xsl:with-param name="Count" select="$Tab"/>
+            </xsl:call-template>
+            <xsl:text>''' &lt;remarks></xsl:text>
+            <xsl:value-of select="normalize-space(I:remarks)" disable-output-escaping="yes"/>
+            <xsl:text>&lt;/remarks>&#xD;&#xA;</xsl:text>
+        </xsl:if>
+    </xsl:template>
+    <!--Creates <summary> from desc=""-->
+    <xsl:template name="Attr-Summary">
+        <xsl:param name="Tab"/>
+        <xsl:call-template name="Tabs">
+            <xsl:with-param name="Count" select="$Tab"/>
+        </xsl:call-template>
+        <xsl:text>''' &lt;summary></xsl:text>
+        <xsl:call-template name="Amp2Entity">
+            <xsl:with-param name="Text" select="normalize-space(@desc)"/>
+        </xsl:call-template>
+        <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
+    </xsl:template>
+    <!--Universally creates <summary>-->
+    <xsl:template name="Summary">
+        <xsl:param name="Tab"/>
+        <xsl:choose>
+            <xsl:when test="I:desc">
+                <xsl:call-template name="Tag-Summary">
+                    <xsl:with-param name="Tab" select="$Tab"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:when test="@desc">
+                <xsl:call-template name="Attr-Summary">
+                    <xsl:with-param name="Tab" select="$Tab"/>
+                </xsl:call-template>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <!--Creates XML-doc comments <summary> and <remarks>-->
+    <xsl:template name="XML-Doc">
+        <xsl:param name="Tab"/>
+        <xsl:call-template name="Summary">
+            <xsl:with-param name="Tab" select="$Tab"/>
+        </xsl:call-template>
+        <xsl:call-template name="Tag-Remarks">
+            <xsl:with-param name="Tab" select="$Tab"/>
+        </xsl:call-template>
+    </xsl:template>
+    <!--Renders DisplayNameAttribute-->
+    <xsl:template name="DisplayName">
+        <xsl:text>&lt;FieldDisplayName("</xsl:text>
+        <xsl:value-of select="@human-name"/>
+        <xsl:text>")> </xsl:text>
+    </xsl:template>
+    <!--Renders CategoryAttribute-->
+    <xsl:template name="Category">
+        <xsl:text>&lt;Category("</xsl:text>
+        <xsl:value-of select="@category"/>
+        <xsl:text>")> </xsl:text>
+    </xsl:template>
+    <!--Renders attributes-->
+    <xsl:template name="Attributes">
+        <xsl:if test="@attributes">
+            <xsl:value-of select="@attributes"/>
+            <xsl:text>&#32;</xsl:text>
+        </xsl:if>
+    </xsl:template>
+    <!--Renders description attribute-->
+    <xsl:template name="Description">
+        <xsl:choose>
+            <xsl:when test="I:desc">
+                <xsl:text>&lt;Description("</xsl:text>
+                <xsl:call-template name="Doc-text">
+                    <xsl:with-param name="Doc" select="I:desc"/>
+                </xsl:call-template>
+                <xsl:text>")></xsl:text>
+            </xsl:when>
+            <xsl:when test="@desc">
+                <xsl:text>&lt;Description("</xsl:text>
+                <xsl:value-of select="@desc"/>
+                <xsl:text>")></xsl:text>
+            </xsl:when>
+        </xsl:choose>
+    </xsl:template>
+    <!--Gets text from XML-doc (with simple plain-text formating). Used for DescriptionAttribute-->
+    <xsl:template name="Doc-text">
+        <xsl:param name="Doc"/>
+        <xsl:for-each select="$Doc/child::node()">
+            <xsl:choose>
+                <xsl:when test="count(self::text())>0">
+                    <xsl:call-template name="Quot">
+                        <xsl:with-param name="str" select="normalize-space(.)"/>
+                    </xsl:call-template>
+                </xsl:when>
+                <xsl:otherwise>
+                    <xsl:text>&#32;</xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="string(.) or ./child::*">
+                            <xsl:if test="local-name(.)='para' or local-name(.)='list' or local-name(.)='item'">
+                                <xsl:text>" &amp; vbCrLf &amp; "</xsl:text>
+                            </xsl:if>
+                            <xsl:if test="local-name(.)='item' and parent::node()/@type!='table'">
+                                <xsl:text>* </xsl:text>
+                            </xsl:if>
+                            <xsl:if test="local-name(.)='description'">
+                                <xsl:text>" &amp; vbTab &amp; "</xsl:text>
+                            </xsl:if>
+                            <xsl:call-template name="Doc-text"/>
+                        </xsl:when>
+                        <xsl:when test="@cref">
+                            <xsl:variable name="cref" select="@cref"/>
+                            <xsl:choose>
+                                <xsl:when test="/I:Root/I:record//I:tag[@name=$cref]/@human-name">
+                                    <xsl:value-of select="/I:Root/I:record//I:tag[@name=$cref]/@human-name"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="@cref"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </xsl:when>
+                        <xsl:when test="name">
+                            <xsl:value-of select="@name"/>
+                        </xsl:when>
+                    </xsl:choose>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:for-each>
+    </xsl:template>
+    <!--Translates docummentation into simple string-->
+    <xsl:template name="SummaryString">
+        <xsl:param name="Node"/>
+        <xsl:variable name="Ret">
+            <xsl:for-each select="$Node/child::node()">
+                <xsl:choose>
+                    <xsl:when test="string(.)='' and @cref">
+                        <xsl:value-of select="@cref"/>
+                    </xsl:when>
+                    <xsl:when test="string(.)='' and @name">
+                        <xsl:value-of select="@name"/>
+                    </xsl:when>
+                    <xsl:otherwise>
+                        <xsl:value-of select="string(.)"/>
+                    </xsl:otherwise>
+                </xsl:choose>
+            </xsl:for-each>
+        </xsl:variable>
+        <xsl:value-of select="normalize-space($Ret)"/>
     </xsl:template>
 </xsl:stylesheet>
 
