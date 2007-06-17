@@ -6,9 +6,10 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 16. června 2007
+' Created: 17. června 2007
 ' By:DZONNY\Honza
 '
+'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
 Imports System.ComponentModel
 Imports Tools.ComponentModelT
 Imports System.XML.Serialization
@@ -2460,7 +2461,7 @@ Namespace DrawingT.MetadataT
 		End Function
 #Region "Classes"
 		''' <summary>Abstract Relation Method</summary>
-		<FieldDisplayName("ARM")> <Category("Old IPTC")> Partial Public NotInheritable Class ARMGroup : Inherits Group
+		<FieldDisplayName("ARM")> <Category("Old IPTC")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ARMGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2510,7 +2511,7 @@ Namespace DrawingT.MetadataT
 
 		End Class
 		''' <summary>Country/geographical location referenced by the content of the object</summary>
-		<FieldDisplayName("Content Location")> <Category("Location")> Partial Public NotInheritable Class ContentLocationGroup : Inherits Group
+		<FieldDisplayName("Content Location")> <Category("Location")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ContentLocationGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2563,7 +2564,7 @@ Namespace DrawingT.MetadataT
 		End Class
 		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
 		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
-		<FieldDisplayName("Reference")> <Category("Old IPTC")> Partial Public NotInheritable Class ReferenceGroup : Inherits Group
+		<FieldDisplayName("Reference")> <Category("Old IPTC")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ReferenceGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2627,7 +2628,7 @@ Namespace DrawingT.MetadataT
 
 		End Class
 		''' <summary>Creator of the object data</summary>
-		<FieldDisplayName("By-line info")> <Category("Author")> Partial Public NotInheritable Class ByLineInfoGroup : Inherits Group
+		<FieldDisplayName("By-line info")> <Category("Author")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ByLineInfoGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2678,7 +2679,7 @@ Namespace DrawingT.MetadataT
 
 		End Class
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
+		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2772,14 +2773,14 @@ Namespace DrawingT.MetadataT
 					For Each item As ContentLocationGroup In Items
 						Dim ContentLocationCodeValues As StringEnum(Of ISO3166)() = ContentLocationCode
 						If ContentLocationCodeValues Is Nothing Then ContentLocationCodeValues = New StringEnum(Of ISO3166)(){}
-						ReDim Preserve ContentLocationCodeValues(ContentLocationCode.Length)
-						ContentLocationCodeValues(ContentLocationCode.Length - 1) = item.ContentLocationCode
+						ReDim Preserve ContentLocationCodeValues(ContentLocationCodeValues.Length)
+						ContentLocationCodeValues(ContentLocationCodeValues.Length - 1) = item.ContentLocationCode
 						ContentLocationCode = ContentLocationCodeValues
 
 						Dim ContentLocationNameValues As String() = ContentLocationName
 						If ContentLocationNameValues Is Nothing Then ContentLocationNameValues = New String(){}
-						ReDim Preserve ContentLocationNameValues(ContentLocationName.Length)
-						ContentLocationNameValues(ContentLocationName.Length - 1) = item.ContentLocationName
+						ReDim Preserve ContentLocationNameValues(ContentLocationNameValues.Length)
+						ContentLocationNameValues(ContentLocationNameValues.Length - 1) = item.ContentLocationName
 						ContentLocationName = ContentLocationNameValues
 					Next item
 				End If
@@ -2802,20 +2803,20 @@ Namespace DrawingT.MetadataT
 					For Each item As ReferenceGroup In Items
 						Dim ReferenceServiceValues As String() = ReferenceService
 						If ReferenceServiceValues Is Nothing Then ReferenceServiceValues = New String(){}
-						ReDim Preserve ReferenceServiceValues(ReferenceService.Length)
-						ReferenceServiceValues(ReferenceService.Length - 1) = item.ReferenceService
+						ReDim Preserve ReferenceServiceValues(ReferenceServiceValues.Length)
+						ReferenceServiceValues(ReferenceServiceValues.Length - 1) = item.ReferenceService
 						ReferenceService = ReferenceServiceValues
 
 						Dim ReferenceDateValues As Date() = ReferenceDate
 						If ReferenceDateValues Is Nothing Then ReferenceDateValues = New Date(){}
-						ReDim Preserve ReferenceDateValues(ReferenceDate.Length)
-						ReferenceDateValues(ReferenceDate.Length - 1) = item.ReferenceDate
+						ReDim Preserve ReferenceDateValues(ReferenceDateValues.Length)
+						ReferenceDateValues(ReferenceDateValues.Length - 1) = item.ReferenceDate
 						ReferenceDate = ReferenceDateValues
 
 						Dim ReferenceNumberValues As Decimal() = ReferenceNumber
 						If ReferenceNumberValues Is Nothing Then ReferenceNumberValues = New Decimal(){}
-						ReDim Preserve ReferenceNumberValues(ReferenceNumber.Length)
-						ReferenceNumberValues(ReferenceNumber.Length - 1) = item.ReferenceNumber
+						ReDim Preserve ReferenceNumberValues(ReferenceNumberValues.Length)
+						ReferenceNumberValues(ReferenceNumberValues.Length - 1) = item.ReferenceNumber
 						ReferenceNumber = ReferenceNumberValues
 					Next item
 				End If
@@ -2836,14 +2837,14 @@ Namespace DrawingT.MetadataT
 					For Each item As ByLineInfoGroup In Items
 						Dim ByLineValues As String() = ByLine
 						If ByLineValues Is Nothing Then ByLineValues = New String(){}
-						ReDim Preserve ByLineValues(ByLine.Length)
-						ByLineValues(ByLine.Length - 1) = item.ByLine
+						ReDim Preserve ByLineValues(ByLineValues.Length)
+						ByLineValues(ByLineValues.Length - 1) = item.ByLine
 						ByLine = ByLineValues
 
 						Dim ByLineTitleValues As String() = ByLineTitle
 						If ByLineTitleValues Is Nothing Then ByLineTitleValues = New String(){}
-						ReDim Preserve ByLineTitleValues(ByLineTitle.Length)
-						ByLineTitleValues(ByLineTitle.Length - 1) = item.ByLineTitle
+						ReDim Preserve ByLineTitleValues(ByLineTitleValues.Length)
+						ByLineTitleValues(ByLineTitleValues.Length - 1) = item.ByLineTitle
 						ByLineTitle = ByLineTitleValues
 					Next item
 				End If

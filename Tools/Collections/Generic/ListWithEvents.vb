@@ -9,7 +9,7 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="05/18/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="06/17/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
@@ -464,7 +464,7 @@ Namespace CollectionsT.GenericT
         End Function
 #Region "Item"
         ''' <summary>List of <see cref="ItemCancelEventHandler"/> delegates to be invoked when the <see cref="ItemChanging"/> event is raised</summary>
-        Private ItemChangingEventHandlerList As List(Of ItemCancelEventHandler)
+        Private ItemChangingEventHandlerList As New List(Of ItemCancelEventHandler)
         ''' <summary>Raised before an item is changed. Raised by setter of <see cref="Item"/> property.</summary>
         ''' <remarks><para>
         ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.

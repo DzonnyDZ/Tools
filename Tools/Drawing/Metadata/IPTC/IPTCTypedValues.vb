@@ -214,7 +214,7 @@ Namespace DrawingT.MetadataT
                     For Each item As String In value
                         If Not IsGraphicCharacters(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic character"))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > 0) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
                             Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
                         Else
                             values.Add(bytes)
@@ -256,9 +256,9 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsTextWithSpaces(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space character"))
+                        If Not IsTextWithSpaces(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space character", item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > 0) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
                             Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
                         Else
                             values.Add(bytes)
@@ -303,7 +303,7 @@ Namespace DrawingT.MetadataT
                     For Each item As String In value
                         If Not IsText(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space-non-cr-non-lf character"))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > 0) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
                             Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
                         Else
                             values.Add(bytes)
@@ -779,9 +779,9 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsAlpha(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-alpha character"))
+                        If Not IsAlpha(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-alpha character", item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
-                        If (Len <> 0 AndAlso bytes.Length > 0) OrElse (Fixed AndAlso bytes.Length <> Len) Then
+                        If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
                             Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
                         Else
                             values.Add(bytes)
@@ -814,12 +814,15 @@ Namespace DrawingT.MetadataT
                 Dim ret As New List(Of StringEnum)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then
-                        ret.Add(StringEnum.GetInstance(Type, ""))
+                        Try
+                            ret.Add(StringEnum.GetInstance(Type, ""))
+                        Catch ex As InvalidEnumArgumentException : End Try
                     Else
                         Dim str As String = System.Text.Encoding.ASCII.GetString(item)
                         ret.Add(StringEnum.GetInstance(Type, str))
                     End If
                 Next item
+                If ret.Count = 0 Then Return Nothing
                 Return ret
             End Get
             Set(ByVal value As List(Of StringEnum))
@@ -828,7 +831,7 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As StringEnum In value
-                        If Not Type.Equals(item.GetType) Then Throw New ArrayTypeMismatchException("EnumType of items passed to StringEnum_Value most be same as that in the Type parameter")
+                        If Not item.GetType.IsGenericType OrElse Not Type.Equals(item.GetType.GetGenericArguments(0)) Then Throw New ArrayTypeMismatchException("EnumType of items passed to StringEnum_Value must be same as that in the Type parameter")
                         Dim Attrs As Object() = item.EnumType.GetCustomAttributes(GetType(RestrictAttribute), False)
                         Dim ra As RestrictAttribute = Nothing
                         If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then ra = Attrs(0)
@@ -879,7 +882,8 @@ Namespace DrawingT.MetadataT
         ''' <param name="Key">Record and dataset number</param>
         ''' <exception cref="ArgumentException">
         ''' Stored value has length different than 2B (in Getter) -or-
-        ''' 2nd byte of stored value cannot be interpreted as <see cref="AudioDataType"/> (in Getter)
+        ''' 2nd byte of stored value cannot be interpreted as <see cref="AudioDataType"/> (in Getter) -or-
+        ''' Setting value which's serializatazion produes more or less than 2 bytes
         ''' </exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Property AudioType_Value(ByVal Key As DataSetIdentification) As List(Of iptcAudioType)
@@ -892,7 +896,7 @@ Namespace DrawingT.MetadataT
                     Dim val As New iptcAudioType
                     If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
                     val.Components = CStr(ChrW(item(0)))
-                    val.TypeCode = ChrW(item(1))
+                    val.TypeCode = CStr(ChrW(item(1)))
                     ret.Add(val)
                 Next item
                 If ret.Count = 0 Then Return Nothing
@@ -902,7 +906,9 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As iptcAudioType In value
-                        values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
+                        Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.ToString)
+                        If Bytes.Length <> 2 Then Throw New ArgumentException("Serialized value has not length 2 bytes.")
+                        values.Add(Bytes)
                     Next item
                 End If
                 Tag(Key) = values
@@ -966,11 +972,14 @@ Namespace DrawingT.MetadataT
         ''' <param name="From"><see cref="List"/> to be converted</param>
         ''' <typeparam name="TNumStr1">Type of items in <paramref name="From"/></typeparam>
         ''' <typeparam name="TNumStr2">Type of items in return value</typeparam>
-        Private Shared Function ConvertNumStrList(Of TNumStr1 As NumStr, TNumStr2 As TNumStr1)(ByVal From As List(Of TNumStr1)) As List(Of TNumStr2)
+        Private Shared Function ConvertNumStrList(Of TNumStr1 As NumStr, TNumStr2 As {TNumStr1, New})(ByVal From As List(Of TNumStr1)) As List(Of TNumStr2)
             If From Is Nothing Then Return Nothing
             Dim ret As New List(Of TNumStr2)(From.Count)
             For Each item As TNumStr1 In From
-                ret.Add(item)
+                Dim NewNumStr As New TNumStr2
+                NewNumStr.Number = item.Number
+                NewNumStr.String = item.String
+                ret.Add(NewNumStr)
             Next item
             Return ret
         End Function

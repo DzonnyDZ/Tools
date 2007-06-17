@@ -57,7 +57,7 @@ Namespace DrawingT.MetadataT
                 End If
             End Get
             Set(ByVal value As List(Of Byte()))
-                Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(DataSetIdentification.Keywords).GetIndices(Tags)
+                Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(Key).GetIndices(Tags)
                 Dim i As Integer = 0
                 'Replace values of existing tags with same key
                 For Each Item As Byte() In value
@@ -71,7 +71,7 @@ Namespace DrawingT.MetadataT
                 If i < Already.Count Then
                     'Remove tags (if value is shorter than Already)
                     For j As Integer = Already.Count - 1 To i Step -1
-                        Tags.RemoveAt(j)
+                        Tags.RemoveAt(Already(j))
                     Next j
                 Else
                     'Add tags (if value is longer than Already)
@@ -89,6 +89,7 @@ Namespace DrawingT.MetadataT
         End Property
         ''' <summary>Identifies IPTC tag (DataSet). Used for indexing.</summary>
         ''' <completionlist cref="DataSetIdentification"/>
+        <DebuggerDisplay("{RecordNumber}:{DatasetNumber}")> _
         Partial Public Structure DataSetIdentification : Implements IPair(Of RecordNumbers, Byte), IEquatable(Of IPair(Of RecordNumbers, Byte))
             ''' <summary>Contains value of the <see cref="RecordNumber"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _

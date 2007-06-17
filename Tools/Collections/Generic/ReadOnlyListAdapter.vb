@@ -249,7 +249,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="index">The zero-based index of the element to get or set.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException"><paramref name="index"/> is less than 0.-or-<paramref name="index"/> is equal to or greater than <see cref="ReadOnlyListAdapter(Of TFrom, TTo).Count"/>. </exception>
         Default Public Overridable ReadOnly Property Item(ByVal index As Integer) As TTo Implements IReadOnlyList(Of TTo).Item
-            Get
+            <DebuggerStepThrough()> Get
                 Return InnerList(index)
             End Get
         End Property

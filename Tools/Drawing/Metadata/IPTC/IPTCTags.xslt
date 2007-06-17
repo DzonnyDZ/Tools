@@ -464,6 +464,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>&#9;&#9;</xsl:text>
             <xsl:call-template name="DisplayName"/>
             <xsl:call-template name="Category"/>
+            <xsl:text>&lt;TypeConverter(GetType(ExpandableObjectConverter))> </xsl:text>
             <xsl:text>Partial Public NotInheritable Class </xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text>Group : Inherits Group&#xD;&#xA;</xsl:text>
@@ -673,12 +674,12 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                         <xsl:value-of select="@name"/>
                         <xsl:text>Values(</xsl:text>
                         <xsl:value-of select="@name"/>
-                        <xsl:text>.Length)&#xD;&#xA;</xsl:text>
+                        <xsl:text>Values.Length)&#xD;&#xA;</xsl:text>
                         <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;</xsl:text>
                         <xsl:value-of select="@name"/>
                         <xsl:text>Values(</xsl:text>
                         <xsl:value-of select="@name"/>
-                        <xsl:text>.Length - 1) = item.</xsl:text>
+                        <xsl:text>Values.Length - 1) = item.</xsl:text>
                         <xsl:value-of select="@name"/>
                         <xsl:call-template name="nl"/>
                         <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;</xsl:text>
