@@ -4,7 +4,7 @@ Namespace CollectionsT.GenericT
     '    ''' <summary>type-safe class defived from <see cref="System.Collections.Hashtable"/></summary>
     '    ''' <typeparam name="TKey">Type of keys</typeparam>
     '    ''' <typeparam name="TValue">type of values</typeparam>
-    '    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of String, Long)), LastChange:="12/25/2006")> _
+    '    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of ,)), LastChange:="12/25/2006")> _
     '    <DebuggerDisplay("Count = {Count}")> _
     '    Public Class HashTable(Of TKey, TValue)
     '        Inherits HashTable
@@ -583,7 +583,7 @@ Namespace CollectionsT.GenericT
     '    End Class
     ''' <summary>Provides HashTable designed for storing only keys and quickly testing if key is in collection or not</summary>
     ''' <remarks>Internally uses <see cref="Dictionary(Of T, Object)"/>. Can be used as List of unique items.</remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of Long)), LastChMMDDYYYY:="12/25/2006")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of )), LastChMMDDYYYY:="12/25/2006")> _
     Public Class HashTable(Of T)
         Implements ICollection(Of T)
         ''' <summary><see cref="Dictionary(Of T, Object)"/> internally used by this instance</summary>

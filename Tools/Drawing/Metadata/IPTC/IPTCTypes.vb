@@ -518,6 +518,7 @@ Namespace DrawingT.MetadataT
         End Class
         ''' <summary>Represents combination of number and string</summary>
         ''' <remarks>This class is abstract, derived class mus specify number of digits of <see cref="NumStr.Number"/></remarks>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public MustInherit Class NumStr
             ''' <summary>Contains value of the <see cref="Number"/> property</summary>            
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Number As Integer
@@ -553,6 +554,7 @@ Namespace DrawingT.MetadataT
             End Function
         End Class
         ''' <summary>Represents combination of 2-digits numer and string (IPTC type <see cref="IPTCTypes.Num2_Str"/>)</summary>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Class NumStr2 : Inherits NumStr
             ''' <summary>Number of digits in number</summary>
             ''' <returns>2</returns>
@@ -563,7 +565,7 @@ Namespace DrawingT.MetadataT
             End Property
         End Class
         ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr2"/> with numbers from enum</summary>
-        <CLSCompliant(False)> _
+        <CLSCompliant(False), TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Class NumStr2(Of T As {IConvertible, Structure}) : Inherits NumStr2
             ''' <summary>Number in this <see cref="NumStr2(Of T)"/></summary>            
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
@@ -585,7 +587,7 @@ Namespace DrawingT.MetadataT
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
-            <EditorBrowsable(EditorBrowsableState.Never)> _
+            <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
             Public NotOverridable Overrides Property Number() As Integer
                 Get
                     Return EnumNumber.ToInt32(InvariantCulture)
@@ -596,7 +598,7 @@ Namespace DrawingT.MetadataT
             End Property
         End Class
         ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr3"/> with numbers from enum</summary>
-        <CLSCompliant(False)> _
+        <CLSCompliant(False), TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Class NumStr3(Of T As {IConvertible, Structure}) : Inherits NumStr3
             ''' <summary>Number in this <see cref="NumStr3(Of T)"/></summary>            
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
@@ -618,7 +620,7 @@ Namespace DrawingT.MetadataT
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
             ''' <exception cref="ArgumentOutOfRangeException">Number beign set is negative</exception>
             ''' <exception cref="InvalidEnumArgumentException"><see cref="T"/> has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and value being set is not member of <see cref="T"/></exception>
-            <EditorBrowsable(EditorBrowsableState.Never)> _
+            <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
             Public NotOverridable Overrides Property Number() As Integer
                 Get
                     Return EnumNumber.ToInt32(InvariantCulture)
@@ -629,6 +631,7 @@ Namespace DrawingT.MetadataT
             End Property
         End Class
         ''' <summary>Represents combination of 3-digits numer and string (IPTC type <see cref="IPTCTypes.Num3_Str"/>)</summary>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Class NumStr3 : Inherits NumStr
             ''' <summary>Number of digits in number</summary>
             ''' <returns>3</returns>
@@ -1275,6 +1278,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Type that can contain value of "string enum" even when such value is not member of this enum</summary>
         ''' <typeparam name="TEnum">Type of <see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum`0.EnumValue"/>. Must inherit from <see cref="[Enum]"/></typeparam>
         <CLSCompliant(False), DebuggerDisplay("{ToString}")> _
+        <TypeConverter(GetType(StringEnumTypeConverter))> _
         Public Class StringEnum(Of TEnum As {IConvertible, Structure})
             Inherits StringEnum
             Implements IT1orT2(Of TEnum, String)
@@ -1471,6 +1475,11 @@ Namespace DrawingT.MetadataT
                 End Get
             End Property
         End Class
+        Public Class StringEnumTypeConverter
+inherits TypeConverter
+            
+        End Class
+
 
 #End Region
         ''' <summary>Returns <see cref="Type"/> that is used to store values of particular <see cref="IPTCTypes">IPTC type</see></summary>

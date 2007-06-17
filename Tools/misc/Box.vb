@@ -1,7 +1,7 @@
 ﻿#If Config <= Release Then
 ''' <summary>This class can wrap everything to be class</summary>
 ''' <remarks>This removes limitation of <see cref="Nullable(Of T)"/> that limits wrapped object to be structure</remarks>
-<Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Box(Of Boolean)), LastChMMDDYYYY:="12/20/2006")> _
+<Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Box(Of )), LastChMMDDYYYY:="12/20/2006")> _
 <DebuggerDisplay("Box ({Item})")> _
 Public Class Box(Of T) : Inherits Cloenable(Of Box(Of T))
     ''' <summary>Contains value of the <see cref="Item"/> property</summary>

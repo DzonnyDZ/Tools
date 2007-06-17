@@ -1,4 +1,4 @@
-#If Config <= RC Then
+'#If Config <= RC Then Stage is set in vbproj
 Imports Tools.MathT
 ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.LinkLabel"/></summary>
 Friend Class frmLEBE
@@ -17,7 +17,7 @@ Friend Class frmLEBE
         Me.Icon = Tools.ResourcesT.ToolsIcon
     End Sub
 
-   
+
     Private Sub cmdS_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdS.Click
         Dim N As Short = txtNumber.Text
         Dim N2 As Short = LEBE(N)
@@ -63,4 +63,4 @@ Friend Class frmLEBE
         View(N, N2, UInt64.MaxValue.ToString("D").Length, UInt64.MaxValue.ToString("X").Length)
     End Sub
 End Class
-#End If
+'#End If

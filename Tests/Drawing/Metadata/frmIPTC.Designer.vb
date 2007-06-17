@@ -42,7 +42,7 @@ Namespace DrawingT.MetadataT
             Me.prgProperties.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgProperties.Location = New System.Drawing.Point(0, 0)
             Me.prgProperties.Name = "prgProperties"
-            Me.prgProperties.Size = New System.Drawing.Size(303, 328)
+            Me.prgProperties.Size = New System.Drawing.Size(303, 524)
             Me.prgProperties.TabIndex = 0
             '
             'picImage
@@ -58,6 +58,7 @@ Namespace DrawingT.MetadataT
             'splMain
             '
             Me.splMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel1
             Me.splMain.Location = New System.Drawing.Point(0, 0)
             Me.splMain.Name = "splMain"
             Me.splMain.Orientation = System.Windows.Forms.Orientation.Horizontal
@@ -69,7 +70,7 @@ Namespace DrawingT.MetadataT
             'splMain.Panel2
             '
             Me.splMain.Panel2.Controls.Add(Me.prgProperties)
-            Me.splMain.Size = New System.Drawing.Size(303, 488)
+            Me.splMain.Size = New System.Drawing.Size(303, 684)
             Me.splMain.SplitterDistance = 156
             Me.splMain.TabIndex = 2
             '
@@ -77,7 +78,7 @@ Namespace DrawingT.MetadataT
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(303, 488)
+            Me.ClientSize = New System.Drawing.Size(303, 684)
             Me.Controls.Add(Me.splMain)
             Me.Name = "frmIPTC"
             Me.Text = "Testing Tools.DrawingT.MetadataT.IPTC"

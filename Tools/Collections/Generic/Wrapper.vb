@@ -2,7 +2,7 @@
 Namespace CollectionsT.GenericT
     ''' <summary>Wpars type-unsafe <see cref="IEnumerable"/> as type-safe <see cref="IEnumerable(Of T)"/></summary>
     ''' <typeparam name="T">Type that each item of wrapped collection must be of or convertible to</typeparam>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(Wrapper(Of Long)), LastChMMDDYYYY:="01/07/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(Wrapper(Of )), LastChMMDDYYYY:="01/07/2007")> _
     Public Class Wrapper(Of T) : Implements IEnumerable(Of T)
         ''' <summary>Contains value of the <see cref="Wrapped"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Wrapped As IEnumerable
