@@ -419,7 +419,7 @@
             <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</desc>
             <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
         </tag>
-        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category">
+        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.DrawingT.MetadataT.IPTC+NumStr2`1;Tools.DrawingT.MetadataT.IPTC+ObjectTypes;02;")>'>
             <desc>The Object Type is used to distinguish between different types of objects within the IIM.</desc>
             <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
@@ -429,7 +429,7 @@
             <item value="2" name="Data" desc="Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate." human-name="Data"/>
             <item value="3" name="Advisory" desc="Advisory" human-name="Advisory"/>
         </enum>
-        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes" category="Category">
+        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.DrawingT.MetadataT.IPTC+NumStr3`1;Tools.DrawingT.MetadataT.IPTC+ObjectAttributes;001;")>'>
             <desc>The Object Attribute defines the nature of the object independent of the Subject.</desc>
             <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
@@ -1367,7 +1367,7 @@
             <desc>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</desc>
             <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
         </tag>
-        <group name="ObjectDataPreview" human-name="ObjectData Preview" category="Embeded object" mandatory="false" repeatable="false">
+        <group name="ObjectDataPreview" human-name="ObjectData Preview" category="Embeded object" mandatory="false" repeatable="false" attributes="&lt;Editor(GetType(NewEditor),GetType(System.Drawing.Design.UITypeEditor))>">
             <desc>Preview of embeded object</desc>
             <tag number="200" name="ObjectDataPreviewFileFormat" human-name="ObjectData Preview File Format" type="Enum-binary" enum="FileFormats" fixed="true" mandatory="true" repeatable="false" length="2" category="Embeded object">
                 <desc>The file format of the ObjectData Preview.</desc>
@@ -1384,10 +1384,10 @@
     </record>
     <record number="7" name="PreObjectDataDescriptorRecord" human-name="Pre-ObjectData descriptor record">
         <desc>Information about ObjectData (before object has been sent)</desc>
-        <tag number="10" name="SizeMode" human-name="Size Mode" type="Boolean-binary" mandatory="true" fixed="true" length="1" repeatable="false" category="Embeded object">
+        <tag number="10" name="SizeMode" human-name="Size Mode" type="Boolean-binary" mandatory="true" fixed="true" length="1" repeatable="false" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
             <desc>The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.</desc>
         </tag>
-        <tag number="20" name="MaxSubfileSize" human-name="Max Subfile Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+        <tag number="20" name="MaxSubfileSize" human-name="Max Subfile Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
             <desc>The maximum size for the following Subfile DataSet(s).</desc>
             <remarks>
                 The largest number is not defined, but programmers should provide
@@ -1397,11 +1397,11 @@
                 of the object.
             </remarks>
         </tag>
-        <tag number="90" name="ObjectDataSizeAnnounced" human-name="ObjectData Size Announced" mandatory="false" repeatable="false" fixed="false" length="0" type="UnsignedBinaryNumber" category="Embeded object">
+        <tag number="90" name="ObjectDataSizeAnnounced" human-name="ObjectData Size Announced" mandatory="false" repeatable="false" fixed="false" length="0" type="UnsignedBinaryNumber" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
             <desc>A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.</desc>
             <remarks>Mandatory if DataSet <see cref="SizeMode"/> has value '1' and not allowed if DataSet <see cref="SizeMode"/> has value '0'.</remarks>
         </tag>
-        <tag number="95" name="MaximumObjectDataSize" human-name="Maximum ObjectData Size" mandatory="false" repeatable="false" fixed="false" type="UnsignedBinaryNumber" category="Embeded object" length="0">
+        <tag number="95" name="MaximumObjectDataSize" human-name="Maximum ObjectData Size" mandatory="false" repeatable="false" fixed="false" type="UnsignedBinaryNumber" category="Embeded object" length="0" attributes="&lt;[ReadOnly](True)>">
             <desc>Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.</desc>
         </tag>
     </record>
@@ -1414,7 +1414,7 @@
     </record>
     <record number="9" name="PostObjectDataDescriptorRecord" human-name="Pos-ObjectData Descriptor Record">
         <desc>Confirmation of size of ObjectData</desc>
-        <tag number="10" name="ConfirmedObjectDataSize" human-name="Confirmed ObjectData Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+        <tag number="10" name="ConfirmedObjectDataSize" human-name="Confirmed ObjectData Size" type="UnsignedBinaryNumber" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object" attributes="&lt;[ReadOnly](True)>">
             <desc>Total size of the objectdata, in octets, without tags.</desc>
             <remarks>This number should equal the number in DataSet <see cref="ObjectDataSizeAnnounced"/> if the size of the objectdata is known and has been provided.</remarks>
         </tag>

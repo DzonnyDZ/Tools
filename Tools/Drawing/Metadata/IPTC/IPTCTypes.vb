@@ -1,5 +1,6 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT
-Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT
+Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT, Tools.DrawingT.DesignT
+Imports System.Drawing.Design, System.Windows.Forms, System.Drawing
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class IPTC
@@ -557,12 +558,12 @@ Namespace DrawingT.MetadataT
                 ODE.CopyTo(ODEArr, 0)
                 Return String.Format(InvariantCulture, "{0:yyyyMMdd}:{1}:{2}:{3}", UCD, IPR, String.Join("/"c, ODEArr), OVI)
             End Function
-            ''' <summary><see cref="ComponentModel.TypeConverter"/> for <see cref="UNO"/></summary>
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="UNO"/></summary>
             Public Class Converter : Inherits ExpandableObjectConverter
                 ''' <summary>Returns whether this converter can convert the object to the specified type, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <param name="destinationType">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
-                ''' <returns>True is <paramref name="destinationType"/> is <see cref="[String]"/> otherwise calls <see cref="ComponentModel.TypeConverter.CanConvertTo"/></returns>
+                ''' <returns>True is <paramref name="destinationType"/> is <see cref="[String]"/> otherwise calls <see cref="System.ComponentModel.TypeConverter.CanConvertTo"/></returns>
                 Public Overrides Function CanConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal destinationType As System.Type) As Boolean
                     Return destinationType.Equals(GetType(String)) OrElse MyBase.CanConvertTo(context, destinationType)
                 End Function
@@ -585,7 +586,7 @@ Namespace DrawingT.MetadataT
                 ''' <summary>Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <param name="sourceType">A <see cref="System.Type"/> that represents the type you want to convert from.</param>
-                ''' <returns>True if <paramref name="sourceType"/> is <see cref="String"/> otherwice callse <see cref="ComponentModel.ExpandableObjectConverter.CanConvertFrom"/></returns>
+                ''' <returns>True if <paramref name="sourceType"/> is <see cref="String"/> otherwice callse <see cref="System.ComponentModel.ExpandableObjectConverter.CanConvertFrom"/></returns>
                 Public Overrides Function CanConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal sourceType As System.Type) As Boolean
                     Return sourceType.Equals(GetType(String)) OrElse MyBase.CanConvertFrom(context, sourceType)
                 End Function
@@ -640,6 +641,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Represents combination of number and string</summary>
         ''' <remarks>This class is abstract, derived class mus specify number of digits of <see cref="NumStr.Number"/></remarks>
         <TypeConverter(GetType(NumStr.Converter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         Public MustInherit Class NumStr
             ''' <summary>Contains value of the <see cref="Number"/> property</summary>            
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Number As Integer
@@ -673,12 +675,12 @@ Namespace DrawingT.MetadataT
             Public NotOverridable Overrides Function ToString() As String
                 Return String.Format(InvariantCulture, "{0:" & New String("0"c, NumberDigits) & "};{1}", Number, [String])
             End Function
-            ''' <summary><see cref="ComponentModel.TypeConverter"/> for <see cref="NumStr"/></summary>
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="NumStr"/></summary>
             Public Class Converter : Inherits ExpandableObjectConverter
                 ''' <summary>Returns whether this converter can convert the object to the specified type, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <param name="destinationType">A <see cref="System.Type"/> that represents the type you want to convert to.</param>
-                ''' <returns>True is <paramref name="destinationType"/> is <see cref="[String]"/> otherwise calls <see cref="ComponentModel.TypeConverter.CanConvertTo"/></returns>
+                ''' <returns>True if <paramref name="destinationType"/> is <see cref="[String]"/> otherwise calls <see cref="System.ComponentModel.TypeConverter.CanConvertTo"/></returns>
                 Public Overrides Function CanConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal destinationType As System.Type) As Boolean
                     Return GetType(String).Equals(destinationType) OrElse MyBase.CanConvertTo(context, destinationType)
                 End Function
@@ -702,7 +704,7 @@ Namespace DrawingT.MetadataT
                 ''' <returns>True if <see cref="PropertyDescriptor.PropertyType"/> of <see cref="ITypeDescriptorContext"/> of <paramref name="context"/> is not null and is subclass of <see cref="NumStr"/> (not <see cref="NumStr"/> itself)</returns>
                 Public Overrides Function GetCreateInstanceSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
                     Try
-                        Return context IsNot Nothing AndAlso context.PropertyDescriptor IsNot Nothing OrElse context.PropertyDescriptor.PropertyType IsNot Nothing AndAlso context.PropertyDescriptor.PropertyType.IsSubclassOf(GetType(NumStr))
+                        Return context IsNot Nothing AndAlso context.PropertyDescriptor IsNot Nothing AndAlso context.PropertyDescriptor.PropertyType IsNot Nothing AndAlso context.PropertyDescriptor.PropertyType.IsSubclassOf(GetType(NumStr))
                     Catch ex As NullReferenceException
                         Return False
                     End Try
@@ -711,6 +713,9 @@ Namespace DrawingT.MetadataT
                 ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> of new property values.</param>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <returns>Instance of subclass of <see cref="NumStr"/> is type of property can be obtained from <paramref name="context"/> and it's subclass of <see cref="NumStr"/>; null otherwise</returns>
+                ''' <exception cref="ArgumentException">Number property converted to string is longer than <see cref="NumberDigits"/></exception>
+                ''' <exception cref="ArgumentOutOfRangeException">Number property is negative</exception>
+                ''' <exception cref="InvalidEnumArgumentException">Type of property is constrained to enumerations and has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and Number property is not member of the enumeration</exception>
                 Public Overrides Function CreateInstance(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal propertyValues As System.Collections.IDictionary) As Object
                     If GetCreateInstanceSupported(context) Then
                         If context.PropertyDescriptor.PropertyType.IsGenericType Then
@@ -721,6 +726,62 @@ Namespace DrawingT.MetadataT
                     Else
                         Return Nothing
                     End If
+                End Function
+                ''' <summary>Converts the given object to the type of this converter, using the specified context and culture information.</summary>
+                ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="value">The <see cref="System.Object"/> to convert.</param>
+                ''' <returns>Converted insvance of <see cref="NumStr"/> if <see cref="GetCreateInstanceSupported"/> returns true and <paramref name="value"/> consists of 2 ;-separated components or <paramref name="value"/> consists of 3 or 4 components; calls <see cref="System.ComponentModel.TypeConverter.ConvertFrom"/> otherwise.</returns>
+                ''' <exception cref="IndexOutOfRangeException"><paramref name="value"/> does not repsesent <see cref="[String]"/> consisting of 2 ;-separated parts</exception>
+                ''' <exception cref="System.NotSupportedException">The conversion cannot be performed.</exception>
+                ''' <exception cref="ArgumentException">Numeric (1st) part of <paramref name="value"/> converted to string is longer than <see cref="NumberDigits"/> -or-  Name of type (in 3 or 4 components-consisting string) is invalid, for example if it contains invalid characters, or if it is a zero-length string. -or- error when creating generic type from 4 components</exception>
+                ''' <exception cref="ArgumentOutOfRangeException">Numeric (1st) part of <paramref name="value"/> is negative</exception>
+                ''' <exception cref="InvalidEnumArgumentException">Type of property is constrained to enumerations and has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> True or it has no <see cref="RestrictAttribute"/> and first part of <paramref name="value"/> is not member of the enumeration</exception>
+                ''' <exception cref="InvalidCastException">First part of <see cref="ValueType"/> cannot be converted to <see cref="Integer"/></exception>
+                ''' <exception cref="InvalidOperationException">There are neither 3 nor 4 components in <paramref name="context"/> and <paramref name="context"/> or any of it's values leading to <see cref="PropertyDescriptor.PropertyType"/> or thet value itself is null -or- There are 4 components in <paramref name="value"/> but first component is not generic type definition</exception>
+                ''' <remarks>
+                ''' If <paramref name="value"/> consists of 2 ;-separated components <paramref name="context"/> is needed to be non-null to obtain type of propery that will be instantiated.
+                ''' If <paramref name="value"/> consists of 3 components then first components denotes type. If it consists of 4 components then second componend is passed as typeparameter to first component. Types are expected as full names.
+                ''' </remarks>
+                Public Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Object) As Object
+                    If TypeOf value Is String Then
+                        Dim Parts As String() = CStr(value).Split(";"c)
+                        Dim ItemValue As Object
+                        If Parts.Length = 3 Or Parts.Length = 4 Then
+                            Dim EType As Type
+                            Dim ItemType As Type = GetType(Integer)
+                            If Parts.Length = 4 Then 'Type;GenericType;Num;Str
+                                ItemType = Type.GetType(Parts(1))
+                                EType = Type.GetType(Parts(0))
+                                EType = EType.MakeGenericType(ItemType)
+                                Dim ActivatorType As Type = GetType(Enumerator(Of )).MakeGenericType(ItemType)
+                                Dim c As Object = Activator.CreateInstance(ActivatorType, CInt(Parts(Parts.Length - 2)))
+                                ItemValue = ActivatorType.GetField("Value").GetValue(c)
+                            Else 'Type;Num;Str
+                                EType = Type.GetType(Parts(0))
+                                ItemValue = CInt(Parts(Parts.Length - 2))
+                            End If
+                            Return Activator.CreateInstance(EType, ItemValue, Parts(Parts.Length - 1))
+                        ElseIf GetCreateInstanceSupported(context) Then
+                            Return Activator.CreateInstance(context.PropertyDescriptor.PropertyType, CInt(Parts(0)), Parts(1))
+                        Else
+                            Throw New InvalidOperationException("Type is specified neither via property nor in value")
+                        End If
+                    End If
+                    Return MyBase.ConvertFrom(context, culture, value)
+                End Function
+                Private Class Enumerator(Of T As {IConvertible, Structure})
+                    Public ReadOnly Value As T
+                    Public Sub New(ByVal Value As Integer)
+                        Me.Value = CObj(Value)
+                    End Sub
+                End Class
+                ''' <summary>Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.</summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="sourceType">A <see cref="System.Type"/> that represents the type you want to convert from.</param>
+                ''' <returns>True if <paramref name="sourceType"/> is <see cref="System.String"/>; otherwice calls <see cref="System.ComponentModel.TypeConverter.CanConvertFrom"/></returns>
+                Public Overrides Function CanConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal sourceType As System.Type) As Boolean
+                    Return GetType(String).Equals(sourceType) OrElse MyBase.CanConvertFrom(context, sourceType)
                 End Function
             End Class
             ''' <summary>CTor</summary>
@@ -738,6 +799,7 @@ Namespace DrawingT.MetadataT
         End Class
         ''' <summary>Represents combination of 2-digits numer and string (IPTC type <see cref="IPTCTypes.Num2_Str"/>)</summary>
         <TypeConverter(GetType(NumStr.Converter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         Public Class NumStr2 : Inherits NumStr
             ''' <summary>Number of digits in number</summary>
             ''' <returns>2</returns>
@@ -760,6 +822,7 @@ Namespace DrawingT.MetadataT
         End Class
         ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr2"/> with numbers from enum</summary>
         <CLSCompliant(False), TypeConverter(GetType(NumStr.Converter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         Public Class NumStr2(Of T As {IConvertible, Structure}) : Inherits NumStr2
             ''' <summary>Number in this <see cref="NumStr2(Of T)"/></summary>            
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 2 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
@@ -787,7 +850,7 @@ Namespace DrawingT.MetadataT
                     Return EnumNumber.ToInt32(InvariantCulture)
                 End Get
                 Set(ByVal value As Integer)
-                    EnumNumber = CObj(Number)
+                    EnumNumber = CObj(value)
                 End Set
             End Property
             ''' <summary>CTor</summary>
@@ -806,6 +869,7 @@ Namespace DrawingT.MetadataT
         End Class
         ''' <summary><see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr3"/> with numbers from enum</summary>
         <CLSCompliant(False), TypeConverter(GetType(NumStr.Converter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         Public Class NumStr3(Of T As {IConvertible, Structure}) : Inherits NumStr3
             ''' <summary>Number in this <see cref="NumStr3(Of T)"/></summary>            
             ''' <exception cref="ArgumentException">Number being set converted to string is longer than 3 <see cref="NumberDigits"/> -or- <see cref="T"/> is not <see cref="[Enum]"/></exception>
@@ -852,6 +916,7 @@ Namespace DrawingT.MetadataT
         End Class
         ''' <summary>Represents combination of 3-digits numer and string (IPTC type <see cref="IPTCTypes.Num3_Str"/>)</summary>
         <TypeConverter(GetType(NumStr.Converter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         Public Class NumStr3 : Inherits NumStr
             ''' <summary>Number of digits in number</summary>
             ''' <returns>3</returns>
@@ -884,7 +949,7 @@ Namespace DrawingT.MetadataT
         End Interface
         ''' <summary>Represents date (Year, Month and Day) which's parts can be ommited by setting value to 0 (IPTC type <see cref="IPTCTypes.CCYYMMDDOmmitable"/>)</summary>
         ''' <remarks>Date represented by this structure can be invalid (e.g. 31.2.2008)</remarks>
-        <Editor(GetType(ComponentModel.Design.DateTimeEditor), GetType(Drawing.Design.UITypeEditor))> _
+        <Editor(GetType(OmmitableDate.TypeEditor), GetType(UITypeEditor))> _
         <TypeConverter(GetType(OmmitableDate.Converter))> _
         Public Structure OmmitableDate
             ''' <summary>Contains value of the <see cref="Year"/> property</summary>
@@ -987,7 +1052,7 @@ Namespace DrawingT.MetadataT
             Public Shared Widening Operator CType(ByVal From As OmmitableDate) As String
                 Return From.ToString
             End Operator
-            ''' <summary><see cref="ComponentModel.TypeConverter"/> of <see cref="OmmitableDate"/> to and from <see cref="String"/> and <see cref="Date"/></summary>
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> of <see cref="OmmitableDate"/> to and from <see cref="String"/> and <see cref="Date"/></summary>
             Public Class Converter
                 Inherits TypeConverter(Of OmmitableDate, String)
                 Implements ITypeConverter(Of Date)
@@ -1026,6 +1091,24 @@ Namespace DrawingT.MetadataT
                 Public Function ConvertToDate(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As OmmitableDate) As Date Implements ITypeConverterTo(Of Date).ConvertTo
                     Return value
                 End Function
+            End Class
+            Public Class TypeEditor : Inherits System.ComponentModel.Design.DateTimeEditor
+                Public Overrides Function EditValue(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal provider As System.IServiceProvider, ByVal value As Object) As Object
+                    Dim DOValue As OmmitableDate = value
+                    Dim DateValue As Date
+                    If DOValue.Year = 0 Then
+                        DateValue = Now
+                    ElseIf DOValue.Month = 0 Then
+                        DateValue = New Date(DOValue.Year, 1, 1)
+                    ElseIf DOValue.Day = 0 Then
+                        DateValue = New Date(DOValue.Year, DOValue.Month, 1)
+                    Else
+                        DateValue = DOValue
+                    End If
+                    Dim NewDateValue As Date = MyBase.EditValue(context, provider, DateValue)
+                    Return CType(NewDateValue, OmmitableDate)
+                End Function
+
             End Class
         End Structure
 
@@ -1522,7 +1605,7 @@ Namespace DrawingT.MetadataT
             Public Overrides Function ToString() As String
                 Return String.Format(InvariantCulture, "{0}{1}", Components, TypeCode)
             End Function
-            ''' <summary><see cref="ComponentModel.TypeConverter"/> for <see cref="AudioType"/></summary>
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="AudioType"/></summary>
             Public Class Converter
                 Inherits TypeConverter(Of iptcAudioType, String)
                 ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
@@ -1638,7 +1721,7 @@ Namespace DrawingT.MetadataT
                 Return instance
             End Function
 
-            ''' <summary><see cref="ComponentModel.TypeConverter"/> for <see cref="StringEnum(Of TEnum)"/>'s</summary>
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="StringEnum(Of TEnum)"/>'s</summary>
             Public Class Converter
                 Inherits TypeConverter(Of StringEnum, String)
                 ''' <summary>Performs conversion from <see cref="String"/> to <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></summary>
@@ -2262,6 +2345,22 @@ Namespace DrawingT.MetadataT
             Return Arr
         End Function
 #End Region
+#End Region
+#Region "Extending group classes"
+        Partial Public Class ObjectDataPreviewGroup
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                Me.ObjectDataPreviewFileFormat = FileFormats.NoObjectData
+                Me.ObjectDataPreviewFileFormatVersion = FileFormatVersions.V0
+                Me.ObjectDataPreviewData = New Byte() {}
+            End Sub
+            ''' <summary>String representation (number of bytes)</summary>
+            Public Overrides Function ToString() As String
+                Dim Bytes As Integer
+                If ObjectDataPreviewData Is Nothing Then Bytes = 0 Else Bytes = ObjectDataPreviewData.Length
+                Return String.Format("{0}B", Bytes)
+            End Function
+        End Class
 #End Region
     End Class
 #End If

@@ -121,6 +121,7 @@
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />
+    <Compile Include="Drawing\Design\NewEditor.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IO\JPEG\Rational.vb" />

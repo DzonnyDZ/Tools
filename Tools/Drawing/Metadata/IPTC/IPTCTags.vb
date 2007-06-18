@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 17. června 2007
+' Created: 19. června 2007
 ' By:DZONNY\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -14,6 +14,7 @@ Imports System.ComponentModel
 Imports Tools.ComponentModelT
 Imports System.XML.Serialization
 Imports Tools.DataStructuresT.GenericT
+Imports Tools.DrawingT.DesignT
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly 'Stage: Nightly
 	Partial Public Class IPTC
@@ -2851,7 +2852,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> Public Property ObjectDataPreview As ObjectDataPreviewGroup
+		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> <Editor(GetType(NewEditor),GetType(System.Drawing.Design.UITypeEditor))> Public Property ObjectDataPreview As ObjectDataPreviewGroup
 			Get
 				Dim v As List(Of ObjectDataPreviewGroup)=ObjectDataPreviewGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2872,7 +2873,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.")> _
-		<Category("Internal")> <FieldDisplayName("Model Version")> <CLSCompliant(False)>Public Property ModelVersion As UShort
+		<Category("Internal")> <FieldDisplayName("Model Version")> <CLSCompliant(False)>Public Overridable Property ModelVersion As UShort
 			Get
 				Try
 					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.ModelVersion)
@@ -2894,7 +2895,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Destination")> Public Property Destination As String()
+		<Category("Old IPTC")> <FieldDisplayName("Destination")> Public Overridable Property Destination As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.Destination)
@@ -2918,7 +2919,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number representing the file format.")> _
-		<Category("Old IPTC")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Property FileFormat As FileFormats
+		<Category("Old IPTC")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Overridable Property FileFormat As FileFormats
 			Get
 				Try
 					Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)))
@@ -2940,7 +2941,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A binary number representing the particular version of the File Format")> _
-		<Category("Old IPTC")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Property FileFormatVersion As FileFormatVersions
+		<Category("Old IPTC")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Overridable Property FileFormatVersion As FileFormatVersions
 			Get
 				Try
 					Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)))
@@ -2962,7 +2963,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the provider and product.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Service Identifier")> Public Property ServiceIdentifier As String
+		<Category("Old IPTC")> <FieldDisplayName("Service Identifier")> Public Overridable Property ServiceIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ServiceIdentifier)
@@ -2985,7 +2986,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The characters form a number that will be unique for the date specified in Date Sentand for the Service Identifier specified in Service Identifier.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Envelope Number")> Public Property EnvelopeNumber As Decimal
+		<Category("Old IPTC")> <FieldDisplayName("Envelope Number")> Public Overridable Property EnvelopeNumber As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopeNumber)
@@ -3008,7 +3009,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Allows a provider to identify subsets of its overall service.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Product I.D.")> Public Property ProductID As String()
+		<Category("Old IPTC")> <FieldDisplayName("Product I.D.")> Public Overridable Property ProductID As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.ProductID)
@@ -3032,7 +3033,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Specifies the envelope handling priority and not the editorial urgency (see 2:10, Urgency).")> _
-		<Category("Status")> <FieldDisplayName("Envelope Priority")> Public Property EnvelopePriority As Decimal
+		<Category("Status")> <FieldDisplayName("Envelope Priority")> Public Overridable Property EnvelopePriority As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.EnvelopePriority)
@@ -3054,7 +3055,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates year, month and day the service sent the material.")> _
-		<Category("Date")> <FieldDisplayName("Date Sent")> Public Property DateSent As Date
+		<Category("Date")> <FieldDisplayName("Date Sent")> Public Overridable Property DateSent As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DateSent)
@@ -3076,7 +3077,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("This is the time the service sent the material.")> _
-		<Category("Date")> <FieldDisplayName("Time Sent")> Public Property TimeSent As Time
+		<Category("Date")> <FieldDisplayName("Time Sent")> Public Overridable Property TimeSent As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeSent)
@@ -3099,7 +3100,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.")> _
-		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> Public Property CodedCharacterSet As Byte()
+		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> Public Overridable Property CodedCharacterSet As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.CodedCharacterSet)
@@ -3122,7 +3123,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("UNO Unique Name of Object, providing eternal, globally unique identification for objects as specified in the IIM, independent of provider and for any media form.")> _
-		<Category("Old IPTC")> <FieldDisplayName("UNO")> Public Property UNO As iptcUNO
+		<Category("Old IPTC")> <FieldDisplayName("UNO")> Public Overridable Property UNO As iptcUNO
 			Get
 				Try
 					Dim AllValues As List(Of iptcUNO) = UNO_Value(DataSetIdentification.UNO)
@@ -3145,7 +3146,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.")> _
-		<Category("Internal")> <FieldDisplayName("Record Version")> <CLSCompliant(False)>Public Property RecordVersion As UShort
+		<Category("Internal")> <FieldDisplayName("Record Version")> <CLSCompliant(False)>Public Overridable Property RecordVersion As UShort
 			Get
 				Try
 					Dim AllValues As List(Of UShort) = UShort_Binary_Value(DataSetIdentification.RecordVersion)
@@ -3168,7 +3169,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Type is used to distinguish between different types of objects within the IIM.")> _
-		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)>Public Property ObjectTypeReference As NumStr2(Of ObjectTypes)
+		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.DrawingT.MetadataT.IPTC+NumStr2`1;Tools.DrawingT.MetadataT.IPTC+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
 			Get
 				Try
 					Dim AllValues As List(Of NumStr2(Of ObjectTypes)) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(Num2_Str_Value(DataSetIdentification.ObjectTypeReference))
@@ -3191,7 +3192,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Attribute defines the nature of the object independent of the Subject.")> _
-		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)>Public Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
+		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.DrawingT.MetadataT.IPTC+NumStr3`1;Tools.DrawingT.MetadataT.IPTC+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
 			Get
 				Try
 					Dim AllValues As List(Of NumStr3(Of ObjectAttributes)) = ConvertNumStrList(Of NumStr3, NumStr3(Of ObjectAttributes))(Num3_Str_Value(DataSetIdentification.ObjectAttributeReference))
@@ -3214,7 +3215,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Status of the objectdata, according to the practice of the provider.")> _
-		<Category("Status")> <FieldDisplayName("Edit Status")> Public Property EditStatus As String
+		<Category("Status")> <FieldDisplayName("Edit Status")> Public Overridable Property EditStatus As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.EditStatus)
@@ -3236,7 +3237,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.")> _
-		<Category("Status")> <FieldDisplayName("Editorial Update")> Public Property EditorialUpdate As EditorialUpdateValues
+		<Category("Status")> <FieldDisplayName("Editorial Update")> Public Overridable Property EditorialUpdate As EditorialUpdateValues
 			Get
 				Try
 					Dim AllValues As List(Of EditorialUpdateValues) = ConvertEnumList(Of EditorialUpdateValues)(Enum_NumChar_Value(DataSetIdentification.EditorialUpdate, GetType(EditorialUpdateValues)))
@@ -3259,7 +3260,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, Envelope Priority).")> _
-		<Category("Status")> <FieldDisplayName("Urgency")> Public Property Urgency As Decimal
+		<Category("Status")> <FieldDisplayName("Urgency")> Public Overridable Property Urgency As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.Urgency)
@@ -3282,7 +3283,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Subject Reference is a structured definition of the subject matter.")> _
-		<Category("Old IPTC")> <FieldDisplayName("Subject Reference")> Public Property SubjectReference As iptcSubjectReference()
+		<Category("Old IPTC")> <FieldDisplayName("Subject Reference")> Public Overridable Property SubjectReference As iptcSubjectReference()
 			Get
 				Try
 					Dim AllValues As List(Of iptcSubjectReference) = SubjectReference_Value(DataSetIdentification.SubjectReference)
@@ -3306,7 +3307,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the subject of the objectdata in the opinion of the provider.")> _
-		<Category("Category")> <FieldDisplayName("Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property Category As String
+		<Category("Category")> <FieldDisplayName("Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Overridable Property Category As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.Category)
@@ -3329,7 +3330,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Supplemental categories further refine the subject of an objectdata.")> _
-		<Category("Category")> <FieldDisplayName("Supplemental Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Property SupplementalCategory As String()
+		<Category("Category")> <FieldDisplayName("Supplemental Category")> <Obsolete("Use of this DataSet is Deprecated. It is likely that this DataSet will not be included in further versions of the IIM.")> Public Overridable Property SupplementalCategory As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SupplementalCategory)
@@ -3353,7 +3354,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies objectdata that recurs often and predictably.")> _
-		<Category("Category")> <FieldDisplayName("Fixture Identifier")> Public Property FixtureIdentifier As String
+		<Category("Category")> <FieldDisplayName("Fixture Identifier")> Public Overridable Property FixtureIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = GraphicCharacters_Value(DataSetIdentification.FixtureIdentifier)
@@ -3376,7 +3377,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Used to indicate specific information retrieval words.")> _
-		<Category("Category")> <FieldDisplayName("Keywords")> Public Property Keywords As String()
+		<Category("Category")> <FieldDisplayName("Keywords")> Public Overridable Property Keywords As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Keywords)
@@ -3399,7 +3400,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The earliest date the provider intends the object to be used.")> _
-		<Category("Date")> <FieldDisplayName("Release Date")> Public Property ReleaseDate As Date
+		<Category("Date")> <FieldDisplayName("Release Date")> Public Overridable Property ReleaseDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ReleaseDate)
@@ -3421,7 +3422,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The earliest time the provider intends the object to be used.")> _
-		<Category("Date")> <FieldDisplayName("Release Time")> Public Property ReleaseTime As Time
+		<Category("Date")> <FieldDisplayName("Release Time")> Public Overridable Property ReleaseTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ReleaseTime)
@@ -3443,7 +3444,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The latest date the provider or owner intends the objectdata to be used.")> _
-		<Category("Date")> <FieldDisplayName("Expiration Date")> Public Property ExpirationDate As Date
+		<Category("Date")> <FieldDisplayName("Expiration Date")> Public Overridable Property ExpirationDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.ExpirationDate)
@@ -3465,7 +3466,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The latest time the provider or owner intends the objectdata to be used.")> _
-		<Category("Date")> <FieldDisplayName("Expiration Time")> Public Property ExpirationTime As Time
+		<Category("Date")> <FieldDisplayName("Expiration Time")> Public Overridable Property ExpirationTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.ExpirationTime)
@@ -3487,7 +3488,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Other editorial instructions concerning the use of the objectdata, such as embargoes and warnings.")> _
-		<Category("Other")> <FieldDisplayName("Special Instructions")> Public Property SpecialInstructions As String
+		<Category("Other")> <FieldDisplayName("Special Instructions")> Public Overridable Property SpecialInstructions As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SpecialInstructions)
@@ -3510,7 +3511,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the type of action that this object provides to a previous object.")> _
-		<Category("Other")> <FieldDisplayName("Action Advised")> Public Property ActionAdvised As AdvisedActions
+		<Category("Other")> <FieldDisplayName("Action Advised")> Public Overridable Property ActionAdvised As AdvisedActions
 			Get
 				Try
 					Dim AllValues As List(Of AdvisedActions) = ConvertEnumList(Of AdvisedActions)(Enum_NumChar_Value(DataSetIdentification.ActionAdvised, GetType(AdvisedActions)))
@@ -3533,7 +3534,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The date the intellectual content of the objectdata was created rather than the date of the creation of the physical representation.")> _
-		<Category("Date")> <FieldDisplayName("Date Created")> Public Property DateCreated As OmmitableDate
+		<Category("Date")> <FieldDisplayName("Date Created")> Public Overridable Property DateCreated As OmmitableDate
 			Get
 				Try
 					Dim AllValues As List(Of OmmitableDate) = CCYYMMDDOmmitable_Value(DataSetIdentification.DateCreated)
@@ -3556,7 +3557,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The time the intellectual content of the objectdata current source material was created rather than the creation of the physical representation.")> _
-		<Category("Date")> <FieldDisplayName("Time Created")> Public Property TimeCreated As Time
+		<Category("Date")> <FieldDisplayName("Time Created")> Public Overridable Property TimeCreated As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.TimeCreated)
@@ -3579,7 +3580,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The date the digital representation of the objectdata was created.")> _
-		<Category("Date")> <FieldDisplayName("Digital Creation Date")> Public Property DigitalCreationDate As Date
+		<Category("Date")> <FieldDisplayName("Digital Creation Date")> Public Overridable Property DigitalCreationDate As Date
 			Get
 				Try
 					Dim AllValues As List(Of Date) = CCYYMMDD_Value(DataSetIdentification.DigitalCreationDate)
@@ -3601,7 +3602,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The time the digital representation of the objectdata was created.")> _
-		<Category("Date")> <FieldDisplayName("Digital Creation Time")> Public Property DigitalCreationTime As Time
+		<Category("Date")> <FieldDisplayName("Digital Creation Time")> Public Overridable Property DigitalCreationTime As Time
 			Get
 				Try
 					Dim AllValues As List(Of Time) = HHMMSS_HHMM_Value(DataSetIdentification.DigitalCreationTime)
@@ -3624,7 +3625,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the type of program used to originate the objectdata.")> _
-		<Category("Other")> <FieldDisplayName("Originating Program")> Public Property OriginatingProgram As String
+		<Category("Other")> <FieldDisplayName("Originating Program")> Public Overridable Property OriginatingProgram As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginatingProgram)
@@ -3647,7 +3648,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the type of program used to originate the objectdata.")> _
-		<Category("Other")> <FieldDisplayName("Program Version")> Public Property ProgramVersion As String
+		<Category("Other")> <FieldDisplayName("Program Version")> Public Overridable Property ProgramVersion As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProgramVersion)
@@ -3669,7 +3670,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Virtually only used in North America.")> _
-		<Category("Status")> <FieldDisplayName("Object Cycle")> <CLSCompliant(False)>Public Property ObjectCycle As StringEnum(Of ObjectCycleValues)
+		<Category("Status")> <FieldDisplayName("Object Cycle")> <CLSCompliant(False)>Public Overridable Property ObjectCycle As StringEnum(Of ObjectCycleValues)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ObjectCycleValues)) = ConvertEnumList(Of ObjectCycleValues)(StringEnum_Value(DataSetIdentification.ObjectCycle, GetType(ObjectCycleValues)))
@@ -3691,7 +3692,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies city of objectdata origin according to guidelines established by the provider.")> _
-		<Category("Location")> <FieldDisplayName("City")> Public Property City As String
+		<Category("Location")> <FieldDisplayName("City")> Public Overridable Property City As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.City)
@@ -3713,7 +3714,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the location within a city from which the objectdata originates, according to guidelines established by the provider.")> _
-		<Category("Location")> <FieldDisplayName("Sublocation")> Public Property SubLocation As String
+		<Category("Location")> <FieldDisplayName("Sublocation")> Public Overridable Property SubLocation As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.SubLocation)
@@ -3735,7 +3736,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies Province/State of origin according to guidelines established by the provider.")> _
-		<Category("Location")> <FieldDisplayName("Province/State")> Public Property ProvinceState As String
+		<Category("Location")> <FieldDisplayName("Province/State")> Public Overridable Property ProvinceState As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ProvinceState)
@@ -3758,7 +3759,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the code of the country/primary location where the intellectual property of the objectdata was created, e.g. a photo was taken, an event occurred.")> _
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
+		<Category("Location")> <FieldDisplayName("Country/Primary Location Code")> <CLSCompliant(False)>Public Overridable Property CountryPrimaryLocationCode As StringEnum(Of ISO3166)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of ISO3166)) = ConvertEnumList(Of ISO3166)(StringEnum_Value(DataSetIdentification.CountryPrimaryLocationCode, GetType(ISO3166)))
@@ -3780,7 +3781,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Provides full, publishable, name of the country/primary location where the intellectual property of the objectdata was created, according to guidelines of the provider.")> _
-		<Category("Location")> <FieldDisplayName("Country/Primary Location Name")> Public Property CountryPrimaryLocationName As String
+		<Category("Location")> <FieldDisplayName("Country/Primary Location Name")> Public Overridable Property CountryPrimaryLocationName As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CountryPrimaryLocationName)
@@ -3803,7 +3804,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A code representing the location of original transmission according to practices of the provider.")> _
-		<Category("Location")> <FieldDisplayName("Original Transmission Refrence")> Public Property OriginalTransmissionReference As String
+		<Category("Location")> <FieldDisplayName("Original Transmission Refrence")> Public Overridable Property OriginalTransmissionReference As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.OriginalTransmissionReference)
@@ -3825,7 +3826,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A publishable entry providing a synopsis of the contents of the objectdata.")> _
-		<Category("Title")> <FieldDisplayName("Headline")> Public Property Headline As String
+		<Category("Title")> <FieldDisplayName("Headline")> Public Overridable Property Headline As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Headline)
@@ -3847,7 +3848,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the provider of the objectdata, not necessarily the owner/creator.")> _
-		<Category("Author")> <FieldDisplayName("Credit")> Public Property Credit As String
+		<Category("Author")> <FieldDisplayName("Credit")> Public Overridable Property Credit As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Credit)
@@ -3870,7 +3871,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the original owner of the intellectual content of the objectdata.")> _
-		<Category("Author")> <FieldDisplayName("Source")> Public Property Source As String
+		<Category("Author")> <FieldDisplayName("Source")> Public Overridable Property Source As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Source)
@@ -3892,7 +3893,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Contains any necessary copyright notice.")> _
-		<Category("Author")> <FieldDisplayName("Copyright Notice")> Public Property CopyrightNotice As String
+		<Category("Author")> <FieldDisplayName("Copyright Notice")> Public Overridable Property CopyrightNotice As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.CopyrightNotice)
@@ -3914,7 +3915,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the person or organisation which can provide further background information on the objectdata.")> _
-		<Category("Author")> <FieldDisplayName("Contact")> Public Property Contact As String()
+		<Category("Author")> <FieldDisplayName("Contact")> Public Overridable Property Contact As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.Contact)
@@ -3937,7 +3938,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A textual description of the objectdata, particularly used where the object is not text.")> _
-		<Category("Title")> <FieldDisplayName("Caption/Abstract")> Public Property CaptionAbstract As String
+		<Category("Title")> <FieldDisplayName("Caption/Abstract")> Public Overridable Property CaptionAbstract As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Text_Value(DataSetIdentification.CaptionAbstract)
@@ -3959,7 +3960,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.")> _
-		<Category("Author")> <FieldDisplayName("Writer/Editor")> Public Property WriterEditor As String()
+		<Category("Author")> <FieldDisplayName("Writer/Editor")> Public Overridable Property WriterEditor As String()
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.WriterEditor)
@@ -3983,7 +3984,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.")> _
-		<Category("Title")> <FieldDisplayName("Rasterized Caption")> Public Property RasterizedeCaption As Drawing.Bitmap
+		<Category("Title")> <FieldDisplayName("Rasterized Caption")> Public Overridable Property RasterizedeCaption As Drawing.Bitmap
 			Get
 				Try
 					Dim AllValues As List(Of Drawing.Bitmap) = BW460_Value(DataSetIdentification.RasterizedeCaption)
@@ -4005,7 +4006,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Image Type")> _
-		<Category("Image")> <FieldDisplayName("Image Type")> Public Property ImageType As iptcImageType
+		<Category("Image")> <FieldDisplayName("Image Type")> Public Overridable Property ImageType As iptcImageType
 			Get
 				Try
 					Dim AllValues As List(Of iptcImageType) = ImageType_Value(DataSetIdentification.ImageType)
@@ -4027,7 +4028,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Indicates the layout of the image area.")> _
-		<Category("Image")> <FieldDisplayName("Image Orientation")> <CLSCompliant(False)>Public Property ImageOrientation As StringEnum(Of Orientations)
+		<Category("Image")> <FieldDisplayName("Image Orientation")> <CLSCompliant(False)>Public Overridable Property ImageOrientation As StringEnum(Of Orientations)
 			Get
 				Try
 					Dim AllValues As List(Of StringEnum(Of Orientations)) = ConvertEnumList(Of Orientations)(StringEnum_Value(DataSetIdentification.ImageOrientation, GetType(Orientations)))
@@ -4050,7 +4051,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Describes the major national language of the object, according to the 2-letter codes of ISO 639:1988.")> _
-		<Category("Other")> <FieldDisplayName("Language Identifier")> Public Property LanguageIdentifier As String
+		<Category("Other")> <FieldDisplayName("Language Identifier")> Public Overridable Property LanguageIdentifier As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Alpha_Value(DataSetIdentification.LanguageIdentifier)
@@ -4073,7 +4074,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Type of audio in objectdata")> _
-		<Category("Audio")> <FieldDisplayName("Audio Type")> Public Property AudioType As iptcAudioType
+		<Category("Audio")> <FieldDisplayName("Audio Type")> Public Overridable Property AudioType As iptcAudioType
 			Get
 				Try
 					Dim AllValues As List(Of iptcAudioType) = Audiotype_Value(DataSetIdentification.AudioType)
@@ -4095,7 +4096,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Sampling rate, representing the sampling rate in hertz (Hz).")> _
-		<Category("Audio")> <FieldDisplayName("Audio Sampling Rate")> Public Property AudioSamplingRate As Decimal
+		<Category("Audio")> <FieldDisplayName("Audio Sampling Rate")> Public Overridable Property AudioSamplingRate As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingRate)
@@ -4117,7 +4118,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The number of bits in each audio sample.")> _
-		<Category("Audio")> <FieldDisplayName("Audio Sampling Resolution")> Public Property AudioSamplingResolution As Decimal
+		<Category("Audio")> <FieldDisplayName("Audio Sampling Resolution")> Public Overridable Property AudioSamplingResolution As Decimal
 			Get
 				Try
 					Dim AllValues As List(Of Decimal) = NumericChar_Value(DataSetIdentification.AudioSamplingResolution)
@@ -4139,7 +4140,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The running time of an audio objectdata when played back at the speed at which it was recorded.")> _
-		<Category("Audio")> <FieldDisplayName("Audio Duration")> Public Property AudioDuration As TimeSpan
+		<Category("Audio")> <FieldDisplayName("Audio Duration")> Public Overridable Property AudioDuration As TimeSpan
 			Get
 				Try
 					Dim AllValues As List(Of TimeSpan) = HHMMSS_Value(DataSetIdentification.AudioDuration)
@@ -4162,7 +4163,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.")> _
-		<Category("Audio")> <FieldDisplayName("Audio Outcue")> Public Property AudioOutcue As String
+		<Category("Audio")> <FieldDisplayName("Audio Outcue")> Public Overridable Property AudioOutcue As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.AudioOutcue)
@@ -4184,7 +4185,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The octet is set to the binary value of '0' if the size of the objectdata is not known and is set to '1' if the size of the objectdata is known at the beginning of transfer.")> _
-		<Category("Embeded object")> <FieldDisplayName("Size Mode")> Public Property SizeMode As Boolean
+		<Category("Embeded object")> <FieldDisplayName("Size Mode")> <[ReadOnly](True)> Public Overridable Property SizeMode As Boolean
 			Get
 				Try
 					Dim AllValues As List(Of Boolean) = Boolean_Binary_Value(DataSetIdentification.SizeMode)
@@ -4207,7 +4208,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The maximum size for the following Subfile DataSet(s).")> _
-		<Category("Embeded object")> <FieldDisplayName("Max Subfile Size")> <CLSCompliant(False)>Public Property MaxSubfileSize As ULong
+		<Category("Embeded object")> <FieldDisplayName("Max Subfile Size")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property MaxSubfileSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaxSubfileSize)
@@ -4230,7 +4231,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A binary number representing the overall size of the objectdata, expressed in octets, not including tags, if that size is known when transfer commences.")> _
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Size Announced")> <CLSCompliant(False)>Public Property ObjectDataSizeAnnounced As ULong
+		<Category("Embeded object")> <FieldDisplayName("ObjectData Size Announced")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property ObjectDataSizeAnnounced As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ObjectDataSizeAnnounced)
@@ -4252,7 +4253,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Used when objectdata size is not known, indicating the largest size, expressed in octets, that the objectdata can possibly have, not including tags.")> _
-		<Category("Embeded object")> <FieldDisplayName("Maximum ObjectData Size")> <CLSCompliant(False)>Public Property MaximumObjectDataSize As ULong
+		<Category("Embeded object")> <FieldDisplayName("Maximum ObjectData Size")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property MaximumObjectDataSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.MaximumObjectDataSize)
@@ -4275,7 +4276,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Subfile DataSet containing the objectdata itself.")> _
-		<Category("Embeded object")> <FieldDisplayName("Subfile")> Public Property Subfile As Byte()
+		<Category("Embeded object")> <FieldDisplayName("Subfile")> Public Overridable Property Subfile As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.Subfile)
@@ -4298,7 +4299,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Total size of the objectdata, in octets, without tags.")> _
-		<Category("Embeded object")> <FieldDisplayName("Confirmed ObjectData Size")> <CLSCompliant(False)>Public Property ConfirmedObjectDataSize As ULong
+		<Category("Embeded object")> <FieldDisplayName("Confirmed ObjectData Size")> <CLSCompliant(False)><[ReadOnly](True)> Public Overridable Property ConfirmedObjectDataSize As ULong
 			Get
 				Try
 					Dim AllValues As List(Of ULong) = UnsignedBinaryNumber_Value(DataSetIdentification.ConfirmedObjectDataSize)

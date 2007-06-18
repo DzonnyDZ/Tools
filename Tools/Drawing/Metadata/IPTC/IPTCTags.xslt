@@ -87,6 +87,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>Imports Tools.ComponentModelT&#xD;&#xA;</xsl:text>
         <xsl:text>Imports System.XML.Serialization&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.DataStructuresT.GenericT&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.DrawingT.DesignT&#xD;&#xA;</xsl:text>
     </xsl:template>
     
     <!--Main content-creating templates:-->
@@ -715,7 +716,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:sort data-type="number" order="ascending" select="../@number"/>
             <xsl:sort data-type="number" order="ascending" select="@number"/>
             <xsl:call-template name="Property">
-                <xsl:with-param name="access" select="'Public'"/>
+                <xsl:with-param name="access" select="'Public Overridable'"/>
             </xsl:call-template>
         </xsl:for-each>
         <!--Of groups-->

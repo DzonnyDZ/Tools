@@ -78,7 +78,7 @@
     <!--Sepecification of attribute-->
     <xs:simpleType name="Attributes">
         <xs:restriction base="xs:string">
-            <xs:pattern value="(&lt;[\p{L}_]+(\.[\p{L}_]+)* *\([^\n\r\t]*\)>)+"/>
+            <xs:pattern value="(&lt;(([\p{L}_]+)|(\[[\p{L}_]+\]))(\.[\p{L}_]+)* *\([^\n\r\t]*\)>)+"/>
         </xs:restriction>
     </xs:simpleType>
     <!--Record number 1÷9-->

@@ -397,7 +397,9 @@ Namespace DrawingT.MetadataT
                 Dim ret As New List(Of [Enum])(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    ret.Add(Type.Assembly.CreateInstance(Type.FullName, False, Reflection.BindingFlags.CreateInstance Or Reflection.BindingFlags.Public, Nothing, New Object() {UIntFromBytes(item.Length, item)}, Nothing, Nothing))
+                    'ret.Add(Type.Assembly.CreateInstance(Type.FullName, False, Reflection.BindingFlags.CreateInstance Or Reflection.BindingFlags.Public, Nothing, New Object() {UIntFromBytes(item.Length, item)}, Nothing, Nothing))
+                    'ret.Add(CObj(UIntFromBytes(item.Length, item))) 'Activator.CreateInstance(Type, UIntFromBytes(item.Length, item)))
+                    ret.Add([Enum].ToObject(Type, UIntFromBytes(item.Length, item)))
                 Next item
                 If ret.Count = 0 Then Return Nothing
                 Return ret
@@ -410,7 +412,7 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As [Enum] In value
-                        If Restrict AndAlso Not Array.IndexOf([Enum].GetValues(Type), value) >= 0 Then Throw New InvalidEnumArgumentException("value", CObj(item), Type)
+                        If Restrict AndAlso Not Array.IndexOf([Enum].GetValues(Type), item) >= 0 Then Throw New InvalidEnumArgumentException("value", CObj(item), Type)
                         If [Enum].GetUnderlyingType(Type).Equals(GetType(Byte)) Then
                             values.Add(ToBytes(CByte(1), CULng(CObj(item))))
                         ElseIf [Enum].GetUnderlyingType(Type).Equals(GetType(UShort)) Then
@@ -582,6 +584,7 @@ Namespace DrawingT.MetadataT
                         values.Add(System.Text.Encoding.ASCII.GetBytes(item.ToString))
                     Next item
                 End If
+                Tag(Key) = values
             End Set
         End Property
         ''' <summary>Gets or sets value of <see cref="IPTCTypes.Byte_Binary"/> type</summary>
