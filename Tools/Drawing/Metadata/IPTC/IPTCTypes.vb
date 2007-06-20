@@ -328,6 +328,7 @@ Namespace DrawingT.MetadataT
             ''' <value>A minimum of one and a maximum of 32 octets. A string of graphic characters, except colon ‘:’ solidus ‘/’, asterisk ‘*’ and question mark ‘?’, registered with, and approved by, the IPTC.</value>
             ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its <see cref="String.Length"/> if more than 32 -or- length of value being set exceeds <see cref="IPRLengthLimit"/> -or- value being set contains character with code higher than 127</exception>
             <Description("Information Provider Reference A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO")> _
+            <Browsable(False)> _
             Public Overridable Property IPR() As String 'Localize: Description
                 Get
                     Return _IPR
@@ -348,6 +349,7 @@ Namespace DrawingT.MetadataT
             ''' <returns>Value that is member of <see cref="InformationProviders"/> if <see cref="IPR"/> can be represented as member of <see cref="InformationProviders"/>, -1 otherwise</returns>
             ''' <exception cref="InvalidEnumArgumentException">Setting value that is not member of <see cref="InformationProviders"/></exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            <Browsable(False)> _
             Public Overridable Property ListedIPR() As InformationProviders
                 Get
                     For Each f As Reflection.FieldInfo In GetType(InformationProviders).GetFields
@@ -363,6 +365,22 @@ Namespace DrawingT.MetadataT
                     IPR = DirectCast(GetConstant(value).GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)(0), Xml.Serialization.XmlEnumAttribute).Name
                 End Set
             End Property
+            ''' <summary>Value of either <see cref="IPR"/> or <see cref="ListedIPR"/> depending on if <see cref="IPR"/> is one of <see cref="InformationProviders"/> members</summary>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            <DisplayName("IPR"), Description("Information Provider Reference")> _
+            <CLSCompliant(False)> _
+            Public Property IPRValue() As StringEnum(Of InformationProviders) 'Localize: Description
+                Get
+                    If ListedIPR = -1 Then
+                        Return New StringEnum(Of InformationProviders)(IPR)
+                    Else
+                        Return New StringEnum(Of InformationProviders)(ListedIPR)
+                    End If
+                End Get
+                Set(ByVal value As StringEnum(Of InformationProviders))
+                    If value.ContainsEnum Then ListedIPR = value.EnumValue Else IPR = value.StringValue
+                End Set
+            End Property
             ''' <summary>When overriden in derived class gets actual lenght limit for <see cref="IPR"/></summary>
             Protected MustOverride ReadOnly Property IPRLengthLimit() As Byte
         End Class
@@ -372,6 +390,7 @@ Namespace DrawingT.MetadataT
         ''' <para>Any technical variants or changes in the presentation of an object, e.g. a picture being presented by a different file format, does not require the allocation of a new ODE but can be indicated by only generating a new OVI.</para>
         ''' <para>Links may be set up to the complete UNO but the structure provides for linking to selected elements, e.g. to all objects of a specified provider.</para>
         ''' </remarks>
+        <DebuggerDisplay("{ToString}")> _
         <TypeConverter(GetType(iptcUNO.Converter))> _
         Public Class iptcUNO : Inherits WithIPR
             ''' <summary>Contains value of the <see cref="UCD"/> property</summary>
@@ -417,10 +436,11 @@ Namespace DrawingT.MetadataT
             ''' </exception>
             ''' <exception cref="OperationCanceledException">
             ''' <paramref name="ODE"/> contains and invalid item (containing invalid characters (?,:,?,* or code over 127), too long or an empty string) or accumulated lenght of <see cref="IPR"/> and <see cref="ODE"/> (including <see cref="IPR"/>-<see cref="ODE"/> separator and separators of items of <see cref="ODE"/>) is greater than 61 -or- <paramref name="ODE"/> contains no item</exception>
-            Public Sub New(ByVal UCD As Date, ByVal IPR As String, ByVal ODE As IEnumerable(Of String), ByVal OVI As String)
+            <CLSCompliant(False)> _
+            Public Sub New(ByVal UCD As Date, ByVal IPR As StringEnum(Of InformationProviders), ByVal ODE As IEnumerable(Of String), ByVal OVI As String)
                 Me.New()
                 Me.UCD = UCD
-                Me.IPR = IPR
+                Me.IPRValue = IPR
                 If ODE IsNot Nothing Then
                     For Each item As String In ODE
                         Me.ODE.Add(item)
@@ -440,6 +460,7 @@ Namespace DrawingT.MetadataT
                 Me.New()
                 If Bytes Is Nothing OrElse Bytes.Length = 0 Then Throw New ArgumentNullException("Bytes")
                 Dim Text As String = System.Text.Encoding.ASCII.GetString(Bytes)
+                Init(Text)
             End Sub
             ''' <summary>Pseudo-CTor from string</summary>
             ''' <param name="Text"><see cref="String"/> to initialize instance with</param>
@@ -547,11 +568,42 @@ Namespace DrawingT.MetadataT
             ''' -and- <see cref="ListWithEvents(Of String).Remove"/> and <see cref="ListWithEvents(Of String).RemoveAt"/> throws <see cref="OperationCanceledException"/> when trying to remove last item from <see cref="ODE"/>
             ''' -and- <see cref="ListWithEvents(Of String).Clear"/> throws <see cref="OperationCanceledException"/> everywhen
             ''' </exception>
-            <Description("Object Descriptor Element In conjunction with the UCD and the IPR, a string of characters ensuring the uniqueness of the UNO.")> _
-            Public ReadOnly Property ODE() As IList(Of String) 'Localize: Description
+            <Browsable(False)> _
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+            Public ReadOnly Property ODE() As IList(Of String)
                 Get
                     Return _ODE
                 End Get
+            End Property
+            ''' <summary>Provides design-time support for editing the <see cref="ODE"/> property</summary>
+            ''' <exception cref="OperationCanceledException">
+            ''' Trying to array that contains an invalid item(s) (containing invalid characters (?,:,?,* or with code over 127), too long or an empty string) or accumulated lenght of <see cref="IPR"/> and <see cref="ODE"/> (including <see cref="IPR"/>-<see cref="ODE"/> separator and separators of items of <see cref="ODE"/>) is greater than 61 -or-
+            ''' Trying to set an empty array
+            ''' </exception>
+            ''' <exception cref="ArgumentNullException">Value being set is null</exception>
+            <DisplayName("ODE"), DesignOnly(True), EditorBrowsable(EditorBrowsableState.Never)> _
+            <Description("Object Descriptor Element In conjunction with the UCD and the IPR, a string of characters ensuring the uniqueness of the UNO.")> _
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            Public Property ODEDesign() As String() 'Localize: Description
+                Get
+                    Return New List(Of String)(ODE).ToArray
+                End Get
+                Set(ByVal value As String())
+                    If value Is Nothing Then Throw New ArgumentNullException("value")
+                    Dim i As Integer
+                    For i = 0 To Math.Min(ODE.Count - 1, value.Length - 1)
+                        ODE(i) = value(i)
+                    Next i
+                    If i < ODE.Count Then
+                        While ODE.Count > i
+                            ODE.RemoveAt(i)
+                        End While
+                    ElseIf i < value.Length Then
+                        For i = i To value.Length - 1
+                            ODE.Add(value(i))
+                        Next i
+                    End If
+                End Set
             End Property
             ''' <summary>Contains value of the <see cref="OVI"/> property</summary>            
             <EditorBrowsable(EditorBrowsableState.Never)> Private _OVI As String = "0"c
@@ -632,7 +684,7 @@ Namespace DrawingT.MetadataT
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <returns>New instance of <see cref="iptcUNO"/></returns>
                 Public Overrides Function CreateInstance(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal propertyValues As System.Collections.IDictionary) As Object
-                    Return New iptcUNO(propertyValues!UCD, propertyValues!IPR, propertyValues!ODE, propertyValues!OVI)
+                    Return New iptcUNO(propertyValues!UCD, propertyValues!IPRValue, propertyValues!ODEDesign, propertyValues!OVI)
                 End Function
                 ''' <summary>Returns whether this object supports a standard set of values that can be picked from a list, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
@@ -1710,12 +1762,18 @@ Namespace DrawingT.MetadataT
         End Structure
 
         ''' <summary>Common base for all <see cref="StringEnum(Of TEnum)"/>s</summary>
+        <DebuggerDisplay("{StringValue}")> _
         Public MustInherit Class StringEnum
             Implements IT1orT2(Of Decimal, String)
             ''' <summary>CTor</summary>
             ''' <remarks>Nobody else can inherit this class</remarks>
             Friend Sub New()
             End Sub
+            ''' <summary>String representation</summary>
+            ''' <returns><see cref="StringValue"/></returns>
+            Public Overrides Function ToString() As String
+                Return StringValue
+            End Function
             ''' <summary>Creates a new object that is a copy of the current instance.</summary>
             ''' <returns>A new object that is a copy of this instance</returns>
             ''' <remarks>Use type-safe <see cref="Clone"/> instead</remarks>

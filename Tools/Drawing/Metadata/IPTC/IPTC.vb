@@ -39,7 +39,10 @@ Namespace DrawingT.MetadataT
         End Function
         ''' <summary>Called when value of any tag changes</summary>
         ''' <param name="Tag">Recod and dataset number</param>
-        ''' <remarks>Called by <see cref="Tag"/>'s setter</remarks>
+        ''' <remarks>
+        ''' <para>Called by <see cref="Tag"/>'s setter.</para>
+        ''' <para>Note for inheritors: Call base class method in order to automatically compute size of embdeded file and invalidate cache for <see cref="BW460_Value"/></para>
+        ''' </remarks>
         Protected Overridable Sub OnValueChanged(ByVal Tag As DataSetIdentification)
             Select Case Tag
                 Case DataSetIdentification.Subfile 'Subfile - change corresponding tags
@@ -60,6 +63,7 @@ Namespace DrawingT.MetadataT
                         SizeMode = True
                     End If
             End Select
+            If Cache.ContainsKey(Tag) Then Cache.Remove(Tag)
         End Sub
         ''' <summary>Gets or sets values associated with particular tag</summary>
         ''' <param name="Key">Tag identification</param>

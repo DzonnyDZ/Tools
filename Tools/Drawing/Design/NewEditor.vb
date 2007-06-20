@@ -2,7 +2,10 @@ Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, Syst
 #If Config <= Nightly Then
 Namespace DrawingT.DesignT
     ''' <summary><see cref="UITypeEditor"/> capable of creating new instance either from <see cref="DefaultValueAttribute"/> (preffered if available) or by parameterless CTor</summary>
-    ''' <remarks>The <see cref="DefaultValueAttribute"/> used can be applyed either on property (preffered) or on type of the property</remarks>
+    ''' <remarks>
+    ''' The <see cref="DefaultValueAttribute"/> used can be applyed either on property (preffered) or on type of the property.
+    ''' See also <seealso cref="InstanceCreationEditor"/>.
+    ''' </remarks>
     Public Class NewEditor 'ASAP: XML-Doc, Wiki, Forum, Mark
         Inherits UITypeEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>

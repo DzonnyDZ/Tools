@@ -329,6 +329,7 @@ Namespace DrawingT.MetadataT
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property BW460_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Drawing.Bitmap)
             Get
+                If Cache.ContainsKey(Key) Then Return Cache(Key)
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of Drawing.Bitmap)(values.Count)
@@ -336,15 +337,21 @@ Namespace DrawingT.MetadataT
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ba As New BitArray(item)
                     If ba.Length Mod BW460_460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
-                    Dim bmp As New Drawing.Bitmap(BW460_460, ba.Length / BW460_460, Drawing.Imaging.PixelFormat.Format1bppIndexed)
+                    Dim bmp As New Drawing.Bitmap(BW460_460, ba.Length \ BW460_460)
+                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(bmp)
                     For i As Integer = 0 To ba.Length - 1 Step BW460_460
                         For j As Integer = i To i + BW460_460 - 1
-                            bmp.SetPixel(j - i, i / BW460_460, VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White))
+                            Dim x As Integer = j - i
+                            Dim y As Integer = bmp.Height - i / BW460_460 - 1
+                            'bmp.SetPixel(x, y, VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White))
+                            g.FillRectangle(New Drawing.SolidBrush(VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White)), x, y, 1, 1)
                         Next j
                     Next i
+                    g.Flush(Drawing.Drawing2D.FlushIntention.Flush)
                     ret.Add(bmp)
                 Next item
                 If ret.Count = 0 Then Return Nothing
+                If Cache.ContainsKey(Key) Then Cache(Key) = ret Else Cache.Add(Key, ret)
                 Return ret
             End Get
             Set(ByVal value As List(Of Drawing.Bitmap))
@@ -355,27 +362,30 @@ Namespace DrawingT.MetadataT
                     For Each item As Drawing.Bitmap In value
                         If item.Width <> BW460_460 Then Throw New ArgumentException("Bitmap's width must be 460px")
                         Dim ba As New BitArray(item.Width * item.Height)
-                        For i As Integer = 0 To item.Height
-                            For j As Integer = 0 To item.Width
-                                ba(i * BW460_460 + j) = Not item.GetPixel(j, i) = Drawing.Color.Wheat
+                        For i As Integer = 0 To item.Height - 1
+                            For j As Integer = 0 To item.Width - 1
+                                ba(i * BW460_460 + j) = Not (item.GetPixel(j, item.Height - i - 1) = Drawing.Color.White OrElse item.GetPixel(j, item.Height - i - 1) = Drawing.Color.FromArgb(255, 255, 255, 255))
                             Next j
                         Next i
                         values.Add(Ba2Bytes(ba))
                         Dim BLen As Integer = values(values.Count - 1).Length
-                        If (BLen > Len AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then Throw New ArgumentException("Bitmap violates lenght constraint")
+                        If (BLen > Len AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then Throw New ArgumentException(String.Format("Bitmap violates lenght constraint. Image size must be 460×{0}px", Len * 8 / 460))
                     Next item
                 End If
                 Tag(Key) = values
             End Set
         End Property
+        ''' <summary>Cache for <see cref="BW460_Value"/></summary>
+        ''' <remarks>FIlled by <see cref="BW460_Value"/> getter, invalidated by <see cref="OnValueChanged"/></remarks>
+        Private Cache As New Dictionary(Of DataSetIdentification, List(Of Drawing.Bitmap))
         ''' <summary>Converts <see cref="BitArray"/> into <see cref="Byte()"/></summary>
         ''' <param name="ba">Bits to be converted</param>
         ''' <returns>Array of <see cref="Byte"/>()</returns>
         Private Function Ba2Bytes(ByVal ba As BitArray) As Byte() 'TODO:Extract as separate tool
-            Dim bytes(Math.Ceiling(ba.Length / 8)) As Byte
+            Dim bytes(Math.Ceiling(ba.Length / 8 - 1)) As Byte
             For i As Integer = 0 To ba.Length - 1
-                bytes(i \ 8) = bytes(i \ 8) Or 1 << (i Mod 8)
-            Next
+                bytes(i \ 8) = bytes(i \ 8) Or VisualBasicT.iif(ba(i), CByte(1), CByte(0)) << (7 - i Mod 8)
+            Next i
             Return bytes
         End Function
         ''' <summary>Gets or sets value(s) of type <see cref="IPTCTypes.Enum_Binary"/></summary>
@@ -460,7 +470,7 @@ Namespace DrawingT.MetadataT
                 Dim ret As New List(Of [Enum])(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    ret.Add(Type.Assembly.CreateInstance(Type.FullName, False, Reflection.BindingFlags.CreateInstance Or Reflection.BindingFlags.Public, Nothing, New Object() {CDec(NumCharFromBytes(item))}, Nothing, Nothing))
+                    ret.Add(GetEnumValue(Type, NumCharFromBytes(item)))
                 Next item
                 If ret.Count = 0 Then Return Nothing
                 Return ret
@@ -474,7 +484,7 @@ Namespace DrawingT.MetadataT
                 If Attrs Is Nothing OrElse Attrs.Length = 0 Then Restrict = True Else Restrict = DirectCast(Attrs(0), RestrictAttribute).Restrict
                 If value IsNot Nothing Then
                     For Each item As [Enum] In value
-                        If Restrict AndAlso Not Array.IndexOf([Enum].GetValues(Type), value) >= 0 Then Throw New InvalidEnumArgumentException("value", CObj(item), Type)
+                        If Restrict AndAlso Not Array.IndexOf([Enum].GetValues(Type), item) >= 0 Then Throw New InvalidEnumArgumentException("value", CObj(item), Type)
                         values.Add(ToBytes(Len, CDec(CObj(item)), Fixed))
                     Next item
                 End If
@@ -967,7 +977,8 @@ Namespace DrawingT.MetadataT
             If From Is Nothing Then Return Nothing
             Dim ret As New List(Of [Enum])(From.Count)
             For Each item As TEnum In From
-                ret.Add(CObj(item))
+                'ret.Add(CObj(item))
+                ret.Add([Enum].ToObject(GetType(TEnum), item))
             Next item
             Return ret
         End Function

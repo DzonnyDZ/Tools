@@ -808,7 +808,7 @@ Namespace DrawingT.MetadataT
 #End Region
 #Region "Enums"
 		''' <summary>Possible values of <see cref="ActionAdvised"/></summary>
-		<Restrict(True)> Public Enum AdvisedActions As Byte
+		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of AdvisedActions)))> Public Enum AdvisedActions As Byte
 			''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
 			''' <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
 			<FieldDisplayName("Object Kill")> ObjectKill = 1
@@ -820,19 +820,19 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Object Reference")> ObjectReference = 4
 		End Enum
 		''' <summary>Abstract Relation Methods Identifiers</summary>
-		<Restrict(True)> <CLSCompliant(False)> Public Enum ARMMethods As UShort
+		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ARMMethods)))> Public Enum ARMMethods As UShort
 			''' <summary>Using DataSets 2:45, 2:47 and 2:50 (<see cref='ReferenceService'/>, <see cref='ReferenceDate'/> and <see cref='ReferenceNumber'/>)</summary>
 			<FieldDisplayName("Method 1 (Reference service, date, number)")> IPTCMethod1 = 1
 			''' <summary>Using DataSet 1:100 (<see cref='UNO'/>)</summary>
 			<FieldDisplayName("Method 2 (UNO)")> IPTCMethod2 = 2
 		End Enum
 		''' <summary>Abstract Relation Method Versions</summary>
-		<Restrict(True)> <CLSCompliant(False)> Public Enum ARMVersions As UShort
+		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ARMVersions)))> Public Enum ARMVersions As UShort
 			''' <summary>The only ARM version</summary>
 			<FieldDisplayName("Version 1")> ARM1 = 1
 		End Enum
 		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</summary>
-		<Restrict(True)> Public Enum EconomySubjectDetail As Integer
+		<Restrict(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of EconomySubjectDetail)))> Public Enum EconomySubjectDetail As Integer
 			''' <summary>Arable Farming</summary>
 			<FieldDisplayName("Arable Farming")> ArableFarming = 04001001
 			''' <summary>Fishing Industry</summary>
@@ -1035,12 +1035,12 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Waterway & Maritime Transport")> WaterwayAndMaritimeTransport = 04015004
 		End Enum
 		''' <summary>Values for <see cref="EditorialUpdate"/></summary>
-		<Restrict(True)> Public Enum EditorialUpdateValues As Byte
+		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of EditorialUpdateValues)))> Public Enum EditorialUpdateValues As Byte
 			''' <summary>Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - <see cref='LanguageIdentifier'/>).</summary>
 			<FieldDisplayName("Additional language")> AdditionalLanguage = 1
 		End Enum
 		''' <summary>Registered file formats by IPTC and NAA</summary>
-		<Restrict(True)> <CLSCompliant(False)> Public Enum FileFormats As UShort
+		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of FileFormats)))> Public Enum FileFormats As UShort
 			''' <summary>No Object Data</summary>
 			<FieldDisplayName("No Object Data")> NoObjectData = 0
 			''' <summary>IPTC-NAA Digital Newsphoto Parameter Record</summary>
@@ -1103,7 +1103,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Corel Draw")> CorelDraw = 29
 		End Enum
 		''' <summary>File format version registered for NAA and IPTC</summary>
-		<Restrict(True)> <CLSCompliant(False)> Public Enum FileFormatVersions As UShort
+		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of FileFormatVersions)))> Public Enum FileFormatVersions As UShort
 			''' <summary>Version 1 for FileFormat <see cref="FileFormats.NoObjectData"/></summary>
 			<FieldDisplayName("1 (No Object Data)")> V0 = 0
 			''' <summary>Version 1 for file fromat <see cref="FileFormats.NewsphotoParameterRecord"/> and <see cref="FileFormats.NAA89_3"/>, 5.0 for <see cref="FileFormats.TIFF"/>, 1.40 for <see cref="FileFormats.AdobeIllustrator"/>, 2 for <see cref="FileFormats.AppleSingle"/>, 1.02 for <see cref="FileFormats.JPEG"/> and 3.1 for <see cref="FileFormats.Freehand"/></summary>
@@ -1116,7 +1116,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recommended Message Format), 5.5 (Freehand)")> V4 = 4
 		End Enum
 		''' <summary>Number of components in image and special meanings of some numbers</summary>
-		<Restrict(True)> Public Enum ImageTypeComponents As Byte
+		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ImageTypeComponents)))> Public Enum ImageTypeComponents As Byte
 			''' <summary>Record 2 caption for specific image</summary>
 			<FieldDisplayName("NoObjectData")> NoObjectData = 0
 			''' <summary>Image has 1 component</summary>
@@ -1131,7 +1131,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Suplementary data")> SuplementaryData = 9
 		End Enum
 		''' <summary>Object Attribute Number abd Object Name relationship</summary>
-		<Restrict(True)> Public Enum ObjectAttributes As Byte
+		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ObjectAttributes)))> Public Enum ObjectAttributes As Byte
 			''' <summary>Current</summary>
 			<FieldDisplayName("Current")> Current = 01
 			''' <summary>Analysis</summary>
@@ -1178,7 +1178,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Press Release")> PressRelease = 22
 		End Enum
 		''' <summary>Object Type Number and Object Type Name relationship</summary>
-		<Restrict(True)> Public Enum ObjectTypes As Byte
+		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ObjectTypes)))> Public Enum ObjectTypes As Byte
 			''' <summary>News</summary>
 			<FieldDisplayName("News")> News = 1
 			''' <summary>Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate.</summary>
@@ -1187,7 +1187,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Advisory")> Advisory = 3
 		End Enum
 		''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
-		<Restrict(True)> Public Enum SubjectMatterNumbers As Integer
+		<Restrict(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of SubjectMatterNumbers)))> Public Enum SubjectMatterNumbers As Integer
 			''' <summary>Archaeology</summary>
 			<FieldDisplayName("Archaeology")> Archaeology = 01001000
 			''' <summary>Architecture</summary>
@@ -1632,7 +1632,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Warnings")> Warnings = 17005000
 		End Enum
 		''' <summary>Subject Reference Number and Subject Name relationship (version IPTC/1)</summary>
-		<Restrict(True)> Public Enum SubjectReferenceNumbers As Integer
+		<Restrict(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of SubjectReferenceNumbers)))> Public Enum SubjectReferenceNumbers As Integer
 			''' <summary>Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions</summary>
 			<FieldDisplayName("Arts, Culture & Entertainment")> ArtsCultureEntertainment = 01000000
 			''' <summary>Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities.</summary>
@@ -3984,7 +3984,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.")> _
-		<Category("Title")> <FieldDisplayName("Rasterized Caption")> Public Overridable Property RasterizedeCaption As Drawing.Bitmap
+		<Category("Title")> <FieldDisplayName("Rasterized Caption")> <Editor(GetType(EmbededImageEditor), GetType(System.Drawing.Design.UITypeEditor))> Public Overridable Property RasterizedeCaption As Drawing.Bitmap
 			Get
 				Try
 					Dim AllValues As List(Of Drawing.Bitmap) = BW460_Value(DataSetIdentification.RasterizedeCaption)

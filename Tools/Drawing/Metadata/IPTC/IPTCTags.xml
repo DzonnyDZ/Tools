@@ -478,7 +478,7 @@
             <desc>The Subject Reference is a structured definition of the subject matter.</desc>
             <remarks>It must contain an IPR (default value is "IPTC"), an 8 digit Subject Reference Number and an optional Subject Name, Subject Matter Name and Subject Detail Name. Each part of the Subject reference is separated by a colon (:). The Subject Reference Number contains three parts, a 2 digit Subject Number, a 3 digit Subject Matter Number and a 3 digit Subject Detail Number thus providing unique identification of the object's subject.</remarks>
         </tag>
-        <enum name="SubjectReferenceNumbers" type="Integer">
+        <enum name="SubjectReferenceNumbers" type="Integer" restrict="false">
             <desc>Subject Reference Number and Subject Name relationship (version IPTC/1)</desc>
             <item value="01000000" name="ArtsCultureEntertainment" human-name="Arts, Culture &amp; Entertainment" desc="Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions"/>
             <item value="02000000" human-name="Crime, Law &amp; Justice" name="CrimeLawJustice" desc="Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities."/>
@@ -498,7 +498,7 @@
             <item value="16000000" human-name="Unrest, Conflicts &amp; War" name="UnrestConflictsWar" desc="Acts of socially or politically motivated protest and/or violence."/>
             <item value="17000000" human-name="Weather" name="Weather" desc="The study, reporting and predic meteorological phenomena."/>
         </enum>
-        <enum name="SubjectMatterNumbers" type="Integer">
+        <enum name="SubjectMatterNumbers" type="Integer" restrict="false">
             <desc>Subject Matter Name and Subject Reference Number relationship</desc>
             <!--Arts, Culture & Entertainment 01000000-->
             <item value="01001000" name="Archaeology" human-name="Archaeology" desc="Archaeology"/>
@@ -739,7 +739,7 @@
             <item value="17004000" name="Statistics" human-name="Statistics" desc="Statistics"/>
             <item value="17005000" name="Warnings" human-name="Warnings" desc="Warnings"/>
         </enum>
-        <enum name="EconomySubjectDetail" type="Integer">
+        <enum name="EconomySubjectDetail" type="Integer" restrict="false">
             <desc>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</desc>
             <!--AGRICULTURE 04001000-->
             <item value="04001001" name="ArableFarming" human-name="Arable Farming" desc="Arable Farming"/>
@@ -1293,7 +1293,7 @@
         <tag number="122" name="WriterEditor" human-name="Writer/Editor" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="32" category="Author">
             <desc>Identification of the name of the person involved in the writing, editing or correcting the objectdata or caption/abstract.</desc>
         </tag>
-        <tag number="125" name="RasterizedeCaption" human-name="Rasterized Caption" type="BW460" mandatory="true" repeatable="false" fixed="true" length="7360" category="Title">
+        <tag number="125" name="RasterizedeCaption" human-name="Rasterized Caption" type="BW460" mandatory="true" repeatable="false" fixed="true" length="7360" category="Title" attributes="&lt;Editor(GetType(EmbededImageEditor), GetType(System.Drawing.Design.UITypeEditor))>">
             <desc>Image width 460 pixels and image height 128 pixels. Scanning direction bottom to top, left to right.</desc>
             <remarks>Contains the rasterized objectdata description and is used where characters that have not been coded are required for the caption.</remarks>
         </tag>
@@ -1382,6 +1382,7 @@
             </tag>
         </group>
     </record>
+    <!--TODO:Record number 3-->
     <record number="7" name="PreObjectDataDescriptorRecord" human-name="Pre-ObjectData descriptor record">
         <desc>Information about ObjectData (before object has been sent)</desc>
         <tag number="10" name="SizeMode" human-name="Size Mode" type="Boolean-binary" mandatory="true" fixed="true" length="1" repeatable="false" category="Embeded object" attributes="&lt;[ReadOnly](True)>">

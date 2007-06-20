@@ -569,7 +569,7 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
 
         Public Overrides Function GetStandardValuesExclusive(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
             Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
-            Return Rest IsNot Nothing AndAlso Not Rest.Restrict
+            Return Rest Is Nothing OrElse Rest.Restrict
         End Function
 
         Public Overrides Function GetStandardValuesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
@@ -638,7 +638,18 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
                     Return cns.Name
                 End If
             Else
-                Return cns.GetValue(Nothing).ToString
+                Dim EType As Type = [Enum].GetUnderlyingType(GetType(T))
+                Dim EValue As IFormattable = Nothing
+                If GetType(Byte).Equals(EType) Then : EValue = CByte(CObj(value))
+                ElseIf GetType(SByte).Equals(EType) Then : EValue = CSByte(CObj(value))
+                ElseIf GetType(Short).Equals(EType) Then : EValue = CShort(CObj(value))
+                ElseIf GetType(UShort).Equals(EType) Then : EValue = CUShort(CObj(value))
+                ElseIf GetType(Integer).Equals(EType) Then : EValue = CInt(CObj(value))
+                ElseIf GetType(UInteger).Equals(EType) Then : EValue = CUInt(CObj(value))
+                ElseIf GetType(Long).Equals(EType) Then : EValue = CLng(CObj(value))
+                ElseIf GetType(ULong).Equals(EType) Then : EValue = CULng(CObj(value))
+                End If
+                Return EValue.ToString("0", System.Globalization.CultureInfo.InvariantCulture)
             End If
         End Function
     End Class
