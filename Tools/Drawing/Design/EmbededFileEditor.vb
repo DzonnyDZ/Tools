@@ -18,17 +18,19 @@ Namespace DrawingT.DesignT
             Using Lst As New ListBox
                 Me.Value = value
                 Me.Context = context
-                Dim Save As New SaveFileDialog
-                Save.Title = "Save data as..." 'Localize: dialog title
                 Lst.DisplayMember = "Title"
-                Lst.Items.Add(Save)
+                If value IsNot Nothing Then
+                    Dim Save As New SaveFileDialog
+                    Save.Title = "Save data as..." 'Localize: dialog title
+                    Lst.Items.Add(Save)
+                End If
                 Dim [ReadOnly] As ReadOnlyAttribute = context.PropertyDescriptor.Attributes(GetType(ReadOnlyAttribute))
                 If [ReadOnly] Is Nothing OrElse [ReadOnly].IsReadOnly = False Then
                     Dim Embed As New OpenFileDialog
                     Lst.Items.Add(Embed)
                     Embed.Title = "Load from file..." 'Localize: dialog title
+                    Lst.Items.Add("Clear") 'Localize: Item
                 End If
-                Lst.Items.Add("Clear") 'Localize: Item
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
                 Service = provider.GetService(GetType(Windows.Forms.Design.IWindowsFormsEditorService))
@@ -92,13 +94,15 @@ Namespace DrawingT.DesignT
             Using Lst As New ListBox
                 Me.Value = value
                 Me.Context = context
-                Dim Save As New SaveFileDialog
-                Dim Filter As String = "Images (bmp,jpeg,png,gif,tiff)|*.bmp;*.jpeg;*.jpg;*.gif;*.tif;*.tiff" 'Localize "images"
-                Save.Title = "Save data as..." 'Localize: dialog title
-                Save.Filter = Filter
-                Save.DefaultExt = "bmp"
                 Lst.DisplayMember = "Title"
-                Lst.Items.Add(Save)
+                Dim Filter As String = "Images (bmp,jpeg,png,gif,tiff)|*.bmp;*.jpeg;*.jpg;*.gif;*.tif;*.tiff;*.png" 'Localize "images"
+                If value IsNot Nothing Then
+                    Dim Save As New SaveFileDialog
+                    Save.Title = "Save data as..." 'Localize: dialog title
+                    Save.Filter = Filter
+                    Save.DefaultExt = "bmp"
+                    Lst.Items.Add(Save)
+                End If
                 Dim [ReadOnly] As ReadOnlyAttribute = context.PropertyDescriptor.Attributes(GetType(ReadOnlyAttribute))
                 If [ReadOnly] Is Nothing OrElse [ReadOnly].IsReadOnly = False Then
                     Dim Embed As New OpenFileDialog
@@ -106,8 +110,8 @@ Namespace DrawingT.DesignT
                     Embed.Title = "Load from file..." 'Localize: dialog title
                     Embed.Filter = Filter
                     Embed.DefaultExt = "bmp"
+                    Lst.Items.Add("Clear") 'Localize: Item
                 End If
-                Lst.Items.Add("Clear") 'Localize: Item
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
                 Service = provider.GetService(GetType(Windows.Forms.Design.IWindowsFormsEditorService))

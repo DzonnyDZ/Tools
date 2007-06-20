@@ -335,19 +335,20 @@ Namespace DrawingT.MetadataT
                 Dim ret As New List(Of Drawing.Bitmap)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    Dim ba As New BitArray(item)
-                    If ba.Length Mod BW460_460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
-                    Dim bmp As New Drawing.Bitmap(BW460_460, ba.Length \ BW460_460)
-                    Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(bmp)
-                    For i As Integer = 0 To ba.Length - 1 Step BW460_460
+                    'Dim ba As New BitArray(item)
+                    If (item.Length * 8) Mod BW460_460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
+                    Dim bmp As New Drawing.Bitmap(BW460_460, (item.Length * 8) \ BW460_460)
+                    'Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(bmp)
+                    For i As Integer = 0 To item.Length * 8 - 1 Step BW460_460
                         For j As Integer = i To i + BW460_460 - 1
                             Dim x As Integer = j - i
                             Dim y As Integer = bmp.Height - i / BW460_460 - 1
-                            'bmp.SetPixel(x, y, VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White))
-                            g.FillRectangle(New Drawing.SolidBrush(VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White)), x, y, 1, 1)
+                            bmp.SetPixel(x, y, VisualBasicT.iif((item(j \ 8) And CByte(2 ^ (7 - j Mod 8))) <> 0, Drawing.Color.Black, Drawing.Color.White))
+                            'g.FillRectangle(New Drawing.SolidBrush(VisualBasicT.iif(ba(j), Drawing.Color.Black, Drawing.Color.White)), x, y, 1, 1)
+                            'g.FillRectangle(New Drawing.SolidBrush(VisualBasicT.iif((item(j \ 8) And CByte(2 ^ (j Mod 8)) <> 0), Drawing.Color.Black, Drawing.Color.White)), x, y, 1, 1)
                         Next j
                     Next i
-                    g.Flush(Drawing.Drawing2D.FlushIntention.Flush)
+                    'g.Flush(Drawing.Drawing2D.FlushIntention.Flush)
                     ret.Add(bmp)
                 Next item
                 If ret.Count = 0 Then Return Nothing

@@ -419,7 +419,7 @@
             <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</desc>
             <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
         </tag>
-        <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.DrawingT.MetadataT.IPTC+NumStr2`1;Tools.DrawingT.MetadataT.IPTC+ObjectTypes;02;")>'>
+       <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.DrawingT.MetadataT.IPTC+NumStr2`1;Tools.DrawingT.MetadataT.IPTC+ObjectTypes;02;")>'>
             <desc>The Object Type is used to distinguish between different types of objects within the IIM.</desc>
             <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
@@ -458,6 +458,9 @@
             <item value="21" name="WrapUp" desc="Wrap-up" human-name="Wrap-up"/>
             <item value="22" name="PressRelease" desc="Press Release" human-name="Press Release"/>
         </enum>
+        <tag number="5" name="ObjectName" human-name="Object Name" type="TextWithSpaces" length="64" fixed="false" repeatable="false" mandatory="false" category="Title">
+            <desc>Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.</desc>
+        </tag>
         <tag number="7" name="EditStatus" human-name="Edit Status" type="TextWithSpaces" mandatory="false" repeatable="false" fixed="false" length="64" category="Status">
             <desc>Status of the objectdata, according to the practice of the provider.</desc>
         </tag>
@@ -1287,7 +1290,7 @@
         <tag number="118" name="Contact" human-name="Contact" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="128" category="Author">
             <desc>Identifies the person or organisation which can provide further background information on the objectdata.</desc>
         </tag>
-        <tag number="120" name="CaptionAbstract" human-name="Caption/Abstract" type="Text" mandatory="false" repeatable="false" fixed="false" length="2000" category="Title">
+        <tag number="120" name="CaptionAbstract" human-name="Caption/Abstract" type="Text" mandatory="false" repeatable="false" fixed="false" length="2000" category="Title" attributes="&lt;Editor(gettype(System.ComponentModel.Design.MultilineStringEditor),gettype(System.Drawing.Design.UITypeEditor))> &lt;TypeConverter(gettype(MultilineStringConverter ))>">
             <desc>A textual description of the objectdata, particularly used where the object is not text.</desc>
         </tag>
         <tag number="122" name="WriterEditor" human-name="Writer/Editor" type="TextWithSpaces" mandatory="false" repeatable="true" fixed="false" length="32" category="Author">

@@ -3,6 +3,8 @@ Imports Tools.DataStructuresT.GenericT
 Namespace DrawingT.MetadataT
 #If Congig <= Nightly Then 'Stage: Nightly
     'ASAP:Wiki, Forum, Mark
+    'TODO: Sort tags by record
+    'TODO: IPTCEmbed (store data in image)
     Partial Public Class IPTC
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()

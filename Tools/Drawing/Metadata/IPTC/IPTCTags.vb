@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 20. června 2007
+' Created: 21. června 2007
 ' By:DZONNY\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -88,6 +88,9 @@ Namespace DrawingT.MetadataT
 			''' <summary>The Object Attribute defines the nature of the object independent of the Subject.</summary>
 			''' <remarks>See <seealso cref="IPTC.ObjectAttributeReference"/> for more info.</remarks>
 			<FieldDisplayName("Object Attribute Reference")> <Category("Category")> ObjectAttributeReference = 4
+			''' <summary>Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.</summary>
+			''' <remarks>See <seealso cref="IPTC.ObjectName"/> for more info.</remarks>
+			<FieldDisplayName("Object Name")> <Category("Title")> ObjectName = 5
 			''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
 			''' <remarks>See <seealso cref="IPTC.EditStatus"/> for more info.</remarks>
 			<FieldDisplayName("Edit Status")> <Category("Status")> EditStatus = 7
@@ -401,6 +404,12 @@ Namespace DrawingT.MetadataT
 			Public Shared ReadOnly Property ObjectAttributeReference As DataSetIdentification
 				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectAttributeReference)
+				End Get
+			End Property
+			''' <summary>Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.</summary>
+			Public Shared ReadOnly Property ObjectName As DataSetIdentification
+				<DebuggerStepThrough()> Get
+					Return New DataSetIdentification(RecordNumbers.Application, Applicationtags.ObjectName)
 				End Get
 			End Property
 			''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
@@ -799,9 +808,9 @@ Namespace DrawingT.MetadataT
 			''' <param name="Hidden">Returns also datasets that are within groups</param>
 			Public Shared Function KnownDataSets(Optional ByVal Hidden As Boolean = False) As DataSetIdentification()
 				If Hidden Then
-					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, ARMIdentifier, ARMVersion, RecordVersion, ObjectTypeReference, ObjectAttributeReference, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ContentLocationCode, ContentLocationName, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, ReferenceService, ReferenceDate, ReferenceNumber, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, ByLine, ByLineTitle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, ObjectDataPreviewFileFormat, ObjectDataPreviewFileFormatVersion, ObjectDataPreviewData, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
+					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, ARMIdentifier, ARMVersion, RecordVersion, ObjectTypeReference, ObjectAttributeReference, ObjectName, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ContentLocationCode, ContentLocationName, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, ReferenceService, ReferenceDate, ReferenceNumber, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, ByLine, ByLineTitle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, ObjectDataPreviewFileFormat, ObjectDataPreviewFileFormatVersion, ObjectDataPreviewData, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
 				Else
-					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, RecordVersion, ObjectTypeReference, ObjectAttributeReference, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
+					Return New DataSetIdentification(){ModelVersion, Destination, FileFormat, FileFormatVersion, ServiceIdentifier, EnvelopeNumber, ProductID, EnvelopePriority, DateSent, TimeSent, CodedCharacterSet, UNO, RecordVersion, ObjectTypeReference, ObjectAttributeReference, ObjectName, EditStatus, EditorialUpdate, Urgency, SubjectReference, Category, SupplementalCategory, FixtureIdentifier, Keywords, ReleaseDate, ReleaseTime, ExpirationDate, ExpirationTime, SpecialInstructions, ActionAdvised, DateCreated, TimeCreated, DigitalCreationDate, DigitalCreationTime, OriginatingProgram, ProgramVersion, ObjectCycle, City, SubLocation, ProvinceState, CountryPrimaryLocationCode, CountryPrimaryLocationName, OriginalTransmissionReference, Headline, Credit, Source, CopyrightNotice, Contact, CaptionAbstract, WriterEditor, RasterizedeCaption, ImageType, ImageOrientation, LanguageIdentifier, AudioType, AudioSamplingRate, AudioSamplingResolution, AudioDuration, AudioOutcue, SizeMode, MaxSubfileSize, ObjectDataSizeAnnounced, MaximumObjectDataSize, Subfile, ConfirmedObjectDataSize}
 				End If
 			End Function
 		End Structure
@@ -2332,6 +2341,7 @@ Namespace DrawingT.MetadataT
 						Case ApplicationTags.RecordVersion : Return New IPTCTag(Number:=ApplicationTags.RecordVersion, Record:=RecordNumbers.Application, Name:="RecordVersion", HumanName:="Record Version", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Internal", Description:="A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.", Lock:=True)
 						Case ApplicationTags.ObjectTypeReference : Return New IPTCTag(Number:=ApplicationTags.ObjectTypeReference, Record:=RecordNumbers.Application, Name:="ObjectTypeReference", HumanName:="Object Type Reference", Type:=IPTCTypes.Num2_Str, Mandatory:=false, Repeatable:=false, Length:=67, Fixed:=false, Category:="Category", Description:="The Object Type is used to distinguish between different types of objects within the IIM.", [Enum]:=GetType(ObjectTypes), Lock:=True)
 						Case ApplicationTags.ObjectAttributeReference : Return New IPTCTag(Number:=ApplicationTags.ObjectAttributeReference, Record:=RecordNumbers.Application, Name:="ObjectAttributeReference", HumanName:="Object Attribute Reference", Type:=IPTCTypes.Num3_Str, Mandatory:=false, Repeatable:=true, Length:=68, Fixed:=false, Category:="Category", Description:="The Object Attribute defines the nature of the object independent of the Subject.", [Enum]:=GetType(ObjectAttributes), Lock:=True)
+						Case ApplicationTags.ObjectName : Return New IPTCTag(Number:=ApplicationTags.ObjectName, Record:=RecordNumbers.Application, Name:="ObjectName", HumanName:="Object Name", Type:=IPTCTypes.TextWithSpaces, Mandatory:=false, Repeatable:=false, Length:=64, Fixed:=false, Category:="Title", Description:="Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.", Lock:=True)
 						Case ApplicationTags.EditStatus : Return New IPTCTag(Number:=ApplicationTags.EditStatus, Record:=RecordNumbers.Application, Name:="EditStatus", HumanName:="Edit Status", Type:=IPTCTypes.TextWithSpaces, Mandatory:=false, Repeatable:=false, Length:=64, Fixed:=false, Category:="Status", Description:="Status of the objectdata, according to the practice of the provider.", Lock:=True)
 						Case ApplicationTags.EditorialUpdate : Return New IPTCTag(Number:=ApplicationTags.EditorialUpdate, Record:=RecordNumbers.Application, Name:="EditorialUpdate", HumanName:="Editorial Update", Type:=IPTCTypes.Enum_NumChar, Mandatory:=false, Repeatable:=false, Length:=2, Fixed:=true, Category:="Status", Description:="Indicates the type of update that this object provides to a previous object. The link to the previous object is made using the ARM (DataSets 1:120 and 1:122 (<see cref='ARM'/>)), according to the practices of the provider.", [Enum]:=GetType(EditorialUpdateValues), Lock:=True)
 						Case ApplicationTags.Urgency : Return New IPTCTag(Number:=ApplicationTags.Urgency, Record:=RecordNumbers.Application, Name:="Urgency", HumanName:="Urgency", Type:=IPTCTypes.NumericChar, Mandatory:=false, Repeatable:=false, Length:=1, Fixed:=true, Category:="Status", Description:="Specifies the editorial urgency of content and not necessarily the envelope handling priority (see 1:60, EnvelopePriority).", Lock:=True)
@@ -3210,6 +3220,28 @@ Namespace DrawingT.MetadataT
 				End Try
 			End Set
 		End Property
+		''' <summary>Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.</summary>
+		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
+		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
+		<Description("Used as a shorthand reference for the object. Changes to existing data, such as updated stories or new crops on photos, should be identified in Edit Status.")> _
+		<Category("Title")> <FieldDisplayName("Object Name")> Public Overridable Property ObjectName As String
+			Get
+				Try
+					Dim AllValues As List(Of String) = TextWithSpaces_Value(DataSetIdentification.ObjectName)
+					If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+				Catch ex As Exception
+					Throw New IPTCGetException(ex)
+				End Try
+			End Get
+			Set
+				Try
+					TextWithSpaces_Value(DataSetIdentification.ObjectName, 64, false) = New List(Of String)(New String(){value})
+				Catch ex As Exception
+					Throw New IPTCSetException(ex)
+				End Try
+			End Set
+		End Property
 		''' <summary>Status of the objectdata, according to the practice of the provider.</summary>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
@@ -3938,7 +3970,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A textual description of the objectdata, particularly used where the object is not text.")> _
-		<Category("Title")> <FieldDisplayName("Caption/Abstract")> Public Overridable Property CaptionAbstract As String
+		<Category("Title")> <FieldDisplayName("Caption/Abstract")> <Editor(gettype(System.ComponentModel.Design.MultilineStringEditor),gettype(System.Drawing.Design.UITypeEditor))> <TypeConverter(gettype(MultilineStringConverter ))> Public Overridable Property CaptionAbstract As String
 			Get
 				Try
 					Dim AllValues As List(Of String) = Text_Value(DataSetIdentification.CaptionAbstract)
