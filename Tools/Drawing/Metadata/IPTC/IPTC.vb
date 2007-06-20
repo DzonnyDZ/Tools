@@ -37,6 +37,30 @@ Namespace DrawingT.MetadataT
         Public Function Contains(ByVal Key As DataSetIdentification) As Integer
             Return Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key)).Count
         End Function
+        ''' <summary>Called when value of any tag changes</summary>
+        ''' <param name="Tag">Recod and dataset number</param>
+        ''' <remarks>Called by <see cref="Tag"/>'s setter</remarks>
+        Protected Overridable Sub OnValueChanged(ByVal Tag As DataSetIdentification)
+            Select Case Tag
+                Case DataSetIdentification.Subfile 'Subfile - change corresponding tags
+                    Dim Subfile As Byte() = Me.Subfile
+                    Dim SubFileLen As Integer
+                    If Subfile Is Nothing Then SubFileLen = 0 Else SubFileLen = Subfile.Length
+                    If Subfile Is Nothing Then
+                        Clear(DataSetIdentification.ConfirmedObjectDataSize)
+                        Clear(DataSetIdentification.MaxSubfileSize)
+                        Clear(DataSetIdentification.MaximumObjectDataSize)
+                        Clear(DataSetIdentification.ObjectDataSizeAnnounced)
+                        Clear(DataSetIdentification.SizeMode)
+                    Else
+                        ConfirmedObjectDataSize = SubFileLen
+                        MaxSubfileSize = SubFileLen
+                        Clear(DataSetIdentification.MaximumObjectDataSize)
+                        ObjectDataSizeAnnounced = SubFileLen
+                        SizeMode = True
+                    End If
+            End Select
+        End Sub
         ''' <summary>Gets or sets values associated with particular tag</summary>
         ''' <param name="Key">Tag identification</param>
         ''' <remarks>This property does no checks if tag <paramref name="Key"/> is repeatable or not and does not checks structure of byte arrays that represents values of tags, so you can totally corrupt structure if some fields. Also tag grouping is not checked. You should use this property very carefully or you can damage internal structure of IPTC data</remarks>
@@ -79,6 +103,7 @@ Namespace DrawingT.MetadataT
                         Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(Key, value(j)))
                     Next j
                 End If
+                OnValueChanged(Key)
             End Set
         End Property
         ''' <summary>All tags and their values in IPTC stream</summary>
@@ -484,23 +509,6 @@ Namespace DrawingT.MetadataT
             End Property
         End Class
 
-        ''' <summary>Indicates if enum may allow values that are not member of it or not</summary>
-        <AttributeUsage(AttributeTargets.Enum)> _
-        Public Class RestrictAttribute : Inherits Attribute
-            ''' <summary>Contains value of the <see cref="Restrict"/> property</summary>
-            Private _Restrict As Boolean
-            ''' <summary>CTor</summary>
-            ''' <param name="Restrict">State of restriction</param>
-            Public Sub New(ByVal Restrict As Boolean)
-                _Restrict = Restrict
-            End Sub
-            ''' <summary>Inidicates if values should be restricted to enum members</summary>
-            Public ReadOnly Property Restrict() As Boolean
-                Get
-                    Return _Restrict
-                End Get
-            End Property
-        End Class
         ''' <summary>Represents common base for <see cref="IPTCGetException"/> and <see cref="IPTCSetException"/></summary>
         Public MustInherit Class IPTCException : Inherits Exception
             ''' <summary>CTor</summary>

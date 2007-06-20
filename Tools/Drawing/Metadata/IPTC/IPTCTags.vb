@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 19. června 2007
+' Created: 20. června 2007
 ' By:DZONNY\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -42,10 +42,10 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Destination")> <Category("Old IPTC")> Destination = 5
 			''' <summary>A number representing the file format.</summary>
 			''' <remarks>See <seealso cref="IPTC.FileFormat"/> for more info.</remarks>
-			<FieldDisplayName("File Format")> <Category("Old IPTC")> FileFormat = 20
+			<FieldDisplayName("File Format")> <Category("Embeded object")> FileFormat = 20
 			''' <summary>A binary number representing the particular version of the <see cref="FileFormat"/></summary>
 			''' <remarks>See <seealso cref="IPTC.FileFormatVersion"/> for more info.</remarks>
-			<FieldDisplayName("File Format Version")> <Category("Old IPTC")> FileFormatVersion = 22
+			<FieldDisplayName("File Format Version")> <Category("Embeded object")> FileFormatVersion = 22
 			''' <summary>Identifies the provider and product.</summary>
 			''' <remarks>See <seealso cref="IPTC.ServiceIdentifier"/> for more info.</remarks>
 			<FieldDisplayName("Service Identifier")> <Category("Old IPTC")> ServiceIdentifier = 30
@@ -2313,8 +2313,8 @@ Namespace DrawingT.MetadataT
 					Select Case TagNumber
 						Case EnvelopeTags.ModelVersion : Return New IPTCTag(Number:=EnvelopeTags.ModelVersion, Record:=RecordNumbers.Envelope, Name:="ModelVersion", HumanName:="Model Version", Type:=IPTCTypes.UShort_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Internal", Description:="A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.", Lock:=True)
 						Case EnvelopeTags.Destination : Return New IPTCTag(Number:=EnvelopeTags.Destination, Record:=RecordNumbers.Envelope, Name:="Destination", HumanName:="Destination", Type:=IPTCTypes.GraphicCharacters, Mandatory:=false, Repeatable:=true, Length:=1024, Fixed:=false, Category:="Old IPTC", Description:="This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.", Lock:=True)
-						Case EnvelopeTags.FileFormat : Return New IPTCTag(Number:=EnvelopeTags.FileFormat, Record:=RecordNumbers.Envelope, Name:="FileFormat", HumanName:="File Format", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Old IPTC", Description:="A number representing the file format.", [Enum]:=GetType(FileFormats), Lock:=True)
-						Case EnvelopeTags.FileFormatVersion : Return New IPTCTag(Number:=EnvelopeTags.FileFormatVersion, Record:=RecordNumbers.Envelope, Name:="FileFormatVersion", HumanName:="File Format Version", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Old IPTC", Description:="A binary number representing the particular version of the FileFormat", [Enum]:=GetType(FileFormatVersions), Lock:=True)
+						Case EnvelopeTags.FileFormat : Return New IPTCTag(Number:=EnvelopeTags.FileFormat, Record:=RecordNumbers.Envelope, Name:="FileFormat", HumanName:="File Format", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Embeded object", Description:="A number representing the file format.", [Enum]:=GetType(FileFormats), Lock:=True)
+						Case EnvelopeTags.FileFormatVersion : Return New IPTCTag(Number:=EnvelopeTags.FileFormatVersion, Record:=RecordNumbers.Envelope, Name:="FileFormatVersion", HumanName:="File Format Version", Type:=IPTCTypes.Enum_binary, Mandatory:=true, Repeatable:=false, Length:=2, Fixed:=true, Category:="Embeded object", Description:="A binary number representing the particular version of the FileFormat", [Enum]:=GetType(FileFormatVersions), Lock:=True)
 						Case EnvelopeTags.ServiceIdentifier : Return New IPTCTag(Number:=EnvelopeTags.ServiceIdentifier, Record:=RecordNumbers.Envelope, Name:="ServiceIdentifier", HumanName:="Service Identifier", Type:=IPTCTypes.GraphicCharacters, Mandatory:=true, Repeatable:=false, Length:=10, Fixed:=false, Category:="Old IPTC", Description:="Identifies the provider and product.", Lock:=True)
 						Case EnvelopeTags.EnvelopeNumber : Return New IPTCTag(Number:=EnvelopeTags.EnvelopeNumber, Record:=RecordNumbers.Envelope, Name:="EnvelopeNumber", HumanName:="Envelope Number", Type:=IPTCTypes.NumericChar, Mandatory:=true, Repeatable:=false, Length:=8, Fixed:=true, Category:="Old IPTC", Description:="The characters form a number that will be unique for the date specified in DateSent and for the Service Identifier specified in ServiceIdentifier.", Lock:=True)
 						Case EnvelopeTags.ProductID : Return New IPTCTag(Number:=EnvelopeTags.ProductID, Record:=RecordNumbers.Envelope, Name:="ProductID", HumanName:="Product I.D.", Type:=IPTCTypes.GraphicCharacters, Mandatory:=false, Repeatable:=true, Length:=32, Fixed:=false, Category:="Old IPTC", Description:="Allows a provider to identify subsets of its overall service.", Lock:=True)
@@ -2462,7 +2462,7 @@ Namespace DrawingT.MetadataT
 		End Function
 #Region "Classes"
 		''' <summary>Abstract Relation Method</summary>
-		<FieldDisplayName("ARM")> <Category("Old IPTC")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ARMGroup : Inherits Group
+		<FieldDisplayName("ARM")> <Category("Old IPTC")> <TypeConverter(GetType(ARMGroup.Converter))> Partial Public NotInheritable Class ARMGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2680,7 +2680,7 @@ Namespace DrawingT.MetadataT
 
 		End Class
 		''' <summary>Preview of embeded object</summary>
-		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> <TypeConverter(GetType(ExpandableObjectConverter))> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
+		<FieldDisplayName("ObjectData Preview")> <Category("Embeded object")> <TypeConverter(GetType(ObjectDataPreviewGroup.Converter))> Partial Public NotInheritable Class ObjectDataPreviewGroup : Inherits Group
 				''' <summary>Loads groups from IPTC</summary>
 				''' <param name="IPTC"><see cref="IPTC"/> to load groups from</param>
 				''' <exception cref="ArgumentNullException"><paramref name="IPTC"/> is null</exception>
@@ -2735,7 +2735,7 @@ Namespace DrawingT.MetadataT
 				''' <summary>Contains value of the <see cref="ObjectDataPreviewData"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ObjectDataPreviewData As Byte()
 				''' <summary>Maximum size of 256000 octets consisting of binary data.</summary>
-				<Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> Public Property ObjectDataPreviewData As Byte()
+				<Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> <Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> Public Property ObjectDataPreviewData As Byte()
 					Get
 						Return _ObjectDataPreviewData
 					End Get
@@ -2760,7 +2760,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>Country/geographical location referenced by the content of the object</summary>
-		<FieldDisplayName("Content Location")> <Category("Location")> Public Property ContentLocation As ContentLocationGroup()
+		<FieldDisplayName("Content Location")> <Category("Location")> <TypeConverter(GetType(TypeConverter))> Public Property ContentLocation As ContentLocationGroup()
 			Get
 				Dim v As List(Of ContentLocationGroup)=ContentLocationGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2789,7 +2789,7 @@ Namespace DrawingT.MetadataT
 		End Property
 		''' <summary>Identifies a prior envelope to which the current object refers.</summary>
 		''' <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
-		<FieldDisplayName("Reference")> <Category("Old IPTC")> Public Property Reference As ReferenceGroup()
+		<FieldDisplayName("Reference")> <Category("Old IPTC")> <TypeConverter(GetType(TypeConverter))> Public Property Reference As ReferenceGroup()
 			Get
 				Dim v As List(Of ReferenceGroup)=ReferenceGroup.Load(Me)
 				If v Is Nothing OrElse v.Count = 0 Then Return Nothing
@@ -2919,7 +2919,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A number representing the file format.")> _
-		<Category("Old IPTC")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Overridable Property FileFormat As FileFormats
+		<Category("Embeded object")> <FieldDisplayName("File Format")> <CLSCompliant(False)>Public Overridable Property FileFormat As FileFormats
 			Get
 				Try
 					Dim AllValues As List(Of FileFormats) = ConvertEnumList(Of FileFormats)(Enum_Binary_Value(DataSetIdentification.FileFormat, GetType(FileFormats)))
@@ -2941,7 +2941,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("A binary number representing the particular version of the File Format")> _
-		<Category("Old IPTC")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Overridable Property FileFormatVersion As FileFormatVersions
+		<Category("Embeded object")> <FieldDisplayName("File Format Version")> <CLSCompliant(False)>Public Overridable Property FileFormatVersion As FileFormatVersions
 			Get
 				Try
 					Dim AllValues As List(Of FileFormatVersions) = ConvertEnumList(Of FileFormatVersions)(Enum_Binary_Value(DataSetIdentification.FileFormatVersion, GetType(FileFormatVersions)))
@@ -3100,7 +3100,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.")> _
-		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> Public Overridable Property CodedCharacterSet As Byte()
+		<Category("Old IPTC")> <FieldDisplayName("CodedCharacterSet")> <TypeConverter(GetType(HexaConverter))> <Editor(GetType(Drawing.Design.UITypeEditor), GetType(Drawing.Design.UITypeEditor))> Public Overridable Property CodedCharacterSet As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.CodedCharacterSet)
@@ -4276,7 +4276,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Subfile DataSet containing the objectdata itself.")> _
-		<Category("Embeded object")> <FieldDisplayName("Subfile")> Public Overridable Property Subfile As Byte()
+		<Category("Embeded object")> <FieldDisplayName("Subfile")> <Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> Public Overridable Property Subfile As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.Subfile)
@@ -4576,7 +4576,7 @@ Namespace DrawingT.MetadataT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("Maximum size of 256000 octets consisting of binary data.")> _
-		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()
+		<Category("Embeded object")> <FieldDisplayName("ObjectData Preview Data")> <Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> <TypeConverter(GetType(FileByteConverter))> <EditorBrowsable(EditorBrowsableState.Never)> Private Property ObjectDataPreviewData As Byte()
 			Get
 				Try
 					Dim AllValues As List(Of Byte()) = ByteArray_Value(DataSetIdentification.ObjectDataPreviewData)

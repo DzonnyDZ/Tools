@@ -301,7 +301,13 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
                     End If
                 End If
             Next int
-            Dim Map As InterfaceMapping = MyType.GetInterfaceMap(InterfaceType)
+            If Not [Implements] Then Return Nothing
+            Dim Map As InterfaceMapping
+            Try
+                Map = MyType.GetInterfaceMap(InterfaceType)
+            Catch ex As ArgumentException
+                Return Nothing
+            End Try
             Dim dType As Type = InterfaceType.GetNestedType("dConvertTo").MakeGenericType(New Type() {GetType(T), destinationType})
             Dim DAdaptorType As Type = GetType(DAdaptor(Of )).MakeGenericType(GetType(T), destinationType)
             Dim i As Integer = 0
@@ -453,6 +459,187 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
         ''' <param name="value">value to be converted</param>
         Public Shadows Function IsValid(ByVal value As TOther) As Boolean
             Return IsValid(Nothing, value)
+        End Function
+    End Class
+
+    ''' <summary>Simple <see cref="ComponentModel.TypeConverter"/> for <see cref="Byte()"/></summary>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(FileByteConverter), LastChMMDDYYYY:="06/19/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    Public Class FileByteConverter
+        Inherits TypeConverter(Of Byte())
+        Implements ITypeConverterTo(Of String)
+        ''' <summary>Performs conversion from <see cref="Byte()"/> to <see cref="String"/></summary>
+        ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+        ''' <param name="value">Value to be converted</param>
+        ''' <returns>An empty <see cref="String"/> if <paramref name="value"/> is null; otherwise <see cref="Array.Length"/> followed by the 'B' letter</returns>
+        Public Shadows Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value() As Byte) As String Implements ITypeConverterTo(Of String).ConvertTo
+            If value Is Nothing Then Return "" Else Return String.Format("{0}B", value.Length)
+        End Function
+    End Class
+    ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with support for interface based conversion as <see cref="TypeConverter(Of T)"/></summary>
+    ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(ExpandableObjectConverter(Of )), LastChMMDDYYYY:="06/19/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    Public Class ExpandableObjectConverter(Of T) : Inherits TypeConverter(Of T)
+        ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <returns>True</returns>
+        Public Overrides Function GetPropertiesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+            Return True
+        End Function
+        ''' <summary>Returns a collection of properties for the type of array specified by the value parameter, using the specified context and attributes.</summary>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="attributes">An array of type <see cref="System.Attribute"/> that is used as a filter.</param>
+        ''' <param name="value">An <see cref="System.Object"/> that specifies the type of array for which to get properties.</param>
+        ''' <returns>A <see cref="System.ComponentModel.PropertyDescriptorCollection"/> with the properties that are exposed for this data type, or null if there are no properties.</returns>
+        Public Overrides Function GetProperties(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As Object, ByVal attributes() As System.Attribute) As System.ComponentModel.PropertyDescriptorCollection
+            Return TypeDescriptor.GetProperties(GetType(T), attributes)
+        End Function
+    End Class
+    ''' <summary>Provides base class fro type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with direct support for conversion to/from one type as <see cref="TypeConverter(Of T, TOther)"/> and interface-based type-safe converters implementation as <see cref="TypeConverter(Of T)"/></summary>
+    ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
+    ''' <typeparam name="TOther">The other type to which and from which main type <paramref name="T"/> is converted</typeparam>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(ExpandableObjectConverter(Of ,)), LastChMMDDYYYY:="06/19/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    Public MustInherit Class ExpandableObjectConverter(Of T, TOther) : Inherits TypeConverter(Of T, TOther)
+        ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <returns>True</returns>
+        Public Overrides Function GetPropertiesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+            Return True
+        End Function
+        ''' <summary>Returns a collection of properties for the type of array specified by the value parameter, using the specified context and attributes.</summary>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="attributes">An array of type <see cref="System.Attribute"/> that is used as a filter.</param>
+        ''' <param name="value">An <see cref="System.Object"/> that specifies the type of array for which to get properties.</param>
+        ''' <returns>A <see cref="System.ComponentModel.PropertyDescriptorCollection"/> with the properties that are exposed for this data type, or null if there are no properties.</returns>
+        Public Overrides Function GetProperties(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As Object, ByVal attributes() As System.Attribute) As System.ComponentModel.PropertyDescriptorCollection
+            Return TypeDescriptor.GetProperties(GetType(T), attributes)
+        End Function
+    End Class
+
+    ''' <summary><see cref="TypeConverter"/> for <see cref="Byte()"/> as hexasring</summary>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+  <Version(1, 0, GetType(HexaConverter), LastChMMDDYYYY:="06/19/2007")> _
+  <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+  Public Class HexaConverter : Inherits TypeConverter(Of Byte(), String)
+        ''' <summary>Performs conversion from <see cref="String"/> to <see cref="Byte()"/></summary>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+        ''' <param name="value">Value to be converted to <see cref="Byte()"/></param>
+        ''' <returns><see cref="Byte()"/> initialized by <paramref name="value"/></returns>
+        ''' <exception cref="ArgumentException">Length of <paramref name="value"/> is odd -or- <paramref name="value"/> contaions non-hexa character</exception>
+        Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As Byte()
+            If value Is Nothing Then Return Nothing
+            If value.Length Mod 2 <> 0 Then Throw New ArgumentException("String must consist of event number of hexadeimal numerals")
+            Dim ret(value.Length \ 2 - 1) As Byte
+            For i As Integer = 0 To value.Length - 1 Step 2
+                Try
+                    ret(i \ 2) = "&h" & value(i) & value(i + 1)
+                Catch ex As Exception
+                    Throw New ArgumentException(String.Format("Invalid character near ""{0}{1}""", value(i), value(i + 1)), ex)
+                End Try
+            Next i
+            Return ret
+        End Function
+        ''' <summary>Performs conversion from <see cref="Byte()"/> to type <see cref="String"/></summary>
+        ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+        ''' <param name="value">Value to be converted</param>
+        ''' <returns>Representation of <paramref name="value"/> in <see cref="String"/></returns>
+        Public Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value() As Byte) As String
+            If value Is Nothing Then Return Nothing
+            Dim ret As New System.Text.StringBuilder(value.Length * 2)
+            For Each item As Byte In value
+                ret.Append(item.ToString("X2"))
+            Next item
+            Return ret.ToString
+        End Function
+    End Class
+    <CLSCompliant(False)> _
+        <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+  <Version(1, 0, GetType(EnumConvertorWithAttributes(Of )), LastChMMDDYYYY:="06/19/2007")> _
+  <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    Public Class EnumConvertorWithAttributes(Of T As {IConvertible, Structure})
+        Inherits TypeConverter(Of T, String)
+
+        Public Overrides Function GetStandardValuesExclusive(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+            Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
+            Return Rest IsNot Nothing AndAlso Not Rest.Restrict
+        End Function
+
+        Public Overrides Function GetStandardValuesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+            Return True
+        End Function
+
+        Public Overrides Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As String) As Boolean
+            Try
+                ConvertFrom(context, Nothing, value)
+                Return True
+            Catch
+                Return False
+            End Try
+        End Function
+
+        Public Overrides Function GetStandardValues(ByVal context As System.ComponentModel.ITypeDescriptorContext) As System.ComponentModel.TypeConverter.StandardValuesCollection
+            Dim ret As New List(Of T)
+            For Each cns As Reflection.FieldInfo In GetType(T).GetFields
+                If cns.IsLiteral AndAlso cns.IsPublic Then
+                    ret.Add(cns.GetValue(Nothing))
+                End If
+            Next cns
+            Return New TypeConverter.StandardValuesCollection(ret)
+        End Function
+
+        Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As T
+            For Each cns As Reflection.FieldInfo In GetType(T).GetFields
+                If cns.IsLiteral AndAlso cns.IsPublic Then
+                    Dim DispName As DisplayNameAttribute = GetAttribute(Of DisplayNameAttribute)(cns)
+                    If DispName IsNot Nothing Then
+                        If DispName.DisplayName = value Then Return cns.GetValue(Nothing)
+                    Else
+                        If cns.Name = value Then Return cns.GetValue(Nothing)
+                    End If
+                End If
+            Next cns
+            Dim Rest As restrictattribute = GetAttribute(Of restrictattribute)(GetType(T))
+            If Rest Is Nothing OrElse Rest.Restrict Then
+                Throw New InvalidEnumArgumentException(String.Format("Cannot interpret value ""{0}"" as {1}", value, GetType(T).Name))
+            Else
+                Dim EType As Type = [Enum].GetUnderlyingType(GetType(T))
+                Dim EValue As Object = Nothing
+                If GetType(Byte).Equals(EType) Then : EValue = CByte(value)
+                ElseIf GetType(SByte).Equals(EType) Then : EValue = CSByte(value)
+                ElseIf GetType(Short).Equals(EType) Then : EValue = CShort(value)
+                ElseIf GetType(UShort).Equals(EType) Then : EValue = CUShort(value)
+                ElseIf GetType(Integer).Equals(EType) Then : EValue = CInt(value)
+                ElseIf GetType(UInteger).Equals(EType) Then : EValue = CUInt(value)
+                ElseIf GetType(Long).Equals(EType) Then : EValue = CLng(value)
+                ElseIf GetType(ULong).Equals(EType) Then : EValue = CULng(value)
+                End If
+                Return [Enum].ToObject(GetType(T), EValue)
+            End If
+        End Function
+
+        Public Overloads Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As T) As String
+            Dim cns As FieldInfo = Nothing
+            Try
+                cns = GetConstant(value)
+            Catch : End Try
+            If cns IsNot Nothing Then
+                Dim DispName As DisplayNameAttribute = GetAttribute(Of DisplayNameAttribute)(cns)
+                If DispName IsNot Nothing Then
+                    Return DispName.DisplayName
+                Else
+                    Return cns.Name
+                End If
+            Else
+                Return cns.GetValue(Nothing).ToString
+            End If
         End Function
     End Class
 End Namespace

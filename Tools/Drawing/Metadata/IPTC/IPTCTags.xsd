@@ -237,6 +237,12 @@
             <xs:pattern value="[^-_][^-]*"/>
         </xs:restriction>
     </xs:simpleType>
+    <!--reference to type-->
+    <xs:simpleType name="type-reference">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\[?[\p{L}][\p{L}\p{Nd}]*\]?(\.\[?[\p{L}][\p{L}\p{Nd}]*\]?)*"/>
+        </xs:restriction>
+    </xs:simpleType>
     <!--VB integers-->
     <xs:simpleType name="NETIntegrals">
         <xs:annotation>
@@ -616,6 +622,11 @@
             <xs:attribute name="category" type="Categories" use="required">
                 <xs:annotation>
                     <xs:documentation>Category of rendered property</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="converter" type="type-reference" use="required">
+                <xs:annotation>
+                    <xs:documentation>Type passed to TypeConverterAttribute</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
         </xs:complexType>

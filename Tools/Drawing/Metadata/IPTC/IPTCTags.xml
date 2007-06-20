@@ -9,7 +9,7 @@
         <tag number="5" name="Destination" human-name="Destination" type="GraphicCharacters" fixed="false" length="1024" mandatory="false" repeatable="true" category="Old IPTC">
             <desc>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</desc>
         </tag>
-        <tag number="20" name="FileFormat" human-name="File Format" type="Enum-binary" enum="FileFormats" fixed="true" length="2" mandatory="true" repeatable="false" category="Old IPTC">
+        <tag number="20" name="FileFormat" human-name="File Format" type="Enum-binary" enum="FileFormats" fixed="true" length="2" mandatory="true" repeatable="false" category="Embeded object">
             <desc>A number representing the file format.</desc>
             <remarks>The file format must be registered with IPTC or NAA with a unique number assigned to it (see Appendix A). The information is used to route the data to the appropriate system and to allow the receiving system to perform the appropriate actions thereto.</remarks>
         </tag>
@@ -46,7 +46,7 @@
             <item name="RBNITF_DTD" value="28" desc="Ritzaus Bureau NITF version (RBNITF DTD)" human-name="RBNITF DTD"/>
             <item name="CorelDraw" value="29" desc="Corel Draw [*.CDR]" human-name="Corel Draw"/>
         </enum>
-        <tag number="22" name="FileFormatVersion" human-name="File Format Version" type="Enum-binary" enum="FileFormatVersions" fixed="true" length="2" mandatory="true" repeatable="false" category="Old IPTC">
+        <tag number="22" name="FileFormatVersion" human-name="File Format Version" type="Enum-binary" enum="FileFormatVersions" fixed="true" length="2" mandatory="true" repeatable="false" category="Embeded object">
             <desc>
                 A binary number representing the particular version of the <see cref='FileFormat'/>
             </desc>
@@ -84,7 +84,7 @@
         <tag number="80" name="TimeSent" human-name="Time Sent" type="HHMMSS-HHMM" fixed="true" mandatory="false" repeatable="false" length="11" category="Date">
             <desc>This is the time the service sent the material.</desc>
         </tag>
-        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteArray" fixed="false" mandatory="false" repeatable="false" length="32" category="Old IPTC">
+        <tag number="90" name="CodedCharacterSet" human-name="CodedCharacterSet" type="ByteArray" fixed="false" mandatory="false" repeatable="false" length="32" category="Old IPTC" attributes="&lt;TypeConverter(GetType(HexaConverter))> &lt;Editor(GetType(Drawing.Design.UITypeEditor), GetType(Drawing.Design.UITypeEditor))>">
             <desc>
                 Array of bytes consisting of one or
                 more control functions used for the announcement, invocation or
@@ -394,7 +394,7 @@
             <item value="UP" human-name="UP" name="UP" desc="United Press International"/>
             <item value="UPI" human-name="UPI" name="UPI" desc="United Press International"/>
         </senum>
-        <group name="ARM" human-name="ARM" repeatable="false" mandatory="false" category="Old IPTC">
+        <group name="ARM" human-name="ARM" repeatable="false" mandatory="false" category="Old IPTC" converter="ARMGroup.Converter">
             <desc>Abstract Relation Method</desc>
             <tag number="120" name="ARMIdentifier" human-name="ARM Identifier" type="Enum-binary" enum="ARMMethods" mandatory="true" repeatable="false" fixed="true" length="2" category="Old IPTC">
                 <desc>The DataSet identifies the Abstract Relationship Method (ARM) which is described in a document registered by the originator of the ARM with the IPTC and NAA.</desc>
@@ -875,7 +875,7 @@
             <desc>Used to indicate specific information retrieval words.</desc>
             <remarks>Each keyword uses a single Keywords DataSet. Multiple keywords use multiple Keywords DataSets. It is expected that a provider of various types of data that are related in subject matter uses the same keyword, enabling the receiving system or subsystems to search across all types of data for related material.</remarks>
         </tag>
-        <group name="ContentLocation" human-name="Content Location" mandatory="false" repeatable="true" category="Location">
+        <group name="ContentLocation" human-name="Content Location" mandatory="false" repeatable="true" category="Location"  converter="ExpandableObjectConverter" attributes="&lt;TypeConverter(GetType(TypeConverter))>">
             <desc>Country/geographical location referenced by the content of the object</desc>
             <tag number="26" name="ContentLocationCode" human-name="Content Location Code" type="StringEnum" mandatory="true" fixed="true" repeatable="false" length="3" enum="ISO3166" category="Location">
                 <desc>Indicates the code of a country/geographical location referenced by the content of the object.</desc>
@@ -1189,7 +1189,7 @@
             <item value="3" name="ObjectAppend" human-name="Object Append" desc="Object Append. Signifies that the provider wants to append to the referenced object information provided in the objectdata of the current envelope."/>
             <item value="4" name="ObjectReference" human-name="Object Reference" desc="Object Reference. Signifies that the provider wants to make reference to objectdata in a different envelope."/>
         </enum>
-        <group name="Reference" human-name="Reference" mandatory="false" repeatable="true" category="Old IPTC">
+        <group name="Reference" human-name="Reference" mandatory="false" repeatable="true" category="Old IPTC"  converter="ExpandableObjectConverter" attributes="&lt;TypeConverter(GetType(TypeConverter))>">
             <desc>Identifies a prior envelope to which the current object refers.</desc>
             <remarks>Indicate that the current object refers to the content of a prior envelope.</remarks>
             <tag number="45" name="ReferenceService" human-name="Reference Service" type="GraphicCharacters" mandatory="true" repeatable="false" fixed="false" length="10" category="Old IPTC">
@@ -1234,7 +1234,7 @@
             <item name="Evening" human-name="evening" value="p" desc="Evening"/>
             <item name="Both" human-name="both" value="b" desc="Both"/>
         </senum>
-        <group name="ByLineInfo" human-name="By-line info" mandatory="false" repeatable="true" category="Author">
+        <group name="ByLineInfo" human-name="By-line info" mandatory="false" repeatable="true" category="Author" converter="ExpandableObjectConverter">
             <desc>Creator of the object data</desc>
             <tag number="80" name="ByLine" human-name="By-line" type="TextWithSpaces" mandatory="true" repeatable="false" fixed="false" length="32" category="Author">
                 <desc>Contains name of the creator of the objectdata, e.g. writer, photographer or graphic artist.</desc>
@@ -1367,7 +1367,7 @@
             <desc>Identifies the content of the end of an audio objectdata, according to guidelines established by the provider.</desc>
             <remarks>The outcue generally consists of the final words spoken within an audio objectdata or the final sounds heard.</remarks>
         </tag>
-        <group name="ObjectDataPreview" human-name="ObjectData Preview" category="Embeded object" mandatory="false" repeatable="false" attributes="&lt;Editor(GetType(NewEditor),GetType(System.Drawing.Design.UITypeEditor))>">
+        <group name="ObjectDataPreview" human-name="ObjectData Preview" category="Embeded object" mandatory="false" repeatable="false" attributes="&lt;Editor(GetType(NewEditor),GetType(System.Drawing.Design.UITypeEditor))>" converter="ObjectDataPreviewGroup.Converter">
             <desc>Preview of embeded object</desc>
             <tag number="200" name="ObjectDataPreviewFileFormat" human-name="ObjectData Preview File Format" type="Enum-binary" enum="FileFormats" fixed="true" mandatory="true" repeatable="false" length="2" category="Embeded object">
                 <desc>The file format of the ObjectData Preview.</desc>
@@ -1377,7 +1377,7 @@
                 <desc>The particular version of the ObjectData Preview File Format specified in <see cref="ObjectDataPreviewFileFormat"/></desc>
                 <remarks>The File Format Version is taken from the list included in Appendix A</remarks>
             </tag>
-            <tag number="202" name="ObjectDataPreviewData" human-name="ObjectData Preview Data" type="ByteArray" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object">
+            <tag number="202" name="ObjectDataPreviewData" human-name="ObjectData Preview Data" type="ByteArray" mandatory="true" repeatable="false" fixed="false" length="0" category="Embeded object" attributes="&lt;Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> &lt;TypeConverter(GetType(FileByteConverter))>">
                 <desc>Maximum size of 256000 octets consisting of binary data.</desc>
             </tag>
         </group>
@@ -1407,7 +1407,7 @@
     </record>
     <record number="8" name="ObjectDataRecord" human-name="ObjectData Record">
         <desc>Contains embeded object</desc>
-        <tag number="10" human-name="Subfile" name="Subfile" type="ByteArray" category="Embeded object" fixed="false" length="0" mandatory="true" repeatable="false">
+        <tag number="10" human-name="Subfile" name="Subfile" type="ByteArray" category="Embeded object" fixed="false" length="0" mandatory="true" repeatable="false" attributes="&lt;Editor(GetType(EmbededFileEditor), GetType(Drawing.Design.UITypeEditor))> &lt;TypeConverter(GetType(FileByteConverter))>">
             <desc>Subfile DataSet containing the objectdata itself.</desc>
             <remarks>Subfiles must be sequential so that the subfiles may be reassembled.</remarks>
         </tag>

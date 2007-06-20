@@ -134,12 +134,13 @@ Namespace DrawingT.MetadataT
                     Return _SubjectReferenceNumber
                 End Get
                 Set(ByVal value As Integer)
-                    If Array.IndexOf([Enum].GetValues(GetType(SubjectReferenceNumbers)), value) < 0 AndAlso _
-                            Array.IndexOf([Enum].GetValues(GetType(SubjectMatterNumbers)), value) < 0 AndAlso _
-                            Array.IndexOf([Enum].GetValues(GetType(EconomySubjectDetail)), value) < 0 AndAlso _
+                    If Array.IndexOf([Enum].GetValues(GetType(SubjectReferenceNumbers)), CType(value, SubjectReferenceNumbers)) < 0 AndAlso _
+                            Array.IndexOf([Enum].GetValues(GetType(SubjectMatterNumbers)), CType(value, SubjectMatterNumbers)) < 0 AndAlso _
+                            Array.IndexOf([Enum].GetValues(GetType(EconomySubjectDetail)), CType(value, EconomySubjectDetail)) < 0 AndAlso _
                             value <> 0 Then
                         Throw New InvalidEnumArgumentException("SubjectReferenceNumber must be member of either SubjectReferenceNumbers, SubjectMatterNumbers or EconomySubjectDetail")
                     End If
+                    _SubjectReferenceNumber = value
                 End Set
             End Property
             ''' <summary>Subject component of <see cref="SubjectReferenceNumber"/></summary>
@@ -167,11 +168,11 @@ Namespace DrawingT.MetadataT
             <DisplayName("Subject Matter Number"), Description("Matter component of Subject Reference Number")> _
             Public Property SubjectMatterNumber() As SubjectMatterNumbers 'Localize: Description and DisplayName
                 Get
-                    Return ((SubjectReferenceNumber Mod SubjRefNMask) \ SubjMatterMask) * SubjMatterMask
+                    Return ((SubjectReferenceNumber) \ SubjMatterMask) * SubjMatterMask
                 End Get
                 Set(ByVal value As SubjectMatterNumbers)
                     If value <> 0 AndAlso Array.IndexOf([Enum].GetValues(GetType(SubjectMatterNumbers)), value) < 0 Then Throw New InvalidEnumArgumentException("value", value, GetType(SubjectMatterNumbers))
-                    SubjectReferenceNumber = SubjectNumber + (value Mod SubjRefNMask)
+                    SubjectReferenceNumber = value 'SubjectNumber + (value Mod SubjRefNMask)
                 End Set
             End Property
             ''' <summary>Detail component of <see cref="SubjectReferenceNumber"/></summary>
@@ -183,11 +184,11 @@ Namespace DrawingT.MetadataT
             <DisplayName("Subject Detail Number"), Description("Detail component of Subject Reference Number")> _
             Public Property SubjectDetailNumber() As EconomySubjectDetail 'Localize: Description and DisplayName
                 Get
-                    Return SubjectReferenceNumber Mod SubjMatterMask
+                    Return SubjectReferenceNumber 'Mod SubjMatterMask
                 End Get
                 Set(ByVal value As EconomySubjectDetail)
                     If value <> 0 AndAlso Array.IndexOf([Enum].GetValues(GetType(EconomySubjectDetail)), value) < 0 Then Throw New InvalidEnumArgumentException("value", value, GetType(EconomySubjectDetail))
-                    SubjectReferenceNumber = SubjectNumber + (SubjectMatterNumber Mod SubjRefNMask) + (value Mod SubjMatterMask)
+                    SubjectReferenceNumber = value '= SubjectNumber + (SubjectMatterNumber Mod SubjRefNMask) + (value Mod SubjMatterMask)
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="SubjectName"/> property</summary>              
@@ -258,11 +259,13 @@ Namespace DrawingT.MetadataT
                 Dim PartI As Integer = 0
                 For i As Integer = 0 To Bytes.Length - 1
                     If Bytes(i) = AscW(":"c) Then
-                        Parts(PartI) = New Pair(Of Integer)(LastColon + 1, i - LastColon + 1)
+                        Parts(PartI) = New Pair(Of Integer)(LastColon + 1, i - LastColon - 1)
                         PartI += 1
                         LastColon = i
                     End If
                 Next i
+                Parts(PartI) = New Pair(Of Integer)(LastColon + 1, Bytes.Length - 1 - LastColon)
+                PartI += 1
                 If PartI <> 5 Then Throw New ArgumentException("SubjectReference must contain exactly 5 parts")
                 Me.IPR = System.Text.Encoding.ASCII.GetString(Bytes, Parts(0).Value1, Parts(0).Value2)
                 Me.SubjectReferenceNumber = System.Text.Encoding.ASCII.GetString(Bytes, Parts(1).Value1, Parts(1).Value2)
@@ -284,15 +287,31 @@ Namespace DrawingT.MetadataT
                 Dim Bytes(4)() As Byte
                 Bytes(0) = System.Text.Encoding.ASCII.GetBytes(Me.IPR)
                 Bytes(1) = System.Text.Encoding.ASCII.GetBytes(Me.SubjectReferenceNumber.ToString(New String("0"c, 8), InvariantCulture))
-                Bytes(2) = Encoding.GetBytes(Me.SubjectName)
-                Bytes(3) = Encoding.GetBytes(Me.SubjectMatterName)
-                Bytes(4) = Encoding.GetBytes(Me.SubjectDetailName)
+                If Me.SubjectDetailName IsNot Nothing Then
+                    Bytes(2) = Encoding.GetBytes(Me.SubjectName)
+                Else
+                    Bytes(2) = New Byte() {}
+                End If
+                If Me.SubjectMatterName IsNot Nothing Then
+                    Bytes(3) = Encoding.GetBytes(Me.SubjectMatterName)
+                Else
+                    Bytes(3) = New Byte() {}
+                End If
+                If Me.SubjectDetailName IsNot Nothing Then
+                    Bytes(4) = Encoding.GetBytes(Me.SubjectDetailName)
+                Else
+                    Bytes(4) = New Byte() {}
+                End If
                 If Bytes(0).Length > 32 Or Bytes(0).Length < 1 Then Throw New InvalidOperationException("Length of serialized IPR is not within range 1÷32 bytes")
                 If Bytes(1).Length <> 8 Then Throw New InvalidOperationException("Lenght of serialized SubjectreferenceNumber diffrs from 8 bytes")
                 If Bytes(2).Length > 64 OrElse Bytes(3).Length > 64 OrElse Bytes(4).Length > 64 Then Throw New InvalidOperationException("Lenght of serialized name exceeds 64 bytes")
-                Dim arr(Bytes(0).Length + Bytes(1).Length + Bytes(2).Length + Bytes(3).Length + Bytes(4).Length - 1) As Byte
+                Dim arr(Bytes(0).Length + Bytes(1).Length + Bytes(2).Length + Bytes(3).Length + Bytes(4).Length - 1 + 4) As Byte
                 Dim CurrPos As Integer = 0
                 For i As Integer = 0 To 4
+                    If i > 0 Then
+                        System.Text.Encoding.ASCII.GetBytes(":").CopyTo(arr, CurrPos)
+                        CurrPos += 1
+                    End If
                     Bytes(i).CopyTo(arr, CurrPos)
                     CurrPos += Bytes(i).Length
                 Next i
@@ -402,9 +421,11 @@ Namespace DrawingT.MetadataT
                 Me.New()
                 Me.UCD = UCD
                 Me.IPR = IPR
-                For Each item As String In ODE
-                    Me.ODE.Add(item)
-                Next item
+                If ODE IsNot Nothing Then
+                    For Each item As String In ODE
+                        Me.ODE.Add(item)
+                    Next item
+                End If
                 Me.ODE.RemoveAt(0)
                 Me.OVI = OVI
             End Sub
@@ -1465,28 +1486,27 @@ Namespace DrawingT.MetadataT
                 End Function
             End Class
         End Structure
-        ''' <summary>Checks if specified value is member of an enumeration</summary>
-        ''' <param name="value">Value to be chcked</param>
-        ''' <returns>True if <paramref name="value"/> is member of <paramref name="T"/></returns>
-        ''' <typeparam name="T">Enumeration to be tested</typeparam>
-        ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
-        Private Shared Function InEnum(Of T As {IConvertible, Structure})(ByVal value As T) As Boolean
-            'TODO:Extract this as separate tool
-            Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
-        End Function
-        ''' <summary>Gets <see cref="Reflection.FieldInfo"/> that represent given constant within an enum</summary>
-        ''' <param name="value">Constant to be found</param>
-        ''' <returns><see cref="Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <paramref name="T"/></returns>
-        ''' <typeparam name="T"><see cref="[Enum]"/> to found constant within</typeparam>
-        ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
-        ''' <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <paramref name="T"/></exception>
-        Private Shared Function GetConstant(Of T As {IConvertible, Structure})(ByVal value As T) As Reflection.FieldInfo
-            'TODO:Extract as separate tool
-            Return GetType(T).GetField([Enum].GetName(GetType(T), value))
-        End Function
         ''' <summary>IPTC image type (IPTC type <see cref="IPTCTypes.ImageType"/>)</summary>
-        <TypeConverter(GetType(ExpandableObjectConverter))> _
+        <TypeConverter(GetType(iptcImageType.Converter))> _
+        <DebuggerDisplay("{ToString}")> _
         Public Structure iptcImageType : Implements IMediaType(Of ImageTypeComponents, ImageTypeContents)
+            ''' <summary>CTor</summary>
+            ''' <param name="TypeCode"><see cref="Type"/> as <see cref="Char"/></param>
+            ''' <param name="Components">Number of components</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Components"/> is not member of <see cref="ImageTypeComponents"/> -or- <paramref name="TypeCode"/> cannot be interpreted as member of <see cref="ImageTypeContents"/></exception>
+            Public Sub New(ByVal Components As Byte, ByVal TypeCode As Char)
+                Me.Components = Components
+                For Each cns As Reflection.FieldInfo In GetType(ImageTypeContents).GetFields
+                    If cns.IsLiteral AndAlso cns.IsPublic Then
+                        Dim attrs As Object() = cns.GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)
+                        If (attrs IsNot Nothing AndAlso attrs.Length > 0 AndAlso DirectCast(attrs(0), Xml.Serialization.XmlEnumAttribute).Name = TypeCode) OrElse ((attrs Is Nothing OrElse attrs.Length = 0) AndAlso cns.Name = TypeCode) Then
+                            Me.Type = cns.GetValue(Nothing)
+                            Exit Sub
+                        End If
+                    End If
+                Next cns
+                Throw New InvalidEnumArgumentException(String.Format("{0} cannot be interpreted as member of ImageTypeContents", TypeCode))
+            End Sub
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Type As ImageTypeContents
@@ -1527,7 +1547,7 @@ Namespace DrawingT.MetadataT
                 Set(ByVal value As Char)
                     For Each Constant As Reflection.FieldInfo In GetType(ImageTypeContents).GetFields()
                         Dim Attrs As Object() = Constant.GetCustomAttributes(GetType(Xml.Serialization.XmlEnumAttribute), False)
-                        If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then
+                        If (Attrs IsNot Nothing AndAlso Attrs.Length > 0 AndAlso DirectCast(Attrs(0), Xml.Serialization.XmlEnumAttribute).Name = value) OrElse ((Attrs Is Nothing OrElse Attrs.Length = 0) AndAlso Constant.Name = value) Then
                             Type = Constant.GetValue(Nothing)
                             Return
                         End If
@@ -1539,17 +1559,60 @@ Namespace DrawingT.MetadataT
             Public Overrides Function ToString() As String
                 Return String.Format(InvariantCulture, "{0}{1}", CByte(Components), TypeCode)
             End Function
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="iptcImageType"/></summary>
+            Public Class Converter
+                Inherits ExpandableObjectConverter(Of iptcImageType, String)
+                ''' <summary>Returns whether changing a value on this object requires a call to <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)"/> to create a new value, using the specified context.</summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>True if <see cref="PropertyDescriptor.PropertyType"/> of <see cref="ITypeDescriptorContext"/> of <paramref name="context"/> is not null and is subclass of <see cref="NumStr"/> (not <see cref="NumStr"/> itself)</returns>
+                Public Overrides Function GetCreateInstanceSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    Return True
+                End Function
+                ''' <summary>Creates an instance of the type that this <see cref="System.ComponentModel.TypeConverter"/> is associated with, using the specified context, given a set of property values for the object.</summary>
+                ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> of new property values.</param>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>Instance of <see cref="iptcAudioType"/> initialized by given property values</returns>
+                Public Overrides Function CreateInstance(ByVal propertyValues As System.Collections.IDictionary, ByVal context As System.ComponentModel.ITypeDescriptorContext) As iptcImageType
+                    Dim ret As iptcImageType
+                    ret.Components = propertyValues!Components
+                    ret.Type = propertyValues!Type
+                    Return ret
+                End Function
+                ''' <summary>Performs conversion from <see cref="String"/> to <see cref="iptcImageType"/></summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+                ''' <param name="value">Value to be converted to type <see cref="iptcAudioType"/></param>
+                ''' <returns>Value of <see cref="iptcAudioType"/> initialized by <paramref name="value"/></returns>
+                ''' <exception cref="ArgumentException">Length of <paramref name="value"/> differs from 2</exception>
+                ''' <exception cref="InvalidCastException">Second character cannot be interpreted as number</exception>
+                ''' <exception cref="InvalidEnumArgumentException">First character cannot be interpreted as <see cref="ImageTypeContents"/> or second character cannot be interpreted as <see cref="ImageTypeComponents"/></exception>
+                Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As iptcImageType
+                    If value.Length <> 2 Then Throw New ArgumentException("Length of value must be 2")
+                    Return New iptcImageType(CStr(value(0)), CStr(value(1)))
+                End Function
+                ''' <summary>Performs conversion from type <see cref="iptcImageType"/> to type <see cref="String"/></summary>
+                ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+                ''' <param name="value">Value to be converted</param>
+                ''' <returns>Representation of <paramref name="value"/> in type <see cref="String"/></returns>
+                Public Overloads Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As iptcImageType) As String
+                    Return value.ToString
+                End Function
+            End Class
         End Structure
 
         ''' <summary>IPTC audio type (IPTC type <see cref="IPTCTypes.AudioType"/>)</summary>
         <TypeConverter(GetType(iptcAudioType.Converter))> _
+        <DebuggerDisplay("{ToString}")> _
         Public Structure iptcAudioType : Implements IMediaType(Of Byte, AudioDataType)
             ''' <summary>CTor</summary>
-            ''' <param name="TypeCode"><see cref="Type"/> as <see cref="Char"/></param>
             ''' <param name="Components">Number of components</param>
-            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Components"/> is not within range 0÷9</exception>
-            ''' <exception cref="ArgumentException">Cannot be interpreted as <see cref="AudioDataType"/></exception>
-            Public Sub New(ByVal TypeCode As Char, ByVal Components As Byte)
+            ''' <param name="TypeCode">
+            ''' <see cref="Type"></see> as <see cref="Char"></see></param>
+            ''' <exception cref="ArgumentOutOfRangeException">
+            ''' <paramref name="Components"></paramref> is not within range 0÷9</exception>
+            ''' <exception cref="ArgumentException">Cannot be interpreted as <see cref="AudioDataType"></see></exception>
+            Public Sub New(ByVal Components As Byte, ByVal TypeCode As Char)
                 Me.Components = Components
                 Me.TypeCode = TypeCode
             End Sub
@@ -1605,23 +1668,9 @@ Namespace DrawingT.MetadataT
             Public Overrides Function ToString() As String
                 Return String.Format(InvariantCulture, "{0}{1}", Components, TypeCode)
             End Function
-            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="AudioType"/></summary>
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="iptcAudioType"/></summary>
             Public Class Converter
-                Inherits TypeConverter(Of iptcAudioType, String)
-                ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
-                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
-                ''' <returns>true if <see cref="M:System.ComponentModel.TypeConverter.GetProperties(System.Object)"/> should be called to find the properties of this object; otherwise, false.</returns>
-                Public Overrides Function GetPropertiesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
-                    Return True
-                End Function
-                ''' <summary>Returns a collection of properties for the type of array specified by the value parameter, using the specified context and attributes.</summary>
-                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
-                ''' <param name="attributes">An array of type <see cref="System.Attribute"/> that is used as a filter.</param>
-                ''' <param name="value">An <see cref="System.Object"/> that specifies the type of array for which to get properties.</param>
-                ''' <returns>A <see cref="System.ComponentModel.PropertyDescriptorCollection"/> with the properties that are exposed for this data type, or null if there are no properties.</returns>
-                Public Overrides Function GetProperties(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As Object, ByVal attributes() As System.Attribute) As System.ComponentModel.PropertyDescriptorCollection
-                    Return TypeDescriptor.GetProperties(GetType(iptcAudioType), attributes)
-                End Function
+                Inherits ExpandableObjectConverter(Of iptcAudioType, String)
                 ''' <summary>Returns whether changing a value on this object requires a call to <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)"/> to create a new value, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <returns>True if <see cref="PropertyDescriptor.PropertyType"/> of <see cref="ITypeDescriptorContext"/> of <paramref name="context"/> is not null and is subclass of <see cref="NumStr"/> (not <see cref="NumStr"/> itself)</returns>
@@ -2360,6 +2409,69 @@ Namespace DrawingT.MetadataT
                 If ObjectDataPreviewData Is Nothing Then Bytes = 0 Else Bytes = ObjectDataPreviewData.Length
                 Return String.Format("{0}B", Bytes)
             End Function
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="ObjectDataPreviewGroup"/></summary>
+            Public Class Converter : Inherits ExpandableObjectConverter(Of ObjectDataPreviewGroup)
+                ''' <summary>Returns whether changing a value on this object requires a call to the <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)"/> method to create a new value.</summary>
+                ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <remarks>True</remarks>
+                Public Overrides Function GetCreateInstanceSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    Return True
+                End Function
+                ''' <summary>Creates an instance of the type that this <see cref="System.ComponentModel.TypeConverter"/> is associated with, using the specified context, given a set of property values for the object.</summary>
+                ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> of new property values.</param>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>New instance of <see cref="ObjectDataPreviewGroup"/> initialized from <paramref name="propertyValues"/></returns>
+                Public Overrides Function CreateInstance(ByVal propertyValues As System.Collections.IDictionary, ByVal context As System.ComponentModel.ITypeDescriptorContext) As ObjectDataPreviewGroup
+                    Dim ret As New ObjectDataPreviewGroup
+                    With propertyValues
+                        ret.ObjectDataPreviewData = !ObjectDataPreviewData
+                        ret.ObjectDataPreviewFileFormat = !ObjectDataPreviewFileFormat
+                        ret.ObjectDataPreviewFileFormatVersion = !ObjectDataPreviewFileFormatVersion
+                    End With
+                    Return ret
+                End Function
+            End Class
+        End Class
+        <DebuggerDisplay("{ToString}")> _
+        Partial Class ContentLocationGroup
+            ''' <summary>String representation</summary>
+            Public Overrides Function ToString() As String
+                Return String.Format("{0} {1}", Me.ContentLocationCode, Me.ContentLocationName)
+            End Function
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                Me.ContentLocationCode = New StringEnum(Of ISO3166)(ISO3166.Afghanistan)
+                Me.ContentLocationName = DirectCast(GetConstant(ISO3166.Afghanistan).GetCustomAttributes(GetType(DisplayNameAttribute), True)(0), DisplayNameAttribute).DisplayName
+            End Sub
+        End Class
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
+        Partial Class ARMGroup
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                Me.ARMIdentifier = ARMMethods.IPTCMethod1
+                Me.ARMVersion = ARMVersions.ARM1
+            End Sub
+            ''' <summary><see cref="System.ComponentModel.TypeConverter"/> for <see cref="ARMGroup"/></summary>
+            Public Class Converter : Inherits ExpandableObjectConverter(Of ARMGroup)
+                ''' <summary>Returns whether changing a value on this object requires a call to the <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)"/> method to create a new value.</summary>
+                ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <remarks>True</remarks>
+                Public Overrides Function GetCreateInstanceSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    Return True
+                End Function
+                ''' <summary>Creates an instance of the type that this <see cref="System.ComponentModel.TypeConverter"/> is associated with, using the specified context, given a set of property values for the object.</summary>
+                ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> of new property values.</param>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>New instance of <see cref="ARMGroup"/> initialized from <paramref name="propertyValues"/></returns>
+                Public Overrides Function CreateInstance(ByVal propertyValues As System.Collections.IDictionary, ByVal context As System.ComponentModel.ITypeDescriptorContext) As ARMGroup
+                    Dim ret As New ARMGroup
+                    With propertyValues
+                        ret.ARMIdentifier = !ARMIdentifier
+                        ret.ARMVersion = !ARMVersion
+                    End With
+                    Return ret
+                End Function
+            End Class
         End Class
 #End Region
     End Class
