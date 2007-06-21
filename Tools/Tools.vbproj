@@ -138,7 +138,7 @@
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTC.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IIPTCGetter.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCTags.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -8,14 +8,28 @@ Namespace DrawingT.MetadataT
     Partial Public Class IPTC
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()
+            AddHandler _Tags.Adding, AddressOf _Tags_Change
+            AddHandler _Tags.ItemChanging, AddressOf _Tags_Change
+            _Tags.AllowAddCancelableEventsHandlers = True
+        End Sub
+        ''' <summary>Handles <see cref="ListWithEvents(Of KeyValuePair(Of DataSetIdentification, Byte())).Adding"/> and <see cref="ListWithEvents(Of KeyValuePair(Of DataSetIdentification, Byte())).ItemChanging"/> events and checks if added item data are not so long</summary>
+        ''' <param name="sender"><see cref="Tag"/></param>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>The <see cref="CollectionsT.GenericT.ListWithEvents(Of System.Collections.Generic.KeyValuePair(Of DataSetIdentification, Byte())).CancelableItemIndexEventArgs.Cancel"/> is set tor true when lenght of data is longer than 32767 which causet <see cref="OperationCanceledException"/> to be thrown by caller</remarks>
+        Private Sub _Tags_Change(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of System.Collections.Generic.KeyValuePair(Of DataSetIdentification, Byte())), ByVal e As CollectionsT.GenericT.ListWithEvents(Of System.Collections.Generic.KeyValuePair(Of DataSetIdentification, Byte())).CancelableItemIndexEventArgs)
+            If e.Item.Value.Length > 32767 Then
+                e.Cancel = True
+                e.CancelMessage = "DataSets longer than 32767B are not supported"
+            End If
         End Sub
         ''' <summary>Contains value of the <see cref="Tags"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Tags As New List(Of KeyValuePair(Of DataSetIdentification, Byte()))
+        Private _Tags As New ListWithEvents(Of KeyValuePair(Of DataSetIdentification, Byte()))(True, True)
 
         ''' <summary>CTor from <see cref="IPTCReader"/></summary>
         ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from</param>
         Public Sub New(ByVal Reader As IPTCReader)
+            Me.New()
             For Each t As IPTCReader.IPTCRecord In Reader.Records
                 Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(New DataSetIdentification(t.RecordNumber, t.Tag), t.Data))
             Next t
@@ -28,7 +42,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Removes all occurences of specified tag</summary>         
         ''' <param name="Key">Tag to remove</param>                            
         Public Sub Clear(ByVal Key As DataSetIdentification)
-            Tags.RemoveAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
+            _Tags.RemoveAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
         End Sub
         ''' <summary>Removes all tags</summary>
         Public Sub Clear()
@@ -37,7 +51,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Gets count of tags with specified key</summary>
         ''' <param name="Key">DataSet identification to count tags with</param>
         Public Function Contains(ByVal Key As DataSetIdentification) As Integer
-            Return Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key)).Count
+            Return _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key)).Count
         End Function
         ''' <summary>Called when value of any tag changes</summary>
         ''' <param name="Tag">Recod and dataset number</param>
@@ -72,10 +86,11 @@ Namespace DrawingT.MetadataT
         ''' <remarks>This property does no checks if tag <paramref name="Key"/> is repeatable or not and does not checks structure of byte arrays that represents values of tags, so you can totally corrupt structure if some fields. Also tag grouping is not checked. You should use this property very carefully or you can damage internal structure of IPTC data</remarks>
         ''' <value>New values for particular tag. Values of tags are replaced with new values. If there was more tags with same <paramref name="Key"/> than is being set then the next tags are removed. If there was less tags with same <paramref name="Key"/> necessary items are added at the end of the stream</value>
         ''' <returns>List of values of tag or null if tag is missing</returns>
+        ''' <exception cref="NotSupportedException">Setting byte array longer then 32767</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Default Protected Property Tag(ByVal Key As DataSetIdentification) As List(Of Byte())
             Get
-                Dim ret As List(Of KeyValuePair(Of DataSetIdentification, Byte())) = Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
+                Dim ret As List(Of KeyValuePair(Of DataSetIdentification, Byte())) = _Tags.FindAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
                 If ret IsNot Nothing AndAlso ret.Count > 0 Then
                     Dim ret2 As New List(Of Byte())
                     For Each Item As KeyValuePair(Of DataSetIdentification, Byte()) In ret
@@ -87,6 +102,9 @@ Namespace DrawingT.MetadataT
                 End If
             End Get
             Set(ByVal value As List(Of Byte()))
+                For Each item As Byte() In value
+                    If item.Length > 32767 Then Throw New NotSupportedException("IPTC DataSets longer that 32767 bytes are not supported")
+                Next item
                 Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(Key).GetIndices(Tags)
                 Dim i As Integer = 0
                 'Replace values of existing tags with same key
@@ -113,11 +131,51 @@ Namespace DrawingT.MetadataT
             End Set
         End Property
         ''' <summary>All tags and their values in IPTC stream</summary>
-        Protected ReadOnly Property Tags() As List(Of KeyValuePair(Of DataSetIdentification, Byte()))
+        ''' <remarks><see cref="IList(Of KeyValuePair(Of DataSetIdentification, Byte())).Add"/> and <see cref="IList(Of KeyValuePair(Of DataSetIdentification, Byte())).Item"/>' setter throws an <see cref="OperationCanceledException"/> when trying to arr or set item that consists of more than 32767 bytes</remarks>
+        Protected ReadOnly Property Tags() As IList(Of KeyValuePair(Of DataSetIdentification, Byte()))
             <DebuggerStepThrough()> Get
                 Return _Tags
             End Get
         End Property
+        ''' <summary>Sorts tags so they are ordered in IPTC-standard-non-violating manner</summary>
+        ''' <remarks>That means that they are ordered by recod number. Order of individual datasets inside records is kept</remarks>
+        Protected Overridable Sub SortTags()
+            Dim taglist(9) As List(Of KeyValuePair(Of DataSetIdentification, Byte()))
+            For Each item As KeyValuePair(Of DataSetIdentification, Byte()) In Tags
+                If taglist(item.Key.RecordNumber) Is Nothing Then taglist(item.Key.RecordNumber) = New List(Of KeyValuePair(Of DataSetIdentification, Byte()))
+                taglist(item.Key.RecordNumber).Add(item)
+            Next item
+            Dim NewList As New List(Of KeyValuePair(Of DataSetIdentification, Byte()))
+            For i As Integer = 0 To 9
+                NewList.AddRange(taglist(i))
+            Next i
+            _Tags.Clear()
+            _Tags.AddRange(NewList)
+        End Sub
+        ''' <summary>Gets bytes of IPTC stream</summary>
+        ''' <returns>IPTC data encoded according to the IPTC standard in set of tags</returns>
+        ''' <remarks>The tag format is following:
+        ''' B1: 0x1C, B2: Record Number, B3 DataSet Number, B4&amp;5 Length of data, B6+ Data
+        ''' </remarks>
+        Public Function GetBytes() As Byte()
+            Dim str As New System.IO.MemoryStream()
+            Dim bw As New System.IO.BinaryWriter(str)
+            For Each Tag As KeyValuePair(Of DataSetIdentification, Byte()) In Tags
+                bw.Write(CByte(&H1C))
+                bw.Write(CByte(Tag.Key.RecordNumber))
+                bw.Write(CByte(Tag.Key.DatasetNumber))
+                If Tag.Value IsNot Nothing Then
+                    bw.Write(MathT.LEBE(CUInt(Tag.Value.Length)))
+                    bw.Write(Tag.Value)
+                Else
+                    bw.Write(MathT.LEBE(CUInt(0)))
+                End If
+            Next Tag
+            Dim pos As Integer = str.Position
+            str.Position = 0
+            Return New System.IO.BinaryReader(str).ReadBytes(pos)
+        End Function
+
         ''' <summary>Identifies IPTC tag (DataSet). Used for indexing.</summary>
         ''' <completionlist cref="DataSetIdentification"/>
         <DebuggerDisplay("{RecordNumber}:{DatasetNumber}")> _

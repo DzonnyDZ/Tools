@@ -9,7 +9,7 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="06/17/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="06/21/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
@@ -182,11 +182,24 @@ Namespace CollectionsT.GenericT
         End Sub
         ''' <summary>Adds range of items into list</summary>
         ''' <param name="Items">Collection of items to be added</param>
-        ''' <remarks>Internally calls <see cref="Add"/> for each item</remarks>
+        ''' <remarks>
+        ''' Internally calls <see cref="Add"/> for each item.
+        ''' If an exception occures in <see cref="Add"/> or event handler than no item is added.
+        ''' </remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         Public Overridable Sub AddRange(ByVal Items As IEnumerable(Of T))
-            For Each itm As T In Items
-                Add(itm)
-            Next itm
+            Dim StartAdd As Integer = Me.Count
+            Try
+                For Each itm As T In Items
+                    Add(itm)
+                Next itm
+            Catch
+                If Me.Count > StartAdd Then _
+                    InternalList.RemoveRange(StartAdd, Me.Count - StartAdd + 1)
+                Throw
+            End Try
         End Sub
 
         ''' <summary>Inserts an item to the <see cref="ListWithEvents(Of T)"/> at the specified index.</summary>
@@ -444,6 +457,43 @@ Namespace CollectionsT.GenericT
                 OnRemoved(New ItemIndexEventArgs(itm, index))
             End If
         End Sub
+        ''' <summary>Removes all items that matches given predicate</summary>
+        ''' <param name="Match">Predicate to match. If this predicate returns true, item is removed</param>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true.</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Match"/> is null</exception>
+        ''' <remarks>If any exception is thrown in <seealso cref="RemoveAt"/> or event handler no item is removed (collection stays unchanged)</remarks>
+        Public Overridable Sub RemoveAll(ByVal Match As Predicate(Of T))
+            If Match Is Nothing Then Throw New ArgumentNullException("Match")
+            Dim [Rem] As New List(Of Integer)
+            For i As Integer = 0 To Me.Count - 1
+                If Match.Invoke(Me(i)) Then
+                    [Rem].Add(i)
+                End If
+            Next i
+            Dim Removed As New List(Of KeyValuePair(Of Integer, T))
+            Try
+                For i As Integer = [Rem].Count - 1 To 0 Step -1
+                    Dim item As T = Me([Rem](i))
+                    Me.RemoveAt([Rem](i))
+                    Removed.Add(New KeyValuePair(Of Integer, T)(i, item))
+                Next i
+            Catch
+                For Each ReAdd As KeyValuePair(Of Integer, T) In Removed
+                    Me.InternalList.Insert(ReAdd.Key, ReAdd.Value)
+                Next ReAdd
+                Throw
+            End Try
+        End Sub
+        ''' <summary>Retrieves the all the elements that match the conditions defined by the specified predicate.</summary>
+        ''' <param name="match">The <see cref="System.Predicate(Of T)"/> delegate that defines the conditions of the elements to search for.</param>
+        ''' <returns>A <see cref="System.Collections.Generic.List(Of T)"/> containing all the elements that match the conditions defined by the specified predicate, if found; otherwise, an empty <see cref="System.Collections.Generic.List(Of T)"/>.</returns>
+        ''' <exception cref="System.ArgumentNullException"><paramref name="Match"/> is null.</exception>
+        ''' <remarks><seealso cref="List(Of T).FindAll"/></remarks>
+        Public Overridable Function FindAll(ByVal Match As Predicate(Of T)) As List(Of T)
+            Return InternalList.FindAll(Match)
+        End Function
 #End Region
         ''' <summary>Returns an enumerator that iterates through the collection.</summary>
         ''' <returns>A <see cref="System.Collections.Generic.IEnumerator(Of T)"/> that can be used to iterate through the collection.</returns>
