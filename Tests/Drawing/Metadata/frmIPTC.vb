@@ -18,15 +18,34 @@ Namespace DrawingT.MetadataT
             frm.Show()
         End Sub
         Private IPTC As IPTC
+        Private JPEG As JPEG.JPEGReader
+
+        Private Sub frmIPTC_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+            If JPEG IsNot Nothing Then JPEG.Dispose()
+        End Sub
         Private Sub frmIPTC_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
             If ofdIPTC.ShowDialog() = Windows.Forms.DialogResult.OK Then
-                picImage.Load(ofdIPTC.FileName)
-                Dim JPEG As New JPEG.JPEGReader(ofdIPTC.FileName)
-                IPTC = New IPTC(JPEG)
+                Try
+                    picImage.Load(ofdIPTC.FileName)
+                    JPEG = New JPEG.JPEGReader(ofdIPTC.FileName, True)
+                    IPTC = New IPTC(JPEG)
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+                    Me.Close()
+                    Exit Sub
+                End Try
                 prgProperties.SelectedObject = IPTC
             Else
                 Me.Close()
             End If
+        End Sub
+
+        Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
+            'Try
+            JPEG.IPTCEmbed(IPTC.GetBytes)
+            'Catch ex As Exception
+            ' MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+            ' End Try
         End Sub
     End Class
 End Namespace

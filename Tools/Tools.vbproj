@@ -126,7 +126,7 @@
     <Compile Include="Drawing\Design\NewEditor.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
-    <Compile Include="Drawing\IO\JPEG\Rational.vb" />
+    <Compile Include="Drawing\Metadata\Exif\Rational.vb" />
     <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
@@ -158,6 +158,7 @@
     <Compile Include="IO\BinaryReader.vb" />
     <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
     <Compile Include="IO\Path.vb" />
+    <Compile Include="IO\StreamTools.vb" />
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />

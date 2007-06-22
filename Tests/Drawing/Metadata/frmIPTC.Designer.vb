@@ -27,10 +27,13 @@ Namespace DrawingT.MetadataT
             Me.prgProperties = New System.Windows.Forms.PropertyGrid
             Me.picImage = New System.Windows.Forms.PictureBox
             Me.splMain = New System.Windows.Forms.SplitContainer
+            Me.cmdSave = New System.Windows.Forms.Button
+            Me.tlpSave = New System.Windows.Forms.TableLayoutPanel
             CType(Me.picImage, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
+            Me.tlpSave.SuspendLayout()
             Me.SuspendLayout()
             '
             'ofdIPTC
@@ -42,7 +45,7 @@ Namespace DrawingT.MetadataT
             Me.prgProperties.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgProperties.Location = New System.Drawing.Point(0, 0)
             Me.prgProperties.Name = "prgProperties"
-            Me.prgProperties.Size = New System.Drawing.Size(303, 524)
+            Me.prgProperties.Size = New System.Drawing.Size(303, 495)
             Me.prgProperties.TabIndex = 0
             '
             'picImage
@@ -70,9 +73,38 @@ Namespace DrawingT.MetadataT
             'splMain.Panel2
             '
             Me.splMain.Panel2.Controls.Add(Me.prgProperties)
+            Me.splMain.Panel2.Controls.Add(Me.tlpSave)
             Me.splMain.Size = New System.Drawing.Size(303, 684)
             Me.splMain.SplitterDistance = 156
             Me.splMain.TabIndex = 2
+            '
+            'cmdSave
+            '
+            Me.cmdSave.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdSave.AutoSize = True
+            Me.cmdSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdSave.Location = New System.Drawing.Point(130, 3)
+            Me.cmdSave.Name = "cmdSave"
+            Me.cmdSave.Size = New System.Drawing.Size(42, 23)
+            Me.cmdSave.TabIndex = 1
+            Me.cmdSave.Text = "&Save"
+            Me.cmdSave.UseVisualStyleBackColor = True
+            '
+            'tlpSave
+            '
+            Me.tlpSave.AutoSize = True
+            Me.tlpSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.tlpSave.ColumnCount = 1
+            Me.tlpSave.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpSave.Controls.Add(Me.cmdSave, 0, 0)
+            Me.tlpSave.Dock = System.Windows.Forms.DockStyle.Bottom
+            Me.tlpSave.Location = New System.Drawing.Point(0, 495)
+            Me.tlpSave.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpSave.Name = "tlpSave"
+            Me.tlpSave.RowCount = 1
+            Me.tlpSave.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpSave.Size = New System.Drawing.Size(303, 29)
+            Me.tlpSave.TabIndex = 2
             '
             'frmIPTC
             '
@@ -85,7 +117,10 @@ Namespace DrawingT.MetadataT
             CType(Me.picImage, System.ComponentModel.ISupportInitialize).EndInit()
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel2.ResumeLayout(False)
+            Me.splMain.Panel2.PerformLayout()
             Me.splMain.ResumeLayout(False)
+            Me.tlpSave.ResumeLayout(False)
+            Me.tlpSave.PerformLayout()
             Me.ResumeLayout(False)
 
         End Sub
@@ -93,5 +128,7 @@ Namespace DrawingT.MetadataT
         Friend WithEvents prgProperties As System.Windows.Forms.PropertyGrid
         Friend WithEvents picImage As System.Windows.Forms.PictureBox
         Friend WithEvents splMain As System.Windows.Forms.SplitContainer
+        Friend WithEvents tlpSave As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents cmdSave As System.Windows.Forms.Button
     End Class
 End Namespace

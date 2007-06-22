@@ -6,6 +6,8 @@ Namespace DrawingT.IO.JPEG
     <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="04/23/2007")> _
     Public Class JPEGReader
         Implements MetadataT.IExifGetter, MetadataT.IIPTCGetter
+        Implements MetadataT.IIPTCWriter
+        Implements IDisposable
         ''' <summary>Stream of opened file</summary>
         Protected ReadOnly Stream As System.IO.Stream
         ''' <summary>Stream of whole JPEG file</summary>
@@ -16,6 +18,7 @@ Namespace DrawingT.IO.JPEG
         End Property
         ''' <summary>CTor from file</summary>
         ''' <param name="Path">Path to file to read from</param>
+        ''' <param name="Write">Opens file for writing as well as for reading if true. This is necessary for <see cref="IPTCEmbed"/> to work</param>
         ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <paramref name="path"/> is invalid, such as being on an unmapped drive.</exception>
         ''' <exception cref="System.ArgumentNullException"><paramref name="path"/> is null.</exception>
         ''' <exception cref="System.UnauthorizedAccessException">The access requested (readonly) is not permitted by the operating system for the specified path.</exception>
@@ -29,8 +32,8 @@ Namespace DrawingT.IO.JPEG
         ''' JPEG stream doesn't start with corect SOI marker -or-
         ''' JPEG stream doesn't end with corect EOI marker
         ''' </exception>
-        Public Sub New(ByVal Path As String)
-            Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, System.IO.FileAccess.Read, System.IO.FileShare.Read)
+        Public Sub New(ByVal Path As String, Optional ByVal Write As Boolean = False)
+            Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, VisualBasicT.iif(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
             Parse()
         End Sub
         ''' <summary>CTor from stream</summary>
@@ -44,6 +47,7 @@ Namespace DrawingT.IO.JPEG
         Public Sub New(ByVal Stream As System.IO.Stream)
             If Stream.CanRead AndAlso Stream.CanSeek Then
                 Me.Stream = Stream
+                CloseStreamOnDispose = True
             Else
                 Throw New NotSupportedException("Stream to read JPEG from must be able to seek and read")
             End If
@@ -241,6 +245,147 @@ Namespace DrawingT.IO.JPEG
                 Return _PhotoshopMarkerIndex
             End Get
         End Property
+        ''' <summary>Writes given IPTC data to stream of JPEG file</summary>
+        ''' <param name="IPTCData">Data to be written</param>
+        ''' <remarks>either replaces existing IPTC data, adds new 8BIM segment or adds new APP14 marker</remarks>
+        ''' <exception cref="InvalidOperationException">No JPEG marker found</exception>
+        ''' <exception cref="IOException">An IO error occurs</exception>
+        ''' <exception cref="ObjectDisposedException"><see cref="Stream"/> is closed</exception>
+        ''' <exception cref="NotSupportedException">
+        ''' <see cref="Stream"/> does not support seeking -or-
+        ''' <see cref="Stream"/> does not support writing -or-
+        ''' <see cref="Stream"/> does not suport reading
+        ''' </exception>
+        Public Sub IPTCEmbed(ByVal IPTCData() As Byte) Implements MetadataT.IIPTCWriter.IPTCEmbed
+            Dim PreData As Byte() 'Write before IPTCData
+            Dim PreDataPos As Integer 'Where to start writing of PreData
+            Dim LenghtToReplace As Integer 'Number of types to replace after PreDataPos
+            Dim PostData As Byte() 'Write after IPTCData
+            Dim Overwrite As New Dictionary(Of Integer, UShort) 'Another bytes to be owerwriten
+            If Me.PhotoshopMarkerIndex >= 0 Then
+                Dim APP14SizePos As Integer = DirectCast(Me.Markers(Me.PhotoshopMarkerIndex).Data, ConstrainedReadOnlyStream).TranslatePosition(0)
+                APP14SizePos -= 2 'Byte where APP14's size is stored
+                If Me.IPTC8BIMSegmentIndex >= 0 Then
+                    Dim BIM8 As Photoshop8BIMReader = Me.Get8BIMSegments(Me.IPTC8BIMSegmentIndex)
+                    'Embed data into existing 8BIM segment
+                    PreDataPos = DirectCast(BIM8.Data, ConstrainedReadOnlyStream).TranslatePosition(0) 'Start of this 8BIM
+                    PreDataPos -= 4 'Position of size identifier of 8BIM
+                    Dim s As New MemoryStream(4)
+                    Dim w As New BinaryWriter(s)
+                    w.Write(MathT.LEBE(IPTCData.Length))
+                    ReDim PreData(3)
+                    Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
+                    Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + (IPTCData.Length - Me.GetIPTCStream.Length)) 'New length of APP14
+                    LenghtToReplace = 4 + Me.GetIPTCStream.Length
+                Else
+                    'Add new 8BIM segment into existing Photoshop segment
+                    Dim BIM8s As IList(Of Photoshop8BIMReader) = Me.Get8BIMSegments(Me.IPTC8BIMSegmentIndex)
+                    'Position where to write new 8BIM segment
+                    If BIM8s.Count > 0 Then
+                        PreDataPos = DirectCast(Me.GetPhotoShopStream, ConstrainedReadOnlyStream).TranslatePosition(0) + 14
+                    Else
+                        PreDataPos = DirectCast(BIM8s(BIM8s.Count - 1).Data, ConstrainedReadOnlyStream)(BIM8s(BIM8s.Count - 1).Data.Length - 1)
+                        If BIM8s(BIM8s.Count - 1).DataPadNeeded Then PreDataPos += 1
+                    End If
+                    PreData = BIM8Header(IPTCData.Length)
+                    Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + IPTCData.Length + PreData.Length) 'New length of APP14
+                    LenghtToReplace = 0 'Insert
+                End If
+                If IPTCData.Length Mod 2 <> 0 Then Overwrite(APP14SizePos) += 1
+            Else
+                'Embed new APP14 with IPTC data
+                Dim InsertAfter As JPEGMarkerReader = Nothing
+                For Each Marker As JPEGMarkerReader In Me.Markers
+                    If Marker.Code = JPEGMarkerReader.Markers.SOS Then Exit For
+                    InsertAfter = Marker
+                    If Marker.Code > JPEGMarkerReader.Markers.APP14 OrElse (Marker.Code < JPEGMarkerReader.Markers.APP0 AndAlso Marker.Code <> JPEGMarkerReader.Markers.EOI) Then Exit For
+                Next Marker
+                If InsertAfter Is Nothing Then Throw New InvalidOperationException("No JPEG marker found")
+                If InsertAfter.Code = JPEGMarkerReader.Markers.SOI Then
+                    PreDataPos = 2
+                Else
+                    PreDataPos = DirectCast(InsertAfter.Data, ConstrainedReadOnlyStream).TranslatePosition(0) + InsertAfter.Data.Length
+                End If
+                Dim s As New MemoryStream(34)
+                Dim w As New BinaryWriter(s)
+                w.Write(CByte(&HFF))
+                w.Write(JPEGMarkerReader.Markers.APP14)
+                w.Write(New Byte() {0, 0})
+                w.Write(New Byte() {&H50, &H68, &H6F, &H74, &H6F, &H73, &H68, &H6F, &H70, &H20, &H33, &H2E, &H30, &H0}) 'Photoshop 3.0\00
+                w.Write(BIM8Header(IPTCData.Length))
+                Dim Bytes As UShort = s.Position + IPTCData.Length
+                s.Seek(2, SeekOrigin.Begin)
+                w.Write(MathT.LEBE(Bytes))
+                ReDim PreData(Bytes - 1)
+                Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, Bytes)
+                If IPTCData.Length Mod 2 <> 0 Then Bytes += 1
+                LenghtToReplace = 0
+            End If
+            If IPTCData.Length Mod 2 <> 0 Then
+                PostData = New Byte() {0}
+            Else
+                PostData = New Byte() {}
+            End If
+            Dim EmbedW As New BinaryWriter(Me.Stream)
+            For Each item As KeyValuePair(Of Integer, UShort) In Overwrite
+                Me.Stream.Seek(item.Key, SeekOrigin.Begin)
+                EmbedW.Write(MathT.LEBE(item.Value))
+            Next item
+            Dim AllData(PreData.Length + IPTCData.Length + PostData.Length - 1) As Byte
+            For i As Integer = 0 To AllData.Length - 1
+                If i < PreData.Length Then
+                    AllData(i) = PreData(i)
+                ElseIf i < PreData.Length + IPTCData.Length Then
+                    AllData(i) = IPTCData(i - PreData.Length)
+                Else
+                    AllData(i) = PostData(i - PreData.Length - IPTCData.Length)
+                End If
+            Next i
+            StreamTools.InsertInto(Me.Stream, PreDataPos, LenghtToReplace, AllData)
+            Me.Stream.Flush()
+        End Sub
+        ''' <summary>Gets bytes of header of 8BIM 1C02 segment</summary>
+        ''' <param name="IPTCDataLength">Size of segment data part to be reported</param>
+        Private Function BIM8Header(ByVal IPTCDataLength As UInteger) As Byte()
+            Dim s As New MemoryStream(16)
+            Dim w As New BinaryWriter(s)
+            w.Write(New Byte() {&H38, &H42, &H49, &H4D}) '"8BIM"
+            w.Write(New Byte() {&H1C, &H2}) '&h1C02 - IPTC type
+            w.Write(CByte(5)) 'Lenght of following string including this byte
+            w.Write(System.Text.Encoding.ASCII.GetByteCount("IPTC")) 'Just small text - this is not complusory
+            w.Write(CByte(0)) 'Pad string + specifier to even lenght (6)
+            w.Write(MathT.LEBE(IPTCDataLength)) 'Lenght of IPTC data
+            Dim Bytes(s.Position - 1) As Byte
+            Array.ConstrainedCopy(s.GetBuffer, 0, Bytes, 0, Bytes.Length) '8BIM Header 
+            Return Bytes
+        End Function
+
+#Region " IDisposable Support "
+
+        ''' <summary>To detect redundant calls</summary>
+        Private disposedValue As Boolean = False
+        ''' <summary>stream will be closed when <see cref="Dispose"/> is invoked</summary>
+        Private CloseStreamOnDispose As Boolean = False
+        ''' <summary><see cref="IDisposable"/></summary>
+        ''' <param name="disposing">Free shared unmanaged resources</param>
+        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                End If
+                If CloseStreamOnDispose AndAlso Stream IsNot Nothing Then Stream.Close()
+            End If
+            Me.disposedValue = True
+        End Sub
+
+        ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        ''' <remarks>This code added by Visual Basic to correctly implement the disposable pattern.</remarks>
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+            Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
+#End Region
+
     End Class
 
     ''' <summary>Represents Photoshop 8BIM segment</summary>

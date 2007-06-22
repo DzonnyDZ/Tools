@@ -6,7 +6,7 @@
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 27. května 2007
+' Created: 22. června 2007
 ' By:DZONNY\Honza
 '
 Namespace DrawingT.MetadataT

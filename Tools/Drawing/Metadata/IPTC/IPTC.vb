@@ -147,7 +147,8 @@ Namespace DrawingT.MetadataT
             Next item
             Dim NewList As New List(Of KeyValuePair(Of DataSetIdentification, Byte()))
             For i As Integer = 0 To 9
-                NewList.AddRange(taglist(i))
+                If taglist(i) IsNot Nothing Then _
+                    NewList.AddRange(taglist(i))
             Next i
             _Tags.Clear()
             _Tags.AddRange(NewList)
@@ -158,6 +159,7 @@ Namespace DrawingT.MetadataT
         ''' B1: 0x1C, B2: Record Number, B3 DataSet Number, B4&amp;5 Length of data, B6+ Data
         ''' </remarks>
         Public Function GetBytes() As Byte()
+            SortTags()
             Dim str As New System.IO.MemoryStream()
             Dim bw As New System.IO.BinaryWriter(str)
             For Each Tag As KeyValuePair(Of DataSetIdentification, Byte()) In Tags
