@@ -4,6 +4,7 @@ Namespace DrawingT.IO.JPEG
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="04/23/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="04/23/2007")> _
     Public Class JPEGReader
         Implements MetadataT.IExifGetter, MetadataT.IIPTCGetter
         Implements MetadataT.IIPTCWriter
@@ -34,6 +35,7 @@ Namespace DrawingT.IO.JPEG
         ''' </exception>
         Public Sub New(ByVal Path As String, Optional ByVal Write As Boolean = False)
             Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, VisualBasicT.iif(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
+            CloseStreamOnDispose = True
             Parse()
         End Sub
         ''' <summary>CTor from stream</summary>
@@ -44,10 +46,11 @@ Namespace DrawingT.IO.JPEG
         ''' JPEG stream doesn't start with corect SOI marker -or-
         ''' JPEG stream doesn't end with corect EOI marker
         ''' </exception>
+        ''' <remarks>The <paramref name="Stream"/> is not automatically closed when instance is disposed</remarks>
         Public Sub New(ByVal Stream As System.IO.Stream)
             If Stream.CanRead AndAlso Stream.CanSeek Then
                 Me.Stream = Stream
-                CloseStreamOnDispose = True
+                CloseStreamOnDispose = False
             Else
                 Throw New NotSupportedException("Stream to read JPEG from must be able to seek and read")
             End If
@@ -272,7 +275,7 @@ Namespace DrawingT.IO.JPEG
                     PreDataPos -= 4 'Position of size identifier of 8BIM
                     Dim s As New MemoryStream(4)
                     Dim w As New BinaryWriter(s)
-                    w.Write(MathT.LEBE(IPTCData.Length))
+                    w.Write(MathT.LEBE(CUInt(IPTCData.Length)))
                     ReDim PreData(3)
                     Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
                     Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + (IPTCData.Length - Me.GetIPTCStream.Length)) 'New length of APP14
@@ -390,8 +393,9 @@ Namespace DrawingT.IO.JPEG
 
     ''' <summary>Represents Photoshop 8BIM segment</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Photoshop8BIMReader), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 1, GetType(Photoshop8BIMReader), LastChMMDDYYYY:="06/25/2007")> _
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <Tool(GetType(JPEGReader), FirstVerMMDDYYYY:="04/24/2007")> _
     Public Class Photoshop8BIMReader
         ''' <summary>CTor</summary>
         ''' <param name="Stream">Steam which contains segment data</param>
@@ -415,8 +419,17 @@ Namespace DrawingT.IO.JPEG
                 Throw New InvalidDataException("8BIM segment doesn't start with sting '8BIM'")
             End If
             _Type = r.ReadUInt16
-            _Name = r.ReadString
-            _NamePaddNeeded = Name.Length Mod 2 = 0
+            Dim StrLen As Byte = r.ReadByte
+            If StrLen > 1 Then
+                Dim Bytes As Byte() = r.ReadBytes(StrLen - 1)
+                _Name = System.Text.Encoding.Default.GetString(Bytes)
+            ElseIf StrLen = 0 Then '0 is incorrect value, but is used - treated as 2 bytes (size+pad)
+                Stream.ReadByte()
+                _Name = ""
+            Else
+                _Name = ""
+            End If
+            _NamePaddNeeded = StrLen Mod 2 <> 0
             If NamePaddNeeded Then Stream.ReadByte()
             _DataSize = r.ReadUInt32
             If Stream.Position + DataSize > Stream.Length Then _
@@ -437,7 +450,7 @@ Namespace DrawingT.IO.JPEG
         ''' <remarks>See <see cref="DataSize"/> for size of data part of segment</remarks>
         Public ReadOnly Property WholeSize() As Long
             Get
-                Return DataSize + 2 + 1 + Name.Length + 4 + 4 + _
+                Return DataSize + 2 + 1 + VisualBasicT.iif(Name.Length = 0, 2, Name.Length) + 4 + 4 + _
                     Tools.VisualBasicT.iif(NamePaddNeeded, 1, 0) + Tools.VisualBasicT.iif(DataPadNeeded, 1, 0)
                 '2 - Type
                 '1 - Length of Pascal string

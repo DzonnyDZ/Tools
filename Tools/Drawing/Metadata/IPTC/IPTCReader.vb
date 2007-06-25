@@ -3,7 +3,8 @@ Namespace DrawingT.MetadataT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides low level access to stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IPTCReader), LastChMMDDYYYY:="04/25/2007")> _
+    <Version(1, 0, GetType(IPTCReader), LastChMMDDYYYY:="06/25/2007")> _
+    <Tool(GetType(IPTC), FirstVerMMDDYYYY:="04/25/2007")> _
     Public Class IPTCReader
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains IPTC data</param>

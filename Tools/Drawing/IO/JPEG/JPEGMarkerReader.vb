@@ -5,6 +5,7 @@ Namespace DrawingT.IO.JPEG
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(JPEGMarkerReader), LastChMMDDYYYY:="04/24/2007")> _
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <Tool(GetType(JPEGReader), FirstVerMMDDYYYY:="04/24/2007")> _
     Public Class JPEGMarkerReader
         ''' <summary>Known types of JPEG markers</summary>
         Public Enum Markers As Byte
