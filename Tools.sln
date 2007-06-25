@@ -49,6 +49,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{67
 		Used doc\IPTC IIM.pdf = Used doc\IPTC IIM.pdf
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Created doc", "Created doc", "{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+	ProjectSection(SolutionItems) = preProject
+		Created doc\JPEG, EXIF, IPTC.doc = Created doc\JPEG, EXIF, IPTC.doc
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 4
@@ -183,6 +192,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{FEA4635F-E0AE-4562-A292-1B6ABCF4444F} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{677A518E-909C-414F-AC5E-528AB32023AF} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
+		{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8

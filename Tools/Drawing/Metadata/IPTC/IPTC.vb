@@ -167,10 +167,10 @@ Namespace DrawingT.MetadataT
                 bw.Write(CByte(Tag.Key.RecordNumber))
                 bw.Write(CByte(Tag.Key.DatasetNumber))
                 If Tag.Value IsNot Nothing Then
-                    bw.Write(MathT.LEBE(CUInt(Tag.Value.Length)))
+                    bw.Write(MathT.LEBE(CUShort(Tag.Value.Length)))
                     bw.Write(Tag.Value)
                 Else
-                    bw.Write(MathT.LEBE(CUInt(0)))
+                    bw.Write(MathT.LEBE(CUShort(0)))
                 End If
             Next Tag
             Dim pos As Integer = str.Position

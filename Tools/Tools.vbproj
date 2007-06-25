@@ -187,36 +187,49 @@
     <Compile Include="Resources\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Forms\DataBoundToolStripComboBox.vb">
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.Designer.vb">
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\StatusMarker.Designer.vb">
+      <DependentUpon>StatusMarker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripComboBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\DataBoundToolStripLabel.vb">
+    <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
+    <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
       <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
+    <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
       <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
+    <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
       <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\ProgressBarWithText.vb">
+    <Compile Include="Windows\Forms\Derived controls\ProgressBarWithText.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\TransparentLabel.vb">
+    <Compile Include="Windows\Forms\Derived controls\TransparentLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\TransparentTextBox.vb">
+    <Compile Include="Windows\Forms\Derived controls\TransparentTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
+    <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
@@ -225,11 +238,11 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\LinkLabel.cs.resx">
+    <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.cs.resx">
       <DependentUpon>LinkLabel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
+    <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.resx">
       <DependentUpon>LinkLabel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
@@ -250,15 +263,15 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentLabel.bmp" />
-    <EmbeddedResource Include="Windows\Forms\EncodingDialog.resx">
+    <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingDialog.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\EncodingSelector.cs.resx">
+    <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.cs.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\EncodingSelector.resx">
+    <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </EmbeddedResource>
@@ -299,6 +312,18 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\WindowsT.FormsT.ProgressBarWithText.bmp" />
+    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StatusMarker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StatusMarker.vb</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
@@ -314,7 +339,17 @@
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
       <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
     </Content>
+    <None Include="Resources\DeleteHS.png" />
+    <None Include="Resources\RepeatHS.png" />
+    <None Include="Resources\NewReportHS.png" />
+    <None Include="Resources\+.png" />
+    <Content Include="Resources\CommentHS.png" />
+    <Content Include="Resources\T.png" />
     <Content Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
+    <None Include="Resources\Zip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Metadata\XMP\" />
