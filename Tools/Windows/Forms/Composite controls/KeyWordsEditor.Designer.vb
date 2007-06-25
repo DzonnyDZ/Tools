@@ -47,7 +47,7 @@ Namespace WindowsT.FormsT
             Me.txtEdit.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
             Me.txtEdit.Location = New System.Drawing.Point(3, 3)
             Me.txtEdit.Name = "txtEdit"
-            Me.txtEdit.Size = New System.Drawing.Size(424, 20)
+            Me.txtEdit.Size = New System.Drawing.Size(408, 20)
             Me.txtEdit.TabIndex = 0
             '
             'lstKW
@@ -89,7 +89,7 @@ Namespace WindowsT.FormsT
             Me.stmStatus.AutoChanged = False
             Me.stmStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.stmStatus.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.stmStatus.Location = New System.Drawing.Point(430, 1)
+            Me.stmStatus.Location = New System.Drawing.Point(414, 1)
             Me.stmStatus.Margin = New System.Windows.Forms.Padding(0)
             Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.stmStatus.Name = "stmStatus"
@@ -103,7 +103,7 @@ Namespace WindowsT.FormsT
             Me.cmdThesaurus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdThesaurus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
             Me.cmdThesaurus.Image = Global.Tools.My.Resources.Resources.T
-            Me.cmdThesaurus.Location = New System.Drawing.Point(454, 1)
+            Me.cmdThesaurus.Location = New System.Drawing.Point(438, 1)
             Me.cmdThesaurus.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdThesaurus.Name = "cmdThesaurus"
             Me.cmdThesaurus.Size = New System.Drawing.Size(23, 24)
@@ -117,11 +117,11 @@ Namespace WindowsT.FormsT
             Me.cmdMerge.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdMerge.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(128, Byte), Integer))
             Me.cmdMerge.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-            Me.cmdThesaurus.Image = Global.Tools.My.Resources.Resources.Zip
-            Me.cmdMerge.Location = New System.Drawing.Point(477, 9)
+            Me.cmdMerge.Image = Global.Tools.My.Resources.Resources.Zip
+            Me.cmdMerge.Location = New System.Drawing.Point(461, 1)
             Me.cmdMerge.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdMerge.Name = "cmdMerge"
-            Me.cmdMerge.Size = New System.Drawing.Size(8, 8)
+            Me.cmdMerge.Size = New System.Drawing.Size(24, 24)
             Me.cmdMerge.TabIndex = 3
             Me.cmdMerge.UseVisualStyleBackColor = False
             '

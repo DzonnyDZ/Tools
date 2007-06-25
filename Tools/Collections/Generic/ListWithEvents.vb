@@ -9,7 +9,7 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="06/21/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="06/26/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
@@ -25,6 +25,10 @@ Namespace CollectionsT.GenericT
             _CancelError = CancelError
             List = New List(Of T)
         End Sub
+        ''' <summary>Copies all elements of this collection to new <see cref="Array"/></summary>
+        Public Function ToArray() As T()
+            Return InternalList.ToArray
+        End Function
         ''' <summary>CTor - initializes from another <see cref="IEnumerable(Of T)"/></summary>
         ''' <param name="collection"><see cref="IEnumerable(Of T)"/> to initialize new instance of <see cref="ListWithEvents(Of T)"/> with</param>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
