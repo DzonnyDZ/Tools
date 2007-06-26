@@ -14,9 +14,11 @@ Namespace CollectionsT.GenericT
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
     <StandAloneTool(FirstVerMMDDYYYY:="01/07/2007")> _
-    Public Class ListWithEvents(Of T) : Implements Runtime.Serialization.ISerializable
+    Public Class ListWithEvents(Of T)
+        Implements Runtime.Serialization.ISerializable
         Implements IList(Of T)
         Implements IList
+        Implements IReportsChange
         ''' <summary>CTor</summary>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
@@ -238,6 +240,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnAdded"/> in order the event to be raised</remarks>
         Protected Overridable Sub OnAdded(ByVal e As ItemIndexEventArgs)
             RaiseEvent Added(Me, e)
+            OnChanged(e)
         End Sub
 #End Region
 #Region "Clear"
@@ -308,6 +311,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnCleared"/> in order the event to be raised</remarks>
         Protected Overridable Sub OnCleared(ByVal e As ItemsEventArgs)
             RaiseEvent Cleared(Me, e)
+            OnChanged(e)
         End Sub
 #End Region
         ''' <summary>Determines whether the <see cref="ListWithEvents(Of T)"/> contains a specific value.</summary>
@@ -398,6 +402,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnRemoved"/> in order the event to be raised</remarks>
         Protected Overridable Sub OnRemoved(ByVal e As ItemIndexEventArgs)
             RaiseEvent Removed(Me, e)
+            OnChanged(e)
         End Sub
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to remove from the <see cref="ListWithEvents(Of T)"/>.</param>
@@ -571,6 +576,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemChanged"/> in order the event to be raised.</remarks>
         Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEvetArgs)
             RaiseEvent ItemChanged(Me, e)
+            OnChanged(e)
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
@@ -654,6 +660,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemValueChanged"/> in order the event to be raised</remarks>
         Protected Overridable Sub OnItemValueChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
             RaiseEvent ItemValueChanged(Me, New ItemValueChangedEventArgs(sender, e))
+            OnChanged(e)
         End Sub
         ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
         ''' <param name="sender">Source of the event</param>
@@ -946,6 +953,17 @@ Namespace CollectionsT.GenericT
         ''' <summary>Name used for serialization of the <see cref="InternalList"/> property</summary>
         Protected Const ItemsName$ = "Items"
 #End Region
+        ''' <summary>Raised when value of member changes</summary>
+        ''' <param name="sender">The source of the event</param>
+        ''' <param name="e">Event information</param>
+        ''' <remarks>Raised after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
+        Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
+        ''' <summary>Raises the <see cref="Changed"/> event</summary>
+        ''' <param name="e">Event parameters</param>
+        ''' <remarks>Called after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
+        Protected Overridable Sub OnChanged(ByVal e As EventArgs)
+            RaiseEvent Changed(Me, e)
+        End Sub
     End Class
 End Namespace
 #End If

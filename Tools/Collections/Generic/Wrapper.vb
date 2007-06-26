@@ -100,5 +100,148 @@ Namespace CollectionsT.GenericT
 
         End Class
     End Class
+    'ASAP:Mark,Forum,Wiki
+    ''' <summary>Wraps type-unsafe <see cref="IList"/> as type-safe <see cref="IList(Of T)"/></summary>
+    Public Class ListWrapper(Of T)
+        Inherits Wrapper(Of T)
+        Implements IList(Of T), IList
+        ''' <summary>CTor</summary>
+        ''' <param name="List">Item to be wrapped</param>
+        Public Sub New(ByVal List As IList)
+            MyBase.New(List)
+        End Sub
+        ''' <summary>Wrapped list</summary>
+        Public ReadOnly Property List() As IList
+            Get
+                Return Wrapped
+            End Get
+        End Property
+        ''' <summary>Wrapped value</summary>
+        ''' <exception cref="ArgumentNullException">Setting value to null</exception>
+        ''' <remarks>Changing this value doesn't invalidate enumerators, so enumerations continues although the content of wrapper has changed</remarks>
+        ''' <exception cref="ArgumentException">Value being set does not implement <see cref="IList"/></exception>
+        Public Overrides Property Wrapped() As System.Collections.IEnumerable
+            Get
+                Return MyBase.Wrapped
+            End Get
+            Set(ByVal value As System.Collections.IEnumerable)
+                If Not TypeOf value Is IList Then Throw New ArgumentException("Only IList instances can be used in ListWrapper")
+                MyBase.Wrapped = value
+            End Set
+        End Property
+        'ASAP:Comment members
+#Region "IList(Of T)"
+        Public Sub Add(ByVal item As T) Implements System.Collections.Generic.ICollection(Of T).Add
+            List.Add(item)
+        End Sub
+
+        Public Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear, System.Collections.IList.Clear
+            List.Clear()
+        End Sub
+
+        Public Function Contains(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Contains
+            Return List.Contains(item)
+        End Function
+
+        Public Sub CopyTo(ByVal array() As T, ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of T).CopyTo
+            Dim i As Integer = arrayIndex
+            For Each item As T In Me
+                array(i) = item
+                i += 1
+            Next item
+        End Sub
+
+        Public ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of T).Count, System.Collections.ICollection.Count
+            Get
+                Return List.Count
+            End Get
+        End Property
+
+        Public ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.Generic.ICollection(Of T).IsReadOnly, System.Collections.IList.IsReadOnly
+            Get
+                Return List.IsReadOnly
+            End Get
+        End Property
+
+        Public Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
+            Remove = List.IndexOf(item) >= 0
+            List.Remove(item)
+        End Function
+
+        Public Function IndexOf(ByVal item As T) As Integer Implements System.Collections.Generic.IList(Of T).IndexOf
+            Return List.IndexOf(item)
+        End Function
+
+        Public Sub Insert(ByVal index As Integer, ByVal item As T) Implements System.Collections.Generic.IList(Of T).Insert
+            List.Insert(index, item)
+        End Sub
+
+        Default Public Property Item(ByVal index As Integer) As T Implements System.Collections.Generic.IList(Of T).Item
+            Get
+                Return List(index)
+            End Get
+            Set(ByVal value As T)
+                List(index) = value
+            End Set
+        End Property
+
+        Public Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt, System.Collections.IList.RemoveAt
+            List.RemoveAt(index)
+        End Sub
+#End Region
+#Region "IList"
+        <Obsolete("Use type-safe overload instead")> _
+        Private Sub CopyTo(ByVal array As System.Array, ByVal index As Integer) Implements System.Collections.ICollection.CopyTo
+            List.CopyTo(array, index)
+        End Sub
+
+        Private ReadOnly Property IsSynchronized() As Boolean Implements System.Collections.ICollection.IsSynchronized
+            Get
+                Return List.IsSynchronized
+            End Get
+        End Property
+
+        Private ReadOnly Property SyncRoot() As Object Implements System.Collections.ICollection.SyncRoot
+            Get
+                Return List.SyncRoot
+            End Get
+        End Property
+        <Obsolete("Use type-safe overload instead")> _
+        Private Function Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
+            Add(CType(value, T))
+        End Function
+        <Obsolete("Use type-safe overload instead")> _
+        Private Function Contains(ByVal value As Object) As Boolean Implements System.Collections.IList.Contains
+            Return List.Contains(value)
+        End Function
+        <Obsolete("Use type-safe overload instead")> _
+        Private Function IndexOf(ByVal value As Object) As Integer Implements System.Collections.IList.IndexOf
+            Return List.IndexOf(value)
+        End Function
+        <Obsolete("Use type-safe overload instead")> _
+        Private Sub Insert(ByVal index As Integer, ByVal value As Object) Implements System.Collections.IList.Insert
+            Insert(index, CType(value, T))
+        End Sub
+
+        Public ReadOnly Property IsFixedSize() As Boolean Implements System.Collections.IList.IsFixedSize
+            Get
+                Return List.IsFixedSize
+            End Get
+        End Property
+        <Obsolete("Use type-safe Item")> _
+        Private Property UnsafeItem(ByVal index As Integer) As Object Implements System.Collections.IList.Item
+            Get
+                Return List(index)
+            End Get
+            Set(ByVal value As Object)
+                Me(index) = value
+            End Set
+        End Property
+        <Obsolete("Use type-safe overload instead")> _
+        Public Sub Remove(ByVal value As Object) Implements System.Collections.IList.Remove
+            List.Remove(value)
+        End Sub
+#End Region
+    End Class
 End Namespace
 #End If

@@ -202,6 +202,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\KeyWordsEditor.Designer.vb">
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\KeyWordsEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\EncodingSelector.Designer.vb">
       <DependentUpon>EncodingSelector.vb</DependentUpon>
     </Compile>
@@ -302,6 +308,10 @@
     <EmbeddedResource Include="Resources\SystemResources.resx">
       <SubType>Designer</SubType>
       <DependentUpon>SystemResources.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\KeyWordsEditor.resx">
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\EncodingSelector.resx">
       <SubType>Designer</SubType>
