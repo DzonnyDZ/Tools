@@ -21,6 +21,9 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj
 		Debug.AspNetCompiler.Debug = "True"
 		Release.AspNetCompiler.Debug = "False"
 	EndProjectSection
+	ProjectSection(ProjectDependencies) = postProject
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}
+	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win", "Tools Win\Tools Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
 	ProjectSection(WebsiteProperties) = preProject
@@ -58,9 +61,21 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Created doc", "Created doc"
 		Created doc\JPEG, EXIF, IPTC.doc = Created doc\JPEG, EXIF, IPTC.doc
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol", "Projects\Metanol\Metanol.vbproj", "{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}"
+	ProjectSection(WebsiteProperties) = preProject
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.Debug = "False"
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -73,6 +88,10 @@ Global
 		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
 		SccProjectName3 = Tools\u0020Win
 		SccLocalPath3 = Tools\u0020Win
+		SccProjectUniqueName4 = Projects\\Metanol\\Metanol.vbproj
+		SccProjectTopLevelParentUniqueName4 = Tools.sln
+		SccProjectName4 = Projects/Metanol
+		SccLocalPath4 = Projects\\Metanol
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
@@ -81,9 +100,6 @@ Global
 		Beta|Any CPU = Beta|Any CPU
 		Beta|Mixed Platforms = Beta|Mixed Platforms
 		Beta|Win32 = Beta|Win32
-		Debug|Any CPU = Debug|Any CPU
-		Debug|Mixed Platforms = Debug|Mixed Platforms
-		Debug|Win32 = Debug|Win32
 		Nightly|Any CPU = Nightly|Any CPU
 		Nightly|Mixed Platforms = Nightly|Mixed Platforms
 		Nightly|Win32 = Nightly|Win32
@@ -105,11 +121,6 @@ Global
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Mixed Platforms.ActiveCfg = Beta|Any CPU
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Mixed Platforms.Build.0 = Beta|Any CPU
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Beta|Win32.ActiveCfg = Beta|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Any CPU.ActiveCfg = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Any CPU.Build.0 = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Mixed Platforms.ActiveCfg = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Mixed Platforms.Build.0 = RC|Any CPU
-		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Debug|Win32.ActiveCfg = RC|Any CPU
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Any CPU.Build.0 = Nightly|Any CPU
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
@@ -135,11 +146,6 @@ Global
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Beta|Mixed Platforms.ActiveCfg = Beta|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Beta|Mixed Platforms.Build.0 = Beta|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Beta|Win32.ActiveCfg = Beta|Any CPU
-		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Any CPU.ActiveCfg = RC|Any CPU
-		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Any CPU.Build.0 = RC|Any CPU
-		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Mixed Platforms.ActiveCfg = RC|Any CPU
-		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Mixed Platforms.Build.0 = RC|Any CPU
-		{79B67251-D837-4367-B571-AB806C2C7C74}.Debug|Win32.ActiveCfg = RC|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Nightly|Any CPU.Build.0 = Nightly|Any CPU
 		{79B67251-D837-4367-B571-AB806C2C7C74}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
@@ -165,11 +171,6 @@ Global
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Mixed Platforms.Build.0 = Release|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Beta|Win32.ActiveCfg = Release|Any CPU
-		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Any CPU.ActiveCfg = RC|Any CPU
-		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Any CPU.Build.0 = RC|Any CPU
-		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Mixed Platforms.ActiveCfg = RC|Any CPU
-		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Mixed Platforms.Build.0 = RC|Any CPU
-		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Debug|Win32.ActiveCfg = RC|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Any CPU.Build.0 = Nightly|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Nightly|Mixed Platforms.ActiveCfg = Release|Any CPU
@@ -185,6 +186,31 @@ Global
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Win32.ActiveCfg = Release|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Mixed Platforms.Build.0 = Alpha|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Win32.ActiveCfg = Alpha|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Any CPU.Build.0 = Beta|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Mixed Platforms.ActiveCfg = Beta|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Mixed Platforms.Build.0 = Beta|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Win32.ActiveCfg = Beta|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Nightly|Any CPU.ActiveCfg = Nightly|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Nightly|Any CPU.Build.0 = Nightly|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Nightly|Mixed Platforms.ActiveCfg = Nightly|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Nightly|Mixed Platforms.Build.0 = Nightly|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Nightly|Win32.ActiveCfg = Nightly|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Any CPU.ActiveCfg = RC|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Any CPU.Build.0 = RC|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Mixed Platforms.Build.0 = RC|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Win32.ActiveCfg = RC|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Win32.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -193,6 +219,7 @@ Global
 		{FEA4635F-E0AE-4562-A292-1B6ABCF4444F} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{677A518E-909C-414F-AC5E-528AB32023AF} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 	EndGlobalSection
 	GlobalSection(TeamFoundationVersionControl) = preSolution
 		SccNumberOfProjects = 8

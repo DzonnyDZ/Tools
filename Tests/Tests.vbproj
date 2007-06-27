@@ -195,6 +195,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Projects\Projects.vb" />
     <Compile Include="Resources\SystemResources.Designer.vb">
       <DependentUpon>SystemResources.vb</DependentUpon>
     </Compile>

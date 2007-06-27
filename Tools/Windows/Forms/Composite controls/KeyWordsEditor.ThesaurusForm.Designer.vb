@@ -1,7 +1,7 @@
 Namespace WindowsT.FormsT
 #If Config <= Nightly Then
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-    Partial Class ThesaurusForm
+        Partial Class ThesaurusForm
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.

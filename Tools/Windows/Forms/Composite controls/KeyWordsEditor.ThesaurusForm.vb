@@ -1,7 +1,6 @@
 Imports Tools.CollectionsT.GenericT, System.Windows.Forms
 Namespace WindowsT.FormsT
 #If Config <= Nightly Then
-    'TODO: Move into KeywordsEditor
     'Localize: UI
     ''' <summary>Editor of autocomplete list and synonym groups for <see cref="KeyWordsEditor"/></summary>
     Friend NotInheritable Class ThesaurusForm
@@ -171,12 +170,19 @@ Namespace WindowsT.FormsT
                     cmbSyn.SelectedIndex = Index
                 ElseIf cmbSyn.Items.Count > 0 Then
                     cmbSyn.SelectedIndex = cmbSyn.Items.Count - 1
+                Else
+                    cmbSyn.Text = ""
+                    fraKeys.Enabled = False
+                    fraValues.Enabled = False
+                    cmdDelSyn.Enabled = False
+                    OldItem = Nothing
                 End If
             End If
         End Sub
 
         Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
             'Store synonyms
+            StoreOldItem()
             If Me.For.Synonyms IsNot Nothing Then
                 Me.For.Synonyms.Clear()
                 For Each Syn As SynProxy In cmbSyn.Items

@@ -435,10 +435,8 @@ Namespace IOt
             If Levels < 0 Then Throw New ArgumentOutOfRangeException("Levels", "Levels should be greater than zero")
             Dim Segments As String() = Me.Segments
             If Levels >= Segments.Length Then Throw New ArgumentOutOfRangeException("Levels", String.Format("The path's depth is not enough to remove {0} levels", Levels))
-            Dim NewArr(Segments.Length - Levels) As String
-            For i As Integer = 0 To NewArr.Length - Levels - 1
-                NewArr(i) = Segments(i)
-            Next i
+            Dim NewArr(Segments.Length - Levels - 1) As String
+            Array.ConstrainedCopy(Segments, 0, NewArr, 0, NewArr.Length)
             Me.Path = IOt.Path.Join(NewArr).Path
         End Sub
         ''' <summary>Removes <paramref name="Levels"/> parts from end of <paramref name="Path"/></summary>
