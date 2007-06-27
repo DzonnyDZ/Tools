@@ -75,7 +75,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol", "Projects\Metanol
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 4
+		SccNumberOfProjects = 5
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -88,6 +88,10 @@ Global
 		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
 		SccProjectName3 = Tools\u0020Win
 		SccLocalPath3 = Tools\u0020Win
+		SccProjectUniqueName4 = Projects\\Metanol\\Metanol.vbproj
+		SccProjectTopLevelParentUniqueName4 = Tools.sln
+		SccProjectName4 = Projects/Metanol
+		SccLocalPath4 = Projects\\Metanol
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
