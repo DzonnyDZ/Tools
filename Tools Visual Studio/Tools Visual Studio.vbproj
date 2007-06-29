@@ -20,6 +20,7 @@
     <RC>4</RC>
     <Release>5</Release>
     <Config>1</Config>
+    <RunPostBuildEvent>OnOutputUpdated</RunPostBuildEvent>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -84,6 +85,7 @@
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -149,4 +151,7 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>COPY "$(TargetPath)" "$(DevEnvDir)..\Packages\Debugger\Visualizers\$(TargetFileName)"</PostBuildEvent>
+  </PropertyGroup>
 </Project>
