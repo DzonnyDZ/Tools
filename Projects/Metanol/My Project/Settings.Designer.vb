@@ -141,6 +141,102 @@ Namespace My
                 Me("MainState") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("286")>  _
+        Public Property HorizontalSplitter() As Integer
+            Get
+                Return CType(Me("HorizontalSplitter"),Integer)
+            End Get
+            Set
+                Me("HorizontalSplitter") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("275")>  _
+        Public Property VerticalSplitter() As Integer
+            Get
+                Return CType(Me("VerticalSplitter"),Integer)
+            End Get
+            Set
+                Me("VerticalSplitter") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0, 0")>  _
+        Public Property LargeLocation() As Global.System.Drawing.Point
+            Get
+                Return CType(Me("LargeLocation"),Global.System.Drawing.Point)
+            End Get
+            Set
+                Me("LargeLocation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("292, 273")>  _
+        Public Property LargeSize() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("LargeSize"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("LargeSize") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Maximized")>  _
+        Public Property LargeState() As Global.System.Windows.Forms.FormWindowState
+            Get
+                Return CType(Me("LargeState"),Global.System.Windows.Forms.FormWindowState)
+            End Get
+            Set
+                Me("LargeState") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property LargeShown() As Boolean
+            Get
+                Return CType(Me("LargeShown"),Boolean)
+            End Get
+            Set
+                Me("LargeShown") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property KwAutoComplete() As String
+            Get
+                Return CType(Me("KwAutoComplete"),String)
+            End Get
+            Set
+                Me("KwAutoComplete") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("")>  _
+        Public Property KwSynonyms() As String
+            Get
+                Return CType(Me("KwSynonyms"),String)
+            End Get
+            Set
+                Me("KwSynonyms") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -23,5 +23,29 @@
     <Setting Name="MainState" Type="System.Windows.Forms.FormWindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
+    <Setting Name="HorizontalSplitter" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">286</Value>
+    </Setting>
+    <Setting Name="VerticalSplitter" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">275</Value>
+    </Setting>
+    <Setting Name="LargeLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="LargeSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">292, 273</Value>
+    </Setting>
+    <Setting Name="LargeState" Type="System.Windows.Forms.FormWindowState" Scope="User">
+      <Value Profile="(Default)">Maximized</Value>
+    </Setting>
+    <Setting Name="LargeShown" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="KwAutoComplete" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="KwSynonyms" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
   </Settings>
 </SettingsFile>

@@ -1,6 +1,13 @@
+Imports Tools.DrawingT.MetadataT, Tools.WindowsT.FormsT.StatusMarker
+Imports Tools.DrawingT.IO.JPEG
+Imports Tools.DrawingT.MetadataT.IPTC
 Public Class frmMain
     'ASAP:Comments
+    Private WithEvents frmLarge As frmLarge
+    'Private AutoComplete As New Tools.CollectionsT.GenericT.ListWithEvents(Of String)
+    'Private Synonyms As List(Of KeyValuePair(Of String(), String()))
     Private Sub cmdBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
+        SaveChanged()
         If My.Settings.Folder IsNot Nothing AndAlso My.Settings.Folder <> "" Then
             Try
                 fbdBrowse.SelectedPath = My.Settings.Folder
@@ -12,8 +19,25 @@ Public Class frmMain
             txtPath.Text = My.Settings.Folder
         End If
     End Sub
+    Private LoadOnEnd As Boolean = False
     ''' <summary>Loads and shows content of folder</summary>
     Private Sub LoadFolder()
+        'If OldSelected.Count > 0 Then
+        '    If SaveCurrent() Then
+        '        OldSelected.Clear()
+        '    Else
+        '        Exit Sub
+        '    End If
+        'End If
+        If bgwThumb.IsBusy Then
+            bgwThumb.CancelAsync()
+            LoadOnEnd = True
+            Me.Cursor = Cursors.WaitCursor
+            Me.Enabled = False
+            Exit Sub
+        End If
+        tsgLoadImages.Value = 0
+        tsgLoadImages.Visible = True
         lvwFolder.Items.Clear()
         lvwImages.Items.Clear()
         Dim IW As Image = imlImages.Images("IrfanView")
@@ -43,7 +67,10 @@ Public Class frmMain
     Private Sub bgwThumb_DoWork(ByVal sender As Object, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwThumb.DoWork
         Dim d As New dSetThumb(AddressOf SetThumb)
         Dim ThSize As Size = imlImages.ImageSize
+        Dim i As Integer = 0
+        Threading.Thread.CurrentThread.Priority = Threading.ThreadPriority.BelowNormal
         For Each Path As String In DirectCast(e.Argument, List(Of String))
+            bgwThumb.ReportProgress(i / DirectCast(e.Argument, List(Of String)).Count * 100)
             Dim Img As Bitmap
             Try
                 Img = New Bitmap(Path)
@@ -54,16 +81,18 @@ Public Class frmMain
             Dim th As Image = Img.GetThumbnailImage(NewSize.Width, NewSize.Height, AddressOf CancelThumb, IntPtr.Zero)
             Dim NewImage As New Bitmap(ThSize.Width, ThSize.Height)
             Dim g As Graphics = Graphics.FromImage(NewImage)
-            g.DrawImage(NewImage, CSng(ThSize.Width / 2 - NewSize.Width / 2), CSng(ThSize.Height / 2 - NewSize.Height / 2))
-            g.Flush(Drawing2D.FlushIntention.Sync)
-            If th IsNot Nothing Then
+            g.DrawImage(th, CSng(ThSize.Width / 2 - NewSize.Width / 2), CSng(ThSize.Height / 2 - NewSize.Height / 2), NewSize.Width, NewSize.Height)
+            g.Flush()
+            If th IsNot Nothing AndAlso Not bgwThumb.CancellationPending Then
                 Me.Invoke(d, Path, NewImage)
             End If
             If bgwThumb.CancellationPending Then
                 e.Cancel = True
                 Exit Sub
             End If
+            i += 1
         Next Path
+        bgwThumb.ReportProgress(100)
     End Sub
     Private Function CancelThumb() As Boolean
         Return bgwThumb.CancellationPending
@@ -91,6 +120,7 @@ Public Class frmMain
         Return NewS
     End Function
     Private Sub cmdGo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdGo.Click
+        SaveChanged()
         My.Settings.Folder = txtPath.Text
         LoadFolder()
     End Sub
@@ -102,6 +132,11 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        ' SaveCurrent()
+        If MsgBox("Close?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo, "Close?") <> MsgBoxResult.Yes Then
+            e.Cancel = True
+            Exit Sub
+        End If
         StoreSettings()
     End Sub
 
@@ -115,17 +150,21 @@ Public Class frmMain
 
 
     Private Sub lvwFolder_ItemActivate(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvwFolder.ItemActivate
+        SaveChanged()
         My.Settings.Folder = lvwFolder.SelectedItems(0).Name
         LoadFolder()
     End Sub
     Private Sub LoadSettings()
+        kweKeyWords.Synonyms = My.Settings.Synonyms
+        kweKeyWords.AutoCompleteStable = My.Settings.AutoComplete
+        'Me.Synonyms = My.Settings.KwSynonyms
         Me.Location = My.Settings.MainLocation
         Me.Size = My.Settings.MainSize
         Me.WindowState = My.Settings.MainState
         If Me.WindowState = FormWindowState.Normal Then
             Dim Intersects As Boolean = False
             For Each scr As Screen In Screen.AllScreens
-                If scr.Bounds.IntersectsWith(Me.DesktopBounds) Then
+                If scr.WorkingArea.IntersectsWith(Me.DesktopBounds) Then
                     Intersects = True
                     Exit For
                 End If
@@ -134,6 +173,14 @@ Public Class frmMain
         End If
         splMain.SplitterDistance = My.Settings.MainSplitter
         splFolder.SplitterDistance = My.Settings.LeftSplitter
+        splVertical.SplitterDistance = My.Settings.VerticalSplitter
+        splHorizontal.SplitterDistance = My.Settings.HorizontalSplitter
+        If My.Settings.LargeShown Then
+            cmdLarge.Visible = False
+            frmLarge = New frmLarge
+            frmLarge.Show()
+            frmLarge.BackgroundImage = picPreview.Image
+        End If
     End Sub
     Private Sub StoreSettings()
         My.Settings.MainLocation = Me.Location
@@ -141,7 +188,603 @@ Public Class frmMain
         My.Settings.MainState = Me.WindowState
         My.Settings.MainSplitter = splMain.SplitterDistance
         My.Settings.LeftSplitter = splFolder.SplitterDistance
+        My.Settings.HorizontalSplitter = splHorizontal.SplitterDistance
+        My.Settings.VerticalSplitter = splVertical.SplitterDistance
+        My.Settings.LargeShown = frmLarge IsNot Nothing
+        If frmLarge IsNot Nothing Then
+            My.Settings.LargeLocation = frmLarge.Location
+            My.Settings.LargeSize = frmLarge.Size
+            My.Settings.LargeState = frmLarge.WindowState
+        End If
+        'My.Settings.KwAutoComplete = AutoComplete '.ToArray
     End Sub
 
+    Private Sub bgwThumb_RunWorkerCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.RunWorkerCompletedEventArgs) Handles bgwThumb.RunWorkerCompleted
+        If LoadOnEnd Then
+            LoadOnEnd = False
+            Me.Enabled = True
+            Me.Cursor = Cursors.Default
+            LoadFolder()
+        Else
+            tsgLoadImages.Visible = False
+        End If
+    End Sub
 
+    Private Sub bgwThumb_ProgressChanged(ByVal sender As System.Object, ByVal e As System.ComponentModel.ProgressChangedEventArgs) Handles bgwThumb.ProgressChanged
+        tsgLoadImages.Value = e.ProgressPercentage
+    End Sub
+
+    'Private Sub [SelectIndices](ByVal Indices As IEnumerable(Of Integer))
+    '    lvwImages.SelectedIndices.Clear()
+    '    For Each sel As Integer In Indices
+    '        lvwImages.SelectedIndices.Add(sel)
+    '    Next sel
+    'End Sub
+
+    'Private SuppressSelectedIndexChanged As Boolean = False
+    'Private Sub lvwImages_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+    '    If SuppressSelectedIndexChanged Then Exit Sub
+    '    SuppressSelectedIndexChanged = True
+    '    Try
+    '        If OldSelected.Count > 0 Then
+    '            Dim NowSelected As New List(Of Integer)(New Tools.CollectionsT.GenericT.Wrapper(Of Integer)(lvwImages.SelectedIndices))
+    '            [SelectIndices](OldSelected)
+    '            If Not SaveCurrent() Then
+    '                Exit Sub
+    '            Else
+    '                [SelectIndices](NowSelected)
+    '            End If
+    '        End If
+    '    Finally
+    '        SuppressSelectedIndexChanged = False
+    '    End Try
+    '    picPreview.CancelAsync()
+    '    If frmLarge IsNot Nothing Then frmLarge.BackgroundImage = Nothing
+    '    If lvwImages.SelectedItems.Count > 0 Then
+    '        Try
+    '            picPreview.LoadAsync(lvwImages.SelectedItems(0).Name)
+    '        Catch
+    '            picPreview.Image = Nothing
+    '        End Try
+    '        If frmLarge IsNot Nothing Then frmLarge.Text = "Metanol large " & IO.Path.GetFileName(lvwImages.SelectedItems(0).Name)
+    '    Else
+    '        picPreview.Image = Nothing
+    '        If frmLarge IsNot Nothing Then frmLarge.Text = "Metanol large"
+    '    End If
+    '    If lvwImages.SelectedItems.Count = 1 Then
+    '        Me.Text = "Metanol " & IO.Path.GetFileName(lvwImages.SelectedItems(0).Name)
+    '    Else
+    '        Me.Text = "Metanol"
+    '    End If
+    '    OldSelected.Clear()
+    '    OldSelected.AddRange(New Tools.CollectionsT.GenericT.Wrapper(Of Integer)(lvwImages.SelectedIndices))
+    '    LoadCurrent()
+    'End Sub
+
+    'Private OldSelected As New List(Of Integer)
+
+    Private Sub frmLarge_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles frmLarge.FormClosed
+        frmLarge = Nothing
+        cmdLarge.Visible = True
+    End Sub
+
+    Private Sub cmdLarge_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdLarge.Click
+        cmdLarge.Visible = False
+        frmLarge = New frmLarge
+        frmLarge.Show()
+        frmLarge.BackgroundImage = picPreview.Image
+        If lvwImages.SelectedItems.Count > 0 Then
+            frmLarge.Text = "Metanol large " & IO.Path.GetFileName(lvwImages.SelectedItems(0).Name)
+        End If
+    End Sub
+
+    Private Sub picPreview_LoadCompleted(ByVal sender As Object, ByVal e As System.ComponentModel.AsyncCompletedEventArgs) Handles picPreview.LoadCompleted
+        If frmLarge IsNot Nothing Then frmLarge.BackgroundImage = picPreview.Image
+    End Sub
+
+    'Private Sub tabChoices_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tabChoices.SelectedIndexChanged
+    '    SaveCurrent(Tools.VisualBasicT.iif(tabChoices.SelectedTab Is tapCommon, tapAll, tapCommon))
+    '    kweKeyWords.Enabled = tabChoices.SelectedTab Is tapCommon
+    '    LoadCurrent()
+    'End Sub
+
+    'Private Function SaveCurrent(Optional ByVal Tab As TabPage = Nothing) As Boolean
+    '    If Tab Is Nothing Then Tab = tabChoices.SelectedTab
+    '    If Tab Is tapCommon Then
+    '        Return SaveCommon()
+    '    Else
+    '        SaveAll()
+    '        Return True
+    '    End If
+    'End Function
+
+    'Private Sub LoadCurrent(Optional ByVal Tab As TabPage = Nothing)
+    '    If Tab Is Nothing Then Tab = tabChoices.SelectedTab
+    '    IPTC = Nothing
+    '    Try
+    '        If Tab Is tapCommon Then
+    '            LoadCommon()
+    '        Else
+    '            LoadAll()
+    '        End If
+    '    Catch ex As Exception
+    '        MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+    '    End Try
+    '    EnableDisable()
+    'End Sub
+
+    'Private Sub LoadAll()
+    '    LoadIPTC()
+    '    prgAll.SelectedObject = IPTC
+    'End Sub
+    Private Sub LoadCommon(ByVal IPTC As IPTC)
+        'LoadIPTC()
+        'If IPTC Is Nothing Then Exit Sub
+        With txwCopyright
+            If 0 >= IPTC.Contains(DataSetIdentification.CopyrightNotice) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.CopyrightNotice
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwCredit
+            If 0 >= IPTC.Contains(DataSetIdentification.Credit) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.Credit
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwCity
+            If 0 >= IPTC.Contains(DataSetIdentification.City) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.City
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With cbwCountryCode
+            If 0 >= IPTC.Contains(DataSetIdentification.CountryPrimaryLocationCode) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.CountryPrimaryLocationCode
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwCountry
+            If 0 >= IPTC.Contains(DataSetIdentification.CountryPrimaryLocationName) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.CountryPrimaryLocationName
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwProvince
+            If 0 >= IPTC.Contains(DataSetIdentification.ProvinceState) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.ProvinceState
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwSubLocation
+            If 0 >= IPTC.Contains(DataSetIdentification.SubLocation) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.SubLocation
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwEditStatus
+            If 0 >= IPTC.Contains(DataSetIdentification.EditStatus) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.EditStatus
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With nwsUrgency
+            If 0 >= IPTC.Contains(DataSetIdentification.Urgency) Then
+                .Value = 0
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Value = IPTC.Urgency
+                    .Status.Status = Statuses.Normal
+                Catch : .Value = 0 : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With txwObjectName
+            If 0 >= IPTC.Contains(DataSetIdentification.ObjectName) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.ObjectName
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With mxwCaptionAbstract
+            If 0 >= IPTC.Contains(DataSetIdentification.CaptionAbstract) Then
+                .Text = ""
+                .Status.Status = Statuses.Null
+            Else
+                Try
+                    .Text = IPTC.CaptionAbstract
+                    .Status.Status = Statuses.Normal
+                Catch : .Text = "" : .Status.Status = Statuses.Error : End Try
+            End If
+        End With
+        With kweKeyWords
+            .KeyWords.Clear()
+            If 0 >= IPTC.Contains(DataSetIdentification.Keywords) Then
+                .Status.Status = Statuses.Null
+            Else
+                .Status.Status = Statuses.Normal
+                Try
+                    For Each Kw As String In IPTC.Keywords
+                        .KeyWords.Add(Kw)
+                    Next Kw
+                Catch : End Try
+            End If
+        End With
+    End Sub
+    'Private Sub SaveAll()
+    '    For Each Item As ListViewItem In lvwImages.SelectedItems
+    '        Try
+    '            Using MyJPEG As New Tools.DrawingT.IO.JPEG.JPEGReader(Item.Name, True)
+    '                MyJPEG.IPTCEmbed(IPTC.GetBytes)
+    '            End Using
+    '        Catch ex As Exception
+    '            MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name & " " & IO.Path.GetFileName(Item.Name))
+    '        End Try
+    '    Next Item
+    'End Sub
+    Private Sub SaveCommon()
+        'Try
+        '  For Each item As ListViewItem In lvwImages.SelectedItems
+        '    Dim MyIPTC As IPTC
+        '    Dim MyJPEG As JPEGReader
+        '    Try
+        '        MyJPEG = New JPEGReader(item.Name, True)
+        '        MyIPTC = New IPTC(MyJPEG)
+        '    Catch ex As Exception
+        '        MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name & " " & IO.Path.GetFileName(item.Name))
+        '        Continue For
+        '    End Try
+        ' Try
+        Try
+            With txwCopyright
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).CopyrightNotice = .Text
+                        ElseIf .Status.Status = Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(DataSetIdentification.CopyrightNotice)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwCredit
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).Credit = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(IPTC.DataSetIdentification.Credit)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwCity
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).City = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.City)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With cbwCountryCode
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).CountryPrimaryLocationCode = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.CountryPrimaryLocationCode)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwCountry
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).CountryPrimaryLocationName = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.CountryPrimaryLocationName)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwProvince
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).ProvinceState = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.ProvinceState)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwSubLocation
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).SubLocation = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.SubLocation)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwEditStatus
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).EditStatus = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.EditStatus)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With nwsUrgency
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).Urgency = .Value
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.Urgency)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With txwObjectName
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).ObjectName = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.ObjectName)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            With mxwCaptionAbstract
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        If .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Changed OrElse .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.[New] Then
+                            DirectCast(item.Tag, Cont).CaptionAbstract = .Text
+                        ElseIf .Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.Deleted Then
+                            DirectCast(item.Tag, Cont).Clear(Tools.DrawingT.MetadataT.IPTC.DataSetIdentification.CaptionAbstract)
+                        End If
+                    Next item
+                    .Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End With
+            If kweKeyWords.Status.Status = Statuses.Changed OrElse kweKeyWords.Status.Status = Statuses.[New] Then
+                Try
+                    For Each item As ListViewItem In lvwImages.SelectedItems
+                        Dim CurrentKw As List(Of String)
+                        If Not kweKeyWords.Merge OrElse lvwImages.SelectedItems.Count = 1 Then 'lvwImages.SelectedItems.Count = 1 OrElse Not kweKeyWords.Merge Then
+                            CurrentKw = New List(Of String)
+                        Else
+                            Dim kw As String() = DirectCast(item.Tag, Cont).Keywords
+                            If kw Is Nothing Then
+                                CurrentKw = New List(Of String)
+                            Else
+                                CurrentKw = New List(Of String)(kw)
+                            End If
+                        End If
+                        For Each kw As String In kweKeyWords.KeyWords
+                            Dim IsIn As Boolean = False
+
+                            For Each InKw As String In CurrentKw
+                                If LCase(InKw) = LCase(kw) Then IsIn = True : Exit For
+                            Next InKw
+                            If Not IsIn Then CurrentKw.Add(kw)
+                        Next kw
+                        DirectCast(item.Tag, Cont).Keywords = CurrentKw.ToArray
+                    Next item
+                    kweKeyWords.Status.Status = Statuses.Normal
+                Catch ex As Exception : MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name) : End Try
+            End If
+        Catch ex As Exception
+            MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+            'Return False
+        End Try
+        'Try
+        '    MyJPEG.IPTCEmbed(Mydirectcast(item.tag,cont).GetBytes)
+        'Catch ex As Exception
+        '    MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name & " " & IO.Path.GetFileName(item.Name))
+        'End Try
+        'Finally
+        '    MyJPEG.Dispose()
+        'End Try
+        'Next item
+        'Return True
+    End Sub
+
+    Private Sub SaveChanged()
+        For Each item As ListViewItem In lvwImages.SelectedItems
+            With DirectCast(item.Tag, Cont)
+                If .Changed Then
+                    Try
+                        Using Reader As New JPEGReader(item.Name, True)
+                            Reader.IPTCEmbed(.GetBytes)
+                        End Using
+                    Catch ex As Exception
+                        MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+                    End Try
+                End If
+            End With
+            item.Tag = Nothing
+        Next item
+        tslChange.Text = ""
+        lvwImages_SelectedIndexChanged(Me, EventArgs.Empty)
+    End Sub
+
+    'Private Sub LoadIPTC()
+    '    If lvwImages.SelectedItems.Count > 0 Then
+    '        Using JPEg As New Tools.DrawingT.IO.JPEG.JPEGReader(lvwImages.SelectedItems(0).Name)
+    '            IPTC = New Tools.DrawingT.MetadataT.IPTC(JPEg)
+    '        End Using
+    '    Else
+    '        IPTC = Nothing
+    '    End If
+    'End Sub
+
+    'Private IPTC As Tools.DrawingT.MetadataT.IPTC
+    Private Sub EnableDisable()
+        kweKeyWords.Enabled = lvwImages.SelectedItems.Count > 0 AndAlso tabChoices.SelectedTab Is tapCommon
+        tabChoices.Enabled = lvwImages.SelectedItems.Count > 0
+    End Sub
+
+    Private Sub frmMain_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+        If e.Control AndAlso e.KeyCode = Keys.Right Then
+            If lvwImages.SelectedItems.Count = 0 AndAlso lvwImages.Items.Count > 0 Then
+                lvwImages.SelectedIndices.Add(0)
+            ElseIf lvwImages.SelectedItems.Count > 0 AndAlso lvwImages.SelectedIndices(0) < lvwImages.Items.Count - 1 Then
+                Dim Index As Integer = lvwImages.SelectedIndices(0)
+                lvwImages.SelectedItems.Clear()
+                lvwImages.SelectedIndices.Add(Index + 1)
+            End If
+        ElseIf e.Control AndAlso e.KeyCode = Keys.Left Then
+            If lvwImages.SelectedItems.Count = 0 AndAlso lvwImages.Items.Count > 0 Then
+                lvwImages.SelectedIndices.Add(lvwImages.Items.Count - 1)
+            ElseIf lvwImages.SelectedIndices.Count > 0 AndAlso lvwImages.SelectedIndices(0) > 0 Then
+                Dim Index As Integer = lvwImages.SelectedIndices(0)
+                lvwImages.SelectedItems.Clear()
+                lvwImages.SelectedIndices.Add(Index - 1)
+            End If
+        ElseIf e.Control AndAlso e.KeyCode = Keys.S Then
+            SaveChanged()
+            MsgBox("Saved.", MsgBoxStyle.Information, "Saved")
+        End If
+    End Sub
+
+    Private Sub lvwImages_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+        Dim Remove As New List(Of ListViewItem)
+        For Each item As ListViewItem In lvwImages.SelectedItems
+            If item.Tag Is Nothing Then
+                Try
+                    Using Reader As New JPEGReader(item.Name)
+                        item.Tag = New Cont(Reader, AddressOf Ch)
+                    End Using
+                Catch ex As Exception
+                    MsgBox(ex.Message, MsgBoxStyle.Critical, IO.Path.GetFileName(item.Name) & " " & ex.GetType.Name)
+                    Remove.Add(item)
+                End Try
+            End If
+        Next item
+        For Each item As ListViewItem In Remove
+            item.Selected = False
+        Next item
+        If lvwImages.SelectedItems.Count > 0 Then
+            LoadCommon(DirectCast(lvwImages.SelectedItems(0).Tag, Cont))
+        End If
+        If tabChoices.SelectedTab Is tapAll Then
+            Dim Objects(lvwImages.SelectedItems.Count - 1) As Object
+            Dim i As Integer = 0
+            For Each item As ListViewItem In lvwImages.SelectedItems
+                Objects(i) = DirectCast(item.Tag, Cont)
+                i += 1
+            Next item
+            prgAll.SelectedObjects = Objects
+        End If
+        EnableDisable()
+    End Sub
+
+    'Private Sub prgAll_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles prgAll.PropertyValueChanged
+    '    For Each item As Cont In prgAll.SelectedObjects
+    '        item.Changed = True
+    '    Next item
+    'End Sub
+
+    Private Sub tabChoices_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tabChoices.SelectedIndexChanged
+        If tabChoices.SelectedTab IsNot tapCommon Then
+            SaveCommon()
+        End If
+        lvwImages_SelectedIndexChanged(sender, e)
+    End Sub
+
+    Private Sub Edit_Leave(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles txwSubLocation.Leave, txwProvince.Leave, txwObjectName.Leave, txwEditStatus.Leave, txwCredit.Leave, txwCountry.Leave, txwCopyright.Leave, txwCity.Leave, nwsUrgency.Leave, mxwCaptionAbstract.Leave, cbwCountryCode.Leave, kweKeyWords.Leave
+        SaveCommon()
+    End Sub
+    Private Sub Ch()
+        tslChange.Text = "*"
+    End Sub
+End Class
+Friend Delegate Sub dChange()
+Friend Class Cont : Inherits IPTC
+    Public Changed As Boolean
+    Private Changes As dChange
+    Public Sub New(ByVal Reader As JPEGReader, ByVal Ch As dChange)
+        MyBase.New(Reader)
+        Me.Changes = Ch
+    End Sub
+    Protected Overrides Sub OnValueChanged(ByVal Tag As Tools.DrawingT.MetadataT.IPTC.DataSetIdentification)
+        MyBase.OnValueChanged(Tag)
+        Changed = True
+        Changes.Invoke()
+    End Sub
+    Public Overrides Sub Clear(ByVal Key As Tools.DrawingT.MetadataT.IPTC.DataSetIdentification)
+        MyBase.Clear(Key)
+        Changed = True
+        Changes.Invoke()
+    End Sub
+    Public Shared Narrowing Operator CType(ByVal from As ListViewItem) As Cont
+        Return from.Tag
+    End Operator
 End Class
