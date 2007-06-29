@@ -123,7 +123,7 @@ Namespace WindowsT.FormsT
             Set(ByVal value As ListWithEvents(Of String))
                 _AutoCompleteStable = value
                 Me.txtEdit.AutoCompleteCustomSource.Clear()
-                If Me.AutoCompleteCacheName <> "" Then Me.txtEdit.AutoCompleteCustomSource.AddRange(value.ToArray)
+                If Me.AutoCompleteCacheName <> "" Then Me.txtEdit.AutoCompleteCustomSource.AddRange(Me.InstanceAutoCompleteChache.toarray)
                 If value IsNot Nothing Then _
                     Me.txtEdit.AutoCompleteCustomSource.AddRange(value.ToArray)
                 TmiEnabled()
@@ -142,7 +142,7 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Gets autocomplete chache used by this instance (if any)</summary>
         <Browsable(False)> _
-        Public ReadOnly Property InstanceAutoCompleteChache() As IList(Of String)
+        Public ReadOnly Property InstanceAutoCompleteChache() As ListWithEvents(Of String)
             Get
                 If AutoCompleteCacheName <> "" Then
                     Return AutocompleteCache(AutoCompleteCacheName)
@@ -304,7 +304,7 @@ Namespace WindowsT.FormsT
             lstKW.SelectedItems.Clear()
             For Each item As String In Sel
                 lstKW.SelectedItems.Add(item)
-            Next
+            Next item
         End Sub
         ''' <summary>Raised when user adds keyword</summary>
         ''' <remarks>Not raised when keyword is added programatically</remarks>
@@ -312,6 +312,11 @@ Namespace WindowsT.FormsT
         ''' <summary>Raises the <see cref="KeywordAdded"/> event</summary> 
         ''' <param name="e">event parameters</param>
         Protected Overridable Sub OnKeywordAdded(ByVal e As ListWithEvents(Of String).ItemEventArgs)
+            If AutoChange AndAlso Me.Status.Status = StatusMarker.Statuses.Null Then
+                Me.Status.Status = StatusMarker.Statuses.[New]
+            ElseIf AutoChange Then
+                Me.Status.Status = StatusMarker.Statuses.Changed
+            End If
             RaiseEvent KeywordAdded(Me, e)
         End Sub
         ''' <summary>List of keywords currenly in list</summary>
@@ -342,11 +347,25 @@ Namespace WindowsT.FormsT
         ''' <summary>Raises the <see cref="KeyWordRemoved"/> event</summary>
         ''' <param name="e">Event params</param>
         Protected Overridable Sub OnKeyWordRemoved(ByVal e As ListWithEvents(Of String).ItemsEventArgs)
+            If AutoChange AndAlso Me.Status.Status = StatusMarker.Statuses.Null Then
+                Me.Status.Status = StatusMarker.Statuses.[New]
+            ElseIf AutoChange Then
+                Me.Status.Status = StatusMarker.Statuses.Changed
+            End If
             RaiseEvent KeyWordRemoved(Me, e)
         End Sub
         ''' <summary>Raised after user manually removes keyword(s)</summary>
         ''' <remarks>Not raised when keywords are removed programatically</remarks>
         Public Event KeyWordRemoved As EventHandler(Of ListWithEvents(Of String).ItemsEventArgs)
+        Private _AutoChange As Boolean = True
+        Public Property AutoChange() As Boolean
+            Get
+                Return _AutoChange
+            End Get
+            Set(ByVal value As Boolean)
+                _AutoChange = value
+            End Set
+        End Property
 #End Region
 #Region "Management"
         Private Sub tmiLabel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiLabel.Click

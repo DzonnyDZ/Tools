@@ -8,7 +8,7 @@ Namespace WindowsT.FormsT
         Private [For] As KeyWordsEditor
         ''' <summary>Reference to auto-complete cache of currently edited <see cref="KeyWordsEditor"/></summary>
         Private WithEvents AutoCompleteCache As ListWithEvents(Of String)
-        Private BackupStable As List(Of String)
+        'Private BackupStable As List(Of String)
         Private BackupChache As List(Of String)
         ''' <summary>CTor</summary>
         ''' <param name="For"><see cref="KeyWordsEditor"/> to be dialog for</param>
@@ -29,7 +29,7 @@ Namespace WindowsT.FormsT
             kweValues.CaseSensitive = Me.For.CaseSensitive
 
             If Me.For.AutoCompleteStable IsNot Nothing Then
-                BackupStable = New List(Of String)(Me.For.AutoCompleteStable)
+                'BackupStable = New List(Of String)(Me.For.AutoCompleteStable)
                 For Each KW As String In Me.For.AutoCompleteStable
                     kweAutoComplete.KeyWords.Add(KW)
                 Next KW
@@ -189,17 +189,23 @@ Namespace WindowsT.FormsT
                     Me.For.Synonyms.Add(Syn.Syns)
                 Next Syn
             End If
+            If Me.For.AutoCompleteStable IsNot Nothing Then
+                Me.For.AutoCompleteStable.Clear()
+                For Each Stable As String In kweAutoComplete.KeyWords
+                    Me.For.AutoCompleteStable.Add(Stable)
+                Next Stable
+            End If
             Me.Close()
         End Sub
 
         Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
             'Repair backups
-            If Me.For.AutoCompleteStable IsNot Nothing Then
-                Me.For.AutoCompleteStable.Clear()
-                For Each Backup As String In BackupStable
-                    Me.For.AutoCompleteStable.Add(Backup)
-                Next Backup
-            End If
+            'If Me.For.AutoCompleteStable IsNot Nothing Then
+            '    Me.For.AutoCompleteStable.Clear()
+            '    For Each Backup As String In BackupStable
+            '        Me.For.AutoCompleteStable.Add(Backup)
+            '    Next Backup
+            'End If
             If Me.For.InstanceAutoCompleteChache IsNot Nothing Then
                 With Me.For.InstanceAutoCompleteChache
                     .Clear()

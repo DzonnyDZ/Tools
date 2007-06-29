@@ -49,16 +49,17 @@ Namespace WindowsT.FormsT
             Me.txtEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtEdit.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
             Me.txtEdit.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-            Me.txtEdit.Location = New System.Drawing.Point(3, 3)
+            Me.txtEdit.Location = New System.Drawing.Point(0, 2)
+            Me.txtEdit.Margin = New System.Windows.Forms.Padding(0)
             Me.txtEdit.Name = "txtEdit"
-            Me.txtEdit.Size = New System.Drawing.Size(384, 20)
+            Me.txtEdit.Size = New System.Drawing.Size(390, 20)
             Me.txtEdit.TabIndex = 0
             '
             'lstKW
             '
             Me.lstKW.Dock = System.Windows.Forms.DockStyle.Fill
             Me.lstKW.FormattingEnabled = True
-            Me.lstKW.Location = New System.Drawing.Point(0, 26)
+            Me.lstKW.Location = New System.Drawing.Point(0, 24)
             Me.lstKW.Name = "lstKW"
             Me.lstKW.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
             Me.lstKW.Size = New System.Drawing.Size(485, 238)
@@ -86,7 +87,7 @@ Namespace WindowsT.FormsT
             Me.tlpTop.Name = "tlpTop"
             Me.tlpTop.RowCount = 1
             Me.tlpTop.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpTop.Size = New System.Drawing.Size(485, 26)
+            Me.tlpTop.Size = New System.Drawing.Size(485, 24)
             Me.tlpTop.TabIndex = 1
             '
             'stmStatus
@@ -96,7 +97,7 @@ Namespace WindowsT.FormsT
             Me.stmStatus.AutoChanged = False
             Me.stmStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.stmStatus.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.stmStatus.Location = New System.Drawing.Point(414, 1)
+            Me.stmStatus.Location = New System.Drawing.Point(414, 0)
             Me.stmStatus.Margin = New System.Windows.Forms.Padding(0)
             Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.stmStatus.Name = "stmStatus"
@@ -111,7 +112,7 @@ Namespace WindowsT.FormsT
             Me.cmdThesaurus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdThesaurus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
             Me.cmdThesaurus.Image = Global.Tools.My.Resources.Resources.T
-            Me.cmdThesaurus.Location = New System.Drawing.Point(438, 1)
+            Me.cmdThesaurus.Location = New System.Drawing.Point(438, 0)
             Me.cmdThesaurus.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdThesaurus.Name = "cmdThesaurus"
             Me.cmdThesaurus.Size = New System.Drawing.Size(23, 24)
@@ -128,7 +129,7 @@ Namespace WindowsT.FormsT
             Me.cmdMerge.BackColor = System.Drawing.Color.Orange
             Me.cmdMerge.FlatStyle = System.Windows.Forms.FlatStyle.Flat
             Me.cmdMerge.Image = Global.Tools.My.Resources.Resources.Zip
-            Me.cmdMerge.Location = New System.Drawing.Point(461, 1)
+            Me.cmdMerge.Location = New System.Drawing.Point(461, 0)
             Me.cmdMerge.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdMerge.Name = "cmdMerge"
             Me.cmdMerge.Size = New System.Drawing.Size(24, 24)
@@ -144,7 +145,7 @@ Namespace WindowsT.FormsT
             Me.cmdAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
             Me.cmdAdd.Image = Global.Tools.My.Resources.Resources.Plus
-            Me.cmdAdd.Location = New System.Drawing.Point(390, 1)
+            Me.cmdAdd.Location = New System.Drawing.Point(390, 0)
             Me.cmdAdd.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdAdd.Name = "cmdAdd"
             Me.cmdAdd.Size = New System.Drawing.Size(24, 24)
@@ -158,7 +159,7 @@ Namespace WindowsT.FormsT
             Me.cmsThesaurus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
             Me.cmsThesaurus.Name = "cmsThesaurus"
             Me.cmsThesaurus.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-            Me.cmsThesaurus.Size = New System.Drawing.Size(206, 158)
+            Me.cmsThesaurus.Size = New System.Drawing.Size(206, 136)
             '
             'tmiLabel
             '
