@@ -76,6 +76,7 @@ Namespace DrawingT.IO.JPEG
         ''' <exception cref="IOException">IO error while reding <paramref name="Stream"/></exception>
         ''' <exception cref="EndOfStreamException">End of stream <paramref name="Stream"/> reached unexpectedly</exception>
         Public Sub New(ByVal Stream As Stream, ByVal Offset As Long)
+            _offset = Offset
             Stream.Position = Offset
             Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             _Code = r.ReadUInt16()
@@ -89,6 +90,14 @@ Namespace DrawingT.IO.JPEG
                 _Data = Net.Sockets.NetworkStream.Null
             End If
         End Sub
+        ''' <summary>Contains value of the <see cref="Offset"/> property</summary>
+        Private _Offset As Long
+        ''' <summary>Offset of marker in stream it was constructed of</summary>
+        Public ReadOnly Property Offset() As Long
+            Get
+                Return _Offset
+            End Get
+        End Property
         ''' <summary>2 Bytes code of marker</summary>
         <CLSCompliant(False)> _
         Public ReadOnly Property Code() As UInt16

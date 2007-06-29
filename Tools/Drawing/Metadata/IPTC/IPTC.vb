@@ -41,7 +41,7 @@ Namespace DrawingT.MetadataT
         End Sub
         ''' <summary>Removes all occurences of specified tag</summary>         
         ''' <param name="Key">Tag to remove</param>                            
-        Public Sub Clear(ByVal Key As DataSetIdentification)
+        Public Overridable Sub Clear(ByVal Key As DataSetIdentification)
             _Tags.RemoveAll(DataSetIdentification.PairMatch.GetPredicate(Of Byte())(Key))
         End Sub
         ''' <summary>Removes all tags</summary>

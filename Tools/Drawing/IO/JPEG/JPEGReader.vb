@@ -3,7 +3,7 @@ Namespace DrawingT.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="06/29/2007")> _
     <MainTool(FirstVerMMDDYYYY:="04/23/2007")> _
     Public Class JPEGReader
         Implements MetadataT.IExifGetter, MetadataT.IIPTCGetter
@@ -214,9 +214,9 @@ Namespace DrawingT.IO.JPEG
         ''' </remarks>
         Public Function GetPhotoShopStream() As System.IO.Stream
             Const PhotoShop$ = "Photoshop 3.0"
-            If PhotoshopMarkerIndex = -1 Then
+            If _PhotoshopMarkerIndex = -1 Then
                 Return Nothing
-            ElseIf PhotoshopMarkerIndex >= 0 Then
+            ElseIf _PhotoshopMarkerIndex >= 0 Then
                 Return New ConstrainedReadOnlyStream(Me.Markers(PhotoshopMarkerIndex).Data, 14, Me.Markers(PhotoshopMarkerIndex).Data.Length - 14)
             End If
             Dim i As Integer = 0
@@ -244,7 +244,7 @@ Namespace DrawingT.IO.JPEG
         ''' <returns>Index of marker into <see cref="Markers"/> collection in which Photoshop data are stored, -1 if there are no Photoshop data</returns>
         Public ReadOnly Property PhotoshopMarkerIndex() As Integer
             Get
-                If _PhotoshopMarkerIndex < -1 Then GetExifStream()
+                If _PhotoshopMarkerIndex < -1 Then GetPhotoShopStream()
                 Return _PhotoshopMarkerIndex
             End Get
         End Property
@@ -267,7 +267,7 @@ Namespace DrawingT.IO.JPEG
             Dim Overwrite As New Dictionary(Of Integer, UShort) 'Another bytes to be owerwriten
             If Me.PhotoshopMarkerIndex >= 0 Then
                 Dim APP14SizePos As Integer = DirectCast(Me.Markers(Me.PhotoshopMarkerIndex).Data, ConstrainedReadOnlyStream).TranslatePosition(0)
-                APP14SizePos -= 2 'Byte where APP14's size is stored
+                APP14SizePos -= 2 'Byte where APP13's size is stored
                 If Me.IPTC8BIMSegmentIndex >= 0 Then
                     Dim BIM8 As Photoshop8BIMReader = Me.Get8BIMSegments(Me.IPTC8BIMSegmentIndex)
                     'Embed data into existing 8BIM segment
@@ -278,8 +278,11 @@ Namespace DrawingT.IO.JPEG
                     w.Write(MathT.LEBE(CUInt(IPTCData.Length)))
                     ReDim PreData(3)
                     Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
-                    Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + (IPTCData.Length - Me.GetIPTCStream.Length)) 'New length of APP14
-                    LenghtToReplace = 4 + Me.GetIPTCStream.Length
+
+                    Dim CurrIPTCStreamLen As Long = Me.GetIPTCStream.Length
+                    Dim Pad As Byte = VisualBasicT.iif((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
+                    Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + (IPTCData.Length - (CurrIPTCStreamLen + Pad))) 'New length of APP14
+                    LenghtToReplace = 4 + CurrIPTCStreamLen + Pad
                 Else
                     'Add new 8BIM segment into existing Photoshop segment
                     Dim BIM8s As IList(Of Photoshop8BIMReader) = Me.Get8BIMSegments(Me.IPTC8BIMSegmentIndex)
@@ -296,32 +299,43 @@ Namespace DrawingT.IO.JPEG
                 End If
                 If IPTCData.Length Mod 2 <> 0 Then Overwrite(APP14SizePos) += 1
             Else
-                'Embed new APP14 with IPTC data
+                'Embed new APP13 with IPTC data
                 Dim InsertAfter As JPEGMarkerReader = Nothing
                 For Each Marker As JPEGMarkerReader In Me.Markers
                     If Marker.Code = JPEGMarkerReader.Markers.SOS Then Exit For
                     InsertAfter = Marker
-                    If Marker.Code > JPEGMarkerReader.Markers.APP14 OrElse (Marker.Code < JPEGMarkerReader.Markers.APP0 AndAlso Marker.Code <> JPEGMarkerReader.Markers.EOI) Then Exit For
+                    If Marker.Code > JPEGMarkerReader.Markers.APP13 OrElse (Marker.Code < JPEGMarkerReader.Markers.APP0 AndAlso Marker.Code <> JPEGMarkerReader.Markers.EOI) Then Exit For
                 Next Marker
                 If InsertAfter Is Nothing Then Throw New InvalidOperationException("No JPEG marker found")
-                If InsertAfter.Code = JPEGMarkerReader.Markers.SOI Then
+                If InsertAfter.MarkerCode = JPEGMarkerReader.Markers.SOI Then
                     PreDataPos = 2
                 Else
-                    PreDataPos = DirectCast(InsertAfter.Data, ConstrainedReadOnlyStream).TranslatePosition(0) + InsertAfter.Data.Length
+                    If InsertAfter.MarkerCode = JPEGMarkerReader.Markers.SOI Then
+                        PreDataPos = InsertAfter.Offset + 2
+                    End If
+                    If InsertAfter.Data.Length = 0 Then
+                        PreDataPos = InsertAfter.Offset + 4
+                    Else
+                        PreDataPos = DirectCast(InsertAfter.Data, ConstrainedReadOnlyStream).TranslatePosition(0) + InsertAfter.Data.Length
+                    End If
                 End If
                 Dim s As New MemoryStream(34)
                 Dim w As New BinaryWriter(s)
                 w.Write(CByte(&HFF))
-                w.Write(JPEGMarkerReader.Markers.APP14)
+                w.Write(JPEGMarkerReader.Markers.APP13)
                 w.Write(New Byte() {0, 0})
                 w.Write(New Byte() {&H50, &H68, &H6F, &H74, &H6F, &H73, &H68, &H6F, &H70, &H20, &H33, &H2E, &H30, &H0}) 'Photoshop 3.0\00
                 w.Write(BIM8Header(IPTCData.Length))
                 Dim Bytes As UShort = s.Position + IPTCData.Length
                 s.Seek(2, SeekOrigin.Begin)
-                w.Write(MathT.LEBE(Bytes))
-                ReDim PreData(Bytes - 1)
-                Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, Bytes)
-                If IPTCData.Length Mod 2 <> 0 Then Bytes += 1
+                If IPTCData.Length Mod 2 <> 0 Then
+                    w.Write(MathT.LEBE(Bytes - 2US + 1US))
+                Else
+                    w.Write(MathT.LEBE(Bytes - 2US))
+                End If
+                ReDim PreData(Bytes - IPTCData.Length - 1)
+                Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, Bytes - IPTCData.Length)
+                ' If IPTCData.Length Mod 2 <> 0 Then Bytes += 1
                 LenghtToReplace = 0
             End If
             If IPTCData.Length Mod 2 <> 0 Then
@@ -353,9 +367,9 @@ Namespace DrawingT.IO.JPEG
             Dim s As New MemoryStream(16)
             Dim w As New BinaryWriter(s)
             w.Write(New Byte() {&H38, &H42, &H49, &H4D}) '"8BIM"
-            w.Write(New Byte() {&H1C, &H2}) '&h1C02 - IPTC type
+            w.Write(New Byte() {&H4, &H4}) '&h1C02 - IPTC type
             w.Write(CByte(5)) 'Lenght of following string including this byte
-            w.Write(System.Text.Encoding.ASCII.GetByteCount("IPTC")) 'Just small text - this is not complusory
+            w.Write(System.Text.Encoding.ASCII.GetBytes("IPTC")) 'Just small text - this is not complusory
             w.Write(CByte(0)) 'Pad string + specifier to even lenght (6)
             w.Write(MathT.LEBE(IPTCDataLength)) 'Lenght of IPTC data
             Dim Bytes(s.Position - 1) As Byte
