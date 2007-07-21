@@ -301,7 +301,7 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsText(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space-non-cr-non-lf character"))
+                        If Not IsText(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space-non-cr-non-lf character", item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
                         If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
                             Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))

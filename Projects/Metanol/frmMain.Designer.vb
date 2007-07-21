@@ -28,6 +28,7 @@ Partial Class frmMain
         Me.splFolder = New System.Windows.Forms.SplitContainer
         Me.lvwImages = New System.Windows.Forms.ListView
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
+        Me.imlStates = New System.Windows.Forms.ImageList(Me.components)
         Me.lvwFolder = New System.Windows.Forms.ListView
         Me.imlFolder = New System.Windows.Forms.ImageList(Me.components)
         Me.tlpPath = New System.Windows.Forms.TableLayoutPanel
@@ -157,7 +158,9 @@ Partial Class frmMain
         Me.lvwImages.LargeImageList = Me.imlImages
         Me.lvwImages.Location = New System.Drawing.Point(0, 0)
         Me.lvwImages.Name = "lvwImages"
+        Me.lvwImages.ShowGroups = False
         Me.lvwImages.Size = New System.Drawing.Size(230, 337)
+        Me.lvwImages.StateImageList = Me.imlStates
         Me.lvwImages.TabIndex = 0
         Me.lvwImages.TabStop = False
         Me.lvwImages.UseCompatibleStateImageBehavior = False
@@ -167,6 +170,13 @@ Partial Class frmMain
         Me.imlImages.ImageStream = CType(resources.GetObject("imlImages.ImageStream"), System.Windows.Forms.ImageListStreamer)
         Me.imlImages.TransparentColor = System.Drawing.Color.Transparent
         Me.imlImages.Images.SetKeyName(0, "IrfanView")
+        '
+        'imlStates
+        '
+        Me.imlStates.ImageStream = CType(resources.GetObject("imlStates.ImageStream"), System.Windows.Forms.ImageListStreamer)
+        Me.imlStates.TransparentColor = System.Drawing.Color.Transparent
+        Me.imlStates.Images.SetKeyName(0, "unselected")
+        Me.imlStates.Images.SetKeyName(1, "selected")
         '
         'lvwFolder
         '
@@ -1113,5 +1123,6 @@ Partial Class frmMain
     Friend WithEvents lblCaptionAbstract As System.Windows.Forms.Label
     Friend WithEvents mxwCaptionAbstract As Tools.WindowsT.FormsT.MultiLineTextBoxWithStatus
     Friend WithEvents tslChange As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents imlStates As System.Windows.Forms.ImageList
 
 End Class

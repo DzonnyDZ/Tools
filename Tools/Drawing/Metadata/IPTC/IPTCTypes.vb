@@ -82,7 +82,7 @@ Namespace DrawingT.MetadataT
         ''' <remarks>All characters with ASCII code higher than space are considered graphic</remarks>
         Public Shared Function IsText(ByVal Str As String) As Boolean
             For Each ch As Char In Str
-                If AscW(ch) <= AscW(" "c) AndAlso AscW(ch) <> AscW(vbCr) AndAlso AscW(ch) <> AscW(vbLf) Then Return False
+                If AscW(ch) < AscW(" "c) AndAlso AscW(ch) <> AscW(vbCr) AndAlso AscW(ch) <> AscW(vbLf) Then Return False
             Next ch
             Return True
         End Function

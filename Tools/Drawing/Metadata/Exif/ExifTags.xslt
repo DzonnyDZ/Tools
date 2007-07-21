@@ -13,26 +13,27 @@
     <xsl:param name="namespace"></xsl:param>
     <xsl:param name="classname"></xsl:param>
 
+    <!--Generates file envelop (#If and #Region)-->
     <xsl:template match="/">
         <xsl:call-template name="header-comment"/>
-        <xsl:if test="$namespace!=''">
-            <xsl:text>Namespace </xsl:text>
-            <xsl:value-of select="$namespace"/>
-            <xsl:call-template name="nl"/>
-        </xsl:if>
-        <xsl:text>#If Congig &lt;= </xsl:text>
+        <xsl:text>#If Config &lt;= </xsl:text>
         <xsl:value-of select="et:Root/@Stage"/>
         <xsl:if test="et:Root/@Stage!='Release'">
             <xsl:text> 'Stage: </xsl:text>
             <xsl:value-of select="et:Root/@Stage"/>
         </xsl:if>
         <xsl:call-template name="nl"/>
-        <xsl:call-template name="code-gen"/>
-        <xsl:text>#End If&#xD;&#xA;</xsl:text>
+        <xsl:text>#Region "Generated code"&#xD;&#xA;</xsl:text>
         <xsl:if test="$namespace!=''">
-            <xsl:text>End Namespace</xsl:text>
+            <xsl:text>Namespace </xsl:text>
+            <xsl:value-of select="$namespace"/>
             <xsl:call-template name="nl"/>
+        </xsl:if>        
+        <xsl:call-template name="code-gen"/>
+        <xsl:if test="$namespace!=''">
+            <xsl:text>End Namespace&#xD;&#xA;</xsl:text>
         </xsl:if>
+        <xsl:text>#End Region&#xD;&#xA;#End If</xsl:text>
     </xsl:template>
     <!--Generates end of line-->
     <xsl:template name="nl">

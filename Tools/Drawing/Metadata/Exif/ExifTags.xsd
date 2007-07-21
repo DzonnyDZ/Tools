@@ -61,7 +61,7 @@
             </xs:enumeration>
             <xs:enumeration value="UInt16">
                 <xs:annotation>
-                    <xs:documentation>Unsigned 2 bytes integer. Oftern reffered as UShort or simply Short</xs:documentation>
+                    <xs:documentation>Unsigned 2 bytes integer. Often reffered as UShort or simply Short</xs:documentation>
                 </xs:annotation>
             </xs:enumeration>
             <xs:enumeration value="UInt32">

@@ -714,6 +714,9 @@ Public Class frmMain
     End Sub
 
     Private Sub lvwImages_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+        For Each item As ListViewItem In lvwImages.Items
+            If item.Selected Then item.StateImageIndex = 1 Else item.StateImageIndex = 0
+        Next item
         Dim Remove As New List(Of ListViewItem)
         For Each item As ListViewItem In lvwImages.SelectedItems
             If item.Tag Is Nothing Then
@@ -743,6 +746,24 @@ Public Class frmMain
             prgAll.SelectedObjects = Objects
         End If
         EnableDisable()
+
+        If lvwImages.SelectedItems.Count > 0 Then
+            If lvwImages.SelectedItems.Count = 1 Then
+                Me.Text = "Metanol " & lvwImages.SelectedItems(0).Name
+            Else
+                Me.Text = "Metanol (multiple)"
+            End If
+            Try
+                picPreview.LoadAsync(lvwImages.SelectedItems(0).Name)
+            Catch
+                picPreview.Image = Nothing
+            End Try
+            If frmLarge IsNot Nothing Then frmLarge.Text = "Metanol large " & IO.Path.GetFileName(lvwImages.SelectedItems(0).Name)
+        Else
+            Me.Text = "Metanol"
+            picPreview.Image = Nothing
+            If frmLarge IsNot Nothing Then frmLarge.Text = "Metanol large"
+        End If
     End Sub
 
     'Private Sub prgAll_PropertyValueChanged(ByVal s As Object, ByVal e As System.Windows.Forms.PropertyValueChangedEventArgs) Handles prgAll.PropertyValueChanged
