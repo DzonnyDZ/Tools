@@ -2,6 +2,7 @@ Imports Tools.CollectionsT.GenericT, System.Windows.Forms
 Namespace WindowsT.FormsT
 #If Config <= Nightly Then
     'Localize: UI
+    'ASAP: , conditional file
     ''' <summary>Editor of autocomplete list and synonym groups for <see cref="KeyWordsEditor"/></summary>
     Friend NotInheritable Class ThesaurusForm
         ''' <summary><see cref="KeyWordsEditor"/> this instance is for</summary>
