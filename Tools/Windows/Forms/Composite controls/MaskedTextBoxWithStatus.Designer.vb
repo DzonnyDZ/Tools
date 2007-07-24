@@ -2,7 +2,7 @@ Namespace WindowsT.FormsT
 #If Config <= Nightly Then
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class MaskedTextBoxWithStatus
-        Inherits System.Windows.Forms.UserControl
+        Inherits Tools.WindowsT.FormsT.ControlWithStatus
 
         'UserControl overrides dispose to clean up the component list.
         <System.Diagnostics.DebuggerNonUserCode()> _
@@ -26,9 +26,15 @@ Namespace WindowsT.FormsT
         Private Sub InitializeComponent()
             Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
             Me.mtbText = New System.Windows.Forms.MaskedTextBox
-            Me.stmStatus = New Tools.WindowsT.FormsT.StatusMarker
             Me.tlpMain.SuspendLayout()
             Me.SuspendLayout()
+            '
+            'stmStatus
+            '
+            Me.stmStatus.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.stmStatus.Location = New System.Drawing.Point(235, 0)
+            Me.stmStatus.Margin = New System.Windows.Forms.Padding(0)
+            Me.stmStatus.TabIndex = 1
             '
             'tlpMain
             '
@@ -47,6 +53,8 @@ Namespace WindowsT.FormsT
             Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpMain.Size = New System.Drawing.Size(259, 24)
             Me.tlpMain.TabIndex = 0
+            Me.tlpMain.Controls.SetChildIndex(Me.stmStatus, 0)
+            Me.tlpMain.Controls.SetChildIndex(Me.mtbText, 0)
             '
             'mtbText
             '
@@ -56,20 +64,6 @@ Namespace WindowsT.FormsT
             Me.mtbText.Name = "mtbText"
             Me.mtbText.Size = New System.Drawing.Size(235, 20)
             Me.mtbText.TabIndex = 0
-            '
-            'stmStatus
-            '
-            Me.stmStatus.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.stmStatus.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.stmStatus.AutoChanged = False
-            Me.stmStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.stmStatus.Location = New System.Drawing.Point(235, 0)
-            Me.stmStatus.Margin = New System.Windows.Forms.Padding(0)
-            Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.stmStatus.Name = "stmStatus"
-            Me.stmStatus.Size = New System.Drawing.Size(24, 24)
-            Me.stmStatus.TabIndex = 1
-            Me.stmStatus.TabStop = False
             '
             'MaskedTextBoxWithStatus
             '
@@ -87,7 +81,6 @@ Namespace WindowsT.FormsT
         End Sub
         Friend WithEvents tlpMain As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents mtbText As System.Windows.Forms.MaskedTextBox
-        Friend WithEvents stmStatus As Tools.WindowsT.FormsT.StatusMarker
     End Class
 #End If
 End Namespace

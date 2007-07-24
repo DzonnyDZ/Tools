@@ -13,7 +13,7 @@ Namespace WindowsT.FormsT
     <Prefix("trb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _
-    <ToolboxBitmap(GetType(TransparentLabel), "TransparentTextBox.bmp")> _
+    <ToolboxBitmap(GetType(TransparentTextBox), "TransparentTextBox.bmp")> _
     Public Class TransparentTextBox : Inherits RichTextBox
 #Region "CTors"
         ''' <summary>CTor</summary>

@@ -1,9 +1,13 @@
 Imports System.Windows.Forms
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then 'Stage:Nightly
-    'ASAP: Comment, mark, Forum, Wiki,Bitmap
-    'TODO: Attributes
-    'TODO:Expose everything
+    '#If Config <= Nightly Then set in Tools.vbproj
+    'Stage:Nightly
+    'ASAP: Comment,Attributes,Expose everything, inherit ControlWithStatus, Conditional file
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(ComboWithStatus), LastChMMDDYYYY:="07/22/2007")> _
+    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Drawing.ToolboxBitmap(GetType(StatusMarker), "ComboWithStatus.bmp")> _
+    <ComponentModelT.Prefix("cws")> _
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
     Public Class ComboWithStatus
@@ -18,7 +22,7 @@ Namespace WindowsT.FormsT
         Private Sub cmbCombo_TextChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbCombo.TextChanged
             OnTextChanged(e)
         End Sub
-        
+
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         Public ReadOnly Property Status() As StatusMarker
             Get
@@ -57,10 +61,10 @@ Namespace WindowsT.FormsT
                 cmbCombo.SelectedItem = value
             End Set
         End Property
-        
+
         Public Event SelectdIndexChanged As EventHandler
 
-        
+
         Private Sub cmbCombo_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmbCombo.SelectedIndexChanged
             OnSelectedIndexChanged(e)
         End Sub
@@ -100,6 +104,5 @@ Namespace WindowsT.FormsT
             End Get
         End Property
     End Class
-#End If
 End Namespace
 

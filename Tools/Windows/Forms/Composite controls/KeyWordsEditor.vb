@@ -1,7 +1,8 @@
 Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then
-    'ASAP:Mark,Bitmap,Comment,Forum,wiki, describe propeties
+    '#If Config <= Nightly Then set in tools.vbproj
+    'Stage: Nightly
+    'ASAP:Mark,Bitmap,Comment,Forum,wiki, describe propeties, , conditional file
     'Localize: UI
     <ComponentModelT.Prefix("kwe")> _
     Public Class KeyWordsEditor
@@ -123,7 +124,7 @@ Namespace WindowsT.FormsT
             Set(ByVal value As ListWithEvents(Of String))
                 _AutoCompleteStable = value
                 Me.txtEdit.AutoCompleteCustomSource.Clear()
-                If Me.AutoCompleteCacheName <> "" Then Me.txtEdit.AutoCompleteCustomSource.AddRange(Me.InstanceAutoCompleteChache.toarray)
+                If Me.AutoCompleteCacheName <> "" Then Me.txtEdit.AutoCompleteCustomSource.AddRange(Me.InstanceAutoCompleteChache.ToArray)
                 If value IsNot Nothing Then _
                     Me.txtEdit.AutoCompleteCustomSource.AddRange(value.ToArray)
                 TmiEnabled()
@@ -476,5 +477,4 @@ Namespace WindowsT.FormsT
             ShowDialog()
         End Sub
     End Class
-#End If
 End Namespace

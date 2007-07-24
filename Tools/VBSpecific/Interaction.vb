@@ -1,8 +1,8 @@
-﻿#If COnfig <= Release Then
-Namespace VisualBasicT
+﻿Namespace VisualBasicT
     ''' <summary>The Interaction module contains procedures used to interact with objects, applications, and systems.</summary>
     <DoNotApplyAuthorAndVersionAttributes()> _
     Public Module Interaction
+#If Config <= Release Then
         ''' <summary>Returns one of two objects, depending on the evaluation of an expression.</summary>
         ''' <param name="Expression">The expression you want to evaluate.</param>
         ''' <param name="FalsePart">Returned if <paramref name="Expression">Expression</paramref> evaluates to False.</param>
@@ -13,6 +13,7 @@ Namespace VisualBasicT
         Public Function iif(Of T)(ByVal Expression As Boolean, ByVal TruePart As T, ByVal FalsePart As T) As T
             If Expression Then Return TruePart Else Return FalsePart
         End Function
+#End If
 #If Config <= Alpha Then 'Stage:Alpha
         ''' <summary>Returns item or ist alternative item depending on if item has meaningful value</summary>
         ''' <param name="value">Item to be returned if has meaningful value</param>
@@ -55,7 +56,13 @@ Namespace VisualBasicT
             If value Is Nothing OrElse TypeOf value Is DBNull Then Return alternative Else Return value
         End Function
 #End If
+#If Config <= Nightly Then 'Stage: Nightly
+        'ASAP: Tool, Forum, Wiki
+        ''' <summary>If you like to use 'Null' instead of 'Nothing' in Visual Basic you can</summary>
+        Public Const Null As Object = Nothing
+        ''' <summary>If you like to use 'Nothing' instead of 'Null' outside Visual Basic you can</summary>
+        Public Const [Nothing] As Object = Nothing
+#End If
     End Module
 End Namespace
-#End If
 

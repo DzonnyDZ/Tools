@@ -1,8 +1,9 @@
 Imports System.IO
 #If Config <= Nightly Then
 Namespace IOt
-    'ASAP:Wiki,Mark,Forum
     ''' <summary>Tools related to IO <see cref="System.IO.Stream"/>s</summary>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(StreamTools), LastChMMDDYYYY:="07/22/2007")> _
     Public Module StreamTools
         ''' <summary>Replaces given ammount of bytes in <see cref="IO.Stream"/> with another amount of bytes</summary>
         ''' <param name="Stream">Stream to perform operation on. It must support seking, reading and writing</param>

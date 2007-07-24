@@ -4,6 +4,7 @@ Namespace ComponentModelT
     ''' <summary>Localizable version of <see cref="DescriptionAttribute"/>. Defines description shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
     ''' <remarks>Localizable means that value can be loaded from resources (any Public Static (Shared in Visual Basic) Property).</remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/21/2007")> _
+    <MainTool(GetType(LDisplayNameAttribute), FirstVerMMDDYYYY:="01/21/2007", GroupName:="Localizable attributes")> _
     Public Class LDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -49,8 +50,13 @@ Namespace ComponentModelT
     End Class
 
     ''' <summary>Localizable version of <see cref="DisplayNameAttribute"/>. Defines name shown in <see cref="System.Windows.Forms.PropertyGrid"/>.</summary>
-    ''' <remarks>Localizable means that value can be loaded from resources.</remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/21/2007")> _
+    ''' <remarks>
+    ''' <para>Localizable means that value can be loaded from resources.</para>
+    ''' <para>This attribute can be also used with fields in place of <see cref="FieldDisplayNameAttribute"/></para>
+    ''' </remarks>
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, LastChMMDDYYYY:="22/07/2007")> _
+    <AttributeUsage(AttributeTargets.Event Or AttributeTargets.Property Or AttributeTargets.Method Or AttributeTargets.Class Or AttributeTargets.Field)> _
+    <MainTool(GetType(LDescriptionAttribute), FirstVerMMDDYYYY:="01/21/2007", GroupName:="Localizable attributes")> _
     Public Class LDisplayNameAttribute : Inherits DisplayNameAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -100,6 +106,7 @@ Namespace ComponentModelT
     ''' Note that some categories can be localized by .NET Framework itself.
     ''' </remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/21/2007")> _
+    <MainTool(GetType(LDescriptionAttribute), FirstVerMMDDYYYY:="01/21/2007", GroupName:="Localizable attributes")> _
     Public Class LCategoryAttribute : Inherits CategoryAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -234,6 +241,7 @@ Namespace ComponentModelT
     ''' This attribute can be used in simple cases. In more complicated cases use ShouldSerialize... and Reset... methods. <seealso>http://msdn2.microsoft.com/en-us/library/53b8022e.aspx</seealso>
     ''' </remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/25/2007")> _
+    <MainTool(GetType(LDescriptionAttribute), FirstVerMMDDYYYY:="01/21/2007", GroupName:="Localizable attributes")> _
     Public Class LDefaultValueAttribute : Inherits DefaultValueAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type

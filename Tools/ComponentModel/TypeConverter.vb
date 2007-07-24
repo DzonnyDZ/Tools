@@ -1,6 +1,6 @@
 Imports System.ComponentModel, System.Globalization, System.Reflection
-#If Config <= Nightly Then 'Stage: Nightly
-Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
+#If Config <= Alpha Then 'Stage: Alpha
+Namespace ComponentModelT
     ''' <summary>Represents base class for type-safe <see cref="ComponentModel.TypeConverter"/>'s</summary>
     ''' <typeparam name="T">Type that is converted from and to other types</typeparam>
     ''' <remarks>It's not enough to derive from this class to get working type-safe <see cref="ComponentModel.TypeConverter"/>. After deriving from this class you must implement one or more type converter interfaces (protected nested interfaces in this class). Those interfaces tells this class which conversions are available and provides conversion methods.</remarks>
@@ -481,9 +481,9 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
     ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with support for interface based conversion as <see cref="TypeConverter(Of T)"/></summary>
     ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ExpandableObjectConverter(Of )), LastChMMDDYYYY:="06/19/2007")> _
+    <Version(1, 0, GetType(ExpandableObjectConverter(Of )), LastChMMDDYYYY:="07/22/2007")> _
     <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
-    Public Class ExpandableObjectConverter(Of T) : Inherits TypeConverter(Of T)
+    Public MustInherit Class ExpandableObjectConverter(Of T) : Inherits TypeConverter(Of T)
         ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <returns>True</returns>
@@ -499,7 +499,7 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
             Return TypeDescriptor.GetProperties(GetType(T), attributes)
         End Function
     End Class
-    ''' <summary>Provides base class fro type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with direct support for conversion to/from one type as <see cref="TypeConverter(Of T, TOther)"/> and interface-based type-safe converters implementation as <see cref="TypeConverter(Of T)"/></summary>
+    ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with direct support for conversion to/from one type as <see cref="TypeConverter(Of T, TOther)"/> and interface-based type-safe converters implementation as <see cref="TypeConverter(Of T)"/></summary>
     ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
     ''' <typeparam name="TOther">The other type to which and from which main type <paramref name="T"/> is converted</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -524,9 +524,9 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
 
     ''' <summary><see cref="TypeConverter"/> for <see cref="Byte()"/> as hexasring</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-  <Version(1, 0, GetType(HexaConverter), LastChMMDDYYYY:="06/19/2007")> _
-  <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
-  Public Class HexaConverter : Inherits TypeConverter(Of Byte(), String)
+    <Version(1, 0, GetType(HexaConverter), LastChMMDDYYYY:="06/19/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    Public Class HexaConverter : Inherits TypeConverter(Of Byte(), String)
         ''' <summary>Performs conversion from <see cref="String"/> to <see cref="Byte()"/></summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
         ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
@@ -560,22 +560,27 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
             Return ret.ToString
         End Function
     End Class
+    ''' <summary>Implements <see cref="TypeConverter"/> for enums that uses <see cref="DisplayNameAttribute"/> applyed on enum items and <see cref="RestrictAttribute"/></summary>
     <CLSCompliant(False)> _
-        <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-  <Version(1, 0, GetType(EnumConvertorWithAttributes(Of )), LastChMMDDYYYY:="06/19/2007")> _
-  <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
-    Public Class EnumConvertorWithAttributes(Of T As {IConvertible, Structure})
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(EnumConverterWithAttributes(Of )), LastChMMDDYYYY:="06/19/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    Public Class EnumConverterWithAttributes(Of T As {IConvertible, Structure})
         Inherits TypeConverter(Of T, String)
-
+        ''' <summary>Returns whether the collection of standard values returned from <see cref="M:System.ComponentModel.TypeConverter.GetStandardValues"></see> is an exclusive list.</summary>
+        ''' <returns>True when <see cref="T"/> has no <see cref="RestrictAttribute"/> or if its <see cref="RestrictAttribute"/> has <see cref="RestrictAttribute.Restrict"/> true</returns>
         Public Overrides Function GetStandardValuesExclusive(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
             Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
             Return Rest Is Nothing OrElse Rest.Restrict
         End Function
-
+        ''' <summary>Returns whether this object supports a standard set of values that can be picked from a list.</summary>
+        ''' <returns>true</returns>
         Public Overrides Function GetStandardValuesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
             Return True
         End Function
-
+        ''' <summary>Returns whether the given value object is valid for this type.</summary>
+        ''' <returns>true if the specified value is valid for type <see cref="T"/>; otherwise, false.</returns>
+        ''' <param name="value">The object to test for validity. </param>
         Public Overrides Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As String) As Boolean
             Try
                 ConvertFrom(context, Nothing, value)
@@ -584,7 +589,8 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
                 Return False
             End Try
         End Function
-
+        ''' <summary>Returns a collection of standard values from the default context for the data type this type converter is designed for.</summary>
+        ''' <returns>A <see cref="T:System.ComponentModel.TypeConverter.StandardValuesCollection"></see> containing a standard set of valid values.</returns>
         Public Overrides Function GetStandardValues(ByVal context As System.ComponentModel.ITypeDescriptorContext) As System.ComponentModel.TypeConverter.StandardValuesCollection
             Dim ret As New List(Of T)
             For Each cns As Reflection.FieldInfo In GetType(T).GetFields
@@ -594,7 +600,11 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
             Next cns
             Return New TypeConverter.StandardValuesCollection(ret)
         End Function
-
+        ''' <summary>Performs conversion from <see cref="String"/> to type <see cref="T"/></summary>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+        ''' <param name="value">Value to be converted to type <see cref="T"/></param>
+        ''' <returns>Value of type <see cref="T"/> initialized by <paramref name="value"/></returns>
         Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As T
             For Each cns As Reflection.FieldInfo In GetType(T).GetFields
                 If cns.IsLiteral AndAlso cns.IsPublic Then
@@ -606,7 +616,7 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
                     End If
                 End If
             Next cns
-            Dim Rest As restrictattribute = GetAttribute(Of restrictattribute)(GetType(T))
+            Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
             If Rest Is Nothing OrElse Rest.Restrict Then
                 Throw New InvalidEnumArgumentException(String.Format("Cannot interpret value ""{0}"" as {1}", value, GetType(T).Name))
             Else
@@ -624,7 +634,11 @@ Namespace ComponentModelT 'ASAP:Mark, Wiki,Comment
                 Return [Enum].ToObject(GetType(T), EValue)
             End If
         End Function
-
+        ''' <summary>Performs conversion from type <see cref="T"/> to <see cref="String"/></summary>
+        ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+        ''' <param name="value">Value to be converted</param>
+        ''' <returns>Representation of <paramref name="value"/> as <see cref="String"/></returns>
         Public Overloads Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As T) As String
             Dim cns As FieldInfo = Nothing
             Try

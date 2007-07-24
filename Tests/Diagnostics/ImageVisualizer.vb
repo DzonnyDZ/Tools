@@ -1,5 +1,5 @@
 Imports Microsoft.VisualStudio.DebuggerVisualizers
-#If Config <= Nightly Then 'TODO: Do this: Stage conditional compilation of this file is set in Tests.vbproj
+'#If Config <= Nightly is set in Tests.vbproj
 Namespace DiagnosticsT
     ''' <summary>Testing <see cref="Tools.DiagnosticsT.ImageVisualizer"/></summary>
     ''' <remarks><seealso>http://msdn2.microsoft.com/en-us/library/zayyhzts.aspx</seealso></remarks>
@@ -31,7 +31,7 @@ Namespace DiagnosticsT
                 End Try
                 picImg.Image = img
                 Try
-                    Dim dh As New VisualizerDevelopmentHost(img, GetType(Tools.DiagnosticsT.ImageVisualizer), GetType(Tools.DiagnosticsT.VisualizerImageSource))
+                    Dim dh As New VisualizerDevelopmentHost(img, GetType(Tools.DiagnosticsT.ImageVisualizer), GetType(Tools.DiagnosticsT.ImageVisualizer.VisualizerImageSource))
                     dh.ShowVisualizer()
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
@@ -41,4 +41,3 @@ Namespace DiagnosticsT
         End Sub
     End Class
 End Namespace
-#End If

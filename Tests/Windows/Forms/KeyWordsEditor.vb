@@ -1,6 +1,5 @@
-Imports Tools.CollectionsT.GenericT
+Imports Tools.CollectionsT.GenericT, System.ComponentModel
 '#If Config <= Release This conditional compilation is done in Tests.vbproj
-'ASAP: Is statement above true?
 Namespace WindowsT.FormsT
     ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.KeyWordsEditor"/></summary>
     Public Class frmKeyWordsEditor

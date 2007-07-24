@@ -1,9 +1,13 @@
 Imports System.Windows.Forms
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then 'Stage:Nightly
-    'ASAP: Comment, mark, Forum, Wiki,Bitmap
-    'TODO: Attributes
-    'TODO: Expose everything
+    '#If Config <= Nightly Then set in Tools.vbproj
+    'Stage:Nightly
+    'ASAP: Comment,  Attributes,Expose everything  , inherit ControlWithStatus , conditional file
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(NumericUpDownWithStatus), LastChMMDDYYYY:="07/22/2007")> _
+    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Drawing.ToolboxBitmap(GetType(StatusMarker), "NumericUpDownWithStatus.bmp")> _
+    <ComponentModelT.Prefix("nws")> _
     <DefaultProperty("Value")> _
     <DefaultEvent("ValueChanged")> _
     Public Class NumericUpDownWithStatus
@@ -67,7 +71,7 @@ Namespace WindowsT.FormsT
 
 
         <RefreshProperties(RefreshProperties.All), Category(UtilitiesT.CategoryAttributeValues.Data)> _
-Public Property Maximum() As Decimal
+    Public Property Maximum() As Decimal
             Get
                 Return nudNumber.Maximum
             End Get
@@ -116,6 +120,5 @@ Public Property Maximum() As Decimal
             End Set
         End Property
     End Class
-#End If
 End Namespace
 

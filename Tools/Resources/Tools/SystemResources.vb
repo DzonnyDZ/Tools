@@ -60,17 +60,27 @@ Namespace ResourcesT
         ''' <summary>Gets string value of system resource</summary>
         ''' <returns>Value of given system resource or null when resource is not available.</returns>
         ''' <param name="Key">Key of resource. Possible keys are retruned by the <see cref="Key"/> property</param>
+        ''' <exception cref="TargetInvocationException">Unknown unexpected error when obtaining resource value</exception>
         Public Shared ReadOnly Property Value(ByVal Key As String) As String
             Get
-                Return SRType.GetMethod("GetObject", BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.DeclaredOnly Or BindingFlags.InvokeMethod).Invoke(Nothing, New Object() {Key})
+                Try
+                    Return SRType.GetMethod("GetObject", BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.DeclaredOnly Or BindingFlags.InvokeMethod).Invoke(Nothing, New Object() {Key})
+                Catch ex As Exception
+                    Throw New TargetInvocationException(ex)
+                End Try
             End Get
         End Property
         ''' <summary>Gets object value of system resource</summary>
         ''' <returns>Value of given system resource or null when resource is not available.</returns>
         ''' <param name="Key">Key of resource. Possible keys are retruned by the <see cref="Key"/> property</param>
+        ''' <exception cref="TargetInvocationException">Unknown unexpected error when obtaining resource value</exception>
         Public Shared ReadOnly Property ObjValue(ByVal Key As String) As Object
             Get
-                Return SRType.GetMethod("GetObject", BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.DeclaredOnly Or BindingFlags.InvokeMethod).Invoke(Nothing, New Object() {Key})
+                Try
+                    Return SRType.GetMethod("GetObject", BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.DeclaredOnly Or BindingFlags.InvokeMethod).Invoke(Nothing, New Object() {Key})
+                Catch ex As Exception
+                    Throw New TargetInvocationException(ex)
+                End Try
             End Get
         End Property
         ''' <summary>Gets formated string value of system resource</summary>
@@ -3033,6 +3043,54 @@ Namespace ResourcesT
             Public Const SoundAPIReadError$ = "SoundAPIReadError"
 #End Region
         End Structure
+    End Class
+
+    ''' <summary>Exposes functionality of internall (friend) .NET class System.SRDescriptionAttribute - applies <see cref="DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
+    Public Class SRDescriptionAttribute   'ASAP: Mark, Wiki, Forum
+        Inherits DescriptionAttribute
+        ''' <summary>Contains value of the <see cref="ResourceKey"/> property</summary>
+        Private _ResourceKey As String
+        ''' <summary>CTor</summary>
+        ''' <param name="ResourceKey">Known resource key to get value from</param>
+        ''' <remarks>This CTor is only hint for intellisense. However it is fully functional you will propebly never use it.</remarks>
+        Public Sub New(ByVal ResourceKey As SystemResources.KnownValues)
+            _ResourceKey = ResourceKey
+        End Sub
+        ''' <summary>CTor</summary>
+        ''' <param name="ResourceKey">Resource key to get value from</param>
+        Public Sub New(ByVal ResourceKey As String)
+            _ResourceKey = ResourceKey
+        End Sub
+        ''' <summary>Gets the description stored in this attribute.</summary>
+        ''' <returns>The description stored in system resource key <see cref="ResourceKey"/></returns>
+        ''' <exception cref="TargetInvocationException">Unknown unexpected error when obtaining resource value</exception>
+        Public Overrides ReadOnly Property Description() As String
+            Get
+                Return SystemResources.Value(ResourceKey)
+            End Get
+        End Property
+        ''' <summary>Key of system resource that contains value of this attribute</summary>
+        Public ReadOnly Property ResourceKey() As String
+            Get
+                Return _ResourceKey
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Exposes functionality of internall (friend) .NET class System.SRCategoryAttribute - applies <see cref="DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
+    Public Class SRCategoryAttribute   'ASAP: Mark, Wiki, Forum
+        Inherits DescriptionAttribute
+        ''' <summary>CTor</summary>
+        ''' <param name="ResourceKey">Known resource key to get value from</param>
+        ''' <remarks>This CTor is only hint for intellisense. However it is fully functional you will propebly never use it.</remarks>
+        Public Sub New(ByVal ResourceKey As SystemResources.KnownValues)
+            MyBase.New(SystemResources.Value(ResourceKey))
+        End Sub
+        ''' <summary>CTor</summary>
+        ''' <param name="ResourceKey">Resource key to get value from</param>
+        Public Sub New(ByVal ResourceKey As String)
+            MyBase.New(SystemResources.Value(ResourceKey))
+        End Sub
     End Class
 End Namespace
 #End If

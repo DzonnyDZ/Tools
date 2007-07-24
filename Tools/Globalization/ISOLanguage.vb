@@ -1,7 +1,6 @@
 Imports System.ComponentModel
-'ASAP:Wiki,forum
 Namespace GlobalizationT
-#If Config <= Alpha Then 'Stage: Alpha
+#If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents language represented by ISO 639 language code and provides list of all defined ISO 639-1 and ISO 639-2 language codes</summary>
     ''' <completionlist cref="ISOLanguage"/>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

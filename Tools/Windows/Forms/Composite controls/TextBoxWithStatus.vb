@@ -1,11 +1,15 @@
 Imports System.Windows.Forms
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then 'Stage:Nightly
-    'ASAP: Comment, mark, Forum, Wiki,Bitmap
-    'TODO: Attributes
-    'TODO: Expose everything
+    '#If Config <= Nightly Then set in Tools.vbproj
+    'Stage:Nightly
+    'ASAP: Comment,Attributes,  Expose everything, inherit ControlWithStatus, conditional file
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
+     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(TextBoxWithStatus), LastChMMDDYYYY:="07/22/2007")> _
+    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Drawing.ToolboxBitmap(GetType(StatusMarker), "TextBoxWithStatus.bmp")> _
+    <ComponentModelT.Prefix("tws")> _
     Public Class TextBoxWithStatus
         Public Overrides Property Text() As String
             Get
@@ -25,7 +29,7 @@ Namespace WindowsT.FormsT
             End Get
         End Property
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public ReadOnly Property TextBox() As textbox
+        Public ReadOnly Property TextBox() As TextBox
             Get
                 Return txtText
             End Get
@@ -56,6 +60,5 @@ Namespace WindowsT.FormsT
             End Set
         End Property
     End Class
-#End If
 End Namespace
 

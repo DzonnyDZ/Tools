@@ -1,10 +1,10 @@
 Imports Tools.CollectionsT.GenericT
 Imports Tools.DataStructuresT.GenericT
 Namespace DrawingT.MetadataT
-#If Congig <= Nightly Then 'Stage: Nightly
-    'ASAP:Wiki, Forum, Mark
-    'TODO: Sort tags by record
-    'TODO: IPTCEmbed (store data in image)
+#If Congig <= Alpha Then 'Stage: Alpha
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(IPTC), LastChMMDDYYYY:="07/22/2007")> _
+    <MainTool(FirstVerMMDDYYYY:="06/01/2007")> _
     Partial Public Class IPTC
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()

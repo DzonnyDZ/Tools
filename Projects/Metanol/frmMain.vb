@@ -1,8 +1,9 @@
 Imports Tools.DrawingT.MetadataT, Tools.WindowsT.FormsT.StatusMarker
 Imports Tools.DrawingT.IO.JPEG
 Imports Tools.DrawingT.MetadataT.IPTC
-Public Class frmMain
-    'ASAP:Comments
+''' <summary>Main form of Methanol application</summary>
+Friend Class frmMain
+    ''' <summary>reference to <see cref="frmLarge"/> that shows large image</summary>
     Private WithEvents frmLarge As frmLarge
     'Private AutoComplete As New Tools.CollectionsT.GenericT.ListWithEvents(Of String)
     'Private Synonyms As List(Of KeyValuePair(Of String(), String()))
@@ -19,6 +20,7 @@ Public Class frmMain
             txtPath.Text = My.Settings.Folder
         End If
     End Sub
+    ''' <summary>Defines if <see cref="bgwThumb_RunWorkerCompleted"/> should call <see cref="LoadFolder"/></summary>
     Private LoadOnEnd As Boolean = False
     ''' <summary>Loads and shows content of folder</summary>
     Private Sub LoadFolder()
@@ -94,15 +96,27 @@ Public Class frmMain
         Next Path
         bgwThumb.ReportProgress(100)
     End Sub
+    ''' <summary>Used by thumbnail generator to stop it's work when <see cref="bgwThumb">bgwThumb</see>.<see cref="System.ComponentModel.BackgroundWorker.CancellationPending">CancellationPending</see> is true</summary>
+    ''' <returns><see cref="bgwThumb">bgwThumb</see>.<see cref="System.ComponentModel.BackgroundWorker.CancellationPending">CancellationPending</see></returns>
     Private Function CancelThumb() As Boolean
         Return bgwThumb.CancellationPending
     End Function
+    ''' <summary>Delegate of <see cref="SetThumb"/> method</summary>
+    ''' <param name="Image">Thumbnail to be shown</param>
+    ''' <param name="Path">Path of image <paramref name="Image"/> is thumbnail of</param>
     Private Delegate Sub dSetThumb(ByVal Path As String, ByVal Image As Image)
+    ''' <summary>Assigns thumbnail image to item of <see cref="lvwImages"/></summary>
+    ''' <param name="Image">Thumbnail to be shown</param>
+    ''' <param name="Path">Path of image <paramref name="Image"/> is thumbnail of</param>
     Private Sub SetThumb(ByVal Path As String, ByVal Image As Image)
         imlImages.Images.Add(Path, Image)
         lvwImages.Items(Path).ImageKey = Path
     End Sub
     'TODO:Extract as tool
+    ''' <summary>Computes the best-fit size of thumbnail image</summary>
+    ''' <param name="Th">Maximal bounds of thumbnail</param>
+    ''' <param name="Img">Size of image to get thumbnail size of</param>
+    ''' <returns>The maximal size of thumbnail computed in such way that width/haight ration of <paramref name="Img"/> is kept and returned size fits into <paramref name="Th"/>. At least one dimesion (height or width) of size returned is the same as appropriate dimension of <paramref name="Th"/></returns>
     Private Shared Function ThumbSize(ByVal Th As Size, ByVal Img As Size) As Size
         Dim NewS As Size
         If Img.Width <= Th.Width AndAlso Img.Height <= Th.Width Then
@@ -154,6 +168,7 @@ Public Class frmMain
         My.Settings.Folder = lvwFolder.SelectedItems(0).Name
         LoadFolder()
     End Sub
+    ''' <summary>Applies <see cref="My.Settings"/> onto this form and its controls</summary>
     Private Sub LoadSettings()
         kweKeyWords.Synonyms = My.Settings.Synonyms
         kweKeyWords.AutoCompleteStable = My.Settings.AutoComplete
@@ -182,6 +197,7 @@ Public Class frmMain
             frmLarge.BackgroundImage = picPreview.Image
         End If
     End Sub
+    ''' <summary>Writes current state of this form and its controls into <see cref="My.Settings"/></summary>
     Private Sub StoreSettings()
         My.Settings.MainLocation = Me.Location
         My.Settings.MainSize = Me.Size
@@ -317,6 +333,8 @@ Public Class frmMain
     '    LoadIPTC()
     '    prgAll.SelectedObject = IPTC
     'End Sub
+    ''' <summary>Loads so-called common properties into editing controls</summary>
+    ''' <param name="IPTC"><see cref="IPTC"/> to obtain values from</param>
     Private Sub LoadCommon(ByVal IPTC As IPTC)
         'LoadIPTC()
         'If IPTC Is Nothing Then Exit Sub
@@ -466,6 +484,7 @@ Public Class frmMain
     '        End Try
     '    Next Item
     'End Sub
+    ''' <summary>Writes so-called common settings from controls back to <see cref="IPTC"/></summary>
     Private Sub SaveCommon()
         'Try
         '  For Each item As ListViewItem In lvwImages.SelectedItems
@@ -655,6 +674,7 @@ Public Class frmMain
         'Return True
     End Sub
 
+    ''' <summary>Stores changes of changed <see cref="IPTC"/>'s into files</summary>
     Private Sub SaveChanged()
         For Each item As ListViewItem In lvwImages.SelectedItems
             With DirectCast(item.Tag, Cont)
@@ -685,6 +705,7 @@ Public Class frmMain
     'End Sub
 
     'Private IPTC As Tools.DrawingT.MetadataT.IPTC
+    ''' <summary>Enables or disables controls depending on if image is selected</summary>
     Private Sub EnableDisable()
         kweKeyWords.Enabled = lvwImages.SelectedItems.Count > 0 AndAlso tabChoices.SelectedTab Is tapCommon
         tabChoices.Enabled = lvwImages.SelectedItems.Count > 0
@@ -783,28 +804,44 @@ Public Class frmMain
         Handles txwSubLocation.Leave, txwProvince.Leave, txwObjectName.Leave, txwEditStatus.Leave, txwCredit.Leave, txwCountry.Leave, txwCopyright.Leave, txwCity.Leave, nwsUrgency.Leave, mxwCaptionAbstract.Leave, cbwCountryCode.Leave, kweKeyWords.Leave
         SaveCommon()
     End Sub
+    ''' <summary>Graphically notifies user that there are some unsaved changes</summary>
     Private Sub Ch()
         tslChange.Text = "*"
     End Sub
 End Class
+''' <summary>Delegate that notifies change</summary>
 Friend Delegate Sub dChange()
+''' <summary>Inherits from <see cref="IPTC"/> in order to notify owner of changes in it</summary>
 Friend Class Cont : Inherits IPTC
+    ''' <summary>True if this instance was changed since its load fromk filer</summary>
     Public Changed As Boolean
+    ''' <summary>Delegate to be notified when change occures</summary>
     Private Changes As dChange
+    ''' <summary>CTor</summary>
+    ''' <param name="Reader"><see cref="IIPTCGetter"/> that contains IPTC stream</param>
+    ''' <param name="Ch">Delegate to be notified when change occures</param>
     Public Sub New(ByVal Reader As JPEGReader, ByVal Ch As dChange)
         MyBase.New(Reader)
         Me.Changes = Ch
     End Sub
+    ''' <summary>Called when value of any tag changes</summary>
+    ''' <param name="Tag">Recod and dataset number</param>
     Protected Overrides Sub OnValueChanged(ByVal Tag As Tools.DrawingT.MetadataT.IPTC.DataSetIdentification)
         MyBase.OnValueChanged(Tag)
         Changed = True
         Changes.Invoke()
     End Sub
+    ''' <summary>Removes all occurences of specified tag</summary>         
+    ''' <param name="Key">Tag to remove</param>                            
     Public Overrides Sub Clear(ByVal Key As Tools.DrawingT.MetadataT.IPTC.DataSetIdentification)
         MyBase.Clear(Key)
         Changed = True
         Changes.Invoke()
     End Sub
+    ''' <summary>Converts <see cref="ListViewItem"/> into <see cref="Cont"/> by returning <see cref="ListViewItem.Tag"/></summary>
+    ''' <param name="from"><see cref="ListViewItem"/> which's <see cref="ListViewItem.Tag">Tag</see> will be returned</param>
+    ''' <returns><paramref name="from"/>.<see cref="ListViewItem.Tag">Tag</see></returns>
+    ''' <exception cref="InvalidCastException"><paramref name="from"/>.<see cref="ListViewItem.Tag">Tag</see> is not <see cref="Cont"/></exception>
     Public Shared Narrowing Operator CType(ByVal from As ListViewItem) As Cont
         Return from.Tag
     End Operator

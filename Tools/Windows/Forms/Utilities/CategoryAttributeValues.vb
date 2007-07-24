@@ -1,7 +1,10 @@
 ﻿#If Config <= Release Then
 Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Common values used for <see cref="CategoryAttribute"/></summary>
-    ''' <remarks>This class contains values that when used for <see cref="CategoryAttribute"/> are recognized by the .NET Framework and localized to current language.</remarks>
+    ''' <remarks>
+    ''' <para>This class contains values that when used for <see cref="CategoryAttribute"/> are recognized by the .NET Framework and localized to current language.</para>
+    ''' <para>You can pass these constans either directly into <see cref="CategoryAttribute"/> or you can use <see cref="ComponentModelT.KnownCategoryAttribute"/>'s overloaded CTor that have better intellisense support.</para>
+    ''' </remarks>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 1, GetType(CategoryAttributeValues), LastChMMDDYYYY:="05/14/2007")> _
     Public Class CategoryAttributeValues
         ''' <summary>Private in order not to pe possible to create instance or inherit from this class</summary>
@@ -63,6 +66,28 @@ Namespace WindowsT.FormsT.UtilitiesT
         Friend Const Private$ = "Private"
         ''' <summary>The Property Chenged category</summary>
         Friend Const PropertyChanged$ = "Property Changed"
+        ''' <summary>Represents known value of <see cref="CategoryAttribute"/> as defined in <see cref="CategoryAttributeValues"/></summary>
+        ''' <remarks>This structure is only hint for intellisense</remarks>
+        ''' <completionlist cref="CategoryAttributeValues"/>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Structure Value
+            ''' <summary>Name of category this instance represents</summary>
+            Public Value As String
+            ''' <summary>Converts <see cref="String"/> to <see cref="Value"/></summary>
+            ''' <param name="a">A <see cref="String"/></param>
+            ''' <returns>New <see cref="Value"/> whichs <see cref="Value.Value"/> is <paramref name="a"/></returns>
+            Public Shared Widening Operator CType(ByVal a As String) As Value
+                Dim ret As Value
+                ret.Value = a
+                Return ret
+            End Operator
+            ''' <summary>Converts <see cref="Value"/> to <see cref="String"/></summary>
+            ''' <param name="a">A <see cref="Value"/></param>
+            ''' <returns><paramref name="a"/>.<see cref="Value.Value">Value</see></returns>
+            Public Shared Widening Operator CType(ByVal a As Value) As String
+                Return a.Value
+            End Operator
+        End Structure
     End Class
 End Namespace
 #End If

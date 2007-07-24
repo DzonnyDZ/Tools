@@ -1,9 +1,13 @@
 Imports System.Windows.Forms
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then 'Stage:Nightly
-    'ASAP: Comment, mark, Forum, Wiki , bitmap
-    'TODO: Attributes
-    'TODO: Expose everything
+    '#If Config <= Nightly Then set in tools.vbproj
+    'Stage:Nightly
+    'ASAP: Comment, ,Attributes, Expose everything, inherit ControlWithStatus , conditional file
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(MultiLineTextBoxWithStatus), LastChMMDDYYYY:="07/22/2007")> _
+    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Drawing.ToolboxBitmap(GetType(StatusMarker), "MultiLineTextBoxWithStatus.bmp")> _
+    <ComponentModelT.Prefix("mxs")> _
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
     Public Class MultiLineTextBoxWithStatus
@@ -74,6 +78,5 @@ Namespace WindowsT.FormsT
             End Set
         End Property
     End Class
-#End If
 End Namespace
 

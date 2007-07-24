@@ -114,6 +114,7 @@
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
     <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
+    <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="ComponentModel\RestrictAttribute.vb" />
@@ -165,6 +166,7 @@
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
+    <Compile Include="misc\Delegates.vb" />
     <Compile Include="misc\ICloneable%28of T%29.vb" />
     <Compile Include="misc\IReportsChange.vb" />
     <Compile Include="misc\Box.vb" />
@@ -186,32 +188,43 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Resources\Resources.vb" />
-    <Compile Include="Resources\SystemResources.vb" />
+    <Compile Include="Resources\Tools\Resources.vb" />
+    <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
     <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.Designer.vb">
       <DependentUpon>ComboWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.vb">
+    <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\ControlWithStatus.Designer.vb">
+      <DependentUpon>ControlWithStatus.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\ControlWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\MaskedTextBoxWithStatus.Designer.vb">
       <DependentUpon>MaskedTextBoxWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\MaskedTextBoxWithStatus.vb">
+    <Compile Include="Windows\Forms\Composite controls\MaskedTextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.Designer.vb">
       <DependentUpon>NumericUpDownWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.vb">
+    <Compile Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
       <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb">
+    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.Designer.vb">
@@ -223,19 +236,22 @@
     <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb">
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\StatusMarker.Designer.vb">
       <DependentUpon>StatusMarker.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb">
+    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\MultiLineTextBoxWithStatus.Designer.vb">
       <DependentUpon>MultiLineTextBoxWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\MultiLineTextBoxWithStatus.vb">
+    <Compile Include="Windows\Forms\Composite controls\MultiLineTextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripComboBox.vb">
@@ -407,8 +423,18 @@
     <None Include="Resources\NewReportHS.png" />
     <None Include="Resources\+.png" />
     <Content Include="Resources\CommentHS.png" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.MultiLineTextBoxWithStatus.bmp" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.NumericUpDownWithStatus.bmp" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.TextBoxWithStatus.bmp" />
     <Content Include="Resources\T.png" />
-    <Content Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.ComboWithStatus.bmp" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.MaskedTextBoxWithStatus.bmp" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.StatusMarker.bmp" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
+    <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>ControlWithStatus.vb</DependentUpon>
+    </EmbeddedResource>
     <None Include="Resources\Zip.png" />
   </ItemGroup>
   <ItemGroup>

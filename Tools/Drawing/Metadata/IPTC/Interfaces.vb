@@ -13,8 +13,9 @@ Namespace DrawingT.MetadataT
         Function GetIPTCStream() As System.IO.Stream
     End Interface
 
-    'ASAP:Wiki, Forum,Mark
     ''' <summary>Represents provider that provides method to writed IPTC data into container</summary>
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(IIPTCWriter), LastChMMDDYYYY:="07/22/2007")> _
     Public Interface IIPTCWriter
         ''' <summary>Writes IPTC data into container</summary>
         ''' <param name="IPTCData">Data to be written</param>
