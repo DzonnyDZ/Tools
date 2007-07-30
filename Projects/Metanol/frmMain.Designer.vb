@@ -81,6 +81,9 @@ Partial Class frmMain
         Me.stsStatus = New System.Windows.Forms.StatusStrip
         Me.tsgLoadImages = New System.Windows.Forms.ToolStripProgressBar
         Me.tslChange = New System.Windows.Forms.ToolStripStatusLabel
+        Me.cmsImages = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.tmiExport = New System.Windows.Forms.ToolStripMenuItem
+        Me.sfdExport = New System.Windows.Forms.SaveFileDialog
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
@@ -109,6 +112,7 @@ Partial Class frmMain
         Me.tlpAuthor.SuspendLayout()
         Me.tapAll.SuspendLayout()
         Me.stsStatus.SuspendLayout()
+        Me.cmsImages.SuspendLayout()
         Me.SuspendLayout()
         '
         'splMain
@@ -153,6 +157,7 @@ Partial Class frmMain
         '
         'lvwImages
         '
+        Me.lvwImages.ContextMenuStrip = Me.cmsImages
         Me.lvwImages.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lvwImages.HideSelection = False
         Me.lvwImages.LargeImageList = Me.imlImages
@@ -1010,6 +1015,25 @@ Partial Class frmMain
         Me.tslChange.Name = "tslChange"
         Me.tslChange.Size = New System.Drawing.Size(0, 17)
         '
+        'cmsImages
+        '
+        Me.cmsImages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiExport})
+        Me.cmsImages.Name = "cmsImages"
+        Me.cmsImages.Size = New System.Drawing.Size(122, 26)
+        '
+        'tmiExport
+        '
+        Me.tmiExport.Name = "tmiExport"
+        Me.tmiExport.Size = New System.Drawing.Size(121, 22)
+        Me.tmiExport.Text = "&Export ..."
+        '
+        'sfdExport
+        '
+        Me.sfdExport.DefaultExt = "csv"
+        Me.sfdExport.Filter = "Semicolon Separated Values (*.csv)|*.csv|Text files (*.txt)|*.txt|All files (*.*)" & _
+            "|*.*"
+        Me.sfdExport.Title = "Export common IPTC data"
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1063,6 +1087,7 @@ Partial Class frmMain
         Me.tapAll.ResumeLayout(False)
         Me.stsStatus.ResumeLayout(False)
         Me.stsStatus.PerformLayout()
+        Me.cmsImages.ResumeLayout(False)
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -1124,5 +1149,8 @@ Partial Class frmMain
     Friend WithEvents mxwCaptionAbstract As Tools.WindowsT.FormsT.MultiLineTextBoxWithStatus
     Friend WithEvents tslChange As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents imlStates As System.Windows.Forms.ImageList
+    Friend WithEvents cmsImages As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents tmiExport As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents sfdExport As System.Windows.Forms.SaveFileDialog
 
 End Class

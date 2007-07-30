@@ -638,7 +638,7 @@ Namespace DrawingT.MetadataT
 						Case Tags.ReferenceBlackWhite : Return New ExifTagFormat(6, &h214, "ReferenceBlackWhite", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
 						Case Tags.DateTime : Return New ExifTagFormat(20, &h132, "DateTime", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
 						Case Tags.ImageDescription : Return New ExifTagFormat(any, &h10E, "ImageDescription", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.Make : Return New ExifTagFormat(any, &h10F, "Make", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
+                        Case Tags.Make : Return New ExifTagFormat(any, &H10F, "Make", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
 						Case Tags.Model : Return New ExifTagFormat(any, &h110, "Model", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
 						Case Tags.Software : Return New ExifTagFormat(any, &h131, "Software", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
 						Case Tags.Artist : Return New ExifTagFormat(any, &h13B, "Artist", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)

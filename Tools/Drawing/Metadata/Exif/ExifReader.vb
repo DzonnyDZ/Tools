@@ -185,7 +185,7 @@ Namespace DrawingT.MetadataT
         ''' <remarks>This collection doesnù contain standard Sub IFDs that was recognized like Exif Sub IFD</remarks>
         Public ReadOnly Property OtherSubIFDs() As Tools.CollectionsT.GenericT.IReadOnlyList(Of SubIFD)
             Get
-                Return New Tools.CollectionsT.GenericT.Wrapper(Of SubIFD)(_OtherSubIFDs)
+                Return New Tools.CollectionsT.GenericT.ReadOnlyListAdapter(Of SubIFD)(_OtherSubIFDs)
             End Get
         End Property
 

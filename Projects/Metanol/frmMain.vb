@@ -1,6 +1,7 @@
 Imports Tools.DrawingT.MetadataT, Tools.WindowsT.FormsT.StatusMarker
 Imports Tools.DrawingT.IO.JPEG
 Imports Tools.DrawingT.MetadataT.IPTC
+Imports Tools.VisualBasicT
 ''' <summary>Main form of Methanol application</summary>
 Friend Class frmMain
     ''' <summary>reference to <see cref="frmLarge"/> that shows large image</summary>
@@ -808,7 +809,81 @@ Friend Class frmMain
     Private Sub Ch()
         tslChange.Text = "*"
     End Sub
+
+    Private Sub tmiExport_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiExport.Click
+        If lvwImages.SelectedItems.Count < 1 Then
+            MsgBox("No images selected")
+            Exit Sub
+        End If
+        If sfdExport.ShowDialog = Windows.Forms.DialogResult.OK Then
+            Dim ret As New System.Text.StringBuilder
+            Dim i As Integer = 0
+            ret.AppendLine(CreateCSV( _
+                "Path", "File name", "Size", "Changed", "Created", _
+                "Exif Date", "Make", "Model", _
+                "Width", "Height", "Horiz. res.", "Vert. res.", _
+                "Object Name", "Credit", "Copyright Notice", "Caption/Abstract", "County Code", "Country", "Province/State", "City", "Sublocation", "Digital Creation Time", "Digital Creation Date", "Digital Creation Time", "Urgency" _
+            ))
+            Try
+                For Each item As ListViewItem In lvwImages.SelectedItems
+                    Dim IPTC As Cont
+                    If item.Tag Is Nothing Then
+                        item.Tag = New Cont(New JPEGReader(item.Name), AddressOf Ch)
+                    End If
+                    IPTC = item.Tag
+                    Dim Exif As New Exif(New ExifReader(New JPEGReader(item.Name)))
+                    Dim System As New Tools.IOt.Path(item.Name)
+                    Dim Img As New Bitmap(item.Name)
+                    With System
+                        ret.Append(CreateCSV( _
+                            .Path, .FileName, .GetFile.Length, .GetFile.LastWriteTime.ToString("G"), .GetFile.CreationTime.ToString("G")))
+                    End With
+                    With Exif
+                        ret.Append(";" & CreateCSV( _
+                            .ExifSubIFD.DateTimeDigitized, .MainIFD.Make, .MainIFD.Model))
+                    End With
+                    With Img
+                        ret.Append(";" & CreateCSV( _
+                            .Width, .Height, .HorizontalResolution, .VerticalResolution))
+                    End With
+                    With IPTC
+                        ret.Append(";" & CreateCSV( _
+                            .ObjectName, .Credit, .CopyrightNotice, .CaptionAbstract, .CountryPrimaryLocationCode, .CountryPrimaryLocationName, .ProvinceState, .City, .SubLocation, .DigitalCreationTime.Time.ToString & "+" & .DigitalCreationTime.Offset.ToString, .DigitalCreationDate.ToString("d"), .Urgency))
+                    End With
+                    ret.Append(vbCrLf)
+                    i += 1
+                    Debug.Print(i)
+                Next item
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+                Exit Sub
+            End Try
+            Try
+                My.Computer.FileSystem.WriteAllText(sfdExport.FileName, ret.ToString, False)
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
+                Do While sfdExport.ShowDialog = Windows.Forms.DialogResult.OK
+                    Try
+                        My.Computer.FileSystem.WriteAllText(sfdExport.FileName, ret.ToString, False)
+                        Exit Do
+                    Catch ex2 As Exception
+                        MsgBox(ex2.Message, MsgBoxStyle.Critical, ex2.GetType.Name)
+                    End Try
+                Loop
+            End Try
+        End If
+    End Sub
+    Private Function CreateCSV(ByVal ParamArray Values As String()) As String
+        Dim b As New System.Text.StringBuilder
+        For Each value As String In Values
+            If b.Length > 0 Then b.Append(";"c)
+            If value Is Nothing Then value = ""
+            b.Append("""" & value.Replace("""", """""").Replace("\", "\\").Replace(vbCr, "\r").Replace(vbLf, "\n") & """")
+        Next value
+        Return b.ToString
+    End Function
 End Class
+
 ''' <summary>Delegate that notifies change</summary>
 Friend Delegate Sub dChange()
 ''' <summary>Inherits from <see cref="IPTC"/> in order to notify owner of changes in it</summary>

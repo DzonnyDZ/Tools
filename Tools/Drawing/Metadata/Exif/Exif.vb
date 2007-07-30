@@ -242,7 +242,7 @@ Namespace DrawingT.MetadataT
             ''' <param name="DataTypes">Possible datatypes of tag. First datatype specified must be the widest and must be always specified and will be used as default</param>
             ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
             Public Sub New(ByVal NumberOfElements As UShort, ByVal Tag As UShort, ByVal Name As String, ByVal ParamArray DataTypes As ExifIFDReader.DirectoryEntry.ExifDataTypes())
-                MyBase.New(TestThrowReturn(DataTypes)(0), NumberOfElements)
+                MyBase.New(NumberOfElements, TestThrowReturn(DataTypes)(0))
                 _Tag = Tag
                 _Name = Name
                 OtherDatatypes.AddRange(DataTypes)
@@ -323,6 +323,7 @@ Namespace DrawingT.MetadataT
                     If value Is Nothing Then Throw New ArgumentNullException("Value cannot be null")
                     Select Case DataType.DataType
                         Case ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII
+                            If TypeOf value Is Char Then value = CStr(CChar(value))
                             If TryCast(value, String) IsNot Nothing Then
                                 Dim newV As String = System.Text.Encoding.Default.GetString(System.Text.Encoding.Default.GetBytes(CStr(value)))
                                 If Me.DataType.NumberOfElements = newV.Length OrElse Not Fixed Then
