@@ -285,6 +285,7 @@
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
+    <Compile Include="Xml\XPath\XPathObjectNavigator.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="My Project\Resources.resx">
