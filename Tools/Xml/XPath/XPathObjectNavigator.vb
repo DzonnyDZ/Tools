@@ -8,6 +8,35 @@ Imports System.ComponentModel
 #If Config <= Nightly Then
 Namespace XmlT.XPathT
     'ASAP:Mark, Wiki, Comment, Forum
+    ''' <summary>Implements <see cref="XPathNavigator"/> over any object structure</summary>
+    ''' <remarks>
+    ''' <para>Pass any object to CTor of this class and peudo-XML tree structure that can be navigated using XPath will be created.</para>
+    ''' <para>
+    ''' The structure alwasy consists of root node and sequence of other nodes.
+    ''' For some spcially supported types (like <see cref="Int32"/> or <see cref="String"/>; see <seealso cref="XPathObjectNavigator.Value"/> for information) the text node is created and nothing else.
+    ''' For other types if created element node with three or four attributes and elements named as properties of such type and element named value-of for items of <see cref="IEnumerable"/>.
+    ''' </para>
+    ''' <para>The attributes are:</para>
+    ''' <list type="table"><listheader><term>Attribute name</term><description>Description</description></listheader>
+    ''' <item><term>type-name</term><description>Short name of type represented by node (see <seealso cref="Type.Name"/>)</description></item>
+    ''' <item><term>full-name</term><description>Full name of type represented by node (see <seealso cref="Type.FullName"/>)</description></item>
+    ''' <item><term>name</term><description>Name of property through which the object have been obtained. For rooth node contains <see cref="String.Empty"/></description></item>
+    ''' <item><term>enumerable</term><description>If object of current node is <see cref="IEnumerable"/> contains true; otherwise it is not present.</description></item>
+    ''' </list>
+    ''' <para>Example for <see cref="List(Of String)"/></para>
+    ''' <example>
+    ''' <![CDATA[
+    ''' < type-name="List`1" full-name="System.Collections.Generic.List`1[[System.String, mscorlib, Versionb=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089]]" name="" enumerable="true">
+    '''     <Capacity type-name="Int32" full-name="System.Int32" name="Capacity">3</Capacity>
+    '''     <Count type-name="Int32" full-name="System.Int32" name="Count">3</Count>
+    '''     <item-of type-name="String" full-name="System.String" name="GetEnumerator">Item 1</item>
+    '''     <item-of type-name="String" full-name="System.String" name="GetEnumerator">Item 2</item>
+    '''     <item-of type-name="String" full-name="System.String" name="GetEnumerator">Item 3</item>
+    ''' </ >
+    ''' ]]>
+    ''' </example>
+    ''' Note: Root node is unnamed. Properties can be of complex types (stored as sub-trees). Order of occurence of attributes is as shown. Properties are alwas before enum items. name from enum items is always GetEnumerator. Name of node representing enum item - item-of can never be in conflict with name of property because it contains hyppen.
+    ''' </remarks>
     Public Class XPathObjectNavigator : Inherits XPathNavigator
 
         'Private Class X
@@ -51,20 +80,44 @@ Namespace XmlT.XPathT
         'Attributes type-name, full-name, name, [enumerable]
 
 #Region "Steps"
+        ''' <summary>Common base for step class. Represents one step (level) in pseudo-XML structure exposed by <see cref="XPathObjectNavigator"/></summary>
+        ''' <remarks>You should not create own derived classes from <see cref="[Step]"/> unless you are going to create own <see cref="XPathObjectNavigator"/>-derived class</remarks>
         <DebuggerDisplay("{ToString}")> _
-        Private MustInherit Class [Step] : Implements ICloneable
-            Friend ReadOnly [Object] As Object
+        Protected MustInherit Class [Step] : Implements ICloneable(Of [Step])
+            ''' <summary>Reprecents object associated with this step</summary>
+            ''' <remarks><list type="table"><listheader><term>Step type</term><description>Content of this field</description></listheader>
+            ''' <item><term><see cref="RootStep"/></term><description>Object value for this step</description></item>
+            ''' <item><term><see cref="PropertyStep"/></term><description>Object on which the property getter will be invoked</description></item>
+            ''' <item><term><see cref="EnumerableStep"/></term><description><see cref="IEnumerable"/> on which the <see cref="System.Collections.Generic.IEnumerable.GetEnumerator">GetEnumerator</see> will be invoked in order to get <see cref="IEnumerator"/></description></item>
+            ''' <item><term><see cref="SpecialStep"/></term><description>Object which's pseudo-propertties will be get</description></item>
+            ''' <item><term><see cref="SelfStep"/></term><description>Object which's value will be returned</description></item>
+            ''' </list></remarks>
+            Public ReadOnly [Object] As Object
+            ''' <summary>Helper enumeration that allows quicker identification of steps. Contains one value of each class inherited from <see cref="[Step]"/></summary>
             Public Enum StepClasses
+                ''' <summary><see cref="RootStep"/></summary>
                 Root
+                ''' <summary><see cref="PropertyStep"/></summary>
                 [Property]
+                ''' <summary><see cref="EnumerableStep"/></summary>
                 Enumerable
+                ''' <summary><see cref="SpecialStep"/></summary>
                 Special
+                ''' <summary><see cref="SelfStep"/></summary>
                 Self
             End Enum
+            ''' <summary>Returns one of <see cref="StepClasses"/> values according to type of current step</summary>
             Public MustOverride ReadOnly Property StepClass() As StepClasses
-            Friend Sub New(ByVal [Object] As Object)
+            ''' <summary>CTor</summary>
+            ''' <param name="Object">Value for the <see cref="[Object]"/> field</param>
+            <DebuggerStepThrough()> _
+            Public Sub New(ByVal [Object] As Object)
                 Me.Object = [Object]
             End Sub
+            ''' <summary>Determines whether the specified <see cref="System.Object"/> is equal to the current <see cref="[Step]"/>.</summary>
+            ''' <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="[Step]"/>.</param>
+            ''' <returns>true if the specified <see cref="System.Object"/> is equal to the current <see cref="[Step]"/>; otherwise, false. This function always returns false when type of <paramref name="obj"/> is not <see cref="[Step]"/> and is not same as type of current instance.</returns>
+            ''' <remarks>This function cannot be overriden. Override overloaded function instead.</remarks>
             Public Overrides Function Equals(ByVal obj As Object) As Boolean
                 If TypeOf obj Is [Step] Then
                     If Me.GetType.Equals(obj.GetType) Then
@@ -75,127 +128,214 @@ Namespace XmlT.XPathT
                 End If
                 Return MyBase.Equals(obj)
             End Function
+            ''' <summary>Determines whether the specified <see cref="[Step]"/> is equal to the current <see cref="[Step]"/>.</summary>
+            ''' <param name="other">The <see cref="[Step]"/> to compare with the current <see cref="[Step]"/>.</param>
+            ''' <returns>true if the specified <see cref="[Step]"/> is equal to the current <see cref="[Step]"/>. This function should always return false if the current <see cref="[Step]"/> is not of the same type as <paramref name="other"/></returns>
             Public MustOverride Overloads Function Equals(ByVal other As [Step]) As Boolean
-            Public MustOverride Function Clone() As [Step]
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
+            Public MustOverride Function Clone() As [Step] Implements ICloneable(Of [Step]).Clone
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
+            ''' <remarks>Use type-safe <see cref="Clone"/> instead</remarks>
+            <Obsolete("Use type-safe Clone instead"), EditorBrowsable(EditorBrowsableState.Never)> _
             Private Function Clone1() As Object Implements System.ICloneable.Clone
                 Return Me.Clone
             End Function
+            ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[Step]"/>.</summary>
+            ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[Step]"/></returns>
             Public Overrides Function ToString() As String
                 Return String.Format("Object ""{0}"" type {1}", Me.Object, Me.Object.GetType.Name)
             End Function
         End Class
-        Private Class RootStep : Inherits [Step]
-            Friend Sub New(ByVal [Object] As Object)
+        ''' <summary>Represents root step of pesudo-XML structure. This step can occure only as first step of sequence.</summary>
+        Protected NotInheritable Class RootStep : Inherits [Step]
+            ''' <summary>CTor</summary>
+            ''' <param name="Object">Context object fro new instance</param>
+            Public Sub New(ByVal [Object] As Object)
                 MyBase.New([Object])
             End Sub
+            ''' <summary>Determines whether the specified <see cref="[Step]"/> is equal to the current <see cref="[RootStep]"/>.</summary>
+            ''' <param name="other">The <see cref="[Step]"/> to compare with the current <see cref="[RootStep]"/>.</param>
+            ''' <returns>true if the specified <see cref="[Step]"/> is <see cref="RootStep"/> and <see cref="[Step].[Object]"/>-s of both <see cref="[Step]">Steps</see> are the same instance.</returns>
             Public Overrides Function Equals(ByVal other As [Step]) As Boolean
                 Return TypeOf other Is RootStep AndAlso Me.Object Is other.Object
             End Function
+            ''' <summary>Type of this instance</summary>
+            ''' <returns><see cref="StepClasses.Root"/></returns>
             Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
-                Get
+                <DebuggerStepThrough()> Get
                     Return StepClasses.Root
                 End Get
             End Property
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
             Public Overrides Function Clone() As [Step]
                 Return New RootStep(Me.Object)
             End Function
         End Class
-        Private Class PropertyStep : Inherits [Step]
-            Friend ReadOnly [Property] As PropertyInfo
-            Friend Sub New(ByVal [Object] As Object, ByVal [Property] As PropertyInfo)
+        ''' <summary>Represents step that represents property of an object</summary>
+        Protected NotInheritable Class PropertyStep : Inherits [Step]
+            ''' <summary>Property represented by this step</summary>
+            Public ReadOnly [Property] As PropertyInfo
+            ''' <summary>CTor</summary>
+            ''' <param name="Object">Object the property is invoked on</param>
+            ''' <param name="Property">Identification of property to be represented by a new instance</param>
+            <DebuggerStepThrough()> _
+            Public Sub New(ByVal [Object] As Object, ByVal [Property] As PropertyInfo)
                 MyBase.New([Object])
                 Me.Property = [Property]
             End Sub
+            ''' <summary>Determines whether the specified <see cref="[Step]"/> is equal to the current <see cref="[RootStep]"/>.</summary>
+            ''' <param name="other">The <see cref="[Step]"/> to compare with the current <see cref="[RootStep]"/>.</param>
+            ''' <returns>true if type of <paramref name="other"/> is <see cref="PropertyStep"/> and both, current an specified, <see cref="[Step]">Steps</see> has same value of the <see cref="[Object]">Object</see> (reference equals) and <see cref="[Property]">Property</see> (same <see cref="PropertyInfo.Name"/>) fields.</returns>
             Public Overrides Function Equals(ByVal other As [Step]) As Boolean
                 Return TypeOf other Is PropertyStep AndAlso Me.Object Is other.Object AndAlso Me.Property.Name = DirectCast(other, PropertyStep).Property.Name
             End Function
+            ''' <summary>Type of this instance</summary>
+            ''' <returns><see cref="StepClasses.[Property]"/></returns>
             Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
                 Get
                     Return StepClasses.Property
                 End Get
             End Property
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
             Public Overrides Function Clone() As [Step]
                 Return New PropertyStep(Me.Object, Me.Property)
             End Function
+            ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[PropertyStep]"/>.</summary>
+            ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[PropertyStep]"/></returns>
             Public Overrides Function ToString() As String
                 Return MyBase.ToString() & String.Format(" Property {0}", Me.Property.Name)
             End Function
         End Class
-        Private Class EnumerableStep : Inherits [Step]
-            Friend Index As Integer
+        ''' <summary>Represents step that points to item of <see cref="IEnumerable"/></summary>
+        Protected NotInheritable Class EnumerableStep : Inherits [Step]
+            ''' <summary>Position of pointed object in <see cref="IEnumerable"/></summary>
+            ''' <remarks>This field must be kept in sinc with real position of <see cref="Enumerator"/> manually! Do not change it if you haven't (or are not going to) move <see cref="Enumerator"/> into the same position as <see cref="Index"/> points to</remarks>
+            Public Index As Integer
+            ''' <summary>Contains value of the <see cref="Enumerator"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Enumerator As IEnumerator
+            ''' <summary><see cref="IEnumerator"/> that iterrates through <see cref="IEnumerable"/> contained in <see cref="[Object]"/></summary>
+            ''' <remarks>If you use <see cref="Enumerator">Enumerator</see>.<see cref="System.Collections.Generic.IEnumerator.MoveNext">MoveNext</see> (or <see cref="System.Collections.Generic.IEnumerator.Reset">Reset</see>) set <see cref="Index"/> to actual position!</remarks>
             Public ReadOnly Property Enumerator() As IEnumerator
                 Get
                     Return _Enumerator
                 End Get
             End Property
-            Friend Sub New(ByVal [Object] As Object, ByVal [index] As Integer)
+            ''' <summary>CTor</summary>
+            ''' <param name="Object">Instance of <see cref="IEnumerable"/> to iterrate through</param>
+            ''' <param name="index">Index to move <see cref="Enumerator"/> initially to</param>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="index"/> is less than zero - or <paramref name="index"/> points to position which exceeds number of items in <paramref name="Object"/></exception>
+            Public Sub New(ByVal [Object] As IEnumerable, Optional ByVal [index] As Integer = 0)
                 MyBase.New([Object])
                 Me.Index = index
+                If index < 0 Then Throw New ArgumentOutOfRangeException("index", "index mus be greater than or equal to zero")
                 _Enumerator = Me.Object.GetEnumerator
                 For i As Integer = 0 To Me.Index
-                    Enumerator.MoveNext()
+                    If Not Enumerator.MoveNext() Then Throw New ArgumentOutOfRangeException("index", "There are not enought items in IEnumerable")
                 Next i
             End Sub
+            ''' <summary>Shadows <see cref="[Step].[Object]"/> by returning it casted to <see cref="IEnumerable"/></summary>
             Private Shadows ReadOnly Property [Object]() As IEnumerable
                 Get
                     Return MyBase.Object
                 End Get
             End Property
+            ''' <summary>Determines whether the specified <see cref="[Step]"/> is equal to the current <see cref="[EnumerableStep]"/>.</summary>
+            ''' <param name="other">The <see cref="[Step]"/> to compare with the current <see cref="[EnumerableStep]"/>.</param>
+            ''' <returns>true if type of <paramref name="other"/> is <see cref="EnumerableStep"/>, both (current and specified) <see cref="[Step]">Steps</see> points to the same object (reference equals) and has same <see cref="Index"/></returns>
             Public Overrides Function Equals(ByVal other As [Step]) As Boolean
                 Return TypeOf other Is EnumerableStep AndAlso Me.Object Is other.Object AndAlso Me.Index = DirectCast(other, EnumerableStep).Index
             End Function
+            ''' <summary>Type of this instance</summary>
+            ''' <returns><see cref="StepClasses.Enumerable"/></returns>
             Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
                 Get
                     Return StepClasses.Enumerable
                 End Get
             End Property
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
             Public Overrides Function Clone() As [Step]
                 Return New EnumerableStep(Me.Object, Me.Index)
             End Function
+            ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[EnumerableStep]"/>.</summary>
+            ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[EnumerableStep]"/></returns>
             Public Overrides Function ToString() As String
                 Return MyBase.ToString() & String.Format(" index {0}", Index)
             End Function
         End Class
-        Private Class SelfStep : Inherits [Step]
-            Friend Sub New(ByVal [Object] As Object)
+        ''' <summary>Step that points to pseudo-CData content of pseudo-node</summary>
+        Protected NotInheritable Class SelfStep : Inherits [Step]
+            ''' <summary>CTor</summary>
+            ''' <param name="Object">Object to point to. This object should be of supported type. See <see cref="Value"/> for list of supported types for pseudo-text pseudo-nodes.</param>
+            Public Sub New(ByVal [Object] As Object)
                 MyBase.New([Object])
             End Sub
+            ''' <summary>Determines whether the specified <see cref="[Step]"/> is equal to the current <see cref="[SelfStep]"/>.</summary>
+            ''' <param name="other">The <see cref="[Step]"/> to compare with the current <see cref="[SelfStep]"/>.</param>
+            ''' <returns>true if type of <paramref name="other"/> is <see cref="SelfStep"/> and <see cref="[Step].[Object]"/> of both (current and specified) <see cref="[Step]">Steps</see> equals (is same instance)</returns>
             Public Overrides Function Equals(ByVal other As [Step]) As Boolean
                 Return TypeOf other Is SelfStep AndAlso Me.Object Is other.Object
             End Function
+            ''' <summary>Type of thsi step</summary>
+            ''' <returns><see cref="StepClasses.Self"/></returns>
             Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
                 Get
                     Return StepClasses.Self
                 End Get
             End Property
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
             Public Overrides Function Clone() As [Step]
                 Return New SelfStep(Me.Object)
             End Function
         End Class
-        Private Class SpecialStep : Inherits [Step]
-            Friend Enum StepType
+        ''' <summary>Represents special step that points to especially supported property of object</summary>
+        Protected NotInheritable Class SpecialStep : Inherits [Step]
+            ''' <summary>Type of especially supported properties</summary>
+            Public Enum StepType
+                ''' <summary>Short name of type of context object (<seealso cref="Type.Name"/>)</summary>
                 TypeName
+                ''' <summary>Full name of type of context object (<see cref="Type.FullName"/>)</summary>
                 FullName
+                ''' <summary>Name of property, current stape will be obtained throught. Supported also for root but returns <see cref="String.Empty"/></summary>
                 Name
+                ''' <summary>Contains true for enumerable objects, otherwise is not present</summary>
                 Enumerable
             End Enum
-            Friend Type As StepType
+            ''' <summary>Sub-type of this step</summary>
+            Public Type As StepType
+            ''' <summary>CTor</summary>
+            ''' <param name="Object">Object to get information from</param>
+            ''' <param name="Type">Type of information to be got</param>
             Friend Sub New(ByVal [Object] As Object, ByVal Type As StepType)
                 MyBase.New([Object])
                 Me.Type = Type
             End Sub
+            ''' <summary>Determines whether the specified <see cref="[Step]"/> is equal to the current <see cref="[SelfStep]"/>.</summary>
+            ''' <param name="other">The <see cref="[Step]"/> to compare with the current <see cref="[SelfStep]"/>.</param>
+            ''' <returns>True if <paramref name="other"/> is <see cref="SpecialStep"/> and both (current and specified) <see cref="[Step]">Steps</see> have same instance in their <see cref="[Object]"/> field and are of same sub-type (see also <seealso cref="Type"/>)</returns>
             Public Overrides Function Equals(ByVal other As [Step]) As Boolean
-                Return TypeOf other Is SpecialStep AndAlso Me.Type = DirectCast(other, SpecialStep).Type
+                Return TypeOf other Is SpecialStep AndAlso other.Object Is Me.Object AndAlso Me.Type = DirectCast(other, SpecialStep).Type
             End Function
+            ''' <summary>Type of this instance</summary>
+            ''' <returns><see cref="StepClasses.Special"/></returns>
             Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
                 Get
                     Return StepClasses.Special
                 End Get
             End Property
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
             Public Overrides Function Clone() As [Step]
                 Return New SpecialStep(Me.Object, Me.Type)
             End Function
+            ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[SpecialStep]"/>.</summary>
+            ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[SpecialStep]"/></returns>
             Public Overrides Function ToString() As String
                 Return MyBase.ToString() & String.Format(" type {0}", Type)
             End Function
@@ -279,19 +419,34 @@ Namespace XmlT.XPathT
             Return False
         End Function
 
+        Private ReadOnly Property ContextObject() As Object
+            Get
+                Select Case CurrentStep.StepClass
+                    Case [Step].StepClasses.Enumerable
+                        Return DirectCast(CurrentStep, EnumerableStep).Enumerator.Current
+                    Case [Step].StepClasses.Property
+                        Return DirectCast(CurrentStep, PropertyStep).Property.GetValue(CurrentStep.Object, Nothing)
+                    Case Else
+                        Return CurrentStep.Object
+                End Select
+            End Get
+        End Property
+
         Public Overrides Function MoveToFirstAttribute() As Boolean
             Select Case CurrentStep.StepClass
                 Case [Step].StepClasses.Enumerable, [Step].StepClasses.Property, [Step].StepClasses.Root
-                    Location.Add(New SpecialStep(Location(Location.Count - 1).Object, SpecialStep.StepType.TypeName))
+                    Location.Add(New SpecialStep(ContextObject, SpecialStep.StepType.TypeName))
                     Return True
             End Select
             Return False
         End Function
 
         Private Property CurrentStep() As [Step]
+            <DebuggerStepThrough()> _
             Get
                 Return Location(Location.Count - 1)
             End Get
+            <DebuggerStepThrough()> _
             Set(ByVal value As [Step])
                 Location(Location.Count - 1) = value
             End Set
@@ -304,7 +459,7 @@ Namespace XmlT.XPathT
             Dim From As Integer
             If Reverse Then From = Properties.Length - 1 Else From = 0
             Dim [To] As Integer
-            If Reverse Then [To] = 0 Else [To] = Properties.Length
+            If Reverse Then [To] = 0 Else [To] = Properties.Length - 1
             Dim [Step] As SByte
             If Reverse Then [Step] = -1 Else [Step] = 1
             For i As Integer = From To [To] Step [Step]
@@ -349,7 +504,7 @@ Namespace XmlT.XPathT
                 Select Case CurrentStep.StepClass
                     Case [Step].StepClasses.Enumerable
                         Location.Add(New PropertyStep(fp.GetValue(Me.CurrentEnumerator.Current, Nothing), fp))
-                    Case Else : Location.Add(New PropertyStep(fp.GetValue(Me.CurrentStep.Object, Nothing), fp))
+                    Case Else : Location.Add(New PropertyStep(Me.CurrentStep.Object, fp))
                 End Select
                 Return True
             End If
@@ -374,11 +529,14 @@ Namespace XmlT.XPathT
             Select Case CurrentStep.StepClass
                 Case [Step].StepClasses.Enumerable, [Step].StepClasses.Root, [Step].StepClasses.Property
                     Dim obj As Object
-                    If CurrentStep.StepClass = [Step].StepClasses.Enumerable Then
-                        obj = CurrentEnumerator.Current
-                    Else
-                        obj = CurrentStep.Object
-                    End If
+                    Select Case CurrentStep.StepClass
+                        Case [Step].StepClasses.Enumerable
+                            obj = CurrentEnumerator.Current
+                        Case [Step].StepClasses.Property
+                            obj = DirectCast(CurrentStep, PropertyStep).Property.GetValue(CurrentStep.Object, Nothing)
+                        Case Else
+                            obj = CurrentStep.Object
+                    End Select
                     If TypeOf obj Is String OrElse TypeOf obj Is Char OrElse TypeOf obj Is Byte OrElse TypeOf obj Is SByte OrElse TypeOf obj Is Short OrElse TypeOf obj Is UShort OrElse TypeOf obj Is Long OrElse TypeOf obj Is ULong OrElse TypeOf obj Is Integer OrElse TypeOf obj Is UInt16 OrElse TypeOf obj Is Single OrElse TypeOf obj Is Double OrElse TypeOf obj Is Decimal OrElse TypeOf obj Is Date OrElse TypeOf obj Is Boolean OrElse TypeOf obj Is TimeSpan OrElse TypeOf obj Is Tools.TimeSpanFormattable OrElse TypeOf obj Is Uri OrElse TypeOf obj Is System.Text.StringBuilder Then
                         Location.Add(New SelfStep(CurrentStep.Object))
                         Return True
@@ -524,24 +682,28 @@ Namespace XmlT.XPathT
                                 End If
                         End Select
                     Case Else
-                        With CurrentStep
-                            If TypeOf .Object Is Date Then
-                                Dim fff As String = Tools.VisualBasicT.iif(DirectCast(.Object, Date).Millisecond = 0, "", ".fff")
-                                Return DirectCast(.Object, Date).ToString("yyyy-MM-DDHH:mm:ss" & fff, System.Globalization.CultureInfo.InvariantCulture)
-                            ElseIf TypeOf .Object Is TimeSpan Then
-                                Dim lll As String = Tools.VisualBasicT.iif(DirectCast(.Object, TimeSpan).Milliseconds = 0, "", ".lll")
-                                Return CType(DirectCast(.Object, TimeSpan), Tools.TimeSpanFormattable).ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
-                            ElseIf TypeOf .Object Is Tools.TimeSpanFormattable Then
-                                Dim lll As String = Tools.VisualBasicT.iif(DirectCast(.Object, Tools.TimeSpanFormattable).Milliseconds = 0, "", ".lll")
-                                Return DirectCast(.Object, Tools.TimeSpanFormattable).ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
-                            ElseIf TypeOf .Object Is Boolean Then
-                                Return Tools.VisualBasicT.iif(.Object, "true", "false")
-                            ElseIf TypeOf .Object Is IFormattable Then
-                                Return DirectCast(.Object, IFormattable).ToString("", System.Globalization.CultureInfo.InvariantCulture)
-                            Else
-                                Return .Object.ToString
-                            End If
-                        End With
+                        Dim Obj As Object
+                        If CurrentStep.StepClass = [Step].StepClasses.Property Then
+                            Obj = Location(Location.Count - 2).Object
+                        Else
+                            Obj = CurrentStep.Object
+                        End If
+                        If TypeOf Obj Is Date Then
+                            Dim fff As String = Tools.VisualBasicT.iif(DirectCast(Obj, Date).Millisecond = 0, "", ".fff")
+                            Return DirectCast(Obj, Date).ToString("yyyy-MM-DDHH:mm:ss" & fff, System.Globalization.CultureInfo.InvariantCulture)
+                        ElseIf TypeOf Obj Is TimeSpan Then
+                            Dim lll As String = Tools.VisualBasicT.iif(DirectCast(Obj, TimeSpan).Milliseconds = 0, "", ".lll")
+                            Return CType(DirectCast(Obj, TimeSpan), Tools.TimeSpanFormattable).ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
+                        ElseIf TypeOf Obj Is Tools.TimeSpanFormattable Then
+                            Dim lll As String = Tools.VisualBasicT.iif(DirectCast(Obj, Tools.TimeSpanFormattable).Milliseconds = 0, "", ".lll")
+                            Return DirectCast(Obj, Tools.TimeSpanFormattable).ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
+                        ElseIf TypeOf Obj Is Boolean Then
+                            Return Tools.VisualBasicT.iif(Obj, "true", "false")
+                        ElseIf TypeOf Obj Is IFormattable Then
+                            Return DirectCast(Obj, IFormattable).ToString("", System.Globalization.CultureInfo.InvariantCulture)
+                        Else
+                            Return Obj.ToString
+                        End If
                 End Select
                 Return ""
             End Get
