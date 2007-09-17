@@ -32,7 +32,7 @@ Namespace XmlT.XPathT
 
         Private Sub cmdDo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdDo.Click
             tvwResult.Nodes.Clear()
-            Dim XObj As New XPathObjectNavigator(cmbSource.SelectedItem)
+            Dim XObj As New XPathObjectNavigator(cmbSource.SelectedItem, False)
             Dim ret As Object = XObj.Evaluate(txtQuery.Text)
             If TypeOf ret Is Boolean OrElse TypeOf ret Is String OrElse TypeOf ret Is Double Then
                 tvwResult.Nodes.Add(ret.ToString).Tag = ret
@@ -85,8 +85,17 @@ Namespace XmlT.XPathT
 
         Private Sub cmdWalk_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWalk.Click
             tvwResult.Nodes.Clear()
-            Dim XObj As New XPathObjectNavigator(cmbSource.SelectedItem)
+            Dim XObj As New XPathObjectNavigator(cmbSource.SelectedItem, False)
             FillWi(tvwResult.Nodes, XObj)
+        End Sub
+
+        Private Sub tvwResult_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvwResult.AfterSelect
+            If tvwResult.SelectedNode.Tag IsNot Nothing AndAlso TypeOf tvwResult.SelectedNode.Tag Is XPathNavigator Then
+                With DirectCast(tvwResult.SelectedNode.Tag, XPathNavigator)
+                    tslResult.Text = String.Format("Type: {0}, Name: {1}, Value: {2}, ValueType: {3}", .NodeType, .Name, .Value, .ValueType.Name)
+                End With
+            End If
+            prgResult.SelectedObject = tvwResult.SelectedNode.Tag
         End Sub
     End Class
 End Namespace

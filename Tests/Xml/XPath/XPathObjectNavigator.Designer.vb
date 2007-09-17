@@ -28,20 +28,25 @@ Namespace XmlT.XPathT
             Me.tlpTop = New System.Windows.Forms.TableLayoutPanel
             Me.lblQuery = New System.Windows.Forms.Label
             Me.txtQuery = New System.Windows.Forms.TextBox
-            Me.splMain = New System.Windows.Forms.SplitContainer
-            Me.lblSourceProp = New System.Windows.Forms.Label
-            Me.lblResult = New System.Windows.Forms.Label
-            Me.prgSource = New System.Windows.Forms.PropertyGrid
-            Me.tvwResult = New System.Windows.Forms.TreeView
-            Me.stsResult = New System.Windows.Forms.StatusStrip
-            Me.tslResult = New System.Windows.Forms.ToolStripStatusLabel
             Me.cmdDo = New System.Windows.Forms.Button
             Me.cmdWalk = New System.Windows.Forms.Button
+            Me.splMain = New System.Windows.Forms.SplitContainer
+            Me.prgSource = New System.Windows.Forms.PropertyGrid
+            Me.lblSourceProp = New System.Windows.Forms.Label
+            Me.stsResult = New System.Windows.Forms.StatusStrip
+            Me.tslResult = New System.Windows.Forms.ToolStripStatusLabel
+            Me.tvwResult = New System.Windows.Forms.TreeView
+            Me.lblResult = New System.Windows.Forms.Label
+            Me.splResult = New System.Windows.Forms.SplitContainer
+            Me.prgResult = New System.Windows.Forms.PropertyGrid
             Me.tlpTop.SuspendLayout()
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
             Me.stsResult.SuspendLayout()
+            Me.splResult.Panel1.SuspendLayout()
+            Me.splResult.Panel2.SuspendLayout()
+            Me.splResult.SuspendLayout()
             Me.SuspendLayout()
             '
             'lblSource
@@ -61,7 +66,7 @@ Namespace XmlT.XPathT
             Me.cmbSource.FormattingEnabled = True
             Me.cmbSource.Location = New System.Drawing.Point(50, 4)
             Me.cmbSource.Name = "cmbSource"
-            Me.cmbSource.Size = New System.Drawing.Size(432, 21)
+            Me.cmbSource.Size = New System.Drawing.Size(436, 21)
             Me.cmbSource.TabIndex = 1
             '
             'tlpTop
@@ -84,7 +89,7 @@ Namespace XmlT.XPathT
             Me.tlpTop.RowCount = 2
             Me.tlpTop.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpTop.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpTop.Size = New System.Drawing.Size(533, 58)
+            Me.tlpTop.Size = New System.Drawing.Size(537, 58)
             Me.tlpTop.TabIndex = 1
             '
             'lblQuery
@@ -102,8 +107,30 @@ Namespace XmlT.XPathT
             Me.txtQuery.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
             Me.txtQuery.Location = New System.Drawing.Point(50, 33)
             Me.txtQuery.Name = "txtQuery"
-            Me.txtQuery.Size = New System.Drawing.Size(432, 20)
+            Me.txtQuery.Size = New System.Drawing.Size(436, 20)
             Me.txtQuery.TabIndex = 3
+            '
+            'cmdDo
+            '
+            Me.cmdDo.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdDo.AutoSize = True
+            Me.cmdDo.Location = New System.Drawing.Point(497, 32)
+            Me.cmdDo.Name = "cmdDo"
+            Me.cmdDo.Size = New System.Drawing.Size(31, 23)
+            Me.cmdDo.TabIndex = 4
+            Me.cmdDo.Text = "&Do"
+            Me.cmdDo.UseVisualStyleBackColor = True
+            '
+            'cmdWalk
+            '
+            Me.cmdWalk.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdWalk.AutoSize = True
+            Me.cmdWalk.Location = New System.Drawing.Point(492, 3)
+            Me.cmdWalk.Name = "cmdWalk"
+            Me.cmdWalk.Size = New System.Drawing.Size(42, 23)
+            Me.cmdWalk.TabIndex = 5
+            Me.cmdWalk.Text = "&Walk"
+            Me.cmdWalk.UseVisualStyleBackColor = True
             '
             'splMain
             '
@@ -118,91 +145,98 @@ Namespace XmlT.XPathT
             '
             'splMain.Panel2
             '
-            Me.splMain.Panel2.Controls.Add(Me.stsResult)
-            Me.splMain.Panel2.Controls.Add(Me.tvwResult)
+            Me.splMain.Panel2.Controls.Add(Me.splResult)
             Me.splMain.Panel2.Controls.Add(Me.lblResult)
-            Me.splMain.Size = New System.Drawing.Size(533, 397)
-            Me.splMain.SplitterDistance = 234
+            Me.splMain.Size = New System.Drawing.Size(537, 510)
+            Me.splMain.SplitterDistance = 235
             Me.splMain.TabIndex = 2
-            '
-            'lblSourceProp
-            '
-            Me.lblSourceProp.Dock = System.Windows.Forms.DockStyle.Top
-            Me.lblSourceProp.Location = New System.Drawing.Point(0, 0)
-            Me.lblSourceProp.Name = "lblSourceProp"
-            Me.lblSourceProp.Size = New System.Drawing.Size(234, 13)
-            Me.lblSourceProp.TabIndex = 0
-            Me.lblSourceProp.Text = "Source properties"
-            Me.lblSourceProp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
-            '
-            'lblResult
-            '
-            Me.lblResult.Dock = System.Windows.Forms.DockStyle.Top
-            Me.lblResult.Location = New System.Drawing.Point(0, 0)
-            Me.lblResult.Name = "lblResult"
-            Me.lblResult.Size = New System.Drawing.Size(295, 13)
-            Me.lblResult.TabIndex = 0
-            Me.lblResult.Text = "Result"
-            Me.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'prgSource
             '
             Me.prgSource.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgSource.Location = New System.Drawing.Point(0, 13)
             Me.prgSource.Name = "prgSource"
-            Me.prgSource.Size = New System.Drawing.Size(234, 384)
+            Me.prgSource.Size = New System.Drawing.Size(235, 497)
             Me.prgSource.TabIndex = 1
             '
-            'tvwResult
+            'lblSourceProp
             '
-            Me.tvwResult.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tvwResult.Location = New System.Drawing.Point(0, 13)
-            Me.tvwResult.Name = "tvwResult"
-            Me.tvwResult.Size = New System.Drawing.Size(295, 384)
-            Me.tvwResult.TabIndex = 1
+            Me.lblSourceProp.Dock = System.Windows.Forms.DockStyle.Top
+            Me.lblSourceProp.Location = New System.Drawing.Point(0, 0)
+            Me.lblSourceProp.Name = "lblSourceProp"
+            Me.lblSourceProp.Size = New System.Drawing.Size(235, 13)
+            Me.lblSourceProp.TabIndex = 0
+            Me.lblSourceProp.Text = "Source properties"
+            Me.lblSourceProp.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'stsResult
             '
             Me.stsResult.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslResult})
-            Me.stsResult.Location = New System.Drawing.Point(0, 375)
+            Me.stsResult.Location = New System.Drawing.Point(0, 175)
             Me.stsResult.Name = "stsResult"
-            Me.stsResult.Size = New System.Drawing.Size(295, 22)
+            Me.stsResult.Size = New System.Drawing.Size(298, 22)
+            Me.stsResult.SizingGrip = False
             Me.stsResult.TabIndex = 2
             Me.stsResult.Text = "StatusStrip1"
             '
             'tslResult
             '
             Me.tslResult.Name = "tslResult"
-            Me.tslResult.Size = New System.Drawing.Size(280, 17)
+            Me.tslResult.Size = New System.Drawing.Size(283, 17)
             Me.tslResult.Spring = True
             '
-            'cmdDo
+            'tvwResult
             '
-            Me.cmdDo.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdDo.AutoSize = True
-            Me.cmdDo.Location = New System.Drawing.Point(493, 32)
-            Me.cmdDo.Name = "cmdDo"
-            Me.cmdDo.Size = New System.Drawing.Size(31, 23)
-            Me.cmdDo.TabIndex = 4
-            Me.cmdDo.Text = "&Do"
-            Me.cmdDo.UseVisualStyleBackColor = True
+            Me.tvwResult.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tvwResult.FullRowSelect = True
+            Me.tvwResult.HideSelection = False
+            Me.tvwResult.Location = New System.Drawing.Point(0, 0)
+            Me.tvwResult.Name = "tvwResult"
+            Me.tvwResult.Size = New System.Drawing.Size(298, 175)
+            Me.tvwResult.TabIndex = 1
             '
-            'cmdWalk
+            'lblResult
             '
-            Me.cmdWalk.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdWalk.AutoSize = True
-            Me.cmdWalk.Location = New System.Drawing.Point(488, 3)
-            Me.cmdWalk.Name = "cmdWalk"
-            Me.cmdWalk.Size = New System.Drawing.Size(42, 23)
-            Me.cmdWalk.TabIndex = 5
-            Me.cmdWalk.Text = "&Walk"
-            Me.cmdWalk.UseVisualStyleBackColor = True
+            Me.lblResult.Dock = System.Windows.Forms.DockStyle.Top
+            Me.lblResult.Location = New System.Drawing.Point(0, 0)
+            Me.lblResult.Name = "lblResult"
+            Me.lblResult.Size = New System.Drawing.Size(298, 13)
+            Me.lblResult.TabIndex = 0
+            Me.lblResult.Text = "Result"
+            Me.lblResult.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
+            '
+            'splResult
+            '
+            Me.splResult.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splResult.Location = New System.Drawing.Point(0, 13)
+            Me.splResult.Name = "splResult"
+            Me.splResult.Orientation = System.Windows.Forms.Orientation.Horizontal
+            '
+            'splResult.Panel1
+            '
+            Me.splResult.Panel1.Controls.Add(Me.tvwResult)
+            Me.splResult.Panel1.Controls.Add(Me.stsResult)
+            '
+            'splResult.Panel2
+            '
+            Me.splResult.Panel2.Controls.Add(Me.prgResult)
+            Me.splResult.Size = New System.Drawing.Size(298, 497)
+            Me.splResult.SplitterDistance = 197
+            Me.splResult.TabIndex = 3
+            '
+            'prgResult
+            '
+            Me.prgResult.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgResult.Location = New System.Drawing.Point(0, 0)
+            Me.prgResult.Name = "prgResult"
+            Me.prgResult.Size = New System.Drawing.Size(298, 296)
+            Me.prgResult.TabIndex = 0
             '
             'frmXPathObjectNavigator
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(533, 455)
+            Me.ClientSize = New System.Drawing.Size(537, 568)
             Me.Controls.Add(Me.splMain)
             Me.Controls.Add(Me.tlpTop)
             Me.Name = "frmXPathObjectNavigator"
@@ -211,10 +245,13 @@ Namespace XmlT.XPathT
             Me.tlpTop.PerformLayout()
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel2.ResumeLayout(False)
-            Me.splMain.Panel2.PerformLayout()
             Me.splMain.ResumeLayout(False)
             Me.stsResult.ResumeLayout(False)
             Me.stsResult.PerformLayout()
+            Me.splResult.Panel1.ResumeLayout(False)
+            Me.splResult.Panel1.PerformLayout()
+            Me.splResult.Panel2.ResumeLayout(False)
+            Me.splResult.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -233,5 +270,7 @@ Namespace XmlT.XPathT
         Friend WithEvents lblResult As System.Windows.Forms.Label
         Friend WithEvents cmdDo As System.Windows.Forms.Button
         Friend WithEvents cmdWalk As System.Windows.Forms.Button
+        Friend WithEvents splResult As System.Windows.Forms.SplitContainer
+        Friend WithEvents prgResult As System.Windows.Forms.PropertyGrid
     End Class
 End Namespace
