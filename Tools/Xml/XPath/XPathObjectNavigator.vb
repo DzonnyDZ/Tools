@@ -332,11 +332,24 @@ Namespace XmlT.XPathT
                 Return _Location
             End Get
         End Property
+        Protected Const ns$ = ""
+        Protected Const atrName$ = "name"
+        Protected Const atrTypeName$ = "type-name"
+        Protected Const atrFullName$ = "full-name"
+        Protected Const atrEnumerable$ = "enumerable"
+        Protected Const atrCircleLevel$ = "circle-level"
+        Protected Const nodItemOf$ = "item-of"
         ''' <summary>Private CTor dhat does common construction steps</summary>
         ''' <param name="AllowCircles">Valus for the <see cref="AllowCircles"/> property</param>
         Private Sub New(Optional ByVal AllowCircles As Boolean = False)
             _AllowCircles = AllowCircles
-            _NameTable.Add(String.Empty)
+            NameTable.Add(ns)
+            NameTable.Add(atrName)
+            NameTable.Add(atrTypeName)
+            NameTable.Add(atrFullName)
+            NameTable.Add(atrEnumerable)
+            NameTable.Add(atrCircleLevel)
+            NameTable.Add(nodItemOf)
         End Sub
         ''' <summary>CTor from any <see cref="Object"/></summary>
         ''' <param name="Object">Root for new instance</param>
@@ -383,7 +396,7 @@ Namespace XmlT.XPathT
             If TypeOf other Is XPathObjectNavigator Then
                 With DirectCast(other, XPathObjectNavigator)
                     If .Location.Count = Me.Location.Count Then
-                        For i As Integer = 0 To Location.Count
+                        For i As Integer = 0 To Location.Count - 1
                             If Not Location(i).Equals(.Location(i)) Then Return False
                         Next i
                         Return True
@@ -409,19 +422,18 @@ Namespace XmlT.XPathT
         Public Overrides ReadOnly Property LocalName() As String
             Get
                 Select Case CurrentStep.StepClass
-                    Case [Step].StepClasses.Enumerable : Return "item-of"
-                    Case [Step].StepClasses.Property : Return DirectCast(CurrentStep, PropertyStep).Property.Name
+                    Case [Step].StepClasses.Enumerable : Return NameTable.Get(nodItemOf)
+                    Case [Step].StepClasses.Property : Return NameTable.Add(DirectCast(CurrentStep, PropertyStep).Property.Name)
                     Case [Step].StepClasses.Special
                         Select Case DirectCast(CurrentStep, SpecialStep).Type
-                            Case SpecialStep.StepType.Enumerable : Return "enumerable"
-                            Case SpecialStep.StepType.FullName : Return "full-name"
-                            Case SpecialStep.StepType.Name : Return "name"
-                            Case SpecialStep.StepType.TypeName : Return "type-name"
-                            Case SpecialStep.StepType.CircleLevel : Return "circle-level"
-                            Case Else : Return String.Empty
+                            Case SpecialStep.StepType.Enumerable : Return NameTable.Get(atrEnumerable)
+                            Case SpecialStep.StepType.FullName : Return NameTable.Get(atrFullName)
+                            Case SpecialStep.StepType.Name : Return NameTable.Get(atrName)
+                            Case SpecialStep.StepType.TypeName : Return NameTable.Get(atrTypeName)
+                            Case SpecialStep.StepType.CircleLevel : Return NameTable.Get(atrCircleLevel)
                         End Select
-                    Case Else : Return String.Empty
                 End Select
+                Return NameTable.Get(String.Empty)
             End Get
         End Property
         ''' <summary>Clones <see cref="Location"/> by clonig all steps in it</summary>
@@ -592,7 +604,7 @@ Namespace XmlT.XPathT
         End Function
         ''' <summary>Moves the <see cref="XPathObjectNavigator"></see> to the next sibling node of the current node.</summary>
         ''' <returns>true if the <see cref="XPathObjectNavigator"/> is successful moving to the next sibling node; otherwise, false if there are no more siblings or if the <see cref="XPathObjectNavigator"></see> is currently positioned on an attribute node. If false, the position of the <see cref="XPathObjectNavigator"/> is unchanged.</returns>
-        ''' <remarks>For <see cref="PropertyStep"/> the <see cref="MoveToFirstPropertyOrItem"/> is invoked. For <see cref="EnumerableStep"/> an attempt to invoke <see cref="IEnumerator.MoveNext"/> is done.</remarks>
+        ''' <remarks>For <see cref="PropertyStep"/> the <see cref="MoveToFirstPropertyOrItem"/> is invoked. For <see cref="EnumerableStep"/> an attempt to invoke <see cref="System.Collections.IEnumerator.MoveNext"/> is done.</remarks>
         Public Overloads Overrides Function MoveToNext() As Boolean
             Select Case CurrentStep.StepClass
                 Case [Step].StepClasses.Enumerable
@@ -645,9 +657,9 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
         Public Overrides Function MoveToParent() As Boolean
             If Location.Count > 1 Then
                 Location.RemoveAt(Location.Count - 1)
-                Return False
+                Return True
             End If
-            Return True
+            Return False
         End Function
         ''' <summary>When overridden in a derived class, moves the <see cref="XPathObjectNavigator"></see> to the previous sibling node of the current node.</summary>
         ''' <returns>Returns true if the <see cref="XPathObjectNavigator"></see> is successful moving to the previous sibling node; otherwise, false if there is no previous sibling node or if the <see cref="XPathObjectNavigator"></see> is currently positioned on an attribute node. If false, the position of the <see cref="XPathObjectNavigator"></see> is unchanged.</returns>
