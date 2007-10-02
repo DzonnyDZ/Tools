@@ -2,9 +2,10 @@ Imports System.Reflection
 #If Config <= Release Then
 Namespace ResourcesT
     ''' <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
-    ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework</remarks>
+    ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework!!!</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(SystemResources), LastChMMDDYYYY:="05/14/2007")> _
+    <Version(1, 0, GetType(SystemResources), LastChMMDDYYYY:="10/02/2007")> _
+    <MainTool(firstverMMDDYYYY:="05/14/2007")> _
     Public NotInheritable Class SystemResources
         ''' <summary>CTor</summary>
         ''' <remarks>In order not to be possible to create instance</remarks>
@@ -3046,7 +3047,10 @@ Namespace ResourcesT
     End Class
 
     ''' <summary>Exposes functionality of internall (friend) .NET class System.SRDescriptionAttribute - applies <see cref="DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
-    Public Class SRDescriptionAttribute   'ASAP: Mark, Wiki, Forum
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(SRDescriptionAttribute), LastchMMDDYYYY:="10/02/2007")> _
+    <Tool(GetType(SystemResources), firstvermmddyyyy:="10/02/2007")> _
+    Public Class SRDescriptionAttribute
         Inherits DescriptionAttribute
         ''' <summary>Contains value of the <see cref="ResourceKey"/> property</summary>
         Private _ResourceKey As String
@@ -3078,7 +3082,10 @@ Namespace ResourcesT
     End Class
 
     ''' <summary>Exposes functionality of internall (friend) .NET class System.SRCategoryAttribute - applies <see cref="DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
-    Public Class SRCategoryAttribute   'ASAP: Mark, Wiki, Forum
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(SRDescriptionAttribute), LastchMMDDYYYY:="10/02/2007")> _
+    <Tool(GetType(SystemResources), firstvermmddyyyy:="10/02/2007")> _
+    Public Class SRCategoryAttribute
         Inherits DescriptionAttribute
         ''' <summary>CTor</summary>
         ''' <param name="ResourceKey">Known resource key to get value from</param>

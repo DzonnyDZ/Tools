@@ -123,7 +123,7 @@
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />
-    <Compile Include="Data\Metadata\MetadataConnection.vb">
+    <Compile Include="ComponentModel\Data\Metadata\MetadataConnection.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />

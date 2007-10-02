@@ -2,7 +2,10 @@ Imports System.Windows.Forms
 Namespace WindowsT.FormsT
     '#If Config <= Nightly Then set in Tools.vbproj
     'Stage:Nightly
-    'ASAP: Comment,Attributes,  Expose everything, inherit ControlWithStatus, conditional file
+    'xASAP: Comment,Attributes,  Expose everything, inherit ControlWithStatus, conditional file
+    'ASAP: Remove
+    ''' <summary>Note: This control will be removed and replaced with attachable implementation of <see cref="StatusMarker"/></summary>
+    <Obsolete("This control will be removed and replaced wit attachable StatusMarker")> _
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
      <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

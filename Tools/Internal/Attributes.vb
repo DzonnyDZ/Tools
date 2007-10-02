@@ -322,11 +322,11 @@ Namespace InternalT
     End Class
 
     ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.InternalT"/> namespace</summary>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 1, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="05/16/2007")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 2, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="05/16/2007")> _
     Friend Module AttributesSpecificDeclarations 'Original 12/20/2006
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>
         ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it. (since version 1.1 there is no need to add constants.</remarks>
-        Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct Or AttributeTargets.Property Or AttributeTargets.Event
+        Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct Or AttributeTargets.Property Or AttributeTargets.Event Or AttributeTargets.Field
     End Module
 #Region "ToolAttribute"
     ''' <summary>Defines additional informations about tool and allows tool grouping. Apply this attribute on dependent tool.</summary>
@@ -393,12 +393,12 @@ Namespace InternalT
     End Class
     ''' <summary>Defines main tool. Only types can be main tools</summary>
     ''' <remarks>Also type that is not tool itself (is marked with <see cref="DoNotApplyAuthorAndVersionAttributesAttribute"/>) can be marked as root (if it is not nested within another tool).</remarks>
-    <AttributeUsage(AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Class Or AttributeTargets.Interface Or AttributeTargets.Struct)> _
+    <AttributeUsage(AuthorAndVersionAttributesUsage)> _
     <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(1, 0, GetType(MainToolAttribute), LastChMMDDYYYY:="05/15/2007")> _
+    <Version(1, 0, GetType(MainToolAttribute), LastChMMDDYYYY:="10/02/2007")> _
     <Tool(GetType(ToolAttribute), FirstVerMMDDYYYY:="05/15/2007")> _
     Public Class MainToolAttribute : Inherits ToolAttribute
-        ''' <summary>Marks tool as indemendent ungrouped main tool</summary>
+        ''' <summary>Marks tool as independent ungrouped main tool</summary>
         Sub New()
             MyBase.New(Nothing)
         End Sub

@@ -1,7 +1,9 @@
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace ComponentModelT
-    'ASAP: Mark, wiki, forum
     ''' <summary><see cref="CategoryAttribute"/> which's value is one of known values</summary>
+    <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _
+    <Version(1, 0, GetType(KnownCategoryAttribute), lastchmmddyyyy:="10/02/2007")> _
+    <StandAloneTool(firstvermmddyyyy:="10/02/2007")> _
     Public Class KnownCategoryAttribute : Inherits CategoryAttribute
         ''' <summary>Represents shared (static) properties of <see cref="CategoryAttribute"/></summary>
         Public Enum KnownCategories As Byte

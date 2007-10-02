@@ -2,8 +2,11 @@ Imports System.Windows.Forms, Tools.ResourcesT, Tools.ComponentModelT, System.Dr
 Namespace WindowsT.FormsT
     '#If Config <= Nightly Then set in Tools.vbproj
     'Stage:Nightly
-    'ASAP: Comment,Attributes, Expose everything
+    'xASAP: Comment,Attributes, Expose everything
     ''' <summary>Composite control of <see cref="MaskedTextBox"/> and <see cref="StatusMarker"/></summary>
+    'ASAP: Remove
+    ''' <summary>Note: This control will be removed and replaced with attachable implementation of <see cref="StatusMarker"/></summary>
+    <Obsolete("This control will be removed and replaced wit attachable StatusMarker")> _
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

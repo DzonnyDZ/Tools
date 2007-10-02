@@ -57,10 +57,15 @@
         End Function
 #End If
 #If Config <= Nightly Then 'Stage: Nightly
-        'ASAP: Tool, Forum, Wiki
         ''' <summary>If you like to use 'Null' instead of 'Nothing' in Visual Basic you can</summary>
+        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+        <Version(1, 0, GetType(Interaction), LastChMMDDYYYY:="10/02/2007")> _
+        <MainTool(FirstVerMMDDYYYY:="10/02/2007", GroupName:="Null")> _
         Public Const Null As Object = Nothing
         ''' <summary>If you like to use 'Nothing' instead of 'Null' outside Visual Basic you can</summary>
+        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+        <Version(1, 0, GetType(Interaction), LastChMMDDYYYY:="10/02/2007")> _
+        <MainTool(FirstVerMMDDYYYY:="10/02/2007", GroupName:="Null")> _
         Public Const [Nothing] As Object = Nothing
 #End If
     End Module
