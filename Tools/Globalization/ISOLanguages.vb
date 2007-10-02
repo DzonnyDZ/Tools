@@ -6,7 +6,7 @@
 '
 ' Generated code from "ISOLanguages.xml"
 '
-' Created: 27. května 2007
+' Created: 2. října 2007
 ' By:DZONNY\Honza
 '
 Namespace GlobalizationT

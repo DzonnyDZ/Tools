@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8" ?> 
+<!--Experimental: This file contains experimental structure of XML-based query language-->
+<!--XML-schema will be created when this query language will be developed (if it will)-->
+<query><!--Root of each query-->
+    <!--Type import - imports given class into query scope
+        name is assembly-quelified name used for System.Type.GetType
+        alias is optional name of type used inside queries if it should differ from type's name (to avoid confilcts)
+        there can be multiple <import-types>s
+        The should be way how to pass types directly info execution of statement to avoid some reflection.
+            How should it work? There will be dictionary of alias - type in class that will represent the query. (So, it will be possible only for types with alias specified).
+            Programmer will be able to pass instances of System.Type to that dictionary. Items filled with nulls will be filled using reflection.
+    -->
+    <import-type name="assemly qualified name" alias="name"/>
+    <!--<query> can contain multiple nodes in any order - like sequence of SQL statemens-->
+    <select><!--like SELECT SQL statement-->
+        <!--Fields that will be selected. There can be more <field>s.
+            source is expression that produces some value that will be selected
+            alias is optional name for outcomming field (use if you don't like field to be named by source).
+            source can contain expessions with
+                binary aritmetical operators
+                    + addition
+                    - subtraction
+                    * multiplication
+                    / division
+                    \ integer division
+                    ^ power
+                    % modulo
+                    & string concactenation
+                    IS identity operator (user mostly for NULLs, but can be used as reference comparison of any objects) 
+                unary arithmetical operators
+                    - negative sign
+                    + positive sign (no meaning)
+                binary comparison operators
+                    < less
+                    <=less or equal
+                    > greater
+                    >=greater or equal
+                    = equal
+                object operators
+                    . member access (only public instance fields and public instance readable not indexed properties can be accessed)
+                parenthes to enforce priority
+                    ()
+                binary logical operators
+                    and and (&& for special null behavior)
+                    or  or (|| for special null behavior)
+                    xor xor
+                unary logical operators
+                    not
+                function calls
+                    :: static call contains type name or alias (see <import-type>) and :: and function name (only public static functions can be called this way) and parenthes (()). If function have any parameters then they are specified separated by colons (,). Parameter value can be any expression.
+                        there will be set of built-in functions calles via bi::
+                    -> instance call contains of any expression, -> operator and function name (only public instance functions can be called) followed by (). Parameters (if any) are specified inside parentes separated by commas.
+               special operators
+                    [] exception-to-null
+                        if en exceprion occures during evaluating part of expression enclosed in [] than it is evaluated as null
+                        compare these statements:
+                        7 / 0 = <exception thrown>
+                        [7 / 0] = NULL
+                    {} strict null logic
+                        compare these statements:
+                        NULL + a    = a      NULL {+} a    = NULL
+                        a + NULL    = a      a {+} NULL    = NULL
+                        NULL - a    = -a     NULL {-} a    = NULL
+                        a - NULL    = a      a {-} NULL    = NULL
+                        NULL * a    = 0      NULL {*} a    = NULL
+                        a * NULL    = 0      a {*} NULL    = NULL
+                        a / NULL    = NULL   a {/} NULL    = NULL
+                        NULL / a    = 0      NULL {/} a    = NULL
+                        a \ NULL    = NULL   a {\} NULL    = NULL
+                        NULL \ a    = 0      NULL {\} a    = NULL
+                        a ^ NULL    = 1      a {^} NULL    = NULL
+                        NULL ^ a    = 0      NULL {^} a    = NULL
+                        NULL % a    = 0      NULL {%} a    = NULL
+                        a % NULL    = NULL   a {%} NULL    = NULL
+                        a & NULL    = a      a {&} NULL    = NULL
+                        NULL & a    = a      NULL {&} a    = NULL
+                        NULL IS a   = FALSE  {IS} is not allowed
+                        a IS NULL   = FALSE  {IS} is not allowed
+                        NULL IS NULL= TRUE   {IS} is not allowed
+                        NULL +-*/\^%& NULL = NULL NULL {+-*/\^%&} NULL = NULL
+                        - NULL      = NULL   {-} (unary) is not allowed
+                        + NULL      = NULL   {+} (unary) is not allowed
+                        a < NULL    = NULL   a {<} NULL    = NULL
+                        NULL < a    = NULL   NULL {<} a    = NULL
+                        a > NULL    = NULL   a {>} NULL    = NULL
+                        NULL > a    = NULL   NULL {>} a    = NULL
+                        NULL = a    = FALSE  NULL {=} a    = NULL
+                        a = NULL    = FALSE  a {=} NULL    = NULL
+                        a <= NULL   = NULL   a {<=} NULL   = NULL
+                        NULL <= a   = NULL   NULL {<=} a   = NULL
+                        a >= NULL   = NULL   a {>=} NULL   = NULL
+                        a <= NULL   = NULL   a {<=} NULL   = NULL
+                        NULL < NULL = FALSE  NULL {<} NULL = NULL
+                        NULL > NULL = FALSE  NULL {>} NULL = NULL
+                        NULL = NULL = TRUE   NULL {=} NULL = TRUE
+                        NULL <= NULL= TRUE   NULL {<=} NULL= NULL
+                        NULL >= NULL= TRUE   NULL {>=} NULL= NULL
+                        NULL.xxx    = NULL   NULL{.}xxx    = exception
+                        (NULL)      = NULL   no alternative
+                        NULL->xxx() = NULL   NULL{->}xxx() = exception
+                        a->xxx(NULL)
+                            if parameter can be dbNull function is called with dbNull
+                            if parameter can be reference type function is called with nothing (null). If ArgumentNullExcetion or NullreferenceException is thrown by trhe function NULL is returned
+                            otherwise NULL is returned
+                        a{->}(NULL) same sa above, but any exception is proposed upwards
+                        not NULL = NULL      {not} is not allowed
+                        NULL or a = 2bool(a)   NULL {or} a = NULL
+                        a or NULL = 2bool(a)   a {or} NULL = NULL
+                        NULL and a = 2bool(a)  NULL {and} a = NULL
+                        a and NULL = 2bool(a)  a {and} NULL = NULL
+                        special: (there is no {||} and {&&}
+                            NULL || FALSE = NULL  = FALSE || NULL
+                            NULL || TRUE  = TRUE  = TRUE  || NULL
+                            NULL && FALSE = FALSE = FALSE && NULL
+                            NULL && TRUE  = NULL =  TRUE  && NULL
+                    explicit casts:
+                        2bool()   NULL ... false
+                                  0    ... false
+                                  ""   ... false
+                                  otherwise true
+                        2string() NULL ... ""
+                                  false ... ""
+                                  otherwise .ToString is called
+                        2number() NULL ... 0
+                                  false ... 0
+                                  true ...  1
+                                  string is parsed in current culture. If unsuccessfull result is NULL
+                                  otherwise 2string is used and then 2number on resulting string
+                    implicit casts:
+                        explicit cast are called automatically
+                            (if overloaded operator is not found in object)
+                            2string & 2string
+                            2number +-*/\% 2number
+                            +- 2number
+                            for <, >, <=, >= an exception occures if overloaded operator is not found
+                            = is replaced by IS if overloaded operator is not found
+                            2bool and or xor 2bool
+                            not 2bool
+                    conditional operators:
+                    a?b:c if a is true returns b otherwise c
+                    a{?}b{:}c if a is null returns null, if a is true returns b otherwise c
+                    a?:b if a is null returns b otherwise a
+                    a?b{:}c, a{?}b:c and a{?:}b are invalid
+               column names:
+                    column names are grouped in groups like
+                        system:
+                        IPTC:
+                        EXIF:
+                        XMP:
+                        JPEG:
+                        etc.
+                    for names created by user there is the rule that it should follow .NET naming conventions (start with _ or letter and contains only _, numbers and letters).
+                        it cannot be IS, and, or, xor, NULL, FALSE, TRUE, bi - if it is it must be enclosed in `` (` is escaped as \`)
+                    All names are case-sensitive (it's XML)
+            There must be at leas one field
+        -->
+        <field source="expression" alias="name"/>
+        <!--<from> specifies path to select data from.
+            path can be file or directory.
+            mask defines mask - only file with name that fits in given mask will be selected.
+            recursive is meaningfull only for directories.
+            mask an recursive are optional
+            there can be mofe <from>s
+            -->
+        <from path="directory path or filename" mask="mask like *.jpg;*.jpeg" recursive="true|false"/>
+        <where><!--<where> is optional. If it is used it contains an expression. Only files for which the expression is evaluated true are returned--></where>
+        <!--<group> is optional
+            by contians expression used for grouping. Files for which the expression has same value are grouped.
+            -->
+        <group by="expression1;expression2">
+            <!--There must be at leas one <field>
+                Expression must be call of function with only param-array, array or any IEnumerable or IEnumerable(Of T) parameter to which all file values are passed.
+                If it is not call of such function tha any of values in group can be returned
+            -->
+            <field source="expression" alias="name"/>
+        </group>
+        <having><!--<having> is optional additional <where> evaluated after grouping--></having>
+        <order by="expression" direction="asc|desc"/>
+        <limit from="0" to="100"/>
+    </select>
+    
+    <update keep-file-date="true|false"><!--like UPDATE SQL statement-->
+        <from path="" mask="" recursive=""/>
+        <set field="name" value="expression"/>
+        <remove group=""/>
+        <where></where>
+        <order by="" direction=""/>
+        <limit from="" to=""/>
+    </update>
+
+    <delete to-recycle-bin="true|false" remove-empty-folders="true|false"><!--Like DELETE SQL statement-->
+        <from path="" mask="" recursive=""/>
+        <where></where>
+        <order by="" direction=""/>
+        <limit from="" to=""/>
+    </delete>
+
+    <copy mode="move|copy" replace="true|false" delete-errors="exception|skip" remove-empty-folders="true|false" copy-empty-folders="true|false">
+        <from path="" mask="" recursive=""/>
+        <to path="" type="type of target file exif, jpeg, iptc"/><!--Only some type changes are allowed eg. jpeg -> exif bot not exif->jpeg. No type specified means keep type.-->
+        <where></where>
+        <order by="" direction=""/>
+        <limit from="" to=""/>
+        <update keep-file-date="true|false">
+            <set field="name" value="expression"/>
+            <remove group=""/>
+            <where></where>
+        </update>
+    </copy>
+
+    <manipulate keep-file-date="true|false" create-backup="true|false">
+        <!--Future request may be manipulating image data-->
+        <from path=""  mask="" recursive=""/>
+        <resize mode="absolute|by-shortest|by-longest|by-horizontal|by-vertical|percent" x="" y=""/>
+        <rotate mode="to-be-wider|to-be-higher|left|right|180"/>
+        <mirror mode="horizontal|vertical"/>
+        <colors count="color count"/>
+        <compression-level number="level"/>
+        <adjust-colors>
+            <r brightness="" gamma="" contrast=""/>
+            <g brightness="" gamma="" contrast=""/>
+            <b brightness="" gamma="" contrast=""/>
+        </adjust-colors>
+        <crop left="" top="" width="" height="" right="" bottom=""/>
+        <imprint font="" size="" color="" bold="" underline="" strike="" italic="" max-width="" align="left|right|center" angle="" background="" left="" right="" top="" bottom="">expression</imprint>
+        <watermark source="" top="" left="" bottom="" right="" alpha=""/>
+        <transparent color=""/>
+        <where></where>
+        <order by="" direction=""/>
+        <limit from="" to=""/>
+        <!--etc.-->
+    </manipulate>
+</query>
+<!--
+    SELECT {filed.source [AS field.alias]}
+    FROM from.path [MASKED BY from.mask] [RECURSIVE]
+    [WHERE where]
+    [HAVING having]
+    [ORDER BY {order.by [ASC|DESC]}]
+    [LIMIT limit.from[, limit.to]]
+-->
+<!--
+    SELECT {group.field.source [AS group.field.alias]}
+    FROM from.path [MASKED BY from.mask] [RECURSIVE]
+    [WHERE where]
+    GROUP BY {group.by}
+    [HAVING having]
+    [ORDER BY {order.by [ASC|DESC]}]
+    [LIMIT limit.from[, limit.to]]
+-->
+<!--
+    UPDATE [KEEP FILE DATE] from.path [MASKED BY from.mask] [RECURSIVE]
+    [SET {set.field = set.value}]
+    [REMOVE {remove.group}]
+    [WHERE where.where]
+    [[ORDER BY {order.by [ASC|DESC]}]
+    LIMIT limit.from[, limit.to]]]
+-->
+<!--
+    DELETE [TO RECYCLE BIN] [REMOVE EMPTY FOLDERS]
+    FROM from.path [MASKED BY from.mask] [RECURSIVE]
+    WHERE where.where
+    [[ORDER BY {order.by [ASC|DESC]}]
+    LIMIT limit.from[, limit.to]]]
+-->
+<!--
+    [INSERT|REPLACE] INTO to.path [TYPE = to.type] [REMOVE EMPTY FOLDERS] [COPY EMPTY FOLDERS] [DELETE SOURCE [SILENT]]
+    [CHANGE [KEEP FILE DATE]
+        [SET {update.set.field = update.set.value}]
+        [REMOVE {remove.group}]
+    ]
+    FROM from.path [MASKED BY from.mask] [RECURSIVE]
+    [WHERE where]
+    [[ORDER BY {order.by [ASC|DESC]}]
+    LIMIT limit.from [, limit.to]]
+-->
+<!--
+    MANIPULATE [KEEP FILE DATE] [BACKUP]
+    FROM from.path MASKED BY from.mask [RECURSIVE]
+    {
+    [RESIZE (ABSOLUTE|PERCENT [resize.x][,resize.y])|(BY SHORTEST|LONGEST|HORIZONTAL|VERICAL resize.x) !]
+    [ROTATE (TO BE WIDER|HIGHER)|LEFT|RIGHT|180 !]
+    [MIRROR HORIZONTAL|VERTICAL !]
+    [COLORS colors.count !]
+    [COMPRESSION LEVEL compression-level.number !]
+    [ADJUST RED|GREEN|BLUE BRIGHTNESS adjust-colors.r.brightness !]
+    [ADJUST RED|GREEN|BLUE GAMMA adjust-colors.r.gamma !]
+    [ADJUST RED|GREEN|BLUE CONTRAST adjust-colors.r.contrast !]
+    [CROP crop.left,crop.top ( - crop.width, crop.hegiht)|(crop.right, crop.bottom) !]
+    [IMPRINT imprint USING impring.font imprint.size [BOLD] [UNDERLINE] [STRIKE] [ITALIC] COLOR imprint.color POSITION (imprint.left)|(RIGTH imprint.right), (imprint.top)|(BOTTOM imprint.bottom) [BACKGROUND imprint.background] MAX (WIDTH imprint.max-width)|(HEIGHT imprint.max-height) [AT impring.angle°] !]
+    [WATERMARK watermark.source POSITION (watermark.left)|(RIGTH watermark.right), (watermark.top)|(BOTTOM watermark.bottom) [ALPHA watermark.aplha] !]
+    [TRANSPARENT transparent.color !]
+    # ...
+    }
+    WHERE where
+    [[ORDER BY {order.by [ASC|DESC]}]
+    LIMIT limit.from [, limit.to]]
+-->
