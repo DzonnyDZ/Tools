@@ -2064,6 +2064,7 @@ Namespace DrawingT.MetadataT
             ''' <param name="From">A <see cref="StringEnum(Of TEnum)"/> to be converted</param>
             ''' <returns><see cref="StringEnum(Of TEnum).StringValue"/> of <paramref name="From"/></returns>
             Public Shared Widening Operator CType(ByVal From As StringEnum(Of TEnum)) As String
+                If From Is Nothing Then Return Nothing
                 Return From.StringValue
             End Operator
             ''' <summary>Converts <see cref="StringEnum(Of TEnum)"/> to <see cref="TEnum"/></summary>

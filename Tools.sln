@@ -81,7 +81,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Visual Studio", "Tool
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 6
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -101,6 +101,23 @@ Global
 		SccProjectUniqueName5 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
 		SccProjectName5 = Tools\u0020Visual\u0020Studio
 		SccLocalPath5 = Tools\u0020Visual\u0020Studio
+		SccProjectUniqueName6 = Projects\\Metanol\\Metanol.vbproj
+		SccProjectTopLevelParentUniqueName6 = Tools.sln
+		SccProjectName6 = Projects/Metanol
+		SccLocalPath6 = Projects\\Metanol
+		SccLocalPath7 = .
+		SccProjectUniqueName8 = Tests\\Tests.vbproj
+		SccProjectName8 = Tests
+		SccLocalPath8 = Tests
+		SccProjectUniqueName9 = Tools\\Tools.vbproj
+		SccProjectName9 = Tools
+		SccLocalPath9 = Tools
+		SccProjectUniqueName10 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
+		SccProjectName10 = Tools\u0020Visual\u0020Studio
+		SccLocalPath10 = Tools\u0020Visual\u0020Studio
+		SccProjectUniqueName11 = Tools\u0020Win\\Tools\u0020Win.vbproj
+		SccProjectName11 = Tools\u0020Win
+		SccLocalPath11 = Tools\u0020Win
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
