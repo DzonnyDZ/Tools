@@ -1,13 +1,13 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2701.36373
+' Generator: TransformCodeGenerator, Version=1.0.2691.18445, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2691.18445
 '
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 2. října 2007
-' By:DZONNY\Honza
+' Created: 4. ??jna 2007
+' By:noutbuk\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
 Imports System.ComponentModel
@@ -358,7 +358,7 @@ Namespace DrawingT.MetadataT
 				End Get
 			End Property
 			''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
-			''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
+			''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (?SN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
 			Public Shared ReadOnly Property CodedCharacterSet As DataSetIdentification
 				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.CodedCharacterSet)
@@ -595,7 +595,7 @@ Namespace DrawingT.MetadataT
 				End Get
 			End Property
 			''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
-			''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
+			''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoy? Sp?cial"</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ByLineTitle As DataSetIdentification
 				<DebuggerStepThrough()> Get
@@ -1072,11 +1072,11 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("United Press International ANPA 1312")> UnitedPressInternationalANPA1312 = 09
 			''' <summary>United Press International Down-Load Message</summary>
 			<FieldDisplayName("Down-Load message")> UnitedPressInternationalDownLoadMessage = 10
-			''' <summary>¤ JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)</summary>
+			''' <summary>? JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)</summary>
 			<FieldDisplayName("JPEG")> JPEG = 11
 			''' <summary>Photo-CD Image-Pac (Eastman Kodak)</summary>
 			<FieldDisplayName("Koned Photo-CD Image-Pac")> PhotoCDImagePac = 12
-			''' <summary>¤ Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)</summary>
+			''' <summary>? Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)</summary>
 			<FieldDisplayName("BMP")> BMP = 13
 			''' <summary>Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)</summary>
 			<FieldDisplayName("WAV")> WAV = 14
@@ -1104,7 +1104,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("News Industry Text Format")> NITF = 25
 			''' <summary>Tape Archive (*.TAR)</summary>
 			<FieldDisplayName("TAR")> TAR = 26
-			''' <summary>Tidningarnas Telegrambyrå NITF version (TTNITF DTD)</summary>
+			''' <summary>Tidningarnas Telegrambyr? NITF version (TTNITF DTD)</summary>
 			<FieldDisplayName("TINITF DTD")> TTNITF_DTD = 27
 			''' <summary>Ritzaus Bureau NITF version (RBNITF DTD)</summary>
 			<FieldDisplayName("RBNITF DTD")> RBNITF_DTD = 28
@@ -1755,7 +1755,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("HNA")> <XmlEnum("HNA")> HNA
 			''' <summary>International Press Telecommunications Council</summary>
 			<FieldDisplayName("IPTC")> <XmlEnum("IPTC")> IPTC
-			''' <summary>Magyar Távirati Iroda / Hungarian News Agency</summary>
+			''' <summary>Magyar T?virati Iroda / Hungarian News Agency</summary>
 			<FieldDisplayName("MTI")> <XmlEnum("MTI")> MTI
 			''' <summary>Canadian Press</summary>
 			<FieldDisplayName("PC")> <XmlEnum("PC")> PC
@@ -1765,7 +1765,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("REUTERS")> <XmlEnum("REUTERS")> REUTERS
 			''' <summary>Slovenska Tiskovna Agencija</summary>
 			<FieldDisplayName("STA")> <XmlEnum("STA")> STA
-			''' <summary>Tidningarnas Telegrambyrå</summary>
+			''' <summary>Tidningarnas Telegrambyr?</summary>
 			<FieldDisplayName("TT")> <XmlEnum("TT")> TT
 			''' <summary>United Press International</summary>
 			<FieldDisplayName("UP")> <XmlEnum("UP")> UP
@@ -1783,8 +1783,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Angola")> <XmlEnum("AGO")> Angola
 			''' <summary>Anguilla</summary>
 			<FieldDisplayName("Anguilla")> <XmlEnum("AIA")> Anguilla
-			''' <summary>Åland Islands</summary>
-			<FieldDisplayName("Åland")> <XmlEnum("ALA")> Åland
+			''' <summary>?land Islands</summary>
+			<FieldDisplayName("?land")> <XmlEnum("ALA")> ?land
 			''' <summary>Albania</summary>
 			<FieldDisplayName("Albania")> <XmlEnum("ALB")> Albania
 			''' <summary>Andorra</summary>
@@ -1861,8 +1861,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Chile")> <XmlEnum("CHL")> Chile
 			''' <summary>China</summary>
 			<FieldDisplayName("China")> <XmlEnum("CHN")> China
-			''' <summary>Côte d'Ivoire</summary>
-			<FieldDisplayName("Côte d'Ivoire")> <XmlEnum("CIV")> CôteDIvoire
+			''' <summary>C?te d'Ivoire</summary>
+			<FieldDisplayName("C?te d'Ivoire")> <XmlEnum("CIV")> C?teDIvoire
 			''' <summary>Cameroon</summary>
 			<FieldDisplayName("Cameroon")> <XmlEnum("CMR")> Cameroon
 			''' <summary>Congo, the Democratic Republic of the[1]</summary>
@@ -2143,8 +2143,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("French Polynesia")> <XmlEnum("PYF")> FrenchPolynesia
 			''' <summary>Qatar</summary>
 			<FieldDisplayName("Qatar")> <XmlEnum("QAT")> Qatar
-			''' <summary>Réunion</summary>
-			<FieldDisplayName("Réunion")> <XmlEnum("REU")> Réunion
+			''' <summary>R?union</summary>
+			<FieldDisplayName("R?union")> <XmlEnum("REU")> R?union
 			''' <summary>Romania</summary>
 			<FieldDisplayName("Romania")> <XmlEnum("ROU")> Romania
 			''' <summary>Russian Federation</summary>
@@ -2263,15 +2263,15 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Zambia")> <XmlEnum("ZMB")> Zambia
 			''' <summary>Zimbabwe</summary>
 			<FieldDisplayName("Zimbabwe")> <XmlEnum("ZWE")> Zimbabwe
-			''' <summary>Ascension Island — Reserved on request of UPU, also used by ITU</summary>
+			''' <summary>Ascension Island ? Reserved on request of UPU, also used by ITU</summary>
 			<FieldDisplayName("Ascension")> <XmlEnum("ASC")> Ascension
-			''' <summary>Clipperton Island — Reserved on request of ITU</summary>
+			''' <summary>Clipperton Island ? Reserved on request of ITU</summary>
 			<FieldDisplayName("Clipperton")> <XmlEnum("CPT")> Clipperton
-			''' <summary>Diego Garcia — Reserved on request of ITU</summary>
+			''' <summary>Diego Garcia ? Reserved on request of ITU</summary>
 			<FieldDisplayName("Diego Garcia")> <XmlEnum("DGA")> DiegoGarcia
-			''' <summary>France, Metropolitan — Reserved on request of France</summary>
+			''' <summary>France, Metropolitan ? Reserved on request of France</summary>
 			<FieldDisplayName("France, Metropolitan")> <XmlEnum("FXX")> FranceMetropolitan
-			''' <summary>Tristan da Cunha — Reserved on request of UPU</summary>
+			''' <summary>Tristan da Cunha ? Reserved on request of UPU</summary>
 			<FieldDisplayName("Tristan da Cunha")> <XmlEnum("TAA")> TristanDaCunha
 			''' <summary>United Nations</summary>
 			<FieldDisplayName("United Nations")> <XmlEnum("XUN")> UnitedNations
@@ -2678,7 +2678,7 @@ Namespace DrawingT.MetadataT
 				''' <summary>Contains value of the <see cref="ByLineTitle"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ByLineTitle As String
 				''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
-				''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
+				''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoy? Sp?cial"</remarks>
 				<Category("Author")> <FieldDisplayName("By-line Title")> Public Property ByLineTitle As String
 					Get
 						Return _ByLineTitle
@@ -3105,7 +3105,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
-		''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
+		''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (?SN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
@@ -4534,7 +4534,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
-		''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
+		''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoy? Sp?cial"</remarks>
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
