@@ -237,7 +237,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:if test="@type='SByte' or @type='UShort' or @type='UInteger' or @type='ULong'">
                 <xsl:text>&lt;CLSCompliant(False)> </xsl:text>
             </xsl:if>
-            <xsl:text>&lt;TypeConverter(GetType(EnumConvertorWithAttributes(Of </xsl:text>
+            <xsl:text>&lt;TypeConverter(GetType(EnumConverterWithAttributes(Of </xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text>)))> </xsl:text>
             <xsl:text>Public Enum </xsl:text>

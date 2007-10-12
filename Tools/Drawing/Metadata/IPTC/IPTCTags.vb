@@ -1,13 +1,13 @@
-' GENERATED FILE -- DO NOT EDIT
+﻿' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2691.18445, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2691.18445
+' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2701.36373
 '
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 4. ??jna 2007
-' By:noutbuk\Honza
+' Created: 12. října 2007
+' By:DZONNY\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
 Imports System.ComponentModel
@@ -358,7 +358,7 @@ Namespace DrawingT.MetadataT
 				End Get
 			End Property
 			''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
-			''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (?SN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
+			''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
 			Public Shared ReadOnly Property CodedCharacterSet As DataSetIdentification
 				<DebuggerStepThrough()> Get
 					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.CodedCharacterSet)
@@ -595,7 +595,7 @@ Namespace DrawingT.MetadataT
 				End Get
 			End Property
 			''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
-			''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoy? Sp?cial"</remarks>
+			''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
 			<EditorBrowsable(EditorBrowsableState.Advanced)> _
 			Public Shared ReadOnly Property ByLineTitle As DataSetIdentification
 				<DebuggerStepThrough()> Get
@@ -817,866 +817,866 @@ Namespace DrawingT.MetadataT
 #End Region
 #Region "Enums"
 		''' <summary>Possible values of <see cref="ActionAdvised"/></summary>
-		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of AdvisedActions)))> Public Enum AdvisedActions As Byte
-			''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
-			''' <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
-			<FieldDisplayName("Object Kill")> ObjectKill = 1
-			''' <summary>Object Replace. Signifies that the provider wants to replace the referenced object with the object provided under the current envelope.</summary>
-			<FieldDisplayName("Object Replace")> ObjectReplace = 2
-			''' <summary>Object Append. Signifies that the provider wants to append to the referenced object information provided in the objectdata of the current envelope.</summary>
-			<FieldDisplayName("Object Append")> ObjectAppend = 3
-			''' <summary>Object Reference. Signifies that the provider wants to make reference to objectdata in a different envelope.</summary>
-			<FieldDisplayName("Object Reference")> ObjectReference = 4
-		End Enum
-		''' <summary>Abstract Relation Methods Identifiers</summary>
-		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ARMMethods)))> Public Enum ARMMethods As UShort
-			''' <summary>Using DataSets 2:45, 2:47 and 2:50 (<see cref='ReferenceService'/>, <see cref='ReferenceDate'/> and <see cref='ReferenceNumber'/>)</summary>
-			<FieldDisplayName("Method 1 (Reference service, date, number)")> IPTCMethod1 = 1
-			''' <summary>Using DataSet 1:100 (<see cref='UNO'/>)</summary>
-			<FieldDisplayName("Method 2 (UNO)")> IPTCMethod2 = 2
-		End Enum
-		''' <summary>Abstract Relation Method Versions</summary>
-		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ARMVersions)))> Public Enum ARMVersions As UShort
-			''' <summary>The only ARM version</summary>
-			<FieldDisplayName("Version 1")> ARM1 = 1
-		End Enum
-		''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</summary>
-		<Restrict(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of EconomySubjectDetail)))> Public Enum EconomySubjectDetail As Integer
-			''' <summary>Arable Farming</summary>
-			<FieldDisplayName("Arable Farming")> ArableFarming = 04001001
-			''' <summary>Fishing Industry</summary>
-			<FieldDisplayName("Fishing Industry")> FishingIndustry = 04001002
-			''' <summary>Forestry &amp; Timber</summary>
-			<FieldDisplayName("Forestry & Timber")> ForestryAndTimber = 04001003
-			''' <summary>Livestock Farming</summary>
-			<FieldDisplayName("Livestock Farming")> LivestockFarming = 04001004
-			''' <summary>Biotechnology</summary>
-			<FieldDisplayName("Biotechnology")> Biotechnology = 04002001
-			''' <summary>Fertilisers</summary>
-			<FieldDisplayName("Fertilisers")> Fertilisers = 04002002
-			''' <summary>Health &amp; Beauty products</summary>
-			<FieldDisplayName("Health & Beauty products")> HealthAndBeautyProducts = 04002003
-			''' <summary>Inorganic chemicals</summary>
-			<FieldDisplayName("Inorganic chemicals")> InorganicChemicals = 04002004
-			''' <summary>Organic chemicals</summary>
-			<FieldDisplayName("Organic chemicals")> OrganicChemicals = 04002005
-			''' <summary>Pharmaceuticals</summary>
-			<FieldDisplayName("Pharmaceuticals")> Pharmaceuticals = 04002006
-			''' <summary>Synthetics &amp; Plastics</summary>
-			<FieldDisplayName("Synthetics & Plastics")> SyntheticsAndPlastics = 04002007
-			''' <summary>Hardware</summary>
-			<FieldDisplayName("Hardware")> Hardware = 04003001
-			''' <summary>Networking</summary>
-			<FieldDisplayName("Networking")> Networking = 04003002
-			''' <summary>Satellite technology</summary>
-			<FieldDisplayName("Satellite technology")> SatelliteTechnology = 04003003
-			''' <summary>Semiconductors &amp; active components</summary>
-			<FieldDisplayName("Semiconductors & active components")> SemiconductorsAndActiveComponents = 04003004
-			''' <summary>Software</summary>
-			<FieldDisplayName("Software")> Software = 04003005
-			''' <summary>Telecommunications Equipment</summary>
-			<FieldDisplayName("Telecommunications Equipment")> TelecommunicationsEquipment = 04003006
-			''' <summary>Telecommunications Services</summary>
-			<FieldDisplayName("Telecommunications Services")> TelecommunicationsServices = 04003007
-			''' <summary>Heavy construction</summary>
-			<FieldDisplayName("Heavy construction")> HeavyConstruction = 04004001
-			''' <summary>House building</summary>
-			<FieldDisplayName("House building")> HouseBuilding = 04004002
-			''' <summary>Real Estate</summary>
-			<FieldDisplayName("Real Estate")> RealEstate = 04004003
-			''' <summary>Alternative energy</summary>
-			<FieldDisplayName("Alternative energy")> AlternativeEnergy = 04005001
-			''' <summary>Coal</summary>
-			<FieldDisplayName("Coal")> Coal = 04005002
-			''' <summary>Oil &amp; Gas - Downstream activities</summary>
-			<FieldDisplayName("Oil & Gas - Downstream activities")> OilAndGasDownstreamActivities = 04005003
-			''' <summary>Oil &amp; Gas - Upstream activities</summary>
-			<FieldDisplayName("Oil & Gas - Upstream activities")> OilAndGasUpstreamActivities = 04005004
-			''' <summary>Nuclear power</summary>
-			<FieldDisplayName("Nuclear power")> NuclearPower = 04005005
-			''' <summary>Electricity Production &amp; Distribution</summary>
-			<FieldDisplayName("Electricity Production & Distribution")> ElectricityProductionAndDistribution = 04005006
-			''' <summary>Waste Management &amp; Pollution Control</summary>
-			<FieldDisplayName("Waste Management & Pollution Control")> WasteManagementAndPollutionControl = 04005007
-			''' <summary>Water Supply</summary>
-			<FieldDisplayName("Water Supply")> WaterSupply = 04005008
-			''' <summary>Accountancy &amp; Auditing</summary>
-			<FieldDisplayName("Accountancy & Auditing")> AccountancyAndAuditing = 04006001
-			''' <summary>Banking</summary>
-			<FieldDisplayName("Banking")> Banking = 04006002
-			''' <summary>Consultancy Services</summary>
-			<FieldDisplayName("Consultancy Services")> ConsultancyServices = 04006003
-			''' <summary>Employment Agencies</summary>
-			<FieldDisplayName("Employment Agencies")> EmploymentAgencies = 04006004
-			''' <summary>Healthcare Providers</summary>
-			<FieldDisplayName("Healthcare Providers")> HealthcareProviders = 04006005
-			''' <summary>Insurance</summary>
-			<FieldDisplayName("Insurance")> Insurance = 04006006
-			''' <summary>Legal services</summary>
-			<FieldDisplayName("Legal services")> LegalServices = 04006007
-			''' <summary>Market research</summary>
-			<FieldDisplayName("Market research")> MarketResearch = 04006008
-			''' <summary>Stock broking</summary>
-			<FieldDisplayName("Stock broking")> StockBroking = 04006009
-			''' <summary>Clothing</summary>
-			<FieldDisplayName("Clothing")> Clothing = 04007001
-			''' <summary>Department stores</summary>
-			<FieldDisplayName("Department stores")> DepartmentStores = 04007002
-			''' <summary>Food</summary>
-			<FieldDisplayName("Food (distribution)")> FoodDistribution = 04007003
-			''' <summary>Mail Order</summary>
-			<FieldDisplayName("Mail Order")> MailOrder = 04007004
-			''' <summary>Retail</summary>
-			<FieldDisplayName("Retail")> Retail = 04007005
-			''' <summary>Speciality stores</summary>
-			<FieldDisplayName("Speciality stores")> SpecialityAtores = 04007006
-			''' <summary>Wholesale</summary>
-			<FieldDisplayName("Wholesale")> Wholesale = 04007007
-			''' <summary>Central Banks</summary>
-			<FieldDisplayName("Central Banks")> CentralBanks = 04008001
-			''' <summary>Consumer Issues</summary>
-			<FieldDisplayName("Consumer Issues")> ConsumerIssues = 04008002
-			''' <summary>Debt Markets</summary>
-			<FieldDisplayName("Debt Markets")> DebtMarkets = 04008003
-			''' <summary>Economic Indicators</summary>
-			<FieldDisplayName("Economic Indicators")> EconomicIndicators = 04008004
-			''' <summary>Emerging Markets Debt</summary>
-			<FieldDisplayName("Emerging Markets Debt")> EmergingMarketsDebt = 04008005
-			''' <summary>Foreign Exchange Markets</summary>
-			<FieldDisplayName("Foreign Exchange Markets")> ForeignExchangeMarkets = 04008006
-			''' <summary>Government Aid</summary>
-			<FieldDisplayName("Government Aid")> GovernmentAid = 04008007
-			''' <summary>Government Debt</summary>
-			<FieldDisplayName("Government Debt")> GovernmentDebt = 04008008
-			''' <summary>Interest Rates</summary>
-			<FieldDisplayName("Interest Rates")> InterestRates = 04008009
-			''' <summary>International Economic Institutions</summary>
-			<FieldDisplayName("International Economic Institutions")> InternationalEconomicInstitutions = 04008010
-			''' <summary>International Trade Issues</summary>
-			<FieldDisplayName("International Trade Issues")> InternationalTradeIssues = 04008011
-			''' <summary>Loan Markets</summary>
-			<FieldDisplayName("Loan Markets")> LoanMarkets = 04008012
-			''' <summary>Energy</summary>
-			<FieldDisplayName("Energy")> Energy = 04009001
-			''' <summary>Metals</summary>
-			<FieldDisplayName("Metals")> Metals = 04009002
-			''' <summary>Securities</summary>
-			<FieldDisplayName("Securities")> Securities = 04009003
-			''' <summary>Soft Commodities</summary>
-			<FieldDisplayName("Soft Commodities")> SoftCommodities = 04009004
-			''' <summary>Advertising</summary>
-			<FieldDisplayName("Advertising")> Advertising = 04010001
-			''' <summary>Books</summary>
-			<FieldDisplayName("Books")> Books = 04010002
-			''' <summary>Cinema</summary>
-			<FieldDisplayName("Cinema")> Cinema = 04010003
-			''' <summary>News Agencies</summary>
-			<FieldDisplayName("News Agencies")> NewsAgencies = 04010004
-			''' <summary>Newspaper &amp; Magazines</summary>
-			<FieldDisplayName("Newspaper & Magazines")> NewspaperAndMagazines = 04010005
-			''' <summary>Online</summary>
-			<FieldDisplayName("Online")> Online = 04010006
-			''' <summary>Public Relations</summary>
-			<FieldDisplayName("Public Relations")> PublicRelations = 04010007
-			''' <summary>Radio</summary>
-			<FieldDisplayName("Radio")> Radio = 04010008
-			''' <summary>Satellite &amp; Cable Services</summary>
-			<FieldDisplayName("Satellite & Cable Services")> SatelliteAndCableServices = 04010009
-			''' <summary>Television</summary>
-			<FieldDisplayName("Television")> Television = 04010010
-			''' <summary>Aerospace</summary>
-			<FieldDisplayName("Aerospace")> Aerospace = 04011001
-			''' <summary>Automotive Equipment</summary>
-			<FieldDisplayName("Automotive Equipment")> AutomotiveEquipment = 04011002
-			''' <summary>Defence Equipment</summary>
-			<FieldDisplayName("Defence Equipment")> DefenceEquipment = 04011003
-			''' <summary>Electrical Appliances</summary>
-			<FieldDisplayName("Electrical Appliances")> ElectricalAppliances = 04011004
-			''' <summary>Heavy engineering</summary>
-			<FieldDisplayName("Heavy engineering")> HeavyEngineering = 04011005
-			''' <summary>Industrial components</summary>
-			<FieldDisplayName("Industrial components")> IndustrialComponents = 04011006
-			''' <summary>Instrument engineering</summary>
-			<FieldDisplayName("Instrument engineering")> InstrumentEngineering = 04011007
-			''' <summary>Shipbuilding</summary>
-			<FieldDisplayName("Shipbuilding")> Shipbuilding = 04011008
-			''' <summary>Building materials</summary>
-			<FieldDisplayName("Building materials")> BuildingMaterials = 04012001
-			''' <summary>Gold &amp; Precious Materials</summary>
-			<FieldDisplayName("Gold & Precious Materials")> GoldAndPreciousMaterials = 04012002
-			''' <summary>Iron &amp; Steel</summary>
-			<FieldDisplayName("Iron & Steel")> IronAndSteel = 04012003
-			''' <summary>Non ferrous metals</summary>
-			<FieldDisplayName("Non ferrous metals")> NonFerrousMetals = 04012004
-			''' <summary>Alcoholic Drinks</summary>
-			<FieldDisplayName("Alcoholic Drinks")> AlcoholicDrinks = 04013001
-			''' <summary>Food</summary>
-			<FieldDisplayName("Food (industry)")> FoodIndustry = 04013002
-			''' <summary>Furnishings &amp; Furniture</summary>
-			<FieldDisplayName("Furnishings & Furniture")> FurnishingsAndFurniture = 04013003
-			''' <summary>Paper &amp; packaging products</summary>
-			<FieldDisplayName("Paper & packaging products")> PaperAndPackagingProducts = 04013004
-			''' <summary>Rubber products</summary>
-			<FieldDisplayName("Rubber products")> Rubberproducts = 04013005
-			''' <summary>Soft Drinks</summary>
-			<FieldDisplayName("Soft Drinks")> SoftDrinks = 04013006
-			''' <summary>Textiles &amp; Clothing</summary>
-			<FieldDisplayName("Textiles & Clothing")> TextilesAndClothing = 04013007
-			''' <summary>Tobacco</summary>
-			<FieldDisplayName("Tobacco")> Tobacco = 04013008
-			''' <summary>Casinos &amp; Gambling</summary>
-			<FieldDisplayName("Casinos & Gambling")> CasinosAndGambling = 04014001
-			''' <summary>Hotels &amp; accommodation</summary>
-			<FieldDisplayName("Hotels & mp; accommodation")> HotelsAndAccommodation = 04014002
-			''' <summary>Recreational &amp; Sports goods</summary>
-			<FieldDisplayName("Recreational & Sports goods")> RecreationalAndSportsGoods = 04014003
-			''' <summary>Restaurants &amp; catering</summary>
-			<FieldDisplayName("Restaurants & catering")> RestaurantsAndCatering = 04014004
-			''' <summary>Tour operators</summary>
-			<FieldDisplayName("Tour operators")> TourOperators = 04014005
-			''' <summary>Air Transport</summary>
-			<FieldDisplayName("Air Transport")> AirTransport = 04015001
-			''' <summary>Railway</summary>
-			<FieldDisplayName("Railway")> Railway = 04015002
-			''' <summary>Road Transport</summary>
-			<FieldDisplayName("Road Transport")> RoadTransport = 04015003
-			''' <summary>Waterway &amp; Maritime Transport</summary>
-			<FieldDisplayName("Waterway & Maritime Transport")> WaterwayAndMaritimeTransport = 04015004
-		End Enum
-		''' <summary>Values for <see cref="EditorialUpdate"/></summary>
-		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of EditorialUpdateValues)))> Public Enum EditorialUpdateValues As Byte
-			''' <summary>Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - <see cref='LanguageIdentifier'/>).</summary>
-			<FieldDisplayName("Additional language")> AdditionalLanguage = 1
-		End Enum
-		''' <summary>Registered file formats by IPTC and NAA</summary>
-		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of FileFormats)))> Public Enum FileFormats As UShort
-			''' <summary>No Object Data</summary>
-			<FieldDisplayName("No Object Data")> NoObjectData = 0
-			''' <summary>IPTC-NAA Digital Newsphoto Parameter Record</summary>
-			<FieldDisplayName("Digital Newsphoto Parameter Record")> NewsphotoParameterRecord = 01
-			''' <summary>IPTC7901 Recommended Message Format</summary>
-			<FieldDisplayName("Recommended Message Format")> RecommendedMessageFormat = 02
-			''' <summary>Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)</summary>
-			<FieldDisplayName("TIFF")> TIFF = 03
-			''' <summary>Illustrator (Adobe Graphics data)</summary>
-			<FieldDisplayName("Adobe Illustrator")> AdobeIllustrator = 04
-			''' <summary>AppleSingle (Apple Computer Inc)</summary>
-			<FieldDisplayName("Apple Single")> AppleSingle = 05
-			''' <summary>NAA 89-3 (ANPA 1312)</summary>
-			<FieldDisplayName("NAA 89-3")> NAA89_3 = 06
-			''' <summary>MacBinary II</summary>
-			<FieldDisplayName("MAcBinary II")> MacBinary = 07
-			''' <summary>IPTC Unstructured Character Oriented File Format (UCOFF)</summary>
-			<FieldDisplayName("IPTC Unstructured Character Oriented File Format")> UCOFF = 08
-			''' <summary>United Press International ANPA 1312 variant</summary>
-			<FieldDisplayName("United Press International ANPA 1312")> UnitedPressInternationalANPA1312 = 09
-			''' <summary>United Press International Down-Load Message</summary>
-			<FieldDisplayName("Down-Load message")> UnitedPressInternationalDownLoadMessage = 10
-			''' <summary>? JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)</summary>
-			<FieldDisplayName("JPEG")> JPEG = 11
-			''' <summary>Photo-CD Image-Pac (Eastman Kodak)</summary>
-			<FieldDisplayName("Koned Photo-CD Image-Pac")> PhotoCDImagePac = 12
-			''' <summary>? Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)</summary>
-			<FieldDisplayName("BMP")> BMP = 13
-			''' <summary>Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)</summary>
-			<FieldDisplayName("WAV")> WAV = 14
-			''' <summary>Audio plus Moving Video [*.AVI] (Microsoft)</summary>
-			<FieldDisplayName("AVI")> AVI = 15
-			''' <summary>PC DOS/Windows Executable Files [*.COM][*.EXE]</summary>
-			<FieldDisplayName("EXE, COM")> EXE = 16
-			''' <summary>Compressed Binary File [*.ZIP] (PKWare Inc)</summary>
-			<FieldDisplayName("ZIP")> ZIP = 17
-			''' <summary>Audio Interchange File Format AIFF (Apple Computer Inc)</summary>
-			<FieldDisplayName("AIFF (Apple)")> AIFF = 18
-			''' <summary>RIFF Wave (Microsoft Corporation)</summary>
-			<FieldDisplayName("RIFF Wave")> RIFFWave = 19
-			''' <summary>Freehand (Macromedia/Aldus)</summary>
-			<FieldDisplayName("Freehand")> Freehand = 20
-			''' <summary>Hypertext Markup Language "HTML" (The Internet Society)</summary>
-			<FieldDisplayName("HTML")> HTML = 21
-			''' <summary>MPEG 2 Audio Layer 2 (Musicom), ISO/IEC</summary>
-			<FieldDisplayName("MPEG 2 Audio")> MP2 = 22
-			''' <summary>MPEG 2 Audio Layer 3, ISO/IEC</summary>
-			<FieldDisplayName("MP3")> MP3 = 23
-			''' <summary>Portable Document File (*.PDF) Adobe</summary>
-			<FieldDisplayName("PDF")> PDF = 24
-			''' <summary>News Industry Text Format (NITF)</summary>
-			<FieldDisplayName("News Industry Text Format")> NITF = 25
-			''' <summary>Tape Archive (*.TAR)</summary>
-			<FieldDisplayName("TAR")> TAR = 26
-			''' <summary>Tidningarnas Telegrambyr? NITF version (TTNITF DTD)</summary>
-			<FieldDisplayName("TINITF DTD")> TTNITF_DTD = 27
-			''' <summary>Ritzaus Bureau NITF version (RBNITF DTD)</summary>
-			<FieldDisplayName("RBNITF DTD")> RBNITF_DTD = 28
-			''' <summary>Corel Draw [*.CDR]</summary>
-			<FieldDisplayName("Corel Draw")> CorelDraw = 29
-		End Enum
-		''' <summary>File format version registered for NAA and IPTC</summary>
-		<Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of FileFormatVersions)))> Public Enum FileFormatVersions As UShort
-			''' <summary>Version 1 for FileFormat <see cref="FileFormats.NoObjectData"/></summary>
-			<FieldDisplayName("1 (No Object Data)")> V0 = 0
-			''' <summary>Version 1 for file fromat <see cref="FileFormats.NewsphotoParameterRecord"/> and <see cref="FileFormats.NAA89_3"/>, 5.0 for <see cref="FileFormats.TIFF"/>, 1.40 for <see cref="FileFormats.AdobeIllustrator"/>, 2 for <see cref="FileFormats.AppleSingle"/>, 1.02 for <see cref="FileFormats.JPEG"/> and 3.1 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("1 (IPTC-NAA Digital Newsphoto Parameter Record, NAA 89-3), 5.0 (TIFF), 1.40 (Adobe Illustrator), 2 (Apple Single), 1.02 (JPEG), 3.1 (Freehand)")> V1 = 1
-			''' <summary>Version 2 for file format <see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for <see cref="FileFormats.TIFF"/>, 4.0 for <see cref="FileFormats.Freehand"/> and 2.0 for <see cref="FileFormats.HTML"/></summary>
-			<FieldDisplayName("2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)")> V2 = 2
-			''' <summary>Version 3 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)")> V3 = 3
-			''' <summary>Version 4 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and <see cref="FileFormats.RecommendedMessageFormat"/> and 5.5 for <see cref="FileFormats.Freehand"/></summary>
-			<FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recommended Message Format), 5.5 (Freehand)")> V4 = 4
-		End Enum
-		''' <summary>Number of components in image and special meanings of some numbers</summary>
-		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ImageTypeComponents)))> Public Enum ImageTypeComponents As Byte
-			''' <summary>Record 2 caption for specific image</summary>
-			<FieldDisplayName("NoObjectData")> NoObjectData = 0
-			''' <summary>Image has 1 component</summary>
-			<FieldDisplayName("Black and White")> BW = 1
-			''' <summary>Image has 2 components</summary>
-			<FieldDisplayName("2 components")> Component2 = 2
-			''' <summary>Image has 3 components</summary>
-			<FieldDisplayName("3 components")> Component3 = 3
-			''' <summary>Image has 4 components</summary>
-			<FieldDisplayName("4 components")> Component4 = 4
-			''' <summary>the objectdata contains supplementary data to an image</summary>
-			<FieldDisplayName("Suplementary data")> SuplementaryData = 9
-		End Enum
-		''' <summary>Object Attribute Number abd Object Name relationship</summary>
-		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ObjectAttributes)))> Public Enum ObjectAttributes As Byte
-			''' <summary>Current</summary>
-			<FieldDisplayName("Current")> Current = 01
-			''' <summary>Analysis</summary>
-			<FieldDisplayName("Analysis")> Analysis = 02
-			''' <summary>Archive material</summary>
-			<FieldDisplayName("Archive material")> ArchiveMaterial = 03
-			''' <summary>Background</summary>
-			<FieldDisplayName("Background")> Background = 04
-			''' <summary>Feature</summary>
-			<FieldDisplayName("Feature")> Feature = 05
-			''' <summary>Forecast</summary>
-			<FieldDisplayName("Forecast")> Forecast = 06
-			''' <summary>History</summary>
-			<FieldDisplayName("History")> History = 07
-			''' <summary>Obituary</summary>
-			<FieldDisplayName("Obituary")> Obituary = 08
-			''' <summary>Opinion</summary>
-			<FieldDisplayName("Opinion")> Opinion = 09
-			''' <summary>Polls &amp; Surveys</summary>
-			<FieldDisplayName("Polls & Survays")> PollsAndSurveys = 10
-			''' <summary>Profile</summary>
-			<FieldDisplayName("Profile")> Profile = 11
-			''' <summary>Results Listings &amp; Tables</summary>
-			<FieldDisplayName("Results Listings & Tables")> ResultsListingsAndTables = 12
-			''' <summary>Side bar &amp; Supporting information</summary>
-			<FieldDisplayName("Side bar & Supporting information")> SideBarAndSupportingInformation = 13
-			''' <summary>Summary</summary>
-			<FieldDisplayName("Summary")> Summary = 14
-			''' <summary>Transcript &amp; Verbatim</summary>
-			<FieldDisplayName("Transcript & Verbatim")> TranscriptAndVerbatim = 15
-			''' <summary>Interview</summary>
-			<FieldDisplayName("Interview")> Interview = 16
-			''' <summary>From the Scene</summary>
-			<FieldDisplayName("From the Scene")> FromTheScene = 17
-			''' <summary>Retrospective</summary>
-			<FieldDisplayName("Retrospective")> Retrospective = 18
-			''' <summary>Statistics</summary>
-			<FieldDisplayName("Statistics")> Statistics = 19
-			''' <summary>Update</summary>
-			<FieldDisplayName("Update")> Update = 20
-			''' <summary>Wrap-up</summary>
-			<FieldDisplayName("Wrap-up")> WrapUp = 21
-			''' <summary>Press Release</summary>
-			<FieldDisplayName("Press Release")> PressRelease = 22
-		End Enum
-		''' <summary>Object Type Number and Object Type Name relationship</summary>
-		<Restrict(True)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of ObjectTypes)))> Public Enum ObjectTypes As Byte
-			''' <summary>News</summary>
-			<FieldDisplayName("News")> News = 1
-			''' <summary>Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate.</summary>
-			<FieldDisplayName("Data")> Data = 2
-			''' <summary>Advisory</summary>
-			<FieldDisplayName("Advisory")> Advisory = 3
-		End Enum
-		''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
-		<Restrict(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of SubjectMatterNumbers)))> Public Enum SubjectMatterNumbers As Integer
-			''' <summary>Archaeology</summary>
-			<FieldDisplayName("Archaeology")> Archaeology = 01001000
-			''' <summary>Architecture</summary>
-			<FieldDisplayName("Architecture")> Architecture = 01002000
-			''' <summary>Bullfighting</summary>
-			<FieldDisplayName("Bullfighting")> Bullfighting = 01003000
-			''' <summary>Carnival</summary>
-			<FieldDisplayName("Carnival")> Carnival = 01004000
-			''' <summary>Cinema</summary>
-			<FieldDisplayName("Cinema")> Cinema = 01005000
-			''' <summary>Dance</summary>
-			<FieldDisplayName("Dance")> Dance = 01006000
-			''' <summary>Fashion</summary>
-			<FieldDisplayName("Fashion")> Fashion = 01007000
-			''' <summary>Language</summary>
-			<FieldDisplayName("Language")> Language = 01008000
-			''' <summary>Libraries &amp; Museums</summary>
-			<FieldDisplayName("Libraries & Museums")> LibrariesMuseums = 01009000
-			''' <summary>Literature</summary>
-			<FieldDisplayName("Literature")> Literature = 01010000
-			''' <summary>Music</summary>
-			<FieldDisplayName("Music")> Music = 01011000
-			''' <summary>Painting</summary>
-			<FieldDisplayName("Painting")> Painting = 01012000
-			''' <summary>Photography</summary>
-			<FieldDisplayName("Photography")> Photography = 01013000
-			''' <summary>Radio</summary>
-			<FieldDisplayName("Radio")> Radio = 01014000
-			''' <summary>Sculpture</summary>
-			<FieldDisplayName("Sculpture")> Sculpture = 01015000
-			''' <summary>Television</summary>
-			<FieldDisplayName("Television")> Television = 01016000
-			''' <summary>Theatre</summary>
-			<FieldDisplayName("Theatre")> Theatre = 01017000
-			''' <summary>Crime</summary>
-			<FieldDisplayName("Crime")> Crime = 02001000
-			''' <summary>Judiciary</summary>
-			<FieldDisplayName("Judiciary")> Judiciary = 02002000
-			''' <summary>Police</summary>
-			<FieldDisplayName("Police")> Police = 02003000
-			''' <summary>Punishment</summary>
-			<FieldDisplayName("Punishment")> Punishment = 02004000
-			''' <summary>Prison</summary>
-			<FieldDisplayName("Prison")> Prison = 02005000
-			''' <summary>Drought</summary>
-			<FieldDisplayName("Drought")> Drought = 03001000
-			''' <summary>Earthquake</summary>
-			<FieldDisplayName("Earthquake")> Earthquake = 03002000
-			''' <summary>Famine</summary>
-			<FieldDisplayName("Famine")> Famine = 03003000
-			''' <summary>Fire</summary>
-			<FieldDisplayName("Fire")> Fire = 03004000
-			''' <summary>Flood</summary>
-			<FieldDisplayName("Flood")> Flood = 03005000
-			''' <summary>Industrial accident</summary>
-			<FieldDisplayName("Industrial accident")> IndustrialAccident = 03006000
-			''' <summary>Meteorological disaster</summary>
-			<FieldDisplayName("Meteorological disaster")> MeteorologicalDisaster = 03007000
-			''' <summary>Nuclear accident</summary>
-			<FieldDisplayName("Nuclear accident")> NuclearAccident = 03008000
-			''' <summary>Pollution</summary>
-			<FieldDisplayName("Pollution")> Pollution = 03009000
-			''' <summary>Transport accident</summary>
-			<FieldDisplayName("Transport accident")> TransportAccident = 03010000
-			''' <summary>Volcanic eruption</summary>
-			<FieldDisplayName("Volcanic eruption")> VolcanicEruption = 03011000
-			''' <summary>Agriculture</summary>
-			<FieldDisplayName("Agriculture")> Agriculture = 04001000
-			''' <summary>Chemicals</summary>
-			<FieldDisplayName("Chemicals")> Chemicals = 04002000
-			''' <summary>Computing &amp; Information Technology</summary>
-			<FieldDisplayName("Computing & Information Technology")> ComputingAndInformationTechnology = 04003000
-			''' <summary>Construction &amp; Property</summary>
-			<FieldDisplayName("Construction & Property")> ConstructionAndProperty = 04004000
-			''' <summary>Energy &amp; Resources</summary>
-			<FieldDisplayName("Energy & Resources")> EnergyAndResources = 04005000
-			''' <summary>Financial &amp; Business Services</summary>
-			<FieldDisplayName("Financial & Business Services")> FinancialAndBusinessServices = 04006000
-			''' <summary>Goods Distribution</summary>
-			<FieldDisplayName("Goods Distribution")> GoodsDistribution = 04007000
-			''' <summary>Macro Economics</summary>
-			<FieldDisplayName("Macro Economics")> MacroEconomics = 04008000
-			''' <summary>Markets</summary>
-			<FieldDisplayName("Markets")> Markets = 04009000
-			''' <summary>Media</summary>
-			<FieldDisplayName("Media")> Media = 04010000
-			''' <summary>Metal Goods &amp; Engineering</summary>
-			<FieldDisplayName("Metal Goods & Engineering")> MetalGoodsAndEngineering = 04011000
-			''' <summary>Metals &amp; Minerals</summary>
-			<FieldDisplayName("Metals & Minerals")> MetalsAndMinerals = 04012000
-			''' <summary>Process Industries</summary>
-			<FieldDisplayName("Process Industries")> ProcessIndustries = 04013000
-			''' <summary>Tourism &amp; Leisure</summary>
-			<FieldDisplayName("Tourism & Leisure")> TourismAndLeisure = 04014000
-			''' <summary>Transport</summary>
-			<FieldDisplayName("Transport")> Transport = 04015000
-			''' <summary>Adult Education</summary>
-			<FieldDisplayName("Adult Education")> AdultEducation = 05001000
-			''' <summary>Further Education</summary>
-			<FieldDisplayName("Further Education")> FurtherEducation = 05002000
-			''' <summary>Parent Organisations</summary>
-			<FieldDisplayName("Parent Organisations")> ParentOrganisations = 05003000
-			''' <summary>Preschooling</summary>
-			<FieldDisplayName("Preschooling")> Preschooling = 05004000
-			''' <summary>Schools</summary>
-			<FieldDisplayName("Schools")> Schools = 05005000
-			''' <summary>Teachers Unions</summary>
-			<FieldDisplayName("Teachers Unions")> TeachersUnions = 05006000
-			''' <summary>University</summary>
-			<FieldDisplayName("University")> University = 05007000
-			''' <summary>Alternative Energy</summary>
-			<FieldDisplayName("Alternative Energy")> AlternativeEnergy = 06001000
-			''' <summary>Conservation</summary>
-			<FieldDisplayName("Conservation")> Conservation = 06002000
-			''' <summary>Energy Savings</summary>
-			<FieldDisplayName("Energy Savings")> EnergySavings = 06003000
-			''' <summary>Environmental Politics</summary>
-			<FieldDisplayName("Environmental Politics")> EnvironmentalPolitics = 06004000
-			''' <summary>Environmental pollution</summary>
-			<FieldDisplayName("Environmental pollution")> EnvironmentalPollution = 06005000
-			''' <summary>Natural resources</summary>
-			<FieldDisplayName("Natural resources")> NaturalResources = 06006000
-			''' <summary>Nature</summary>
-			<FieldDisplayName("Nature")> Nature = 06007000
-			''' <summary>Population</summary>
-			<FieldDisplayName("Population")> Population = 06008000
-			''' <summary>Waste</summary>
-			<FieldDisplayName("Waste")> Waste = 06009000
-			''' <summary>Water Supplies</summary>
-			<FieldDisplayName("Water Supplies")> WaterSupplies = 06010000
-			''' <summary>Diseases</summary>
-			<FieldDisplayName("Diseases")> Diseases = 07001000
-			''' <summary>Epidemic &amp; Plague</summary>
-			<FieldDisplayName("Epidemic & Plague")> EpidemicAndPlague = 07002000
-			''' <summary>Health treatment</summary>
-			<FieldDisplayName("Health treatment")> HealthTreatment = 07003000
-			''' <summary>Health organisations</summary>
-			<FieldDisplayName("Health organisations")> HealthOrganisations = 07004000
-			''' <summary>Medical research</summary>
-			<FieldDisplayName("Medical research")> MedicalResearch = 07005000
-			''' <summary>Medical staff</summary>
-			<FieldDisplayName("Medical staff")> MedicalStaff = 07006000
-			''' <summary>Medicines</summary>
-			<FieldDisplayName("Medicines")> Medicines = 07007000
-			''' <summary>Preventative medicine</summary>
-			<FieldDisplayName("Preventative medicine")> PreventativeMedicine = 07008000
-			''' <summary>Animals</summary>
-			<FieldDisplayName("Animals")> Animals = 08001000
-			''' <summary>Curiosities</summary>
-			<FieldDisplayName("Curiosities")> Curiosities = 08002000
-			''' <summary>People</summary>
-			<FieldDisplayName("People")> People = 08003000
-			''' <summary>Apprentices</summary>
-			<FieldDisplayName("Apprentices")> Apprentices = 09001000
-			''' <summary>Collective contracts</summary>
-			<FieldDisplayName("Collective contracts")> CollectiveContracts = 09002000
-			''' <summary>Employment</summary>
-			<FieldDisplayName("Employment")> Employment = 09003000
-			''' <summary>Labour dispute</summary>
-			<FieldDisplayName("Labour dispute")> LabourDispute = 09004000
-			''' <summary>Labour legislation</summary>
-			<FieldDisplayName("Labour legislation")> LabourLegislation = 09005000
-			''' <summary>Retirement</summary>
-			<FieldDisplayName("Retirement")> Retirement = 09006000
-			''' <summary>Retraining</summary>
-			<FieldDisplayName("Retraining")> Retraining = 09007000
-			''' <summary>Strike</summary>
-			<FieldDisplayName("Strike")> Strike = 09008000
-			''' <summary>Unemployment</summary>
-			<FieldDisplayName("Unemployment")> Unemployment = 09009000
-			''' <summary>Unions</summary>
-			<FieldDisplayName("Unions")> Unions = 09010000
-			''' <summary>Wages &amp; Pensions</summary>
-			<FieldDisplayName("Wages & Pensions")> WagesAndPensions = 09011000
-			''' <summary>Work Relations</summary>
-			<FieldDisplayName("Work Relations")> WorkRelations = 09012000
-			''' <summary>Games</summary>
-			<FieldDisplayName("Games")> Games = 10001000
-			''' <summary>Gaming &amp; Lotteries</summary>
-			<FieldDisplayName("Gaming & Lotteries")> GamingAndLotteries = 10002000
-			''' <summary>Gastronomy</summary>
-			<FieldDisplayName("Gastronomy")> Gastronomy = 10003000
-			''' <summary>Hobbies</summary>
-			<FieldDisplayName("Hobbies")> Hobbies = 10004000
-			''' <summary>Holidays or vacations</summary>
-			<FieldDisplayName("Holidays or vacations")> HolidaysOrVacations = 10005000
-			''' <summary>Tourism</summary>
-			<FieldDisplayName("Tourism")> Tourism = 10006000
-			''' <summary>Defence</summary>
-			<FieldDisplayName("Defence")> Defence = 11001000
-			''' <summary>Diplomacy</summary>
-			<FieldDisplayName("Diplomacy")> Diplomacy = 11002000
-			''' <summary>Elections</summary>
-			<FieldDisplayName("Elections")> Elections = 11003000
-			''' <summary>Espionage &amp; Intelligence</summary>
-			<FieldDisplayName("Espionage & Intelligence")> EspionageAndIntelligence = 11004000
-			''' <summary>Foreign Aid</summary>
-			<FieldDisplayName("Foreign Aid")> ForeignAid = 11005000
-			''' <summary>Government</summary>
-			<FieldDisplayName("Government")> Government = 11006000
-			''' <summary>Human Rights</summary>
-			<FieldDisplayName("Human Rights")> HumanRights = 11007000
-			''' <summary>Local authorities</summary>
-			<FieldDisplayName("Local authorities")> LocalAuthorities = 11008000
-			''' <summary>Parliament</summary>
-			<FieldDisplayName("Parliament")> Parliament = 11009000
-			''' <summary>Parties</summary>
-			<FieldDisplayName("Parties")> Parties = 11010000
-			''' <summary>Refugees</summary>
-			<FieldDisplayName("Refugees")> Refugees = 11011000
-			''' <summary>Regional authorities</summary>
-			<FieldDisplayName("Regional authorities")> RegionalAuthorities = 11012000
-			''' <summary>State Budget</summary>
-			<FieldDisplayName("State Budget")> StateBudget = 11013000
-			''' <summary>Treaties &amp; Organisations</summary>
-			<FieldDisplayName("Treaties & Organisations")> TreatiesAndOrganisations = 11014000
-			''' <summary>Cults &amp; sects</summary>
-			<FieldDisplayName("Cults & sects")> CultsAndSects = 12001000
-			''' <summary>Faith</summary>
-			<FieldDisplayName("Faith")> Faith = 12002000
-			''' <summary>Free masonry</summary>
-			<FieldDisplayName("Free masonry")> FreeMasonry = 12003000
-			''' <summary>Religious institutions</summary>
-			<FieldDisplayName("Religious institutions")> ReligiousInstitutions = 12004000
-			''' <summary>Applied Sciences</summary>
-			<FieldDisplayName("Applied Sciences")> AppliedSciences = 13001000
-			''' <summary>Engineering</summary>
-			<FieldDisplayName("Engineering")> Engineering = 13002000
-			''' <summary>Human Sciences</summary>
-			<FieldDisplayName("Human Sciences")> HumanSciences = 13003000
-			''' <summary>Natural Sciences</summary>
-			<FieldDisplayName("Natural Sciences")> NaturalSciences = 13004000
-			''' <summary>Philosophical Sciences</summary>
-			<FieldDisplayName("Philosophical Sciences")> PhilosophicalSciences = 13005000
-			''' <summary>Research</summary>
-			<FieldDisplayName("Research")> Research = 13006000
-			''' <summary>Scientific exploration</summary>
-			<FieldDisplayName("Scientific exploration")> ScientificExploration = 13007000
-			''' <summary>Space programmes</summary>
-			<FieldDisplayName("Space programmes")> SpaceProgrammes = 13008000
-			''' <summary>Addiction</summary>
-			<FieldDisplayName("Addiction")> Addiction = 14001000
-			''' <summary>Charity</summary>
-			<FieldDisplayName("Charity")> Charity = 14002000
-			''' <summary>Demographics</summary>
-			<FieldDisplayName("Demographics")> Demographics = 14003000
-			''' <summary>Disabled</summary>
-			<FieldDisplayName("Disabled")> Disabled = 14004000
-			''' <summary>Euthanasia</summary>
-			<FieldDisplayName("Euthanasia")> Euthanasia = 14005000
-			''' <summary>Family</summary>
-			<FieldDisplayName("Family")> Family = 14006000
-			''' <summary>Family planning</summary>
-			<FieldDisplayName("Family planning")> FamilyPlanning = 14007000
-			''' <summary>Health insurance</summary>
-			<FieldDisplayName("Health insurance")> HealthInsurance = 14008000
-			''' <summary>Homelessness</summary>
-			<FieldDisplayName("Homelessness")> Homelessness = 14009000
-			''' <summary>Minority groups</summary>
-			<FieldDisplayName("Minority groups")> MinorityGroups = 14010000
-			''' <summary>Pornography</summary>
-			<FieldDisplayName("Pornography")> Pornography = 14011000
-			''' <summary>Poverty</summary>
-			<FieldDisplayName("Poverty")> Poverty = 14012000
-			''' <summary>Prostitution</summary>
-			<FieldDisplayName("Prostitution")> Prostitution = 14013000
-			''' <summary>Racism</summary>
-			<FieldDisplayName("Racism")> Racism = 14014000
-			''' <summary>Welfare</summary>
-			<FieldDisplayName("Welfare")> Welfare = 14015000
-			''' <summary>Aero and Aviation Sports</summary>
-			<FieldDisplayName("Aero and Aviation Sports")> Aero = 15001000
-			''' <summary>Alpine Skiing</summary>
-			<FieldDisplayName("Alpine Skiing")> AlpineSkiing = 15002000
-			''' <summary>American Football</summary>
-			<FieldDisplayName("American Football")> AmericanFootball = 15003000
-			''' <summary>Archery</summary>
-			<FieldDisplayName("Archery")> Archery = 15004000
-			''' <summary>Athletics, Track &amp; Field</summary>
-			<FieldDisplayName("Athletics, Track & Field")> AthleticsTrackAndField = 15005000
-			''' <summary>Badminton</summary>
-			<FieldDisplayName("Badminton")> Badminton = 15006000
-			''' <summary>Baseball</summary>
-			<FieldDisplayName("Baseball")> Baseball = 15007000
-			''' <summary>Basketball</summary>
-			<FieldDisplayName("Basketball")> Basketball = 15008000
-			''' <summary>Biathlon</summary>
-			<FieldDisplayName("Biathlon")> Biathlon = 15009000
-			''' <summary>Billiards, Snooker and Pool</summary>
-			<FieldDisplayName("Billiards, Snooker and Pool")> BilliardsSnookerPool = 15010000
-			''' <summary>Bobsleigh</summary>
-			<FieldDisplayName("Bobsleigh")> Bobsleigh = 15011000
-			''' <summary>Bowling</summary>
-			<FieldDisplayName("Bowling")> Bowling = 15012000
-			''' <summary>Bowls &amp; Petanque</summary>
-			<FieldDisplayName("Bowls & Petanque")> BowlsAndPetanque = 15013000
-			''' <summary>Boxing</summary>
-			<FieldDisplayName("Boxing")> Boxing = 15014000
-			''' <summary>Canoeing &amp; Kayaking</summary>
-			<FieldDisplayName("Canoeing & Kayaking")> CanoeingAndKayaking = 15015000
-			''' <summary>Climbing</summary>
-			<FieldDisplayName("Climbing")> Climbing = 15016000
-			''' <summary>Cricket</summary>
-			<FieldDisplayName("Cricket")> Cricket = 15017000
-			''' <summary>Curling</summary>
-			<FieldDisplayName("Curling")> Curling = 15018000
-			''' <summary>Cycling</summary>
-			<FieldDisplayName("Cycling")> Cycling = 15019000
-			''' <summary>Dancing</summary>
-			<FieldDisplayName("Dancing")> Dancing = 15020000
-			''' <summary>Diving</summary>
-			<FieldDisplayName("Diving")> Diving = 15021000
-			''' <summary>Equestrian</summary>
-			<FieldDisplayName("Equestrian")> Equestrian = 15022000
-			''' <summary>Fencing</summary>
-			<FieldDisplayName("Fencing")> Fencing = 15023000
-			''' <summary>Field Hockey</summary>
-			<FieldDisplayName("Field Hockey")> FieldHockey = 15024000
-			''' <summary>Figure Skating</summary>
-			<FieldDisplayName("Figure Skating")> FigureSkating = 15025000
-			''' <summary>Freestyle Skiing</summary>
-			<FieldDisplayName("Freestyle Skiing")> FreestyleSkiing = 15026000
-			''' <summary>Golf</summary>
-			<FieldDisplayName("Golf")> Golf = 15027000
-			''' <summary>Gymnastics</summary>
-			<FieldDisplayName("Gymnastics")> Gymnastics = 15028000
-			''' <summary>Handball (Team)</summary>
-			<FieldDisplayName("Handball")> Handball = 15029000
-			''' <summary>Horse Racing, Harness Racing</summary>
-			<FieldDisplayName("Horse Racing, Harness Racing")> Horse = 15030000
-			''' <summary>Ice Hockey</summary>
-			<FieldDisplayName("Ice Hockey")> IceHockey = 15031000
-			''' <summary>Jai Alai (Pelota)</summary>
-			<FieldDisplayName("Jai Alai (Pelota)")> JaiAlai = 15032000
-			''' <summary>Judo</summary>
-			<FieldDisplayName("Judo")> Judo = 15033000
-			''' <summary>Karate</summary>
-			<FieldDisplayName("Karate")> Karate = 15034000
-			''' <summary>Lacrosse</summary>
-			<FieldDisplayName("Lacrosse")> Lacrosse = 15035000
-			''' <summary>Luge</summary>
-			<FieldDisplayName("Luge")> Luge = 15036000
-			''' <summary>Marathon</summary>
-			<FieldDisplayName("Marathon")> Marathon = 15037000
-			''' <summary>Modern Pentathlon</summary>
-			<FieldDisplayName("Modern Pentathlon")> ModernPentathlon = 15038000
-			''' <summary>Motor Racing</summary>
-			<FieldDisplayName("Motor Racing")> MotorRacing = 15039000
-			''' <summary>Motor Rallying</summary>
-			<FieldDisplayName("Motor Rallying")> MotorRallying = 15040000
-			''' <summary>Motorcycling</summary>
-			<FieldDisplayName("Motorcycling")> Motorcycling = 15041000
-			''' <summary>Netball</summary>
-			<FieldDisplayName("Netball")> Netball = 15042000
-			''' <summary>Nordic Skiing</summary>
-			<FieldDisplayName("Nordic Skiing")> NordicSkiing = 15043000
-			''' <summary>Orienteering</summary>
-			<FieldDisplayName("Orienteering")> Orienteering = 15044000
-			''' <summary>Polo</summary>
-			<FieldDisplayName("Polo")> Polo = 15045000
-			''' <summary>Power Boating</summary>
-			<FieldDisplayName("Power Boating")> PowerBoating = 15046000
-			''' <summary>Rowing</summary>
-			<FieldDisplayName("Rowing")> Rowing = 15047000
-			''' <summary>Rugby League</summary>
-			<FieldDisplayName("Rugby League")> RugbyLeague = 15048000
-			''' <summary>Rugby Union</summary>
-			<FieldDisplayName("Rugby Union")> RugbyUnion = 15049000
-			''' <summary>Sailing</summary>
-			<FieldDisplayName("Sailing")> Sailing = 15050000
-			''' <summary>Shooting</summary>
-			<FieldDisplayName("Shooting")> Shooting = 15051000
-			''' <summary>Ski Jumping</summary>
-			<FieldDisplayName("Ski Jumping")> SkiJumping = 15052000
-			''' <summary>Snow Boarding</summary>
-			<FieldDisplayName("Snow Boarding")> SnowBoarding = 15053000
-			''' <summary>Soccer</summary>
-			<FieldDisplayName("Soccer")> Soccer = 15054000
-			''' <summary>Softball</summary>
-			<FieldDisplayName("Softball")> Softball = 15055000
-			''' <summary>Speed Skating</summary>
-			<FieldDisplayName("Speed Skating")> SpeedSkating = 15056000
-			''' <summary>Speedway</summary>
-			<FieldDisplayName("Speedway")> Speedway = 15057000
-			''' <summary>Sports Organisations</summary>
-			<FieldDisplayName("Sports Organisations")> SportsOrganisations = 15058000
-			''' <summary>Squash</summary>
-			<FieldDisplayName("Squash")> Squash = 15059000
-			''' <summary>Sumo Wrestling</summary>
-			<FieldDisplayName("Sumo Wrestling")> SumoWrestling = 15060000
-			''' <summary>Surfing</summary>
-			<FieldDisplayName("Surfing")> Surfing = 15061000
-			''' <summary>Swimming</summary>
-			<FieldDisplayName("Swimming")> Swimming = 15062000
-			''' <summary>Table Tennis</summary>
-			<FieldDisplayName("Table Tennis")> TableTennis = 15063000
-			''' <summary>Taekwon-Do</summary>
-			<FieldDisplayName("Taekwon-Do")> TaekwonDo = 15064000
-			''' <summary>Tennis</summary>
-			<FieldDisplayName("Tennis")> Tennis = 15065000
-			''' <summary>Triathlon</summary>
-			<FieldDisplayName("Triathlon")> Triathlon = 15066000
-			''' <summary>Volleyball</summary>
-			<FieldDisplayName("Volleyball")> Volleyball = 15067000
-			''' <summary>Water Polo</summary>
-			<FieldDisplayName("Water Polo")> WaterPolo = 15068000
-			''' <summary>Water Skiing</summary>
-			<FieldDisplayName("Water Skiing")> WaterSkiing = 15069000
-			''' <summary>Weightlifting</summary>
-			<FieldDisplayName("Weightlifting")> Weightlifting = 15070000
-			''' <summary>Windsurfing</summary>
-			<FieldDisplayName("Windsurfing")> Windsurfing = 15071000
-			''' <summary>Wrestling</summary>
-			<FieldDisplayName("Wrestling")> Wrestling = 15072000
-			''' <summary>Acts of terror</summary>
-			<FieldDisplayName("Acts of terror")> ActsOfTerror = 16001000
-			''' <summary>Armed conflict</summary>
-			<FieldDisplayName("Armed conflict")> ArmedConflict = 16002000
-			''' <summary>Civil unrest</summary>
-			<FieldDisplayName("Civil unrest")> CivilUnrest = 16003000
-			''' <summary>Coup d'Etat</summary>
-			<FieldDisplayName("Coup d'Etat")> CoupDEtat = 16004000
-			''' <summary>Guerrilla activities</summary>
-			<FieldDisplayName("Guerrilla activities")> GuerrillaActivities = 16005000
-			''' <summary>Massacre</summary>
-			<FieldDisplayName("Massacre")> Massacre = 16006000
-			''' <summary>Riots</summary>
-			<FieldDisplayName("Riots")> Riots = 16007000
-			''' <summary>Violent demonstrations</summary>
-			<FieldDisplayName("Violent demonstrations")> ViolentDemonstrations = 16008000
-			''' <summary>War</summary>
-			<FieldDisplayName("War")> War = 16009000
-			''' <summary>Forecasts</summary>
-			<FieldDisplayName("Forecasts")> Forecasts = 17001000
-			''' <summary>Global change</summary>
-			<FieldDisplayName("Global change")> GlobalChange = 17002000
-			''' <summary>Reports</summary>
-			<FieldDisplayName("Reports")> Reports = 17003000
-			''' <summary>Statistics</summary>
-			<FieldDisplayName("Statistics")> Statistics = 17004000
-			''' <summary>Warnings</summary>
-			<FieldDisplayName("Warnings")> Warnings = 17005000
-		End Enum
-		''' <summary>Subject Reference Number and Subject Name relationship (version IPTC/1)</summary>
-		<Restrict(False)> <TypeConverter(GetType(EnumConvertorWithAttributes(Of SubjectReferenceNumbers)))> Public Enum SubjectReferenceNumbers As Integer
-			''' <summary>Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions</summary>
-			<FieldDisplayName("Arts, Culture & Entertainment")> ArtsCultureEntertainment = 01000000
-			''' <summary>Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities.</summary>
-			<FieldDisplayName("Crime, Law & Justice")> CrimeLawJustice = 02000000
-			''' <summary>Man made and natural events resulting in loss of life or injury to living creatures and/or damage to inanimate objects or property.</summary>
-			<FieldDisplayName("Disasters & Accidents")> DisastersAccidents = 03000000
-			''' <summary>All matters concerning the planning, production and exchange of wealth.</summary>
-			<FieldDisplayName("Economy, Business & Finance")> EconomyBusinessFinance = 04000000
-			''' <summary>All aspects of furthering knowledge of human individuals from birth to death.</summary>
-			<FieldDisplayName("Education")> Education = 05000000
-			''' <summary>All aspects of protection, damage, and condition of the ecosystem of the planet earth and its surroundings.</summary>
-			<FieldDisplayName("Environmental Issues")> EnvironmentalIssues = 06000000
-			''' <summary>All aspects pertaining to the physical and mental welfare of human beings.</summary>
-			<FieldDisplayName("Health")> Health = 07000000
-			''' <summary>Lighter items about individuals, groups, animals or objects.</summary>
-			<FieldDisplayName("Human Interest")> HumanInterest = 08000000
-			''' <summary>Social aspects, organisations, rules and conditions affecting the employment of human effort for the generation of wealth or provision of services and the economic support of the unemployed.</summary>
-			<FieldDisplayName("Labour")> Labour = 09000000
-			''' <summary>Activities undertaken for pleasure, relaxation or recreation outside paid employment, including eating and travel.</summary>
-			<FieldDisplayName("Lifestyle & Leisure")> LifestyleAndLeisure = 10000000
-			''' <summary>Local, regional, national and international exercise of power, or struggle for power, and the relationships between governing bodies and states.</summary>
-			<FieldDisplayName("Politics")> Politics = 11000000
-			''' <summary>All aspects of human existence involving theology, philosophy, ethics and spirituality.</summary>
-			<FieldDisplayName("Religion & Belief")> ReligionBelief = 12000000
-			''' <summary>All aspects pertaining to human understanding of nature and the physical world and the development and application of this knowledge</summary>
-			<FieldDisplayName("Science & Technology")> ScienceTechnology = 13000000
-			''' <summary>Aspects of the behaviour of humans affecting the quality of life.</summary>
-			<FieldDisplayName("Social Issues")> SocialIssues = 14000000
-			''' <summary>Competitive exercise involving physical effort. Organisations and bodies involved in these activities.</summary>
-			<FieldDisplayName("Sport")> Sport = 15000000
-			''' <summary>Acts of socially or politically motivated protest and/or violence.</summary>
-			<FieldDisplayName("Unrest, Conflicts & War")> UnrestConflictsWar = 16000000
-			''' <summary>The study, reporting and predic meteorological phenomena.</summary>
-			<FieldDisplayName("Weather")> Weather = 17000000
-		End Enum
+        <Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of AdvisedActions)))> Public Enum AdvisedActions As Byte
+            ''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
+            ''' <remarks>Implies that any use of the object might result in embarrassment or other exposure of the provider and/or recipient.</remarks>
+            <FieldDisplayName("Object Kill")> ObjectKill = 1
+            ''' <summary>Object Replace. Signifies that the provider wants to replace the referenced object with the object provided under the current envelope.</summary>
+            <FieldDisplayName("Object Replace")> ObjectReplace = 2
+            ''' <summary>Object Append. Signifies that the provider wants to append to the referenced object information provided in the objectdata of the current envelope.</summary>
+            <FieldDisplayName("Object Append")> ObjectAppend = 3
+            ''' <summary>Object Reference. Signifies that the provider wants to make reference to objectdata in a different envelope.</summary>
+            <FieldDisplayName("Object Reference")> ObjectReference = 4
+        End Enum
+        ''' <summary>Abstract Relation Methods Identifiers</summary>
+        <Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ARMMethods)))> Public Enum ARMMethods As UShort
+            ''' <summary>Using DataSets 2:45, 2:47 and 2:50 (<see cref='ReferenceService'/>, <see cref='ReferenceDate'/> and <see cref='ReferenceNumber'/>)</summary>
+            <FieldDisplayName("Method 1 (Reference service, date, number)")> IPTCMethod1 = 1
+            ''' <summary>Using DataSet 1:100 (<see cref='UNO'/>)</summary>
+            <FieldDisplayName("Method 2 (UNO)")> IPTCMethod2 = 2
+        End Enum
+        ''' <summary>Abstract Relation Method Versions</summary>
+        <Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ARMVersions)))> Public Enum ARMVersions As UShort
+            ''' <summary>The only ARM version</summary>
+            <FieldDisplayName("Version 1")> ARM1 = 1
+        End Enum
+        ''' <summary>Subject Detail Name and Subject Refrence Number relationship (Economy, Business &amp; Finnance)</summary>
+        <Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of EconomySubjectDetail)))> Public Enum EconomySubjectDetail As Integer
+            ''' <summary>Arable Farming</summary>
+            <FieldDisplayName("Arable Farming")> ArableFarming = 4001001
+            ''' <summary>Fishing Industry</summary>
+            <FieldDisplayName("Fishing Industry")> FishingIndustry = 4001002
+            ''' <summary>Forestry &amp; Timber</summary>
+            <FieldDisplayName("Forestry & Timber")> ForestryAndTimber = 4001003
+            ''' <summary>Livestock Farming</summary>
+            <FieldDisplayName("Livestock Farming")> LivestockFarming = 4001004
+            ''' <summary>Biotechnology</summary>
+            <FieldDisplayName("Biotechnology")> Biotechnology = 4002001
+            ''' <summary>Fertilisers</summary>
+            <FieldDisplayName("Fertilisers")> Fertilisers = 4002002
+            ''' <summary>Health &amp; Beauty products</summary>
+            <FieldDisplayName("Health & Beauty products")> HealthAndBeautyProducts = 4002003
+            ''' <summary>Inorganic chemicals</summary>
+            <FieldDisplayName("Inorganic chemicals")> InorganicChemicals = 4002004
+            ''' <summary>Organic chemicals</summary>
+            <FieldDisplayName("Organic chemicals")> OrganicChemicals = 4002005
+            ''' <summary>Pharmaceuticals</summary>
+            <FieldDisplayName("Pharmaceuticals")> Pharmaceuticals = 4002006
+            ''' <summary>Synthetics &amp; Plastics</summary>
+            <FieldDisplayName("Synthetics & Plastics")> SyntheticsAndPlastics = 4002007
+            ''' <summary>Hardware</summary>
+            <FieldDisplayName("Hardware")> Hardware = 4003001
+            ''' <summary>Networking</summary>
+            <FieldDisplayName("Networking")> Networking = 4003002
+            ''' <summary>Satellite technology</summary>
+            <FieldDisplayName("Satellite technology")> SatelliteTechnology = 4003003
+            ''' <summary>Semiconductors &amp; active components</summary>
+            <FieldDisplayName("Semiconductors & active components")> SemiconductorsAndActiveComponents = 4003004
+            ''' <summary>Software</summary>
+            <FieldDisplayName("Software")> Software = 4003005
+            ''' <summary>Telecommunications Equipment</summary>
+            <FieldDisplayName("Telecommunications Equipment")> TelecommunicationsEquipment = 4003006
+            ''' <summary>Telecommunications Services</summary>
+            <FieldDisplayName("Telecommunications Services")> TelecommunicationsServices = 4003007
+            ''' <summary>Heavy construction</summary>
+            <FieldDisplayName("Heavy construction")> HeavyConstruction = 4004001
+            ''' <summary>House building</summary>
+            <FieldDisplayName("House building")> HouseBuilding = 4004002
+            ''' <summary>Real Estate</summary>
+            <FieldDisplayName("Real Estate")> RealEstate = 4004003
+            ''' <summary>Alternative energy</summary>
+            <FieldDisplayName("Alternative energy")> AlternativeEnergy = 4005001
+            ''' <summary>Coal</summary>
+            <FieldDisplayName("Coal")> Coal = 4005002
+            ''' <summary>Oil &amp; Gas - Downstream activities</summary>
+            <FieldDisplayName("Oil & Gas - Downstream activities")> OilAndGasDownstreamActivities = 4005003
+            ''' <summary>Oil &amp; Gas - Upstream activities</summary>
+            <FieldDisplayName("Oil & Gas - Upstream activities")> OilAndGasUpstreamActivities = 4005004
+            ''' <summary>Nuclear power</summary>
+            <FieldDisplayName("Nuclear power")> NuclearPower = 4005005
+            ''' <summary>Electricity Production &amp; Distribution</summary>
+            <FieldDisplayName("Electricity Production & Distribution")> ElectricityProductionAndDistribution = 4005006
+            ''' <summary>Waste Management &amp; Pollution Control</summary>
+            <FieldDisplayName("Waste Management & Pollution Control")> WasteManagementAndPollutionControl = 4005007
+            ''' <summary>Water Supply</summary>
+            <FieldDisplayName("Water Supply")> WaterSupply = 4005008
+            ''' <summary>Accountancy &amp; Auditing</summary>
+            <FieldDisplayName("Accountancy & Auditing")> AccountancyAndAuditing = 4006001
+            ''' <summary>Banking</summary>
+            <FieldDisplayName("Banking")> Banking = 4006002
+            ''' <summary>Consultancy Services</summary>
+            <FieldDisplayName("Consultancy Services")> ConsultancyServices = 4006003
+            ''' <summary>Employment Agencies</summary>
+            <FieldDisplayName("Employment Agencies")> EmploymentAgencies = 4006004
+            ''' <summary>Healthcare Providers</summary>
+            <FieldDisplayName("Healthcare Providers")> HealthcareProviders = 4006005
+            ''' <summary>Insurance</summary>
+            <FieldDisplayName("Insurance")> Insurance = 4006006
+            ''' <summary>Legal services</summary>
+            <FieldDisplayName("Legal services")> LegalServices = 4006007
+            ''' <summary>Market research</summary>
+            <FieldDisplayName("Market research")> MarketResearch = 4006008
+            ''' <summary>Stock broking</summary>
+            <FieldDisplayName("Stock broking")> StockBroking = 4006009
+            ''' <summary>Clothing</summary>
+            <FieldDisplayName("Clothing")> Clothing = 4007001
+            ''' <summary>Department stores</summary>
+            <FieldDisplayName("Department stores")> DepartmentStores = 4007002
+            ''' <summary>Food</summary>
+            <FieldDisplayName("Food (distribution)")> FoodDistribution = 4007003
+            ''' <summary>Mail Order</summary>
+            <FieldDisplayName("Mail Order")> MailOrder = 4007004
+            ''' <summary>Retail</summary>
+            <FieldDisplayName("Retail")> Retail = 4007005
+            ''' <summary>Speciality stores</summary>
+            <FieldDisplayName("Speciality stores")> SpecialityAtores = 4007006
+            ''' <summary>Wholesale</summary>
+            <FieldDisplayName("Wholesale")> Wholesale = 4007007
+            ''' <summary>Central Banks</summary>
+            <FieldDisplayName("Central Banks")> CentralBanks = 4008001
+            ''' <summary>Consumer Issues</summary>
+            <FieldDisplayName("Consumer Issues")> ConsumerIssues = 4008002
+            ''' <summary>Debt Markets</summary>
+            <FieldDisplayName("Debt Markets")> DebtMarkets = 4008003
+            ''' <summary>Economic Indicators</summary>
+            <FieldDisplayName("Economic Indicators")> EconomicIndicators = 4008004
+            ''' <summary>Emerging Markets Debt</summary>
+            <FieldDisplayName("Emerging Markets Debt")> EmergingMarketsDebt = 4008005
+            ''' <summary>Foreign Exchange Markets</summary>
+            <FieldDisplayName("Foreign Exchange Markets")> ForeignExchangeMarkets = 4008006
+            ''' <summary>Government Aid</summary>
+            <FieldDisplayName("Government Aid")> GovernmentAid = 4008007
+            ''' <summary>Government Debt</summary>
+            <FieldDisplayName("Government Debt")> GovernmentDebt = 4008008
+            ''' <summary>Interest Rates</summary>
+            <FieldDisplayName("Interest Rates")> InterestRates = 4008009
+            ''' <summary>International Economic Institutions</summary>
+            <FieldDisplayName("International Economic Institutions")> InternationalEconomicInstitutions = 4008010
+            ''' <summary>International Trade Issues</summary>
+            <FieldDisplayName("International Trade Issues")> InternationalTradeIssues = 4008011
+            ''' <summary>Loan Markets</summary>
+            <FieldDisplayName("Loan Markets")> LoanMarkets = 4008012
+            ''' <summary>Energy</summary>
+            <FieldDisplayName("Energy")> Energy = 4009001
+            ''' <summary>Metals</summary>
+            <FieldDisplayName("Metals")> Metals = 4009002
+            ''' <summary>Securities</summary>
+            <FieldDisplayName("Securities")> Securities = 4009003
+            ''' <summary>Soft Commodities</summary>
+            <FieldDisplayName("Soft Commodities")> SoftCommodities = 4009004
+            ''' <summary>Advertising</summary>
+            <FieldDisplayName("Advertising")> Advertising = 4010001
+            ''' <summary>Books</summary>
+            <FieldDisplayName("Books")> Books = 4010002
+            ''' <summary>Cinema</summary>
+            <FieldDisplayName("Cinema")> Cinema = 4010003
+            ''' <summary>News Agencies</summary>
+            <FieldDisplayName("News Agencies")> NewsAgencies = 4010004
+            ''' <summary>Newspaper &amp; Magazines</summary>
+            <FieldDisplayName("Newspaper & Magazines")> NewspaperAndMagazines = 4010005
+            ''' <summary>Online</summary>
+            <FieldDisplayName("Online")> Online = 4010006
+            ''' <summary>Public Relations</summary>
+            <FieldDisplayName("Public Relations")> PublicRelations = 4010007
+            ''' <summary>Radio</summary>
+            <FieldDisplayName("Radio")> Radio = 4010008
+            ''' <summary>Satellite &amp; Cable Services</summary>
+            <FieldDisplayName("Satellite & Cable Services")> SatelliteAndCableServices = 4010009
+            ''' <summary>Television</summary>
+            <FieldDisplayName("Television")> Television = 4010010
+            ''' <summary>Aerospace</summary>
+            <FieldDisplayName("Aerospace")> Aerospace = 4011001
+            ''' <summary>Automotive Equipment</summary>
+            <FieldDisplayName("Automotive Equipment")> AutomotiveEquipment = 4011002
+            ''' <summary>Defence Equipment</summary>
+            <FieldDisplayName("Defence Equipment")> DefenceEquipment = 4011003
+            ''' <summary>Electrical Appliances</summary>
+            <FieldDisplayName("Electrical Appliances")> ElectricalAppliances = 4011004
+            ''' <summary>Heavy engineering</summary>
+            <FieldDisplayName("Heavy engineering")> HeavyEngineering = 4011005
+            ''' <summary>Industrial components</summary>
+            <FieldDisplayName("Industrial components")> IndustrialComponents = 4011006
+            ''' <summary>Instrument engineering</summary>
+            <FieldDisplayName("Instrument engineering")> InstrumentEngineering = 4011007
+            ''' <summary>Shipbuilding</summary>
+            <FieldDisplayName("Shipbuilding")> Shipbuilding = 4011008
+            ''' <summary>Building materials</summary>
+            <FieldDisplayName("Building materials")> BuildingMaterials = 4012001
+            ''' <summary>Gold &amp; Precious Materials</summary>
+            <FieldDisplayName("Gold & Precious Materials")> GoldAndPreciousMaterials = 4012002
+            ''' <summary>Iron &amp; Steel</summary>
+            <FieldDisplayName("Iron & Steel")> IronAndSteel = 4012003
+            ''' <summary>Non ferrous metals</summary>
+            <FieldDisplayName("Non ferrous metals")> NonFerrousMetals = 4012004
+            ''' <summary>Alcoholic Drinks</summary>
+            <FieldDisplayName("Alcoholic Drinks")> AlcoholicDrinks = 4013001
+            ''' <summary>Food</summary>
+            <FieldDisplayName("Food (industry)")> FoodIndustry = 4013002
+            ''' <summary>Furnishings &amp; Furniture</summary>
+            <FieldDisplayName("Furnishings & Furniture")> FurnishingsAndFurniture = 4013003
+            ''' <summary>Paper &amp; packaging products</summary>
+            <FieldDisplayName("Paper & packaging products")> PaperAndPackagingProducts = 4013004
+            ''' <summary>Rubber products</summary>
+            <FieldDisplayName("Rubber products")> Rubberproducts = 4013005
+            ''' <summary>Soft Drinks</summary>
+            <FieldDisplayName("Soft Drinks")> SoftDrinks = 4013006
+            ''' <summary>Textiles &amp; Clothing</summary>
+            <FieldDisplayName("Textiles & Clothing")> TextilesAndClothing = 4013007
+            ''' <summary>Tobacco</summary>
+            <FieldDisplayName("Tobacco")> Tobacco = 4013008
+            ''' <summary>Casinos &amp; Gambling</summary>
+            <FieldDisplayName("Casinos & Gambling")> CasinosAndGambling = 4014001
+            ''' <summary>Hotels &amp; accommodation</summary>
+            <FieldDisplayName("Hotels & mp; accommodation")> HotelsAndAccommodation = 4014002
+            ''' <summary>Recreational &amp; Sports goods</summary>
+            <FieldDisplayName("Recreational & Sports goods")> RecreationalAndSportsGoods = 4014003
+            ''' <summary>Restaurants &amp; catering</summary>
+            <FieldDisplayName("Restaurants & catering")> RestaurantsAndCatering = 4014004
+            ''' <summary>Tour operators</summary>
+            <FieldDisplayName("Tour operators")> TourOperators = 4014005
+            ''' <summary>Air Transport</summary>
+            <FieldDisplayName("Air Transport")> AirTransport = 4015001
+            ''' <summary>Railway</summary>
+            <FieldDisplayName("Railway")> Railway = 4015002
+            ''' <summary>Road Transport</summary>
+            <FieldDisplayName("Road Transport")> RoadTransport = 4015003
+            ''' <summary>Waterway &amp; Maritime Transport</summary>
+            <FieldDisplayName("Waterway & Maritime Transport")> WaterwayAndMaritimeTransport = 4015004
+        End Enum
+        ''' <summary>Values for <see cref="EditorialUpdate"/></summary>
+        <Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of EditorialUpdateValues)))> Public Enum EditorialUpdateValues As Byte
+            ''' <summary>Additional language. Signifies that the accompanying Record 2 DataSets repeat information from another object in a different natural language (as indicated by DataSet 2:135 - <see cref='LanguageIdentifier'/>).</summary>
+            <FieldDisplayName("Additional language")> AdditionalLanguage = 1
+        End Enum
+        ''' <summary>Registered file formats by IPTC and NAA</summary>
+        <Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of FileFormats)))> Public Enum FileFormats As UShort
+            ''' <summary>No Object Data</summary>
+            <FieldDisplayName("No Object Data")> NoObjectData = 0
+            ''' <summary>IPTC-NAA Digital Newsphoto Parameter Record</summary>
+            <FieldDisplayName("Digital Newsphoto Parameter Record")> NewsphotoParameterRecord = 1
+            ''' <summary>IPTC7901 Recommended Message Format</summary>
+            <FieldDisplayName("Recommended Message Format")> RecommendedMessageFormat = 2
+            ''' <summary>Tagged Image File Format (Adobe/Aldus Image data) (Recommended for image ObjectData Preview)</summary>
+            <FieldDisplayName("TIFF")> TIFF = 3
+            ''' <summary>Illustrator (Adobe Graphics data)</summary>
+            <FieldDisplayName("Adobe Illustrator")> AdobeIllustrator = 4
+            ''' <summary>AppleSingle (Apple Computer Inc)</summary>
+            <FieldDisplayName("Apple Single")> AppleSingle = 5
+            ''' <summary>NAA 89-3 (ANPA 1312)</summary>
+            <FieldDisplayName("NAA 89-3")> NAA89_3 = 6
+            ''' <summary>MacBinary II</summary>
+            <FieldDisplayName("MAcBinary II")> MacBinary = 7
+            ''' <summary>IPTC Unstructured Character Oriented File Format (UCOFF)</summary>
+            <FieldDisplayName("IPTC Unstructured Character Oriented File Format")> UCOFF = 8
+            ''' <summary>United Press International ANPA 1312 variant</summary>
+            <FieldDisplayName("United Press International ANPA 1312")> UnitedPressInternationalANPA1312 = 9
+            ''' <summary>United Press International Down-Load Message</summary>
+            <FieldDisplayName("Down-Load message")> UnitedPressInternationalDownLoadMessage = 10
+            ''' <summary>¤ JPEG File Interchange (JFIF) (Recommended for image ObjectData Preview)</summary>
+            <FieldDisplayName("JPEG")> JPEG = 11
+            ''' <summary>Photo-CD Image-Pac (Eastman Kodak)</summary>
+            <FieldDisplayName("Koned Photo-CD Image-Pac")> PhotoCDImagePac = 12
+            ''' <summary>¤ Microsoft Bit Mapped Graphics File [*.BMP] (Recommended for image ObjectData Preview)</summary>
+            <FieldDisplayName("BMP")> BMP = 13
+            ''' <summary>Digital Audio File [*.WAV] (Microsoft &amp; Creative Labs)</summary>
+            <FieldDisplayName("WAV")> WAV = 14
+            ''' <summary>Audio plus Moving Video [*.AVI] (Microsoft)</summary>
+            <FieldDisplayName("AVI")> AVI = 15
+            ''' <summary>PC DOS/Windows Executable Files [*.COM][*.EXE]</summary>
+            <FieldDisplayName("EXE, COM")> EXE = 16
+            ''' <summary>Compressed Binary File [*.ZIP] (PKWare Inc)</summary>
+            <FieldDisplayName("ZIP")> ZIP = 17
+            ''' <summary>Audio Interchange File Format AIFF (Apple Computer Inc)</summary>
+            <FieldDisplayName("AIFF (Apple)")> AIFF = 18
+            ''' <summary>RIFF Wave (Microsoft Corporation)</summary>
+            <FieldDisplayName("RIFF Wave")> RIFFWave = 19
+            ''' <summary>Freehand (Macromedia/Aldus)</summary>
+            <FieldDisplayName("Freehand")> Freehand = 20
+            ''' <summary>Hypertext Markup Language "HTML" (The Internet Society)</summary>
+            <FieldDisplayName("HTML")> HTML = 21
+            ''' <summary>MPEG 2 Audio Layer 2 (Musicom), ISO/IEC</summary>
+            <FieldDisplayName("MPEG 2 Audio")> MP2 = 22
+            ''' <summary>MPEG 2 Audio Layer 3, ISO/IEC</summary>
+            <FieldDisplayName("MP3")> MP3 = 23
+            ''' <summary>Portable Document File (*.PDF) Adobe</summary>
+            <FieldDisplayName("PDF")> PDF = 24
+            ''' <summary>News Industry Text Format (NITF)</summary>
+            <FieldDisplayName("News Industry Text Format")> NITF = 25
+            ''' <summary>Tape Archive (*.TAR)</summary>
+            <FieldDisplayName("TAR")> TAR = 26
+            ''' <summary>Tidningarnas Telegrambyrå NITF version (TTNITF DTD)</summary>
+            <FieldDisplayName("TINITF DTD")> TTNITF_DTD = 27
+            ''' <summary>Ritzaus Bureau NITF version (RBNITF DTD)</summary>
+            <FieldDisplayName("RBNITF DTD")> RBNITF_DTD = 28
+            ''' <summary>Corel Draw [*.CDR]</summary>
+            <FieldDisplayName("Corel Draw")> CorelDraw = 29
+        End Enum
+        ''' <summary>File format version registered for NAA and IPTC</summary>
+        <Restrict(True)> <CLSCompliant(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of FileFormatVersions)))> Public Enum FileFormatVersions As UShort
+            ''' <summary>Version 1 for FileFormat <see cref="FileFormats.NoObjectData"/></summary>
+            <FieldDisplayName("1 (No Object Data)")> V0 = 0
+            ''' <summary>Version 1 for file fromat <see cref="FileFormats.NewsphotoParameterRecord"/> and <see cref="FileFormats.NAA89_3"/>, 5.0 for <see cref="FileFormats.TIFF"/>, 1.40 for <see cref="FileFormats.AdobeIllustrator"/>, 2 for <see cref="FileFormats.AppleSingle"/>, 1.02 for <see cref="FileFormats.JPEG"/> and 3.1 for <see cref="FileFormats.Freehand"/></summary>
+            <FieldDisplayName("1 (IPTC-NAA Digital Newsphoto Parameter Record, NAA 89-3), 5.0 (TIFF), 1.40 (Adobe Illustrator), 2 (Apple Single), 1.02 (JPEG), 3.1 (Freehand)")> V1 = 1
+            ''' <summary>Version 2 for file format <see cref="FileFormats.NewsphotoParameterRecord"/>, 6.0 for <see cref="FileFormats.TIFF"/>, 4.0 for <see cref="FileFormats.Freehand"/> and 2.0 for <see cref="FileFormats.HTML"/></summary>
+            <FieldDisplayName("2 (IPTC-NAA Digital Newsphoto Parameter Record), 6.0 (TIFF), 4.0 (Freehand), 2.0 (HTML)")> V2 = 2
+            ''' <summary>Version 3 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and 5.0 for <see cref="FileFormats.Freehand"/></summary>
+            <FieldDisplayName("3 (IPTC-NAA Digital Newsphoto Parameter Record), 5.0 (Freehand)")> V3 = 3
+            ''' <summary>Version 4 for file format <see cref="FileFormats.NewsphotoparameterRecord"/> and <see cref="FileFormats.RecommendedMessageFormat"/> and 5.5 for <see cref="FileFormats.Freehand"/></summary>
+            <FieldDisplayName("4 (IPTC-NAA Digital Newsphoto Parameter Record, Recommended Message Format), 5.5 (Freehand)")> V4 = 4
+        End Enum
+        ''' <summary>Number of components in image and special meanings of some numbers</summary>
+        <Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ImageTypeComponents)))> Public Enum ImageTypeComponents As Byte
+            ''' <summary>Record 2 caption for specific image</summary>
+            <FieldDisplayName("NoObjectData")> NoObjectData = 0
+            ''' <summary>Image has 1 component</summary>
+            <FieldDisplayName("Black and White")> BW = 1
+            ''' <summary>Image has 2 components</summary>
+            <FieldDisplayName("2 components")> Component2 = 2
+            ''' <summary>Image has 3 components</summary>
+            <FieldDisplayName("3 components")> Component3 = 3
+            ''' <summary>Image has 4 components</summary>
+            <FieldDisplayName("4 components")> Component4 = 4
+            ''' <summary>the objectdata contains supplementary data to an image</summary>
+            <FieldDisplayName("Suplementary data")> SuplementaryData = 9
+        End Enum
+        ''' <summary>Object Attribute Number abd Object Name relationship</summary>
+        <Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ObjectAttributes)))> Public Enum ObjectAttributes As Byte
+            ''' <summary>Current</summary>
+            <FieldDisplayName("Current")> Current = 1
+            ''' <summary>Analysis</summary>
+            <FieldDisplayName("Analysis")> Analysis = 2
+            ''' <summary>Archive material</summary>
+            <FieldDisplayName("Archive material")> ArchiveMaterial = 3
+            ''' <summary>Background</summary>
+            <FieldDisplayName("Background")> Background = 4
+            ''' <summary>Feature</summary>
+            <FieldDisplayName("Feature")> Feature = 5
+            ''' <summary>Forecast</summary>
+            <FieldDisplayName("Forecast")> Forecast = 6
+            ''' <summary>History</summary>
+            <FieldDisplayName("History")> History = 7
+            ''' <summary>Obituary</summary>
+            <FieldDisplayName("Obituary")> Obituary = 8
+            ''' <summary>Opinion</summary>
+            <FieldDisplayName("Opinion")> Opinion = 9
+            ''' <summary>Polls &amp; Surveys</summary>
+            <FieldDisplayName("Polls & Survays")> PollsAndSurveys = 10
+            ''' <summary>Profile</summary>
+            <FieldDisplayName("Profile")> Profile = 11
+            ''' <summary>Results Listings &amp; Tables</summary>
+            <FieldDisplayName("Results Listings & Tables")> ResultsListingsAndTables = 12
+            ''' <summary>Side bar &amp; Supporting information</summary>
+            <FieldDisplayName("Side bar & Supporting information")> SideBarAndSupportingInformation = 13
+            ''' <summary>Summary</summary>
+            <FieldDisplayName("Summary")> Summary = 14
+            ''' <summary>Transcript &amp; Verbatim</summary>
+            <FieldDisplayName("Transcript & Verbatim")> TranscriptAndVerbatim = 15
+            ''' <summary>Interview</summary>
+            <FieldDisplayName("Interview")> Interview = 16
+            ''' <summary>From the Scene</summary>
+            <FieldDisplayName("From the Scene")> FromTheScene = 17
+            ''' <summary>Retrospective</summary>
+            <FieldDisplayName("Retrospective")> Retrospective = 18
+            ''' <summary>Statistics</summary>
+            <FieldDisplayName("Statistics")> Statistics = 19
+            ''' <summary>Update</summary>
+            <FieldDisplayName("Update")> Update = 20
+            ''' <summary>Wrap-up</summary>
+            <FieldDisplayName("Wrap-up")> WrapUp = 21
+            ''' <summary>Press Release</summary>
+            <FieldDisplayName("Press Release")> PressRelease = 22
+        End Enum
+        ''' <summary>Object Type Number and Object Type Name relationship</summary>
+        <Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of ObjectTypes)))> Public Enum ObjectTypes As Byte
+            ''' <summary>News</summary>
+            <FieldDisplayName("News")> News = 1
+            ''' <summary>Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate.</summary>
+            <FieldDisplayName("Data")> Data = 2
+            ''' <summary>Advisory</summary>
+            <FieldDisplayName("Advisory")> Advisory = 3
+        End Enum
+        ''' <summary>Subject Matter Name and Subject Reference Number relationship</summary>
+        <Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of SubjectMatterNumbers)))> Public Enum SubjectMatterNumbers As Integer
+            ''' <summary>Archaeology</summary>
+            <FieldDisplayName("Archaeology")> Archaeology = 1001000
+            ''' <summary>Architecture</summary>
+            <FieldDisplayName("Architecture")> Architecture = 1002000
+            ''' <summary>Bullfighting</summary>
+            <FieldDisplayName("Bullfighting")> Bullfighting = 1003000
+            ''' <summary>Carnival</summary>
+            <FieldDisplayName("Carnival")> Carnival = 1004000
+            ''' <summary>Cinema</summary>
+            <FieldDisplayName("Cinema")> Cinema = 1005000
+            ''' <summary>Dance</summary>
+            <FieldDisplayName("Dance")> Dance = 1006000
+            ''' <summary>Fashion</summary>
+            <FieldDisplayName("Fashion")> Fashion = 1007000
+            ''' <summary>Language</summary>
+            <FieldDisplayName("Language")> Language = 1008000
+            ''' <summary>Libraries &amp; Museums</summary>
+            <FieldDisplayName("Libraries & Museums")> LibrariesMuseums = 1009000
+            ''' <summary>Literature</summary>
+            <FieldDisplayName("Literature")> Literature = 1010000
+            ''' <summary>Music</summary>
+            <FieldDisplayName("Music")> Music = 1011000
+            ''' <summary>Painting</summary>
+            <FieldDisplayName("Painting")> Painting = 1012000
+            ''' <summary>Photography</summary>
+            <FieldDisplayName("Photography")> Photography = 1013000
+            ''' <summary>Radio</summary>
+            <FieldDisplayName("Radio")> Radio = 1014000
+            ''' <summary>Sculpture</summary>
+            <FieldDisplayName("Sculpture")> Sculpture = 1015000
+            ''' <summary>Television</summary>
+            <FieldDisplayName("Television")> Television = 1016000
+            ''' <summary>Theatre</summary>
+            <FieldDisplayName("Theatre")> Theatre = 1017000
+            ''' <summary>Crime</summary>
+            <FieldDisplayName("Crime")> Crime = 2001000
+            ''' <summary>Judiciary</summary>
+            <FieldDisplayName("Judiciary")> Judiciary = 2002000
+            ''' <summary>Police</summary>
+            <FieldDisplayName("Police")> Police = 2003000
+            ''' <summary>Punishment</summary>
+            <FieldDisplayName("Punishment")> Punishment = 2004000
+            ''' <summary>Prison</summary>
+            <FieldDisplayName("Prison")> Prison = 2005000
+            ''' <summary>Drought</summary>
+            <FieldDisplayName("Drought")> Drought = 3001000
+            ''' <summary>Earthquake</summary>
+            <FieldDisplayName("Earthquake")> Earthquake = 3002000
+            ''' <summary>Famine</summary>
+            <FieldDisplayName("Famine")> Famine = 3003000
+            ''' <summary>Fire</summary>
+            <FieldDisplayName("Fire")> Fire = 3004000
+            ''' <summary>Flood</summary>
+            <FieldDisplayName("Flood")> Flood = 3005000
+            ''' <summary>Industrial accident</summary>
+            <FieldDisplayName("Industrial accident")> IndustrialAccident = 3006000
+            ''' <summary>Meteorological disaster</summary>
+            <FieldDisplayName("Meteorological disaster")> MeteorologicalDisaster = 3007000
+            ''' <summary>Nuclear accident</summary>
+            <FieldDisplayName("Nuclear accident")> NuclearAccident = 3008000
+            ''' <summary>Pollution</summary>
+            <FieldDisplayName("Pollution")> Pollution = 3009000
+            ''' <summary>Transport accident</summary>
+            <FieldDisplayName("Transport accident")> TransportAccident = 3010000
+            ''' <summary>Volcanic eruption</summary>
+            <FieldDisplayName("Volcanic eruption")> VolcanicEruption = 3011000
+            ''' <summary>Agriculture</summary>
+            <FieldDisplayName("Agriculture")> Agriculture = 4001000
+            ''' <summary>Chemicals</summary>
+            <FieldDisplayName("Chemicals")> Chemicals = 4002000
+            ''' <summary>Computing &amp; Information Technology</summary>
+            <FieldDisplayName("Computing & Information Technology")> ComputingAndInformationTechnology = 4003000
+            ''' <summary>Construction &amp; Property</summary>
+            <FieldDisplayName("Construction & Property")> ConstructionAndProperty = 4004000
+            ''' <summary>Energy &amp; Resources</summary>
+            <FieldDisplayName("Energy & Resources")> EnergyAndResources = 4005000
+            ''' <summary>Financial &amp; Business Services</summary>
+            <FieldDisplayName("Financial & Business Services")> FinancialAndBusinessServices = 4006000
+            ''' <summary>Goods Distribution</summary>
+            <FieldDisplayName("Goods Distribution")> GoodsDistribution = 4007000
+            ''' <summary>Macro Economics</summary>
+            <FieldDisplayName("Macro Economics")> MacroEconomics = 4008000
+            ''' <summary>Markets</summary>
+            <FieldDisplayName("Markets")> Markets = 4009000
+            ''' <summary>Media</summary>
+            <FieldDisplayName("Media")> Media = 4010000
+            ''' <summary>Metal Goods &amp; Engineering</summary>
+            <FieldDisplayName("Metal Goods & Engineering")> MetalGoodsAndEngineering = 4011000
+            ''' <summary>Metals &amp; Minerals</summary>
+            <FieldDisplayName("Metals & Minerals")> MetalsAndMinerals = 4012000
+            ''' <summary>Process Industries</summary>
+            <FieldDisplayName("Process Industries")> ProcessIndustries = 4013000
+            ''' <summary>Tourism &amp; Leisure</summary>
+            <FieldDisplayName("Tourism & Leisure")> TourismAndLeisure = 4014000
+            ''' <summary>Transport</summary>
+            <FieldDisplayName("Transport")> Transport = 4015000
+            ''' <summary>Adult Education</summary>
+            <FieldDisplayName("Adult Education")> AdultEducation = 5001000
+            ''' <summary>Further Education</summary>
+            <FieldDisplayName("Further Education")> FurtherEducation = 5002000
+            ''' <summary>Parent Organisations</summary>
+            <FieldDisplayName("Parent Organisations")> ParentOrganisations = 5003000
+            ''' <summary>Preschooling</summary>
+            <FieldDisplayName("Preschooling")> Preschooling = 5004000
+            ''' <summary>Schools</summary>
+            <FieldDisplayName("Schools")> Schools = 5005000
+            ''' <summary>Teachers Unions</summary>
+            <FieldDisplayName("Teachers Unions")> TeachersUnions = 5006000
+            ''' <summary>University</summary>
+            <FieldDisplayName("University")> University = 5007000
+            ''' <summary>Alternative Energy</summary>
+            <FieldDisplayName("Alternative Energy")> AlternativeEnergy = 6001000
+            ''' <summary>Conservation</summary>
+            <FieldDisplayName("Conservation")> Conservation = 6002000
+            ''' <summary>Energy Savings</summary>
+            <FieldDisplayName("Energy Savings")> EnergySavings = 6003000
+            ''' <summary>Environmental Politics</summary>
+            <FieldDisplayName("Environmental Politics")> EnvironmentalPolitics = 6004000
+            ''' <summary>Environmental pollution</summary>
+            <FieldDisplayName("Environmental pollution")> EnvironmentalPollution = 6005000
+            ''' <summary>Natural resources</summary>
+            <FieldDisplayName("Natural resources")> NaturalResources = 6006000
+            ''' <summary>Nature</summary>
+            <FieldDisplayName("Nature")> Nature = 6007000
+            ''' <summary>Population</summary>
+            <FieldDisplayName("Population")> Population = 6008000
+            ''' <summary>Waste</summary>
+            <FieldDisplayName("Waste")> Waste = 6009000
+            ''' <summary>Water Supplies</summary>
+            <FieldDisplayName("Water Supplies")> WaterSupplies = 6010000
+            ''' <summary>Diseases</summary>
+            <FieldDisplayName("Diseases")> Diseases = 7001000
+            ''' <summary>Epidemic &amp; Plague</summary>
+            <FieldDisplayName("Epidemic & Plague")> EpidemicAndPlague = 7002000
+            ''' <summary>Health treatment</summary>
+            <FieldDisplayName("Health treatment")> HealthTreatment = 7003000
+            ''' <summary>Health organisations</summary>
+            <FieldDisplayName("Health organisations")> HealthOrganisations = 7004000
+            ''' <summary>Medical research</summary>
+            <FieldDisplayName("Medical research")> MedicalResearch = 7005000
+            ''' <summary>Medical staff</summary>
+            <FieldDisplayName("Medical staff")> MedicalStaff = 7006000
+            ''' <summary>Medicines</summary>
+            <FieldDisplayName("Medicines")> Medicines = 7007000
+            ''' <summary>Preventative medicine</summary>
+            <FieldDisplayName("Preventative medicine")> PreventativeMedicine = 7008000
+            ''' <summary>Animals</summary>
+            <FieldDisplayName("Animals")> Animals = 8001000
+            ''' <summary>Curiosities</summary>
+            <FieldDisplayName("Curiosities")> Curiosities = 8002000
+            ''' <summary>People</summary>
+            <FieldDisplayName("People")> People = 8003000
+            ''' <summary>Apprentices</summary>
+            <FieldDisplayName("Apprentices")> Apprentices = 9001000
+            ''' <summary>Collective contracts</summary>
+            <FieldDisplayName("Collective contracts")> CollectiveContracts = 9002000
+            ''' <summary>Employment</summary>
+            <FieldDisplayName("Employment")> Employment = 9003000
+            ''' <summary>Labour dispute</summary>
+            <FieldDisplayName("Labour dispute")> LabourDispute = 9004000
+            ''' <summary>Labour legislation</summary>
+            <FieldDisplayName("Labour legislation")> LabourLegislation = 9005000
+            ''' <summary>Retirement</summary>
+            <FieldDisplayName("Retirement")> Retirement = 9006000
+            ''' <summary>Retraining</summary>
+            <FieldDisplayName("Retraining")> Retraining = 9007000
+            ''' <summary>Strike</summary>
+            <FieldDisplayName("Strike")> Strike = 9008000
+            ''' <summary>Unemployment</summary>
+            <FieldDisplayName("Unemployment")> Unemployment = 9009000
+            ''' <summary>Unions</summary>
+            <FieldDisplayName("Unions")> Unions = 9010000
+            ''' <summary>Wages &amp; Pensions</summary>
+            <FieldDisplayName("Wages & Pensions")> WagesAndPensions = 9011000
+            ''' <summary>Work Relations</summary>
+            <FieldDisplayName("Work Relations")> WorkRelations = 9012000
+            ''' <summary>Games</summary>
+            <FieldDisplayName("Games")> Games = 10001000
+            ''' <summary>Gaming &amp; Lotteries</summary>
+            <FieldDisplayName("Gaming & Lotteries")> GamingAndLotteries = 10002000
+            ''' <summary>Gastronomy</summary>
+            <FieldDisplayName("Gastronomy")> Gastronomy = 10003000
+            ''' <summary>Hobbies</summary>
+            <FieldDisplayName("Hobbies")> Hobbies = 10004000
+            ''' <summary>Holidays or vacations</summary>
+            <FieldDisplayName("Holidays or vacations")> HolidaysOrVacations = 10005000
+            ''' <summary>Tourism</summary>
+            <FieldDisplayName("Tourism")> Tourism = 10006000
+            ''' <summary>Defence</summary>
+            <FieldDisplayName("Defence")> Defence = 11001000
+            ''' <summary>Diplomacy</summary>
+            <FieldDisplayName("Diplomacy")> Diplomacy = 11002000
+            ''' <summary>Elections</summary>
+            <FieldDisplayName("Elections")> Elections = 11003000
+            ''' <summary>Espionage &amp; Intelligence</summary>
+            <FieldDisplayName("Espionage & Intelligence")> EspionageAndIntelligence = 11004000
+            ''' <summary>Foreign Aid</summary>
+            <FieldDisplayName("Foreign Aid")> ForeignAid = 11005000
+            ''' <summary>Government</summary>
+            <FieldDisplayName("Government")> Government = 11006000
+            ''' <summary>Human Rights</summary>
+            <FieldDisplayName("Human Rights")> HumanRights = 11007000
+            ''' <summary>Local authorities</summary>
+            <FieldDisplayName("Local authorities")> LocalAuthorities = 11008000
+            ''' <summary>Parliament</summary>
+            <FieldDisplayName("Parliament")> Parliament = 11009000
+            ''' <summary>Parties</summary>
+            <FieldDisplayName("Parties")> Parties = 11010000
+            ''' <summary>Refugees</summary>
+            <FieldDisplayName("Refugees")> Refugees = 11011000
+            ''' <summary>Regional authorities</summary>
+            <FieldDisplayName("Regional authorities")> RegionalAuthorities = 11012000
+            ''' <summary>State Budget</summary>
+            <FieldDisplayName("State Budget")> StateBudget = 11013000
+            ''' <summary>Treaties &amp; Organisations</summary>
+            <FieldDisplayName("Treaties & Organisations")> TreatiesAndOrganisations = 11014000
+            ''' <summary>Cults &amp; sects</summary>
+            <FieldDisplayName("Cults & sects")> CultsAndSects = 12001000
+            ''' <summary>Faith</summary>
+            <FieldDisplayName("Faith")> Faith = 12002000
+            ''' <summary>Free masonry</summary>
+            <FieldDisplayName("Free masonry")> FreeMasonry = 12003000
+            ''' <summary>Religious institutions</summary>
+            <FieldDisplayName("Religious institutions")> ReligiousInstitutions = 12004000
+            ''' <summary>Applied Sciences</summary>
+            <FieldDisplayName("Applied Sciences")> AppliedSciences = 13001000
+            ''' <summary>Engineering</summary>
+            <FieldDisplayName("Engineering")> Engineering = 13002000
+            ''' <summary>Human Sciences</summary>
+            <FieldDisplayName("Human Sciences")> HumanSciences = 13003000
+            ''' <summary>Natural Sciences</summary>
+            <FieldDisplayName("Natural Sciences")> NaturalSciences = 13004000
+            ''' <summary>Philosophical Sciences</summary>
+            <FieldDisplayName("Philosophical Sciences")> PhilosophicalSciences = 13005000
+            ''' <summary>Research</summary>
+            <FieldDisplayName("Research")> Research = 13006000
+            ''' <summary>Scientific exploration</summary>
+            <FieldDisplayName("Scientific exploration")> ScientificExploration = 13007000
+            ''' <summary>Space programmes</summary>
+            <FieldDisplayName("Space programmes")> SpaceProgrammes = 13008000
+            ''' <summary>Addiction</summary>
+            <FieldDisplayName("Addiction")> Addiction = 14001000
+            ''' <summary>Charity</summary>
+            <FieldDisplayName("Charity")> Charity = 14002000
+            ''' <summary>Demographics</summary>
+            <FieldDisplayName("Demographics")> Demographics = 14003000
+            ''' <summary>Disabled</summary>
+            <FieldDisplayName("Disabled")> Disabled = 14004000
+            ''' <summary>Euthanasia</summary>
+            <FieldDisplayName("Euthanasia")> Euthanasia = 14005000
+            ''' <summary>Family</summary>
+            <FieldDisplayName("Family")> Family = 14006000
+            ''' <summary>Family planning</summary>
+            <FieldDisplayName("Family planning")> FamilyPlanning = 14007000
+            ''' <summary>Health insurance</summary>
+            <FieldDisplayName("Health insurance")> HealthInsurance = 14008000
+            ''' <summary>Homelessness</summary>
+            <FieldDisplayName("Homelessness")> Homelessness = 14009000
+            ''' <summary>Minority groups</summary>
+            <FieldDisplayName("Minority groups")> MinorityGroups = 14010000
+            ''' <summary>Pornography</summary>
+            <FieldDisplayName("Pornography")> Pornography = 14011000
+            ''' <summary>Poverty</summary>
+            <FieldDisplayName("Poverty")> Poverty = 14012000
+            ''' <summary>Prostitution</summary>
+            <FieldDisplayName("Prostitution")> Prostitution = 14013000
+            ''' <summary>Racism</summary>
+            <FieldDisplayName("Racism")> Racism = 14014000
+            ''' <summary>Welfare</summary>
+            <FieldDisplayName("Welfare")> Welfare = 14015000
+            ''' <summary>Aero and Aviation Sports</summary>
+            <FieldDisplayName("Aero and Aviation Sports")> Aero = 15001000
+            ''' <summary>Alpine Skiing</summary>
+            <FieldDisplayName("Alpine Skiing")> AlpineSkiing = 15002000
+            ''' <summary>American Football</summary>
+            <FieldDisplayName("American Football")> AmericanFootball = 15003000
+            ''' <summary>Archery</summary>
+            <FieldDisplayName("Archery")> Archery = 15004000
+            ''' <summary>Athletics, Track &amp; Field</summary>
+            <FieldDisplayName("Athletics, Track & Field")> AthleticsTrackAndField = 15005000
+            ''' <summary>Badminton</summary>
+            <FieldDisplayName("Badminton")> Badminton = 15006000
+            ''' <summary>Baseball</summary>
+            <FieldDisplayName("Baseball")> Baseball = 15007000
+            ''' <summary>Basketball</summary>
+            <FieldDisplayName("Basketball")> Basketball = 15008000
+            ''' <summary>Biathlon</summary>
+            <FieldDisplayName("Biathlon")> Biathlon = 15009000
+            ''' <summary>Billiards, Snooker and Pool</summary>
+            <FieldDisplayName("Billiards, Snooker and Pool")> BilliardsSnookerPool = 15010000
+            ''' <summary>Bobsleigh</summary>
+            <FieldDisplayName("Bobsleigh")> Bobsleigh = 15011000
+            ''' <summary>Bowling</summary>
+            <FieldDisplayName("Bowling")> Bowling = 15012000
+            ''' <summary>Bowls &amp; Petanque</summary>
+            <FieldDisplayName("Bowls & Petanque")> BowlsAndPetanque = 15013000
+            ''' <summary>Boxing</summary>
+            <FieldDisplayName("Boxing")> Boxing = 15014000
+            ''' <summary>Canoeing &amp; Kayaking</summary>
+            <FieldDisplayName("Canoeing & Kayaking")> CanoeingAndKayaking = 15015000
+            ''' <summary>Climbing</summary>
+            <FieldDisplayName("Climbing")> Climbing = 15016000
+            ''' <summary>Cricket</summary>
+            <FieldDisplayName("Cricket")> Cricket = 15017000
+            ''' <summary>Curling</summary>
+            <FieldDisplayName("Curling")> Curling = 15018000
+            ''' <summary>Cycling</summary>
+            <FieldDisplayName("Cycling")> Cycling = 15019000
+            ''' <summary>Dancing</summary>
+            <FieldDisplayName("Dancing")> Dancing = 15020000
+            ''' <summary>Diving</summary>
+            <FieldDisplayName("Diving")> Diving = 15021000
+            ''' <summary>Equestrian</summary>
+            <FieldDisplayName("Equestrian")> Equestrian = 15022000
+            ''' <summary>Fencing</summary>
+            <FieldDisplayName("Fencing")> Fencing = 15023000
+            ''' <summary>Field Hockey</summary>
+            <FieldDisplayName("Field Hockey")> FieldHockey = 15024000
+            ''' <summary>Figure Skating</summary>
+            <FieldDisplayName("Figure Skating")> FigureSkating = 15025000
+            ''' <summary>Freestyle Skiing</summary>
+            <FieldDisplayName("Freestyle Skiing")> FreestyleSkiing = 15026000
+            ''' <summary>Golf</summary>
+            <FieldDisplayName("Golf")> Golf = 15027000
+            ''' <summary>Gymnastics</summary>
+            <FieldDisplayName("Gymnastics")> Gymnastics = 15028000
+            ''' <summary>Handball (Team)</summary>
+            <FieldDisplayName("Handball")> Handball = 15029000
+            ''' <summary>Horse Racing, Harness Racing</summary>
+            <FieldDisplayName("Horse Racing, Harness Racing")> Horse = 15030000
+            ''' <summary>Ice Hockey</summary>
+            <FieldDisplayName("Ice Hockey")> IceHockey = 15031000
+            ''' <summary>Jai Alai (Pelota)</summary>
+            <FieldDisplayName("Jai Alai (Pelota)")> JaiAlai = 15032000
+            ''' <summary>Judo</summary>
+            <FieldDisplayName("Judo")> Judo = 15033000
+            ''' <summary>Karate</summary>
+            <FieldDisplayName("Karate")> Karate = 15034000
+            ''' <summary>Lacrosse</summary>
+            <FieldDisplayName("Lacrosse")> Lacrosse = 15035000
+            ''' <summary>Luge</summary>
+            <FieldDisplayName("Luge")> Luge = 15036000
+            ''' <summary>Marathon</summary>
+            <FieldDisplayName("Marathon")> Marathon = 15037000
+            ''' <summary>Modern Pentathlon</summary>
+            <FieldDisplayName("Modern Pentathlon")> ModernPentathlon = 15038000
+            ''' <summary>Motor Racing</summary>
+            <FieldDisplayName("Motor Racing")> MotorRacing = 15039000
+            ''' <summary>Motor Rallying</summary>
+            <FieldDisplayName("Motor Rallying")> MotorRallying = 15040000
+            ''' <summary>Motorcycling</summary>
+            <FieldDisplayName("Motorcycling")> Motorcycling = 15041000
+            ''' <summary>Netball</summary>
+            <FieldDisplayName("Netball")> Netball = 15042000
+            ''' <summary>Nordic Skiing</summary>
+            <FieldDisplayName("Nordic Skiing")> NordicSkiing = 15043000
+            ''' <summary>Orienteering</summary>
+            <FieldDisplayName("Orienteering")> Orienteering = 15044000
+            ''' <summary>Polo</summary>
+            <FieldDisplayName("Polo")> Polo = 15045000
+            ''' <summary>Power Boating</summary>
+            <FieldDisplayName("Power Boating")> PowerBoating = 15046000
+            ''' <summary>Rowing</summary>
+            <FieldDisplayName("Rowing")> Rowing = 15047000
+            ''' <summary>Rugby League</summary>
+            <FieldDisplayName("Rugby League")> RugbyLeague = 15048000
+            ''' <summary>Rugby Union</summary>
+            <FieldDisplayName("Rugby Union")> RugbyUnion = 15049000
+            ''' <summary>Sailing</summary>
+            <FieldDisplayName("Sailing")> Sailing = 15050000
+            ''' <summary>Shooting</summary>
+            <FieldDisplayName("Shooting")> Shooting = 15051000
+            ''' <summary>Ski Jumping</summary>
+            <FieldDisplayName("Ski Jumping")> SkiJumping = 15052000
+            ''' <summary>Snow Boarding</summary>
+            <FieldDisplayName("Snow Boarding")> SnowBoarding = 15053000
+            ''' <summary>Soccer</summary>
+            <FieldDisplayName("Soccer")> Soccer = 15054000
+            ''' <summary>Softball</summary>
+            <FieldDisplayName("Softball")> Softball = 15055000
+            ''' <summary>Speed Skating</summary>
+            <FieldDisplayName("Speed Skating")> SpeedSkating = 15056000
+            ''' <summary>Speedway</summary>
+            <FieldDisplayName("Speedway")> Speedway = 15057000
+            ''' <summary>Sports Organisations</summary>
+            <FieldDisplayName("Sports Organisations")> SportsOrganisations = 15058000
+            ''' <summary>Squash</summary>
+            <FieldDisplayName("Squash")> Squash = 15059000
+            ''' <summary>Sumo Wrestling</summary>
+            <FieldDisplayName("Sumo Wrestling")> SumoWrestling = 15060000
+            ''' <summary>Surfing</summary>
+            <FieldDisplayName("Surfing")> Surfing = 15061000
+            ''' <summary>Swimming</summary>
+            <FieldDisplayName("Swimming")> Swimming = 15062000
+            ''' <summary>Table Tennis</summary>
+            <FieldDisplayName("Table Tennis")> TableTennis = 15063000
+            ''' <summary>Taekwon-Do</summary>
+            <FieldDisplayName("Taekwon-Do")> TaekwonDo = 15064000
+            ''' <summary>Tennis</summary>
+            <FieldDisplayName("Tennis")> Tennis = 15065000
+            ''' <summary>Triathlon</summary>
+            <FieldDisplayName("Triathlon")> Triathlon = 15066000
+            ''' <summary>Volleyball</summary>
+            <FieldDisplayName("Volleyball")> Volleyball = 15067000
+            ''' <summary>Water Polo</summary>
+            <FieldDisplayName("Water Polo")> WaterPolo = 15068000
+            ''' <summary>Water Skiing</summary>
+            <FieldDisplayName("Water Skiing")> WaterSkiing = 15069000
+            ''' <summary>Weightlifting</summary>
+            <FieldDisplayName("Weightlifting")> Weightlifting = 15070000
+            ''' <summary>Windsurfing</summary>
+            <FieldDisplayName("Windsurfing")> Windsurfing = 15071000
+            ''' <summary>Wrestling</summary>
+            <FieldDisplayName("Wrestling")> Wrestling = 15072000
+            ''' <summary>Acts of terror</summary>
+            <FieldDisplayName("Acts of terror")> ActsOfTerror = 16001000
+            ''' <summary>Armed conflict</summary>
+            <FieldDisplayName("Armed conflict")> ArmedConflict = 16002000
+            ''' <summary>Civil unrest</summary>
+            <FieldDisplayName("Civil unrest")> CivilUnrest = 16003000
+            ''' <summary>Coup d'Etat</summary>
+            <FieldDisplayName("Coup d'Etat")> CoupDEtat = 16004000
+            ''' <summary>Guerrilla activities</summary>
+            <FieldDisplayName("Guerrilla activities")> GuerrillaActivities = 16005000
+            ''' <summary>Massacre</summary>
+            <FieldDisplayName("Massacre")> Massacre = 16006000
+            ''' <summary>Riots</summary>
+            <FieldDisplayName("Riots")> Riots = 16007000
+            ''' <summary>Violent demonstrations</summary>
+            <FieldDisplayName("Violent demonstrations")> ViolentDemonstrations = 16008000
+            ''' <summary>War</summary>
+            <FieldDisplayName("War")> War = 16009000
+            ''' <summary>Forecasts</summary>
+            <FieldDisplayName("Forecasts")> Forecasts = 17001000
+            ''' <summary>Global change</summary>
+            <FieldDisplayName("Global change")> GlobalChange = 17002000
+            ''' <summary>Reports</summary>
+            <FieldDisplayName("Reports")> Reports = 17003000
+            ''' <summary>Statistics</summary>
+            <FieldDisplayName("Statistics")> Statistics = 17004000
+            ''' <summary>Warnings</summary>
+            <FieldDisplayName("Warnings")> Warnings = 17005000
+        End Enum
+        ''' <summary>Subject Reference Number and Subject Name relationship (version IPTC/1)</summary>
+        <Restrict(False)> <TypeConverter(GetType(EnumConverterWithAttributes(Of SubjectReferenceNumbers)))> Public Enum SubjectReferenceNumbers As Integer
+            ''' <summary>Matters pertaining to the advancement and refinement of the human mind, of interests, skills, tastes and emotions</summary>
+            <FieldDisplayName("Arts, Culture & Entertainment")> ArtsCultureEntertainment = 1000000
+            ''' <summary>Establishment and/or statement of the rules of behaviour in society, the enforcement of these rules, breaches of the rules and the punishment of offenders. Organisations and bodies involved in these activities.</summary>
+            <FieldDisplayName("Crime, Law & Justice")> CrimeLawJustice = 2000000
+            ''' <summary>Man made and natural events resulting in loss of life or injury to living creatures and/or damage to inanimate objects or property.</summary>
+            <FieldDisplayName("Disasters & Accidents")> DisastersAccidents = 3000000
+            ''' <summary>All matters concerning the planning, production and exchange of wealth.</summary>
+            <FieldDisplayName("Economy, Business & Finance")> EconomyBusinessFinance = 4000000
+            ''' <summary>All aspects of furthering knowledge of human individuals from birth to death.</summary>
+            <FieldDisplayName("Education")> Education = 5000000
+            ''' <summary>All aspects of protection, damage, and condition of the ecosystem of the planet earth and its surroundings.</summary>
+            <FieldDisplayName("Environmental Issues")> EnvironmentalIssues = 6000000
+            ''' <summary>All aspects pertaining to the physical and mental welfare of human beings.</summary>
+            <FieldDisplayName("Health")> Health = 7000000
+            ''' <summary>Lighter items about individuals, groups, animals or objects.</summary>
+            <FieldDisplayName("Human Interest")> HumanInterest = 8000000
+            ''' <summary>Social aspects, organisations, rules and conditions affecting the employment of human effort for the generation of wealth or provision of services and the economic support of the unemployed.</summary>
+            <FieldDisplayName("Labour")> Labour = 9000000
+            ''' <summary>Activities undertaken for pleasure, relaxation or recreation outside paid employment, including eating and travel.</summary>
+            <FieldDisplayName("Lifestyle & Leisure")> LifestyleAndLeisure = 10000000
+            ''' <summary>Local, regional, national and international exercise of power, or struggle for power, and the relationships between governing bodies and states.</summary>
+            <FieldDisplayName("Politics")> Politics = 11000000
+            ''' <summary>All aspects of human existence involving theology, philosophy, ethics and spirituality.</summary>
+            <FieldDisplayName("Religion & Belief")> ReligionBelief = 12000000
+            ''' <summary>All aspects pertaining to human understanding of nature and the physical world and the development and application of this knowledge</summary>
+            <FieldDisplayName("Science & Technology")> ScienceTechnology = 13000000
+            ''' <summary>Aspects of the behaviour of humans affecting the quality of life.</summary>
+            <FieldDisplayName("Social Issues")> SocialIssues = 14000000
+            ''' <summary>Competitive exercise involving physical effort. Organisations and bodies involved in these activities.</summary>
+            <FieldDisplayName("Sport")> Sport = 15000000
+            ''' <summary>Acts of socially or politically motivated protest and/or violence.</summary>
+            <FieldDisplayName("Unrest, Conflicts & War")> UnrestConflictsWar = 16000000
+            ''' <summary>The study, reporting and predic meteorological phenomena.</summary>
+            <FieldDisplayName("Weather")> Weather = 17000000
+        End Enum
 #End Region
 #Region "String enums"
 		''' <summary>The exact type of audio contained in the current objectdata.</summary>
@@ -1755,7 +1755,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("HNA")> <XmlEnum("HNA")> HNA
 			''' <summary>International Press Telecommunications Council</summary>
 			<FieldDisplayName("IPTC")> <XmlEnum("IPTC")> IPTC
-			''' <summary>Magyar T?virati Iroda / Hungarian News Agency</summary>
+			''' <summary>Magyar Távirati Iroda / Hungarian News Agency</summary>
 			<FieldDisplayName("MTI")> <XmlEnum("MTI")> MTI
 			''' <summary>Canadian Press</summary>
 			<FieldDisplayName("PC")> <XmlEnum("PC")> PC
@@ -1765,7 +1765,7 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("REUTERS")> <XmlEnum("REUTERS")> REUTERS
 			''' <summary>Slovenska Tiskovna Agencija</summary>
 			<FieldDisplayName("STA")> <XmlEnum("STA")> STA
-			''' <summary>Tidningarnas Telegrambyr?</summary>
+			''' <summary>Tidningarnas Telegrambyrå</summary>
 			<FieldDisplayName("TT")> <XmlEnum("TT")> TT
 			''' <summary>United Press International</summary>
 			<FieldDisplayName("UP")> <XmlEnum("UP")> UP
@@ -1783,8 +1783,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Angola")> <XmlEnum("AGO")> Angola
 			''' <summary>Anguilla</summary>
 			<FieldDisplayName("Anguilla")> <XmlEnum("AIA")> Anguilla
-			''' <summary>?land Islands</summary>
-			<FieldDisplayName("?land")> <XmlEnum("ALA")> ?land
+			''' <summary>Åland Islands</summary>
+			<FieldDisplayName("Åland")> <XmlEnum("ALA")> Åland
 			''' <summary>Albania</summary>
 			<FieldDisplayName("Albania")> <XmlEnum("ALB")> Albania
 			''' <summary>Andorra</summary>
@@ -1861,8 +1861,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Chile")> <XmlEnum("CHL")> Chile
 			''' <summary>China</summary>
 			<FieldDisplayName("China")> <XmlEnum("CHN")> China
-			''' <summary>C?te d'Ivoire</summary>
-			<FieldDisplayName("C?te d'Ivoire")> <XmlEnum("CIV")> C?teDIvoire
+			''' <summary>Côte d'Ivoire</summary>
+			<FieldDisplayName("Côte d'Ivoire")> <XmlEnum("CIV")> CôteDIvoire
 			''' <summary>Cameroon</summary>
 			<FieldDisplayName("Cameroon")> <XmlEnum("CMR")> Cameroon
 			''' <summary>Congo, the Democratic Republic of the[1]</summary>
@@ -2143,8 +2143,8 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("French Polynesia")> <XmlEnum("PYF")> FrenchPolynesia
 			''' <summary>Qatar</summary>
 			<FieldDisplayName("Qatar")> <XmlEnum("QAT")> Qatar
-			''' <summary>R?union</summary>
-			<FieldDisplayName("R?union")> <XmlEnum("REU")> R?union
+			''' <summary>Réunion</summary>
+			<FieldDisplayName("Réunion")> <XmlEnum("REU")> Réunion
 			''' <summary>Romania</summary>
 			<FieldDisplayName("Romania")> <XmlEnum("ROU")> Romania
 			''' <summary>Russian Federation</summary>
@@ -2263,15 +2263,15 @@ Namespace DrawingT.MetadataT
 			<FieldDisplayName("Zambia")> <XmlEnum("ZMB")> Zambia
 			''' <summary>Zimbabwe</summary>
 			<FieldDisplayName("Zimbabwe")> <XmlEnum("ZWE")> Zimbabwe
-			''' <summary>Ascension Island ? Reserved on request of UPU, also used by ITU</summary>
+			''' <summary>Ascension Island — Reserved on request of UPU, also used by ITU</summary>
 			<FieldDisplayName("Ascension")> <XmlEnum("ASC")> Ascension
-			''' <summary>Clipperton Island ? Reserved on request of ITU</summary>
+			''' <summary>Clipperton Island — Reserved on request of ITU</summary>
 			<FieldDisplayName("Clipperton")> <XmlEnum("CPT")> Clipperton
-			''' <summary>Diego Garcia ? Reserved on request of ITU</summary>
+			''' <summary>Diego Garcia — Reserved on request of ITU</summary>
 			<FieldDisplayName("Diego Garcia")> <XmlEnum("DGA")> DiegoGarcia
-			''' <summary>France, Metropolitan ? Reserved on request of France</summary>
+			''' <summary>France, Metropolitan — Reserved on request of France</summary>
 			<FieldDisplayName("France, Metropolitan")> <XmlEnum("FXX")> FranceMetropolitan
-			''' <summary>Tristan da Cunha ? Reserved on request of UPU</summary>
+			''' <summary>Tristan da Cunha — Reserved on request of UPU</summary>
 			<FieldDisplayName("Tristan da Cunha")> <XmlEnum("TAA")> TristanDaCunha
 			''' <summary>United Nations</summary>
 			<FieldDisplayName("United Nations")> <XmlEnum("XUN")> UnitedNations
@@ -2678,7 +2678,7 @@ Namespace DrawingT.MetadataT
 				''' <summary>Contains value of the <see cref="ByLineTitle"/> property</summary>
 				<EditorBrowsable(EditorBrowsableState.Never)> Private Dim _ByLineTitle As String
 				''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
-				''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoy? Sp?cial"</remarks>
+				''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
 				<Category("Author")> <FieldDisplayName("By-line Title")> Public Property ByLineTitle As String
 					Get
 						Return _ByLineTitle
@@ -3105,7 +3105,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>Array of bytes consisting of one or more control functions used for the announcement, invocation or designation of coded character sets. The control functions follow the ISO 2022 standard and may consist of the escape control character and one or more graphic characters. For more details see Appendix C, the IPTC-NAA Code Library.</summary>
-		''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (?SN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
+		''' <remarks>The control functions apply to character oriented DataSets in records 2-6. They also apply to record 8, unless the objectdata explicitly, or the File Format implicitly, defines character sets otherwise. If this DataSet contains the designation function for Unicode in UTF-8 then no other announcement, designation or invocation functions are permitted in this DataSet or in records 2-6. For all other character sets, one or more escape sequences are used: for the announcement of the code extension facilities used in the data which follows, for the initial designation of the G0, G1, G2 and G3 graphic character sets and for the initial invocation of the graphic set (7 bits) or the lefthand and the right-hand graphic set (8 bits) and for the initial invocation of the C0 (7 bits) or of the C0 and the C1 control character sets (8 bits). The announcement of the code extension facilities, if transmitted, must appear in this data set. Designation and invocation of graphic and control function sets (shifting) may be transmitted anywhere where the escape and the other necessary control characters are permitted. However, it is recommended to transmit in this DataSet an initial designation and invocation, i.e. to define all designations and the shift status currently in use by transmitting the appropriate escape sequences and locking-shift functions. If is omitted, the default for records 2-6 and 8 is ISO 646 IRV (7 bits) or ISO 4873 DV (8 bits). Record 1 shall always use ISO 646 IRV or ISO 4873 DV respectively. ECMA as the ISO Registration Authority for escape sequences maintains the International Register of Coded Character Sets to be used with escape sequences, a register of Codes and allocated standardised escape sequences, which are recognised by IPTC-NAA without further approval procedure. The registration procedure is defined in ISO 2375. IPTC-NAA maintain a Register of Codes and allocated private escape sequences, which are shown in paragraph 1.2. IPTC may, as Sponsoring Authority, submit such private sequence Codes for approval as standardised sequence Codes. The registers consist of a Graphic repertoire, a Control function repertoire and a Repertoire of other coding systems (e.g. complete Codes). Together they represent the IPTC-NAA Code Library. Graphic Repertoire94-character sets (intermediate character 2/8 to 2/11)002ISO 646 IRV 4/0004ISO 646 British Version 4/1006ISO 646 USA Version (ASCII) 4/2008-1NATS Primary Set for Finland and Sweden 4/3008-2NATS Secondary Set for Finland and Sweden 4/4009-1NATS Primary Set for Denmark and Norway 4/5009-2NATS Secondary Set for Denmark and Norway 4/6010ISO 646 Swedish Version (SEN 850200) 4/7015ISO 646 Italian Version (ECMA) 5/9016ISO 646 Portuguese Version (ECMA Olivetti) 4/12017ISO 646 Spanish Version (ECMA Olivetti) 5/10018ISO 646 Greek Version (ECMA) 5/11021ISO 646 German Version (DIN 66003) 4/11037Basic Cyrillic Character Set (ISO 5427) 4/14060ISO 646 Norwegian Version (NS 4551) 6/0069ISO 646 French Version (NF Z 62010-1982) 6/6084ISO 646 Portuguese Version (ECMA IBM) 6/7085ISO 646 Spanish Version (ECMA IBM) 6/8086ISO 646 Hungarian Version (HS 7795/3) 6/9121Alternate Primary Graphic Set No. 1 (Canada CSA Z 243.4-1985) 7/7122Alternate Primary Graphic Set No. 2 (Canada CSA Z 243.4-1985) 7/896-character sets (intermediate character 2/12 to 2/15):100Right-hand Part of Latin Alphabet No. 1 (ISO 8859-1) 4/1101Right-hand Part of Latin Alphabet No. 2 (ISO 8859-2) 4/2109Right-hand Part of Latin Alphabet No. 3 (ISO 8859-3) 4/3110Right-hand Part of Latin Alphabet No. 4 (ISO 8859-4) 4/4111Right-hand Part of Latin/Cyrillic Alphabet (ISO 8859-5) 4/0125Right-hand Part of Latin/Greek Alphabet (ISO 8859-7) 4/6127Right-hand Part of Latin/Arabic Alphabet (ISO 8859-6) 4/7138Right-hand Part of Latin/Hebrew Alphabet (ISO 8859-8) 4/8139Right-hand Part of Czechoslovak Standard (ČSN 369103) 4/9Multiple-Byte Graphic Character Sets (1st intermediate character 2/4, 2nd intermediate character 2/8 to 2/11)87Japanese characters (JIS X 0208-1983) 4/2Control Function RepertoireC0 Control Function Sets (intermediate character 2/1)001C0 Set of ISO 646 4/0026IPTC C0 Set for newspaper text transmission 4/3036C0 Set of ISO 646 with SS2 instead of IS4 4/4104Minimum C0 Set for ISO 4873 4/7 C1 Control Function Sets (intermediate character 2/2)077C1 Control Set of ISO 6429 4/3105Minimum C1 Set for ISO 4873 4/7 Single Additional Control Functions062Locking-Shift Two (LS2), ISO 2022 6/14063Locking-Shift Three (LS3), ISO 2022 6/15064Locking-Shift Three Right (LS3R), ISO 2022 7/12065Locking-Shift Two Right (LS2R), ISO 2022 7/13066Locking-Shift One Right (LS1R), ISO 2022 7/14Repertoire of Other Coding Systems (e.g. complete Codes, intermediate character 2/5 )196UCS Transformation Format (UTF-8) 4/7 --></remarks>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
@@ -4534,7 +4534,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 		''' <summary>A by-line title is the title of the creator or creators of an objectdata. Where used, a by-line title should follow the by-line it modifies.</summary>
-		''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoy? Sp?cial"</remarks>
+		''' <remarks>Examples: "Staff Photographer", "Corresponsal", "Envoyé Spécial"</remarks>
 		''' <returns>If this instance contains this tag(s) retuns them. Otherwise returns null</returns>
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
