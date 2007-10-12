@@ -1,0 +1,45 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cs" xml:lang="cs">
+<head>
+    <title>XPathObjectNavigator</title>
+</head>
+<body>
+    <h1>XPath a XSLT pro vlastní objekty</h1>
+    <p>.NET implementace XSLT a XPath umožňuje v celku jednoduché rozšiřování vestavěných XPath/XSLT funkcí o své vlastní. Existuje dokonce hned několik možností. Pokud je XSLT voláno někde z kódu nechá se do něj předat (i více) objektů, které je pak možno z XSL transformace volat. Také je možno definovat rozšiřující funkce pořímo v XSLT dokumentu pomocí elementu
+        <code>&lt;msxsl:script></code>, který může obsahovat funkce v libovolném jazyce, pro nějž .NET najde kompilátor.
+    </p>
+    <p>Podorbněji viz <a href="http://msdn2.microsoft.com/en-us/library/6datxzsd(VS.80).aspx">Extending XSLT Style Sheets na MSDN</a>.</p>
+    <p>Protože jak .NET tak XPath mají vlastní sadu datových typů dochází při přechodu z XSLT do jiného jazyka k implicitní konverzi podle následující tabulky:
+    </p>
+    <table style="caption-side:bottom"><caption>Převodf mezi W3C a CLR typy</caption>
+        <thead>
+            <tr><th>W3C typ</th><td></td><th>CLR typ</th></tr>
+        </thead>
+        <tbody>
+            <tr><td>String</td><td>↔</td><td>String</td></tr>
+            <tr><td>Boolean</td><td>↔</td><td>Boolean</td></tr>
+            <tr><td>Number</td><td>→</td><td>Double</td></tr>
+            <tr><td>Number</td><td>←</td><td>Double ← Jakýkoliv CLR číselný typ</td></tr>
+            <tr><td>část XML stromu</td><td>↔</td><td>XPathNavigator</td></tr>
+            <tr><td>část XML stromu</td><td>←</td><td>XPathNavigator ← IXPathNavigable</td></tr>
+            <tr><td>množina uzlů</td><td>↔</td><td>XPathNodeIterator</td></tr>
+            <tr><td>množina uzlů</td><td>←</td><td>XPathNodeIterator ← XPathNavigator[]</td></tr>
+            <tr><td>String</td><td>←</td><td>DateTime</td></tr>
+        </tbody>
+    </table>
+    <p>Při pokuzu o vrácení jiného datového typu z CLR do XSLT dojde k výjímce.</p>
+    <h2>Problém</h2>
+    <p>A teď si představte, že pro vaši XSL transformaci potřebujete funkci s podobnou funkčností jako <code>String.Split</code>. Taková funkce vrací pole řetězců. Nebo ještě něco složitějšího: Máte nějakou datovou strukturu definovanou například takto:</p>
+    <pre><code>Public Class Class1
+    Public Property Vlastnost1 As String
+    Public Property Vlastnost2 As Long
+    Public Property Vlastnost3 As List(Of Integer)
+    Public Pole As Class2()
+End Class
+Public Class Class2
+    Public Property Vlastnost1 As StringBuilder
+    Public Property Vlastnost2 As Point 
+End Class</code></pre>
+    <p>A chceme se přes instanci třídy Class1 pomocí XPath</p>    
+</body>
+</html>
