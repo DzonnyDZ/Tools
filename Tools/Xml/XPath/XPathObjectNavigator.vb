@@ -332,6 +332,7 @@ Namespace XmlT.XPathT
                 Return _Location
             End Get
         End Property
+        'ASAP: Comment this
         Protected Const ns$ = ""
         Protected Const atrName$ = "name"
         Protected Const atrTypeName$ = "type-name"

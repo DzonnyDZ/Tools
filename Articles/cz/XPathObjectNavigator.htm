@@ -40,6 +40,569 @@ Public Class Class2
     Public Property Vlastnost1 As StringBuilder
     Public Property Vlastnost2 As Point 
 End Class</code></pre>
-    <p>A chceme se přes instanci třídy Class1 pomocí XPath</p>    
+    <p>A chceme se přes instanci třídy Class1 navigovat pomocí XPath například takto <code>./Pole[Vlastnost2/X > 7]/Vlastnost1</code> (vybere text obsažený ve vlastnosti Vlastnost1 třídy Class2 všech položek pole Class1.Pole pro něž má hodnota vlastnosti X vlastnosti Vlastnost2 hodnotu vyšší než 7.)</p>
+    <p>Vlastně jediné, co jsem ve svém kódu potřeboval bylo vrátit pole (nebo nějaký jiný IEnumerable). Zjistil jsem však, že není jiná možnost, než poctivě implementovat poměrně rozsáhlou abstraktní třídu XPathNavigator. Tato třída zajišťuje veškerou potřebnou podporu pro pohyb ve stromové struktuře a její implementace určuje co bude ta stromová struktura zač. Pátral jsem po nějakých implementacích této třídy v .NET Frameworku a zjistil jsem, že žádná z nich není Public :-(. Nicméně z dokumentace na MSDN se dá zjisti co má která virtuální metoda dělat, takže vhůru do toho!</p>
+    <h2>Implementace</h2>    
+    <p>První problém na který můžete narazit je skutečnost, že jeden jediný XPathNavigator musí být schopen ukazovat na jakýkoliv uzel vašeho virtuálního stromu. Tedy na element, atribut, textový uzel (a kdoví co ještě chcete implementovat). Navigace přes XML dokument pomocí XPath totiž probíhá tak, že se mění pozice jedné instance XPathNavigatoru namísto aby se vytvářeli pořád nové a nové instance ukazující na nové pozice (ve skutečnosti zjistíte, že se i tak vytváří spousta nových instancí, protože občas je potřeba si prostě nejakou pozici zapamatovat). Nejprve je tedy nutné nadefinovat si tyto uzly.
+    Uzly můžeme implementova t v zásadě dvěma způsoby. Uděláme si púro ně Enum a na místech kódu, kde bude záležet na typu uzlu dáme Select Case (Switch v C#). Nebo každý uzel implementujeme jako třídu odděděnou od nějaké základní abstraktní třídy. Instance třídy pak bude vracet vše co XPathNavigator bude potřebovat a tomu bude úplně jedno s jakou konkrétní třídou pracuje. Druhý popsaný přístup je "ten správný objektový" ale také je o něco složitější. Pokud navigace neprobíhá přes nějakou komplikovanou strukturu můžeme zvolit i třetí možnost - kombinace obou popsaných přístupů - tak jsem postupoval já.
+    </p>
+    <p><strong>Poznámka:</strong> Dále uvedené úkázky zdrojových kódů mohou používat různé třídy z mé knihovny ĐTools, takže vám neboudou fungovat "as is". Knihovnu naleznete na <a href="http://codeplex.com/DTools">CodePlexu</a> i se zdrojáky.</p>
+    <p>Já jsem jednotlivé typy uzlů nazval kroky (Step) a vytvořil je takto:</p>
+    <pre><code>'Společná nadtřída
+&lt;DebuggerDisplay("{ToString}")> _
+Protected MustInherit Class [Step] : Implements ICloneable(Of [Step])
+    ' Ke každému kroku se váže instance nějakého objektu (zde ten objekt ukládám). Vztak objektu a kroku se liší podle typu kroku
+    ' RootStep - objekt pro tento krok
+    ' PropertyStep - Objekt, na který bude volán getter vlasnosti
+    ' EnumerableStep - IEnumerable na který se bude volat GetEnumerator
+    ' SpecialStep - Objekt jehož pseudovlastnosti budou vraceny
+    ' SelfStep - objekt jehož hodnota bude vrácena
+    Public ReadOnly [Object] As Object
+    ' To je ten slibovaný Enum s typy kroků (vlastně jej dělám jen proto, že nelte napsat Select Case Type Of MyObject
+    Public Enum StepClasses
+        Root
+        [Property]
+        Enumerable
+        Special
+        Self
+    End Enum
+    ' Krok vrací sám o sobě co je zač (pak můžu použít Select Case MyStep.StepClass)
+    Public MustOverride ReadOnly Property StepClass() As StepClasses
+    &lt;DebuggerStepThrough()> Public Sub New(ByVal [Object] As Object)
+        Me.Object = [Object]
+    End Sub
+    ' Pomocná metoda
+    Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        ' (...) Když je obj typu [Step] volá následující metodu
+    End Function
+    ' Zjistí jestli dva kroky ukazují na stejné místo ve vertuálním stromě
+    Public MustOverride Overloads Function Equals(ByVal other As [Step]) As Boolean
+    ' Klonování kroků
+    Public MustOverride Function Clone() As [Step] Implements ICloneable(Of [Step]).Clone
+    ' Jenom pro implementaci interfacu
+    &lt;Obsolete("Use type-safe Clone instead"), EditorBrowsable(EditorBrowsableState.Never)> _
+    Private Function Clone1() As Object Implements System.ICloneable.Clone
+        Return Me.Clone
+    End Function
+    ' ToString se vždycky hodí
+    Public Overrides Function ToString() As String
+        Return String.Format("Object ""{0}"" type {1}", Me.Object, Me.Object.GetType.Name)
+    End Function
+End Class
+'Následuje implementace jednotlivých kroků</code></pre>
+        <p>Na tomto místě bych měl asi vysvětlit jak hodlám reprezentovat aktuální pozici v virtuálním stromu: <br />
+        Hodlám to dělat tak, že vytvořím List(Of [Step]) a do něj budu vkládat posloupnost kroků začínající kořenem, která popíše jak se do aktuálného stavu dostat. Bude se jednat tedy o posloupnost vlastností, indexů do IEnumerable. Když napíšete
+        MyObject.Property1.Property7(15).Property8 bude to reprezentováno jako:</p>
+        <ol>
+            <li>Kořen</li>
+            <li>Vlastnost "Property1"</li>
+            <li>Vlastnost "Property7"</li>
+            <li>Index 15</li>
+            <li>Vlastnost "Property8"</li>
+        </ol>
+        <pre><code>' Kořenový korok (reprezentuje objekt, na kterém navigace začíná. může se vyskytnout jen jednou
+'Členy snad netřeba komentovat
+Protected NotInheritable Class RootStep : Inherits [Step]
+    &lt;DebuggerStepThrough()> Public Sub New(ByVal [Object] As Object)
+        MyBase.New([Object])
+    End Sub
+    Public Overrides Function Equals(ByVal other As [Step]) As Boolean
+        Return TypeOf other Is RootStep AndAlso Me.Object Is other.Object
+    End Function
+    Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
+        &lt;DebuggerStepThrough()> Get
+            Return StepClasses.Root
+        End Get
+    End Property
+    Public Overrides Function Clone() As [Step]
+        Return New RootStep(Me.Object)
+    End Function
+End Class
+' Krok ukazující na vlastnost objektu. Vlastnost musí být Public a read-only nebo read-write
+Protected NotInheritable Class PropertyStep : Inherits [Step]
+    ' Informace o vlastnosti (pro reflection)
+    Public ReadOnly [Property] As PropertyInfo
+    &lt;DebuggerStepThrough()> Public Sub New(ByVal [Object] As Object, ByVal [Property] As PropertyInfo)
+        MyBase.New([Object])
+        Me.Property = [Property]
+    End Sub
+    Public Overrides Function Equals(ByVal other As [Step]) As Boolean
+        Return TypeOf other Is PropertyStep AndAlso Me.Object Is other.Object AndAlso Me.Property.Name = DirectCast(other, PropertyStep).Property.Name
+    End Function
+    Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
+        Get
+            Return StepClasses.Property
+        End Get
+    End Property
+    Public Overrides Function Clone() As [Step]
+        Return New PropertyStep(Me.Object, Me.Property)
+    End Function
+    Public Overrides Function ToString() As String
+        Return MyBase.ToString() &amp; String.Format(" Property {0}", Me.Property.Name)
+    End Function
+End Class
+' Krok ukazující na položku IEnumerable
+' Aby tento krok bylo možné rekonstruovat udržuje se index této položky. Indexace je pak řešena doiterováním se na příslušnou pozici
+Protected NotInheritable Class EnumerableStep : Inherits [Step]
+    ' Slibovaný index
+    Public Index As Integer
+    ' IEnumerator získaný z IEnumerable přes GetEnumerator a oditerovaný na pozici Index
+    &lt;EditorBrowsable(EditorBrowsableState.Never)> Private _Enumerator As IEnumerator
+    Public ReadOnly Property Enumerator() As IEnumerator
+        Get
+            Return _Enumerator
+        End Get
+    End Property
+    ' Tady se řeší to oditerování při klonování (nebo jiné rekonstrukci)
+    Public Sub New(ByVal [Object] As IEnumerable, Optional ByVal [index] As Integer = 0)
+        MyBase.New([Object])
+        Me.Index = index
+        If index &lt; 0 Then Throw New ArgumentOutOfRangeException("index", "index mus be greater than or equal to zero")
+        _Enumerator = Me.Object.GetEnumerator
+        For i As Integer = 0 To Me.Index
+            If Not Enumerator.MoveNext() Then Throw New ArgumentOutOfRangeException("index", "There are not enought items in IEnumerable")
+        Next i
+    End Sub
+    ' Jenom aby byl objekt správného typu a fungoval mi IntelliSense
+    Private Shadows ReadOnly Property [Object]() As IEnumerable
+        Get
+            Return MyBase.Object
+        End Get
+    End Property
+    Public Overrides Function Equals(ByVal other As [Step]) As Boolean
+        Return TypeOf other Is EnumerableStep AndAlso Me.Object Is other.Object AndAlso Me.Index = DirectCast(other, EnumerableStep).Index
+    End Function
+    Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
+        Get
+            Return StepClasses.Enumerable
+        End Get
+    End Property
+    Public Overrides Function Clone() As [Step]
+        Return New EnumerableStep(Me.Object, Me.Index)
+    End Function
+    Public Overrides Function ToString() As String
+        Return MyBase.ToString() &amp; String.Format(" index {0}", Index)
+    End Function
+End Class</code></pre>
+        <p>Protože nic netrvá věčně, tak ani pohyb ve vertuálním stromě nechci donekonečna vnořovat do vlastností objektů. Místo toho definuji, že některé typy objketů jako String, Integer, Long, DateTime vrátím jako hodnotu elementu.</p>
+        <pre><code>' Krok ukazující na hodnotu virtuálného elementu - jako kdyby ste měli &lt;string>Hodnota&lt;/string>
+Protected NotInheritable Class SelfStep : Inherits [Step]
+    Public Sub New(ByVal [Object] As Object)
+        MyBase.New([Object])
+    End Sub
+    Public Overrides Function Equals(ByVal other As [Step]) As Boolean
+        Return TypeOf other Is SelfStep AndAlso Me.Object Is other.Object
+    End Function
+    Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
+        Get
+            Return StepClasses.Self
+        End Get
+    End Property
+    Public Overrides Function Clone() As [Step]
+        Return New SelfStep(Me.Object)
+    End Function
+End Class</code></pre>
+        <p>Dále jsem se ještě rozhodl, že o každém objektu si zpřístupním nějaké metainformace. Zatím vše jsem implementoval jako elementy (z kódu výše to není poznat). Metainformace implementuji jako atributy.</p>
+        <pre><code>' Krok ukazující na metainformaci
+Protected NotInheritable Class SpecialStep : Inherits [Step]
+    ' Typy metainformací
+    Public Enum StepType
+        ' Krátký název typu objektu
+        TypeName
+        ' Dlouhý název typu objektu
+        FullName
+        ' Název vlastnosti, přes níž byl aktuální krok získán. (Pro kořen je to String.Empty)
+        Name
+        ' True pro objekty typu IEnumerable, jinak nepřítomno
+        Enumerable</code></pre>
+        <p>A ještě jedna specialitka: Může se vám stát, že struktura přes, kterou budete navigovat nebude stromová ale cyklická. To se vám stane dokonce hned jak použijete pole, protože System.Array.SyncRoot obsahuje sama sebe. Je tedy nutno nějak zabránit zacyklení. Já mu zabraňuji tak, že pro každý objekt, na který narazím, se podívám na předchozí kroky, jestli jsem na něj už nenarazil.</p>                
+<pre><code>        ' Před kolika kroky se narazilo na stejný objekt (přítomno jen pokud se na něj už narazilo)
+        CircleLevel
+    End Enum
+    ' Sub-typ kroku
+    Public Type As StepType
+    Friend Sub New(ByVal [Object] As Object, ByVal Type As StepType)
+        MyBase.New([Object])
+        Me.Type = Type
+    End Sub
+    Public Overrides Function Equals(ByVal other As [Step]) As Boolean
+        Return TypeOf other Is SpecialStep AndAlso other.Object Is Me.Object AndAlso Me.Type = DirectCast(other, SpecialStep).Type
+    End Function
+    Public Overrides ReadOnly Property StepClass() As [Step].StepClasses
+        Get
+            Return StepClasses.Special
+        End Get
+    End Property
+    Public Overrides Function Clone() As [Step]
+        Return New SpecialStep(Me.Object, Me.Type)
+    End Function
+    Public Overrides Function ToString() As String
+        Return MyBase.ToString() &amp; String.Format(" type {0}", Type)
+    End Function
+End Class</code></pre>
+        <p>Takže popis jednotlivých typů elementů, které bude XPath používat by sme měli za sebou. Tyto elementy je nyní nutno namapovat na uzly XML. Důležité uzly jsou především kořen, element, atribut a textový uzel. XML dále podporuje ještě komentáře a procesní instrukce (a možné ještě něco).
+        Jak už jsem zmínil výše vlastnosti a iterace mapuji na elementy, kořen samozřejmě na kořen, hodnoty vybraných typů (string, integer, ...) na textové uzly a metainformace na atributy.
+        </p>
+        <p>Následuje nástin implementace vlastního XPathObjectNavigatoru:</p>
+        <p><strong>Poznámka: Je potřeba oddědit i některé metody a vlastnosti, které jsem se rozhodl neimplementovat. Ty v ukázce vynechávám, ale pro kompilaci jsou nutné. Najdete je v kompletním zdrojáku.</strong></p>
+        <pre><code>Public Class XPathObjectNavigator : Inherits XPathNavigator : Implements ICloneable(Of XPathNavigator)
+    ' Tady se ukládá ta pozice - seznam kroků k dosažení aktuálního místa
+    &lt;EditorBrowsable(EditorBrowsableState.Never)> Private _Location As New List(Of [Step])
+    Protected ReadOnly Property Location() As List(Of [Step])
+        Get
+            Return _Location
+        End Get
+    End Property
+    'Rár konstant s definicí názvů atributů
+    Protected Const ns$ = ""
+    Protected Const atrName$ = "name"
+    Protected Const atrTypeName$ = "type-name"
+    Protected Const atrFullName$ = "full-name"
+    Protected Const atrEnumerable$ = "enumerable"
+    Protected Const atrCircleLevel$ = "circle-level"
+    Protected Const nodItemOf$ = "item-of"
+    Private Sub New(Optional ByVal AllowCircles As Boolean = False)
+        _AllowCircles = AllowCircles
+        ' NameTable - to je taková zvláštní věc, která zajišťuje aby se Stringy nekopírovaly a nemnožili se instance se stejnou hodnotou. Všechny názvy by se měly pasírovat přes NameTable jinak XPath nbude vnímat stejné stringy jako stejné, protože je porovnává ne podle obsahu ale podle reference (je to výkonnější).
+        NameTable.Add(ns)
+        NameTable.Add(atrName)
+        NameTable.Add(atrTypeName)
+        NameTable.Add(atrFullName)
+        NameTable.Add(atrEnumerable)
+        NameTable.Add(atrCircleLevel)
+        NameTable.Add(nodItemOf)
+    End Sub
+    ' Pár dalších konstruktorů
+    Public Sub New(ByVal [Object] As Object, Optional ByVal AllowCircles As Boolean = False)
+        Me.New(AllowCircles)
+        Location.Add(New RootStep([Object]))
+    End Sub
+    Private Sub New(ByVal Other As XPathObjectNavigator)
+        Me.New(Other.AllowCircles)
+        Me._Location = New List(Of [Step])(Other.CloneLocation)
+    End Sub
+    ' Klonování zaopatřuje kopírovací konstruktor
+    Public Overrides Function Clone() As System.Xml.XPath.XPathNavigator Implements ICloneable(Of System.Xml.XPath.XPathNavigator).Clone
+        Return New XPathObjectNavigator(Me)
+    End Function
+    ' Říká jestli elelent je prázdn
+    ' Element je prázdný pokud jeho objekt nemá žádné použitelné vlastnosti
+    Public Overrides ReadOnly Property IsEmptyElement() As Boolean
+        Get
+            Select Case CurrentStep.StepClass
+                Case [Step].StepClasses.Enumerable, [Step].StepClasses.Root, [Step].StepClasses.Property
+                    Dim clone As XPathObjectNavigator = Me.Clone
+                    Return clone.MoveToFirstChild
+                Case Else : Return False
+            End Select
+        End Get
+    End Property
+    ' Porovnání pozic je vzhledem ke způsobu uložení celkem jednoduché
+    Public Overrides Function IsSamePosition(ByVal other As System.Xml.XPath.XPathNavigator) As Boolean
+        If TypeOf other Is XPathObjectNavigator Then
+            With DirectCast(other, XPathObjectNavigator)
+                If .Location.Count = Me.Location.Count Then
+                    For i As Integer = 0 To Location.Count - 1
+                        If Not Location(i).Equals(.Location(i)) Then Return False
+                    Next i
+                    Return True
+                End If
+            End With
+        End If
+        Return False
+    End Function
+    ' Lokální jméno katuálního prvku (bez namespacu)
+    Public Overrides ReadOnly Property LocalName() As String
+        Get
+            Select Case CurrentStep.StepClass
+                Case [Step].StepClasses.Enumerable : Return NameTable.Get(nodItemOf)
+                Case [Step].StepClasses.Property : Return NameTable.Add(DirectCast(CurrentStep, PropertyStep).Property.Name)
+                Case [Step].StepClasses.Special
+                    Select Case DirectCast(CurrentStep, SpecialStep).Type
+                        Case SpecialStep.StepType.Enumerable : Return NameTable.Get(atrEnumerable)
+                        Case SpecialStep.StepType.FullName : Return NameTable.Get(atrFullName)
+                        Case SpecialStep.StepType.Name : Return NameTable.Get(atrName)
+                        Case SpecialStep.StepType.TypeName : Return NameTable.Get(atrTypeName)
+                        Case SpecialStep.StepType.CircleLevel : Return NameTable.Get(atrCircleLevel)
+                    End Select
+            End Select
+            Return NameTable.Get(String.Empty)
+        End Get
+    End Property
+    ' Klonování pozice
+    Protected Function CloneLocation() As List(Of [Step])
+        Dim NewLoc As New List(Of [Step])(Me.Location.Count)
+        For Each item As [Step] In Me.Location
+            NewLoc.Add(item.Clone)
+        Next item
+        Return NewLoc
+    End Function
+    ' Přesun na zadanou pozici
+    Public Overrides Function MoveTo(ByVal other As System.Xml.XPath.XPathNavigator) As Boolean
+        If TypeOf other Is XPathObjectNavigator Then
+            Me._Location = DirectCast(other, XPathObjectNavigator).CloneLocation
+            Return True
+        End If
+        Return False
+    End Function
+
+    ' Přesun na první atributPublic Overrides Function MoveToFirstAttribute() As Boolean
+        Select Case CurrentStep.StepClass
+            Case [Step].StepClasses.Enumerable, [Step].StepClasses.Property, [Step].StepClasses.Root
+                Location.Add(New SpecialStep(ContextObject, SpecialStep.StepType.TypeName))
+                Return True
+        End Select
+        Return False
+    End Function
+    ' Získá první vlastnost následující po zadané vlastnosti (buď od konce nebo od začátku)
+    Protected Function GetFirstProperty(Optional ByVal Obj As Object = Nothing, Optional ByVal After As PropertyInfo = Nothing, Optional ByVal Reverse As Boolean = False) As PropertyInfo
+        ' (...) Přes reflection získám pole vlastností. Tam najdu After a vrátím co je po ní v daném směru
+        ' Je to trušku zdlouhavé, ale jednoduché. Implementace ve zdrojáku. 
+    End Function
+    ' Přesune se na první virtuální element objektu následující za zvoleným prvkem
+    ' Přes GteFirstProperty tento prvek najde. Pokud jej nenajde a je objekt typu IEnumerable započne enumeraci
+    ' Podle Replace je nová pozice buď přidána za aktuální do seznamu nebo je aktuální nahrazena
+    Protected Overridable Function MoveToFirstPropertyOrItem(Optional ByVal After As PropertyInfo = Nothing, Optional ByVal Obj As Object = Nothing, Optional ByVal Replace As Boolean = False) As Boolean
+        ' (...)
+    End Function
+
+    ' Přesune se na prvního potomka ve virtuálním stromě (atributy nejsou potomci!)
+    Public Overrides Function MoveToFirstChild() As Boolean
+        Select Case CurrentStep.StepClass
+            Case [Step].StepClasses.Enumerable, [Step].StepClasses.Root, [Step].StepClasses.Property
+                If Not AllowCircles AndAlso IsCircleReferenced Then Return False
+                If ContextObject Is Nothing Then Return False
+                If IsSupportedType(ContextObject.GetType) Then
+                    Location.Add(New SelfStep(ContextObject))
+                    Return True
+                End If
+                Return MoveToFirstPropertyOrItem()
+            Case Else : Return False
+        End Select
+    End Function
+
+    ' Seznam typů podporovaných pro to aby se přímo vrátila jejich hodnota namísto navigace přes jejich vlastnosti
+    Protected Overridable Function IsSupportedType(ByVal T As Type) As Boolean
+        Return _
+            T.Equals(GetType(String)) OrElse _
+            T.Equals(GetType(Char)) OrElse _
+            T.Equals(GetType(Byte)) OrElse _
+            T.Equals(GetType(SByte)) OrElse _
+            T.Equals(GetType(Short)) OrElse _
+            T.Equals(GetType(UShort)) OrElse _
+            T.Equals(GetType(Long)) OrElse _
+            T.Equals(GetType(ULong)) OrElse _
+            T.Equals(GetType(Integer)) OrElse _
+            T.Equals(GetType(UInteger)) OrElse _
+            T.Equals(GetType(Decimal)) OrElse _
+            T.Equals(GetType(Double)) OrElse _
+            T.Equals(GetType(Single)) OrElse _
+            T.Equals(GetType(Date)) OrElse _
+            T.Equals(GetType(TimeSpan)) OrElse _
+            T.Equals(GetType(TimeSpanFormattable)) OrElse _
+            T.Equals(GetType(Uri)) OrElse _
+            T.Equals(GetType(System.Text.StringBuilder)) OrElse _
+            T.Equals(GetType(Boolean)) OrElse _
+            T.IsEnum
+    End Function
+    ' Přesun na následujícího sourozence 
+    Public Overloads Overrides Function MoveToNext() As Boolean
+        Select Case CurrentStep.StepClass
+            Case [Step].StepClasses.Enumerable
+                If CurrentEnumerator.MoveNext Then
+                    DirectCast(CurrentStep, EnumerableStep).Index += 1
+                    Return True
+                End If
+                Return False
+            Case [Step].StepClasses.Property
+                Return MoveToFirstPropertyOrItem(Obj:=CurrentObject, After:=CurrentProperty, Replace:=True)
+            Case Else : Return False
+        End Select
+    End Function
+    ' Přesun na následující atribut
+    Public Overrides Function MoveToNextAttribute() As Boolean
+        If CurrentStep.StepClass = [Step].StepClasses.Special Then
+            Select Case DirectCast(CurrentStep, SpecialStep).Type
+                Case SpecialStep.StepType.TypeName
+                    CurrentStep = New SpecialStep(CurrentStep.Object, SpecialStep.StepType.FullName)
+                    Return True
+                Case SpecialStep.StepType.FullName
+                    CurrentStep = New SpecialStep(CurrentStep.Object, SpecialStep.StepType.Name)
+                    Return True
+                Case SpecialStep.StepType.Name
+                    If TypeOf ContextObject Is IEnumerable AndAlso Not IsSupportedType(ContextObject.GetType) Then
+                        CurrentStep = New SpecialStep(CurrentStep.Object, SpecialStep.StepType.Enumerable)
+                        Return True
+                    End If
+                    GoTo CircleLevel
+                Case SpecialStep.StepType.Enumerable
+CircleLevel:            If CircleLevel &lt; Location.Count - 2 Then '2 because 1 for difference between Count and highest index and 1 because last index is not important for me
+                        CurrentStep = New SpecialStep(CurrentStep.Object, SpecialStep.StepType.CircleLevel)
+                        Return True
+                    End If
+            End Select
+        End If
+        Return False
+    End Function
+    ' Přesun na rodiče - velmi jenoduché vzhledem ke způsobu uložení
+    Public Overrides Function MoveToParent() As Boolean
+        If Location.Count > 1 Then
+            Location.RemoveAt(Location.Count - 1)
+            Return True
+        End If
+        Return False
+    End Function
+    ' Přesun na předchozího sourozence
+    ' Pro IEnumerable je tu trošku nepříjemný způsob dekrementace indexu - musí se na něj znova doiterovat od nuly :-(
+    Public Overrides Function MoveToPrevious() As Boolean
+        ' (...)
+    End Function
+    'O nametable jsem se zmiňoval už výše v CToru
+    &lt;EditorBrowsable(EditorBrowsableState.Never)> Private _NameTable As New NameTable
+    Public Overrides ReadOnly Property NameTable() As System.Xml.XmlNameTable
+        Get
+            Return _NameTable
+        End Get
+    End Property
+    ' Typ uzlu
+    Public Overrides ReadOnly Property NodeType() As System.Xml.XPath.XPathNodeType
+        Get
+            Select Case CurrentStep.StepClass
+                Case [Step].StepClasses.Root : Return XPathNodeType.Root
+                Case [Step].StepClasses.Enumerable, [Step].StepClasses.Property
+                    Return XPathNodeType.Element
+                Case [Step].StepClasses.Special : Return XPathNodeType.Attribute
+                Case [Step].StepClasses.Self : Return XPathNodeType.Text
+                Case Else : Throw New InvalidOperationException("Unknown type of node.")
+            End Select
+        End Get
+    End Property
+    
+    ' Hodnota  tzv. podporovaného typu (string, integer, ...)
+    Protected Overridable Function SupportedTypeValue(ByVal obj As Object) As String
+        ' (...)
+    End Function
+    ' Hodnota uzlu
+    Public Overrides ReadOnly Property Value() As String
+        Get
+            Select Case CurrentStep.StepClass
+                Case [Step].StepClasses.Special
+                    If ContextValue Is Nothing Then Return String.Empty
+                    Return SupportedTypeValue(ContextValue)
+                Case Else
+                    If ContextObject Is Nothing Then Return String.Empty
+                    If IsSupportedType(ContextObject.GetType) Then
+                        Return SupportedTypeValue(ContextObject)
+                    Else
+                        If TypeOf ContextObject Is IFormattable Then
+                            Return DirectCast(ContextObject, IFormattable).ToString("", System.Globalization.CultureInfo.InvariantCulture)
+                        Else
+                            Return ContextObject.ToString
+                        End If
+                    End If
+            End Select
+        End Get
+    End Property
+    ' (...) Ve zdrojáku je tu ještě implementace typově bezpečných hodnot. Ale ta je nepovinná
+
+#Region "Helper properties" 'Pár pomocných metod
+    ' Kontextová hodnota kroku - hodnota kterou krok logicky vrací
+    Public ReadOnly Property ContextValue() As Object
+        Get
+            Select Case CurrentStep.StepClass
+                Case [Step].StepClasses.Special
+                    Select Case DirectCast(CurrentStep, SpecialStep).Type
+                        Case SpecialStep.StepType.Enumerable : Return TypeOf ContextObject Is IEnumerable AndAlso Not IsSupportedType(ContextObject.GetType)
+                        Case SpecialStep.StepType.FullName : Return CurrentStep.Object.GetType.FullName
+                        Case SpecialStep.StepType.TypeName : Return CurrentStep.Object.GetType.Name
+                        Case SpecialStep.StepType.Name
+                            If Location(Location.Count - 2).StepClass = [Step].StepClasses.Property Then
+                                Return DirectCast(Location(Location.Count - 2), PropertyStep).Property.Name
+                            ElseIf Location(Location.Count - 2).StepClass = [Step].StepClasses.Enumerable Then
+                                Return "GetEnumerator"
+                            Else
+                                Return ""
+                            End If
+                        Case SpecialStep.StepType.CircleLevel : Return Location.Count - CircleLevel - 2 '2 because 1 for difference between highest index and Count and 1 because we are at level of attribute
+                        Case Else : Return ""
+                    End Select
+                Case Else : Return ContextObject
+            End Select
+        End Get
+    End Property
+    ' Aktuální krok
+    Protected Property CurrentStep() As [Step]
+        &lt;DebuggerStepThrough()> Get
+            Return Location(Location.Count - 1)
+        End Get
+        &lt;DebuggerStepThrough()> Set(ByVal value As [Step])
+            Location(Location.Count - 1) = value
+        End Set
+    End Property
+    ' Aktuální vlastnost
+    Protected ReadOnly Property CurrentProperty() As PropertyInfo
+        &lt;DebuggerStepThrough()> Get
+            If CurrentStep.StepClass = [Step].StepClasses.Property Then Return DirectCast(CurrentStep, PropertyStep).Property Else Return Nothing
+        End Get
+    End Property
+    ' Aktuální objekt
+    Protected ReadOnly Property CurrentObject() As Object
+        Get
+            Return CurrentStep.Object
+        End Get
+    End Property
+    ' Aktuální hodnota enumerátoru
+    Private ReadOnly Property CurrentEnumerator() As IEnumerator
+        Get
+            If CurrentStep.StepClass = [Step].StepClasses.Enumerable Then
+                Return DirectCast(CurrentStep, EnumerableStep).Enumerator
+            Else
+                Return Nothing
+            End If
+        End Get
+    End Property
+    ' Kontextový objekt - objekt na kterém vykonávat operace získání vlastností a enumerace
+    Protected ReadOnly Property ContextObject() As Object
+        Get
+            Select Case CurrentStep.StepClass
+                Case [Step].StepClasses.Enumerable
+                    Return DirectCast(CurrentStep, EnumerableStep).Enumerator.Current
+                Case [Step].StepClasses.Property
+                    Return DirectCast(CurrentStep, PropertyStep).Property.GetValue(CurrentStep.Object, Nothing)
+                Case Else
+                    Return CurrentStep.Object
+            End Select
+        End Get
+    End Property
+    ' Určuje jestli je aktuální objekt ve stromové struktuře po vícté
+    Public ReadOnly Property IsCircleReferenced() As Boolean
+        Get
+            Return CircleLevel &lt; Location.Count - 1
+        End Get
+    End Property
+    ' Určuje jek daleko nahoru se nachází kruhová reference
+    Public Overridable ReadOnly Property CircleLevel() As Integer
+        Get
+            ' (...)
+        End Get
+    End Property
+    ' Nebezpečná vlastnost umožňující rozvinutí kruhových referencí do nekonečna
+    ' Některé druhy XPath dotazů se pak zacyklí!
+    Private ReadOnly _AllowCircles As Boolean
+    Public ReadOnly Property AllowCircles() As Boolean
+        Get
+            Return _AllowCircles
+        End Get
+    End Property
+#End Region
+End Class</code></pre>        
+    <p>Toť vše.</p>
+    <h2>Závěr</h2>
+    <p>Pokud takovýto XPathObjectNavigator použijete pro IEnumerable a nebudete se pohybovat po ose preceding a preceding-sibling získáváte docela výkonný nástroj pro vracení polí do XSLT.
+    Chcete-li použít obecnou strukturu objektů výkonnost torchu klesá, protože celé řešení je založenö na reflection. Kdo by ale také čekal nějakou extra výkonnost od XML! Ale přecejenom, pokud byste měli nějakou vlastní přesně definovanou struktury, vyplatilo by se pro ní asi vytvořit vlastní XPathNavigator. Pak vám tento článek snad ukázal jak.</p>
+    <h3>Zdrojáky</h3>
+    <p>Zdrojové kódy jsou součástí open-source knihovny ĐTools. Najdete je na <a href="http://CodePlex.com/DTools">CodePlexu</a>. Tato mkonkrétní třída se jmenuje Tools.XmlT.XPathT.XPathObjectNavigator. Ve zdrojácích najdete i dokumentaci vce formátu XML komentářů. Ty se vám nejlépe budou proklížet, pokud knihovnu zkompilujete (poslední build ještě tuto třídu neobsahuje :-( ) a pak se na ni podíváte <a href="http://www.aisto.com/roeder/dotnet/">Reflectorem</a>.</p>
+    <p style="text-align:right">Đonny</p>
 </body>
 </html>
+
