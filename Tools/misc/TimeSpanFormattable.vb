@@ -2,7 +2,8 @@ Imports System.Text, system.Math
 #If Config <= rc Then 'Stage:RC
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-<Version(1, 0, GetType(TimeSpanFormattable), LastChMMDDYYYY:="05/12/2007")> _
+<DebuggerDisplay("{ToString}")> _
+<Version(1, 0, GetType(TimeSpanFormattable), LastChMMDDYYYY:="10/15/2007")> _
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable
@@ -654,6 +655,14 @@ Public Structure TimeSpanFormattable
         Dim state As FormatAutomatState = FormatAutomatState.nth
         Dim StartIndex As Integer = -1
         Dim InFormat As String = ""
+        Dim NProvider As Globalization.NumberFormatInfo = Nothing
+        Dim TProvider As Globalization.DateTimeFormatInfo = Nothing
+        If prov IsNot Nothing Then
+            NProvider = prov.GetFormat(GetType(Globalization.NumberFormatInfo))
+            TProvider = prov.GetFormat(GetType(Globalization.DateTimeFormatInfo))
+        End If
+        If NProvider Is Nothing Then NProvider = Globalization.NumberFormatInfo.CurrentInfo
+        If TProvider Is Nothing Then TProvider = Globalization.DateTimeFormatInfo.CurrentInfo
         For i As Integer = 0 To format.Length - 1
             Select Case state
                 Case FormatAutomatState.nth 'Basic
@@ -671,17 +680,17 @@ Public Structure TimeSpanFormattable
                         Case "L"c : state = FormatAutomatState.L_
                         Case "t"c : state = FormatAutomatState.t1 : StartIndex = i
                         Case "T"c : state = FormatAutomatState.T_
-                        Case ":"c : ret.Append(System.Globalization.DateTimeFormatInfo.CurrentInfo.TimeSeparator)
+                        Case ":"c : ret.Append(TProvider.TimeSeparator)
                         Case """"c : state = FormatAutomatState.doubleQ : StartIndex = i
                         Case "'"c : state = FormatAutomatState.singleQ : StartIndex = i
                         Case "\"c : state = FormatAutomatState.Back
-                        Case "."c : ret.Append(System.Globalization.NumberFormatInfo.CurrentInfo.NumberDecimalSeparator)
-                        Case "-"c : If TS.TotalMilliseconds < 0 Then ret.Append(System.Globalization.NumberFormatInfo.CurrentInfo.NegativeSign)
+                        Case "."c : ret.Append(NProvider.NumberDecimalSeparator)
+                        Case "-"c : If TS.TotalMilliseconds < 0 Then ret.Append(NProvider.NegativeSign)
                         Case "+"
                             If TS.TotalMilliseconds < 0 Then
-                                ret.Append(System.Globalization.NumberFormatInfo.CurrentInfo.NegativeSign)
+                                ret.Append(NProvider.NegativeSign)
                             ElseIf TS.TotalMilliseconds > 0 Then
-                                ret.Append(System.Globalization.NumberFormatInfo.CurrentInfo.PositiveSign)
+                                ret.Append(NProvider.PositiveSign)
                             End If
                         Case ChrW(0) : Exit For
                         Case Else : ret.Append(format(i))
