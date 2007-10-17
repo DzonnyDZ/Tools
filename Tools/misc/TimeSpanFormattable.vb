@@ -322,7 +322,9 @@ Public Structure TimeSpanFormattable
 #Region "Formating"
     ''' <summary>Formats the value of the current instance using the specified format.</summary>
     ''' <param name="format">The <see cref="System.String"/> specifying the format to use.-or- null to use the default format defined for the type of the <see cref="TimeSpanFormattable"/>.</param>
-    ''' <param name="formatProvider">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system. If non-nul value is pased then it is used to format separate numbers.</param>
+    ''' <param name="formatProvider">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.
+    ''' <para>If null is pased then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para>
+    ''' </param>
     ''' <returns>A <see cref="System.String"/> containing the value of the current instance in the specified format.</returns>
     ''' <remarks>For more information about formating of <see cref="TimeSpanFormattable"/> see documentation of overloaded <seealso cref="ToString"/></remarks>
     ''' <exception cref="FormatException">Unknown predefined format -or- syntax error in format string</exception>
@@ -455,7 +457,7 @@ Public Structure TimeSpanFormattable
     ''' <para>Formats in braces:</para>
     ''' <para>
     '''     There are several contexts where you can use other nested format string to format part of rendered string. Those nested format strings are also enclosed with braces (). The format string expected in braces depends on value being formated. d,h,m,s,l and t are integral numbers, D,H,M,S and L are floating point numbers and T is <see cref="DateTime"/>. You can use any format string valied for appropriate data type - predefined or custom or you can leave braces empty to use default format.
-    '''     Because you may want to pass closin brace ')' into custom format, you must understand how the closing brace is being esacped. If you want to pass the ')' into custom format instead of using it to close custom format block escape it with '\' (type '\)'). If you want to pass backslash ('\') into nested custom format string escape it with another '\' (type '\\'). Note if you will type any other chracter than ')' or '\' after '\' inside braces-delimited nested custom format string the whole sequence will be passed into underlying nested custom format string.
+    '''     Because you may want to pass closing brace ')' into custom format, you must understand how the closing brace is being esacped. If you want to pass the ')' into custom format instead of using it to close custom format block escape it with '\' (type '\)'). If you want to pass backslash ('\') into nested custom format string escape it with another '\' (type '\\'). Note if you will type any other chracter than ')' or '\' after '\' inside braces-delimited nested custom format string the whole sequence will be passed into underlying nested custom format string.
     '''     For example if you want to use custom format string 'hh"(hours) and "mm"(minutes)"' (which produces something like '13(hours) and 33(minutes)' you should type 
     '''     <example>T(hh"(hours\) and "mm"(minutes\)")</example>(Note: Same effect can be reached with format string 'hh"(hours) and "mm"(minutes)"' directly.
     ''' </para>
@@ -471,7 +473,8 @@ Public Structure TimeSpanFormattable
     ''' <summary>Formats given <see cref="TimeSpanFormattable"/> using given format string</summary>
     ''' <param name="TS">A <see cref="TimeSpanFormattable"/> to be formated</param>
     ''' <param name="formatStr">A format string (Can be predefined or custom)</param>
-    ''' <param name="formatProvider">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system. If non-nul value is pased then it is used to format separate numbers.</param>
+    ''' <param name="formatProvider">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.
+    ''' <para>If null is pased then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para></param>
     ''' <returns><paramref name="TS"/> fromated using <paramref name="formatStr"/></returns>
     ''' <exception cref="FormatException">Unknown predefined format -or- syntax error in format string</exception>
     ''' <exception cref="ArgumentOutOfRangeException">The 'T()' patter is used on negative <see cref="TimeSpanFormattable"/> or value of current <see cref="TimeSpanFormattable"/> added to <see cref="DateTime.MinValue"/> causes <see cref="DateTime.MaxValue"/> to be exceeded.</exception>
@@ -642,7 +645,9 @@ Public Structure TimeSpanFormattable
     ''' <summary>Realizes Finite Deterministic State Automaton that parses format string and produces resulting output string</summary>
     ''' <param name="TS">A <see cref="TimeSpanFormattable"/> to be formated</param>
     ''' <param name="format">Format string</param>
-    ''' <param name="prov">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system. If non-nul value is pased then it is used to format separate numbers.</param>
+    ''' <param name="prov">The <see cref="System.IFormatProvider"/> to use to format the value.-or- null to obtain the numeric format information from the current locale setting of the operating system.
+    ''' <para>If null is pased then <see cref="System.Globalization.CultureInfo.CurrentCulture"/> is used. This argument is used to obtain decimal separators, positive and negative signs and time separators in custom format and is also passed to custom subformats in braces. In order this parameter to work it's <see cref="IFormatProvider.GetFormat">GetFormat</see> method must return non-null value for <see cref="System.Globalization.NumberFormatInfo"/> and/or <see cref="System.Globalization.DateTimeFormatInfo"/>. If one of returned values is null <see cref="System.Globalization.NumberFormatInfo.CurrentInfo"/> resp. <see cref="System.Globalization.DateTimeFormatInfo.CurrentInfo"/> is used.</para>
+    ''' </param>
     ''' <returns><paramref name="TS"/> formated using <paramref name="format"/></returns>
     ''' <remarks>For more information about formating <see cref="TimeSpanFormattable"/> see <seealso cref="ToString"/></remarks>
     ''' <exception cref="FormatException">Unknown predefined format -or- syntax error in format string</exception>
