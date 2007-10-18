@@ -1,10 +1,15 @@
-Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms
+Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms, Tools.ComponentModelT
 Namespace WindowsT.FormsT
-    '#If Config <= Nightly Then set in tools.vbproj
-    'Stage: Nightly
-    'ASAP:Mark,Bitmap,Comment,Forum,wiki, describe propeties, , conditional file
+    '#If Config <= Alpha Then set in tools.vbproj
+    'Stage: Alpha
+    'ASAP:Bitmap
     'Localize: UI
+    ''' <summary>Control that allows eas and very sophisticated editing of set of keywords</summary>
+    ''' <remarks>There is a list of known keywords (which can be adited by user and persisted). Synonyms of keywords can be defined and added automatically in list.</remarks>
     <ComponentModelT.Prefix("kwe")> _
+    <MainTool(FirstVerMMDDYYYY:="06/26/2007")> _
+    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(KeyWordsEditor), LastChMMDDYYYY:="10/18/2007")> _
     Public Class KeyWordsEditor
         Implements IComparer(Of String)
 #Region "Auto complete"
@@ -17,7 +22,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets synonyms configuration</summary>
         ''' <remarks><para>Synonyms configuration is such that its list of pairs of arrays. Key array contain words one of which is added than also all key-array words are added and all value-array words are added to</para>
         ''' <para>If this property is null then synonym capability of <see cref="KeyWordsEditor"/> is turned off</para></remarks>
-        <Browsable(False)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property Synonyms() As List(Of KeyValuePair(Of String(), String()))
             Get
                 Return _Synonyms
@@ -27,10 +32,11 @@ Namespace WindowsT.FormsT
                 TmiEnabled()
             End Set
         End Property
-        ''' <summary>Name per-session cache of keywords used by this instance</summary>
+        ''' <summary>Name of per-session cache of keywords used by this instance</summary>
         ''' <value>An enmpty <see cref="String"/> to use no temporary chache</value>
-        <DefaultValue("")> _
-        Public Property AutoCompleteCacheName() As String
+        <DefaultValue(""), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Name of per-session cache of keywords used by this instance")> _
+        Public Property AutoCompleteCacheName() As String 'Localize:Description
             Get
                 Return _AutoCompleteCacheName
             End Get
@@ -116,7 +122,7 @@ Namespace WindowsT.FormsT
         ''' <summary>contains value of the <see cref="AutoCompleteStable"/> property</summary>
         Private WithEvents _AutoCompleteStable As ListWithEvents(Of String)
         ''' <summary>Permanent autocomplete source</summary>
-        <Browsable(False)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property AutoCompleteStable() As ListWithEvents(Of String)
             Get
                 Return _AutoCompleteStable
@@ -142,7 +148,7 @@ Namespace WindowsT.FormsT
             Next item
         End Sub
         ''' <summary>Gets autocomplete chache used by this instance (if any)</summary>
-        <Browsable(False)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public ReadOnly Property InstanceAutoCompleteChache() As ListWithEvents(Of String)
             Get
                 If AutoCompleteCacheName <> "" Then
@@ -166,7 +172,9 @@ Namespace WindowsT.FormsT
         Private _CaseSensitive As Boolean = False
         ''' <summary>Gets or sets value idicating if keywords are case sensitive</summary>
         <DefaultValue(False)> _
-        Public Property CaseSensitive() As Boolean
+        <Description("Gets or sets value idicating if keywords are case sensitive")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        Public Property CaseSensitive() As Boolean 'Localize:Description
             Get
                 Return _CaseSensitive
             End Get
@@ -179,7 +187,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets state of <see cref="Status"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(ControlState), "Enabled")> _
-        Public Property StatusState() As ControlState
+        <Description("Gets or sets state of Status")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+        Public Property StatusState() As ControlState 'Localize:Description
             Get
                 Return Misc.ControlState(stmStatus)
             End Get
@@ -189,7 +199,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary><see cref="StatusMarker"/> present on this control</summary>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        Public ReadOnly Property Status() As StatusMarker
+        <Description("StatusMarker present on this control")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+        Public ReadOnly Property Status() As StatusMarker 'Localile: Description
             Get
                 Return stmStatus
             End Get
@@ -197,7 +209,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets state of thesaurus button</summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(ControlState), "Enabled")> _
-        Public Property ThesaurusButtonState() As ControlState
+        <Description("Gets or sets state of thesaurus button")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        Public Property ThesaurusButtonState() As ControlState 'Localize: Description
             Get
                 Return Misc.ControlState(cmdThesaurus)
             End Get
@@ -207,8 +221,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or sets state of merge button</summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
+        <Description("Gets or sets state of merge button"), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(GetType(ControlState), "Enabled")> _
-        Public Property MergeButtonState() As ControlState
+        Public Property MergeButtonState() As ControlState 'Localize: Description
             Get
                 Return Misc.ControlState(cmdMerge)
             End Get
@@ -218,7 +233,8 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or sets value indicating if merge button is checked (orange) or not (gray)</summary>
         <DefaultValue(True)> _
-        Public Property Merge() As Boolean
+        <Description("Gets or sets value indicating if merge button is checked (orange) or not (gray)"), KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        Public Property Merge() As Boolean 'Localize: Description
             Get
                 Return cmdMerge.BackColor = Drawing.Color.Orange
             End Get
@@ -233,13 +249,13 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Raised after value of the <see cref="Merge"/> property changes</summary>
-        Public Event MergeChanged As EventHandler
+        <Category("Value Changed"), Description("Raised after value of the Merge property changed")> _
+        Public Event MergeChanged As EventHandler 'Localize: Category(How are categories of .NET controls set), Description
         ''' <summary>Raises the <see cref="MergeChanged"/> event</summary>
         ''' <param name="e">Event params</param>
         Protected Overridable Sub OnMergeChanged(ByVal e As EventArgs)
             RaiseEvent MergeChanged(Me, e)
         End Sub
-
 
         Private Sub cmdMerge_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdMerge.Click
             Me.Merge = Not Me.Merge
@@ -309,7 +325,8 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised when user adds keyword</summary>
         ''' <remarks>Not raised when keyword is added programatically</remarks>
-        Public Event KeywordAdded As EventHandler(Of ListWithEvents(Of String).ItemEventArgs)
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action), Description("Raised when usr adds keyword")> _
+        Public Event KeywordAdded As EventHandler(Of ListWithEvents(Of String).ItemEventArgs) 'Localize: Description
         ''' <summary>Raises the <see cref="KeywordAdded"/> event</summary> 
         ''' <param name="e">event parameters</param>
         Protected Overridable Sub OnKeywordAdded(ByVal e As ListWithEvents(Of String).ItemEventArgs)
@@ -321,7 +338,7 @@ Namespace WindowsT.FormsT
             RaiseEvent KeywordAdded(Me, e)
         End Sub
         ''' <summary>List of keywords currenly in list</summary>
-        <Browsable(False)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public ReadOnly Property KeyWords() As IList(Of String)
             Get
                 Return New ListWrapper(Of String)(lstKW.Items)
@@ -357,9 +374,15 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised after user manually removes keyword(s)</summary>
         ''' <remarks>Not raised when keywords are removed programatically</remarks>
-        Public Event KeyWordRemoved As EventHandler(Of ListWithEvents(Of String).ItemsEventArgs)
-        Private _AutoChange As Boolean = True
-        Public Property AutoChange() As Boolean
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action), Description("Raised after user manually removes keyword(s)")> _
+        Public Event KeyWordRemoved As EventHandler(Of ListWithEvents(Of String).ItemsEventArgs) 'Localize: Description
+        ''' <summary>Contains value of the <see cref="AutoChange"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _AutoChange As Boolean = True
+        ''' <summary>Gets or sets value indicating if <see cref="Status">Status</see>.<see cref="StatusMarker.Status">Status</see> automatically changes when keyword is added or removed</summary>
+        <Description("Gets or sets value indicating if Status.Status automatically changes when keyword is added or removed")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(True)> _
+        Public Property AutoChange() As Boolean 'Localize: Description
             Get
                 Return _AutoChange
             End Get

@@ -1,5 +1,5 @@
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then
+#If Config <= Alpha Then
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
         Partial Class ThesaurusForm
         Inherits System.Windows.Forms.Form

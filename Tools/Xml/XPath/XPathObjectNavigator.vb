@@ -54,7 +54,7 @@ Namespace XmlT.XPathT
     ''' </list>
     ''' </remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(XPathObjectNavigator), LastChMMDDYYYY:="09/17/2007")> _
+    <Version(1, 0, GetType(XPathObjectNavigator), LastChMMDDYYYY:="10/18/2007")> _
     <StandAloneTool(FirstVerMMDDYYYY:="09/17/2007")> _
     Public Class XPathObjectNavigator : Inherits XPathNavigator : Implements ICloneable(Of XPathNavigator)
 #Region "Steps"
@@ -332,14 +332,22 @@ Namespace XmlT.XPathT
                 Return _Location
             End Get
         End Property
-        'ASAP: Comment this
+#Region "Name Constants"
+        ''' <summary>Name of namespace for pseudo-document</summary>
         Protected Const ns$ = ""
+        ''' <summary>Name of attribute name</summary>
         Protected Const atrName$ = "name"
+        ''' <summary>Name of attribute type-name</summary>
         Protected Const atrTypeName$ = "type-name"
+        ''' <summary>Name of attribute full-name</summary>
         Protected Const atrFullName$ = "full-name"
+        ''' <summary>Name of attribute enumerable</summary>
         Protected Const atrEnumerable$ = "enumerable"
+        ''' <summary>Name of attribute circele-level</summary>
         Protected Const atrCircleLevel$ = "circle-level"
+        ''' <summary>Name of ode item-of</summary>
         Protected Const nodItemOf$ = "item-of"
+#End Region
         ''' <summary>Private CTor dhat does common construction steps</summary>
         ''' <param name="AllowCircles">Valus for the <see cref="AllowCircles"/> property</param>
         Private Sub New(Optional ByVal AllowCircles As Boolean = False)
