@@ -1,3 +1,5 @@
+Imports System.Runtime.CompilerServices
+
 #If Config <= Nightly Then
 'ASAP:Wiki, Forum, Mark, Comment
 Public Module TypeTools
@@ -25,7 +27,12 @@ Public Module TypeTools
     ''' <param name="Inherit">When true, look up the hierarchy chain for the inherited custom attribute.</param>
     ''' <returns>First attribute returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
+#If VBC_VER >= 9 Then
+    <Extension()> _
     Public Function GetAttribute(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T
+#Else
+    Public Function GetAttribute(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T
+#End If
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing OrElse attrs.Length = 0 Then Return Nothing Else Return attrs(0)
     End Function

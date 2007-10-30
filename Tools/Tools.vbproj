@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>8.0.50727</ProductVersion>
+    <ProductVersion>9.0.20706</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -25,6 +25,8 @@
     <OldToolsVersion>2.0</OldToolsVersion>
     <UpgradeBackupLocation>
     </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionInfer>On</OptionInfer>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -88,6 +90,9 @@
     <Reference Include="Accessibility" />
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Data" />
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Deployment" />
@@ -345,14 +350,16 @@
       <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
     </None>
     <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Drawing\Metadata\Exif\ExifTags.xslt" />
     <None Include="Drawing\Metadata\Exif\ExifTags.xsx">
       <DependentUpon>ExifTags.xsd</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xsd">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Globalization\ISOLanguages.xsx">
       <DependentUpon>ISOLanguages.xsd</DependentUpon>
@@ -413,14 +420,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
-      <SubType>Designer</SubType>
+      <SubType>
+      </SubType>
     </None>
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xsx">
       <DependentUpon>IPTCTags.xsd</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xslt" />
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt" />
-    <Content Include="Data\Metadata\MetaData Query language prposal.xml" />
+    <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
     <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>

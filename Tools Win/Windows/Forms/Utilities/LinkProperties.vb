@@ -6,8 +6,12 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
     ''' <remarks>See also <seealso cref="Tools.DrawingT.SystemColorsExtension"/></remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _
-    <Version(1, 0, GetType(LinkProperties), LastChMMDDYYYY:="05/10/2007")> _
+    <Version(1, 0, GetType(LinkProperties), LastChMMDDYYYY:="10/30/2007")> _
+    <StandAloneTool(FirstVerMMDDYYYY:="05/10/2007")> _
     Public NotInheritable Class LinkProperties
+        ''' <summary>There is no CTor</summary>
+        Partial Private Sub New()
+        End Sub
         ''' <summary>Color of not visited not hovered hyperlink</summary>
         ''' <remarks>This system value can be also accesed via <see cref="System.Windows.Forms.ToolstripLabel.LinkColor"/></remarks>
         Public Shared ReadOnly Property Color() As Color
@@ -58,6 +62,9 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Copy of Micforoft's internal System.Windows.Forms.LinkUtilities class that gives access to link setting of Internet Explorer</summary>
     ''' <remarks>This is 1:1 copy of <see cref="T:System.Windows.Forms.LinkUtilities"/> got by Reflector</remarks>
     Friend NotInheritable Class LinkUtilities
+        ''' <summary>There is no CTor</summary>
+        Partial Private Sub New()
+        End Sub
         ''' <summary>Gets link fonts</summary>
         ''' <param name="baseFont">Default font</param>
         ''' <param name="link">Custom link behavior, pass <see cref="LinkBehavior.SystemDefault"/> to use system default</param>
@@ -176,7 +183,6 @@ Namespace WindowsT.FormsT.UtilitiesT
             Return LinkBehavior.AlwaysUnderline
         End Function
 
-
         ' Properties
         ''' <summary>Color of active hyperlink</summary>
         Public Shared ReadOnly Property IEActiveLinkColor() As Color
@@ -205,7 +211,6 @@ Namespace WindowsT.FormsT.UtilitiesT
                 Return _IEVisitedLinkColor
             End Get
         End Property
-
 
         ' Fields
         ''' <summary>Contains value of the <see cref="IEActiveLinkColor"/> property</summary>
