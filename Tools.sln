@@ -1,41 +1,12 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 9.00
-# Visual Studio 2005
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{847298BA-D4D1-4EBD-AF69-0193A77DC90C}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Latest.bat = Latest.bat
 	EndProjectSection
 EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-	ProjectSection(ProjectDependencies) = postProject
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}
-	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win", "Tools Win\Tools Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "DevelopmentTools", "{FEA4635F-E0AE-4562-A292-1B6ABCF4444F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		DevelopmentTools\read.me.txt = DevelopmentTools\read.me.txt
 		DevelopmentTools\Robocopy.exe = DevelopmentTools\Robocopy.exe
@@ -43,60 +14,41 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "Develop
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{677A518E-909C-414F-AC5E-528AB32023AF}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Used doc\IPTC IIM Record No 3.pdf = Used doc\IPTC IIM Record No 3.pdf
 		Used doc\IPTC IIM.pdf = Used doc\IPTC IIM.pdf
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Created doc", "Created doc", "{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Created doc\JPEG, EXIF, IPTC.doc = Created doc\JPEG, EXIF, IPTC.doc
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Projects", "Projects", "{507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol", "Projects\Metanol\Metanol.vbproj", "{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Visual Studio", "Tools Visual Studio\Tools Visual Studio.vbproj", "{DCD6658E-6008-4668-BBDF-CCB0F0267759}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Articles", "Articles", "{982F36B7-A3E5-4782-96B0-9979A95610F1}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cz", "cz", "{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE}"
-	ProjectSection(WebsiteProperties) = preProject
-		Debug.AspNetCompiler.Debug = "True"
-		Release.AspNetCompiler.Debug = "False"
-	EndProjectSection
 	ProjectSection(SolutionItems) = preProject
 		Articles\cz\XPathObjectNavigator.htm = Articles\cz\XPathObjectNavigator.htm
 	EndProjectSection
 EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj", "{FCF346AC-D1C3-42DB-9026-9144240FB766}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
+	ProjectSection(ProjectDependencies) = postProject
+		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}
+	EndProjectSection
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win", "Tools Win\Tools Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol", "Projects\Metanol\Metanol.vbproj", "{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}"
+EndProject
+Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Visual Studio", "Tools Visual Studio\Tools Visual Studio.vbproj", "{DCD6658E-6008-4668-BBDF-CCB0F0267759}"
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
+		SccNumberOfProjects = 6
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -116,23 +68,6 @@ Global
 		SccProjectUniqueName5 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
 		SccProjectName5 = Tools\u0020Visual\u0020Studio
 		SccLocalPath5 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName6 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName6 = Tools.sln
-		SccProjectName6 = Projects/Metanol
-		SccLocalPath6 = Projects\\Metanol
-		SccLocalPath7 = .
-		SccProjectUniqueName8 = Tests\\Tests.vbproj
-		SccProjectName8 = Tests
-		SccLocalPath8 = Tests
-		SccProjectUniqueName9 = Tools\\Tools.vbproj
-		SccProjectName9 = Tools
-		SccLocalPath9 = Tools
-		SccProjectUniqueName10 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName10 = Tools\u0020Visual\u0020Studio
-		SccLocalPath10 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName11 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName11 = Tools\u0020Win
-		SccLocalPath11 = Tools\u0020Win
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
@@ -315,472 +250,5 @@ Global
 		{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE} = {982F36B7-A3E5-4782-96B0-9979A95610F1}
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccProjectUniqueName4 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName4 = Tools.sln
-		SccProjectName4 = Projects/Metanol
-		SccLocalPath4 = Projects\\Metanol
-		SccProjectUniqueName5 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName5 = Tools\u0020Visual\u0020Studio
-		SccLocalPath5 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName6 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName6 = Tools.sln
-		SccProjectName6 = Projects/Metanol
-		SccLocalPath6 = Projects\\Metanol
-		SccLocalPath7 = .
-		SccProjectUniqueName8 = Tests\\Tests.vbproj
-		SccProjectName8 = Tests
-		SccLocalPath8 = Tests
-		SccProjectUniqueName9 = Tools\\Tools.vbproj
-		SccProjectName9 = Tools
-		SccLocalPath9 = Tools
-		SccProjectUniqueName10 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName10 = Tools\u0020Visual\u0020Studio
-		SccLocalPath10 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName11 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName11 = Tools\u0020Win
-		SccLocalPath11 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccProjectUniqueName4 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName4 = Tools.sln
-		SccProjectName4 = Projects/Metanol
-		SccLocalPath4 = Projects\\Metanol
-		SccProjectUniqueName5 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName5 = Tools\u0020Visual\u0020Studio
-		SccLocalPath5 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName6 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName6 = Tools.sln
-		SccProjectName6 = Projects/Metanol
-		SccLocalPath6 = Projects\\Metanol
-		SccLocalPath7 = .
-		SccProjectUniqueName8 = Tests\\Tests.vbproj
-		SccProjectName8 = Tests
-		SccLocalPath8 = Tests
-		SccProjectUniqueName9 = Tools\\Tools.vbproj
-		SccProjectName9 = Tools
-		SccLocalPath9 = Tools
-		SccProjectUniqueName10 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName10 = Tools\u0020Visual\u0020Studio
-		SccLocalPath10 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName11 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName11 = Tools\u0020Win
-		SccLocalPath11 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 12
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccProjectUniqueName4 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName4 = Tools.sln
-		SccProjectName4 = Projects/Metanol
-		SccLocalPath4 = Projects\\Metanol
-		SccProjectUniqueName5 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName5 = Tools\u0020Visual\u0020Studio
-		SccLocalPath5 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName6 = Projects\\Metanol\\Metanol.vbproj
-		SccProjectTopLevelParentUniqueName6 = Tools.sln
-		SccProjectName6 = Projects/Metanol
-		SccLocalPath6 = Projects\\Metanol
-		SccLocalPath7 = .
-		SccProjectUniqueName8 = Tests\\Tests.vbproj
-		SccProjectName8 = Tests
-		SccLocalPath8 = Tests
-		SccProjectUniqueName9 = Tools\\Tools.vbproj
-		SccProjectName9 = Tools
-		SccLocalPath9 = Tools
-		SccProjectUniqueName10 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
-		SccProjectName10 = Tools\u0020Visual\u0020Studio
-		SccLocalPath10 = Tools\u0020Visual\u0020Studio
-		SccProjectUniqueName11 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName11 = Tools\u0020Win
-		SccLocalPath11 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
-	EndGlobalSection
-	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 8
-		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
-		SccTeamFoundationServer = https://tfs01.codeplex.com/
-		SccLocalPath0 = .
-		SccProjectUniqueName1 = Tests\\Tests.vbproj
-		SccProjectName1 = Tests
-		SccLocalPath1 = Tests
-		SccProjectUniqueName2 = Tools\\Tools.vbproj
-		SccProjectName2 = Tools
-		SccLocalPath2 = Tools
-		SccProjectUniqueName3 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName3 = Tools\u0020Win
-		SccLocalPath3 = Tools\u0020Win
-		SccLocalPath4 = .
-		SccProjectUniqueName5 = Tests\\Tests.vbproj
-		SccProjectName5 = Tests
-		SccLocalPath5 = Tests
-		SccProjectUniqueName6 = Tools\\Tools.vbproj
-		SccProjectName6 = Tools
-		SccLocalPath6 = Tools
-		SccProjectUniqueName7 = Tools\u0020Win\\Tools\u0020Win.vbproj
-		SccProjectName7 = Tools\u0020Win
-		SccLocalPath7 = Tools\u0020Win
 	EndGlobalSection
 EndGlobal
