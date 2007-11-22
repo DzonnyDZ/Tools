@@ -1,5 +1,4 @@
-#If Config <= Nightly Then 'Stage: Nightly
-'ASAP: Forum, Wiki
+#If Config <= RC Then 'Stage: RC
 ''' <summary>Universal delegate of procedure with no argument</summary>
 Public Delegate Sub dSub()
 ''' <summary>Universal delegate of procedure with 1 argument</summary>

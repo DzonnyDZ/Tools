@@ -1,7 +1,8 @@
 Imports System.Runtime.CompilerServices
 
-#If Config <= Nightly Then
-'ASAP:Wiki, Forum, Mark, Comment
+#If Config <= Nightly Then 'Stage:Nightly
+<Author("Ðonny", "dzonny.dz@.gmail.com", "http://dzonny.cz")> _
+<Version(1, 0, GetType(TypeTools))> _
 Public Module TypeTools
     ''' <summary>Checks if specified value is member of an enumeration</summary>
     ''' <param name="value">Value to be chcked</param>
