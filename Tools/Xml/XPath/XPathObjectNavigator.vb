@@ -821,7 +821,11 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
                     Return .ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
                 End With
                 If TypeOf obj Is Boolean Then
+#If VBC_VER >= 9.0 Then
+                    Return If(DirectCast(obj, Boolean), "true", "false")
+#Else
                     Return Tools.VisualBasicT.iif(DirectCast(obj, Boolean), "true", "false")
+#End If
                 End If
             ElseIf obj.GetType.IsEnum Then
                 Return DirectCast(obj, System.Enum).ToString()

@@ -1,4 +1,4 @@
-﻿Imports Tools.ComponentModelt, System.ComponentModel
+﻿Imports Tools.ComponentModelT, System.ComponentModel, Tools.ResourcesT
 Namespace ComponentModelT
     '#If Config <= RC Then Stage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="LCategoryAttribute"/>, <see cref="LDescriptionAttribute"/> and <see cref="LDisplayNameAttribute"/></summary>
@@ -8,7 +8,7 @@ Namespace ComponentModelT
             ' This call is required by the Windows Form Designer.
             InitializeComponent()
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.ResourcesT.ToolsIcon
+            Me.Icon = ToolsIcon
             prgMain.SelectedObject = New Obj
         End Sub
         ''' <summary>Shows test form</summary>

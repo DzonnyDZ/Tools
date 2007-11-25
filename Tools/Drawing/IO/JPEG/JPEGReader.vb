@@ -34,7 +34,11 @@ Namespace DrawingT.IO.JPEG
         ''' JPEG stream doesn't end with corect EOI marker
         ''' </exception>
         Public Sub New(ByVal Path As String, Optional ByVal Write As Boolean = False)
+#If VBC_VER >= 9 Then
+            Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, If(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
+#Else
             Stream = New System.IO.FileStream(Path, System.IO.FileMode.Open, VisualBasicT.iif(Write, System.IO.FileAccess.ReadWrite, System.IO.FileAccess.Read), System.IO.FileShare.Read)
+#End If
             CloseStreamOnDispose = True
             Parse()
         End Sub
@@ -280,7 +284,11 @@ Namespace DrawingT.IO.JPEG
                     Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
 
                     Dim CurrIPTCStreamLen As Long = Me.GetIPTCStream.Length
+#If VBC_VER >= 9.0 Then
+                    Dim Pad As Byte = If((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
+#Else
                     Dim Pad As Byte = VisualBasicT.iif((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
+#End If
                     Overwrite.Add(APP14SizePos, Me.Markers(Me.PhotoshopMarkerIndex).Length + (IPTCData.Length - (CurrIPTCStreamLen + Pad))) 'New length of APP14
                     LenghtToReplace = 4 + CurrIPTCStreamLen + Pad
                 Else
@@ -464,8 +472,13 @@ Namespace DrawingT.IO.JPEG
         ''' <remarks>See <see cref="DataSize"/> for size of data part of segment</remarks>
         Public ReadOnly Property WholeSize() As Long
             Get
+#If VBC_VER >= 9.0 Then
+                Return DataSize + 2 + 1 + If(Name.Length = 0, 2, Name.Length) + 4 + 4 + _
+                    If(NamePaddNeeded, 1, 0) + If(DataPadNeeded, 1, 0)
+#Else
                 Return DataSize + 2 + 1 + VisualBasicT.iif(Name.Length = 0, 2, Name.Length) + 4 + 4 + _
                     Tools.VisualBasicT.iif(NamePaddNeeded, 1, 0) + Tools.VisualBasicT.iif(DataPadNeeded, 1, 0)
+#End If
                 '2 - Type
                 '1 - Length of Pascal string
                 '4 - Size

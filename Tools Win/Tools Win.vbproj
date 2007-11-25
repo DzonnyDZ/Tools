@@ -130,6 +130,7 @@
     <Compile Include="Windows\Forms\ExtendedForm.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\ScreenSaverBase.vb" />
     <Compile Include="Windows\Forms\Utilities\LinkProperties.vb" />
   </ItemGroup>
   <ItemGroup>

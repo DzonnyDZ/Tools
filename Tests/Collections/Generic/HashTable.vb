@@ -1,4 +1,4 @@
-﻿Imports Tools.CollectionsT.GenericT
+﻿Imports Tools.CollectionsT.GenericT, Tools.ResourcesT
 Namespace CollectionsT.GenericT
     '#If Config <= Nightly This conditional compilation is done in Tests.vbproj
     ''' <summary>Test Form for testing <see cref="HashTable(Of String)"/></summary>
@@ -12,7 +12,7 @@ Namespace CollectionsT.GenericT
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.ResourcesT.ToolsIcon
+            Me.Icon = ToolsIcon
         End Sub
         ''' <summary>Simple case-insencitive string comparer</summary>
         Private Class eqc : Implements IEqualityComparer(Of String)

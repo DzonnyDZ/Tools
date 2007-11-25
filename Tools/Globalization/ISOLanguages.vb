@@ -1,13 +1,13 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2701.36373
+' Generator: TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2833.35810
 '
 '
 ' Generated code from "ISOLanguages.xml"
 '
-' Created: 2. října 2007
-' By:DZONNY\Honza
+' Created: 22. listopadu 2007
+' By:noutbuk\Honza
 '
 Namespace GlobalizationT
 #If Congig <= Alpha 'Stage: Alpha
@@ -573,7 +573,7 @@ Namespace GlobalizationT
 		''' <summary>Code for Dogrib (Tłįchǫ)</summary>
 		<DebuggerNonUserCode()> Public Shared Readonly Property [dgr]() As ISOLanguage
 			Get
-				Return New ISOLanguage("", "dgr", "Dogrib", "Tłįchǫ", 2110UI, CodeTypes.spoken, "")
+                Return New ISOLanguage("", "dgr", "Dogrib", "Tłįchǫ", 2110UI, CodeTypes.spoken, "")
 			End Get
 		End Property
 		''' <summary>Code for Dinka (Thuɔŋjäŋ)</summary>

@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 30. října 2007
+' Created: 22. listopadu 2007
 ' By:noutbuk\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages

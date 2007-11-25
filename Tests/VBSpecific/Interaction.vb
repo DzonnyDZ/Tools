@@ -1,4 +1,5 @@
-﻿Namespace VisualBasicT
+﻿#If VBC_VER < 9.0 Then
+Namespace VisualBasicT
     ''' <summary>Tests for <see cref="Tools.VisualBasicT.Interaction"/></summary>
     Friend Module Interaction
         Public Sub iif()
@@ -6,3 +7,4 @@
         End Sub
     End Module
 End Namespace
+#End If

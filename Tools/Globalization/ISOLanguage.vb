@@ -59,7 +59,11 @@ Namespace GlobalizationT
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not valid <see cref="CodeTypes"/> value</exception>
         <CLSCompliant(False)> _
         Public Sub New(ByVal ISO2 As String, ByVal English As String, Optional ByVal Native As String = Nothing, Optional ByVal ISO1 As String = Nothing, Optional ByVal Type As CodeTypes = CodeTypes.Spoken, Optional ByVal Scale As UInteger = 0, Optional ByVal Duplicate As String = Nothing)
+#If VBC_VER >= 9.0 Then
+            Me.new(ISO1, ISO2, English, If(Native Is Nothing, English, Native), Scale, Type, Duplicate)
+#Else
             Me.new(ISO1, ISO2, English, Tools.VisualBasicT.Interaction.iif(Native Is Nothing, English, Native), Scale, Type, Duplicate)
+#End If
         End Sub
         ''' <summary>Contains value of the <see cref="ISO1"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _

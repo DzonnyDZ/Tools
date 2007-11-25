@@ -412,8 +412,13 @@ Namespace IOt
         ''' <param name="ToAlternative">If set to true the alternative directory separator (/ on Windows) is used instead of primary (\ on Windows)</param>
         ''' <remarks>See also <seealso cref="System.IO.Path.DirectorySeparatorChar"/>, <seealso cref="System.IO.Path.AltDirectorySeparatorChar"/></remarks>
         Public Sub Normalize(Optional ByVal ToAlternative As Boolean = False)
+#If VBC_VER >= 9.0 Then
+            Dim Old As Char = If(ToAlternative, System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
+            Dim [New] As Char = If(ToAlternative, System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar)
+#Else
             Dim Old As Char = iif(ToAlternative, System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
             Dim [New] As Char = iif(ToAlternative, System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar)
+#End If
             Path = Path.Replace(Old, [New])
         End Sub
         ''' <summary>Gets segmnents (directories) of path</summary>

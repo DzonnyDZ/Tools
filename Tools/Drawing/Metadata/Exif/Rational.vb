@@ -244,7 +244,11 @@ Namespace DrawingT.MetadataT
             If Denominator = 0 Then Return Me
             Dim Negative As Boolean = Numerator < 0 Xor Denominator < 0
             Dim GCD As UInt32 = MathT.GCD(System.Math.Abs(Numerator), System.Math.Abs(Denominator))
+#If VBC_VER >= 9.0 Then
+            Return New SRational(If(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
+#Else
             Return New SRational(Tools.VisualBasicT.iif(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
+#End If
         End Function
 #Region "Operators"
         ''' <summary>Adds two <see cref="SRational"/>s</summary>

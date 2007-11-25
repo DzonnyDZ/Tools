@@ -1,7 +1,7 @@
-Imports Microsoft.VisualStudio.DebuggerVisualizers
+Imports Microsoft.VisualStudio.DebuggerVisualizers, Tools.ResourcesT, Tools.DiagnosticsT
 '#If Config <= Nightly is set in Tests.vbproj
 Namespace DiagnosticsT
-    ''' <summary>Testing <see cref="Tools.DiagnosticsT.ImageVisualizer"/></summary>
+    ''' <summary>Testing <see cref="ImageVisualizer"/></summary>
     ''' <remarks><seealso>http://msdn2.microsoft.com/en-us/library/zayyhzts.aspx</seealso></remarks>
     Public Class frmImageVisualizer
 
@@ -12,7 +12,7 @@ Namespace DiagnosticsT
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            Me.Icon = Tools.ResourcesT.ToolsIcon
+            Me.Icon = ToolsIcon
         End Sub
         ''' <summary>Runs test</summary>
         Public Shared Sub Test()
@@ -31,7 +31,7 @@ Namespace DiagnosticsT
                 End Try
                 picImg.Image = img
                 Try
-                    Dim dh As New VisualizerDevelopmentHost(img, GetType(Tools.DiagnosticsT.ImageVisualizer), GetType(Tools.DiagnosticsT.ImageVisualizer.VisualizerImageSource))
+                    Dim dh As New VisualizerDevelopmentHost(img, GetType(ImageVisualizer), GetType(ImageVisualizer.VisualizerImageSource))
                     dh.ShowVisualizer()
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)

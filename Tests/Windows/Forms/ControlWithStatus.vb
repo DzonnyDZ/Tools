@@ -1,10 +1,11 @@
 '#If Config <= Alpha This conditional compilation is done in Tests.vbproj
 Namespace WindowsT.FormsT
     ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.TransparentTextBox"/></summary>
+    <Obsolete("Tools.WindowsT.FormsT.TransparentTextBox is obsolete")> _
     Public Class frmControlWithStatus
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
-            Dim frm As New frmControlWithstatus
+            Dim frm As New frmControlWithStatus
             frm.ShowDialog()
         End Sub
         ''' <summary>CTor</summary>

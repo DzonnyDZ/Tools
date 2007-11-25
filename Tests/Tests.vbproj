@@ -88,7 +88,7 @@
     <Config>4</Config>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -254,6 +254,7 @@
     <Compile Include="Windows\Forms\ProgressBarWithText.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\ScreenSaverBase.vb" />
     <Compile Include="Windows\Forms\TransparentLabel.Designer.vb">
       <DependentUpon>TransparentLabel.vb</DependentUpon>
     </Compile>
@@ -410,6 +411,15 @@
     <None Include="Resources\FindHS.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Resources\CriticalError.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\warning.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\infoBubble.bmp" />
+  </ItemGroup>
+  <ItemGroup>
     <ProjectReference Include="..\Tools Visual Studio\Tools Visual Studio.vbproj">
       <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
       <Name>Tools Visual Studio</Name>
@@ -422,15 +432,6 @@
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\CriticalError.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\warning.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\infoBubble.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

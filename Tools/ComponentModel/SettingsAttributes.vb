@@ -9,7 +9,11 @@ Namespace ComponentModelT
         ''' <param name="Property">Name of the property which's <see cref="SettingsDescriptionAttribute"/> initializes this attribute</param>
         ''' <param name="AlternateDescription">Alternative description used in case of failure of getting description form specified property</param>
         Public Sub New(ByVal Settings As Type, ByVal [Property] As String, Optional ByVal AlternateDescription As String = "")
-            MyBase.New(IIf(AlternateDescription = "", [Property], AlternateDescription))
+#If VBC_VER >= 9 Then
+            MyBase.New(If(AlternateDescription = "", [Property], AlternateDescription))
+#Else
+            MyBase.New(iif(AlternateDescription = "", [Property], AlternateDescription))
+#End If
             Me.Settings = Settings
             Me.Property = [Property]
         End Sub

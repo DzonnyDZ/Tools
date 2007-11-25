@@ -1309,7 +1309,11 @@ Namespace WindowsT.FormsT
                         lblItemInfo.Text = resources.GetString("lblItemInfo.Text")
                     Else
                         pgrProperty.SelectedObjects = (New ArrayList(lstItems.SelectedItems)).ToArray
+#If VBC_VER >= 9.0 Then
+                        Enable(If(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
+#Else
                         Enable(VisualBasicT.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
+#End If
                         If lstItems.SelectedItems.Count = 1 Then
                             lblItemInfo.Text = lstItems.SelectedItems(0).GetType.Name & ": " & lstItems.SelectedItems(0).ToString.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ").Replace(vbTab, " ")
                         Else

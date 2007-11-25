@@ -8,7 +8,7 @@
     <DoNotApplyAuthorAndVersionAttributes()> _
     Public Module Resources
 #If Config <= Release Then
-        ''' <summary>Icon reprecenting ĐTools project</summary>
+        ''' <summary>Icon representing ĐTools project</summary>
         ''' <remarks>The 'Đ' letter</remarks>
         Public ReadOnly Property ToolsIcon() As System.Drawing.Icon
             Get

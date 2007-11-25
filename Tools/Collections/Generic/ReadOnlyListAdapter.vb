@@ -429,7 +429,7 @@ Namespace CollectionsT.GenericT
             End Function
         End Class
 
-        ''' <summary>Wraps <see cref="Action"/> of <see cref="TTo"/> so it looks like <see cref="Action"/> of <see cref="TFrom"/></summary>
+        ''' <summary>Wraps <see cref="Action(Of TTo)"/> of <see cref="TTo"/> so it looks like <see cref="Action(Of TFrom)"/> of <see cref="TFrom"/></summary>
         Protected Class ActionAdaptor
             ''' <summary>Contains value of the <see cref="InnerAction"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
