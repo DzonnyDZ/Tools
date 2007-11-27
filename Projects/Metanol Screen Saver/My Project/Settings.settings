@@ -1,7 +1,42 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" UseMySettingsClassName="true">
-  <Profiles>
-    <Profile Name="(Default)" />
-  </Profiles>
-  <Settings />
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="My" GeneratedClassName="MySettings" UseMySettingsClassName="true">
+  <Profiles />
+  <Settings>
+    <Setting Name="InfoText" Type="System.String" Scope="User">
+      <Value Profile="(Default)">&lt;Sys:FileNameWO:{0}&gt;&lt;Exif:DateTimeDigitized: {0}&gt;
+&lt;IPTC:ObjectName:{0}
+&gt;&lt;IPTC:CountryPrimaryLocationCode:{0}, &gt;&lt;IPTC:ProvinceState:{0}, &gt;&lt;IPTC:City:{0}, &gt;&lt;IPTC:SubLocation:{0}&gt;</Value>
+    </Setting>
+    <Setting Name="Folder" Type="System.String" Scope="User">
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="Alghoritm" Type="Metanol.SSaver.SSAverAlghoritm" Scope="User">
+      <Value Profile="(Default)">Random</Value>
+    </Setting>
+    <Setting Name="Mask" Type="System.Collections.Specialized.StringCollection" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;ArrayOfString xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"&gt;
+  &lt;string&gt;*.jpeg&lt;/string&gt;
+  &lt;string&gt;*.jpg&lt;/string&gt;
+&lt;/ArrayOfString&gt;</Value>
+    </Setting>
+    <Setting Name="Timer" Type="System.UInt16" Scope="User">
+      <Value Profile="(Default)">10</Value>
+    </Setting>
+    <Setting Name="Font" Type="System.Drawing.Font" Scope="User">
+      <Value Profile="(Default)">Arial, 9.75pt</Value>
+    </Setting>
+    <Setting Name="BgColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Black</Value>
+    </Setting>
+    <Setting Name="FgColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Lime</Value>
+    </Setting>
+    <Setting Name="InfoBgColor" Type="System.Drawing.Color" Scope="User">
+      <Value Profile="(Default)">Transparent</Value>
+    </Setting>
+    <Setting Name="InfoAlign" Type="System.Drawing.ContentAlignment" Scope="User">
+      <Value Profile="(Default)">TopLeft</Value>
+    </Setting>
+  </Settings>
 </SettingsFile>

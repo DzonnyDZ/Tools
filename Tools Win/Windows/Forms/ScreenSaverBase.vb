@@ -53,28 +53,28 @@ Namespace WindowsT.FormsT
             instance.Run(cmd)
         End Sub
 #Region "Default implementation - ScreenSaver"
-        ''' <summary>For each display at system gets one form</summary>
-        ''' <returns>Form for each screen</returns>
-        ''' <remarks>
-        ''' As many forms as computer has displays.
-        ''' This method cannot be overriden, but you can override methods called by this one.
-        ''' <see cref="GetScreenForm"/>, <see cref="FormatScreenForm"/> and <see cref="HookFormEvents"/>
-        ''' Methods are called in following order:
-        ''' <see cref="GetScreenForm"/>,
-        ''' <see cref="M:Tools.WindowsT.FormsT.FormatScreenForm(System.Windows.Forms.Form)"/>,
-        ''' <see cref="M:Tools.WindowsT.FormsT.FormatScreenForm(System.Windows.Forms.Form,System.Windows.Forms.Screen)"/>,
-        ''' <see cref="HookFormEvents"/>
-        ''' </remarks>
-        Protected Function GetFormForEachScreen() As Form()
-            Dim Forms(Screen.AllScreens.Length - 1) As Form
-            For i = 0 To Screen.AllScreens.Length - 1
-                Forms(i) = GetScreenForm(Screen.AllScreens(i))
-                FormatScreenForm(Forms(i))
-                FormatScreenForm(Forms(i), Screen.AllScreens(i))
-                HookFormEvents(Forms(i))
-            Next i
-            Return Forms
-        End Function
+        '''' <summary>For each display at system gets one form</summary>
+        '''' <returns>Form for each screen</returns>
+        '''' <remarks>
+        '''' As many forms as computer has displays.
+        '''' This method cannot be overriden, but you can override methods called by this one.
+        '''' <see cref="GetScreenForm"/>, <see cref="FormatScreenForm"/> and <see cref="HookFormEvents"/>
+        '''' Methods are called in following order:
+        '''' <see cref="GetScreenForm"/>,
+        '''' <see cref="M:Tools.WindowsT.FormsT.FormatScreenForm(System.Windows.Forms.Form)"/>,
+        '''' <see cref="M:Tools.WindowsT.FormsT.FormatScreenForm(System.Windows.Forms.Form,System.Windows.Forms.Screen)"/>,
+        '''' <see cref="HookFormEvents"/>
+        '''' </remarks>
+        'Protected Function GetFormForEachScreen() As Form()
+        '    Dim Forms(Screen.AllScreens.Length - 1) As Form
+        '    For i = 0 To Screen.AllScreens.Length - 1
+        '        Forms(i) = GetScreenForm(Screen.AllScreens(i))
+        '        FormatScreenForm(Forms(i))
+        '        FormatScreenForm(Forms(i), Screen.AllScreens(i))
+        '        HookFormEvents(Forms(i))
+        '    Next i
+        '    Return Forms
+        'End Function
         ''' <summary>Creates instance of form for one screen. Called by default implementation of <see cref="RunScreenSaver"/> as 1st method.</summary>
         ''' <param name="Screen">Screen form is created for. Can be null if form is created for preview mode.</param>
         ''' <returns>Default implementation returns new unmodified instance of <see cref="Form"/></returns>
@@ -139,28 +139,40 @@ Namespace WindowsT.FormsT
             End Get
         End Property
         ''' <summary>Runs the screen saver</summary>
-        ''' <remarks>
-        ''' Default implementation calls <see cref="GetFormForEachScreen"/>, then shows those forms (each in own thread) and waits for threads to finish. Forms are shown using <see cref="Application.Run"/>.
-        ''' </remarks>
+        ''' <remarks>Default implementation calls <see cref="RunScreenSaverOnScreen"/> for each screen in single thread.</remarks>
         Protected Overridable Sub RunScreenSaver()
-            Dim Forms = GetFormForEachScreen()
-            Dim Threads(Forms.Length - 1) As Threading.Thread
-            For i = 0 To Forms.Length - 1
-                Dim t As New Threading.Thread(AddressOf ShowForm)
-                t.Name = "Form thread"
-                t.Start(Forms(i))
-                RunningForms.Add(Forms(i))
-                Threads(i) = t
-            Next i
+            Dim Threads As New List(Of Threading.Thread)
+            For Each Screen As Screen In Screen.AllScreens
+                Dim t As New Threading.Thread(AddressOf RunScreenSaverOnScreen)
+                t.Name = "Screen thread"
+                t.TrySetApartmentState(ThreadingApartment)
+                Threads.Add(t)
+                t.Start(Screen)
+            Next Screen
             For Each t In Threads
                 t.Join()
             Next t
         End Sub
-        ''' <summary>Display single screen form</summary>
-        ''' <param name="Form">Form to display</param>
-        Private Sub ShowForm(ByVal Form As Form)
-            Application.Run(Form)
+        ''' <summary>Gets <see cref="Threading.ApartmentState"/> used by screen threads</summary>
+        ''' <returns>Default implementation returns <see cref="Threading.ApartmentState.MTA"/></returns>
+        ''' <remarks>Override this property if you want to work with COM objects and return <see cref="Threading.ApartmentState.STA"/></remarks>
+        Protected Overridable ReadOnly Property ThreadingApartment() As Threading.ApartmentState
+            Get
+                Return Threading.ApartmentState.MTA
+            End Get
+        End Property
+        Protected Overridable Sub RunScreenSaverOnScreen(ByVal Screen As Screen)
+            Dim F As Form
+            SyncLock RunningForms
+                F = GetScreenForm(Screen)
+                FormatScreenForm(F)
+                FormatScreenForm(F, Screen)
+                HookFormEvents(F)
+                RunningForms.Add(F)
+            End SyncLock
+            Application.Run(F)
         End Sub
+        
 #End Region
 #Region "Default implementation - Preview"
         ''' <summary>Low-level implementation of preview</summary>
