@@ -28,6 +28,7 @@ Public Class frmSSaver
             tmrImg.Enabled = True
             LoadImage()
         End If
+        Cursor.Hide()
     End Sub
     Private Enum ParseStates
         Text
@@ -185,94 +186,3 @@ Public Class frmSSaver
     End Sub
 End Class
 
-Friend Class Files : Implements IEnumerable(Of String)
-    Private Root As String
-    Private Masks As IEnumerable(Of String)
-    Private Files As New List(Of String)
-    Private Alghoritm As SSAverAlghoritm
-    Public Sub New(ByVal Root As String, ByVal Masks As IEnumerable(Of String), ByVal Alghoritm As SSAverAlghoritm)
-        Me.Root = Root
-        Me.Masks = Masks
-        Me.Alghoritm = Alghoritm
-        Dim AllFiles = IO.Directory.GetFiles(Root, "*.*", IO.SearchOption.AllDirectories)
-        Files.AddRange(From File In AllFiles Where InLike(File) Select File)
-    End Sub
-    Private Function InLike(ByVal File As String) As Boolean
-        For Each Mask In Masks
-            If IO.Path.GetFileName(File).ToLower Like Mask.ToLower Then Return True
-        Next Mask
-        Return False
-    End Function
-
-    Private Class Enumerator : Implements IEnumerator(Of String)
-        Private Instance As Files
-        Private Position As Integer = -1
-        Private Rnd As New Random
-        Public Sub New(ByVal Collection As Files)
-            Instance = Collection
-        End Sub
-        Public ReadOnly Property Current() As String Implements System.Collections.Generic.IEnumerator(Of String).Current
-            Get
-                Return Instance.Files(Position)
-            End Get
-        End Property
-
-        Private ReadOnly Property Current1() As Object Implements System.Collections.IEnumerator.Current
-            Get
-                Return Current
-            End Get
-        End Property
-
-        Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
-            If Instance.Files.Count < 1 Then Return False
-            If Instance.Alghoritm = SSAverAlghoritm.Sequintial AndAlso Position < Instance.Files.Count - 1 AndAlso Position >= 0 Then
-                Position += 1
-            ElseIf Instance.Alghoritm = SSAverAlghoritm.Sequintial Then
-                Reset()
-            Else
-                Position = Rnd.Next(0, Instance.Files.Count - 1)
-            End If
-            Return True
-        End Function
-
-        Public Sub Reset() Implements System.Collections.IEnumerator.Reset
-            If Instance.Alghoritm = SSAverAlghoritm.Sequintial Then
-                Position = 0
-            Else
-                MoveNext()
-            End If
-        End Sub
-
-#Region " IDisposable Support "
-        Private disposedValue As Boolean = False        ' To detect redundant calls
-
-        ' IDisposable
-        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
-            If Not Me.disposedValue Then
-                If disposing Then
-                    ' TODO: free other state (managed objects).
-                End If
-
-                ' TODO: free your own state (unmanaged objects).
-                ' TODO: set large fields to null.
-            End If
-            Me.disposedValue = True
-        End Sub
-        ' This code added by Visual Basic to correctly implement the disposable pattern.
-        Public Sub Dispose() Implements IDisposable.Dispose
-            ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
-            Dispose(True)
-            GC.SuppressFinalize(Me)
-        End Sub
-#End Region
-
-    End Class
-
-    Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of String) Implements System.Collections.Generic.IEnumerable(Of String).GetEnumerator
-        Return New Enumerator(Me)
-    End Function
-
-    Private Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
-        Return GetEnumerator()
-    End Function
-End Class

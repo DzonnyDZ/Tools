@@ -115,6 +115,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Files.vb" />
     <Compile Include="frmProperties.Designer.vb">
       <DependentUpon>frmProperties.vb</DependentUpon>
     </Compile>

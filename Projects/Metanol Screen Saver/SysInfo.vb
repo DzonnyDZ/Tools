@@ -127,5 +127,11 @@ Friend Class SysInfo
             Return Image.RawFormat
         End Get
     End Property
+    <Category("Other"), DisplayName("Now"), Description("Contains current date and time. Refreshed with image change.")> _
+    Public ReadOnly Property Now() As Date
+        Get
+            Return Now
+        End Get
+    End Property
 End Class
 

@@ -8,8 +8,8 @@
         cmdFont.Tag = My.Settings.Font.Clone
         cmdFont.Text = GetFontText(cmdFont.Tag)
         cmdBgWin.BackColor = My.Settings.BgColor
-        cmdBgInfo.BackColor = My.Settings.FgColor
-        cmdFgInfo.BackColor = Color.FromArgb(My.Settings.InfoBgColor.R, My.Settings.InfoBgColor.G, My.Settings.InfoBgColor.B)
+        cmdFgInfo.BackColor = My.Settings.FgColor
+        cmdBgInfo.BackColor = Color.FromArgb(My.Settings.InfoBgColor.R, My.Settings.InfoBgColor.G, My.Settings.InfoBgColor.B)
         NumericUpDown1.Value = My.Settings.InfoBgColor.A
         Select Case My.Settings.InfoAlign
             Case ContentAlignment.BottomCenter : optBottomCenter.Checked = True
