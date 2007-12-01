@@ -3,9 +3,11 @@ Imports Tools.VisualBasicT, System.IO
 Namespace IOt
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>
-    <Version(1, 1, GetType(Path), LastChMMDDYYYY:="03/05/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 2, GetType(Path), LastChMMDDYYYY:="11/28/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <StandAloneTool(FirstVerMMDDYYYY:="03/05/2007")> _
     <DebuggerDisplay("{Path}")> _
     Public Class Path
+        Implements IEnumerable(Of Path)
 #Region "Basic behavior"
         ''' <summary>Contains value of the <see cref="Path"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -705,6 +707,33 @@ Namespace IOt
             End If
         End Function
 #End Region
+
+
+        ''' <summary>Returns an enumerator that iterates through the all files and folder under current folder recursivelly. Current folder is included in enumeration. Files are listed before folders at each level.</summary>
+        ''' <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the file system recursivelly.</returns>
+        ''' <remarks>If current instance points to file instead of folder then return enumerator thet enumerates throught array of exactly one item - current path; otherwise <see cref="FileSystemEnumerator"/> is returned.</remarks>
+        Public Overloads Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of Path) Implements System.Collections.Generic.IEnumerable(Of Path).GetEnumerator
+            Return GetEnumerator(False)
+        End Function
+        ''' <summary>Returns an enumerator that iterates through the all files and folders under current folder recursivelly. Current folder is not included in enumeration.</summary>
+        ''' <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterates through the file system recursivelly.</returns>
+        ''' <param name="FoldersFirst">True to list Folders before files at each level.</param>
+        ''' <remarks>If current instance points to file instead of folder then return enumerator thet enumerates throught array of exactly one item - current path; otherwise <see cref="FileSystemEnumerator"/> is returned.</remarks>
+        Public Overloads Function GetEnumerator(ByVal FoldersFirst As Boolean) As IEnumerator(Of Path)
+            If IsDirectory Then
+                Return New FileSystemEnumerator(Me.Path, FoldersFirst)
+            Else
+                Return New Path() {New Path(Me)}.GetEnumerator
+            End If
+        End Function
+
+        ''' <summary>Returns an enumerator that iterates through the file system.</summary>
+        ''' <returns><see cref="M:Tools.IOt.Path.GetEnumerator()"/></returns>
+        ''' <remarks>Use type-safe <see cref="M:Tools.IOt.Path.GetEnumerator()"/>instead</remarks>
+        <Obsolete("Use type safe GetEnumerator instead")> _
+        Private Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
+            Return GetEnumerator()
+        End Function
     End Class
 End Namespace
 #End If

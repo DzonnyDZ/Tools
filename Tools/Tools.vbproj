@@ -119,7 +119,12 @@
     <Import Include="Tools.InternalT" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Collections\Generic\CollectionTools.vb" />
+    <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
+    <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
     <Compile Include="Collections\Generic\IIndexable.vb" />
+    <Compile Include="Collections\Generic\TypedArrayEnumerator.vb" />
+    <Compile Include="Collections\Generic\UnionEnumerator.vb" />
     <Compile Include="Collections\Generic\Wrapper.vb" />
     <Compile Include="Collections\Generic\HashTable.vb" />
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
@@ -176,6 +181,7 @@
     <Compile Include="Internal\ToolAssembly.vb" />
     <Compile Include="IO\BinaryReader.vb" />
     <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
+    <Compile Include="IO\FileSystemEnumerator.vb" />
     <Compile Include="IO\Path.vb" />
     <Compile Include="IO\StreamTools.vb" />
     <Compile Include="Math\LCM GCD.vb" />

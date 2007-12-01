@@ -100,6 +100,7 @@ Namespace CollectionsT.GenericT
 
         End Class
     End Class
+
     ''' <summary>Wraps type-unsafe <see cref="IList"/> as type-safe <see cref="IList(Of T)"/></summary>
     <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ListWrapper(Of )), LastChMMDDYYYY:="07/22/2007")> _
@@ -175,7 +176,7 @@ Namespace CollectionsT.GenericT
             End Get
         End Property
         ''' <summary>Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1"></see> is read-only.</summary>
-        ''' <returns><see cref="List">List</see>.<see cref="Collections.IList.IsReadOnly">IsReadOnly</see></returns>
+        ''' <returns><see cref="List">List</see>.<see cref="System.Collections.IList.IsReadOnly">IsReadOnly</see></returns>
         Public ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.Generic.ICollection(Of T).IsReadOnly, System.Collections.IList.IsReadOnly
             Get
                 Return List.IsReadOnly
