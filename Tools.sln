@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Articles", "Articles", "{98
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cz", "cz", "{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE}"
 	ProjectSection(SolutionItems) = preProject
+		Articles\cz\Macros XMLDoc 9.htm = Articles\cz\Macros XMLDoc 9.htm
 		Articles\cz\XPathObjectNavigator.htm = Articles\cz\XPathObjectNavigator.htm
 	EndProjectSection
 EndProject

@@ -1,0 +1,123 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>VB9: XML Komentáře snadno, rychle, přehledně</title>
+</head>
+<body>
+    <h1>
+        VB9: XML kometáře snadno, rychle a přehledně</h1>
+    <p>
+        Pro své potřeby jsem vytvořil 4 různá makra:</p>
+    <dl>
+        <dt><a href="#XMLSummary">XMLSummary</a></dt>
+        <dd>
+            Opravdu jednoduché makro. Nedělá nic jiného, než že do textu dokumentu vloží řetězec ''' &lt;summary>&lt;/summary>.</dd>
+        <dt><a href="#XMLDoc_Long">XMLDoc_Long</a></dt>
+        <dd>
+            Dělá téměř to samé, co se stane po napsání tří apostrofů, ale &lt;summary> je jen na jeden řádek a sekce &lt;remarks> chybí.</dd>
+        <dt><a href="#PasteXMLDoc">PasteXMLDoc</a></dt>
+        <dd>
+            To už je zapeklitější. Makro očekává, že je ve schránce zkopírovaný tyxt z ObjectBrowseru a vytvoří z něk XML kometář.</dd>
+        <dt><a href="#InheritXMLDoc">InheritXMLDoc</a></dt>
+        <dd>
+            Nejzapeklitější makro "zdědí" XML kometář z bázové třídy nebo interfacu. Funguje jak pro vaše vlastní báze a interfacy tak pro vestavěné.</dd>
+    </dl>
+    <h2 id="XMLSummary">
+        XMLSummary</h2>
+    <p>
+        Makro vloží do textu řetězec ''' &lt;summary>&lt;/summary>. Shledáte ho užitečným ve všech případech, kdy se vám nelíbí vestavěná funkčnost Visual Studia, které vkládá po napsání třech apostrofů do dokumentu na můj vkus příliš místa zabírající XML - &lt;summary> na tři řádky a &lt;remarks> k tomu. Pro prvek výčtového typu opravdu trochu příliš!
+    </p>
+    <p>
+        I vtakto "malém" kalru se ale najde jedna zapeklitost - pokud totiž použijete objekt typu EnvDTE.TextSelection a nastavíte jeho vlastnost Text na "''' &lt;summary>&lt;/summary>" dostaví se stejný efek, jako kdyby ste postupně ťukali do kláves zadávajících příslušné znaky. Tedy do dokumentu se vloží "dlouhý" XML komentář a k němu ještě váš &lt;summary>. Selection.Text, tedy použít nelze. Je nutno použít EnvDTE.EditPoint, který získáte jednoduše jako selection.ActivePoint.CreateEditPoint. Ten má metodu Insert a ta už funguje z tohoto pohledu korektně.
+    </p>
+    <p>
+        Za účelem zvýšení uživatelské přívětivosti makro přesune kurzor doprostřed tagu &lt;summary> a pokud byl vybrán nějaký text, vloží jej tam.
+    </p>
+    <h2 id="XMLDoc_Long">
+        XMLDOc_Long</h2>
+    <p>
+        Předchozí ukázka byla opravdu jednoduchá a textově postavená. 23 řádků ;-). Tohle již je zapeklitější. Makro vytvoří k prvku, který začíná na řádku, kde se nachází textový kurzor, plnohodnotný XML komentář výrazně podobný tomu, který VS vloží po zadání '''. Ale moje osobní preference je mít &lt;summary> jen na jeden řádek a &lt;remarks automaticky nevkládat. Pro vlastnosti, které jsou read-only nechci &lt;value> a pro ty, které jsou write-only nechci &lt;returns>. Tedy staň se!
+    </p>
+    <p>
+        Jistě vás napadá zajímavá otázka: Jak zjistit co je to za prvek pod kurzorem, jaké má parametry atp. A napadá vás jistě i odpověď: Syntaktická analýza. To vypadá na pěkný semestrální projekt do předmětu Programovací jazyky a překladače! Tedy, byla by to možnost a jak se později ukáže, mít vlastní syntaktický analyzátor by se velmi hodilo, ale je to spousta práce a času. Naštěstí Visual Studio poskytne některé informace o objektu pod po chvíli přemlouvání samo.
+    </p>
+    <p>
+        První úlohou je zjistit jaký prvek se pod kurzorem vůbec ukrývá. To se ukázalo jako trošku "tricky" úloha. Visual Studio vám ocotně prozradí uvnitř jakého prvku se kurzor nachází, ale jen v případě, že vy mu řeknete o jaký druh prvku (třída, metoda, vlastnost, ...) máte zájem. To je trošku nepraktické v případě, kdy potřebujete dostat jakýkoliv prvek od úrovně metody výše. Nezbývá tedy, než se Visual Studia zeptat na všechny prvky - typicky se váš kurzor nachází uvnitř metody, metoda je uvnitř třídy, třída uvnitř jmenného prostoru ... - a pak vybrat ten, který začíná na stejném řádku jako je kurzor. Na to jsem hned využil nových vlastností VB9 a implementoval jsem extension metodu:
+    </p>
+    <pre><code>&lt;ExtensionAttribute()> _ Private Function GetCodeElement(ByVal p As EnvDTE.EditPoint) As EnvDTE.CodeElement For Each t As vsCMElement In [Enum].GetValues(GetType(vsCMElement)) Dim CE = p.CodeElement(t) If CE IsNot Nothing Then If CE.GetStartPoint(vsCMPart.vsCMPartWholeWithAttributes).Line = p.Line OrElse CE.GetStartPoint(vsCMPart.vsCMPartWhole).Line = p.Line Then _ Return CE End If Next t Return Nothing End Function</code></pre>
+    <p>
+        Metoda vrátí takový prvek kódu, který začíná na řádku, kde je kurzor. Přičemž "začíná" znamená, že tam začíná jeho hlavička nebo tam začínají jeho atributy.</p>
+    <p>
+        Interface EnvDTE.CodeElement je je jakýsi společný předek všech elementů kódu. I když musím zde poznamenat, že objektový model Visual Studia je poněkud "divoký", protože je importován pomocí COM-interop (VS není napsáno v .NETu). Většina typů, jsou tedy "jen" interfacy. Pokud budete testovat typ objektu za běhu, dostanete jen System.__ComObject. Typy memají moc nějakou hierarchii dědičnosti, jak by se slušelo (CodeClass nedědí od CodeElement).
+    </p>
+    <p>
+        No nic. Máme tedy prvek pod kurzorem. Vlastnost CodeElement.Kind nám řekne, "co je to zač", a nyní již stačí vygenerovat správný XML komentář podle typu prvku. Pro výčty, konstanty a proměnné (fields) je to jednoduché - nic víc než &lt;summary> není potřeba. Pro třídy, struktury a interfacy také - pokud ovšem nejsou generické. A tady je první problém. Visual studio vám přes rozhraní CodeClass2, CodeInterfase2 resp. CodeStruct2, řekne jestli se jedná o generický objekt nebo ne (IsGeneric), ale už vám neprozradí jména typových parametrů. Existuje zde možnost získat rozšiřující vlastnosti prvku, přes CodeClass2.Extender("VBGenericExtender"). Vlastnost vrátí objekt typu System.__ComObject. Po troše snažení zjistíte, že implementuje rozhraní IVBGenericExtender, ale to je konec :-(. Tento interface není definován v žádné knihovně, kterou jsem na počítači našel a v registrech je oněm uložena jediná informace - CLSID. A co je nejhorší - Google o něm mlčí (až naindexuje tenhle článek, už mlčet nebude ;-)!) Nemůžete tedy na tento typ přetypovat, neznáte jeho vlastnosti, nemůžete je volat ani přes late binding. Prostě nic. Bez alespoň základní podpory pro typové argumenty bych nemohl dobře spát, takže nezbývalo, než udělat jednoduchý parser. Tentokrát jsem jej postavil na stavovém automatu a jeho výstupem jsou jména generických parametrů použitelná pro tag &lt;typeparam>. Viz metoda vbParseGeneric.
+    </p>
+    <p>
+        Parametry delegátů, funkcí a vlastností získáte jednoduše přes vlastnost Parameters příslušného typu. Pozor kolekce jsou indexovány od 1!. Pro generické funkce a delegáty platí to samé co pro typy.</p>
+    <p>
+        Horší je to u událostí. V CLS totiž každá událost má přiřazeného delegáta, který určuje její parametry. Visual Basic vám však umožňuje deklarovat událost i s parametry a kompilátor vytvoří delegáta za vás. Porovnejte následující:
+    </p>
+    <pre><code>Public Event OnSthHappen(ByVal Sender As Object, ByVal e As EventArgs)</code></pre>
+    <p>
+        a</p>
+    <pre><code>Public Event OnSthHappen As EventHandler</code></pre>
+    <p>
+        (Všichni jistě víte že existuje i třetí syntax <code>Public Custom Event OnSthHappen As EventHandler</code>, která je podobná syntaxi pro vlastnosti.)</p>
+    <p>
+        V prvním případě, je potřeba vygenerovat elementy &lt;param>, ale VS vám parametry neprozradí, protože je u události neočekává. Je tedy potřeba záhlaví události rozparzovat ručně. Tentokráte jsem s lehce těžkým svědomím sáhl po regulárním výrazu ""^\s*Event\s+(_|\p{L})(_|\p{L}|\p{N})*\s*\(\s*((ByVal|ByRef)\s+((?<name>(_|\p{L})(_|\p{L}|\p{N})*)(\s+As\s+(_|\p{L})(_|\p{L}|\p{N})*(\s*\(Of\s+((_|\p{L})(_|\p{L}|\p{N})*(\s*\(Of\s+((_|\p{L})(_|\p{L}|\p{N})*\s*,?)+\s*\))?\s*,?)+\s*\))?)\s*,?\s*))*\s*\)\s*$".
+        Těžkost mého svědomí spočívá v tom, že tento výraz není univerzální. Generické typy "pochopí" jen do dvou úrovní.
+        Tedy pochopí <code>List(Of List(Of String))</code>, ale nepochopí <code>List(Of List(Of List(Of String)))</code>. Snad to pro začátek nebude vadit ;-). Výsledkem funkce vbParseEventHeader je opět seznam názvů parametrů události.
+    </p>
+    <p>
+        A je to! Tedy skoro. Ještě je nutné XML komentář na příslušný objekt kódu aplikovat, aniž by došlo například ke zníčení seznamu jeho uživatelských atributů. S tím nám VS naštěstí opět pomůže - příslušné rozhraní má vlastnost DocComment, do které stačí přiřadit. Teď už zbývá jen přesunout kurzor doprostřed tagu &lt;summary> a uživatel může psát dokumentaci.
+    </p>
+    <h2 id="PasteXMLDoc">
+        PasteXMLDoc</h2>
+    <p>
+        Toto makro vám umožňuje jednoduše "vykrádat" XML komentáře zobrazované v ObjectBrowseru. Hodí se to zejména pokud implementujete nějaký interface, nebo dědíte od nějaké třídy a overridujete její metody. Dokumentaci k nim mít chcete, ale rozhodně ji nechcete opisovat ručně. Najdete si tedy v object browseru příslušnou metodu, komentář skopírujete do schránky a na příslušném místě jej pomocí makra vložíte.
+    </p>
+    <p>
+        Další makro vám, ale ukáže, že to jde ještě jednodušeji, ještě pohodlněji.</p>
+    <p>
+        Funkce XMLCommentFromObjectBrowser přeloží text z ObjectBrowseru na XML kometář. Texty v ObjectBrowseru mají naštěstí poměrně jednotný formát. Přesné pořadí sekcí odpovídající jednotlivým tagům. Každá sekce (kromě první) předcházena dvěma konci řádku. Pro skekce odpovídající tagům &lt;param>, &lt;typeparam> a &lt;exception> je formát 'Název: Popis' následovaný koncem řádku. Žádné velké záludnoti na vás nečekají. ObjectBrowser k mému velkému naštvání ignoruje jakékoliv formátování jako &lt;para>, &lt;list> atp., ale alespoň k něčemu je to dobré. (Pokud chcete prohlížet komentáře i s formátováním doporučuji <a href="http://www.aisto.com/roeder/dotnet/">Lutz Roeder's .NET Reflector</a>.) Takže si to přímo žádá regulární výraz. Je trošku dlouhý, ale s dobrým nástrojem (<a href="http://www.radsoftware.com.au/?from=RegexDesigner">Rad Software Regular Expression Designer</a> nebo <a href="http://www.ultrapico.com/">Expresso</a>) ho zvládne vytvořit i ... i já.
+    </p>
+    <p>
+        XML komentáře často obsahují odkazy na jiné typy, metody, vlastnosti atd. Ty se nejčastěji zavírají to tagu &lt;see/>. O tuto informaci jsme převodem přes ObjectBrowser přišli. Metoda SeeReplace se snaží tuto "napáchanou křivdu" zmírnit alespoň tím, že obnoví reference ukazující do jmenných prostorů System a Microsoft. Pokud však často používáte i jiné jmenné prostory, není problém regulární výraz "(?&lt;Name>(Microsoft|System)\.((Of\s)|[^\s\n\r])+)" rozšířit.
+    </p>
+    <p>
+        A na konec vložit vygenerované XML (momochodem použil jsem novou VB9 snytax pro XML) do souboru pomocí EditPoint.Insert.</p>
+    <h2 id="InheritXMLDoc">
+        InheritXMLDoc</h2>
+    <p>
+        Poslední makro dokáže téměř eliminovat použité toho předposledního. Vezme totiž metodu (vlastnostu, událost) pod kurzorem a připojí k ní XML kometář z místa její definice. To může být buď v bázové třídě nebo v nějakém interfacu.
+    </p>
+    <p>
+        Visual Studio nám s tímto úkolem opět trochu pomůže a trochu to nechá na nás. Pro metodu nebo vlastnost (ale i událost, kdet to nemá ve VB význam) se dozvíte jestli je deklarována Overrides a to takto: <code>(This.OverrideKind And vsCMOverrideKind.vsCMOverrideKindOverride) = vsCMOverrideKind.vsCMOverrideKindOverride</code> (kde This je mého vlastního typu ClassMemberProvider, který v sobě spojuje CodeElement, CodeElement2, CodeProperty, CodeProperty2, CodeFunction, CodeFunction2 a CodeEvent - na objektový model už jsem nadával výše). Pokud se tedy dozvíme, že je deklarována Overrides, hledáme XML kometář v bázové třídě. Pokud se toto nedozvíme, pžedpokládáme že je použito Implements (s tím už nám VS nepomůže).
+    </p>
+    <p>
+        Hledání v bázové třídě probíhá jednoduše. Projsou se všechny její členy, vyberou se z nich ty stejného typu jako je ten, pro nějž XML kometář hledáme, porovnají se jejich jména a signatury a ten, který odpovídá je ten správný - do něj bude XML komentář vzat. U signatury bych se ještě trochu pozdržel. Příslušný objekt má vlastnost Prototype, která s parametrem 2 vrací string ukazující signaturu elementu. Signatura v tomto případě je např. "(,)" pro element se dvěma parametry. Není nic jednoduššího než tyto signatury stringově porovnat. Vystavujeme se zde jistému riziku vrácení špatného elementu, pokud se jedná o overload se stejným počtem parametrů ale jiného typu. Tuto nedeokonalost by bylo možné odstranit, protože VS podává informaci o typu parametrů - možná příště...
+    </p>
+    <p>
+        U interfaců je situace poněkud složitější. VB totiž dovoluje nazvat metodu, která implementuje jinou metodu jakkoliv a v klauzuli Implements říci, co implementuje. Mohl jsem opět parsovat klauzuli Implements, zístak z ní seznam implementovaných elementů rozhraní a po těch pak pátrat. Místo toho jsem se ale rozhodl pro tentokrát přenést trochu zodpovědnosti na uživatele. Pokud v dokumentu vybere nějaký text, bude se pátrat po metodě jejíž celé jméno (celé-jméno-interfacu.jméno-metody) odpovídá vybranému textu. Pokud není vybráno nic, bude se předpokládat, že názvy implementující a implementované metody se shodují. Toto pátrání obstará metoda SearchIMethod. Provede stejná porovnání jako byla zmíněna u hledání v bázové třídě, ale navíc pátrá i v rodičovských interfacech implementovaných interfaců a ukládá si do seznamu všechny metody (událoti/vlastnosti), jejichž jméno nějak odpovídá vybranému textu (pokud nějaký vybtaný je, jinak provede exaktní porovnání názvů metod). Nakonec vybere to z metod, jejíž celé jméno nejlépe odpovídá hledanému.
+    </p>
+    <p>
+        Na závěr je zde metoda SetXMLCommentFromOther, která jako parametry přijme instance ClassMemberProvider This a Other a nastaví XML kometář u This na stjenou hodnotu jako Other. Tato metoda si poradí jak s elementem Other, který jste si napsali sami, tak s tím, který je implementován v nějaké externí knihovně (třeba .NET Frameworku). Je zde však jistý rozdíl. Pro elementy, k jejichž zdrojovému kódu má VS přístup, dostanete přesně ten text, který je u nich zadán jako XML komentář. Pro elementy implementované "venku", jej ale dostanete obalen tagem &lt;doc>, který by se ve vašem zdrojáku asi moc pěkně nevyjímal. Je potřeba tedy použít nějakou manipulaci s XML a vrátit jen "vnitřnosti" tagu &lt;doc>. Nějak se mi toto nepodařilo vyrobit přes novou VB XML syntax a třídu XElement, ale vždy je tu ještě starý dobrý DOM a vlastnost InnerXml. Má jedinou nevýhodu: Celé XML vrací na jednom řádku. Je tedy potřeba vyložit konce řádků pře začátky těch XML tagů, které mají být na samotném řádku.
+    </p>
+    <h2>
+        Zdrojové kódy</h2>
+    <p>
+        <a href="http://dzonny.cz/prj/VSMacros/%D0.rar">http://dzonny.cz/prj/VSMacros/Đ.rar</a></p>
+    <h2>
+        Závěr</h2>
+    <p>
+        Závěrem bych především chtěl apelovat na všechny ať XML komentáře používají úplně na všechno na co se použít dají. Výrazně to zvyšuje možnost pochopení a použití kódu někým dalším.</p>
+    <p>
+        Jinak budiž shrnuto, že Visual Studio poskytuje objektově orirntovaný přístup ke zdrojovému kódu na úrovni metod, vlastností, událotí, tříd, delegátů atd. Ne vždy je nám ale schopno poskytnout, vše co od něj chceme vědět. Jeho objektový model je založen na COM, takže se sním nepracuje úplně nejlépe, ale aspoň něco. VS můžeme skriptovat podobně jako Word a Excel, el programovacím jazykem zde není zastaralý, ošklivý a perverzní VBA ale pnohodnotný VB9. Kdysi jsem slyšel něco o podpoře pro C#, ale do Orcasu se evidentně "nevešla". Nutno je poznamnat, že makra nejsou zrovna vzory rychlosti - daleko pomalejší než v Officech. Je však možné psát pro VS i různé pluginy. Při tvorbě puginů pracujete se stejným COM objektovým modelem jako z maker ale nejdte omezeni na VB a pluginy jsou rychlejší.</p>
+    <p>
+        Přeji vám mnoho ušetřeného klikání a opisování kódu a nastavte si ke komentářům nějakou pěknou barvičku, ať z nich máte radost ;-)!</p>
+    <p>
+        Đonny</p>
+    <img src="http://dzonny.cz/misc/ColorComments.png" alt="Obarvené komentáře" style="border: medium outset Gray" />
+</body>
+</html>
