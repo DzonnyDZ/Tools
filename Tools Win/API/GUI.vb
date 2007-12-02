@@ -10,7 +10,7 @@ Namespace API
         ''' Specifies the action to be taken. If this parameter is <see cref="APIBool.FALSE"/>, <see cref="GetSystemMenu"/> returns the handle of the copy of the window menu currently in use. The copy is initially identical to the window menu, but it can be modified.
         ''' If this parameter is <see cref="APIBool.TRUE"/>, <see cref="GetSystemMenu"/> resets the window menu back to the Windows default state. The previous window menu, if any, is destroyed.</param>
         ''' <returns>If the <paramref name="bRevert"/> parameter is <see cref="APIBool.FALSE"/>, the return value is the handle of a copy of the window menu. If the <paramref name="bRevert"/> parameter is <see cref="APIBool.TRUE"/>, the return value is <see cref="NULL"/>. </returns>
-        Public Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Integer, ByVal revert As APIBool) As Integer
+        Friend Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Integer, ByVal revert As APIBool) As Integer
         ''' <summary>The <see cref="EnableMenuItem"/> function enables, disables, or grays the specified menu item.</summary>
         ''' <param name="menu">Handle to the menu</param>
         ''' <param name="ideEnableItem">Specifies the menu item to be enabled, disabled, or grayed, as determined by the <paramref name="uEnable"/> parameter. This parameter specifies an item in a menu bar, menu, or submenu. Some menu items that can be manipuleated when <paramref name="enable"/> is combination of <see cref="enmEnableMenuItemStatus.MF_BYCOMMAND"/> are listed in <see cref="SystemMenuItems"/></param>
@@ -24,9 +24,9 @@ Namespace API
         ''' <para>The InsertMenu, InsertMenuItem, LoadMenuIndirect, ModifyMenu, and SetMenuItemInfo API functions can also set the state (enabled, disabled, or grayed) of a menu item.</para>
         ''' <para>When you change a window menu, the menu bar is not immediately updated. To force the update, call API DrawMenuBar.</para>
         ''' </remarks>
-        Public Declare Function EnableMenuItem Lib "user32" (ByVal menu As Integer, ByVal ideEnableItem As Integer, ByVal enable As enmEnableMenuItemStatus) As enmPreviousMenuItemStatus
+        Friend Declare Function EnableMenuItem Lib "user32" (ByVal menu As Integer, ByVal ideEnableItem As Integer, ByVal enable As enmEnableMenuItemStatus) As enmPreviousMenuItemStatus
         ''' <summary>Values for <see cref="EnableMenuItem"/>'s enable parameter</summary>
-        Public Enum enmEnableMenuItemStatus As Integer
+        Friend Enum enmEnableMenuItemStatus As Integer
             ''' <summary>Indicates that uIDEnableItem gives the identifier of the menu item. If neither the MF_BYCOMMAND nor MF_BYPOSITION flag is specified, the MF_BYCOMMAND flag is the default flag.</summary>
             MF_BYCOMMAND = &H0I
             ''' <summary>Indicates that uIDEnableItem gives the zero-based relative position of the menu item.</summary>
@@ -39,7 +39,7 @@ Namespace API
             MF_ENABLED = &H0I
         End Enum
         ''' <summary>Values returned by <see cref="EnableMenuItem"/> function</summary>
-        Public Enum enmPreviousMenuItemStatus As Integer
+        Friend Enum enmPreviousMenuItemStatus As Integer
             ''' <summary>Indicates that the menu item is disabled, but not grayed, so it cannot be selected.</summary>
             MF_DISABLED = &H2I
             ''' <summary>Indicates that the menu item is disabled and grayed so that it cannot be selected.</summary>
@@ -52,7 +52,7 @@ Namespace API
 
         ''' <summary>Win32 window system menu standard items</summary>
         ''' <remarks>Used by <see cref="EnableMenuItem"/>'s ideEnableItem parameter when the enable parameter is combination of <see cref="enmEnableMenuItemStatus.MF_BYCOMMAND"/></remarks>
-        Public Enum SystemMenuItems As Int32
+        Friend Enum SystemMenuItems As Int32
             ''' <summary>Close (X) button</summary>
             SC_CLOSE = &HF060I
             ''' <summary>Move menu item (doesn't work)</summary>
@@ -68,7 +68,7 @@ Namespace API
         End Enum
 
         ''' <summary>Notifications connected with windows state changing passed to <see cref="System.Windows.Forms.Form.WndProc"/> with the <see cref="Messages.WM_SYSCOMMAND"/> message</summary>
-        Public Enum WindowStateChangedNotifications As Int32
+        Friend Enum WindowStateChangedNotifications As Int32
             ''' <summary>Windows size has been restored</summary>
             SC_RESTORE = &HF120
             ''' <summary>Window has been maximized</summary>
@@ -84,9 +84,9 @@ Namespace API
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.
         ''' </returns>
         ''' <remarks>The application must call the <see cref="DrawMenuBar"/> function whenever a menu changes, whether or not the menu is in a displayed window.</remarks>
-        Public Declare Function RemoveMenu Lib "user32.dll" (ByVal hMenu As Int32, ByVal nPosition As Int32, ByVal wFlags As enmSelectMenuMethod) As Int32
+        Friend Declare Function RemoveMenu Lib "user32.dll" (ByVal hMenu As Int32, ByVal nPosition As Int32, ByVal wFlags As enmSelectMenuMethod) As Int32
         ''' <summary>Values for <see cref="EnableMenuItem"/>'s enable parameter</summary>
-        Public Enum enmSelectMenuMethod As Integer
+        Friend Enum enmSelectMenuMethod As Integer
             ''' <summary>Indicates that uIDEnableItem gives the identifier of the menu item. If neither the MF_BYCOMMAND nor MF_BYPOSITION flag is specified, the MF_BYCOMMAND flag is the default flag.</summary>
             MF_BYCOMMAND = &H0I
             ''' <summary>Indicates that uIDEnableItem gives the zero-based relative position of the menu item.</summary>
@@ -97,66 +97,81 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. 
         ''' </returns>
-        Public Declare Function DrawMenuBar Lib "user32.dll" (ByVal hwnd As Int32) As Int32
+        Friend Declare Function DrawMenuBar Lib "user32.dll" (ByVal hwnd As Int32) As Int32
         ''' <summary>The GetWindowRect function retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.</summary>
         ''' <param name="hwnd">Identifies the window.</param>
         ''' <param name="lpRect">Points to a RECT structure that receives the screen coordinates of the upper-left and lower-right corners of the window.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Public Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Int32, ByRef lpRect As RECT) As Boolean
+        Friend Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Int32, ByRef lpRect As RECT) As Boolean
         ''' <summary>The RECT structure defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
         ''' <remarks>By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.</remarks>
         <StructLayout(LayoutKind.Sequential)> _
-        Public Structure RECT
+        Friend Structure RECT
             ''' <summary>Specifies the x-coordinate of the upper-left corner of the rectangle.</summary>
-            Public Left As Int32
+            Friend Left As Int32
             ''' <summary>Specifies the y-coordinate of the upper-left corner of the rectangle.</summary>
-            Public Top As Int32
+            Friend Top As Int32
             ''' <summary>Specifies the x-coordinate of the lower-right corner of the rectangle.</summary>
-            Public Right As Int32
+            Friend Right As Int32
             ''' <summary>Specifies the y-coordinate of the lower-right corner of the rectangle.</summary>
-            Public Bottom As Int32
+            Friend Bottom As Int32
             ''' <summary>Initializes <see cref="RECT"/> structure</summary>
             ''' <param name="Left">Specifies the x-coordinate of the upper-left corner of the rectangle.</param>
             ''' <param name="Top">Specifies the y-coordinate of the upper-left corner of the rectangle.</param>
             ''' <param name="Right">Specifies the x-coordinate of the lower-right corner of the rectangle.</param>
             ''' <param name="Bottom">Specifies the y-coordinate of the lower-right corner of the rectangle.</param>
-            Public Sub New(ByVal Left%, ByVal Top%, ByVal Right%, ByVal Bottom%)
+            Friend Sub New(ByVal Left%, ByVal Top%, ByVal Right%, ByVal Bottom%)
                 Me.Left = Left : Me.Bottom = Bottom : Me.Right = Right : Me.Top = Top
             End Sub
             ''' <summary>Converts <see cref="Rectangle"/> to <see cref="RECT"/></summary>
             ''' <param name="a">A <see cref="Rectangle"/></param>
             ''' <returns><see cref="RECT"/> equivalent to <paramref name="a"/></returns>
-            Shared Widening Operator CType(ByVal a As Rectangle) As RECT
+            Public Shared Widening Operator CType(ByVal a As Rectangle) As RECT
                 Return New RECT(a.Left, a.Top, a.Right, a.Bottom)
             End Operator
             ''' <summary>Converts <see cref="RECT"/> to <see cref="Rectangle"/></summary>
             ''' <param name="a">A <see cref="RECT"/></param>
             ''' <returns><see cref="Rectangle"/> equivalent to <paramref name="a"/></returns>
-            Shared Widening Operator CType(ByVal a As RECT) As Rectangle
+            Public Shared Widening Operator CType(ByVal a As RECT) As Rectangle
                 Return New Rectangle(a.Left, a.Top, a.Right - a.Left, a.Bottom - a.Top)
             End Operator
         End Structure
+        ''' <summary>The MoveWindow function changes the position and dimensions of the specified window. For a top-level window, the position and dimensions are relative to the upper-left corner of the screen. For a child window, they are relative to the upper-left corner of the parent window’s client area.</summary>
+        ''' <param name="bRepaint">Specifies whether the window is to be repainted. If this parameter is TRUE, the window receives a WM_PAINT message. If the parameter is FALSE, no repainting of any kind occurs. This applies to the client area, the nonclient area (including the title bar and scroll bars), and any part of the parent window uncovered as a result of moving a child window. If this parameter is FALSE, the application must explicitly invalidate or redraw any parts of the window and parent window that need redrawing.</param>
+        ''' <param name="hwnd">Identifies the window.</param>
+        ''' <param name="nHeight">Specifies the new height of the window.</param>
+        ''' <param name="nWidth">Specifies the new width of the window.</param>
+        ''' <param name="x">Specifies the new position of the left side of the window.</param>
+        ''' <param name="y">Specifies the new position of the top of the window.</param>
+        ''' <returns>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
+        Friend Declare Function MoveWindow Lib "user32.dll" (ByVal hwnd As Int32, ByVal x As Int32, ByVal y As Int32, ByVal nWidth As Int32, ByVal nHeight As Int32, ByVal bRepaint As Int32) As Boolean
         ''' <summary>The SetParent function changes the parent window of the specified child window.</summary>
         ''' <param name="hWndChild">Identifies the child window.</param>
         ''' <param name="hWndNewParent">Identifies the new parent window. If this parameter is NULL, the desktop window becomes the new parent window.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Public Declare Function SetParent Lib "user32.dll" (ByVal hWndChild As Int32, ByVal hWndNewParent As Int32) As Boolean
+        Friend Declare Function SetParent Lib "user32.dll" (ByVal hWndChild As Int32, ByVal hWndNewParent As Int32) As Boolean
+        ''' <summary>The GetParent function retrieves the handle of the specified child window’s parent window.</summary>
+        ''' <param name="hwnd">Identifies the window whose parent window handle is to be retrieved.</param>
+        ''' <remarks>If the function succeeds, the return value is the handle of the parent window. If the window has no parent window, the return value is NULL. To get extended error information, call GetLastError.</remarks>
+        Friend Declare Function GetParent Lib "user32.dll" (ByVal hwnd As Int32) As Int32
         ''' <summary>The SetWindowLong function changes an attribute of the specified window. The function also sets a 32-bit (long) value at the specified offset into the extra window memory of a window.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be set. Valid values are in the range zero through the number of bytes of extra window memory, minus 4; for example, if you specified 12 or more bytes of extra memory, a value of 8 would be an index to the third 32-bit integer.</param>
         ''' <param name="dwNewLong">Specifies the replacement value.</param>
         ''' <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer. </returns>
-        Public Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs, ByVal dwNewLong As Int32) As Int32
+        Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs, ByVal dwNewLong As Int32) As Int32
         ''' <summary>The GetWindowLong function retrieves information about the specified window. The function also retrieves the 32-bit (long) value at the specified offset into the extra window memory of a window.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be retrieved. Valid values are in the range zero through the number of bytes of extra window memory, minus four; for example, if you specified 12 or more bytes of extra memory, a value of 8 would be an index to the third 32-bit integer.</param>
         ''' <returns>If the function succeeds, the return value is the requested 32-bit value. 
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
-        Public Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs) As Int32
+        Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs) As Int32
         ''' <summary>Predefined window longs for <see cref="GetWindowLong"/> and <see cref="SetWindowLong"/></summary>
-        Public Enum WindowLongs As Int32
+        ''' <remarks>Publicly visible alternative of this enumeration is <see cref="[Public].WindowLongs"/></remarks>
+        Friend Enum WindowLongs As Int32
             ''' <summary>Retrieves the extended window styles. For more information, see CreateWindowEx.</summary>
             GWL_EXSTYLE = -20
             ''' <summary>Retrieves the window styles.</summary>
