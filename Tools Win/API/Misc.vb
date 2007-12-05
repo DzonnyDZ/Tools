@@ -1,11 +1,4 @@
 Namespace API
-    ''' <summary>Various messages used by this library</summary>
-    <DoNotApplyAuthorAndVersionAttributes()> _
-    Friend Enum Messages As Int32
-        ''' <summary>System command</summary>
-        WM_SYSCOMMAND = &H112
-    End Enum
-
     ''' <summary>Generic exception caused by Win32 API</summary>
     Public Class Win32APIException : Inherits System.ComponentModel.Win32Exception
         ''' <summary>CTor with error number</summary>
@@ -103,6 +96,5 @@ Namespace API
             ''' <summary>Default sublanguage</summary>
             SUBLANG_DEFAULT = &H1S
         End Enum
-
     End Module
 End Namespace

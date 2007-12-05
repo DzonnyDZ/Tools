@@ -159,7 +159,7 @@ Namespace WindowsT.FormsT
         Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
             'Pre process
             Select Case m.Msg
-                Case Messages.WM_SYSCOMMAND
+                Case Messages.WindowMessages.WM_SYSCOMMAND
                     Select Case m.WParam
                         Case SystemMenuItems.SC_CLOSE
                             If CloseBox = False OrElse CloseBoxEnabled <> SystemMenuState.Enabled Then _
@@ -171,7 +171,7 @@ Namespace WindowsT.FormsT
 
             'Post process
             Select Case m.Msg
-                Case Messages.WM_SYSCOMMAND
+                Case Messages.WindowMessages.WM_SYSCOMMAND
                     Select Case m.WParam
                         Case WindowStateChangedNotifications.SC_RESTORE, WindowStateChangedNotifications.SC_MAXIMIZE, WindowStateChangedNotifications.SC_MINIMIZE
                             OnWindowStateChanged(EventArgs.Empty) 'State change events

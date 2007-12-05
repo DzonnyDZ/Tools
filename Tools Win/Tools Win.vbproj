@@ -91,6 +91,7 @@
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Data" />
+    <Reference Include="System.Design" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
@@ -111,6 +112,7 @@
     <Compile Include="API\GUI.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Messages.vb" />
     <Compile Include="API\Misc.vb" />
     <Compile Include="API\Public.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

@@ -193,5 +193,77 @@ Namespace API
             ''' <summary>Retrieves extra information private to the application, such as handles or pointers.</summary>
             DWL_USER = 8
         End Enum
+        ''' <summary>The SetWindowText function changes the text of the specified window’s title bar (if it has one). If the specified window is a control, the text of the control is changed.</summary>
+        ''' <param name="hwnd">Identifies the window or control whose text is to be changed.</param>
+        ''' <param name="lpString">Points to a null-terminated string to be used as the new title or control text.</param>
+        ''' <returns>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
+        Friend Declare Auto Function SetWindowText Lib "user32.dll" (ByVal hwnd As Int32, ByVal lpString As String) As Boolean
+        ''' <summary>The GetWindowText function copies the text of the specified window’s title bar (if it has one) into a buffer. If the specified window is a control, the text of the control is copied.</summary>
+        ''' <param name="cch">Specifies the maximum number of characters to copy to the buffer, including the NULL character. If the text exceeds this limit, it is truncated.</param>
+        ''' <param name="hwnd">Identifies the window or control containing the text.</param>
+        ''' <param name="lpString">Points to the buffer that will receive the text.</param>
+        ''' <returns>If the function succeeds, the return value is the length, in characters, of the copied string, not including the terminating null character. If the window has no title bar or text, if the title bar is empty, or if the window or control handle is invalid, the return value is zero. To get extended error information, call GetLastError. 
+        ''' This function cannot retrieve the text of an edit control in another application. </returns>
+        Friend Declare Auto Function GetWindowText Lib "user32.dll" (ByVal hwnd As Int32, <Out()> ByVal lpString As System.Text.StringBuilder, ByVal cch As Int32) As Int32
+        ''' <summary>The GetWindowTextLength function retrieves the length, in characters, of the specified window’s title bar text (if the window has a title bar). If the specified window is a control, the function retrieves the length of the text within the control.</summary>
+        ''' <param name="hwnd">Identifies the window or control.</param>
+        ''' <returns>If the function succeeds, the return value is the length, in characters, of the text. Under certain conditions, this value may actually be greater than the length of the text. For more information, see the following Remarks section. 
+        ''' If the window has no text, the return value is zero. To get extended error information, call GetLastError. </returns>
+        Friend Declare Auto Function GetWindowTextLength Lib "user32.dll" (ByVal hwnd As Int32) As Int32
+        ''' <summary>The ScreenToClient function converts the screen coordinates of a specified point on the screen to client-area coordinates.</summary>
+        ''' <param name="hwnd">Handle to the window whose client area will be used for the conversion.</param>
+        ''' <param name="lpPoint">Pointer to a POINT structure that specifies the screen coordinates to be converted.</param>
+        ''' <returns>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. </returns>
+        Friend Declare Function ScreenToClient Lib "user32.dll" (ByVal hwnd As Int32, ByRef lpPoint As POINTAPI) As Boolean
+        ''' <summary>The POINT structure defines the x- and y- coordinates of a point.</summary>
+        <StructLayout(LayoutKind.Sequential)> _
+        Friend Structure POINTAPI
+            ''' <summary>Specifies the x-coordinate of the point.</summary>
+            Public x As Int32
+            ''' <summary>Specifies the y-coordinate of the point.</summary>
+            Public y As Int32
+            ''' <summary>CTor</summary>
+            ''' <param name="x">the x-coordinate of the point</param>
+            ''' <param name="y">the y-coordinate of the point.</param>
+            Public Sub New(ByVal x As Integer, ByVal y As Integer)
+                Me.x = x
+                Me.y = y
+            End Sub
+            ''' <summary>Converts <see cref="POINTAPI"/> to <see cref="Point"/></summary>
+            ''' <param name="a">A <see cref="POINTAPI"/></param>
+            ''' <returns>A <see cref="Point"/></returns>
+            Public Shared Widening Operator CType(ByVal a As POINTAPI) As Point
+                Return New Point(a.x, a.y)
+            End Operator
+            ''' <summary>Converts <see cref="Point"/> to <see cref="POINTAPI"/></summary>
+            ''' <param name="a">A <see cref="Point"/></param>
+            ''' <returns>A <see cref="POINTAPI"/></returns>
+            Public Shared Widening Operator CType(ByVal a As Point) As POINTAPI
+                Return New POINTAPI(a.X, a.Y)
+            End Operator
+        End Structure
+        ''' <summary>The GetDesktopWindow function returns the handle of the Windows desktop window. The desktop window covers the entire screen. The desktop window is the area on top of which all icons and other windows are painted.</summary>
+        ''' <returns>The return value is the handle of the desktop window.</returns>
+        Friend Declare Function GetDesktopWindow Lib "user32.dll" () As Int32
+        ''' <summary>The EnumChildWindows function enumerates the child windows that belong to the specified parent window by passing the handle to each child window, in turn, to an application-defined callback function. EnumChildWindows continues until the last child window is enumerated or the callback function returns FALSE.</summary>
+        ''' <param name="hWndParent">Identifies the parent window whose child windows are to be enumerated.</param>
+        ''' <param name="lpEnumFunc">Points to an application-defined callback function. For more information about the callback function, see the EnumChildProc callback function.</param>
+        ''' <param name="lParam">Specifies a 32-bit, application-defined value to be passed to the callback function.</param>
+        ''' <returns>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
+        Friend Declare Function EnumChildWindows Lib "user32.dll" (ByVal hWndParent As Int32, ByVal lpEnumFunc As EnumWindowsProc, ByVal lParam As Int32) As Boolean
+        ''' <summary>The EnumChildProc function is an application-defined callback function used with the EnumChildWindows function. It receives the child window handles. The WNDENUMPROC type defines a pointer to this callback function. EnumChildProc is a placeholder for the application-defined function name.</summary>
+        ''' <param name="hWnd">Handle to a child window of the parent window specified in EnumChildWindows.</param>
+        ''' <param name="lParam">Specifies the application-defined value given in EnumChildWindows.</param>
+        ''' <returns>To continue enumeration, the callback function must return TRUE; to stop enumeration, it must return FALSE.</returns>
+        Friend Delegate Function EnumWindowsProc(ByVal hWnd As Integer, ByVal lParam As Integer) As Boolean
+        ''' <summary>The EnumWindows function enumerates all top-level windows on the screen by passing the handle of each window, in turn, to an application-defined callback function. EnumWindows continues until the last top-level window is enumerated or the callback function returns FALSE.</summary>
+        ''' <param name="lpEnumFunc">Points to an application-defined callback function. For more information, see the EnumWindowsProc callback function.</param>
+        ''' <param name="lParam">Specifies a 32-bit, application-defined value to be passed to the callback function.</param>
+        ''' <remarks>If the function succeeds, the return value is nonzero.
+        ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</remarks>
+        Friend Declare Function EnumWindows Lib "user32.dll" (ByVal lpEnumFunc As EnumWindowsProc, ByVal lParam As Int32) As Int32
     End Module
 End Namespace

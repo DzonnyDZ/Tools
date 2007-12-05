@@ -1,4 +1,6 @@
-﻿Imports System.ComponentModel
+﻿Imports System.ComponentModel, Tools.CollectionsT.GenericT
+Imports System.ComponentModel.Design
+Imports System.Drawing.Design
 
 #If Config <= Nightly Then 'Stage: Nightly
 Imports System.Windows.Forms
@@ -6,8 +8,10 @@ Namespace WindowsT.NativeT
     'ASAP: Mark, Wiki, Forum
     ''' <summary>Represents native window used in Microsoft Windows</summary>
     ''' <remarks>This class can be used to manipulate windows and controls that originates from non-.NET applications as well as .NET ones. It can be used in 64b environment as well.</remarks>
+    <DebuggerDisplay("{ToString}")> _
     Public Class Win32Window
         Implements IWin32Window, IDisposable, ICloneable(Of IWin32Window), ICloneable(Of Win32Window)
+        Implements IEquatable(Of IWin32Window), IEquatable(Of Win32Window), IEquatable(Of Control)
 #Region "Basic"
         ''' <summary>Contains value of the <see cref="Handle"/> property</summary>
         Private _Handle As System.IntPtr
@@ -42,13 +46,15 @@ Namespace WindowsT.NativeT
 
         ''' <summary>Gets the handle to the window represented by the implementer.</summary>
         ''' <returns>A handle to the window represented by the implementer.</returns>
-        Public ReadOnly Property Handle() As System.IntPtr Implements System.Windows.Forms.IWin32Window.Handle
+        <Category("Handle")> _
+        Public ReadOnly Property Handle() As System.IntPtr Implements System.Windows.Forms.IWin32Window.Handle 'Localize: Category
             Get
                 Return _Handle
             End Get
         End Property
         ''' <summary>Same as <see cref="Handle"/> but <see cref="Integer"/></summary>
-        Public ReadOnly Property hWnd() As Integer
+        <Category("Handle")> _
+        Public ReadOnly Property hWnd() As Integer 'Localize:Category
             Get
                 Return Handle
             End Get
@@ -100,23 +106,72 @@ Namespace WindowsT.NativeT
         ''' <summary>Gets or sets parent of current Window</summary>
         ''' <value>A <see cref="Win32Window"/> to reparent current window into. Can be null to un-parent current window completely.</value>
         ''' <returns>Current parent of current window. Can return null if current window has no parent or there was error when obtaining parent (ie. <see cref="Handle"/> is invalid)</returns>
-        ''' <exception cref="API.Win32APIException">Setting failed. It may indicate that <see cref="hWnd"/> does not point to existing window.</exception>
-        ''' <remarks>Setting value to <see cref="Win32Window"/> with <see cref="Handle"/> of zero has the same effect as setting it to null.</remarks>
-        Public Property Parent() As Win32Window
+        ''' <exception cref="API.Win32APIException">Setting failed. It may indicate that <see cref="hWnd"/> does not point to existing window or attempt to set parent to the same window or to one of children.</exception>
+        ''' <remarks>Setting value to <see cref="Win32Window"/> with <see cref="Handle"/> of zero has the same effect as setting it to null.
+        ''' Non-top-level windows (such as button) cannot be unparented. Setting null for shuch window will cause window to be parented into desktop - not by this implementation but by the OS.</remarks>
+        <Category("Relationship")> _
+        Public Property Parent() As Win32Window 'Localize:Category
             Get
                 Dim ret As Integer = API.GetParent(hWnd)
-                Return If(ret = 0, New Win32Window(ret), Nothing)
+                Return If(ret <> 0, New Win32Window(ret), Nothing)
             End Get
             Set(ByVal value As Win32Window)
                 If Not API.SetParent(hWnd, If(value Is Nothing, 0, value.hWnd)) Then _
                     Throw New API.Win32APIException()
             End Set
         End Property
+        ''' <summary>Adds <paramref name="item"/> to <paramref name="List"/> and returns true</summary>
+        ''' <param name="List"><see cref="List(Of T)"/> to add item to</param>
+        ''' <param name="item">Item to be added</param>
+        ''' <typeparam name="T">Type of <paramref name="item"/></typeparam>
+        ''' <returns>True</returns>
+        Private Shared Function AddToList(Of T)(ByVal List As List(Of T), ByVal item As T) As Boolean
+            List.Add(item)
+            Return True
+        End Function
+        ''' <summary>Gets all childrens of current windows</summary>
+        ''' <returns>Childrens of current window</returns>
+        ''' <exception cref="API.Win32APIException">Error while enumerating windows. Ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Relationship")> _
+        <TypeConverter(GetType(CollectionConverter))> _
+        Public ReadOnly Property Children() As IReadOnlyList(Of Win32Window) 'Localize: description
+            Get
+                Dim List As New List(Of Win32Window)
+                If API.EnumChildWindows(hWnd, New API.EnumWindowsProc(Function(hWnd As Integer, lParam As Integer) AddToList(List, New Win32Window(hWnd))), 0) Then
+                    Return New ReadOnlyListAdapter(Of Win32Window)(List)
+                Else
+                    Dim ex As New API.Win32APIException
+                    If ex.NativeErrorCode <> 0 Then
+                        Throw ex
+                    Else
+                        Return New ReadOnlyListAdapter(Of Win32Window)(List)
+                    End If
+                End If
+            End Get
+        End Property
+        ''' <summary>Gets or sets handle of current window's parent</summary>
+        ''' <value>Handle to window to parent current window into. Set to 0 if window should be parented into desktop.</value>
+        ''' <returns>Handle of current window's parent. Zero if current window has no parent.</returns>
+        ''' <exception cref="API.Win32APIException">Error when setting parent. It may be caused by invalid <see cref="Handle"/> or invalid <see cref="ParentHandle"/> being set</exception>
+        ''' <remarks>It's recomended to use <see cref="Parent"/> instead.
+        ''' Non-top-level windows (such as button) cannot be unparented. Setting zero for shuch window will cause window to be parented into desktop - not by this implementation but by the OS.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <Category("Relationship")> _
+        Public Property ParentHandle() As IntPtr 'Localize:Category
+            Get
+                Return API.GetParent(hWnd)
+            End Get
+            Set(ByVal value As IntPtr)
+                If Not API.SetParent(hWnd, value) Then _
+                    Throw New API.Win32APIException
+            End Set
+        End Property
         ''' <summary>Gets or sets specified window long of current window</summary>
         ''' <param name="Long">Long to get or set. Can be one of <see cref="API.[Public].WindowLongs"/> values or can be any user-defined integer</param>
         ''' <value>New value of window long</value>
         ''' <returns>Current value of window long</returns>
-        Public Property WindowLong(ByVal [Long] As API.Public.WindowLongs) As Integer
+        <Category("Low-level")> _
+        Public Property WindowLong(ByVal [Long] As API.Public.WindowLongs) As Integer 'Localize:Category
             Get
                 Return API.GetWindowLong(hWnd, [Long])
             End Get
@@ -126,14 +181,165 @@ Namespace WindowsT.NativeT
         End Property
 #Region "Size & location"
         'ASAP: Comment, do not forget exceptions
+        ''' <summary>Changes window position and size</summary>
+        ''' <param name="Height">New height of window in px</param>
+        ''' <param name="Left">New x coordinate of left edge of the window in px</param>
+        ''' <param name="Repaint">Forces window to repaint its content after moving - default is true</param>
+        ''' <param name="Top">New y coordinate of top edge of the window in px</param>
+        ''' <param name="Width">New width of window in px</param>
+        ''' <exception cref="API.Win32APIException">Moving failed, ie. <see cref="Handle"/> is invalid</exception>
+        ''' <remarks>
+        ''' In some multi-monitor configurations the <paramref name="Top"/> and <see cref="Left"/> can be negative and it does not necesarilly mean that window is positioned outside the desktop.
+        ''' For top-level windows screen coordinates are used. For windows with <see cref="Parent"/> parent's coordinates are used.
+        ''' </remarks>
         Public Sub Move(ByVal Left As Integer, ByVal Top As Integer, ByVal Width As Integer, ByVal Height As Integer, Optional ByVal Repaint As Boolean = True)
             If Not API.MoveWindow(hWnd, Left, Top, Width, Height, Repaint) Then _
                 Throw New API.Win32APIException
         End Sub
+        ''' <summary>Changes window position and size to specified <see cref="Rectangle"/></summary>
+        ''' <param name="Rectangle">Defines new window size and position</param>
+        ''' <remarks><paramref name="Rectangle"/>.<see cref="Rectangle.Location">Location</see> should be in screen coordibates for top-level windows and in parent's coordinates for windows with <see cref="Parent"/></remarks>
+        ''' <exception cref="API.Win32APIException">Moving failed, ie. <see cref="Handle"/> is invalid</exception>
         Public Sub Move(ByVal Rectangle As Rectangle)
             Move(Rectangle.Left, Rectangle.Top, Rectangle.Width, Rectangle.Height)
         End Sub
-        Public Property Area() As Rectangle
+        ''' <summary>Gets or sets rectangle covered by the window</summary>
+        ''' <returns>Current rectangle covered by the window</returns>
+        ''' <value>New rectangle covered by the window</value>
+        ''' <remarks>For top-level windows screen coordinates are used. For windows with <see cref="Parent"/> coordinates of parent are used.</remarks>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Area() As Rectangle 'Localize: Category
+            Get
+                Dim ret As API.RECT
+                If API.GetWindowRect(hWnd, ret) Then
+                    If Parent IsNot Nothing Then
+                        Dim pos As API.POINTAPI = CType(ret, Rectangle).Location
+                        If API.ScreenToClient(Parent.hWnd, pos) Then
+                            Return New Rectangle(pos, CType(ret, Rectangle).Size)
+                        Else
+                            Throw New API.Win32APIException
+                        End If
+                    Else
+                        Return ret
+                    End If
+                Else
+                    Throw New API.Win32APIException
+                End If
+            End Get
+            Set(ByVal value As Rectangle)
+                Move(value)
+            End Set
+        End Property
+        ''' <summary>Gets or sets the size of the window</summary>
+        ''' <value>New size of the window. Position will be unchanged</value>
+        ''' <returns>Current size of the window</returns>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Size() As Size 'Localize: Category
+            Get
+                Return Area.Size
+            End Get
+            Set(ByVal value As Size)
+                Area = New Rectangle(Location, value)
+            End Set
+        End Property
+        ''' <summary>Gets or sets location of the window</summary>
+        ''' <value>New position of top left corner of window. Size will ne unchanged.</value>
+        ''' <returns>Current position of window top left corner</returns>
+        ''' <remarks>For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Location() As Point 'Localize:Category
+            Get
+                Return Area.Location
+            End Get
+            Set(ByVal value As Point)
+                Area = New Rectangle(value, Size)
+            End Set
+        End Property
+        ''' <summary>Gets or sets x coordinale of left edge of the window.</summary>
+        ''' <value>New x coordinate of left edge of the window</value>
+        ''' <returns>Current x coordinate of left edge of the window</returns>
+        ''' <remarks>In some multi-monitor configurations the left edge of desktop can be negative number. In such case <see cref="Left"/> can be also negative and it does not necesarilly mean that the window is outside of the desktop.
+        ''' For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Left() As Integer 'Localize:Category
+            Get
+                Return Location.X
+            End Get
+            Set(ByVal value As Integer)
+                Location = New Point(value, Top)
+            End Set
+        End Property
+        ''' <summary>Gets or sets y coordinate of top edge of the window.</summary>
+        ''' <value>New y coordinate of top edge of the window</value>
+        ''' <returns>Current y coordinate of top edge of the window</returns>
+        ''' <remarks>In some multi-monitor configurations the top edge of desktop can be negative number. In such case <see cref="Top"/> can be also negative and it does not necesarilly mean thet the window is outside of the desktop.
+        ''' For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Top() As Integer 'Localize:Category
+            Get
+                Return Location.Y
+            End Get
+            Set(ByVal value As Integer)
+                Location = New Point(Left, value)
+            End Set
+        End Property
+        ''' <summary>Gets or sets width of the window</summary>
+        ''' <value>New width of the window</value>
+        ''' <returns>Current width of the window</returns>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Width() As Int32 'Localize:Category
+            Get
+                Return Size.Width
+            End Get
+            Set(ByVal value As Integer)
+                Size = New Size(value, Height)
+            End Set
+        End Property
+        ''' <summary>Gets or sets height of the window</summary>
+        ''' <value>New height of the window</value>
+        ''' <returns>Current height of the window</returns>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public Property Height() As Integer 'Localize:Category
+            Get
+                Return Size.Height
+            End Get
+            Set(ByVal value As Integer)
+                Size = New Size(Width, value)
+            End Set
+        End Property
+        ''' <summary>Gets x coordinate of right edge of the window</summary>
+        ''' <returns>Current x-coordinate of right edge of the window</returns>
+        ''' <remarks>For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
+        ''' <exception cref="API.Win32APIException">Obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public ReadOnly Property Right() As Integer 'Localize:Category
+            Get
+                Return Area.Right
+            End Get
+        End Property
+        ''' <summary>Gets y coordinate of bottom edge of the window</summary>
+        ''' <returns>Current y-coordinate of bottom edge of the window</returns>
+        ''' <remarks>For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
+        ''' <exception cref="API.Win32APIException">Obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Size and position")> _
+        Public ReadOnly Property Bottom() As Integer 'Localize:Category
+            Get
+                Return Area.Bottom
+            End Get
+        End Property
+        ''' <summary>Gets or sets window area in screen coordinates (even for non-top-level windows)</summary>
+        ''' <returns>Current area that windows covers on screen</returns>
+        ''' <value>New area to cover</value>
+        ''' <exception cref="API.Win32APIException">Error while setting or obtaining the area (ie. <see cref="Handle"/> is invalid)</exception>
+        <Category("Size and position")> _
+        Public Property ScreenArea() As Rectangle 'Localize:Category
             Get
                 Dim ret As API.RECT
                 If API.GetWindowRect(hWnd, ret) Then
@@ -143,68 +349,159 @@ Namespace WindowsT.NativeT
                 End If
             End Get
             Set(ByVal value As Rectangle)
+                If Parent IsNot Nothing Then
+                    Dim pos As API.POINTAPI = value.Location
+                    If API.ScreenToClient(Parent.hWnd, pos) Then
+                        value.Location = pos
+                    Else
+                        Throw New API.Win32APIException
+                    End If
+                End If
                 Move(value)
             End Set
         End Property
-        Public Property Size() As Size
-            Get
-                Return Area.Size
-            End Get
-            Set(ByVal value As Size)
-                Area = New Rectangle(Location, value)
-            End Set
-        End Property
-        Public Property Location() As Point
-            Get
-                Return Area.Location
-            End Get
-            Set(ByVal value As Point)
-                Area = New Rectangle(value, Size)
-            End Set
-        End Property
-        Public Property Left() As Integer
-            Get
-                Return Location.X
-            End Get
-            Set(ByVal value As Integer)
-                Location = New Point(value, Top)
-            End Set
-        End Property
-        Public Property Top() As Integer
-            Get
-                Return Location.Y
-            End Get
-            Set(ByVal value As Integer)
-                Location = New Point(Left, value)
-            End Set
-        End Property
-        Public Property Width() As Integer
-            Get
-                Return Size.Width
-            End Get
-            Set(ByVal value As Integer)
-                Size = New Size(value, Height)
-            End Set
-        End Property
-        Public Property Height() As Integer
-            Get
-                Return Size.Height
-            End Get
-            Set(ByVal value As Integer)
-                Size = New Size(Width, value)
-            End Set
-        End Property
-        Public ReadOnly Property Right() As Integer
-            Get
-                Return Area.Right
-            End Get
-        End Property
-        Public ReadOnly Property Bottom() As Integer
-            Get
-                Return Area.Bottom
-            End Get
-        End Property
 #End Region
+        ''' <summary>Gets or sets text associated with the window</summary>
+        ''' <value>New text of window</value>
+        ''' <returns>Current text of the window</returns>
+        ''' <remarks>For windows that represents form it is text from title bar, for other controls like labels it is text of the control. See also <seealso cref="Control.Text"/>.
+        ''' This property can can get/set text for all windows in the same process as it is called from and text of windows that has title bar (forms) from any process.</remarks>
+        ''' <exception cref="API.Win32APIException">Setting or obtaining of text failed. ie. <see cref="Handle"/> is invalid</exception>
+        <Category("Window properties")> _
+        Public Property Text$() 'Localize: category
+            Get
+                Dim len As Integer = API.GetWindowTextLength(hWnd)
+                If len > 0 Then
+                    Dim b As New System.Text.StringBuilder(ChrW(0), len + 1)
+                    Dim ret = API.GetWindowText(hWnd, b, b.Capacity)
+                    If ret <> 0 Then
+                        Return b.ToString
+                    Else
+                        Throw New API.Win32APIException
+                    End If
+                Else
+                    Dim ex As New API.Win32APIException
+                    If ex.NativeErrorCode <> 0 Then
+                        Throw New API.Win32APIException
+                    Else
+                        Return ""
+                    End If
+                End If
+            End Get
+            Set(ByVal value$)
+                If Not API.SetWindowText(hWnd, value) Then _
+                    Throw New Win32Exception
+            End Set
+        End Property
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+        Public Overrides Function ToString() As String
+            If hWnd = 0 Then Return "<no window>"
+            Try : Return String.Format("{0} hWnd = {1}", Text, hWnd) : Catch ex As Win32Exception : Return String.Format("hWnd = {0}", hWnd) : End Try
+        End Function
+        'TODO:Public Overridable Property WndProc()
+#Region "Equals"
+        ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
+        ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+
+        Public Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
+            If TypeOf obj Is IWin32Window Then Return DirectCast(obj, IWin32Window).Handle = Me.Handle
+            Return MyBase.Equals(obj)
+        End Function
+        ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        ''' <param name="other">An object to compare with this object.</param>
+        ''' <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        Public Overloads Function Equals(ByVal other As System.Windows.Forms.Control) As Boolean Implements System.IEquatable(Of System.Windows.Forms.Control).Equals
+            Return Equals(CObj(other))
+        End Function
+        ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        ''' <param name="other">An object to compare with this object.</param>
+        ''' <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        Public Overloads Function Equals(ByVal other As System.Windows.Forms.IWin32Window) As Boolean Implements System.IEquatable(Of System.Windows.Forms.IWin32Window).Equals
+            Return Equals(CObj(other))
+        End Function
+        ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        ''' <param name="other">An object to compare with this object.</param>
+        ''' <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        Public Overloads Function Equals(ByVal other As Win32Window) As Boolean Implements System.IEquatable(Of Win32Window).Equals
+            Return Equals(CObj(other))
+        End Function
+        ''' <summary>Compares <see cref="IWin32Window"/> and <see cref="Win32Window"/></summary>
+        ''' <param name="a">A <see cref="IWin32Window"/></param>
+        ''' <param name="b">A <see cref="Win32Window"/></param>
+        ''' <returns>True if <paramref name="a"/>.<see cref="IWin32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see></returns>
+        Public Shared Operator =(ByVal a As IWin32Window, ByVal b As Win32Window) As Boolean
+            Return b.Equals(a)
+        End Operator
+        ''' <summary>Compares <see cref="Win32Window"/> and <see cref="IWin32Window"/></summary>
+        ''' <param name="a">A <see cref="Win32Window"/></param>
+        ''' <param name="b">A <see cref="IWin32Window"/></param>
+        ''' <returns>True if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="IWin32Window.Handle">Handle</see></returns>
+        Public Shared Operator =(ByVal a As Win32Window, ByVal b As IWin32Window) As Boolean
+            Return a.Equals(b)
+        End Operator
+        ''' <summary>Compares <see cref="Win32Window"/> and <see cref="Win32Window"/></summary>
+        ''' <param name="a">A <see cref="Win32Window"/></param>
+        ''' <param name="b">A <see cref="Win32Window"/></param>
+        ''' <returns>True if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see></returns>
+        Public Shared Operator =(ByVal a As Win32Window, ByVal b As Win32Window) As Boolean
+            Return a.Equals(b)
+        End Operator
+        ''' <summary>Compares <see cref="IWin32Window"/> and <see cref="Win32Window"/></summary>
+        ''' <param name="a">A <see cref="IWin32Window"/></param>
+        ''' <param name="b">A <see cref="Win32Window"/></param>
+        ''' <returns>False if <paramref name="a"/>.<see cref="IWin32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see></returns>
+        Public Shared Operator <>(ByVal a As IWin32Window, ByVal b As Win32Window) As Boolean
+            Return Not a = b
+        End Operator
+        ''' <summary>Compares <see cref="Win32Window"/> and <see cref="IWin32Window"/></summary>
+        ''' <param name="a">A <see cref="Win32Window"/></param>
+        ''' <param name="b">A <see cref="IWin32Window"/></param>
+        ''' <returns>False if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="IWin32Window.Handle">Handle</see></returns>
+        Public Shared Operator <>(ByVal a As Win32Window, ByVal b As IWin32Window) As Boolean
+            Return Not a = b
+        End Operator
+        ''' <summary>Compares <see cref="Win32Window"/> and <see cref="Win32Window"/></summary>
+        ''' <param name="a">A <see cref="Win32Window"/></param>
+        ''' <param name="b">A <see cref="Win32Window"/></param>
+        ''' <returns>False if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see></returns>
+        Public Shared Operator <>(ByVal a As Win32Window, ByVal b As Win32Window) As Boolean
+            Return Not a = b
+        End Operator
+#End Region
+#End Region
+#Region "Shared"
+        ''' <summary>Gets window that represents the desktop</summary>
+        ''' <exception cref="API.Win32APIException">An error occured</exception>
+        Public Shared ReadOnly Property Desktop() As Win32Window
+            Get
+                Dim dhWnd As Integer = API.GetDesktopWindow
+                If dhWnd <> 0 Then
+                    Return New Win32Window(dhWnd)
+                Else
+                    Throw New API.Win32APIException
+                End If
+            End Get
+        End Property
+        ''' <summary>Gets all the top-level windows</summary>
+        ''' <returns>List of all top-level windows</returns>
+        ''' <exception cref="API.Win32APIException">An error occured</exception>
+        Public Shared ReadOnly Property TopLevelWindows() As IReadOnlyList(Of Win32Window)
+            Get
+                Dim List As New List(Of Win32Window)
+                If API.EnumWindows(New API.EnumWindowsProc(Function(hWnd As Integer, lParam As Integer) AddToList(List, New Win32Window(hWnd))), 0) Then
+                    Return New ReadOnlyListAdapter(Of Win32Window)(List)
+                Else
+                    Dim ex As New API.Win32APIException
+                    If ex.NativeErrorCode <> 0 Then
+                        Throw ex
+                    Else
+                        Return New ReadOnlyListAdapter(Of Win32Window)(List)
+                    End If
+                End If
+            End Get
+        End Property
 #End Region
     End Class
 End Namespace

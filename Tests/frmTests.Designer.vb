@@ -78,8 +78,10 @@ Partial Class frmTests
         Dim TreeNode55 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("LinkProperties")
         Dim TreeNode56 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("UtilitiesT", New System.Windows.Forms.TreeNode() {TreeNode55})
         Dim TreeNode57 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("FormsT", New System.Windows.Forms.TreeNode() {TreeNode53, TreeNode54, TreeNode56})
-        Dim TreeNode58 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WindowsT", New System.Windows.Forms.TreeNode() {TreeNode57})
-        Dim TreeNode59 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tools Win", New System.Windows.Forms.TreeNode() {TreeNode58})
+        Dim TreeNode58 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Win32Window")
+        Dim TreeNode59 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("NativeT", New System.Windows.Forms.TreeNode() {TreeNode58})
+        Dim TreeNode60 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("WindowsT", New System.Windows.Forms.TreeNode() {TreeNode57, TreeNode59})
+        Dim TreeNode61 As System.Windows.Forms.TreeNode = New System.Windows.Forms.TreeNode("Tools Win", New System.Windows.Forms.TreeNode() {TreeNode60})
         Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmTests))
         Me.tvwMain = New System.Windows.Forms.TreeView
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
@@ -353,15 +355,24 @@ Partial Class frmTests
         TreeNode57.Name = "FormsT"
         TreeNode57.SelectedImageKey = "Namespace"
         TreeNode57.Text = "FormsT"
-        TreeNode58.ImageKey = "Namespace"
-        TreeNode58.Name = "WindowsT"
-        TreeNode58.SelectedImageKey = "Namespace"
-        TreeNode58.Text = "WindowsT"
-        TreeNode59.ImageKey = "Assembly"
-        TreeNode59.Name = "Tools Win"
-        TreeNode59.SelectedImageKey = "Assembly"
-        TreeNode59.Text = "Tools Win"
-        Me.tvwMain.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode49, TreeNode52, TreeNode59})
+        TreeNode58.ImageKey = "Class"
+        TreeNode58.Name = "Win32Window"
+        TreeNode58.SelectedImageKey = "Class"
+        TreeNode58.Tag = "Tools.Tests.WindowsT.NativeT.frmWin32Window.Test"
+        TreeNode58.Text = "Win32Window"
+        TreeNode59.ImageKey = "Namespace"
+        TreeNode59.Name = "NativeT"
+        TreeNode59.SelectedImageKey = "Namespace"
+        TreeNode59.Text = "NativeT"
+        TreeNode60.ImageKey = "Namespace"
+        TreeNode60.Name = "WindowsT"
+        TreeNode60.SelectedImageKey = "Namespace"
+        TreeNode60.Text = "WindowsT"
+        TreeNode61.ImageKey = "Assembly"
+        TreeNode61.Name = "Tools Win"
+        TreeNode61.SelectedImageKey = "Assembly"
+        TreeNode61.Text = "Tools Win"
+        Me.tvwMain.Nodes.AddRange(New System.Windows.Forms.TreeNode() {TreeNode1, TreeNode49, TreeNode52, TreeNode61})
         Me.tvwMain.SelectedImageIndex = 0
         Me.tvwMain.Size = New System.Drawing.Size(401, 249)
         Me.tvwMain.TabIndex = 0

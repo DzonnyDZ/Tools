@@ -1,4 +1,5 @@
-﻿Namespace API.Public
+﻿#If Config <= Nightly Then 'Stage: Nightly
+Namespace API.Public
     ''' <summary>Predefined window longs for <see cref="WindowsT.NativeT.Win32Window.WindowLong"/></summary>
     Public Enum WindowLongs As Int32
         ''' <summary>Retrieves the extended window styles. For more information, see CreateWindowEx.</summary>
@@ -33,3 +34,4 @@
         User = GUI.WindowLongs.DWL_USER
     End Enum
 End Namespace
+#End If
