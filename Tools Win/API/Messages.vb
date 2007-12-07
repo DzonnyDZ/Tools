@@ -31,10 +31,10 @@ Namespace API.Messages
         ''' <description>If an application processes this message, it should return zero.</description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632614.aspx</seealso></remarks>
         WM_ACTIVATEAPP = &H1C
-        ''' <summary>N/A</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> WM_AFXFIRST = &H360
-        ''' <summary>N/A</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> WM_AFXLAST = &H37F
+        ''' <summary>The lowest value for AFX message.</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_AFXFIRST = &H360
+        ''' <summary>The highest value for AFX message.</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_AFXLAST = &H37F
         ''' <summary>The WM_APP constant is used by applications to help define private messages, usually of the form WM_APP+X, where X is an integer value.</summary>
         ''' <remarks>The WM_APP constant is used to distinguish between message values that are reserved for use by the system and values that can be used by an application to send messages within a private window class. The following are the ranges of message numbers available.
         ''' <list type="table">
@@ -615,10 +615,10 @@ Namespace API.Messages
         ''' <description>The return value is the length of the text in TCHARs, not including the terminating null character. </description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632628.aspx</seealso></remarks>
         WM_GETTEXTLENGTH = &HE
-        ''' <summary>N/A</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> WM_HANDHELDFIRST = &H358
-        ''' <summary>N/A</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> WM_HANDHELDLAST = &H35F
+        ''' <summary>The lowest value for handheld message.</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_HANDHELDFIRST = &H358
+        ''' <summary>The highest value for handheld message.</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_HANDHELDLAST = &H35F
         ''' <summary>Indicates that the user pressed the F1 key. If a menu is active when F1 is pressed, WM_HELP is sent to the window associated with the menu; otherwise, WM_HELP is sent to the window that has the keyboard focus. If no window has the keyboard focus, WM_HELP is sent to the currently active window.</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
@@ -732,8 +732,9 @@ Namespace API.Messages
         ''' <description>An application should return 0 if it processes this message.</description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms776177.aspx</seealso></remarks>
         WM_IME_KEYDOWN = &H290
-        ''' <summary>N/A</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> WM_IME_KEYLAST = &H10F
+        ''' <summary>The highest value of IME keyboard message.</summary>
+        ''' <remarks>Note: There is no WM_IME_KEYFIRST</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_IME_KEYLAST = &H10F
         ''' <summary>Sent to an application by the IME to notify the application of a key release and to keep message order. A window receives this message through its WindowProc function.</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
@@ -859,7 +860,7 @@ Namespace API.Messages
         ''' <description>An application should return zero if it processes this message.</description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646280.aspx</seealso></remarks>
         WM_KEYDOWN = &H100
-        ''' <summary>This message filters for keyboard messages.</summary>
+        ''' <summary>This message filters for keyboard messages. (This is the lowest value of keyboard message.</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
         ''' <description>Not used.</description></item>
@@ -869,7 +870,7 @@ Namespace API.Messages
         ''' <description>None.</description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/aa931746.aspx</seealso></remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> WM_KEYFIRST = &H100
-        ''' <summary>This message filters for keyboard messages.</summary>
+        ''' <summary>This message filters for keyboard messages. (This is the highest value of keyboard message)</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>
         ''' <description>Not used.</description></item>
@@ -1183,96 +1184,983 @@ Namespace API.Messages
         ''' <description>The return value specifies whether the window should be activated and whether the identifier of the mouse message should be discarded. It must be one of the <see cref="ReturnValues.WM_MOUSEACTIVATE"/> values.</description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645612.aspx</seealso></remarks>
         WM_MOUSEACTIVATE = &H21
-        WM_MOUSEFIRST = &H200
+        ''' <summary>Lowest value of mouse message</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_MOUSEFIRST = &H200
+        ''' <summary>The WM_MOUSEHOVER message is posted to a window when the cursor hovers over the client area of the window for the period of time specified in a prior call to TrackMouseEvent.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645613.aspx</seealso></remarks>
         WM_MOUSEHOVER = &H2A1
-        WM_MOUSELAST = &H20D
+        ''' <summary>Highest value of mouse message</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_MOUSELAST = &H20D
+        ''' <summary>The WM_MOUSELEAVE message is posted to a window when the cursor leaves the client area of the window specified in a prior call to TrackMouseEvent.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645615.aspx</seealso></remarks>
         WM_MOUSELEAVE = &H2A3
+        ''' <summary>The WM_MOUSEMOVE message is posted to a window when the cursor moves. If the mouse is not captured, the message is posted to the window that contains the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645616.aspx</seealso></remarks>
         WM_MOUSEMOVE = &H200
+        ''' <summary>The WM_MOUSEWHEEL message is sent to the focus window when the mouse wheel is rotated. The DefWindowProc function propagates the message to the window's parent. There should be no internal forwarding of the message, since DefWindowProc propagates it up the parent chain until it finds a window that processes it.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The high-order word indicates the distance the wheel is rotated, expressed in multiples or divisions of WHEEL_DELTA, which is 120. A positive value indicates that the wheel was rotated forward, away from the user; a negative value indicates that the wheel was rotated backward, toward the user.
+        ''' The low-order word indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values (but <see cref="wParam.WM_LBUTTONDBLCLK"/> are <see cref="Integer">Integers</see> while low-order word is <see cref="Short"/>). </description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the pointer, relative to the upper-left corner of the screen.
+        ''' The high-order word specifies the y-coordinate of the pointer, relative to the upper-left corner of the screen. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645617.aspx</seealso></remarks>
         WM_MOUSEWHEEL = &H20A
+        ''' <summary>The WM_MOVE message is sent after a window has been moved.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the x and y coordinates of the upper-left corner of the client area of the window. The low-order word contains the x-coordinate while the high-order word contains the y coordinate.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632631.aspx</seealso></remarks>
         WM_MOVE = &H3
+        ''' <summary>The WM_MOVING message is sent to a window that the user is moving. By processing this message, an application can monitor the position of the drag rectangle and, if needed, change its position.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a RECT structure with the current position of the window, in screen coordinates. To change the position of the drag rectangle, an application must change the members of this structure.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return TRUE if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632632.aspx</seealso></remarks>
         WM_MOVING = &H216
+        ''' <summary>The WM_NCACTIVATE message is sent to a window when its nonclient area needs to be changed to indicate an active or inactive state.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies when a title bar or icon needs to be changed to indicate an active or inactive state. If an active title bar or icon is to be drawn, the wParam parameter is TRUE. It is FALSE for an inactive title bar or icon.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>When the wParam parameter is FALSE, an application should return TRUE to indicate that the system should proceed with the default processing, or it should return FALSE to prevent the title bar or icon from being deactivated. When wParam is TRUE, the return value is ignored. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632633.aspx</seealso></remarks>
         WM_NCACTIVATE = &H86
+        ''' <summary>The WM_NCCALCSIZE message is sent when the size and position of a window's client area must be calculated. By processing this message, an application can control the content of the window's client area when the size or position of the window changes.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>If wParam is TRUE, it specifies that the application should indicate which part of the client area contains valid information. The system copies the valid information to the specified area within the new client area.
+        ''' If wParam is FALSE, the application does not need to indicate the valid part of the client area.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>If wParam is TRUE, lParam points to an NCCALCSIZE_PARAMS structure that contains information an application can use to calculate the new size and position of the client rectangle.
+        ''' If wParam is FALSE, lParam points to a RECT structure. On entry, the structure contains the proposed window rectangle for the window. On exit, the structure should contain the screen coordinates of the corresponding window client area.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If the wParam parameter is FALSE, the application should return zero.
+        ''' If wParam is TRUE, the application should return zero or a combination of the <see cref="ReturnValues.WM_NCCALCSIZE"/> values.
+        ''' If wParam is TRUE and an application returns zero, the old client area is preserved and is aligned with the upper-left corner of the new client area.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632634.aspx</seealso></remarks>
         WM_NCCALCSIZE = &H83
+        ''' <summary>The WM_NCCREATE message is sent prior to the WM_CREATE message when a window is first created.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to the CREATESTRUCT structure that contains information about the window being created. The members of CREATESTRUCT are identical to the parameters of the CreateWindowEx function.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return TRUE to continue creation of the window. If the application returns FALSE, the CreateWindow or CreateWindowEx function will return a NULL handle. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632635.aspx</seealso></remarks>
         WM_NCCREATE = &H81
+        ''' <summary>The WM_NCDESTROY message informs a window that its nonclient area is being destroyed. The DestroyWindow function sends the WM_NCDESTROY message to the window following the WM_DESTROY message. WM_DESTROY is used to free the allocated memory object associated with the window.
+        ''' The WM_NCDESTROY message is sent after the child windows have been destroyed. In contrast, WM_DESTROY is sent before the child windows are destroyed.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632636.aspx</seealso></remarks>
         WM_NCDESTROY = &H82
+        ''' <summary>The WM_NCHITTEST message is sent to a window when the cursor moves, or when a mouse button is pressed or released. If the mouse is not captured, the message is sent to the window beneath the cursor. Otherwise, the message is sent to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the screen.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the screen. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value of the DefWindowProc function is one of the <see cref="ReturnValues.WM_NCHITTEST"/> values, indicating the position of the cursor hot spot.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645618.aspx</seealso></remarks>
         WM_NCHITTEST = &H84
+        ''' <summary>The WM_NCLBUTTONDBLCLK message is posted when the user double-clicks the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645619.aspx</seealso></remarks>
         WM_NCLBUTTONDBLCLK = &HA3
+        ''' <summary>The WM_NCLBUTTONDOWN message is posted when the user presses the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645620.aspx</seealso></remarks>
         WM_NCLBUTTONDOWN = &HA1
+        ''' <summary>The WM_NCLBUTTONUP message is posted when the user releases the left mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645621.aspx</seealso></remarks>
         WM_NCLBUTTONUP = &HA2
+        ''' <summary>The WM_NCMBUTTONDBLCLK message is posted when the user double-clicks the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645622.aspx</seealso></remarks>
         WM_NCMBUTTONDBLCLK = &HA9
+        ''' <summary>The WM_NCMBUTTONDOWN message is posted when the user presses the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645623.aspx</seealso></remarks>
         WM_NCMBUTTONDOWN = &HA7
+        ''' <summary>The WM_NCMBUTTONUP message is posted when the user releases the middle mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645624.aspx</seealso></remarks>
         WM_NCMBUTTONUP = &HA8
+        ''' <summary>The WM_NCMOUSEMOVE message is posted to a window when the cursor is moved within the nonclient area of the window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645627.aspx</seealso></remarks>
         WM_NCMOUSEMOVE = &HA0
+        ''' <summary>The WM_NCPAINT message is sent to a window when its frame must be painted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the update region of the window. The update region is clipped to the window frame.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application returns zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms534905.aspx</seealso></remarks>
         WM_NCPAINT = &H85
+        ''' <summary>The WM_NCRBUTTONDBLCLK message is posted when the user double-clicks the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645628.aspx</seealso></remarks>
         WM_NCRBUTTONDBLCLK = &HA6
+        ''' <summary>The WM_NCRBUTTONDOWN message is posted when the user presses the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645629.aspx</seealso></remarks>
         WM_NCRBUTTONDOWN = &HA4
+        ''' <summary>The WM_NCRBUTTONUP message is posted when the user releases the right mouse button while the cursor is within the nonclient area of a window. This message is posted to the window that contains the cursor. If a window has captured the mouse, this message is not posted.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the hit-test value returned by the DefWindowProc function as a result of processing the WM_NCHITTEST message. For a list of hit-test values, see WM_NCHITTEST.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies a POINTS structure that contains the x- and y-coordinates of the cursor. The coordinates are relative to the upper-left corner of the screen.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645630.aspx</seealso></remarks>
         WM_NCRBUTTONUP = &HA5
+        ''' <summary>The WM_NEXTDLGCTL message is sent to a dialog box procedure to set the keyboard focus to a different control in the dialog box.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>If lParam is TRUE, this parameter identifies the control that receives the focus. If lParam is FALSE, this parameter indicates whether the next or previous control with the WS_TABSTOP style receives the focus. If wParam is zero, the next control receives the focus; otherwise, the previous control with the WS_TABSTOP style receives the focus.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word indicates how the system uses wParam. If the low-order word is TRUE, wParam is a handle associated with the control that receives the focus; otherwise, wParam is a flag that indicates whether the next or previous control with the WS_TABSTOP style receives the focus.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645432.aspx</seealso></remarks>
         WM_NEXTDLGCTL = &H28
+        ''' <summary>The WM_NEXTMENU message is sent to an application when the right or left arrow key is used to switch between the menu bar and the system menu.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the virtual-key code of the key.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a MDINEXTMENU structure that contains information about the menu to be activated.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>No return value.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms647612.aspx</seealso></remarks>
         WM_NEXTMENU = &H213
+        ''' <summary>Sent by a common control to its parent window when an event has occurred or the control requires some information.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The identifier of the common control sending the message. This identifier is not guaranteed to be unique. An application should use the hwndFrom or idFrom member of the NMHDR structure (passed as the lParam parameter) to identify the control.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>A pointer to an NMHDR structure that contains the notification code and additional information. For some notification messages, this parameter points to a larger structure that has the NMHDR structure as its first member.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value is ignored except for notification messages that specify otherwise.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/bb775583.aspx</seealso></remarks>
         WM_NOTIFY = &H4E
+        ''' <summary>Determines if a window accepts ANSI or Unicode structures in the WM_NOTIFY notification message. WM_NOTIFYFORMAT messages are sent from a common control to its parent window and from the parent window to the common control.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>A handle to the window that is sending the WM_NOTIFYFORMAT message. If Command is NF_QUERY, this parameter is the handle to a control. If Command is NF_REQUERY, this parameter is the handle to the parent window of a control.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The command value that specifies the nature of the WM_NOTIFYFORMAT message. This will be one of the <see cref="lParam.WM_NOTIFYFORMAT"/> values.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>Returns one of the <see cref="ReturnValues.WM_NOTIFYFORMAT"/> values.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/bb775584.aspx</seealso></remarks>
         WM_NOTIFYFORMAT = &H55
+        ''' <summary>The WM_NULL message performs no operation. An application sends the WM_NULL message if it wants to post a message that the recipient window will ignore.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application returns zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632637.aspx</seealso></remarks>
         WM_NULL = &H0
+        ''' <summary>The WM_PAINT message is sent when the system or another application makes a request to paint a portion of an application's window. The message is sent when the UpdateWindow or RedrawWindow function is called, or by the DispatchMessage function when the application obtains a WM_PAINT message by using the GetMessage or PeekMessage function.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application returns zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms534901.aspx</seealso></remarks>
         WM_PAINT = &HF
+        ''' <summary>The WM_PAINTCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and the clipboard viewer's client area needs repainting.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the clipboard viewer window.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Handle to a global memory object that contains a PAINTSTRUCT structure. The structure defines the part of the client area to paint.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649027.aspx</seealso></remarks>
         WM_PAINTCLIPBOARD = &H309
-        WM_PAINTICON = &H26
+        ''' <summary>Windows NT 3.51 and earlier: The WM_PAINTICON message is sent to a minimized window when the icon is to be painted. This message is not sent by newer versions of Microsoft Windows, except in unusual circumstances explained in the Remarks.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms648057.aspx</seealso></remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)> WM_PAINTICON = &H26
+        ''' <summary>The WM_PALETTECHANGED message is sent to all top-level and overlapped windows after the window with the keyboard focus has realized its logical palette, thereby changing the system palette. This message enables a window that uses a color palette but does not have the keyboard focus to realize its logical palette and update its client area.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the window that caused the system palette to change.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>N/A</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms532653.aspx</seealso></remarks>
         WM_PALETTECHANGED = &H311
+        ''' <summary>The WM_PALETTEISCHANGING message informs applications that an application is going to realize its logical palette.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the window that is going to realize its logical palette.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms532632.aspx</seealso></remarks>
         WM_PALETTEISCHANGING = &H310
+        ''' <summary>The WM_PARENTNOTIFY message is sent to the parent of a child window when the child window is created or destroyed, or when the user clicks a mouse button while the cursor is over the child window. When the child window is being created, the system sends WM_PARENTNOTIFY just before the CreateWindow or CreateWindowEx function that creates the window returns. When the child window is being destroyed, the system sends the message before any processing to destroy the window takes place.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The low-order word of wParam specifies the event for which the parent is being notified. This parameter can be one of the <see cref="wParam.WM_PARENTNOTIFY_low"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Meaning depends on value of low-order word of wParam</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632638.aspx</seealso></remarks>
         WM_PARENTNOTIFY = &H210
+        ''' <summary>An application sends a WM_PASTE message to an edit control or combo box to copy the current content of the clipboard to the edit control at the current caret position. Data is inserted only if the clipboard contains data in CF_TEXT format.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>This message does not return a value.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649028.aspx</seealso></remarks>
         WM_PASTE = &H302
-        WM_PENWINFIRST = &H380
-        WM_PENWINLAST = &H38F
+        ''' <summary>The lowes value for pen messages.</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_PENWINFIRST = &H380
+        ''' <summary>The highest value for pen messages.</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_PENWINLAST = &H38F
+        ''' <summary>Notifies applications that the system, typically a battery-powered personal computer, is about to enter a suspended mode.
+        ''' Note  The WM_POWER message is obsolete. It is provided only for compatibility with 16-bit Windows-based applications. Applications should use the WM_POWERBROADCAST message.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The power-event notification. This parameter can be one of the <see cref="wParam.WM_POWER"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The value an application returns depends on the value of the wParam parameter. If wParam is <see cref="wParam.WM_POWER.PWR_SUSPENDREQUEST"/>, the return value is <see cref="ReturnValues.WM_POWER.PWR_FAIL"/> to prevent the system from entering the suspended state; otherwise, it is <see cref="ReturnValues.WM_POWER.PWR_OK"/>. If wParam is <see cref="wParam.WM_POWER.PWR_SUSPENDRESUME"/> or <see cref="wParam.WM_POWER.PWR_CRITICALRESUME"/>, the return value is zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/aa373245.aspx</seealso></remarks>
         WM_POWER = &H48
+        ''' <summary>Notifies applications that a power-management event has occurred.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The power-management event. This parameter can be one of the <see cref="wParam.WM_POWERBROADCAST"/> event identifiers.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>    The event-specific data. For most events, this parameter is reserved and not used.
+        ''' If the wParam parameter is <see cref="wParam.WM_POWERBROADCAST.PBT_POWERSETTINGCHANGE"/>, the lParam parameter is a pointer to a POWERBROADCAST_SETTING structure.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return TRUE if it processes this message.
+        ''' Windows Server 2003, Windows XP, and Windows 2000:  An application can return <see cref="ReturnValues.WM_POWERBROADCAST.BROADCAST_QUERY_DENY"/> to deny a <see cref="ReturnValues.WM_POWERBROADCAST.PBT_APMQUERYSUSPEND"/> or <see cref="ReturnValues.WM_POWERBROADCAST.PBT_APMQUERYSUSPENDFAILED"/> request.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/aa373247.aspx</seealso></remarks>
         WM_POWERBROADCAST = &H218
+        ''' <summary>The WM_PRINT message is sent to a window to request that it draw itself in the specified device context, most commonly in a printer device context.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the device context to draw in.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the drawing options. This parameter can be one or more of the <see cref="lParam.WM_PRINT"/> values.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>N/A</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms534856.aspx</seealso></remarks>
         WM_PRINT = &H317
+        ''' <summary>The WM_PRINTCLIENT message is sent to a window to request that it draw its client area in the specified device context, most commonly in a printer device context.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the device context to draw in.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies drawing options. This parameter can be one or more of the <see cref="lParam.WM_PRINT"/> values.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>N/A</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms534913.aspx</seealso></remarks>
         WM_PRINTCLIENT = &H318
+        ''' <summary>The WM_QUERYDRAGICON message is sent to a minimized (iconic) window. The window is about to be dragged by the user but does not have an icon defined for its class. An application can return a handle to an icon or cursor. The system displays this cursor or icon while the user drags the icon.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return a handle to a cursor or icon that the system is to display while the user drags the icon. The cursor or icon must be compatible with the display driver's resolution. If the application returns NULL, the system displays the default cursor.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632639.aspx</seealso></remarks>
         WM_QUERYDRAGICON = &H37
+        ''' <summary>The WM_QUERYENDSESSION message is sent when the user chooses to end the session or when an application calls one of the system shutdown functions. If any application returns zero, the session is not ended. The system stops sending WM_QUERYENDSESSION messages as soon as one application returns zero.
+        ''' After processing this message, the system sends the WM_ENDSESSION message with the wParam parameter set to the results of the WM_QUERYENDSESSION message.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is reserved for future use.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter can be one or more of the <seealso cref="lParam.WM_QUERYENDSESSION"/> values. If this parameter is 0, the system is shutting down or restarting (it is not possible to determine which event is occurring).</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>Applications should respect the user's intentions and return TRUE. By default, the DefWindowProc function returns TRUE for this message.
+        ''' If shutting down would corrupt the system or media that is being burned, the application can return FALSE. However, it is good practice to respect the user's actions.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/aa376890.aspx</seealso></remarks>
         WM_QUERYENDSESSION = &H11
+        ''' <summary>The WM_QUERYNEWPALETTE message informs a window that it is about to receive the keyboard focus, giving the window the opportunity to realize its logical palette when it receives the focus.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This message has no parameters.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This message has no parameters.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If the window realizes its logical palette, it must return TRUE; otherwise, it must return FALSE.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms532654.aspx</seealso></remarks>
         WM_QUERYNEWPALETTE = &H30F
+        ''' <summary>The WM_QUERYOPEN message is sent to an icon when the user requests that the window be restored to its previous size and position.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If the icon can be opened, an application that processes this message should return TRUE; otherwise, it should return FALSE to prevent the icon from being opened.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632640.aspx</seealso></remarks>
         WM_QUERYOPEN = &H13
+        ''' <summary>The WM_QUEUESYNC message is sent by a computer-based training (CBT) application to separate user-input messages from other messages sent through the WH_JOURNALPLAYBACK Hook procedure.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>N/A</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>N/A</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>A CBT application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms644972.aspx</seealso></remarks>
         WM_QUEUESYNC = &H23
+        ''' <summary>The WM_QUIT message indicates a request to terminate an application and is generated when the application calls the PostQuitMessage function. It causes the GetMessage function to return zero.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the exit code given in the PostQuitMessage function.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>This message does not have a return value because it causes the message loop to terminate before the message is sent to the application's window procedure.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632641.aspx</seealso></remarks>
         WM_QUIT = &H12
+        ''' <summary>The WM_RBUTTONDBLCLK message is posted when the user double-clicks the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646241.aspx</seealso></remarks>
         WM_RBUTTONDBLCLK = &H206
+        ''' <summary>The WM_RBUTTONDOWN message is posted when the user presses the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646242.aspx</seealso></remarks>
         WM_RBUTTONDOWN = &H204
+        ''' <summary>The WM_RBUTTONUP message is posted when the user releases the right mouse button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646243.aspx</seealso></remarks>
         WM_RBUTTONUP = &H205
+        ''' <summary>The WM_RENDERALLFORMATS message is sent to the clipboard owner before it is destroyed, if the clipboard owner has delayed rendering one or more clipboard formats. For the content of the clipboard to remain available to other applications, the clipboard owner must render data in all the formats it is capable of generating, and place the data on the clipboard by calling the SetClipboardData function.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649029.aspx</seealso></remarks>
         WM_RENDERALLFORMATS = &H306
+        ''' <summary>The WM_RENDERFORMAT message is sent to the clipboard owner if it has delayed rendering a specific clipboard format and if an application has requested data in that format. The clipboard owner must render data in the specified format and place it on the clipboard by calling the SetClipboardData function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the clipboard format to be rendered.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649030.aspx</seealso></remarks>
         WM_RENDERFORMAT = &H305
+        ''' <summary>The WM_SETCURSOR message is sent to a window if the mouse causes the cursor to move within a window and mouse input is not captured.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the window that contains the cursor.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word of lParam specifies the hit-test code.
+        ''' The high-order word of lParam specifies the identifier of the mouse message. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return TRUE to halt further processing or FALSE to continue.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms648382.aspx</seealso></remarks>
         WM_SETCURSOR = &H20
+        ''' <summary>The WM_SETFOCUS message is sent to a window after it has gained the keyboard focus.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the window that has lost the keyboard focus. This parameter can be NULL.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646283.aspx</seealso></remarks>
         WM_SETFOCUS = &H7
+        ''' <summary>An application sends a WM_SETFONT message to specify the font that a control is to use when drawing text.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the font (HFONT). If this parameter is NULL, the control uses the default system font to draw text.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word of lParam specifies whether the control should be redrawn immediately upon setting the font. If this parameter is TRUE, the control redraws itself.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>This message does not return a value.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632642.aspx</seealso></remarks>
         WM_SETFONT = &H30
+        ''' <summary>An application sends a WM_SETHOTKEY message to a window to associate a hot key with the window. When the user presses the hot key, the system activates the window.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The low-order word specifies the virtual-key code to associate with the window.
+        ''' The high-order word can be one or more of the <see cref="ReturnValues.WM_GETHOTKEY_high"/> values.
+        ''' Setting wParam to NULL removes the hot key associated with a window.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value is one of the <see cref="ReturnValues.WM_SETHOTKEY"/>.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646284.aspx</seealso></remarks>
         WM_SETHOTKEY = &H32
+        ''' <summary>An application sends the WM_SETICON message to associate a new large or small icon with a window. The system displays the large icon in the ALT+TAB dialog box, and the small icon in the window caption.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the type of icon to be set. This parameter can be one of the following values: <see cref="wParam.WM_GETICON.ICON_BIG"/>, <see cref="wParam.WM_GETICON.ICON_SMALL"/>.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Handle to the new large or small icon. If this parameter is NULL, the icon indicated by wParamis removed.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value is a handle to the previous large or small icon, depending on the value of wParam. It is NULL if the window previously had no icon of the type indicated by wParam.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632643.aspx</seealso></remarks>
         WM_SETICON = &H80
+        ''' <summary>An application sends the WM_SETREDRAW message to a window to allow changes in that window to be redrawn or to prevent changes in that window from being redrawn.
+        ''' To send this message, call the SendMessage function with the following parameters. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the redraw state. If this parameter is TRUE, the content can be redrawn after a change. If this parameter is FALSE, the content cannot be redrawn after a change.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application returns zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms534853.aspx</seealso></remarks>
         WM_SETREDRAW = &HB
+        ''' <summary>An application sends a WM_SETTEXT message to set the text of a window.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a null-terminated string that is the window text.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value is TRUE if the text is set. It is FALSE (for an edit control), LB_ERRSPACE (for a list box), or CB_ERRSPACE (for a combo box) if insufficient space is available to set the text in the edit control. It is CB_ERR if this message is sent to a combo box without an edit control.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632644.aspx</seealso></remarks>
         WM_SETTEXT = &HC
+        ''' <summary>A message that is sent to all top-level windows when the SystemParametersInfo function changes a system-wide setting or when policy settings have changed.
+        ''' Applications should send WM_SETTINGCHANGE to all top-level windows when they make changes to system parameters. (This message cannot be sent directly to a window.) To send the WM_SETTINGCHANGE message to all top-level windows, use the SendMessageTimeout function with the hwnd parameter set to HWND_BROADCAST.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>When the system sends this message as a result of a SystemParametersInfo call, wParam is a flag that indicates the system parameter that was changed. For a list of values, see SystemParametersInfo.
+        ''' When the system sends this message as a result of a change in policy settings, this parameter indicates the type of policy that was applied. This value is 1 if computer policy was applied or zero if user policy was applied.
+        ''' When the system sends this message as a result of a change in locale settings, this parameter is zero.
+        ''' When an application sends this message, this parameter must be NULL.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>When the system sends this message as a result of a SystemParametersInfo call, lParam is a pointer to a string that indicates the area containing the system parameter that was changed. This parameter does not usually indicate which specific system parameter changed. (Note that some applications send this message with lParam set to NULL.) In general, when you receive this message, you should check and reload any system parameter settings that are used by your application.
+        ''' This string can be the name of a registry key or the name of a section in the Win.ini file. When the string is a registry name, it typically indicates only the leaf node in the registry, not the full path.
+        ''' When the system sends this message as a result of a change in policy settings, this parameter points to the string "Policy".
+        ''' When the system sends this message as a result of a change in locale settings, this parameter points to the string "intl".
+        ''' To effect a change in the environment variables for the system or the user, broadcast this message with lParam set to the string "Environment".
+        ''' </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If you process this message, return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms725497.aspx</seealso></remarks>
         WM_SETTINGCHANGE = &H1A
+        ''' <summary>The WM_SHOWWINDOW message is sent to a window when the window is about to be hidden or shown.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies whether a window is being shown. If wParam is TRUE, the window is being shown. If wParam is FALSE, the window is being hidden.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the status of the window being shown. If lParam is zero, the message was sent because of a call to the ShowWindow function; otherwise, lParam is one of the <see cref="lParam.WM_SHOWWINDOW"/> values.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632645.aspx</seealso></remarks>
         WM_SHOWWINDOW = &H18
+        ''' <summary>The WM_SIZE message is sent to a window after its size has changed.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the type of resizing requested. This parameter can be one of the <see cref="wParam.WM_SIZE"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word of lParam specifies the new width of the client area.
+        ''' The high-order word of lParam specifies the new height of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632646.aspx</seealso></remarks>
         WM_SIZE = &H5
+        ''' <summary>The WM_SIZECLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and the clipboard viewer's client area has changed size.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the clipboard viewer window.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>    Handle to a global memory object that contains a RECT structure. The structure specifies the new dimensions of the clipboard viewer's client area.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649031.aspx</seealso></remarks>
         WM_SIZECLIPBOARD = &H30B
+        ''' <summary>The WM_SIZING message is sent to a window that the user is resizing. By processing this message, an application can monitor the size and position of the drag rectangle and, if needed, change its size or position.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies which edge of the window is being sized. This parameter can be one of the <see cref="wParam.WM_SIZING"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a RECT structure with the screen coordinates of the drag rectangle. To change the size or position of the drag rectangle, an application must change the members of this structure.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return TRUE if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632647.aspx</seealso></remarks>
         WM_SIZING = &H214
+        ''' <summary>The WM_SPOOLERSTATUS message is sent from Print Manager whenever a job is added to or removed from the Print Manager queue.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the PR_JOBSTATUS flag.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the number of jobs remaining in the Print Manager queue.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms535643.aspx</seealso></remarks>
         WM_SPOOLERSTATUS = &H2A
+        ''' <summary>The WM_STYLECHANGED message is sent to a window after the SetWindowLong function has changed one or more of the window's styles.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies whether the window's styles or extended window styles have changed. This parameter can be one or more of the <see cref="wParam.WM_STYLECHANGED"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a STYLESTRUCT structure that contains the new styles for the window. An application can examine the styles, but cannot change them.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632648.aspx</seealso></remarks>
         WM_STYLECHANGED = &H7D
+        ''' <summary>The WM_STYLECHANGING message is sent to a window when the SetWindowLong function is about to change one or more of the window's styles.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies whether the window's styles or extended window styles are changing. This parameter can be one or more of the <see cref="wParam.WM_STYLECHANGED"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a STYLESTRUCT structure that contains the proposed new styles for the window. An application can examine the styles and, if necessary, change them.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632649.aspx</seealso></remarks>
         WM_STYLECHANGING = &H7C
+        ''' <summary>The WM_SYNCPAINT message is used to synchronize painting while avoiding linking independent GUI threads.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This message has no parameters.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This message has no parameters.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application returns zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms534855.aspx</seealso></remarks>
         WM_SYNCPAINT = &H88
+        ''' <summary>The WM_SYSCHAR message is posted to the window with the keyboard focus when a WM_SYSKEYDOWN message is translated by the TranslateMessage function. It specifies the character code of a system character key — that is, a character key that is pressed while the ALT key is down.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the character code of the window menu key.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the repeat count, scan code, extended-key flag, context code, previous key-state flag, and transition-state flag, as shown in the <see cref="lParam.WM_CHAR"/>.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646357.aspx</seealso></remarks>
         WM_SYSCHAR = &H106
+        ''' <summary>The WM_SYSCOLORCHANGE message is sent to all top-level windows when a change is made to a system color setting.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This message has no parameters.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This message has no parameters.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>N/A</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms532603.aspx</seealso></remarks>
         WM_SYSCOLORCHANGE = &H15
+        ''' <summary>A window receives this message when the user chooses a command from the Window menu (formerly known as the system or control menu) or when the user chooses the maximize button, minimize button, restore button, or close button.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the type of system command requested. This parameter can be one of the <see cref="wParam.WM_SYSCOMMAND"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the horizontal position of the cursor, in screen coordinates, if a window menu command is chosen with the mouse. Otherwise, this parameter is not used.
+        ''' The high-order word specifies the vertical position of the cursor, in screen coordinates, if a window menu command is chosen with the mouse. This parameter is –1 if the command is chosen using a system accelerator, or zero if using a mnemonic. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646360.aspx</seealso></remarks>
         WM_SYSCOMMAND = &H112
+        ''' <summary>The WM_SYSDEADCHAR message is sent to the window with the keyboard focus when a WM_SYSKEYDOWN message is translated by the TranslateMessage function. WM_SYSDEADCHAR specifies the character code of a system dead key — that is, a dead key that is pressed while holding down the ALT key.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the character code generated by the system dead key — that is, a dead key that is pressed while holding down the ALT key.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the repeat count, scan code, extended-key flag, context code, previous key-state flag, and transition-state flag, as shown in the <see cref="lParam.WM_CHAR"/>.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646285.aspx</seealso></remarks>
         WM_SYSDEADCHAR = &H107
+        ''' <summary>The WM_SYSKEYDOWN message is posted to the window with the keyboard focus when the user presses the F10 key (which activates the menu bar) or holds down the ALT key and then presses another key. It also occurs when no window currently has the keyboard focus; in this case, the WM_SYSKEYDOWN message is sent to the active window. The window that receives the message can distinguish between these two contexts by checking the context code in the lParam parameter.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the virtual-key code of the key being pressed.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the repeat count, scan code, extended-key flag, context code, previous key-state flag, and transition-state flag, as shown in the <see cref="lParam.WM_CHAR"/>.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646286.aspx</seealso></remarks>
         WM_SYSKEYDOWN = &H104
+        ''' <summary>The WM_SYSKEYUP message is posted to the window with the keyboard focus when the user releases a key that was pressed while the ALT key was held down. It also occurs when no window currently has the keyboard focus; in this case, the WM_SYSKEYUP message is sent to the active window. The window that receives the message can distinguish between these two contexts by checking the context code in the lParam parameter.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Specifies the virtual-key code of the key being released.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Specifies the repeat count, scan code, extended-key flag, context code, previous key-state flag, and transition-state flag, as shown in the <see cref="lParam.WM_CHAR"/>.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646287.aspx</seealso></remarks>
         WM_SYSKEYUP = &H105
+        ''' <summary>Sent to an application that has initiated a training card with Microsoft Windows Help. The message informs the application when the user clicks an authorable button. An application initiates a training card by specifying the HELP_TCARD command in a call to the WinHelp function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>A value that indicates the action the user has taken. This can be one of the <see cref="wParam.WM_TCARD"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>If idAction specifies HELP_TCARD_DATA, this parameter is a long specified by the Help author. Otherwise, this parameter is zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value is ignored; use zero. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/bb774307.aspx</seealso></remarks>
         WM_TCARD = &H52
+        ''' <summary>A message that is sent whenever there is a change in the system time.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms725498.aspx</seealso></remarks>
         WM_TIMECHANGE = &H1E
+        ''' <summary>The WM_TIMER message is posted to the installing thread's message queue when a timer expires. The message is posted by the GetMessage or PeekMessage function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>[in] Specifies the timer identifier.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>[in] Pointer to an application-defined callback function that was passed to the SetTimer function when the timer was installed.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message. </description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms644902.aspx</seealso></remarks>
         WM_TIMER = &H113
+        ''' <summary>An application sends a WM_UNDO message to an edit control to undo the last operation. When this message is sent to an edit control, the previously deleted text is restored or the previously added text is deleted.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Not used; must be zero.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If the message succeeds, the return value is TRUE.
+        ''' If the message fails, the return value is FALSE.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/bb761693.aspx</seealso></remarks>
         WM_UNDO = &H304
+        ''' <summary>The WM_UNINITMENUPOPUP message is sent when a drop-down menu or submenu has been destroyed.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the menu</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The high-order word identifies the menu that was destroyed. Currently, it can only be MF_SYSMENU (the window menu).</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>No return value.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms647614.aspx</seealso></remarks>
         WM_UNINITMENUPOPUP = &H125
-        WM_USER = &H400
+        ''' <summary>This message is used by applications to help define private messages.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>None.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>None.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>None.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/aa928069.aspx</seealso></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> WM_USER = &H400
+        ''' <summary>The WM_USERCHANGED message is sent to all windows after the user has logged on or off. When the user logs on or off, the system updates the user-specific settings. The system sends this message immediately after updating the settings.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>An application should return zero if it processes this message.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632651.aspx</seealso></remarks>
         WM_USERCHANGED = &H54
+        ''' <summary>Sent by a list box with the LBS_WANTKEYBOARDINPUT style to its owner in response to a WM_KEYDOWN message.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The low-order word specifies the virtual-key code of the key the user pressed. The high-order word specifies the current position of the caret.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Handle to the list box.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>The return value specifies the action that the application performed in response to the message. A return value of –2 indicates that the application handled all aspects of selecting the item and requires no further action by the list box. (See Remarks.) A return value of –1 indicates that the list box should perform the default action in response to the keystroke. A return value of 0 or greater specifies the index of an item in the list box and indicates that the list box should perform the default action for the keystroke on the specified item.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/bb761364.aspx</seealso></remarks>
         WM_VKEYTOITEM = &H2E
+        ''' <summary>The WM_VSCROLL message is sent to a window when a scroll event occurs in the window's standard vertical scroll bar. This message is also sent to the owner of a vertical scroll bar control when a scroll event occurs in the control.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The high-order word specifies the current position of the scroll box if the low-order word is SB_THUMBPOSITION or SB_THUMBTRACK; otherwise, this word is not used.
+        ''' The low-order word specifies a scroll bar value that indicates the user's scrolling request. This parameter can be one of the <see cref="wParam.WM_HSCROLL_low"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>If the message is sent by a scroll bar, this parameter is the handle to the scroll bar control. If the message is not sent by a scroll bar, this parameter is NULL.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/bb787577.aspx</seealso></remarks>
         WM_VSCROLL = &H115
+        ''' <summary>The WM_VSCROLLCLIPBOARD message is sent to the clipboard owner by a clipboard viewer window when the clipboard contains data in the CF_OWNERDISPLAY format and an event occurs in the clipboard viewer's vertical scroll bar. The owner should scroll the clipboard image and update the scroll bar values.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Handle to the clipboard viewer window.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word of lParam specifies a scroll bar event. This parameter can be one of the <see cref="wParam.WM_HSCROLL_low"/> values. The high-order word of lParam specifies the current position of the scroll box if the low-order word of lParam is SB_THUMBPOSITION; otherwise, the high-order word of lParam is not used.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms649032.aspx</seealso></remarks>
         WM_VSCROLLCLIPBOARD = &H30A
+        ''' <summary>The WM_WINDOWPOSCHANGED message is sent to a window whose size, position, or place in the Z order has changed as a result of a call to the SetWindowPos function or another window-management function.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a WINDOWPOS structure that contains information about the window's new size and position.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632652.aspx</seealso></remarks>
         WM_WINDOWPOSCHANGED = &H47
+        ''' <summary>The WM_WINDOWPOSCHANGING message is sent to a window whose size, position, or place in the Z order is about to change as a result of a call to the SetWindowPos function or another window-management function.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Pointer to a WINDOWPOS structure that contains information about the window's new size and position.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms632653.aspx</seealso></remarks>
         WM_WINDOWPOSCHANGING = &H46
-        WM_WININICHANGE = &H1A
+        ''' <summary>An application sends the WM_WININICHANGE message to all top-level windows after making a change to the WIN.INI file. The SystemParametersInfo function sends this message after an application uses the function to change a setting in WIN.INI.
+        ''' Note  The WM_WININICHANGE message is provided only for compatibility with earlier versions of the system. Applications should use the WM_SETTINGCHANGE message.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>This parameter is not used.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>A pointer to a string containing the name of the system parameter that was changed. For example, this string can be the name of a registry key or the name of a section in the Win.ini file. This parameter is not particularly useful in determining which system parameter changed. For example, when the string is a registry name, it typically indicates only the leaf node in the registry, not the whole path. In addition, some applications send this message with lParam set to NULL. In general, when you receive this message, you should check and reload any system parameter settings that are used by your application.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If you process this message, return zero.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms725499.aspx</seealso></remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)> WM_WININICHANGE = &H1A
+        ''' <summary>The WM_XBUTTONDBLCLK message is posted when the user double-clicks the first or second X button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The low-order word indicates whether various virtual keys are down. It can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.
+        ''' The high-order word indicates which button was double-clicked. It can be one of the <see cref="wParam.WM_PARENTNOTIFY_WM_XBUTTONDOWN_high"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return TRUE. For more information about processing the return value, see the Remarks section (http://msdn2.microsoft.com/en-us/library/ms646244.aspx).</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646244.aspx</seealso></remarks>
         WM_XBUTTONDBLCLK = &H20D
+        ''' <summary>The WM_XBUTTONDOWN message is posted when the user presses the first or second X button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The low-order word indicates whether various virtual keys are down. It can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.
+        ''' The high-order word indicates which button was clicked. It can be one of the <see cref="wParam.WM_PARENTNOTIFY_WM_XBUTTONDOWN_high"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.</description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return TRUE. For more information about processing the return value, see the Remarks section (http://msdn2.microsoft.com/en-us/library/ms646245.aspx).</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646245.aspx</seealso></remarks>
         WM_XBUTTONDOWN = &H20B
+        ''' <summary>The WM_XBUTTONUP message is posted when the user releases the first or second X button while the cursor is in the client area of a window. If the mouse is not captured, the message is posted to the window beneath the cursor. Otherwise, the message is posted to the window that has captured the mouse.
+        ''' A window receives this message through its WindowProc function. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The low-order word indicates whether various virtual keys are down. It can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values.
+        ''' The high-order word indicates which button was double-clicked. It can be one of the <see cref="wParam.WM_PARENTNOTIFY_WM_XBUTTONDOWN_high"/> values.</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>The low-order word specifies the x-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area.
+        ''' The high-order word specifies the y-coordinate of the cursor. The coordinate is relative to the upper-left corner of the client area. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return TRUE. For more information about processing the return value, see the Remarks section.</description></item>
+        ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646246.aspx</seealso></remarks>
         WM_XBUTTONUP = &H20C
 #Region "Ranges"
         ''' <summary>Messages in range <see cref="X0000"/> through <see cref="WM_USER_minus_1"/> are reserved for use by the system.</summary>
@@ -1367,7 +2255,7 @@ Namespace API.Messages
         ''' <summary>Constants used for low word of wParam of <see cref="WindowMessages.WM_COMMAND"/> message</summary>
         ''' <remarks>Sorry, I haven't found any documentation for those constants</remarks>
         Public Enum WM_COMMAND_low As Short
-            'TODO: Docummentation
+            'TODO: Docummentation, there is some documentation related to DHTML
             IDM_1D = 2170
             IDM_ADDFAVORITES = 2261
             IDM_ADDRESS = 2189
@@ -1775,10 +2663,13 @@ Namespace API.Messages
             MSGF_MENU = 2
         End Enum
         ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_GETICON"/> message</summary>
+        ''' <remarks><see cref="WM_GETICON.ICON_BIG"/> and <see cref="WM_GETICON.ICON_SMALL"/> ia also used by <see cref="WindowMessages.WM_SETICON"/>'s wParam.</remarks>
         Public Enum WM_GETICON As Integer
             ''' <summary>Retrieve the large icon for the window.</summary>
+            ''' <remarks><see cref="WindowMessages.WM_SETICON"/>: Set the large icon for the window.</remarks>
             ICON_BIG = 1
             ''' <summary>Retrieve the small icon for the window.</summary>
+            ''' <remarks><see cref="WindowMessages.WM_SETICON"/>: Set the small icon for the window.</remarks>
             ICON_SMALL = 0
             ''' <summary>Windows XP: Retrieves the small icon provided by the application. If the application does not provide one, the system uses the system-generated icon for that window.</summary>
             ICON_SMALL2 = 2
@@ -1790,7 +2681,7 @@ Namespace API.Messages
             ''' <summary>The "snap window" hot key was pressed.</summary>
             IDHOT_SNAPWINDOW = (-1)
         End Enum
-        ''' <summary>Used for low word of wParam of <see cref="WindowMessages.WM_HSCROLL"/> message and for low word of lParam of <see cref="WindowMessages.WM_HSCROLLCLIPBOARD"/></summary>
+        ''' <summary>Used for low word of wParam of <see cref="WindowMessages.WM_HSCROLL"/> message and for low word of lParam of <see cref="WindowMessages.WM_HSCROLLCLIPBOARD"/> message</summary>
         Public Enum WM_HSCROLL_low As Short
             ''' <summary>Ends scroll.</summary>
             SB_ENDSCROLL = 8
@@ -1810,6 +2701,27 @@ Namespace API.Messages
             SB_THUMBPOSITION = 4
             ''' <summary>The user is dragging the scroll box. This message is sent repeatedly until the user releases the mouse button. The high-order word indicates the position that the scroll box has been dragged to.</summary>
             SB_THUMBTRACK = 5
+        End Enum
+        ''' <summary>Used for low word of wParam of <see cref="WindowMessages.WM_VSCROLL"/> message and for low word of lParam of <see cref="WindowMessages.WM_VSCROLLCLIPBOARD"/> message</summary>
+        Public Enum WM_VSCROLL_low As Short
+            ''' <summary>Scrolls to the lower right.</summary>
+            SB_BOTTOM = 7
+            ''' <summary>Ends scroll.</summary>
+            SB_ENDSCROLL = WM_HSCROLL_low.SB_ENDSCROLL
+            ''' <summary>Scrolls one line down.</summary>
+            SB_LINEDOWN = 1
+            ''' <summary>Scrolls one line up.</summary>
+            SB_LINEUP = 0
+            ''' <summary>Scrolls one page down.</summary>
+            SB_PAGEDOWN = 3
+            ''' <summary>Scrolls one page up.</summary>
+            SB_PAGEUP = 2
+            ''' <summary>The user has dragged the scroll box (thumb) and released the mouse button. The high-order word indicates the position of the scroll box at the end of the drag operation.</summary>
+            SB_THUMBPOSITION = WM_HSCROLL_low.SB_THUMBPOSITION
+            ''' <summary>The user is dragging the scroll box. This message is sent repeatedly until the user releases the mouse button. The high-order word indicates the position that the scroll box has been dragged to.</summary>
+            SB_THUMBTRACK = WM_HSCROLL_low.SB_THUMBTRACK
+            ''' <summary>Scrolls to the upper left.</summary>
+            SB_TOP = 6
         End Enum
         ''' <summary>Values used for wParam of <see cref="WindowMessages.WM_IME_CONTROL"/> message</summary>
         Public Enum WM_IME_CONTROL As Integer
@@ -2009,7 +2921,7 @@ Namespace API.Messages
             ''' <summary>Windows 2000/XP:The new input locale's keyboard layout can be used with the system character set.</summary>
             INPUTLANGCHANGE_SYSCHARSET = &H1
         End Enum
-        ''' <summary>Values used for wParam of <see cref="WindowMessages.WM_LBUTTONDBLCLK"/>, <see cref="WindowMessages.WM_LBUTTONDOWN"/>, <see cref="WindowMessages.WM_LBUTTONUP"/>, <see cref="WindowMessages.WM_MBUTTONDBLCLK"/>, <see cref="WindowMessages.WM_MBUTTONDOWN"/>, <see cref="WindowMessages.WM_MBUTTONUP"/></summary>
+        ''' <summary>Values used for wParam of <see cref="WindowMessages.WM_LBUTTONDBLCLK"/>, <see cref="WindowMessages.WM_LBUTTONDOWN"/>, <see cref="WindowMessages.WM_LBUTTONUP"/>, <see cref="WindowMessages.WM_MBUTTONDBLCLK"/>, <see cref="WindowMessages.WM_MBUTTONDOWN"/>, <see cref="WindowMessages.WM_MBUTTONUP"/>, <see cref="WindowMessages.WM_MOUSEHOVER"/>, <see cref="WindowMessages.WM_MOUSEMOVE"/>, <see cref="WindowMessages.WM_MOUSEWHEEL"/> (low-order word as <see cref="Short"/>), <see cref="WindowMessages.WM_RBUTTONDBLCLK"/>, <see cref="WindowMessages.WM_RBUTTONDOWN"/>, <see cref="WindowMessages.WM_RBUTTONUP"/></summary>
         <Flags()> Public Enum WM_LBUTTONDBLCLK As Integer
             ''' <summary>The CTRL key is down.</summary>
             MK_CONTROL = &H8
@@ -2049,7 +2961,7 @@ Namespace API.Messages
             ''' <summary>The window menu.</summary>
             MF_SYSMENU = &H2000S
         End Enum
-        ''' <summary>Values used for high word of wParam of the <see cref="WindowMessages.WM_MENUSELECT"/></summary>
+        ''' <summary>Values used for high word of wParam of the <see cref="WindowMessages.WM_MENUSELECT"/> message</summary>
         <Flags(), CLSCompliant(False)> Public Enum WM_MENUSELECT_high As UShort
             ''' <summary>Item displays a bitmap.</summary>
             MF_BITMAP = &H4US
@@ -2070,9 +2982,195 @@ Namespace API.Messages
             ''' <summary>Item is contained in the window menu. The lParam parameter contains a handle to the menu associated with the message.</summary>
             MF_SYSMENU = &H2000US
         End Enum
+        ''' <summary>Values used for low word of wParam of the <see cref="WindowMessages.WM_PARENTNOTIFY"/> message</summary>
+        Public Enum WM_PARENTNOTIFY_low As Short
+            ''' <summary>The child window is being created.</summary>
+            ''' <remarks><list type="table">
+            ''' <item><term>High-order word of wParam</term><description>Identifier of the child window.</description></item>
+            ''' <item><term>lParam</term><description>Handle of the child window.</description></item>
+            ''' </list></remarks>
+            WM_CREATE = WindowMessages.WM_CREATE
+            ''' <summary>The child window is being destroyed.</summary>
+            ''' <remarks><list type="table">
+            ''' <item><term>High-order word of wParam</term><description>Identifier of the child window.</description></item>
+            ''' <item><term>lParam</term><description>Handle of the child window.</description></item>
+            ''' </list></remarks>
+            WM_DESTROY = WindowMessages.WM_DESTROY
+            ''' <summary>The user has placed the cursor over the child window and has clicked the left mouse button.</summary>
+            ''' <remarks><list type="table">
+            ''' <item><term>High-order word of wParam</term><description>Undefined.</description></item>
+            ''' <item><term>lParam</term><description>The x-coordinate of the cursor is the low-order word, and the y-coordinate of the cursor is the high-order word.</description></item>
+            ''' </list></remarks>
+            WM_LBUTTONDOWN = WindowMessages.WM_LBUTTONDOWN
+            ''' <summary>The user has placed the cursor over the child window and has clicked the middle mouse button.</summary>
+            ''' <remarks><list type="table">
+            ''' <item><term>High-order word of wParam</term><description>Undefined.</description></item>
+            ''' <item><term>lParam</term><description>The x-coordinate of the cursor is the low-order word, and the y-coordinate of the cursor is the high-order word.</description></item>
+            ''' </list></remarks>
+            WM_MBUTTONDOWN = WindowMessages.WM_MBUTTONDOWN
+            ''' <summary>The user has placed the cursor over the child window and has clicked the right mouse button.</summary>
+            ''' <remarks><list type="table">
+            ''' <item><term>High-order word of wParam</term><description>Undefined.</description></item>
+            ''' <item><term>lParam</term><description>The x-coordinate of the cursor is the low-order word, and the y-coordinate of the cursor is the high-order word.</description></item>
+            ''' </list></remarks>
+            WM_RBUTTONDOWN = WindowMessages.WM_RBUTTONDOWN
+            ''' <summary>Windows 2000/XP: The user has placed the cursor over the child window and has clicked the first or second X button.</summary>
+            ''' <remarks><list type="table">
+            ''' <item><term>High-order word of wParam</term><description>Windows 2000/XP: Indicates which button was pressed. This parameter can be one of the <see cref="wParam.WM_PARENTNOTIFY_WM_XBUTTONDOWN_high"/> values.</description></item>
+            ''' <item><term>lParam</term><description>The x-coordinate of the cursor is the low-order word, and the y-coordinate of the cursor is the high-order word.</description></item>
+            ''' </list></remarks>
+            WM_XBUTTONDOWN = WindowMessages.WM_XBUTTONDOWN
+        End Enum
+        ''' <summary>Values used for high word of wParam of <see cref="WindowMessages.WM_PARENTNOTIFY"/> when low word is <see cref="WM_PARENTNOTIFY_low.WM_XBUTTONDOWN"/> and for high-order word of wParam of <see cref="WindowMessages.WM_XBUTTONDBLCLK"/>, <see cref="WindowMessages.WM_XBUTTONDOWN"/> and <see cref="WindowMessages.WM_XBUTTONUP"/></summary>
+        Public Enum WM_PARENTNOTIFY_WM_XBUTTONDOWN_high As Short
+            ''' <summary>X-button 1</summary>
+            XBUTTON1 = &H1
+            ''' <summary>X-button 2</summary>
+            XBUTTON2 = &H2
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_POWER"/> message</summary>
+        Public Enum WM_POWER As Integer
+            ''' <summary>Indicates that the system is resuming operation after entering suspended mode without first broadcasting a PWR_SUSPENDREQUEST notification message to the application. An application should perform any necessary recovery actions.</summary>
+            PWR_CRITICALRESUME = 3
+            ''' <summary>Indicates that the system is about to enter suspended mode.</summary>
+            PWR_SUSPENDREQUEST = 1
+            ''' <summary>Indicates that the system is resuming operation after having entered suspended mode normally—that is, the system broadcast a PWR_SUSPENDREQUEST notification message to the application before the system was suspended. An application should perform any necessary recovery actions.</summary>
+            PWR_SUSPENDRESUME = 2
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_POWERBROADCAST"/> message</summary>
+        Public Enum WM_POWERBROADCAST As Integer
+            ''' <summary>Battery power is low. In Windows Server 2008 and Windows Vista, use <see cref="PBT_APMPOWERSTATUSCHANGE"/> instead.</summary>
+            PBT_APMBATTERYLOW = &H9
+            ''' <summary>Used in Windows Server 2008 and Windows Vista instead of <see cref="PBT_APMBATTERYLOW"/></summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> PBT_APMPOWERSTATUSCHANGE = &HA
+            ''' <summary>OEM-defined event occurred. In Windows Server 2008 and Windows Vista, this event is not available because these operating systems support only ACPI; APM BIOS events are not supported.</summary>
+            PBT_APMOEMEVENT = &HB
+            ''' <summary>Request for permission to suspend. In Windows Server 2008 and Windows Vista, use the SetThreadExecutionState function instead.</summary>
+            PBT_APMQUERYSUSPEND = &H0
+            ''' <summary>Suspension request denied. In Windows Server 2008 and Windows Vista, use SetThreadExecutionState instead.</summary>
+            PBT_APMQUERYSUSPENDFAILED = &H2
+            ''' <summary>Operation resuming after critical suspension. In Windows Server 2008 and Windows Vista, use <see cref="PBT_APMRESUMEAUTOMATIC"/> instead.</summary>
+            PBT_APMRESUMECRITICAL = &H6
+            ''' <summary>Used in Windows Server 2008 and Windows Vista instead of <see cref="PBT_APMRESUMECRITICAL"/></summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> PBT_APMRESUMEAUTOMATIC = &H12
+            ''' <summary>If the wParam parameter is <see cref="wParam.WM_POWERBROADCAST.PBT_POWERSETTINGCHANGE"/>, the lParam parameter is a pointer to a POWERBROADCAST_SETTING structure.</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> PBT_POWERSETTINGCHANGE = &H8013
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WM_SIZE"/> message</summary>
+        Public Enum WM_SIZE As Integer
+            ''' <summary>Message is sent to all pop-up windows when some other window is maximized.</summary>
+            SIZE_MAXHIDE = 4
+            ''' <summary>The window has been maximized.</summary>
+            SIZE_MAXIMIZED = 2
+            ''' <summary>Message is sent to all pop-up windows when some other window has been restored to its former size.</summary>
+            SIZE_MAXSHOW = 3
+            ''' <summary>The window has been minimized.</summary>
+            SIZE_MINIMIZED = 1
+            ''' <summary>The window has been resized, but neither the SIZE_MINIMIZED nor SIZE_MAXIMIZED value applies.</summary>
+            SIZE_RESTORED = 0
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_SIZING"/> message</summary>
+        Public Enum WM_SIZING As Integer
+            ''' <summary>Bottom edge</summary>
+            WMSZ_BOTTOM = 6
+            ''' <summary>Bottom-left corner</summary>
+            WMSZ_BOTTOMLEFT = 7
+            ''' <summary>Bottom-right corner</summary>
+            WMSZ_BOTTOMRIGHT = 8
+            ''' <summary>Left edge</summary>
+            WMSZ_LEFT = 1
+            ''' <summary>Right edge</summary>
+            WMSZ_RIGHT = 2
+            ''' <summary>Top edge</summary>
+            WMSZ_TOP = 3
+            ''' <summary>Top-left corner</summary>
+            WMSZ_TOPLEFT = 4
+            ''' <summary>Top-right corner</summary>
+            WMSZ_TOPRIGHT = 5
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_STYLECHANGED"/> message</summary>
+        <Flags()> Public Enum WM_STYLECHANGED As Integer
+            ''' <summary>The extended window styles have changed.</summary>
+            GWL_EXSTYLE = -20
+            ''' <summary>The window styles have changed.</summary>
+            GWL_STYLE = -16
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_SYSCOMMAND"/> message</summary>
+        Public Enum WM_SYSCOMMAND As Integer
+            ''' <summary>Closes the window.</summary>
+            SC_CLOSE = &HF060I
+            ''' <summary>Changes the cursor to a question mark with a pointer. If the user then clicks a control in the dialog box, the control receives a WM_HELP message.</summary>
+            SC_CONTEXTHELP = &HF180
+            ''' <summary>Activates the window associated with the application-specified hot key. The lParam parameter identifies the window to activate.</summary>
+            SC_DEFAULT = &HF160
+            ''' <summary>Activates the window associated with the application-specified hot key. The lParam parameter identifies the window to activate.</summary>
+            SC_HOTKEY = &HF150
+            ''' <summary>Scrolls horizontally.</summary>
+            SC_HSCROLL = &HF080
+            ''' <summary>Retrieves the window menu as a result of a keystroke. For more information, see the Remarks section.</summary>
+            SC_KEYMENU = &HF100
+            ''' <summary>Maximizes the window.</summary>
+            SC_MAXIMIZE = &HF030I
+            ''' <summary>Minimizes the window.</summary>
+            SC_MINIMIZE = &HF020I
+            ''' <summary>    Sets the state of the display. This command supports devices that have power-saving features, such as a battery-powered personal computer.</summary>
+            ''' <remarks>The lParam parameter can have the following values:
+            ''' <list type="table">
+            ''' <item><term>1</term><description>the display is going to low power</description></item>
+            ''' <item><term>2</term><description> the display is being shut off</description></item>
+            ''' </list></remarks>
+            SC_MONITORPOWER = &HF170
+            ''' <summary>Retrieves the window menu as a result of a mouse click.</summary>
+            SC_MOUSEMENU = &HF090
+            ''' <summary>Moves the window.</summary>
+            SC_MOVE = &HF010
+            ''' <summary>Moves to the next window.</summary>
+            SC_NEXTWINDOW = &HF040
+            ''' <summary>Moves to the previous window.</summary>
+            SC_PREVWINDOW = &HF050
+            ''' <summary>Restores the window to its normal position and size.</summary>
+            SC_RESTORE = &HF120
+            ''' <summary>Executes the screen saver application specified in the [boot] section of the System.ini file.</summary>
+            SC_SCREENSAVE = &HF140
+            ''' <summary>Sizes the window.</summary>
+            SC_SIZE = &HF000
+            ''' <summary>Activates the Start menu.</summary>
+            SC_TASKLIST = &HF130
+            ''' <summary>Scrolls vertically.</summary>
+            SC_VSCROLL = &HF070
+        End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_TCARD"/> message</summary>
+        Public Enum WM_TCARD As Integer
+            ''' <summary>The user clicked an authorable Abort button.</summary>
+            IDABORT = 3
+            ''' <summary>The user clicked an authorable Cancel button.</summary>
+            IDCANCEL = 2
+            ''' <summary>The user closed the training card.</summary>
+            IDCLOSE = 8
+            ''' <summary>The user clicked an authorable Windows Help button.</summary>
+            IDHELP = 9
+            ''' <summary>The user clicked an authorable Ignore button.</summary>
+            IDIGNORE = 5
+            ''' <summary>The user clicked an authorable OK button.</summary>
+            IDOK = 1
+            ''' <summary>The user clicked an authorable No button.</summary>
+            IDNO = 7
+            ''' <summary>The user clicked an authorable Retry button.</summary>
+            IDRETRY = 4
+            ''' <summary>The user clicked an authorable button. The dwActionData parameter contains a long integer specified by the Help author.</summary>
+            HELP_TCARD_DATA = &H10
+            'ASAP: Find values of this constants!!!
+            ''' <summary>The user clicked an authorable Next button.</summary>
+            <Obsolete("I haven't found value of this constant. Do not use it!", True)> _
+            <EditorBrowsable(EditorBrowsableState.Never)> HELP_TCARD_NEXT = Integer.MinValue
+            ''' <summary>Another application has requested training cards.</summary>
+            HELP_TCARD_OTHER_CALLER = &H11
+            ''' <summary>The user clicked an authorable Yes button.</summary>
+            IDYES = 6
+        End Enum
     End Namespace
     Namespace lParam
-        ''' <summary>Bit-masks used by <see cref="WindowMessages.WM_CHAR"/>, <see cref="WindowMessages.WM_DEADCHAR"/>, <see cref="WindowMessages.WM_IME_CHAR"/>, <see cref="WindowMessages.WM_IME_KEYDOWN"/>, <see cref="WindowMessages.WM_IME_KEYUP"/>, <see cref="WindowMessages.WM_KEYDOWN"/>, <see cref="WindowMessages.WM_KEYUP"/> message for lParam</summary>
+        ''' <summary>Bit-masks used by <see cref="WindowMessages.WM_CHAR"/>, <see cref="WindowMessages.WM_DEADCHAR"/>, <see cref="WindowMessages.WM_IME_CHAR"/>, <see cref="WindowMessages.WM_IME_KEYDOWN"/>, <see cref="WindowMessages.WM_IME_KEYUP"/>, <see cref="WindowMessages.WM_KEYDOWN"/>, <see cref="WindowMessages.WM_KEYUP"/>, <see cref="WindowMessages.WM_SYSCHAR"/>, <see cref="WindowMessages.WM_SYSDEADCHAR"/>, <see cref="WindowMessages.WM_SYSKEYDOWN"/>, <see cref="WindowMessages.WM_SYSKEYUP"/> message for lParam</summary>
         ''' <remarks>And lParam with mask and to get appropriete value</remarks>
         Public Enum WM_CHAR As Integer
             ''' <summary>Bits 0÷15: Specifies the repeat count for the current message. The value is the number of times the keystroke is autorepeated as a result of the user holding down the key. If the keystroke is held long enough, multiple messages are sent. However, the repeat count is not cumulative.</summary>
@@ -2148,21 +3246,64 @@ Namespace API.Messages
         <Flags()> Public Enum WM_IME_SETCONTEXT As Integer
             ''' <summary>Show the composition window by user interface window.</summary>
             ISC_SHOWUICOMPOSITIONWINDOW = &H80000000
-            'ASAP: Find values of these constants!!!
+            'ASAP: Find values of this constants!!!
             ''' <summary>Show the guide window by user interface window.</summary>
             <Obsolete("Value of this constant is unknown, do not use it!", True), EditorBrowsable(EditorBrowsableState.Never)> _
-            ISC_SHOWUIGUIDWINDOW
+            ISC_SHOWUIGUIDWINDOW = Integer.MinValue
             ''' <summary>Show the candidate window of index 0 by user interface window.</summary>
             ISC_SHOWUICANDIDATEWINDOW = &H1
+            'ASAP: Find values of this constants!!!
             ''' <summary>Show the soft keyboard by user interface window.</summary>
             <Obsolete("Value of this constant is unknown, do not use it!", True), EditorBrowsable(EditorBrowsableState.Never)> _
-            ISC_SHOWUISOFTKBD
+            ISC_SHOWUISOFTKBD = Integer.MinValue
             ''' <summary>Show the candidate window of index 1 by user interface window.</summary>
             ISC_SHOWUICANDIDATEWINDOW_l1 = ISC_SHOWUICANDIDATEWINDOW << 1
             ''' <summary> 	Show the candidate window of index 2 by user interface window.</summary>
             ISC_SHOWUICANDIDATEWINDOW_l2 = ISC_SHOWUICANDIDATEWINDOW << 2
             ''' <summary>Show the candidate window of index 3 by user interface window.</summary>
             ISC_SHOWUICANDIDATEWINDOW_l3 = ISC_SHOWUICANDIDATEWINDOW << 3
+        End Enum
+        ''' <summary>Values used for lParam of the <see cref="WindowMessages.WM_NOTIFYFORMAT"/> message</summary>
+        Public Enum WM_NOTIFYFORMAT As Integer
+            ''' <summary>The message is a query to determine whether ANSI or Unicode structures should be used in WM_NOTIFY messages. This command is sent from a control to its parent window during the creation of a control and in response to an NF_REQUERY command.</summary>
+            NF_QUERY = 3
+            ''' <summary>The message is a request for a control to send an NF_QUERY form of this message to its parent window. This command is sent from the parent window. The parent window is asking the control to requery it about the type of structures to use in WM_NOTIFY messages. If Command is NF_REQUERY, the return value is the result of the requery operation.</summary>
+            NF_REQUERY = 4
+        End Enum
+        ''' <summary>Values used for lParam of the <see cref="WindowMessages.WM_PRINT"/> message</summary>
+        <Flags()> Public Enum WM_PRINT As Integer
+            ''' <summary>Draws all visible children windows.</summary>
+            PRF_CHECKVISIBLE = &H1I
+            ''' <summary>Draws all visible children windows.</summary>
+            PRF_CHILDREN = &H10I
+            ''' <summary>Draws the client area of the window.</summary>
+            PRF_CLIENT = &H4I
+            ''' <summary>Erases the background before drawing the window.</summary>
+            PRF_ERASEBKGND = &H8I
+            ''' <summary>Draws the nonclient area of the window.</summary>
+            PRF_NONCLIENT = &H2I
+            ''' <summary>Draws all owned windows.</summary>
+            PRF_OWNED = &H20I
+        End Enum
+        ''' <summary>Values used for lParam of the <see cref="WindowMessages.WM_QUERYENDSESSION"/> message</summary>
+        <Flags()> Public Enum WM_QUERYENDSESSION As Integer
+            ''' <summary>The application is using a file that must be replaced, the system is being serviced, or system resources are exhausted. For more information, see Guidelines for Applications (http://msdn2.microsoft.com/en-us/library/aa373651.aspx).</summary>
+            ENDSESSION_CLOSEAPP = &H1
+            ''' <summary>The user is logging off. For more information, see Logging Off (http://msdn2.microsoft.com/en-us/library/aa376876.aspx).</summary>
+            ENDSESSION_LOGOFF = &H80000000
+        End Enum
+        ''' <summary>Values used for lparam of the <see cref="WindowMessages.WM_SHOWWINDOW"/> message</summary>
+        Public Enum WM_SHOWWINDOW As Integer
+            ''' <summary>the message was sent because of a call to the ShowWindow function</summary>
+            zero = 0
+            ''' <summary>The window is being uncovered because a maximize window was restored or minimized.</summary>
+            SW_OTHERUNZOOM = 4
+            ''' <summary>The window is being covered by another window that has been maximized.</summary>
+            SW_OTHERZOOM = 2
+            ''' <summary>The window's owner window is being minimized.</summary>
+            SW_PARENTCLOSING = 1
+            ''' <summary>The window's owner window is being restored.</summary>
+            SW_PARENTOPENING = 3
         End Enum
     End Namespace
     Namespace ReturnValues
@@ -2207,8 +3348,8 @@ Namespace API.Messages
             ''' <summary>TAB key.</summary>
             DLGC_WANTTAB = &H2
         End Enum
-        ''' <summary>Used for hight word of return value of <see cref="WindowMessages.WM_GETHOTKEY"/> message</summary>
-        ''' <remarks>You must left-shift by 24 bits this value before it can be used as return value, or use <see cref="WM_GETHOTKEY_high_shifted"/> that can be directly or-ed with virtual key code</remarks>
+        ''' <summary>Used for hight word of return value of <see cref="WindowMessages.WM_GETHOTKEY"/> message. It is also used as <see cref="Short"/> for high-order word of wParam of the <see cref="WindowMessages.WM_SETHOTKEY"/> message.</summary>
+        ''' <remarks>You must left-shift by 24 bits this value before it can be used as return value, or use <see cref="WM_GETHOTKEY_high_shifted"/> that can be directly or-ed with virtual key code. For <see cref="WindowMessages.WM_SETHOTKEY"/>'s wParam it must be left-shifted by 16 converted to <see cref="Integer"/> and then or-ed with low-order word of wParam.</remarks>
         <Flags()> Public Enum WM_GETHOTKEY_high As Byte
             ''' <summary>ALT key</summary>
             HOTKEYF_ALT = &H4
@@ -2267,10 +3408,125 @@ Namespace API.Messages
             ''' <summary>Does not activate the window, but discards the mouse message.</summary>
             MA_NOACTIVATEANDEAT = 4
         End Enum
+        ''' <summary>Values used as return values for the <see cref="WindowMessages.WM_NCCALCSIZE"/> message</summary>
+        <Flags()> Public Enum WM_NCCALCSIZE As Integer
+            ''' <summary>A zero (0)</summary>
+            zero = 0
+            ''' <summary>Specifies that the client area of the window is to be preserved and aligned with the top of the new position of the window. For example, to align the client area to the upper-left corner, return the WVR_ALIGNTOP and WVR_ALIGNLEFT values.</summary>
+            WVR_ALIGNTOP = &H10
+            ''' <summary>	Specifies that the client area of the window is to be preserved and aligned with the right side of the new position of the window. For example, to align the client area to the lower-right corner, return the WVR_ALIGNRIGHT and WVR_ALIGNBOTTOM values.</summary>
+            WVR_ALIGNRIGHT = &H80
+            ''' <summary>Specifies that the client area of the window is to be preserved and aligned with the bottom of the new position of the window. For example, to align the client area to the top-left corner, return the WVR_ALIGNTOP and WVR_ALIGNLEFT values.</summary>
+            WVR_ALIGNLEFT = &H20
+            ''' <summary>Specifies that the client area of the window is to be preserved and aligned with the bottom of the new position of the window. For example, to align the client area to the top-left corner, return the WVR_ALIGNTOP and WVR_ALIGNLEFT values.</summary>
+            WVR_ALIGNBOTTOM = &H40
+            ''' <summary>Used in combination with any other values, except WVR_VALIDRECTS, causes the window to be completely redrawn if the client rectangle changes size horizontally. This value is similar to CS_HREDRAW class style</summary>
+            WVR_HREDRAW = &H100
+            ''' <summary>Used in combination with any other values, except WVR_VALIDRECTS, causes the window to be completely redrawn if the client rectangle changes size vertically. This value is similar to CS_VREDRAW class style</summary>
+            WVR_VREDRAW = &H200
+            ''' <summary>This value causes the entire window to be redrawn. It is a combination of WVR_HREDRAW and WVR_VREDRAW values.</summary>
+            WVR_REDRAW = WVR_HREDRAW Or WVR_VREDRAW
+            ''' <summary>This value indicates that, upon return from WM_NCCALCSIZE, the rectangles specified by the rgrc[1] and rgrc[2] members of the NCCALCSIZE_PARAMS structure contain valid destination and source area rectangles, respectively. The system combines these rectangles to calculate the area of the window to be preserved. The system copies any part of the window image that is within the source rectangle and clips the image to the destination rectangle. Both rectangles are in parent-relative or screen-relative coordinates. This flag cannot be combined with any other flags.</summary>
+            ''' <remarks>This return value allows an application to implement more elaborate client-area preservation strategies, such as centering or preserving a subset of the client area.</remarks>
+            WVR_VALIDRECTS = &H400
+        End Enum
+        ''' <summary>Values used as return values for the <see cref="WindowMessages.WM_NCHITTEST"/> message</summary>
+        Public Enum WM_NCHITTEST
+            ''' <summary>	In the border of a window that does not have a sizing border.</summary>
+            HTBORDER = 18
+            ''' <summary>In the lower-horizontal border of a resizable window (the user can click the mouse to resize the window vertically).</summary>
+            HTBOTTOM = 15
+            ''' <summary>In the lower-left corner of a border of a resizable window (the user can click the mouse to resize the window diagonally).</summary>
+            HTBOTTOMLEFT = 16
+            ''' <summary>In the lower-right corner of a border of a resizable window (the user can click the mouse to resize the window diagonally).</summary>
+            HTBOTTOMRIGHT = 17
+            ''' <summary>	In a title bar.</summary>
+            HTCAPTION = 2
+            ''' <summary>	In a client area.</summary>
+            HTCLIENT = 1
+            ''' <summary>	In a Close button.</summary>
+            HTCLOSE = 20
+            ''' <summary>On the screen background or on a dividing line between windows (same as HTNOWHERE, except that the DefWindowProc function produces a system beep to indicate an error).</summary>
+            HTERROR = -2
+            ''' <summary>	In a size box (same as HTSIZE).</summary>
+            HTGROWBOX = 4
+            ''' <summary>In a Help button.</summary>
+            HTHELP = 21
+            ''' <summary>In a horizontal scroll bar.</summary>
+            HTHSCROLL = 6
+            ''' <summary>In the left border of a resizable window (the user can click the mouse to resize the window horizontally).</summary>
+            HTLEFT = 10
+            ''' <summary>	In a menu.</summary>
+            HTMENU = 5
+            ''' <summary>	In a Maximize button.</summary>
+            HTMAXBUTTON = 9
+            ''' <summary>	In a Minimize button.</summary>
+            HTMINBUTTON = 8
+            ''' <summary>On the screen background or on a dividing line between windows.</summary>
+            HTNOWHERE = 0
+            ''' <summary>In a Minimize button.</summary>
+            HTREDUCE = HTMINBUTTON
+            ''' <summary>In the right border of a resizable window (the user can click the mouse to resize the window horizontally).</summary>
+            HTRIGHT = 11
+            ''' <summary>In a size box (same as HTGROWBOX).</summary>
+            HTSIZE = HTGROWBOX
+            ''' <summary>In a window menu or in a Close button in a child window.</summary>
+            HTSYSMENU = 3
+            ''' <summary>In the upper-horizontal border of a window.</summary>
+            HTTOP = 12
+            ''' <summary>	In the upper-left corner of a window border.</summary>
+            HTTOPLEFT = 13
+            ''' <summary>In the upper-right corner of a window border.</summary>
+            HTTOPRIGHT = 14
+            ''' <summary>	In a window currently covered by another window in the same thread (the message will be sent to underlying windows in the same thread until one of them returns a code that is not HTTRANSPARENT).</summary>
+            HTTRANSPARENT = -1
+            ''' <summary>In the vertical scroll bar.</summary>
+            HTVSCROLL = 7
+            ''' <summary>In a Maximize button.</summary>
+            HTZOOM = HTMAXBUTTON
+        End Enum
+        ''' <summary>Values used as return values for the <see cref="WindowMessages.WM_NOTIFYFORMAT"/> message</summary>
+        Public Enum WM_NOTIFYFORMAT As Integer
+            ''' <summary>ANSI structures should be used in WM_NOTIFY messages sent by the control.</summary>
+            NFR_ANSI = 1
+            ''' <summary>	Unicode structures should be used in WM_NOTIFY messages sent by the control.</summary>
+            NFR_UNICODE = 2
+            ''' <summary>An error occurred.</summary>
+            zero = 0
+        End Enum
+        ''' <summary>Values used as return values for the <see cref="WindowMessages.WM_POWER"/> message</summary>
+        Public Enum WM_POWER As Integer
+            ''' <summary>If wParam is <see cref="wParam.WM_POWER.PWR_SUSPENDRESUME"/> or <see cref="wParam.WM_POWER.PWR_CRITICALRESUME"/>, the return value is zero.</summary>
+            zero = 0
+            ''' <summary>If wParam is <see cref="wParam.WM_POWER.PWR_SUSPENDREQUEST"/>, the return value is <see cref="PWR_OK"/> not to prevent the system from entering the suspended state.</summary>
+            PWR_OK = 1
+            ''' <summary>If wParam is <see cref="wParam.WM_POWER.PWR_SUSPENDREQUEST"/>, the return value is <see cref="PWR_FAIL"/> to prevent the system from entering the suspended state.</summary>
+            PWR_FAIL = -1
+        End Enum
+        ''' <summary>Values used as return values for the <see cref="WindowMessages.WM_POWERBROADCAST"/> messag</summary>
+        Public Enum WM_POWERBROADCAST As Integer
+            ''' <summary>An application should return TRUE if it processes this message.</summary>
+            [TRUE] = APIBool.TRUE
+            ''' <summary>Windows Server 2003, Windows XP, and Windows 2000:  An application can return <see cref="BROADCAST_QUERY_DENY"/> to deny a <see cref="PBT_APMQUERYSUSPEND"/> or <see cref="PBT_APMQUERYSUSPENDFAILED"/> request.</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> PBT_APMQUERYSUSPENDFAILED = &H2
+            ''' <summary>Windows Server 2003, Windows XP, and Windows 2000:  An application can return <see cref="BROADCAST_QUERY_DENY"/> to deny a <see cref="PBT_APMQUERYSUSPEND"/> or <see cref="PBT_APMQUERYSUSPENDFAILED"/> request.</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> BROADCAST_QUERY_DENY = &H424D5144
+            ''' <summary>Windows Server 2003, Windows XP, and Windows 2000:  An application can return <see cref="BROADCAST_QUERY_DENY"/> to deny a <see cref="PBT_APMQUERYSUSPEND"/> or <see cref="PBT_APMQUERYSUSPENDFAILED"/> request.</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> PBT_APMQUERYSUSPEND = &H0
+        End Enum
+        ''' <summary>Values used as return values for the <see cref="WM_SETHOTKEY"/> message</summary>
+        Public Enum WM_SETHOTKEY As Integer
+            ''' <summary>The function is unsuccessful—the hot key is invalid.</summary>
+            minus_1 = -1
+            ''' <summary>The function is unsuccessful—the window is invalid.</summary>
+            zero = 0
+            ''' <summary>The function is successful, and no other window has the same hot key.</summary>
+            one = 1
+            ''' <summary>The function is successful, but another window already has the same hot key.</summary>
+            two = 2
+        End Enum
     End Namespace
 End Namespace
 #End If
-
-
 
 

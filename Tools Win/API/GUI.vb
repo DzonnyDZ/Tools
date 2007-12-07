@@ -67,15 +67,6 @@ Namespace API
             SC_RESTORE = &HF120
         End Enum
 
-        ''' <summary>Notifications connected with windows state changing passed to <see cref="System.Windows.Forms.Form.WndProc"/> with the <see cref="Messages.WM_SYSCOMMAND"/> message</summary>
-        Friend Enum WindowStateChangedNotifications As Int32
-            ''' <summary>Windows size has been restored</summary>
-            SC_RESTORE = &HF120
-            ''' <summary>Window has been maximized</summary>
-            SC_MAXIMIZE = &HF030I
-            ''' <summary>Window has been minimized</summary>
-            SC_MINIMIZE = &HF020I
-        End Enum
         ''' <summary>The <see cref="RemoveMenu"/> function deletes a menu item or detaches a submenu from the specified menu. If the menu item opens a drop-down menu or submenu, <see cref="RemoveMenu"/> does not destroy the menu or its handle, allowing the menu to be reused. Before this function is called, the GetSubMenu function should retrieve a handle to the drop-down menu or submenu. </summary>
         ''' <param name="hMenu">Handle to the menu to be changed. </param>
         ''' <param name="nPosition">Specifies the menu item to be deleted, as determined by the <paramref name="wFlags"/> parameter. </param>
@@ -267,3 +258,4 @@ Namespace API
         Friend Declare Function EnumWindows Lib "user32.dll" (ByVal lpEnumFunc As EnumWindowsProc, ByVal lParam As Int32) As Int32
     End Module
 End Namespace
+

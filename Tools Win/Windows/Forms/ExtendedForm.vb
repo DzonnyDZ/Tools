@@ -173,7 +173,7 @@ Namespace WindowsT.FormsT
             Select Case m.Msg
                 Case Messages.WindowMessages.WM_SYSCOMMAND
                     Select Case m.WParam
-                        Case WindowStateChangedNotifications.SC_RESTORE, WindowStateChangedNotifications.SC_MAXIMIZE, WindowStateChangedNotifications.SC_MINIMIZE
+                        Case Messages.wParam.WM_SYSCOMMAND.SC_RESTORE, Messages.wParam.WM_SYSCOMMAND.SC_MAXIMIZE, Messages.wParam.WM_SYSCOMMAND.SC_MINIMIZE
                             OnWindowStateChanged(EventArgs.Empty) 'State change events
                     End Select
             End Select
