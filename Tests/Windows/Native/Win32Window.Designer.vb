@@ -37,6 +37,12 @@
             Me.cmdLoadTopLevel = New System.Windows.Forms.Button
             Me.cmdLoadChildren = New System.Windows.Forms.Button
             Me.lstWindowList = New System.Windows.Forms.ListBox
+            Me.lblPrintMessage = New System.Windows.Forms.Label
+            Me.chkPrintMessage1 = New System.Windows.Forms.CheckBox
+            Me.chkPrintMessage2 = New System.Windows.Forms.CheckBox
+            Me.cmdWndReplace = New System.Windows.Forms.Button
+            Me.cmdWndRenew = New System.Windows.Forms.Button
+            Me.lblWndProc = New System.Windows.Forms.Label
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -90,6 +96,12 @@
             Me.flpCommands.Controls.Add(Me.cmdLoadParent)
             Me.flpCommands.Controls.Add(Me.cmdLoadDesktop)
             Me.flpCommands.Controls.Add(Me.fraWindowList)
+            Me.flpCommands.Controls.Add(Me.lblPrintMessage)
+            Me.flpCommands.Controls.Add(Me.chkPrintMessage1)
+            Me.flpCommands.Controls.Add(Me.chkPrintMessage2)
+            Me.flpCommands.Controls.Add(Me.lblWndProc)
+            Me.flpCommands.Controls.Add(Me.cmdWndReplace)
+            Me.flpCommands.Controls.Add(Me.cmdWndRenew)
             Me.flpCommands.Dock = System.Windows.Forms.DockStyle.Fill
             Me.flpCommands.Location = New System.Drawing.Point(0, 0)
             Me.flpCommands.Margin = New System.Windows.Forms.Padding(0)
@@ -162,11 +174,12 @@
             Me.fraWindowList.AutoSize = True
             Me.fraWindowList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.fraWindowList.Controls.Add(Me.tlpWindowList)
+            Me.flpCommands.SetFlowBreak(Me.fraWindowList, True)
             Me.fraWindowList.Location = New System.Drawing.Point(0, 69)
             Me.fraWindowList.Margin = New System.Windows.Forms.Padding(0)
             Me.fraWindowList.Name = "fraWindowList"
             Me.fraWindowList.Padding = New System.Windows.Forms.Padding(0)
-            Me.fraWindowList.Size = New System.Drawing.Size(168, 132)
+            Me.fraWindowList.Size = New System.Drawing.Size(168, 157)
             Me.fraWindowList.TabIndex = 3
             Me.fraWindowList.TabStop = False
             Me.fraWindowList.Text = "Window list"
@@ -188,7 +201,7 @@
             Me.tlpWindowList.RowCount = 2
             Me.tlpWindowList.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpWindowList.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpWindowList.Size = New System.Drawing.Size(168, 119)
+            Me.tlpWindowList.Size = New System.Drawing.Size(168, 144)
             Me.tlpWindowList.TabIndex = 0
             '
             'cmdLoadTopLevel
@@ -227,8 +240,81 @@
             Me.lstWindowList.Location = New System.Drawing.Point(0, 23)
             Me.lstWindowList.Margin = New System.Windows.Forms.Padding(0)
             Me.lstWindowList.Name = "lstWindowList"
-            Me.lstWindowList.Size = New System.Drawing.Size(168, 95)
+            Me.lstWindowList.Size = New System.Drawing.Size(168, 121)
             Me.lstWindowList.TabIndex = 2
+            '
+            'lblPrintMessage
+            '
+            Me.lblPrintMessage.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.lblPrintMessage.AutoSize = True
+            Me.lblPrintMessage.Location = New System.Drawing.Point(0, 231)
+            Me.lblPrintMessage.Margin = New System.Windows.Forms.Padding(0, 0, 3, 0)
+            Me.lblPrintMessage.Name = "lblPrintMessage"
+            Me.lblPrintMessage.Size = New System.Drawing.Size(103, 13)
+            Me.lblPrintMessage.TabIndex = 4
+            Me.lblPrintMessage.Text = "Form prints message"
+            '
+            'chkPrintMessage1
+            '
+            Me.chkPrintMessage1.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.chkPrintMessage1.AutoSize = True
+            Me.chkPrintMessage1.Location = New System.Drawing.Point(106, 229)
+            Me.chkPrintMessage1.Margin = New System.Windows.Forms.Padding(0, 3, 0, 3)
+            Me.chkPrintMessage1.Name = "chkPrintMessage1"
+            Me.chkPrintMessage1.Size = New System.Drawing.Size(32, 17)
+            Me.chkPrintMessage1.TabIndex = 5
+            Me.chkPrintMessage1.Text = "1"
+            Me.chkPrintMessage1.UseVisualStyleBackColor = True
+            '
+            'chkPrintMessage2
+            '
+            Me.chkPrintMessage2.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.chkPrintMessage2.AutoSize = True
+            Me.flpCommands.SetFlowBreak(Me.chkPrintMessage2, True)
+            Me.chkPrintMessage2.Location = New System.Drawing.Point(138, 229)
+            Me.chkPrintMessage2.Margin = New System.Windows.Forms.Padding(0, 3, 0, 3)
+            Me.chkPrintMessage2.Name = "chkPrintMessage2"
+            Me.chkPrintMessage2.Size = New System.Drawing.Size(32, 17)
+            Me.chkPrintMessage2.TabIndex = 6
+            Me.chkPrintMessage2.Text = "2"
+            Me.chkPrintMessage2.UseVisualStyleBackColor = True
+            '
+            'cmdWndReplace
+            '
+            Me.cmdWndReplace.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.cmdWndReplace.AutoSize = True
+            Me.cmdWndReplace.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdWndReplace.Location = New System.Drawing.Point(52, 252)
+            Me.cmdWndReplace.Margin = New System.Windows.Forms.Padding(0, 3, 0, 3)
+            Me.cmdWndReplace.Name = "cmdWndReplace"
+            Me.cmdWndReplace.Size = New System.Drawing.Size(57, 23)
+            Me.cmdWndReplace.TabIndex = 7
+            Me.cmdWndReplace.Text = "Replace"
+            Me.cmdWndReplace.UseVisualStyleBackColor = True
+            '
+            'cmdWndRenew
+            '
+            Me.cmdWndRenew.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.cmdWndRenew.AutoSize = True
+            Me.cmdWndRenew.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdWndRenew.Location = New System.Drawing.Point(109, 252)
+            Me.cmdWndRenew.Margin = New System.Windows.Forms.Padding(0, 3, 0, 3)
+            Me.cmdWndRenew.Name = "cmdWndRenew"
+            Me.cmdWndRenew.Size = New System.Drawing.Size(51, 23)
+            Me.cmdWndRenew.TabIndex = 8
+            Me.cmdWndRenew.Text = "Renew"
+            Me.cmdWndRenew.UseVisualStyleBackColor = True
+            '
+            'lblWndProc
+            '
+            Me.lblWndProc.Anchor = System.Windows.Forms.AnchorStyles.Left
+            Me.lblWndProc.AutoSize = True
+            Me.lblWndProc.Location = New System.Drawing.Point(0, 257)
+            Me.lblWndProc.Margin = New System.Windows.Forms.Padding(0)
+            Me.lblWndProc.Name = "lblWndProc"
+            Me.lblWndProc.Size = New System.Drawing.Size(52, 13)
+            Me.lblWndProc.TabIndex = 9
+            Me.lblWndProc.Text = "WndProc"
             '
             'frmWin32Window
             '
@@ -267,5 +353,11 @@
         Friend WithEvents cmdLoadTopLevel As System.Windows.Forms.Button
         Friend WithEvents cmdLoadChildren As System.Windows.Forms.Button
         Friend WithEvents lstWindowList As System.Windows.Forms.ListBox
+        Friend WithEvents lblPrintMessage As System.Windows.Forms.Label
+        Friend WithEvents chkPrintMessage1 As System.Windows.Forms.CheckBox
+        Friend WithEvents chkPrintMessage2 As System.Windows.Forms.CheckBox
+        Friend WithEvents cmdWndReplace As System.Windows.Forms.Button
+        Friend WithEvents lblWndProc As System.Windows.Forms.Label
+        Friend WithEvents cmdWndRenew As System.Windows.Forms.Button
     End Class
 End Namespace

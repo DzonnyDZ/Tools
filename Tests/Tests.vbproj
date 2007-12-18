@@ -88,6 +88,7 @@
     <Config>4</Config>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -102,6 +103,7 @@
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
+    <Import Include="Microsoft.VisualBasic.Compatibility" />
     <Import Include="System" />
     <Import Include="System.Collections" />
     <Import Include="System.Collections.Generic" />
@@ -458,6 +460,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\infoBubble.bmp" />
+    <None Include="app.mda.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools Visual Studio\Tools Visual Studio.vbproj">
@@ -481,4 +484,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)\app.mda.config" "$(TargetPath).mda.config"
+copy "$(ProjectDir)\app.mda.config" "$(TargetDir)$(TargetName).vshost$(TargetExt).mda.config"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

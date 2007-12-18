@@ -170,13 +170,22 @@ Namespace WindowsT.NativeT
         ''' <param name="Long">Long to get or set. Can be one of <see cref="API.[Public].WindowLongs"/> values or can be any user-defined integer</param>
         ''' <value>New value of window long</value>
         ''' <returns>Current value of window long</returns>
+        ''' <exception cref="API.Win32APIException">Getting or setting of value failed (i.e. <see cref="Handle"/> is invalid or <paramref name="Long"/> is invalid)</exception>
         <Category("Low-level")> _
         Public Property WindowLong(ByVal [Long] As API.Public.WindowLongs) As Integer 'Localize:Category
             Get
-                Return API.GetWindowLong(hWnd, [Long])
+                Try
+                    Return API.GetWindowLong(hWnd, CType([Long], API.WindowLongs))
+                Finally
+                    Dim ex As New API.Win32APIException
+                    If ex.NativeErrorCode <> 0 Then Throw ex
+                End Try
             End Get
             Set(ByVal value As Integer)
-                API.SetWindowLong(hWnd, [Long], value)
+                If API.SetWindowLong(hWnd, [Long], value) = 0 Then
+                    Dim ex As New API.Win32APIException
+                    If ex.NativeErrorCode <> 0 Then Throw ex
+                End If
             End Set
         End Property
 #Region "Size & location"
@@ -399,7 +408,67 @@ Namespace WindowsT.NativeT
             If hWnd = 0 Then Return "<no window>"
             Try : Return String.Format("{0} hWnd = {1}", Text, hWnd) : Catch ex As Win32Exception : Return String.Format("hWnd = {0}", hWnd) : End Try
         End Function
-        'TODO:Public Overridable Property WndProc()
+        ''' <summary>Gets or sets pointer to wnd proc of current window. Used for so-called sub-classing.</summary>
+        ''' <returns>Pointer to current wnd proc of current window</returns>
+        ''' <value>Pointer to new wnd proc. Note: Old wnd proc is lost when setting this property. You should consider backing old value up.</value>
+        ''' <remarks>
+        ''' wnd proc (window procedure) is procedure with signature of th <see cref="API.Messages.WndProc"/> delegate that processes all the messages. You should consider using <see cref="WndProc"/> property rather then this one.
+        ''' You can do this also with <see cref="WindowLong"/> with <see cref="API.[Public].WindowLongs.WndProc"/> as argument.
+        ''' </remarks>
+        ''' <exception cref="API.Win32APIException">Getting or setting of value failed (i.e. <see cref="Handle"/> is invalid)</exception>
+        <Category("Low-level")> _
+        <Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Overridable Property WndProcPointer() As IntPtr  'Localize: category
+            Get
+                Return WindowLong(API.Public.WindowLongs.WndProc)
+            End Get
+            Set(ByVal value As IntPtr)
+                WindowLong(API.Public.WindowLongs.WndProc) = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets wnd proc of current window. Used for so-called window sub-classing.</summary>
+        ''' <value>New window proc. Note: Old window proc is lost by setting this property. You should consider backing it up.
+        ''' <para>Warning: By setting value of this property youar passing delegate to unmanaged code! You must keep that delegate alive as long as it is in use - that means while the window exists or until <see cref="WndProc"/> property is changed again. For example following VB code is completely invalid!</para>
+        ''' <example><code>instance.WndProc = AddressOf MyReplacementProc</code></example>
+        ''' <para>This example creates new delegate, passes it to unmanaged code, and forgets it. The is no reference to that delegate keeping it alive (protecting it from being garbage collected), so you can get unexpected error when the runtime garbage collector collects the delegate and the there is an attempt to call it. The proper way of setting this property is create an instance of <see cref="API.Messages.WndProc"/>, store it somewhere, pass it here and keep that 'somewhere' alive as long as window uses that replaced wnd proc.</para>
+        ''' <para>The need to keep delegate alive may be problem when creating backup of previos window procedure in order to revert change of window procedure in the future. This property returns a managed delegate (to possibly onmanaged code). So, this delegate must be kept alive as long as it is used by window. That is not always the think you want to (or can) do. In such case you should considering backing up pointer to the old wnd proc. Pointer can be used to restore the procedure with no need to keep it alive. To do so use the <see cref="WndProcPointer"/> property. It is common parctise to backup old wnd proc in order to call it from new one. You cannot call a pointer. So, if you need to back up old wnd proc in order to restore it as well as in order to call it, the best think you can do is back it up as pointer as well as as delegate.</para>
+        ''' </value>
+        ''' <returns>Delegate to old window proc</returns>
+        ''' <exception cref="API.Win32APIException">Getting or setting value failed (i.e. <see cref="Handle"/> is invalid). This is also usually thrown when window comes from another process than property is being got.</exception>
+        ''' <remarks>
+        ''' Window procedure is used to handle messages of current window.
+        ''' <para>If current window represents .NET <see cref="Form"/> or other <see cref="Control"/> and you have chance to derive from it, you'd better to do so and the override <see cref="Control.WndProc"/>.
+        ''' You are the proctedted from problems with keeping delegate alive. You can also derive from <see cref="Windows.Forms.NativeWindow"/> and override it's <see cref="Windows.Forms.NativeWindow.WndProc"/>.</para>
+        ''' </remarks>
+        <Category("Low-level")> _
+        Public Overridable Property WndProc() As API.Messages.WndProc 'Localize: Category
+            Get
+                Dim ret As API.Messages.WndProc = API.GetWindowLong(hWnd, API.WindowProcs.GWL_WNDPROC)
+                If ret Is Nothing Then
+                    Dim ex As New API.Win32APIException
+                    If ex.NativeErrorCode <> 0 Then Throw ex
+                End If
+                Return ret
+            End Get
+            Set(ByVal value As API.Messages.WndProc)
+                If value Is Nothing Then
+                    WndProcPointer = 0
+                Else
+                    If Not API.SetWindowLong(hWnd, API.WindowProcs.GWL_WNDPROC, value) Then
+                        Throw New API.Win32APIException
+                    End If
+                End If
+            End Set
+        End Property
+        ''' <summary>Gets default window procedure implementation that responds to all messages in defaut way. This implementation is provided by the OS.</summary>
+        ''' <returns>Delegate to <see cref="API.DefWindowProc"/> (internal, PInvoke function)</returns>
+        Public Shared ReadOnly Property DefWndProc() As API.Messages.WndProc
+            Get
+                Static ret As API.Messages.WndProc
+                If ret Is Nothing Then ret = AddressOf API.DefWindowProc
+                Return ret
+            End Get
+        End Property
 #Region "Equals"
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>

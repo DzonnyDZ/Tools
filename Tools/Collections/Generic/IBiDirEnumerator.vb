@@ -1,5 +1,5 @@
 ﻿#If Config <= RC Then 'Stage: RC
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     'ASAP: Mark, WiKi, Forum
     ''' <summary>Provides interface of bidirectional type-safe enumerator</summary>
     ''' <typeparam name="T">Type of items to enumerate</typeparam>

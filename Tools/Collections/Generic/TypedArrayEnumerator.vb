@@ -1,5 +1,5 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
-Namespace Collections.Generic
+Namespace CollectionsT.GenericT
     'ASAP: Mark, WiKi, Forum
     ''' <summary>Implements type-safe <see cref="IEnumerator(Of T)"/> for 1-dimensional array of any type</summary>
     ''' <typeparam name="T">Type of array element</typeparam>

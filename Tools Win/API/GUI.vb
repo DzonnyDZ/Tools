@@ -152,14 +152,25 @@ Namespace API
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be set. Valid values are in the range zero through the number of bytes of extra window memory, minus 4; for example, if you specified 12 or more bytes of extra memory, a value of 8 would be an index to the third 32-bit integer.</param>
         ''' <param name="dwNewLong">Specifies the replacement value.</param>
-        ''' <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer. </returns>
+        ''' <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer.</returns>
         Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs, ByVal dwNewLong As Int32) As Int32
+        ''' <summary>Overload of the <see cref="SetWindowLong"/> function used to set window proc.</summary>
+        ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
+        ''' <param name="nIndex">Specifies the zero-based offset to the value to be set. This overload expects one of the <see cref="WindowProcs"/> values</param>
+        ''' <param name="NewProc">New window procedure - converted to pointer.</param>
+        ''' <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer.</returns>
+        Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowProcs, ByVal NewProc As Messages.WndProc) As Boolean
         ''' <summary>The GetWindowLong function retrieves information about the specified window. The function also retrieves the 32-bit (long) value at the specified offset into the extra window memory of a window.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be retrieved. Valid values are in the range zero through the number of bytes of extra window memory, minus four; for example, if you specified 12 or more bytes of extra memory, a value of 8 would be an index to the third 32-bit integer.</param>
         ''' <returns>If the function succeeds, the return value is the requested 32-bit value. 
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
         Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs) As Int32
+        ''' <summary>Overload of the <see cref="GetWindowLong"/> function used to get window proc.</summary>
+        ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
+        ''' <param name="nIndex">Specifies the zero-based offset to the value to be retrieved. This overload expects one of <see cref="WindowProcs"/> values.</param>
+        ''' <returns>If the function succeeds, the return value is requested delegate. If it fails the return value is null.</returns>
+        Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowProcs) As Messages.WndProc
         ''' <summary>Predefined window longs for <see cref="GetWindowLong"/> and <see cref="SetWindowLong"/></summary>
         ''' <remarks>Publicly visible alternative of this enumeration is <see cref="[Public].WindowLongs"/></remarks>
         Friend Enum WindowLongs As Int32
@@ -183,6 +194,13 @@ Namespace API
             DWL_MSGRESULT = 0
             ''' <summary>Retrieves extra information private to the application, such as handles or pointers.</summary>
             DWL_USER = 8
+        End Enum
+        ''' <summary>Subset of <see cref="WindowLongs"/> values related to window procedures</summary>
+        Friend Enum WindowProcs As Int32
+            ''' <summary>Retrieves the address of the window procedure, or a handle representing the address of the window procedure. You must use the CallWindowProc function to call the window procedure.</summary>
+            GWL_WNDPROC = WindowLongs.GWL_WNDPROC
+            ''' <summary>Retrieves the address of the dialog box procedure, or a handle representing the address of the dialog box procedure. You must use the CallWindowProc function to call the dialog box procedure.</summary>
+            DWL_DLGPROC = WindowLongs.DWL_DLGPROC
         End Enum
         ''' <summary>The SetWindowText function changes the text of the specified window’s title bar (if it has one). If the specified window is a control, the text of the control is changed.</summary>
         ''' <param name="hwnd">Identifies the window or control whose text is to be changed.</param>
@@ -256,6 +274,13 @@ Namespace API
         ''' <remarks>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</remarks>
         Friend Declare Function EnumWindows Lib "user32.dll" (ByVal lpEnumFunc As EnumWindowsProc, ByVal lParam As Int32) As Int32
+        ''' <summary>The DefWindowProc function calls the default window procedure to provide default processing for any window messages that an application does not process. This function ensures that every message is processed. DefWindowProc is called with the same parameters received by the window procedure.</summary>
+        ''' <param name="hwnd">Identifies the window procedure that received the message.</param>
+        ''' <param name="wMsg">Specifies the message.</param>
+        ''' <param name="wParam">Specifies additional message information. The content of this parameter depends on the value of the Msg parameter.</param>
+        ''' <param name="lParam">Specifies additional message information. The content of this parameter depends on the value of the Msg parameter.</param>
+        ''' <returns>The return value is the result of the message processing and depends on the message.</returns>
+        Friend Declare Auto Function DefWindowProc Lib "user32.dll" (ByVal hwnd As Int32, ByVal wMsg As Messages.WindowMessages, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
     End Module
 End Namespace
 

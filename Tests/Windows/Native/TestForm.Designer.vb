@@ -82,7 +82,10 @@
             Me.Controls.Add(Me.TextBox)
             Me.Controls.Add(Me.Button)
             Me.Controls.Add(Me.Label)
+            Me.MaximizeBox = False
+            Me.MinimizeBox = False
             Me.Name = "frmTestForm"
+            Me.ShowInTaskbar = False
             Me.Text = "TestForm"
             Me.ResumeLayout(False)
             Me.PerformLayout()
