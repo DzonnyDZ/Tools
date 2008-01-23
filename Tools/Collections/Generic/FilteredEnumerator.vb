@@ -2,7 +2,7 @@
 #If Config <= Nightly Then 'Stage nightly
     'ASAP: Forum, Mark , Wiki
 
-
+    ''' <summary>Filterg given <see cref="IEnumerator(Of T)"/> with given <see cref="Predicate(Of T)"/></summary>
     Public Class FilteredEnumerator(Of T)
         Implements IEnumerator(Of T)
         ''' <summary>Filtered <see cref="IEnumerator(Of T)"/></summary>
@@ -14,7 +14,8 @@
         ''' <param name="Other">The <see cref="IEnumerator(Of T)"/> to be filtered</param>
         ''' <param name="Filter">Filter predicate. Only items for which predicate is True are included in filtered enumeration</param>
         Public Sub New(ByVal Other As IEnumerator(Of T), ByVal Filter As Predicate(Of T))
-
+            internal = Other
+            Me.Filter = Filter
         End Sub
         ''' <summary>Gets the element in the collection at the current position of the enumerator.</summary>
         ''' <returns>The element in the collection at the current position of the enumerator.</returns>

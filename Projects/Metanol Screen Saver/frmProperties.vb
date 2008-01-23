@@ -1,16 +1,36 @@
 ﻿Imports System.Reflection, Tools.TypeTools
 Imports System.ComponentModel
 
-Public Class frmProperties
+Partial Friend Class frmProperties
     Private Shared ExifProperties As IEnumerable(Of PropertyInfoDisplay)
     Private Shared IPTCProperties As IEnumerable(Of PropertyInfoDisplay)
     Private Shared SysProperties As IEnumerable(Of PropertyInfoDisplay)
-    Private Shadows ReadOnly Property Owner() As frmSettings
+    Private Shared Instance As frmProperties
+    Public Shared ReadOnly Property IsInstance() As Boolean
         Get
-            Return TryCast(MyBase.Owner, frmSettings)
+            Return Instance IsNot Nothing
         End Get
     End Property
-    Public Sub New()
+
+    Public Shared Function ShowInstance(ByVal txt As TextBox) As frmProperties
+        If Instance Is Nothing Then Instance = New frmProperties()
+        Instance.txt = txt
+        If Instance.Visible Then
+            Instance.BringToFront()
+        Else
+            Instance.Show(txt.FindForm)
+            AddHandler txt.FindForm.FormClosed, AddressOf Instance.OwnerClose
+        End If
+        Return Instance
+    End Function
+
+    Private Sub OwnerClose(ByVal sender As Form, ByVal e As EventArgs)
+        Me.Close()
+        Instance = Nothing
+    End Sub
+
+
+    Private Sub New()
         InitializeComponent()
         If ExifProperties Is Nothing Then ExifProperties = PropertyInfoDisplay.GetProperties(GetType(Tools.DrawingT.MetadataT.Exif.IFDExif))
         If IPTCProperties Is Nothing Then IPTCProperties = PropertyInfoDisplay.GetProperties(GetType(Tools.DrawingT.MetadataT.IPTC))
@@ -40,16 +60,19 @@ Public Class frmProperties
         If sender.Focused Then DisplayInfo(sender)
     End Sub
 
+    Private txt As TextBox
     Private Sub lst_MouseDoubleClick(ByVal sender As ListBox, ByVal e As System.Windows.Forms.MouseEventArgs) _
         Handles lstOther.MouseDoubleClick, lstIPTC.MouseDoubleClick, lstExif.MouseDoubleClick
-        If Owner IsNot Nothing Then
-            Dim Namespace$
-            If sender Is lstExif Then : Namespace$ = "Exif"
-            ElseIf sender Is lstIPTC Then : [Namespace] = "IPTC"
-            Else : [Namespace] = "Sys"
-            End If
-            Owner.txtText.SelectedText = String.Format("<{0}:{1}:{2}>", [Namespace], CType(sender.SelectedItem, PropertyInfoDisplay).Name, "{0}")
+        Dim Namespace$
+        If sender Is lstExif Then : Namespace$ = "Exif"
+        ElseIf sender Is lstIPTC Then : [Namespace] = "IPTC"
+        Else : [Namespace] = "Sys"
         End If
+        txt.SelectedText = String.Format("<{0}:{1}:{2}>", [Namespace], CType(sender.SelectedItem, PropertyInfoDisplay).Name, "{0}")
+    End Sub
+
+    Private Sub frmProperties_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+        If Instance Is Me Then Instance = Nothing
     End Sub
 End Class
 

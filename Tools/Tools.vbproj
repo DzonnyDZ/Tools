@@ -303,6 +303,12 @@
     <Compile Include="Windows\Forms\Derived controls\TransparentTextBox.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\Dialogs\AboutDialog.Designer.vb">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\AboutDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
@@ -461,6 +467,10 @@
     <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ControlWithStatus.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />
   </ItemGroup>

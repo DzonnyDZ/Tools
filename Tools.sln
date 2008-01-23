@@ -15,6 +15,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "Develop
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{677A518E-909C-414F-AC5E-528AB32023AF}"
 	ProjectSection(SolutionItems) = preProject
+		Used doc\EXIF.pdf = Used doc\EXIF.pdf
 		Used doc\IPTC IIM Record No 3.pdf = Used doc\IPTC IIM Record No 3.pdf
 		Used doc\IPTC IIM.pdf = Used doc\IPTC IIM.pdf
 	EndProjectSection

@@ -8,6 +8,7 @@ Namespace IOt
             Dim f As New frmFileSystemEnumeratorWithMask
             f.ShowDialog()
         End Sub
+        ''' <summary>Get enumerator for file system</summary>
         Protected Overrides Function GetEnumerator() As FileSystemEnumerator
             Dim e As New FileSystemEnumeratorWithMask(txtRoot.Text, txtFileMask.Text, ";"c, chkFoldersFirst.Checked)
             If txtRoot.Text = "" Then e.FilesMasks = New String() {}

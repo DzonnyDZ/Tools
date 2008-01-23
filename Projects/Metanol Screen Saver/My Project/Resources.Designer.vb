@@ -59,5 +59,16 @@ Namespace My.Resources
                 resourceCulture = value
             End Set
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;Sys:FileNameWO:{0}&gt;&lt;Exif:DateTimeDigitized: {0}&gt;
+        '''&lt;IPTC:ObjectName:{0}
+        '''&gt;&lt;IPTC:CountryPrimaryLocationCode:{0}, &gt;&lt;IPTC:ProvinceState:{0}, &gt;&lt;IPTC:City:{0}, &gt;&lt;IPTC:SubLocation:{0}&gt;.
+        '''</summary>
+        Friend ReadOnly Property DefaultText() As String
+            Get
+                Return ResourceManager.GetString("DefaultText", resourceCulture)
+            End Get
+        End Property
     End Module
 End Namespace

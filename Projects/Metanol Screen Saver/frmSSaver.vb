@@ -1,34 +1,34 @@
 ﻿Imports Tools.DrawingT.ImageTools, Tools.DrawingT.MetadataT
-Public Class frmSSaver
+Partial Friend Class frmSSaver
     Private Shared Files As Files
     Private Shared FilesLock As New Object
     Shared Sub New()
         SyncLock FilesLock
-            If Files Is Nothing Then
-                Dim root = My.Settings.Folder
-                If root = "" Then root = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
-                Dim Masks = My.Settings.Mask
-                If Masks.Count = 0 Then Masks.AddRange(New String() {"*.jpg", "*.jpeg"})
-                Files = New Files(root, New Tools.CollectionsT.GenericT.Wrapper(Of String)(Masks), My.Settings.Alghoritm)
-            End If
+            'If Files Is Nothing Then
+            '    Dim root = My.Settings.Folder
+            '    If root = "" Then root = Environment.GetFolderPath(Environment.SpecialFolder.MyPictures)
+            '    Dim Masks = My.Settings.Mask
+            '    If Masks.Count = 0 Then Masks.AddRange(New String() {"*.jpg", "*.jpeg"})
+            '    Files = New Files(root, New Tools.CollectionsT.GenericT.Wrapper(Of String)(Masks), My.Settings.Alghoritm)
+            'End If
         End SyncLock
     End Sub
     Private Enumerator As IEnumerator(Of String)
     Private Sub frmSSaver_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-        Me.BackColor = My.Settings.BgColor
-        picMain.BackColor = My.Settings.BgColor
-        tlbInfo.BackColor = My.Settings.InfoBgColor
-        tlbInfo.ForeColor = My.Settings.FgColor
-        tlbInfo.Text = My.Settings.InfoAlign
-        Try : tlbInfo.Font = My.Settings.Font : Catch : End Try
+        'Me.BackColor = My.Settings.BgColor
+        'picMain.BackColor = My.Settings.BgColor
+        'tlbInfo.BackColor = My.Settings.InfoBgColor
+        'tlbInfo.ForeColor = My.Settings.FgColor
+        'tlbInfo.Text = My.Settings.InfoAlign
+        'Try : tlbInfo.Font = My.Settings.Font : Catch : End Try
 
-        Enumerator = Files.GetEnumerator
-        If Enumerator.MoveNext() Then
-            tmrImg.Interval = My.Settings.Timer * 1000
-            tmrImg.Enabled = True
-            LoadImage()
-        End If
-        Cursor.Hide()
+        'Enumerator = Files.GetEnumerator
+        'If Enumerator.MoveNext() Then
+        '    tmrImg.Interval = My.Settings.Timer * 1000
+        '    tmrImg.Enabled = True
+        '    LoadImage()
+        'End If
+        'Cursor.Hide()
     End Sub
     Private Enum ParseStates
         Text
@@ -137,7 +137,7 @@ Public Class frmSSaver
                         Exif = New Exif.IFDExif(New Tools.DrawingT.MetadataT.ExifReader(JPEG).ExifSubIFD)
                     Catch : End Try
                     tlbInfo.AutoSize = True
-                    tlbInfo.Text = ParseText(My.Settings.InfoText, Exif, IPTC, New SysInfo(picMain.Image, path))
+                    'tlbInfo.Text = ParseText(My.Settings.InfoText, Exif, IPTC, New SysInfo(picMain.Image, path))
                 End Using
             Catch : End Try
         End If
@@ -167,22 +167,22 @@ Public Class frmSSaver
     End Sub
 
     Private Sub tlbInfo_SizeChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tlbInfo.SizeChanged
-        Select Case My.Settings.InfoAlign
-            Case ContentAlignment.BottomCenter, ContentAlignment.BottomLeft, ContentAlignment.BottomRight
-                tlbInfo.Top = Me.ClientSize.Height - tlbInfo.Height
-            Case ContentAlignment.MiddleCenter, ContentAlignment.MiddleLeft, ContentAlignment.MiddleRight
-                tlbInfo.Top = Me.ClientSize.Height / 2 - tlbInfo.Height / 2
-            Case ContentAlignment.TopCenter, ContentAlignment.TopLeft, ContentAlignment.TopRight
-                tlbInfo.Top = 0
-        End Select
-        Select Case My.Settings.InfoAlign
-            Case ContentAlignment.BottomCenter, ContentAlignment.MiddleCenter, ContentAlignment.TopCenter
-                tlbInfo.Left = Me.ClientSize.Width / 2 - tlbInfo.Width / 2
-            Case ContentAlignment.BottomLeft, ContentAlignment.MiddleLeft, ContentAlignment.TopLeft
-                tlbInfo.Left = 0
-            Case ContentAlignment.BottomRight, ContentAlignment.MiddleRight, ContentAlignment.TopRight
-                tlbInfo.Left = Me.ClientSize.Width - tlbInfo.Width
-        End Select
+        'Select Case My.Settings.InfoAlign
+        '    Case ContentAlignment.BottomCenter, ContentAlignment.BottomLeft, ContentAlignment.BottomRight
+        '        tlbInfo.Top = Me.ClientSize.Height - tlbInfo.Height
+        '    Case ContentAlignment.MiddleCenter, ContentAlignment.MiddleLeft, ContentAlignment.MiddleRight
+        '        tlbInfo.Top = Me.ClientSize.Height / 2 - tlbInfo.Height / 2
+        '    Case ContentAlignment.TopCenter, ContentAlignment.TopLeft, ContentAlignment.TopRight
+        '        tlbInfo.Top = 0
+        'End Select
+        'Select Case My.Settings.InfoAlign
+        '    Case ContentAlignment.BottomCenter, ContentAlignment.MiddleCenter, ContentAlignment.TopCenter
+        '        tlbInfo.Left = Me.ClientSize.Width / 2 - tlbInfo.Width / 2
+        '    Case ContentAlignment.BottomLeft, ContentAlignment.MiddleLeft, ContentAlignment.TopLeft
+        '        tlbInfo.Left = 0
+        '    Case ContentAlignment.BottomRight, ContentAlignment.MiddleRight, ContentAlignment.TopRight
+        '        tlbInfo.Left = Me.ClientSize.Width - tlbInfo.Width
+        'End Select
     End Sub
 End Class
 

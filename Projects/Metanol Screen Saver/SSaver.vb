@@ -1,4 +1,4 @@
-﻿Public Class SSaver : Inherits Tools.WindowsT.FormsT.ScreenSaverBase
+﻿Friend Class SSaver : Inherits Tools.WindowsT.FormsT.ScreenSaverBase
     <STAThread()> _
     Public Shared Sub Main()
         Application.EnableVisualStyles()

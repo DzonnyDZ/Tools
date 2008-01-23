@@ -21,6 +21,7 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
+    <ApplicationIcon>Methanol.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -112,6 +113,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Files.vb" />
+    <Compile Include="frmMonitors.Designer.vb">
+      <DependentUpon>frmMonitors.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmMonitors.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmProperties.Designer.vb">
       <DependentUpon>frmProperties.vb</DependentUpon>
     </Compile>
@@ -130,6 +137,12 @@
     <Compile Include="frmSSaver.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="LabelSettings.Designer.vb">
+      <DependentUpon>LabelSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="LabelSettings.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -142,14 +155,26 @@
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenSettings.Designer.vb">
+      <DependentUpon>ScreenSettings.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ScreenSettings.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SSSettings.vb">
     </Compile>
     <Compile Include="Settings.vb" />
     <Compile Include="SSaver.vb" />
     <Compile Include="SysInfo.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="frmMonitors.resx">
+      <DependentUpon>frmMonitors.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="frmProperties.resx">
       <DependentUpon>frmProperties.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -162,10 +187,18 @@
       <DependentUpon>frmSSaver.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="LabelSettings.resx">
+      <DependentUpon>LabelSettings.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ScreenSettings.resx">
+      <DependentUpon>ScreenSettings.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -190,6 +223,9 @@
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Methanol.ico" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\" />
