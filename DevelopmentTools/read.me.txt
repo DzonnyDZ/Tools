@@ -1,2 +1,3 @@
 This directory contains some tools that may be necessary to build ÐTools successfuly.
-Note taht codegenerators must be properly registered for each language (VB,C#,PHP) separatelly.
+Note taht codegenerators must be properly registered for each language (VB,C#,PHP, ...) separatelly.
+TransformCodeGenerator.reg registers TransformCodeGenerator for VB8, VB9, C#2 and C#3. 

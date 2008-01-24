@@ -1,0 +1,497 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/2002/REC-xhtml1-20020801/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <title>Exif tags for ĐTools</title>
+    <link rel="stylesheet" type="text/css" href="ExifTags.css" title="main style" />
+    <link rel="alternate" title="XML version" href="Exiftags.xml" type="text/xml" />
+  </head>
+  <body>
+    <h1>Exif tags for ĐTools</h1>
+    <p>
+                    Stage: Nightly</p>
+    <h2>Sub IFD pointers <span>PointersMain</span></h2><p>
+            IFD: IFD</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_IFD_ExifIFD" rowspan="1">ExifIFD</td><td rowspan="1">8769</td><td rowspan="1">Exif IFD Pointer</td><td rowspan="1">UInt32</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_GPSIFD" rowspan="1">GPSIFD</td><td rowspan="1">8825</td><td rowspan="1">GPS Info IFD Pointer</td><td rowspan="1">UInt32</td><td rowspan="1">1</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Sub IFD pointers <span>PointersExif</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_InteroperabilityIFD" rowspan="1">InteroperabilityIFD</td><td rowspan="1">A005</td><td rowspan="1">Interoperability IFD Pointer</td><td rowspan="1">UInt32</td><td rowspan="1">1</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tags relating to image data structure <span>ImageDataStructure</span></h2><p>
+            IFD: IFD</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_IFD_ImageWidth" rowspan="1">ImageWidth</td><td rowspan="1">100</td><td rowspan="1">Image width</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_ImageLength" rowspan="1">ImageLength</td><td rowspan="1">101</td><td rowspan="1">Image height</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_BitsPerSample" rowspan="1">BitsPerSample</td><td rowspan="1">102</td><td rowspan="1">Number of bits per component</td><td rowspan="1">UInt16</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_Compression" rowspan="2">Compression</td><td rowspan="2">103</td><td rowspan="2">Compression scheme</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>uncompressed</td><td>1</td><td>uncompressed</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>JPEG</td><td>6</td><td>JPEG compression (thumbnails only)</td></tr>
+            
+        <tr><td id="tag_IFD_PhotometricInterpretation" rowspan="2">PhotometricInterpretation</td><td rowspan="2">106</td><td rowspan="2">Pixel composition</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>RGB</td><td>2</td><td>RGB</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>YCbCr</td><td>6</td><td>YCbCr</td></tr>
+            
+        <tr><td id="tag_IFD_Orientation" rowspan="8">Orientation</td><td rowspan="8">112</td><td rowspan="8">Orientation of image</td><td rowspan="8">UInt16</td><td rowspan="8">1</td>
+                <td>TopLeft</td><td>1</td><td>The 0th row is at the visual top of the image, and the 0th column is the visual left-hand side.</td>
+                
+                
+                
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>TopRight</td><td>2</td><td>The 0th row is at the visual top of the image, and the 0th column is the visual right-hand side.</td></tr>
+                <tr class="enum"><td>BottomRight</td><td>3</td><td>The 0th row is at the visual bottom of the image, and the 0th column is the visual right-hand side.</td></tr>
+                <tr class="enum"><td>BottomLeft</td><td>4</td><td>The 0th row is at the visual bottom of the image, and the 0th column is the visual left-hand side.</td></tr>
+                <tr class="enum"><td>LeftTop</td><td>5</td><td>The 0th row is the visual left-hand side of the image, and the 0th column is the visual top.</td></tr>
+                <tr class="enum"><td>RightTop</td><td>6</td><td>The 0th row is the visual right-hand side of the image, and the 0th column is the visual top.</td></tr>
+                <tr class="enum"><td>RightBottom</td><td>7</td><td>The 0th row is the visual right-hand side of the image, and the 0th column is the visual bottom.</td></tr>
+                <tr class="enum"><td>LeftBottom</td><td>8</td><td>The 0th row is the visual left-hand side of the image, and the 0th column is the visual bottom.</td></tr>
+            
+        <tr><td id="tag_IFD_SamplesPerPixel" rowspan="1">SamplesPerPixel</td><td rowspan="1">115</td><td rowspan="1">Number of components</td><td rowspan="1">UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_PlanarConfiguration" rowspan="2">PlanarConfiguration</td><td rowspan="2">11C</td><td rowspan="2">Image data arrangement</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>Chunky</td><td>1</td><td>chunky format</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Planar</td><td>2</td><td>planar format</td></tr>
+            
+        <tr><td id="tag_IFD_YCbCrSubSampling" rowspan="1">YCbCrSubSampling</td><td rowspan="1">212</td><td rowspan="1">Subsampling ratio of Y to C</td><td rowspan="1">UInt16</td><td rowspan="1">2</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_YCbCrPositioning" rowspan="2">YCbCrPositioning</td><td rowspan="2">213</td><td rowspan="2">Y and C positioning</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>Centered</td><td>1</td><td>centered</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Cosited</td><td>2</td><td>co-sited</td></tr>
+            
+        <tr><td id="tag_IFD_XResolution" rowspan="1">XResolution</td><td rowspan="1">11A</td><td rowspan="1">Image resolution in width direction</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_YResolution" rowspan="1">YResolution</td><td rowspan="1">11B</td><td rowspan="1">Image resolution in height direction</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_ResolutionUnit" rowspan="1">ResolutionUnit</td><td rowspan="1">128</td><td rowspan="1">Unit of X and Y resolution</td><td rowspan="1">UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tags relating to recording offset <span>RecordingOffset</span></h2><p>
+            IFD: IFD</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_IFD_StripOffsets" rowspan="1">StripOffsets</td><td rowspan="1">111</td><td rowspan="1">Image data location</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_RowsPerStrip" rowspan="1">RowsPerStrip</td><td rowspan="1">116</td><td rowspan="1">Number of rows per strip</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_StripByteCounts" rowspan="1">StripByteCounts</td><td rowspan="1">117</td><td rowspan="1">Bytes per compressed strip</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_JPEGInterchangeFormat" rowspan="1">JPEGInterchangeFormat</td><td rowspan="1">201</td><td rowspan="1">Offset to JPEG SOI</td><td rowspan="1">UInt32</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_JPEGInterchangeFormatLength" rowspan="1">JPEGInterchangeFormatLength</td><td rowspan="1">202</td><td rowspan="1">Bytes of JPEG data</td><td rowspan="1">UInt32</td><td rowspan="1">1</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tags relating to image data characteristics <span>ImageDataCharacteristicsMain</span></h2><p>
+            IFD: IFD</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_IFD_TransferFunction" rowspan="1">TransferFunction</td><td rowspan="1">12D</td><td rowspan="1">Transfer function</td><td rowspan="1">UInt16</td><td rowspan="1">768</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_WhitePoint" rowspan="1">WhitePoint</td><td rowspan="1">13E</td><td rowspan="1">White point chromaticity</td><td rowspan="1">URational</td><td rowspan="1">2</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_PrimaryChromaticities" rowspan="1">PrimaryChromaticities</td><td rowspan="1">13F</td><td rowspan="1">Chromaticities of primaries</td><td rowspan="1">URational</td><td rowspan="1">6</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_YCbCrCoefficients" rowspan="1">YCbCrCoefficients</td><td rowspan="1">211</td><td rowspan="1">Color space transformation matrix coefficients</td><td rowspan="1">URational</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_ReferenceBlackWhite" rowspan="1">ReferenceBlackWhite</td><td rowspan="1">214</td><td rowspan="1">Pair of black and white reference values</td><td rowspan="1">URational</td><td rowspan="1">6</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Other tags <span>IFDOther</span></h2><p>
+            IFD: IFD</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_IFD_DateTime" rowspan="1">DateTime</td><td rowspan="1">132</td><td rowspan="1">File change date and time</td><td rowspan="1">ASCII</td><td rowspan="1">20</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_ImageDescription" rowspan="1">ImageDescription</td><td rowspan="1">10E</td><td rowspan="1">Image title</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+
+        <tr><td id="tag_IFD_Make" rowspan="1">Make</td><td rowspan="1">10F</td><td rowspan="1">Image input equipment manufacturer</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_Model" rowspan="1">Model</td><td rowspan="1">110</td><td rowspan="1">Image input equipment model</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_Software" rowspan="1">Software</td><td rowspan="1">131</td><td rowspan="1">Software used</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_Artist" rowspan="1">Artist</td><td rowspan="1">13B</td><td rowspan="1">Person who created the image</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_IFD_Copyright" rowspan="1">Copyright</td><td rowspan="1">8298</td><td rowspan="1">Copyright holder</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+    </tbody></table>
+
+    <h2>Tags Relating to Version <span>Version</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_ExifVersion" rowspan="1">ExifVersion</td><td rowspan="1">9000</td><td rowspan="1">Exif version</td><td rowspan="1">NA</td><td rowspan="1">4</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FlashpixVersion" rowspan="1">FlashpixVersion</td><td rowspan="1">A000</td><td rowspan="1">Supported Flashpix version</td><td rowspan="1">NA</td><td rowspan="1">4</td>
+                <td>Flashpix10</td><td>0100</td><td>Flashpix Format Version 1.0</td>
+            </tr>
+                
+            
+    </tbody></table>
+    <h2>Tag Relating to Image Data Characteristics <span>ImageDataCharacteristicsExif</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_ColorSpace" rowspan="2">ColorSpace</td><td rowspan="2">A001</td><td rowspan="2">Color space information</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>sRGB</td><td>1</td><td>sRGB</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Uncalibrated</td><td>&amp;hFFFF</td><td>Uncalibrated</td></tr>
+            
+    </tbody></table>
+    <h2>Tags Relating to Image Configuration <span>ImageConfiguration</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_ComponentsConfiguration" rowspan="7">ComponentsConfiguration</td><td rowspan="7">9101</td><td rowspan="7">Meaning of each component</td><td rowspan="7">NA</td><td rowspan="7">4</td>
+                <td>DoesNotExist</td><td>0</td><td>does not exist</td>
+                
+                
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Y</td><td>1</td><td>Y</td></tr>
+                <tr class="enum"><td>Cb</td><td>2</td><td>Cb</td></tr>
+                <tr class="enum"><td>Cr</td><td>3</td><td>Cr</td></tr>
+                <tr class="enum"><td>R</td><td>4</td><td>R</td></tr>
+                <tr class="enum"><td>G</td><td>5</td><td>G</td></tr>
+                <tr class="enum"><td>B</td><td>6</td><td>B</td></tr>
+            
+        <tr><td id="tag_Exif_CompressedBitsPerPixel" rowspan="1">CompressedBitsPerPixel</td><td rowspan="1">9102</td><td rowspan="1">Image compression mode</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_PixelXDimension" rowspan="1">PixelXDimension</td><td rowspan="1">A002</td><td rowspan="1">Valid image width</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_PixelYDimension" rowspan="1">PixelYDimension</td><td rowspan="1">A003</td><td rowspan="1">Valid image height</td><td rowspan="1">UInt32, UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tags Relating to User Information <span>UserInformation</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_MakerNote" rowspan="1">MakerNote</td><td rowspan="1">927C</td><td rowspan="1">Manufacturer notes</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_UserComment" rowspan="1">UserComment</td><td rowspan="1">9286</td><td rowspan="1">User comments</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tag Relating to Related File Information <span>FileInformation</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_RelatedSoundFile" rowspan="1">RelatedSoundFile</td><td rowspan="1">A004</td><td rowspan="1">Related audio file</td><td rowspan="1">ASCII</td><td rowspan="1">13</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tags Relating to Date and Time <span>DateAndTime</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_DateTimeOriginal" rowspan="1">DateTimeOriginal</td><td rowspan="1">9003</td><td rowspan="1">Date and time of original data generation</td><td rowspan="1">ASCII</td><td rowspan="1">20</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_DateTimeDigitized" rowspan="1">DateTimeDigitized</td><td rowspan="1">9004</td><td rowspan="1">Date and time of digital data generation</td><td rowspan="1">ASCII</td><td rowspan="1">20</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubSecTime" rowspan="1">SubSecTime</td><td rowspan="1">9290</td><td rowspan="1">DateTime subseconds</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubSecTimeOriginal" rowspan="1">SubSecTimeOriginal</td><td rowspan="1">9291</td><td rowspan="1">DateTimeOriginal subseconds</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubSecTimeDigitized" rowspan="1">SubSecTimeDigitized</td><td rowspan="1">9292</td><td rowspan="1">DateTimeDigitized subseconds</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Tags Relating to Picture-Taking Conditions <span>PictureTakingConditions</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_ExposureTime" rowspan="1">ExposureTime</td><td rowspan="1">829A</td><td rowspan="1">Exposure time</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FNumber" rowspan="1">FNumber</td><td rowspan="1">829D</td><td rowspan="1">F number</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_ExposureProgram" rowspan="9">ExposureProgram</td><td rowspan="9">8822</td><td rowspan="9">Exposure program</td><td rowspan="9">UInt16</td><td rowspan="9">1</td>
+                <td>NotDefined</td><td>0</td><td>Not defined</td>
+                
+                
+                
+                
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Manual</td><td>1</td><td>Manual</td></tr>
+                <tr class="enum"><td>NormalProgram</td><td>2</td><td>Normal program</td></tr>
+                <tr class="enum"><td>AperturePriority</td><td>3</td><td>Aperture priority</td></tr>
+                <tr class="enum"><td>ShutterPriority</td><td>4</td><td>Shutter priority</td></tr>
+                <tr class="enum"><td>CreativeProgram</td><td>5</td><td>Creative program (biased toward depth of field)</td></tr>
+                <tr class="enum"><td>ActionProgram</td><td>6</td><td>Action program (biased toward fast shutter speed)</td></tr>
+                <tr class="enum"><td>PortraitMode</td><td>7</td><td>Portrait mode (for closeup photos with the background out of focus)</td></tr>
+                <tr class="enum"><td>LandscapeMode</td><td>8</td><td>Landscape mode (for landscape photos with the background in focus)</td></tr>
+            
+        <tr><td id="tag_Exif_SpectralSensitivity" rowspan="1">SpectralSensitivity</td><td rowspan="1">8824</td><td rowspan="1">Spectral sensitivity</td><td rowspan="1">URational</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_ISOSpeedRatings" rowspan="1">ISOSpeedRatings</td><td rowspan="1">8827</td><td rowspan="1">ISO speed rating</td><td rowspan="1">UInt16</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_OECF" rowspan="1">OECF</td><td rowspan="1">8828</td><td rowspan="1">Optoelectric conversion factor</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_ShutterSpeedValue" rowspan="1">ShutterSpeedValue</td><td rowspan="1">9201</td><td rowspan="1">Shutter speed</td><td rowspan="1">SRational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_ApertureValue" rowspan="1">ApertureValue</td><td rowspan="1">9202</td><td rowspan="1">Aperture</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_BrightnessValue" rowspan="1">BrightnessValue</td><td rowspan="1">9203</td><td rowspan="1">Brightness</td><td rowspan="1">SRational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_ExposureBiasValue" rowspan="1">ExposureBiasValue</td><td rowspan="1">9204</td><td rowspan="1">Exposure bias</td><td rowspan="1">SRational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_MaxApertureValue" rowspan="1">MaxApertureValue</td><td rowspan="1">9205</td><td rowspan="1">Maximum lens aperture</td><td rowspan="1">SRational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubjectDistance" rowspan="1">SubjectDistance</td><td rowspan="1">9206</td><td rowspan="1">Subject distance</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_MeteringMode" rowspan="8">MeteringMode</td><td rowspan="8">9207</td><td rowspan="8">Metering mode</td><td rowspan="8">UInt16</td><td rowspan="8">1</td>
+                <td>Unknown</td><td>0</td><td>unknown</td>
+                
+                
+                
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Average</td><td>1</td><td>Average</td></tr>
+                <tr class="enum"><td>CenterWeightedAverage</td><td>2</td><td>Center weighted average</td></tr>
+                <tr class="enum"><td>Spot</td><td>3</td><td>Spot</td></tr>
+                <tr class="enum"><td>MultiSpot</td><td>4</td><td>MultiSpot</td></tr>
+                <tr class="enum"><td>Pattern</td><td>5</td><td>Pattern</td></tr>
+                <tr class="enum"><td>PartialMode</td><td>6</td><td>Partial</td></tr>
+                <tr class="enum"><td>Other</td><td>255</td><td>Other</td></tr>
+            
+        <tr><td id="tag_Exif_LightSource" rowspan="21">LightSource</td><td rowspan="21">9208</td><td rowspan="21">Light source</td><td rowspan="21">UInt16</td><td rowspan="21">1</td>
+                <td>unknown</td><td>0</td><td>unknown</td>
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Daylight</td><td>1</td><td>Daylight</td></tr>
+                <tr class="enum"><td>Fluorescent</td><td>2</td><td>Fluorescent</td></tr>
+                <tr class="enum"><td>Tungsten</td><td>3</td><td>Tungsten (incandescent light)</td></tr>
+                <tr class="enum"><td>Flash</td><td>4</td><td>Flash</td></tr>
+                <tr class="enum"><td>FineWeather</td><td>9</td><td>Fine weather</td></tr>
+                <tr class="enum"><td>CloudyWeather</td><td>10</td><td>Cloudy weather</td></tr>
+                <tr class="enum"><td>Shade</td><td>11</td><td>Shade</td></tr>
+                <tr class="enum"><td>DaylightFluorescent</td><td>12</td><td>Daylight fluorescent (D 5700 – 7100K)</td></tr>
+                <tr class="enum"><td>DayWhiteFluorescent</td><td>13</td><td>Day white fluorescent (N 4600 – 5400K)</td></tr>
+                <tr class="enum"><td>CoolWhiteFluorescent</td><td>14</td><td>Cool white fluorescent (W 3900 – 4500K)</td></tr>
+                <tr class="enum"><td>WhiteFluorescent</td><td>15</td><td>White fluorescent (WW 3200 – 3700K)</td></tr>
+                <tr class="enum"><td>StandardLightA</td><td>17</td><td>Standard light A</td></tr>
+                <tr class="enum"><td>StandardLightB</td><td>18</td><td>Standard light B</td></tr>
+                <tr class="enum"><td>StandardLightC</td><td>19</td><td>Standard light C</td></tr>
+                <tr class="enum"><td>D55</td><td>20</td><td>D55</td></tr>
+                <tr class="enum"><td>D65</td><td>21</td><td>D65</td></tr>
+                <tr class="enum"><td>D75</td><td>22</td><td>D75</td></tr>
+                <tr class="enum"><td>D50</td><td>23</td><td>D50</td></tr>
+                <tr class="enum"><td>ISOStudioTungsten</td><td>24</td><td>ISO studio tungsten</td></tr>
+                <tr class="enum"><td>OtherLightSource</td><td>255</td><td>other light source</td></tr>
+            
+        <tr><td id="tag_Exif_Flash" rowspan="1">Flash</td><td rowspan="1">9209</td><td rowspan="1">Flash</td><td rowspan="1">UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FocalLength" rowspan="1">FocalLength</td><td rowspan="1">920A</td><td rowspan="1">Lens focal length</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubjectArea" rowspan="1">SubjectArea</td><td rowspan="1">9214</td><td rowspan="1">Subject area</td><td rowspan="1">UInt16</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FlashEnergy" rowspan="1">FlashEnergy</td><td rowspan="1">A20B</td><td rowspan="1">Flash energy</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SpatialFrequencyResponse" rowspan="1">SpatialFrequencyResponse</td><td rowspan="1">A20C</td><td rowspan="1">Spatial frequency response</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FocalPlaneXResolution" rowspan="1">FocalPlaneXResolution</td><td rowspan="1">A20E</td><td rowspan="1">Focal plane X resolution</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FocalPlaneYResolution" rowspan="1">FocalPlaneYResolution</td><td rowspan="1">A20F</td><td rowspan="1">Focal plane Y resolution</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FocalPlaneResolutionUnit" rowspan="1">FocalPlaneResolutionUnit</td><td rowspan="1">A210</td><td rowspan="1">Focal plane resolution unit</td><td rowspan="1">UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubjectLocation" rowspan="1">SubjectLocation</td><td rowspan="1">A214</td><td rowspan="1">Subject location</td><td rowspan="1">UInt16</td><td rowspan="1">2</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_ExposureIndex" rowspan="1">ExposureIndex</td><td rowspan="1">A215</td><td rowspan="1">Exposure index</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SensingMethod" rowspan="7">SensingMethod</td><td rowspan="7">A217</td><td rowspan="7">Sensing method</td><td rowspan="7">Int16</td><td rowspan="7">1</td>
+                <td>NotDefined</td><td>1</td><td>Not defined</td>
+                
+                
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>OneChipColorAreaSensor</td><td>2</td><td>One-chip color area sensor</td></tr>
+                <tr class="enum"><td>TwoChipColorAreaSensor</td><td>3</td><td>Two-chip color area sensor</td></tr>
+                <tr class="enum"><td>ThreeChipColorAreaSensor</td><td>4</td><td>Three-chip color area sensor</td></tr>
+                <tr class="enum"><td>ColorSequentialAreaSensor</td><td>5</td><td>Color sequential area sensor</td></tr>
+                <tr class="enum"><td>TrilinearSensor</td><td>7</td><td>Trilinear sensor</td></tr>
+                <tr class="enum"><td>ColorSequentialLinearSensor</td><td>8</td><td>Color sequential linear sensor</td></tr>
+            
+        <tr><td id="tag_Exif_FileSource" rowspan="1">FileSource</td><td rowspan="1">A300</td><td rowspan="1">File source</td><td rowspan="1">NA</td><td rowspan="1">1</td>
+                <td>DSC</td><td>3</td><td>DSC</td>
+            </tr>
+                
+            
+        <tr><td id="tag_Exif_SceneType" rowspan="1">SceneType</td><td rowspan="1">A301</td><td rowspan="1">Scene type</td><td rowspan="1">NA</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_CFAPattern" rowspan="1">CFAPattern</td><td rowspan="1">A302</td><td rowspan="1">CFA pattern</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_CustomRendered" rowspan="2">CustomRendered</td><td rowspan="2">A401</td><td rowspan="2">Custom image processing</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>NormalProcess</td><td>0</td><td>Normal process</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Customrocess</td><td>1</td><td>Custom process</td></tr>
+            
+        <tr><td id="tag_Exif_ExposureMode" rowspan="3">ExposureMode</td><td rowspan="3">A402</td><td rowspan="3">Exposure mode</td><td rowspan="3">UInt16</td><td rowspan="3">1</td>
+                <td>AutoExposure</td><td>0</td><td>Auto exposure</td>
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>ManualExposure</td><td>1</td><td>Manual exposure</td></tr>
+                <tr class="enum"><td>AutoBracket</td><td>2</td><td>Auto bracket</td></tr>
+            
+        <tr><td id="tag_Exif_WhiteBalance" rowspan="2">WhiteBalance</td><td rowspan="2">A403</td><td rowspan="2">White balance</td><td rowspan="2">UInt16</td><td rowspan="2">1</td>
+                <td>Auto</td><td>0</td><td>Auto white balance</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Manual</td><td>1</td><td>Manual white balance</td></tr>
+            
+        <tr><td id="tag_Exif_DigitalZoomRatio" rowspan="1">DigitalZoomRatio</td><td rowspan="1">A404</td><td rowspan="1">Digital zoom ratio</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_FocalLengthIn35mmFilm" rowspan="4">FocalLengthIn35mmFilm</td><td rowspan="4">A405</td><td rowspan="4">Focal length in 35 mm film</td><td rowspan="4">UInt16</td><td rowspan="4">1</td>
+                <td>Standard</td><td>0</td><td>Standard</td>
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Landscape</td><td>1</td><td>Landscape</td></tr>
+                <tr class="enum"><td>Portrait</td><td>2</td><td>Portrait</td></tr>
+                <tr class="enum"><td>NightScene</td><td>3</td><td>Night scene</td></tr>
+            
+        <tr><td id="tag_Exif_SceneCaptureType" rowspan="1">SceneCaptureType</td><td rowspan="1">A406</td><td rowspan="1">Scene capture type</td><td rowspan="1">UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_GainControl" rowspan="5">GainControl</td><td rowspan="5">A407</td><td rowspan="5">Gain control</td><td rowspan="5">UInt16</td><td rowspan="5">1</td>
+                <td>None</td><td>0</td><td>None</td>
+                
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>LowGainUp</td><td>1</td><td>Low gain up</td></tr>
+                <tr class="enum"><td>HighGainUp</td><td>2</td><td>High gain up</td></tr>
+                <tr class="enum"><td>LowGainDown</td><td>3</td><td>Low gain down</td></tr>
+                <tr class="enum"><td>HighGainDown</td><td>4</td><td>High gain down</td></tr>
+            
+        <tr><td id="tag_Exif_Contrast" rowspan="3">Contrast</td><td rowspan="3">A408</td><td rowspan="3">Contrast</td><td rowspan="3">UInt16</td><td rowspan="3">1</td>
+                <td>Normal</td><td>0</td><td>Normal</td>
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Soft</td><td>1</td><td>Soft</td></tr>
+                <tr class="enum"><td>Hard</td><td>2</td><td>Hard</td></tr>
+            
+        <tr><td id="tag_Exif_Saturation" rowspan="3">Saturation</td><td rowspan="3">A409</td><td rowspan="3">Saturation</td><td rowspan="3">UInt16</td><td rowspan="3">1</td>
+                <td>Normal</td><td>0</td><td>Normal</td>
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Low</td><td>1</td><td>Low saturation</td></tr>
+                <tr class="enum"><td>High</td><td>2</td><td>High saturation</td></tr>
+            
+        <tr><td id="tag_Exif_Sharpness" rowspan="3">Sharpness</td><td rowspan="3">A40A</td><td rowspan="3">Sharpness</td><td rowspan="3">UInt16</td><td rowspan="3">1</td>
+                <td>Normal</td><td>0</td><td>Normal</td>
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Soft</td><td>1</td><td>Soft</td></tr>
+                <tr class="enum"><td>Hard</td><td>2</td><td>Hard</td></tr>
+            
+        <tr><td id="tag_Exif_DeviceSettingDescription" rowspan="1">DeviceSettingDescription</td><td rowspan="1">A40B</td><td rowspan="1">Device settings description</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_Exif_SubjectDistanceRange" rowspan="4">SubjectDistanceRange</td><td rowspan="4">A40C</td><td rowspan="4">Subject distance range</td><td rowspan="4">UInt16</td><td rowspan="4">1</td>
+                <td>unknown</td><td>0</td><td>unknown</td>
+                
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>Macro</td><td>1</td><td>Macro</td></tr>
+                <tr class="enum"><td>CloseView</td><td>2</td><td>Close view</td></tr>
+                <tr class="enum"><td>DistantView</td><td>3</td><td>Distant view</td></tr>
+            
+    </tbody></table>
+    <h2>Other tags <span>OtherExif</span></h2><p>
+            IFD: Exif</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_Exif_ImageUniqueID" rowspan="1">ImageUniqueID</td><td rowspan="1">A420</td><td rowspan="1">Unique image ID</td><td rowspan="1">ASCII</td><td rowspan="1">33</td><td colspan="3" /></tr>
+    </tbody></table>
+
+    <h2>Tags Relating to GPS <span>GPS</span></h2><p>
+            IFD: GPS</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        <tr><td id="tag_GPS_GPSVersionID" rowspan="1">GPSVersionID</td><td rowspan="1">0</td><td rowspan="1">GPS tag version</td><td rowspan="1">Byte</td><td rowspan="1">4</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSLatitudeRef" rowspan="2">GPSLatitudeRef</td><td rowspan="2">1</td><td rowspan="2">North or South Latitude</td><td rowspan="2">ASCII</td><td rowspan="2">2</td>
+                <td>North</td><td>N</td><td>Nort latitude</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>South</td><td>S</td><td>South latitude</td></tr>
+            
+        <tr><td id="tag_GPS_GPSLatitude" rowspan="1">GPSLatitude</td><td rowspan="1">2</td><td rowspan="1">Latitude</td><td rowspan="1">URational</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSLongitudeRef" rowspan="2">GPSLongitudeRef</td><td rowspan="2">3</td><td rowspan="2">East or West Longitude</td><td rowspan="2">ASCII</td><td rowspan="2">2</td>
+                <td>East</td><td>E</td><td>East longitude</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>West</td><td>W</td><td>West longitude</td></tr>
+            
+        <tr><td id="tag_GPS_GPSLongitude" rowspan="1">GPSLongitude</td><td rowspan="1">4</td><td rowspan="1">Longitude</td><td rowspan="1">URational</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSAltitudeRef" rowspan="2">GPSAltitudeRef</td><td rowspan="2">5</td><td rowspan="2">Altitude reference</td><td rowspan="2">Byte</td><td rowspan="2">1</td>
+                <td>SeaLevel</td><td>0</td><td>Sea level</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>SeaLevelReference</td><td>1</td><td>Sea level reference (negative value)</td></tr>
+            
+        <tr><td id="tag_GPS_GPSAltitude" rowspan="1">GPSAltitude</td><td rowspan="1">6</td><td rowspan="1">Altitude</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSTimeStamp" rowspan="1">GPSTimeStamp</td><td rowspan="1">7</td><td rowspan="1">GPS time (atomic clock)</td><td rowspan="1">URational</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSSatellites" rowspan="1">GPSSatellites</td><td rowspan="1">8</td><td rowspan="1">GPS satellites used for measurement</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSStatus" rowspan="2">GPSStatus</td><td rowspan="2">9</td><td rowspan="2">GPS receiver status</td><td rowspan="2">ASCII</td><td rowspan="2">2</td>
+                <td>InProgress</td><td>A</td><td>Measurement in progress</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Interoperability</td><td>V</td><td>Measurement Interoperability</td></tr>
+            
+        <tr><td id="tag_GPS_GPSMeasureMode" rowspan="2">GPSMeasureMode</td><td rowspan="2">A</td><td rowspan="2">GPS measurement mode</td><td rowspan="2">ASCII</td><td rowspan="2">2</td>
+                <td>Measurement2D</td><td>2</td><td>2-dimensional measurement</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>Measurement3D</td><td>3</td><td>3-dimensional measurement</td></tr>
+            
+        <tr><td id="tag_GPS_GPSDOP" rowspan="1">GPSDOP</td><td rowspan="1">B</td><td rowspan="1">Measurement precision</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSSpeedRef" rowspan="3">GPSSpeedRef</td><td rowspan="3">C</td><td rowspan="3">Speed unit</td><td rowspan="3">ASCII</td><td rowspan="3">2</td>
+                <td>KilometersPeHour</td><td>K</td><td>Kilometers per hour</td>
+                
+                
+            </tr>
+                
+                <tr class="enum"><td>MilesPerHour</td><td>M</td><td>Miles per hour</td></tr>
+                <tr class="enum"><td>Knots</td><td>N</td><td>Knots</td></tr>
+            
+        <tr><td id="tag_GPS_GPSSpeed" rowspan="1">GPSSpeed</td><td rowspan="1">D</td><td rowspan="1">Speed of GPS receiver</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSTrackRef" rowspan="2">GPSTrackRef</td><td rowspan="2">E</td><td rowspan="2">Reference for direction of movement</td><td rowspan="2">ASCII</td><td rowspan="2">2</td>
+                <td>TrueDirection</td><td>T</td><td>True direction</td>
+                
+            </tr>
+                
+                <tr class="enum"><td>MagneticDirection</td><td>M</td><td>Magnetic direction</td></tr>
+            
+        <tr><td id="tag_GPS_GPSTrack" rowspan="1">GPSTrack</td><td rowspan="1">F</td><td rowspan="1">Direction of movement</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSImgDirectionRef" rowspan="1">GPSImgDirectionRef</td><td rowspan="1">10</td><td rowspan="1">Reference for direction of image</td><td rowspan="1">ASCII</td><td rowspan="1">2</td>
+                <td colspan="3"><span class="see">
+                see
+                <a href="#tag_GPS_GPSTrackRef">GPSTrackRef</a></span></td>
+            </tr>
+                
+            
+        <tr><td id="tag_GPS_GPSImgDirection" rowspan="1">GPSImgDirection</td><td rowspan="1">11</td><td rowspan="1">Direction of image</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSMapDatum" rowspan="1">GPSMapDatum</td><td rowspan="1">12</td><td rowspan="1">Geodetic survey data used</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDestLatitudeRef" rowspan="1">GPSDestLatitudeRef</td><td rowspan="1">13</td><td rowspan="1">Reference for latitude of destination</td><td rowspan="1">ASCII</td><td rowspan="1">2</td>
+                <td colspan="3"><span class="see">
+                see
+                <a href="#tag_GPS_GPSLatitudeRef">GPSLatitudeRef</a></span></td>
+            </tr>
+                
+            
+        <tr><td id="tag_GPS_GPSDestLatitude" rowspan="1">GPSDestLatitude</td><td rowspan="1">14</td><td rowspan="1">Latitude of destination</td><td rowspan="1">URational</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDestLongitudeRef" rowspan="1">GPSDestLongitudeRef</td><td rowspan="1">15</td><td rowspan="1">Reference for longitude of destination</td><td rowspan="1">ASCII</td><td rowspan="1">2</td>
+                <td colspan="3"><span class="see">
+                see
+                <a href="#tag_GPS_GPSLongitudeRef">GPSLongitudeRef</a></span></td>
+            </tr>
+                
+            
+        <tr><td id="tag_GPS_GPSDestLongitude" rowspan="1">GPSDestLongitude</td><td rowspan="1">16</td><td rowspan="1">Longitude of destination</td><td rowspan="1">URational</td><td rowspan="1">3</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDestBearingRef" rowspan="1">GPSDestBearingRef</td><td rowspan="1">17</td><td rowspan="1">Reference for bearing of destination</td><td rowspan="1">ASCII</td><td rowspan="1">2</td><td colspan="3"><span class="see">
+                see
+                <a href="#tag_GPS_GPSTrackRef">GPSTrackRef</a></span></td></tr>
+        <tr><td id="tag_GPS_GPSDestBearing" rowspan="1">GPSDestBearing</td><td rowspan="1">18</td><td rowspan="1">Bearing of destination</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDestDistanceRef" rowspan="1">GPSDestDistanceRef</td><td rowspan="1">19</td><td rowspan="1">Reference for distance to destination</td><td rowspan="1">ASCII</td><td rowspan="1">2</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDestDistance" rowspan="1">GPSDestDistance</td><td rowspan="1">1A</td><td rowspan="1">Distance to destination</td><td rowspan="1">URational</td><td rowspan="1">1</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSProcessingMethod" rowspan="1">GPSProcessingMethod</td><td rowspan="1">1B</td><td rowspan="1">Name of GPS processing method</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSAreaInformation" rowspan="1">GPSAreaInformation</td><td rowspan="1">1C</td><td rowspan="1">Name of GPS area</td><td rowspan="1">NA</td><td rowspan="1">any</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDateStamp" rowspan="1">GPSDateStamp</td><td rowspan="1">1D</td><td rowspan="1">GPS date</td><td rowspan="1">ASCII</td><td rowspan="1">11</td><td colspan="3" /></tr>
+        <tr><td id="tag_GPS_GPSDifferential" rowspan="1">GPSDifferential</td><td rowspan="1">1E</td><td rowspan="1">GPS differential correction</td><td rowspan="1">UInt16</td><td rowspan="1">1</td><td colspan="3" /></tr>
+    </tbody></table>
+    <h2>Ineroperability Tags <span>Interop</span></h2><p>
+            IFD: Interop</p><table><caption>Tags</caption><colgroup span="5"><col class="Tag" /><col class="ID" /><col class="Desc" /><col class="Type" /><col class="Comps" /></colgroup><colgroup class="Enum" span="3"><col class="e-name" /><col class="e-value" /><col class="e-desc" /></colgroup><thead><tr><th>Tag</th><th>ID</th><th>Description</th><th>Data types</th><th>Components</th><th colspan="3">Enumeration</th></tr></thead><tbody>
+        
+        <tr><td id="tag_Interop_InteroperabilityIndex" rowspan="1">InteroperabilityIndex</td><td rowspan="1">1</td><td rowspan="1">Indicates the identification of the Interoperability rule.</td><td rowspan="1">ASCII</td><td rowspan="1">any</td><td colspan="3" /></tr>
+    </tbody></table>
+<p><a href="http://validator.w3.org/check?uri=referer"><img src="http://www.w3.org/Icons/valid-xhtml10-blue" alt="Valid XHTML 1.0 Strict" height="31" width="88" /></a></p></body>
+</html>

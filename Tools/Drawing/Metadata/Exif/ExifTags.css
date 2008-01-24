@@ -1,0 +1,206 @@
+﻿/*XML*/
+Root:before{
+    content:"ĐTools: Exif attributes definition\A Stage: " attr(Stage);
+    display:block;
+    color:Black;
+    background-color:White;
+}
+Root{
+    display:block;
+}
+
+Group:before{
+    content:attr(Name) " (" attr(ShortName) "), IFD: " attr(IFD);
+    display:block;
+    font-size:125%;
+    font-weight:bold;
+    border:solid thin Black;
+    position:relative;
+    left:-2ex;
+    padding-left:1ex;
+    font-family:Sans-Serif;
+}
+Group{
+    display:block;
+    border:solid thin Black;
+    border-top:none;
+    margin-top:0.5em;
+    margin-bottom:1em;
+    table-layout:fixed;
+    padding-left:2ex;
+    padding-bottom:0.5ex;
+}
+
+Group > Tag:before{
+    font-weight:bold;
+    content: attr(Name);
+    display:block;
+    position:relative;
+    left:-2ex;
+    font-family:Sans-Serif;
+}
+Group > Tag{
+    padding-left:2ex;
+    display:block;
+}
+Group > Tag > summary{
+    display:block;
+}
+Group > Tag > summary + Type:before{
+    content: "Types: ";
+    display: block;
+    position:relative;
+    left:-2ex;
+}
+Group > Tag > Type + Type:before{
+    content:"";
+    display:none;
+}
+Group > Tag > Type{
+    display:block;
+    padding-left:2ex
+}
+Group > Tag:after{
+    display:block;
+    content:"ID " attr(Tag) "\A count " attr(Components);
+}
+Group > Tag > enum:before{
+    content:"Enumeration:";
+    display:block;
+    position:relative;
+    left:-2ex;
+}
+Group > Tag > enum{
+    display:block;
+    padding-left:2ex;
+}
+Group > Tag > enum > item:before{
+    content:attr(name);    
+    font-weight:bold;
+}
+Group > Tag > enum > item{
+    display:block;
+    content: " = " attr(value);
+}
+Group > Tag > enum > item:after{
+    content:", " attr(summary);
+}
+Group > Tag > enum > ref{
+    content:"See " attr(ref);
+    font-style:italic;
+}
+Root:after{
+    content:"© Đonny 2007,8";
+    display:block;
+    text-align:right;
+    font-size:smaller;
+    font-family:Đonny;
+}
+
+/*HTML*/
+html body{
+    color:Black;
+    background-color:White;
+}
+html h1{
+    font-family:Sans-Serif;
+    font-weight:bold;
+    margin-bottom:0;
+    margin-top:0;
+}
+html h2{
+    font-family:Sans-Serif;
+    font-weight:bold;
+    margin-bottom:0;
+    margin-top:1ex;
+}
+html h1 + p, html h2 + p{
+    margin-bottom:1em;
+}
+html table{
+    border-collapse:collapse;
+    border:solid thick Black;
+    caption-side:bottom;
+    width:100%;
+    table-layout:auto;
+}
+html table tr > td + td + td + td + td + td{
+    font-size:smaller;
+    border-bottom:none;
+    border-left:none;
+    border-right:none;
+}
+html table tr > td:first-child + td + td + td + td + td + td,
+html table tr.enum td:first-child + td{
+    text-align:right;
+}
+html table tr.enum > td{
+    border:none;
+    font-size:smaller;
+    font-weight:normal;
+}
+html tbody,html thead{
+    border:solid medium Black;
+}
+html td, html th{
+    border: solid thin Black;
+}
+html tr > td:first-child{
+    font-weight:bold;
+}
+html p{
+    margin-top:0;
+    margin-bottom:0;
+    padding-top:0;
+    padding-bottom:0;
+}
+html h2 > span{
+    font-size:smaller;
+    font-weight:normal;
+}
+html body:after{
+    content:"© Đonny 2007,8";
+    display:block;
+    text-align:right;
+    font-family:Đonny;
+    font-size:smaller;
+}html span.see{
+    font-style:italic;
+}
+html table > caption{
+    text-align:right;
+}
+html a img{
+    border:none;
+}
+
+html table col.Tag{
+    width:17.5%;
+}
+html table col.ID{
+    width:2.5%;
+    min-width:5EM;
+}
+html table col.Desc{
+    width:25%;
+}
+html table col.Type{
+    width:10%;
+}
+html table col.Comps{
+    width:2.5%;
+    min-width:1EM;
+}
+html table col.e-name{
+    width:10%;
+}
+html table col.e-value{
+    width:2.5%;
+    min-width:1EM;
+}
+html table col.e-desc{
+    width:30%;
+}
+html td{
+    overflow:hidden;
+}

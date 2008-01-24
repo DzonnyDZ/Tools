@@ -6,7 +6,7 @@
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 2. října 2007
+' Created: 25. ledna 2008
 ' By:DZONNY\Honza
 '
 #If Config <= Nightly 'Stage: Nightly

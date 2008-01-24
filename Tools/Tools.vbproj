@@ -446,6 +446,9 @@
     <None Include="Globalization\ISOLanguages.xslt" />
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt" />
     <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
+    <Content Include="Drawing\Metadata\Exif\ExifTags.css" />
+    <Content Include="Drawing\Metadata\Exif\ExifTags.display.xslt" />
+    <Content Include="Drawing\Metadata\Exif\ExifTags.html" />
     <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>

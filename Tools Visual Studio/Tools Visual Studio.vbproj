@@ -8,7 +8,7 @@
     <ProjectGuid>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tools</RootNamespace>
-    <AssemblyName>Tools Visual Studio</AssemblyName>
+    <AssemblyName>Tools.VisualStudio</AssemblyName>
     <MyType>Windows</MyType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -35,7 +35,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Nightly\</OutputPath>
-    <DocumentationFile>Tools Visual Studio.xml</DocumentationFile>
+    <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly</DefineConstants>
     <Config>1</Config>
@@ -46,7 +46,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
-    <DocumentationFile>Tools Visual Studio.xml</DocumentationFile>
+    <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release</DefineConstants>
     <Config>5</Config>
@@ -56,7 +56,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Alpha\</OutputPath>
-    <DocumentationFile>Tools Visual Studio.xml</DocumentationFile>
+    <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -68,7 +68,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Beta\</OutputPath>
-    <DocumentationFile>Tools Visual Studio.xml</DocumentationFile>
+    <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -80,7 +80,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\RC\</OutputPath>
-    <DocumentationFile>Tools Visual Studio.xml</DocumentationFile>
+    <DocumentationFile>Tools.VisualStudio.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
