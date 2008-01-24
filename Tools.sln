@@ -103,6 +103,7 @@ Global
 		Release|Any CPU = Release|Any CPU
 		Release|Mixed Platforms = Release|Mixed Platforms
 		Release|Win32 = Release|Win32
+		Description = ĐTools
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FCF346AC-D1C3-42DB-9026-9144240FB766}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
