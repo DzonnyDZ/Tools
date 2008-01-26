@@ -119,7 +119,7 @@
     <Import Include="Tools.InternalT" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemlyStage.vb" />
+    <Compile Include="AssemblyStage.vb" />
     <Compile Include="Collections\Generic\CollectionTools.vb" />
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
     <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
