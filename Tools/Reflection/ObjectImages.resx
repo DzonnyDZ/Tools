@@ -1,0 +1,281 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="iAssembly" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\assembly.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for assembly</comment>
+  </data>
+  <data name="iAttribute" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\attribute.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for attribuet class</comment>
+  </data>
+  <data name="iClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\class.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for class (reference type)</comment>
+  </data>
+  <data name="iConstant" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\constant.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for constant</comment>
+  </data>
+  <data name="iCTor" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\ctor.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for constructor</comment>
+  </data>
+  <data name="iDelegate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\delegate.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for delegate</comment>
+  </data>
+  <data name="iEnum" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\enum.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for enumeration</comment>
+  </data>
+  <data name="iEnumItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\enumitem.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for enumeration item</comment>
+  </data>
+  <data name="iEvent" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\event.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for event</comment>
+  </data>
+  <data name="iException" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\exception.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for exception</comment>
+  </data>
+  <data name="iField" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\field.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for field (class-level variable)</comment>
+  </data>
+  <data name="iGetter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\getter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for read-only property</comment>
+  </data>
+  <data name="iInterface" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\interface.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for interface</comment>
+  </data>
+  <data name="iLibrary" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\library.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for unmanaged library</comment>
+  </data>
+  <data name="iMacro" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\macro.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for C/C++ macro</comment>
+  </data>
+  <data name="iMap" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\map.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for map</comment>
+  </data>
+  <data name="iMapItem" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\mapitem.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for map item</comment>
+  </data>
+  <data name="iMethod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\method.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for method (Sub or Function in VB)</comment>
+  </data>
+  <data name="iMethodOverload" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\methodoverload.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for group of overloaded methods</comment>
+  </data>
+  <data name="iModule" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\module.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for .NET PE module (not VB standard module)</comment>
+  </data>
+  <data name="iNamespace" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\namespace.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for namespace</comment>
+  </data>
+  <data name="iObject" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\object.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for any object</comment>
+  </data>
+  <data name="iOperator" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\operator.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for operator</comment>
+  </data>
+  <data name="iProperty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\property.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for property (read-write property)</comment>
+  </data>
+  <data name="iResource" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\resource.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for single resource</comment>
+  </data>
+  <data name="iResources" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\resources.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for group of resources (uncompiled represented by resx file)</comment>
+  </data>
+  <data name="iSetter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\setter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for write-only property</comment>
+  </data>
+  <data name="iStandardModule" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\standardmodule.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for VB standard module (not .NET PE module)</comment>
+  </data>
+  <data name="iStructure" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\structure.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for structure (value type; but there is special image for non-structure value types)</comment>
+  </data>
+  <data name="iTemplate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\template.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for C++ template (not for .NET generics)</comment>
+  </data>
+  <data name="iType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\type.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for type (not .NET class)</comment>
+  </data>
+  <data name="iTypeDef" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\typedef.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for C++ typedef</comment>
+  </data>
+  <data name="iUnion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\union.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for union structure</comment>
+  </data>
+  <data name="iValueType" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\valuetype.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for generic value type</comment>
+  </data>
+  <data name="oFriend" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\friend.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overlay image for friend (internal, asembly visibility) member</comment>
+  </data>
+  <data name="oNotInheritable" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\notinheritable.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overlay image for sealed (NotInheritable class, NotOverridable method in VB) member</comment>
+  </data>
+  <data name="oPrivate" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\private.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overlay image for private member</comment>
+  </data>
+  <data name="oProtected" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\protected.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overlay image for protected (family accessibility) member</comment>
+  </data>
+  <data name="oShortcut" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\shortcut.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overlay image for shortcut or reference</comment>
+  </data>
+  <data name="oStatic" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\static.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overla yimage for static member</comment>
+  </data>
+</root>

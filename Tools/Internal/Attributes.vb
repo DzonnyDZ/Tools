@@ -366,7 +366,7 @@ Namespace InternalT
 
     ''' <summary>Identifies in which stage of development life-cycle current build was done</summary>
     <AttributeUsage(AttributeTargets.Assembly, AllowMultiple:=False)> _
-    Public Class AssemblyBuildStage : Inherits Attribute
+    Public Class AssemblyBuildStageAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="State"/> property</summary>
         Private _State As BuildStates
         ''' <summary>Identifies stage of life-cycle</summary>

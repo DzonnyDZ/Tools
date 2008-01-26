@@ -209,6 +209,12 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Reflection\CodeImages.vb" />
+    <Compile Include="Reflection\ObjectImages.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjectImages.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Tools\Resources.vb" />
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
@@ -239,6 +245,12 @@
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
       <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
@@ -458,7 +470,53 @@
     <None Include="Resources\RepeatHS.png" />
     <None Include="Resources\NewReportHS.png" />
     <None Include="Resources\+.png" />
+    <None Include="Reflection\Resources\Assembly.png" />
+    <None Include="Reflection\Resources\Class.png" />
+    <None Include="Reflection\Resources\Constant.png" />
+    <None Include="Reflection\Resources\CTor.png" />
+    <None Include="Reflection\Resources\Delegate.png" />
+    <None Include="Reflection\Resources\Enum.png" />
+    <None Include="Reflection\Resources\EnumItem.png" />
+    <None Include="Reflection\Resources\Event.png" />
+    <None Include="Reflection\Resources\Exception.png" />
+    <None Include="Reflection\Resources\Field.png" />
+    <None Include="Reflection\Resources\Friend.png" />
+    <None Include="Reflection\Resources\Getter.png" />
+    <None Include="Reflection\Resources\Interface.png" />
+    <None Include="Reflection\Resources\Library.png" />
+    <None Include="Reflection\Resources\Macro.png" />
+    <None Include="Reflection\Resources\Map.png" />
+    <None Include="Reflection\Resources\MapItem.png" />
+    <None Include="Reflection\Resources\Method.png" />
+    <None Include="Reflection\Resources\MethodOverload.png" />
+    <None Include="Reflection\Resources\Module.png" />
+    <None Include="Reflection\Resources\Namespace.png" />
+    <None Include="Reflection\Resources\NotInheritable.png" />
+    <None Include="Reflection\Resources\Object.png" />
+    <None Include="Reflection\Resources\Operator.png" />
+    <None Include="Reflection\Resources\Private.png" />
+    <None Include="Reflection\Resources\Property.png" />
+    <None Include="Reflection\Resources\Protected.png" />
+    <None Include="Reflection\Resources\Resource.png" />
+    <None Include="Reflection\Resources\Resources.png" />
+    <None Include="Reflection\Resources\Setter.png" />
+    <None Include="Reflection\Resources\Shortcut.png" />
+    <None Include="Reflection\Resources\StandardModule.png" />
+    <None Include="Reflection\Resources\Static.png" />
+    <None Include="Reflection\Resources\Structure.png" />
+    <None Include="Reflection\Resources\Template.png" />
+    <None Include="Reflection\Resources\Type.png" />
+    <None Include="Reflection\Resources\TypeDef.png" />
+    <None Include="Reflection\Resources\Union.png" />
+    <None Include="Reflection\Resources\ValueType.png" />
+    <Content Include="Reflection\Resources\Attribute.png" />
     <Content Include="Resources\CommentHS.png" />
+    <EmbeddedResource Include="Reflection\ObjectImages.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>ObjectImages.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\WindowsT.FormsT.MultiLineTextBoxWithStatus.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.NumericUpDownWithStatus.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.TextBoxWithStatus.bmp" />
@@ -470,6 +528,10 @@
     <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ControlWithStatus.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.vb</DependentUpon>

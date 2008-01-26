@@ -97,6 +97,7 @@
     <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyStage.cs" />
     <Compile Include="Generators\CustomToolAttribute.cs" />
     <Compile Include="Generators\CustomToolBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +111,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Generators\Visual Studio\Readme.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

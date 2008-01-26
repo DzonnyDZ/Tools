@@ -112,6 +112,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyStage.vb" />
     <Compile Include="Files.vb" />
     <Compile Include="frmMonitors.Designer.vb">
       <DependentUpon>frmMonitors.vb</DependentUpon>

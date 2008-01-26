@@ -111,6 +111,7 @@
     <Import Include="Tools.VisualBasicT" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssemblyStage.vb" />
     <Compile Include="Diagnostics\ImageVisualizer.vb">
       <SubType>Form</SubType>
     </Compile>
