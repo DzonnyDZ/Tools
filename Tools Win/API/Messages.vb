@@ -7,7 +7,7 @@ Namespace API.Messages
     ''' <param name="wParam">Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter.</param>
     ''' <param name="lParam">Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter.</param>
     ''' <returns>The return value is the result of the message processing and depends on the message sent.</returns>
-    Public Delegate Function WndProc(ByVal hWnd As Integer, ByVal msg As Messages.WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
+    Public Delegate Function WndProc(ByVal hWnd As IntPtr, ByVal msg As Messages.WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
     ''' <summary>Window messages</summary>
     Public Enum WindowMessages As Integer
         ''' <summary>The WM_ACTIVATE message is sent to both the window being activated and the window being deactivated. If the windows use the same input queue, the message is sent synchronously, first to the window procedure of the top-level window being deactivated, then to the window procedure of the top-level window being activated. If the windows use different input queues, the message is sent asynchronously, so the window is activated immediately.</summary>

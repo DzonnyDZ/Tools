@@ -9,7 +9,7 @@ Namespace API
         ''' Specifies the action to be taken. If this parameter is <see cref="APIBool.FALSE"/>, <see cref="GetSystemMenu"/> returns the handle of the copy of the window menu currently in use. The copy is initially identical to the window menu, but it can be modified.
         ''' If this parameter is <see cref="APIBool.TRUE"/>, <see cref="GetSystemMenu"/> resets the window menu back to the Windows default state. The previous window menu, if any, is destroyed.</param>
         ''' <returns>If the <paramref name="bRevert"/> parameter is <see cref="APIBool.FALSE"/>, the return value is the handle of a copy of the window menu. If the <paramref name="bRevert"/> parameter is <see cref="APIBool.TRUE"/>, the return value is <see cref="NULL"/>. </returns>
-        Friend Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As Integer, ByVal revert As APIBool) As Integer
+        Friend Declare Function GetSystemMenu Lib "user32" (ByVal hwnd As IntPtr, ByVal revert As APIBool) As IntPtr
         ''' <summary>The <see cref="EnableMenuItem"/> function enables, disables, or grays the specified menu item.</summary>
         ''' <param name="menu">Handle to the menu</param>
         ''' <param name="ideEnableItem">Specifies the menu item to be enabled, disabled, or grayed, as determined by the <paramref name="uEnable"/> parameter. This parameter specifies an item in a menu bar, menu, or submenu. Some menu items that can be manipuleated when <paramref name="enable"/> is combination of <see cref="enmEnableMenuItemStatus.MF_BYCOMMAND"/> are listed in <see cref="SystemMenuItems"/></param>
@@ -23,7 +23,7 @@ Namespace API
         ''' <para>The InsertMenu, InsertMenuItem, LoadMenuIndirect, ModifyMenu, and SetMenuItemInfo API functions can also set the state (enabled, disabled, or grayed) of a menu item.</para>
         ''' <para>When you change a window menu, the menu bar is not immediately updated. To force the update, call API DrawMenuBar.</para>
         ''' </remarks>
-        Friend Declare Function EnableMenuItem Lib "user32" (ByVal menu As Integer, ByVal ideEnableItem As Integer, ByVal enable As enmEnableMenuItemStatus) As enmPreviousMenuItemStatus
+        Friend Declare Function EnableMenuItem Lib "user32" (ByVal menu As IntPtr, ByVal ideEnableItem As Integer, ByVal enable As enmEnableMenuItemStatus) As enmPreviousMenuItemStatus
         ''' <summary>Values for <see cref="EnableMenuItem"/>'s enable parameter</summary>
         Friend Enum enmEnableMenuItemStatus As Integer
             ''' <summary>Indicates that uIDEnableItem gives the identifier of the menu item. If neither the MF_BYCOMMAND nor MF_BYPOSITION flag is specified, the MF_BYCOMMAND flag is the default flag.</summary>
@@ -74,7 +74,7 @@ Namespace API
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.
         ''' </returns>
         ''' <remarks>The application must call the <see cref="DrawMenuBar"/> function whenever a menu changes, whether or not the menu is in a displayed window.</remarks>
-        Friend Declare Function RemoveMenu Lib "user32.dll" (ByVal hMenu As Int32, ByVal nPosition As Int32, ByVal wFlags As enmSelectMenuMethod) As Int32
+        Friend Declare Function RemoveMenu Lib "user32.dll" (ByVal hMenu As IntPtr, ByVal nPosition As Int32, ByVal wFlags As enmSelectMenuMethod) As Int32
         ''' <summary>Values for <see cref="EnableMenuItem"/>'s enable parameter</summary>
         Friend Enum enmSelectMenuMethod As Integer
             ''' <summary>Indicates that uIDEnableItem gives the identifier of the menu item. If neither the MF_BYCOMMAND nor MF_BYPOSITION flag is specified, the MF_BYCOMMAND flag is the default flag.</summary>
@@ -87,13 +87,13 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. 
         ''' </returns>
-        Friend Declare Function DrawMenuBar Lib "user32.dll" (ByVal hwnd As Int32) As Int32
+        Friend Declare Function DrawMenuBar Lib "user32.dll" (ByVal hwnd As IntPtr) As Int32
         ''' <summary>The GetWindowRect function retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.</summary>
         ''' <param name="hwnd">Identifies the window.</param>
         ''' <param name="lpRect">Points to a RECT structure that receives the screen coordinates of the upper-left and lower-right corners of the window.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Friend Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As Int32, ByRef lpRect As RECT) As Boolean
+        Friend Declare Function GetWindowRect Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef lpRect As RECT) As Boolean
         ''' <summary>The RECT structure defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
         ''' <remarks>By convention, the right and bottom edges of the rectangle are normally considered exclusive. In other words, the pixel whose coordinates are (right, bottom) lies immediately outside of the the rectangle. For example, when RECT is passed to the FillRect function, the rectangle is filled up to, but not including, the right column and bottom row of pixels. This structure is identical to the RECTL structure.</remarks>
         <StructLayout(LayoutKind.Sequential)> _
@@ -136,40 +136,40 @@ Namespace API
         ''' <param name="y">Specifies the new position of the top of the window.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Friend Declare Function MoveWindow Lib "user32.dll" (ByVal hwnd As Int32, ByVal x As Int32, ByVal y As Int32, ByVal nWidth As Int32, ByVal nHeight As Int32, ByVal bRepaint As Int32) As Boolean
+        Friend Declare Function MoveWindow Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal x As Int32, ByVal y As Int32, ByVal nWidth As Int32, ByVal nHeight As Int32, ByVal bRepaint As Int32) As Boolean
         ''' <summary>The SetParent function changes the parent window of the specified child window.</summary>
         ''' <param name="hWndChild">Identifies the child window.</param>
         ''' <param name="hWndNewParent">Identifies the new parent window. If this parameter is NULL, the desktop window becomes the new parent window.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Friend Declare Function SetParent Lib "user32.dll" (ByVal hWndChild As Int32, ByVal hWndNewParent As Int32) As Boolean
+        Friend Declare Function SetParent Lib "user32.dll" (ByVal hWndChild As IntPtr, ByVal hWndNewParent As IntPtr) As Boolean
         ''' <summary>The GetParent function retrieves the handle of the specified child window’s parent window.</summary>
         ''' <param name="hwnd">Identifies the window whose parent window handle is to be retrieved.</param>
         ''' <remarks>If the function succeeds, the return value is the handle of the parent window. If the window has no parent window, the return value is NULL. To get extended error information, call GetLastError.</remarks>
-        Friend Declare Function GetParent Lib "user32.dll" (ByVal hwnd As Int32) As Int32
+        Friend Declare Function GetParent Lib "user32.dll" (ByVal hwnd As IntPtr) As Int32
         ''' <summary>The SetWindowLong function changes an attribute of the specified window. The function also sets a 32-bit (long) value at the specified offset into the extra window memory of a window.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be set. Valid values are in the range zero through the number of bytes of extra window memory, minus 4; for example, if you specified 12 or more bytes of extra memory, a value of 8 would be an index to the third 32-bit integer.</param>
         ''' <param name="dwNewLong">Specifies the replacement value.</param>
         ''' <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer.</returns>
-        Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs, ByVal dwNewLong As Int32) As Int32
+        Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nIndex As WindowLongs, ByVal dwNewLong As Int32) As Int32
         ''' <summary>Overload of the <see cref="SetWindowLong"/> function used to set window proc.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be set. This overload expects one of the <see cref="WindowProcs"/> values</param>
         ''' <param name="NewProc">New window procedure - converted to pointer.</param>
         ''' <returns>If the function succeeds, the return value is the previous value of the specified 32-bit integer.</returns>
-        Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowProcs, ByVal NewProc As Messages.WndProc) As Boolean
+        Friend Declare Auto Function SetWindowLong Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nIndex As WindowProcs, ByVal NewProc As Messages.WndProc) As Boolean
         ''' <summary>The GetWindowLong function retrieves information about the specified window. The function also retrieves the 32-bit (long) value at the specified offset into the extra window memory of a window.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be retrieved. Valid values are in the range zero through the number of bytes of extra window memory, minus four; for example, if you specified 12 or more bytes of extra memory, a value of 8 would be an index to the third 32-bit integer.</param>
         ''' <returns>If the function succeeds, the return value is the requested 32-bit value. 
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError. </returns>
-        Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowLongs) As Int32
+        Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nIndex As WindowLongs) As Int32
         ''' <summary>Overload of the <see cref="GetWindowLong"/> function used to get window proc.</summary>
         ''' <param name="hwnd">Identifies the window and, indirectly, the class to which the window belongs.</param>
         ''' <param name="nIndex">Specifies the zero-based offset to the value to be retrieved. This overload expects one of <see cref="WindowProcs"/> values.</param>
         ''' <returns>If the function succeeds, the return value is requested delegate. If it fails the return value is null.</returns>
-        Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As Int32, ByVal nIndex As WindowProcs) As Messages.WndProc
+        Friend Declare Auto Function GetWindowLong Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal nIndex As WindowProcs) As Messages.WndProc
         ''' <summary>Predefined window longs for <see cref="GetWindowLong"/> and <see cref="SetWindowLong"/></summary>
         ''' <remarks>Publicly visible alternative of this enumeration is <see cref="[Public].WindowLongs"/></remarks>
         Friend Enum WindowLongs As Int32
@@ -206,25 +206,25 @@ Namespace API
         ''' <param name="lpString">Points to a null-terminated string to be used as the new title or control text.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Friend Declare Auto Function SetWindowText Lib "user32.dll" (ByVal hwnd As Int32, ByVal lpString As String) As Boolean
+        Friend Declare Auto Function SetWindowText Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal lpString As String) As Boolean
         ''' <summary>The GetWindowText function copies the text of the specified window’s title bar (if it has one) into a buffer. If the specified window is a control, the text of the control is copied.</summary>
         ''' <param name="cch">Specifies the maximum number of characters to copy to the buffer, including the NULL character. If the text exceeds this limit, it is truncated.</param>
         ''' <param name="hwnd">Identifies the window or control containing the text.</param>
         ''' <param name="lpString">Points to the buffer that will receive the text.</param>
         ''' <returns>If the function succeeds, the return value is the length, in characters, of the copied string, not including the terminating null character. If the window has no title bar or text, if the title bar is empty, or if the window or control handle is invalid, the return value is zero. To get extended error information, call GetLastError. 
         ''' This function cannot retrieve the text of an edit control in another application. </returns>
-        Friend Declare Auto Function GetWindowText Lib "user32.dll" (ByVal hwnd As Int32, <Out()> ByVal lpString As System.Text.StringBuilder, ByVal cch As Int32) As Int32
+        Friend Declare Auto Function GetWindowText Lib "user32.dll" (ByVal hwnd As IntPtr, <Out()> ByVal lpString As System.Text.StringBuilder, ByVal cch As Int32) As Int32
         ''' <summary>The GetWindowTextLength function retrieves the length, in characters, of the specified window’s title bar text (if the window has a title bar). If the specified window is a control, the function retrieves the length of the text within the control.</summary>
         ''' <param name="hwnd">Identifies the window or control.</param>
         ''' <returns>If the function succeeds, the return value is the length, in characters, of the text. Under certain conditions, this value may actually be greater than the length of the text. For more information, see the following Remarks section. 
         ''' If the window has no text, the return value is zero. To get extended error information, call GetLastError. </returns>
-        Friend Declare Auto Function GetWindowTextLength Lib "user32.dll" (ByVal hwnd As Int32) As Int32
+        Friend Declare Auto Function GetWindowTextLength Lib "user32.dll" (ByVal hwnd As IntPtr) As Int32
         ''' <summary>The ScreenToClient function converts the screen coordinates of a specified point on the screen to client-area coordinates.</summary>
         ''' <param name="hwnd">Handle to the window whose client area will be used for the conversion.</param>
         ''' <param name="lpPoint">Pointer to a POINT structure that specifies the screen coordinates to be converted.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. </returns>
-        Friend Declare Function ScreenToClient Lib "user32.dll" (ByVal hwnd As Int32, ByRef lpPoint As POINTAPI) As Boolean
+        Friend Declare Function ScreenToClient Lib "user32.dll" (ByVal hwnd As IntPtr, ByRef lpPoint As POINTAPI) As Boolean
         ''' <summary>The POINT structure defines the x- and y- coordinates of a point.</summary>
         <StructLayout(LayoutKind.Sequential)> _
         Friend Structure POINTAPI
@@ -254,19 +254,19 @@ Namespace API
         End Structure
         ''' <summary>The GetDesktopWindow function returns the handle of the Windows desktop window. The desktop window covers the entire screen. The desktop window is the area on top of which all icons and other windows are painted.</summary>
         ''' <returns>The return value is the handle of the desktop window.</returns>
-        Friend Declare Function GetDesktopWindow Lib "user32.dll" () As Int32
+        Friend Declare Function GetDesktopWindow Lib "user32.dll" () As IntPtr
         ''' <summary>The EnumChildWindows function enumerates the child windows that belong to the specified parent window by passing the handle to each child window, in turn, to an application-defined callback function. EnumChildWindows continues until the last child window is enumerated or the callback function returns FALSE.</summary>
         ''' <param name="hWndParent">Identifies the parent window whose child windows are to be enumerated.</param>
         ''' <param name="lpEnumFunc">Points to an application-defined callback function. For more information about the callback function, see the EnumChildProc callback function.</param>
         ''' <param name="lParam">Specifies a 32-bit, application-defined value to be passed to the callback function.</param>
         ''' <returns>If the function succeeds, the return value is nonzero.
         ''' If the function fails, the return value is zero. To get extended error information, call GetLastError.</returns>
-        Friend Declare Function EnumChildWindows Lib "user32.dll" (ByVal hWndParent As Int32, ByVal lpEnumFunc As EnumWindowsProc, ByVal lParam As Int32) As Boolean
+        Friend Declare Function EnumChildWindows Lib "user32.dll" (ByVal hWndParent As IntPtr, ByVal lpEnumFunc As EnumWindowsProc, ByVal lParam As Int32) As Boolean
         ''' <summary>The EnumChildProc function is an application-defined callback function used with the EnumChildWindows function. It receives the child window handles. The WNDENUMPROC type defines a pointer to this callback function. EnumChildProc is a placeholder for the application-defined function name.</summary>
         ''' <param name="hWnd">Handle to a child window of the parent window specified in EnumChildWindows.</param>
         ''' <param name="lParam">Specifies the application-defined value given in EnumChildWindows.</param>
         ''' <returns>To continue enumeration, the callback function must return TRUE; to stop enumeration, it must return FALSE.</returns>
-        Friend Delegate Function EnumWindowsProc(ByVal hWnd As Integer, ByVal lParam As Integer) As Boolean
+        Friend Delegate Function EnumWindowsProc(ByVal hWnd As IntPtr, ByVal lParam As Integer) As Boolean
         ''' <summary>The EnumWindows function enumerates all top-level windows on the screen by passing the handle of each window, in turn, to an application-defined callback function. EnumWindows continues until the last top-level window is enumerated or the callback function returns FALSE.</summary>
         ''' <param name="lpEnumFunc">Points to an application-defined callback function. For more information, see the EnumWindowsProc callback function.</param>
         ''' <param name="lParam">Specifies a 32-bit, application-defined value to be passed to the callback function.</param>
@@ -279,7 +279,7 @@ Namespace API
         ''' <param name="wParam">Specifies additional message information. The content of this parameter depends on the value of the Msg parameter.</param>
         ''' <param name="lParam">Specifies additional message information. The content of this parameter depends on the value of the Msg parameter.</param>
         ''' <returns>The return value is the result of the message processing and depends on the message.</returns>
-        Friend Declare Auto Function DefWindowProc Lib "user32.dll" (ByVal hwnd As Int32, ByVal wMsg As Messages.WindowMessages, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
+        Friend Declare Auto Function DefWindowProc Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal wMsg As Messages.WindowMessages, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
     End Module
 End Namespace
 

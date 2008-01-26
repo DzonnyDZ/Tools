@@ -137,7 +137,7 @@ Namespace WindowsT.NativeT
 
         Private Sub cmdWndReplace_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWndReplace.Click
             With CType(prgProperties.SelectedObject, Win32Window)
-                If OldWndProcs.ContainsKey(.hWnd) Then
+                If OldWndProcs.ContainsKey(.Handle) Then
                     MsgBox("Wnd proc of this window has already been replaced.", MsgBoxStyle.Information, "Wnd proc")
                 Else
                     Dim OldProc As API.Messages.WndProc = Nothing
@@ -148,11 +148,11 @@ Namespace WindowsT.NativeT
                     Catch ex As Exception
                         If MsgBox(String.Format("Error backing current wnd proc up:{0}{1}{0}{0}Continue anyway", vbCrLf, ex.Message), MsgBoxStyle.Critical Or MsgBoxStyle.YesNo, ex.GetType.Name) <> MsgBoxResult.Yes Then Exit Sub
                     End Try
-                    OldWndProcs.Add(.hWnd, New KeyValuePair(Of IntPtr, API.Messages.WndProc)(OldWndProcPtr, OldProc))
+                    OldWndProcs.Add(.Handle, New KeyValuePair(Of IntPtr, API.Messages.WndProc)(OldWndProcPtr, OldProc))
                     Try
                         .WndProc = ReplacementWndProcDelegate
                     Catch ex As Exception
-                        OldWndProcs.Remove(.hWnd)
+                        OldWndProcs.Remove(.Handle)
                         MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
                     End Try
                 End If
@@ -161,12 +161,12 @@ Namespace WindowsT.NativeT
 
         Private Sub cmdWndRenew_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWndRenew.Click
             With CType(prgProperties.SelectedObject, Win32Window)
-                If Not OldWndProcs.ContainsKey(.hWnd) Then
+                If Not OldWndProcs.ContainsKey(.Handle) Then
                     MsgBox("Wnd proc of this window is not backed up.", MsgBoxStyle.Information, "Wnd proc")
                 Else
                     Try
-                        .WndProcPointer = OldWndProcs(.hWnd).Key
-                        OldWndProcs.Remove(.hWnd)
+                        .WndProcPointer = OldWndProcs(.Handle).Key
+                        OldWndProcs.Remove(.Handle)
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
                     End Try

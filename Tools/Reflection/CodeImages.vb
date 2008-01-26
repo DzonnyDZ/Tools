@@ -119,7 +119,6 @@ Namespace CodeDomT
                 Case Objects.TypeDef : Return My.Resources.ObjectImages.iTypeDef
                 Case Objects.Union : Return My.Resources.ObjectImages.iUnion
                 Case Objects.ValueType : Return My.Resources.ObjectImages.iValueType
-
                 Case Else : Throw New InvalidEnumArgumentException("ObjectType", ObjectType, GetType(Objects))
             End Select
         End Function

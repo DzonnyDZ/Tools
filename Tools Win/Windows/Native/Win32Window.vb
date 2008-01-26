@@ -112,11 +112,11 @@ Namespace WindowsT.NativeT
         <Category("Relationship")> _
         Public Property Parent() As Win32Window 'Localize:Category
             Get
-                Dim ret As Integer = API.GetParent(hWnd)
+                Dim ret As Integer = API.GetParent(Handle)
                 Return If(ret <> 0, New Win32Window(ret), Nothing)
             End Get
             Set(ByVal value As Win32Window)
-                If Not API.SetParent(hWnd, If(value Is Nothing, 0, value.hWnd)) Then _
+                If Not API.SetParent(Handle, If(value Is Nothing, IntPtr.Zero, value.Handle)) Then _
                     Throw New API.Win32APIException()
             End Set
         End Property
@@ -137,7 +137,7 @@ Namespace WindowsT.NativeT
         Public ReadOnly Property Children() As IReadOnlyList(Of Win32Window) 'Localize: description
             Get
                 Dim List As New List(Of Win32Window)
-                If API.EnumChildWindows(hWnd, New API.EnumWindowsProc(Function(hWnd As Integer, lParam As Integer) AddToList(List, New Win32Window(hWnd))), 0) Then
+                If API.EnumChildWindows(Handle, New API.EnumWindowsProc(Function(hwnd As IntPtr, lParam As Integer) AddToList(List, New Win32Window(hwnd))), 0) Then
                     Return New ReadOnlyListAdapter(Of Win32Window)(List)
                 Else
                     Dim ex As New API.Win32APIException
@@ -159,10 +159,10 @@ Namespace WindowsT.NativeT
         <Category("Relationship")> _
         Public Property ParentHandle() As IntPtr 'Localize:Category
             Get
-                Return API.GetParent(hWnd)
+                Return API.GetParent(Handle)
             End Get
             Set(ByVal value As IntPtr)
-                If Not API.SetParent(hWnd, value) Then _
+                If Not API.SetParent(Handle, value) Then _
                     Throw New API.Win32APIException
             End Set
         End Property
@@ -175,14 +175,14 @@ Namespace WindowsT.NativeT
         Public Property WindowLong(ByVal [Long] As API.Public.WindowLongs) As Integer 'Localize:Category
             Get
                 Try
-                    Return API.GetWindowLong(hWnd, CType([Long], API.WindowLongs))
+                    Return API.GetWindowLong(Handle, CType([Long], API.WindowLongs))
                 Finally
                     Dim ex As New API.Win32APIException
                     If ex.NativeErrorCode <> 0 Then Throw ex
                 End Try
             End Get
             Set(ByVal value As Integer)
-                If API.SetWindowLong(hWnd, [Long], value) = 0 Then
+                If API.SetWindowLong(Handle, [Long], value) = 0 Then
                     Dim ex As New API.Win32APIException
                     If ex.NativeErrorCode <> 0 Then Throw ex
                 End If
@@ -202,7 +202,7 @@ Namespace WindowsT.NativeT
         ''' For top-level windows screen coordinates are used. For windows with <see cref="Parent"/> parent's coordinates are used.
         ''' </remarks>
         Public Sub Move(ByVal Left As Integer, ByVal Top As Integer, ByVal Width As Integer, ByVal Height As Integer, Optional ByVal Repaint As Boolean = True)
-            If Not API.MoveWindow(hWnd, Left, Top, Width, Height, Repaint) Then _
+            If Not API.MoveWindow(Handle, Left, Top, Width, Height, Repaint) Then _
                 Throw New API.Win32APIException
         End Sub
         ''' <summary>Changes window position and size to specified <see cref="Rectangle"/></summary>
@@ -221,10 +221,10 @@ Namespace WindowsT.NativeT
         Public Property Area() As Rectangle 'Localize: Category
             Get
                 Dim ret As API.RECT
-                If API.GetWindowRect(hWnd, ret) Then
+                If API.GetWindowRect(Handle, ret) Then
                     If Parent IsNot Nothing Then
                         Dim pos As API.POINTAPI = CType(ret, Rectangle).Location
-                        If API.ScreenToClient(Parent.hWnd, pos) Then
+                        If API.ScreenToClient(Parent.Handle, pos) Then
                             Return New Rectangle(pos, CType(ret, Rectangle).Size)
                         Else
                             Throw New API.Win32APIException
@@ -351,7 +351,7 @@ Namespace WindowsT.NativeT
         Public Property ScreenArea() As Rectangle 'Localize:Category
             Get
                 Dim ret As API.RECT
-                If API.GetWindowRect(hWnd, ret) Then
+                If API.GetWindowRect(Handle, ret) Then
                     Return ret
                 Else
                     Throw New API.Win32APIException
@@ -360,7 +360,7 @@ Namespace WindowsT.NativeT
             Set(ByVal value As Rectangle)
                 If Parent IsNot Nothing Then
                     Dim pos As API.POINTAPI = value.Location
-                    If API.ScreenToClient(Parent.hWnd, pos) Then
+                    If API.ScreenToClient(Parent.Handle, pos) Then
                         value.Location = pos
                     Else
                         Throw New API.Win32APIException
@@ -379,10 +379,10 @@ Namespace WindowsT.NativeT
         <Category("Window properties")> _
         Public Property Text$() 'Localize: category
             Get
-                Dim len As Integer = API.GetWindowTextLength(hWnd)
+                Dim len As Integer = API.GetWindowTextLength(Handle)
                 If len > 0 Then
                     Dim b As New System.Text.StringBuilder(ChrW(0), len + 1)
-                    Dim ret = API.GetWindowText(hWnd, b, b.Capacity)
+                    Dim ret = API.GetWindowText(Handle, b, b.Capacity)
                     If ret <> 0 Then
                         Return b.ToString
                     Else
@@ -398,15 +398,15 @@ Namespace WindowsT.NativeT
                 End If
             End Get
             Set(ByVal value$)
-                If Not API.SetWindowText(hWnd, value) Then _
+                If Not API.SetWindowText(Handle, value) Then _
                     Throw New Win32Exception
             End Set
         End Property
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
         ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
         Public Overrides Function ToString() As String
-            If hWnd = 0 Then Return "<no window>"
-            Try : Return String.Format("{0} hWnd = {1}", Text, hWnd) : Catch ex As Win32Exception : Return String.Format("hWnd = {0}", hWnd) : End Try
+            If Handle = IntPtr.Zero Then Return "<no window>"
+            Try : Return String.Format("{0} hWnd = {1}", Text, Handle) : Catch ex As Win32Exception : Return String.Format("hWnd = {0}", Handle) : End Try
         End Function
         ''' <summary>Gets or sets pointer to wnd proc of current window. Used for so-called sub-classing.</summary>
         ''' <returns>Pointer to current wnd proc of current window</returns>
@@ -443,7 +443,7 @@ Namespace WindowsT.NativeT
         <Category("Low-level")> _
         Public Overridable Property WndProc() As API.Messages.WndProc 'Localize: Category
             Get
-                Dim ret As API.Messages.WndProc = API.GetWindowLong(hWnd, API.WindowProcs.GWL_WNDPROC)
+                Dim ret As API.Messages.WndProc = API.GetWindowLong(Handle, API.WindowProcs.GWL_WNDPROC)
                 If ret Is Nothing Then
                     Dim ex As New API.Win32APIException
                     If ex.NativeErrorCode <> 0 Then Throw ex
@@ -454,7 +454,7 @@ Namespace WindowsT.NativeT
                 If value Is Nothing Then
                     WndProcPointer = 0
                 Else
-                    If Not API.SetWindowLong(hWnd, API.WindowProcs.GWL_WNDPROC, value) Then
+                    If Not API.SetWindowLong(Handle, API.WindowProcs.GWL_WNDPROC, value) Then
                         Throw New API.Win32APIException
                     End If
                 End If
