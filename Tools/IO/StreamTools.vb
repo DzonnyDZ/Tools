@@ -5,8 +5,8 @@ Imports System.Runtime.CompilerServices
 Namespace IOt
     ''' <summary>Tools related to IO <see cref="System.IO.Stream"/>s</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="07/22/2007")> _
-    <Version(1, 0, GetType(StreamTools), LastChMMDDYYYY:="10/30/2007")> _
+    <FirstVersion("07/22/2007")> _
+    <Version(1, 0, GetType(StreamTools), LastChange:="10/30/2007")> _
     Public Module StreamTools
         ''' <summary>Replaces given ammount of bytes in <see cref="IO.Stream"/> with another amount of bytes</summary>
         ''' <param name="Stream">Stream to perform operation on. It must support seking, reading and writing</param>
@@ -24,7 +24,7 @@ Namespace IOt
         ''' </exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Stream"/> is null -or- <paramref name="Data"/> is null</exception>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Position"/> is not within range &lt;0; <paramref name="Stream"/>.<see cref="Stream.Length">Length</see>) -or- <paramref name="BytesToReplace"/> is not within range &lt;0; <paramref name="Stream"/>.<see cref="Stream.Length">Lenght</see> - <paramref name="Position"/> - or- <paramref name="Chunk"/> is not positive</exception>
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
         <Extension()> _
         Public Sub InsertInto(ByVal Stream As IO.Stream, ByVal Position As Integer, ByVal BytesToReplace As Integer, ByVal Data As Byte(), Optional ByVal Chunk As Integer = 1024)
 #Else

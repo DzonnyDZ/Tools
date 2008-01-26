@@ -5,7 +5,6 @@
     ''' only properties are allowed here;
     ''' because properties shouldn't be decorated with AuthorAttribute and VersionAttribute, it is not necessary to use these attribute here
     ''' </remarks>
-    <DoNotApplyAuthorAndVersionAttributes()> _
     Public Module Resources
 #If Config <= Release Then
         ''' <summary>Icon representing ĐTools project</summary>

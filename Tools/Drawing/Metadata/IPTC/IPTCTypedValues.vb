@@ -343,7 +343,7 @@ Namespace DrawingT.MetadataT
                         For j As Integer = i To i + BW460_460 - 1
                             Dim x As Integer = j - i
                             Dim y As Integer = bmp.Height - i / BW460_460 - 1
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                             bmp.SetPixel(x, y, If((item(j \ 8) And CByte(2 ^ (7 - j Mod 8))) <> 0, Drawing.Color.Black, Drawing.Color.White))
 #Else
                             bmp.SetPixel(x, y, VisualBasicT.iif((item(j \ 8) And CByte(2 ^ (7 - j Mod 8))) <> 0, Drawing.Color.Black, Drawing.Color.White))
@@ -389,7 +389,7 @@ Namespace DrawingT.MetadataT
         Private Function Ba2Bytes(ByVal ba As BitArray) As Byte() 'TODO:Extract as separate tool
             Dim bytes(Math.Ceiling(ba.Length / 8 - 1)) As Byte
             For i As Integer = 0 To ba.Length - 1
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                 bytes(i \ 8) = bytes(i \ 8) Or If(ba(i), CByte(1), CByte(0)) << (7 - i Mod 8)
 #Else
                 bytes(i \ 8) = bytes(i \ 8) Or VisualBasicT.iif(ba(i), CByte(1), CByte(0)) << (7 - i Mod 8)
@@ -591,7 +591,7 @@ Namespace DrawingT.MetadataT
                     If ItemStr.Length <> 11 Then Throw New ArgumentException("Length of data stored under this tag is different then 11 which is necessary for datatype HHMMSS_HHMM")
                     Dim Sig As String = ItemStr(6)
                     If Sig <> "-"c AndAlso Sig <> "+"c Then Throw New ArgumentException("Stored time does not contain valied character on time zone offset sign position")
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                     ret.Add(New Time(ItemStr.Substring(0, 2), ItemStr.Substring(2, 2), ItemStr.Substring(4, 2), If(Sig = "+"c, 1, -1) * ItemStr.Substring(7, 2), ItemStr.Substring(9, 2)))
 #Else
                     ret.Add(New Time(ItemStr.Substring(0, 2), ItemStr.Substring(2, 2), ItemStr.Substring(4, 2), VisualBasicT.iif(Sig = "+"c, 1, -1) * ItemStr.Substring(7, 2), ItemStr.Substring(9, 2)))

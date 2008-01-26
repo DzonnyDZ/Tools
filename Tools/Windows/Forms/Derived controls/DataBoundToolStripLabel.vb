@@ -7,7 +7,7 @@ Namespace WindowsT.FormsT
     <DefaultBindingProperty("Text")> _
     <ComponentModelT.Prefix("dtl")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(DataBoundToolStripLabel), LastChMMDDYYYY:="05/13/2007")> _
+    <Version(1, 0, GetType(DataBoundToolStripLabel), LastChange:="05/13/2007")> _
     Public Class DataBoundToolStripLabel : Inherits ToolStripLabel
         Implements IBindableComponent
         ''' <summary>Contains value of the <see cref="BindingContext"/> property</summary>

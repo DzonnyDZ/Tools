@@ -3,8 +3,8 @@ Namespace DrawingT.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGReader), LastChMMDDYYYY:="06/29/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(JPEGReader), LastChange:="06/29/2007")> _
+    <FirstVersion("04/23/2007")> _
     Public Class JPEGReader
         Implements MetadataT.IExifGetter, MetadataT.IIPTCGetter
         Implements MetadataT.IIPTCWriter
@@ -284,7 +284,7 @@ Namespace DrawingT.IO.JPEG
                     Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
 
                     Dim CurrIPTCStreamLen As Long = Me.GetIPTCStream.Length
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                     Dim Pad As Byte = If((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
 #Else
                     Dim Pad As Byte = VisualBasicT.iif((CurrIPTCStreamLen) Mod 2 = 0, 0, 1)
@@ -415,9 +415,9 @@ Namespace DrawingT.IO.JPEG
 
     ''' <summary>Represents Photoshop 8BIM segment</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(Photoshop8BIMReader), LastChMMDDYYYY:="06/25/2007")> _
+    <Version(1, 1, GetType(Photoshop8BIMReader), LastChange:="06/25/2007")> _
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
-    <Tool(GetType(JPEGReader), FirstVerMMDDYYYY:="04/24/2007")> _
+    <FirstVersion("04/24/2007")> _
     Public Class Photoshop8BIMReader
         ''' <summary>CTor</summary>
         ''' <param name="Stream">Steam which contains segment data</param>
@@ -472,7 +472,7 @@ Namespace DrawingT.IO.JPEG
         ''' <remarks>See <see cref="DataSize"/> for size of data part of segment</remarks>
         Public ReadOnly Property WholeSize() As Long
             Get
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                 Return DataSize + 2 + 1 + If(Name.Length = 0, 2, Name.Length) + 4 + 4 + _
                     If(NamePaddNeeded, 1, 0) + If(DataPadNeeded, 1, 0)
 #Else

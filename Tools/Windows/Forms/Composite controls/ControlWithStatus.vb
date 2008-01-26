@@ -6,8 +6,8 @@ Namespace WindowsT.FormsT
     <DefaultEvent("StatusChanged"), DefaultProperty("Status")> _
     <ToolboxItem(False)> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(StatusMarker), LastChMMDDYYYY:="07/22/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="07/22/2007")> _
+    <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
+    <FirstVersion("07/22/2007")> _
     <Microsoft.VisualBasic.CompilerServices.DesignerGeneratedAttribute()> _
     Public Class ControlWithStatus
         Inherits System.Windows.Forms.UserControl

@@ -1,6 +1,6 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
 Imports Tools.CollectionsT.GenericT, Tools.DataStructuresT.GenericT
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
 Imports System.Linq
 #End If
 Namespace IOt
@@ -240,7 +240,7 @@ Namespace IOt
                 Return _FoldersListMasks
             End Get
         End Property
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
         ''' <summary>Gets or sets array masks used for files</summary>
         ''' <value>Array of masks used for files. Masks are in formet used by Visual Basic Like operator (wildchars * and ?)</value>
         ''' <returns>Array of maks. Getter can change actual instance stored in masks. Avoid using getter unless it is necessary. Inheritors can use <see cref="MaskForFiles"/>.</returns>

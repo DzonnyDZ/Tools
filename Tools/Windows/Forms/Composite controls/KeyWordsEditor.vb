@@ -7,9 +7,9 @@ Namespace WindowsT.FormsT
     ''' <summary>Control that allows eas and very sophisticated editing of set of keywords</summary>
     ''' <remarks>There is a list of known keywords (which can be adited by user and persisted). Synonyms of keywords can be defined and added automatically in list.</remarks>
     <ComponentModelT.Prefix("kwe")> _
-    <MainTool(FirstVerMMDDYYYY:="06/26/2007")> _
+    <FirstVersion("06/26/2007")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(KeyWordsEditor), LastChMMDDYYYY:="10/18/2007")> _
+    <Version(1, 0, GetType(KeyWordsEditor), LastChange:="10/18/2007")> _
     Public Class KeyWordsEditor
         Implements IComparer(Of String)
 #Region "Auto complete"

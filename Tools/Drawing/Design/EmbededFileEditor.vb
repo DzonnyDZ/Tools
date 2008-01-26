@@ -3,7 +3,7 @@ Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, Syst
 Namespace DrawingT.DesignT
     ''' <summary><see cref="UITypeEditor"/> of <see cref="Byte()"/> capable to save bytes info file and load them from it</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(EmbededFileEditor), LastChMMDDYYYY:="07/22/2007")> _
+    <Version(1, 0, GetType(EmbededFileEditor), LastChange:="07/22/2007")> _
     Public Class EmbededFileEditor
         Inherits UITypeEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>
@@ -81,7 +81,7 @@ Namespace DrawingT.DesignT
 
     ''' <summary><see cref="UITypeEditor"/> of <see cref="Byte()"/> capable to save and load image</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(EmbededImageEditor), LastChMMDDYYYY:="07/22/2007")> _
+    <Version(1, 0, GetType(EmbededImageEditor), LastChange:="07/22/2007")> _
     Public Class EmbededImageEditor
         Inherits BitmapEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>

@@ -8,8 +8,8 @@ Namespace WindowsT.FormsT
     ''' <summary><see cref="RichTextBox"/> with transparent background</summary>
     ''' <remarks>This control is 100% transaprent and cannot have any other than transparent <see cref="TransparentTextBox.BackColor"/>. To make it semi-transparent, put it onto semitransparent panel.</remarks>
     <Author("Ğonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentTextBox), LastChMMDDYYYY:="05/21/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="05/19/2007")> _
+    <Version(1, 0, GetType(TransparentTextBox), LastChange:="05/21/2007")> _
+    <FirstVersion("05/19/2007")> _
     <Prefix("trb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _

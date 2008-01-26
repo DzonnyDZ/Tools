@@ -1,6 +1,6 @@
 ﻿#If Config <= Release Then
 ''' <summary>Represents data type that reports change of values of its members</summary>
-<Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChMMDDYYYY:="01/03/2007")> _
+<Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="01/03/2007")> _
 Public Interface IReportsChange
     ''' <summary>Raised when value of member changes</summary>
     ''' <param name="sender">The source of the event</param>

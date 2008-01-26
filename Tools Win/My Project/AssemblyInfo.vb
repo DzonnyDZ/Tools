@@ -35,4 +35,3 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyFileVersion("1.0.0.0")> 
 
 <Assembly: CLSCompliant(True)> 
-<Assembly: DoNotApplyAuthorAndVersionAttributes()> 

@@ -2,7 +2,7 @@ Namespace IOt
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Implements stream that reads only part of base stream</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ConstrainedReadOnlyStream), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(ConstrainedReadOnlyStream), LastChange:="04/24/2007")> _
     Public Class ConstrainedReadOnlyStream : Inherits System.IO.Stream
         Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte)
         ''' <summary><see cref="System.IO.Stream"/> being constrained</summary>

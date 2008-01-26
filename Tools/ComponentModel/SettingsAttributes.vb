@@ -2,7 +2,7 @@
 #If Config <= RC Then 'Stage: RC
 Namespace ComponentModelT
     ''' <summary><see cref="DescriptionAttribute"/> that takes its value from <see cref="System.Configuration.SettingsDescriptionAttribute"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/21/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="01/21/2007")> _
     Public Class SettingsInheritDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name specified in <paramref name="Property"/></param>
@@ -35,7 +35,7 @@ Namespace ComponentModelT
         End Property
     End Class
     ''' <summary><see cref="DefaultValueAttribute"/> that takes its value from <see cref="System.Configuration.DefaultSettingValueAttribute"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="01/25/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="01/25/2007")> _
     Public Class SettingsInheritDefaultValueAttribute : Inherits DefaultValueAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name defined in <paramref name="Property"/></param>

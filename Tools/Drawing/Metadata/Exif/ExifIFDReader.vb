@@ -3,7 +3,7 @@ Namespace DrawingT.MetadataT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ExifIFDReader), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(ExifIFDReader), LastChange:="04/24/2007")> _
     Public Class ExifIFDReader
         ''' <summary>CTor</summary>
         ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>

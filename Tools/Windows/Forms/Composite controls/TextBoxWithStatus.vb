@@ -9,8 +9,8 @@ Namespace WindowsT.FormsT
     <DefaultProperty("Text")> _
     <DefaultEvent("TextChanged")> _
      <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TextBoxWithStatus), LastChMMDDYYYY:="07/22/2007")> _
-    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Version(1, 0, GetType(TextBoxWithStatus), LastChange:="07/22/2007")> _
+    <FirstVersion("06/22/2007")> _
     <Drawing.ToolboxBitmap(GetType(StatusMarker), "TextBoxWithStatus.bmp")> _
     <ComponentModelT.Prefix("tws")> _
     Public Class TextBoxWithStatus

@@ -12,7 +12,6 @@ Namespace WindowsT.FormsT.UtilitiesT
         Hidden
     End Enum
     ''' <summary>Miscaleneous small Windows Forms realetd tools</summary>
-    <DoNotApplyAuthorAndVersionAttributes()> _
     Public Module Misc
         'ASAP:Mark, wiki, forum members
         ''' <summary>Applyes <see cref="UtilitiesT.ControlState"/> on given <see cref="Control"/> or gets its state</summary>

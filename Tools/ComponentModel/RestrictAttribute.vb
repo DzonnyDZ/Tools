@@ -3,8 +3,8 @@ Namespace ComponentModelT
     ''' <summary>Indicates if enum may allow values that are not member of it or not</summary>
     ''' <remarks>Tools that use this attribute should treat enums with no <see cref="RestrictAttribute"/> as restricted (<see cref="RestrictAttribute.Restrict"/> is True)</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(RestrictAttribute), lastchmmddyyyy:="07/22/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="06/20/2007")> _
+    <Version(1, 0, GetType(RestrictAttribute), LastChange:="07/22/2007")> _
+    <FirstVersion("06/20/2007")> _
     <AttributeUsage(AttributeTargets.Enum)> _
     Public Class RestrictAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Restrict"/> property</summary>

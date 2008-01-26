@@ -6,8 +6,8 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Gives acces of hyperlink settings of Internet Explorer</summary>
     ''' <remarks>See also <seealso cref="Tools.DrawingT.SystemColorsExtension"/></remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _
-    <Version(1, 0, GetType(LinkProperties), LastChMMDDYYYY:="10/30/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="05/10/2007")> _
+    <Version(1, 0, GetType(LinkProperties), LastChange:="10/30/2007")> _
+    <FirstVersion("05/10/2007")> _
     Public NotInheritable Class LinkProperties
         ''' <summary>There is no CTor</summary>
         Partial Private Sub New()

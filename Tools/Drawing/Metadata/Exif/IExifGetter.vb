@@ -2,7 +2,7 @@ Namespace DrawingT.MetadataT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IExifGetter), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(IExifGetter), LastChange:="04/24/2007")> _
     Public Interface IExifGetter
         ''' <summary>Gets stream of Exif data</summary>
         ''' <remarks>

@@ -181,7 +181,7 @@ Namespace WindowsT.FormsT.UtilitiesT
                     strY = ""
                 End If
             End If
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
             Dim mul As Integer = If(Descending, -1, 1)
 #Else
             Dim mul As Integer = Tools.VisualBasicT.iif(Descending, -1, 1)

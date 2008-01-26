@@ -5,8 +5,8 @@ Partial Class MathT
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="05/20/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
+    <FirstVersion("04/23/2007")> _
     Public Overloads Shared Function LEBE(ByVal value As Short) As Short
         Dim B1 As Byte = (value And &HFF00US) >> 8
         Dim B2 As Byte = value And &HFFUS
@@ -16,8 +16,8 @@ Partial Class MathT
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="05/20/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
+    <FirstVersion("04/23/2007")> _
     <CLSCompliant(False)> _
         Public Overloads Shared Function LEBE(ByVal value As UShort) As UShort
         Dim B1 As Byte = (value And &HFF00US) >> 8
@@ -28,8 +28,8 @@ Partial Class MathT
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="05/20/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
+    <FirstVersion("04/23/2007")> _
     Public Overloads Shared Function LEBE(ByVal value As Integer) As Integer
         Dim B1 As Byte = (value And &HFF000000I) >> (3 * 8)
         Dim B2 As Byte = (value And &HFF0000I) >> (2 * 8)
@@ -41,8 +41,8 @@ Partial Class MathT
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="05/20/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
+    <FirstVersion("04/23/2007")> _
     <CLSCompliant(False)> _
     Public Overloads Shared Function LEBE(ByVal value As UInteger) As UInteger
         Dim B1 As Byte = (value And &HFF000000UI) >> (3 * 8)
@@ -55,8 +55,8 @@ Partial Class MathT
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="05/20/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
+    <FirstVersion("04/23/2007")> _
     Public Overloads Shared Function LEBE(ByVal value As Long) As Long
         Dim B1 As Byte = (value And &HFF00000000000000L) >> (7 * 8)
         Dim B2 As Byte = (value And &HFF000000000000L) >> (6 * 8)
@@ -72,8 +72,8 @@ Partial Class MathT
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="05/20/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="04/23/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
+    <FirstVersion("04/23/2007")> _
     <CLSCompliant(False)> _
     Public Overloads Shared Function LEBE(ByVal value As ULong) As ULong
         Dim B1 As Byte = (value And &HFF00000000000000UL) >> (7 * 8)

@@ -1,4 +1,10 @@
 Namespace API
+    ''' <summary>Various messages used by this library</summary>
+    Friend Enum Messages As Int32
+        ''' <summary>System command</summary>
+        WM_SYSCOMMAND = &H112
+    End Enum
+
     ''' <summary>Generic exception caused by Win32 API</summary>
     Public Class Win32APIException : Inherits System.ComponentModel.Win32Exception
         ''' <summary>CTor with error number</summary>
@@ -14,7 +20,6 @@ Namespace API
 
 
     ''' <summary>Common Win32 API declarations</summary>
-    <DoNotApplyAuthorAndVersionAttributes()> _
     Friend Module Common
         ''' <summary>Value representing NULL</summary>
         Public Const NULL As Integer = 0
@@ -25,7 +30,7 @@ Namespace API
             ''' <summary>False</summary>
             [FALSE] = 0
         End Enum
-        
+
         ''' <summary>Retrieves the calling thread's last-error code value. The last-error code is maintained on a per-thread basis. Multiple threads do not overwrite each other's last-error code.</summary>
         ''' <returns>The return value is the calling thread's last-error code.
         ''' <para>The Return Value section of the documentation for each function that sets the last-error code notes the conditions under which the function sets the last-error code. Most functions that set the thread's last-error code set it when they fail. However, some functions also set the last-error code when they succeed. If the function is not documented to set the last-error code, the value returned by this function is simply the most recent last-error code to have been set; some functions set the last-error code to 0 on success and others do not.</para>

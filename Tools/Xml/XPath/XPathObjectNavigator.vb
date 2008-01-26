@@ -54,8 +54,8 @@ Namespace XmlT.XPathT
     ''' </list>
     ''' </remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(XPathObjectNavigator), LastChMMDDYYYY:="10/18/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="09/17/2007")> _
+    <Version(1, 0, GetType(XPathObjectNavigator), LastChange:="10/18/2007")> _
+    <FirstVersion("09/17/2007")> _
     Public Class XPathObjectNavigator : Inherits XPathNavigator : Implements ICloneable(Of XPathNavigator)
 #Region "Steps"
         ''' <summary>Common base for step class. Represents one step (level) in pseudo-XML structure exposed by <see cref="XPathObjectNavigator"/></summary>
@@ -821,7 +821,7 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
                     Return .ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
                 End With
                 If TypeOf obj Is Boolean Then
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                     Return If(DirectCast(obj, Boolean), "true", "false")
 #Else
                     Return Tools.VisualBasicT.iif(DirectCast(obj, Boolean), "true", "false")

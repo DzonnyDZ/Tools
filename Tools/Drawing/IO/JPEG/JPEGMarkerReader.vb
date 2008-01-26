@@ -3,9 +3,9 @@ Namespace DrawingT.IO.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represernts marker (block of JPEG file)</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGMarkerReader), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(JPEGMarkerReader), LastChange:="04/24/2007")> _
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
-    <Tool(GetType(JPEGReader), FirstVerMMDDYYYY:="04/24/2007")> _
+    <FirstVersion("04/24/2007")> _
     Public Class JPEGMarkerReader
         ''' <summary>Known types of JPEG markers</summary>
         Public Enum Markers As Byte
@@ -76,7 +76,7 @@ Namespace DrawingT.IO.JPEG
         ''' <exception cref="IOException">IO error while reding <paramref name="Stream"/></exception>
         ''' <exception cref="EndOfStreamException">End of stream <paramref name="Stream"/> reached unexpectedly</exception>
         Public Sub New(ByVal Stream As Stream, ByVal Offset As Long)
-            _offset = Offset
+            _Offset = Offset
             Stream.Position = Offset
             Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             _Code = r.ReadUInt16()

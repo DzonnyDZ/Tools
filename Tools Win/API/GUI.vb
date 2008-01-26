@@ -2,7 +2,6 @@ Imports System.Runtime.InteropServices
 
 Namespace API
     ''' <summary>Contains declarations of Win32 API related to GUI</summary>
-    <DoNotApplyAuthorAndVersionAttributes()> _
     Friend Module GUI
         ''' <summary>The <see cref="GetSystemMenu"/> function allows the application to access the window menu (also known as the System menu or the Control menu) for copying and modifying.</summary>
         ''' <param name="hwnd">Identifies the window that will own a copy of the window menu.</param>

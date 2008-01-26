@@ -3,7 +3,7 @@ Imports System.Text, system.Math
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
 <DebuggerDisplay("{ToString}")> _
-<Version(1, 0, GetType(TimeSpanFormattable), LastChMMDDYYYY:="10/15/2007")> _
+<Version(1, 0, GetType(TimeSpanFormattable), LastChange:="10/15/2007")> _
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable

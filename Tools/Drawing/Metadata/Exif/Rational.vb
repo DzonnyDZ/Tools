@@ -2,7 +2,7 @@ Namespace DrawingT.MetadataT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represents unsigned rational number with numerator and denominator as used in Exif</summary>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="04/24/2007")> _
     <CLSCompliant(False)> _
     Public Structure URational
         Implements DataStructuresT.GenericT.IPair(Of UInt16, UInt16)
@@ -189,7 +189,7 @@ Namespace DrawingT.MetadataT
 
     ''' <summary>Represents signed rational number with numerator and denominator as used in Exif</summary>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(Math), LastChange:="04/24/2007")> _
     Public Structure SRational
         Implements DataStructuresT.GenericT.IPair(Of Int16, Int16)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
@@ -244,7 +244,7 @@ Namespace DrawingT.MetadataT
             If Denominator = 0 Then Return Me
             Dim Negative As Boolean = Numerator < 0 Xor Denominator < 0
             Dim GCD As UInt32 = MathT.GCD(System.Math.Abs(Numerator), System.Math.Abs(Denominator))
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
             Return New SRational(If(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
 #Else
             Return New SRational(Tools.VisualBasicT.iif(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)

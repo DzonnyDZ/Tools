@@ -4,14 +4,10 @@ Imports System.Reflection
 Namespace InternalT
     ''' <summary>Marks person defined by instance of this attribute as author of marked part of code.</summary>
     ''' <remarks>
-    ''' Use this attribute to mark yourself as author of code you have written.
-    ''' This attribute should not be applyed on items where <see cref="DoNotApplyAuthorAndVersionAttributesAttribute"/> is used.
-    ''' This attribute should not be applyed on items nested in items decorated with this attribute (if not necessary).
-    ''' If you want to determine author of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyCompanyAttribute"/>
-    ''' </remarks>
+    ''' Use this attribute to mark yourself as author of code you have written.</remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=True, Inherited:=False)> _
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChMMDDYYYY:="12/20/2006")> _
-    <MainTool(GetType(ToolAttribute), FirstVerMMDDYYYY:="12/20/2006")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChange:="12/20/2006")> _
+    <FirstVersion(2006, 12, 20)> _
     Public Class AuthorAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -61,15 +57,10 @@ Namespace InternalT
     End Class
 
     ''' <summary>Defines a version of component of code</summary>
-    ''' <remarks>
-    ''' This attribute should not be applyed on items where <see cref="DoNotApplyAuthorAndVersionAttributesAttribute"/> is used.
-    ''' This attribute should not be applyed on items nested in items decorated with this attribute (if not necessary).
-    ''' If you want to determine version of something and it is not decorated with this attribute try serarching for this attribute applyed on item which your item is nested in. If attribute is not found, go 1 nesting level up, if not found go again etc. If no information is found at assembly level search for <see cref="AssemblyVersionAttribute"/>
-    ''' </remarks>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
     <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(1, 1, GetType(VersionAttribute), LastChMMDDYYYY:="05/15/2007")> _
-    <MainTool(GetType(ToolAttribute), FirstVerMMDDYYYY:="12/20/2006")> _
+    <Version(1, 1, GetType(VersionAttribute), LastChange:="01/26/2008")> _
+    <FirstVersion("12/20/2006")> _
     Public Class VersionAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Major"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -290,17 +281,13 @@ Namespace InternalT
         Private _LastChange As Date
         ''' <summary>Date of last modification (date format in invariant culture: MM/DD/YYYY)</summary>
         ''' <remarks>Be carefull when setting this attribute property. If you make mistake if will cause exception when reading it at runtime.</remarks>
-        Public Property LastChMMDDYYYY() As String
+        ''' <exception cref="System.FormatException">Value being set does not contain a valid string representation of a date and time.</exception>
+        Public Property LastChange() As String
             Get
-                Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-                Return _LastChange.ToString(c.DateTimeFormat)
+                Return _LastChange.ToString("d", Globalization.CultureInfo.InvariantCulture)
             End Get
             Set(ByVal value As String)
-                Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-                Dim oldc As Globalization.CultureInfo = Threading.Thread.CurrentThread.CurrentCulture
-                Threading.Thread.CurrentThread.CurrentCulture = c
-                _LastChange = value
-                Threading.Thread.CurrentThread.CurrentCulture = oldc
+                _LastChange = Date.Parse(value, Globalization.CultureInfo.InvariantCulture)
             End Set
         End Property
         ''' <summary>Date of last modification</summary>
@@ -314,126 +301,98 @@ Namespace InternalT
         End Property
     End Class
 
-    ''' <summary>By applying this attribute you informs other programmers that tehy shouldn't apply <see cref="AuthorAttribute"/> and <see cref="VersionAttribute"/> at this declaration level. They should apply them to nested code elements.</summary>
-    <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(DoNotApplyAuthorAndVersionAttributesAttribute), LastChMMDDYYYY:="12/20/2006")> _
-    <Tool(GetType(AuthorAttribute), FirstVerMMDDYYYY:="12/20/2006")> _
-    Public Class DoNotApplyAuthorAndVersionAttributesAttribute : Inherits Attribute
-    End Class
-
     ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.InternalT"/> namespace</summary>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 2, GetType(AttributesSpecificDeclarations), LastChMMDDYYYY:="05/16/2007")> _
+    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 2, GetType(AttributesSpecificDeclarations), LastChange:="01/26/2008")> _
+    <FirstVersion("5/16/2007")> _
     Friend Module AttributesSpecificDeclarations 'Original 12/20/2006
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>
         ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it. (since version 1.1 there is no need to add constants.</remarks>
-        Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.Assembly Or AttributeTargets.Class Or AttributeTargets.Delegate Or AttributeTargets.Enum Or AttributeTargets.Interface Or AttributeTargets.Method Or AttributeTargets.Module Or AttributeTargets.Struct Or AttributeTargets.Property Or AttributeTargets.Event Or AttributeTargets.Field
+        Public Const AuthorAndVersionAttributesUsage As AttributeTargets = AttributeTargets.All
     End Module
-#Region "ToolAttribute"
-    ''' <summary>Defines additional informations about tool and allows tool grouping. Apply this attribute on dependent tool.</summary>
+
+    ''' <summary>Defines date when item was introduced</summary>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
     <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(1, 0, GetType(ToolAttribute), LastChMMDDYYYY:="05/15/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="05/15/2007")> _
-    Public Class ToolAttribute : Inherits Attribute
-        ''' <summary>Initializes ToolAttributte that marks tool as dependent</summary>
-        ''' <param name="Group">Main tool for this tool (root of groups of tools). Main tools can be only types. Main tool should be decorated with <see cref="MainToolAttribute"/>.</param>
-        Sub New(ByVal Group As Type)
-            _Group = Group
+    <Version(2, 0, GetType(FirstVersion), LastChange:="01/26/2008")> _
+    <FirstVersion("05/15/2007")> _
+    Public Class FirstVersion : Inherits Attribute
+        ''' <summary>CTor from date</summary>
+        ''' <param name="Date">Date when item was first introduced</param>
+        Public Sub New(ByVal [Date] As Date)
+            Me.FirstVersionDate = [Date]
+        End Sub
+        ''' <summary>CTor from string that represents date in invariant culture format MM/DD/YYYY</summary>
+        ''' <param name="InvariantDateStr">Invariant culture string representation of date when tool was first introduced (MM/DD/YYYY)</param>
+        ''' <remarks>Be carefull when setting this attribute property. If you make mistake if will cause exception when reading it at runtime.</remarks>
+        ''' <exception cref="System.FormatException"><paramref name="InvariantDateStr"/> not contain a valid string representation of a date and time.</exception>
+        Public Sub New(ByVal InvariantDateStr As String)
+            Me.FirstVerStr = InvariantDateStr
+        End Sub
+        ''' <summary>CTor from parts of date</summary>
+        ''' <param name="Day">Day (number of day in <paramref name="Month"/>, 1-based)</param>
+        ''' <param name="Month">Month (number of month in <paramref name="Year"/>, 1-based)</param>
+        ''' <param name="Year">Number of eyar</param>
+        ''' <remarks>Arguments valid for <see cref="Date"/> constructor are acceptable.</remarks>
+        ''' <exception cref="System.ArgumentOutOfRangeException">year is less than 1 or greater than 9999.-or- month is less than 1 or greater than 12.-or- day is less than 1 or greater than the number of days in month.</exception>
+        ''' <exception cref="System.ArgumentException">The specified parameters evaluate to less than <see cref="System.DateTime.MinValue" /> or more than <see cref="System.DateTime.MaxValue" />.</exception>
+        <CLSCompliant(False)> _
+        Public Sub New(ByVal Year As UShort, ByVal Month As Byte, ByVal Day As Byte)
+            Me.New(New Date(Year, Month, Day))
         End Sub
         ''' <summary>Contains value of the <see cref="FirstVersionDate"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _FirstVersion As Date
-        ''' <summary>Date when first version the tool was created</summary>
+        ''' <summary>Date when first version the item was created</summary>
         Public Property FirstVersionDate() As Date
             Get
                 Return _FirstVersion
             End Get
-            Set(ByVal value As Date)
+            Private Set(ByVal value As Date)
                 _FirstVersion = value
             End Set
         End Property
-        ''' <summary>Contains value of the <see cref="Name"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Name As String
-        ''' <summary>Optional descriptive name of tool if different of name of declaring element</summary>
-        Public Property Name() As String
-            Get
-                Return _Name
-            End Get
-            Set(ByVal value As String)
-                _Name = value
-            End Set
-        End Property
-        ''' <summary>Date when first version of tool was created (date format in invariant culture: MM/DD/YYYY)</summary>
-        ''' <remarks>Be carefull when setting this attribute property. If you make mistake if will cause exception when reading it at runtime.</remarks>
-        Public Property FirstVerMMDDYYYY() As String
+        ''' <summary>Date when first version of item was created (date format in invariant culture: MM/DD/YYYY)</summary>
+        ''' <exception cref="System.FormatException">Value being set does not contain a valid string representation of a date and time.</exception>
+        Public Property FirstVerStr() As String
             Get
                 Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
                 Return FirstVersionDate.ToString(c.DateTimeFormat)
             End Get
-            Set(ByVal value As String)
-                Dim c As Globalization.CultureInfo = Globalization.CultureInfo.InvariantCulture
-                Dim oldc As Globalization.CultureInfo = Threading.Thread.CurrentThread.CurrentCulture
-                Threading.Thread.CurrentThread.CurrentCulture = c
-                FirstVersionDate = value
-                Threading.Thread.CurrentThread.CurrentCulture = oldc
+            Private Set(ByVal value As String)
+                FirstVersionDate = Date.Parse(value, System.Globalization.CultureInfo.InvariantCulture)
             End Set
-        End Property
-        ''' <summary>Contains value of the <see cref="Group"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _Group As Type
-        ''' <summary>Tool this tool depends on</summary>
-        ''' <returns>Type of parent tool. Null for independent tools.</returns>
-        ''' <remarks>Only types can be parent tools.</remarks>
-        Public ReadOnly Property Group() As Type
-            Get
-                Return _Group
-            End Get
         End Property
     End Class
-    ''' <summary>Defines main tool. Only types can be main tools</summary>
-    ''' <remarks>Also type that is not tool itself (is marked with <see cref="DoNotApplyAuthorAndVersionAttributesAttribute"/>) can be marked as root (if it is not nested within another tool).</remarks>
-    <AttributeUsage(AuthorAndVersionAttributesUsage)> _
-    <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(1, 0, GetType(MainToolAttribute), LastChMMDDYYYY:="10/02/2007")> _
-    <Tool(GetType(ToolAttribute), FirstVerMMDDYYYY:="05/15/2007")> _
-    Public Class MainToolAttribute : Inherits ToolAttribute
-        ''' <summary>Marks tool as independent ungrouped main tool</summary>
-        Sub New()
-            MyBase.New(Nothing)
-        End Sub
-        ''' <summary>Marks tool as main tool of group that has multiple main tools.</summary>
-        ''' <param name="Group">Another main tool of group. Only types can be main tools. Main tool should be decorated with <see cref="MainToolAttribute"/></param>
-        Sub New(ByVal Group As Type)
-            MyBase.New(Group)
-        End Sub
-        ''' <summary>Contains value of the <see cref="GroupName"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _GroupName As String
-        ''' <summary>Name of group of tools</summary>
-        ''' <remarks>Defines name of group of tools. Used when there are more Main tools in group. If there are more main tools in group it should have same <see cref="GroupName"/> or only one tool should have <see cref="GroupName"/> defined.</remarks>
-        Public Property GroupName() As String
-            Get
-                Return _GroupName
-            End Get
-            Set(ByVal value As String)
-                _GroupName = value
-            End Set
-        End Property
 
-    End Class
-    ''' <summary>Marks tool as stand-alone tool. Stand-alone tool is tool that cannot have tools dependent on it and is dependent on no tool.</summary>
-    ''' <remarks>This attribute should be applyed on tools that are not grouped and are not types</remarks>
-    <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(1, 0, GetType(StandAloneToolAttribute), LastChMMDDYYYY:="05/15/2007")> _
-    <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Tool(GetType(ToolAttribute), FirstVerMMDDYYYY:="05/15/2007")> _
-    Public Class StandAloneToolAttribute : Inherits ToolAttribute
+    ''' <summary>Identifies in which stage of development life-cycle current build was done</summary>
+    <AttributeUsage(AttributeTargets.Assembly, AllowMultiple:=False)> _
+    Public Class AssemblyBuildStage : Inherits Attribute
+        ''' <summary>Contains value of the <see cref="State"/> property</summary>
+        Private _State As BuildStates
+        ''' <summary>Identifies stage of life-cycle</summary>
+        Public ReadOnly Property State() As BuildStates
+            Get
+                Return _State
+            End Get
+        End Property
         ''' <summary>CTor</summary>
-        Sub New()
-            MyBase.New(Nothing)
+        ''' <param name="State">Identifies stage of life-cycle</param>
+        Public Sub New(ByVal State As BuildStates)
+            Me._State = State
         End Sub
     End Class
-#End Region
+    ''' <summary>Represents possible stages of life-cycle of assembly used by ĐTools project</summary>
+    Public Enum BuildStates
+        ''' <summary>Debug build, usually done by developer to debug and test</summary>
+        Nightly = 1
+        ''' <summary>Early stagte of development posled to public</summary>
+        Alpha = 2
+        ''' <summary>More tested and debuged statge of development, but still not final</summary>
+        Beta = 3
+        ''' <summary>Near-final stage of development</summary>
+        RC = 4
+        ''' <summary>Production release</summary>
+        Release = 5
+    End Enum
 End Namespace
 #End If

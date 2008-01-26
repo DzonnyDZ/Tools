@@ -10,12 +10,12 @@ Imports System.Runtime.Serialization
 'Its preceded by comment.
 Namespace WindowsT.FormsT
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChMMDDYYYY:="05/20/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="05/20/2007")> _
     <ToolboxItemFilter("System.Windows.Forms")> _
     <System.Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
     <DefaultEvent("LinkClicked"), ToolboxItem(True), DefaultProperty("Items")> _
     <Prefix("llb")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="01/24/2007")> _
+    <FirstVersion("01/24/2007")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
         ''' <summary>Contains value of the <see cref="Items"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -1309,7 +1309,7 @@ Namespace WindowsT.FormsT
                         lblItemInfo.Text = resources.GetString("lblItemInfo.Text")
                     Else
                         pgrProperty.SelectedObjects = (New ArrayList(lstItems.SelectedItems)).ToArray
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
                         Enable(If(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
 #Else
                         Enable(VisualBasicT.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))

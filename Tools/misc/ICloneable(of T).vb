@@ -1,6 +1,6 @@
 ﻿#If Config <= Release Then
 ''' <summary>Type-safe <see cref="ICloneable"/> interface</summary>
-<Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(ICloneable(Of )), LastChMMDDYYYY:="12/20/2006")> _
+<Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(ICloneable(Of )), LastChange:="12/20/2006")> _
 Public Interface ICloneable(Of T) : Inherits ICloneable
     ''' <summary>Creates a new object that is a copy of the current instance.</summary>
     ''' <returns>A new object that is a copy of this instance</returns>

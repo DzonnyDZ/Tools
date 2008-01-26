@@ -7,8 +7,8 @@ Namespace WindowsT.FormsT
     ''' <summary>Note: This control will be removed and replaced with attachable implementation of <see cref="StatusMarker"/></summary>
     <Obsolete("This control will be removed and replaced wit attachable StatusMarker")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(MultiLineTextBoxWithStatus), LastChMMDDYYYY:="07/22/2007")> _
-    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Version(1, 0, GetType(MultiLineTextBoxWithStatus), LastChange:="07/22/2007")> _
+    <FirstVersion("06/22/2007")> _
     <Drawing.ToolboxBitmap(GetType(StatusMarker), "MultiLineTextBoxWithStatus.bmp")> _
     <ComponentModelT.Prefix("mxs")> _
     <DefaultProperty("Text")> _

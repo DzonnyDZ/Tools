@@ -9,11 +9,11 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChMMDDYYYY:="06/26/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChange:="06/26/2007")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
-    <StandAloneTool(FirstVerMMDDYYYY:="01/07/2007")> _
+    <FirstVersion("01/07/2007")> _
     Public Class ListWithEvents(Of T)
         Implements Runtime.Serialization.ISerializable
         Implements IList(Of T)

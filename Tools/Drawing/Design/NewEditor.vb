@@ -7,7 +7,7 @@ Namespace DrawingT.DesignT
     ''' See also <seealso cref="InstanceCreationEditor"/>.
     ''' </remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(NewEditor), LastChMMDDYYYY:="07/22/2007")> _
+    <Version(1, 0, GetType(NewEditor), LastChange:="07/22/2007")> _
     Public Class NewEditor
         Inherits UITypeEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>

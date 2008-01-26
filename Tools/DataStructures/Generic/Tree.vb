@@ -3,8 +3,8 @@ Namespace DataStructuresT.GenericT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Represents tree or sub-tree</summary>
     <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _
-    <Version(1, 0, GetType(Tree(Of DBNull)), LastChMMDDYYYY:="06/16/2007")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="05/19/2007")> _
+    <Version(1, 0, GetType(Tree(Of DBNull)), LastChange:="06/16/2007")> _
+    <FirstVersion("05/19/2007")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class Tree(Of T) : Implements ICloneable(Of Tree(Of T))
 #Region "CTors"

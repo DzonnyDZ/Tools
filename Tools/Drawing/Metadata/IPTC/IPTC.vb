@@ -3,8 +3,8 @@ Imports Tools.DataStructuresT.GenericT
 Namespace DrawingT.MetadataT
 #If Congig <= Alpha Then 'Stage: Alpha
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(IPTC), LastChMMDDYYYY:="10/03/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/01/2007")> _
+    <Version(1, 1, GetType(IPTC), LastChange:="10/03/2007")> _
+    <FirstVersion("06/01/2007")> _
     Partial Public Class IPTC
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()

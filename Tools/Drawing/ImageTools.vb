@@ -4,7 +4,7 @@ Imports System.Runtime.CompilerServices
 Namespace DrawingT
     'ASAP: Mark, WiKi, COmment, Forum
     Public Module ImageTools
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
         <Extension()> _
         Public Function ThumbSize(ByVal ImgSize As Size, ByVal ThumbBounds As Size) As Size
 #Else
@@ -25,7 +25,7 @@ Namespace DrawingT
             End If
             Return NewS
         End Function
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
         <Extension()> _
         Public Function ThumbSize(ByVal Image As Image, ByVal ThumbBounds As Size) As Size
             Return Image.Size.ThumbSize(ThumbBounds)

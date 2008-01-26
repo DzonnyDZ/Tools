@@ -7,8 +7,8 @@ Namespace WindowsT.FormsT
     ''' <summary>Note: This control will be removed and replaced with attachable implementation of <see cref="StatusMarker"/></summary>
     <Obsolete("This control will be removed and replaced wit attachable StatusMarker")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ComboWithStatus), LastChMMDDYYYY:="07/22/2007")> _
-    <Tool(GetType(StatusMarker), FirstVerMMDDYYYY:="06/22/2007")> _
+    <Version(1, 0, GetType(ComboWithStatus), LastChange:="07/22/2007")> _
+    <firstversion("06/22/2007")> _
     <Drawing.ToolboxBitmap(GetType(StatusMarker), "ComboWithStatus.bmp")> _
     <ComponentModelT.Prefix("cws")> _
     <DefaultProperty("Text")> _

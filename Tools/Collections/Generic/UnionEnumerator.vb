@@ -1,5 +1,5 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
 Imports System.Linq
 #End If
 Namespace CollectionsT.GenericT
@@ -60,7 +60,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>CTor from any <see cref="IEnumerable(Of IEnumerable(Of T))"/></summary>
         ''' <param name="Enumerables">Enumerables to get enumerators from and union them</param>
         Public Sub New(ByVal Enumerables As IEnumerable(Of IEnumerable(Of T)))
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
             Me.New(From Enumerable In Enumerables Select Enumerable.GetEnumerator)
 #Else
             Dim lst As New List(Of IEnumerator(Of T))
@@ -68,7 +68,7 @@ Namespace CollectionsT.GenericT
                 lst.Add(Enumerable.GetEnumerator)
             Next Enumerable
             Me.Enumerators = lst.GetEnumerator
-            Me.Enumerators.MoveNext 
+            Me.Enumerators.MoveNext()
 #End If
         End Sub
 

@@ -3,8 +3,8 @@ Imports Tools.VisualBasicT, System.IO
 Namespace IOt
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>
-    <Version(1, 2, GetType(Path), LastChMMDDYYYY:="11/28/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <StandAloneTool(FirstVerMMDDYYYY:="03/05/2007")> _
+    <Version(1, 2, GetType(Path), LastChange:="11/28/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <FirstVersion("03/05/2007")> _
     <DebuggerDisplay("{Path}")> _
     Public Class Path
         Implements IEnumerable(Of Path)
@@ -414,7 +414,7 @@ Namespace IOt
         ''' <param name="ToAlternative">If set to true the alternative directory separator (/ on Windows) is used instead of primary (\ on Windows)</param>
         ''' <remarks>See also <seealso cref="System.IO.Path.DirectorySeparatorChar"/>, <seealso cref="System.IO.Path.AltDirectorySeparatorChar"/></remarks>
         Public Sub Normalize(Optional ByVal ToAlternative As Boolean = False)
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
             Dim Old As Char = If(ToAlternative, System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
             Dim [New] As Char = If(ToAlternative, System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar)
 #Else

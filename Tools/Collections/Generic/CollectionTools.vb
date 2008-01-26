@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Tools.Collections.Generic
 
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
 Namespace CollectionsT.GenericT
     'ASAP: Mark,  Wiki, Forum
     ''' <summary>Extension methods for working with collection</summary>

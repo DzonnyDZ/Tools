@@ -5,8 +5,8 @@ Namespace ComponentModelT
     ''' <typeparam name="T">Type that is converted from and to other types</typeparam>
     ''' <remarks>It's not enough to derive from this class to get working type-safe <see cref="ComponentModel.TypeConverter"/>. After deriving from this class you must implement one or more type converter interfaces (protected nested interfaces in this class). Those interfaces tells this class which conversions are available and provides conversion methods.</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TypeConverter(Of )), LastChMMDDYYYY:="06/17/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/16/2007")> _
+    <Version(1, 0, GetType(TypeConverter(Of )), LastChange:="06/17/2007")> _
+    <FirstVersion("06/16/2007")> _
     Public MustInherit Class TypeConverter(Of T) : Inherits TypeConverter
 #Region "Interfaces"
         ''' <summary>Interface for type-safe <see cref="ComponentModel.TypeConverter"/>s (read-only conversion)</summary>
@@ -385,8 +385,8 @@ Namespace ComponentModelT
     ''' <typeparam name="TOther">Type the <paramref name="T"/> will be converted from and to</typeparam>
     ''' <remarks>This class provides type-safe base of <see cref="ComponentModel.TypeConverter"/> for two types. You can extend its support for another types by implementing another <see cref="TypeConverter(Of T)"/> nested interfaces.</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TypeConverter(Of )), LastChMMDDYYYY:="06/17/2007")> _
-    <Tool(GetType(TypeConverter(Of )), FirstVerMMDDYYYY:="06/16/2007")> _
+    <Version(1, 0, GetType(TypeConverter(Of )), LastChange:="06/17/2007")> _
+    <FirstVersion("06/16/2007")> _
     Public MustInherit Class TypeConverter(Of T, TOther)
         Inherits TypeConverter(Of T)
         Implements ITypeConverterWithValidation(Of TOther)
@@ -464,8 +464,8 @@ Namespace ComponentModelT
 
     ''' <summary>Simple <see cref="ComponentModel.TypeConverter"/> for <see cref="Byte()"/></summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(FileByteConverter), LastChMMDDYYYY:="06/19/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    <Version(1, 0, GetType(FileByteConverter), LastChange:="06/19/2007")> _
+    <FirstVersion("06/19/2007")> _
     Public Class FileByteConverter
         Inherits TypeConverter(Of Byte())
         Implements ITypeConverterTo(Of String)
@@ -481,8 +481,8 @@ Namespace ComponentModelT
     ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with support for interface based conversion as <see cref="TypeConverter(Of T)"/></summary>
     ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ExpandableObjectConverter(Of )), LastChMMDDYYYY:="07/22/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    <Version(1, 0, GetType(ExpandableObjectConverter(Of )), LastChange:="07/22/2007")> _
+    <FirstVersion("06/19/2007")> _
     Public MustInherit Class ExpandableObjectConverter(Of T) : Inherits TypeConverter(Of T)
         ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
@@ -503,8 +503,8 @@ Namespace ComponentModelT
     ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
     ''' <typeparam name="TOther">The other type to which and from which main type <paramref name="T"/> is converted</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ExpandableObjectConverter(Of ,)), LastChMMDDYYYY:="06/19/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    <Version(1, 0, GetType(ExpandableObjectConverter(Of ,)), LastChange:="06/19/2007")> _
+    <FirstVersion("06/19/2007")> _
     Public MustInherit Class ExpandableObjectConverter(Of T, TOther) : Inherits TypeConverter(Of T, TOther)
         ''' <summary>Returns whether this object supports properties, using the specified context.</summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
@@ -524,8 +524,8 @@ Namespace ComponentModelT
 
     ''' <summary><see cref="TypeConverter"/> for <see cref="Byte()"/> as hexasring</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(HexaConverter), LastChMMDDYYYY:="06/19/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    <Version(1, 0, GetType(HexaConverter), LastChange:="06/19/2007")> _
+    <FirstVersion("06/19/2007")> _
     Public Class HexaConverter : Inherits TypeConverter(Of Byte(), String)
         ''' <summary>Performs conversion from <see cref="String"/> to <see cref="Byte()"/></summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
@@ -563,8 +563,8 @@ Namespace ComponentModelT
     ''' <summary>Implements <see cref="TypeConverter"/> for enums that uses <see cref="DisplayNameAttribute"/> applyed on enum items and <see cref="RestrictAttribute"/></summary>
     <CLSCompliant(False)> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(EnumConverterWithAttributes(Of )), LastChMMDDYYYY:="06/19/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/19/2007")> _
+    <Version(1, 0, GetType(EnumConverterWithAttributes(Of )), LastChange:="06/19/2007")> _
+    <FirstVersion("06/19/2007")> _
     Public Class EnumConverterWithAttributes(Of T As {IConvertible, Structure})
         Inherits TypeConverter(Of T, String)
         ''' <summary>Returns whether the collection of standard values returned from <see cref="M:System.ComponentModel.TypeConverter.GetStandardValues"></see> is an exclusive list.</summary>

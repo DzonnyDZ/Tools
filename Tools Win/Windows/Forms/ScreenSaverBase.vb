@@ -1,6 +1,6 @@
 ﻿Imports System.ComponentModel
 
-#If VBC_VER >= 9.0 Then
+#If Framework >= 3.5 Then
 Namespace WindowsT.FormsT
     'ASAP:  Wiki, 
     ''' <summary>Provides common base for implementing Windows screensawers</summary>
@@ -172,7 +172,7 @@ Namespace WindowsT.FormsT
             End SyncLock
             Application.Run(F)
         End Sub
-        
+
 #End Region
 #Region "Default implementation - Preview"
         ''' <summary>Low-level implementation of preview</summary>

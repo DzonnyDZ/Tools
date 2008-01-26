@@ -2,7 +2,7 @@ Namespace DrawingT.MetadataT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIPTCGetter), LastChMMDDYYYY:="04/24/2007")> _
+    <Version(1, 0, GetType(IIPTCGetter), LastChange:="04/24/2007")> _
     Public Interface IIPTCGetter
         ''' <summary>Gets stream of IPTC data</summary>
         ''' <remarks>
@@ -15,7 +15,7 @@ Namespace DrawingT.MetadataT
 
     ''' <summary>Represents provider that provides method to writed IPTC data into container</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIPTCWriter), LastChMMDDYYYY:="07/22/2007")> _
+    <Version(1, 0, GetType(IIPTCWriter), LastChange:="07/22/2007")> _
     Public Interface IIPTCWriter
         ''' <summary>Writes IPTC data into container</summary>
         ''' <param name="IPTCData">Data to be written</param>

@@ -3,7 +3,7 @@ Namespace DrawingT
 #If Config <= Release Then
     ''' <summary>Gives access to aditional system-defined colors</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _
-    <Version(1, 0, GetType(SystemColorsExtension), LastChMMDDYYYY:="05/10/2007")> _
+    <Version(1, 0, GetType(SystemColorsExtension), LastChange:="05/10/2007")> _
     Public NotInheritable Class SystemColorsExtension
         ''' <summary>Color of non visited non hovered hyperlink in web browser</summary>
         Public Shared ReadOnly Property BrowserLink() As Color

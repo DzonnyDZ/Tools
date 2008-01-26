@@ -4,8 +4,8 @@ Imports System.Windows.Forms
 Namespace WindowsT.FormsT
     ''' <summary>Marks state of data item</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(StatusMarker), LastChMMDDYYYY:="07/22/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="06/22/2007")> _
+    <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
+    <FirstVersion("06/22/2007")> _
     <Drawing.ToolboxBitmap(GetType(StatusMarker), "StatusMarker.bmp")> _
     <ComponentModelT.Prefix("stm")> _
     <DefaultProperty("Status")> _
@@ -408,8 +408,8 @@ Namespace WindowsT.FormsT
     End Class
     ''' <summary>Provides common interface for controls that exposes its status</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(StatusMarker), LastChMMDDYYYY:="07/22/2007")> _
-    <MainTool(FirstVerMMDDYYYY:="07/22/2007")> _
+    <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
+    <FirstVersion("07/22/2007")> _
     Public Interface IControlWithStatus
         ''' <summary>Current status of control</summary>
         Property Status() As StatusMarker.Statuses
