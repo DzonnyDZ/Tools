@@ -44,7 +44,17 @@
     <p>
         První úlohou je zjistit jaký prvek se pod kurzorem vůbec ukrývá. To se ukázalo jako trošku "tricky" úloha. Visual Studio vám ocotně prozradí uvnitř jakého prvku se kurzor nachází, ale jen v případě, že vy mu řeknete o jaký druh prvku (třída, metoda, vlastnost, ...) máte zájem. To je trošku nepraktické v případě, kdy potřebujete dostat jakýkoliv prvek od úrovně metody výše. Nezbývá tedy, než se Visual Studia zeptat na všechny prvky - typicky se váš kurzor nachází uvnitř metody, metoda je uvnitř třídy, třída uvnitř jmenného prostoru ... - a pak vybrat ten, který začíná na stejném řádku jako je kurzor. Na to jsem hned využil nových vlastností VB9 a implementoval jsem extension metodu:
     </p>
-    <pre><code>&lt;ExtensionAttribute()> _ Private Function GetCodeElement(ByVal p As EnvDTE.EditPoint) As EnvDTE.CodeElement For Each t As vsCMElement In [Enum].GetValues(GetType(vsCMElement)) Dim CE = p.CodeElement(t) If CE IsNot Nothing Then If CE.GetStartPoint(vsCMPart.vsCMPartWholeWithAttributes).Line = p.Line OrElse CE.GetStartPoint(vsCMPart.vsCMPartWhole).Line = p.Line Then _ Return CE End If Next t Return Nothing End Function</code></pre>
+    <pre><code>&lt;ExtensionAttribute()> _
+Private Function GetCodeElement(ByVal p As EnvDTE.EditPoint) As EnvDTE.CodeElement
+    For Each t As vsCMElement In [Enum].GetValues(GetType(vsCMElement))
+        Dim CE = p.CodeElement(t)
+        If CE IsNot Nothing Then
+            If CE.GetStartPoint(vsCMPart.vsCMPartWholeWithAttributes).Line = p.Line OrElse CE.GetStartPoint(vsCMPart.vsCMPartWhole).Line = p.Line Then _
+                Return CE
+        End If
+    Next t
+    Return Nothing
+End Function</code></pre>
     <p>
         Metoda vrátí takový prvek kódu, který začíná na řádku, kde je kurzor. Přičemž "začíná" znamená, že tam začíná jeho hlavička nebo tam začínají jeho atributy.</p>
     <p>
