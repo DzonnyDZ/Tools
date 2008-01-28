@@ -34,6 +34,7 @@ Namespace WindowsT.FormsT
             Me.cmdShow = New System.Windows.Forms.Button
             Me.picBig = New System.Windows.Forms.PictureBox
             Me.picSmall = New System.Windows.Forms.PictureBox
+            Me.txtKey = New System.Windows.Forms.TextBox
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -80,6 +81,7 @@ Namespace WindowsT.FormsT
             Me.flpBottom.Controls.Add(Me.cmdShow)
             Me.flpBottom.Controls.Add(Me.picBig)
             Me.flpBottom.Controls.Add(Me.picSmall)
+            Me.flpBottom.Controls.Add(Me.txtKey)
             Me.flpBottom.Dock = System.Windows.Forms.DockStyle.Fill
             Me.flpBottom.Location = New System.Drawing.Point(0, 0)
             Me.flpBottom.Name = "flpBottom"
@@ -91,7 +93,8 @@ Namespace WindowsT.FormsT
             Me.cmbType.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmbType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cmbType.FormattingEnabled = True
-            Me.cmbType.Location = New System.Drawing.Point(3, 24)
+            Me.cmbType.Location = New System.Drawing.Point(0, 21)
+            Me.cmbType.Margin = New System.Windows.Forms.Padding(0)
             Me.cmbType.Name = "cmbType"
             Me.cmbType.Size = New System.Drawing.Size(121, 21)
             Me.cmbType.Sorted = True
@@ -102,7 +105,8 @@ Namespace WindowsT.FormsT
             Me.cmbAccess.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmbAccess.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
             Me.cmbAccess.FormattingEnabled = True
-            Me.cmbAccess.Location = New System.Drawing.Point(130, 24)
+            Me.cmbAccess.Location = New System.Drawing.Point(121, 21)
+            Me.cmbAccess.Margin = New System.Windows.Forms.Padding(0)
             Me.cmbAccess.Name = "cmbAccess"
             Me.cmbAccess.Size = New System.Drawing.Size(121, 21)
             Me.cmbAccess.TabIndex = 1
@@ -111,7 +115,8 @@ Namespace WindowsT.FormsT
             '
             Me.chkStatic.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.chkStatic.AutoSize = True
-            Me.chkStatic.Location = New System.Drawing.Point(257, 26)
+            Me.chkStatic.Location = New System.Drawing.Point(242, 23)
+            Me.chkStatic.Margin = New System.Windows.Forms.Padding(0)
             Me.chkStatic.Name = "chkStatic"
             Me.chkStatic.Size = New System.Drawing.Size(53, 17)
             Me.chkStatic.TabIndex = 2
@@ -122,7 +127,8 @@ Namespace WindowsT.FormsT
             '
             Me.chkSealed.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.chkSealed.AutoSize = True
-            Me.chkSealed.Location = New System.Drawing.Point(316, 26)
+            Me.chkSealed.Location = New System.Drawing.Point(295, 23)
+            Me.chkSealed.Margin = New System.Windows.Forms.Padding(0)
             Me.chkSealed.Name = "chkSealed"
             Me.chkSealed.Size = New System.Drawing.Size(59, 17)
             Me.chkSealed.TabIndex = 3
@@ -133,7 +139,8 @@ Namespace WindowsT.FormsT
             '
             Me.chkShortcut.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.chkShortcut.AutoSize = True
-            Me.chkShortcut.Location = New System.Drawing.Point(381, 26)
+            Me.chkShortcut.Location = New System.Drawing.Point(354, 23)
+            Me.chkShortcut.Margin = New System.Windows.Forms.Padding(0)
             Me.chkShortcut.Name = "chkShortcut"
             Me.chkShortcut.Size = New System.Drawing.Size(66, 17)
             Me.chkShortcut.TabIndex = 4
@@ -143,7 +150,8 @@ Namespace WindowsT.FormsT
             'cmdShow
             '
             Me.cmdShow.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdShow.Location = New System.Drawing.Point(453, 23)
+            Me.cmdShow.Location = New System.Drawing.Point(420, 20)
+            Me.cmdShow.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdShow.Name = "cmdShow"
             Me.cmdShow.Size = New System.Drawing.Size(75, 23)
             Me.cmdShow.TabIndex = 5
@@ -153,7 +161,8 @@ Namespace WindowsT.FormsT
             'picBig
             '
             Me.picBig.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.picBig.Location = New System.Drawing.Point(534, 3)
+            Me.picBig.Location = New System.Drawing.Point(495, 0)
+            Me.picBig.Margin = New System.Windows.Forms.Padding(0)
             Me.picBig.Name = "picBig"
             Me.picBig.Size = New System.Drawing.Size(64, 64)
             Me.picBig.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
@@ -163,12 +172,23 @@ Namespace WindowsT.FormsT
             'picSmall
             '
             Me.picSmall.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.picSmall.Location = New System.Drawing.Point(604, 25)
+            Me.picSmall.Location = New System.Drawing.Point(559, 22)
+            Me.picSmall.Margin = New System.Windows.Forms.Padding(0)
             Me.picSmall.Name = "picSmall"
             Me.picSmall.Size = New System.Drawing.Size(20, 20)
             Me.picSmall.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize
             Me.picSmall.TabIndex = 7
             Me.picSmall.TabStop = False
+            '
+            'txtKey
+            '
+            Me.txtKey.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.txtKey.Location = New System.Drawing.Point(579, 22)
+            Me.txtKey.Margin = New System.Windows.Forms.Padding(0)
+            Me.txtKey.Name = "txtKey"
+            Me.txtKey.ReadOnly = True
+            Me.txtKey.Size = New System.Drawing.Size(76, 20)
+            Me.txtKey.TabIndex = 8
             '
             'frmObjectBrowser
             '
@@ -199,5 +219,6 @@ Namespace WindowsT.FormsT
         Friend WithEvents cmdShow As System.Windows.Forms.Button
         Friend WithEvents picBig As System.Windows.Forms.PictureBox
         Friend WithEvents picSmall As System.Windows.Forms.PictureBox
+        Friend WithEvents txtKey As System.Windows.Forms.TextBox
     End Class
 End Namespace

@@ -35,6 +35,7 @@ Namespace WindowsT.FormsT
             cmbAccess.Items.AddRange(New Object() {ObjectModifiers.Public, ObjectModifiers.Friend, ObjectModifiers.Protected, ObjectModifiers.ProtectedFriend, ObjectModifiers.FriendProtected, ObjectModifiers.Private, ObjectModifiers.None})
             cmbType.SelectedIndex = 0
             cmbAccess.SelectedIndex = 0
+            AddHandler ReflectionT.ImageRequested, AddressOf CodeImages_ImageRequested
         End Sub
 
         Private Sub cmdShow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdShow.Click
@@ -46,6 +47,16 @@ Namespace WindowsT.FormsT
             Dim img = GetImage(ObjectType, ObjectModifiers)
             picBig.Image = img
             picSmall.Image = img
+            txtKey.Text = LastCode
+        End Sub
+        ''' <summary>Kye of last image caught by <see cref="CodeImages_ImageRequested"/></summary>
+        Private LastCode As String
+        ''' <summary>handles the <see cref="ReflectionT.ImageRequested"/> event</summary>
+        ''' <param name="Image">Image to be returned</param>
+        ''' <param name="ObjectType">Type of object for image</param>
+        ''' <param name="Modifiers">Object modifiers for  image</param>
+        Private Sub CodeImages_ImageRequested(ByVal Image As Image, ByVal ObjectType As Objects, ByVal Modifiers As ObjectModifiers)
+            LastCode = String.Format("{0:d}_{0:d}", ObjectType, Modifiers)
         End Sub
     End Class
 End Namespace

@@ -300,6 +300,7 @@ Namespace ReflectionT
             Return img
         End Function
         ''' <summary>Gets image that represents <see cref="ObjectModifiers.ProtectedFriend"/></summary>
+        ''' <remarks>The image is dynamically generated an the cached</remarks>
         Private ReadOnly Property ProtectedFriend() As Image
             Get
                 Static val As Image
@@ -314,6 +315,7 @@ Namespace ReflectionT
             End Get
         End Property
         ''' <summary>Gets image that represents <see cref="ObjectModifiers.FriendProtected"/></summary>
+        ''' <remarks>The image is dynamically generated an the cached</remarks>
         Private ReadOnly Property FriendProtected() As Image
             Get
                 Static val As Image
@@ -332,6 +334,7 @@ Namespace ReflectionT
         ''' <param name="Modifiers">Object modifiers</param>
         ''' <returns>16×16px image that graphicaly represents <paramref name="ObjectType"/> with its modifiers.</returns>
         ''' <remarks>Images are dynamically created on request and cached. So if you change the image returned, it will be returned changed on next call.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="ObjectType"/> is not member of <see cref="Objects"/></exception>
         <DebuggerStepThrough()> _
         Public Function GetImage(ByVal ObjectType As Objects, ByVal Modifiers As ObjectModifiers) As Image
             Dim ret As Image
@@ -359,7 +362,9 @@ Namespace ReflectionT
         Public Event ImageRequested(ByVal Image As Image, ByVal ObjectType As Objects, ByVal Modifiers As ObjectModifiers)
         ''' <summary>For each image in cache calls given callback method</summary>
         ''' <param name="Callback">Method to call. Parameters are same as of the <see cref="ImageAdded"/> event.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Callback"/> is null</exception>
         Public Sub WithAllImages(ByVal Callback As dSub(Of Image, Objects, ObjectModifiers))
+            If Callback Is Nothing Then Throw New ArgumentNullException("Callback")
             For Each item In Cache
                 Callback.Invoke(item.Value, item.Key >> 32, item.Key And &HFFFFFFFF)
             Next item
@@ -369,6 +374,7 @@ Namespace ReflectionT
         ''' <param name="Attributes">Object modifiers</param>
         ''' <returns>16×16px image that graphicaly represents <paramref name="ObjectType"/> with its modifiers.</returns>
         ''' <remarks>Images are dynamically created on request and cached. So if you change the image returned, it will be returned changed on next call.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="ObjectType"/> is not member of <see cref="Objects"/></exception>
         Public Function GetImage(ByVal ObjectType As Objects, ByVal Attributes As MethodAttributes) As Image
             Return GetImage(ObjectType, DirectCast(Attributes, ObjectModifiers))
         End Function
@@ -377,7 +383,9 @@ Namespace ReflectionT
         ''' <param name="Type">Type to get image for</param>
         ''' <returns>16×16 image representing type obtained using <see cref="GetImage"/></returns>
         ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         <Extension()> Public Function GetImage(ByVal Type As Type) As Image
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Dim TypeType As Objects
             'Generic parameters:
             If Type.IsGenericParameter Then
@@ -457,7 +465,10 @@ Namespace ReflectionT
         ''' <param name="Member">Member to represent</param>
         ''' <returns>16×16px image that represents <paramref name="Member"/></returns>
         ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
         <Extension()> Public Function GetImage(ByVal Member As Reflection.MemberInfo) As Image
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
             'TODO: Specialized GetImages()s or recursion will ocur
             Select Case Member.MemberType
                 Case Reflection.MemberTypes.Constructor
@@ -481,8 +492,13 @@ Namespace ReflectionT
             End Select
             Return GetImage(Objects.Question)
         End Function
-        ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <summary>Gets image that graphicaly represents give method</summary>
+        ''' <param name="Member">Method to get image for</param>
+        ''' <returns>16×16px image that graphicaly represents <paramref name="Member"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
         <Extension()> Public Function GetImage(ByVal Member As MethodBase) As Image
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
             Dim Type As Objects
             If Member.IsConstructor Then
                 Type = Objects.CTor
@@ -500,35 +516,21 @@ Namespace ReflectionT
         ''' <param name="Member">Property to get image for</param>
         ''' <returns>Image that graphically represents <paramref name="Member"/></returns>
         ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and.</exception>
         <Extension()> Public Function GetImage(ByVal Member As PropertyInfo) As Image
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
             Dim Type As Objects
-            Dim Overlay As ObjectModifiers
+            Dim Overlay As ObjectModifiers = Member.GetAccessibility
             If Not Member.CanRead Then
                 Type = Objects.Setter
-                If Member.GetSetMethod(True) IsNot Nothing Then Overlay = Member.GetSetMethod(True).Attributes
             ElseIf Not Member.CanWrite Then
                 Type = Objects.Getter
-                If Member.GetGetMethod(True) IsNot Nothing Then Overlay = Member.GetGetMethod(True).Attributes
             Else
                 Type = Objects.Property
-                Dim Getter As MethodInfo = Member.GetGetMethod(True)
-                Dim Setter As MethodInfo = Member.GetSetMethod(True)
-                If Getter.IsPublic OrElse Setter.IsPublic Then
-                    Overlay = ObjectModifiers.Public
-                ElseIf Getter.IsFamilyOrAssembly OrElse Setter.IsFamilyOrAssembly OrElse (Getter.IsFamily AndAlso Setter.IsAssembly) OrElse (Getter.IsAssembly AndAlso Setter.IsFamily) Then
-                    Overlay = ObjectModifiers.ProtectedFriend
-                ElseIf Getter.IsAssembly OrElse Setter.IsAssembly Then
-                    Overlay = ObjectModifiers.Friend
-                ElseIf Getter.IsFamily OrElse Setter.IsFamily Then
-                    Overlay = ObjectModifiers.Protected
-                ElseIf Getter.IsFamilyAndAssembly OrElse Setter.IsFamilyAndAssembly Then
-                    Overlay = ObjectModifiers.FriendProtected
-                ElseIf Getter.IsPrivate OrElse Setter.IsPrivate Then
-                    Overlay = ObjectModifiers.Private
-                End If
-                If Getter.IsStatic OrElse Setter.IsStatic Then Overlay = Overlay Or ObjectModifiers.Static
-                If Getter.IsFinal AndAlso Setter.IsFinal Then Overlay = Overlay Or ObjectModifiers.Sealed
             End If
+            If Member.IsStatic Then Overlay = Overlay Or ObjectModifiers.Static
+            If Member.IsFinal Then Overlay = Overlay Or ObjectModifiers.Sealed
             Return GetImage(Type, Overlay)
         End Function
 
@@ -536,31 +538,13 @@ Namespace ReflectionT
         ''' <param name="Member">Event to get image for</param>
         ''' <returns>16×16px image that graphicaly represents <paramref name="Member"/></returns>
         ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and.</exception>
         <Extension()> Public Function GetImage(ByVal Member As EventInfo) As Image
-            Dim Overlay As ObjectModifiers
-            Dim Adder As MethodInfo = Member.GetAddMethod(True)
-            Dim Remover As MethodInfo = Member.GetRemoveMethod(True)
-            Dim Raiser As MethodInfo = Member.GetRaiseMethod(True)
-            If Adder IsNot Nothing OrElse Remover IsNot Nothing OrElse Raiser IsNot Nothing Then
-                If Adder Is Nothing Then Adder = If(Raiser, Remover)
-                If Remover Is Nothing Then Remover = If(Raiser, Adder)
-                If Raiser Is Nothing Then Raiser = If(Adder, Remover)
-                If Adder.IsPublic OrElse Raiser.IsPublic OrElse Adder.IsPublic Then
-                    Overlay = ObjectModifiers.Public
-                ElseIf Adder.IsFamilyOrAssembly OrElse Remover.IsFamilyOrAssembly OrElse Raiser.IsFamilyOrAssembly OrElse ((Raiser.IsFamily OrElse Adder.IsFamily OrElse Remover.IsFamily) AndAlso (Raiser.IsAssembly OrElse Adder.IsAssembly OrElse Remover.IsAssembly)) Then
-                    Overlay = ObjectModifiers.ProtectedFriend
-                ElseIf Adder.IsAssembly OrElse Remover.IsAssembly OrElse Raiser.IsAssembly Then
-                    Overlay = ObjectModifiers.Friend
-                ElseIf Adder.IsFamily OrElse Remover.IsFamily OrElse Raiser.IsFamily Then
-                    Overlay = ObjectModifiers.Protected
-                ElseIf Adder.IsFamilyAndAssembly OrElse Remover.IsFamilyAndAssembly OrElse Raiser.IsFamilyAndAssembly Then
-                    Overlay = ObjectModifiers.FriendProtected
-                ElseIf Adder.IsPrivate OrElse Remover.IsPrivate OrElse Raiser.IsPrivate Then
-                    Overlay = ObjectModifiers.Private
-                End If
-                If Adder.IsStatic OrElse Remover.IsStatic OrElse Raiser.IsStatic Then Overlay = Overlay Or ObjectModifiers.Static
-                If Adder.IsFinal AndAlso Remover.IsFinal AndAlso Raiser.IsFinal Then Overlay = Overlay Or ObjectModifiers.Sealed
-            End If
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            Dim Overlay As ObjectModifiers = Member.GetAccessibility
+            If Member.IsFamily Then Overlay = Overlay Or ObjectModifiers.Sealed
+            If Member.IsStatic Then Overlay = Overlay Or ObjectModifiers.Static
             Return GetImage(Objects.Event, Overlay)
         End Function
 
@@ -568,7 +552,9 @@ Namespace ReflectionT
         ''' <param name="Member">Field to get image for</param>
         ''' <returns>16×16px image that graphiocaly represents <paramref name="Member"/></returns>
         ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
         <Extension()> Public Function GetImage(ByVal Member As FieldInfo) As Image
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
             Dim Type As Objects
             If Member.IsLiteral AndAlso Member.DeclaringType IsNot Nothing AndAlso Member.DeclaringType.IsEnum AndAlso Member.MemberType.Equals([Enum].GetUnderlyingType(Member.DeclaringType)) Then
                 Type = Objects.EnumItem
