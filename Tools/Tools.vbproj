@@ -215,6 +215,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectImages.resx</DependentUpon>
     </Compile>
+    <Compile Include="Reflection\ReflectionTools.vb" />
     <Compile Include="Resources\Tools\Resources.vb" />
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
@@ -466,6 +467,7 @@
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
       <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
     </Content>
+    <None Include="Reflection\MemberNumbers.xls" />
     <None Include="Resources\DeleteHS.png" />
     <None Include="Resources\RepeatHS.png" />
     <None Include="Resources\NewReportHS.png" />
@@ -510,6 +512,27 @@
     <None Include="Reflection\Resources\Union.png" />
     <None Include="Reflection\Resources\ValueType.png" />
     <Content Include="Reflection\Resources\Attribute.png" />
+    <None Include="Reflection\Resources\⋀.png" />
+    <None Include="Reflection\Resources\⋁.png" />
+    <None Include="Reflection\Resources\Error.png" />
+    <None Include="Reflection\Resources\GenericClass.png" />
+    <None Include="Reflection\Resources\GenericInstance.png" />
+    <None Include="Reflection\Resources\GenericInstanceClass.png" />
+    <None Include="Reflection\Resources\GenericInstanceMethod.png" />
+    <None Include="Reflection\Resources\GenericInstanceStructure.png" />
+    <None Include="Reflection\Resources\GenericMethod.png" />
+    <None Include="Reflection\Resources\GenericParameter.png" />
+    <None Include="Reflection\Resources\GenericStructure.png" />
+    <None Include="Reflection\Resources\Question.png" />
+    <None Include="Reflection\Resources\GenericInstanceInterface.png" />
+    <None Include="Reflection\Resources\GenericInterface.png" />
+    <None Include="Reflection\Resources\Generic.png" />
+    <None Include="Reflection\Resources\Attribute_GenericClosed.png" />
+    <None Include="Reflection\Resources\Attribute_GenericOpen.png" />
+    <None Include="Reflection\Resources\Exception_GenericClosed.png" />
+    <None Include="Reflection\Resources\Exception_GenericOpen.png" />
+    <None Include="Reflection\Resources\Delegate_GenericClosed.png" />
+    <None Include="Reflection\Resources\Delegate_GenericOpen.png" />
     <Content Include="Resources\CommentHS.png" />
     <EmbeddedResource Include="Reflection\ObjectImages.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>

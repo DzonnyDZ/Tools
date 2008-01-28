@@ -63,7 +63,7 @@ Namespace DrawingT
             If Background Is Nothing Then Throw New ArgumentNullException("Background")
             Dim ret As New Bitmap(Background.Width, Background.Height)
             Dim g = Graphics.FromImage(ret)
-            g.DrawImage(Background, 0, 0)
+            g.DrawImageInPixels(Background, New Point(0, 0))
             If OverlayImage IsNot Nothing Then
                 Dim op As Point
                 Select Case Position
@@ -84,10 +84,18 @@ Namespace DrawingT
                     Case ContentAlignment.BottomRight, ContentAlignment.MiddleRight, ContentAlignment.TopRight
                         op.X = Background.Width - OverlayImage.Width
                 End Select
-                g.DrawImage(OverlayImage, op)
+                g.DrawImageInPixels(OverlayImage, op)
             End If
-            g.Flush(Drawing2D.FlushIntention.Flush)
+            g.Flush(Drawing2D.FlushIntention.Sync)
             Return ret
         End Function
+
+        <Extension()> Public Sub DrawImageInPixels(ByVal g As Graphics, ByVal img As Image, ByVal Position As Point)
+            g.PageUnit = GraphicsUnit.Pixel
+            g.DrawImage(img, Position.X, Position.Y, img.Size.Width, img.Size.Height)
+        End Sub
+        <Extension()> Public Sub DrawImageInPixels(ByVal g As Graphics, ByVal img As Image, ByVal x As Integer, ByVal y As Integer)
+            g.DrawImageInPixels(img, New Point(x, y))
+        End Sub
     End Module
 End Namespace

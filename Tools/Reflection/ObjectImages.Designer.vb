@@ -78,6 +78,20 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property iAttribute_GenericClosed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iAttribute_GenericClosed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iAttribute_GenericOpen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iAttribute_GenericOpen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property iClass() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iClass", resourceCulture)
@@ -106,6 +120,20 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property iDelegate_GenericClosed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iDelegate_GenericClosed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iDelegate_GenericOpen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iDelegate_GenericOpen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property iEnum() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iEnum", resourceCulture)
@@ -116,6 +144,13 @@ Namespace My.Resources
         Friend Shared ReadOnly Property iEnumItem() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iEnumItem", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iError() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iError", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -134,9 +169,100 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property iException_GenericClosed() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iException_GenericClosed", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iException_GenericOpen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iException_GenericOpen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property iField() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iField", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGeneric() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGeneric", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericClass() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericClass", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericInstance() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericInstance", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericInstanceClass() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericInstanceClass", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericInstanceInterface() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericInstanceInterface", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericInstanceMethod() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericInstanceMethod", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericInstanceStructure() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericInstanceStructure", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericInterface() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericInterface", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericMethod() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericMethod", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericParameter() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericParameter", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iGenericStructure() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iGenericStructure", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -232,6 +358,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property iQuestion() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iQuestion", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property iResource() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iResource", resourceCulture)
@@ -302,6 +435,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property oAnd() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("oAnd", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property oFriend() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("oFriend", resourceCulture)
@@ -312,6 +452,13 @@ Namespace My.Resources
         Friend Shared ReadOnly Property oNotInheritable() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("oNotInheritable", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property oOr() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("oOr", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

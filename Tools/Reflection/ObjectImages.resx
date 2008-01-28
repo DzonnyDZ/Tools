@@ -278,4 +278,88 @@
     <value>resources\static.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Overla yimage for static member</comment>
   </data>
+  <data name="oAnd" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\⋀.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overla yimage for static member</comment>
+  </data>
+  <data name="oOr" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\⋁.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overla yimage for static member</comment>
+  </data>
+  <data name="iAttribute_GenericClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\attribute_genericclosed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic attribute</comment>
+  </data>
+  <data name="iAttribute_GenericOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\attribute_genericopen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic attribute</comment>
+  </data>
+  <data name="iDelegate_GenericClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\delegate_genericclosed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic delegate</comment>
+  </data>
+  <data name="iDelegate_GenericOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\delegate_genericopen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic delegate</comment>
+  </data>
+  <data name="iError" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\error.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for error (used when error ocured)</comment>
+  </data>
+  <data name="iException_GenericClosed" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\exception_genericclosed.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic exception</comment>
+  </data>
+  <data name="iException_GenericOpen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\exception_genericopen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic exception</comment>
+  </data>
+  <data name="iGeneric" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\generic.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic type where it is unknown if it is class, structure or interface.</comment>
+  </data>
+  <data name="iGenericClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericclass.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic class</comment>
+  </data>
+  <data name="iGenericInstance" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericinstance.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic type</comment>
+  </data>
+  <data name="iGenericInstanceClass" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericinstanceclass.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic class</comment>
+  </data>
+  <data name="iGenericInstanceInterface" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericinstanceinterface.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic interface</comment>
+  </data>
+  <data name="iGenericInstanceMethod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericinstancemethod.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic method</comment>
+  </data>
+  <data name="iGenericInstanceStructure" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericinstancestructure.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for closed generic structure</comment>
+  </data>
+  <data name="iGenericInterface" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericinterface.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic interface</comment>
+  </data>
+  <data name="iGenericMethod" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericmethod.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic method</comment>
+  </data>
+  <data name="iGenericParameter" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericparameter.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for generic parameter</comment>
+  </data>
+  <data name="iGenericStructure" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\genericstructure.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for open generic structure</comment>
+  </data>
+  <data name="iQuestion" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\question.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for unknown entity</comment>
+  </data>
 </root>

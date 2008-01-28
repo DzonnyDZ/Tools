@@ -229,6 +229,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Projects\Projects.vb" />
+    <Compile Include="Windows\Forms\ObjectBrowser.Designer.vb">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\ObjectBrowser.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Resources\SystemResources.Designer.vb">
       <DependentUpon>SystemResources.vb</DependentUpon>
     </Compile>
@@ -375,6 +381,10 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\ObjectBrowser.resx">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\SystemResources.resx">

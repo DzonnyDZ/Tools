@@ -31,7 +31,7 @@ Namespace DiagnosticsT
                 End Try
                 picImg.Image = img
                 Try
-                    Dim dh As New VisualizerDevelopmentHost(img, GetType(ImageVisualizer), GetType(ImageVisualizer.VisualizerImageSource))
+                    Dim dh As New VisualizerDevelopmentHost(img, GetType(ImageVisualizer)) ', GetType(ImageVisualizer.VisualizerImageSource))
                     dh.ShowVisualizer()
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
