@@ -64,4 +64,10 @@ Public Delegate Function dFunction(Of TRet, T1, T2, T3)(ByVal arg1 As T1, ByVal 
 ''' <typeparam name="T3">Type of third argument</typeparam>
 ''' <typeparam name="T4">Type of third argument</typeparam>
 Public Delegate Function dFunction(Of TRet, T1, T2, T3, T4)(ByVal arg1 As T1, ByVal arg2 As T2, ByVal arg3 As T3, ByVal arg4 As T4) As TRet
+''' <summary>Represents type-safe event handler</summary>
+''' <typeparam name="TControl">Type of <paramref name="source"/></typeparam>
+''' <typeparam name=" TEventArgs">Type of <paramref name="e"/></typeparam>
+''' <param name="source"><see cref="Windows.Forms.Control"/> that caused the event</param>
+''' <param name="e">Event arguments</param>
+Public Delegate Sub ControlEventHandler(Of TControl As Windows.Forms.Control, TEventArgs As EventArgs)(ByVal source As TControl, ByVal e As TEventArgs)
 #End If

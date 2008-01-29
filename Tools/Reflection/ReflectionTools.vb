@@ -346,5 +346,27 @@ Namespace ReflectionT
         Public Function GetTypes(Optional ByVal Nested As Boolean = False) As Type()
             Return (From Type In Me.Module.GetTypes() Where (Nested OrElse Not Type.IsNested) AndAlso Type.Namespace = Me.Name Select Type).ToArray
         End Function
+        ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>True if <paramref name="obj"/> is <see cref="NamespaceInfo"/> and its <see cref="[Module]"/> equals to <see cref="[Module]"/> of current <see cref="NamespaceInfo"/> and also <see cref="Name">Names</see> or current <see cref="NamespaceInfo"/> and <paramref name="obj"/> equals.</returns>
+        ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        ''' <exception cref="T:System.NullReferenceException">The 
+        ''' <paramref name="obj" /> parameter is null.</exception>
+        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Return TypeOf obj Is NamespaceInfo AndAlso Me.Module.Equals(DirectCast(obj, NamespaceInfo).Module) AndAlso Me.Name = DirectCast(obj, NamespaceInfo).Name
+        End Function
+        ''' <summary>Compares two <see cref="NamespaceInfo">NamespaceInfos</see> for equality</summary>
+        ''' <param name="a">A <see cref="NamespaceInfo"/></param>
+        ''' <param name="b">A <see cref="NamespaceInfo"/></param>
+        ''' <returns>True if <paramref name="a"/> equals to <paramref name="b"/>.</returns>
+        Public Shared Operator =(ByVal a As NamespaceInfo, ByVal b As NamespaceInfo) As Boolean
+            Return a.Equals(b)
+        End Operator
+        ''' <summary>Compares two <see cref="NamespaceInfo">NamespaceInfos</see> for inequality</summary>
+        ''' <param name="a">A <see cref="NamespaceInfo"/></param>
+        ''' <param name="b">A <see cref="NamespaceInfo"/></param>
+        ''' <returns>False if <paramref name="a"/> equals to <paramref name="b"/>.</returns>
+        Public Shared Operator <>(ByVal a As NamespaceInfo, ByVal b As NamespaceInfo) As Boolean
+            Return Not (a = b)
+        End Operator
     End Class
 End Namespace

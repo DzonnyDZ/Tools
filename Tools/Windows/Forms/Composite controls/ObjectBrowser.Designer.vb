@@ -35,27 +35,29 @@
             Me.prgProperties = New System.Windows.Forms.PropertyGrid
             Me.lblObjType = New System.Windows.Forms.Label
             Me.tosMenu = New System.Windows.Forms.ToolStrip
-            Me.ToolStripDropDownButton1 = New System.Windows.Forms.ToolStripDropDownButton
-            Me.ConstructorsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.EventsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.FieldsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.GenericArgumentsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.GlobalMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.InheritedMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.InitializersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.InstanceMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.InternalMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.MethodsToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.NestedTypesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.PrivateMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.PropertiesToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.ProtectedMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.SpecialMembersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
-            Me.StaticMemebersToolStripMenuItem = New System.Windows.Forms.ToolStripMenuItem
+            Me.tdbShow = New System.Windows.Forms.ToolStripDropDownButton
+            Me.tmiShowCTors = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowEvents = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowFields = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowGenericArguments = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowGlobalMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowInheritedMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowInitializers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowInstanceMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowInternalMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowMethods = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowNestedTypes = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowPrivateMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowProperties = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowProtectedMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowSpecialMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowStaticMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.rtbShort = New System.Windows.Forms.RichTextBox
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
             Me.splLeft.Panel1.SuspendLayout()
+            Me.splLeft.Panel2.SuspendLayout()
             Me.splLeft.SuspendLayout()
             Me.splRight.Panel1.SuspendLayout()
             Me.splRight.SuspendLayout()
@@ -123,6 +125,10 @@
             'splLeft.Panel1
             '
             Me.splLeft.Panel1.Controls.Add(Me.tvwObjects)
+            '
+            'splLeft.Panel2
+            '
+            Me.splLeft.Panel2.Controls.Add(Me.rtbShort)
             Me.splLeft.Size = New System.Drawing.Size(314, 505)
             Me.splLeft.SplitterDistance = 443
             Me.splLeft.TabIndex = 1
@@ -181,166 +187,177 @@
             '
             Me.tosMenu.GripMargin = New System.Windows.Forms.Padding(0)
             Me.tosMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
-            Me.tosMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ToolStripDropDownButton1})
+            Me.tosMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tdbShow})
             Me.tosMenu.Location = New System.Drawing.Point(0, 0)
             Me.tosMenu.Name = "tosMenu"
             Me.tosMenu.Size = New System.Drawing.Size(749, 25)
             Me.tosMenu.TabIndex = 2
             Me.tosMenu.Text = "Commands"
             '
-            'ToolStripDropDownButton1
+            'tdbShow
             '
-            Me.ToolStripDropDownButton1.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-            Me.ToolStripDropDownButton1.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.ConstructorsToolStripMenuItem, Me.EventsToolStripMenuItem, Me.FieldsToolStripMenuItem, Me.GenericArgumentsToolStripMenuItem, Me.GlobalMembersToolStripMenuItem, Me.InheritedMembersToolStripMenuItem, Me.InitializersToolStripMenuItem, Me.InstanceMembersToolStripMenuItem, Me.InternalMembersToolStripMenuItem, Me.MethodsToolStripMenuItem, Me.NestedTypesToolStripMenuItem, Me.PrivateMembersToolStripMenuItem, Me.PropertiesToolStripMenuItem, Me.ProtectedMembersToolStripMenuItem, Me.SpecialMembersToolStripMenuItem, Me.StaticMemebersToolStripMenuItem})
-            Me.ToolStripDropDownButton1.Image = CType(resources.GetObject("ToolStripDropDownButton1.Image"), System.Drawing.Image)
-            Me.ToolStripDropDownButton1.ImageTransparentColor = System.Drawing.Color.Magenta
-            Me.ToolStripDropDownButton1.Name = "ToolStripDropDownButton1"
-            Me.ToolStripDropDownButton1.Size = New System.Drawing.Size(46, 22)
-            Me.ToolStripDropDownButton1.Text = "Show"
+            Me.tdbShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
+            Me.tdbShow.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiShowCTors, Me.tmiShowEvents, Me.tmiShowFields, Me.tmiShowGenericArguments, Me.tmiShowGlobalMembers, Me.tmiShowInheritedMembers, Me.tmiShowInitializers, Me.tmiShowInstanceMembers, Me.tmiShowInternalMembers, Me.tmiShowMethods, Me.tmiShowNestedTypes, Me.tmiShowPrivateMembers, Me.tmiShowProperties, Me.tmiShowProtectedMembers, Me.tmiShowSpecialMembers, Me.tmiShowStaticMembers})
+            Me.tdbShow.Image = CType(resources.GetObject("tdbShow.Image"), System.Drawing.Image)
+            Me.tdbShow.ImageTransparentColor = System.Drawing.Color.Magenta
+            Me.tdbShow.Name = "tdbShow"
+            Me.tdbShow.Size = New System.Drawing.Size(46, 22)
+            Me.tdbShow.Text = "Show"
             '
-            'ConstructorsToolStripMenuItem
+            'tmiShowCTors
             '
-            Me.ConstructorsToolStripMenuItem.Checked = True
-            Me.ConstructorsToolStripMenuItem.CheckOnClick = True
-            Me.ConstructorsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.ConstructorsToolStripMenuItem.Name = "ConstructorsToolStripMenuItem"
-            Me.ConstructorsToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.ConstructorsToolStripMenuItem.Text = "Constructors"
+            Me.tmiShowCTors.Checked = True
+            Me.tmiShowCTors.CheckOnClick = True
+            Me.tmiShowCTors.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowCTors.Name = "tmiShowCTors"
+            Me.tmiShowCTors.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowCTors.Text = "Constructors"
             '
-            'EventsToolStripMenuItem
+            'tmiShowEvents
             '
-            Me.EventsToolStripMenuItem.Checked = True
-            Me.EventsToolStripMenuItem.CheckOnClick = True
-            Me.EventsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.EventsToolStripMenuItem.Name = "EventsToolStripMenuItem"
-            Me.EventsToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.EventsToolStripMenuItem.Text = "Events"
+            Me.tmiShowEvents.Checked = True
+            Me.tmiShowEvents.CheckOnClick = True
+            Me.tmiShowEvents.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowEvents.Name = "tmiShowEvents"
+            Me.tmiShowEvents.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowEvents.Text = "Events"
             '
-            'FieldsToolStripMenuItem
+            'tmiShowFields
             '
-            Me.FieldsToolStripMenuItem.Checked = True
-            Me.FieldsToolStripMenuItem.CheckOnClick = True
-            Me.FieldsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.FieldsToolStripMenuItem.Name = "FieldsToolStripMenuItem"
-            Me.FieldsToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.FieldsToolStripMenuItem.Text = "Fields"
+            Me.tmiShowFields.Checked = True
+            Me.tmiShowFields.CheckOnClick = True
+            Me.tmiShowFields.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowFields.Name = "tmiShowFields"
+            Me.tmiShowFields.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowFields.Text = "Fields"
             '
-            'GenericArgumentsToolStripMenuItem
+            'tmiShowGenericArguments
             '
-            Me.GenericArgumentsToolStripMenuItem.Checked = True
-            Me.GenericArgumentsToolStripMenuItem.CheckOnClick = True
-            Me.GenericArgumentsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.GenericArgumentsToolStripMenuItem.Name = "GenericArgumentsToolStripMenuItem"
-            Me.GenericArgumentsToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.GenericArgumentsToolStripMenuItem.Text = "Generic arguments"
+            Me.tmiShowGenericArguments.Checked = True
+            Me.tmiShowGenericArguments.CheckOnClick = True
+            Me.tmiShowGenericArguments.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowGenericArguments.Name = "tmiShowGenericArguments"
+            Me.tmiShowGenericArguments.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowGenericArguments.Text = "Generic arguments"
             '
-            'GlobalMembersToolStripMenuItem
+            'tmiShowGlobalMembers
             '
-            Me.GlobalMembersToolStripMenuItem.Checked = True
-            Me.GlobalMembersToolStripMenuItem.CheckOnClick = True
-            Me.GlobalMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.GlobalMembersToolStripMenuItem.Name = "GlobalMembersToolStripMenuItem"
-            Me.GlobalMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.GlobalMembersToolStripMenuItem.Text = "Global members"
+            Me.tmiShowGlobalMembers.Checked = True
+            Me.tmiShowGlobalMembers.CheckOnClick = True
+            Me.tmiShowGlobalMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowGlobalMembers.Name = "tmiShowGlobalMembers"
+            Me.tmiShowGlobalMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowGlobalMembers.Text = "Global members"
             '
-            'InheritedMembersToolStripMenuItem
+            'tmiShowInheritedMembers
             '
-            Me.InheritedMembersToolStripMenuItem.Checked = True
-            Me.InheritedMembersToolStripMenuItem.CheckOnClick = True
-            Me.InheritedMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.InheritedMembersToolStripMenuItem.Name = "InheritedMembersToolStripMenuItem"
-            Me.InheritedMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.InheritedMembersToolStripMenuItem.Text = "Inherited members"
+            Me.tmiShowInheritedMembers.CheckOnClick = True
+            Me.tmiShowInheritedMembers.Name = "tmiShowInheritedMembers"
+            Me.tmiShowInheritedMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInheritedMembers.Text = "Inherited members"
             '
-            'InitializersToolStripMenuItem
+            'tmiShowInitializers
             '
-            Me.InitializersToolStripMenuItem.Checked = True
-            Me.InitializersToolStripMenuItem.CheckOnClick = True
-            Me.InitializersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.InitializersToolStripMenuItem.Name = "InitializersToolStripMenuItem"
-            Me.InitializersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.InitializersToolStripMenuItem.Text = "Initializers"
+            Me.tmiShowInitializers.Checked = True
+            Me.tmiShowInitializers.CheckOnClick = True
+            Me.tmiShowInitializers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowInitializers.Name = "tmiShowInitializers"
+            Me.tmiShowInitializers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInitializers.Text = "Initializers"
             '
-            'InstanceMembersToolStripMenuItem
+            'tmiShowInstanceMembers
             '
-            Me.InstanceMembersToolStripMenuItem.Checked = True
-            Me.InstanceMembersToolStripMenuItem.CheckOnClick = True
-            Me.InstanceMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.InstanceMembersToolStripMenuItem.Name = "InstanceMembersToolStripMenuItem"
-            Me.InstanceMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.InstanceMembersToolStripMenuItem.Text = "Instance members"
+            Me.tmiShowInstanceMembers.Checked = True
+            Me.tmiShowInstanceMembers.CheckOnClick = True
+            Me.tmiShowInstanceMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowInstanceMembers.Name = "tmiShowInstanceMembers"
+            Me.tmiShowInstanceMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInstanceMembers.Text = "Instance members"
             '
-            'InternalMembersToolStripMenuItem
+            'tmiShowInternalMembers
             '
-            Me.InternalMembersToolStripMenuItem.Checked = True
-            Me.InternalMembersToolStripMenuItem.CheckOnClick = True
-            Me.InternalMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.InternalMembersToolStripMenuItem.Name = "InternalMembersToolStripMenuItem"
-            Me.InternalMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.InternalMembersToolStripMenuItem.Text = "Internal members"
+            Me.tmiShowInternalMembers.Checked = True
+            Me.tmiShowInternalMembers.CheckOnClick = True
+            Me.tmiShowInternalMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowInternalMembers.Name = "tmiShowInternalMembers"
+            Me.tmiShowInternalMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInternalMembers.Text = "Internal members"
             '
-            'MethodsToolStripMenuItem
+            'tmiShowMethods
             '
-            Me.MethodsToolStripMenuItem.Checked = True
-            Me.MethodsToolStripMenuItem.CheckOnClick = True
-            Me.MethodsToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.MethodsToolStripMenuItem.Name = "MethodsToolStripMenuItem"
-            Me.MethodsToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.MethodsToolStripMenuItem.Text = "Methods"
+            Me.tmiShowMethods.Checked = True
+            Me.tmiShowMethods.CheckOnClick = True
+            Me.tmiShowMethods.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowMethods.Name = "tmiShowMethods"
+            Me.tmiShowMethods.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowMethods.Text = "Methods"
             '
-            'NestedTypesToolStripMenuItem
+            'tmiShowNestedTypes
             '
-            Me.NestedTypesToolStripMenuItem.Checked = True
-            Me.NestedTypesToolStripMenuItem.CheckOnClick = True
-            Me.NestedTypesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.NestedTypesToolStripMenuItem.Name = "NestedTypesToolStripMenuItem"
-            Me.NestedTypesToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.NestedTypesToolStripMenuItem.Text = "Nested types"
+            Me.tmiShowNestedTypes.Checked = True
+            Me.tmiShowNestedTypes.CheckOnClick = True
+            Me.tmiShowNestedTypes.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowNestedTypes.Name = "tmiShowNestedTypes"
+            Me.tmiShowNestedTypes.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowNestedTypes.Text = "Nested types"
             '
-            'PrivateMembersToolStripMenuItem
+            'tmiShowPrivateMembers
             '
-            Me.PrivateMembersToolStripMenuItem.Checked = True
-            Me.PrivateMembersToolStripMenuItem.CheckOnClick = True
-            Me.PrivateMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.PrivateMembersToolStripMenuItem.Name = "PrivateMembersToolStripMenuItem"
-            Me.PrivateMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.PrivateMembersToolStripMenuItem.Text = "Private members"
+            Me.tmiShowPrivateMembers.Checked = True
+            Me.tmiShowPrivateMembers.CheckOnClick = True
+            Me.tmiShowPrivateMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowPrivateMembers.Name = "tmiShowPrivateMembers"
+            Me.tmiShowPrivateMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowPrivateMembers.Text = "Private members"
             '
-            'PropertiesToolStripMenuItem
+            'tmiShowProperties
             '
-            Me.PropertiesToolStripMenuItem.Checked = True
-            Me.PropertiesToolStripMenuItem.CheckOnClick = True
-            Me.PropertiesToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.PropertiesToolStripMenuItem.Name = "PropertiesToolStripMenuItem"
-            Me.PropertiesToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.PropertiesToolStripMenuItem.Text = "Properties"
+            Me.tmiShowProperties.Checked = True
+            Me.tmiShowProperties.CheckOnClick = True
+            Me.tmiShowProperties.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowProperties.Name = "tmiShowProperties"
+            Me.tmiShowProperties.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowProperties.Text = "Properties"
             '
-            'ProtectedMembersToolStripMenuItem
+            'tmiShowProtectedMembers
             '
-            Me.ProtectedMembersToolStripMenuItem.Checked = True
-            Me.ProtectedMembersToolStripMenuItem.CheckOnClick = True
-            Me.ProtectedMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.ProtectedMembersToolStripMenuItem.Name = "ProtectedMembersToolStripMenuItem"
-            Me.ProtectedMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.ProtectedMembersToolStripMenuItem.Text = "Protected members"
+            Me.tmiShowProtectedMembers.Checked = True
+            Me.tmiShowProtectedMembers.CheckOnClick = True
+            Me.tmiShowProtectedMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowProtectedMembers.Name = "tmiShowProtectedMembers"
+            Me.tmiShowProtectedMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowProtectedMembers.Text = "Protected members"
             '
-            'SpecialMembersToolStripMenuItem
+            'tmiShowSpecialMembers
             '
-            Me.SpecialMembersToolStripMenuItem.Checked = True
-            Me.SpecialMembersToolStripMenuItem.CheckOnClick = True
-            Me.SpecialMembersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.SpecialMembersToolStripMenuItem.Name = "SpecialMembersToolStripMenuItem"
-            Me.SpecialMembersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.SpecialMembersToolStripMenuItem.Text = "Special members"
+            Me.tmiShowSpecialMembers.Checked = True
+            Me.tmiShowSpecialMembers.CheckOnClick = True
+            Me.tmiShowSpecialMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowSpecialMembers.Name = "tmiShowSpecialMembers"
+            Me.tmiShowSpecialMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowSpecialMembers.Text = "Special members"
             '
-            'StaticMemebersToolStripMenuItem
+            'tmiShowStaticMembers
             '
-            Me.StaticMemebersToolStripMenuItem.Checked = True
-            Me.StaticMemebersToolStripMenuItem.CheckOnClick = True
-            Me.StaticMemebersToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.StaticMemebersToolStripMenuItem.Name = "StaticMemebersToolStripMenuItem"
-            Me.StaticMemebersToolStripMenuItem.Size = New System.Drawing.Size(167, 22)
-            Me.StaticMemebersToolStripMenuItem.Text = "Static memebers"
+            Me.tmiShowStaticMembers.Checked = True
+            Me.tmiShowStaticMembers.CheckOnClick = True
+            Me.tmiShowStaticMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowStaticMembers.Name = "tmiShowStaticMembers"
+            Me.tmiShowStaticMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowStaticMembers.Text = "Static memebers"
+            '
+            'rtbShort
+            '
+            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.None
+            Me.rtbShort.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.rtbShort.Location = New System.Drawing.Point(0, 0)
+            Me.rtbShort.MaxLength = 0
+            Me.rtbShort.Name = "rtbShort"
+            Me.rtbShort.ReadOnly = True
+            Me.rtbShort.Size = New System.Drawing.Size(314, 58)
+            Me.rtbShort.TabIndex = 0
+            Me.rtbShort.Text = ""
+            Me.rtbShort.WordWrap = False
             '
             'ObjectBrowser
             '
@@ -354,6 +371,7 @@
             Me.splMain.Panel2.ResumeLayout(False)
             Me.splMain.ResumeLayout(False)
             Me.splLeft.Panel1.ResumeLayout(False)
+            Me.splLeft.Panel2.ResumeLayout(False)
             Me.splLeft.ResumeLayout(False)
             Me.splRight.Panel1.ResumeLayout(False)
             Me.splRight.ResumeLayout(False)
@@ -376,23 +394,24 @@
         Friend WithEvents splLeft As System.Windows.Forms.SplitContainer
         Friend WithEvents lblObjType As System.Windows.Forms.Label
         Friend WithEvents tosMenu As System.Windows.Forms.ToolStrip
-        Friend WithEvents ToolStripDropDownButton1 As System.Windows.Forms.ToolStripDropDownButton
-        Friend WithEvents ConstructorsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents EventsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents FieldsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents GenericArgumentsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents GlobalMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents InheritedMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents InitializersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents InstanceMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents InternalMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents MethodsToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents NestedTypesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents PrivateMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents PropertiesToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents ProtectedMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents SpecialMembersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents StaticMemebersToolStripMenuItem As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tdbShow As System.Windows.Forms.ToolStripDropDownButton
+        Friend WithEvents tmiShowCTors As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowEvents As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowFields As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowGenericArguments As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowGlobalMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowInheritedMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowInitializers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowInternalMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowMethods As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowNestedTypes As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowPrivateMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowProperties As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowProtectedMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowSpecialMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowStaticMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiShowInstanceMembers As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents rtbShort As System.Windows.Forms.RichTextBox
 
     End Class
 End Namespace

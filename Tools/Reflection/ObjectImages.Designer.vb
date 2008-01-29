@@ -92,6 +92,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend Shared ReadOnly Property iBackwardReference() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iBackwardReference", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend Shared ReadOnly Property iClass() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iClass", resourceCulture)
@@ -130,6 +137,13 @@ Namespace My.Resources
         Friend Shared ReadOnly Property iDelegate_GenericOpen() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iDelegate_GenericOpen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iEmpty() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iEmpty", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -186,6 +200,13 @@ Namespace My.Resources
         Friend Shared ReadOnly Property iField() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("iField", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property iForwardReference() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("iForwardReference", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -438,6 +459,13 @@ Namespace My.Resources
         Friend Shared ReadOnly Property oAnd() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("oAnd", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend Shared ReadOnly Property oExtension() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("oExtension", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

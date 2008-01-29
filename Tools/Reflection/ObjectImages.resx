@@ -362,4 +362,20 @@
     <value>resources\question.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Image for unknown entity</comment>
   </data>
+  <data name="iEmpty" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\empty.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Empty 16×16 image</comment>
+  </data>
+  <data name="oExtension" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\extension.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Overlay image for extension methods</comment>
+  </data>
+  <data name="iBackwardReference" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\backwardreference.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for backward reference</comment>
+  </data>
+  <data name="iForwardReference" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>resources\forwardreference.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+    <comment>Image for forward reference</comment>
+  </data>
 </root>

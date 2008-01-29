@@ -43,6 +43,8 @@ Namespace ReflectionT
         ''' </list>
         ''' </remarks>
         Public Enum Objects
+            ''' <summary>No object. Represented by fully transparent image.</summary>
+            NoObject = 0
             ''' <summary>Assembly</summary>
             Assembly = &H5A02
             ''' <summary>Attribute. Class that derives from <see cref="Attribute"/></summary>
@@ -152,6 +154,10 @@ Namespace ReflectionT
             GenericDelegateClosed = &HED8A
             ''' <summary>Question. Used for unknown kind of member.</summary>
             Question = &H604
+            ''' <summary>Forward refernce (i.e. referenced assemblies, derived types)</summary>
+            ForwardReference = &H201
+            ''' <summary>Backward reference (i.e. parent types)</summary>
+            BackwardReference = &H601
         End Enum
         ''' <summary>Gets image that represents code object</summary>
         ''' <param name="ObjectType">Object type</param>
@@ -159,6 +165,7 @@ Namespace ReflectionT
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="ObjectType"/> is not member of <see cref="Objects"/></exception>
         Public Function GetImage(ByVal ObjectType As Objects) As Image
             Select Case ObjectType
+                Case Objects.NoObject : Return My.Resources.ObjectImages.iEmpty
                 Case Objects.Assembly : Return My.Resources.ObjectImages.iAssembly
                 Case Objects.Attribute : Return My.Resources.ObjectImages.iAttribute
                 Case Objects.Class : Return My.Resources.ObjectImages.iClass
@@ -212,11 +219,14 @@ Namespace ReflectionT
                 Case Objects.GenericExceptionOpen : Return My.Resources.ObjectImages.iException_GenericOpen
                 Case Objects.GenericDelegateClosed : Return My.Resources.ObjectImages.iDelegate_GenericClosed
                 Case Objects.GenericDelegateOpen : Return My.Resources.ObjectImages.iDelegate_GenericOpen
+                Case Objects.Forwardreference : Return My.Resources.ObjectImages.iForwardReference
+                Case Objects.BackwardReference : Return My.Resources.ObjectImages.iBackwardReference
                 Case Else : Throw New InvalidEnumArgumentException("ObjectType", ObjectType, GetType(Objects))
             End Select
         End Function
         ''' <summary>Code element modifiers that produces overlay images</summary>
-        ''' <remarks>With exception of <see cref="ObjectModifiers.Shortcut"/> modifiers are subset of <see cref="Reflection.MethodAttributes"/>. Thos attributes can be applied on any supported membert as defined in <seealso cref="Objects"/>. Modifiers can be combined, but not each with each.</remarks>
+        ''' <remarks>With exception of <see cref="ObjectModifiers.Shortcut"/> and <see cref="ObjectModifiers.Extension"/> modifiers are subset of <see cref="Reflection.MethodAttributes"/>. Thos attributes can be applied on any supported membert as defined in <seealso cref="Objects"/>. Modifiers can be combined, but not each with each.</remarks>
+        <Flags()> _
         Public Enum ObjectModifiers As Integer
             ''' <summary>No modifier</summary>
             None = 0
@@ -238,6 +248,8 @@ Namespace ReflectionT
             [Sealed] = Reflection.MethodAttributes.Final
             ''' <summary>Shortcust or reference</summary>
             [Shortcut] = &H10000
+            ''' <summary>Extension (represents extension method)</summary>
+            Extension = Shortcut << 1
         End Enum
         ''' <summary>Gets overlay image tha repreents given modifiers</summary>
         ''' <param name="Modifiers">Modifiers to get overlay image for</param>
@@ -247,6 +259,7 @@ Namespace ReflectionT
         ''' <paramref name="Modifiers"/> Can be or-combination of values of <paramref name="Modifiers"/> enumeration. But with some limitation. <paramref name="Modifiers"/> &amp; <see cref="Reflection.MethodAttributes.MemberAccessMask"/> should be one of <see cref="ObjectModifiers.[Private]"/>, <see cref="ObjectModifiers.FriendProtected"/>, <see cref="ObjectModifiers.[Friend]"/>, <see cref="ObjectModifiers.[Protected]"/>, <see cref="ObjectModifiers.ProtectedFriend"/>, <see cref="ObjectModifiers.[Public]"/> (<see cref="ObjectModifiers.[Public]"/> generates no overlay) or this part will be ignored.
         ''' Other <see cref="ObjectModifiers"/> members can be or-ed with no limitation. Overlay will be combined and single images will be smartly positioned into 4 corners of it.
         ''' Combination of either <see cref="ObjectModifiers.ProtectedFriend"/> or <see cref="ObjectModifiers.FriendProtected"/> with <see cref="ObjectModifiers.[Static]"/>, <see cref="ObjectModifiers.Sealed"/> and <see cref="ObjectModifiers.Shortcut"/> results to need to position 5 images into 4 corners. So, shortcut overly is placed as last one to bottom left corner overlaying protected overlay.
+        ''' If <see cref="ObjectModifiers.Extension"/> takes effect it is always placed to right-bottom corner overlayin any other possible image there.
         ''' </remarks>
         Public Function GetOverlayImage(ByVal Modifiers As ObjectModifiers) As Image
             Static dic As New Dictionary(Of ObjectModifiers, Image)
@@ -291,6 +304,7 @@ Namespace ReflectionT
             img = img.Overlay(BottomLeft, ContentAlignment.BottomLeft)
             img = img.Overlay(TopLeft, ContentAlignment.TopLeft)
             img = img.Overlay(TopRight, ContentAlignment.TopRight)
+            If Modifiers And ObjectModifiers.Extension Then img = img.Overlay(My.Resources.ObjectImages.oExtension, ContentAlignment.BottomRight)
             If BottomRight Is My.Resources.ObjectImages.oShortcut AndAlso (BottomLeft Is ProtectedFriend OrElse BottomLeft Is FriendProtected) Then
                 img = img.Overlay(BottomRight, ContentAlignment.BottomLeft)
             Else
@@ -322,9 +336,9 @@ Namespace ReflectionT
                 If val IsNot Nothing Then Return val
                 val = New Bitmap(My.Resources.ObjectImages.oFriend.Width + My.Resources.ObjectImages.oProtected.Width, Math.Max(My.Resources.ObjectImages.oProtected.Height, My.Resources.ObjectImages.oFriend.Height))
                 Dim g = Graphics.FromImage(val)
-                g.DrawImage(My.Resources.ObjectImages.oProtected, 0, val.Height - My.Resources.ObjectImages.oProtected.Height)
-                g.DrawImage(My.Resources.ObjectImages.oFriend, val.Width - My.Resources.ObjectImages.oFriend.Width, val.Height - My.Resources.ObjectImages.oFriend.Height)
-                g.DrawImage(My.Resources.ObjectImages.oAnd, val.Width \ 2 - My.Resources.ObjectImages.oAnd.Width \ 2, val.Height - My.Resources.ObjectImages.oAnd.Height)
+                g.DrawImageInPixels(My.Resources.ObjectImages.oProtected, 0, val.Height - My.Resources.ObjectImages.oProtected.Height)
+                g.DrawImageInPixels(My.Resources.ObjectImages.oFriend, val.Width - My.Resources.ObjectImages.oFriend.Width, val.Height - My.Resources.ObjectImages.oFriend.Height)
+                g.DrawImageInPixels(My.Resources.ObjectImages.oAnd, val.Width \ 2 - My.Resources.ObjectImages.oAnd.Width \ 2, val.Height - My.Resources.ObjectImages.oAnd.Height)
                 g.Flush(Drawing2D.FlushIntention.Sync)
                 Return val
             End Get

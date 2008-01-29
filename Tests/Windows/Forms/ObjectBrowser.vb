@@ -44,6 +44,7 @@ Namespace WindowsT.FormsT
             If chkSealed.Checked Then ObjectModifiers = ObjectModifiers Or CodeImages.ObjectModifiers.Sealed
             If chkShortcut.Checked Then ObjectModifiers = ObjectModifiers Or CodeImages.ObjectModifiers.Shortcut
             If chkStatic.Checked Then ObjectModifiers = ObjectModifiers Or CodeImages.ObjectModifiers.Static
+            If chkExtension.CheckAlign Then ObjectModifiers = ObjectModifiers Or CodeImages.ObjectModifiers.Extension
             Dim img = GetImage(ObjectType, ObjectModifiers)
             picBig.Image = img
             picSmall.Image = img
@@ -57,6 +58,11 @@ Namespace WindowsT.FormsT
         ''' <param name="Modifiers">Object modifiers for  image</param>
         Private Sub CodeImages_ImageRequested(ByVal Image As Image, ByVal ObjectType As Objects, ByVal Modifiers As ObjectModifiers)
             LastCode = String.Format("{0:d}_{0:d}", ObjectType, Modifiers)
+        End Sub
+
+        Private Sub frmObjectBrowser_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+            Dim frm As New FloatingPropertyGrid(obTest)
+            frm.Show(Me)
         End Sub
     End Class
 End Namespace

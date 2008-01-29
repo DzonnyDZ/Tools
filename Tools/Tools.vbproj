@@ -216,6 +216,7 @@
       <DependentUpon>ObjectImages.resx</DependentUpon>
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
+    <Compile Include="Reflection\SignatureProvider.vb" />
     <Compile Include="Resources\Tools\Resources.vb" />
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
@@ -533,6 +534,10 @@
     <None Include="Reflection\Resources\Exception_GenericOpen.png" />
     <None Include="Reflection\Resources\Delegate_GenericClosed.png" />
     <None Include="Reflection\Resources\Delegate_GenericOpen.png" />
+    <None Include="Reflection\Resources\empty.png" />
+    <None Include="Reflection\Resources\Extension.png" />
+    <None Include="Reflection\Resources\BackwardReference.png" />
+    <None Include="Reflection\Resources\ForwardReference.png" />
     <Content Include="Resources\CommentHS.png" />
     <EmbeddedResource Include="Reflection\ObjectImages.resx">
       <CustomToolNamespace>My.Resources</CustomToolNamespace>

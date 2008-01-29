@@ -2,7 +2,7 @@
 Imports System.Windows.Forms, System.Reflection
 Imports System.Drawing, System.Linq
 Imports Tools.ComponentModelT
-
+#If Config <= Nightly Then
 Namespace WindowsT.FormsT
     'ASAP:
     ''' <summary>Control for browsing .NET assemblies</summary>
@@ -34,8 +34,10 @@ Namespace WindowsT.FormsT
                 Return _ShowInheritedMembers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowInheritedMembers Then Exit Property
                 _ShowInheritedMembers = value
-                'TODO: Apply change
+                tmiShowInheritedMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
 
@@ -49,11 +51,13 @@ Namespace WindowsT.FormsT
         <Description("Gets or sets value indicating if nested types are shown.")> _
         Public Property ShowNestedTypes() As Boolean 'Localize: Description
             Get
-                Return ShowPrivateMembers
+                Return _ShowNestedTypes
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowNestedTypes Then Exit Property
                 _ShowNestedTypes = value
-                'TODO: Apply change
+                tmiShowNestedTypes.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowPrivateMembers"/> property</summary>
@@ -69,8 +73,10 @@ Namespace WindowsT.FormsT
                 Return _ShowPrivateMembers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowPrivateMembers Then Exit Property
                 _ShowPrivateMembers = value
-                'TODO: Apply change
+                tmiShowPrivateMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowInternalMembers"/> property</summary>
@@ -86,8 +92,10 @@ Namespace WindowsT.FormsT
                 Return _ShowInternalMembers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowInternalMembers Then Exit Property
                 _ShowInternalMembers = value
-                'TODO: Apply change
+                tmiShowInternalMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowProtectedMembers"/> property</summary>
@@ -103,8 +111,10 @@ Namespace WindowsT.FormsT
                 Return _ShowProtectedMembers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowProtectedMembers Then Exit Property
                 _ShowProtectedMembers = value
-                'TODO: Apply change
+                tmiShowProtectedMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowinstanceMembers"/> property</summary>
@@ -117,11 +127,13 @@ Namespace WindowsT.FormsT
         <Description("Gets or sets value indicating if instance members are shown.")> _
         Public Property ShowInstanceMembers() As Boolean 'Localize: Description
             Get
-                Return _ShowinstanceMembers
+                Return _ShowInstanceMembers
             End Get
             Set(ByVal value As Boolean)
-                _ShowinstanceMembers = value
-                'TODO: Apply change
+                If value = ShowInstanceMembers Then Exit Property
+                _ShowInstanceMembers = value
+                tmiShowInstanceMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowstaticMembers"/> property</summary>
@@ -134,11 +146,13 @@ Namespace WindowsT.FormsT
         <Description("Gets or sets value indicating if static members are shown.")> _
         Public Property ShowStaticMembers() As Boolean 'Localize: Description
             Get
-                Return _ShowstaticMembers
+                Return _ShowStaticMembers
             End Get
             Set(ByVal value As Boolean)
-                _ShowstaticMembers = value
-                'TODO: Apply change
+                If value = ShowStaticMembers Then Exit Property
+                _ShowStaticMembers = value
+                tmiShowStaticMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowspecialMembers"/> property</summary>
@@ -154,8 +168,10 @@ Namespace WindowsT.FormsT
                 Return _ShowSpecialMembers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowSpecialMembers Then Exit Property
                 _ShowSpecialMembers = value
-                'TODO: Apply change
+                tmiShowSpecialMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowGlobalMembers"/> property</summary>
@@ -171,8 +187,10 @@ Namespace WindowsT.FormsT
                 Return _ShowGlobalMembers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowGlobalMembers Then Exit Property
                 _ShowGlobalMembers = value
-                'TODO: Apply change
+                tmiShowGlobalMembers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowProperties"/> property</summary>
@@ -188,8 +206,10 @@ Namespace WindowsT.FormsT
                 Return _ShowProperties
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowProperties Then Exit Property
                 _ShowProperties = value
-                'TODO: Apply change
+                tmiShowProperties.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowEvents"/> property</summary>
@@ -205,8 +225,10 @@ Namespace WindowsT.FormsT
                 Return _ShowEvents
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowEvents Then Exit Property
                 _ShowEvents = value
-                'TODO: Apply change
+                tmiShowEvents.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowMethods"/> property</summary>
@@ -222,8 +244,10 @@ Namespace WindowsT.FormsT
                 Return _ShowMethods
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowMethods Then Exit Property
                 _ShowMethods = value
-                'TODO: Apply change
+                tmiShowMethods.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowFields"/> property</summary>
@@ -239,8 +263,10 @@ Namespace WindowsT.FormsT
                 Return _ShowFields
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowFields Then Exit Property
                 _ShowFields = value
-                'TODO: Apply change
+                tmiShowFields.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowCTors"/> property</summary>
@@ -256,8 +282,10 @@ Namespace WindowsT.FormsT
                 Return _ShowCTors
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowCTors Then Exit Property
                 _ShowCTors = value
-                'TODO: Apply change
+                tmiShowCTors.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowInitializers"/> property</summary>
@@ -273,8 +301,10 @@ Namespace WindowsT.FormsT
                 Return _ShowInitializers
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowInitializers Then Exit Property
                 _ShowInitializers = value
-                'TODO: Apply change
+                tmiShowInitializers.Checked = value
+                OnShowChanged()
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowgenericArguments"/> property</summary>
@@ -290,10 +320,65 @@ Namespace WindowsT.FormsT
                 Return _ShowgenericArguments
             End Get
             Set(ByVal value As Boolean)
+                If value = ShowGenericArguments Then Exit Property
                 _ShowgenericArguments = value
-                'TODO: Apply change
+                tmiShowGenericArguments.Checked = value
+                OnShowChanged()
             End Set
         End Property
+        ''' <summary>Called after value of property that controls which members are displayed in <see cref="ListView"/> is changed.</summary>
+        ''' <remarks>Those properties are:
+        ''' <see cref="ShowCTors"/>, <see cref="ShowEvents"/>, <see cref="ShowFields"/>, <see cref="ShowgenericArguments"/>, <see cref="ShowGlobalMembers"/>, <see cref="ShowInheritedMembers"/>, <see cref="ShowInitializers"/>, <see cref="ShowInstanceMembers"/>, <see cref="ShowMethods"/>, <see cref="ShowInternalMembers"/>, <see cref="ShowNestedTypes"/>, <see cref="ShowPrivateMembers"/>, <see cref="ShowProperties"/>, <see cref="ShowProtectedMembers"/>, <see cref="ShowSpecialMembers"/>, <see cref="ShowStaticMembers"/>
+        ''' </remarks>
+        Protected Overridable Sub OnShowChanged()
+            For Each Node As TreeNode In tvwObjects.Nodes
+                If Node.IsExpanded Then
+                    ActualizeNode(Node)
+                ElseIf Node.Nodes.Count <> 0 Then
+                    Node.Nodes.Clear()
+                    Node.Nodes.Add(New TreeNode("Please wait...")) 'Localize: Please wait
+                End If
+            Next Node
+        End Sub
+        ''' <summary>Raised after property that controls which members are displayed in <see cref="ListView"/> was changed.</summary>
+        ''' <remarks>See <seealso cref="OnShowChanged"/> for list of properties that causes this event to be raised.</remarks>
+        <Description("Raised after property that controls which members are displayed in ListView was changed.")> _
+        <Category(WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.PropertyChanged)> _
+        Public Event ShowChanged As ControlEventHandler(Of ObjectBrowser, EventArgs) 'Localize: Description
+        ''' <summary>Called recursivelly by <see cref="OnShowChanged"/> and itself in order to actualize content of each expanded node.</summary>
+        ''' <param name="Node">Node to actualize content of</param>
+        ''' <remarks>Note for inheritors: After actualizing content of this node, if there are any ünchanged nodes (that is your actualization logic is not delete all nodes and create them again) you should call this method on all the expanded nodes and replace content of all colapsed nodes by only tag-less node.</remarks>
+        Protected Overridable Sub ActualizeNode(ByVal Node As TreeNode)
+            Try
+                Dim c = GetChildren(Node.Tag)
+                Dim Content As List(Of Object) = If(TypeOf c Is List(Of Object), c, New List(Of Object)(c))
+                Dim ToRemove As New List(Of TreeNode)
+                For Each MyNode As TreeNode In Node.Nodes
+                    If Content.Contains(MyNode.Tag) Then Content.Remove(MyNode.Tag) Else ToRemove.Add(MyNode)
+                Next MyNode
+                For Each RemNode As TreeNode In ToRemove
+                    Node.Nodes.Remove(RemNode)
+                Next RemNode
+                For Each AddNode In Content
+                    Try
+                        Node.Nodes.Add(GetNode(AddNode))
+                    Catch ex As Exception
+                        Node.Nodes.Add(GetNode(ex))
+                    End Try
+                Next AddNode
+            Catch ex As Exception
+                Node.Nodes.Clear()
+                Node.Nodes.Add(GetNode(ex))
+            End Try
+            For Each SubNode As TreeNode In Node.Nodes
+                If SubNode.IsExpanded Then
+                    ActualizeNode(SubNode)
+                ElseIf SubNode.Nodes.Count <> 0 Then
+                    SubNode.Nodes.Clear()
+                    SubNode.Nodes.Add(New TreeNode("Please wait...")) 'Localize: Please wait
+                End If
+            Next
+        End Sub
 #End Region
 
         ''' <summary>List of assemblies or any other objects listed at top-level of tree-view</summary>
@@ -428,7 +513,9 @@ Namespace WindowsT.FormsT
             prgProperties.SelectedObject = ItemTag
             lblObjType.Text = ItemTag.GetType.Name
         End Sub
+        ''' <summary>Contains value oft teh <see cref="CurrentSelectedItem"/> property</summary>
         Private _CurrentSelectedItem As Object
+        ''' <summary>Contains item that is currently selected</summary>
         Protected ReadOnly Property CurrentSelectedItem() As Object
             Get
                 Return _CurrentSelectedItem
@@ -462,7 +549,28 @@ Namespace WindowsT.FormsT
             Catch ex As Exception
                 lvwMembers.Items.Add(GetListItem(ex))
             End Try
+            GetShortDesc(e.Node.Tag)
         End Sub
+
+        ''' <summary>Assigns short description of object selected in <see cref="tvwObjects"/> to <see cref="rtbShort"/></summary>
+        ''' <param name="Obj">Object to get description of (it is <see cref="TreeNode.Tag"/> of selected <see cref="TreeNode"/>)</param>
+        Protected Overridable Sub GetShortDesc(ByVal Obj As Object)
+            If TypeOf Obj Is Assembly Then
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, Assembly))
+            ElseIf TypeOf Obj Is [Module] Then
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, [Module]))
+            ElseIf TypeOf Obj Is NamespaceInfo Then
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo))
+            ElseIf TypeOf Obj Is MemberInfo Then
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo))
+            ElseIf TypeOf Obj Is Exception Then
+                rtbShort.Text = DirectCast(Obj, Exception).Message
+            Else
+                rtbShort.tet = Obj.ToString
+            End If
+        End Sub
+
+        Private SignatureProvider As ISignatureProvider = New VisualBasicSignatureProvider
 
         ''' <summary>Gets list of items to show in <see cref="ListView"/>. Called after node in <see cref="TreeView"/> is selected</summary>
         ''' <param name="obj"><see cref="TreeNode.Tag"/> of selected <see cref="TreeNode"/></param>
@@ -519,77 +627,75 @@ Namespace WindowsT.FormsT
                 ret.AddRange( _
                     From n In DirectCast(obj, [Module]).GetNamespaces( _
                         Function(t As Type) ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , False)) _
-                        Select n Order By n.Name Ascending)
+                        Order By n.Name Ascending Select CObj(n))
                 'No-namespace types
                 ret.AddRange( _
                     From t In DirectCast(obj, [Module]).GetTypes(False) _
                     Where ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True) _
-                    Select t _
-                    Order By t.Name Ascending)
+                    Order By t.Name Ascending Select CObj(t))
                 'Global fields
                 If ShowGlobalMembers AndAlso ShowFields Then
                     ret.AddRange( _
                         From f In DirectCast(obj, [Module]).GetFields() _
                         Where ShouldShowMember(f.IsPrivate, f.IsFamily, f.IsAssembly, f.IsPublic, f.IsFamilyAndAssembly, f.IsFamilyOrAssembly, f.IsStatic, True) _
-                        Select f Order By f.Name Ascending)
+                        Order By f.Name Ascending Select CObj(f))
                 End If
                 'Global methods
                 If ShowGlobalMembers AndAlso ShowMethods Then
                     ret.AddRange( _
                         From m In DirectCast(obj, [Module]).GetMethods _
                         Where ShouldShowMember(m.IsPrivate, m.IsFamily, m.IsAssembly, m.IsPublic, m.IsFamilyAndAssembly, m.IsFamilyOrAssembly, m.IsStatic, True) _
-                        Select m Order By m.Name Ascending)
+                        Order By m.Name Ascending Select CObj(m))
                 End If
             ElseIf TypeOf obj Is NamespaceInfo Then  'Namespace
-                ret.AddRange(From t In DirectCast(obj, NamespaceInfo).GetTypes Where ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True) Order By t.Name Ascending)
+                ret.AddRange(From t In DirectCast(obj, NamespaceInfo).GetTypes Where ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True) Order By t.Name Ascending Select CObj(t))
             ElseIf TypeOf obj Is Type Then 'Type
                 With DirectCast(obj, Type)
                     'Generic arguments
                     If ShowGenericArguments Then
-                        ret.AddRange(.GetGenericArguments)
+                        ret.AddRange(From ga In .GetGenericArguments Select CObj(ga))
                     End If
                     'Nested types
                     If ShowNestedTypes Then
                         ret.AddRange( _
-                            From st In .GetNestedTypes(BindingFlags.Public Or BindingFlags.NonPublic Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
+                            From st In .GetNestedTypes(BindingFlags.Public Or BindingFlags.NonPublic Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly) Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
                             Where ShouldShowMember(st.IsNestedPrivate, st.IsNestedFamily, st.IsNestedAssembly, st.IsNestedPublic, st.IsNestedFamANDAssem, st.IsNestedFamORAssem, , True) _
-                            Select st _
-                            Order By st.Name Ascending)
+                            Order By st.Name Ascending Select CObj(st))
                     End If
                     'CTors and initializers
                     If ShowCTors OrElse ShowInitializers Then
                         ret.AddRange( _
-                            From c In .GetConstructors(BindingFlags.Public Or BindingFlags.NonPublic Or If(ShowCTors, BindingFlags.Instance, BindingFlags.Default) Or If(ShowInitializers, BindingFlags.Static, BindingFlags.Default)) _
+                            From c In .GetConstructors(BindingFlags.Public Or BindingFlags.NonPublic Or If(ShowCTors, BindingFlags.Instance, BindingFlags.Default) Or If(ShowInitializers, BindingFlags.Static, BindingFlags.Default) Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
                             Where ShouldShowMember(c.IsPrivate, c.IsFamily, c.IsAssembly, c.IsPublic, c.IsFamilyAndAssembly, c.IsFamilyOrAssembly, c.IsStatic, True) _
-                            Select c Order By c.Name Ascending)
+                            Order By c.Name Ascending Select CObj(c))
                     End If
                     'Properties
                     If ShowProperties Then
                         ret.AddRange( _
-                            From p In .GetProperties(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance) _
+                            From p In .GetProperties(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
                             Where ShouldShowMember(p.IsPrivate, p.IsFamily, p.IsAssembly, p.IsPublic, p.IsFamilyAndAssembly, p.IsFamilyOrAssembly, p.IsStatic) _
-                            Select p Order By p.Name Ascending)
+                            Order By p.Name Ascending Select CObj(p))
                     End If
                     'Methods
                     If ShowMethods Then
                         ret.AddRange( _
-                            From m In .GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance) _
+                            From m In .GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
                             Where ShouldShowMember(m.IsPrivate, m.IsFamily, m.IsAssembly, m.IsPublic, m.IsFamilyAndAssembly, m.IsFamilyOrAssembly, m.IsStatic) _
-                            Select m Order By m.Name Ascending)
+                            Order By m.Name Ascending Select CObj(m))
                     End If
                     'Events
                     If ShowEvents Then
                         ret.AddRange( _
-                            From e In .GetEvents(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance) _
+                            From e In .GetEvents(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
                             Where ShouldShowMember(e.IsPrivate, e.IsFamily, e.IsAssembly, e.IsPublic, e.IsFamilyAndAssembly, e.IsFamilyOrAssembly, e.IsStatic) _
-                            Select e Order By e.Name Ascending)
+                            Order By e.Name Ascending Select CObj(e))
                     End If
                     'Fields
                     If ShowFields Then
                         ret.AddRange( _
-                            From f In .GetFields(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance) _
+                            From f In .GetFields(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
                             Where ShouldShowMember(f.IsPrivate, f.IsFamily, f.IsAssembly, f.IsPublic, f.IsFamilyAndAssembly, f.IsFamilyOrAssembly, f.IsStatic) _
-                            Select f Order By f.Name Ascending)
+                             Order By f.Name Ascending Select CObj(f))
                     End If
                 End With
             ElseIf TypeOf obj Is PropertyInfo AndAlso ShowSpecialMembers Then 'Property
@@ -597,17 +703,17 @@ Namespace WindowsT.FormsT
                     ret.AddRange( _
                         From a In .GetAccessors(True) _
                         Where ShouldShowMember(a.IsPrivate, a.IsFamily, a.IsAssembly, a.IsPublic, a.IsFamilyAndAssembly, a.IsFamilyOrAssembly, a.IsStatic) _
-                        Select a Order By a.Name)
+                         Order By a.Name Select CObj(a))
                 End With
             ElseIf TypeOf obj Is EventInfo AndAlso ShowSpecialMembers Then 'Event
                 With DirectCast(obj, EventInfo)
                     ret.AddRange( _
                         From a In .GetOtherMethods().Union(New MethodInfo() {.GetAddMethod, .GetRemoveMethod, .GetRaiseMethod}) _
                         Where a IsNot Nothing AndAlso ShouldShowMember(a.IsPrivate, a.IsFamily, a.IsAssembly, a.IsPublic, a.IsFamilyAndAssembly, a.IsFamilyOrAssembly, a.IsStatic) _
-                        Select a Order By a.Name)
+                         Order By a.Name Select CObj(a))
                 End With
             ElseIf TypeOf obj Is MethodInfo AndAlso (DirectCast(obj, MethodInfo).IsGenericMethodDefinition OrElse DirectCast(obj, MethodInfo).IsGenericMethod) AndAlso ShowGenericArguments Then
-                ret.AddRange(DirectCast(obj, MethodInfo).GetGenericArguments)
+                ret.AddRange(From ga In DirectCast(obj, MethodInfo).GetGenericArguments Select CObj(ga))
             End If
             Return ret
         End Function
@@ -646,16 +752,70 @@ Namespace WindowsT.FormsT
 
         Private Sub lvwMembers_Enter(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwMembers.Enter
             If Initializing Then Exit Sub
+            If sender.SelectedItems.Count = 0 Then Exit Sub
             OnSelectedItemChangedInternal(sender, sender.SelectedItems(0), sender.SelectedItems(0).Tag)
         End Sub
 
         Private Sub lvwMembers_SelectedIndexChanged(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwMembers.SelectedIndexChanged
+            If sender.SelectedItems.Count = 0 Then Exit Sub
             OnSelectedItemChangedInternal(sender, sender.SelectedItems(0), sender.SelectedItems(0).Tag)
         End Sub
 
         Private Sub tvwObjects_Enter(ByVal sender As TreeView, ByVal e As System.EventArgs) Handles tvwObjects.Enter
             If Initializing Then Exit Sub
+            If sender.SelectedNode Is Nothing Then Exit Sub
             OnSelectedItemChangedInternal(sender, sender.SelectedNode, sender.SelectedNode.Tag)
         End Sub
+#Region "Show..._CheckedChanged"
+        Private Sub tmiShowCTors_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowCTors.CheckedChanged
+            Me.ShowCTors = sender.Checked
+        End Sub
+        Private Sub tmiShowEvents_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowEvents.CheckedChanged
+            Me.ShowEvents = sender.Checked
+        End Sub
+        Private Sub tmiShowFields_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowFields.CheckedChanged
+            Me.ShowFields = sender.Checked
+        End Sub
+        Private Sub tmiShowGenericArguments_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowGenericArguments.CheckedChanged
+            Me.ShowGenericArguments = sender.Checked
+        End Sub
+        Private Sub tmiShowGlobalMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowGlobalMembers.CheckedChanged
+            Me.ShowGlobalMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowInheritedmembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowInheritedMembers.CheckedChanged
+            Me.ShowInheritedMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowInitializers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowInitializers.CheckedChanged
+            Me.ShowInitializers = sender.Checked
+        End Sub
+        Private Sub tmiShowInstanceMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowInstanceMembers.CheckedChanged
+            Me.ShowInstanceMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowInternalMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowInternalMembers.CheckedChanged
+            Me.ShowInternalMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowMethods_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowMethods.CheckedChanged
+            Me.ShowMethods = sender.Checked
+        End Sub
+        Private Sub tmiShowNestedtypes_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowNestedTypes.CheckedChanged
+            Me.ShowNestedTypes = sender.Checked
+        End Sub
+        Private Sub tmiShowPrivateMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowPrivateMembers.CheckedChanged
+            Me.ShowPrivateMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowProperties_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowProperties.CheckedChanged
+            Me.ShowProperties = sender.Checked
+        End Sub
+        Private Sub tmiShowProtectedMemebers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowProtectedMembers.CheckedChanged
+            Me.ShowProtectedMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowSpecialMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowSpecialMembers.CheckedChanged
+            Me.ShowSpecialMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowStaticMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowStaticMembers.CheckedChanged
+            Me.ShowStaticMembers = sender.Checked
+        End Sub
+#End Region
     End Class
 End Namespace
+#End If
