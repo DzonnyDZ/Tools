@@ -45,8 +45,12 @@ Namespace ReflectionT
                 ret.Append(GetAccessModifiers(Member) & " ")
                 'Static modifiers
                 Select Case Member.MemberType
-                    Case MemberTypes.Constructor, MemberTypes.Event, MemberTypes.Field, MemberTypes.Method, MemberTypes.Property
-                        If Member.IsStatic Then ret.Append("Static ")
+                    Case MemberTypes.Constructor, MemberTypes.Event, MemberTypes.Method, MemberTypes.Property
+                        If Member.IsStatic Then ret.Append("Shared ")
+                    Case MemberTypes.Field
+                        With DirectCast(Member, FieldInfo)
+                            If Not .IsLiteral AndAlso .IsStatic Then ret.Append("Shared ")
+                        End With
                 End Select
                 'Read-Write modifiers
                 If Member.MemberType = MemberTypes.Field AndAlso DirectCast(Member, FieldInfo).IsInitOnly Then ret.Append("ReadOnly ")
@@ -117,7 +121,7 @@ Namespace ReflectionT
                             ret.Append("Structure ")
                         ElseIf GetType([Delegate]).IsAssignableFrom(Member) Then
                             ret.Append("Delegate ")
-                            If .GetMethod("Invoke", BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public).ReflectedType.Equals(GetType(System.Void)) Then
+                            If .GetMethod("Invoke", BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public).ReturnType.Equals(GetType(System.Void)) Then
                                 ret.Append("Sub ")
                             Else
                                 ret.Append("Function ")
@@ -152,8 +156,8 @@ Namespace ReflectionT
                         Dim i As Integer = 0
                         For Each g In .GetGenericArguments
                             If i > 0 Then ret.Append(", ")
-                            AppendGenericConstraints(g, ret)
                             ret.Append(g.Name)
+                            AppendGenericConstraints(g, ret)
                             i += 1
                         Next g
                         ret.Append(")")
@@ -177,10 +181,30 @@ Namespace ReflectionT
                     i += 1
                 Next param
                 ret.Append(")")
+                'Return type
                 If m.MemberType = MemberTypes.Method AndAlso Not DirectCast(m, MethodInfo).ReturnType.Equals(GetType(System.Void)) Then
                     ret.Append(" As ")
                     RepresentTypeName(DirectCast(m, MethodInfo).ReturnType, ret)
                 End If
+            ElseIf (Member.MemberType = MemberTypes.TypeInfo OrElse Member.MemberType = MemberTypes.NestedType) AndAlso DirectCast(Member, Type).IsEnum Then
+                ret.Append(" As ")
+                RepresentTypeName([Enum].GetUnderlyingType(Member), ret)
+            ElseIf Member.MemberType = MemberTypes.Property Then
+                With DirectCast(Member, PropertyInfo)
+                    'TODO: Property arguments
+                    ret.Append(" As ")
+                    RepresentTypeName(.PropertyType, ret)
+                End With
+            ElseIf Member.MemberType = MemberTypes.Event Then
+                With DirectCast(Member, EventInfo)
+                    ret.Append(" As ")
+                    RepresentTypeName(.EventHandlerType, ret)
+                End With
+            ElseIf Member.MemberType = MemberTypes.Field Then
+                With DirectCast(Member, FieldInfo)
+                    ret.Append(" As ")
+                    RepresentTypeName(.FieldType, ret)
+                End With
             End If
             Return ret.ToString
         End Function
@@ -216,7 +240,7 @@ Namespace ReflectionT
         End Sub
         Private Sub RepresentTypeName(ByVal Type As Type, ByVal ret As System.Text.StringBuilder)
             'TODO: Do something smart here and represent generic types and array in good way
-            ret.Append(Type.FullName)
+            ret.Append(If(Type.FullName, Type.Name))
         End Sub
         ''' <summary>Gets member access modifiers</summary>
         ''' <param name="Member">Member to get modifiers of</param>
