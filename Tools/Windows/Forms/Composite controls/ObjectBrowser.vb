@@ -562,11 +562,11 @@ Namespace WindowsT.FormsT
             ElseIf TypeOf Obj Is NamespaceInfo Then
                 rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo))
             ElseIf TypeOf Obj Is MemberInfo Then
-                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo))
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo), True, False)
             ElseIf TypeOf Obj Is Exception Then
                 rtbShort.Text = DirectCast(Obj, Exception).Message
             Else
-                rtbShort.tet = Obj.ToString
+                rtbShort.Text = Obj.ToString
             End If
         End Sub
 
