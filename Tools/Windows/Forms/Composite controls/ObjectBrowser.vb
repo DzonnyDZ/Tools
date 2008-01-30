@@ -16,13 +16,14 @@ Namespace WindowsT.FormsT
             Assemblies.AllowAddCancelableEventsHandlers = False
             AddHandler ReflectionT.ImageRequested, AddressOf ImageRequested
             InitializeComponent()
+            walkcontrol(prgProperties)
             Initializing = False
             tvwObjects.Select()
         End Sub
 
 #Region "Show"
         ''' <summary>Contains value of the <see cref="ShowInheritedMembers"/> property</summary>
-        Private _ShowInheritedMembers As Boolean
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowInheritedMembers As Boolean
         ''' <summary>Gets or sets value indicating if inherited members are shown</summary>
         ''' <value>True to show inherited members, false to hide them</value>
         ''' <returns>Value indicating if inherited members are shown</returns>
@@ -42,7 +43,7 @@ Namespace WindowsT.FormsT
         End Property
 
         ''' <summary>Contains value of the <see cref="ShowNestedTypes"/> property</summary>
-        Private _ShowNestedTypes As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowNestedTypes As Boolean = True
         ''' <summary>Gets or sets value indicating if nested types are shown</summary>
         ''' <value>True to show nested types, false to hide them</value>
         ''' <returns>Value indicating if nested types are shown</returns>
@@ -61,7 +62,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowPrivateMembers"/> property</summary>
-        Private _ShowPrivateMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowPrivateMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if private members are shown</summary>
         ''' <value>True to show private members, false to hide them</value>
         ''' <returns>Value indicating if private members are shown</returns>
@@ -80,7 +81,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowInternalMembers"/> property</summary>
-        Private _ShowInternalMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowInternalMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if internal members are shown</summary>
         ''' <value>True to show internal members, false to hide them</value>
         ''' <returns>Value indicating if internal members are shown</returns>
@@ -99,7 +100,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowProtectedMembers"/> property</summary>
-        Private _ShowProtectedMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowProtectedMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if protected members are shown</summary>
         ''' <value>True to show protected members, false to hide them</value>
         ''' <returns>Value indicating if protected members are shown</returns>
@@ -118,7 +119,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowinstanceMembers"/> property</summary>
-        Private _ShowInstanceMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowInstanceMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if instance members are shown</summary>
         ''' <value>True to show instance members, false to hide them</value>
         ''' <returns>Value indicating if instance members are shown</returns>
@@ -137,7 +138,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowstaticMembers"/> property</summary>
-        Private _ShowStaticMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowStaticMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if static members are shown</summary>
         ''' <value>True to show static members, false to hide them</value>
         ''' <returns>Value indicating if static members are shown</returns>
@@ -156,7 +157,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowspecialMembers"/> property</summary>
-        Private _ShowSpecialMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowSpecialMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if special members (parts of properties and events) are shown</summary>
         ''' <value>True to show special members, false to hide them</value>
         ''' <returns>Value indicating if special members are shown</returns>
@@ -175,7 +176,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowGlobalMembers"/> property</summary>
-        Private _ShowGlobalMembers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowGlobalMembers As Boolean = True
         ''' <summary>Gets or sets value indicating if Global members (parts of properties and events) are shown</summary>
         ''' <value>True to show Global members, false to hide them</value>
         ''' <returns>Value indicating if Global members are shown</returns>
@@ -194,7 +195,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowProperties"/> property</summary>
-        Private _ShowProperties As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowProperties As Boolean = True
         ''' <summary>Gets or sets value indicating if properties are shown</summary>
         ''' <value>True to show properties  false to hide them</value>
         ''' <returns>Value indicating if properties are shown</returns>
@@ -213,7 +214,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowEvents"/> property</summary>
-        Private _ShowEvents As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowEvents As Boolean = True
         ''' <summary>Gets or sets value indicating if Events are shown</summary>
         ''' <value>True to show Events  false to hide them</value>
         ''' <returns>Value indicating if Events are shown</returns>
@@ -232,7 +233,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowMethods"/> property</summary>
-        Private _ShowMethods As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowMethods As Boolean = True
         ''' <summary>Gets or sets value indicating if Methods are shown</summary>
         ''' <value>True to show Methods  false to hide them</value>
         ''' <returns>Value indicating if Methods are shown</returns>
@@ -251,7 +252,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowFields"/> property</summary>
-        Private _ShowFields As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowFields As Boolean = True
         ''' <summary>Gets or sets value indicating if Fields are shown</summary>
         ''' <value>True to show Fields  false to hide them</value>
         ''' <returns>Value indicating if Fields are shown</returns>
@@ -270,7 +271,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowCTors"/> property</summary>
-        Private _ShowCTors As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowCTors As Boolean = True
         ''' <summary>Gets or sets value indicating if CTors are shown</summary>
         ''' <value>True to show CTors  false to hide them</value>
         ''' <returns>Value indicating if CTors are shown</returns>
@@ -289,7 +290,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowInitializers"/> property</summary>
-        Private _ShowInitializers As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowInitializers As Boolean = True
         ''' <summary>Gets or sets value indicating if Initializers are shown</summary>
         ''' <value>True to show Initializers  false to hide them</value>
         ''' <returns>Value indicating if Initializers are shown</returns>
@@ -308,7 +309,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="ShowgenericArguments"/> property</summary>
-        Private _ShowgenericArguments As Boolean = True
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowgenericArguments As Boolean = True
         ''' <summary>Gets or sets value indicating if generic arguments (type parameters) are shown</summary>
         ''' <value>True to show generic arguments  false to hide them</value>
         ''' <returns>Value indicating if generic arguments are shown</returns>
@@ -323,6 +324,44 @@ Namespace WindowsT.FormsT
                 If value = ShowGenericArguments Then Exit Property
                 _ShowgenericArguments = value
                 tmiShowGenericArguments.Checked = value
+                OnShowChanged()
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="ShowReferences"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowReferences As Boolean = True
+        ''' <summary>Gets or sets value indicating if references are shown</summary>
+        ''' <value>True to show references false to hide them</value>
+        ''' <returns>Value indicating if references are shown</returns>
+        <DefaultValue(True)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Gets or sets value indicating if references are shown.")> _
+        Public Property ShowReferences() As Boolean 'Localize: Description
+            Get
+                Return _ShowReferences
+            End Get
+            Set(ByVal value As Boolean)
+                If value = ShowReferences Then Exit Property
+                _ShowReferences = value
+                tmiShowReferences.Checked = value
+                OnShowChanged()
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="ShowBaseTypes"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowBaseTypes As Boolean = True
+        ''' <summary>Gets or sets value indicating if base types are shown</summary>
+        ''' <value>True to show base types  false to hide them</value>
+        ''' <returns>Value indicating if base types are shown</returns>
+        <DefaultValue(True)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Gets or sets value indicating if base types are shown.")> _
+        Public Property ShowBaseTypes() As Boolean 'Localize: Description
+            Get
+                Return _ShowBaseTypes
+            End Get
+            Set(ByVal value As Boolean)
+                If value = ShowBaseTypes Then Exit Property
+                _ShowBaseTypes = value
+                tmiShowBaseTypes.Checked = value
                 OnShowChanged()
             End Set
         End Property
@@ -380,6 +419,21 @@ Namespace WindowsT.FormsT
             Next
         End Sub
 #End Region
+        ''' <summary>Contains value of the <see cref="ShowShowMenu"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowShowMenu As Boolean = True
+        ''' <summary>Gets or sets value indicating if the Show menu is shown</summary>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(True)> _
+        <Description("Gets or sets value indicating if Show menu is shown.")> _
+        Public Property ShowShowMenu() As Boolean 'Localize:Description
+            Get
+                Return _ShowShowMenu
+            End Get
+            Set(ByVal value As Boolean)
+                _ShowShowMenu = value
+                tdbShow.Visible = value
+            End Set
+        End Property
 
         ''' <summary>List of assemblies or any other objects listed at top-level of tree-view</summary>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
@@ -424,16 +478,16 @@ Namespace WindowsT.FormsT
             Dim tn As New TreeNode
             Dim Expandable As Boolean = True
             If TypeOf Obj Is Assembly Then
-                tn.Text = DirectCast(Obj, Assembly).ToString
+                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, Assembly), SignatureFlags.ShortNameOnly)
                 GetImage(CodeImages.Objects.Assembly, ObjectModifiers.None)
             ElseIf TypeOf Obj Is [Module] Then
-                tn.Text = DirectCast(Obj, [Module]).Name
+                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, [Module]), SignatureFlags.ShortNameOnly)
                 GetImage(CodeImages.Objects.Module, ObjectModifiers.None)
             ElseIf TypeOf Obj Is NamespaceInfo Then
-                tn.Text = DirectCast(Obj, NamespaceInfo).Name
+                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo), SignatureFlags.ShortNameOnly)
                 GetImage(CodeImages.Objects.Namespace, ObjectModifiers.None)
             ElseIf TypeOf Obj Is MemberInfo Then
-                tn.Text = DirectCast(Obj, MemberInfo).Name
+                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo), SignatureFlags.Short)
                 DirectCast(Obj, MemberInfo).GetImage()
                 If DirectCast(Obj, MemberInfo).IsPrivate Then tn.ForeColor = SystemColors.GrayText
                 Expandable = _
@@ -444,6 +498,32 @@ Namespace WindowsT.FormsT
                 tn.Text = DirectCast(Obj, Exception).Message
                 GetImage(CodeImages.Objects.Error, ObjectModifiers.None)
                 Expandable = False
+            ElseIf TypeOf Obj Is KeyValuePair(Of String, Object) Then
+                With DirectCast(Obj, KeyValuePair(Of String, Object))
+                    Select Case .Key
+                        Case kpBaseType
+                            With DirectCast(.Value, Type)
+                                tn.Text = SignatureProvider.GetSignature(.self, SignatureFlags.ShortNameOnly)
+                                .GetImage()
+                            End With
+                        Case kpBaseTypes
+                            tn.Text = "Base Types" 'Localize:Base types
+                            GetImage(CodeImages.Objects.BackwardReference, ObjectModifiers.None)
+                        Case kpReference
+                            With DirectCast(.Value, AssemblyName)
+                                tn.Text = SignatureProvider.GetSignature(.self, SignatureFlags.ShortNameOnly)
+                                GetImage(CodeImages.Objects.Assembly, ObjectModifiers.Shortcut)
+                                Expandable = False
+                            End With
+                        Case kpReferences
+                            tn.Text = "References" 'Localize references
+                            GetImage(CodeImages.Objects.ForwardReference, ObjectModifiers.None)
+                        Case Else
+                            tn.Text = .Key
+                            GetImage(CodeImages.Objects.Question, ObjectModifiers.None)
+                            Expandable = False
+                    End Select
+                End With
             Else
                 tn.Text = Obj.ToString
                 GetImage(CodeImages.Objects.Question, ObjectModifiers.None)
@@ -462,18 +542,18 @@ Namespace WindowsT.FormsT
         ''' <exception cref="Exception">An error ocured during creating node (not thrown when <paramref name="Obj"/> is <see cref="Exception"/>). Note to inheritors: Do not throw any exception when <paramref name="Obj"/> is <see cref="Exception"/>!</exception>
         Protected Overridable Function GetListItem(ByVal Obj As Object) As ListViewItem
             Dim li As New ListViewItem
-            If TypeOf obj Is Attribute Then
-                li.Text = obj.GetType.Name
-                GetImage(If(obj.GetType.IsGenericType, ReflectionT.Objects.GenericAttributeClosed, ReflectionT.Objects.Attribute), ObjectModifiers.None)
-            ElseIf TypeOf obj Is Exception Then
-                li.Text = DirectCast(obj, Exception).Message
+            If TypeOf Obj Is Attribute Then
+                li.Text = Obj.GetType.Name
+                GetImage(If(Obj.GetType.IsGenericType, ReflectionT.Objects.GenericAttributeClosed, ReflectionT.Objects.Attribute), ObjectModifiers.None)
+            ElseIf TypeOf Obj Is Exception Then
+                li.Text = DirectCast(Obj, Exception).Message
                 GetImage(CodeImages.Objects.Error, ObjectModifiers.None)
             Else
-                li.Text = obj.ToString
+                li.Text = Obj.ToString
                 GetImage(CodeImages.Objects.Question, ObjectModifiers.None)
             End If
             li.ImageKey = LastRequestedKey
-            li.Tag = obj
+            li.Tag = Obj
             Return li
         End Function
 
@@ -514,7 +594,7 @@ Namespace WindowsT.FormsT
             lblObjType.Text = ItemTag.GetType.Name
         End Sub
         ''' <summary>Contains value oft teh <see cref="CurrentSelectedItem"/> property</summary>
-        Private _CurrentSelectedItem As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CurrentSelectedItem As Object
         ''' <summary>Contains item that is currently selected</summary>
         Protected ReadOnly Property CurrentSelectedItem() As Object
             Get
@@ -556,15 +636,23 @@ Namespace WindowsT.FormsT
         ''' <param name="Obj">Object to get description of (it is <see cref="TreeNode.Tag"/> of selected <see cref="TreeNode"/>)</param>
         Protected Overridable Sub GetShortDesc(ByVal Obj As Object)
             If TypeOf Obj Is Assembly Then
-                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, Assembly))
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, Assembly), SignatureFlags.ObjectType Or SignatureFlags.LongName Or SignatureFlags.AllAttributes)
             ElseIf TypeOf Obj Is [Module] Then
-                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, [Module]))
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, [Module]), SignatureFlags.ObjectType Or SignatureFlags.LongName Or SignatureFlags.AllAttributes)
             ElseIf TypeOf Obj Is NamespaceInfo Then
-                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo))
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo), SignatureFlags.ObjectType Or SignatureFlags.LongName)
             ElseIf TypeOf Obj Is MemberInfo Then
-                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo), True, False)
+                rtbShort.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo), SignatureFlags.Full)
             ElseIf TypeOf Obj Is Exception Then
                 rtbShort.Text = DirectCast(Obj, Exception).Message
+            ElseIf TypeOf Obj Is KeyValuePair(Of String, Object) Then
+                With DirectCast(Obj, KeyValuePair(Of String, Object))
+                    Select Case .Key
+                        Case kpBaseType, kpReference : GetShortDesc(.Value)
+                        Case kpBaseTypes : rtbShort.Text = "Base types" 'Localize:Base types
+                        Case kpReferences : rtbShort.Text = "References" 'Localize: References
+                    End Select
+                End With
             Else
                 rtbShort.Text = Obj.ToString
             End If
@@ -611,6 +699,14 @@ Namespace WindowsT.FormsT
                 Next Child
             End If
         End Sub
+        ''' <summary>Code for node representing all the base types</summary>
+        Private Const kpBaseTypes$ = "Base types"
+        ''' <summary>Code for node representing all the references</summary>
+        Private Const kpReferences$ = "References"
+        ''' <summary>Code for node representing single base type</summary>
+        Private Const kpBaseType$ = "Base type"
+        ''' <summary>Code for node representing single referenced assembly</summary>
+        Private Const kpReference$ = "Reference"
         ''' <summary>This function is called by default implementation of <see cref="OnBeforeExpand"/> to obtain childrens of node being expanded.</summary>
         ''' <param name="obj"><see cref="TreeNode.Tag"/> of node being expanded</param>
         ''' <returns>Object to pass to <see cref="GetNode"/> in order to obtain node to add to current node. Can be null.</returns>
@@ -621,6 +717,9 @@ Namespace WindowsT.FormsT
             If TypeOf obj Is Assembly Then 'Assembly
                 ret.AddRange( _
                     (From m In DirectCast(obj, Assembly).GetModules Order By m.Name Ascending Select CObj(m)))
+                If ShowReferences Then
+                    ret.Add(New KeyValuePair(Of String, Object)(kpReferences, obj))
+                End If
             ElseIf TypeOf obj Is [Module] Then 'Module
                 'Namespaces
                 'TODO: Type consideration
@@ -680,7 +779,7 @@ Namespace WindowsT.FormsT
                     If ShowMethods Then
                         ret.AddRange( _
                             From m In .GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance Or If(ShowInheritedMembers, BindingFlags.Default, BindingFlags.DeclaredOnly)) _
-                            Where ShouldShowMember(m.IsPrivate, m.IsFamily, m.IsAssembly, m.IsPublic, m.IsFamilyAndAssembly, m.IsFamilyOrAssembly, m.IsStatic) _
+                            Where ShouldShowMember(m.IsPrivate, m.IsFamily, m.IsAssembly, m.IsPublic, m.IsFamilyAndAssembly, m.IsFamilyOrAssembly, m.IsStatic) AndAlso m.GetEvent Is Nothing AndAlso m.GetProperty Is Nothing _
                             Order By m.Name Ascending Select CObj(m))
                     End If
                     'Events
@@ -712,8 +811,28 @@ Namespace WindowsT.FormsT
                         Where a IsNot Nothing AndAlso ShouldShowMember(a.IsPrivate, a.IsFamily, a.IsAssembly, a.IsPublic, a.IsFamilyAndAssembly, a.IsFamilyOrAssembly, a.IsStatic) _
                          Order By a.Name Select CObj(a))
                 End With
-            ElseIf TypeOf obj Is MethodInfo AndAlso (DirectCast(obj, MethodInfo).IsGenericMethodDefinition OrElse DirectCast(obj, MethodInfo).IsGenericMethod) AndAlso ShowGenericArguments Then
+            ElseIf TypeOf obj Is MethodInfo AndAlso (DirectCast(obj, MethodInfo).IsGenericMethodDefinition OrElse DirectCast(obj, MethodInfo).IsGenericMethod) AndAlso ShowGenericArguments Then 'Generic method
                 ret.AddRange(From ga In DirectCast(obj, MethodInfo).GetGenericArguments Select CObj(ga))
+            ElseIf TypeOf obj Is Type Then 'Type
+                If ShowBaseTypes Then ret.Add(New KeyValuePair(Of String, Object)(kpBaseType, obj))
+            ElseIf TypeOf obj Is KeyValuePair(Of String, Object) Then 'Special nodes
+                With DirectCast(obj, KeyValuePair(Of String, Object))
+                    Select Case .Key
+                        Case kpBaseTypes, kpBaseType  'Base types
+                            With DirectCast(.Value, Type)
+                                If .BaseType IsNot Nothing Then ret.Add(.BaseType)
+                                ret.AddRange( _
+                                    From b In .GetInterfaces() _
+                                    Order By b.Name Select CObj(New KeyValuePair(Of String, Object)(kpBaseType, b)))
+                            End With
+                        Case kpReferences 'References
+                            With DirectCast(.Value, Assembly)
+                                ret.AddRange( _
+                                    From r In .GetReferencedAssemblies() _
+                                    Order By r.ToString Select CObj(New KeyValuePair(Of String, Object)(kpReference, r)))
+                            End With
+                    End Select
+                End With
             End If
             Return ret
         End Function
@@ -738,12 +857,22 @@ Namespace WindowsT.FormsT
             Return True
         End Function
 
-        Private Sub prgProperties_ControlAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ControlEventArgs) Handles prgProperties.ControlAdded
+        Private Sub prgProperties_ControlAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ControlEventArgs) 'Handles prgProperties.ControlAdded
             AddHandler e.Control.ControlAdded, AddressOf prgProperties_ControlAdded
             AddHandler e.Control.ControlRemoved, AddressOf prgProperties_ControlRemoved
             If TypeOf e.Control Is TextBoxBase Then
                 DirectCast(e.Control, TextBoxBase).ReadOnly = True
             End If
+            If sender IsNot Nothing Then Debug.Print("{0}{1}{2}", e.Control.GetType.Name, vbTab, e.Control.Name) 'TODO:Remove
+        End Sub
+        ''' <summary>For all controls in given control including given control itself recursively calls <see cref="prgProperties_ControlAdded"/></summary>
+        ''' <param name="control">Root control</param>
+        Private Sub walkcontrol(ByVal control As Control)
+            Me.prgProperties_ControlAdded(Nothing, New ControlEventArgs(control))
+            Debug.Print("{0}{1}{2}", control.GetType.Name, vbTab, control.Name) 'TODO:Remove
+            For Each c2 In control.Controls
+                walkcontrol(c2)
+            Next
         End Sub
 
         Private Sub prgProperties_ControlRemoved(ByVal sender As Object, ByVal e As System.Windows.Forms.ControlEventArgs) Handles prgProperties.ControlRemoved
@@ -814,6 +943,12 @@ Namespace WindowsT.FormsT
         End Sub
         Private Sub tmiShowStaticMembers_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowStaticMembers.CheckedChanged
             Me.ShowStaticMembers = sender.Checked
+        End Sub
+        Private Sub tmiShowReferences_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowReferences.CheckedChanged
+            Me.ShowReferences = sender.Checked
+        End Sub
+        Private Sub tmiShowBaseTypes_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowBaseTypes.CheckedChanged
+            Me.ShowBaseTypes = sender.Checked
         End Sub
 #End Region
     End Class

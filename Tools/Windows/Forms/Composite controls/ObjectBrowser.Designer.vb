@@ -28,8 +28,10 @@
             Me.tvwObjects = New System.Windows.Forms.TreeView
             Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
             Me.lvwMembers = New System.Windows.Forms.ListView
+            Me.cohItem = New System.Windows.Forms.ColumnHeader
             Me.splMain = New System.Windows.Forms.SplitContainer
             Me.splLeft = New System.Windows.Forms.SplitContainer
+            Me.rtbShort = New System.Windows.Forms.RichTextBox
             Me.splRight = New System.Windows.Forms.SplitContainer
             Me.splTopRight = New System.Windows.Forms.SplitContainer
             Me.prgProperties = New System.Windows.Forms.PropertyGrid
@@ -52,7 +54,8 @@
             Me.tmiShowProtectedMembers = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowSpecialMembers = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowStaticMembers = New System.Windows.Forms.ToolStripMenuItem
-            Me.rtbShort = New System.Windows.Forms.RichTextBox
+            Me.tmiShowBaseTypes = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowReferences = New System.Windows.Forms.ToolStripMenuItem
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -87,6 +90,7 @@
             '
             'lvwMembers
             '
+            Me.lvwMembers.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.cohItem})
             Me.lvwMembers.Dock = System.Windows.Forms.DockStyle.Fill
             Me.lvwMembers.Location = New System.Drawing.Point(0, 0)
             Me.lvwMembers.MultiSelect = False
@@ -95,7 +99,12 @@
             Me.lvwMembers.SmallImageList = Me.imlImages
             Me.lvwMembers.TabIndex = 1
             Me.lvwMembers.UseCompatibleStateImageBehavior = False
-            Me.lvwMembers.View = System.Windows.Forms.View.Details
+            Me.lvwMembers.View = System.Windows.Forms.View.List
+            '
+            'cohItem
+            '
+            Me.cohItem.Text = "Item"
+            Me.cohItem.Width = 208
             '
             'splMain
             '
@@ -132,6 +141,19 @@
             Me.splLeft.Size = New System.Drawing.Size(314, 505)
             Me.splLeft.SplitterDistance = 443
             Me.splLeft.TabIndex = 1
+            '
+            'rtbShort
+            '
+            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.None
+            Me.rtbShort.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.rtbShort.Location = New System.Drawing.Point(0, 0)
+            Me.rtbShort.MaxLength = 0
+            Me.rtbShort.Name = "rtbShort"
+            Me.rtbShort.ReadOnly = True
+            Me.rtbShort.Size = New System.Drawing.Size(314, 58)
+            Me.rtbShort.TabIndex = 0
+            Me.rtbShort.Text = ""
+            Me.rtbShort.WordWrap = False
             '
             'splRight
             '
@@ -197,7 +219,7 @@
             'tdbShow
             '
             Me.tdbShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-            Me.tdbShow.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiShowCTors, Me.tmiShowEvents, Me.tmiShowFields, Me.tmiShowGenericArguments, Me.tmiShowGlobalMembers, Me.tmiShowInheritedMembers, Me.tmiShowInitializers, Me.tmiShowInstanceMembers, Me.tmiShowInternalMembers, Me.tmiShowMethods, Me.tmiShowNestedTypes, Me.tmiShowPrivateMembers, Me.tmiShowProperties, Me.tmiShowProtectedMembers, Me.tmiShowSpecialMembers, Me.tmiShowStaticMembers})
+            Me.tdbShow.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiShowCTors, Me.tmiShowEvents, Me.tmiShowFields, Me.tmiShowGenericArguments, Me.tmiShowGlobalMembers, Me.tmiShowInheritedMembers, Me.tmiShowInitializers, Me.tmiShowInstanceMembers, Me.tmiShowInternalMembers, Me.tmiShowMethods, Me.tmiShowNestedTypes, Me.tmiShowPrivateMembers, Me.tmiShowProperties, Me.tmiShowProtectedMembers, Me.tmiShowSpecialMembers, Me.tmiShowReferences, Me.tmiShowBaseTypes, Me.tmiShowStaticMembers})
             Me.tdbShow.Image = CType(resources.GetObject("tdbShow.Image"), System.Drawing.Image)
             Me.tdbShow.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.tdbShow.Name = "tdbShow"
@@ -346,18 +368,23 @@
             Me.tmiShowStaticMembers.Size = New System.Drawing.Size(167, 22)
             Me.tmiShowStaticMembers.Text = "Static memebers"
             '
-            'rtbShort
+            'tmiShowBaseTypes
             '
-            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.None
-            Me.rtbShort.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.rtbShort.Location = New System.Drawing.Point(0, 0)
-            Me.rtbShort.MaxLength = 0
-            Me.rtbShort.Name = "rtbShort"
-            Me.rtbShort.ReadOnly = True
-            Me.rtbShort.Size = New System.Drawing.Size(314, 58)
-            Me.rtbShort.TabIndex = 0
-            Me.rtbShort.Text = ""
-            Me.rtbShort.WordWrap = False
+            Me.tmiShowBaseTypes.Checked = True
+            Me.tmiShowBaseTypes.CheckOnClick = True
+            Me.tmiShowBaseTypes.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowBaseTypes.Name = "tmiShowBaseTypes"
+            Me.tmiShowBaseTypes.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowBaseTypes.Text = "Base types"
+            '
+            'tmiShowReferences
+            '
+            Me.tmiShowReferences.Checked = True
+            Me.tmiShowReferences.CheckOnClick = True
+            Me.tmiShowReferences.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowReferences.Name = "tmiShowReferences"
+            Me.tmiShowReferences.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowReferences.Text = "References"
             '
             'ObjectBrowser
             '
@@ -389,29 +416,32 @@
         Protected WithEvents splMain As System.Windows.Forms.SplitContainer
         Protected WithEvents splRight As System.Windows.Forms.SplitContainer
         Protected WithEvents imlImages As System.Windows.Forms.ImageList
-        Friend WithEvents splTopRight As System.Windows.Forms.SplitContainer
-        Friend WithEvents prgProperties As System.Windows.Forms.PropertyGrid
-        Friend WithEvents splLeft As System.Windows.Forms.SplitContainer
-        Friend WithEvents lblObjType As System.Windows.Forms.Label
-        Friend WithEvents tosMenu As System.Windows.Forms.ToolStrip
-        Friend WithEvents tdbShow As System.Windows.Forms.ToolStripDropDownButton
-        Friend WithEvents tmiShowCTors As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowEvents As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowFields As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowGenericArguments As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowGlobalMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowInheritedMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowInitializers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowInternalMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowMethods As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowNestedTypes As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowPrivateMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowProperties As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowProtectedMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowSpecialMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowStaticMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents tmiShowInstanceMembers As System.Windows.Forms.ToolStripMenuItem
-        Friend WithEvents rtbShort As System.Windows.Forms.RichTextBox
+        Protected WithEvents cohItem As System.Windows.Forms.ColumnHeader
+        Protected WithEvents splTopRight As System.Windows.Forms.SplitContainer
+        Protected WithEvents prgProperties As System.Windows.Forms.PropertyGrid
+        Protected WithEvents splLeft As System.Windows.Forms.SplitContainer
+        Protected WithEvents lblObjType As System.Windows.Forms.Label
+        Protected WithEvents tosMenu As System.Windows.Forms.ToolStrip
+        Protected WithEvents tdbShow As System.Windows.Forms.ToolStripDropDownButton
+        Protected WithEvents tmiShowCTors As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowEvents As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowFields As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowGenericArguments As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowGlobalMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowInheritedMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowInitializers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowInternalMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowMethods As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowNestedTypes As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowPrivateMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowProperties As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowProtectedMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowSpecialMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowStaticMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowInstanceMembers As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents rtbShort As System.Windows.Forms.RichTextBox
+        Protected WithEvents tmiShowReferences As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowBaseTypes As System.Windows.Forms.ToolStripMenuItem
 
     End Class
 End Namespace

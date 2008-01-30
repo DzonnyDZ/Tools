@@ -64,6 +64,26 @@ Public Module TypeTools
         Else : Throw New ArgumentException(String.Format("Unknown underlying type {0}", EType.Name))
         End If
     End Function
+    ''' <summary>Gets name of given enumeration value</summary>
+    ''' <param name="value">Value to get name of</param>
+    ''' <returns>Name of value in enumeration or null if there is no constant with given value</returns>
+    <Extension()> Public Function GetName(ByVal value As [Enum]) As String
+        Return [Enum].GetName(value.GetType, value)
+    End Function
+    ''' <summary>Gets constant field that represents given enum value</summary>
+    ''' <param name="value">Value to get constant of</param>
+    ''' <returns><see cref="Reflection.FieldInfo"/> with constant value equal to <paramref name="value"/> or null if such field does not exist</returns>
+    <Extension()> Public Function GetConstant(ByVal value As [Enum]) As System.Reflection.FieldInfo
+        Dim name = [Enum].GetName(value.GetType, value)
+        If name Is Nothing Then Return Nothing
+        Return value.GetType.GetField(name)
+    End Function
+    ''' <summary>Gets value of enum in its unedlying type</summary>
+    ''' <param name="value">Enumeration value</param>
+    ''' <returns>Value of enum in its underlying type (so it no longer derives from <see cref="System.[Enum]"/>)</returns>
+    <Extension(), CLSCompliant(False)> Public Function GetValue(ByVal value As [Enum]) As IConvertible
+        Return GetValueInEnumBaseType(value.GetType, value)
+    End Function
     ''' <summary>Converts specified <see cref="IConvertible"/> to specified <see cref="[Enum]"/> (type-safe)</summary>
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>
     ''' <typeparam name="T">Type of enumeration (must derive from <see cref="System.Enum"/>)</typeparam>

@@ -510,20 +510,25 @@ Namespace ReflectionT
         ''' <param name="Member">Method to get image for</param>
         ''' <returns>16×16px image that graphicaly represents <paramref name="Member"/></returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
-''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
+        ''' <remarks><seealso cref="M:Tools.ReflectionT.CodeImages.GetImage(Tools.ReflectionT.CodeImages.Objects)"/></remarks>
         <Extension()> Public Function GetImage(ByVal Member As MethodBase) As Image
             If Member Is Nothing Then Throw New ArgumentNullException("Member")
             Dim Type As Objects
-            If Member.IsConstructor Then
+            If Member.MemberType = MemberTypes.Constructor Then
                 Type = Objects.CTor
             ElseIf Member.IsGenericMethodDefinition Then
                 Type = Objects.GenericMethodOpen
             ElseIf Member.IsGenericMethod Then
                 Type = Objects.GenericMethodClosed
+            ElseIf DirectCast(Member, MethodInfo).IsOperator Then
+                Type = Objects.Operator
             Else
                 Type = Objects.Method
             End If
-            Return GetImage(Type, Member.Attributes)
+            Dim MemberAttributes As ObjectModifiers = Member.Attributes
+            If Member.MemberType = MemberTypes.Method AndAlso Member.IsStatic AndAlso Member.IsDefined(GetType(ExtensionAttribute), False) Then _
+                MemberAttributes = MemberAttributes Or ObjectModifiers.Extension
+            Return GetImage(Type, MemberAttributes)
         End Function
 
         ''' <summary>Gets image that graphically represents given property</summary>
@@ -586,7 +591,7 @@ Namespace ReflectionT
                 Case FieldAttributes.FamORAssem : Overlay = ObjectModifiers.ProtectedFriend
                 Case FieldAttributes.Private : Overlay = ObjectModifiers.Private
             End Select
-            If Member.IsStatic Then Overlay = Overlay Or ObjectModifiers.Static
+            If Member.IsStatic AndAlso Not Member.IsLiteral Then Overlay = Overlay Or ObjectModifiers.Static
             If Member.IsInitOnly Then Overlay = Overlay Or ObjectModifiers.Sealed
             Return GetImage(Type, Overlay)
         End Function

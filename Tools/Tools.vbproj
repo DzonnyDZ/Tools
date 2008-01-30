@@ -191,6 +191,7 @@
     <Compile Include="misc\ICloneable%28of T%29.vb" />
     <Compile Include="misc\IReportsChange.vb" />
     <Compile Include="misc\Box.vb" />
+    <Compile Include="misc\misc.vb" />
     <Compile Include="misc\TimeSpanFormattable.vb" />
     <Compile Include="misc\TriBool.vb" />
     <Compile Include="misc\TypeTools.vb" />
