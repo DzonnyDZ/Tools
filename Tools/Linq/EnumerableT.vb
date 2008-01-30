@@ -1,7 +1,7 @@
 ﻿Imports System.Runtime.CompilerServices, System.Linq
 #If Config <= Nightly Then
 Namespace LinqT
-    ''' <summary>Tools for working with <see cref="IEnumerable(Of )"/></summary>
+    ''' <summary>Tools for working with <see cref="IEnumerable(Of T)"/></summary>
     Module EnumerableT
         ''' <summary>Creates union of all given collections</summary>
         ''' <param name="collections">Collections to create union of</param>
