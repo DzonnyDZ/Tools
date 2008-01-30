@@ -137,6 +137,7 @@
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
+    <Compile Include="ComponentModel\ReadOnlyObject.vb" />
     <Compile Include="ComponentModel\RestrictAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="ComponentModel\TypeConverter.vb" />
@@ -184,6 +185,7 @@
     <Compile Include="IO\FileSystemEnumerator.vb" />
     <Compile Include="IO\Path.vb" />
     <Compile Include="IO\StreamTools.vb" />
+    <Compile Include="Linq\EnumerableT.vb" />
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />

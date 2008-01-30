@@ -1,6 +1,6 @@
 ﻿Imports Tools.CollectionsT.GenericT, Tools.ReflectionT
 Imports System.Windows.Forms, System.Reflection
-Imports System.Drawing, System.Linq
+Imports System.Drawing, System.Linq, Tools.LinqT.EnumerableT
 Imports Tools.ComponentModelT
 #If Config <= Nightly Then
 Namespace WindowsT.FormsT
@@ -16,7 +16,6 @@ Namespace WindowsT.FormsT
             Assemblies.AllowAddCancelableEventsHandlers = False
             AddHandler ReflectionT.ImageRequested, AddressOf ImageRequested
             InitializeComponent()
-            walkcontrol(prgProperties)
             Initializing = False
             tvwObjects.Select()
         End Sub
@@ -484,7 +483,7 @@ Namespace WindowsT.FormsT
                 tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, [Module]), SignatureFlags.ShortNameOnly)
                 GetImage(CodeImages.Objects.Module, ObjectModifiers.None)
             ElseIf TypeOf Obj Is NamespaceInfo Then
-                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo), SignatureFlags.ShortNameOnly)
+                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo), SignatureFlags.LongName)
                 GetImage(CodeImages.Objects.Namespace, ObjectModifiers.None)
             ElseIf TypeOf Obj Is MemberInfo Then
                 tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo), SignatureFlags.Short)
@@ -590,7 +589,7 @@ Namespace WindowsT.FormsT
         ''' <param name="Item">Item itself (can be <see cref="TreeNode"/> or <see cref="ListViewItem"/>)</param>
         ''' <param name="ItemTag">Tag of item - selected object</param>
         Protected Overridable Sub OnSelectedItemChanged(ByVal Control As Control, ByVal Item As Object, ByVal ItemTag As Object)
-            prgProperties.SelectedObject = ItemTag
+            prgProperties.SelectedObject = New ReadOnlyObject(ItemTag)
             lblObjType.Text = ItemTag.GetType.Name
         End Sub
         ''' <summary>Contains value oft teh <see cref="CurrentSelectedItem"/> property</summary>
@@ -750,6 +749,10 @@ Namespace WindowsT.FormsT
                 ret.AddRange(From t In DirectCast(obj, NamespaceInfo).GetTypes Where ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True) Order By t.Name Ascending Select CObj(t))
             ElseIf TypeOf obj Is Type Then 'Type
                 With DirectCast(obj, Type)
+                    'Base types
+                    If ShowBaseTypes Then
+                        ret.Add(New KeyValuePair(Of String, Object)(kpBaseTypes, obj))
+                    End If
                     'Generic arguments
                     If ShowGenericArguments Then
                         ret.AddRange(From ga In .GetGenericArguments Select CObj(ga))
@@ -820,10 +823,8 @@ Namespace WindowsT.FormsT
                     Select Case .Key
                         Case kpBaseTypes, kpBaseType  'Base types
                             With DirectCast(.Value, Type)
-                                If .BaseType IsNot Nothing Then ret.Add(.BaseType)
-                                ret.AddRange( _
-                                    From b In .GetInterfaces() _
-                                    Order By b.Name Select CObj(New KeyValuePair(Of String, Object)(kpBaseType, b)))
+                                If .BaseType IsNot Nothing Then ret.Add(New KeyValuePair(Of String, Object)(kpBaseType, .BaseType))
+                                ret.AddRange(From ii In .GetImplementedInterfaces Select New KeyValuePair(Of String, Object)(kpBaseType, ii))
                             End With
                         Case kpReferences 'References
                             With DirectCast(.Value, Assembly)
@@ -857,27 +858,29 @@ Namespace WindowsT.FormsT
             Return True
         End Function
 
-        Private Sub prgProperties_ControlAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ControlEventArgs) 'Handles prgProperties.ControlAdded
-            AddHandler e.Control.ControlAdded, AddressOf prgProperties_ControlAdded
-            AddHandler e.Control.ControlRemoved, AddressOf prgProperties_ControlRemoved
-            If TypeOf e.Control Is TextBoxBase Then
-                DirectCast(e.Control, TextBoxBase).ReadOnly = True
-            End If
-            If sender IsNot Nothing Then Debug.Print("{0}{1}{2}", e.Control.GetType.Name, vbTab, e.Control.Name) 'TODO:Remove
-        End Sub
-        ''' <summary>For all controls in given control including given control itself recursively calls <see cref="prgProperties_ControlAdded"/></summary>
-        ''' <param name="control">Root control</param>
-        Private Sub walkcontrol(ByVal control As Control)
-            Me.prgProperties_ControlAdded(Nothing, New ControlEventArgs(control))
-            Debug.Print("{0}{1}{2}", control.GetType.Name, vbTab, control.Name) 'TODO:Remove
-            For Each c2 In control.Controls
-                walkcontrol(c2)
-            Next
-        End Sub
+        'Private Sub prgProperties_ControlAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.ControlEventArgs) 'Handles prgProperties.ControlAdded
+        '    AddHandler e.Control.ControlAdded, AddressOf prgProperties_ControlAdded
+        '    AddHandler e.Control.ControlRemoved, AddressOf prgProperties_ControlRemoved
+        '    If TypeOf e.Control Is TextBoxBase Then
+        '        DirectCast(e.Control, TextBoxBase).ReadOnly = True
+        '    ElseIf TypeOf e.Control Is Button Then
+        '        e.Control.Enabled = False
+        '    End If
+        '    If sender IsNot Nothing Then Debug.Print("{0}{1}{2}", e.Control.GetType.Name, vbTab, e.Control.Name) 'TODO:Remove
+        'End Sub
+        '''' <summary>For all controls in given control including given control itself recursively calls <see cref="prgProperties_ControlAdded"/></summary>
+        '''' <param name="control">Root control</param>
+        'Private Sub walkcontrol(ByVal control As Control)
+        '    Me.prgProperties_ControlAdded(Nothing, New ControlEventArgs(control))
+        '    Debug.Print("{0}{1}{2}", control.GetType.Name, vbTab, control.Name) 'TODO:Remove
+        '    For Each c2 In control.Controls
+        '        walkcontrol(c2)
+        '    Next
+        'End Sub
 
-        Private Sub prgProperties_ControlRemoved(ByVal sender As Object, ByVal e As System.Windows.Forms.ControlEventArgs) Handles prgProperties.ControlRemoved
-            RemoveHandler e.Control.ControlAdded, AddressOf prgProperties_ControlAdded
-        End Sub
+        'Private Sub prgProperties_ControlRemoved(ByVal sender As Object, ByVal e As System.Windows.Forms.ControlEventArgs) Handles prgProperties.ControlRemoved
+        '    RemoveHandler e.Control.ControlAdded, AddressOf prgProperties_ControlAdded
+        'End Sub
 
         Private Sub lvwMembers_Enter(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwMembers.Enter
             If Initializing Then Exit Sub

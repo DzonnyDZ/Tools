@@ -1,11 +1,13 @@
 ﻿Imports System.Reflection, System.Runtime.InteropServices
-Imports System.Runtime.CompilerServices
+Imports System.Runtime.CompilerServices, System.Linq, Tools.LinqT
 
 #If Config <= Nightly Then 'Stage:Nightly
 'ASAP
 Namespace ReflectionT
     ''' <summary>Provides interface of object that provides string representation of various reflection object</summary>
     Public Interface ISignatureProvider
+        ''' <summary>Gets name of current provider</summary>
+        ReadOnly Property Name$()
         ''' <summary>Gets string representation of an assembly name</summary>
         ''' <param name="Assembly">Assembly to represent</param>
         ''' <param name="Flags">Controls how the signature will be rendered</param>
@@ -85,9 +87,21 @@ Namespace ReflectionT
         AllShortNames = NoEmptyBraces << 1
         ''' <summary>Instructs provider not to create multiline code</summary>
         NoMultiline = AllShortNames << 1
+        ''' <summary>Instructs provider to create only such fragments that are supported by provider's language.</summary>
+        ''' <remarks> This does not necesarily mean that provider will provide code that is valid in target language (i.e. if it is also instructed to ommit element type definition (<see cref="ObjectType"/> is not set) or omit empty braces (<see cref="NoEmptyBraces"/>).
+        ''' This mean that unsupported constructs will not be provided - it will be writtent in other way. I.e. VB does not support overloading of <c>AndAlso</c> (&amp;&amp; in C#) operator, so in strict mode the provider will return <c>Public Shared Function op_LogicalAnd</c> instead of <c>Public Shared Operator AndAlso</c>.</remarks>
+        Strict = NoMultiline << 1
     End Enum
     ''' <summary>Provides string representation of various reflection object using Visual Basic syntax</summary>
+    <DebuggerDisplay("{Name} signature provider")> _
     Public NotInheritable Class VisualBasicSignatureProvider : Implements ISignatureProvider
+        ''' <summary>Gets name of current provider</summary>
+        ''' <returns>"Visual Basic 9"</returns>
+        ReadOnly Property Name$() Implements ISignatureProvider.Name
+            Get
+                Return "Visual Basic 9"
+            End Get
+        End Property
         ''' <summary>Gets string representation of an assembly name</summary>
         ''' <param name="Assembly">Assembly to represent</param>
         ''' <param name="Flags">Controls how the signature will be rendered</param>
@@ -96,7 +110,7 @@ Namespace ReflectionT
         Public Function GetSignature(ByVal Assembly As System.Reflection.AssemblyName, Optional ByVal Flags As SignatureFlags = SignatureFlags.ShortNameOnly) As String Implements ISignatureProvider.GetSignature
             If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
             Dim ret As New System.Text.StringBuilder
-            If Flags And SignatureFlags.ObjectType Then ret.Append("Assembly ")
+            If Flags And SignatureFlags.ObjectType Then ret.Append(If(Flags And SignatureFlags.Strict, "'", "") & "Assembly ")
             If Flags And SignatureFlags.LongName Then
                 ret.Append(Assembly.FullName)
             Else
@@ -112,7 +126,7 @@ Namespace ReflectionT
         Public Function GetSignature(ByVal Assembly As Assembly, Optional ByVal Flags As SignatureFlags = SignatureFlags.ShortNameOnly) As String Implements ISignatureProvider.GetSignature
             If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
             Dim ret As New System.Text.StringBuilder
-            If Flags And SignatureFlags.ObjectType Then ret.Append("Assembly ")
+            If Flags And SignatureFlags.ObjectType Then ret.Append(If(Flags And SignatureFlags.Strict, "'", "") & "Assembly ")
             If Flags And SignatureFlags.LongName Then
                 ret.Append(Assembly.FullName)
             Else
@@ -149,11 +163,13 @@ Namespace ReflectionT
                     For Each cpar In attr.ConstructorArguments
                         If i > 0 Then this.Append(", ")
                         RepresentValue(cpar.Value, flags, this)
+                        i += 1
                     Next cpar
                     For Each npar In attr.NamedArguments
                         If i > 0 Then this.Append(", ")
                         this.Append(npar.MemberInfo.Name & " := ")
                         RepresentValue(npar.TypedValue.Value, flags, this)
+                        i += 1
                     Next npar
                     If attr.ConstructorArguments.Count > 0 OrElse attr.NamedArguments.Count > 0 OrElse Not CBool(flags And SignatureFlags.NoEmptyBraces) Then this.Append(")")
                     Outattr.Add(this)
@@ -163,14 +179,14 @@ Namespace ReflectionT
             If Outattr.Count > 0 Then
                 Dim Prefix = If(Way = CustomAttributeFlags.Module, "Module", "Assembly")
                 If (flags And SignatureFlags.NoMultiline) AndAlso Way Then
-                    ret.AppendFormat(ic, "<{0}: ", Prefix)
+                    ret.AppendFormat(ic, "{1}<{0}: ", Prefix, If((flags And SignatureFlags.Strict) AndAlso Way = CustomAttributeFlags.Module, "'", ""))
                 ElseIf flags And SignatureFlags.NoMultiline Then
                     ret.Append("<")
                 End If
                 Dim i As Integer = 0
                 For Each attr In Outattr
                     If Not CBool(flags And SignatureFlags.NoMultiline) AndAlso Way Then
-                        ret.AppendFormat(ic, "<{0}: ", Prefix)
+                        ret.AppendFormat(ic, "{1}<{0}: ", Prefix, If((flags And SignatureFlags.Strict) AndAlso Way = CustomAttributeFlags.Module, "'", ""))
                     ElseIf Not CBool(flags And SignatureFlags.NoMultiline) Then
                         ret.Append("<")
                     ElseIf i > 0 Then : ret.Append(", ")
@@ -264,6 +280,10 @@ Namespace ReflectionT
                 RepresentValue("{" & val.ToString & "}", Flags, ret)
             End If
         End Sub
+        ''' <summary>Operator suported for displaying signature by this provider</summary>
+        Private Shared SupportedOperators As Operators() = {Operators.Addition, Operators.AditionAssignment, Operators.AddressOf, Operators.BitwiseAnd, Operators.BitwiseAndAssignment, Operators.BitwiseOr, Operators.BitwiseOrAssignment, Operators.Comma, Operators.Concatenate, Operators.Decrement, Operators.Division, Operators.DivisionAssignment, Operators.Equality, Operators.ExclusiveOr, Operators.ExclusiveOrAssignment, Operators.Explicit, Operators.Exponent, Operators.False, Operators.GreaterThan, Operators.GreaterThanOrEqual, Operators.Implicit, Operators.Increment, Operators.Inequality, Operators.IntegerDivision, Operators.LeftShift, Operators.LeftShiftAssignment, Operators.LessThan, Operators.LessThanOrEqual, Operators.LogicalAnd, Operators.LogicalOr, Operators.Modulus, Operators.ModulusAssignment, Operators.MultiplicationAssignment, Operators.Multiply, Operators.OnesComplement, Operators.RightShifAssignment, Operators.RightShift, Operators.Subtraction, Operators.SubtractionAssignment, Operators.True, Operators.UnaryNegation, Operators.UnaryPlus}
+        ''' <summary>Operator suported for displaying signature by this provider in strict mode</summary>
+        Private Shared StrictOperators As Operators() = {Operators.Addition, Operators.BitwiseAnd, Operators.BitwiseOr, Operators.Concatenate, Operators.Division, Operators.Equality, Operators.ExclusiveOr, Operators.Explicit, Operators.Exponent, Operators.False, Operators.GreaterThan, Operators.GreaterThanOrEqual, Operators.Implicit, Operators.Inequality, Operators.IntegerDivision, Operators.LeftShift, Operators.LessThan, Operators.LessThanOrEqual, Operators.Modulus, Operators.Multiply, Operators.OnesComplement, Operators.RightShift, Operators.Subtraction, Operators.True, Operators.UnaryNegation, Operators.UnaryPlus}
 
         ''' <summary>Gets string representation of a member</summary>
         ''' <param name="Member">Member to represent</param>
@@ -275,7 +295,7 @@ Namespace ReflectionT
             Dim ret As New System.Text.StringBuilder
             Dim EmptyBraces As String = If(Flags And SignatureFlags.NoEmptyBraces, "", "()")
             If (Flags And SignatureFlags.SomeAttributes) OrElse (Flags And SignatureFlags.AllAttributes) Then
-                AppendCustomAttributes(CustomAttributeData.GetCustomAttributes(Member), ret, Flags, True, True, _
+                AppendCustomAttributes(CustomAttributeData.GetCustomAttributes(Member), ret, Flags, False, True, _
                     Function(at As Type) _
                         (Member.MemberType = MemberTypes.Method AndAlso at.Equals(GetType(ExtensionAttribute))) OrElse _
                         ((Member.MemberType = MemberTypes.TypeInfo OrElse Member.MemberType = MemberTypes.NestedType) AndAlso DirectCast(Member, Type).IsEnum AndAlso at.Equals(GetType(FlagsAttribute))) OrElse _
@@ -329,6 +349,9 @@ Namespace ReflectionT
             End If
             'Name
             Dim MemberName$
+            Dim MyOperator As Operators = Operators.no
+            If Member.MemberType = MemberTypes.Method Then MyOperator = DirectCast(Member, MethodInfo).IsOperator
+            Dim IsOperator = Member.MemberType = MemberTypes.Method AndAlso If(Flags And SignatureFlags.Strict, StrictOperators, SupportedOperators).Contains(MyOperator)
             If Flags And SignatureFlags.LongName Then
                 Select Case Member.MemberType
                     Case MemberTypes.TypeInfo, MemberTypes.NestedType
@@ -339,7 +362,9 @@ Namespace ReflectionT
                         Dim tnb As New System.Text.StringBuilder
                         If Member.DeclaringType IsNot Nothing Then RepresentTypeName(Member.DeclaringType, tnb, Flags)
                         With DirectCast(Member, MethodInfo)
-                            If .IsGenericMethodDefinition Then
+                            If IsOperator Then
+                                MemberName = tnb.ToString & OperatorName(MyOperator)
+                            ElseIf .IsGenericMethodDefinition Then
                                 Dim muggle = String.Format(System.Globalization.CultureInfo.InvariantCulture, "`{0}", .GetGenericArguments.Length)
                                 If .Name.EndsWith(muggle) Then
                                     MemberName = tnb.ToString & "." & Member.Name.Substring(0, Member.Name.Length - muggle.Length)
@@ -356,7 +381,9 @@ Namespace ReflectionT
                         MemberName = tnb.ToString & "." & Member.Name
                 End Select
             Else
-                If Member.MemberType = MemberTypes.Constructor Then
+                If IsOperator Then
+                    MemberName = OperatorName(MyOperator)
+                ElseIf Member.MemberType = MemberTypes.Constructor Then
                     MemberName = "New"
                 Else
                     MemberName = Member.Name
@@ -377,12 +404,16 @@ Namespace ReflectionT
                     Case MemberTypes.Property : ret.Append(String.Format("Property {0}", MemberName))
                     Case MemberTypes.Method
                         With DirectCast(Member, MethodInfo)
-                            If .ReturnType.Equals(GetType(System.Void)) Then
-                                ret.Append("Sub ")
+                            If SupportedOperators.Contains(.IsOperator) Then
+                                ret.Append("Operator ")
                             Else
-                                ret.Append("Function ")
+                                If .ReturnType.Equals(GetType(System.Void)) Then
+                                    ret.Append("Sub ")
+                                Else
+                                    ret.Append("Function ")
+                                End If
+                                ret.Append(MemberName)
                             End If
-                            ret.Append(MemberName)
                         End With
                     Case MemberTypes.NestedType, MemberTypes.TypeInfo
                         With DirectCast(Member, Type)
@@ -392,7 +423,7 @@ Namespace ReflectionT
                                 ret.Append("Enum ")
                             ElseIf .IsValueType Then
                                 ret.Append("Structure ")
-                            ElseIf GetType([Delegate]).IsAssignableFrom(Member) Then
+                            ElseIf GetType([Delegate]).IsAssignableFrom(Member) AndAlso Not .IsAbstract Then
                                 ret.Append("Delegate ")
                                 If .GetMethod("Invoke", BindingFlags.Instance Or BindingFlags.NonPublic Or BindingFlags.Public).ReturnType.Equals(GetType(System.Void)) Then
                                     ret.Append("Sub ")
@@ -451,25 +482,27 @@ Namespace ReflectionT
             If (Flags And SignatureFlags.Signature) OrElse (Flags And SignatureFlags.Type) Then
                 'Signature
                 'Method and delegate
-                If Member.MemberType = MemberTypes.Constructor OrElse Member.MemberType = MemberTypes.Method OrElse ((Member.MemberType = MemberTypes.TypeInfo OrElse Member.MemberType = MemberTypes.NestedType) AndAlso GetType([Delegate]).IsAssignableFrom(Member)) Then
+                If Member.MemberType = MemberTypes.Constructor OrElse Member.MemberType = MemberTypes.Method OrElse ((Member.MemberType = MemberTypes.TypeInfo OrElse Member.MemberType = MemberTypes.NestedType) AndAlso GetType([Delegate]).IsAssignableFrom(Member) AndAlso Not DirectCast(Member, Type).IsAbstract) Then
                     Dim m As MethodBase = If(Member.MemberType = MemberTypes.Method OrElse Member.MemberType = MemberTypes.Constructor, _
                         Member, _
                         DirectCast(Member, Type).GetMethod("Invoke", BindingFlags.Instance Or BindingFlags.Public Or BindingFlags.NonPublic))
-                    If Flags And SignatureFlags.Signature Then
-                        If m.GetParameters.Length > 0 OrElse Not CBool(Flags And SignatureFlags.NoEmptyBraces) Then
-                            ret.Append("(")
-                            AppendSignature(m.GetParameters, Flags, ret)
-                            ret.Append(")")
-                        End If
-                    End If
-                    If Flags And SignatureFlags.Type Then
-                        'Return type
-                        If m.MemberType = MemberTypes.Method AndAlso Not DirectCast(m, MethodInfo).ReturnType.Equals(GetType(System.Void)) Then
-                            ret.Append(" As ")
-                            If Flags And SignatureFlags.AllAttributes Then
-                                AppendCustomAttributes(CustomAttributeData.GetCustomAttributes(DirectCast(m, MethodInfo).ReturnParameter), ret, Flags, False, False, Nothing)
+                    If m IsNot Nothing Then
+                        If Flags And SignatureFlags.Signature Then
+                            If m.GetParameters.Length > 0 OrElse Not CBool(Flags And SignatureFlags.NoEmptyBraces) Then
+                                ret.Append("(")
+                                AppendSignature(m.GetParameters, Flags, ret)
+                                ret.Append(")")
                             End If
-                            RepresentTypeName(DirectCast(m, MethodInfo).ReturnType, ret, Flags)
+                        End If
+                        If Flags And SignatureFlags.Type Then
+                            'Return type
+                            If m.MemberType = MemberTypes.Method AndAlso Not DirectCast(m, MethodInfo).ReturnType.Equals(GetType(System.Void)) Then
+                                ret.Append(" As ")
+                                If Flags And SignatureFlags.AllAttributes Then
+                                    AppendCustomAttributes(CustomAttributeData.GetCustomAttributes(DirectCast(m, MethodInfo).ReturnParameter), ret, Flags, False, False, Nothing)
+                                End If
+                                RepresentTypeName(DirectCast(m, MethodInfo).ReturnType, ret, Flags)
+                            End If
                         End If
                     End If
                 ElseIf ((Member.MemberType = MemberTypes.TypeInfo OrElse Member.MemberType = MemberTypes.NestedType) AndAlso DirectCast(Member, Type).IsEnum) AndAlso (Flags And SignatureFlags.Type) Then
@@ -514,12 +547,13 @@ Namespace ReflectionT
                                 ret.Append(If(Flags And SignatureFlags.NoMultiline, " : ", vbCrLf & vbTab) & "Inherits ")
                                 RepresentTypeName(.BaseType, ret, Flags)
                             End If
-                            If .GetInterfaces.Length > 0 Then
+                            Dim ImmediateInterfaces = .GetImplementedInterfaces
+                            If Not ImmediateInterfaces.IsEmpty Then
                                 ret.Append(If(Flags And SignatureFlags.NoMultiline, " : ", vbCrLf & vbTab) & "Implements ")
                                 Dim i As Integer = 0
-                                For Each intf In .GetInterfaces
+                                For Each intf In ImmediateInterfaces
                                     If i > 0 Then ret.Append(", ")
-                                    RepresentTypeName(intf.BaseType, ret, Flags)
+                                    RepresentTypeName(intf, ret, Flags)
                                     i += 1
                                 Next intf
                             End If
@@ -527,6 +561,65 @@ Namespace ReflectionT
                 End Select
             End If
             Return ret.ToString
+        End Function
+        ''' <summary>Converts any operator tor its string representation</summary>
+        ''' <param name="op">Operator to convert</param>
+        ''' <returns>Operator string representation in Visual Basic.</returns>
+        ''' <remarks>Works also for operators that cannot be overloaded or even don't exist in VB.</remarks>
+        Private Shared Function OperatorName(ByVal op As Operators) As String
+            Select Case op
+                Case Operators.Addition : Return "+"
+                Case Operators.AddressOf : Return "AddressOf" 'Cannot be overloaded
+                Case Operators.AditionAssignment : Return "+=" 'Cannot be overloaded
+                Case Operators.Assign : Return ":=" 'Is not used as assignment
+                Case Operators.BitwiseAnd : Return "And"
+                Case Operators.BitwiseAndAssignment : Return "And=" 'Does not exist
+                Case Operators.BitwiseOr : Return "Or"
+                Case Operators.BitwiseOrAssignment : Return "Or=" 'Does not exist
+                Case Operators.Comma : Return "," 'Does not exist
+                Case Operators.Concatenate : Return "&"
+                Case Operators.Decrement : Return "--" 'Does not exist
+                Case Operators.Division : Return "/"
+                Case Operators.DivisionAssignment : Return "/=" 'Cannot be overloaeed
+                Case Operators.Equality : Return "="
+                Case Operators.ExclusiveOr : Return "Xor"
+                Case Operators.ExclusiveOrAssignment : Return "Xor=" 'Does not exist
+                Case Operators.Explicit : Return "Narrowing CType"
+                Case Operators.Exponent : Return "^"
+                Case Operators.False : Return "IsFalse"
+                Case Operators.GreaterThan : Return ">"
+                Case Operators.GreaterThanOrEqual : Return ">="
+                Case Operators.Implicit : Return "Widening CType"
+                Case Operators.Increment : Return "++" 'Does not exist
+                Case Operators.Inequality : Return "<>"
+                Case Operators.IntegerDivision : Return "\"
+                Case Operators.LeftShift : Return "<<"
+                Case Operators.LeftShiftAssignment : Return "<<=" 'Cannot be overloaded
+                Case Operators.LessThan : Return "<"
+                Case Operators.LessThanOrEqual : Return "<="
+                Case Operators.LogicalAnd : Return "AndAlso" 'Cannot be overloaded
+                Case Operators.LogicalNot : Return "Neg" 'Nothing like this exists
+                Case Operators.LogicalOr : Return "OrElse" 'Cannot be overloaded
+                Case Operators.MemberSelection : Return "." 'Cannot be overloaded and in fact has not the same meaning
+                Case Operators.Modulus : Return "Mod"
+                Case Operators.ModulusAssignment : Return "Mod=" 'Does not exist
+                Case Operators.MultiplicationAssignment : Return "*=" 'Cannot be overloaded
+                Case Operators.Multiply : Return "*"
+                Case Operators.OnesComplement : Return "Not"
+                Case Operators.PointerDereference : Return "OfAddress" 'Nothing like this exists
+                Case Operators.PointerToMemberSelection : Return "AddressOf." 'Does not exists
+                Case Operators.RightShifAssignment : Return ">>=" 'Cannot be overloaded
+                Case Operators.RightShift : Return ">>"
+                Case Operators.SignedRightShif : Return ">>S" 'Nothing like this exists
+                Case Operators.Subtraction : Return "-"
+                Case Operators.SubtractionAssignment : Return "-=" 'Cannot be overloaded
+                Case Operators.True : Return "IsTrue"
+                Case Operators.UnaryNegation : Return "-"
+                Case Operators.UnaryPlus : Return "+"
+                Case Operators.UnsignedRightShift : Return ">>U" 'Nothing like this exists
+                Case Operators.UnsignedRightShiftAssignment : Return ">>U=" 'Nothign like this exists
+                Case Else : Return String.Format("op{0:d}", op)
+            End Select
         End Function
 
         ''' <summary>Appends method signature to <see cref="System.Text.StringBuilder"/></summary>
@@ -577,7 +670,7 @@ Namespace ReflectionT
                 Dim i As Integer = 0
                 For Each Constraint In TypeConstraints
                     If i > 0 Then ret.Append(", ")
-                    RepresentTypeName(Constraint, ret, flags)
+                    RepresentTypeName(Constraint, ret, Flags)
                     i += 1
                 Next Constraint
             End If
@@ -616,9 +709,11 @@ Namespace ReflectionT
                 ret.Append("(")
                 For i = 0 To Type.GetArrayRank - 1
                     If i > 0 Then ret.Append(", ")
-                    Type.GetArrayRank()
                 Next i
                 ret.Append(")")
+                Exit Sub
+            ElseIf Type.IsByRef OrElse Type.IsPointer Then
+                Stop
             ElseIf Type.IsNested Then
                 RepresentTypeName(Type.DeclaringType, ret, Flags)
                 ret.Append(".")
@@ -632,7 +727,7 @@ Namespace ReflectionT
                 Else
                     ret.Append(Type.Name)
                 End If
-                ret.Append("Of ")
+                ret.Append("(Of ")
                 Dim i As Integer = 0
                 For Each GPar In Type.GetGenericArguments
                     If i > 0 Then ret.Append(", ")
@@ -713,7 +808,7 @@ Namespace ReflectionT
             Else
                 ret.Append([Namespace].ShortName)
             End If
-            Return ret.tostring
+            Return ret.ToString
         End Function
     End Class
 End Namespace

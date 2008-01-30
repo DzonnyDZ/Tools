@@ -53,9 +53,9 @@
             Me.tmiShowProperties = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowProtectedMembers = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowSpecialMembers = New System.Windows.Forms.ToolStripMenuItem
-            Me.tmiShowStaticMembers = New System.Windows.Forms.ToolStripMenuItem
-            Me.tmiShowBaseTypes = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowReferences = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowBaseTypes = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowStaticMembers = New System.Windows.Forms.ToolStripMenuItem
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -144,8 +144,9 @@
             '
             'rtbShort
             '
-            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.None
+            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
             Me.rtbShort.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.rtbShort.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
             Me.rtbShort.Location = New System.Drawing.Point(0, 0)
             Me.rtbShort.MaxLength = 0
             Me.rtbShort.Name = "rtbShort"
@@ -359,14 +360,14 @@
             Me.tmiShowSpecialMembers.Size = New System.Drawing.Size(167, 22)
             Me.tmiShowSpecialMembers.Text = "Special members"
             '
-            'tmiShowStaticMembers
+            'tmiShowReferences
             '
-            Me.tmiShowStaticMembers.Checked = True
-            Me.tmiShowStaticMembers.CheckOnClick = True
-            Me.tmiShowStaticMembers.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.tmiShowStaticMembers.Name = "tmiShowStaticMembers"
-            Me.tmiShowStaticMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowStaticMembers.Text = "Static memebers"
+            Me.tmiShowReferences.Checked = True
+            Me.tmiShowReferences.CheckOnClick = True
+            Me.tmiShowReferences.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowReferences.Name = "tmiShowReferences"
+            Me.tmiShowReferences.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowReferences.Text = "References"
             '
             'tmiShowBaseTypes
             '
@@ -377,14 +378,14 @@
             Me.tmiShowBaseTypes.Size = New System.Drawing.Size(167, 22)
             Me.tmiShowBaseTypes.Text = "Base types"
             '
-            'tmiShowReferences
+            'tmiShowStaticMembers
             '
-            Me.tmiShowReferences.Checked = True
-            Me.tmiShowReferences.CheckOnClick = True
-            Me.tmiShowReferences.CheckState = System.Windows.Forms.CheckState.Checked
-            Me.tmiShowReferences.Name = "tmiShowReferences"
-            Me.tmiShowReferences.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowReferences.Text = "References"
+            Me.tmiShowStaticMembers.Checked = True
+            Me.tmiShowStaticMembers.CheckOnClick = True
+            Me.tmiShowStaticMembers.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowStaticMembers.Name = "tmiShowStaticMembers"
+            Me.tmiShowStaticMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowStaticMembers.Text = "Static memebers"
             '
             'ObjectBrowser
             '

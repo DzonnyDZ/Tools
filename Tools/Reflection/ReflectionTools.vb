@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Reflection
-Imports System.Linq
+Imports System.Linq, Tools.LinqT
 'ASAP:
 Namespace ReflectionT
     ''' <summary>Various reflection tools</summary>
@@ -394,6 +394,19 @@ Namespace ReflectionT
         <Extension()> Function IsAssignment(ByVal [Operator] As Operators) As Boolean
             Return [Operator] And Operators_masks.Assignment
         End Function
+        ''' <summary>Gets interfaces implemented by given type</summary>
+        ''' <param name="Type">Type to get interfaces from</param>
+        ''' <param name="Inherit">True to get all interfaces, false to get only interfaces implemented by this type directly</param>
+        ''' <returns>Interfaces inplemented by this type. Whether all or only those implemented by this type directly depends on <paramref name="Inherit"/>.</returns>
+        <Extension()> Public Function GetImplementedInterfaces(ByVal Type As Type, Optional ByVal Inherit As Boolean = False) As IEnumerable(Of Type)
+            If Inherit Then Return Type.GetInterfaces
+            Return From MyInterface In Type.GetInterfaces _
+                Where Not UnionAll( _
+                    From MyInterface2 In Type.GetInterfaces _
+                        Select DirectCast(MyInterface2.GetInterfaces, IEnumerable(Of Type)) _
+                    ).Contains(MyInterface) _
+                Select MyInterface
+        End Function
     End Module
     ''' <summary>Represents reflection namespace</summary>
     Public Class NamespaceInfo
@@ -521,7 +534,7 @@ Namespace ReflectionT
         ''' <summary>Signed right shift (binary)</summary>
         SignedRightShif = &H1802
         ''' <summary>Unsigned right shift (binary)</summary>
-        UnsignedRightShif = &H1902
+        UnsignedRightShift = &H1902
         ''' <summary>Equality comparison (binary, like C++/C# ==, VB =)</summary>
         Equality = &H1A02
         ''' <summary>Greater than comparison (binary, like C++/C#/VB >)</summary>
@@ -535,7 +548,7 @@ Namespace ReflectionT
         ''' <summary>Less than or equal comparison (binary, like C++/C#/VB &lt;=)</summary>
         LessThanOrEqual = &H200
         ''' <summary>Self-assignment of unsigned right shift (binary)</summary>
-        UnsignedRightShiftAssignmen = &H2012
+        UnsignedRightShiftAssignment = &H2012
         ''' <summary>Member selection (binary, like C++ ->)</summary>
         MemberSelection = &H2102
         ''' <summary>Self-assignment of right shift (binary, like C++/C#/VB >>=)</summary>
