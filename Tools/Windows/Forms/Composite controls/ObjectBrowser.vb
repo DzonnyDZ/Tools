@@ -861,7 +861,7 @@ Namespace WindowsT.FormsT
                         Case kpBaseTypes, kpBaseType  'Base types
                             With DirectCast(.Value, Type)
                                 If .BaseType IsNot Nothing Then ret.Add(New KeyValuePair(Of String, Object)(kpBaseType, .BaseType))
-                                ret.AddRange(From ii In .GetImplementedInterfaces Select CObj(New KeyValuePair(Of String, Object))(kpBaseType, ii))
+                                ret.AddRange(From ii In .GetImplementedInterfaces Select CObj(New KeyValuePair(Of String, Object)(kpBaseType, ii)))
                             End With
                         Case kpReferences 'References
                             With DirectCast(.Value, Assembly)
