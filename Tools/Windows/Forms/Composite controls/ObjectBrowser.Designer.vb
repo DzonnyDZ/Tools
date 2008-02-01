@@ -56,6 +56,7 @@
             Me.tmiShowReferences = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowBaseTypes = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiShowStaticMembers = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiShowFlatNamespaces = New System.Windows.Forms.ToolStripMenuItem
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -220,11 +221,11 @@
             'tdbShow
             '
             Me.tdbShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-            Me.tdbShow.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiShowCTors, Me.tmiShowEvents, Me.tmiShowFields, Me.tmiShowGenericArguments, Me.tmiShowGlobalMembers, Me.tmiShowInheritedMembers, Me.tmiShowInitializers, Me.tmiShowInstanceMembers, Me.tmiShowInternalMembers, Me.tmiShowMethods, Me.tmiShowNestedTypes, Me.tmiShowPrivateMembers, Me.tmiShowProperties, Me.tmiShowProtectedMembers, Me.tmiShowSpecialMembers, Me.tmiShowReferences, Me.tmiShowBaseTypes, Me.tmiShowStaticMembers})
+            Me.tdbShow.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiShowCTors, Me.tmiShowEvents, Me.tmiShowFields, Me.tmiShowGenericArguments, Me.tmiShowGlobalMembers, Me.tmiShowInheritedMembers, Me.tmiShowInitializers, Me.tmiShowInstanceMembers, Me.tmiShowInternalMembers, Me.tmiShowMethods, Me.tmiShowNestedTypes, Me.tmiShowPrivateMembers, Me.tmiShowProperties, Me.tmiShowProtectedMembers, Me.tmiShowSpecialMembers, Me.tmiShowReferences, Me.tmiShowBaseTypes, Me.tmiShowStaticMembers, Me.tmiShowFlatNamespaces})
             Me.tdbShow.Image = CType(resources.GetObject("tdbShow.Image"), System.Drawing.Image)
             Me.tdbShow.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.tdbShow.Name = "tdbShow"
-            Me.tdbShow.Size = New System.Drawing.Size(46, 22)
+            Me.tdbShow.Size = New System.Drawing.Size(49, 22)
             Me.tdbShow.Text = "Show"
             '
             'tmiShowCTors
@@ -233,7 +234,7 @@
             Me.tmiShowCTors.CheckOnClick = True
             Me.tmiShowCTors.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowCTors.Name = "tmiShowCTors"
-            Me.tmiShowCTors.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowCTors.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowCTors.Text = "Constructors"
             '
             'tmiShowEvents
@@ -242,7 +243,7 @@
             Me.tmiShowEvents.CheckOnClick = True
             Me.tmiShowEvents.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowEvents.Name = "tmiShowEvents"
-            Me.tmiShowEvents.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowEvents.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowEvents.Text = "Events"
             '
             'tmiShowFields
@@ -251,7 +252,7 @@
             Me.tmiShowFields.CheckOnClick = True
             Me.tmiShowFields.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowFields.Name = "tmiShowFields"
-            Me.tmiShowFields.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowFields.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowFields.Text = "Fields"
             '
             'tmiShowGenericArguments
@@ -260,7 +261,7 @@
             Me.tmiShowGenericArguments.CheckOnClick = True
             Me.tmiShowGenericArguments.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowGenericArguments.Name = "tmiShowGenericArguments"
-            Me.tmiShowGenericArguments.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowGenericArguments.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowGenericArguments.Text = "Generic arguments"
             '
             'tmiShowGlobalMembers
@@ -269,14 +270,14 @@
             Me.tmiShowGlobalMembers.CheckOnClick = True
             Me.tmiShowGlobalMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowGlobalMembers.Name = "tmiShowGlobalMembers"
-            Me.tmiShowGlobalMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowGlobalMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowGlobalMembers.Text = "Global members"
             '
             'tmiShowInheritedMembers
             '
             Me.tmiShowInheritedMembers.CheckOnClick = True
             Me.tmiShowInheritedMembers.Name = "tmiShowInheritedMembers"
-            Me.tmiShowInheritedMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInheritedMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowInheritedMembers.Text = "Inherited members"
             '
             'tmiShowInitializers
@@ -285,7 +286,7 @@
             Me.tmiShowInitializers.CheckOnClick = True
             Me.tmiShowInitializers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowInitializers.Name = "tmiShowInitializers"
-            Me.tmiShowInitializers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInitializers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowInitializers.Text = "Initializers"
             '
             'tmiShowInstanceMembers
@@ -294,7 +295,7 @@
             Me.tmiShowInstanceMembers.CheckOnClick = True
             Me.tmiShowInstanceMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowInstanceMembers.Name = "tmiShowInstanceMembers"
-            Me.tmiShowInstanceMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInstanceMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowInstanceMembers.Text = "Instance members"
             '
             'tmiShowInternalMembers
@@ -303,7 +304,7 @@
             Me.tmiShowInternalMembers.CheckOnClick = True
             Me.tmiShowInternalMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowInternalMembers.Name = "tmiShowInternalMembers"
-            Me.tmiShowInternalMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowInternalMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowInternalMembers.Text = "Internal members"
             '
             'tmiShowMethods
@@ -312,7 +313,7 @@
             Me.tmiShowMethods.CheckOnClick = True
             Me.tmiShowMethods.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowMethods.Name = "tmiShowMethods"
-            Me.tmiShowMethods.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowMethods.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowMethods.Text = "Methods"
             '
             'tmiShowNestedTypes
@@ -321,7 +322,7 @@
             Me.tmiShowNestedTypes.CheckOnClick = True
             Me.tmiShowNestedTypes.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowNestedTypes.Name = "tmiShowNestedTypes"
-            Me.tmiShowNestedTypes.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowNestedTypes.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowNestedTypes.Text = "Nested types"
             '
             'tmiShowPrivateMembers
@@ -330,7 +331,7 @@
             Me.tmiShowPrivateMembers.CheckOnClick = True
             Me.tmiShowPrivateMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowPrivateMembers.Name = "tmiShowPrivateMembers"
-            Me.tmiShowPrivateMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowPrivateMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowPrivateMembers.Text = "Private members"
             '
             'tmiShowProperties
@@ -339,7 +340,7 @@
             Me.tmiShowProperties.CheckOnClick = True
             Me.tmiShowProperties.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowProperties.Name = "tmiShowProperties"
-            Me.tmiShowProperties.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowProperties.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowProperties.Text = "Properties"
             '
             'tmiShowProtectedMembers
@@ -348,7 +349,7 @@
             Me.tmiShowProtectedMembers.CheckOnClick = True
             Me.tmiShowProtectedMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowProtectedMembers.Name = "tmiShowProtectedMembers"
-            Me.tmiShowProtectedMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowProtectedMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowProtectedMembers.Text = "Protected members"
             '
             'tmiShowSpecialMembers
@@ -357,7 +358,7 @@
             Me.tmiShowSpecialMembers.CheckOnClick = True
             Me.tmiShowSpecialMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowSpecialMembers.Name = "tmiShowSpecialMembers"
-            Me.tmiShowSpecialMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowSpecialMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowSpecialMembers.Text = "Special members"
             '
             'tmiShowReferences
@@ -366,7 +367,7 @@
             Me.tmiShowReferences.CheckOnClick = True
             Me.tmiShowReferences.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowReferences.Name = "tmiShowReferences"
-            Me.tmiShowReferences.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowReferences.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowReferences.Text = "References"
             '
             'tmiShowBaseTypes
@@ -375,7 +376,7 @@
             Me.tmiShowBaseTypes.CheckOnClick = True
             Me.tmiShowBaseTypes.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowBaseTypes.Name = "tmiShowBaseTypes"
-            Me.tmiShowBaseTypes.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowBaseTypes.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowBaseTypes.Text = "Base types"
             '
             'tmiShowStaticMembers
@@ -384,8 +385,17 @@
             Me.tmiShowStaticMembers.CheckOnClick = True
             Me.tmiShowStaticMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowStaticMembers.Name = "tmiShowStaticMembers"
-            Me.tmiShowStaticMembers.Size = New System.Drawing.Size(167, 22)
+            Me.tmiShowStaticMembers.Size = New System.Drawing.Size(178, 22)
             Me.tmiShowStaticMembers.Text = "Static memebers"
+            '
+            'tmiShowFlatNamespaces
+            '
+            Me.tmiShowFlatNamespaces.Checked = True
+            Me.tmiShowFlatNamespaces.CheckOnClick = True
+            Me.tmiShowFlatNamespaces.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.tmiShowFlatNamespaces.Name = "tmiShowFlatNamespaces"
+            Me.tmiShowFlatNamespaces.Size = New System.Drawing.Size(178, 22)
+            Me.tmiShowFlatNamespaces.Text = "Flat namespaces"
             '
             'ObjectBrowser
             '
@@ -443,6 +453,7 @@
         Protected WithEvents rtbShort As System.Windows.Forms.RichTextBox
         Protected WithEvents tmiShowReferences As System.Windows.Forms.ToolStripMenuItem
         Protected WithEvents tmiShowBaseTypes As System.Windows.Forms.ToolStripMenuItem
+        Protected WithEvents tmiShowFlatNamespaces As System.Windows.Forms.ToolStripMenuItem
 
     End Class
 End Namespace

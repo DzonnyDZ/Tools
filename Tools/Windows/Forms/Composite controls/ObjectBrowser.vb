@@ -41,6 +41,26 @@ Namespace WindowsT.FormsT
             End Set
         End Property
 
+        ''' <summary>Contains value of the <see cref="ShowFlatNamespaces"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowFlatNamespaces As Boolean
+        ''' <summary>Gets or sets value indicating if namespaces are show flat or hierachically</summary>
+        ''' <value>True to show flat namespaces, false to show hierarchic namespaces</value>
+        ''' <returns>Value indicating if namespaces are shown flat or hierarchic</returns>
+        <DefaultValue(False)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <Description("Gets or sets value indicating if namespaces are shown flat (true) or hierarchically (false).")> _
+        Public Property ShowFlatNamespaces() As Boolean 'Localize: Description
+            Get
+                Return _ShowFlatNamespaces
+            End Get
+            Set(ByVal value As Boolean)
+                If value = ShowFlatNamespaces Then Exit Property
+                _ShowFlatNamespaces = value
+                tmiShowflatnamespaces.Checked = value
+                OnShowChanged()
+            End Set
+        End Property
+
         ''' <summary>Contains value of the <see cref="ShowNestedTypes"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowNestedTypes As Boolean = True
         ''' <summary>Gets or sets value indicating if nested types are shown</summary>
@@ -434,6 +454,22 @@ Namespace WindowsT.FormsT
             End Set
         End Property
 
+        ''' <summary>Contains value of the <see cref="ShowToolbar"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowToolbar As Boolean = True
+        ''' <summary>Gets or sets value indicating if the toolbar is shown</summary>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(True)> _
+        <Description("Gets or sets value indicating if the toolbar is shown.")> _
+        Public Property ShowToolbar() As Boolean 'Localize:Description
+            Get
+                Return _ShowToolbar
+            End Get
+            Set(ByVal value As Boolean)
+                _ShowToolbar = value
+                tosMenu.Visible = value
+            End Set
+        End Property
+
         ''' <summary>List of assemblies or any other objects listed at top-level of tree-view</summary>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <Description("List of assemblies or any other objects listed at top-level of tree-view")> _
@@ -483,7 +519,7 @@ Namespace WindowsT.FormsT
                 tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, [Module]), SignatureFlags.ShortNameOnly)
                 GetImage(CodeImages.Objects.Module, ObjectModifiers.None)
             ElseIf TypeOf Obj Is NamespaceInfo Then
-                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo), SignatureFlags.LongName)
+                tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, NamespaceInfo), If(ShowFlatNamespaces, SignatureFlags.LongName, SignatureFlags.ShortNameOnly))
                 GetImage(CodeImages.Objects.Namespace, ObjectModifiers.None)
             ElseIf TypeOf Obj Is MemberInfo Then
                 tn.Text = SignatureProvider.GetSignature(DirectCast(Obj, MemberInfo), SignatureFlags.Short)
@@ -721,10 +757,9 @@ Namespace WindowsT.FormsT
                 End If
             ElseIf TypeOf obj Is [Module] Then 'Module
                 'Namespaces
-                'TODO: Type consideration
                 ret.AddRange( _
                     From n In DirectCast(obj, [Module]).GetNamespaces( _
-                        Function(t As Type) ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , False)) _
+                        Function(t As Type) ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True), , ShowFlatNamespaces) _
                         Order By n.Name Ascending Select CObj(n))
                 'No-namespace types
                 ret.AddRange( _
@@ -745,7 +780,9 @@ Namespace WindowsT.FormsT
                         Where ShouldShowMember(m.IsPrivate, m.IsFamily, m.IsAssembly, m.IsPublic, m.IsFamilyAndAssembly, m.IsFamilyOrAssembly, m.IsStatic, True) _
                         Order By m.Name Ascending Select CObj(m))
                 End If
-            ElseIf TypeOf obj Is NamespaceInfo Then  'Namespace
+            ElseIf TypeOf obj Is NamespaceInfo Then 'Namespace
+                If Not ShowFlatNamespaces Then _
+                    ret.AddRange(From n In DirectCast(obj, NamespaceInfo).GetNamespaces(Function(t As Type) ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True)) Order By n.ShortName Ascending Select CObj(n))
                 ret.AddRange(From t In DirectCast(obj, NamespaceInfo).GetTypes Where ShouldShowMember(False, False, t.IsNotPublic, t.IsPublic, False, False, , True) Order By t.Name Ascending Select CObj(t))
             ElseIf TypeOf obj Is Type Then 'Type
                 With DirectCast(obj, Type)
@@ -824,7 +861,7 @@ Namespace WindowsT.FormsT
                         Case kpBaseTypes, kpBaseType  'Base types
                             With DirectCast(.Value, Type)
                                 If .BaseType IsNot Nothing Then ret.Add(New KeyValuePair(Of String, Object)(kpBaseType, .BaseType))
-                                ret.AddRange(From ii In .GetImplementedInterfaces Select New KeyValuePair(Of String, Object)(kpBaseType, ii))
+                                ret.AddRange(From ii In .GetImplementedInterfaces Select CObj(New KeyValuePair(Of String, Object))(kpBaseType, ii))
                             End With
                         Case kpReferences 'References
                             With DirectCast(.Value, Assembly)
@@ -835,7 +872,7 @@ Namespace WindowsT.FormsT
                     End Select
                 End With
             End If
-            Return ret
+                Return ret
         End Function
         ''' <summary>Gets value indicating if member with given accesibility and static/instance behavior should be shown</summary>
         ''' <param name="Private">Member is private</param>
@@ -952,6 +989,9 @@ Namespace WindowsT.FormsT
         End Sub
         Private Sub tmiShowBaseTypes_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowBaseTypes.CheckedChanged
             Me.ShowBaseTypes = sender.Checked
+        End Sub
+        Private Sub tmiShowFlatNamespaces_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowFlatNamespaces.CheckedChanged
+            Me.ShowFlatNamespaces = sender.Checked
         End Sub
 #End Region
     End Class

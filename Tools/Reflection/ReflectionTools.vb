@@ -9,38 +9,53 @@ Namespace ReflectionT
         ''' <param name="Module">Module to get namespaces in</param>
         ''' <returns>Array of namespaces in <paramref name="Module"/></returns>
         ''' <param name="IncludeGlobal">True to include global namespace (with empty name)</param>
+        ''' <param name="Flat">True to list all namespaces even if their name contains dot (.), False to list only top-level namespaces</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Module"/> is null</exception>
         ''' <exception cref="System.Reflection.ReflectionTypeLoadException">One or more classes in a module could not be loaded.</exception>
         ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <Extension()> Public Function GetNamespaces(ByVal [Module] As Reflection.Module, Optional ByVal IncludeGlobal As Boolean = False) As [NamespaceInfo]()
-            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
-            Dim NamespaceNames As New List(Of String)
-            Dim Namespaces As New List(Of NamespaceInfo)
-            For Each Type In [Module].GetTypes
-                If (Type.Namespace <> "" OrElse IncludeGlobal) AndAlso Not NamespaceNames.Contains(Type.Namespace) Then
-                    NamespaceNames.Add(Type.Namespace)
-                    Namespaces.Add(New NamespaceInfo([Module], Type.Namespace))
-                End If
-            Next Type
-            Return Namespaces.ToArray()
+        <Extension()> Public Function GetNamespaces(ByVal [Module] As Reflection.Module, Optional ByVal IncludeGlobal As Boolean = False, Optional ByVal Flat As Boolean = True) As [NamespaceInfo]()
+            Return [Module].GetNamespaces(Function(t As Type) True, IncludeGlobal, Flat)
+            'If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            'Dim NamespaceNames As New List(Of String)
+            'Dim Namespaces As New List(Of NamespaceInfo)
+            'For Each Type In [Module].GetTypes
+            '    Dim NamespaceName As String
+            '    If Not Flat OrElse Type.Namespace = "" OrElse Not Type.Namespace.Contains("."c) Then
+            '        NamespaceName = Type.Namespace
+            '    Else
+            '        NamespaceName = Type.Namespace.Substring(0, Type.Namespace.IndexOf("."c))
+            '    End If
+            '    If (NamespaceName <> "" OrElse IncludeGlobal) AndAlso Not NamespaceNames.Contains(NamespaceName) Then
+            '        NamespaceNames.Add(Type.Namespace)
+            '        Namespaces.Add(New NamespaceInfo([Module], Type.Namespace))
+            '    End If
+            'Next Type
+            'Return Namespaces.ToArray()
         End Function
         ''' <summary>Gets namespaces in given module</summary>
         ''' <param name="Module">Module to get namespaces in</param>
         ''' <returns>Array of namespaces in <paramref name="Module"/></returns>
         ''' <param name="TypeFilter">Predicate. Onyl those types for which the predicate returns true will be observed for namespaces.</param>
         ''' <param name="IncludeGlobal">True to include global namespace (with empty name)</param>
+        ''' <param name="Flat">True to list all namespaces even if their name contains dot (.), False to list only top-level namespaces</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Module"/> or <paramref name="TypeFilter"/> is null</exception>
         ''' <exception cref="System.Reflection.ReflectionTypeLoadException">One or more classes in a module could not be loaded.</exception>
         ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
-        <Extension()> Public Function GetNamespaces(ByVal [Module] As Reflection.Module, ByVal TypeFilter As Predicate(Of Type), Optional ByVal IncludeGlobal As Boolean = False) As [NamespaceInfo]()
+        <Extension()> Public Function GetNamespaces(ByVal [Module] As Reflection.Module, ByVal TypeFilter As Predicate(Of Type), Optional ByVal IncludeGlobal As Boolean = False, Optional ByVal Flat As Boolean = True) As [NamespaceInfo]()
             If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
             If TypeFilter Is Nothing Then Throw New ArgumentNullException("TypeFilter")
             Dim NamespaceNames As New List(Of String)
             Dim Namespaces As New List(Of NamespaceInfo)
             For Each Type In [Module].GetTypes
-                If ((Type.Namespace <> "" OrElse IncludeGlobal) AndAlso Not NamespaceNames.Contains(Type.Namespace)) AndAlso TypeFilter(Type) Then
-                    NamespaceNames.Add(Type.Namespace)
-                    Namespaces.Add(New NamespaceInfo([Module], Type.Namespace))
+                Dim NamespaceName As String
+                If Flat OrElse Type.Namespace = "" OrElse Not Type.Namespace.Contains("."c) Then
+                    NamespaceName = Type.Namespace
+                Else
+                    NamespaceName = Type.Namespace.Substring(0, Type.Namespace.IndexOf("."c))
+                End If
+                If ((NamespaceName <> "" OrElse IncludeGlobal) AndAlso Not NamespaceNames.Contains(NamespaceName)) AndAlso TypeFilter(Type) Then
+                    NamespaceNames.Add(NamespaceName)
+                    Namespaces.Add(New NamespaceInfo([Module], NamespaceName))
                 End If
             Next Type
             Return Namespaces.ToArray()
@@ -354,12 +369,6 @@ Namespace ReflectionT
             Next ev
             Return Nothing
         End Function
-        ''' <summary>Gets namespace of given <see cref="Type"/></summary>
-        ''' <param name="Type"><see cref="Type"/> to get namespace of</param>
-        ''' <returns>Namespce of given type. Even if it is global (empty) one</returns>
-        <Extension()> Function GetNamespace(ByVal Type As Type) As NamespaceInfo
-            Return New NamespaceInfo(Type.Module, Type.Namespace)
-        End Function
         ''' <summary>Gets value indicating whether and if which the function is operator</summary>
         ''' <param name="Method">Method to investigate</param>
         ''' <param name="NonStandard">Also include operators that are not part of CLI standard (currently VB \, ^ and &amp; operators are supported)</param>
@@ -406,6 +415,13 @@ Namespace ReflectionT
                         Select DirectCast(MyInterface2.GetInterfaces, IEnumerable(Of Type)) _
                     ).Contains(MyInterface) _
                 Select MyInterface
+        End Function
+        ''' <summary>Gets namespace of given <see cref="System.Type"/> as instance of <see cref="NamespaceInfo"/></summary>
+        ''' <param name="Type">Type to get namespace of</param>
+        ''' <returns><see cref="NamespaceInfo"/> constructed from <paramref name="Type"/>.<see cref="Type.[Module]">Module</see> and <paramref name="Type"/>.<see cref="Type.[Namespace]">Namespace</see>.</returns>
+        ''' <remarks>Each type has namespace even when name of the namespace is an empty <see cref="String"/>.</remarks>
+        <Extension()> Public Function GetNamespace(ByVal Type As Type) As NamespaceInfo
+            Return New NamespaceInfo(Type.Module, Type.Namespace)
         End Function
     End Module
     ''' <summary>Represents reflection namespace</summary>
@@ -473,6 +489,50 @@ Namespace ReflectionT
         Public Shared Operator <>(ByVal a As NamespaceInfo, ByVal b As NamespaceInfo) As Boolean
             Return Not (a = b)
         End Operator
+        ''' <summary>Gets parent namespace of current namespace</summary>
+        ''' <returns>If <see cref="Name"/> of current namespace contains no dot an namespace with empty name is returned. If <see cref="Name"/> of current namespace is an empty string, null is returned.</returns>
+        Public ReadOnly Property Parent() As NamespaceInfo
+            Get
+                If Me.Name = "" Then
+                    Return Nothing
+                ElseIf Me.Name.Contains("."c) Then
+                    Return New NamespaceInfo(Me.Module, Me.Name.Substring(0, Me.Name.LastIndexOf("."c)))
+                Else
+                    Return New NamespaceInfo(Me.Module, "")
+                End If
+            End Get
+        End Property
+        ''' <summary>Gets all namespaces immediately contained in this namespace</summary>
+        ''' <returns>Array of namespaces in this namespace</returns>
+        ''' <remarks>Whe looking for namespaces all types in curret namespace are considered (even non-public). 
+        ''' If you want filer some types use overloaded <see cref="M:Tools.ReflectionT.NamespaceInfo.GetNamespaces(System.Predicate`1[System.Type])"/>.</remarks>
+        Public Function GetNamespaces() As NamespaceInfo()
+            Return GetNamespaces(Function(t As Type) True)
+        End Function
+        ''' <summary>Gets namespaces immediatelly contained in this namespace when considering only selected types</summary>
+        ''' <param name="TypeFiler">This function returns only such namespaces which contain at leas one type for which delegate function <paramref name="TypeFiler"/> returns true</param>
+        ''' <returns>Array of namespaces in this namespace</returns>
+        Public Function GetNamespaces(ByVal TypeFiler As System.Predicate(Of Type)) As NamespaceInfo()
+            Dim NamespaceNames As New List(Of String)
+            For Each t As Type In [Module].GetTypes
+                If t.Namespace <> "" AndAlso (Me.Name = "" OrElse t.Namespace.StartsWith(Me.Name & ".")) Then
+                    Dim NamePart As String
+                    If Me.Name = "" AndAlso t.Namespace.Contains("."c) Then
+                        NamePart = t.Namespace.Substring(0, t.Namespace.IndexOf("."c))
+                    ElseIf Me.Name = "" Then
+                        NamePart = t.Namespace
+                    Else
+                        NamePart = t.Namespace.Substring(Me.Name.Length + 1)
+                        If NamePart.Contains("."c) Then NamePart = NamePart.Substring(0, NamePart.IndexOf("."c))
+                    End If
+                    If Not NamespaceNames.Contains(NamePart) AndAlso TypeFiler.Invoke(t) Then NamespaceNames.Add(NamePart)
+                End If
+            Next t
+            Return (From np In NamespaceNames _
+                Order By np _
+                Select New NamespaceInfo(Me.Module, If(Me.Name = "", np, Me.Name & "." & np)) _
+                ).ToArray
+        End Function
     End Class
     ''' <summary>Operators supported by CLI</summary>
     ''' <remarks>High order byte (exluding its MSB) is number that uniquely identifies the operator.
