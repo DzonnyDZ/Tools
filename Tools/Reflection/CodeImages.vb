@@ -100,7 +100,7 @@ Namespace ReflectionT
             ''' <summary>Group of resources (this was a resx file before compilation)</summary>
             Resources = &H7821
             ''' <summary>Write-only property</summary>
-            Setter = &H7889
+            Setter = &H7882
             ''' <summary>VB standard module</summary>
             ''' <remarks>This is somethign different than .NET PE module. See <seealso cref="[Module]"/></remarks>
             StandardModule = &H6C0A
@@ -416,7 +416,7 @@ Namespace ReflectionT
             ElseIf Type.IsGenericTypeDefinition AndAlso Type.IsClass Then
                 TypeType = Objects.GenericClassOpen
             ElseIf Type.IsGenericTypeDefinition AndAlso Type.IsValueType Then
-                TypeType = Objects.GenericStructureClosed
+                TypeType = Objects.GenericStructureOpen
             ElseIf Type.IsGenericTypeDefinition Then
                 TypeType = Objects.GenericTypeOpen
                 'Closed generics:
@@ -471,7 +471,7 @@ Namespace ReflectionT
             ElseIf Type.IsNestedPrivate Then
                 Modifiers = ObjectModifiers.Private
             End If
-            If Type.IsSealed Then Modifiers = Modifiers Or ObjectModifiers.Sealed
+            If Type.IsSealed AndAlso Not Type.IsValueType Then Modifiers = Modifiers Or ObjectModifiers.Sealed
             'TODO: C# Static classes?
             Return GetImage(TypeType, Modifiers)
         End Function

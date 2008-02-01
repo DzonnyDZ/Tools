@@ -410,7 +410,7 @@ Namespace ReflectionT
         <Extension()> Public Function GetImplementedInterfaces(ByVal Type As Type, Optional ByVal Inherit As Boolean = False) As IEnumerable(Of Type)
             If Inherit Then Return Type.GetInterfaces
             Return From MyInterface In Type.GetInterfaces _
-                Where Not UnionAll( _
+                Where Not UnionAll(If(Type.BaseType Is Nothing, DirectCast(New List(Of Type), IEnumerable(Of Type)), Type.BaseType.GetInterfaces), _
                     From MyInterface2 In Type.GetInterfaces _
                         Select DirectCast(MyInterface2.GetInterfaces, IEnumerable(Of Type)) _
                     ).Contains(MyInterface) _

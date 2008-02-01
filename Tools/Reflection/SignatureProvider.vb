@@ -55,11 +55,11 @@ Namespace ReflectionT
         ''' <summary>Include generic parameter names</summary>
         GenericParameters = LongName << 1
         ''' <summary>Include generic parameter details (constraints). Works only when <see cref="GenericParameters"/> is set.</summary>
-        GenericparametersDetails = GenericParameters << 1
+        GenericParametersDetails = GenericParameters << 1
         ''' <summary>Include generic parameters with detauils (constraints). This is combination of <see cref="Genericparameters"/> and <see cref="GenericParametersDetails"/></summary>
-        FullGenericparameters = GenericParameters Or GenericparametersDetails
+        FullGenericparameters = GenericParameters Or GenericParametersDetails
         ''' <summary>Include method signature (types of arguments only)</summary>
-        Signature = GenericparametersDetails << 1
+        Signature = GenericParametersDetails << 1
         ''' <summary>Include names and other details in signarure. valid only if <see cref="Signature"/> is set</summary>
         SignatureDetails = Signature << 1
         ''' <summary>Include full signature with all details. Tis is combination of <see cref="Signature"/> and <see cref="SignatureDetails"/>.</summary>
@@ -454,7 +454,7 @@ Namespace ReflectionT
                                     AppendCustomAttributes(CustomAttributeData.GetCustomAttributes(g), ret, Flags, False, False, Nothing)
                                 End If
                                 ret.Append(g.Name)
-                                If Flags And SignatureFlags.GenericparametersDetails Then AppendGenericConstraints(g, ret, Flags)
+                                If Flags And SignatureFlags.GenericParametersDetails Then AppendGenericConstraints(g, ret, Flags)
                                 i += 1
                             Next g
                             ret.Append(")")
@@ -471,7 +471,7 @@ Namespace ReflectionT
                                     AppendCustomAttributes(CustomAttributeData.GetCustomAttributes(g), ret, Flags, False, False, Nothing)
                                 End If
                                 ret.Append(g.Name)
-                                If Flags And SignatureFlags.GenericparametersDetails Then AppendGenericConstraints(g, ret, Flags)
+                                If Flags And SignatureFlags.GenericParametersDetails Then AppendGenericConstraints(g, ret, Flags)
                                 i += 1
                             Next g
                             ret.Append(")")
@@ -549,7 +549,7 @@ Namespace ReflectionT
                             End If
                             Dim ImmediateInterfaces = .GetImplementedInterfaces
                             If Not ImmediateInterfaces.IsEmpty Then
-                                ret.Append(If(Flags And SignatureFlags.NoMultiline, " : ", vbCrLf & vbTab) & "Implements ")
+                                ret.Append(If(Flags And SignatureFlags.NoMultiline, " : ", vbCrLf & vbTab) & If(.IsInterface, "Inherits ", "Implements "))
                                 Dim i As Integer = 0
                                 For Each intf In ImmediateInterfaces
                                     If i > 0 Then ret.Append(", ")
@@ -660,10 +660,13 @@ Namespace ReflectionT
         ''' <summary>tes constraints of generic type to <see cref="System.Text.StringBuilder"/> in Visual-Basic-like way</summary>
         ''' <param name="gPar"><see cref="Type"/> that represents generic parameter</param>
         ''' <param name="ret"><see cref="System.Text.StringBuilder"/> to write constraints to</param>
+        ''' <param name="Flags">Flags that controls rendering</param>
         ''' <exception cref="ArgumentNullException"><paramref name="ret"/> or <paramref name="gPar"/> is null</exception>
+        ''' <remarks>If <paramref name="Flags"/> ans not set <see cref="SignatureFlags.GenericParametersDetails"/> bit the method exits immediatelly</remarks>
         Private Sub AppendGenericConstraints(ByVal gPar As Type, ByVal ret As System.Text.StringBuilder, ByVal Flags As SignatureFlags)
             If ret Is Nothing Then Throw New ArgumentNullException("ret")
             If gPar Is Nothing Then Throw New ArgumentNullException("gPar")
+            If Not CBool(Flags And SignatureFlags.GenericParametersDetails) Then Return
             Dim TypeConstraints = gPar.GetGenericParameterConstraints
             If TypeConstraints.Length > 0 Then
                 ret.Append(" As {")
@@ -702,7 +705,7 @@ Namespace ReflectionT
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
             If Type.IsGenericParameter Then
                 ret.Append(Type.Name)
-                AppendGenericConstraints(Type, ret, Flags)
+                If Flags And SignatureFlags.GenericParametersDetails Then AppendGenericConstraints(Type, ret, Flags)
                 Exit Sub
             ElseIf Type.IsArray Then
                 RepresentTypeName(Type.GetElementType, ret, Flags)
@@ -731,7 +734,7 @@ Namespace ReflectionT
                 Dim i As Integer = 0
                 For Each GPar In Type.GetGenericArguments
                     If i > 0 Then ret.Append(", ")
-                    RepresentTypeName(GPar, ret, Flags)
+                    RepresentTypeName(GPar, ret, If(Type.IsGenericTypeDefinition, Flags, Flags And Not SignatureFlags.GenericParametersDetails))
                     i += 1
                 Next
                 ret.Append(")")

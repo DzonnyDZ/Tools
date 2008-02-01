@@ -16,6 +16,21 @@ Namespace WindowsT.FormsT
             Assemblies.AllowAddCancelableEventsHandlers = False
             AddHandler ReflectionT.ImageRequested, AddressOf ImageRequested
             InitializeComponent()
+            tmiShowBaseTypes.Image = GetImage(CodeImages.Objects.BackwardReference)
+            tmiShowCTors.Image = GetImage(CodeImages.Objects.CTor)
+            tmiShowEvents.Image = GetImage(CodeImages.Objects.Event)
+            tmiShowFields.Image = GetImage(CodeImages.Objects.Field)
+            tmiShowFlatNamespaces.Image = GetImage(CodeImages.Objects.Namespace)
+            tmiShowGenericArguments.Image = GetImage(CodeImages.Objects.GenericParameter)
+            tmiShowInitializers.Image = GetImage(CodeImages.Objects.CTor, ObjectModifiers.Static)
+            tmiShowInternalMembers.Image = GetImage(CodeImages.Objects.NoObject, ObjectModifiers.Friend)
+            tmiShowMethods.Image = GetImage(CodeImages.Objects.Method)
+            tmiShowNestedTypes.Image = GetImage(CodeImages.Objects.Type)
+            tmiShowPrivateMembers.Image = GetImage(CodeImages.Objects.NoObject, ObjectModifiers.Private)
+            tmiShowProperties.Image = GetImage(CodeImages.Objects.Property)
+            tmiShowProtectedMembers.Image = GetImage(CodeImages.Objects.NoObject, ObjectModifiers.Protected)
+            tmiShowReferences.Image = GetImage(CodeImages.Objects.ForwardReference)
+            tmiShowStaticMembers.Image = GetImage(CodeImages.Objects.NoObject, ObjectModifiers.Static)
             Initializing = False
             tvwObjects.Select()
         End Sub
@@ -787,7 +802,7 @@ Namespace WindowsT.FormsT
             ElseIf TypeOf obj Is Type Then 'Type
                 With DirectCast(obj, Type)
                     'Base types
-                    If ShowBaseTypes Then
+                    If ShowBaseTypes AndAlso (Not GetType(Object).Equals(.BaseType) OrElse .GetInterfaces.Length <> 0) Then
                         ret.Add(New KeyValuePair(Of String, Object)(kpBaseTypes, obj))
                     End If
                     'Generic arguments
