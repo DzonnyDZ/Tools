@@ -948,6 +948,8 @@ Namespace WindowsT.FormsT
             OnSelectedItemChangedInternal(sender, sender.SelectedItems(0), sender.SelectedItems(0).Tag)
         End Sub
 
+       
+
         Private Sub tvwObjects_Enter(ByVal sender As TreeView, ByVal e As System.EventArgs) Handles tvwObjects.Enter
             If Initializing Then Exit Sub
             If sender.SelectedNode Is Nothing Then Exit Sub
@@ -1041,7 +1043,19 @@ Namespace WindowsT.FormsT
         ''' <summary>Called whne forward navigation is requested. Performs navigation and raises the <see cref="NavigateForwardEvent"/></summary>
         Protected Overridable Sub OnNavigateForward()
             If ForwardStack.Count > 0 Then
-                'TODO: Navigate forward, move item to backward stack
+                Try
+                    Navigating = True
+                    BackwardStack.Push(tvwObjects.SelectedNode)     'TODO: Ask for detailed node tracking info
+                    While ForwardStack.Count > 0
+                        Try
+                            tvwObjects.SelectedNode = ForwardStack.Pop.Node 'TODO: Utilize tag
+                            Exit While
+                        Catch : End Try
+                    End While
+                    If tvwObjects.SelectedNode Is BackwardStack.Peek.Node Then BackwardStack.Pop()
+                Finally
+                    Navigating = False
+                End Try
                 RaiseEvent NavigateBackward(Me, EventArgs.Empty)
             End If
             tsbForward.Enabled = ForwardStack.Count > 0
@@ -1050,18 +1064,53 @@ Namespace WindowsT.FormsT
         ''' <summary>Called whne backward navigation is requested. Performs navigation and raises the <see cref="NavigateBackwardEvent"/></summary>        
         Protected Overridable Sub OnNavigateBackward()
             If BackwardStack.Count > 0 Then
-                'TODO: Navigate backward, move item to forward stack
+                Try
+                    Navigating = True
+                    ForwardStack.Push(tvwObjects.SelectedNode)     'TODO: Ask for detailed node tracking info
+                    While BackwardStack.Count > 0
+                        Try
+                            tvwObjects.SelectedNode = BackwardStack.Pop.Node 'TODO: Utilize tag
+                            Exit While
+                        Catch:End Try
+                    End While
+                    If tvwObjects.SelectedNode Is ForwardStack.Peek.Node Then ForwardStack.Pop()
+                Finally
+                    Navigating = False
+                End Try
                 RaiseEvent NavigateBackward(Me, EventArgs.Empty)
             End If
             tsbForward.Enabled = ForwardStack.Count > 0
             tsbBack.Enabled = BackwardStack.Count > 0
         End Sub
+        ''' <summary>Contains value of the <see cref="Navigating"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _Navigating As Boolean
+        ''' <summary>Gets or sets value indicating if backward/forward navigation is pending</summary>
+        ''' <returns>Value indicating if backward/forward navigation is pending</returns>
+        ''' <value>True if backward/forward navigation is currently pending and navigation is not automatically tracked because of it</value>
+        ''' <remarks>If this property is set to true the <see cref="TreeView.BeforeSelect"/> event of <see cref="tvwObjects"/> does not track change of node</remarks>
+        Protected Property Navigating() As Boolean
+            Get
+                Return _Navigating
+            End Get
+            Set(ByVal value As Boolean)
+                _Navigating = value
+            End Set
+        End Property
         ''' <summary>Stack of points for forward navigation</summary>
         Private ReadOnly ForwardStack As New Stack(Of NavigationPoint)
         ''' <summary>Stack of points for backward navigation</summary>
         Private ReadOnly BackwardStack As New Stack(Of NavigationPoint)
         ''' <summary>Represents point for forward/backward navigation</summary>
         Protected Structure NavigationPoint
+            ''' <summary>Converts <see cref="TreeNode"/> to <see cref="NavigationPoint"/></summary>
+            ''' <param name="a">A <see cref="TreeNode"/></param>
+            ''' <returns>INstance of <see cref="NavigationPoint"/> populated with <paramref name="a"/></returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="a"/> is null</exception>
+            Public Shared Widening Operator CType(ByVal a As TreeNode) As NavigationPoint
+                If a Is Nothing Then Throw New ArgumentNullException("a")
+                Return New NavigationPoint(a)
+            End Operator
             ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As Object
             ''' <summary>Tag can contain any additional information for navigation point</summary>
@@ -1096,6 +1145,12 @@ Namespace WindowsT.FormsT
         ''' <summary>raised after backward navigation ocured</summary>
         ''' <param name="e"><see cref="EventArgs.Empty"/></param>
         Public Event NavigateBackward As EventHandler
+        Private Sub tvwObjects_BeforeSelect(ByVal sender As TreeView, ByVal e As System.Windows.Forms.TreeViewCancelEventArgs) Handles tvwObjects.BeforeSelect
+            If Not Navigating Then
+                ForwardStack.Clear()
+                BackwardStack.Push(sender.SelectedNode) 'TODO: Ask for detailed node tracking info
+            End If
+        End Sub
 #End Region
     End Class
 End Namespace

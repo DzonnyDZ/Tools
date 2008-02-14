@@ -483,7 +483,6 @@ Namespace ReflectionT
         ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
         <Extension()> Public Function GetImage(ByVal Member As Reflection.MemberInfo) As Image
             If Member Is Nothing Then Throw New ArgumentNullException("Member")
-            'TODO: Specialized GetImages()s or recursion will ocur
             Select Case Member.MemberType
                 Case Reflection.MemberTypes.Constructor
                     Dim m = TryCast(Member, ConstructorInfo)
