@@ -1088,7 +1088,7 @@ Namespace WindowsT.FormsT
             Public Sub New(ByVal Node As TreeNode)
                 If Node Is Nothing Then Throw New ArgumentNullException("Node")
                 _Node = Node
-                End
+            End Sub
         End Structure
         ''' <summary>Raised after forward navigation ocured</summary>
         ''' <param name="e"><see cref="EventArgs.Empty"/></param>
