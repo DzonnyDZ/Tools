@@ -6,16 +6,19 @@ Imports Tools.ComponentModelT
 Namespace WindowsT.FormsT
     'ASAP:
     ''' <summary>Control for browsing .NET assemblies</summary>
-    Public Class ObjectBrowser
+    Public Class ObjectBrowser : Inherits UserControlExtended
         ''' <summary>Contains value of the <see cref="Objects"/> property</summary>
         ''' <remarks>Can be any object</remarks>
         Private WithEvents Assemblies As New ListWithEvents(Of Object)
+        ''' <summary>Is set to true when component is being constructed</summary>
+        ''' <remarks>It is used to stop some functionality during initialisation</remarks>
         Private Initializing As Boolean = True
         ''' <summary>CTor</summary>
         Public Sub New()
             Assemblies.AllowAddCancelableEventsHandlers = False
             AddHandler ReflectionT.ImageRequested, AddressOf ImageRequested
             InitializeComponent()
+            KeyPreviewDefaultValue = KeyPreview
             tmiShowBaseTypes.Image = GetImage(CodeImages.Objects.BackwardReference)
             tmiShowCTors.Image = GetImage(CodeImages.Objects.CTor)
             tmiShowEvents.Image = GetImage(CodeImages.Objects.Event)
@@ -71,7 +74,7 @@ Namespace WindowsT.FormsT
             Set(ByVal value As Boolean)
                 If value = ShowFlatNamespaces Then Exit Property
                 _ShowFlatNamespaces = value
-                tmiShowflatnamespaces.Checked = value
+                tmiShowFlatNamespaces.Checked = value
                 OnShowChanged()
             End Set
         End Property
@@ -887,7 +890,7 @@ Namespace WindowsT.FormsT
                     End Select
                 End With
             End If
-                Return ret
+            Return ret
         End Function
         ''' <summary>Gets value indicating if member with given accesibility and static/instance behavior should be shown</summary>
         ''' <param name="Private">Member is private</param>
@@ -1008,6 +1011,91 @@ Namespace WindowsT.FormsT
         Private Sub tmiShowFlatNamespaces_CheckedChanged(ByVal sender As ToolStripMenuItem, ByVal e As System.EventArgs) Handles tmiShowFlatNamespaces.CheckedChanged
             Me.ShowFlatNamespaces = sender.Checked
         End Sub
+#End Region
+#Region "Navigation"
+        'TODO: Implement navigation
+        ''' <summary>Raises the <see cref="E:System.Windows.Forms.Control.KeyDown" /> event. Processes key events.</summary>
+        ''' <param name="e">A <see cref="T:System.Windows.Forms.KeyEventArgs" /> that contains the event data. </param>
+        ''' <remarks>This implementation processes keyboard events for this control with <see cref="KeyPreview"/> set to true. Processed keys are:
+        ''' <list type="table">
+        ''' <listheader><term>Key</term><description>Action</description></listheader>
+        ''' <item><term><see cref="Keys.BrowserBack">Browser back</see></term><description>Navigate backward, calls <see cref="OnNavigateBackward"/>. </description></item>
+        ''' <item><term><see cref="Keys.BrowserForward">Browser forward</see></term><description>Navigate forward, calls <see cref="OnNavigateForward"/>. </description></item>
+        ''' </list>
+        ''' If the event is processed <paramref name="e"/>.<see cref="KeyEventArgs.Handled">Handled</see> is set to true.
+        ''' </remarks>        
+        Protected Overrides Sub OnKeyDown(ByVal e As KeyEventArgs)
+            MyBase.OnKeyDown(e)
+            If Not e.SuppressKeyPress Then
+                Select Case e.KeyCode
+                    Case Keys.BrowserForward
+                        OnNavigateForward()
+                        e.Handled = True
+                    Case Keys.BrowserBack
+                        OnNavigateBackward()
+                        e.Handled = True
+                End Select
+            End If
+        End Sub
+
+        ''' <summary>Called whne forward navigation is requested. Performs navigation and raises the <see cref="NavigateForwardEvent"/></summary>
+        Protected Overridable Sub OnNavigateForward()
+            If ForwardStack.Count > 0 Then
+                'TODO: Navigate forward, move item to backward stack
+                RaiseEvent NavigateBackward(Me, EventArgs.Empty)
+            End If
+            tsbForward.Enabled = ForwardStack.Count > 0
+            tsbBack.Enabled = BackwardStack.Count > 0
+        End Sub
+        ''' <summary>Called whne backward navigation is requested. Performs navigation and raises the <see cref="NavigateBackwardEvent"/></summary>        
+        Protected Overridable Sub OnNavigateBackward()
+            If BackwardStack.Count > 0 Then
+                'TODO: Navigate backward, move item to forward stack
+                RaiseEvent NavigateBackward(Me, EventArgs.Empty)
+            End If
+            tsbForward.Enabled = ForwardStack.Count > 0
+            tsbBack.Enabled = BackwardStack.Count > 0
+        End Sub
+        ''' <summary>Stack of points for forward navigation</summary>
+        Private ReadOnly ForwardStack As New Stack(Of NavigationPoint)
+        ''' <summary>Stack of points for backward navigation</summary>
+        Private ReadOnly BackwardStack As New Stack(Of NavigationPoint)
+        ''' <summary>Represents point for forward/backward navigation</summary>
+        Protected Structure NavigationPoint
+            ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As Object
+            ''' <summary>Tag can contain any additional information for navigation point</summary>
+            Public Property Tag() As Object
+                Get
+                    Return _Tag
+                End Get
+                Set(ByVal value As Object)
+                    _Tag = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Node"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Node As TreeNode
+            ''' <summary><see cref="TreeNode"/> that is point of navigation</summary>
+            ''' <remarks>Node must be always set but more information can be provided in order to allow navigation whne the node was already removed form <see cref="TreeView"/></remarks>
+            Public ReadOnly Property Node() As TreeNode
+                Get
+                    Return _Node
+                End Get
+            End Property
+            ''' <summary>CTor from <see cref="TreeNode"/></summary>
+            ''' <paramref name="Node">Node this navigation point points to. It cannot be null.</paramref>
+            ''' <exception cref="ArgumentNullException"><paramref name="Node"/> is null</exception>
+            Public Sub New(ByVal Node As TreeNode)
+                If Node Is Nothing Then Throw New ArgumentNullException("Node")
+                _Node = Node
+                End
+        End Structure
+        ''' <summary>Raised after forward navigation ocured</summary>
+        ''' <param name="e"><see cref="EventArgs.Empty"/></param>
+        Public Event NavigateForward As EventHandler
+        ''' <summary>raised after backward navigation ocured</summary>
+        ''' <param name="e"><see cref="EventArgs.Empty"/></param>
+        Public Event NavigateBackward As EventHandler
 #End Region
     End Class
 End Namespace

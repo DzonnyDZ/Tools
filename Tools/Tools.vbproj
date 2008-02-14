@@ -326,6 +326,9 @@
     <Compile Include="Windows\Forms\Dialogs\AboutDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\Forms\UserControlExtended.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
@@ -551,6 +554,8 @@
     <EmbeddedResource Include="Resources\WindowsT.FormsT.MultiLineTextBoxWithStatus.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.NumericUpDownWithStatus.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.TextBoxWithStatus.bmp" />
+    <None Include="Resources\NavBack.png" />
+    <None Include="Resources\NavForward.png" />
     <Content Include="Resources\T.png" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.ComboWithStatus.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.MaskedTextBoxWithStatus.bmp" />
