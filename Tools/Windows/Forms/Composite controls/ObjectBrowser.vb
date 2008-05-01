@@ -1146,6 +1146,7 @@ Namespace WindowsT.FormsT
         ''' <param name="e"><see cref="EventArgs.Empty"/></param>
         Public Event NavigateBackward As EventHandler
         Private Sub tvwObjects_BeforeSelect(ByVal sender As TreeView, ByVal e As System.Windows.Forms.TreeViewCancelEventArgs) Handles tvwObjects.BeforeSelect
+            If sender.SelectedNode IsNot Nothing Then Exit Sub
             If Not Navigating Then
                 ForwardStack.Clear()
                 BackwardStack.Push(sender.SelectedNode) 'TODO: Ask for detailed node tracking info
