@@ -1,6 +1,6 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
 Imports System.Runtime.CompilerServices
-Imports Tools.Collections.Generic
+Imports Tools.CollectionsT.GenericT
 
 #If Framework >= 3.5 Then
 Namespace CollectionsT.GenericT

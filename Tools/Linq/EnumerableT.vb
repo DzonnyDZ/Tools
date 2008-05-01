@@ -1,4 +1,4 @@
-﻿Imports System.Runtime.CompilerServices, System.Linq
+﻿Imports System.Runtime.CompilerServices, System.Linq, System.Collections.Generic
 #If Config <= Nightly Then
 Namespace LinqT
     ''' <summary>Tools for working with <see cref="IEnumerable(Of T)"/></summary>
@@ -43,7 +43,7 @@ Namespace LinqT
         End Function
         ''' <summary>Gets value indicating if given collection is empty</summary>
         ''' <param name="collection">Collection to check emptyness of</param>
-        ''' <returns>True if first element of collection cannot be enumerated using <paramref name="collection"/>.<see cref="IEnumerable.GetEnumerator">GetEnumerator</see>.<see cref="IEnumerator.MoveNext">MoveNext</see>.</returns>
+        ''' <returns>True if first element of collection cannot be enumerated using <paramref name="collection"/>.<see cref="System.Collections.Generic.IEnumerable.GetEnumerator">GetEnumerator</see>.<see cref="IEnumerator.MoveNext">MoveNext</see>.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="collection"/> is null</exception>
         <Extension()> Public Function IsEmpty(ByVal collection As IEnumerable) As Boolean
             If collection Is Nothing Then Throw New ArgumentNullException("collection")

@@ -1,6 +1,6 @@
 ﻿Imports System.Runtime.CompilerServices
 ''' <summary>Misc tools</summary>
-<HideModuleName()> Public Module _misc
+<HideModuleName()> Public Module misc_
     ''' <summary>Returns given object</summary>
     ''' <param name="obj">Object to return</param>
     ''' <typeparam name="T">Type of <paramref name="obj"/></typeparam>
