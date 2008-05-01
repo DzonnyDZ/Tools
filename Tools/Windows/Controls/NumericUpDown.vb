@@ -12,8 +12,15 @@ Imports System.Windows.Controls.Primitives
 Imports CultureInfo = System.Globalization.CultureInfo
 
 Namespace WindowsT.ControlsT
-
+    'ASAP: More comments
     '<SnippetStaticCtorOfCustomClassCommonTasks>
+    ''' <summary>Represents a Windows spin box (also known as an up-down control) that displays numeric values.</summary>
+    ''' <remarks>
+    ''' <para>This is companion class to <see cref="Windows.Forms.NumericUpDown"/>.</para>
+    ''' <para>This class is bsed on http://msdn.microsoft.com/en-us/library/ms771573.aspx, converted by http://labs.developerfusion.co.uk/convert/csharp-to-vb.aspx</para>
+    ''' </remarks>
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <FirstVersion(2008, 5, 1), Version(1, 0, GetType(NumericUpDown), Note:="Based on http://msdn.microsoft.com/en-us/library/ms771573.aspx")> _
     <TemplatePart(Name:=NumericUpDown.PART_EditableTextBox, Type:=GetType(TextBox))> _
     Public Class NumericUpDown
         Inherits Control

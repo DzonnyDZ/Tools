@@ -2,42 +2,68 @@
 Imports System.Globalization
 
 Namespace WindowsT.ConvertersT
-    Friend Class NotBooleanValueConverter
-        Implements IValueConverter
-
-#Region "IValueConverter Members"
-
-        Public Function Convert(ByVal value As Object, ByVal targetType As Type, ByVal parameter As Object, ByVal culture As CultureInfo) As Object Implements IValueConverter.Convert
-            If TypeOf value Is Boolean AndAlso targetType.Equals(GetType(Boolean)) Then
-                Return Not CBool(value)
-            End If
-            Throw New ArgumentException("Unsupported conversion") 'LOcalize:Exception
+    ''' <summary>Implements <see cref="IValueConverter"/> which negates <see cref="Boolean"/> value</summary>
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(NotBooleanValueConverter)), FirstVersion(2008, 5, 1)> _
+    Public Class NotBooleanValueConverter
+        Inherits StronglyTypedConverter(Of Boolean, Boolean)
+        ''' <summary>Converts a value - makes boolean negation of it.</summary>
+        ''' <param name="value">The value produced by the binding source.</param>
+        ''' <param name="parameter">The converter parameter to use. Ignored.</param>
+        ''' <param name="culture">The culture to use in the converter. Ignored.</param>
+        ''' <returns>Boolean negation of <paramref name="value"/></returns>
+        Public Overrides Function Convert(ByVal value As Boolean, ByVal parameter As Object, ByVal culture As CultureInfo) As Boolean
+            Return Not value
         End Function
-
-        Public Function ConvertBack(ByVal value As Object, ByVal targetType As Type, ByVal parameter As Object, ByVal culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
-            If TypeOf value Is Boolean AndAlso targetType.Equals(GetType(Boolean)) Then
-                Return Not CBool(value)
-            End If
-            Throw New ArgumentException("Unsupported conversion") 'Localize:Exception
+        ''' <summary>Converts a value - makes boolean negation of it.</summary>
+        ''' <param name="value">The value that is produced by the binding target.</param>
+        ''' <param name="parameter">The converter parameter to use. Ignored.</param>
+        ''' <param name="culture">The culture to use in the converter. Ignored.</param>
+        ''' <returns>Boolean negation of <paramref name="value"/>.</returns>
+        Public Overrides Function ConvertBack(ByVal value As Boolean, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Boolean
+            Return Not value
         End Function
-
-#End Region
     End Class
+
+    ''' <summary>Implements <see cref="IValueConverter"/> for converting numeric values to halfs of them</summary>
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(HalfConverter)), FirstVersion(2008, 5, 1)> _
     Friend Class HalfConverter
         Implements IValueConverter
-
-#Region "IValueConverter Members"
-
+        ''' <summary>Converts a value. </summary>
+        ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        ''' <param name="value">The value produced by the binding source.</param>
+        ''' <param name="targetType">The type of the binding target property.</param>
+        ''' <param name="parameter">The converter parameter to use.</param>
+        ''' <param name="culture">The culture to use in the converter.</param>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> or <paramref name="targetType"/> is not supported.
+        ''' Supported types are <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/>, <see cref="ULong"/>, <see cref="Single"/>, <see cref="Double"/> and <see cref="Decimal"/>
+        ''' </exception>
         Public Function Convert(ByVal value As Object, ByVal targetType As Type, ByVal parameter As Object, ByVal culture As CultureInfo) As Object Implements IValueConverter.Convert
             Return Convert(value, targetType, CSng(0.5))
 
         End Function
 
+        ''' <summary>Converts a value. </summary>
+        ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
+        ''' <param name="value">The value produced by the binding source.</param>
+        ''' <param name="targetType">The type of the binding target property.</param>
+        ''' <param name="parameter">The converter parameter to use.</param>
+        ''' <param name="culture">The culture to use in the converter.</param>
+        ''' <exception cref="ArgumentException"><paramref name="value"/> or <paramref name="targetType"/> is not supported.
+        ''' Supported types are <see cref="Byte"/>, <see cref="SByte"/>, <see cref="Short"/>, <see cref="UShort"/>, <see cref="Integer"/>, <see cref="UInteger"/>, <see cref="Long"/>, <see cref="ULong"/>, <see cref="Single"/>, <see cref="Double"/> and <see cref="Decimal"/>
+        ''' </exception>
         Public Function ConvertBack(ByVal value As Object, ByVal targetType As Type, ByVal parameter As Object, ByVal culture As CultureInfo) As Object Implements IValueConverter.ConvertBack
             Return Convert(value, targetType, CSng(2))
         End Function
 
-#End Region
+
+        ''' <summary>Performs a conversion</summary>
+        ''' <param name="value">Value to be converted</param>
+        ''' <param name="targetType">Type of return value</param>
+        ''' <param name="param">Multiplication constant</param>
+        ''' <returns><paramref name="value"/> * <paramref name="param"/> in type <paramref name="targetType"/></returns>
+        ''' <exception cref="ArgumentException"><paramref name="value"/>is of unsupported type or <paramref name="targetType"/> is unsupported</exception>
         Private Shared Function Convert(ByVal value As Object, ByVal targetType As Type, ByVal param As Single) As Object
             Dim multiplied As Double
             If TypeOf value Is SByte Then

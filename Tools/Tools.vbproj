@@ -188,6 +188,8 @@
     <Compile Include="Drawing\Metadata\IPTC\IPTCTypes.vb" />
     <Compile Include="Drawing\ImageTools.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
+    <Compile Include="Extensions\Char.vb" />
+    <Compile Include="Extensions\String.vb" />
     <Compile Include="Globalization\ISOLanguage.vb" />
     <Compile Include="Globalization\ISOLanguages.vb">
       <DependentUpon>ISOLanguages.xml</DependentUpon>
@@ -604,7 +606,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\Metadata\XMP\" />
-    <Folder Include="Extensions\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
