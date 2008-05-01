@@ -957,7 +957,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event information</param>
         ''' <remarks>Raised after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
-        Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
+        Public Event Changed(ByVal sender As IReportsChange, ByVal e As EventArgs) Implements IReportsChange.Changed
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
         ''' <param name="e">Event parameters</param>
         ''' <remarks>Called after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
