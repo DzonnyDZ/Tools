@@ -245,6 +245,7 @@
     <Compile Include="Windows\Controls\NumericUpDown.vb" />
     <Compile Include="Windows\Converters\Converters.vb" />
     <Compile Include="Windows\Converters\StronlyTypedConverter.vb" />
+    <Compile Include="Windows\Dialogs\MessageBox.vb" />
     <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.Designer.vb">
       <DependentUpon>ComboWithStatus.vb</DependentUpon>
     </Compile>
@@ -345,6 +346,12 @@
       <DependentUpon>AboutDialog.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\Forms\Dialogs\AboutDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\MessageBoxForm.Designer.vb">
+      <DependentUpon>MessageBoxForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\MessageBoxForm.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\UserControlExtended.vb">
@@ -592,6 +599,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBoxForm.resx">
+      <DependentUpon>MessageBoxForm.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />

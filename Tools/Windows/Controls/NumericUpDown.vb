@@ -1,4 +1,5 @@
-﻿Imports System
+﻿#If Stage <= Nightly Then 'Stage: Nightly
+Imports System
 Imports System.Windows
 Imports System.Windows.Controls
 Imports System.Windows.Input
@@ -599,3 +600,4 @@ Namespace WindowsT.ControlsT
 
 
 End Namespace
+#End If
