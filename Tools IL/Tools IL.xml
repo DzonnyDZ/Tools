@@ -18,6 +18,14 @@
             <typeparam name="T">Type of the enumeration</typeparam>
             <param name="value">Value to verify</param>
             <returns>True if enumeration <typeparamref name="T"/> contains constant with value <paramref name="value"/>; false otherwise.</returns>
+            <remarks>There is a companion method Tools.TypeTools.IsDefined in assembly Tools.</remarks>
+        </member>
+        <member name="M:Tools.SpecialT.TypeTools.GetConstant``1(``0)">
+            <summary>Gets <see cref="T:System.Reflection.FieldInfo"/> that represent given constant within an enum</summary>
+            <param name="value">Constant to be found</param>
+            <returns><see cref="T:System.Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <typeparamref name="T"/></returns>
+            <typeparam name="T"><see cref="T:System.Enum"/> to found constant within</typeparam>
+            <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <paramref name="T"/></exception>
         </member>
     </members>
 </doc>

@@ -2,13 +2,14 @@ Imports System.Runtime.CompilerServices
 
 #If Config <= Nightly Then 'Stage:Nightly
 <Author("Ðonny", "dzonny.dz@.gmail.com", "http://dzonny.cz")> _
-<Version(1, 0, GetType(TypeTools))> _
+<Version(1, 1, GetType(TypeTools))> _
 Public Module TypeTools
     ''' <summary>Checks if specified value is member of an enumeration</summary>
     ''' <param name="value">Value to be chcked</param>
     ''' <returns>True if <paramref name="value"/> is member of <paramref name="T"/></returns>
     ''' <typeparam name="T">Enumeration to be tested</typeparam>
     ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
+    ''' <seelaso cref="IsDefined"/>
     <CLSCompliant(False)> _
     Public Function InEnum(Of T As {IConvertible, Structure})(ByVal value As T) As Boolean
         Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
@@ -101,11 +102,12 @@ Public Module TypeTools
     Public Function GetEnumValue(ByVal Type As Type, ByVal Value As IConvertible) As [Enum]
         Return [Enum].ToObject(Type, GetValueInEnumBaseType(Type, Value))
     End Function
-End Module
-<CLSCompliant(False)> _
-Public Module __ASAP_Delete
-    <Extension()> Public Function IsDefined(Of T As System.Exception )(ByVal value As [Enum]) As Boolean
-        Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
+    ''' <summary>Gets value idicating if given value is defined as constant in enumeration</summary>
+    ''' <param name="value">Value to be checked. Value must be to type of enumeration to be checked in</param>
+    ''' <returns>True if <paramref name="value"/> is defined as constant in enumeration of type of <paramref name="value"/></returns>
+    ''' <remarks>Assembly Tools IL contains more type-safe generic extension function IsDefined. This is comanion function to <see cref="InEnum"/>.</remarks>
+    <Extension()> Public Function IsDefined(ByVal value As [Enum]) As Boolean
+        Return Array.IndexOf([Enum].GetValues(value.GetType), value) >= 0
     End Function
 End Module
 #End If

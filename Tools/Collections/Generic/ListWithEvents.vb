@@ -9,7 +9,7 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(ListWithEvents(Of )), LastChange:="06/26/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 2, GetType(ListWithEvents(Of )), LastChange:="05/13/2008")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
@@ -191,11 +191,13 @@ Namespace CollectionsT.GenericT
         ''' <remarks>
         ''' Internally calls <see cref="Add"/> for each item.
         ''' If an exception occures in <see cref="Add"/> or event handler than no item is added.
+        ''' <paramref name="Items"/> can safelly be null.
         ''' </remarks>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         Public Overridable Sub AddRange(ByVal Items As IEnumerable(Of T))
+            If Items Is Nothing Then Exit Sub
             Dim StartAdd As Integer = Me.Count
             Try
                 For Each itm As T In Items

@@ -4,12 +4,36 @@
 Imports System.Windows.Forms
 
 Namespace WindowsT.DialogsT
-    'TODO: Fully comment
     'ASAP:Mark
     ''' <summary>Provides technology-independent base class for WinForms and WPF message boxes</summary>
     Public MustInherit Class MessageBox : Inherits Control
-
-#Region "MessageBox Definition"
+#Region "Shared"
+        ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private Shared _DefaultImplementation As Type 'TODO: Assign WinForms implementation
+        ''' <summary>Gets or sets default implementation used for messageboxes shown by static <see cref="Show"/> methods of this class</summary>
+        ''' <returns>Type currently used as default implementation of message box</returns>
+        ''' <value>Sets application-wide default implementation of message box</value>
+        ''' <exception cref="ArgumentNullException">Value being set is null</exception>
+        ''' <see cref="ArgumentException">Value being set represents type that either does not derive from <see cref="MesasageBox"/>, is abstract, is generic non-closed or hasn't parameter-less contructor.</see>
+        Public Shared Property DefaultImplementation() As Type
+            <DebuggerStepThrough()> Get
+                Return _DefaultImplementation
+            End Get
+            Set(ByVal value As Type)
+                If value Is Nothing Then Throw New ArgumentNullException("value")
+                If Not value.IsSubclassOf(GetType(MessageBox)) Then Throw New ArgumentException("Type must inherit from MessageBox") 'Localize:Exception
+                If value.IsAbstract Then Throw New ArgumentException("Default MessageBox implementation cannot be abstract type.") 'Localize: Exception
+                If value.IsGenericTypeDefinition Then Throw New ArgumentException("Deffault MessageBox implementation cannot be generic type definition.") 'Localize:Exception
+                If value.GetConstructor(Type.EmptyTypes) Is Nothing Then Throw New ArgumentException("Class that represents default MessageBox implementation must have parameter-less constructor.") 'Localize:Exception
+                _DefaultImplementation = value
+            End Set
+        End Property
+        ''' <summary>Returns new instance of default implementation of <see cref="MessageBox"/></summary>
+        Public Shared Function GetDefault() As MessageBox
+            Return Activator.CreateInstance(DefaultImplementation)
+        End Function
+#End Region
+#Region "MessageBox Definition fields"
         Private _Buttons As New List(Of MessageBoxButton)
         Private _DefaultButton As Integer = 0
         Private _CloseResponce As DialogResult = DialogResult.None 'TODO: In Show/Ctor adjust if Cancel/No/Abort button is defined
@@ -26,7 +50,17 @@ Namespace WindowsT.DialogsT
         Private _Timer As TimeSpan = TimeSpan.Zero
         Private _TimeButton As Integer = 0
 #End Region
+#Region "Properties"
 
+#End Region
+#Region "CTors"
+
+#End Region
+#Region "Shared Show"
+
+#End Region
+#Region "Control classes"
+        ''' <summary>Common base for predefined message box controls</summary>
         Public MustInherit Class MessageBoxControl : Implements IReportsChange
             ''' <summary>Contains value of the <see cref="Text"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Text As String
@@ -37,15 +71,16 @@ Namespace WindowsT.DialogsT
             ''' <summary>Raised when value of the <see cref="Text"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
-            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event TextChanged(ByVal sender As MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            ''' <remarks>If derived control is editable, user can cause this event to be fired.</remarks>
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event TextChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             ''' <summary>Raised when value of the <see cref="ToolTip"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
-            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event ToolTipChanged(ByVal sender As MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event ToolTipChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             ''' <summary>Raised when value of the <see cref="Enabled"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
-            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EnabledChanged(ByVal sender As MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EnabledChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             ''' <summary>Gets or sets text displayed on button</summary>
             Public Property Text() As String
                 <DebuggerStepThrough()> Get
@@ -99,7 +134,6 @@ Namespace WindowsT.DialogsT
                 RaiseEvent Changed(Me, e)
             End Sub
         End Class
-
         ''' <summary>Represents button for <see cref="MessageBox"/></summary>
         ''' <completionlist cref="MessageBoxButton"/>
         Public Class MessageBoxButton : Inherits MessageBoxControl
@@ -298,31 +332,91 @@ Namespace WindowsT.DialogsT
                 End Get
             End Property
 #End Region
+            ''' <summary>Gets buttons specified by WinForms enumeration value</summary>
+            ''' <param name="Buttons">Buttons to get</param>
+            ''' <returns>Array of buttons as specified in <paramref name="Buttons"/></returns>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Buttons"/> is not member of <see cref="System.Windows.Forms.MessageBoxButtons"/></exception>
+            Public Shared Function GetButtons(ByVal Buttons As System.Windows.Forms.MessageBoxButtons) As MessageBoxButton()
+                Select Case Buttons
+                    Case MessageBoxButtons.AbortRetryIgnore '2
+                        Return New MessageBoxButton() {Abort, Retry, Ignore}
+                    Case MessageBoxButtons.OK '0
+                        Return New MessageBoxButton() {OK}
+                    Case MessageBoxButtons.OKCancel '1
+                        Return New MessageBoxButton() {OK, Cancel}
+                    Case MessageBoxButtons.RetryCancel '5
+                        Return New MessageBoxButton() {Retry, Cancel}
+                    Case MessageBoxButtons.YesNo '4
+                        Return New MessageBoxButton() {Yes, No}
+                    Case MessageBoxButtons.YesNoCancel '3
+                        Return New MessageBoxButton() {Yes, No, Cancel}
+                    Case Else : Throw New InvalidEnumArgumentException("Buttons", Buttons, GetType(System.Windows.Forms.MessageBoxButtons))
+                End Select
+            End Function
+            ''' <summary>Gets buttons specified by WPF enumeration value</summary>
+            ''' <param name="Buttons">Buttons to get</param>
+            ''' <returns>Array of buttons as specified in <paramref name="Buttons"/></returns>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Buttons"/> is not member of <see cref="System.Windows.MessageBoxButton"/></exception>
+            Public Shared Function GetButtons(ByVal Buttons As System.Windows.MessageBoxButton) As MessageBoxButton()
+                Select Case Buttons
+                    Case Windows.MessageBoxButton.OK '0
+                        Return New MessageBoxButton() {OK}
+                    Case Windows.MessageBoxButton.OKCancel '1
+                        Return New MessageBoxButton() {OK, Cancel}
+                    Case Windows.MessageBoxButton.YesNo '4
+                        Return New MessageBoxButton() {Yes, No}
+                    Case Windows.MessageBoxButton.YesNoCancel '3
+                        Return New MessageBoxButton() {Yes, No, Cancel}
+                    Case Else : Throw New InvalidEnumArgumentException("Buttons", Buttons, GetType(Global.System.Windows.MessageBoxButton))
+                End Select
+            End Function
+            ''' <summary>Gets buttons specified by Visual Basic enumeration value</summary>
+            ''' <param name="Buttons">Buttons to get</param>
+            ''' <returns>Array of buttons as specified in <paramref name="Buttons"/></returns>
+            ''' <exception cref="InvalidEnumArgumentException">Bitwise and of <paramref name="Buttons"/> and 7 is not member of <see cref="System.Windows.Forms.MessageBoxButtons"/> enumeration (values 0÷5)</exception>
+            Public Shared Function GetButtons(ByVal Buttons As Microsoft.VisualBasic.MsgBoxStyle) As MessageBoxButton()
+                Return GetButtons(CType(Buttons And 7, System.Windows.Forms.MessageBoxButtons))
+            End Function
+            ''' <summary>Gets buttons by bit aray</summary>
+            ''' <param name="Buttons">Bit mask of buttons to get</param>
+            ''' <returns>Array of buttons according to bit array <paramref name="Buttons"/></returns>
+            Public Shared Function GetButtons(ByVal Buttons As Buttons) As MessageBoxButton()
+                Dim ret As New List(Of MessageBoxButton)
+                If Buttons And MessageBoxButton.Buttons.OK Then ret.Add(OK)
+                If Buttons And MessageBoxButton.Buttons.Cancel Then ret.Add(Cancel)
+                If Buttons And MessageBoxButton.Buttons.Yes Then ret.Add(Yes)
+                If Buttons And MessageBoxButton.Buttons.No Then ret.Add(No)
+                If Buttons And MessageBoxButton.Buttons.Abort Then ret.Add(Abort)
+                If Buttons And MessageBoxButton.Buttons.Retry Then ret.Add(Retry)
+                If Buttons And MessageBoxButton.Buttons.Ignore Then ret.Add(Ignore)
+                If Buttons And MessageBoxButton.Buttons.Help Then ret.Add(Help)
+                Return ret.ToArray
+            End Function
+            ''' <summary>Bit aray for predefined buttons</summary>
+            <Flags()> _
+            Public Enum Buttons As Byte
+                ''' <summary>OK button</summary>
+                OK = 1
+                ''' <summary>Cancel button</summary>
+                Cancel = 2
+                ''' <summary>Yes button</summary>
+                Yes = 4
+                ''' <summary>No button</summary>
+                No = 8
+                ''' <summary>Abort button</summary>
+                Abort = 16
+                ''' <summary>Retry button</summary>
+                Retry = 32
+                ''' <summary>Ignore button</summary>
+                Ignore = 64
+                ''' <summary>Help button</summary>
+                Help = 128
+            End Enum
         End Class
         ''' <summary>Value of the <see cref="MessageBoxButton.Result"/> property for predefined <see cref="Help">Help</see> button</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Const HelpDialogResult As DialogResult = Integer.MinValue
-
-        ''' <summary>Options for <see cref="MessageBox"/></summary>
-        Public Enum MessageBoxOptions As Byte
-            ''' <summary>Text is aligned left (default)</summary>
-            AlignLeft = 0 '0000
-            ''' <summary>Text is aligned right</summary>
-            AlignRight = 1 '0001
-            ''' <summary>Text is aligned center</summary>
-            AlignCenter = 2 '0010                                                                         
-            ''' <summary>Text is aligned to block. If target platform does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.Left"/> (in ltr reading <see cref="MessageBoxOptions.AlignRight"/> in rtl reading)</summary>
-            AlignJustify = 3 '0011
-            ''' <summary>Bitwise mask for AND-ing text alignment</summary>
-            <EditorBrowsable(EditorBrowsableState.Advanced)> AlignMask = 3 '0011
-            ''' <summary>Left-to-right reading (default)</summary>
-            Ltr = 0 '0000
-            ''' <summary>Right-to-left reading</summary>
-            Rtl = 4 '0100
-            ''' <summary>Force shows message box to the user even if application is not currently active</summary>
-            BringToFront = 1 '1000
-        End Enum
-
+        ''' <summary>Represents check box control for <see cref="MessageBox"/></summary>
         Public Class MessageBoxCheckBox : Inherits MessageBoxControl
             ''' <summary>Contains value of the <see cref="ThreeState"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _ThreeState As Boolean
@@ -335,7 +429,8 @@ Namespace WindowsT.DialogsT
             ''' <summary>Raised when value of the <see cref="State"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
-            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
+            ''' <remarks><see cref="State"/> can be changed by user or programatically</remarks>
+            Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
             ''' <summary>Gets or sets value indicating if user can change state of checkbox between 3 or 2 states</summary>
             ''' <remarks>2-state CheckBox allows user to change state only to <see cref="CheckState.Checked"/> or <see cref="CheckState.Unchecked"/></remarks>
             <DefaultValue(False)> _
@@ -363,7 +458,24 @@ Namespace WindowsT.DialogsT
                     If old <> value Then RaiseEvent StateChanged(Me, New IReportsChange.ValueChangedEventArgs(Of CheckState)(old, value, "State"))
                 End Set
             End Property
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxCheckBox"/> class</summary>
+            Public Sub New()
+            End Sub
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxCheckBox"/> class with text</summary>
+            ''' <param name="Text">Initial text of the control (<see cref="Text"/> property)</param>
+            Public Sub New(ByVal Text$)
+                Me.new()
+                Me.Text = Text
+            End Sub
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxCheckBox"/> class with text and check state</summary>
+            ''' <param name="Text">Initial text of the control (<see cref="Text"/> property)</param>
+            ''' <param name="State">Initial state of the control (<see cref="State"/> property)</param>
+            Public Sub New(ByVal Text$, ByVal State As CheckState)
+                Me.new(Text)
+                Me.State = State
+            End Sub
         End Class
+        ''' <summary>Represents combo box (drop down list) control for <see cref="MessageBox"/></summary>
         Public Class MessageBoxComboBox : Inherits MessageBoxControl
 #Region "Fields"
             ''' <summary>Contains value of the <see cref="Editable"/> property</summary>
@@ -377,18 +489,6 @@ Namespace WindowsT.DialogsT
             ''' <summary>Contains value of the <see cref="SelectedIndex"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _SelectedIndex As Integer = -1
 #End Region
-#Region "CTors"
-            Public Sub New()
-                'AddHandler Items.Added, AddressOf Items_Added
-                'AddHandler Items.Removed, AddressOf Items_Removed
-                'AddHandler Items.ItemChanged, AddressOf Items_ItemChanged
-                'AddHandler Items.Cleared, AddressOf Items_Cleared
-            End Sub
-#End Region
-#Region "EventHandlers"
-
-#End Region
-            'TODO:Implement
 #Region "Properties"
             ''' <summary>Contains value of the <see cref="Editable"></see> property</summary>
             <DefaultValue(False)> _
@@ -397,10 +497,13 @@ Namespace WindowsT.DialogsT
                     Return _Editable
                 End Get
                 Set(ByVal value As Boolean)
+                    Dim old = Editable
                     _Editable = value
+                    If old <> value Then RaiseEvent EditableChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Editable"))
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="Items"></see> property</summary>
+            ''' <remarks>register handlers with events of <see cref="ListWithEvents(Of T)"/> returned by this property in order to track changes of the collection</remarks>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
             Public ReadOnly Property Items() As ListWithEvents(Of Object)
                 <DebuggerStepThrough()> Get
@@ -414,17 +517,21 @@ Namespace WindowsT.DialogsT
                     Return _DisplayMember
                 End Get
                 Set(ByVal value As String)
+                    Dim old = DisplayMember
                     _DisplayMember = value
+                    If old <> value Then RaiseEvent DisplayMemberChanged(Me, New IReportsChange.ValueChangedEventArgs(Of String)(old, value, "DisplayMember"))
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="SelectedItem"></see> property</summary>
-            <DefaultValue(GetType(Object), Nothing)> _
+            <DefaultValue(GetType(Object), Nothing), Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             Public Property SelectedItem() As Object
                 <DebuggerStepThrough()> Get
                     Return _SelectedItem
                 End Get
                 Set(ByVal value As Object)
+                    Dim old = SelectedItem
                     _SelectedItem = value
+                    If Not old.Equals(value) Then RaiseEvent SelectedItemChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "SelectedItem"))
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="SelectedIndex"></see> property</summary>
@@ -434,18 +541,128 @@ Namespace WindowsT.DialogsT
                     Return _SelectedIndex
                 End Get
                 Set(ByVal value As Integer)
+                    Dim old = value
                     _SelectedIndex = value
+                    If old <> value Then RaiseEvent SelectedIndexChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "SelectedIndex"))
                 End Set
             End Property
 #End Region
 #Region "Events"
-
+            ''' <summary>Raised when value of the <see cref="Editable"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EditableChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            ''' <summary>Raised when value of the <see cref="DisplayMember"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event DisplayMemberChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            ''' <summary>Raised when value of the <see cref="SelectedItem"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            ''' <remarks><see cref="SelectedItem"/> can be changed by user or programatically</remarks>
+            Public Event SelectedItemChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+            ''' <summary>Raised when value of the <see cref="SelectedIndex"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            ''' <remarks><see cref="SelectedIndex"/> can be changed by user or programatically</remarks>
+            Public Event SelectedIndexChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
 #End Region
+#Region "CTors"
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxComboBox"/> class</summary>
+            Public Sub New()
+                AddHandler MyBase.TextChanged, AddressOf MyBase_TextChanged
+            End Sub
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxComboBox"/> class with combo box items and display member</summary>
+            ''' <param name="DisplayMember">Initial value of the <see cref="DisplayMember"/> property - name of member used to display items</param>
+            ''' <param name="Items">Initial items in combo box</param>
+            Public Sub New(ByVal DisplayMember$, ByVal ParamArray Items As Object())
+                Me.New(Items)
+                Me.DisplayMember = DisplayMember
+            End Sub
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxComboBox"/> class with items</summary>
+            ''' <param name="Items">Initial items in combo box</param>
+            Public Sub New(ByVal ParamArray Items As Object())
+                Me.new()
+                Me.Items.AddRange(Items)
+            End Sub
+#End Region
+
+            ''' <summary>Raised when value of the <see cref="Text"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            ''' <remarks>
+            ''' Value of the <see cref="Text"/> property can be changed programatically or by the user.
+            ''' This event shadows base class's event in order to change <see cref="EditorBrowsableAttribute"/> only.
+            ''' </remarks>
+            Public Shadows Event TextChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            ''' <summary>Handles <see cref="MessageBoxControl.TextChanged"/> event in order to provide shadowing</summary>
+            ''' <param name="sender">Source of event (is always this instance)</param>
+            ''' <param name="e">Event arguments informing about old and new value</param>
+            Private Sub MyBase_TextChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+                RaiseEvent TextChanged(Me, e)
+            End Sub
         End Class
+        ''' <summary>Represents radio button (one from many check box) for <see cref="MessageBox"/></summary>
         Public Class MessageBoxRadioButton : Inherits MessageBoxControl
+            ''' <summary>Contains value of the <see cref="Checked"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Checked As Boolean
-            'TODO:Implement
+            ''' <summary>Gets or sets value indicating if control is checked or not</summary>
+            <DefaultValue(False)> _
+            Public Property Checked() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _Checked
+                End Get
+                Set(ByVal value As Boolean)
+                    Dim old = value
+                    _Checked = value
+                    If old <> value Then
+                        RaiseEvent CheckedChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Checked"))
+                    End If
+                End Set
+            End Property
+            ''' <summary>raised when value of the <see cref="Checked"/> property changes</summary>
+            ''' <param name="sender">Source of the event</param>
+            ''' <param name="e">Event arguments containing infomation about new and old value</param>
+            ''' <remarks>The <see cref="Checked"/> property can be changed programatically or by user</remarks>
+            Public Event CheckedChanged(ByVal sender As MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxRadioButton"/> class</summary>
+            Public Sub New()
+            End Sub
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxRadioButton"/> class with text</summary>
+            ''' <param name="Text">Text of control</param>
+            Public Sub New(ByVal Text$)
+                Me.new()
+                Me.Text = Text
+            End Sub
+            ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxRadioButton"/> class with text and check state</summary>
+            ''' <param name="Text">Text of control</param>
+            ''' <param name="Checked">Initial check state</param>
+            Public Sub New(ByVal Text$, ByVal Checked As Boolean)
+                Me.new(Text)
+                Me.Checked = Checked
+            End Sub
         End Class
+#End Region
+
+        ''' <summary>Options for <see cref="MessageBox"/></summary>
+        Public Enum MessageBoxOptions As Byte
+            ''' <summary>Text is aligned left (default)</summary>
+            AlignLeft = 0 '0000
+            ''' <summary>Text is aligned right</summary>
+            AlignRight = 1 '0001
+            ''' <summary>Text is aligned center</summary>
+            AlignCenter = 2 '0010                                                                         
+            ''' <summary>Text is aligned to block. If target platform does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.Left"/> (in ltr reading <see cref="MessageBoxOptions.AlignRight"/> in rtl reading)</summary>
+            AlignJustify = 3 '0011
+            ''' <summary>Bitwise mask for AND-ing text alignment</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> AlignMask = 3 '0011
+            ''' <summary>Left-to-right reading (default)</summary>
+            Ltr = 0 '0000
+            ''' <summary>Right-to-left reading</summary>
+            Rtl = 4 '0100
+            ''' <summary>Force shows message box to the user even if application is not currently active</summary>
+            BringToFront = 1 '1000
+        End Enum
     End Class
 End Namespace
 #End If
