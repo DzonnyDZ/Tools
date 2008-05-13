@@ -245,7 +245,9 @@
     <Compile Include="Windows\Controls\NumericUpDown.vb" />
     <Compile Include="Windows\Converters\Converters.vb" />
     <Compile Include="Windows\Converters\StronlyTypedConverter.vb" />
-    <Compile Include="Windows\Dialogs\MessageBox.vb" />
+    <Compile Include="Windows\Dialogs\MessageBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.Designer.vb">
       <DependentUpon>ComboWithStatus.vb</DependentUpon>
     </Compile>

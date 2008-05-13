@@ -102,4 +102,10 @@ Public Module TypeTools
         Return [Enum].ToObject(Type, GetValueInEnumBaseType(Type, Value))
     End Function
 End Module
+<CLSCompliant(False)> _
+Public Module __ASAP_Delete
+    <Extension()> Public Function IsDefined(Of T As System.Exception )(ByVal value As [Enum]) As Boolean
+        Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
+    End Function
+End Module
 #End If

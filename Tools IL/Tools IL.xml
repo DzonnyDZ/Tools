@@ -1,0 +1,23 @@
+<?xml version="1.0" ?>
+<doc>
+    <assembly>
+        <name>Tools IL</name>
+    </assembly>
+    <members>
+        <member name="N:Tools">
+            <summary>Root namespace for all tools in ĐTools project</summary>
+        </member>
+        <member name="N:Tools.SpecialT">
+            <summary>Special tools created using techniques not available in ordinary .NET programming languages as Visual Basic or C#</summary>
+        </member>
+        <member name="T:Tools.SpecialT.TypeTools">
+            <summary>Contains static methods (extension methods) for working with <see cref="T:System.Type"/> and <see cref="T:System.Enum"/>.</summary>
+        </member>
+        <member name="M:Tools.Special.TypeTools.IsDefined">
+            <summary>Gets value indicatiing if given value is defined as member of enumeration</summary>
+            <typeparam name="T">Type of the enumeration</typeparam>
+            <param name="value">Value to verify</param>
+            <returns>True if enumeration <typeparamref name="T"/> contains constant with value <paramref name="value"/>; false otherwise.</returns>
+        </member>
+    </members>
+</doc>

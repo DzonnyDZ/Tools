@@ -1,11 +1,13 @@
-﻿#If Config <= Nightly Then 'Stage Nightly
+﻿Imports Tools.CollectionsT.GenericT
+
+#If Config <= Nightly Then 'Stage Nightly
 Imports System.Windows.Forms
 
 Namespace WindowsT.DialogsT
     'TODO: Fully comment
     'ASAP:Mark
     ''' <summary>Provides technology-independent base class for WinForms and WPF message boxes</summary>
-    Public MustInherit Class MessageBox
+    Public MustInherit Class MessageBox : Inherits Control
 
 #Region "MessageBox Definition"
         Private _Buttons As New List(Of MessageBoxButton)
@@ -18,11 +20,11 @@ Namespace WindowsT.DialogsT
         Private _CheckBox As MessageBoxCheckBox
         Private _ComboBox As MessageBoxComboBox
         Private _Radios As New List(Of MessageBoxRadioButton)
-        Private _TopControl As Control
-        Private _MidControl As Control
-        Private _BottomControl As Control
-        Private _Timer As TimeSpan
-        Private _TimeButton As Integer
+        Private _TopControl As Object
+        Private _MidControl As Object
+        Private _BottomControl As Object
+        Private _Timer As TimeSpan = TimeSpan.Zero
+        Private _TimeButton As Integer = 0
 #End Region
 
         Public MustInherit Class MessageBoxControl : Implements IReportsChange
@@ -297,7 +299,7 @@ Namespace WindowsT.DialogsT
             End Property
 #End Region
         End Class
-        ''' <summary>Value of the <see cref="Result"/> property for predefined <see cref="Help">Help</see> button</summary>
+        ''' <summary>Value of the <see cref="MessageBoxButton.Result"/> property for predefined <see cref="Help">Help</see> button</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Const HelpDialogResult As DialogResult = Integer.MinValue
 
@@ -322,12 +324,126 @@ Namespace WindowsT.DialogsT
         End Enum
 
         Public Class MessageBoxCheckBox : Inherits MessageBoxControl
-            'TODO:Implement
+            ''' <summary>Contains value of the <see cref="ThreeState"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _ThreeState As Boolean
+            ''' <summary>Contains value of the <see cref="State"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _State As CheckState
+            ''' <summary>Raised when value of the <see cref="ThreeState"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event ThreeStateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            ''' <summary>Raised when value of the <see cref="State"/> property changes</summary>
+            ''' <param name="sender">The source of the event</param>
+            ''' <param name="e">Information about old and new value</param>
+            <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
+            ''' <summary>Gets or sets value indicating if user can change state of checkbox between 3 or 2 states</summary>
+            ''' <remarks>2-state CheckBox allows user to change state only to <see cref="CheckState.Checked"/> or <see cref="CheckState.Unchecked"/></remarks>
+            <DefaultValue(False)> _
+            Public Property ThreeState() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _ThreeState
+                End Get
+                Set(ByVal value As Boolean)
+                    Dim old = ThreeState
+                    _ThreeState = value
+                    If old <> value Then RaiseEvent ThreeStateChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "ThreeState"))
+                End Set
+            End Property
+            ''' <summary>Gets or sets current state of check box</summary>
+            ''' <remarks>If <see cref="ThreeState"/> is false user cannot set checkbox to <see cref="CheckState.Indeterminate"/>, however you can achieve it programatically</remarks>
+            <DefaultValue(GetType(CheckState), "Unchecked")> _
+            Public Property State() As CheckState
+                <DebuggerStepThrough()> Get
+                    Return _State
+                End Get
+                Set(ByVal value As CheckState)
+                    If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, GetType(CheckState))
+                    Dim old = value
+                    _State = value
+                    If old <> value Then RaiseEvent StateChanged(Me, New IReportsChange.ValueChangedEventArgs(Of CheckState)(old, value, "State"))
+                End Set
+            End Property
         End Class
         Public Class MessageBoxComboBox : Inherits MessageBoxControl
+#Region "Fields"
+            ''' <summary>Contains value of the <see cref="Editable"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Editable As Boolean
+            ''' <summary>Contains value of the <see cref="Items"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Items As New ListWithEvents(Of Object)(True, True)
+            ''' <summary>Contains value of the <see cref="DisplayMember"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _DisplayMember As String
+            ''' <summary>Contains value of the <see cref="SelectedItem"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _SelectedItem As Object
+            ''' <summary>Contains value of the <see cref="SelectedIndex"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _SelectedIndex As Integer = -1
+#End Region
+#Region "CTors"
+            Public Sub New()
+                'AddHandler Items.Added, AddressOf Items_Added
+                'AddHandler Items.Removed, AddressOf Items_Removed
+                'AddHandler Items.ItemChanged, AddressOf Items_ItemChanged
+                'AddHandler Items.Cleared, AddressOf Items_Cleared
+            End Sub
+#End Region
+#Region "EventHandlers"
+
+#End Region
             'TODO:Implement
+#Region "Properties"
+            ''' <summary>Contains value of the <see cref="Editable"></see> property</summary>
+            <DefaultValue(False)> _
+            Public Property Editable() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _Editable
+                End Get
+                Set(ByVal value As Boolean)
+                    _Editable = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Items"></see> property</summary>
+            <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+            Public ReadOnly Property Items() As ListWithEvents(Of Object)
+                <DebuggerStepThrough()> Get
+                    Return _Items
+                End Get
+            End Property
+            ''' <summary>Contains value of the <see cref="DisplayMember"></see> property</summary>
+            <DefaultValue(GetType(String), Nothing)> _
+            Public Property DisplayMember() As String
+                <DebuggerStepThrough()> Get
+                    Return _DisplayMember
+                End Get
+                Set(ByVal value As String)
+                    _DisplayMember = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="SelectedItem"></see> property</summary>
+            <DefaultValue(GetType(Object), Nothing)> _
+            Public Property SelectedItem() As Object
+                <DebuggerStepThrough()> Get
+                    Return _SelectedItem
+                End Get
+                Set(ByVal value As Object)
+                    _SelectedItem = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="SelectedIndex"></see> property</summary>
+            <DefaultValue(-1I)> _
+            Public Property SelectedIndex() As Integer
+                <DebuggerStepThrough()> Get
+                    Return _SelectedIndex
+                End Get
+                Set(ByVal value As Integer)
+                    _SelectedIndex = value
+                End Set
+            End Property
+#End Region
+#Region "Events"
+
+#End Region
         End Class
         Public Class MessageBoxRadioButton : Inherits MessageBoxControl
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Checked As Boolean
             'TODO:Implement
         End Class
     End Class
