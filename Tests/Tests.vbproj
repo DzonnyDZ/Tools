@@ -484,6 +484,10 @@
     <None Include="app.mda.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
+      <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
+      <Name>Tools IL</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools Visual Studio\Tools Visual Studio.vbproj">
       <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
       <Name>Tools Visual Studio</Name>
