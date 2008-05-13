@@ -13,8 +13,8 @@
         <member name="T:Tools.SpecialT.TypeTools">
             <summary>Contains static methods (extension methods) for working with <see cref="T:System.Type"/> and <see cref="T:System.Enum"/>.</summary>
         </member>
-        <member name="M:Tools.Special.TypeTools.IsDefined">
-            <summary>Gets value indicatiing if given value is defined as member of enumeration</summary>
+        <member name="M:Tools.SpecialT.TypeTools.IsDefined``1(``0)">
+            <summary>Gets value indicating if given value is defined as member of enumeration</summary>
             <typeparam name="T">Type of the enumeration</typeparam>
             <param name="value">Value to verify</param>
             <returns>True if enumeration <typeparamref name="T"/> contains constant with value <paramref name="value"/>; false otherwise.</returns>

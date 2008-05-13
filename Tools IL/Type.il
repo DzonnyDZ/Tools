@@ -11,7 +11,7 @@
     extends [mscorlib]System.Object
 {
     .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor()
-    .method public static bool IsDefined<([mscorlib]System.Enum) T>(class [mscorlib]System.Enum 'value') cil managed
+    .method public static bool IsDefined<([mscorlib]System.Enum) T>(!!T 'value') cil managed
     {
         .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor()
         .maxstack 2

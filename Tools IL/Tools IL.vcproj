@@ -28,8 +28,8 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.* /DEBUG&#x0D;&#x0A;copy &quot;Tools IL.xml&quot; &quot;$(OutDir)/Tools IL.xml&quot;"
-				ReBuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.*"
+				BuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
+				ReBuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
 				CleanCommandLine="del &quot;$(OutDir)\Tools IL.*&quot;"
 				Output="$(OutDir)\Tools IL.dll"
 				PreprocessorDefinitions="WIN32;_DEBUG"
@@ -48,8 +48,8 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.*&#x0D;&#x0A;copy &quot;Tools IL.xml&quot; &quot;$(OutDir)/Tools IL.xml&quot;"
-				ReBuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.*"
+				BuildCommandLine="Make.cmd &quot;$(OutDir)&quot;"
+				ReBuildCommandLine="Make.cmd &quot;$(OutDir)&quot;"
 				CleanCommandLine="del &quot;$(OutDir)\Tools IL.*&quot;"
 				Output="$(OutDir)\Tools IL.dll"
 				PreprocessorDefinitions="WIN32;NDEBUG"
@@ -68,8 +68,8 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.* /DEBUG&#x0D;&#x0A;copy &quot;Tools IL.xml&quot; &quot;$(OutDir)/Tools IL.xml&quot;"
-				ReBuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.*"
+				BuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
+				ReBuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
 				CleanCommandLine="del &quot;$(OutDir)\Tools IL.*&quot;"
 				Output="$(OutDir)\Tools IL.dll"
 				PreprocessorDefinitions="WIN32;_DEBUG"
@@ -88,8 +88,8 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.* /DEBUG&#x0D;&#x0A;copy &quot;Tools IL.xml&quot; &quot;$(OutDir)/Tools IL.xml&quot;"
-				ReBuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.*"
+				BuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
+				ReBuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
 				CleanCommandLine="del &quot;$(OutDir)\Tools IL.*&quot;"
 				Output="$(OutDir)\Tools IL.dll"
 				PreprocessorDefinitions="WIN32;_DEBUG"
@@ -108,8 +108,8 @@
 			>
 			<Tool
 				Name="VCNMakeTool"
-				BuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.* /DEBUG&#x0D;&#x0A;copy &quot;Tools IL.xml&quot; &quot;$(OutDir)/Tools IL.xml&quot;"
-				ReBuildCommandLine="ilasm Type.il /OUTPUT=&quot;$(OutDir)/Tools IL.dll&quot; /DLL /NOLOGO /PDB /MDV=1.0.*"
+				BuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
+				ReBuildCommandLine="Make.cmd &quot;$(OutDir)&quot; /DEBUG"
 				CleanCommandLine="del &quot;$(OutDir)\Tools IL.*&quot;"
 				Output="$(OutDir)\Tools IL.dll"
 				PreprocessorDefinitions="WIN32;_DEBUG"
@@ -124,6 +124,10 @@
 	<References>
 	</References>
 	<Files>
+		<File
+			RelativePath=".\Make.cmd"
+			>
+		</File>
 		<File
 			RelativePath=".\Tools IL.xml"
 			>
