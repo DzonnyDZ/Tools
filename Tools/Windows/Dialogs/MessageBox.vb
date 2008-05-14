@@ -1,4 +1,4 @@
-﻿Imports Tools.CollectionsT.GenericT
+﻿Imports Tools.CollectionsT.GenericT, System.Linq
 
 #If Config <= Nightly Then 'Stage Nightly
 Imports System.Windows.Forms
@@ -6,7 +6,7 @@ Imports System.Windows.Forms
 Namespace WindowsT.DialogsT
     'ASAP:Mark
     ''' <summary>Provides technology-independent base class for WinForms and WPF message boxes</summary>
-    Public MustInherit Class MessageBox : Inherits Control
+    Public MustInherit Class MessageBox : Inherits Component
 #Region "Shared"
         ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private Shared _DefaultImplementation As Type 'TODO: Assign WinForms implementation
@@ -34,27 +34,270 @@ Namespace WindowsT.DialogsT
         End Function
 #End Region
 #Region "MessageBox Definition fields"
-        Private _Buttons As New List(Of MessageBoxButton)
-        Private _DefaultButton As Integer = 0
-        Private _CloseResponce As DialogResult = DialogResult.None 'TODO: In Show/Ctor adjust if Cancel/No/Abort button is defined
-        Private _Prompt As String
-        Private _Title As String
-        Private _Icon As Drawing.Image
-        Private _Options As MessageBoxOptions
-        Private _CheckBox As MessageBoxCheckBox
-        Private _ComboBox As MessageBoxComboBox
-        Private _Radios As New List(Of MessageBoxRadioButton)
-        Private _TopControl As Object
-        Private _MidControl As Object
-        Private _BottomControl As Object
-        Private _Timer As TimeSpan = TimeSpan.Zero
-        Private _TimeButton As Integer = 0
+        ''' <summary>Contaions value of the <see cref="Buttons"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Buttons As New List(Of MessageBoxButton)
+        ''' <summary>Contaions value of the <see cref="DefaultButton"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _DefaultButton As Integer = 0
+        ''' <summary>Contaions value of the <see cref="CloseResponse"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CloseResponse As DialogResult = DialogResult.None 'TODO: In Show/Ctor adjust if Cancel/No/Abort button is defined
+        ''' <summary>Contaions value of the <see cref="Prompt"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Prompt As String
+        ''' <summary>Contaions value of the <see cref="Title"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Title As String
+        ''' <summary>Contaions value of the <see cref="Icon"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Icon As Drawing.Image
+        ''' <summary>Contaions value of the <see cref="Options"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Options As MessageBoxOptions
+        ''' <summary>Contaions value of the <see cref="CheckBox"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CheckBox As MessageBoxCheckBox
+        ''' <summary>Contaions value of the <see cref="ComboBox"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ComboBox As MessageBoxComboBox
+        ''' <summary>Contaions value of the <see cref="Radios"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Radios As New List(Of MessageBoxRadioButton)
+        ''' <summary>Contaions value of the <see cref="TopControl"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _TopControl As Object
+        ''' <summary>Contaions value of the <see cref="MidControl"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _MidControl As Object
+        ''' <summary>Contaions value of the <see cref="BottomControl"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _BottomControl As Object
+        ''' <summary>Contaions value of the <see cref="Timer"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Timer As TimeSpan = TimeSpan.Zero
+        ''' <summary>Contaions value of the <see cref="TimeButton"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _TimeButton As Integer = -1
 #End Region
 #Region "Properties"
-
+        ''' <summary>Defines buttons displayed on message box</summary>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+        Public ReadOnly Property Buttons() As List(Of MessageBoxButton)
+            <DebuggerStepThrough()> Get
+                Return _Buttons
+            End Get
+        End Property
+        ''' <summary>gets value indicating if value of the <see cref="Buttons"/> property have been changed and sou it should be serialized</summary>
+        ''' <returns>Ture if <see cref="Buttons"/> should be serialized, false if it has its default value</returns>
+        Private Function ShouldSerializeButtons() As Boolean
+            Return Buttons.Count <> 1 OrElse (Buttons.Count = 1 AndAlso Buttons(0).Result <> DialogResult.OK OrElse Buttons(0).HasChanged)
+        End Function
+        ''' <summary>Resets the <see cref="Buttons"/> to its initial value</summary>
+        Private Sub ResetButtons()
+            Buttons.Clear()
+            Buttons.Add(MessageBoxButton.OK)
+        End Sub
+        ''' <summary>Indicates 0-based index of button that has focus when message box is shown and that is default button for message box</summary>
+        ''' <remarks>Default button is treated as being clicked when user presses Enter. If value ios set outside of range of <see cref="Buttons"/> (i.e. -1), message box has no default button.</remarks>
+        ''' <seealso cref="System.Windows.Forms.Form.AcceptButton"/>
+        ''' <seealso cref="System.Windows.Controls.Button.IsDefault"/>
+        <DefaultValue(0I)> _
+        Public Property DefaultButton() As Integer
+            <DebuggerStepThrough()> Get
+                Return _DefaultButton
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Integer)
+                _DefaultButton = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets value returned by <see cref="Show"/> function when user closes the message box by closing window or by pressin escape</summary>
+        ''' <remarks>Values that are not members of the <see cref="DialogResult"/> enumeration can be safely used.</remarks>
+        Public Property CloseResponse() As DialogResult
+            <DebuggerStepThrough()> Get
+                Return _CloseResponse
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As DialogResult)
+                _CloseResponse = value
+            End Set
+        End Property
+        ''' <summary>gets value idicating if the <see cref="CloseResponse"/> property should be serialuzed</summary>
+        ''' <returns>True when <see cref="CloseResponse"/> differs from <see cref="GetDefaultCloseResponse"/></returns>
+        Private Function ShouldSerializeCloseResponse() As Boolean
+            Return CloseResponse <> GetDefaultCloseResponse()
+        End Function
+        ''' <summary>Resets value of the <see cref="CloseResponse"/> property to <see cref="GetDefaultCloseResponse"/></summary>
+        Private Sub ResetCloseResponse()
+            CloseResponse = GetDefaultCloseResponse()
+        End Sub
+        ''' <summary>Gets value indicating if the <see cref="CloseResponse"/> property has its default value</summary>
+        ''' <returns>True when <see cref="CloseResponse"/> equals to <see cref="GetDefaultCloseResponse"/>; false otherwise</returns>
+        ''' <value>Setting value of the property to true causes reseting value of the <see cref="CloseResponse"/> to its default value (<see cref="GetDefaultCloseResponse"/>). Setting the property to false is ignored.</value>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        Public Property UseDefaultCloseResponse() As Boolean
+            Get
+                Return CloseResponse = GetDefaultCloseResponse()
+            End Get
+            Set(ByVal value As Boolean)
+                If value = True Then CloseResponse = GetDefaultCloseResponse()
+            End Set
+        End Property
+        ''' <summary>Gets default value for the <see cref="CloseResponse"/> property. The value depends on current content of <see cref="Buttons"/> collection.</summary>
+        ''' <returns>Default value for the <see cref="CloseResponse"/> property</returns>
+        ''' <remarks>Following rules apply in given order:
+        ''' <list type="list">
+        ''' <item>If <see cref="Buttons"/> is empty, returns <see cref="DialogResult.None"/></item>
+        ''' <item>If <see cref="Buttons"/> has only one element, returns <see cref="MessageBoxButton.Result">Result</see> of that button</item>
+        ''' <item>If any button with <see cref="MessageBoxButton.Result">Result</see> <see cref="DialogResult.Cancel"/> exists returns <see cref="DialogResult.Cancel"/></item>
+        ''' <item>If any button with <see cref="MessageBoxButton.Result">Result</see> <see cref="DialogResult.No"/> exists returns <see cref="DialogResult.No"/></item>
+        ''' <item>If any button with <see cref="MessageBoxButton.Result">Result</see> <see cref="DialogResult.Abort"/> exists returns <see cref="DialogResult.Abort"/></item>
+        ''' <item>If any button with <see cref="MessageBoxButton.Result">Result</see> <see cref="DialogResult.Ignore"/> exists returns <see cref="DialogResult.Ignore"/></item>
+        ''' <item>In all other cases returns <see cref="DialogResult.None"/></item>
+        ''' </list>
+        ''' </remarks>
+        Protected Function GetDefaultCloseResponse() As DialogResult
+            If Buttons.Count = 0 Then
+                Return DialogResult.None
+            ElseIf Buttons.Count = 1 Then
+                Return Buttons(0).Result
+            End If
+            Dim Cancel = (From Button In Buttons Where Button.Result = DialogResult.Cancel).FirstOrDefault
+            If Cancel IsNot Nothing Then Return DialogResult.Cancel
+            Dim No = (From Button In Buttons Where Button.Result = DialogResult.No).FirstOrDefault
+            If No IsNot Nothing Then Return DialogResult.No
+            Dim Abort = (From Button In Buttons Where Button.Result = DialogResult.Abort).FirstOrDefault
+            If Abort IsNot Nothing Then Return DialogResult.Abort
+            Dim Ignore = (From Button In Buttons Where Button.Result = DialogResult.Ignore).FirstOrDefault
+            If Ignore IsNot Nothing Then Return DialogResult.Ignore
+            Return DialogResult.None
+        End Function
+        ''' <summary>Gets or sets text of prompt of message box.</summary>
+        <DefaultValue(GetType(String), Nothing)> _
+        Public Property Prompt() As String
+            <DebuggerStepThrough()> Get
+                Return _Prompt
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As String)
+                _Prompt = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets title text of message box</summary>
+        ''' <remarks>If value of thsi property is null or an empty string, application title is used (see <see cref="Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Title"/>)</remarks>
+        <DefaultValue(GetType(String), Nothing)> _
+        Public Property Title() As String
+            <DebuggerStepThrough()> Get
+                Return _Title
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As String)
+                _Title = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets icon image to display on the message box</summary>
+        ''' <remarks>Expected image size is 32×32px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
+        <DefaultValue(GetType(Drawing.Image), Nothing)> _
+        Public Property Icon() As Drawing.Image
+            <DebuggerStepThrough()> Get
+                Return _Icon
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Drawing.Image)
+                _Icon = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets options of the message box</summary>
+        <DefaultValue(GetType(MessageBoxOptions), "0")> _
+        Public Property Options() As MessageBoxOptions
+            <DebuggerStepThrough()> Get
+                Return _Options
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As MessageBoxOptions)
+                _Options = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets check box displayed in messaqge box</summary>
+        <DefaultValue(GetType(MessageBoxCheckBox), Nothing)> _
+        Public Property CheckBox() As MessageBoxCheckBox
+            <DebuggerStepThrough()> Get
+                Return _CheckBox
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As MessageBoxCheckBox)
+                _CheckBox = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets combo box (drop down list) displayed in message box</summary>
+        <DefaultValue(GetType(MessageBoxComboBox), Nothing)> _
+        Public Property ComboBox() As MessageBoxComboBox
+            <DebuggerStepThrough()> Get
+                Return _ComboBox
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As MessageBoxComboBox)
+                _ComboBox = value
+            End Set
+        End Property
+        ''' <summary>Radio buttons displayed on message box</summary>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+        Public ReadOnly Property Radios() As List(Of MessageBoxRadioButton)
+            <DebuggerStepThrough()> Get
+                Return _Radios
+            End Get
+        End Property
+        ''' <summary>Gets value idiciating if the <see cref="Radios"/> property should be serialized</summary>
+        ''' <returns>True if count of items of <see cref="Radios"/> is greater than zero</returns>
+        Private Function ShouldSerializeRadios() As Boolean
+            Return Radios.Count <> 0
+        End Function
+        ''' <summary>Resets value of the <see cref="Radios"/> property to its default value (an empty list)</summary>
+        Private Sub ResetRadios()
+            Radios.Clear()
+        End Sub
+        ''' <summary>Gets or sets additional control displayed at top of the message box (above message)</summary>
+        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        <DefaultValue(GetType(Object), Nothing)> _
+        Public Property TopControl() As Object
+            <DebuggerStepThrough()> Get
+                Return _TopControl
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Object)
+                _TopControl = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets additional control displayed in the middle of the message box (above buttons)</summary>
+        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        Public Property MidControl() As Object
+            <DebuggerStepThrough()> Get
+                Return _MidControl
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Object)
+                _MidControl = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets additional control displayed at bottom of the message box (below buttons)</summary>
+        ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        Public Property BottomControl() As Object
+            <DebuggerStepThrough()> Get
+                Return _BottomControl
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Object)
+                _BottomControl = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicating for how long the message box will be displayed before it closes with <see cref="CloseResponse"/> as result.</summary>
+        ''' <remarks><see cref="TimeSpan.Zero"/> or less vaklue meand then no count-down takes effect</remarks>
+        <DefaultValue(GetType(TimeSpan), "0:00:00")> _
+        Public Property Timer() As TimeSpan
+            <DebuggerStepThrough()> Get
+                Return _Timer
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As TimeSpan)
+                _Timer = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicating 0-based index of button when count-down time is displayed</summary>
+        ''' <remarks>Following values has special meaning:
+        ''' <list type="table"><listheader><term>value</term><description>efect</description></listheader>
+        ''' <item><term>-1</term><description>Button is chosed automatically depending on <see cref="CloseResponse"/> property (if there are more buttons with same <see cref="MessageBoxButton.Result"/> first is used)</description></item>
+        ''' <item><term>&lt; -1</term><description>Count down time is displayed in message box title</description></item>
+        ''' <item><term>>= <see cref="Buttons">Buttons</see>.<see cref="List(Of MessageBoxButton).Count">Count</see></term><description>Count down is not displayed</description></item>
+        ''' </list>
+        ''' Count down is displayed as time in format h:mm:ss, m:ss or s depending on current value of time remaining (always the shortest possible format is used).</remarks>
+        <DefaultValue(-1I)> _
+        Public Property TimeButton() As Integer
+            <DebuggerStepThrough()> Get
+                Return _TimeButton
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Integer)
+                _TimeButton = value
+            End Set
+        End Property
 #End Region
 #Region "CTors"
-
+        Public Sub New()
+            Me.Buttons.Add(MessageBoxButton.OK)
+        End Sub
 #End Region
 #Region "Shared Show"
 
@@ -144,6 +387,8 @@ Namespace WindowsT.DialogsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Button As Object
             ''' <summary>Contains value of the <see cref="AccessKey"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _AccessKey As Char = vbNullChar
+            ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _HasChanged As Boolean
 #End Region
             ''' <summary>Raised when button is clicked, before action associated with the button is taken</summary>
             ''' <param name="e">Event arguments. Can be used to cancel the event.</param>
@@ -159,7 +404,7 @@ Namespace WindowsT.DialogsT
             ''' <param name="e">Information about old and new value</param>
             <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event AccessKeyChanged(ByVal sender As MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
 #End Region
-#Region "Common properties"
+#Region "Properties"
             ''' <summary>Gets or sets result produced by this button</summary>
             ''' <remarks>In case you need to define your own buttons you can use this property and set it to value thet is not member of the <see cref="DialogResult"/> enumeration.</remarks>
             <DefaultValue(GetType(DialogResult), "None")> _
@@ -198,6 +443,16 @@ Namespace WindowsT.DialogsT
                     End If
                 End Set
             End Property
+            ''' <summary>Gets value indicating if any property of this instance have been changed since its construction</summary>
+            ''' <remarks>Changing this property does not cause the <see cref="Changed"/> event to be raised</remarks>
+            Friend Property HasChanged() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _HasChanged
+                End Get
+                <DebuggerStepThrough()> Private Set(ByVal value As Boolean)
+                    _HasChanged = value
+                End Set
+            End Property
 #End Region
             ''' <summary>Class derived from <see cref="MessageBox"/> which owns this button can use this property to store "physical" button object that represents the button on surface of a window.</summary>
             ''' <remarks>
@@ -216,49 +471,119 @@ Namespace WindowsT.DialogsT
 #Region "CTors"
             'TODO:Null exceptions
             'TODO:Comments
-            Public Sub New(ByVal Text$)
-                Me.Text = Text
+            ''' <summary>Ture indicates that this instance is currently being constructed</summary>
+            Private ReadOnly IsConstructing As Boolean = True
+            ''' <summary>CTor - creates new instance of the <see cref="MessageBoxButton"/> class</summary>
+            Public Sub New()
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from button text</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            Public Sub New(ByVal Text$)
+                Me.New()
+                IsConstructing = True
+                Me.Text = Text
+                IsConstructing = False
+            End Sub
+            ''' <summary>CTor from button text and access key</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal AccessKey As Char)
                 Me.New(Text)
+                IsConstructing = True
                 Me.AccessKey = AccessKey
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text and tool tip text</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
             Public Sub New(ByVal Text$, ByVal ToolTip$)
                 Me.New(Text)
+                IsConstructing = True
                 Me.ToolTip = ToolTip
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text, tool tip text and access key</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
+            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal ToolTip$, ByVal AccessKey As Char)
                 Me.New(Text, ToolTip)
+                IsConstructing = True
                 Me.AccessKey = AccessKey
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text and dialog result</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
             Public Sub New(ByVal Text$, ByVal Result As DialogResult)
                 Me.New(Text)
+                IsConstructing = True
                 Me.Result = Result
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text, dialog result and access key</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
+            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal Result As DialogResult, ByVal AccessKey As Char)
                 Me.New(Text, Result)
+                IsConstructing = True
                 Me.AccessKey = AccessKey
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text, tool tip text and dialog result</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
+            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
             Public Sub New(ByVal Text$, ByVal ToolTip$, ByVal Result As DialogResult)
                 Me.New(Text, ToolTip)
+                IsConstructing = True
                 Me.Result = Result
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text, tool tip text, dialog result and access key</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
+            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
+            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal ToolTip$, ByVal Result As DialogResult, ByVal AccessKey As Char)
                 Me.New(Text, ToolTip, Result)
+                IsConstructing = True
                 Me.AccessKey = AccessKey
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text and enabled value</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="Enabled">Initial value of the <see cref="Enabled"/> property</param>
             Public Sub New(ByVal Text$, ByVal Enabled As Boolean)
                 Me.new(Text)
+                IsConstructing = True
                 Me.Enabled = Enabled
+                IsConstructing = False
             End Sub
+            ''' <summary>CTor from text, dialog result, tool tip text and enabled value</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="Enabled">Initial value of the <see cref="Enabled"/> property</param>
+            ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
+            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
             Public Sub New(ByVal Text$, ByVal Result As DialogResult, ByVal Enabled As Boolean, Optional ByVal ToolTip$ = Nothing)
                 Me.New(Text, ToolTip, Result)
                 Me.Enabled = Enabled
             End Sub
+            ''' <summary>CTor from text, click event handler and optionally tool tip text, dialog result, access key and enabled value</summary>
+            ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>
+            ''' <param name="ClickPreview">Delegate handler for <see cref="ClickPreview"/> event</param>
+            ''' <param name="ToolTip">Tool tip (help) text for button (see <see cref="ToolTip"/>)</param>
+            ''' <param name="Result">Result returned by <see cref="Show"/> function when the button is clicked (see <see cref="Result"/>)</param>
+            ''' <param name="Enabled">Initial value of the <see cref="Enabled"/> property</param>
+            ''' <param name="AccessKey">Character used as button shortcut (see <see cref="AccessKey"/>)</param>
             Public Sub New(ByVal Text$, ByVal ClickPreview As ClickPreviewEventHandler, Optional ByVal ToolTip$ = Nothing, Optional ByVal Result As DialogResult = DialogResult.None, Optional ByVal Enabled As Boolean = True, Optional ByVal AccessKey As Char = CChar(vbNullChar))
                 Me.New(Text, Result, Enabled, ToolTip)
+                IsConstructing = True
                 Me.AccessKey = AccessKey
                 AddHandler Me.ClickPreview, ClickPreview
+                IsConstructing = False
             End Sub
 #End Region
             ''' <summary>Called by owner window when appropriate button is clicked. Raises the <see cref="ClickPreview"/> event</summary>
@@ -275,49 +600,49 @@ Namespace WindowsT.DialogsT
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property OK() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("OK", DialogResult.OK) With {.AccessKey = "O"} 'Localize:OK, AccessKey
+                    Return New MessageBoxButton("OK", DialogResult.OK, "O"c) 'Localize:OK, AccessKey
                 End Get
             End Property
             ''' <summary>Default Cancle button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Cancel() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Cancel", DialogResult.Cancel) With {.AccessKey = "C"} 'Localize:Cancel, AccessKey
+                    Return New MessageBoxButton("Cancel", DialogResult.Cancel, "C"c) 'Localize:Cancel, AccessKey
                 End Get
             End Property
             ''' <summary>Default Yes button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Yes() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Yes", DialogResult.Yes) With {.AccessKey = "Y"}  'Localize:Yes, AccessKey
+                    Return New MessageBoxButton("Yes", DialogResult.Yes, "Y"c) 'Localize:Yes, AccessKey
                 End Get
             End Property
             ''' <summary>Defaut No button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property No() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("No", DialogResult.No) With {.AccessKey = "N"}  'Localize:No, AccessKey
+                    Return New MessageBoxButton("No", DialogResult.No, "N"c) 'Localize:No, AccessKey
                 End Get
             End Property
             ''' <summary>Default Abort button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Abort() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Abort", DialogResult.Abort) With {.AccessKey = "A"}  'Localize:Abort, AccessKey
+                    Return New MessageBoxButton("Abort", DialogResult.Abort, "A"c) 'Localize:Abort, AccessKey
                 End Get
             End Property
             ''' <summary>Default Retry button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Retry() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Retry", DialogResult.Retry) With {.AccessKey = "R"}  'Localize:Retry, AccessKey
+                    Return New MessageBoxButton("Retry", DialogResult.Retry, "R"c) 'Localize:Retry, AccessKey
                 End Get
             End Property
             ''' <summary>Default Ignore button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Ignore() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Ignore", DialogResult.Ignore) With {.AccessKey = "I"} 'Localize:Ignore , AccessKey
+                    Return New MessageBoxButton("Ignore", DialogResult.Ignore, "I"c) 'Localize:Ignore , AccessKey
                 End Get
             End Property
             ''' <summary>Default Help button</summary>
@@ -328,10 +653,11 @@ Namespace WindowsT.DialogsT
             ''' </remarks>
             Public Shared ReadOnly Property Help() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Help", HelpDialogResult) With {.AccessKey = "H"}  'Localize:Help, AccessKey
+                    Return New MessageBoxButton("Help", HelpDialogResult, "H"c) 'Localize:Help, AccessKey
                 End Get
             End Property
 #End Region
+#Region "GetButtons"
             ''' <summary>Gets buttons specified by WinForms enumeration value</summary>
             ''' <param name="Buttons">Buttons to get</param>
             ''' <returns>Array of buttons as specified in <paramref name="Buttons"/></returns>
@@ -380,15 +706,16 @@ Namespace WindowsT.DialogsT
             ''' <summary>Gets buttons by bit aray</summary>
             ''' <param name="Buttons">Bit mask of buttons to get</param>
             ''' <returns>Array of buttons according to bit array <paramref name="Buttons"/></returns>
+            ''' <remarks>Order of buttons is Yes - No - OK - Abort - Retry - Ignore - Cancel - Help</remarks>
             Public Shared Function GetButtons(ByVal Buttons As Buttons) As MessageBoxButton()
                 Dim ret As New List(Of MessageBoxButton)
-                If Buttons And MessageBoxButton.Buttons.OK Then ret.Add(OK)
-                If Buttons And MessageBoxButton.Buttons.Cancel Then ret.Add(Cancel)
                 If Buttons And MessageBoxButton.Buttons.Yes Then ret.Add(Yes)
                 If Buttons And MessageBoxButton.Buttons.No Then ret.Add(No)
+                If Buttons And MessageBoxButton.Buttons.OK Then ret.Add(OK)
                 If Buttons And MessageBoxButton.Buttons.Abort Then ret.Add(Abort)
                 If Buttons And MessageBoxButton.Buttons.Retry Then ret.Add(Retry)
                 If Buttons And MessageBoxButton.Buttons.Ignore Then ret.Add(Ignore)
+                If Buttons And MessageBoxButton.Buttons.Cancel Then ret.Add(Cancel)
                 If Buttons And MessageBoxButton.Buttons.Help Then ret.Add(Help)
                 Return ret.ToArray
             End Function
@@ -412,6 +739,10 @@ Namespace WindowsT.DialogsT
                 ''' <summary>Help button</summary>
                 Help = 128
             End Enum
+#End Region
+            Private Sub MessageBoxButton_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles Me.Changed
+                If Not IsConstructing Then HasChanged = True
+            End Sub
         End Class
         ''' <summary>Value of the <see cref="MessageBoxButton.Result"/> property for predefined <see cref="Help">Help</see> button</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
@@ -441,7 +772,11 @@ Namespace WindowsT.DialogsT
                 Set(ByVal value As Boolean)
                     Dim old = ThreeState
                     _ThreeState = value
-                    If old <> value Then RaiseEvent ThreeStateChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "ThreeState"))
+                    If old <> value Then
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "ThreeState")
+                        RaiseEvent ThreeStateChanged(Me, e)
+                        OnChanged(e)
+                    End If
                 End Set
             End Property
             ''' <summary>Gets or sets current state of check box</summary>
@@ -455,7 +790,11 @@ Namespace WindowsT.DialogsT
                     If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, GetType(CheckState))
                     Dim old = value
                     _State = value
-                    If old <> value Then RaiseEvent StateChanged(Me, New IReportsChange.ValueChangedEventArgs(Of CheckState)(old, value, "State"))
+                    If old <> value Then
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of CheckState)(old, value, "State")
+                        RaiseEvent StateChanged(Me, e)
+                        OnChanged(e)
+                    End If
                 End Set
             End Property
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxCheckBox"/> class</summary>
@@ -499,7 +838,11 @@ Namespace WindowsT.DialogsT
                 Set(ByVal value As Boolean)
                     Dim old = Editable
                     _Editable = value
-                    If old <> value Then RaiseEvent EditableChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Editable"))
+                    If old <> value Then
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Editable")
+                        RaiseEvent EditableChanged(Me, e)
+                        OnChanged(e)
+                    End If
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="Items"></see> property</summary>
@@ -519,7 +862,11 @@ Namespace WindowsT.DialogsT
                 Set(ByVal value As String)
                     Dim old = DisplayMember
                     _DisplayMember = value
-                    If old <> value Then RaiseEvent DisplayMemberChanged(Me, New IReportsChange.ValueChangedEventArgs(Of String)(old, value, "DisplayMember"))
+                    If old <> value Then
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of String)(old, value, "DisplayMember")
+                        RaiseEvent DisplayMemberChanged(Me, e)
+                        OnChanged(e)
+                    End If
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="SelectedItem"></see> property</summary>
@@ -531,7 +878,11 @@ Namespace WindowsT.DialogsT
                 Set(ByVal value As Object)
                     Dim old = SelectedItem
                     _SelectedItem = value
-                    If Not old.Equals(value) Then RaiseEvent SelectedItemChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "SelectedItem"))
+                    If Not old.Equals(value) Then
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "SelectedItem")
+                        RaiseEvent SelectedItemChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "SelectedItem"))
+                        OnChanged(e)
+                    End If
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="SelectedIndex"></see> property</summary>
@@ -543,7 +894,11 @@ Namespace WindowsT.DialogsT
                 Set(ByVal value As Integer)
                     Dim old = value
                     _SelectedIndex = value
-                    If old <> value Then RaiseEvent SelectedIndexChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "SelectedIndex"))
+                    If old <> value Then
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "SelectedIndex")
+                        RaiseEvent SelectedIndexChanged(Me, e)
+                        OnChanged(e)
+                    End If
                 End Set
             End Property
 #End Region
@@ -616,7 +971,9 @@ Namespace WindowsT.DialogsT
                     Dim old = value
                     _Checked = value
                     If old <> value Then
-                        RaiseEvent CheckedChanged(Me, New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Checked"))
+                        Dim e As New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Checked")
+                        RaiseEvent CheckedChanged(Me, e)
+                        OnChanged(e)
                     End If
                 End Set
             End Property
@@ -663,6 +1020,164 @@ Namespace WindowsT.DialogsT
             ''' <summary>Force shows message box to the user even if application is not currently active</summary>
             BringToFront = 1 '1000
         End Enum
+#Region "Action"
+        ''' <summary>Shows modal dialog (and waits until the dialog is closed)</summary>
+        ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
+        Function Show() As DialogResult
+            Return Show(Nothing)
+        End Function
+        ''' <summary>Show modal dialog (and waits until the dialog is closed)</summary>
+        ''' <param name="Parent">Parent window of dialog (may be null)</param>
+        ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
+        Function Show(ByVal Parent As IWin32Window) As DialogResult
+            PerformDialog(True, Parent)
+            Return Me.DialogResult
+        End Function
+        ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
+        Sub Display()
+            Display(Nothing)
+        End Sub
+        ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
+        ''' <param name="Parent">Parent window of dialog (may be null)</param>
+        Sub Display(ByVal Parent As IWin32Window)
+            PerformDialog(False, Parent)
+        End Sub
+        ''' <summary>If overriden in derived class shows the dialog</summary>
+        ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
+        ''' <param name="Parent">Parent window of dialog (may be null)</param>
+        MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Parent As IWin32Window)
+
+        ''' <summary>Closes message box with <see cref="CloseResponse"/></summary>
+        Public Sub Close()
+            Me.Close(Me.CloseResponse)
+        End Sub
+        ''' <summary>If overriden in derived class closes the message box with given response</summary>
+        ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
+        Public MustOverride Sub Close(ByVal Response As DialogResult)
+        ''' <summary>raises the <see cref="Closed"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Derived class should call this method when dialog is closed</remarks>
+        Protected Sub OnClosed(ByVal e As EventArgs)
+            CountDownTimer.Enabled = False
+            State = States.Closed
+            RaiseEvent Closed(Me, e)
+        End Sub
+        ''' <summary>Called when dialog is shown. Performs some initialization (timer). Raises the <see cref="Shown"/> event.</summary>
+        ''' <remarks>Derived class should call thism methow after dialog is shown.</remarks>
+        Protected Sub OnShown()
+            If Me.Timer > TimeSpan.Zero Then
+                Me.CurrentTimer = Me.Timer
+                Me.CountDownTimer.Enabled = True
+                OnCountDown(New EventArgs)
+            End If
+            State = States.Shown
+            RaiseEvent Shown(Me, New EventArgs)
+        End Sub
+        ''' <summary>Possible state of the message box class instance</summary>
+        Public Enum States
+            ''' <summary>Instance have been created, but message box have not been shown yet. You can modify message box properties.</summary>
+            Created
+            ''' <summary>Message bos was shown to user and waits for user action. Only some properties can be modificated with effect.</summary>
+            Shown
+            ''' <summary>Message box was closed</summary>
+            Closed
+        End Enum
+        ''' <summary>Contains value of the <see cref="State"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _State As States = States.Created
+        ''' <summary>Gets or sets value indicating current state of the message box</summary>
+        ''' <remarks>Value of this property is set by <see cref="OnShown"/> and <see cref="OnClosed"/> methods</remarks>
+        Public Property State() As States
+            <DebuggerStepThrough()> Get
+                Return _State
+            End Get
+            <DebuggerStepThrough()> Private Set(ByVal value As States)
+                _State = value
+            End Set
+        End Property
+        ''' <summary>If overriden in derived class gets result of dialog (<see cref="MessageBoxButton.Result"/> of button user has clicked on)</summary>
+        ''' <returns><see cref="MessageBoxButton.Result"/> of button user have clicked to or <see cref="CloseResponse"/> when message box was closed by pressing escape, closing the window or timer.</returns>
+        ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
+        Public MustOverride ReadOnly Property DialogResult() As DialogResult
+        ''' <summary>When overriden in derived class gets button user have clicked on</summary>
+        ''' <returns>Button user have clicked on (or null if dialog was closed by window close button, pressing escape or timer)</returns>
+        ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
+        Public MustOverride ReadOnly Property ClickedButton() As MessageBoxButton
+#End Region
+#Region "Timer"
+        Private Sub CountDownTimer_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles CountDownTimer.Tick
+            OnCountDown(New EventArgs)
+            If Not Me.IsCountDown Then Exit Sub
+            CurrentTimer -= TimeSpan.FromSeconds(1)
+            If CurrentTimer <= TimeSpan.Zero Then Me.Close() : CountDownTimer.Enabled = False
+        End Sub
+        ''' <summary>Gets value indicationg if counting down is curently in progress</summary>
+        ''' <remarks>In order to cahnge value of this prioperty use <see cref="ResumeCountDown"/> and <see cref="StopCountDown"/> methods</remarks>
+        <Browsable(False)> _
+        Public ReadOnly Property IsCountDown() As Boolean
+            Get
+                Return CountDownTimer.Enabled
+            End Get
+        End Property
+        ''' <summary>Timer that performs count downs</summary>
+        Private WithEvents CountDownTimer As New Timer With {.interval = 1000}
+        ''' <summary>Raises the <see cref="CountDown"/> event</summary>
+        ''' <param name="e">Event argument</param>
+        ''' <remarks>Derived class should override this method in order to catch change of count down remaining time and call base class method.</remarks>
+        Protected Overridable Sub OnCountDown(ByVal e As EventArgs)
+            RaiseEvent CountDown(Me, e)
+        End Sub
+        ''' <summary>Called when count-down is stopped by calling <see cref="StopCountDown"/></summary>
+        ''' <remarks>Derived class should override this method in order to catch count-down stoped event and react somehow (hide count down text).<para>This implementation does nothing.</para></remarks>
+        Protected Overridable Sub OnCountDownStopped()
+        End Sub
+        ''' <summary>Contains value of the <see cref="CurrentTimer"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CurrentTimer As TimeSpan
+        ''' <summary>Gets or sets current remaining time of count-down timer</summary>
+        ''' <remarks>If value id <see cref="TimeSpan.Zero"/> or less, count down ends and dialog is about to be closed</remarks>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        Public Property CurrentTimer() As TimeSpan
+            <DebuggerStepThrough()> Get
+                Return _CurrentTimer
+            End Get
+            <DebuggerStepThrough()> Protected Set(ByVal value As TimeSpan)
+                _CurrentTimer = value
+            End Set
+        End Property
+        ''' <summary>Stops count-down timer ticking</summary>
+        Public Sub StopCountDown()
+            CountDownTimer.Enabled = False
+            OnCountDownStopped()
+        End Sub
+        ''' <summary>Resumes previously stopped count down timer</summary>
+        Public Sub ResumeCountDown()
+            If Me.CurrentTimer <= TimeSpan.Zero Then Throw New InvalidOperationException("Cannot resume count-down timer when there is no time left.") 'Localize:Exception
+            CountDownTimer.Enabled = True
+            OnCountDown(New EventArgs)
+        End Sub
+        ''' <summary>Resumes previouskly stopped count down timer with new timer value</summary>
+        ''' <param name="TimeLeft">Count down timer time (after which the message box is closed)</param>
+        Public Sub ResumeCountDown(ByVal TimeLeft As TimeSpan)
+            If TimeLeft <= TimeSpan.Zero Then Throw New ArgumentOutOfRangeException("TimeLeft", "Count down time must be greater than zero.") 'Localize:Exception
+            Me.CurrentTimer = TimeLeft
+            ResumeCountDown()
+        End Sub
+#End Region
+#Region "Events"
+        ''' <summary>Raised when count down timer ticks</summary>
+        ''' <remarks>Count down timer ticks each second once. First the event is raised immediatelly after the dialog is shown or count-down is resumed</remarks>
+        ''' <param name="sender">Source of the event (current instance)</param>
+        ''' <param name="e">Event argument</param>
+        Public Event CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
+        ''' <summary>Raised after dialog is shown</summary>
+        ''' <param name="sender">Source of the event (current instance)</param>
+        ''' <param name="e">Event argument</param>
+        Public Event Shown(ByVal sender As MessageBox, ByVal e As EventArgs)
+        ''' <summary>Raised after dialog is closed</summary>
+        ''' <param name="sender">Source of the event (current instance)</param>
+        ''' <param name="e">Event argument</param>
+        Public Event Closed(ByVal sender As MessageBox, ByVal e As EventArgs)
+#End Region
     End Class
 End Namespace
 #End If

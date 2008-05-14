@@ -24,19 +24,19 @@ Partial Class MessageBoxForm
     Private Sub InitializeComponent()
         Me.components = New System.ComponentModel.Container
         Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
+        Me.lblPlhTop = New System.Windows.Forms.Label
         Me.picPicture = New System.Windows.Forms.PictureBox
         Me.lblPrompt = New System.Windows.Forms.Label
-        Me.lblPlhTop = New System.Windows.Forms.Label
         Me.chkCheckBox = New System.Windows.Forms.CheckBox
         Me.cmbCombo = New System.Windows.Forms.ComboBox
         Me.flpRadio = New System.Windows.Forms.FlowLayoutPanel
         Me.RadioPlh1 = New System.Windows.Forms.RadioButton
         Me.RadioPlh2 = New System.Windows.Forms.RadioButton
+        Me.lblPlhMid = New System.Windows.Forms.Label
         Me.flpButtons = New System.Windows.Forms.FlowLayoutPanel
         Me.ButtonPlh1 = New System.Windows.Forms.Button
         Me.buttonPlh2 = New System.Windows.Forms.Button
         Me.lblPlhBottom = New System.Windows.Forms.Label
-        Me.lblPlhMid = New System.Windows.Forms.Label
         Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
         Me.tmrCountDown = New System.Windows.Forms.Timer(Me.components)
         Me.tlpMain.SuspendLayout()
@@ -76,25 +76,6 @@ Partial Class MessageBoxForm
         Me.tlpMain.Size = New System.Drawing.Size(346, 200)
         Me.tlpMain.TabIndex = 0
         '
-        'picPicture
-        '
-        Me.picPicture.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.picPicture.Location = New System.Drawing.Point(3, 16)
-        Me.picPicture.Name = "picPicture"
-        Me.picPicture.Size = New System.Drawing.Size(39, 32)
-        Me.picPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picPicture.TabIndex = 0
-        Me.picPicture.TabStop = False
-        '
-        'lblPrompt
-        '
-        Me.lblPrompt.AutoSize = True
-        Me.lblPrompt.Location = New System.Drawing.Point(48, 13)
-        Me.lblPrompt.Name = "lblPrompt"
-        Me.lblPrompt.Size = New System.Drawing.Size(40, 13)
-        Me.lblPrompt.TabIndex = 1
-        Me.lblPrompt.Text = "Prompt"
-        '
         'lblPlhTop
         '
         Me.lblPlhTop.AutoSize = True
@@ -104,6 +85,25 @@ Partial Class MessageBoxForm
         Me.lblPlhTop.Size = New System.Drawing.Size(88, 13)
         Me.lblPlhTop.TabIndex = 0
         Me.lblPlhTop.Text = "TOP Placeholder"
+        '
+        'picPicture
+        '
+        Me.picPicture.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.picPicture.Location = New System.Drawing.Point(3, 16)
+        Me.picPicture.Name = "picPicture"
+        Me.picPicture.Size = New System.Drawing.Size(32, 32)
+        Me.picPicture.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
+        Me.picPicture.TabIndex = 0
+        Me.picPicture.TabStop = False
+        '
+        'lblPrompt
+        '
+        Me.lblPrompt.AutoSize = True
+        Me.lblPrompt.Location = New System.Drawing.Point(41, 13)
+        Me.lblPrompt.Name = "lblPrompt"
+        Me.lblPrompt.Size = New System.Drawing.Size(40, 13)
+        Me.lblPrompt.TabIndex = 1
+        Me.lblPrompt.Text = "Prompt"
         '
         'chkCheckBox
         '
@@ -163,6 +163,16 @@ Partial Class MessageBoxForm
         Me.RadioPlh2.Text = "RadioButton2"
         Me.RadioPlh2.UseVisualStyleBackColor = True
         '
+        'lblPlhMid
+        '
+        Me.lblPlhMid.AutoSize = True
+        Me.tlpMain.SetColumnSpan(Me.lblPlhMid, 2)
+        Me.lblPlhMid.Location = New System.Drawing.Point(3, 130)
+        Me.lblPlhMid.Name = "lblPlhMid"
+        Me.lblPlhMid.Size = New System.Drawing.Size(86, 13)
+        Me.lblPlhMid.TabIndex = 5
+        Me.lblPlhMid.Text = "MID Placeholder"
+        '
         'flpButtons
         '
         Me.flpButtons.Anchor = System.Windows.Forms.AnchorStyles.None
@@ -210,16 +220,6 @@ Partial Class MessageBoxForm
         Me.lblPlhBottom.Size = New System.Drawing.Size(99, 13)
         Me.lblPlhBottom.TabIndex = 7
         Me.lblPlhBottom.Text = "Bottom Placeholder"
-        '
-        'lblPlhMid
-        '
-        Me.lblPlhMid.AutoSize = True
-        Me.tlpMain.SetColumnSpan(Me.lblPlhMid, 2)
-        Me.lblPlhMid.Location = New System.Drawing.Point(3, 130)
-        Me.lblPlhMid.Name = "lblPlhMid"
-        Me.lblPlhMid.Size = New System.Drawing.Size(86, 13)
-        Me.lblPlhMid.TabIndex = 5
-        Me.lblPlhMid.Text = "MID Placeholder"
         '
         'tmrCountDown
         '
