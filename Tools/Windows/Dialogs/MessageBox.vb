@@ -1027,10 +1027,10 @@ Namespace WindowsT.DialogsT
             Return Show(Nothing)
         End Function
         ''' <summary>Show modal dialog (and waits until the dialog is closed)</summary>
-        ''' <param name="Parent">Parent window of dialog (may be null)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null)</param>
         ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
-        Function Show(ByVal Parent As IWin32Window) As DialogResult
-            PerformDialog(True, Parent)
+        Function Show(ByVal Owner As IWin32Window) As DialogResult
+            PerformDialog(True, Owner)
             Return Me.DialogResult
         End Function
         ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
@@ -1038,14 +1038,14 @@ Namespace WindowsT.DialogsT
             Display(Nothing)
         End Sub
         ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
-        ''' <param name="Parent">Parent window of dialog (may be null)</param>
-        Sub Display(ByVal Parent As IWin32Window)
-            PerformDialog(False, Parent)
+        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        Sub Display(ByVal Owner As IWin32Window)
+            PerformDialog(False, Owner)
         End Sub
         ''' <summary>If overriden in derived class shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
-        ''' <param name="Parent">Parent window of dialog (may be null)</param>
-        MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Parent As IWin32Window)
+        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        Protected MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As IWin32Window)
 
         ''' <summary>Closes message box with <see cref="CloseResponse"/></summary>
         Public Sub Close()
@@ -1178,6 +1178,10 @@ Namespace WindowsT.DialogsT
         ''' <param name="e">Event argument</param>
         Public Event Closed(ByVal sender As MessageBox, ByVal e As EventArgs)
 #End Region
+    End Class
+
+    Public MustInherit Class MessageBoxBase(Of T As MessageBox)
+        Inherits MessageBox
     End Class
 End Namespace
 #End If
