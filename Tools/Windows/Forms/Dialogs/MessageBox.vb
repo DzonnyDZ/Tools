@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel
+﻿Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
+Imports Tools.WindowsT.FormsT.UtilitiesT.Misc
 #If Config <= Nightly Then
 Namespace WindowsT.FormsT
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
@@ -21,8 +22,83 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Initializes tis form by <see cref="MessageBox"/>, called from CTor</summary>
         Protected Overridable Sub Initialize()
-         
+            'Title
+            If MessageBox.Title Is Nothing Then
+                Dim App As New Microsoft.VisualBasic.ApplicationServices.AssemblyInfo(System.Reflection.Assembly.GetEntryAssembly)
+                Me.Text = App.Title
+            Else
+                Me.Text = MessageBox.Title
+            End If
+            'Top control
+            tlpMain.ReplaceControl(lblPlhTop, MessageBox.TopControlControl)
+            'Icon
+            If MessageBox.Icon Is Nothing Then
+                picPicture.Visible = False
+            Else
+                picPicture.Image = MessageBox.Icon
+            End If
+            'Propmpt
+            lblPrompt.Text = MessageBox.Prompt
+            'Checkbox
+            If MessageBox.CheckBox Is Nothing Then
+                chkCheckBox.Visible = False
+            Else
+                chkCheckBox.Text = MessageBox.CheckBox.Text
+                chkCheckBox.CheckState = MessageBox.CheckBox.State
+                chkCheckBox.ThreeState = MessageBox.CheckBox.ThreeState
+                If MessageBox.CheckBox.ToolTip <> "" Then totToolTip.SetToolTip(chkCheckBox, MessageBox.CheckBox.ToolTip)
+                chkCheckBox.Enabled = MessageBox.CheckBox.Enabled
+                'TODO:Events
+            End If
+            'Combobox
+            If MessageBox.ComboBox Is Nothing Then
+                cmbCombo.Visible = False
+            Else
+                cmbCombo.DropDownStyle = If(MessageBox.ComboBox.Editable, ComboBoxStyle.DropDown, ComboBoxStyle.DropDownList)
+                cmbCombo.Enabled = MessageBox.ComboBox.Enabled
+                cmbCombo.DisplayMember = MessageBox.ComboBox.DisplayMember
+                For Each item In MessageBox.ComboBox.Items
+                    cmbCombo.Items.Add(item)
+                Next item
+                If MessageBox.ComboBox.SelectedItem IsNot Nothing Then cmbCombo.SelectedItem = MessageBox.ComboBox.SelectedItem
+                If MessageBox.ComboBox.SelectedIndex >= 0 Then cmbCombo.SelectedIndex = MessageBox.ComboBox.SelectedIndex
+                If MessageBox.ComboBox.Editable AndAlso MessageBox.CheckBox.Text <> "" Then cmbCombo.Text = MessageBox.ComboBox.Text
+                If MessageBox.ComboBox.ToolTip <> "" Then totToolTip.SetToolTip(cmbCombo, MessageBox.ComboBox.ToolTip)
+            End If
+            'Radios
+            flpRadio.Controls.Clear()
+            If MessageBox.Radios.Count <= 0 Then
+                flpRadio.Visible = False
+            Else
+                For Each Radio In MessageBox.Radios
+                    flpRadio.Controls.Add(New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio})
+                    If Radio.ToolTip <> "" Then totToolTip.SetToolTip(flpRadio.Controls(flpRadio.Controls.Count - 1), Radio.ToolTip)
+                Next Radio
+            End If
+            'Mic control
+            tlpMain.ReplaceControl(lblPlhMid, MessageBox.MidControlControl)
+            'Buttons
+            flpButtons.Controls.Clear()
+            If MessageBox.Buttons.Count <= 0 Then
+                flpButtons.Visible = False
+            Else
+                Dim AcceptButton As Button, CancelButton As Button
+                For Each Button In MessageBox.Buttons
+                    Dim text As String = Button.Text.Replace("&", "&&")
+                    If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey), 0) = "&"
+                    flpButtons.Controls.Add(New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result})
+                    If Button.ToolTip <> "" Then totToolTip.SetToolTip(flpButtons.Controls(flpButtons.Controls.Count - 1), Button.ToolTip)
+                    'TODO:EVENTS, accepst, cancel
+                Next Button
+            End If
+            'Bottom control
+            tlpMain.ReplaceControl(lblPlhBottom, MessageBox.BottomControlControl)
         End Sub
+
+        Private Sub MessageBoxForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+        End Sub
+
     End Class
 
     ''' <summary>Implements <see cref="WindowsT.DialogsT.MessageBox"/> for as <see cref="Form"/></summary>
@@ -68,6 +144,51 @@ Namespace WindowsT.FormsT
                 Form.Show(Owner)
             End If
         End Sub
+        ''' <summary>gets <see cref="Control"/> representation of <see cref="TopControl"/> if possible</summary>
+        ''' <returns><see cref="Control"/> which represents <see cref="TopControl"/> if possible, null otherwise</returns>
+        ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>
+        ''' <seealso cref="TopControl"/>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Friend ReadOnly Property TopControlControl() As Control
+            Get
+                Return GetControl(Me.TopControl)
+            End Get
+        End Property
+        ''' <summary>Gets <see cref="Control"/> representation of <see cref="MidControl"/> if possible</summary>
+        ''' <returns><see cref="Control"/> which represents <see cref="MidControl"/> if possible, null otherwise</returns>
+        ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="BottomControlControl"/>
+        ''' <seealso cref="MidControl"/>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Friend ReadOnly Property MidControlControl() As Control
+            Get
+                Return GetControl(Me.MidControl)
+            End Get
+        End Property
+        ''' <summary>Gets <see cref="Control"/> representation of <see cref="BottomControl"/> if possible</summary>
+        ''' <returns><see cref="Control"/> which represents <see cref="BottomControl"/> if possible, null otherwise</returns>
+        ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="MidControlControl"/>
+        ''' <seealso cref="BottomControl"/>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Friend ReadOnly Property BottomControlControl() As Control
+            Get
+                Return GetControl(Me.BottomControl)
+            End Get
+        End Property
+        ''' <summary>Gets control from object</summary>
+        ''' <param name="Control">Object that represents a control. It can be <see cref="Control"/>, <see cref="Windows.UIElement"/></param>
+        ''' <returns><see cref="Control"/> which represents <paramref name="Control"/>. For same <paramref name="Control"/> returns same <see cref="Control"/>. Returns null if <paramref name="Control"/> is null or it is of unsupported type.</returns>
+        Protected Overridable Function GetControl(ByVal Control As Object) As Control
+            If Control Is Nothing Then Return Nothing
+            If TypeOf Control Is Control Then Return Control
+            If TypeOf Control Is Windows.UIElement Then
+                Static WPFHosts As New Dictionary(Of Windows.FrameworkElement, Windows.Forms.Integration.ElementHost)
+                If WPFHosts.ContainsKey(Control) Then Return WPFHosts(Control)
+                Dim WPFHost As New Integration.ElementHost With {.Dock = DockStyle.Fill}
+                WPFHost.HostContainer.Children.Add(Control)
+                WPFHosts.Add(Control, WPFHost)
+            End If
+            Return Nothing
+        End Function
     End Class
 End Namespace
 #End If

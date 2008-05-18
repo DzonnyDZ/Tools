@@ -1,4 +1,6 @@
 Imports System.Windows.Forms
+Imports System.Runtime.CompilerServices
+
 Namespace WindowsT.FormsT.UtilitiesT
 #If Config <= Nightly Then
     'ASAP:Amrk,Forum,WiKi
@@ -47,6 +49,48 @@ Namespace WindowsT.FormsT.UtilitiesT
                 End With
             End Set
         End Property
+        ''' <summary>Removes control from parent its control</summary>
+        ''' <param name="Control">Control to be removed</param>
+        ''' <remarks>If <paramref name="Control"/>.<see cref="Control.Parent">Parent</see> is null, nozhing happens</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Control"/> is null</exception>
+        <Extension()> Public Sub Remove(ByVal Control As Control)
+            If Control Is Nothing Then Throw New ArgumentNullException("Control")
+            If Control.Parent Is Nothing Then Exit Sub
+            Control.Parent.Controls.Remove(Control)
+        End Sub
+
+        ''' <summary>Replaces one <see cref="Control"/> in <see cref="TableLayoutPanel"/> with another</summary>
+        ''' <param name="tlp">A <see cref="TableLayoutPanel"/> to perform replacement in</param>
+        ''' <param name="OldControl">A <see cref="Control"/> to be replaced</param>
+        ''' <param name="NewControl">A <see cref="Control"/> to replace <paramref name="OldControl"/> with. If null <paramref name="OldControl"/> is just removed from <paramref name="tlp"/></param>
+        ''' <remarks>
+        ''' <paramref name="OldControl"/> is replaced with <paramref name="NewControl"/>.
+        ''' <paramref name="NewControl"/> inherits <see cref="TableLayoutPanel.GetRow">Row</see>, <see cref="TableLayoutPanel.GetColumn">Column</see>, <see cref="TableLayoutPanel.GetColumnSpan">ColumnSpan</see>, <see cref="TableLayoutPanel.GetRowSpan">RowSpan</see> and <see cref="Control.TabIndex"/> from <paramref name="OldControl"/>.
+        ''' <paramref name="OldControl"/> is removed from <paramref name="tlp"/>.<see cref="TableLayoutPanel.Controls">Controls.</see>.
+        ''' <paramref name="NewControl"/> is removed from its old <see cref="Control.Parent">Parent</see>.
+        ''' </remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="tlp"/> is null -or- <paramref name="OldControl"/> is null</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="OldControl"/> is not contained within <paramref name="tlp"/>.<see cref="TableLayoutPanel.Controls">Controls</see>.</exception>
+        <Extension()> Public Sub ReplaceControl(ByVal tlp As TableLayoutPanel, ByVal OldControl As Control, ByVal NewControl As Control)
+            If tlp Is Nothing Then Throw New ArgumentNullException("tlp")
+            If OldControl Is Nothing Then Throw New ArgumentNullException("OldControl")
+            If Not tlp.Controls.Contains(OldControl) Then Throw New InvalidOperationException("OldControl must be member of Controls collection of tlp") 'Localize:Exception
+            If NewControl Is Nothing Then
+                OldControl.Remove()
+                Exit Sub
+            End If
+            Dim Row = tlp.GetRow(OldControl)
+            Dim Column = tlp.GetColumn(OldControl)
+            Dim RowSpan = tlp.GetRowSpan(OldControl)
+            Dim columnSpan = tlp.GetColumnSpan(OldControl)
+            Dim TabIndex = OldControl.TabIndex
+            OldControl.Remove()
+            NewControl.Remove()
+            tlp.Controls.Add(NewControl, Row, Column)
+            tlp.SetColumnSpan(NewControl, columnSpan)
+            tlp.SetRowSpan(NewControl, RowSpan)
+            NewControl.TabIndex = TabIndex
+        End Sub
     End Module
 #End If
 End Namespace

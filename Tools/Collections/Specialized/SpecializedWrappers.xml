@@ -1,0 +1,389 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<wrappers xmlns="http://dzonny.cz/xml/SpecializedWrapperDefinition" stage="Nightly" transformer="SpecializedWrappers.xslt">
+    <wrapper Collection="BitArray" CollectionNamespace="System.Collections" Item="Boolean" ItemNamespace="System" RW="true">
+        <add>
+            <![CDATA[
+                Collection.Length += 1
+                Collection.Item(Collection.Length - 1) = item
+        ]]>
+        </add>
+        <clear>Collection.Length = 0</clear>
+        <remove>
+            <![CDATA[
+                For i As Integer = 0 To Collection.Length - 1
+                    If Collection.Item(i) = item Then
+                        For j As Integer = i To Collection.Length - 2
+                            Collection(j) = Collection(j + 1)
+                        Next
+                        Collection.Length -= 1
+                        Return True
+                    End If
+                Next
+                Return False
+        ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="AttributeCollection" CollectionNamespace="System.ComponentModel" Item="Attribute" ItemNamespace="System"/>
+    <wrapper Collection="DesignerCollection" CollectionNamespace="System.ComponentModel.Design" Item="IDesignerHost"/>
+    <wrapper Collection="DataViewSettingCollection" CollectionNamespace="System.Data" Item="DataViewSetting"/>
+    <wrapper Collection="OdbcErrorCollection" CollectionNamespace="System.Data.Odbc" Item="OdbcError"/>
+    <wrapper Collection="OleDbErrorCollection" CollectionNamespace="System.Data.OleDb" Item="OleDbError"/>
+    <wrapper Collection="SqlErrorCollection" CollectionNamespace="System.Data.SqlClient" Item="SqlError"/>
+    <wrapper Collection="EventLogEntryCollection" CollectionNamespace="System.Diagnostics" Item="EventLogEntry"/>
+    <wrapper Collection="PaperSourceCollection" CollectionNamespace="System.Drawing.Printing.PrinterSettings" Item="PaperSource" ItemNamespace="System.Drawing.Printing" Addable="1"/>
+    <wrapper Collection="PaperSizeCollection" CollectionNamespace="System.Drawing.Printing.PrinterSettings" Item="PaperSize" ItemNamespace="System.Drawing.Printing" Addable="1"/>
+    <wrapper Collection="PrinterResolutionCollection" CollectionNamespace="System.Drawing.Printing.PrinterSettings" Item="PrinterResolution" ItemNamespace="System.Drawing.Printing" Addable="1"/>
+    <wrapper Collection="CookieCollection" CollectionNamespace="System.Net" Item="Cookie" Addable="1"/>
+    <wrapper Collection="AsnEncodedDataCollection" CollectionNamespace="System.Security.Cryptography" Item="AsnEncodedData" Addable="true"/>
+    <wrapper Collection="OidCollection" CollectionNamespace="System.Security.Cryptography" Item="Oid" Addable="true"/>
+    <wrapper Collection="X509ExtensionCollection" CollectionNamespace="System.Security.Cryptography.X509Certificates" Item="X509Extension" Addable="true"/>
+    <wrapper Collection="X509ChainElementCollection" CollectionNamespace="System.Security.Cryptography.X509Certificates" Item="X509ChainElement" />
+    <wrapper Collection="KeyContainerPermissionAccessEntryCollection" CollectionNamespace="System.Security.Permissions" Item="KeyContainerPermissionAccessEntry" />
+    <wrapper Collection="ApplicationTrustCollection" CollectionNamespace="System.Security.Policy" Item="ApplicationTrust" RW="true" RemoveIsSub="true" NoSetter="true"/>
+    <wrapper Collection="CaptureCollection" Item="Capture" CollectionNamespace="System.Text.RegularExpressions"/>
+    <wrapper Collection="GroupCollection" Item="Group" CollectionNamespace="System.Text.RegularExpressions"/>
+    <wrapper Collection="MatchCollection" Item="Match" CollectionNamespace="System.Text.RegularExpressions"/>
+    <wrapper Collection="ControlCollection" Item="Control" CollectionNamespace="System.Web.UI" RW="true" WrapperName="WebControlCollectionTypeSafeWrapper" RemoveIsSub="true" RemoveAt="true" Contains="auto" IndexOf="true" Insert="true" NoSetter="true">
+        <insert>Collection.AddAt(index, item)</insert>
+    </wrapper>
+    <wrapper Collection="HtmlTableCellCollection" Item="HtmlTableCell" CollectionNamespace="System.Web.UI.HtmlControls" RW="true" RemoveAt="true" RemoveIsSub="true" Insert="true" NoSetter="true"/>
+    <wrapper Collection="HtmlTableRowCollection" Item="HtmlTableRow" CollectionNamespace="System.Web.UI.HtmlControls" RW="true" RemoveAt="true" RemoveIsSub="true" Insert="true" NoSetter="true"/>
+    <wrapper Collection="ValidatorCollection" Item="IValidator" CollectionNamespace="System.Web.UI" RW="true" Contains="auto" RemoveIsSub="true" NoSetter="true" NoClear="true"/>
+    <wrapper Collection="DataGridColumnCollection" Item="DataGridColumn" CollectionNamespace="System.Web.UI.WebControls" RW="true" IndexOf="true" Insert="true"  NoSetter="true" RemoveAt="true" RemoveIsSub="true">
+        <insert>Collection.AddAt(index,item)</insert>
+    </wrapper>
+    <wrapper Collection="DataGridItemCollection" Item="DataGridItem" CollectionNamespace="System.Web.UI.WebControls"/>
+    <wrapper Collection="DataKeyArray" Item="DataKey" CollectionNamespace="System.Web.UI.WebControls"/>
+    <wrapper Collection="DataListItemCollection" Item="DataListItem" CollectionNamespace="System.Web.UI.WebControls"/>
+    <wrapper Collection="DetailsViewRowCollection" Item="DetailsViewRow" CollectionNamespace="System.Web.UI.WebControls"/>
+    <wrapper Collection="GridViewRowCollection" Item="GridViewRow" CollectionNamespace="System.Web.UI.WebControls"/>
+    <wrapper Collection="MenuItemCollection" Item="MenuItem" CollectionNamespace="System.Web.UI.WebControls" Contains="auto" IndexOf="true" NoSetter="true" RemoveAt="true" RemoveIsSub="true" RW="true" WrapperName="WebMenuItemCollectionTypeSafeWrapper"/>
+    <wrapper Collection="RepeaterItemCollection" Item="RepeaterItem" CollectionNamespace="System.Web.UI.WebControls"/>
+    <wrapper Collection="SelectedDatesCollection" Item="DateTime" CollectionNamespace="System.Web.UI.WebControls" ItemNamespace="System" RW="true" Contains="auto" NoSetter="true" RemoveIsSub="true"/>
+    <wrapper Collection="TreeNodeCollection" Item="TreeNode" CollectionNamespace="System.Web.UI.WebControls" RW="true" Contains="auto" IndexOf="true" Insert="true" NoSetter="true" RemoveIsSub="true" RemoveAt="true" WrapperName="WebTreeNodeCollectionTypeSafeWrapper">
+        <insert>Collection.AddAt(index, item)</insert>
+    </wrapper>
+    <wrapper Collection="PersonalizationStateInfoCollection" Item="PersonalizationStateInfo" CollectionNamespace="System.Web.UI.WebControls.WebParts" RW="true" NoSetter="true" RemoveIsSub="true">
+        <remove>
+            <![CDATA[
+                    Dim comparer As EqualityComparer(Of System.Web.UI.WebControls.WebParts.PersonalizationStateInfo) = EqualityComparer(Of System.Web.UI.WebControls.WebParts.PersonalizationStateInfo).Default
+                    Dim Old As New List(Of System.Web.UI.WebControls.WebParts.PersonalizationStateInfo)(Me)
+                    Me.Clear
+                    Dim Removed As Boolean = False
+                    For i% = 0 To Old.Count - 1
+                        If Not Removed AndAlso ((item Is Nothing AndAlso Old(i) Is Nothing) OrElse (Item IsNot Nothing AndAlso comparer.Equals(Item, Old(i)))) Then _
+                            Removed = True _
+                        Else Me.Add(Old(i))
+                    Next i
+                    Return Removed
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="GridItemCollection" Item="GridItem" CollectionNamespace="System.Windows.Forms"/>
+    <wrapper Collection="HtmlElementCollection" Item="HtmlElement" CollectionNamespace="System.Windows.Forms"/>
+    <wrapper Collection="HtmlWindowCollection" Item="HtmlWindow" CollectionNamespace="System.Windows.Forms"/>
+    <wrapper Collection="PropertyTabCollection" Item="PropertyTab" CollectionNamespace="System.Windows.Forms.PropertyGrid" ItemNamespace="System.Windows.Forms.Design"/>
+    <wrapper Collection="WindowCollection" Item="Window" CollectionNamespace="System.Windows"/>
+    <wrapper Collection="XmlAttributeCollection" Item="XmlAttribute" CollectionNamespace="System.Xml" RW="true" NoSetter="true" RemoveAt="true">
+        <add>Collection.Append(item)</add>
+        <clear>Collection.RemoveAll</clear>
+        <remove>Return Collection.Remove(Item) IsNot Nothing</remove>
+    </wrapper>
+
+    <wrapper Collection="ComponentCollection" Item="IComponent" CollectionNamespace="System.ComponentModel"/>
+    <wrapper Collection="ConfigurationLocationCollection" Item="ConfigurationLocation" CollectionNamespace="System.Configuration"/>
+    <wrapper Collection="ProcessModuleCollection" Item="ProcessModule" CollectionNamespace="System.Diagnostics" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="ProcessThreadCollection" Item="ProcessThread" CollectionNamespace="System.Diagnostics" RW="true" Contains="auto" IndexOf="true" Insert="true" NoClear="true" NoSetter="true" RemoveIsSub="true"/>
+    <wrapper Collection="CategoryNameCollection" Item="String" CollectionNamespace="System.Drawing.Design" ItemNamespace="System" IndexOf="true" Contains="auto"/>
+    <wrapper Collection="ToolboxItemCollection" Item="ToolboxItem" CollectionNamespace="System.Drawing.Design" IndexOf="true" Contains="auto"/>
+    <wrapper Collection="AuthorizationRuleCollection" Item="AuthorizationRule" CollectionNamespace="System.Security.AccessControl"/>
+    <wrapper Collection="WebBaseEventCollection" Item="WebBaseEvent" CollectionNamespace="System.Web.Management" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="CatalogPartCollection" Item="Catalogpart" CollectionNamespace="System.Web.UI.WebControls.WebParts" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="ConnectionInterfaceCollection" Item="Type" CollectionNamespace="System.Web.UI.WebControls.WebParts" ItemNamespace="System" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="ConsumerConnectionPointCollection" CollectionNamespace="System.Web.UI.WebControls.WebParts" Item="ConsumerConnectionPoint" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="EditorPartCollection" Item="EditorPart" CollectionNamespace="System.Web.UI.WebControls.WebParts" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="ProviderConnectionPointCollection" Item="ProviderConnectionPoint" CollectionNamespace="System.Web.UI.WebControls.WebParts" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="TransformerTypeCollection" Item="Type" CollectionNamespace="System.Web.UI.WebControls.WebParts" ItemNamespace="System" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="WebPartCollection" Item="WebPart" CollectionNamespace="System.Web.UI.WebControls.WebParts" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="WebPartDescriptionCollection" Item="WebPartdescription" CollectionNamespace="System.Web.UI.WebControls.WebParts" IndexOf="true" Contains="auto"/>
+    <wrapper Collection="WebPartVerbCollection" Item="WebPartVerb" CollectionNamespace="System.Web.UI.WebControls.WebParts" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="WebPartZoneCollection" Item="WebPartZoneBase" CollectionNamespace="System.Web.UI.WebControls.WebParts" Contains="auto" IndexOf="true"/>
+    <wrapper Collection="FormCollection" Item="Form" CollectionNamespace="System.windows.Forms"/>
+    <wrapper Collection="InputLanguageCollection" Item="InputLanguage" CollectionNamespace="System.Windows.Forms" Contains="auto" IndexOf="true"/>
+
+    <wrapper Collection="ConfigurationSectionCollection" Item="ConfigurationSection" CollectionNamespace="System.Configuration" RemoveAt="true"/>
+    <wrapper Collection="ConfigurationSectionGroupCollection" Item="ConfigurationSectionGroup" CollectionNamespace="System.Configuration" RemoveAt="true"/>
+    <wrapper Collection="VirtualDirectoryMappingCollection" Item="VirtualDirectoryMapping" CollectionNamespace="System.Web.Configuration" RemoveAt="true"/>
+    <wrapper CollectionNamespace="System.Web" Collection="HttpCookieCollection" Item="HttpCookie" Addable="true" RemoveAt="true" NoSetter="true">
+        <remove-at>Collection.Remove(Collection.GetKey(index))</remove-at>
+    </wrapper>
+    <wrapper Collection="HttpFileCollection" Item="HttpPostedFile" CollectionNamespace="System.Web"/>
+    <wrapper Collection="HttpModuleCollection" Item="IHttpModule" CollectionNamespace="System.Web"/>
+
+    <wrapper Collection="ConnectionStringSettingsCollection" Item="ConnectionStringSettings" CollectionNamespace="System.Configuration" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true" NoSetter="true"/>
+    <wrapper Collection="ProviderSettingsCollection" Item="ProviderSettings" CollectionNamespace="System.Configuration" Addable="true" Clear="true"/>
+    <wrapper Collection="AuthenticationModuleElementCollection" Item="AuthenticationModuleElement" CollectionNamespace="System.Net.Configuration" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="BypassElementCollection" Item="BypassElement" CollectionNamespace="System.Net.Configuration" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="ConnectionManagementElementCollection" Item="ConnectionManagementElement" CollectionNamespace="System.Net.Configuration" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="WebrequestModuleElementCollection" Item="WebRequestModuleElement" CollectionNamespace="System.Net.Configuration" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="AssemblyCollection" Item="AssemblyInfo" CollectionNamespace="System.Web.Configuration" Addable="true" RemoveAt="true" Clear="true" WrapperName="WebAssemblyCollectionTypeSafeWrapper"/>
+    <wrapper Collection="AuthorizationRuleCollection" Item="AuthorizationRule" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true" CollectionNamespace="System.Web.Configuration" WrapperName="WebAuthorizationRuleCollectionTypeSafeWrapper"/>
+    <wrapper Collection="BufferModesCollection" Item="BufferModeSettings" CollectionNamespace="System.Web.Configuration" Addable="true" Clear="true" Write="true"/>
+    <wrapper Collection="BuildProviderCollection" Item="BuildProvider" CollectionNamespace="System.Web.Configuration" RemoveAt="true" Addable="true" Write="true"/>
+    <wrapper Collection="ClientTargetCollection" Item="ClientTarget" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="CodeSubDirectoriesCollection" Item="CodeSubDirectory" CollectionNamespace="System.Web.Configuration" Addable="true" Clear="true" RemoveAt="true" Write="true"/>
+    <wrapper Collection="CompilerCollection" Item="Compiler" CollectionNamespace="System.Web.Configuration" WrapperName="WebCompilerCollectionTypeSafeWrapper"/>
+    <wrapper Collection="CustomErrorCollection" Item="CustomError" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.StatusCode)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="EventMappingSettingsCollection" Item="EventMappingSettings"  CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" Contains="IndexOf" IndexOf="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+        <index-of>Return Collection.IndexOf(Item.Name)</index-of>
+    </wrapper>
+    <wrapper Collection="ExpressionBuilderCollection" Item="ExpressionBuilder" CollectionNamespace="System.Web.Configuration" RemoveAt="true" Addable="true" Clear="true" Write="true"/>
+    <wrapper Collection="FormsAuthenticationUserCollection" Item="FormsAuthenticationUser" CollectionNamespace="System.Web.Configuration" Addable="true" Clear="true" RemoveAt="true" Write="true"/>
+    <wrapper Collection="HttpHandlerActionCollection" Item="HttpHandlerAction" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" IndexOf="true" Contains="IndexOf" RemoveIsSub="true"/>
+    <wrapper Collection="HttpModuleActionCollection" Item="HttpModuleAction" CollectionNamespace="System.Web.Configuration" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="NamespaceCollection" Item="NamespaceInfo" CollectionNamespace="System.Web.Configuration" WrapperName="WebNamespaceCollectionTypeSafeWrapper" RW="true" RemoveAt="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Namespace)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="OutputCacheProfileCollection" Item="OutputCacheProfile" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="ProfileGroupSettingsCollection" Item="ProfileGroupSettings" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="ProfilePropertySettingsCollection" Item="ProfilePropertySettings" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="ProfileSettingsCollection" Item="ProfileSettings" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" Insert="true" IndexOf="true" Contains="auto">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+        <contains>Return Collection.Contains(Item.Name)</contains>
+        <index-of>Return Collection.IndexOf(Item.Name)</index-of>
+    </wrapper>
+    <wrapper Collection="ProtocolCollection" Item="ProtocolElement" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" RemoveIsSub="true"/>
+    <wrapper Collection="RuleSettingsCollection" Item="RuleSettings" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" Insert="true" IndexOf="true" Contains="auto">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+        <contains>Return Collection.Contains(Item.Name)</contains>
+        <index-of>Return Collection.IndexOf(Item.Name)</index-of>
+    </wrapper>
+    <wrapper Collection="SqlCacheDependencyDatabaseCollection" Item="SqlCacheDependencyDatabase" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="TagMapCollection" Item="TagMapInfo" CollectionNamespace="System.Web.Configuration" RW="true" RemoveIsSub="true"/>
+    <wrapper Collection="TagPrefixCollection" Item="TagPrefixInfo" CollectionNamespace="System.Web.Configuration" RemoveIsSub="true"/>
+    <wrapper Collection="TransformerInfoCollection" Item="TransformerInfo" CollectionNamespace="System.Web.Configuration" RemoveIsSub="true">
+        <remove>
+            <![CDATA[
+                    Dim OldCount As Integer = Me.Count
+                    Collection.Remove(Item.Name)
+                    Return Me.Count < OldCount
+            ]]>
+        </remove>
+    </wrapper>
+    <wrapper Collection="TrustLevelCollection" Item="TrustLevel" CollectionNamespace="System.Web.Configuration" RemoveIsSub="true" RemoveAt="true"/>
+    <wrapper Collection="UrlmappingCollection" Item="Urlmapping" CollectionNamespace="System.Web.Configuration" RW="true" RemoveAt="true" RemoveIsSub="true"/>    
+    <wrapper Collection="SchemaImporterExtensionElementCollection" Item="SchemaImporterExtensionElement" CollectionNamespace="System.Xml.Serialization.Configuration" RW="true" RemoveAt="true" IndexOf="true" RemoveIsSub="true"/>
+
+    <wrapper Collection="ProtectedConfigurationProviderCollection" Item="ProtectedConfigurationProvider" CollectionNamespace="System.Configuration" Addable="true"/>
+    <wrapper Collection="SettingsProviderCollection" Item="SettingsProvider" CollectionNamespace="System.Configuration" Addable="true"/>
+    <wrapper Collection="ProfileProviderCollection" Item="ProfileProvider" CollectionNamespace="System.Web.Profile" Addable="true"/>
+    <wrapper Collection="MembershipProviderCollection" Item="MembershipProvider" CollectionNamespace="System.Web.Security" Addable="true"/>
+    <wrapper Collection="RoleProviderCollection" Item="RoleProvider" CollectionNamespace="System.Web.Security" Addable="true"/>
+    <wrapper Collection="SiteMapProviderCollection" Item="SiteMapProvider" CollectionNamespace="System.Web" Addable="true"/>
+    <wrapper Collection="PersonalizationProviderCollection" Item="PersonalizationProvider" CollectionNamespace="System.Web.UI.WebControls.WebParts" Addable="true"/>
+
+    <wrapper Collection="ConstraintCollection" Item="Constraint" CollectionNamespace="System.Data" RW="true" IndexOf="true" RemoveIsSub="true" RemoveAt="true" NoSetter="true"/>
+    <wrapper Collection="DataColumnCollection" Item="DataColumn" CollectionNamespace="System.Data" RW="true" IndexOf="true" RemoveIsSub="true" RemoveAt="true" NoSetter="true"/>
+    <wrapper Collection="DataRelationCollection" Item="DataRelation" CollectionNamespace="System.Data" RW="true" IndexOf="true" RemoveIsSub="true" RemoveAt="true" NoSetter="true"/>  
+    <wrapper Collection="DataRowCollection" Item="DataRow" CollectionNamespace="System.Data" RW="true" IndexOf="true" RemoveIsSub="true" RemoveAt="true" NoSetter="true"/>
+    <wrapper Collection="DataTableCollection" Item="DataTable" CollectionNamespace="System.Data" RW="true" IndexOf="true" RemoveIsSub="true" RemoveAt="true" NoSetter="true"/>
+
+    <wrapper Collection="GenericAcl" Item="GenericAce" CollectionNamespace="System.Security.AccessControl" Write="true"/>
+    <wrapper Collection="RawAcl" Item="GenericAce" CollectionNamespace="System.Security.AccessControl" RemoveAt="true" Insert="true" Write="true">
+        <insert>Collection.InsertAce(index, item)</insert>
+        <remove-at>Collection.RemoveAce(index)</remove-at>
+    </wrapper>
+
+    <wrapper Collection="ViewCollection" Item="View" CollectionNamespace="System.Web.UI.WebControls" RW="true" Insert="true" NoSetter="true" RemoveAt="true" Contains="auto" IndexOf="true" RemoveIsSub="true" WrapperName="WebViewCollectionTypeSafeWrapper">
+        <insert>Collection.AddAt(index, item)</insert>
+    </wrapper>
+
+    <wrapper Collection="BindingsCollection" Item="Binding" CollectionNamespace="System.Windows.Forms"/>
+    <wrapper Collection="ControlBindingsCollection" Item="Binding" CollectionNamespace="System.Windows.Forms" RW="true" RemoveAt="true" NoSetter="true" RemoveIsSub="true"/>
+    <!--<wrapper Collection="DataGridViewCellCollection" Item="DataGridViewCell" CollectionNamespace="System.Windows.Forms" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true"/>-->
+    <!--<wrapper Collection="DataGridViewColumnCollection" Item="DataGridViewColumn" CollectionNamespace="System.Windows.Forms" RW="true" IndexOf="true" RemoveAt="true" RemoveIsSub="true" NoSetter="true"/>
+    <wrapper Collection="DataGridViewSelectedCellCollection" Item="DataGridViewCell" CollectionNamespace="System.Windows.Forms" Clear="true" Contains="auto" Insert="true" Addable="true">
+        <add>Collection.Insert(Collection.Count, Item)</add>
+    </wrapper>
+    <wrapper Collection="DataGridViewSelectedColumnCollection" Item="DataGridViewColumn" CollectionNamespace="System.Windows.Forms" Clear="true" Contains="auto" Insert="true" Addable="true">
+        <add>Collection.Insert(Collection.Count, Item)</add>
+    </wrapper>
+    <wrapper Collection="DataGridViewSelectedRowCollection" Item="DataGridViewRow" CollectionNamespace="System.Windows.Forms" Clear="true" Contains="auto" Insert="true" Addable="true">
+        <add>Collection.Insert(Collection.Count, Item)</add>
+    </wrapper>-->
+    <!--<wrapper Collection="GridColumnStylesCollection" Item="DataGridColumnStyle" CollectionNamespace="System.Windows.Forms" RW="true" NoSetter="true" RemoveAt="true" IndexOf="true" Contains="IndexOf" RemoveIsSub="true"/>-->
+    <!--<wrapper Collection="GridTableStylesCollection" Item="DataGridTableStyle" CollectionNamespace="System.Windows.Forms" RW="true" NoSetter="true" RemoveAt="true" RemoveIsSub="true"/>-->
+
+    <wrapper Collection="AdapterDictionary" Item="String" CollectionNamespace="System.Web.Configuration" ItemNamespace="System" Clear="true" RemoveAt="true"/>
+
+    <IList Collection="CodeNamespaceImportCollection" Item="CodeNamespaceImport" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeAttributeArgumentCollection" Item="CodeAttributeArgument" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeAttributeDeclarationCollection" Item="CodeAttributeDeclaration" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeCatchClauseCollection" Item="CodeCatchClause" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeCommentStatementCollection" Item="CodeCommentStatement" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeDirectiveCollection" Item="CodeDirective" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeExpressionCollection" Item="CodeExpression" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeNamespaceCollection" Item="CodeNamespace" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeParameterDeclarationExpressionCollection" Item="CodeParameterDeclarationexpression" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeStatementCollection" Item="CodeStatement" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeTypeDeclarationCollection" Item="CodeTypeDeclaration" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeTypeMemberCollection" Item="CodeTypeMember" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeTypeParameterCollection" Item="CodeTypeParameter" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CodeTypeReferenceCollection" Item="CodeTypereference" CollectionNamespace="System.CodeDom"/>
+    <IList Collection="CompilerErrorCollection" Item="CompilerError" CollectionNamespace="System.CodeDom.Compiler"/>
+    <IList Collection="DesignerVerbCollection" Item="DesignerVerb" CollectionNamespace="System.ComponentModel.Design"/>
+    <IList Collection="SqlBulkCopyColumnMappingCollection" Item="SqlBulkCopyColumnMapping" CollectionNamespace="System.Data.SqlClient"/>
+    <IList Collection="CounterCreationDataCollection" Item="CounterCreationdata" CollectionNamespace="System.Diagnostics"/>
+    <IList Collection="EventLogPermissionEntryCollection" Item="EventLogPermissionEntry" CollectionNamespace="System.Diagnostics"/>
+    <IList Collection="PerformanceCounterPermissionEntryCollection" Item="PerformanceCounterPermissionEntry" CollectionNamespace="System.Diagnostics"/>
+    <IList Collection="X509CertificateCollection" Item="X509Certificate" CollectionNamespace="System.Security.Cryptography.X509Certificates"/>    
+    <IList Collection="X509Certificate2Collection" Item="X509Certificate2" CollectionNamespace="System.Security.Cryptography.X509Certificates"/>    
+    <IList Collection="ParserErrorCollection" Item="ParserError" CollectionNamespace="System.Web"/>    
+    <IList Collection="EmbeddedMailObjectsCollection" Item="EmbeddedMailObject" CollectionNamespace="System.Web.UI.WebControls"/>
+    <IList Collection="RoleGroupCollection" Item="RoleGroup" CollectionNamespace="System.Web.UI.WebControls"/>
+    <IList Collection="ProxyWebPartConnectionCollection" Item="WebPartConnection" CollectionNamespace="System.Web.UI.WebControls.WebParts"/>
+    <IList Collection="WebPartConnectionCollection" Item="WebPartConnection" CollectionNamespace="System.Web.UI.WebControls.WebParts"/>
+    <IList Collection="WebPartDisplayModeCollection" Item="WebPartDisplayMode" CollectionNamespace="System.Web.UI.WebControls.WebParts"/>
+    <IList Collection="WebPartTransformerCollection" Item="WebPartTransformer" CollectionNamespace="System.Web.UI.WebControls.WebParts"/>
+    <IList Collection="LinkTargetCollection" Item="LinkTarget" CollectionNamespace="System.Windows.Documents"/>
+    <IList Collection="SchemaImporterExtensionCollection" Item="SchemaImporterExtension" CollectionNamespace="System.Xml.Serialization.Advanced"/>
+    <IList Collection="XmlAnyElementAttributes" Item="XmlAnyElementAttribute" CollectionNamespace="System.Xml.Serialization"/>
+    <IList Collection="XmlArrayItemAttributes" Item="XmlArrayItemAttribute" CollectionNamespace="System.Xml.Serialization"/>
+    <IList Collection="XmlElementAttributes" Item="XmlElementAttribute" CollectionNamespace="System.Xml.Serialization"/>
+    <IList Collection="XmlSchemas" Item="XmlSchema" ItemNamespace="System.Xml.Schema" CollectionNamespace="System.Xml.Serialization"/>
+    <IList Collection="XmlSchemaObjectCollection" Item="XmlSchemaObject" CollectionNamespace="System.Xml.Schema"/>
+
+    <IList Collection="StringCollection" Item="String" CollectionNamespace="System.Collections.Specialized" ItemNamespace="System"/>
+    <IList Collection="DesignerOptionCollection" CollectionNamespace="System.ComponentModel.Design.DesignerOptionService" Item="DesignerOptionCollection"/>
+    <IList Collection="EventDescriptorCollection" Item="EventDescriptor" CollectionNamespace="System.ComponentModel"/>
+    <IList Collection="ListSortDescriptionCollection" Item="ListSortDescription" CollectionNamespace="System.ComponentModel"/>
+    <IList Collection="PropertyDescriptorCollection" Item="PropertyDescriptor" CollectionNamespace="System.ComponentModel"/>
+    <IList Collection="DataColumnMappingCollection" Item="DataColumnMapping" CollectionNamespace="System.Data.Common"/>
+    <IList Collection="DbParameterCollection" Item="DbParameter" CollectionNamespace="System.Data.Common"/>
+    <IList Collection="OdbcParameterCollection" Item="OdbcParameter" CollectionNamespace="System.Data.Odbc"/>
+    <IList Collection="OleDbParameterCollection" Item="OleDbParameter" CollectionNamespace="System.Data.OleDb"/>
+    <IList Collection="SqlParameterCollection" Item="SqlParameter" CollectionNamespace="System.Data.SqlClient"/>
+    <IList Collection="DataTableMappingCollection" Item="DataTableMapping" CollectionNamespace="System.Data.Common"/>
+    <IList Collection="TraceListenerCollection" CollectionNamespace="System.Diagnostics" Item="TraceListener"/>
+    <IList Collection="SiteMapNodeCollection" Item="SiteMapNode" CollectionNamespace="System.Web"/>
+
+    <IList Collection='DataControlFieldCollection' Item='DataControlField' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='HotSpotCollection' Item='HotSpot' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='MenuItemBindingCollection' Item='MenuItemBinding' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='MenuItemStyleCollection' Item='MenuItemStyle' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='ParameterCollection' Item='Parameter' CollectionNamespace='System.Web.UI.WebControls' WrapperName='WebParameterCollectionTypeSafeWrapper'/>
+    <IList Collection='StyleCollection' Item='Style' CollectionNamespace='System.Web.UI.WebControls' WrapperName='WebStyleCollectionTypeSafeWrapper'/>
+    <IList Collection='SubMenuStyleCollection' Item='SubMenuStyle' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='TreeNodeBindingCollection' Item='TreeNodeBinding' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='TreeNodeStyleCollection' Item='TreeNodeStyle' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='ListItemCollection' Item='ListItem' CollectionNamespace='System.Web.UI.WebControls' WrapperName='WebListItemCollectionTypeSafeWrapper'/>
+    <IList Collection='TableCellCollection' Item='TableCell' CollectionNamespace='System.Web.UI.WebControls' WrapperName='WebTableCellCollectionTypeSafeWrapper'/>
+    <IList Collection='TableRowCollection' Item='TableRow' CollectionNamespace='System.Web.UI.WebControls' WrapperName='WebTableRowCollectionTypeSafeWrapper'/>
+    <IList Collection='WizardStepCollection' Item='WizardStep' CollectionNamespace='System.Web.UI.WebControls'/>
+    <IList Collection='ColumnDefinitionCollection' Item='ColumnDefinition' CollectionNamespace='System.Windows.Controls' WrapperName='WebColumnDefinitionCollectionTypeSafeWrapper'/>
+    <IList Collection='RowDefinitionCollection' Item='RowDefinition' CollectionNamespace='System.Windows.Controls'/>
+    <IList Collection='UIElementCollection' Item='UIElement' CollectionNamespace='System.Windows.Controls' ItemNamespace='System.Windows'/>
+    <IList Collection='TableCellCollection' Item='TableCell' CollectionNamespace='System.Windows.Documents'/>
+    <IList Collection='TableColumnCollection' Item='TableColumn' CollectionNamespace='System.Windows.Documents'/>
+    <IList Collection='TableRowCollection' Item='TableRow' CollectionNamespace='System.Windows.Documents'/>
+    <IList Collection='TableRowGroupCollection' Item='TableRowGroup' CollectionNamespace='System.Windows.Documents'/>
+    <IList Collection='AutoCompleteStringCollection' Item='String' CollectionNamespace='System.Windows.Forms' ItemNamespace='System'/>
+    <IList Collection='DataGridViewCellCollection' Item='DataGridViewCell' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='DataGridViewColumnCollection' Item='DataGridViewColumn' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='DataGridViewRowCollection' Item='DataGridViewRow' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='DataGridViewSelectedCellCollection' Item='DataGridViewCell' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='DataGridViewSelectedColumnCollection' Item='DataGridViewColumn' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='DataGridViewSelectedRowCollection' Item='DataGridViewRow' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='GridColumnStylesCollection' Item='DataGridColumnStyle' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='GridTableStylesCollection' Item='DataGridTableStyle' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='CheckedIndexCollection' Item='Int32' ItemNamespace='System' CollectionNamespace='System.Windows.Forms.CheckedListBox' WrapperName='ListBoxCheckedIndexCollectionTypeSafeWrapper'/>
+    <IList Collection='ImageCollection' Item='Image' CollectionNamespace='System.Windows.Forms.ImageList' ItemNamespace='System.Drawing'/>
+    <IList Collection='ControlCollection' Item='Control' CollectionNamespace='System.Windows.Forms.Control' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='ToolStripItemCollection' Item='ToolStripItem' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='ToolStripPanelRowCollection' Item='ToolStripPanelRow' CollectionNamespace='System.Windows.Forms.ToolStripPanel' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='LinkCollection' Item='Link' CollectionNamespace='System.Windows.Forms.LinkLabel'/>
+    <IList Collection='IntegerCollection' Item='Int32' CollectionNamespace='System.Windows.Forms.ListBox' ItemNamespace='System'/>
+    <IList Collection='SelectedIndexCollection' Item='Int32' CollectionNamespace='System.Windows.Forms.ListBox' ItemNamespace='System' WrapperName='ListBoxSelectedIndexCollectionTypeSafeWrapper'/>
+    <IList Collection='ColumnHeaderCollection' Item='ColumnHeader' CollectionNamespace='System.Windows.Forms.ListView' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='CheckedIndexCollection' Item='Int32' CollectionNamespace='System.Windows.Forms.ListView' ItemNamespace='System' WrapperName='ListViewCheckedIndexCollectionTypeSafeWrapper'/>
+    <IList Collection='CheckedListViewItemCollection' Item='ListViewItem' CollectionNamespace='System.Windows.Forms.ListView' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='ListViewItemCollection' Item='ListViewItem' CollectionNamespace='System.Windows.Forms.ListView' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='SelectedIndexCollection' Item='Int32' ItemNamespace='System' CollectionNamespace='System.Windows.Forms.ListView'/>
+    <IList Collection='SelectedListViewItemCollection' Item='ListViewItem' CollectionNamespace='System.Windows.Forms.ListView' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='ListViewGroupCollection' Item='ListViewGroup' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='ListViewSubItemCollection' Item='ListViewSubItem' CollectionNamespace='System.Windows.Forms.ListViewItem'/>
+    <IList Collection='MenuItemCollection' Item='MenuItem' CollectionNamespace='System.Windows.Forms.Menu' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='StatusBarPanelCollection' Item='StatusBarPanel' CollectionNamespace='System.Windows.Forms.StatusBar' ItemNamespace='System.Windows.Forms'/>
+    <IList Collection='TabPageCollection' ItemNamespace='System.Windows.Forms' Item='TabPage' CollectionNamespace='System.Windows.Forms.TabControl'/>
+    <IList Collection='TableLayoutStyleCollection' Item='TableLayoutStyle' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='ToolBarButtonCollection' ItemNamespace='System.Windows.Forms' Item='ToolBarButton' CollectionNamespace='System.Windows.Forms.ToolBar'/>
+    <IList Collection='TreeNodeCollection' Item='TreeNode' CollectionNamespace='System.Windows.Forms'/>
+    <IList Collection='ThicknessKeyFrameCollection' Item='ThicknessKeyFrame' CollectionNamespace='System.Windows.Media.Animation'/>
+    <IList Collection='TriggerActionCollection' Item='TriggerAction' CollectionNamespace='System.Windows'/>
+
+</wrappers>

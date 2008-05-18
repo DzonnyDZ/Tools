@@ -103,9 +103,10 @@ Namespace WindowsT.FormsT
             Me.lblPrompt.AutoSize = True
             Me.lblPrompt.Location = New System.Drawing.Point(41, 13)
             Me.lblPrompt.Name = "lblPrompt"
-            Me.lblPrompt.Size = New System.Drawing.Size(40, 13)
+            Me.lblPrompt.Size = New System.Drawing.Size(46, 13)
             Me.lblPrompt.TabIndex = 1
-            Me.lblPrompt.Text = "Prompt"
+            Me.lblPrompt.Text = "Prom&pt"
+            Me.lblPrompt.UseMnemonic = False
             '
             'chkCheckBox
             '
@@ -116,6 +117,7 @@ Namespace WindowsT.FormsT
             Me.chkCheckBox.Size = New System.Drawing.Size(81, 17)
             Me.chkCheckBox.TabIndex = 2
             Me.chkCheckBox.Text = "CheckBox1"
+            Me.chkCheckBox.UseMnemonic = False
             Me.chkCheckBox.UseVisualStyleBackColor = True
             '
             'cmbCombo

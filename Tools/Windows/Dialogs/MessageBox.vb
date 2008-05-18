@@ -14,7 +14,7 @@ Namespace WindowsT.DialogsT
         ''' <returns>Type currently used as default implementation of message box</returns>
         ''' <value>Sets application-wide default implementation of message box</value>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
-        ''' <see cref="ArgumentException">Value being set represents type that either does not derive from <see cref="MesasageBox"/>, is abstract, is generic non-closed or hasn't parameter-less contructor.</see>
+        ''' <see cref="ArgumentException">Value being set represents type that either does not derive from <see cref="MessageBox"/>, is abstract, is generic non-closed or hasn't parameter-less contructor.</see>
         Public Shared Property DefaultImplementation() As Type
             <DebuggerStepThrough()> Get
                 Return _DefaultImplementation
@@ -1009,7 +1009,7 @@ Namespace WindowsT.DialogsT
             AlignRight = 1 '0001
             ''' <summary>Text is aligned center</summary>
             AlignCenter = 2 '0010                                                                         
-            ''' <summary>Text is aligned to block. If target platform does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.Left"/> (in ltr reading <see cref="MessageBoxOptions.AlignRight"/> in rtl reading)</summary>
+            ''' <summary>Text is aligned to block. If target platform does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.AlignLeft"/> (in ltr reading <see cref="MessageBoxOptions.AlignRight"/> in rtl reading)</summary>
             AlignJustify = 3 '0011
             ''' <summary>Bitwise mask for AND-ing text alignment</summary>
             <EditorBrowsable(EditorBrowsableState.Advanced)> AlignMask = 3 '0011

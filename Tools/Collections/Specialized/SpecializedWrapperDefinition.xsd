@@ -1,0 +1,223 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema
+    targetNamespace="http://dzonny.cz/xml/SpecializedWrapperDefinition"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/SpecializedWrapperDefinition"
+    xmlns:swd="http://dzonny.cz/xml/SpecializedWrapperDefinition"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:annotation>
+        <xs:documentation>XML schema for automatically generated type-safe wrappers of specialized collections</xs:documentation>
+    </xs:annotation>
+
+    <xs:attributeGroup name="Ident">
+        <xs:attribute name="CollectionNamespace" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Full name of named item (namespace, type) in which collection is nested</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Collection" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Unqualified name of collection</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="Item" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Unqualified name of collection item</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="ItemNamespace" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Full name of named item (namespace, type) in which collection is nested (id differs form @CollectionNamespace)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+     <xs:attribute name="WrapperName" type="xs:string" use="optional">
+                            <xs:annotation>
+                                <xs:documentation>Use different than automatically generated name of wrapper collection</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+    </xs:attributeGroup>
+    
+    <xs:element name="wrappers">
+        <xs:annotation>
+            <xs:documentation>Root element - contains wrapper definition</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:choice minOccurs="0" maxOccurs="unbounded">
+                <xs:element name="wrapper">
+                    <xs:annotation>
+                        <xs:documentation>Definition of one wrapper</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:choice minOccurs="0" maxOccurs="unbounded">
+                            <xs:element minOccurs="0" maxOccurs="1" name="setter" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Replace code of setter of Item property with given text (only when @RW is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="add" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Replace code of Add method with given text (only when @RW or @Addable is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="clear" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Replace code of Clear method with given text (only when @RW is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="remove" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Replace code of Remove method with given text (only when @RW is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="remove-at" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Replace code of RemoveAt method with given text (only when @RemoveAt is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="insert" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>replace code of Insert method (only if Insert and RW is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="snippet" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Additional code to class (at class-level)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="index-of" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>Replace code of IndexOf function (if @IndexOf is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                            <xs:element minOccurs="0" maxOccurs="1" name="contains" type="xs:string">
+                                <xs:annotation>
+                                    <xs:documentation>replace code of Contains function (if @Contains is true)</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:choice>
+                        <xs:attributeGroup ref="Ident"/>
+                        <xs:attribute name="Addable" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Only if @RW is false - implement IAddable interface</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="RW" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Specifies that collection is read-write (not read-only)</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="RemoveIsSub" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Indicates that Remove method of collection being wrapped is procedure (Sub). Only if @RW is true. Ignored when &lt;remove> is present.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="RemoveAt" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Indicates that collection has RemoveAt method and IRemovable interface can be implemented.</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Contains" use="optional" default="none">
+                            <xs:annotation>
+                                <xs:documentation>Indicates that Contains funcrion should be overriden.</xs:documentation>
+                            </xs:annotation>
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="none">
+                                        <xs:annotation>
+                                            <xs:documentation>Contains function is not overriden</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:enumeration>
+                                    <xs:enumeration value="auto">
+                                        <xs:annotation>
+                                            <xs:documentation>Contains function is implemented by collection being wrapped</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:enumeration>
+                                    <xs:enumeration value="IndexOf">
+                                        <xs:annotation>
+                                            <xs:documentation>Contains function is implemented by IndexOf (must be present)</xs:documentation>
+                                        </xs:annotation>
+                                    </xs:enumeration>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:attribute>
+                        <xs:attribute name="IndexOf" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Indicates that collection has IndexOf function</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Insert" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Collection implements Insert method at therefore wrapper may implement IInsertable (only when @RW is true)</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="NoSetter" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Indicates that collection has property Item read-only (only when @RW is true)</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="NoClear" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Indicates that collection has clear method (only when @RW is true)</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Clear" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Emmit clear method for collection with @RW false (needs either @NoClear false or @RemoveAt true)</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                        <xs:attribute name="Write" type="xs:boolean" use="optional" default="false">
+                            <xs:annotation>
+                                <xs:documentation>Emmit setter from for collection with @RW false</xs:documentation>
+                            </xs:annotation>
+                        </xs:attribute>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="IList" minOccurs="0" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:attributeGroup ref="Ident"/>
+                    </xs:complexType>
+                </xs:element>
+            </xs:choice>
+            <xs:attribute name="stage" use="required">
+                <xs:annotation>
+                    <xs:documentation>Development cycle stage</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Nightly">
+                            <xs:annotation>
+                                <xs:documentation>Nightly build</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Alpha">
+                            <xs:annotation>
+                                <xs:documentation>Alpha pre-release</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Beta">
+                            <xs:annotation>
+                                <xs:documentation>Beta pre-release</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="RC">
+                            <xs:annotation>
+                                <xs:documentation>Release candidate</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Release">
+                            <xs:annotation>
+                                <xs:documentation>Stable release</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>
+            <xs:attribute name="transformer" type="xs:anyURI" use="required" fixed="SpecializedWrappers.xslt">
+                <xs:annotation>
+                    <xs:documentation>This is for VS custom tools. Indicates XSLT file to use.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

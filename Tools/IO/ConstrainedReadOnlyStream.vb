@@ -4,7 +4,7 @@ Namespace IOt
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ConstrainedReadOnlyStream), LastChange:="04/24/2007")> _
     Public Class ConstrainedReadOnlyStream : Inherits System.IO.Stream
-        Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte)
+        Implements CollectionsT.GenericT.IReadOnlyIndexableWithRange(Of Byte, Long)
         ''' <summary><see cref="System.IO.Stream"/> being constrained</summary>
         Protected ReadOnly Stream As System.IO.Stream
         ''' <summary>Minimum position for seek (0-based)</summary>
@@ -154,7 +154,7 @@ Namespace IOt
         ''' <summary>Returns an enumerator that iterates through the collection.</summary>
         ''' <returns>A <see cref="System.Collections.Generic.IEnumerator(Of T1)"/> that can be used to iterate through the collection.</returns>
         Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of Byte) Implements System.Collections.Generic.IEnumerable(Of Byte).GetEnumerator
-            Return New CollectionsT.GenericT.IndexableEnumerator(Of Byte)(Me)
+            Return New CollectionsT.GenericT.LongIndexableEnumerator(Of Byte)(Me)
         End Function
         ''' <summary>Returns an enumerator that iterates through a collection.</summary>
         ''' <returns>An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.</returns>
@@ -179,13 +179,13 @@ Namespace IOt
             End Get
         End Property
         ''' <summary>Maximal valid value for index</summary>
-        Public ReadOnly Property Maximum() As Long Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte).Maximum
+        Public ReadOnly Property Maximum() As Long Implements CollectionsT.GenericT.IReadOnlyIndexableWithRange(Of Byte, Long).Maximum
             Get
                 Return ConstrainedLenght - 1
             End Get
         End Property
         ''' <summary>Minimal valid value for index</summary>
-        Public ReadOnly Property Minimum() As Long Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte).Minimum
+        Public ReadOnly Property Minimum() As Long Implements CollectionsT.GenericT.IReadOnlyIndexableWithRange(Of Byte, Long).Minimum
             Get
                 Return 0
             End Get

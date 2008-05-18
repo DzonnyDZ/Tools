@@ -123,6 +123,9 @@
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -139,6 +142,7 @@
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
     <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
     <Compile Include="Collections\Generic\IIndexable.vb" />
+    <Compile Include="Collections\Specialized\SpecializedWrapper.vb" />
     <Compile Include="Collections\Generic\TypedArrayEnumerator.vb" />
     <Compile Include="Collections\Generic\UnionEnumerator.vb" />
     <Compile Include="Collections\Generic\Wrapper.vb" />
@@ -146,6 +150,14 @@
     <Compile Include="Collections\Generic\IReadOnlyList.vb" />
     <Compile Include="Collections\Generic\ListWithEvents.vb" />
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
+    <Compile Include="Collections\Specialized\CollectionTools.vb" />
+    <Compile Include="Collections\Specialized\SpecializedWrappers.vb">
+      <DependentUpon>SpecializedWrappers.xml</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Collections\Type-unsafe\CollectionTools.vb" />
     <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
     <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
@@ -213,6 +225,7 @@
     <Compile Include="misc\misc.vb" />
     <Compile Include="misc\TimeSpanFormattable.vb" />
     <Compile Include="misc\TriBool.vb" />
+    <Compile Include="misc\TypeMismatchException.vb" />
     <Compile Include="misc\TypeTools.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -486,6 +499,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd" />
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
       <SubType>
       </SubType>
@@ -495,6 +509,12 @@
     </None>
     <None Include="Globalization\ISOLanguages.xslt" />
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt" />
+    <Content Include="Collections\Specialized\SpecializedWrappers.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
+      <CustomToolNamespace>CollectionsT.SpecialzedT</CustomToolNamespace>
+    </Content>
+    <Content Include="Collections\Specialized\SpecializedWrappers.xslt" />
     <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
     <Content Include="Drawing\Metadata\Exif\ExifTags.css" />
     <Content Include="Drawing\Metadata\Exif\ExifTags.display.xslt" />
