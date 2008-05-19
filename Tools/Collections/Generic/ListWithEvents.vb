@@ -967,5 +967,89 @@ Namespace CollectionsT.GenericT
             RaiseEvent Changed(Me, e)
         End Sub
     End Class
+    ''' <summary>Describes acction on collection</summary>
+    Public Enum CollectionChangeAction   'TODO: Use this in ListWithEvents's events
+        ''' <summary>An item was added. Equals to <see cref="ComponentModel.CollectionChangeAction.Add"/>. Represents <see cref="ListWithEvents(Of Object).Added"/>.</summary>
+        Add = ComponentModel.CollectionChangeAction.Add
+        ''' <summary>An item was removed. Equals to <see cref="ComponentModel.CollectionChangeAction.Remove"/>. Represents <see cref="ListWithEvents(Of Object).Removed"/></summary>
+        Remove = ComponentModel.CollectionChangeAction.Remove
+        ''' <summary>The collection was cleared. Represents <see cref="ListWithEvents(Of Object).Cleared"/>.</summary>
+        Clear = 4
+        ''' <summary>Item of collection was replaced. Represents <see cref="ListWithEvents(Of Object).ItemChanged"/>.</summary>
+        Replace = 5
+        ''' <summary>Property of item of collection changed. Represents <see cref="ListWithEvents(Of Object).ItemValueChanged"/>.</summary>
+        ItemChange = 6
+        ''' <summary>Unspecified action. Equals to <see cref="ComponentModel.CollectionChangeAction.Refresh"/>.</summary>
+        Other = ComponentModel.CollectionChangeAction.Refresh
+    End Enum
+    ''' <summary>Arguments of event raised when collection owned by event source has changed</summary>
+    Public Class CollectionChanged(Of TItem)
+        Inherits ComponentModel.CollectionChangeEventArgs
+        ''' <summary>Contains value of the <see cref="ChangeEventArgs"/> property</summary>
+        Private ReadOnly _ChangeEventArgs As EventArgs
+        ''' <summary>Contains value of the <see cref="Action"/> property</summary>
+        Private ReadOnly _Action As CollectionChangeAction
+        ''' <summary>CTor</summary>
+        ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+        ''' <param name="Collection">Collection that was changed</param>
+        ''' <remarks><see cref="Action"/> is set to <see cref="CollectionChangeAction.Other"/></remarks>
+        Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs)
+            Me.New(Collection, ChangeEventArgs, CollectionChangeAction.Other)
+        End Sub
+        ''' <summary>CTor</summary>
+        ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+        ''' <param name="Collection">Collection that was changed</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+        Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
+            MyBase.New(ConvertAction(Action), Collection)
+            _ChangeEventArgs = ChangeEventArgs
+            _Action = Action
+        End Sub
+        ''' <summary>Converts <see cref="CollectionChangeAction"/> to <see cref="ComponentModel.CollectionChangeAction"/></summary>
+        ''' <param name="Action">A <see cref="CollectionChangeAction"/> to be converted</param>
+        ''' <returns><see cref="ComponentModel.CollectionChangeAction"/> corresponding to <paramref name="Action"/></returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+        ''' <remarks>Conversion table follows:
+        ''' <list type="table">
+        ''' <listheader><term><see cref="CollectionChangeAction"/> (<paramref name="Action"/>)</term><description><see cref="ComponentModel.CollectionChangeAction"/></description></listheader>
+        ''' <item><term><see cref="CollectionChangeAction.Add"/></term><description><see cref="ComponentModel.CollectionChangeAction.Add"/></description></item>
+        ''' <item><term><see cref="CollectionChangeAction.Remove"/></term><description><see cref="ComponentModel.CollectionChangeAction.Remove"/></description></item>
+        ''' <item><term><see cref="CollectionChangeAction.Other"/></term><description><see cref="ComponentModel.CollectionChangeAction.Refresh"/></description></item>
+        ''' <item><term><see cref="CollectionChangeAction.Clear"/></term><description><see cref="ComponentModel.CollectionChangeAction.Remove"/></description></item>
+        ''' <item><term><see cref="CollectionChangeAction.Replace"/></term><description><see cref="ComponentModel.CollectionChangeAction.Refresh"/></description></item>
+        ''' <item><term><see cref="CollectionChangeAction.ItemChange"/></term><description><see cref="ComponentModel.CollectionChangeAction.Refresh"/></description></item>
+        ''' <item><term>Otherwise</term><description><see cref="InvalidEnumArgumentException"/> thrown</description></item>
+        ''' </list>
+        ''' </remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Shared Function ConvertAction(ByVal Action As CollectionChangeAction) As ComponentModel.CollectionChangeAction
+            Select Case Action
+                Case CollectionChangeAction.Add, CollectionChangeAction.Remove, CollectionChangeAction.Other
+                    Return Action
+                Case CollectionChangeAction.Clear : Return ComponentModel.CollectionChangeAction.Remove
+                Case CollectionChangeAction.Replace, CollectionChangeAction.ItemChange
+                    Return ComponentModel.CollectionChangeAction.Refresh
+                Case Else : Throw New InvalidEnumArgumentException("Action", Action, GetType(CollectionChangeAction))
+            End Select
+        End Function
+        ''' <summary>Collection which was changed</summary>
+        Public ReadOnly Property Collection() As ICollection(Of TItem)
+            Get
+                Return Me.Element
+            End Get
+        End Property
+        ''' <summary>Arguments of event that caused collection to be changed or that was raised by the colection on change</summary>
+        Public ReadOnly Property ChangeEventArgs() As EventArgs
+            Get
+                Return _ChangeEventArgs
+            End Get
+        End Property
+        ''' <summary>Action taken on collection</summary>
+        Public Shadows ReadOnly Property Action() As CollectionChangeAction
+            Get
+                Return _Action
+            End Get
+        End Property
+    End Class
 End Namespace
 #End If

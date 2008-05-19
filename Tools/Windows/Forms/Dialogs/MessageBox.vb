@@ -103,7 +103,7 @@ Namespace WindowsT.FormsT
 
     ''' <summary>Implements <see cref="WindowsT.DialogsT.MessageBox"/> for as <see cref="Form"/></summary>
     Public Class MessageBox
-        Inherits DialogsT.MessageBoxBase(Of MessageBox)
+        Inherits DialogsT.MessageBox
         Public Overrides ReadOnly Property ClickedButton() As DialogsT.MessageBox.MessageBoxButton
             Get
 
