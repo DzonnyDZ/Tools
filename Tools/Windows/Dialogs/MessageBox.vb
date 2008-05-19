@@ -96,7 +96,7 @@ Namespace WindowsT.DialogsT
             <DebuggerStepThrough()> Set(ByVal value As Integer)
                 Dim old = DefaultButton
                 _DefaultButton = value
-                If old <> value Then OnDefaultButtonChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value))
+                If old <> value Then OnDefaultButtonChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "DefaultButton"))
             End Set
         End Property
         ''' <summary>Gets or sets value returned by <see cref="Show"/> function when user closes the message box by closing window or by pressin escape</summary>
@@ -108,7 +108,7 @@ Namespace WindowsT.DialogsT
             <DebuggerStepThrough()> Set(ByVal value As DialogResult)
                 Dim old = CloseResponse
                 _CloseResponse = value
-                If old <> value Then OnCloseResponseChanged(New IReportsChange.ValueChangedEventArgs(Of DialogResult)(old, value))
+                If old <> value Then OnCloseResponseChanged(New IReportsChange.ValueChangedEventArgs(Of DialogResult)(old, value, "CloseResponse"))
             End Set
         End Property
         ''' <summary>gets value idicating if the <see cref="CloseResponse"/> property should be serialuzed</summary>
@@ -196,7 +196,7 @@ Namespace WindowsT.DialogsT
             <DebuggerStepThrough()> Set(ByVal value As Drawing.Image)
                 Dim old = Icon
                 _Icon = value
-                If old IsNot value Then OnIconChanged(New IReportsChange.ValueChangedEventArgs(Of image)(old, value, "Icon"))
+                If old IsNot value Then OnIconChanged(New IReportsChange.ValueChangedEventArgs(Of Drawing.Image)(old, value, "Icon"))
             End Set
         End Property
         ''' <summary>Gets or sets options of the message box</summary>
@@ -274,7 +274,7 @@ Namespace WindowsT.DialogsT
             <DebuggerStepThrough()> Set(ByVal value As Object)
                 Dim old = MidControl
                 _MidControl = value
-                If old IsNot value Then OnMidControlChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "MidControl"))
+                If old IsNot value Then OnMidControlChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "MidControl"))
             End Set
         End Property
         ''' <summary>Gets or sets additional control displayed at bottom of the message box (below buttons)</summary>
@@ -286,7 +286,7 @@ Namespace WindowsT.DialogsT
             <DebuggerStepThrough()> Set(ByVal value As Object)
                 Dim old = BottomControl
                 _BottomControl = value
-                If old IsNot value Then OnBottomControlChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "BottomControl"))
+                If old IsNot value Then OnBottomControlChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "BottomControl"))
             End Set
         End Property
         ''' <summary>Gets or sets value indicating for how long the message box will be displayed before it closes with <see cref="CloseResponse"/> as result.</summary>
@@ -577,11 +577,11 @@ Namespace WindowsT.DialogsT
             ''' <summary>Raised when value of member changes</summary>
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Event information</param>
-            ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>
+            ''' <remarks><paramref name="e"/>Additionla information - is <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></remarks>
             Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
             ''' <summary>Raises the <see cref="Changed"/> event</summary>
-            ''' <param name="e">Event parameters</param>
-            Protected Overridable Sub OnChanged(ByVal e As IReportsChange.ValueChangedEventArgsBase)
+            ''' <param name="e">Event parameters - should be <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></param>
+            Protected Overridable Sub OnChanged(ByVal e As EventArgs)
                 RaiseEvent Changed(Me, e)
             End Sub
         End Class
@@ -1033,6 +1033,8 @@ Namespace WindowsT.DialogsT
             End Sub
         End Class
         ''' <summary>Represents combo box (drop down list) control for <see cref="MessageBox"/></summary>
+        ''' <remarks>This class inherits implementation of <see cref="IReportsChange"/> from <see cref="MessageBoxControl"/>. The <see cref="MessageBoxComboBox.Changed"/> event when raised for change of <see cref="MessageBoxComboBox.Items"/> collection, reports event arguments of <see cref="MessageBoxComboBox.Items">Items</see>.<see cref="ListWithEvents(Of Object).CollectionChanged">CollectionChanged</see> event (instead of the <see cref="ListWithEvents(Of Object).Changed">Changed</see>).</remarks>
+        ''' <seealco cref="MessageBoxComboBox.OnItemsChanged"/>
         Public Class MessageBoxComboBox : Inherits MessageBoxControl
 #Region "Fields"
             ''' <summary>Contains value of the <see cref="Editable"/> property</summary>
@@ -1063,7 +1065,7 @@ Namespace WindowsT.DialogsT
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="Items"></see> property</summary>
-            ''' <remarks>register handlers with events of <see cref="ListWithEvents(Of T)"/> returned by this property in order to track changes of the collection</remarks>
+            ''' <remarks>Register handlers with events of <see cref="ListWithEvents(Of T)"/> returned by this property or use <see cref="ItemsChanged"/> event in order to track changes of the collection.</remarks>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
             Public ReadOnly Property Items() As ListWithEvents(Of Object)
                 <DebuggerStepThrough()> Get
@@ -1159,8 +1161,17 @@ Namespace WindowsT.DialogsT
                 RaiseEvent SelectedIndexChanged(Me, e)
                 OnChanged(e)
             End Sub
-            Private Sub Items_Changed(ByVal sender As ListWithEvents(Of Object), ByVal e As EventArgs)
-                OnChanged(New CollectionChangeEventArgs(Of Object)(sender, e)) 'TODO:Action
+            ''' <summary>Raised when something happens to the <see cref="Items"/> collection (when it raises the <see cref="ListWithEvents(Of Object).CollectionChanged"/> event).</summary>
+            ''' <param name="sender">Source of event (this instance of <see cref="MessageBoxComboBox"/>)</param>
+            ''' <param name="e">Event arguments (originally passesd by <see cref="Items">Items</see>.<see cref="ListWithEvents(Of Object).CollectionChanged">CollectionChanged</see></param>
+            Public Event ItemsChanged(ByVal sender As MessageBoxComboBox, ByVal e As ListWithEvents(Of Object).ListChangedEventArgs)
+            ''' <summary>Raises the <see cref="ItemsChanged"/> event. Handles <see cref="Items">Items</see>.<see cref="ListWithEvents(Of Object).CollectionChanged">CollectionChanged</see> event.</summary>
+            ''' <param name="sender"><see cref="Items"/> (event source)</param>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This method (after the <see cref="ItemsChanged"/> event is raised) also calls <see cref="OnChanged"/> with <paramref name="e"/> as argument.</remarks>
+            Protected Overridable Sub OnItemsChanged(ByVal sender As ListWithEvents(Of Object), ByVal e As ListWithEvents(Of Object).ListChangedEventArgs)
+                RaiseEvent ItemsChanged(Me, e)
+                OnChanged(e)
             End Sub
             ''' <summary>Raised when value of the <see cref="Text"/> is changed</summary>
             ''' <param name="sender">The source of the event</param>
@@ -1178,7 +1189,7 @@ Namespace WindowsT.DialogsT
 #Region "CTors"
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxComboBox"/> class</summary>
             Public Sub New()
-                AddHandler Items.Changed, AddressOf Me.Items_Changed
+                AddHandler Items.CollectionChanged, AddressOf Me.OnItemsChanged
             End Sub
             ''' <summary>CTor - initializes new instance of the <see cref="MessageBoxComboBox"/> class with combo box items and display member</summary>
             ''' <param name="DisplayMember">Initial value of the <see cref="DisplayMember"/> property - name of member used to display items</param>

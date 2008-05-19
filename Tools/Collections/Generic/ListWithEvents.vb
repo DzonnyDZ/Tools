@@ -243,6 +243,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnAdded(ByVal e As ItemIndexEventArgs)
             RaiseEvent Added(Me, e)
             OnChanged(e)
+            OnCollectionChanged(e, CollectionChangeAction.Add)
         End Sub
 #End Region
 #Region "Clear"
@@ -314,6 +315,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnCleared(ByVal e As ItemsEventArgs)
             RaiseEvent Cleared(Me, e)
             OnChanged(e)
+            OnCollectionChanged(e, CollectionChangeAction.Clear)
         End Sub
 #End Region
         ''' <summary>Determines whether the <see cref="ListWithEvents(Of T)"/> contains a specific value.</summary>
@@ -405,6 +407,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnRemoved(ByVal e As ItemIndexEventArgs)
             RaiseEvent Removed(Me, e)
             OnChanged(e)
+            OnCollectionChanged(e, CollectionChangeAction.Remove)
         End Sub
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to remove from the <see cref="ListWithEvents(Of T)"/>.</param>
@@ -579,6 +582,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEvetArgs)
             RaiseEvent ItemChanged(Me, e)
             OnChanged(e)
+            OnCollectionChanged(e, CollectionChangeAction.Replace)
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
@@ -661,8 +665,10 @@ Namespace CollectionsT.GenericT
         ''' <param name="e">Original event parameters</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemValueChanged"/> in order the event to be raised</remarks>
         Protected Overridable Sub OnItemValueChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
-            RaiseEvent ItemValueChanged(Me, New ItemValueChangedEventArgs(sender, e))
-            OnChanged(e)
+            Dim e2 As New ItemValueChangedEventArgs(sender, e)
+            RaiseEvent ItemValueChanged(Me, e2)
+            OnChanged(e2)
+            OnCollectionChanged(e2, CollectionChangeAction.ItemChange)
         End Sub
         ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
         ''' <param name="sender">Source of the event</param>
@@ -776,16 +782,14 @@ Namespace CollectionsT.GenericT
             Public ReadOnly Items() As T
         End Class
         ''' <summary>Parameter of the <see cref="ItemValueChanged"/> event</summary>
-        Public Class ItemValueChangedEventArgs : Inherits EventArgs
-            ''' <summary>Item that caused the event</summary>
-            Public ReadOnly Item As T
+        Public Class ItemValueChangedEventArgs : Inherits ItemEventArgs
             ''' <summary>Original argument of item's <see cref="IReportsChange.Changed"/> event</summary>
             Public ReadOnly OriginalEventArgs As EventArgs
             ''' <summary>CTor</summary>
             ''' <param name="Item">Item that caused the event</param>
             ''' <param name="OriginalEventArgs">Original argument of item's <see cref="IReportsChange.Changed"/> event</param>
             Public Sub New(ByVal Item As T, ByVal OriginalEventArgs As EventArgs)
-                Me.Item = Item
+                MyBase.New(Item)
                 Me.OriginalEventArgs = OriginalEventArgs
             End Sub
         End Class
@@ -957,18 +961,62 @@ Namespace CollectionsT.GenericT
 #End Region
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
-        ''' <param name="e">Event information</param>
+        ''' <param name="e">Event information.
+        ''' As of this implementation type of <paramref name="e"/> is always one of following types: <see cref="ItemIndexEventArgs"/> (<see cref="Added"/>), <see cref="ItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="ItemIndexEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewItemEvetArgs"/> (<see cref="ItemChanged"/>), <see cref="ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).</param>
         ''' <remarks>Raised after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As EventArgs) Implements IReportsChange.Changed
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
         ''' <param name="e">Event parameters</param>
-        ''' <remarks>Called after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
+        ''' <remarks>Called after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/>.
+        ''' You should call one of overloaded <see cref="OnCollectionChanged"/> methods after calling this.</remarks>
         Protected Overridable Sub OnChanged(ByVal e As EventArgs)
             RaiseEvent Changed(Me, e)
         End Sub
+        ''' <summary>Raised when this <see cref="ListWithEvents(Of T)"/> collection changes.</summary>
+        ''' <param name="sender">Source ot the event</param>
+        ''' <param name="e">Event arguments. The <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> contains event argument of the <see cref="Changed"/> event raised immediatelly prior this event.
+        ''' As of this implementation type of <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> is always one of following types: <see cref="ItemIndexEventArgs"/> (<see cref="Added"/>), <see cref="ItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="ItemIndexEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewItemEvetArgs"/> (<see cref="ItemChanged"/>), <see cref="ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).
+        ''' Value of <paramref name="e"/>.<see cref="ListChangedEventArgs.Collection"/> is always this instance.</param>
+        ''' <remarks>This event is raised immediatelly after each <see cref="Changed"/> event.<para>
+        ''' The reason for having two duplicit events is that <see cref="Changed"/> implements <see cref="IReportsChange.Changed"/> and you cannot determine action (what happend) through it. The aim of this event is to concentrate <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events to one single event which allows handler to easily dinstinguish which action happedned on collection.</para></remarks>
+        Public Event CollectionChanged(ByVal sender As ListWithEvents(Of T), ByVal e As ListChangedEventArgs)
+        ''' <summary>Raises the <see cref="CollectionChanged"/> event.</summary>
+        ''' <param name="e">Event argument. The <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> should always contain event argument of preceding call of <see cref="OnChanged"/></param>
+        ''' <remarks>You should call one of overloaded <see cref="OnChanged"/> methods after all calls of <see cref="OnChanged"/>.
+        ''' This overridable overload is always called by the other overloads.</remarks>
+        ''' <filterpriority>2</filterpriority>
+        Protected Overridable Sub OnCollectionChanged(ByVal e As ListChangedEventArgs)
+            RaiseEvent CollectionChanged(Me, e)
+        End Sub
+        ''' <summary>Raises the <see cref="CollectionChanged"/> event via calling <see cref="M:Tools.CollectionsT.GenericT.ListWithEvents`1.OnChanged(Tools.CollectionsT.GenericT.ListChangedEventArgs)"/></summary>
+        ''' <param name="e">Argument of preceding call of <see cref="OnChanged"/></param>
+        ''' <param name="Action">Action taken on collection</param>
+        ''' <remarks>You should call one of overloaded <see cref="OnChanged"/> methods after all calls of <see cref="OnChanged"/>.</remarks>
+        ''' <filterpriority>1</filterpriority>
+        Protected Sub OnCollectionChanged(ByVal e As EventArgs, ByVal Action As CollectionChangeAction)
+            OnCollectionChanged(New ListChangedEventArgs(Me, e, Action))
+        End Sub
+
+        ''' <summary>Specialized <see cref="CollectionChangeEventArgs(Of T)"/> for <see cref="ListWithEvents(Of T)"/></summary>
+        Public Class ListChangedEventArgs : Inherits CollectionChangeEventArgs(Of T)
+            ''' <summary>CTor</summary>
+            ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+            ''' <param name="Collection">Collection that was changed</param>
+            ''' <param name="Action">Action which occured on collection</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+            Public Sub New(ByVal Collection As ListWithEvents(Of T), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
+                MyBase.new(Collection, ChangeEventArgs, Action)
+            End Sub
+            ''' <summary>Collection which was changed</summary>
+            Public Shadows ReadOnly Property Collection() As ListWithEvents(Of T)
+                Get
+                    Return MyBase.Collection
+                End Get
+            End Property
+        End Class
     End Class
     ''' <summary>Describes acction on collection</summary>
-    Public Enum CollectionChangeAction   'TODO: Use this in ListWithEvents's events
+    Public Enum CollectionChangeAction
         ''' <summary>An item was added. Equals to <see cref="ComponentModel.CollectionChangeAction.Add"/>. Represents <see cref="ListWithEvents(Of Object).Added"/>.</summary>
         Add = ComponentModel.CollectionChangeAction.Add
         ''' <summary>An item was removed. Equals to <see cref="ComponentModel.CollectionChangeAction.Remove"/>. Represents <see cref="ListWithEvents(Of Object).Removed"/></summary>
@@ -982,8 +1030,8 @@ Namespace CollectionsT.GenericT
         ''' <summary>Unspecified action. Equals to <see cref="ComponentModel.CollectionChangeAction.Refresh"/>.</summary>
         Other = ComponentModel.CollectionChangeAction.Refresh
     End Enum
-    ''' <summary>Arguments of event raised when collection owned by event source has changed</summary>
-    Public Class CollectionChanged(Of TItem)
+    ''' <summary>Represents common base for generic classes <see cref="CollectionChangeEventArgs(Of T)"/></summary>
+    Public MustInherit Class CollectionChangedEventArgsBase
         Inherits ComponentModel.CollectionChangeEventArgs
         ''' <summary>Contains value of the <see cref="ChangeEventArgs"/> property</summary>
         Private ReadOnly _ChangeEventArgs As EventArgs
@@ -993,14 +1041,15 @@ Namespace CollectionsT.GenericT
         ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
         ''' <param name="Collection">Collection that was changed</param>
         ''' <remarks><see cref="Action"/> is set to <see cref="CollectionChangeAction.Other"/></remarks>
-        Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs)
+        Protected Sub New(ByVal Collection As IEnumerable, ByVal ChangeEventArgs As EventArgs)
             Me.New(Collection, ChangeEventArgs, CollectionChangeAction.Other)
         End Sub
         ''' <summary>CTor</summary>
         ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
         ''' <param name="Collection">Collection that was changed</param>
+        ''' <param name="Action">Action which occured on collection</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
-        Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
+        Protected Sub New(ByVal Collection As IEnumerable, ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
             MyBase.New(ConvertAction(Action), Collection)
             _ChangeEventArgs = ChangeEventArgs
             _Action = Action
@@ -1032,12 +1081,6 @@ Namespace CollectionsT.GenericT
                 Case Else : Throw New InvalidEnumArgumentException("Action", Action, GetType(CollectionChangeAction))
             End Select
         End Function
-        ''' <summary>Collection which was changed</summary>
-        Public ReadOnly Property Collection() As ICollection(Of TItem)
-            Get
-                Return Me.Element
-            End Get
-        End Property
         ''' <summary>Arguments of event that caused collection to be changed or that was raised by the colection on change</summary>
         Public ReadOnly Property ChangeEventArgs() As EventArgs
             Get
@@ -1048,6 +1091,31 @@ Namespace CollectionsT.GenericT
         Public Shadows ReadOnly Property Action() As CollectionChangeAction
             Get
                 Return _Action
+            End Get
+        End Property
+    End Class
+    ''' <summary>Arguments of event raised when collection owned by event source has changed</summary>
+    Public Class CollectionChangeEventArgs(Of TItem)
+        Inherits CollectionChangedEventArgsBase
+        ''' <summary>CTor</summary>
+        ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+        ''' <param name="Collection">Collection that was changed</param>
+        ''' <remarks><see cref="Action"/> is set to <see cref="CollectionChangeAction.Other"/></remarks>
+        Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs)
+            MyBase.new(Collection, ChangeEventArgs)
+        End Sub
+        ''' <summary>CTor</summary>
+        ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+        ''' <param name="Collection">Collection that was changed</param>
+        ''' <param name="Action">Action which occured on collection</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+        Public Sub New(ByVal Collection As ICollection(Of TItem), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
+            MyBase.new(Collection, ChangeEventArgs, Action)
+        End Sub
+        ''' <summary>Collection which was changed</summary>
+        Public ReadOnly Property Collection() As ICollection(Of TItem)
+            Get
+                Return MyBase.element
             End Get
         End Property
     End Class
