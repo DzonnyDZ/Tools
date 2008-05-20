@@ -1,8 +1,8 @@
 Imports Tools.CollectionsT.GenericT, System.Windows.Forms
 Namespace WindowsT.FormsT
-#If Config <= Nightly Then
+    '#If Config <= Alpha Then Set in Tools.vbproj
+    'Stage: Alpha
     'Localize: UI
-    'ASAP: , conditional file
     ''' <summary>Editor of autocomplete list and synonym groups for <see cref="KeyWordsEditor"/></summary>
     Friend NotInheritable Class ThesaurusForm
         ''' <summary><see cref="KeyWordsEditor"/> this instance is for</summary>
@@ -218,5 +218,5 @@ Namespace WindowsT.FormsT
             Me.Close()
         End Sub
     End Class
-#End If
+    '#End If
 End Namespace

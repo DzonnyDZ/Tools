@@ -67,7 +67,7 @@ Namespace WindowsT.DialogsT
 #End Region
 #Region "Properties"
         ''' <summary>Defines buttons displayed on message box</summary>
-        ''' <remarks>This collection reports event. You can use them to track changed of the collection.</remarks>
+        ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.</remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton)
             <DebuggerStepThrough()> Get
@@ -236,7 +236,7 @@ Namespace WindowsT.DialogsT
             End Set
         End Property
         ''' <summary>Radio buttons displayed on message box</summary>
-        ''' <remarks>This collection reports event. You can use them to track changed of the collection.</remarks>
+        ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="RadiosChanged"/> event.</remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         Public ReadOnly Property Radios() As ListWithEvents(Of MessageBoxRadioButton)
             <DebuggerStepThrough()> Get
@@ -323,7 +323,14 @@ Namespace WindowsT.DialogsT
         End Property
 #End Region
 #Region "CTors"
+        ''' <summary>Adds event handlers to collections</summary>
+        Private Sub AddHandlers()
+            AddHandler Buttons.CollectionChanged, AddressOf OnButtonsChanged
+            AddHandler Radios.CollectionChanged, AddressOf OnRadiosChanged
+        End Sub
+        ''' <summary>Default CTor - creates messagebox with just one button <see cref="MessageBoxButton.OK"/></summary>
         Public Sub New()
+            AddHandlers()
             Me.Buttons.Add(MessageBoxButton.OK)
         End Sub
 #End Region
@@ -333,13 +340,13 @@ Namespace WindowsT.DialogsT
 #Region "Property events"
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
-        ''' <param name="e">Event information</param>
-        ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>
+        ''' <param name="e">Event information. For changes of <see cref="Buttons"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents(Of T).CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents(Of T).Changed"/>.</param>
+        ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> class)</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
         ''' <param name="e">Event parameters</param>
-        Protected Overridable Sub OnChanged(ByVal e As IReportsChange.ValueChangedEventArgsBase)
+        Protected Overridable Sub OnChanged(ByVal e As EventArgs)
             RaiseEvent Changed(Me, e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="DefaultButton"/> property changes</summary>
@@ -347,7 +354,7 @@ Namespace WindowsT.DialogsT
         ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Event DefaultButtonChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
-        ''' <summary>Raises the <see cref="DeafaultButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
+        ''' <summary>Raises the <see cref="DefaultButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnDefaultButtonChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
             RaiseEvent DefaultButtonChanged(Me, e)
@@ -411,7 +418,7 @@ Namespace WindowsT.DialogsT
         ''' <summary>Raised wghen value of the <see cref="CheckBox"/> property changes</summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event arguments</param>
-        ''' <remarks>This event tracks only changes of vaklue of the <see cref="CheckBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
+        ''' <remarks>This event tracks only changes of value of the <see cref="CheckBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Event CheckBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox))
         ''' <summary>Raises the <see cref="CheckBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -423,7 +430,7 @@ Namespace WindowsT.DialogsT
         ''' <summary>Raised wghen value of the <see cref="ComboBox"/> property changes</summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event arguments</param>
-        ''' <remarks>This event tracks only changes of vaklue of the <see cref="ComboBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
+        ''' <remarks>This event tracks only changes of value of the <see cref="ComboBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Event ComboBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox))
         ''' <summary>Raises the <see cref="ComboBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
@@ -485,6 +492,30 @@ Namespace WindowsT.DialogsT
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnTimeButtonChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
             RaiseEvent TimeButtonChanged(Me, e)
+            OnChanged(e)
+        End Sub
+        ''' <summary>Raised when content of the <see cref="Radios"/> collection changes</summary>
+        ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
+        ''' <param name="e">Event arguments. Argument e of <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged"/> is passed directly here.</param>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        Public Event RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxRadioButton).ListChangedEventArgs)
+        ''' <summary>Raises the <see cref="RadiosChanged"/> event. Handles <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
+        ''' <param name="sender">Source ot the event - <see cref="Radios"/></param>
+        ''' <param name="e">Event arguments. Those arguemnts are directly passed to <see cref="RadiosChanged"/> and <see cref="OnChanged"/></param>
+        Protected Overridable Sub OnRadiosChanged(ByVal sender As ListWithEvents(Of MessageBoxRadioButton), ByVal e As ListWithEvents(Of MessageBoxRadioButton).ListChangedEventArgs)
+            RaiseEvent RadiosChanged(Me, e)
+            OnChanged(e)
+        End Sub
+        ''' <summary>Raised when content of the <see cref="Buttons"/> collection changes</summary>
+        ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
+        ''' <param name="e">Event arguments. Argument e of <see cref="Buttons">Radios</see>.<see cref="ListWithEvents(Of MessageBoxButton).CollectionChanged"/> is passed directly here.</param>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        Public Event ButtonsChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxButton).ListChangedEventArgs)
+        ''' <summary>Raises the <see cref="ButtonsChanged"/> event. Handles <see cref="Buttons">Radios</see>.<see cref="ListWithEvents(Of MessageBoxButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
+        ''' <param name="sender">Source ot the event - <see cref="Buttons"/></param>
+        ''' <param name="e">Event arguments. Those arguemnts are directly passed to <see cref="ButtonsChanged"/> and <see cref="OnChanged"/></param>
+        Protected Overridable Sub OnButtonsChanged(ByVal sender As ListWithEvents(Of MessageBoxButton), ByVal e As ListWithEvents(Of MessageBoxButton).ListChangedEventArgs)
+            RaiseEvent ButtonsChanged(Me, e)
             OnChanged(e)
         End Sub
 #End Region
