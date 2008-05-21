@@ -1,8 +1,8 @@
-'This code was generated from SpecializedWrappers.xml at 18. května 2008 by TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null1.0.2701.36373
+'This code was generated from SpecializedWrappers.xml at 21. května 2008 by TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null1.0.2833.35810
 'Do not edit, your changes will be lost!
 Imports System.ComponentModel, Tools.CollectionsT.GenericT, System.Runtime.CompilerServices
 #If Config <= Nightly Then 'Stage:Nightly
-Namespace CollectionsT.SpecialzedT
+Namespace CollectionsT.SpecializedT
     Partial Public MustInherit Class SpecializedWrapper
 #Region "BitArray (Boolean)"
         ''' <summary>Gets type-sfafe wrapper for <see cref="System.Collections.BitArray"/></summary>

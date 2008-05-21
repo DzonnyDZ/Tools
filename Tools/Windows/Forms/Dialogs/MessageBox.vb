@@ -1,5 +1,5 @@
 ﻿Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
-Imports Tools.WindowsT.FormsT.UtilitiesT.Misc
+Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
 #If Config <= Nightly Then
 Namespace WindowsT.FormsT
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
@@ -72,7 +72,7 @@ Namespace WindowsT.FormsT
             Else
                 For Each Radio In MessageBox.Radios
                     flpRadio.Controls.Add(New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio})
-                    If Radio.ToolTip <> "" Then totToolTip.SetToolTip(flpRadio.Controls(flpRadio.Controls.Count - 1), Radio.ToolTip)
+                    If Radio.ToolTip <> "" Then totToolTip.SetToolTip(flpRadio.Controls.Last, Radio.ToolTip)
                 Next Radio
             End If
             'Mic control
@@ -82,19 +82,69 @@ Namespace WindowsT.FormsT
             If MessageBox.Buttons.Count <= 0 Then
                 flpButtons.Visible = False
             Else
-                Dim AcceptButton As Button, CancelButton As Button
+                Dim CancelButton As Button = Nothing
+                Dim i As Integer = 0
                 For Each Button In MessageBox.Buttons
                     Dim text As String = Button.Text.Replace("&", "&&")
                     If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey), 0) = "&"
-                    flpButtons.Controls.Add(New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result})
-                    If Button.ToolTip <> "" Then totToolTip.SetToolTip(flpButtons.Controls(flpButtons.Controls.Count - 1), Button.ToolTip)
-                    'TODO:EVENTS, accepst, cancel
+                    flpButtons.Controls.Add(New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button})
+                    If Button.ToolTip <> "" Then totToolTip.SetToolTip(flpButtons.Controls.Last, Button.ToolTip)
+                    If MessageBox.DefaultButton = i Then Me.AcceptButton = flpButtons.Controls.Last
+                    If MessageBox.CloseResponse = Button.Result AndAlso CancelButton Is Nothing Then CancelButton = flpButtons.Controls.Last
+                    i += 1
                 Next Button
+                Me.CancelButton = CancelButton
             End If
             'Bottom control
             tlpMain.ReplaceControl(lblPlhBottom, MessageBox.BottomControlControl)
+            AddHandler MessageBox.BottomControlChanged, AddressOf MessageBox_BottomControlChanged
+            AddHandler MessageBox.CloseResponseChanged, AddressOf MessageBox_CloseResponseChanged
+            AddHandler MessageBox.ComboBoxChanged, AddressOf MessageBox_ComboBoxChanged
+            AddHandler MessageBox.CountDown, AddressOf MessageBox_CountDown
+            AddHandler MessageBox.DefaultButtonChanged, AddressOf MessageBox_DefaultButtonChanged
+            AddHandler MessageBox.CheckBoxChanged, AddressOf MessageBox_CheckBoxChanged
+            AttachComboBoxHandlers(MessageBox.ComboBox)
+            AttachCheckBoxHandlers(MessageBox.CheckBox)
+            'TODO: Events of buttons and radios
         End Sub
-
+        Private Sub AttachComboBoxHandlers(ByVal ComboBox As MessageBox.MessageBoxComboBox, Optional ByVal attach As Boolean = True)
+            If ComboBox Is Nothing Then Exit Sub
+            If attach Then
+                AddHandler ComboBox.DisplayMemberChanged, AddressOf ComboBox_DisplayMemberChanged
+                AddHandler ComboBox.EditableChanged, AddressOf ComboBox_EditableChanged
+                AddHandler ComboBox.EnabledChanged, AddressOf ComboBox_EnabledChanged
+                AddHandler ComboBox.ItemsChanged, AddressOf ComboBox_ItemsChanged
+                AddHandler ComboBox.SelectedIndexChanged, AddressOf ComboBox_SelectedIndexChanged
+                AddHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_SelectedItemChanged
+                AddHandler ComboBox.TextChanged, AddressOf ComboBox_TextChanged
+                AddHandler ComboBox.ToolTipChanged, AddressOf ComboBox_ToolTipChanged
+            Else
+                RemoveHandler ComboBox.DisplayMemberChanged, AddressOf ComboBox_DisplayMemberChanged
+                RemoveHandler ComboBox.EditableChanged, AddressOf ComboBox_EditableChanged
+                RemoveHandler ComboBox.EnabledChanged, AddressOf ComboBox_EnabledChanged
+                RemoveHandler ComboBox.ItemsChanged, AddressOf ComboBox_ItemsChanged
+                RemoveHandler ComboBox.SelectedIndexChanged, AddressOf ComboBox_SelectedIndexChanged
+                RemoveHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_SelectedItemChanged
+                RemoveHandler ComboBox.TextChanged, AddressOf ComboBox_TextChanged
+                RemoveHandler ComboBox.ToolTipChanged, AddressOf ComboBox_ToolTipChanged
+            End If
+        End Sub
+        Private Sub AttachCheckBoxHandlers(ByVal CheckBox As MessageBox.MessageBoxCheckBox, Optional ByVal attach As Boolean = True)
+            If CheckBox Is Nothing Then Exit Sub
+            If attach Then
+                AddHandler CheckBox.EnabledChanged, AddressOf CheckBox_EnabledChanged
+                AddHandler CheckBox.StateChanged, AddressOf CheckBox_StateChanged
+                AddHandler CheckBox.TextChanged, AddressOf CheckBox_TextChanged
+                AddHandler CheckBox.ThreeStateChanged, AddressOf CheckBox_ThreeStateChanged
+                AddHandler CheckBox.ToolTipChanged, AddressOf CheckBox_ToolTipChanged
+            Else
+                RemoveHandler CheckBox.EnabledChanged, AddressOf CheckBox_EnabledChanged
+                RemoveHandler CheckBox.StateChanged, AddressOf CheckBox_StateChanged
+                RemoveHandler CheckBox.TextChanged, AddressOf CheckBox_TextChanged
+                RemoveHandler CheckBox.ThreeStateChanged, AddressOf CheckBox_ThreeStateChanged
+                RemoveHandler CheckBox.ToolTipChanged, AddressOf CheckBox_ToolTipChanged
+            End If
+        End Sub
         Private Sub MessageBoxForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
 
         End Sub

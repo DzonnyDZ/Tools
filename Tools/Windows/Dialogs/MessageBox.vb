@@ -6,7 +6,12 @@ Imports System.Windows.Forms
 Namespace WindowsT.DialogsT
     'ASAP:Mark
     ''' <summary>Provides technology-independent base class for WinForms and WPF message boxes</summary>
-    Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange 'TODO:Collection events
+    ''' <remarks>
+    ''' This class implements <see cref="IReportsChange"/> and has plenty of events fo reporting changes of property values. Also types of some properties reports events when their properties are changed.
+    ''' The aim of such behavior is to provide dynamic message box which can be changed as it is displayd.
+    ''' However it is up to derived class which changes it will track and interpret as changes of dialog.
+    ''' </remarks>
+    Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
 #Region "Shared"
         ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private Shared _DefaultImplementation As Type 'TODO: Assign WinForms implementation
@@ -340,8 +345,8 @@ Namespace WindowsT.DialogsT
 #Region "Property events"
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
-        ''' <param name="e">Event information. For changes of <see cref="Buttons"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents(Of T).CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents(Of T).Changed"/>.</param>
-        ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> class)</remarks>
+        ''' <param name="e">Event information. For changes of <see cref="Buttons"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents.CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents.Changed"/>.</param>
+        ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="IReportsChange.ValueChangedEventArgs"/> class)</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
         ''' <summary>Raises the <see cref="Changed"/> event</summary>

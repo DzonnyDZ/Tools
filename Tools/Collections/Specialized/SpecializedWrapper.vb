@@ -12,7 +12,7 @@ Imports System.Net
 
 #If Config <= Nightly Then
 Imports Tools.CollectionsT.GenericT, System.Linq
-Namespace CollectionsT.SpecialzedT
+Namespace CollectionsT.SpecializedT
     ''' <summary>Provides abstract base class and static methods for wrapping type-unsafe <see cref="ICollection"/> as type-safe <see cref="IReadOnlyIndexableCollection(Of Integer, T)"/></summary>
     ''' <remarks>Derived classes should derive from <see cref="SpecializedReadOnlyWrapper(Of T)"/> or <see cref="SpecializedWrapper(Of T)"/> instead</remarks>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
