@@ -44,16 +44,17 @@ Namespace WindowsT.FormsT
                 chkCheckBox.Visible = False
             Else
                 chkCheckBox.Text = MessageBox.CheckBox.Text
+                MessageBox.CheckBox.Control = chkCheckBox
                 chkCheckBox.CheckState = MessageBox.CheckBox.State
                 chkCheckBox.ThreeState = MessageBox.CheckBox.ThreeState
                 If MessageBox.CheckBox.ToolTip <> "" Then totToolTip.SetToolTip(chkCheckBox, MessageBox.CheckBox.ToolTip)
                 chkCheckBox.Enabled = MessageBox.CheckBox.Enabled
-                'TODO:Events
             End If
             'Combobox
             If MessageBox.ComboBox Is Nothing Then
                 cmbCombo.Visible = False
             Else
+                MessageBox.CheckBox.Control = cmbCombo
                 cmbCombo.DropDownStyle = If(MessageBox.ComboBox.Editable, ComboBoxStyle.DropDown, ComboBoxStyle.DropDownList)
                 cmbCombo.Enabled = MessageBox.ComboBox.Enabled
                 cmbCombo.DisplayMember = MessageBox.ComboBox.DisplayMember
@@ -73,6 +74,8 @@ Namespace WindowsT.FormsT
                 For Each Radio In MessageBox.Radios
                     flpRadio.Controls.Add(New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio})
                     If Radio.ToolTip <> "" Then totToolTip.SetToolTip(flpRadio.Controls.Last, Radio.ToolTip)
+                    Radio.Control = flpRadio.Controls.Last
+                    AddHandler DirectCast(flpRadio.Controls.Last, RadioButton).CheckedChanged, AddressOf Radio_CheckedChanged_ 'TODO: Why there must be _? VB bug?
                 Next Radio
             End If
             'Mic control
@@ -91,6 +94,8 @@ Namespace WindowsT.FormsT
                     If Button.ToolTip <> "" Then totToolTip.SetToolTip(flpButtons.Controls.Last, Button.ToolTip)
                     If MessageBox.DefaultButton = i Then Me.AcceptButton = flpButtons.Controls.Last
                     If MessageBox.CloseResponse = Button.Result AndAlso CancelButton Is Nothing Then CancelButton = flpButtons.Controls.Last
+                    AddHandler flpButtons.Controls.Last.Click, AddressOf Button_Click
+                    Button.Control = flpButtons.Controls.Last
                     i += 1
                 Next Button
                 Me.CancelButton = CancelButton
@@ -103,52 +108,265 @@ Namespace WindowsT.FormsT
             AddHandler MessageBox.CountDown, AddressOf MessageBox_CountDown
             AddHandler MessageBox.DefaultButtonChanged, AddressOf MessageBox_DefaultButtonChanged
             AddHandler MessageBox.CheckBoxChanged, AddressOf MessageBox_CheckBoxChanged
+            AddHandler MessageBox.PromptChanged, AddressOf MessageBox_PromptChanged
+            AddHandler MessageBox.TitleChanged, AddressOf MessageBox_TitleChanged
             AttachComboBoxHandlers(MessageBox.ComboBox)
             AttachCheckBoxHandlers(MessageBox.CheckBox)
-            'TODO: Events of buttons and radios
+            For Each Button In MessageBox.Buttons
+                AttachButtonHandlers(Button)
+            Next
+            For Each Radio In MessageBox.Radios
+                AttachRadioHandlers(Radio)
+            Next
         End Sub
+        ''' <summary>Additional control on messagebox below buttons</summary>
+        Private BottomControl As Control
+        ''' <summary>Additional control on messagebox abow prompt</summary>
+        Private TopControl As Control
+        ''' <summary>Additional control on messagebox abow buttons</summary>
+        Private MidControl As Control
+#Region "Attach / detach"
+        ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxComboBox"/></summary>
+        ''' <param name="ComboBox"><see cref="MessageBox.MessageBoxComboBox"/> to attach handlers to</param>
+        ''' <param name="attach">True to attach, false so detach</param>
         Private Sub AttachComboBoxHandlers(ByVal ComboBox As MessageBox.MessageBoxComboBox, Optional ByVal attach As Boolean = True)
             If ComboBox Is Nothing Then Exit Sub
             If attach Then
                 AddHandler ComboBox.DisplayMemberChanged, AddressOf ComboBox_DisplayMemberChanged
                 AddHandler ComboBox.EditableChanged, AddressOf ComboBox_EditableChanged
-                AddHandler ComboBox.EnabledChanged, AddressOf ComboBox_EnabledChanged
+                AddHandler ComboBox.EnabledChanged, AddressOf Control_EnabledChanged
                 AddHandler ComboBox.ItemsChanged, AddressOf ComboBox_ItemsChanged
                 AddHandler ComboBox.SelectedIndexChanged, AddressOf ComboBox_SelectedIndexChanged
                 AddHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_SelectedItemChanged
-                AddHandler ComboBox.TextChanged, AddressOf ComboBox_TextChanged
-                AddHandler ComboBox.ToolTipChanged, AddressOf ComboBox_ToolTipChanged
+                AddHandler ComboBox.TextChanged, AddressOf Control_TextChanged
+                AddHandler ComboBox.ToolTipChanged, AddressOf Control_ToolTipChanged
             Else
                 RemoveHandler ComboBox.DisplayMemberChanged, AddressOf ComboBox_DisplayMemberChanged
                 RemoveHandler ComboBox.EditableChanged, AddressOf ComboBox_EditableChanged
-                RemoveHandler ComboBox.EnabledChanged, AddressOf ComboBox_EnabledChanged
+                RemoveHandler ComboBox.EnabledChanged, AddressOf Control_EnabledChanged
                 RemoveHandler ComboBox.ItemsChanged, AddressOf ComboBox_ItemsChanged
                 RemoveHandler ComboBox.SelectedIndexChanged, AddressOf ComboBox_SelectedIndexChanged
                 RemoveHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_SelectedItemChanged
-                RemoveHandler ComboBox.TextChanged, AddressOf ComboBox_TextChanged
-                RemoveHandler ComboBox.ToolTipChanged, AddressOf ComboBox_ToolTipChanged
+                RemoveHandler ComboBox.TextChanged, AddressOf Control_TextChanged
+                RemoveHandler ComboBox.ToolTipChanged, AddressOf Control_ToolTipChanged
             End If
         End Sub
+        ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxCheckBox"/></summary>
+        ''' <param name="CheckBox"><see cref="MessageBox.MessageBoxCheckBox"/> to attach handlers to</param>
+        ''' <param name="attach">True to attach, false so detach</param>
         Private Sub AttachCheckBoxHandlers(ByVal CheckBox As MessageBox.MessageBoxCheckBox, Optional ByVal attach As Boolean = True)
             If CheckBox Is Nothing Then Exit Sub
             If attach Then
-                AddHandler CheckBox.EnabledChanged, AddressOf CheckBox_EnabledChanged
+                AddHandler CheckBox.EnabledChanged, AddressOf Control_EnabledChanged
                 AddHandler CheckBox.StateChanged, AddressOf CheckBox_StateChanged
-                AddHandler CheckBox.TextChanged, AddressOf CheckBox_TextChanged
+                AddHandler CheckBox.TextChanged, AddressOf Control_TextChanged
                 AddHandler CheckBox.ThreeStateChanged, AddressOf CheckBox_ThreeStateChanged
-                AddHandler CheckBox.ToolTipChanged, AddressOf CheckBox_ToolTipChanged
+                AddHandler CheckBox.ToolTipChanged, AddressOf Control_ToolTipChanged
             Else
-                RemoveHandler CheckBox.EnabledChanged, AddressOf CheckBox_EnabledChanged
+                RemoveHandler CheckBox.EnabledChanged, AddressOf Control_EnabledChanged
                 RemoveHandler CheckBox.StateChanged, AddressOf CheckBox_StateChanged
-                RemoveHandler CheckBox.TextChanged, AddressOf CheckBox_TextChanged
+                RemoveHandler CheckBox.TextChanged, AddressOf Control_TextChanged
                 RemoveHandler CheckBox.ThreeStateChanged, AddressOf CheckBox_ThreeStateChanged
-                RemoveHandler CheckBox.ToolTipChanged, AddressOf CheckBox_ToolTipChanged
+                RemoveHandler CheckBox.ToolTipChanged, AddressOf Control_ToolTipChanged
             End If
         End Sub
-        Private Sub MessageBoxForm_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
-
+        ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxButton"/></summary>
+        ''' <param name="Button"><see cref="MessageBox.MessageBoxButton"/> to attach handlers to</param>
+        ''' <param name="attach">True to attach, false so detach</param>
+        Private Sub AttachButtonHandlers(ByVal Button As MessageBox.MessageBoxButton, Optional ByVal attach As Boolean = True)
+            If Button Is Nothing Then Exit Sub
+            If attach Then
+                AddHandler Button.AccessKeyChanged, AddressOf Button_AccessKeyChanged
+                AddHandler Button.EnabledChanged, AddressOf Control_EnabledChanged
+                AddHandler Button.ResultChanged, AddressOf Button_ResultChanged
+                AddHandler Button.TextChanged, AddressOf Control_TextChanged
+                AddHandler Button.ToolTipChanged, AddressOf Control_ToolTipChanged
+            Else
+                RemoveHandler Button.AccessKeyChanged, AddressOf Button_AccessKeyChanged
+                RemoveHandler Button.EnabledChanged, AddressOf Control_EnabledChanged
+                RemoveHandler Button.ResultChanged, AddressOf Button_ResultChanged
+                RemoveHandler Button.TextChanged, AddressOf Control_TextChanged
+                RemoveHandler Button.ToolTipChanged, AddressOf Control_ToolTipChanged
+            End If
         End Sub
-
+        ''' <summary>Attachs or detachs handlers for <see cref="MessageBox.MessageBoxRadioButton"/></summary>
+        ''' <param name="Radio"><see cref="MessageBox.MessageBoxRadioButton"/> to attach handlers to</param>
+        ''' <param name="attach">True to attach, false so detach</param>
+        Private Sub AttachRadioHandlers(ByVal Radio As MessageBox.MessageBoxRadioButton, Optional ByVal attach As Boolean = True)
+            If Radio Is Nothing Then Exit Sub
+            If attach Then
+                AddHandler Radio.EnabledChanged, AddressOf Control_EnabledChanged
+                AddHandler Radio.TextChanged, AddressOf Control_TextChanged
+                AddHandler Radio.ToolTipChanged, AddressOf Control_ToolTipChanged
+                AddHandler Radio.CheckedChanged, AddressOf Radio_CheckedChanged
+            Else
+                RemoveHandler Radio.EnabledChanged, AddressOf Control_EnabledChanged
+                RemoveHandler Radio.TextChanged, AddressOf Control_TextChanged
+                RemoveHandler Radio.ToolTipChanged, AddressOf Control_ToolTipChanged
+                RemoveHandler Radio.CheckedChanged, AddressOf Radio_CheckedChanged
+            End If
+        End Sub
+#End Region
+#Region "Handlers"
+#Region "Generic"
+        Private Sub Control_EnabledChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            With DirectCast(sender.Control, Control)
+                If .Enabled <> sender.Enabled Then .Enabled = sender.Enabled
+            End With
+        End Sub
+        Private Sub Control_TextChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            With DirectCast(sender.Control, Control)
+                If .Text <> sender.Text Then .Text = sender.Text
+            End With
+        End Sub
+        Private Sub Control_ToolTipChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            If totToolTip.GetToolTip(sender.Control) <> sender.ToolTip Then totToolTip.SetToolTip(sender.Control, sender.ToolTip)
+        End Sub
+#End Region
+#Region "Radio"
+        ''' <summary>Handles the <see cref="MessageBox.MessageBoxRadioButton.CheckedChanged">CheckedChanged</see> event of items of the <see cref="MessageBox">MessageBox</see>.<see cref="MessageBox.Radios">Radios</see> collection</summary>
+        ''' <param name="sender">Source of the event</param>
+        ''' <param name="e">Event parameters</param>
+        Private Sub Radio_CheckedChanged(ByVal sender As MessageBox.MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            With DirectCast(sender.Control, MessageBox.MessageBoxRadioButton)
+                If .Checked <> sender.Checked Then .Checked = sender.Checked
+            End With
+        End Sub
+        ''' <summary>Hanles the <see cref="RadioButton.CheckedChanged"/> event of radio buttons</summary>
+        ''' <param name="sender">Source of the event</param>
+        ''' <param name="e">Event parameters</param>
+        Private Sub Radio_CheckedChanged_(ByVal sender As RadioButton, ByVal e As EventArgs)
+            DirectCast(sender.Tag, MessageBox.MessageBoxRadioButton).Checked = sender.Checked
+        End Sub
+#End Region
+#Region "ComboBox"
+        Private Sub ComboBox_EditableChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            cmbCombo.DropDownStyle = If(sender.Editable, ComboBoxStyle.DropDown, ComboBoxStyle.DropDownList)
+        End Sub
+        Private Sub ComboBox_DisplayMemberChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            cmbCombo.DisplayMember = sender.DisplayMember
+        End Sub
+        Private Sub ComboBox_ItemsChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As ListWithEvents(Of Object).ListChangedEventArgs)
+            Select Case e.Action
+                Case CollectionsT.GenericT.CollectionChangeAction.Add
+                    cmbCombo.Items.Insert(e.Index, e.NewValue)
+                Case CollectionsT.GenericT.CollectionChangeAction.Clear
+                    cmbCombo.Items.Clear()
+                Case CollectionsT.GenericT.CollectionChangeAction.Other
+                    cmbCombo.Items.Clear()
+                    cmbCombo.Items.AddRange(sender.Items.ToArray)
+                Case CollectionsT.GenericT.CollectionChangeAction.Remove
+                    cmbCombo.Items.RemoveAt(e.Index)
+                Case CollectionsT.GenericT.CollectionChangeAction.Replace
+                    cmbCombo.Items(e.Index) = e.NewValue
+            End Select
+        End Sub
+        Private Sub ComboBox_SelectedIndexChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
+            If sender.SelectedIndex <> cmbCombo.SelectedIndex Then
+                Try
+                    cmbCombo.SelectedIndex = sender.SelectedIndex
+                Finally
+                    sender.SelectedItem = cmbCombo.SelectedItem
+                    sender.SelectedIndex = cmbCombo.SelectedIndex
+                End Try
+            End If
+        End Sub
+        Private Sub ComboBox_selectedItemChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+            If (sender.SelectedItem Is Nothing Xor cmbCombo.SelectedItem IsNot Nothing) OrElse (sender.SelectedItem IsNot Nothing AndAlso Not sender.SelectedItem.Equals(cmbCombo.SelectedItem)) Then
+                Try
+                    cmbCombo.SelectedItem = sender.SelectedItem
+                Finally
+                    sender.SelectedItem = cmbCombo.SelectedItem
+                    sender.SelectedIndex = cmbCombo.SelectedIndex
+                End Try
+            End If
+        End Sub
+        Private Sub cmbCombo_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.SelectedIndexChanged
+            If MessageBox.CheckBox Is Nothing Then Exit Sub
+            If MessageBox.ComboBox.SelectedIndex <> sender.SelectedIndex OrElse (sender.SelectedItem Is Nothing Xor MessageBox.ComboBox.SelectedItem Is Nothing) OrElse (sender.SelectedItem IsNot Nothing AndAlso Not sender.SelectedItem.Equals(MessageBox.ComboBox.SelectedItem)) Then
+                sender.SelectedIndex = cmbCombo.SelectedIndex
+                sender.SelectedItem = cmbCombo.SelectedItem
+            End If
+        End Sub
+        Private Sub cmbCombo_TextChanged(ByVal sender As combobox, ByVal e As System.EventArgs) Handles cmbCombo.TextChanged
+            If MessageBox.ComboBox Is Nothing Then Exit Sub
+            If MessageBox.ComboBox.Text <> sender.Text Then MessageBox.ComboBox.Text = sender.Text
+        End Sub
+#End Region
+#Region "CheckBox"
+        Private Sub CheckBox_ThreeStateChanged(ByVal sender As MessageBox.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            chkCheckBox.ThreeState = sender.ThreeState
+        End Sub
+        Private Sub CheckBox_StateChanged(ByVal sender As MessageBox.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
+            If chkCheckBox.CheckState <> sender.State Then chkCheckBox.CheckState = sender.State
+        End Sub
+        Private Sub chkCheckBox_CheckStateChanged(ByVal sender As CheckBox, ByVal e As System.EventArgs) Handles chkCheckBox.CheckStateChanged
+            If MessageBox.CheckBox IsNot Nothing AndAlso MessageBox.CheckBox.State <> sender.CheckState Then MessageBox.CheckBox.State = sender.CheckState
+        End Sub
+#End Region
+#Region "Button"
+        Private Sub Button_AccessKeyChanged(ByVal sender As MessageBox.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
+            With DirectCast(sender.Control, Button)
+                Dim text As String = sender.Text.Replace("&", "&&")
+                If sender.AccessKey <> vbNullChar AndAlso text.IndexOf(sender.AccessKey) >= 0 Then Mid(text, text.IndexOf(sender.AccessKey), 0) = "&"
+                .Text = text
+            End With
+        End Sub
+        Private Sub Button_ResultChanged(ByVal sender As MessageBox.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
+            DirectCast(sender.Control, Button).DialogResult = sender.Result
+        End Sub
+#End Region
+#Region "MessageBox"
+        Private Sub MessageBox_BottomControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+            tlpMain.ReplaceControl(If(BottomControl, lblPlhBottom), If(MessageBox.BottomControlControl, lblPlhBottom))
+        End Sub
+        Private Sub MessageBox_MidControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+            tlpMain.ReplaceControl(If(MidControl, lblPlhMid), If(MessageBox.MidControlControl, lblPlhMid))
+        End Sub
+        Private Sub MessageBox_TopControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+            tlpMain.ReplaceControl(If(MidControl, lblPlhTop), If(MessageBox.TopControlControl, lblPlhTop))
+        End Sub
+        Private Sub MessageBox_PromptChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            lblPrompt.Text = sender.Prompt
+        End Sub
+        Private Sub MessageBox_TitleChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+            Me.Text = sender.Title
+        End Sub
+        Private Sub MessageBox_CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
+            Const Format As String = "{0} ({1:})" 'TODO: Formating
+            Select Case MessageBox.TimeButton
+                Case -1
+                    For Each Button In MessageBox.Buttons
+                        If Button.Result = MessageBox.CloseResponse Then
+                            DirectCast(Button.Control, Button).Text = String.Format("{0} ({1})", Button.Text, MessageBox.TimeButton)
+                            Exit Select
+                        End If
+                    Next
+                    Me.Text = String.Format(Format, MessageBox.Title, MessageBox.CurrentTimer)
+                Case Is < -1 'Title
+                    Me.Text = String.Format(Format, MessageBox.Title, MessageBox.CurrentTimer)
+                Case Is >= MessageBox.Buttons.Count 'Do nothing
+                Case Else
+                    Me.flpButtons.Controls(MessageBox.TimeButton).Text = String.Format("{0} ({1})", MessageBox.Buttons(MessageBox.TimeButton).Text, MessageBox.CurrentTimer)
+            End Select
+        End Sub
+        Private Sub MessageBox_CloseResponseChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
+            'TODO:Implement
+        End Sub
+        Private Sub MessageBox_ComboBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxComboBox))
+            'TODO:Implement
+        End Sub
+        Private Sub MessageBox_DefaultButtonChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
+            'TODO:Implement
+        End Sub
+        Private Sub MessageBox_CheckBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxCheckBox))
+            'TODO:Implement
+        End Sub
+#End Region
+        Private Sub Button_Click(ByVal sender As Button, ByVal e As EventArgs)
+            'TODO:Implement
+        End Sub
+#End Region
     End Class
 
     ''' <summary>Implements <see cref="WindowsT.DialogsT.MessageBox"/> for as <see cref="Form"/></summary>

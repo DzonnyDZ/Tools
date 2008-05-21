@@ -3,7 +3,8 @@ Imports System.Text, system.Math
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
 <DebuggerDisplay("{ToString}")> _
-<Version(1, 0, GetType(TimeSpanFormattable), LastChange:="10/15/2007")> _
+<Version(1, 1, GetType(TimeSpanFormattable), LastChange:="05/21/2008")> _
+<FirstVersion("10/15/2007")> _
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable
@@ -234,6 +235,22 @@ Public Structure TimeSpanFormattable
     Public Shared Operator -(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As TimeSpanFormattable
         Return t1.Inner - t2.Inner
     End Operator
+    ''' <summary>Subtracts a specified <see cref="TimeSpanFormattable"/> from another specified <see cref="TimeSpan"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpan"/>.</param>
+    ''' <returns>A <see cref="TimeSpan"/> whose value is the result of the value of <paramref name="t1"/> minus the value of <paramref name="t2"/>.</returns>
+    ''' <exception cref="System.OverflowException">The return value is less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>.</exception>
+    Public Shared Operator -(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As TimeSpan
+        Return t1 - t2.Inner
+    End Operator
+    ''' <summary>Subtracts a specified <see cref="TimeSpan"/> from another specified <see cref="TimeSpanFormattable"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>A <see cref="TimeSpanFormattable"/> whose value is the result of the value of <paramref name="t1"/> minus the value of <paramref name="t2"/>.</returns>
+    ''' <exception cref="System.OverflowException">The return value is less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>.</exception>
+    Public Shared Operator -(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As TimeSpanFormattable
+        Return t1.Inner - t2
+    End Operator
     ''' <summary>Returns the specified instance of <see cref="TimeSpanFormattable"/>.</summary>
     ''' <param name="t">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>Returns <paramref name="t"/>.</returns>
@@ -248,6 +265,24 @@ Public Structure TimeSpanFormattable
     Public Shared Operator +(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As TimeSpanFormattable
         Return t1.Inner + t2.Inner
     End Operator
+    ''' <summary>Adds specified <see cref="TimeSpan"/> to another <see cref="TimeSpanFormattable"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>A <see cref="TimeSpanFormattable"/> whose value is the sum of the values of <paramref name="t1"/> and <paramref name="t2"/>.</returns>
+    ''' <exception cref="System.OverflowException">The resulting <see cref="TimeSpanFormattable"/> is less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>.</exception>
+    Public Shared Operator +(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As TimeSpanFormattable
+        Return t1.Inner + t2
+    End Operator
+    ''' <summary>Adds specified <see cref="TimeSpanFormattable"/> to another <see cref="TimeSpan"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpan"/>.</param>
+    ''' <returns>A <see cref="TimeSpanFormattable"/> whose value is the sum of the values of <paramref name="t1"/> and <paramref name="t2"/>.</returns>
+    ''' <exception cref="System.OverflowException">The resulting <see cref="TimeSpan"/> is less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/>.</exception>
+    Public Shared Operator +(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As TimeSpan
+        Return t1 + t2.Inner
+    End Operator
+#Region "<=>"
+#Region "TimeSpanFormattable, TimeSpanFormattable"
     ''' <summary>Indicates whether two <see cref="TimeSpanFormattable"/> instances are equal.</summary>
     ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
@@ -256,40 +291,169 @@ Public Structure TimeSpanFormattable
         Return t1.Inner = t2.Inner
     End Operator
     ''' <summary>Indicates whether two <see cref="TimeSpanFormattable"/> instances are not equal.</summary>
-    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the values of <paramref name="t1"/> and <paramref name="t2"/> are not equal; otherwise, false.</returns>
     Public Shared Operator <>(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As Boolean
         Return t1.Inner <> t2.Inner
     End Operator
     ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is less than another specified <see cref="TimeSpanFormattable"/>.</summary>
-    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the value of <paramref name="t1"/> is less than the value of <paramref name="t2"/>; otherwise, false.</returns>
     Public Shared Operator <(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As Boolean
         Return t1.Inner < t2.Inner
     End Operator
     ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is less than or equal to another specified <see cref="TimeSpanFormattable"/>.</summary>
-    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the value of <paramref name="t1"/> is less than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
     Public Shared Operator <=(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As Boolean
         Return t1.Inner <= t2.Inner
     End Operator
     ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is greater than another specified <see cref="TimeSpanFormattable"/>.</summary>
-    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the value of <paramref name="t1"/> is greater than the value of <paramref name="t2"/>; otherwise, false.</returns>
     Public Shared Operator >(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As Boolean
         Return t1.Inner > t2.Inner
     End Operator
     ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is greater than or equal to another specified <see cref="TimeSpanFormattable"/>.</summary>
-    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the value of <paramref name="t1"/> is greater than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
     Public Shared Operator >=(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpanFormattable) As Boolean
         Return t1.Inner >= t2.Inner
     End Operator
+#End Region
+#Region "TimeSpan, TimeSpanFormattable"
+    ''' <summary>Indicates whether <see cref="TimeSpan"/> and <see cref="TimeSpanFormattable"/> instances are equal.</summary>
+    ''' <param name="t1">A <see cref="timespan"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the values of <paramref name="t1"/> and <paramref name="t2"/> are equal; otherwise, false.</returns>
+    Public Shared Operator =(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
+        Return t1 = t2.Inner
+    End Operator
+    ''' <summary>Indicates whether <see cref="TimeSpan"/> and <see cref="TimeSpanFormattable"/> instances are not equal.</summary>
+    ''' <param name="t1">A <see cref="timespan"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the values of <paramref name="t1"/> and <paramref name="t2"/> are not equal; otherwise, false.</returns>
+    Public Shared Operator <>(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
+        Return t1 <> t2.Inner
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="TimeSpan"/> is less than another specified <see cref="TimeSpanFormattable"/>.</summary>
+    ''' <param name="t1">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is less than the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator <(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
+        Return t1 < t2.Inner
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="Timespan"/> is less than or equal to another specified <see cref="TimeSpanFormattable"/>.</summary>
+    ''' <param name="t1">A <see cref="timespan"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is less than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator <=(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
+        Return t1 <= t2.Inner
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="timespan"/> is greater than another specified <see cref="TimeSpanFormattable"/>.</summary>
+    ''' <param name="t1">A <see cref="timespan"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is greater than the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator >(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
+        Return t1 > t2.Inner
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="timespan"/> is greater than or equal to another specified <see cref="TimeSpanFormattable"/>.</summary>
+    ''' <param name="t1">A <see cref="timespan"/>.</param>
+    ''' <param name="t2>A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is greater than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator >=(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
+        Return t1 >= t2.Inner
+    End Operator
+#End Region
+#Region "TimeSpanFormattable, TimeSpan"
+    ''' <summary>Indicates whether <see cref="TimeSpanFormattable"/> and <see cref="TimeSpan"/> instances are equal.</summary>
+    ''' <param name="t2">A <see cref="timespan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the values of <paramref name="t1"/> and <paramref name="t2"/> are equal; otherwise, false.</returns>
+    Public Shared Operator =(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean
+        Return t1.Inner = t2
+    End Operator
+    ''' <summary>Indicates whether  <see cref="TimeSpanFormattable"/> nad <see cref="TimeSpan"/> instances are not equal.</summary>
+    ''' <param name="t2">A <see cref=""/>"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the values of <paramref name="t1"/> and <paramref name="t2"/> are not equal; otherwise, false.</returns>
+    Public Shared Operator <>(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean
+        Return t1.Inner <> t2
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is less than another specified <see cref="TimeSpan"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is less than the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator <(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean
+        Return t1.Inner < t2
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is less than or equal to another specified <see cref="TimeSpan"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is less than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator <=(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean
+        Return t1.Inner <= t2
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is greater than another specified <see cref="TimeSpan"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is greater than the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator >(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean
+        Return t1.Inner > t2
+    End Operator
+    ''' <summary>Indicates whether a specified <see cref="TimeSpanFormattable"/> is greater than or equal to another specified <see cref="TimeSpan"/>.</summary>
+    ''' <param name="t2">A <see cref="TimeSpan"/>.</param>
+    ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <returns>true if the value of <paramref name="t1"/> is greater than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
+    Public Shared Operator >=(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean
+        Return t1.Inner >= t2
+    End Operator
+#End Region
+#End Region
+#Region "*"
+    ''' <summary>Multiplies given <see cref="TimeSpanFormattable"/> with given multiplier</summary>
+    ''' <param name="Time">A <see cref="TimeSpanFormattable"/></param>
+    ''' <param name="multiplier">Multiplier</param>
+    ''' <returns><paramref name="Time"/> multiplied <paramref name="multiplier"/> times. Accurancy of theis operation is milliseconds</returns>
+    ''' <exception cref="OverflowException">Resulting value is up to be less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/></exception>
+    Public Shared Operator *(ByVal multiplier As Integer, ByVal Time As TimeSpanFormattable) As TimeSpanFormattable
+        Return TimeSpan.FromMilliseconds(Time.TotalMilliseconds * multiplier)
+    End Operator
+    ''' <summary>Multiplies given <see cref="TimeSpanFormattable"/> with given multiplier</summary>
+    ''' <param name="Time">A <see cref="TimeSpanFormattable"/></param>
+    ''' <param name="multiplier">Multiplier</param>
+    ''' <returns><paramref name="Time"/> multiplied <paramref name="multiplier"/> times. Accurancy of theis operation is milliseconds</returns>
+    ''' <exception cref="OverflowException">Resulting value is up to be less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/></exception>
+    Public Shared Operator *(ByVal Time As TimeSpanFormattable, ByVal multiplier As Integer) As TimeSpanFormattable
+        Return TimeSpan.FromMilliseconds(Time.TotalMilliseconds * multiplier)
+    End Operator
+    ''' <summary>Multiplies given <see cref="TimeSpanFormattable"/> with given multiplier</summary>
+    ''' <param name="Time">A <see cref="TimeSpanFormattable"/></param>
+    ''' <param name="multiplier">Multiplier</param>
+    ''' <returns><paramref name="Time"/> multiplied <paramref name="multiplier"/> times. Accurancy of theis operation is milliseconds</returns>
+    ''' <exception cref="OverflowException">Resulting value is up to be less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/></exception>
+    Public Shared Operator *(ByVal multiplier As Double, ByVal Time As TimeSpanFormattable) As TimeSpanFormattable
+        If multiplier.IsInfinity Then Throw New OverflowException("multiplier was infinity") 'Localize exception
+        If multiplier.IsNaN Then Throw New ArgumentException("multiplier was NaN", "multiplier") 'Localize exception
+        Return TimeSpan.FromMilliseconds(Time.TotalMilliseconds * multiplier)
+    End Operator
+    ''' <summary>Multiplies given <see cref="TimeSpanFormattable"/> with given multiplier</summary>
+    ''' <param name="Time">A <see cref="TimeSpanFormattable"/></param>
+    ''' <param name="multiplier">Multiplier</param>
+    ''' <returns><paramref name="Time"/> multiplied <paramref name="multiplier"/> times. Accurancy of theis operation is milliseconds</returns>
+    ''' <exception cref="OverflowException">Resulting value is up to be less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/></exception>
+    Public Shared Operator *(ByVal Time As TimeSpanFormattable, ByVal multiplier As Double) As TimeSpanFormattable
+        If multiplier.IsInfinity Then Throw New OverflowException("multiplier was infinity") 'Localize exception
+        If multiplier.IsNaN Then Throw New ArgumentException("multiplier was NaN", "multiplier") 'Localize exception
+        Return TimeSpan.FromMilliseconds(Time.TotalMilliseconds * multiplier)
+    End Operator
+#End Region
+    'TODO:Operator /
     ''' <summary>Indicates whether the current <see cref="TimeSpanFormattable"/> is equal to another <see cref="TimeSpanFormattable"/>.</summary>
     ''' <param name="other">A <see cref="TimeSpanFormattable"/> to compare with this object.</param>
     ''' <returns>true if the current <see cref="TimeSpanFormattable"/> is equal to the <paramref name="other"/> parameter; otherwise, false.</returns>
@@ -504,7 +668,7 @@ Public Structure TimeSpanFormattable
         End Select
     End Function
 
-    ''' <summary>State of finete state deterministic automaton used to parse custom format string in <see cref="FormatCustomized"/></summary>
+    ''' <summary>States of finite state deterministic automaton used to parse custom format string in <see cref="FormatCustomized"/></summary>
     Private Enum FormatAutomatState
         ''' <summary>Normal state</summary>
         nth

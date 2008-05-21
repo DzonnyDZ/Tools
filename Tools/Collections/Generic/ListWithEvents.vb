@@ -243,7 +243,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnAdded(ByVal e As ItemIndexEventArgs)
             RaiseEvent Added(Me, e)
             OnChanged(e)
-            OnCollectionChanged(e, CollectionChangeAction.Add)
+            OnCollectionChanged(e, CollectionChangeAction.Add, Nothing, e.Item, e.Index)
         End Sub
 #End Region
 #Region "Clear"
@@ -315,7 +315,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnCleared(ByVal e As ItemsEventArgs)
             RaiseEvent Cleared(Me, e)
             OnChanged(e)
-            OnCollectionChanged(e, CollectionChangeAction.Clear)
+            OnCollectionChanged(e, CollectionChangeAction.Clear, Nothing, Nothing, -1)
         End Sub
 #End Region
         ''' <summary>Determines whether the <see cref="ListWithEvents(Of T)"/> contains a specific value.</summary>
@@ -407,7 +407,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnRemoved(ByVal e As ItemIndexEventArgs)
             RaiseEvent Removed(Me, e)
             OnChanged(e)
-            OnCollectionChanged(e, CollectionChangeAction.Remove)
+            OnCollectionChanged(e, CollectionChangeAction.Remove, e.Item, Nothing, e.Index)
         End Sub
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to remove from the <see cref="ListWithEvents(Of T)"/>.</param>
@@ -582,7 +582,7 @@ Namespace CollectionsT.GenericT
         Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEvetArgs)
             RaiseEvent ItemChanged(Me, e)
             OnChanged(e)
-            OnCollectionChanged(e, CollectionChangeAction.Replace)
+            OnCollectionChanged(e, CollectionChangeAction.Replace, e.OldItem, e.Item, e.Index)
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
@@ -668,7 +668,7 @@ Namespace CollectionsT.GenericT
             Dim e2 As New ItemValueChangedEventArgs(sender, e)
             RaiseEvent ItemValueChanged(Me, e2)
             OnChanged(e2)
-            OnCollectionChanged(e2, CollectionChangeAction.ItemChange)
+            OnCollectionChanged(e2, CollectionChangeAction.ItemChange, sender, sender, IndexOf(DirectCast(sender, T)))
         End Sub
         ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
         ''' <param name="sender">Source of the event</param>
@@ -991,14 +991,18 @@ Namespace CollectionsT.GenericT
         ''' <summary>Raises the <see cref="CollectionChanged"/> event via calling <see cref="M:Tools.CollectionsT.GenericT.ListWithEvents`1.OnChanged(Tools.CollectionsT.GenericT.ListChangedEventArgs)"/></summary>
         ''' <param name="e">Argument of preceding call of <see cref="OnChanged"/></param>
         ''' <param name="Action">Action taken on collection</param>
+        ''' <param name="OldValue">Old value at index <paramref name="index"/> prior to change. Pass null (default value for value types) if not applicable.</param>
+        ''' <param name="NewValue">New value at index <paramref name="index"/> after change. pass null (default value for value types) if not applicable</param>
+        ''' <param name="index">Index at which change has occured. Pass -1 if not applicable</param>
         ''' <remarks>You should call one of overloaded <see cref="OnChanged"/> methods after all calls of <see cref="OnChanged"/>.</remarks>
         ''' <filterpriority>1</filterpriority>
-        Protected Sub OnCollectionChanged(ByVal e As EventArgs, ByVal Action As CollectionChangeAction)
-            OnCollectionChanged(New ListChangedEventArgs(Me, e, Action))
+        Protected Sub OnCollectionChanged(ByVal e As EventArgs, ByVal Action As CollectionChangeAction, ByVal OldValue As T, ByVal NewValue As T, ByVal index As Integer)
+            OnCollectionChanged(New ListChangedEventArgs(Me, e, Action, index, OldValue, NewValue))
         End Sub
 
         ''' <summary>Specialized <see cref="CollectionChangeEventArgs(Of T)"/> for <see cref="ListWithEvents(Of T)"/></summary>
         Public Class ListChangedEventArgs : Inherits CollectionChangeEventArgs(Of T)
+#Region "CTors"
             ''' <summary>CTor</summary>
             ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
             ''' <param name="Collection">Collection that was changed</param>
@@ -1007,10 +1011,61 @@ Namespace CollectionsT.GenericT
             Public Sub New(ByVal Collection As ListWithEvents(Of T), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction)
                 MyBase.new(Collection, ChangeEventArgs, Action)
             End Sub
+            ''' <summary>CTor with index</summary>
+            ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+            ''' <param name="Collection">Collection that was changed</param>
+            ''' <param name="Action">Action which occured on collection</param>
+            ''' <param name="index">Index at which the change has occured</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+            Public Sub New(ByVal Collection As ListWithEvents(Of T), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction, ByVal index As Integer)
+                Me.new(Collection, ChangeEventArgs, Action)
+                _Index = index
+            End Sub
+            ''' <summary>CTor with index and old and new value</summary>
+            ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
+            ''' <param name="Collection">Collection that was changed</param>
+            ''' <param name="Action">Action which occured on collection</param>
+            ''' <param name="index">Index at which the change has occured</param>
+            ''' <param name="OldValue">Old value at index <paramref name="index"/></param>
+            ''' <param name="NewValue">New value at index <paramref name="index"/></param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Action"/> is not member of <see cref="CollectionChangeAction"/></exception>
+            Public Sub New(ByVal Collection As ListWithEvents(Of T), ByVal ChangeEventArgs As EventArgs, ByVal Action As CollectionChangeAction, ByVal index As Integer, ByVal OldValue As T, ByVal NewValue As T)
+                Me.new(Collection, ChangeEventArgs, Action, index)
+                _OldValue = OldValue
+                _NewValue = NewValue
+            End Sub
+#End Region
             ''' <summary>Collection which was changed</summary>
             Public Shadows ReadOnly Property Collection() As ListWithEvents(Of T)
                 Get
                     Return MyBase.Collection
+                End Get
+            End Property
+            ''' <summary>Contains value of the <see cref="Index"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Index As Integer = -1
+            ''' <summary>Contains value of the <see cref="OldValue"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _OldValue As T = Nothing
+            ''' <summary>Contains value of the <see cref="NewValue"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _NewValue As T = Nothing
+            ''' <summary>Gets index at which change occured (if applicable)</summary>
+            ''' <returns>Original index where the change has ocured. If not applicable returns -1</returns>
+            Public ReadOnly Property Index() As Integer
+                <DebuggerStepThrough()> Get
+                    Return _Index
+                End Get
+            End Property
+            ''' <summary>Gets value on index <see cref="Index"/> before change (if applicable)</summary>
+            ''' <returns>Original value at index <see cref="Index"/>. If not applicable returns null (for reference types) or type default value (for <see cref="ValueType">value types</see>)</returns>
+            Public ReadOnly Property OldValue() As T
+                Get
+                    Return _OldValue
+                End Get
+            End Property
+            ''' <summary>Gets value on index <see cref="Index"/> after change (if applicable)</summary>
+            ''' <returns>Valu at index <see cref="Index"/> after changed. If not applicable returns null (for reference types) or type default value (for <see cref="ValueType">value types</see>)</returns>
+            Public ReadOnly Property NewValue() As T
+                Get
+                    Return _NewValue
                 End Get
             End Property
         End Class

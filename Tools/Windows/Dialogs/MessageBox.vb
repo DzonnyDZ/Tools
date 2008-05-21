@@ -620,6 +620,22 @@ Namespace WindowsT.DialogsT
             Protected Overridable Sub OnChanged(ByVal e As EventArgs)
                 RaiseEvent Changed(Me, e)
             End Sub
+            ''' <summary>Contains value of the <see cref="Control"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Control As Object
+            ''' <summary>Gets or sets physical control that currently implements this control</summary>
+            ''' <remarks>
+            ''' This property is intended to be used by GUI implementation to store instance of for example <see cref="Button"/> that currently represents the control.
+            ''' Its up to implementation how and if it will use this property. Caller should not rely on content of the property.
+            ''' </remarks>
+            <EditorBrowsable(EditorBrowsableState.Advanced), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
+            Public Property Control() As Object
+                <DebuggerStepThrough()> Get
+                    Return _Control
+                End Get
+                <DebuggerStepThrough()> Protected Friend Set(ByVal value As Object)
+                    _Control = value
+                End Set
+            End Property
         End Class
         ''' <summary>Represents button for <see cref="MessageBox"/></summary>
         ''' <completionlist cref="MessageBoxButton"/>
@@ -1421,15 +1437,15 @@ Namespace WindowsT.DialogsT
         Protected Overridable Sub OnCountDownStopped()
         End Sub
         ''' <summary>Contains value of the <see cref="CurrentTimer"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _CurrentTimer As TimeSpan
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CurrentTimer As TimeSpanFormattable
         ''' <summary>Gets or sets current remaining time of count-down timer</summary>
         ''' <remarks>If value id <see cref="TimeSpan.Zero"/> or less, count down ends and dialog is about to be closed</remarks>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        Public Property CurrentTimer() As TimeSpan
+        Public Property CurrentTimer() As TimeSpanFormattable
             <DebuggerStepThrough()> Get
                 Return _CurrentTimer
             End Get
-            <DebuggerStepThrough()> Protected Set(ByVal value As TimeSpan)
+            <DebuggerStepThrough()> Protected Set(ByVal value As TimeSpanFormattable)
                 _CurrentTimer = value
             End Set
         End Property
