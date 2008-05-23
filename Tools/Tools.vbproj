@@ -174,7 +174,6 @@
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />
     <Compile Include="Data\Metadata\MetadataConnection.vb">
-      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
     <Compile Include="Drawing\Design\NewEditor.vb" />
@@ -257,11 +256,11 @@
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Controls\AssemblyInfo.vb" />
-    <Compile Include="Windows\Controls\NumericUpDown.vb" />
-    <Compile Include="Windows\Converters\Converters.vb" />
-    <Compile Include="Windows\Converters\StronlyTypedConverter.vb" />
-    <Compile Include="Windows\Dialogs\MessageBox.vb">
+    <Compile Include="Windows\WPF\AssemblyInfo.vb" />
+    <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
+    <Compile Include="Windows\WPF\Converters\Converters.vb" />
+    <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
+    <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.Designer.vb">
@@ -640,7 +639,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Windows\Controls\NumericUpDown.xaml">
+    <Page Include="Windows\WPF\Controls\NumericUpDown.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>

@@ -1,30 +1,45 @@
 ﻿Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
 Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
+Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 #If Config <= Nightly Then
 Namespace WindowsT.FormsT
+    'ASAP:Mark
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
+    ''' <remarks>
+    ''' <para>This class implements <see cref="iMsg"/> in fully dynamic way. You can change all it's properties and all properties of its controls and those change are immediatelly displayed to user.</para>
+    ''' If you are passing some very custom implementation of <see cref="MessageBox"/> to this form, you must ensure that :
+    ''' <list type="list">
+    ''' <item>Argument e of the <see cref="MessageBox.ComboBox"/>.<see cref="MessageBox.MessageBoxComboBox.Items">Items</see>.<see cref="ListWithEvents.CollectionChanged"/> event has always <see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> which is member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</item>
+    ''' <item>Argument e of the <see cref="MessageBox.ButtonsChanged"/> and <see cref="MessageBox.RadiosChanged"/> events has always <see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> which is member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/> and is not <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/>.</item>
+    ''' </list>
+    ''' Violating these rules can lead to uncatchable <see cref="InvalidOperationException"/> being thrown when event occurs.
+    ''' </remarks>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public Class MessageBoxForm : Inherits Form
         ''' <summary>Form overrides dispose to clean up the component list.</summary>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             Try
                 If disposing AndAlso components IsNot Nothing Then
+                    CommonDisposeActions()
                     components.Dispose()
-                    If MessageBox.CheckBox IsNot Nothing Then MessageBox.CheckBox.Control = Nothing : AttachCheckBoxHandlers(MessageBox.CheckBox, False)
-                    If MessageBox.ComboBox IsNot Nothing Then MessageBox.ComboBox.Control = Nothing : AttachComboBoxHandlers(MessageBox.ComboBox, False)
-                    For Each Button In MessageBox.Buttons
-                        Button.Control = Nothing
-                        AttachButtonHandlers(Button, False)
-                    Next
-                    For Each Radio In MessageBox.Radios
-                        Radio.Control = Nothing
-                        AttachRadioHandlers(Radio, False)
-                    Next
-                    AttachMessageBoxHandlers(False)
                 End If
             Finally
                 MyBase.Dispose(disposing)
             End Try
+        End Sub
+        ''' <summary>Common actions taken when form is closed or disposed</summary>
+        Private Sub CommonDisposeActions()
+            If MessageBox.CheckBox IsNot Nothing Then MessageBox.CheckBox.Control = Nothing : AttachCheckBoxHandlers(MessageBox.CheckBox, False)
+            If MessageBox.ComboBox IsNot Nothing Then MessageBox.ComboBox.Control = Nothing : AttachComboBoxHandlers(MessageBox.ComboBox, False)
+            For Each Button In MessageBox.Buttons
+                Button.Control = Nothing
+                AttachButtonHandlers(Button, False)
+            Next
+            For Each Radio In MessageBox.Radios
+                Radio.Control = Nothing
+                AttachRadioHandlers(Radio, False)
+            Next
+            AttachMessageBoxHandlers(False)
         End Sub
         ''' <summary>Contains value of the <see cref="MessageBox"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _MessageBox As MessageBox
@@ -66,16 +81,8 @@ Namespace WindowsT.FormsT
             ApplyComboBox()
             'Radios
             flpRadio.Controls.Clear()
-            If MessageBox.Radios.Count <= 0 Then
-                flpRadio.Visible = False
-            Else
-                For Each Radio In MessageBox.Radios
-                    flpRadio.Controls.Add(New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio})
-                    If Radio.ToolTip <> "" Then totToolTip.SetToolTip(flpRadio.Controls.Last, Radio.ToolTip)
-                    Radio.Control = flpRadio.Controls.Last
-                    AddHandler DirectCast(flpRadio.Controls.Last, RadioButton).CheckedChanged, AddressOf Radio_CheckedChanged_ 'TODO: Why there must be _? VB bug?
-                Next Radio
-            End If
+            If MessageBox.Radios.Count <= 0 Then flpRadio.Visible = False _
+            Else flpRadio.Controls.AddRange((From Radio In MessageBox.Radios Select CreateRadio(Radio)).ToArray)
             'Mic control
             tlpMain.ReplaceControl(lblPlhMid, MessageBox.MidControlControl)
             'Buttons
@@ -86,14 +93,9 @@ Namespace WindowsT.FormsT
                 Dim CancelButton As Button = Nothing
                 Dim i As Integer = 0
                 For Each Button In MessageBox.Buttons
-                    Dim text As String = Button.Text.Replace("&", "&&")
-                    If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey), 0) = "&"
-                    flpButtons.Controls.Add(New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button})
-                    If Button.ToolTip <> "" Then totToolTip.SetToolTip(flpButtons.Controls.Last, Button.ToolTip)
-                    If MessageBox.DefaultButton = i Then Me.AcceptButton = flpButtons.Controls.Last
+                    flpButtons.Controls.Add(CreateButton(Button))
                     If MessageBox.CloseResponse = Button.Result AndAlso CancelButton Is Nothing Then CancelButton = flpButtons.Controls.Last
-                    AddHandler flpButtons.Controls.Last.Click, AddressOf Button_Click
-                    Button.Control = flpButtons.Controls.Last
+                    If MessageBox.DefaultButton = i Then Me.AcceptButton = flpButtons.Controls.Last
                     i += 1
                 Next Button
                 Me.CancelButton = CancelButton
@@ -128,7 +130,7 @@ Namespace WindowsT.FormsT
                 AddHandler ComboBox.EnabledChanged, AddressOf Control_EnabledChanged
                 AddHandler ComboBox.ItemsChanged, AddressOf ComboBox_ItemsChanged
                 AddHandler ComboBox.SelectedIndexChanged, AddressOf ComboBox_SelectedIndexChanged
-                AddHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_SelectedItemChanged
+                AddHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_selectedItemChanged
                 AddHandler ComboBox.TextChanged, AddressOf Control_TextChanged
                 AddHandler ComboBox.ToolTipChanged, AddressOf Control_ToolTipChanged
             Else
@@ -137,7 +139,7 @@ Namespace WindowsT.FormsT
                 RemoveHandler ComboBox.EnabledChanged, AddressOf Control_EnabledChanged
                 RemoveHandler ComboBox.ItemsChanged, AddressOf ComboBox_ItemsChanged
                 RemoveHandler ComboBox.SelectedIndexChanged, AddressOf ComboBox_SelectedIndexChanged
-                RemoveHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_SelectedItemChanged
+                RemoveHandler ComboBox.SelectedItemChanged, AddressOf ComboBox_selectedItemChanged
                 RemoveHandler ComboBox.TextChanged, AddressOf Control_TextChanged
                 RemoveHandler ComboBox.ToolTipChanged, AddressOf Control_ToolTipChanged
             End If
@@ -201,27 +203,31 @@ Namespace WindowsT.FormsT
         ''' <param name="attach">True (default) to attach, false to detach</param>
         Private Sub AttachMessageBoxHandlers(Optional ByVal attach As Boolean = True)
             If attach Then
-                AddHandler MessageBox.BottomControlChanged, AddressOf MessageBox_BottomControlChanged
-                AddHandler MessageBox.CloseResponseChanged, AddressOf MessageBox_CloseResponseChanged
-                AddHandler MessageBox.ComboBoxChanged, AddressOf MessageBox_ComboBoxChanged
-                AddHandler MessageBox.CountDown, AddressOf MessageBox_CountDown
-                AddHandler MessageBox.DefaultButtonChanged, AddressOf MessageBox_DefaultButtonChanged
-                AddHandler MessageBox.CheckBoxChanged, AddressOf MessageBox_CheckBoxChanged
-                AddHandler MessageBox.PromptChanged, AddressOf MessageBox_PromptChanged
-                AddHandler MessageBox.TitleChanged, AddressOf MessageBox_TitleChanged
-                AddHandler MessageBox.ButtonsChanged, AddressOf MessageBox_ButtonsChanged
-                AddHandler MessageBox.RadiosChanged, AddressOf MessageBox_RadiosChan
+                AddHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_BottomControlChanged
+                AddHandler MessageBox.MidControlChanged, AddressOf__MessageBox_TopControlChanged
+                AddHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_MidControlChanged
+                AddHandler MessageBox.CloseResponseChanged, AddressOf__MessageBox_CloseResponseChanged
+                AddHandler MessageBox.ComboBoxChanged, AddressOf__MessageBox_ComboBoxChanged
+                AddHandler MessageBox.CountDown, AddressOf__MessageBox_CountDown
+                AddHandler MessageBox.DefaultButtonChanged, AddressOf__MessageBox_DefaultButtonChanged
+                AddHandler MessageBox.CheckBoxChanged, AddressOf__MessageBox_CheckBoxChanged
+                AddHandler MessageBox.PromptChanged, AddressOf__MessageBox_PromptChanged
+                AddHandler MessageBox.TitleChanged, AddressOf__MessageBox_TitleChanged
+                AddHandler MessageBox.ButtonsChanged, AddressOf__MessageBox_ButtonsChanged
+                AddHandler MessageBox.RadiosChanged, AddressOf__MessageBox_RadiosChanged
             Else
-                RemoveHandler MessageBox.BottomControlChanged, AddressOf MessageBox_BottomControlChanged
-                RemoveHandler MessageBox.CloseResponseChanged, AddressOf MessageBox_CloseResponseChanged
-                RemoveHandler MessageBox.ComboBoxChanged, AddressOf MessageBox_ComboBoxChanged
-                RemoveHandler MessageBox.CountDown, AddressOf MessageBox_CountDown
-                RemoveHandler MessageBox.DefaultButtonChanged, AddressOf MessageBox_DefaultButtonChanged
-                RemoveHandler MessageBox.CheckBoxChanged, AddressOf MessageBox_CheckBoxChanged
-                RemoveHandler MessageBox.PromptChanged, AddressOf MessageBox_PromptChanged
-                RemoveHandler MessageBox.TitleChanged, AddressOf MessageBox_TitleChanged
-                RemoveHandler MessageBox.ButtonsChanged, AddressOf MessageBox_ButtonsChanged
-                RemoveHandler MessageBox.RadiosChanged, AddressOf MessageBox_RadiosChan
+                RemoveHandler MessageBox.TopControlChanged, AddressOf__MessageBox_BottomControlChanged
+                RemoveHandler MessageBox.MidControlChanged, AddressOf__MessageBox_TopControlChanged
+                RemoveHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_MidControlChanged
+                RemoveHandler MessageBox.CloseResponseChanged, AddressOf__MessageBox_CloseResponseChanged
+                RemoveHandler MessageBox.ComboBoxChanged, AddressOf__MessageBox_ComboBoxChanged
+                RemoveHandler MessageBox.CountDown, AddressOf__MessageBox_CountDown
+                RemoveHandler MessageBox.DefaultButtonChanged, AddressOf__MessageBox_DefaultButtonChanged
+                RemoveHandler MessageBox.CheckBoxChanged, AddressOf__MessageBox_CheckBoxChanged
+                RemoveHandler MessageBox.PromptChanged, AddressOf__MessageBox_PromptChanged
+                RemoveHandler MessageBox.TitleChanged, AddressOf__MessageBox_TitleChanged
+                RemoveHandler MessageBox.ButtonsChanged, AddressOf__MessageBox_ButtonsChanged
+                RemoveHandler MessageBox.RadiosChanged, AddressOf__MessageBox_RadiosChanged
             End If
         End Sub
 #End Region
@@ -258,6 +264,28 @@ Namespace WindowsT.FormsT
                 chkCheckBox.Enabled = MessageBox.CheckBox.Enabled
             End If
         End Sub
+        ''' <summary>Creates <see cref="Button"/> from <see cref="MessageBox.MessageBoxButton"/></summary>
+        ''' <param name="Button"><see cref="MessageBox.MessageBoxButton"/> to initialize new <see cref="Button"/> with</param>
+        ''' <returns>Newly created <see cref="Button"/> with attached <see cref="Button.Click"/> event to <see cref="Button_Click"/></returns>
+        Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
+            Dim text As String = Button.Text.Replace("&", "&&")
+            If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey), 0) = "&"
+            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button}
+            If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
+            Button.Control = CmdButton
+            AddHandler CmdButton.Click, AddressOf Button_Click
+            Return CmdButton
+        End Function
+        ''' <summary>Creates <see cref="RadioButton"/> from <see cref="iMsg.MessageBoxRadioButton"/></summary>
+        ''' <param name="Radio"><see cref="iMsg.MessageBoxRadioButton"/> to initialize new <see cref="RadioButton"/> with</param>
+        ''' <returns>New created <see cref="RadioButton"/> with attached <see cref="RadioButton.CheckedChanged"/> event to <see cref="Radio_CheckedChanged"/></returns>
+        Private Function CreateRadio(ByVal Radio As iMsg.MessageBoxRadioButton) As RadioButton
+            Dim NewRadio As RadioButton = New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio}
+            If Radio.ToolTip <> "" Then totToolTip.SetToolTip(NewRadio, Radio.ToolTip)
+            Radio.Control = NewRadio
+            AddHandler DirectCast(NewRadio, RadioButton).CheckedChanged, AddressOf__Radio_CheckedChanged
+            Return NewRadio
+        End Function
 #Region "Handlers"
 #Region "Generic"
         Private Sub Control_EnabledChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
@@ -286,7 +314,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Hanles the <see cref="RadioButton.CheckedChanged"/> event of radio buttons</summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event parameters</param>
-        Private Sub Radio_CheckedChanged_(ByVal sender As RadioButton, ByVal e As EventArgs)
+        Private Sub Radio_CheckedChanged(ByVal sender As RadioButton, ByVal e As EventArgs)
             DirectCast(sender.Tag, MessageBox.MessageBoxRadioButton).Checked = sender.Checked
         End Sub
 #End Region
@@ -297,6 +325,7 @@ Namespace WindowsT.FormsT
         Private Sub ComboBox_DisplayMemberChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             cmbCombo.DisplayMember = sender.DisplayMember
         End Sub
+        ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
         Private Sub ComboBox_ItemsChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As ListWithEvents(Of Object).ListChangedEventArgs)
             Select Case e.Action
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
@@ -310,6 +339,8 @@ Namespace WindowsT.FormsT
                     cmbCombo.Items.RemoveAt(e.Index)
                 Case CollectionsT.GenericT.CollectionChangeAction.Replace
                     cmbCombo.Items(e.Index) = e.NewValue
+                Case Else
+                    Throw New InvalidOperationException("Action was not member of CollectionChangeAction") 'Localize:Exception
             End Select
         End Sub
         Private Sub ComboBox_SelectedIndexChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -339,7 +370,7 @@ Namespace WindowsT.FormsT
                 sender.SelectedItem = cmbCombo.SelectedItem
             End If
         End Sub
-        Private Sub cmbCombo_TextChanged(ByVal sender As combobox, ByVal e As System.EventArgs) Handles cmbCombo.TextChanged
+        Private Sub cmbCombo_TextChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.TextChanged
             If MessageBox.ComboBox Is Nothing Then Exit Sub
             If MessageBox.ComboBox.Text <> sender.Text Then MessageBox.ComboBox.Text = sender.Text
         End Sub
@@ -365,6 +396,7 @@ Namespace WindowsT.FormsT
         End Sub
         Private Sub Button_ResultChanged(ByVal sender As MessageBox.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
             DirectCast(sender.Control, Button).DialogResult = sender.Result
+            If e.OldValue = MessageBox.CloseResponse Xor e.NewValue = MessageBox.CloseResponse Then EnsureCancelButton()
         End Sub
 #End Region
 #Region "MessageBox"
@@ -402,7 +434,7 @@ Namespace WindowsT.FormsT
             End Select
         End Sub
         Private Sub MessageBox_CloseResponseChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
-            'TODO:Implement
+            EnsureCancelButton()
         End Sub
         Private Sub MessageBox_ComboBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxComboBox))
             If e.OldValue IsNot e.NewValue Then
@@ -412,7 +444,8 @@ Namespace WindowsT.FormsT
             End If
         End Sub
         Private Sub MessageBox_DefaultButtonChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
-            'TODO:Implement
+            Me.AcceptButton = Nothing
+            If e.NewValue >= 0 AndAlso e.NewValue < MessageBox.Buttons.Count Then Me.AcceptButton = MessageBox.Buttons(e.NewValue).Control
         End Sub
         Private Sub MessageBox_CheckBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxCheckBox))
             If e.OldValue IsNot e.NewValue Then
@@ -421,31 +454,154 @@ Namespace WindowsT.FormsT
                 If e.NewValue IsNot Nothing Then AttachCheckBoxHandlers(e.OldValue)
             End If
         End Sub
+        ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
+        Private Sub MessageBox_RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxRadioButton).ListChangedEventArgs)
+            Select Case e.Action
+                Case CollectionsT.GenericT.CollectionChangeAction.Add
+                    Dim NewRadio = CreateRadio(e.NewValue)
+                    flpRadio.Controls.Insert(e.Index, NewRadio)
+                    flpRadio.Visible = True
+                Case CollectionsT.GenericT.CollectionChangeAction.Clear
+                    Dim e2 = DirectCast(e.ChangeEventArgs, ListWithEvents(Of iMsg.MessageBoxRadioButton).ItemsEventArgs)
+                    flpRadio.Controls.Clear()
+                    For Each old In e2.Items
+                        PerformRadioRemoval(old)
+                    Next
+                    Me.flpRadio.Visible = False
+                Case CollectionsT.GenericT.CollectionChangeAction.ItemChange 'Do nothing
+                Case CollectionsT.GenericT.CollectionChangeAction.Remove
+                    Me.flpRadio.Controls.RemoveAt(e.Index)
+                    PerformRadioRemoval(e.OldValue.Control)
+                    flpRadio.Visible = flpRadio.Controls.Count > 0
+                Case CollectionsT.GenericT.CollectionChangeAction.Replace
+                    Dim NewRadio = CreateRadio(e.NewValue)
+                    PerformButtonRemoval(e.OldValue.Control)
+                    Me.flpRadio.Controls.Replace(e.Index, NewRadio)
+                    EnsureCancelButton()
+                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Buttons"))     'Localize:Exception
+            End Select
+        End Sub
+        ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
+        Private Sub MessageBox_ButtonsChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxButton).ListChangedEventArgs)
+            Select Case e.Action
+                Case CollectionsT.GenericT.CollectionChangeAction.Add
+                    Dim NewButton = CreateButton(e.NewValue)
+                    flpButtons.Controls.Insert(e.Index, NewButton)
+                    flpButtons.Visible = True
+                    If MessageBox.DefaultButton >= e.Index Then MessageBox.DefaultButton += 1
+                    EnsureCancelButton()
+                Case CollectionsT.GenericT.CollectionChangeAction.Clear
+                    Dim e2 = DirectCast(e.ChangeEventArgs, ListWithEvents(Of MessageBox.MessageBoxButton).ItemsEventArgs)
+                    flpButtons.Controls.Clear()
+                    For Each Old In e2.Items
+                        PerformButtonRemoval(Old)
+                    Next
+                    flpButtons.Visible = False
+                    Me.AcceptButton = Nothing
+                    Me.CancelButton = Nothing
+                Case CollectionsT.GenericT.CollectionChangeAction.ItemChange 'Do nothing
+                Case CollectionsT.GenericT.CollectionChangeAction.Remove
+                    If Me.AcceptButton Is e.OldValue.Control Then Me.AcceptButton = Nothing
+                    If Me.CancelButton Is e.OldValue.Control Then Me.CancelButton = Nothing
+                    Me.flpButtons.Controls.RemoveAt(e.Index)
+                    PerformButtonRemoval(e.OldValue.Control)
+                    flpButtons.Visible = flpButtons.Controls.Count > 0
+                    If MessageBox.DefaultButton = e.Index Then MessageBox.DefaultButton = -1
+                    If MessageBox.DefaultButton > e.Index Then MessageBox.DefaultButton -= 1
+                    EnsureCancelButton()
+                Case CollectionsT.GenericT.CollectionChangeAction.Replace
+                    Dim NewButton = CreateButton(e.NewValue)
+                    If Me.AcceptButton Is e.OldValue.Control Then Me.AcceptButton = NewButton
+                    If Me.CancelButton Is e.OldValue.Control Then Me.CancelButton = Nothing
+                    PerformButtonRemoval(e.OldValue.Control)
+                    Me.flpButtons.Controls.Replace(e.Index, NewButton)
+                    EnsureCancelButton()
+                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Buttons"))     'Localize:Exception
+            End Select
+        End Sub
+        ''' <summary>Performs actions needed when button is about to be removed. Does not remove button from <see cref="flpButtons"/>.</summary>
+        ''' <param name="Button">Button to be removed</param>
+        Private Sub PerformButtonRemoval(ByVal Button As MessageBox.MessageBoxButton)
+            Dim cmd As Button = Button.Control
+            cmd.Tag = Nothing
+            Button.Control = Nothing
+            RemoveHandler cmd.Click, AddressOf__Button_Click
+            AttachButtonHandlers(Button, False)
+        End Sub
+        ''' <summary>Performs actions needed when radio button is about to be removed. Does not remove radio button from <see cref="flpRadio"/>.</summary>
+        Private Sub PerformRadioRemoval(ByVal Button As iMsg.MessageBoxRadioButton)
+            Dim opt As RadioButton = Button.Control
+            opt.Tag = Nothing
+            Button.Control = Nothing
+            RemoveHandler opt.CheckedChanged, AddressOf__Radio_CheckedChanged
+            AttachRadioHandlers(Button, False)
+        End Sub
+        ''' <summary>Ensures that <see cref="CancelButton"/> is set to button with <see cref="Button.DialogResult">DialogResult</see> same as <see cref="MessageBox">MessageBox</see>.<see cref="iMsg.CloseResponse">CloseResponse</see> or to null if appropriate button does not exist</summary>
+        Private Sub EnsureCancelButton()
+            Me.CancelButton = Nothing
+            For Each Button In MessageBox.Buttons
+                If Button.Result = MessageBox.CloseResponse Then
+                    Me.CancelButton = Button.Control
+                    Exit Sub
+                End If
+            Next
+        End Sub
+#End Region
+#Region "AddressOf"
+        'Following delegates required because methods does not have exactly same signatures as events they are handling
+        Private ReadOnly AddressOf__Button_Click As EventHandler = AddressOf Button_Click
+        Private ReadOnly AddressOf__MessageBox_BottomControlChanged As MessageBox.ControlChangedEventHandler = AddressOf MessageBox_BottomControlChanged
+        Private ReadOnly AddressOf__MessageBox_TopControlChanged As MessageBox.ControlChangedEventHandler = AddressOf MessageBox_TopControlChanged
+        Private ReadOnly AddressOf__MessageBox_MidControlChanged As MessageBox.ControlChangedEventHandler = AddressOf MessageBox_MidControlChanged
+        Private ReadOnly AddressOf__MessageBox_CloseResponseChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of DialogResult)) = AddressOf MessageBox_CloseResponseChanged
+        Private ReadOnly AddressOf__MessageBox_ComboBoxChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxComboBox)) = AddressOf MessageBox_ComboBoxChanged
+        Private ReadOnly AddressOf__MessageBox_CountDown As EventHandler(Of iMsg, EventArgs) = AddressOf MessageBox_CountDown
+        Private ReadOnly AddressOf__MessageBox_DefaultButtonChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of Integer)) = AddressOf MessageBox_DefaultButtonChanged
+        Private ReadOnly AddressOf__MessageBox_CheckBoxChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxCheckBox)) = AddressOf MessageBox_CheckBoxChanged
+        Private ReadOnly AddressOf__MessageBox_PromptChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of String)) = AddressOf MessageBox_PromptChanged
+        Private ReadOnly AddressOf__MessageBox_TitleChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of String)) = AddressOf MessageBox_TitleChanged
+        Private ReadOnly AddressOf__MessageBox_ButtonsChanged As iMsg.ButtonsChangedEventHandler = AddressOf MessageBox_ButtonsChanged
+        Private ReadOnly AddressOf__MessageBox_RadiosChanged As iMsg.RadiosChangedEventHandler = AddressOf MessageBox_RadiosChanged
+        Private ReadOnly AddressOf__Radio_CheckedChanged As EventHandler = AddressOf New EventHandler(Of RadioButton, EventArgs)(AddressOf Radio_CheckedChanged).Invoke
 #End Region
         Private Sub Button_Click(ByVal sender As Button, ByVal e As EventArgs)
-            'TODO:Implement
+            Dim button As iMsg.MessageBoxButton = sender.Tag
+            If button.OnClick() Then
+                MessageBox.ClickedButton = button
+                Me.DialogResult = button.Result
+                MessageBox.DialogResult = button.Result
+                Me.Close()
+            End If
+        End Sub
+        Private Sub MessageBoxForm_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
+            CommonDisposeActions()
         End Sub
 #End Region
+
+        Private Sub MessageBoxForm_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            Select Case e.CloseReason
+                Case CloseReason.UserClosing
+                    If Not MessageBox.AllowClose Then e.Cancel = True : Exit Sub
+                    Me.DialogResult = MessageBox.CloseResponse
+                    MessageBox.DialogResult = MessageBox.CloseResponse
+                    MessageBox.ClickedButton = Nothing
+                Case CloseReason.None 'Do nothing (programatic)
+                Case Else : e.Cancel = True
+            End Select
+        End Sub
     End Class
 
-    ''' <summary>Implements <see cref="WindowsT.DialogsT.MessageBox"/> for as <see cref="Form"/></summary>
+    ''' <summary>Implements <see cref="WindowsT.IndependentT.MessageBox"/> for as <see cref="Form"/></summary>
     Public Class MessageBox
-        Inherits DialogsT.MessageBox
-        Public Overrides ReadOnly Property ClickedButton() As DialogsT.MessageBox.MessageBoxButton
-            Get
-
-            End Get
-        End Property
-
+        Inherits iMsg
+        ''' <summary>If overriden in derived class closes the message box with given response</summary>
+        ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
         Public Overloads Overrides Sub Close(ByVal Response As System.Windows.Forms.DialogResult)
-
+            Me.DialogResult = Response
+            Me.ClickedButton = Nothing
+            Form.Close()
         End Sub
 
-        Public Overrides ReadOnly Property DialogResult() As System.Windows.Forms.DialogResult
-            Get
-
-            End Get
-        End Property
         ''' <summary>Contains value of the <see cref="Form"/> property</summary>
         Private _Form As MessageBoxForm
         ''' <summary>Gets or sets instance of <see cref="MessageBoxForm"/> that currently shows the message box</summary>

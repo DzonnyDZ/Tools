@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data
 Imports System.Globalization
 
-Namespace WindowsT.ConvertersT
+Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Common base for type-safe implementations of <see cref="IValueConverter"/></summary>
     ''' <typeparam name="TSource">Type values are converted from</typeparam>
     ''' <typeparam name="TTarget">Type values are converted to</typeparam>

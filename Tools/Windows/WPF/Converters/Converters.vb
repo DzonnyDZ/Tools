@@ -1,7 +1,7 @@
 ﻿Imports System.Windows.Data
 Imports System.Globalization
 
-Namespace WindowsT.ConvertersT
+Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Implements <see cref="IValueConverter"/> which negates <see cref="Boolean"/> value</summary>
     <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(NotBooleanValueConverter)), FirstVersion(2008, 5, 1)> _

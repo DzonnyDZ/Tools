@@ -1,3 +1,4 @@
+#If ControlWithStatus Then
 '#If Config <= Alpha This conditional compilation is done in Tests.vbproj
 Namespace WindowsT.FormsT
     ''' <summary>Tests <see cref="Tools.WindowsT.FormsT.TransparentTextBox"/></summary>
@@ -64,3 +65,4 @@ Namespace WindowsT.FormsT
         End Sub
     End Class
 End Namespace
+#End If

@@ -1,3 +1,4 @@
+#If ControlWithStatus Then
 Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmControlWithStatus
@@ -84,7 +85,7 @@ Namespace WindowsT.FormsT
             '
             '
             '
-            
+
             Me.TextBoxWithStatus1.TabIndex = 1
             '
             'frmControlWithStatus
@@ -108,3 +109,4 @@ Namespace WindowsT.FormsT
         Friend WithEvents TextBoxWithStatus1 As Tools.WindowsT.FormsT.MaskedTextBoxWithStatus
     End Class
 End Namespace
+#End If

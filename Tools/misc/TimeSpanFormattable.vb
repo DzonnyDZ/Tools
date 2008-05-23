@@ -364,7 +364,7 @@ Public Structure TimeSpanFormattable
     End Operator
     ''' <summary>Indicates whether a specified <see cref="timespan"/> is greater than or equal to another specified <see cref="TimeSpanFormattable"/>.</summary>
     ''' <param name="t1">A <see cref="timespan"/>.</param>
-    ''' <param name="t2>A <see cref="TimeSpanFormattable"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the value of <paramref name="t1"/> is greater than or equal to the value of <paramref name="t2"/>; otherwise, false.</returns>
     Public Shared Operator >=(ByVal t1 As TimeSpan, ByVal t2 As TimeSpanFormattable) As Boolean
         Return t1 >= t2.Inner
@@ -379,7 +379,7 @@ Public Structure TimeSpanFormattable
         Return t1.Inner = t2
     End Operator
     ''' <summary>Indicates whether  <see cref="TimeSpanFormattable"/> nad <see cref="TimeSpan"/> instances are not equal.</summary>
-    ''' <param name="t2">A <see cref=""/>"/>.</param>
+    ''' <param name="t2">A <see cref="TimeSpan"/>"/>.</param>
     ''' <param name="t1">A <see cref="TimeSpanFormattable"/>.</param>
     ''' <returns>true if the values of <paramref name="t1"/> and <paramref name="t2"/> are not equal; otherwise, false.</returns>
     Public Shared Operator <>(ByVal t1 As TimeSpanFormattable, ByVal t2 As TimeSpan) As Boolean

@@ -3,7 +3,7 @@
 #If Config <= Nightly Then 'Stage Nightly
 Imports System.Windows.Forms
 
-Namespace WindowsT.DialogsT
+Namespace WindowsT.IndependentT
     'ASAP:Mark
     ''' <summary>Provides technology-independent base class for WinForms and WPF message boxes</summary>
     ''' <remarks>
@@ -69,8 +69,23 @@ Namespace WindowsT.DialogsT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Timer As TimeSpan = TimeSpan.Zero
         ''' <summary>Contaions value of the <see cref="TimeButton"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _TimeButton As Integer = -1
+        ''' <summary>Contains value of the <see cref="AllowClose"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _AllowClose As Boolean = True
 #End Region
 #Region "Properties"
+        ''' <summary>Gets or sets value indicationg if dialog can be closed without specifiing clicking any of buttons</summary>
+        ''' <remarks>This does not affacet possibility to close message box programatically using the <see cref="Close"/> method.</remarks>
+        Public Property AllowClose() As Boolean
+            Get
+                Return _AllowClose
+            End Get
+            Set(ByVal value As Boolean)
+                If AllowClose <> value Then
+                    _AllowClose = value
+                    OnAllowCloseChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(Not value, value, "AllowClose"))
+                End If
+            End Set
+        End Property
         ''' <summary>Defines buttons displayed on message box</summary>
         ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.</remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
@@ -90,7 +105,9 @@ Namespace WindowsT.DialogsT
             Buttons.Add(MessageBoxButton.OK)
         End Sub
         ''' <summary>Indicates 0-based index of button that has focus when message box is shown and that is default button for message box</summary>
-        ''' <remarks>Default button is treated as being clicked when user presses Enter. If value ios set outside of range of <see cref="Buttons"/> (i.e. -1), message box has no default button.</remarks>
+        ''' <remarks>Default button is treated as being clicked when user presses Enter. If value is set outside of range of <see cref="Buttons"/> (i.e. -1), message box has no default button.
+        ''' <para>If messagebox implementation supports changes of <see cref="Buttons"/> collection when displayed, this property is changed on buttom insert/removal and it points strill to the same physical button.</para>
+        ''' </remarks>
         ''' <seealso cref="System.Windows.Forms.Form.AcceptButton"/>
         ''' <seealso cref="System.Windows.Controls.Button.IsDefault"/>
         <DefaultValue(0I)> _
@@ -343,6 +360,15 @@ Namespace WindowsT.DialogsT
 
 #End Region
 #Region "Property events"
+        ''' <summary>Raised when value of the <see cref="AllowClose"/> property changes</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        Public Event AllowCloseChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Boolean))
+        ''' <summary>Raises tha <see cref="AllowCloseChanged"/> event. Calls <see cref="OnChanged"/></summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub OnAllowCloseChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            RaiseEvent AllowCloseChanged(Me, e)
+            OnChanged(e)
+        End Sub
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event information. For changes of <see cref="Buttons"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents.CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents.Changed"/>.</param>
@@ -355,10 +381,8 @@ Namespace WindowsT.DialogsT
             RaiseEvent Changed(Me, e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="DefaultButton"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event DefaultButtonChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
+        Public Event DefaultButtonChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Integer))
         ''' <summary>Raises the <see cref="DefaultButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnDefaultButtonChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -366,21 +390,17 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="CloseResponse"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event CloseResponseChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
-        ''' <summary>Raises the <see cref="DeafaultButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
+        Public Event CloseResponseChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of DialogResult))
+        ''' <summary>Raises the <see cref="OnCloseResponseChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnCloseResponseChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
             RaiseEvent CloseResponseChanged(Me, e)
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Prompt"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event PromptChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+        Public Event PromptChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of String))
         ''' <summary>Raises the <see cref="PromptChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnPromptChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
@@ -388,10 +408,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Title"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event TitleChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+        Public Event TitleChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of String))
         ''' <summary>Raises the <see cref="TitleChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnTitleChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
@@ -399,10 +417,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Icon"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event IconChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
+        Public Event IconChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
         ''' <summary>Raises the <see cref="IconChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnIconChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
@@ -410,10 +426,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Options"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event OptionsChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions))
+        Public Event OptionsChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions))
         ''' <summary>Raises the <see cref="OptionsChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnOptionsChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions))
@@ -421,11 +435,9 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="CheckBox"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         ''' <remarks>This event tracks only changes of value of the <see cref="CheckBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event CheckBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox))
+        Public Event CheckBoxChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox))
         ''' <summary>Raises the <see cref="CheckBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnCheckBoxChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox))
@@ -433,11 +445,9 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="ComboBox"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         ''' <remarks>This event tracks only changes of value of the <see cref="ComboBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event ComboBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox))
+        Public Event ComboBoxChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox))
         ''' <summary>Raises the <see cref="ComboBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnComboBoxChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxComboBox))
@@ -445,10 +455,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="TopControl"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event TopControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+        Public Event TopControlChanged As ControlChangedEventHandler
         ''' <summary>Raises the <see cref="TopControlChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnTopControlChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
@@ -456,10 +464,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="MidControl"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event MidControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+        Public Event MidControlChanged As ControlChangedEventHandler
         ''' <summary>Raises the <see cref="MidControlChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnMidControlChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
@@ -467,10 +473,13 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="BottomControl"/> property changes</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
+        Public Event BottomControlChanged As ControlChangedEventHandler
+        ''' <summary>Delegate for events <see cref="BottomControlChanged"/>, <see cref="TopControlChanged"/> and <see cref="MidControlChanged"/></summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event arguments</param>
-        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event BottomControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Delegate Sub ControlChangedEventHandler(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
         ''' <summary>Raises the <see cref="BottomControlChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnBottomControlChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
@@ -478,10 +487,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="Timer"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event TimerChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of TimeSpan))
+        Public Event TimerChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of TimeSpan))
         ''' <summary>Raises the <see cref="TimerChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnTimerChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of TimeSpan))
@@ -489,10 +496,8 @@ Namespace WindowsT.DialogsT
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="TimeButton"/> property changes</summary>
-        ''' <param name="sender">Source of the event</param>
-        ''' <param name="e">Event arguments</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event TimeButtonChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
+        Public Event TimeButtonChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of Integer))
         ''' <summary>Raises the <see cref="TimeButtonChanged"/> event, calls <see cref="OnChanged"/></summary>
         ''' <param name="e">Event arguments</param>
         Protected Overridable Sub OnTimeButtonChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -650,9 +655,10 @@ Namespace WindowsT.DialogsT
             ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _HasChanged As Boolean
 #End Region
-            ''' <summary>Raised when button is clicked, before action associated with the button is taken</summary>
-            ''' <param name="e">Event arguments. Can be used to cancel the event.</param>
+            ''' <summary>Raised when button is clicked, before action associated with the button is taken. This event can be canceled.</summary>
+            ''' <param name="e">Event arguments. Can be used to cancel the event. <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> false means tha message box will be closed; false means the message box will remain open.</param>
             ''' <param name="sender">Instance of <see cref="MessageBoxButton"/> that have raised the event</param>
+            ''' <remarks>If <see cref="Result"/> is <see cref="HelpDialogResult"/> <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> is pre-set to true. That means that if it is not set to false, message box is not closed when help button is clicked.</remarks>
             Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs)
 #Region "Change events"
             ''' <summary>Raised when value of the <see cref="Result"/> property changes</summary>
@@ -666,7 +672,10 @@ Namespace WindowsT.DialogsT
 #End Region
 #Region "Properties"
             ''' <summary>Gets or sets result produced by this button</summary>
-            ''' <remarks>In case you need to define your own buttons you can use this property and set it to value thet is not member of the <see cref="DialogResult"/> enumeration.</remarks>
+            ''' <remarks>In case you need to define your own buttons you can use this property and set it to value thet is not member of the <see cref="DialogResult"/> enumeration.
+            ''' <para>Special result value <see cref="HelpDialogResult"/> defines help button. The <see cref="MessageBox"/> class does not pefrom any help-providing actions for that button, only, by default, thius button does not cause the messagebox to be closed.</para>
+            ''' </remarks>
+            ''' <seealso cref="MessageBoxButton.Help"/>
             <DefaultValue(GetType(DialogResult), "None")> _
             Public Property Result() As DialogResult
                 <DebuggerStepThrough()> Get
@@ -848,10 +857,11 @@ Namespace WindowsT.DialogsT
 #End Region
             ''' <summary>Called by owner window when appropriate button is clicked. Raises the <see cref="ClickPreview"/> event</summary>
             ''' <returns>True if action associated with button can be performed. False when event was canceled</returns>
-            ''' <remarks>This function should be called only by class derived from <see cref="MessageBox"/> which owns the button</remarks>
+            ''' <remarks>This function should be called only by class derived from <see cref="MessageBox"/> which owns the button.</remarks>
             <EditorBrowsable(EditorBrowsableState.Advanced)> _
-            Public Function OnClick() As Boolean
+            Protected Friend Function OnClick() As Boolean
                 Dim e As New CancelEventArgs
+                If Me.Result = HelpDialogResult Then e.Cancel = True
                 RaiseEvent ClickPreview(Me, e)
                 Return Not e.Cancel
             End Function
@@ -909,7 +919,8 @@ Namespace WindowsT.DialogsT
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             ''' <remarks>
             ''' <see cref="MessageBoxButton.Result"/> of this button is <see cref="HelpDialogResult"/>.
-            ''' Class that derives from <see cref="MessageBox"/> should implement this special button as message box does not close when the button is clicked and some help is opened.
+            ''' The only difference between treating button with <see cref="Result"/> set to <see cref="HelpDialogResult"/> and other buttons is that by default dialog is not closed when help button is clicked.
+            ''' <see cref="MessageBox"/> does not take any help-providing action. See the <see cref="ClickPreview"/> event in order to see how is controlled if dialog closes when button is clicked or not.
             ''' </remarks>
             Public Shared ReadOnly Property Help() As MessageBoxButton
                 Get
@@ -917,6 +928,7 @@ Namespace WindowsT.DialogsT
                 End Get
             End Property
 #End Region
+            
 #Region "GetButtons"
             ''' <summary>Gets buttons specified by WinForms enumeration value</summary>
             ''' <param name="Buttons">Buttons to get</param>
@@ -1400,14 +1412,36 @@ Namespace WindowsT.DialogsT
                 _State = value
             End Set
         End Property
-        ''' <summary>If overriden in derived class gets result of dialog (<see cref="MessageBoxButton.Result"/> of button user has clicked on)</summary>
+        ''' <summary>Gets result of dialog (<see cref="MessageBoxButton.Result"/> of button user has clicked on)</summary>
         ''' <returns><see cref="MessageBoxButton.Result"/> of button user have clicked to or <see cref="CloseResponse"/> when message box was closed by pressing escape, closing the window or timer.</returns>
+        ''' <value>Should be set by derived class when dialog is closed</value>
         ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
-        Public MustOverride ReadOnly Property DialogResult() As DialogResult
-        ''' <summary>When overriden in derived class gets button user have clicked on</summary>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        Public Property DialogResult() As DialogResult
+            Get
+                Return _DialogResult
+            End Get
+            Protected Friend Set(ByVal value As DialogResult)
+                _DialogResult = value
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="DialogResult"/> property</summary>
+        Private _DialogResult As DialogResult = Windows.Forms.DialogResult.None
+        ''' <summary>Gets button user have clicked on</summary>
         ''' <returns>Button user have clicked on (or null if dialog was closed by window close button, pressing escape or timer)</returns>
         ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
-        Public MustOverride ReadOnly Property ClickedButton() As MessageBoxButton
+        ''' <value>Should be set by derived class when dialog is closed</value>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        Public Overridable Property ClickedButton() As MessageBoxButton
+            Get
+                Return _ClickedButton
+            End Get
+            Protected Friend Set(ByVal value As MessageBoxButton)
+                _ClickedButton = value
+            End Set
+        End Property
+        ''' <summary>Contaisn value of the <see cref="ClickedButton"/> property</summary>
+        Private _ClickedButton As MessageBox.MessageBoxButton
 #End Region
 #Region "Timer"
         Private Sub CountDownTimer_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles CountDownTimer.Tick
@@ -1471,17 +1505,11 @@ Namespace WindowsT.DialogsT
 #Region "Events"
         ''' <summary>Raised when count down timer ticks</summary>
         ''' <remarks>Count down timer ticks each second once. First the event is raised immediatelly after the dialog is shown or count-down is resumed</remarks>
-        ''' <param name="sender">Source of the event (current instance)</param>
-        ''' <param name="e">Event argument</param>
-        Public Event CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
+        Public Event CountDown As EventHandler(Of MessageBox, EventArgs)
         ''' <summary>Raised after dialog is shown</summary>
-        ''' <param name="sender">Source of the event (current instance)</param>
-        ''' <param name="e">Event argument</param>
-        Public Event Shown(ByVal sender As MessageBox, ByVal e As EventArgs)
+        Public Event Shown As EventHandler(Of MessageBox, EventArgs)
         ''' <summary>Raised after dialog is closed</summary>
-        ''' <param name="sender">Source of the event (current instance)</param>
-        ''' <param name="e">Event argument</param>
-        Public Event Closed(ByVal sender As MessageBox, ByVal e As EventArgs)
+        Public Event Closed As EventHandler(Of MessageBox, EventArgs)
 #End Region
     End Class
 End Namespace

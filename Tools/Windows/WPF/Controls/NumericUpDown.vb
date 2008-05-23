@@ -12,7 +12,7 @@ Imports System.Windows.Data
 Imports System.Windows.Controls.Primitives
 Imports CultureInfo = System.Globalization.CultureInfo
 
-Namespace WindowsT.ControlsT
+Namespace WindowsT.WPF.ControlsT
     'ASAP: More comments
     '<SnippetStaticCtorOfCustomClassCommonTasks>
     ''' <summary>Represents a Windows spin box (also known as an up-down control) that displays numeric values.</summary>
