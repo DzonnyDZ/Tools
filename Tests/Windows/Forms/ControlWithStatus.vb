@@ -1,3 +1,4 @@
+' This file is excluded from project
 #If ControlWithStatus Then
 '#If Config <= Alpha This conditional compilation is done in Tests.vbproj
 Namespace WindowsT.FormsT
