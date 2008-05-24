@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then
+﻿'#If Config <= Nightly Then 'set in project file
 Namespace WindowsT.NativeT
     Friend Class frmTestForm
         ''' <summary>CTor</summary>
@@ -16,4 +16,4 @@ Namespace WindowsT.NativeT
         End Sub
     End Class
 End Namespace
-#End If
+'#End If

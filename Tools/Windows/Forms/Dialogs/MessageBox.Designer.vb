@@ -1,11 +1,10 @@
 ﻿Imports System.Linq
-#If Config <= Nightly Then
 Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class MessageBoxForm
         Inherits System.Windows.Forms.Form
 
-        
+
 
         'Required by the Windows Form Designer
         Private components As System.ComponentModel.IContainer
@@ -266,4 +265,3 @@ Namespace WindowsT.FormsT
         Protected Friend WithEvents tmrCountDown As System.Windows.Forms.Timer
     End Class
 End Namespace
-#End If

@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then 'Stage: Nightly
+﻿'#If Config <= Nightly Then 'set in project file
 Imports Tools.IOt
 Namespace IOt
     ''' <summary>Test for <see cref="Tools.IOt.FileSystemEnumerator"/></summary>
@@ -35,4 +35,3 @@ Namespace IOt
         End Function
     End Class
 End Namespace
-#End If

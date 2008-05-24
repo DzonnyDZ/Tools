@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{79B67251-D837-4367-B571-AB806C2C7C74}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -154,18 +154,25 @@
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Diagnostics\Drawing\IO\frmJPEG.Designer.vb">
-      <DependentUpon>frmJPEG.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Diagnostics\Drawing\IO\frmJPEG.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Diagnostics\Drawing\Metadata\frmIPTC.Designer.vb">
       <DependentUpon>frmIPTC.vb</DependentUpon>
     </Compile>
     <Compile Include="Diagnostics\Drawing\Metadata\frmIPTC.vb" Condition="$(Config)&lt;=$(Nightly)">
       <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Drawing\IO\frmJPEG.Designer.vb">
+      <DependentUpon>frmJPEG.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Drawing\IO\frmJPEG.vb" Condition="$(Config)&lt;=$(Nightly)">
+        <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Drawing\Metadata\frmIPTC.Designer.vb">
+      <DependentUpon>frmIPTC.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Drawing\Metadata\frmIPTC.vb" Condition="$(Config)&lt;=$(Nightly)">
+        <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FloatingPropertyGrid.Designer.vb">
@@ -192,13 +199,15 @@
     <Compile Include="IO\FileSystemEnumerator.Designer.vb">
       <DependentUpon>FileSystemEnumerator.vb</DependentUpon>
     </Compile>
-    <Compile Include="IO\FileSystemEnumerator.vb">
+    <Compile Include="IO\FileSystemEnumerator.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IO\FileSystemEnumeratorWithMask.Designer.vb">
       <DependentUpon>FileSystemEnumeratorWithMask.vb</DependentUpon>
     </Compile>
-    <Compile Include="IO\FileSystemEnumeratorWithMask.vb">
+    <Compile Include="IO\FileSystemEnumeratorWithMask.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="IO\StreamTools.InsertInto.Designer.vb">
@@ -239,10 +248,18 @@
     </Compile>
     <Compile Include="Projects\Projects.vb" />
     <Compile Include="Special\TypeTools.vb" />
+    <Compile Include="Windows\Forms\MessageBox.Designer.vb">
+      <DependentUpon>MessageBox.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\MessageBox.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\ObjectBrowser.Designer.vb">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\ObjectBrowser.vb">
+    <Compile Include="Windows\Forms\ObjectBrowser.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Resources\SystemResources.Designer.vb">
@@ -252,12 +269,11 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Forms\ControlWithStatus.designer.vb">
+    <!--<Compile Include="Windows\Forms\ControlWithStatus.designer.vb">
       <DependentUpon>ControlWithStatus.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\ControlWithStatus.vb">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="Windows\Forms\ControlWithStatus.vb" Condition="$(Config)&lt;=$(Alpha)">
+    </Compile>-->
     <Compile Include="Windows\Forms\KeyWordsEditor.Designer.vb">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>
     </Compile>
@@ -311,22 +327,18 @@
     <Compile Include="Windows\Forms\LinkLabel.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Windows\Dialogs\MessageBox.Designer.vb">
-      <DependentUpon>MessageBox.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Dialogs\MessageBox.vb">
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Windows\Native\TestForm.Designer.vb">
       <DependentUpon>TestForm.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Native\TestForm.vb">
+    <Compile Include="Windows\Native\TestForm.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Native\Win32Window.Designer.vb">
       <DependentUpon>Win32Window.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Native\Win32Window.vb">
+    <Compile Include="Windows\Native\Win32Window.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Xml\XPath\XPathObjectNavigator.Designer.vb">
@@ -357,12 +369,14 @@
       <DependentUpon>ImageVisualizer.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Diagnostics\Drawing\IO\frmJPEG.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>frmJPEG.vb</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Diagnostics\Drawing\Metadata\frmIPTC.resx">
       <SubType>Designer</SubType>
+      <DependentUpon>frmIPTC.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drawing\IO\frmJPEG.resx">
+      <DependentUpon>frmJPEG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Drawing\Metadata\frmIPTC.resx">
       <DependentUpon>frmIPTC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FloatingPropertyGrid.resx">
@@ -403,6 +417,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\MessageBox.resx">
+      <DependentUpon>MessageBox.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\ObjectBrowser.resx">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -411,10 +428,10 @@
       <SubType>Designer</SubType>
       <DependentUpon>SystemResources.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\ControlWithStatus.resx">
+    <!--<EmbeddedResource Include="Windows\Forms\ControlWithStatus.resx">
       <DependentUpon>ControlWithStatus.vb</DependentUpon>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
+    </EmbeddedResource>-->
     <EmbeddedResource Include="Windows\Forms\KeyWordsEditor.resx">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -446,10 +463,6 @@
     <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LinkLabel.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Dialogs\MessageBox.resx">
-      <DependentUpon>MessageBox.vb</DependentUpon>
-      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Native\TestForm.resx">
       <DependentUpon>TestForm.vb</DependentUpon>

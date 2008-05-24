@@ -1,7 +1,8 @@
 ﻿Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
 Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
-#If Config <= Nightly Then
+'#If Config <= Nightly Then 'Set in project file
+'Stage:Nightly
 Namespace WindowsT.FormsT
     'ASAP:Mark
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
@@ -592,8 +593,20 @@ Namespace WindowsT.FormsT
     End Class
 
     ''' <summary>Implements <see cref="WindowsT.IndependentT.MessageBox"/> for as <see cref="Form"/></summary>
+    <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
     Public Class MessageBox
         Inherits iMsg
+        ''' <summary>Releases all resources used by the <see cref="T:System.ComponentModel.Component" />.</summary>
+        ''' <param name="disposing"> true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            If disposing Then
+                If Form IsNot Nothing AndAlso Not Form.IsDisposed Then
+                    Form.Close()
+                    Form.Dispose()
+                End If
+            End If
+            MyBase.Dispose(disposing)
+        End Sub
         ''' <summary>If overriden in derived class closes the message box with given response</summary>
         ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
         Public Overloads Overrides Sub Close(ByVal Response As System.Windows.Forms.DialogResult)
@@ -674,4 +687,3 @@ Namespace WindowsT.FormsT
         End Function
     End Class
 End Namespace
-#End If

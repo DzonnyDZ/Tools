@@ -294,7 +294,8 @@
     <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb">
+    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb" Condition="$(Config)&lt;=$(Nightly)">
+        <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
@@ -339,15 +340,15 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
-      <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
-      <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
-      <!--Set stage of LinkLabel here, because it uses resources and using #If produces warnings-->
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\ProgressBarWithText.vb">
@@ -368,7 +369,8 @@
     <Compile Include="Windows\Forms\Dialogs\MessageBox.Designer.vb">
       <DependentUpon>MessageBox.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Dialogs\MessageBox.vb">
+    <Compile Include="Windows\Forms\Dialogs\MessageBox.vb" Condition="$(Config)&lt;=$(Nightly)">
+        <!--Set stage of here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\UserControlExtended.vb">
@@ -603,14 +605,10 @@
       <LastGenOutput>ObjectImages.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.MultiLineTextBoxWithStatus.bmp" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.NumericUpDownWithStatus.bmp" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.TextBoxWithStatus.bmp" />
     <None Include="Resources\NavBack.png" />
     <None Include="Resources\NavForward.png" />
+    <EmbeddedResource Include="Resources\WindowsT.FormsT.MessageBox.bmp" />
     <Content Include="Resources\T.png" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.ComboWithStatus.bmp" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.MaskedTextBoxWithStatus.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.StatusMarker.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
     <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">

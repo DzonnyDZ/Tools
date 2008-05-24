@@ -2,9 +2,10 @@
 Imports System.Windows.Forms, System.Reflection
 Imports System.Drawing, System.Linq, Tools.LinqT.EnumerableT
 Imports Tools.ComponentModelT
-#If Config <= Nightly Then
+'#If Config <= Nightly Then 'Set in project file
+'Stage:Nightly
 Namespace WindowsT.FormsT
-    'ASAP:
+    'ASAP: Mark
     ''' <summary>Control for browsing .NET assemblies</summary>
     Public Class ObjectBrowser : Inherits UserControlExtended
         ''' <summary>Contains value of the <see cref="Objects"/> property</summary>
@@ -948,7 +949,7 @@ Namespace WindowsT.FormsT
             OnSelectedItemChangedInternal(sender, sender.SelectedItems(0), sender.SelectedItems(0).Tag)
         End Sub
 
-       
+
 
         Private Sub tvwObjects_Enter(ByVal sender As TreeView, ByVal e As System.EventArgs) Handles tvwObjects.Enter
             If Initializing Then Exit Sub
@@ -1071,7 +1072,7 @@ Namespace WindowsT.FormsT
                         Try
                             tvwObjects.SelectedNode = BackwardStack.Pop.Node 'TODO: Utilize tag
                             Exit While
-                        Catch:End Try
+                        Catch : End Try
                     End While
                     If tvwObjects.SelectedNode Is ForwardStack.Peek.Node Then ForwardStack.Pop()
                 Finally
@@ -1155,4 +1156,3 @@ Namespace WindowsT.FormsT
 #End Region
     End Class
 End Namespace
-#End If

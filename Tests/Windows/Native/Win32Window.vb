@@ -1,4 +1,4 @@
-﻿#If Config <= Nightly Then
+﻿'#If Config <= Nightly Then'Set in project file
 Imports Tools.WindowsT.NativeT, System.Linq
 Namespace WindowsT.NativeT
 
@@ -244,4 +244,3 @@ Namespace WindowsT.NativeT
 
     End Class
 End Namespace
-#End If
