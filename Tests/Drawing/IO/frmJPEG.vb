@@ -1,5 +1,5 @@
 Namespace DrawingT.IO
-    '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
+    '#If Config <= Nightly Then Stage co      nditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.DrawingT.IO.JPEG"/></summary>
     Public Class frmJPEG
         ''' <summary>CTor</summary>
