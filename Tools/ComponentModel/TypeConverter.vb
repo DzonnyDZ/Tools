@@ -479,7 +479,7 @@ Namespace ComponentModelT
         End Function
     End Class
     ''' <summary>Provides base class for type-safe <see cref="ComponentModel.ExpandableObjectConverter"/> with support for interface based conversion as <see cref="TypeConverter(Of T)"/></summary>
-    ''' <typeparam name="T">Main type conversion is providfed from and to</typeparam>
+    ''' <typeparam name="T">Main type conversion is provided from and to</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ExpandableObjectConverter(Of )), LastChange:="07/22/2007")> _
     <FirstVersion("06/19/2007")> _

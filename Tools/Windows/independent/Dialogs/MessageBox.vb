@@ -1,4 +1,7 @@
 ﻿Imports Tools.CollectionsT.GenericT, System.Linq
+Imports Tools.DrawingT.DesignT
+Imports System.Drawing.Design
+Imports Tools.ComponentModelT
 
 #If Config <= Nightly Then 'Stage Nightly
 Imports System.Windows.Forms
@@ -11,10 +14,11 @@ Namespace WindowsT.IndependentT
     ''' The aim of such behavior is to provide dynamic message box which can be changed as it is displayd.
     ''' However it is up to derived class which changes it will track and interpret as changes of dialog.
     ''' </remarks>
+    <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
 #Region "Shared"
         ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private Shared _DefaultImplementation As Type 'TODO: Assign WinForms implementation
+        <EditorBrowsable(EditorBrowsableState.Never)> Private Shared _DefaultImplementation As Type = GetType(FormsT.MessageBox)
         ''' <summary>Gets or sets default implementation used for messageboxes shown by static <see cref="Show"/> methods of this class</summary>
         ''' <returns>Type currently used as default implementation of message box</returns>
         ''' <value>Sets application-wide default implementation of message box</value>
@@ -73,9 +77,12 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _AllowClose As Boolean = True
 #End Region
 #Region "Properties"
-        ''' <summary>Gets or sets value indicationg if dialog can be closed without specifiing clicking any of buttons</summary>
+        ''' <summary>Gets or sets value indicating if dialog can be closed without clicking any of buttons</summary>
         ''' <remarks>This does not affacet possibility to close message box programatically using the <see cref="Close"/> method.</remarks>
-        Public Property AllowClose() As Boolean
+        <DefaultValue(True)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Value indicationg if dialog can be closed without clicking on button. Thi is typically by closing the window that represents the dialog by the ""X"" button.")> _
+        Public Property AllowClose() As Boolean 'Localize:Description
             Get
                 Return _AllowClose
             End Get
@@ -88,8 +95,10 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Defines buttons displayed on message box</summary>
         ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.</remarks>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton)
+        <Description("Defines buttons displayed on message box")> _
+        Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton) 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Buttons
             End Get
@@ -111,7 +120,9 @@ Namespace WindowsT.IndependentT
         ''' <seealso cref="System.Windows.Forms.Form.AcceptButton"/>
         ''' <seealso cref="System.Windows.Controls.Button.IsDefault"/>
         <DefaultValue(0I)> _
-        Public Property DefaultButton() As Integer
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("indicates 0-based index of button that has focus when message box is shown and is default button fro message box (usually reported when user presses enter).")> _
+        Public Property DefaultButton() As Integer 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _DefaultButton
             End Get
@@ -122,8 +133,13 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Gets or sets value returned by <see cref="Show"/> function when user closes the message box by closing window or by pressin escape</summary>
-        ''' <remarks>Values that are not members of the <see cref="DialogResult"/> enumeration can be safely used.</remarks>
-        Public Property CloseResponse() As DialogResult
+        ''' <remarks>Values that are not members of the <see cref="DialogResult"/> enumeration can be safely used.
+        ''' <para>If <see cref="AllowClose"/> is false this property ahs effect only when mapped to one of buttons (has same value as <see cref="MessageBoxButton.Result"/> of one buttons) and user presses escape.</para></remarks>
+        ''' <seealeo cref="DialogResult"/><seealso cref="Show"/>
+        <DefaultValue(GetType(DialogResult), "None")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Value returned by the Show function / DialogResult property when user closes the dialog by closing dialog window or by pressing escape")> _
+        Public Property CloseResponse() As DialogResult 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _CloseResponse
             End Get
@@ -185,7 +201,9 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Gets or sets text of prompt of message box.</summary>
         <DefaultValue(GetType(String), Nothing)> _
-        Public Property Prompt() As String
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <Description("Text of prompt displayed to the user.")> _
+        Public Property Prompt() As String 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Prompt
             End Get
@@ -198,7 +216,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets or sets title text of message box</summary>
         ''' <remarks>If value of thsi property is null or an empty string, application title is used (see <see cref="Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Title"/>)</remarks>
         <DefaultValue(GetType(String), Nothing)> _
-        Public Property Title() As String
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <Description("Title shown in dialog header")> _
+        Public Property Title() As String 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Title
             End Get
@@ -211,7 +231,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets or sets icon image to display on the message box</summary>
         ''' <remarks>Expected image size is 32×32px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
         <DefaultValue(GetType(Drawing.Image), Nothing)> _
-        Public Property Icon() As Drawing.Image
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <Description("Icon shown in left to corner (lrt) of dialog")> _
+        Public Property Icon() As Drawing.Image 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Icon
             End Get
@@ -221,9 +243,13 @@ Namespace WindowsT.IndependentT
                 If old IsNot value Then OnIconChanged(New IReportsChange.ValueChangedEventArgs(Of Drawing.Image)(old, value, "Icon"))
             End Set
         End Property
+        'TODO: Editor for prg
         ''' <summary>Gets or sets options of the message box</summary>
         <DefaultValue(GetType(MessageBoxOptions), "0")> _
-        Public Property Options() As MessageBoxOptions
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
+        <Description("Addtional options controlling how dialog si displayed")> _
+        <Editor(GetType(OptionsEditor), GetType(UITypeEditor))> _
+        Public Property Options() As MessageBoxOptions 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Options
             End Get
@@ -233,9 +259,17 @@ Namespace WindowsT.IndependentT
                 If old <> value Then OnOptionsChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions)(old, value, "Options"))
             End Set
         End Property
+        Private NotInheritable Class OptionsEditor
+            'Inherits DropDownEditor
+            'TODO:Impelment
+        End Class
         ''' <summary>Gets or sets check box displayed in messaqge box</summary>
         <DefaultValue(GetType(MessageBoxCheckBox), Nothing)> _
-        Public Property CheckBox() As MessageBoxCheckBox
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
+        <Description("Check box displayed for message box. Can be used for example for 'Do not show this message in future' option.")> _
+        Public Property CheckBox() As MessageBoxCheckBox 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _CheckBox
             End Get
@@ -247,7 +281,11 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Gets or sets combo box (drop down list) displayed in message box</summary>
         <DefaultValue(GetType(MessageBoxComboBox), Nothing)> _
-        Public Property ComboBox() As MessageBoxComboBox
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
+        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
+        <Description("Combo box displayed on dialog")> _
+        Public Property ComboBox() As MessageBoxComboBox 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _ComboBox
             End Get
@@ -260,6 +298,8 @@ Namespace WindowsT.IndependentT
         ''' <summary>Radio buttons displayed on message box</summary>
         ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="RadiosChanged"/> event.</remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
+        <Description("Radio buttons (options) displayed on messagebox")> _
         Public ReadOnly Property Radios() As ListWithEvents(Of MessageBoxRadioButton)
             <DebuggerStepThrough()> Get
                 Return _Radios
@@ -277,6 +317,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets or sets additional control displayed at top of the message box (above message)</summary>
         ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
         <DefaultValue(GetType(Object), Nothing)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
         Public Property TopControl() As Object
             <DebuggerStepThrough()> Get
                 Return _TopControl
@@ -289,6 +330,8 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Gets or sets additional control displayed in the middle of the message box (above buttons)</summary>
         ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        <DefaultValue(GetType(Object), Nothing)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
         Public Property MidControl() As Object
             <DebuggerStepThrough()> Get
                 Return _MidControl
@@ -301,6 +344,8 @@ Namespace WindowsT.IndependentT
         End Property
         ''' <summary>Gets or sets additional control displayed at bottom of the message box (below buttons)</summary>
         ''' <remarks>Implementation of message box (derived class) may accept only controls of specified type(s) like <see cref="Windows.Forms.Control"/> or <see cref="Windows.FrameworkElement"/> and ignore any other types.</remarks>
+        <DefaultValue(GetType(Object), Nothing)> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
         Public Property BottomControl() As Object
             <DebuggerStepThrough()> Get
                 Return _BottomControl
@@ -314,7 +359,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets or sets value indicating for how long the message box will be displayed before it closes with <see cref="CloseResponse"/> as result.</summary>
         ''' <remarks><see cref="TimeSpan.Zero"/> or less vaklue meand then no count-down takes effect</remarks>
         <DefaultValue(GetType(TimeSpan), "0:00:00")> _
-        Public Property Timer() As TimeSpan
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Inidcates how long the message box will be show to user before being closed automatically. If zero or less, no count-down takes effect.")> _
+        Public Property Timer() As TimeSpan 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Timer
             End Get
@@ -333,7 +380,9 @@ Namespace WindowsT.IndependentT
         ''' </list>
         ''' Count down is displayed as time in format h:mm:ss, m:ss or s depending on current value of time remaining (always the shortest possible format is used).</remarks>
         <DefaultValue(-1I)> _
-        Public Property TimeButton() As Integer
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <Description("Indicates 0-based index of button which displays the count-down timer. It aslo defines result of dialog returned when time elapses. -1 chose button automatically acording to CloseResponse, <-1 displays count-down in title, > number of buttons hides count-down indicator.")> _
+        Public Property TimeButton() As Integer 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _TimeButton
             End Get
@@ -531,6 +580,7 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "Control classes"
         ''' <summary>Common base for predefined message box controls</summary>
+        <DefaultProperty("Text"), DefaultEvent("Changed")> _
         Public MustInherit Class MessageBoxControl : Implements IReportsChange
             ''' <summary>Contains value of the <see cref="Text"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Text As String
@@ -551,8 +601,10 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EnabledChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
-            ''' <summary>Gets or sets text displayed on button</summary>
-            Public Property Text() As String
+            ''' <summary>Gets or sets text displayed on control</summary>
+            <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+            <Description("Text displayed on the control")> _
+            Public Property Text() As String 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _Text
                 End Get
@@ -566,7 +618,8 @@ Namespace WindowsT.IndependentT
                 End Set
             End Property
             ''' <summary>Gets or sets tool tip text for the button</summary>
-            <DefaultValue(GetType(String), Nothing)> _
+            <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+                         <Description("Tool tip text (help) for control")> _
             Public Property ToolTip() As String
                 <DebuggerStepThrough()> Get
                     Return _ToolTip
@@ -581,8 +634,9 @@ Namespace WindowsT.IndependentT
                 End Set
             End Property
             ''' <summary>Gets or sets value indicating if button is enabled (accessible) or not</summary>
-            <DefaultValue(True)> _
-            Public Property Enabled() As Boolean
+            <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+            <Description("Indicates if control is enabled, so user can interact with it.")> _
+            Public Property Enabled() As Boolean 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _Enabled
                 End Get
@@ -644,6 +698,7 @@ Namespace WindowsT.IndependentT
         End Class
         ''' <summary>Represents button for <see cref="MessageBox"/></summary>
         ''' <completionlist cref="MessageBoxButton"/>
+        <DefaultEvent("ClickPreview")> _
         Public Class MessageBoxButton : Inherits MessageBoxControl
 #Region "Backing fields"
             ''' <summary>Contains value of the <see cref="Result"/> property</summary>
@@ -659,7 +714,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Event arguments. Can be used to cancel the event. <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> false means tha message box will be closed; false means the message box will remain open.</param>
             ''' <param name="sender">Instance of <see cref="MessageBoxButton"/> that have raised the event</param>
             ''' <remarks>If <see cref="Result"/> is <see cref="HelpDialogResult"/> <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> is pre-set to true. That means that if it is not set to false, message box is not closed when help button is clicked.</remarks>
-            Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs)
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+            <Description("Raised when user clicks the button. Can be canceled.")> _
+            Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs) 'Localize:Description
 #Region "Change events"
             ''' <summary>Raised when value of the <see cref="Result"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
@@ -677,7 +734,9 @@ Namespace WindowsT.IndependentT
             ''' </remarks>
             ''' <seealso cref="MessageBoxButton.Help"/>
             <DefaultValue(GetType(DialogResult), "None")> _
-            Public Property Result() As DialogResult
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+            <Description("Result of message box returned when this button is clicked.")> _
+            Public Property Result() As DialogResult 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _Result
                 End Get
@@ -698,7 +757,9 @@ Namespace WindowsT.IndependentT
             ''' When you do not want to use accesskey for your button, set his property to 0 (null char, <see cref="vbNullChar"/>).
             ''' </remarks>
             <DefaultValue(CChar(vbNullChar))> _
-            Public Property AccessKey() As Char
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+            <Description("Access character for the button. Should be one of characters from button text.")> _
+            Public Property AccessKey() As Char 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _AccessKey
                 End Get
@@ -723,20 +784,7 @@ Namespace WindowsT.IndependentT
                 End Set
             End Property
 #End Region
-            ''' <summary>Class derived from <see cref="MessageBox"/> which owns this button can use this property to store "physical" button object that represents the button on surface of a window.</summary>
-            ''' <remarks>
-            ''' Use of this property by <see cref="MessageBox">MessageBox</see>-derived class is optional.
-            ''' This property should be set only by class derived from <see cref="MessageBox"/> which owns this button.
-            ''' </remarks>
-            <EditorBrowsable(EditorBrowsableState.Advanced), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
-            Public Property Button() As Object
-                <DebuggerStepThrough()> Get
-                    Return _Button
-                End Get
-                <DebuggerStepThrough()> Set(ByVal value As Object)
-                    _Button = value
-                End Set
-            End Property
+
 #Region "CTors"
             'TODO:Null exceptions
             'TODO:Comments
@@ -928,7 +976,7 @@ Namespace WindowsT.IndependentT
                 End Get
             End Property
 #End Region
-            
+
 #Region "GetButtons"
             ''' <summary>Gets buttons specified by WinForms enumeration value</summary>
             ''' <param name="Buttons">Buttons to get</param>
@@ -1020,6 +1068,7 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Const HelpDialogResult As DialogResult = Integer.MinValue
         ''' <summary>Represents check box control for <see cref="MessageBox"/></summary>
+        <DefaultEvent("StateChanged")> _
         Public Class MessageBoxCheckBox : Inherits MessageBoxControl
             ''' <summary>Contains value of the <see cref="ThreeState"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _ThreeState As Boolean
@@ -1033,11 +1082,15 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="State"/> can be changed by user or programatically</remarks>
-            Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+            <Description("Raised ehrn value of the State property changed")> _
+            Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState)) 'Localize:Description
             ''' <summary>Gets or sets value indicating if user can change state of checkbox between 3 or 2 states</summary>
             ''' <remarks>2-state CheckBox allows user to change state only to <see cref="CheckState.Checked"/> or <see cref="CheckState.Unchecked"/></remarks>
             <DefaultValue(False)> _
-            Public Property ThreeState() As Boolean
+            <Description("Indicateis if checkbox has 3rd intermediate state")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+            Public Property ThreeState() As Boolean 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _ThreeState
                 End Get
@@ -1053,7 +1106,9 @@ Namespace WindowsT.IndependentT
             ''' <summary>Gets or sets current state of check box</summary>
             ''' <remarks>If <see cref="ThreeState"/> is false user cannot set checkbox to <see cref="CheckState.Indeterminate"/>, however you can achieve it programatically</remarks>
             <DefaultValue(GetType(CheckState), "Unchecked")> _
-            Public Property State() As CheckState
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+            <Description("Current check state of check box")> _
+            Public Property State() As CheckState 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _State
                 End Get
@@ -1099,6 +1154,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Represents combo box (drop down list) control for <see cref="MessageBox"/></summary>
         ''' <remarks>This class inherits implementation of <see cref="IReportsChange"/> from <see cref="MessageBoxControl"/>. The <see cref="MessageBoxComboBox.Changed"/> event when raised for change of <see cref="MessageBoxComboBox.Items"/> collection, reports event arguments of <see cref="MessageBoxComboBox.Items">Items</see>.<see cref="ListWithEvents(Of Object).CollectionChanged">CollectionChanged</see> event (instead of the <see cref="ListWithEvents(Of Object).Changed">Changed</see>).</remarks>
         ''' <seealco cref="MessageBoxComboBox.OnItemsChanged"/>
+        <DefaultProperty("Items"), DefaultEvent("SelectedIndexChanged")> _
         Public Class MessageBoxComboBox : Inherits MessageBoxControl
 #Region "Fields"
             ''' <summary>Contains value of the <see cref="Editable"/> property</summary>
@@ -1113,9 +1169,11 @@ Namespace WindowsT.IndependentT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _SelectedIndex As Integer = -1
 #End Region
 #Region "Properties"
-            ''' <summary>Contains value of the <see cref="Editable"></see> property</summary>
+            ''' <summary>gets or sets value indicating if user can type any text to combo box</summary>
             <DefaultValue(False)> _
-            Public Property Editable() As Boolean
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+            <Description("Indicates if user can change text of combo box (true) or must select only form list of predefined values (false).")> _
+            Public Property Editable() As Boolean 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _Editable
                 End Get
@@ -1128,17 +1186,22 @@ Namespace WindowsT.IndependentT
                     End If
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="Items"></see> property</summary>
+            ''' <summary>Itels in drop down of combo box</summary>
             ''' <remarks>Register handlers with events of <see cref="ListWithEvents(Of T)"/> returned by this property or use <see cref="ItemsChanged"/> event in order to track changes of the collection.</remarks>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+            <Description("Items shown to user in drop down. Item can be any Object.")> _
             Public ReadOnly Property Items() As ListWithEvents(Of Object)
                 <DebuggerStepThrough()> Get
                     Return _Items
                 End Get
             End Property
-            ''' <summary>Contains value of the <see cref="DisplayMember"></see> property</summary>
+            ''' <summary>Indicates member (property or field) used to obtain text displayed in drop down for each item.</summary>
+            ''' <seealso cref="ComboBox.DisplayMember"/>
             <DefaultValue(GetType(String), Nothing)> _
-            Public Property DisplayMember() As String
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+            <Description("Indicates member (property, field) used to obtain text to be shown to user for each item.")> _
+            Public Property DisplayMember() As String 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _DisplayMember
                 End Get
@@ -1151,7 +1214,8 @@ Namespace WindowsT.IndependentT
                     End If
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="SelectedItem"></see> property</summary>
+            ''' <summary>Gets or sets value indicating currently selected item</summary>
+            ''' <seealso cref="SelectedIndex"/>
             <DefaultValue(GetType(Object), Nothing), Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             Public Property SelectedItem() As Object
                 <DebuggerStepThrough()> Get
@@ -1166,9 +1230,12 @@ Namespace WindowsT.IndependentT
                     End If
                 End Set
             End Property
-            ''' <summary>Contains value of the <see cref="SelectedIndex"></see> property</summary>
+            ''' <summary>Indicates 0-based index of item diaplyed in combo box</summary>
+            ''' <seealso cref="SelectedItem"/>
             <DefaultValue(-1I)> _
-            Public Property SelectedIndex() As Integer
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+            <Description("Indicates 0-based index of selected item in combo box.")> _
+            Public Property SelectedIndex() As Integer 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _SelectedIndex
                 End Get
@@ -1207,7 +1274,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="SelectedItem"/> can be changed by user or programatically</remarks>
-            Public Event SelectedItemChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+            <Description("Raised when value of the SelectedItem property changes")> _
+            Public Event SelectedItemChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) 'Localize:Description
             ''' <summary>Raises the <see cref="SelectedItemChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnSelectedItemChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
@@ -1218,7 +1287,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">The source of the event</param>
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="SelectedIndex"/> can be changed by user or programatically</remarks>
-            Public Event SelectedIndexChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+            <Description("Raised when value of the SelectedIndex property changes.")> _
+            Public Event SelectedIndexChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer)) 'Localize:Description
             ''' <summary>Raises the <see cref="SelectedIndexChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnSelectedIndexChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -1271,12 +1342,15 @@ Namespace WindowsT.IndependentT
 #End Region
         End Class
         ''' <summary>Represents radio button (one from many check box) for <see cref="MessageBox"/></summary>
+        <DefaultEvent("CheckedChanged")> _
         Public Class MessageBoxRadioButton : Inherits MessageBoxControl
             ''' <summary>Contains value of the <see cref="Checked"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Checked As Boolean
             ''' <summary>Gets or sets value indicating if control is checked or not</summary>
             <DefaultValue(False)> _
-            Public Property Checked() As Boolean
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+            <Description("Indicates of option is selected")> _
+            Public Property Checked() As Boolean 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _Checked
                 End Get
@@ -1293,7 +1367,9 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">Source of the event</param>
             ''' <param name="e">Event arguments containing infomation about new and old value</param>
             ''' <remarks>The <see cref="Checked"/> property can be changed programatically or by user</remarks>
-            Public Event CheckedChanged(ByVal sender As MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+            <Description("Raised when value of the Checked property changes")> _
+            Public Event CheckedChanged(ByVal sender As MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean)) 'Localize:Description
             ''' <summary>Raises the <see cref="CheckedChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnCheckedChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
@@ -1374,14 +1450,14 @@ Namespace WindowsT.IndependentT
         ''' <summary>raises the <see cref="Closed"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Derived class should call this method when dialog is closed</remarks>
-        Protected Sub OnClosed(ByVal e As EventArgs)
+        Protected Friend Overridable Sub OnClosed(ByVal e As EventArgs)
             CountDownTimer.Enabled = False
             State = States.Closed
             RaiseEvent Closed(Me, e)
         End Sub
         ''' <summary>Called when dialog is shown. Performs some initialization (timer). Raises the <see cref="Shown"/> event.</summary>
-        ''' <remarks>Derived class should call thism methow after dialog is shown.</remarks>
-        Protected Sub OnShown()
+        ''' <remarks>Derived class should call this method after dialog is shown.</remarks>
+        Protected Friend Overridable Sub OnShown()
             If Me.Timer > TimeSpan.Zero Then
                 Me.CurrentTimer = Me.Timer
                 Me.CountDownTimer.Enabled = True
@@ -1404,6 +1480,7 @@ Namespace WindowsT.IndependentT
         Private _State As States = States.Created
         ''' <summary>Gets or sets value indicating current state of the message box</summary>
         ''' <remarks>Value of this property is set by <see cref="OnShown"/> and <see cref="OnClosed"/> methods</remarks>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False)> _
         Public Property State() As States
             <DebuggerStepThrough()> Get
                 Return _State
@@ -1448,11 +1525,20 @@ Namespace WindowsT.IndependentT
             OnCountDown(New EventArgs)
             If Not Me.IsCountDown Then Exit Sub
             CurrentTimer -= TimeSpan.FromSeconds(1)
-            If CurrentTimer <= TimeSpan.Zero Then Me.Close() : CountDownTimer.Enabled = False
+            If CurrentTimer <= TimeSpan.Zero Then
+                Select Me.TimeButton
+                    Case 0 To Me.Buttons.Count - 1
+                        Me.Close(Me.Buttons(Me.TimeButton).Result)
+                    Case -1
+                        Me.Close(Me.CloseResponse)
+                    Case Else : Me.Close()
+                End Select
+                CountDownTimer.Enabled = False
+            End If
         End Sub
         ''' <summary>Gets value indicationg if counting down is curently in progress</summary>
         ''' <remarks>In order to cahnge value of this prioperty use <see cref="ResumeCountDown"/> and <see cref="StopCountDown"/> methods</remarks>
-        <Browsable(False)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public ReadOnly Property IsCountDown() As Boolean
             Get
                 Return CountDownTimer.Enabled
@@ -1503,13 +1589,19 @@ Namespace WindowsT.IndependentT
         End Sub
 #End Region
 #Region "Events"
-        ''' <summary>Raised when count down timer ticks</summary>
+        ''' <summary>Raised when count-down timer ticks</summary>
         ''' <remarks>Count down timer ticks each second once. First the event is raised immediatelly after the dialog is shown or count-down is resumed</remarks>
-        Public Event CountDown As EventHandler(Of MessageBox, EventArgs)
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        <Description("Raised when count-down time ticks - once a second.")> _
+        Public Event CountDown As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
         ''' <summary>Raised after dialog is shown</summary>
-        Public Event Shown As EventHandler(Of MessageBox, EventArgs)
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        <Description("Raised after dialog is shown")> _
+        Public Event Shown As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
         ''' <summary>Raised after dialog is closed</summary>
-        Public Event Closed As EventHandler(Of MessageBox, EventArgs)
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        <Description("Raised after dialog is closed")> _
+        Public Event Closed As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
 #End Region
     End Class
 End Namespace

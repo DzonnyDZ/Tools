@@ -93,7 +93,8 @@ Namespace CollectionsT.SpecializedT
             Return Collection.GetEnumerator
         End Function
         Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of Object) Implements System.Collections.Generic.IEnumerable(Of Object).GetEnumerator
-            Return Collection.GetEnumerator
+            If TypeOf Collection Is IEnumerable(Of Object) Then Return DirectCast(Collection, IEnumerable(Of Object)).GetEnumerator
+            Return New Wrapper(Of Object)(Collection).GetEnumerator
         End Function
 #End Region
         ''' <summary>Provides common base class for wrappers of type-unsafe <see cref="IList"/> to type-safe <see cref="IList(Of T)"/></summary>

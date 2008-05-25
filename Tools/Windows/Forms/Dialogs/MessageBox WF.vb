@@ -59,6 +59,16 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Initializes tis form by <see cref="MessageBox"/>, called from CTor</summary>
         Protected Overridable Sub Initialize()
+            'Options
+            Select Case MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.AlignMask
+                Case IndependentT.MessageBox.MessageBoxOptions.AlignLeft, IndependentT.MessageBox.MessageBoxOptions.AlignJustify
+                    lblPrompt.TextAlign = Drawing.ContentAlignment.TopLeft
+                Case IndependentT.MessageBox.MessageBoxOptions.AlignRight
+                    lblPrompt.TextAlign = Drawing.ContentAlignment.TopRight
+                Case IndependentT.MessageBox.MessageBoxOptions.AlignCenter
+                    lblPrompt.TextAlign = Drawing.ContentAlignment.TopCenter
+            End Select
+            'Todo: lrt rtl
             'Title
             If MessageBox.Title Is Nothing Then
                 Dim App As New Microsoft.VisualBasic.ApplicationServices.AssemblyInfo(System.Reflection.Assembly.GetEntryAssembly)
@@ -216,6 +226,8 @@ Namespace WindowsT.FormsT
                 AddHandler MessageBox.TitleChanged, AddressOf__MessageBox_TitleChanged
                 AddHandler MessageBox.ButtonsChanged, AddressOf__MessageBox_ButtonsChanged
                 AddHandler MessageBox.RadiosChanged, AddressOf__MessageBox_RadiosChanged
+                AddHandler MessageBox.IconChanged, AddressOf__MessageBox_IconChanged
+                AddHandler MessageBox.OptionsChanged, AddressOf__MessageBox_OptionsChanged
             Else
                 RemoveHandler MessageBox.TopControlChanged, AddressOf__MessageBox_BottomControlChanged
                 RemoveHandler MessageBox.MidControlChanged, AddressOf__MessageBox_TopControlChanged
@@ -229,6 +241,8 @@ Namespace WindowsT.FormsT
                 RemoveHandler MessageBox.TitleChanged, AddressOf__MessageBox_TitleChanged
                 RemoveHandler MessageBox.ButtonsChanged, AddressOf__MessageBox_ButtonsChanged
                 RemoveHandler MessageBox.RadiosChanged, AddressOf__MessageBox_RadiosChanged
+                RemoveHandler MessageBox.IconChanged, AddressOf__MessageBox_IconChanged
+                RemoveHandler MessageBox.OptionsChanged, AddressOf__MessageBox_OptionsChanged
             End If
         End Sub
 #End Region
@@ -547,6 +561,13 @@ Namespace WindowsT.FormsT
                 End If
             Next
         End Sub
+        Private Sub MessageBox_IconChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Drawing.Image))
+            picPicture.Image = e.NewValue
+            picPicture.Visible = e.NewValue IsNot Nothing
+        End Sub
+        Private Sub MessageBox_OptionsChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxOptions))
+            'TODO:Implement
+        End Sub
 #End Region
 #Region "AddressOf"
         'Following delegates required because methods does not have exactly same signatures as events they are handling
@@ -564,6 +585,8 @@ Namespace WindowsT.FormsT
         Private ReadOnly AddressOf__MessageBox_ButtonsChanged As iMsg.ButtonsChangedEventHandler = AddressOf MessageBox_ButtonsChanged
         Private ReadOnly AddressOf__MessageBox_RadiosChanged As iMsg.RadiosChangedEventHandler = AddressOf MessageBox_RadiosChanged
         Private ReadOnly AddressOf__Radio_CheckedChanged As EventHandler = AddressOf New EventHandler(Of RadioButton, EventArgs)(AddressOf Radio_CheckedChanged).Invoke
+        Private ReadOnly AddressOf__MessageBox_IconChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of Drawing.Image)) = AddressOf MessageBox_IconChanged
+        Private ReadOnly AddressOf__MessageBox_OptionsChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxOptions)) = AddressOf MessageBox_OptionsChanged
 #End Region
         Private Sub Button_Click(ByVal sender As Button, ByVal e As EventArgs)
             Dim button As iMsg.MessageBoxButton = sender.Tag
@@ -576,6 +599,7 @@ Namespace WindowsT.FormsT
         End Sub
         Private Sub MessageBoxForm_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
             CommonDisposeActions()
+            MessageBox.OnClosed(e)
         End Sub
 #End Region
 
@@ -589,6 +613,13 @@ Namespace WindowsT.FormsT
                 Case CloseReason.None 'Do nothing (programatic)
                 Case Else : e.Cancel = True
             End Select
+        End Sub
+
+        Private Sub MessageBoxForm_Shown(ByVal sender As MessageBoxForm, ByVal e As System.EventArgs) Handles Me.Shown
+            MessageBox.OnShown()
+            If (MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.BringToFront) = IndependentT.MessageBox.MessageBoxOptions.BringToFront Then
+                Me.BringToFront()
+            End If
         End Sub
     End Class
 
@@ -616,9 +647,10 @@ Namespace WindowsT.FormsT
         End Sub
 
         ''' <summary>Contains value of the <see cref="Form"/> property</summary>
-        Private _Form As MessageBoxForm
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Form As MessageBoxForm
         ''' <summary>Gets or sets instance of <see cref="MessageBoxForm"/> that currently shows the message box</summary>
         ''' <value>This property should be set only from overriden <see cref="PerformDialog"/> when it does not calls base class method</value>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property Form() As MessageBoxForm
             Get
                 Return _Form

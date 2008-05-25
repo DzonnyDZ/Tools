@@ -31,7 +31,7 @@ Namespace WindowsT.FormsT
             Me.cmdShowFloating = New System.Windows.Forms.Button
             Me.cmdClose = New System.Windows.Forms.Button
             Me.cmdDestroy = New System.Windows.Forms.Button
-            Me.PropertyGrid1 = New System.Windows.Forms.PropertyGrid
+            Me.prgGrid = New System.Windows.Forms.PropertyGrid
             Me.txtLog = New System.Windows.Forms.TextBox
             Me.FlowLayoutPanel1.SuspendLayout()
             Me.SuspendLayout()
@@ -129,13 +129,13 @@ Namespace WindowsT.FormsT
             Me.cmdDestroy.Text = "Destroy"
             Me.cmdDestroy.UseVisualStyleBackColor = True
             '
-            'PropertyGrid1
+            'prgGrid
             '
-            Me.PropertyGrid1.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.PropertyGrid1.Location = New System.Drawing.Point(0, 58)
-            Me.PropertyGrid1.Name = "PropertyGrid1"
-            Me.PropertyGrid1.Size = New System.Drawing.Size(294, 301)
-            Me.PropertyGrid1.TabIndex = 1
+            Me.prgGrid.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgGrid.Location = New System.Drawing.Point(0, 58)
+            Me.prgGrid.Name = "prgGrid"
+            Me.prgGrid.Size = New System.Drawing.Size(294, 301)
+            Me.prgGrid.TabIndex = 1
             '
             'txtLog
             '
@@ -154,7 +154,7 @@ Namespace WindowsT.FormsT
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(294, 498)
-            Me.Controls.Add(Me.PropertyGrid1)
+            Me.Controls.Add(Me.prgGrid)
             Me.Controls.Add(Me.FlowLayoutPanel1)
             Me.Controls.Add(Me.txtLog)
             Me.MaximizeBox = False
@@ -174,7 +174,7 @@ Namespace WindowsT.FormsT
         Friend WithEvents cmdShowFloating As System.Windows.Forms.Button
         Friend WithEvents cmdClose As System.Windows.Forms.Button
         Friend WithEvents cmdDestroy As System.Windows.Forms.Button
-        Friend WithEvents PropertyGrid1 As System.Windows.Forms.PropertyGrid
+        Friend WithEvents prgGrid As System.Windows.Forms.PropertyGrid
         Friend WithEvents txtLog As System.Windows.Forms.TextBox
     End Class
 

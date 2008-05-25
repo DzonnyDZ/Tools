@@ -35,6 +35,7 @@ Namespace WindowsT.FormsT
             txtLog.Clear()
             Log("Creating")
             Box = New MessageBox
+            prgGrid.SelectedObject = Box
             ApplyState()
         End Sub
 
@@ -66,6 +67,7 @@ Namespace WindowsT.FormsT
             Log("Destroying")
             Box.Dispose()
             Box = Nothing
+            prgGrid.SelectedObject = Nothing
             ApplyState()
         End Sub
 #Region "Events"

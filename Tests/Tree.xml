@@ -1,0 +1,104 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<tree xmlns="http://dzonny.cz/xml/ĐTools/Tests/Tree">
+    <node name="Metanol" image="Assembly" tag="Tools.Tests.Projects.Metanol.Test" />
+    <node name="Tools" image="Assembly">
+        <node name="CollectionsT" image="Namespace">
+            <node name="GenericT" image="Namespace">
+                <node name="ReadOnlyListAdapter" image="Class" tag="Tools.Tests.CollectionsT.GenericT.frmReadOnlyListAdapter.Test" />
+                <node name="HashTable" image="Class" tag="Tools.Tests.CollectionsT.GenericT.frmHashTable.Test" />
+            </node>
+        </node>
+        <node name="ComponentModelT" image="Namespace">
+            <node name="LocalizableAttributes" image="Class" tag="Tools.Tests.ComponentModelT.frmLocalizableAttributes.Test" />
+            <node name="SettingsAttributes" image="Class" tag="Tools.Tests.ComponentModelT.frmSettingsAttributes.Test" />
+        </node>
+        <node name="DataStructuresT" image="Namespace">
+            <node name="GenericT" image="Namespace">
+                <node name="T1orT2" image="Class" tag="Tools.Tests.DataStructuresT.GenericT.T1orT2.Test" />
+            </node>
+        </node>
+        <node name="DrawingT" image="Namespace">
+            <node name="IO" image="Namespace">
+                <node name="JPEG" image="Namespace" tag="Tools.Tests.DrawingT.IO.frmJPEG.test" />
+            </node>
+            <node name="SystemColorsExtension" image="Class Sealed (NotInheritable)" tag="Tools.Tests.WindowsT.FormsT.UtilitiesT.frmLinkProperties.Test" />
+            <node name="MetadataT" image="Namespace">
+                <node name="IPTC" image="Class" tag="Tools.Tests.DrawingT.MetadataT.frmIPTC.test" />
+            </node>
+        </node>
+        <node name="InternalT" image="Namespace">
+            <node name="ToolAssembly" image="Class" tag="Tools.Tests.InternalT.ToolAssembly.Test" />
+            <node name="VersionAttribute" image="Class" tag="Tools.Tests.InternalT.VersionAttributeTest.Test" />
+        </node>
+        <node name="IOt" image="Namespace">
+            <node name="BinaryReader, ConstrainedReadOnlyStream" image="Class" tag="Tools.Tests.DrawingT.IO.frmJPEG.test" />
+            <node name="FileSystemEnumerator" image="Class" tag="Tools.Tests.IOt.frmFileSystemEnumerator.Test" />
+            <node name="FileSystemEnumeratorWithMask" image="Class" tag="Tools.Tests.IOt.frmFileSystemEnumeratorWithMask.Test" />
+            <node name="StreamTools" image="Module">
+                <node name="InsertInto" image="Method" tag="Tools.Tests.IOt.StreamTools.frmInsertInto.test" />
+            </node>
+        </node>
+        <node name="MathT" image="Class">
+            <node name="LEBE" image="Method Overload" tag="Tools.Tests.frmLEBE.Test" />
+            <node name="Min" image="Method Overload" tag="Tools.Tests.MathT.Min" />
+            <node name="Max" image="Method Overload" tag="Tools.Tests.MathT.Max" />
+        </node>
+        <node name="ReflectionT" image="Namespace">
+            <node name="ReflectionTools" image="Module" tag="Tools.Tests.WindowsT.FormsT.frmObjectBrowser.Test" />
+        </node>
+        <node name="ResourcesT" image="Namespace">
+            <node name="SystemResources" image="Class Sealed (NotInheritable)" tag="Tools.Tests.ResourcesT.frmSystemResources.Test" />
+        </node>
+        <node name="TimesSpanFormattable" image="Structure" tag="Tools.Tests.frmTimeSpanFormattable.Test" />
+        <node name="VisualBasicT" image="Namespace">
+            <node name="Interaction" image="Module">
+                <node name="iif" image="Method" tag="Tools.Tests.VisualBasicT.Interaction.iif" />
+            </node>
+        </node>
+        <node name="WindowsT" image="Namespace">
+            <node name="FormsT" image="Namespace">
+                <node name="ControlWithStatus" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmControlWithStatus.Test" />
+                <node name="EncodingSelector" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmEncodingSelector.Test" />
+                <node name="KeyWordsEditor" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmKeyWordsEditor.Test" />
+                <node name="LinkLabel" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmLinkLabel.Test" />
+                <node name="MessageBox" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmMessageBox.Test" />
+                <node name="ObjectBrowser" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmObjectBrowser.Test" />
+                <node name="ProgressBarWithText" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmProgressBarWithText.Test" />
+                <node name="TransparentLabel" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentLabel.Test" />
+                <node name="TransparentTextBox" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentTextBox.Test" />
+            </node>
+        </node>
+        <node name="XmlT" image="Namespace">
+            <node name="XPathT" image="Namespace">
+                <node name="XPathObjectNavigator" image="Class" tag="Tools.Tests.XmlT.XPathT.frmXPathObjectNavigator.Test" />
+            </node>
+        </node>
+    </node>
+    <node name="Tools IL" image="Assembly">
+        <node name="SpecialT" image="Namespace">
+            <node name="TypeTools" image="Class Sealed (NotInheritable)">
+                <node name="GetConstant" image="Method" tag="Tools.Tests.SpecialT.TypeTools.GetConstant" />
+                <node name="IsDefined" image="Method" tag="Tools.Tests.SpecialT.TypeTools.IsDefined" />
+            </node>
+        </node>
+    </node>
+    <node name="Tools Visual Studio" image="Assembly">
+        <node name="DiagnosticsT" image="Namespace">
+            <node name="ImageVisualizer" image="Class" tag="Tools.Tests.DiagnosticsT.frmImageVisualizer.Test" />
+        </node>
+    </node>
+    <node name="Tools Win" image="Assembly">
+        <node name="WindowsT" image="Namespace">
+            <node name="FormsT" image="Namespace">
+                <node name="ExtendedForm" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmExtendedForm.Test" />
+                <node name="ScreenSaverBase" image="Class" tag="Tools.Tests.WindowsT.FormsT.ScreenSaverBase.Test" />
+                <node name="UtilitiesT" image="Namespace">
+                    <node name="LinkProperties" image="Class Sealed (NotInheritable)" tag="Tools.Tests.WindowsT.FormsT.UtilitiesT.frmLinkProperties.Test" />
+                </node>
+            </node>
+            <node name="NativeT" image="Namespace">
+                <node name="Win32Window" image="Class" tag="Tools.Tests.WindowsT.NativeT.frmWin32Window.Test" />
+            </node>
+        </node>
+    </node>
+</tree>
