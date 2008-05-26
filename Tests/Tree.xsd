@@ -6,17 +6,202 @@
     xmlns:tree="http://dzonny.cz/xml/ĐTools/Tests/Tree"
     xmlns:xs="http://www.w3.org/2001/XMLSchema"
 >
+    <xs:annotation>
+        <xs:documentation>This schema is used internaly with Test project of ĐTools to describe nodes in treeview via which tests are launched.</xs:documentation>
+    </xs:annotation>
     <xs:complexType name="node">
         <xs:sequence minOccurs="0" maxOccurs="1">
             <xs:element ref="node" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
-        <xs:attribute name="name" type="xs:string" use="required"/>
-        <xs:attribute name="tag" type="xs:string" use="optional"/>
-        <xs:attribute name="image" type="xs:string" use="required"/>
+        <xs:attribute name="name" type="xs:string" use="required">
+            <xs:annotation>
+                <xs:documentation>Name and key of node</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="SortOrder" type="xs:integer" use="optional" >
+            <xs:annotation>
+                <xs:documentation>Allows to override default sorting order by name. Negative orders are sorted first, then zero/missing and then positive.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="tag" type="xs:string" use="optional">
+            <xs:annotation>
+                <xs:documentation>Tag of n ode. If present should be full name of static method to be invoked in order to launch the test.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="image"  use="required">
+            <xs:annotation>
+                <xs:documentation>Image key for node</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="xs:string" xmlns="http://www.w3.org/2001/XMLSchema">
+                    <enumeration value="Value Type Private"/>
+                    <enumeration value="Assembly"/>
+                    <enumeration value="BSC"/>
+                    <enumeration value="Class"/>
+                    <enumeration value="Class Friend"/>
+                    <enumeration value="Class Private"/>
+                    <enumeration value="Class Protected"/>
+                    <enumeration value="Class Sealed (NotInheritable)"/>
+                    <enumeration value="Class Shortcut"/>
+                    <enumeration value="Constant"/>
+                    <enumeration value="Constant Friend"/>
+                    <enumeration value="Constant Private"/>
+                    <enumeration value="Constant Protected"/>
+                    <enumeration value="Constant Sealed (NotOverridable)"/>
+                    <enumeration value="Constant Shortcut"/>
+                    <enumeration value="Delegate"/>
+                    <enumeration value="Delegate Friend"/>
+                    <enumeration value="Delegate Private"/>
+                    <enumeration value="Delegate Protected"/>
+                    <enumeration value="Delegate Sealed (NotOverridable)"/>
+                    <enumeration value="Delegate Shortcut"/>
+                    <enumeration value="Dialog ID"/>
+                    <enumeration value="Enum"/>
+                    <enumeration value="Enum Friend"/>
+                    <enumeration value="Enum Protected"/>
+                    <enumeration value="Enum Sealed (NotInheritable)"/>
+                    <enumeration value="Enum Shortcut"/>
+                    <enumeration value="Enum Item"/>
+                    <enumeration value="Enum Item Friend"/>
+                    <enumeration value="Enum Item Private"/>
+                    <enumeration value="Enum Item Protected"/>
+                    <enumeration value="Enum Item Sealed (NotOverridable)"/>
+                    <enumeration value="Enum Item Shortcu"/>
+                    <enumeration value="Enum Private"/>
+                    <enumeration value="Event"/>
+                    <enumeration value="Event Friend"/>
+                    <enumeration value="Event Private"/>
+                    <enumeration value="Event Protected"/>
+                    <enumeration value="Event Sealed (NotOverridable)"/>
+                    <enumeration value="Event Shortcut"/>
+                    <enumeration value="Exception"/>
+                    <enumeration value="Exception Friend"/>
+                    <enumeration value="Exception Protected"/>
+                    <enumeration value="Exception Sealed (NotInheritable)"/>
+                    <enumeration value="Exception Shortcut"/>
+                    <enumeration value="Exception Private"/>
+                    <enumeration value="Field"/>
+                    <enumeration value="Field Friend"/>
+                    <enumeration value="Field Private"/>
+                    <enumeration value="Field Protected"/>
+                    <enumeration value="Field Sealed (NotOverridable)"/>
+                    <enumeration value="Field Shortcut"/>
+                    <enumeration value="Interface"/>
+                    <enumeration value="Interface Friend"/>
+                    <enumeration value="Interface Private"/>
+                    <enumeration value="Interface Protected"/>
+                    <enumeration value="Interface Sealed (NotInheritable)"/>
+                    <enumeration value="Interface Shortcut"/>
+                    <enumeration value="Library"/>
+                    <enumeration value="Macro"/>
+                    <enumeration value="Macro Friend"/>
+                    <enumeration value="Macro Private"/>
+                    <enumeration value="Macro Protected"/>
+                    <enumeration value="Macro Sealed (NotOverridable)"/>
+                    <enumeration value="Macro Shortcut"/>
+                    <enumeration value="Map"/>
+                    <enumeration value="Map Friend"/>
+                    <enumeration value="Map Private"/>
+                    <enumeration value="Map Protected"/>
+                    <enumeration value="Map Sealed (NotInheritable)"/>
+                    <enumeration value="Map Shortcut"/>
+                    <enumeration value="Map Item"/>
+                    <enumeration value="Map Item Friend"/>
+                    <enumeration value="Map Item Private"/>
+                    <enumeration value="Map Item Protected"/>
+                    <enumeration value="Map Item Sealed (NotOverridable)"/>
+                    <enumeration value="Map Item Shortcut"/>
+                    <enumeration value="Method"/>
+                    <enumeration value="Method Friend"/>
+                    <enumeration value="Method Private"/>
+                    <enumeration value="Method Protected"/>
+                    <enumeration value="Method Sealed (NotOverridable)"/>
+                    <enumeration value="Method Shortcut"/>
+                    <enumeration value="Method Overload"/>
+                    <enumeration value="Method Overload Friend"/>
+                    <enumeration value="Method Overload Private"/>
+                    <enumeration value="Method Overload Protected"/>
+                    <enumeration value="Method Overload Sealed (NotOverridable)"/>
+                    <enumeration value="Method Overload Shortcut"/>
+                    <enumeration value="Module"/>
+                    <enumeration value="Module Friend"/>
+                    <enumeration value="Module Private"/>
+                    <enumeration value="Module Protected"/>
+                    <enumeration value="Module Sealed (NotInheritable)"/>
+                    <enumeration value="Module Shortcut"/>
+                    <enumeration value="Namespace"/>
+                    <enumeration value="Namespace Friend"/>
+                    <enumeration value="Namespace Sealed (NotInheritable)"/>
+                    <enumeration value="Namespace Shortcut"/>
+                    <enumeration value="Namespace Private"/>
+                    <enumeration value="Namespace Protected"/>
+                    <enumeration value="Object"/>
+                    <enumeration value="Object Friend"/>
+                    <enumeration value="Object Private"/>
+                    <enumeration value="Object Protected"/>
+                    <enumeration value="Object Sealed (NotInheritable)"/>
+                    <enumeration value="Object Shortcut"/>
+                    <enumeration value="Operator"/>
+                    <enumeration value="Operator Friend"/>
+                    <enumeration value="Operator Private"/>
+                    <enumeration value="Operator Protected"/>
+                    <enumeration value="Operator Sealed (NotOverridable)"/>
+                    <enumeration value="Operator Shortcut"/>
+                    <enumeration value="Properties"/>
+                    <enumeration value="Properties Friend"/>
+                    <enumeration value="Properties Private"/>
+                    <enumeration value="Properties Protected"/>
+                    <enumeration value="Properties Sealed (NotOverridable)"/>
+                    <enumeration value="Properties Shortcut"/>
+                    <enumeration value="Structure"/>
+                    <enumeration value="Structure Friend"/>
+                    <enumeration value="Structure Private"/>
+                    <enumeration value="Structure Protected"/>
+                    <enumeration value="Structure Sealed (NotInheritable)"/>
+                    <enumeration value="Structure Shortcut"/>
+                    <enumeration value="Template"/>
+                    <enumeration value="Template Friend"/>
+                    <enumeration value="Template Private"/>
+                    <enumeration value="Template Protected"/>
+                    <enumeration value="Template Sealed (NotOverridable)"/>
+                    <enumeration value="Template Shortcut"/>
+                    <enumeration value="Type"/>
+                    <enumeration value="Type Friend"/>
+                    <enumeration value="Type Private"/>
+                    <enumeration value="Type Protected"/>
+                    <enumeration value="Type Sealed"/>
+                    <enumeration value="Type Shortcut"/>
+                    <enumeration value="TypeDef"/>
+                    <enumeration value="TypeDef Friend"/>
+                    <enumeration value="TypeDef Private"/>
+                    <enumeration value="TypeDef Protected"/>
+                    <enumeration value="TypeDef Sealed (NotOverridable)"/>
+                    <enumeration value="TypeDef Shortcut"/>
+                    <enumeration value="Union"/>
+                    <enumeration value="Union Friend"/>
+                    <enumeration value="Union Protected"/>
+                    <enumeration value="Union Sealed (NotInheritable)"/>
+                    <enumeration value="Union Shortcut"/>
+                    <enumeration value="Union Private"/>
+                    <enumeration value="Value Type"/>
+                    <enumeration value="Value Type Friend"/>
+                    <enumeration value="Value Type Protected"/>
+                    <enumeration value="Value Type Sealed"/>
+                    <enumeration value="Value Type Shortcut"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
     </xs:complexType>
 
-    <xs:element name="node" type="node"/>
+    <xs:element name="node" type="node">
+        <xs:annotation>
+            <xs:documentation>Single node in tree</xs:documentation>
+        </xs:annotation>
+    </xs:element>
     <xs:element name="tree">
+        <xs:annotation>
+            <xs:documentation>Root element. Can contain multiple root nodes.</xs:documentation>
+        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="0" maxOccurs="unbounded">
                 <xs:element ref="node" minOccurs="0" maxOccurs="unbounded"/>

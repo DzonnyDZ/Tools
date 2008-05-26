@@ -72,7 +72,7 @@ Namespace WindowsT.FormsT
         End Sub
 #Region "Events"
         Private Sub Box_Closed(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Closed
-            Log("Closed")
+            Log("Closed {0}", sender.DialogResult)
             ApplyState()
         End Sub
 

@@ -19,12 +19,18 @@ Friend Class frmTests
         tvwMain.Nodes.Clear()
         Dim doc = XDocument.Load(IO.Path.Combine(My.Application.Info.DirectoryPath, "Tree.xml"))
         tvwMain.Nodes.AddRange( _
-            (From node In doc.<tree>.<node> Order By node.@name Select Xml2Tree(node)).ToArray)
+            (From node In doc.<tree>.<node> Order By SortOrder(node), node.@SortOrder, node.@name Select Xml2Tree(node)).ToArray)
     End Sub
     Private Function Xml2Tree(ByVal node As XElement) As TreeNode
         Dim ret As New TreeNode() With {.Text = node.@name, .Name = node.@name, .ImageKey = node.@image, .SelectedImageKey = node.@image, .Tag = node.@tag}
-        ret.Nodes.AddRange((From inndernode In node.<node> Order By node.@name Select Xml2Tree(inndernode)).ToArray)
+        ret.Nodes.AddRange((From inndernode In node.<node> Order By SortOrder(node), node.@SortOrder, node.@name Select Xml2Tree(inndernode)).ToArray)
         Return ret
+    End Function
+
+    Private Function SortOrder(ByVal node As XElement) As Integer
+        If node.@SortOrder IsNot Nothing AndAlso node.@SortOrder < 0 Then Return -1
+        If node.@SortOrder IsNot Nothing AndAlso node.@SortOrder > 0 Then Return 1
+        Return 0
     End Function
 
     Private Sub tvwMain_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles tvwMain.KeyDown
@@ -75,7 +81,7 @@ Friend Class frmTests
                     <?xml version="1.0" encoding="utf-8"?>
                     <tree>
                         <%= From node In tvwMain.Nodes.AsTypeSafe Select NodeFromNode(node) %>
-                    </tree>
+                    </tree> '<%= From item In imlImages.Images.Keys.AsTypeSafe Select New XComment(item) %>
                 doc.Save(sfdXml.FileName)
             Catch ex As Exception
                 MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)

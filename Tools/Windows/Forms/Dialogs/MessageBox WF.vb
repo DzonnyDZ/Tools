@@ -3,8 +3,8 @@ Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, 
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 '#If Config <= Nightly Then 'Set in project file
 'Stage:Nightly
+'TODO: Autosize in shown time
 Namespace WindowsT.FormsT
-    'ASAP:Mark
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
     ''' <remarks>
     ''' <para>This class implements <see cref="iMsg"/> in fully dynamic way. You can change all it's properties and all properties of its controls and those change are immediatelly displayed to user.</para>
@@ -57,18 +57,27 @@ Namespace WindowsT.FormsT
             Me.InitializeComponent()
             Initialize()
         End Sub
-        ''' <summary>Initializes tis form by <see cref="MessageBox"/>, called from CTor</summary>
-        Protected Overridable Sub Initialize()
-            'Options
+        ''' <summary>Applies <see cref="MessageBox"/>.<see cref="MessageBox.Options">Options</see></summary>
+        Private Sub ApplyOptions()
             Select Case MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.AlignMask
                 Case IndependentT.MessageBox.MessageBoxOptions.AlignLeft, IndependentT.MessageBox.MessageBoxOptions.AlignJustify
                     lblPrompt.TextAlign = Drawing.ContentAlignment.TopLeft
+                    lblPrompt.Anchor = AnchorStyles.Left Or AnchorStyles.Top
                 Case IndependentT.MessageBox.MessageBoxOptions.AlignRight
                     lblPrompt.TextAlign = Drawing.ContentAlignment.TopRight
+                    lblPrompt.Anchor = AnchorStyles.Right Or AnchorStyles.Top
                 Case IndependentT.MessageBox.MessageBoxOptions.AlignCenter
                     lblPrompt.TextAlign = Drawing.ContentAlignment.TopCenter
+                    lblPrompt.Anchor = AnchorStyles.Top
             End Select
-            'Todo: lrt rtl
+            If (MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.Rtl) = IndependentT.MessageBox.MessageBoxOptions.Rtl Then _
+                Me.RightToLeft = Windows.Forms.RightToLeft.Yes _
+                Else Me.RightToLeft = Windows.Forms.RightToLeft.No
+        End Sub
+        ''' <summary>Initializes tis form by <see cref="MessageBox"/>, called from CTor</summary>
+        Protected Overridable Sub Initialize()
+            'Options
+            ApplyOptions()
             'Title
             If MessageBox.Title Is Nothing Then
                 Dim App As New Microsoft.VisualBasic.ApplicationServices.AssemblyInfo(System.Reflection.Assembly.GetEntryAssembly)
@@ -252,7 +261,7 @@ Namespace WindowsT.FormsT
                 cmbCombo.Visible = False
             Else
                 cmbCombo.Visible = True
-                MessageBox.CheckBox.Control = cmbCombo
+                MessageBox.ComboBox.Control = cmbCombo
                 cmbCombo.DropDownStyle = If(MessageBox.ComboBox.Editable, ComboBoxStyle.DropDown, ComboBoxStyle.DropDownList)
                 cmbCombo.Enabled = MessageBox.ComboBox.Enabled
                 cmbCombo.DisplayMember = MessageBox.ComboBox.DisplayMember
@@ -283,9 +292,9 @@ Namespace WindowsT.FormsT
         ''' <param name="Button"><see cref="MessageBox.MessageBoxButton"/> to initialize new <see cref="Button"/> with</param>
         ''' <returns>Newly created <see cref="Button"/> with attached <see cref="Button.Click"/> event to <see cref="Button_Click"/></returns>
         Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
-            Dim text As String = Button.Text.Replace("&", "&&")
-            If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey) + 1, 0) = "&"
-            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button}
+            Dim text As String = If(Button.Text IsNot Nothing, Button.Text.Replace("&", "&&"), "")
+            If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(Button.AccessKey), "&")
+            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink}
             If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
             Button.Control = CmdButton
             AddHandler CmdButton.Click, AddressOf Button_Click
@@ -309,9 +318,19 @@ Namespace WindowsT.FormsT
             End With
         End Sub
         Private Sub Control_TextChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
-            With DirectCast(sender.Control, Control)
-                If .Text <> sender.Text Then .Text = sender.Text
-            End With
+            If TypeOf sender Is MessageBox.MessageBoxButton Then
+                With DirectCast(sender.Control, Button)
+                    If .Text <> sender.Text Then
+                        Dim text As String = If(sender.Text, "").Replace("&", "&&")
+                        If DirectCast(sender, MessageBox.MessageBoxButton).AccessKey <> vbNullChar AndAlso text.IndexOf(DirectCast(sender, MessageBox.MessageBoxButton).AccessKey) >= 0 Then text = text.Insert(text.IndexOf(DirectCast(sender, MessageBox.MessageBoxButton).AccessKey), "&")
+                        .Text = text
+                    End If
+                End With
+            Else
+                With DirectCast(sender.Control, Control)
+                    If .Text <> sender.Text Then .Text = sender.Text
+                End With
+            End If
         End Sub
         Private Sub Control_ToolTipChanged(ByVal sender As MessageBox.MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             If totToolTip.GetToolTip(sender.Control) <> sender.ToolTip Then totToolTip.SetToolTip(sender.Control, sender.ToolTip)
@@ -322,7 +341,7 @@ Namespace WindowsT.FormsT
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event parameters</param>
         Private Sub Radio_CheckedChanged(ByVal sender As MessageBox.MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
-            With DirectCast(sender.Control, MessageBox.MessageBoxRadioButton)
+            With DirectCast(sender.Control, RadioButton)
                 If .Checked <> sender.Checked Then .Checked = sender.Checked
             End With
         End Sub
@@ -405,7 +424,7 @@ Namespace WindowsT.FormsT
         Private Sub Button_AccessKeyChanged(ByVal sender As MessageBox.MessageBoxButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
             With DirectCast(sender.Control, Button)
                 Dim text As String = sender.Text.Replace("&", "&&")
-                If sender.AccessKey <> vbNullChar AndAlso text.IndexOf(sender.AccessKey) >= 0 Then Mid(text, text.IndexOf(sender.AccessKey), 0) = "&"
+                If sender.AccessKey <> vbNullChar AndAlso text.IndexOf(sender.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(sender.AccessKey), "&")
                 .Text = text
             End With
         End Sub
@@ -431,12 +450,12 @@ Namespace WindowsT.FormsT
             Me.Text = sender.Title
         End Sub
         Private Sub MessageBox_CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
-            Const Format As String = "{0} ({1:})" 'TODO: Formating
+            Const Format As String = "{0} ({1})" 'TODO: Formating
             Select Case MessageBox.TimeButton
                 Case -1
                     For Each Button In MessageBox.Buttons
                         If Button.Result = MessageBox.CloseResponse Then
-                            DirectCast(Button.Control, Button).Text = String.Format("{0} ({1})", Button.Text, MessageBox.TimeButton)
+                            DirectCast(Button.Control, Button).Text = String.Format(Format, Button.Text, MessageBox.CurrentTimer)
                             Exit Select
                         End If
                     Next
@@ -445,7 +464,7 @@ Namespace WindowsT.FormsT
                     Me.Text = String.Format(Format, MessageBox.Title, MessageBox.CurrentTimer)
                 Case Is >= MessageBox.Buttons.Count 'Do nothing
                 Case Else
-                    Me.flpButtons.Controls(MessageBox.TimeButton).Text = String.Format("{0} ({1})", MessageBox.Buttons(MessageBox.TimeButton).Text, MessageBox.CurrentTimer)
+                    Me.flpButtons.Controls(MessageBox.TimeButton).Text = String.Format(Format, MessageBox.Buttons(MessageBox.TimeButton).Text, MessageBox.CurrentTimer)
             End Select
         End Sub
         Private Sub MessageBox_CloseResponseChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of DialogResult))
@@ -475,6 +494,7 @@ Namespace WindowsT.FormsT
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
                     Dim NewRadio = CreateRadio(e.NewValue)
                     flpRadio.Controls.Insert(e.Index, NewRadio)
+                    AttachRadioHandlers(e.NewValue)
                     flpRadio.Visible = True
                 Case CollectionsT.GenericT.CollectionChangeAction.Clear
                     Dim e2 = DirectCast(e.ChangeEventArgs, ListWithEvents(Of iMsg.MessageBoxRadioButton).ItemsEventArgs)
@@ -492,6 +512,7 @@ Namespace WindowsT.FormsT
                     Dim NewRadio = CreateRadio(e.NewValue)
                     PerformButtonRemoval(e.OldValue.Control)
                     Me.flpRadio.Controls.Replace(e.Index, NewRadio)
+                    AttachRadioHandlers(e.NewValue)
                     EnsureCancelButton()
                 Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Buttons"))     'Localize:Exception
             End Select
@@ -501,6 +522,7 @@ Namespace WindowsT.FormsT
             Select Case e.Action
                 Case CollectionsT.GenericT.CollectionChangeAction.Add
                     Dim NewButton = CreateButton(e.NewValue)
+                    AttachButtonHandlers(e.NewValue)
                     flpButtons.Controls.Insert(e.Index, NewButton)
                     flpButtons.Visible = True
                     If MessageBox.DefaultButton >= e.Index Then MessageBox.DefaultButton += 1
@@ -530,6 +552,7 @@ Namespace WindowsT.FormsT
                     If Me.CancelButton Is e.OldValue.Control Then Me.CancelButton = Nothing
                     PerformButtonRemoval(e.OldValue.Control)
                     Me.flpButtons.Controls.Replace(e.Index, NewButton)
+                    AttachButtonHandlers(e.NewValue)
                     EnsureCancelButton()
                 Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Buttons"))     'Localize:Exception
             End Select
@@ -566,7 +589,7 @@ Namespace WindowsT.FormsT
             picPicture.Visible = e.NewValue IsNot Nothing
         End Sub
         Private Sub MessageBox_OptionsChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxOptions))
-            'TODO:Implement
+            ApplyOptions()
         End Sub
 #End Region
 #Region "AddressOf"
@@ -619,11 +642,17 @@ Namespace WindowsT.FormsT
                     Me.DialogResult = MessageBox.CloseResponse
                     MessageBox.DialogResult = MessageBox.CloseResponse
                     MessageBox.ClickedButton = Nothing
-                Case Else : e.Cancel = True
+                Case Else : e.Cancel = True : Exit Sub
             End Select
+            If Not e.Cancel Then AllowClose = True : MyBase.Close()
+        End Sub
+
+        Private Sub MessageBoxForm_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+            Me.MaximumSize = DesktopBounds.Size
         End Sub
 
         Private Sub MessageBoxForm_Shown(ByVal sender As MessageBoxForm, ByVal e As System.EventArgs) Handles Me.Shown
+            lblPrompt.MaximumSize = New Drawing.Size(Screen.FromControl(lblPrompt).WorkingArea.Width / 2, 0)
             MessageBox.OnShown()
             If (MessageBox.Options And IndependentT.MessageBox.MessageBoxOptions.BringToFront) = IndependentT.MessageBox.MessageBoxOptions.BringToFront Then
                 Me.BringToFront()
@@ -632,7 +661,15 @@ Namespace WindowsT.FormsT
     End Class
 
     ''' <summary>Implements <see cref="WindowsT.IndependentT.MessageBox"/> for as <see cref="Form"/></summary>
+    ''' <remarks>The <see cref="IndependentT.MessageBox"/> is implemented with following notes:
+    ''' <list>
+    ''' <item><see cref="iMsg.MessageBoxOptions.AlignJustify"/> is not supported, <see cref="iMsg.MessageBoxOptions.AlignLeft"/> is used instead.</item>
+    ''' </list>
+    ''' </remarks>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(MessageBox), LastChange:="05/26/2008")> _
+    <FirstVersion("05/26/2008")> _
     Public Class MessageBox
         Inherits iMsg
         ''' <summary>Releases all resources used by the <see cref="T:System.ComponentModel.Component" />.</summary>
@@ -727,6 +764,10 @@ Namespace WindowsT.FormsT
             End If
             Return Nothing
         End Function
+        ''' <summary>Performs all operations needed to switch <see cref="MessageBox"/> form <see cref="State"/> <see cref="States.Closed"/> to <see cref="States.Created"/></summary>
+        ''' <remarks>Called by <see cref="Recycle"/>.
+        ''' <para>Note to inheritors: Always call base-class method <see cref="RecycleInternal"/>.</para></remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Closed"/>. This exception never occures in this implementation because <see cref="Recycle"/> ensures that <see cref="RecycleInternal"/> is caled only when <see cref="State"/> is <see cref="States.Closed"/>.</exception>
         Protected Overrides Sub RecycleInternal()
             MyBase.RecycleInternal()
             Form = Nothing

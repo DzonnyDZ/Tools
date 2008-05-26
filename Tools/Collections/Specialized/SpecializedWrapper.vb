@@ -17,7 +17,7 @@ Namespace CollectionsT.SpecializedT
     ''' <remarks>Derived classes should derive from <see cref="SpecializedReadOnlyWrapper(Of T)"/> or <see cref="SpecializedWrapper(Of T)"/> instead</remarks>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Partial Public MustInherit Class SpecializedWrapper
-        Implements IReadOnlyIndexableCollection(Of Object, Integer), ICollection
+        Implements ICollection 'IReadOnlyIndexableCollection(Of Object, Integer),
         ''' <summary>Collection being wrapped</summary>
         Protected ReadOnly Collection As ICollection
         ''' <summary>CTor</summary>
@@ -32,7 +32,7 @@ Namespace CollectionsT.SpecializedT
         ''' <param name="index">Index to obtain value</param>
         ''' <returns>value lying on specified <paramref name="index"/></returns>
         ''' <exception cref="ArgumentException">Specified <paramref name="index"/> is invalid</exception>
-        Protected MustOverride ReadOnly Property UnsafeReadOnlyItem(ByVal index As Integer) As Object Implements GenericT.IReadOnlyIndexable(Of Object, Integer).Item
+        Protected MustOverride ReadOnly Property UnsafeReadOnlyItem(ByVal index As Integer) As Object 'Implements GenericT.IReadOnlyIndexable(Of Object, Integer).Item
         ''' <summary>Copies the elements of the <see cref="T:System.Collections.ICollection" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
         ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.ICollection" />. The <see cref="T:System.Array" /> must have zero-based indexing. </param>
         ''' <param name="index">The zero-based index in <paramref name="array" /> at which copying begins. </param>
@@ -55,14 +55,14 @@ Namespace CollectionsT.SpecializedT
         ''' <exception cref="T:System.ArgumentException">array is multidimensional.-or- index is equal to or greater than the length of array.-or- The number of elements in the source <see cref="T:System.Collections.ICollection"></see> is greater than the available space from index to the end of the destination array. </exception>
         ''' <exception cref="T:System.InvalidCastException">The type of the source <see cref="IReadOnlyCollection(Of T)"></see> cannot be cast automatically to the type of the destination array. </exception>
         ''' <filterpriority>2</filterpriority>
-        Protected Sub Copy(ByVal array As Object(), ByVal index As Integer) Implements IReadOnlyIndexableCollection(Of Object, Integer).CopyTo
+        Protected Sub Copy(ByVal array As Object(), ByVal index As Integer) 'Implements IReadOnlyIndexableCollection(Of Object, Integer).CopyTo
             Collection.CopyTo(array, index)
         End Sub
 
         ''' <summary>Gets the number of elements contained in the <see cref="T:System.Collections.ICollection" />.</summary>
         ''' <returns>The number of elements contained in the <see cref="T:System.Collections.ICollection" />.</returns>
         ''' <filterpriority>2</filterpriority>
-        Public Overridable ReadOnly Property Count() As Integer Implements System.Collections.ICollection.Count, IReadOnlyCollection(Of Object).Count
+        Public Overridable ReadOnly Property Count() As Integer Implements System.Collections.ICollection.Count ', IReadOnlyCollection(Of Object).Count
             <DebuggerStepThrough()> Get
                 Return Collection.Count
             End Get
@@ -92,10 +92,10 @@ Namespace CollectionsT.SpecializedT
         Private Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
             Return Collection.GetEnumerator
         End Function
-        Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of Object) Implements System.Collections.Generic.IEnumerable(Of Object).GetEnumerator
-            If TypeOf Collection Is IEnumerable(Of Object) Then Return DirectCast(Collection, IEnumerable(Of Object)).GetEnumerator
-            Return New Wrapper(Of Object)(Collection).GetEnumerator
-        End Function
+        'Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of Object) Implements System.Collections.Generic.IEnumerable(Of Object).GetEnumerator
+        '    If TypeOf Collection Is IEnumerable(Of Object) Then Return DirectCast(Collection, IEnumerable(Of Object)).GetEnumerator
+        '    Return New Wrapper(Of Object)(Collection).GetEnumerator
+        'End Function
 #End Region
         ''' <summary>Provides common base class for wrappers of type-unsafe <see cref="IList"/> to type-safe <see cref="IList(Of T)"/></summary>
         ''' <typeparam name="TCollection">Type of collection being wrapped</typeparam>
@@ -451,7 +451,7 @@ Namespace CollectionsT.SpecializedT
         ''' <filterpriority>1</filterpriority>
         Public Overridable Shadows Function GetEnumerator() As IEnumerator(Of T) Implements IEnumerable(Of T).GetEnumerator
             If TypeOf Collection Is IEnumerable(Of T) Then Return DirectCast(Collection, IEnumerable(Of T)).GetEnumerator
-            Return New GenericT.Wrapper(Of T)(Collection)
+            Return New GenericT.Wrapper(Of T)(Collection).GetEnumerator
         End Function
 
         ''' <summary>Gets or sets value on specified index (type-unsafe)</summary>

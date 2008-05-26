@@ -7,8 +7,7 @@ Imports Tools.ComponentModelT
 Imports System.Windows.Forms
 
 Namespace WindowsT.IndependentT
-    'ASAP:Mark
-    ''' <summary>Provides technology-independent base class for WinForms and WPF message boxes</summary>
+    ''' <summary>Provides technology-independent managed base class for WinForms and WPF message boxes</summary>
     ''' <remarks>
     ''' This class implements <see cref="IReportsChange"/> and has plenty of events fo reporting changes of property values. Also types of some properties reports events when their properties are changed.
     ''' The aim of such behavior is to provide dynamic message box which can be changed as it is displayd.
@@ -16,6 +15,9 @@ Namespace WindowsT.IndependentT
     ''' <para>After message box is closed, it can be shown again (so called re-cycling; see <see cref="messagebox.Recycle"/>).</para>
     ''' </remarks>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 0, GetType(MessageBox), LastChange:="05/26/2008")> _
+    <FirstVersion("05/26/2008")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
 #Region "Shared"
         ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>
@@ -24,7 +26,8 @@ Namespace WindowsT.IndependentT
         ''' <returns>Type currently used as default implementation of message box</returns>
         ''' <value>Sets application-wide default implementation of message box</value>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
-        ''' <see cref="ArgumentException">Value being set represents type that either does not derive from <see cref="MessageBox"/>, is abstract, is generic non-closed or hasn't parameter-less contructor.</see>
+        ''' <exception cref="ArgumentException">Value being set represents type that either does not derive from <see cref="MessageBox"/>, is abstract, is generic non-closed or hasn't parameter-less contructor.</exception>
+        ''' <remarks>Default implementation used is <see cref="WindowsT.FormsT.MessageBox"/> which uses WinForms technology.</remarks>
         Public Shared Property DefaultImplementation() As Type
             <DebuggerStepThrough()> Get
                 Return _DefaultImplementation
@@ -204,6 +207,7 @@ Namespace WindowsT.IndependentT
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <Description("Text of prompt displayed to the user.")> _
+        <Localizable(True)> _
         Public Property Prompt() As String 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Prompt
@@ -219,6 +223,7 @@ Namespace WindowsT.IndependentT
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <Description("Title shown in dialog header")> _
+        <Localizable(True)> _
         Public Property Title() As String 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Title
@@ -234,6 +239,7 @@ Namespace WindowsT.IndependentT
         <DefaultValue(GetType(Drawing.Image), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <Description("Icon shown in left to corner (lrt) of dialog")> _
+        <Localizable(True)> _
         Public Property Icon() As Drawing.Image 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Icon
@@ -245,10 +251,12 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Gets or sets options of the message box</summary>
+        ''' <remarks>Text align applies only to prompt part of message box. In right-to-left reading text align has oposite meaning - <see cref="MessageBoxOptions.AlignLeft"/> aligns to right and <see cref="MessageBoxOptions.AlignRight"/> aligns to left.</remarks>
         <DefaultValue(GetType(MessageBoxOptions), "0")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
         <Description("Addtional options controlling how dialog si displayed")> _
         <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
+        <Localizable(True)> _
         Public Property Options() As MessageBoxOptions 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Options
@@ -600,6 +608,7 @@ Namespace WindowsT.IndependentT
             ''' <summary>Gets or sets text displayed on control</summary>
             <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
             <Description("Text displayed on the control")> _
+            <Localizable(True)> _
             Public Property Text() As String 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _Text
@@ -615,7 +624,8 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Gets or sets tool tip text for the button</summary>
             <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-                         <Description("Tool tip text (help) for control")> _
+            <Description("Tool tip text (help) for control")> _
+            <Localizable(True)> _
             Public Property ToolTip() As String
                 <DebuggerStepThrough()> Get
                     Return _ToolTip
@@ -755,6 +765,7 @@ Namespace WindowsT.IndependentT
             <DefaultValue(CChar(vbNullChar))> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
             <Description("Access character for the button. Should be one of characters from button text.")> _
+            <Localizable(True)> _
             Public Property AccessKey() As Char 'Localize:Description
                 <DebuggerStepThrough()> Get
                     Return _AccessKey
@@ -1110,7 +1121,7 @@ Namespace WindowsT.IndependentT
                 End Get
                 Set(ByVal value As CheckState)
                     If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, GetType(CheckState))
-                    Dim old = value
+                    Dim old = State
                     _State = value
                     If old <> value Then
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of CheckState)(old, value, "State")
@@ -1187,6 +1198,7 @@ Namespace WindowsT.IndependentT
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
             <Description("Items shown to user in drop down. Item can be any Object.")> _
+            <Localizable(True)> _
             Public ReadOnly Property Items() As ListWithEvents(Of Object)
                 <DebuggerStepThrough()> Get
                     Return _Items
@@ -1359,7 +1371,7 @@ Namespace WindowsT.IndependentT
                     Return _Checked
                 End Get
                 Set(ByVal value As Boolean)
-                    Dim old = value
+                    Dim old = Checked
                     _Checked = value
                     If old <> value Then
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Checked")
@@ -1407,13 +1419,13 @@ Namespace WindowsT.IndependentT
         <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
         <TypeConverter(GetType(MessageBoxOptionsConverter))> _
         Public Enum MessageBoxOptions As Byte
-            ''' <summary>Text is aligned left (default)</summary>
+            ''' <summary>Text is aligned left (default). In rtl reading aligns text to right.</summary>
             AlignLeft = 0 '0000
-            ''' <summary>Text is aligned right</summary>
+            ''' <summary>Text is aligned right. In rtl reading aligns text to left.</summary>
             AlignRight = 1 '0001
             ''' <summary>Text is aligned center</summary>
             AlignCenter = 2 '0010                                                                         
-            ''' <summary>Text is aligned to block. If target platform does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.AlignLeft"/> (in ltr reading <see cref="MessageBoxOptions.AlignRight"/> in rtl reading)</summary>
+            ''' <summary>Text is aligned to block. If target technology does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.AlignLeft"/>.</summary>
             AlignJustify = 3 '0011
             ''' <summary>Bitwise mask for AND-ing text alignment</summary>
             ''' <remarks>This is actually not walue of enumeration.</remarks>

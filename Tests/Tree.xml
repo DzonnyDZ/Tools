@@ -101,4 +101,11 @@
             </node>
         </node>
     </node>
+    <node name=".NET" image="Library" SortOrder="1">
+        <node name="System" image="Namespace">
+            <node name="Globalization" image="Namespace">
+                <node name="LtR/RtL" image="Object" tag="Tools.Tests.Framework.SystemF.GlobalizationF.frmLtrRtl.Test"/>
+            </node>
+        </node>
+    </node>
 </tree>

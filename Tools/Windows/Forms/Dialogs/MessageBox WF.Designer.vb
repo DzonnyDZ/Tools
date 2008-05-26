@@ -104,7 +104,7 @@ Namespace WindowsT.FormsT
             Me.tlpMain.SetColumnSpan(Me.chkCheckBox, 2)
             Me.chkCheckBox.Location = New System.Drawing.Point(3, 54)
             Me.chkCheckBox.Name = "chkCheckBox"
-            Me.chkCheckBox.Size = New System.Drawing.Size(81, 17)
+            Me.chkCheckBox.Size = New System.Drawing.Size(82, 17)
             Me.chkCheckBox.TabIndex = 2
             Me.chkCheckBox.Text = "CheckBox1"
             Me.chkCheckBox.UseMnemonic = False
@@ -233,6 +233,7 @@ Namespace WindowsT.FormsT
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "MessageBoxForm"
+            Me.RightToLeftLayout = True
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
             Me.Text = "MesssageBox"

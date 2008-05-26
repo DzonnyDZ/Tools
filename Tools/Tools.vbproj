@@ -261,7 +261,8 @@
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb">
+    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
+        <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\WPF\AssemblyInfo.vb" />
