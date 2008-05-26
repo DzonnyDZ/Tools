@@ -1,7 +1,7 @@
 ﻿Namespace WindowsT.IndependentT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class MessageBoxOptionsEditor
-        Inherits System.Windows.Forms.UserControl
+        Inherits Tools.WindowsT.FormsT.UserControlExtended
 
         'UserControl overrides dispose to clean up the component list.
         <System.Diagnostics.DebuggerNonUserCode()> _
@@ -31,8 +31,8 @@
             Me.flpAlign = New System.Windows.Forms.TableLayoutPanel
             Me.optLeft = New System.Windows.Forms.RadioButton
             Me.optCenter = New System.Windows.Forms.RadioButton
-            Me.optRight = New System.Windows.Forms.RadioButton
             Me.optJustify = New System.Windows.Forms.RadioButton
+            Me.optRight = New System.Windows.Forms.RadioButton
             Me.tlpFlow = New System.Windows.Forms.TableLayoutPanel
             Me.optLtR = New System.Windows.Forms.RadioButton
             Me.optRtL = New System.Windows.Forms.RadioButton
@@ -149,19 +149,6 @@
             Me.optCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             Me.optCenter.UseVisualStyleBackColor = True
             '
-            'optRight
-            '
-            Me.optRight.AutoSize = True
-            Me.optRight.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.optRight.Location = New System.Drawing.Point(3, 49)
-            Me.optRight.Name = "optRight"
-            Me.optRight.Size = New System.Drawing.Size(87, 17)
-            Me.optRight.TabIndex = 6
-            Me.optRight.TabStop = True
-            Me.optRight.Text = "&Right"
-            Me.optRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight
-            Me.optRight.UseVisualStyleBackColor = True
-            '
             'optJustify
             '
             Me.optJustify.AutoSize = True
@@ -174,6 +161,19 @@
             Me.optJustify.Text = "&J u s t i f y"
             Me.optJustify.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             Me.optJustify.UseVisualStyleBackColor = True
+            '
+            'optRight
+            '
+            Me.optRight.AutoSize = True
+            Me.optRight.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.optRight.Location = New System.Drawing.Point(3, 49)
+            Me.optRight.Name = "optRight"
+            Me.optRight.Size = New System.Drawing.Size(87, 17)
+            Me.optRight.TabIndex = 6
+            Me.optRight.TabStop = True
+            Me.optRight.Text = "&Right"
+            Me.optRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight
+            Me.optRight.UseVisualStyleBackColor = True
             '
             'tlpFlow
             '
@@ -222,6 +222,7 @@
             Me.AutoSize = True
             Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.Controls.Add(Me.tlpMain)
+            Me.KeyPreview = True
             Me.Name = "MessageBoxOptionsEditor"
             Me.Size = New System.Drawing.Size(170, 138)
             Me.tlpMain.ResumeLayout(False)

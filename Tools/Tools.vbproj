@@ -177,6 +177,8 @@
     </Compile>
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
     <Compile Include="Drawing\Design\NewEditor.vb" />
+    <Compile Include="Drawing\Design\UITypeEditor.vb">
+    </Compile>
     <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\Rational.vb" />

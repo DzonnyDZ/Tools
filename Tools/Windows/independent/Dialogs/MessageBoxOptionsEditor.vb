@@ -1,9 +1,12 @@
-﻿Imports Tools.ComponentModelT
+﻿Imports Tools.ComponentModelT, Tools.WindowsT.FormsT
+Imports Tools.DrawingT.DesignT
 
 #If Config <= Nightly Then
 Namespace WindowsT.IndependentT
     ''' <summary>Implements editor for <see cref="MessageBox.MessageBoxOptions"/></summary>
-    Friend NotInheritable Class MessageBoxOptionsEditor 'Localize:Control
+    Friend NotInheritable Class MessageBoxOptionsEditor 'Localize:Control UI
+        Inherits UserControlExtended
+        Implements IEditor(Of MessageBox.MessageBoxOptions)
         ''' <summary>Default CTor</summary>
         Public Sub New()
             Me.New(0)
@@ -18,9 +21,9 @@ Namespace WindowsT.IndependentT
         <DefaultValue(GetType(MessageBox.MessageBoxOptions), "AlignLeft")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <Bindable(True)> _
-        Public Property Value() As MessageBox.MessageBoxOptions
+        Public Property Value() As MessageBox.MessageBoxOptions Implements DrawingT.DesignT.IEditor(Of MessageBox.MessageBoxOptions).Value
             Get
-                Dim ret As MessageBox.MessageBoxOptions
+                Dim ret As MessageBox.MessageBoxOptions = 0
                 Select Case True
                     Case optLeft.Checked : ret = ret Or MessageBox.MessageBoxOptions.AlignLeft
                     Case optRight.Checked : ret = ret Or MessageBox.MessageBoxOptions.AlignRight
@@ -49,7 +52,56 @@ Namespace WindowsT.IndependentT
             Handles chkBring.CheckedChanged, optCenter.CheckedChanged, optLeft.CheckedChanged, optRight.CheckedChanged, optJustify.CheckedChanged, optLeft.CheckedChanged, optRight.CheckedChanged
             RaiseEvent ValueChanged(Me, New EventArgs)
         End Sub
+#Region "IEditor"
+        ''' <summary>Contaisn value of the <see cref="Context"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _Context As ITypeDescriptorContext
 
+        ''' <summary>Stores context of current editing session</summary>
+        ''' <remarks>This property is set by owner of the control and is valid between calls of <see cref="OnBeforeShow"/> and <see cref="OnClosed"/>.</remarks>
+        Public Property Context() As System.ComponentModel.ITypeDescriptorContext Implements DrawingT.DesignT.IEditor(Of MessageBox.MessageBoxOptions).Context
+            Get
+                Return _Context
+            End Get
+            Private Set(ByVal value As System.ComponentModel.ITypeDescriptorContext)
+                _Context = value
+            End Set
+        End Property
+        ''' <summary>Owner of control informs control that it is about to be shown by calling this methos. It is called just befiore the control is shown.</summary>
+        Protected Sub OnBeforeShow() Implements DrawingT.DesignT.IEditor(Of MessageBox.MessageBoxOptions).OnBeforeShow
+            'Do nothing
+        End Sub
+        ''' <summary>Informs control that it was just hidden by calling this method.</summary>
+        ''' <remarks>When implementing editor for reference type that is edited by changin its properties instead of changing its instance. Properties shouldbe changed in this method and onyl if <see cref="Result"/> is true.</remarks>
+        Protected Sub OnClosed() Implements DrawingT.DesignT.IEditor(Of MessageBox.MessageBoxOptions).OnClosed
+            'Do nothing
+        End Sub
+        Private _Result As Boolean
+        ''' <summary>Stores editing result</summary>
+        ''' <returns>True if editing was terminated with success, false if it was canceled</returns>
+        ''' <remarks>This property is set by owner of the control and is valid when and after <see cref="OnClosed"/> is called</remarks>
+        Public Property Result() As Boolean Implements DrawingT.DesignT.IEditor(Of MessageBox.MessageBoxOptions).Result
+            Get
+                Return _Result
+            End Get
+            Protected Set(ByVal value As Boolean)
+                _Result = value
+            End Set
+        End Property
+        ''' <summary>Contaisn value of the <see cref="Service"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Private _Service As System.Windows.Forms.Design.IWindowsFormsEditorService
+        ''' <summary>Stores <see cref="System.Windows.Forms.Design.IWindowsFormsEditorService"/> valid for current editing session</summary>
+        ''' <remarks>This property is set by owner of the control and is valid between calls of <see cref="OnBeforeShow"/> and <see cref="OnClosed"/>.</remarks>
+        Public Property Service() As System.Windows.Forms.Design.IWindowsFormsEditorService Implements DrawingT.DesignT.IEditor(Of MessageBox.MessageBoxOptions).Service
+            Get
+                Return _Service
+            End Get
+            Protected Set(ByVal value As System.Windows.Forms.Design.IWindowsFormsEditorService)
+                _Service = value
+            End Set
+        End Property
+#End Region
     End Class
 End Namespace
 #End If

@@ -79,11 +79,51 @@ Public Module TypeTools
         If name Is Nothing Then Return Nothing
         Return value.GetType.GetField(name)
     End Function
+    ''' <summary>Gets <see cref="Reflection.FieldInfo"/> representing constant of given name from an enumeration</summary>
+    ''' <param name="name">Name of constant to get</param>
+    ''' <param name="EnumType">Type of enumeration</param>
+    ''' <returns><see cref="Reflection.FieldInfo"/> that represents constant enum member of type <paramref name="EnumType"/> with name <paramref name="name"/>. Null if such constant doesnot exists.</returns>
+    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration</exception>
+    Public Function GetConstant(ByVal name As String, ByVal EnumType As Type) As Reflection.FieldInfo
+        If Not EnumType.IsEnum Then Throw New ArgumentException("Type must be enumeration") 'Localize exception
+        Dim field = EnumType.GetField(name, Reflection.BindingFlags.Static Or Reflection.BindingFlags.Public)
+        If field Is Nothing Then Return Nothing
+        If Not field.IsLiteral Then Return Nothing
+        Return field
+    End Function
+    ''' <summary>Gets <see cref="Reflection.FieldInfo"/> representing constant of given name from an enumeration</summary>
+    ''' <param name="name">Name of constant to get</param>
+    ''' <typeparam name="T">Type of enumeration</typeparam>
+    ''' <returns><see cref="Reflection.FieldInfo"/> that represents constant enum member of type <paramref name="EnumType"/> with name <paramref name="name"/>. Null if such constant doesnot exists.</returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration</exception>
+    <CLSCompliant(False)> _
+    Public Function GetConstant(Of T As {Structure, IConvertible})(ByVal name$) As Reflection.FieldInfo
+        Return GetConstant(name, GetType(T))
+    End Function
     ''' <summary>Gets value of enum in its unedlying type</summary>
     ''' <param name="value">Enumeration value</param>
     ''' <returns>Value of enum in its underlying type (so it no longer derives from <see cref="System.[Enum]"/>)</returns>
     <Extension(), CLSCompliant(False)> Public Function GetValue(ByVal value As [Enum]) As IConvertible
         Return GetValueInEnumBaseType(value.GetType, value)
+    End Function
+    ''' <summary>Gets value of enum member</summary>
+    ''' <param name="name">Name of enumeration memebr</param>
+    ''' <param name="EnumType">Type of enumeration</param>
+    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= Constant with name <paramref name="name"/> does not exist in enumeration <paramref name="EnumType"/>.</exception>
+    ''' <returns>Value of constant with name <paramref name="name"/> in type <paramref name="EnumType"/></returns>
+    Public Function GetValue(ByVal name$, ByVal EnumType As Type) As [Enum]
+        Dim cns = GetConstant(name, EnumType)
+        If cns Is Nothing Then Throw New ArgumentException(String.Format("Constant {0} does not exist in type {1}", name, EnumType.Name))
+        Return cns.GetValue(Nothing)
+    End Function
+    ''' <summary>Gets value of enum member</summary>
+    ''' <param name="name">Name of enumeration memebr</param>
+    ''' <typeparam name="T">Type of enumeration</typeparam>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= Constant with name <paramref name="name"/> does not exist in enumeration <typeparamref name="T"/>.</exception>
+    ''' <returns>Value of constant with name <paramref name="name"/> in type <typeparamref name="T"/></returns>
+    <CLSCompliant(False)> _
+    Public Function GetValue(Of T As {IConvertible, Structure})(ByVal name As String) As T
+        Return GetValue(name, GetType(T)).GetValue
     End Function
     ''' <summary>Converts specified <see cref="IConvertible"/> to specified <see cref="[Enum]"/> (type-safe)</summary>
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>
@@ -108,6 +148,100 @@ Public Module TypeTools
     ''' <remarks>Assembly Tools IL contains more type-safe generic extension function IsDefined. This is comanion function to <see cref="InEnum"/>.</remarks>
     <Extension()> Public Function IsDefined(ByVal value As [Enum]) As Boolean
         Return Array.IndexOf([Enum].GetValues(value.GetType), value) >= 0
+    End Function
+
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <param name="EnumType">Type fo parse flags into</param>
+    ''' <param name="Separator">Separator of flags</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal Separator As String) As [Enum]
+        If Not EnumType.IsEnum Then Throw New ArgumentException("Type must be enumeration", "EnumType") 'Localize exception
+        If [Enum].GetUnderlyingType(EnumType).Equals(GetType(SByte)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Short)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Integer)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Long)) Then
+            Dim ret As Long = 0
+            For Each item In Flags.Split(Separator)
+                If IsNumeric(item) Then ret = ret Or CLng(item) Else _
+                ret = ret Or CType(GetValue(item, EnumType).GetValue, Long)
+            Next
+            Return [Enum].ToObject(EnumType, GetValueInEnumBaseType(EnumType, ret))
+        Else
+            Dim ret As ULong = 0
+            For Each item In Flags.Split(Separator)
+                If IsNumeric(item) AndAlso CDec(item) >= 0 Then : ret = ret Or CULng(item)
+                ElseIf IsNumeric(item) Then : Throw New ArgumentException("Enumeration does not allow negative values")
+                Else : ret = ret Or CType(GetValue(item, EnumType).GetValue, ULong) : End If
+            Next
+            Return [Enum].ToObject(EnumType, GetValueInEnumBaseType(EnumType, ret))
+        End If
+    End Function
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <param name="EnumType">Type fo parse flags into</param>
+    ''' <param name="Culture">Culture to obtain separator from</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal Culture As Globalization.CultureInfo) As [Enum]
+        Return FlagsFromString(Flags, EnumType, Culture.TextInfo)
+    End Function
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <param name="EnumType">Type fo parse flags into</param>
+    ''' <param name="TextInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal TextInfo As Globalization.TextInfo) As [Enum]
+        Return FlagsFromString(Flags, EnumType, TextInfo.ListSeparator)
+    End Function
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <param name="EnumType">Type fo parse flags into</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <remarks>Obtains separator from current culture</remarks>
+    Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type) As [Enum]
+        Return FlagsFromString(Flags, EnumType, Globalization.CultureInfo.CurrentCulture)
+    End Function
+
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type fo parse flags into</typeparam>
+    ''' <param name="Separator">Separator of flags</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    <CLSCompliant(False)> _
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String, ByVal Separator As String) As T
+        Return CObj(FlagsFromString(Flags, GetType(T), Separator))
+    End Function
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type fo parse flags into</typeparam>
+    ''' <param name="Culture">Culture to obtain separator from</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    <CLSCompliant(False)> _
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String, ByVal Culture As Globalization.CultureInfo) As T
+        Return CObj(FlagsFromString(Flags, GetType(T), Culture.TextInfo))
+    End Function
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type fo parse flags into</typeparam>
+    ''' <param name="TextInfo"><see cref="Globalization.TextInfo"/> to obtain separator from</param>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    <CLSCompliant(False)> _
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String, ByVal TextInfo As Globalization.TextInfo) As T
+        Return CObj(FlagsFromString(Flags, GetType(T), TextInfo.ListSeparator))
+    End Function
+    ''' <summary>Converts set of flags separated by separator to value of given enumeration</summary>
+    ''' <param name="Flags">Flags to parse. Each flag can be name or number</param>
+    ''' <typeparam name="T">Type fo parse flags into</typeparam>
+    ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
+    ''' <exception cref="ArgumentException"><typeparamref name="T"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
+    ''' <remarks>Obtains separator from current culture</remarks>
+    <CLSCompliant(False)> _
+    Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String) As T
+        Return CObj(FlagsFromString(Flags, GetType(T), Globalization.CultureInfo.CurrentCulture))
     End Function
 End Module
 #End If

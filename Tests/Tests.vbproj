@@ -504,6 +504,10 @@
     <None Include="Tree.xsd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Experimental\Experimental.vbproj">
+      <Project>{088CB10C-E5D3-4537-979F-F5BED401DB25}</Project>
+      <Name>Experimental</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
       <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
       <Name>Tools IL</Name>

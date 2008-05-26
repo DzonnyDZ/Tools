@@ -8,7 +8,7 @@
     <ProjectGuid>{088CB10C-E5D3-4537-979F-F5BED401DB25}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tools</RootNamespace>
-    <AssemblyName>Tools</AssemblyName>
+    <AssemblyName>Tools Experimental</AssemblyName>
     <MyType>Windows</MyType>
     <Nightly>1</Nightly>
     <Alpha>2</Alpha>
@@ -34,7 +34,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Nightly\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools Experimental.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
     <Config>1</Config>
@@ -45,7 +45,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools Experimental.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
     <Config>5</Config>
@@ -55,7 +55,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Alpha\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools Experimental.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -67,7 +67,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Beta\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools Experimental.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -79,7 +79,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\RC\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools Experimental.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -140,6 +140,38 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssemblyStage.vb" />
+    <Compile Include="EOS\DayView\BlackHoleQueue.vb" />
+    <Compile Include="EOS\CM-EDL\OrderByEditor.designer.vb">
+      <DependentUpon>OrderByEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EOS\CM-EDL\OrderByEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EOS\DayView\DayView - DataBinding support.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EOS\DayView\DayView - DataBinding.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EOS\DayView\DayView.designer.vb">
+      <DependentUpon>DayView.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EOS\DayView\DayView.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EOS\DayView\DayViewItem.vb" />
+    <Compile Include="EOS\DayView\DayViewRow.vb" />
+    <Compile Include="EOS\DayView\EventArgs.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EOS\DayView\IDayViewDataItem.vb" />
+    <Compile Include="EOS\DayView\ItemToolStrip.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="EOS\DayView\Misc.vb" />
+    <Compile Include="EOS\DayView\ToolStripLabelLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -157,6 +189,12 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="EOS\CM-EDL\OrderByEditor.resx">
+      <DependentUpon>OrderByEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EOS\DayView\DayView.resx">
+      <DependentUpon>DayView.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -177,6 +215,15 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="EOS\DayView\ItemMembers.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

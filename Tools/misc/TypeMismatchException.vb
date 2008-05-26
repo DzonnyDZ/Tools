@@ -12,6 +12,13 @@ Public Class TypeMismatchException : Inherits ArgumentException
     Public Sub New(ByVal Message$)
         MyBase.new(Message)
     End Sub
+    ''' <summary>Initializes new instance of the <see cref="TypeMismatchException"/> class with message and actual unacceptable value.</summary>
+    ''' <param name="Message">The error message that explains the reason for the exception.</param>
+    ''' <param name="ActualValue">Value of argument which caused the exception to be thrown</param>
+    Public Sub New(ByVal Message$, ByVal ActualValue As Object)
+        MyBase.New(Message)
+        Me._ActualValue = ActualValue
+    End Sub
     ''' <summary>Initializes a new instance of the <see cref="TypeMismatchException" /> class with a specified error message and a reference to the inner exception that is the cause of this exception.</summary>
     ''' <param name="Message">The error message that explains the reason for the exception.</param>
     ''' <param name="innerException">The exception that is the cause of the current exception. If the innerException parameter is not a null reference, the current exception is raised in a catch block that handles the inner exception.</param>

@@ -243,12 +243,11 @@ Namespace WindowsT.IndependentT
                 If old IsNot value Then OnIconChanged(New IReportsChange.ValueChangedEventArgs(Of Drawing.Image)(old, value, "Icon"))
             End Set
         End Property
-        'TODO: Editor for prg
         ''' <summary>Gets or sets options of the message box</summary>
         <DefaultValue(GetType(MessageBoxOptions), "0")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
         <Description("Addtional options controlling how dialog si displayed")> _
-        <Editor(GetType(OptionsEditor), GetType(UITypeEditor))> _
+        <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
         Public Property Options() As MessageBoxOptions 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Options
@@ -259,10 +258,6 @@ Namespace WindowsT.IndependentT
                 If old <> value Then OnOptionsChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions)(old, value, "Options"))
             End Set
         End Property
-        Private NotInheritable Class OptionsEditor
-            'Inherits DropDownEditor
-            'TODO:Impelment
-        End Class
         ''' <summary>Gets or sets check box displayed in messaqge box</summary>
         <DefaultValue(GetType(MessageBoxCheckBox), Nothing)> _
         <TypeConverter(GetType(ExpandableObjectConverter))> _
@@ -1196,6 +1191,14 @@ Namespace WindowsT.IndependentT
                     Return _Items
                 End Get
             End Property
+            ''' <summary>Gets value indicating if the <see cref="Items"/> property should be serialized</summary>
+            Private Function ShouldSerializeItems() As Boolean
+                Return Items.Count > 0
+            End Function
+            ''' <summary>Resets the <see cref="Items"/> property to its decault value - removes all items.</summary>
+            Private Sub ResetItems()
+                Items.Clear()
+            End Sub
             ''' <summary>Indicates member (property or field) used to obtain text displayed in drop down for each item.</summary>
             ''' <seealso cref="ComboBox.DisplayMember"/>
             <DefaultValue(GetType(String), Nothing)> _
@@ -1395,6 +1398,13 @@ Namespace WindowsT.IndependentT
         End Class
 #End Region
         ''' <summary>Options for <see cref="MessageBox"/></summary>
+        ''' <remarks>Values of this enumeration can be combined as long as they fall to different groups. There are three groups of values -
+        ''' Align (<see cref="MessageBoxOptions.AlignCenter"/>,<see cref="MessageBoxOptions.AlignJustify"/>, <see cref="MessageBoxOptions.AlignLeft"/>, <see cref="MessageBoxOptions.AlignRight"/>),
+        ''' Text flow (<see cref="MessageBoxOptions.Ltr"/>, <see cref="MessageBoxOptions.Rtl"/>) and
+        ''' Focus (<see cref="MessageBoxOptions.BringToFront"/>).</remarks>
+        <Flags()> _
+        <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
+        <TypeConverter(GetType(MessageBoxOptionsConverter))> _
         Public Enum MessageBoxOptions As Byte
             ''' <summary>Text is aligned left (default)</summary>
             AlignLeft = 0 '0000
@@ -1405,14 +1415,51 @@ Namespace WindowsT.IndependentT
             ''' <summary>Text is aligned to block. If target platform does not support <see cref="MessageBoxOptions.AlignJustify"/> treats it as <see cref="MessageBoxOptions.AlignLeft"/> (in ltr reading <see cref="MessageBoxOptions.AlignRight"/> in rtl reading)</summary>
             AlignJustify = 3 '0011
             ''' <summary>Bitwise mask for AND-ing text alignment</summary>
+            ''' <remarks>This is actually not walue of enumeration.</remarks>
             <EditorBrowsable(EditorBrowsableState.Advanced)> AlignMask = 3 '0011
             ''' <summary>Left-to-right reading (default)</summary>
             Ltr = 0 '0000
             ''' <summary>Right-to-left reading</summary>
             Rtl = 4 '0100
             ''' <summary>Force shows message box to the user even if application is not currently active</summary>
-            BringToFront = 1 '1000
+            BringToFront = 8 '1000
         End Enum
+        Private Class MessageBoxOptionsConverter
+            Inherits TypeConverter(Of MessageBoxOptions, String)
+
+            ''' <summary>Performs conversion from type <see cref="String"/> to type <see cref="MessageBoxOptions"/></summary>
+            ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            ''' <param name="value">Value to be converted to type <see cref="MessageBoxOptions"/></param>
+            ''' <returns>Value of type <see cref="MessageBoxOptions"/> initialized by <paramref name="value"/></returns>
+            Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As MessageBoxOptions
+                Return FlagsFromString(Of MessageBoxOptions)(value)
+            End Function
+
+            ''' <summary>Performs conversion from type <see cref="MessageBoxOptions"/> to type <see cref="String"/></summary>
+            ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+            ''' <param name="value">Value to be converted</param>
+            ''' <returns>Representation of <paramref name="value"/> in type <see cref="String"/></returns>
+            Public Overloads Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As MessageBoxOptions) As String
+                Dim ret As String = ""
+                Select Case value And MessageBoxOptions.AlignMask
+                    Case MessageBoxOptions.AlignCenter : ret = "AlignCenter"
+                    Case MessageBoxOptions.AlignJustify : ret = "AlignJustify"
+                    Case MessageBoxOptions.AlignLeft : ret = "AlignLeft"
+                    Case MessageBoxOptions.AlignRight : ret = "AlignRight"
+                End Select
+                ret &= Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator
+                If (value And MessageBoxOptions.Rtl) = MessageBoxOptions.Ltr Then
+                    ret &= "Ltr"
+                Else
+                    ret &= "Rtl"
+                End If
+                If (value And MessageBoxOptions.BringToFront) = MessageBoxOptions.BringToFront Then _
+                    ret &= Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator & "BringToFront"
+                Return ret
+            End Function
+        End Class
 #Region "Action"
         ''' <summary>Shows modal dialog (and waits until the dialog is closed)</summary>
         ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>

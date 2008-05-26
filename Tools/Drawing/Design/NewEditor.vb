@@ -1,13 +1,14 @@
 Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, System.Drawing
 #If Config <= Nightly Then
 Namespace DrawingT.DesignT
-    ''' <summary><see cref="UITypeEditor"/> capable of creating new instance either from <see cref="DefaultValueAttribute"/> (preffered if available) or by parameterless CTor</summary>
+    ''' <summary><see cref="UITypeEditor"/> capable of creating new instance either from <see cref="DefaultValueAttribute"/> (preffered if available and <see cref="DefaultValueAttribute.Value"/> is not null) or by parameterless CTor</summary>
     ''' <remarks>
     ''' The <see cref="DefaultValueAttribute"/> used can be applyed either on property (preffered) or on type of the property.
     ''' See also <seealso cref="InstanceCreationEditor"/>.
     ''' </remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(NewEditor), LastChange:="07/22/2007")> _
+    <Version(1, 1, GetType(NewEditor), LastChange:="05/26/2008")> _
+    <FirstVersion("07/22/2007")> _
     Public Class NewEditor
         Inherits UITypeEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>
@@ -45,7 +46,7 @@ Namespace DrawingT.DesignT
                 Try
                     Dim DVA As DefaultValueAttribute = Context.PropertyDescriptor.Attributes(GetType(DefaultValueAttribute))
                     If DVA Is Nothing Then Try : DVA = Context.PropertyDescriptor.PropertyType.GetCustomAttributes(GetType(DefaultValueAttribute), True)(0) : Catch : End Try
-                    If DVA IsNot Nothing Then
+                    If DVA IsNot Nothing AndAlso DVA.Value IsNot Nothing Then
                         .Tag = DVA.Value
                     Else
                         .Tag = Activator.CreateInstance(Context.PropertyDescriptor.PropertyType)
