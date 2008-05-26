@@ -21,12 +21,12 @@ Namespace WindowsT.FormsT
             Me.Icon = Tools.ResourcesT.ToolsIcon
 
         End Sub
-
+        ''' <summary>Enables/disables buttons according to <see cref="MessageBox.State"/> of <see cref="Box"/></summary>
         Private Sub ApplyState()
             cmdCreate.Enabled = Box Is Nothing
-            cmdShow.Enabled = Box IsNot Nothing AndAlso Box.State = IndependentT.MessageBox.States.Created
-            cmdShowDialog.Enabled = Box IsNot Nothing AndAlso Box.State = IndependentT.MessageBox.States.Created
-            cmdShowFloating.Enabled = Box IsNot Nothing AndAlso Box.State = IndependentT.MessageBox.States.Created
+            cmdShow.Enabled = Box IsNot Nothing AndAlso (Box.State = IndependentT.MessageBox.States.Created Or Box.State = IndependentT.MessageBox.States.Closed)
+            cmdShowDialog.Enabled = Box IsNot Nothing AndAlso (Box.State = IndependentT.MessageBox.States.Created Or Box.State = IndependentT.MessageBox.States.Closed)
+            cmdShowFloating.Enabled = Box IsNot Nothing AndAlso (Box.State = IndependentT.MessageBox.States.Created Or Box.State = IndependentT.MessageBox.States.Closed)
             cmdClose.Enabled = Box IsNot Nothing AndAlso Box.State = IndependentT.MessageBox.States.Shown
             cmdDestroy.Enabled = Box IsNot Nothing AndAlso (Box.State = IndependentT.MessageBox.States.Created OrElse Box.State = IndependentT.MessageBox.States.Closed)
         End Sub
@@ -76,17 +76,28 @@ Namespace WindowsT.FormsT
             ApplyState()
         End Sub
 
+        Private Sub Box_Recycled(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Recycled
+            Log("Reycled")
+            ApplyState()
+        End Sub
+
         Private Sub Box_Shown(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Shown
             Log("Shown")
             ApplyState()
         End Sub
 #End Region
+        ''' <summary>Logs messagebox action</summary>
+        ''' <param name="Text">Text to be logged</param>
         Private Sub Log(ByVal Text$)
             If txtLog.Text <> "" Then txtLog.Text &= vbCrLf
             txtLog.Text &= Text
             txtLog.Select(txtLog.Text.Length, 0)
             txtLog.ScrollToCaret()
         End Sub
+        ''' <summary>Logs message box action with parameters</summary>
+        ''' <param name="Text">Formatting text</param>
+        ''' <param name="Params">Parameters</param>
+        ''' <seealso cref="String.Format"/>
         Private Sub Log(ByVal Text$, ByVal ParamArray Params As Object())
             Log(String.Format(Text, Params))
         End Sub

@@ -284,7 +284,7 @@ Namespace WindowsT.FormsT
         ''' <returns>Newly created <see cref="Button"/> with attached <see cref="Button.Click"/> event to <see cref="Button_Click"/></returns>
         Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
             Dim text As String = Button.Text.Replace("&", "&&")
-            If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey), 0) = "&"
+            If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then Mid(text, text.IndexOf(Button.AccessKey) + 1, 0) = "&"
             Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button}
             If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
             Button.Control = CmdButton
@@ -597,20 +597,28 @@ Namespace WindowsT.FormsT
                 Me.Close()
             End If
         End Sub
+        ''' <summary>Force closes the form</summary>
+        Public Shadows Sub Close()
+            AllowClose = True
+            Try
+                MyBase.Close()
+            Finally : AllowClose = False : End Try
+        End Sub
         Private Sub MessageBoxForm_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
             CommonDisposeActions()
             MessageBox.OnClosed(e)
         End Sub
 #End Region
-
+        ''' <summary>When true <see cref="MessageBoxForm_FormClosing"/> allows form to be closed on whatever reason without any action (use for programatic closes)</summary>
+        Private AllowClose As Boolean = False
         Private Sub MessageBoxForm_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+            If AllowClose Then Exit Sub
             Select Case e.CloseReason
-                Case CloseReason.UserClosing
+                Case CloseReason.UserClosing, CloseReason.None
                     If Not MessageBox.AllowClose Then e.Cancel = True : Exit Sub
                     Me.DialogResult = MessageBox.CloseResponse
                     MessageBox.DialogResult = MessageBox.CloseResponse
                     MessageBox.ClickedButton = Nothing
-                Case CloseReason.None 'Do nothing (programatic)
                 Case Else : e.Cancel = True
             End Select
         End Sub
@@ -664,7 +672,9 @@ Namespace WindowsT.FormsT
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
         ''' <param name="Owner">Parent window of dialog (may be null)</param>
         ''' <remarks>Note for inheritors: If you override thie method and do not call base class method, you must set value of the <see cref="Form"/> property</remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/></exception>
         Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As System.Windows.Forms.IWin32Window)
+            If State <> States.Created Then Throw New InvalidOperationException("MessageBox must be in Created State in order to be displyed by PerformDialog.") 'Localize: Exception
             Form = New MessageBoxForm(Me)
             If Modal Then
                 Form.ShowDialog(Owner)
@@ -717,5 +727,9 @@ Namespace WindowsT.FormsT
             End If
             Return Nothing
         End Function
+        Protected Overrides Sub RecycleInternal()
+            MyBase.RecycleInternal()
+            Form = Nothing
+        End Sub
     End Class
 End Namespace

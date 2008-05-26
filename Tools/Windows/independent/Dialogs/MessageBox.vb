@@ -13,6 +13,7 @@ Namespace WindowsT.IndependentT
     ''' This class implements <see cref="IReportsChange"/> and has plenty of events fo reporting changes of property values. Also types of some properties reports events when their properties are changed.
     ''' The aim of such behavior is to provide dynamic message box which can be changed as it is displayd.
     ''' However it is up to derived class which changes it will track and interpret as changes of dialog.
+    ''' <para>After message box is closed, it can be shown again (so called re-cycling; see <see cref="messagebox.Recycle"/>).</para>
     ''' </remarks>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
@@ -1463,29 +1464,42 @@ Namespace WindowsT.IndependentT
 #Region "Action"
         ''' <summary>Shows modal dialog (and waits until the dialog is closed)</summary>
         ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
-        Function Show() As DialogResult
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
+        Public Function Show() As DialogResult
             Return Show(Nothing)
         End Function
         ''' <summary>Show modal dialog (and waits until the dialog is closed)</summary>
         ''' <param name="Owner">Parent window of dialog (may be null)</param>
         ''' <returns>Dialog result (<see cref="MessageBoxButton.Result"/> of clicked button)</returns>
-        Function Show(ByVal Owner As IWin32Window) As DialogResult
-            PerformDialog(True, Owner)
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
+        Public Function Show(ByVal Owner As IWin32Window) As DialogResult
+            PrePerformDialog(True, Owner)
             Return Me.DialogResult
         End Function
         ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
-        Sub Display()
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
+        Public Sub Display()
             Display(Nothing)
         End Sub
         ''' <summary>Displays the dialog non-modally (execution continues immediatelly)</summary>
         ''' <param name="Owner">Parent window of dialog (may be null)</param>
-        Sub Display(ByVal Owner As IWin32Window)
-            PerformDialog(False, Owner)
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
+        Public Sub Display(ByVal Owner As IWin32Window)
+            PrePerformDialog(False, Owner)
         End Sub
         ''' <summary>If overriden in derived class shows the dialog</summary>
         ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
         ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
         Protected MustOverride Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As IWin32Window)
+        ''' <summary>Calls <see cref="Recycle"/> if necessary, then calls <see cref="PerformDialog"/></summary>
+        ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
+        ''' <param name="Owner">Parent window of dialog (may be null)</param>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/></exception>
+        Private Sub PrePerformDialog(ByVal Modal As Boolean, ByVal Owner As IWin32Window)
+            If State <> States.Created Then Recycle()
+            PerformDialog(Modal, Owner)
+        End Sub
 
         ''' <summary>Closes message box with <see cref="CloseResponse"/></summary>
         Public Sub Close()
@@ -1573,7 +1587,7 @@ Namespace WindowsT.IndependentT
             If Not Me.IsCountDown Then Exit Sub
             CurrentTimer -= TimeSpan.FromSeconds(1)
             If CurrentTimer <= TimeSpan.Zero Then
-                Select Me.TimeButton
+                Select Case Me.TimeButton
                     Case 0 To Me.Buttons.Count - 1
                         Me.Close(Me.Buttons(Me.TimeButton).Result)
                     Case -1
@@ -1650,6 +1664,38 @@ Namespace WindowsT.IndependentT
         <Description("Raised after dialog is closed")> _
         Public Event Closed As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
 #End Region
+        ''' <summary>Switches <see cref="MessageBox"/> from <see cref="States.Closed"/> to <see cref="States.Created"/> <see cref="State"/></summary>
+        ''' <remarks>This method cannot be overriden. Override <see cref="RecycleInternal"/> instead which is called only when necessary.
+        ''' <para>Calling this method has no effect when <see  cref="State"/> is <see cref="States.Created"/> and causes <see cref="InvalidOperationException"/> when <see cref="State"/> is <see cref="States.Shown"/>.</para>
+        ''' <para><see cref="Show"/> and <see cref="Display"/> instance methods call <see cref="Recycle"/> if necessary.</para>
+        ''' <para>When re-cycling message boxex, you should keep in mind that youre can change state of it (check boxes, radio buttons, combo boxes, custom controls)</para></remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/> or <see cref="State"/> is not member of <see cref="States"/></exception>
+        Public Sub Recycle()
+            Select Case Me.State
+                Case States.Created 'Do nothing
+                Case States.Shown : Throw New InvalidOperationException("MessageBox cannot be re-cycled when it is shown.")
+                Case Else : RecycleInternal() : OnRecycled(New EventArgs)
+            End Select
+        End Sub
+        ''' <summary>Raised when instance recycling process is completed</summary>
+        ''' <seealso cref="Recycle"/>
+        Public Event Recycled As EventHandler(Of MessageBox, EventArgs)
+        ''' <summary>Raises the <see cref="Recycled"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Called by <see cref="Recycle"/> after call of <see cref="RecycleInternal"/></remarks>
+        Protected Overridable Sub OnRecycled(ByVal e As EventArgs)
+            RaiseEvent Recycled(Me, e)
+        End Sub
+        ''' <summary>Performs all operations needed to switch <see cref="MessageBox"/> form <see cref="State"/> <see cref="States.Closed"/> to <see cref="States.Created"/></summary>
+        ''' <remarks>Called by <see cref="Recycle"/>.
+        ''' <para>Note to inheritors: Always call base-class method <see cref="RecycleInternal"/>.</para></remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Closed"/>. This exception never occures in this implementation because <see cref="Recycle"/> ensures that <see cref="RecycleInternal"/> is caled only when <see cref="State"/> is <see cref="States.Closed"/>.</exception>
+        Protected Overridable Sub RecycleInternal()
+            If Me.State <> States.Closed Then Throw New InvalidOperationException("RecycleInternal can be called on on closed messagebox.")
+            Me.DialogResult = Windows.Forms.DialogResult.None
+            Me.ClickedButton = Nothing
+            State = States.Created
+        End Sub
     End Class
 End Namespace
 #End If
