@@ -149,6 +149,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <DependentUpon>SettingsAttributesTestSettings.settings</DependentUpon>
     </Compile>
+    <Compile Include="ContentTree.Designer.vb">
+      <DependentUpon>ContentTree.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ContentTree.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStructures\Generic\T1orT2.vb" />
     <Compile Include="Diagnostics\ImageVisualizer.Designer.vb">
       <DependentUpon>ImageVisualizer.vb</DependentUpon>
@@ -181,6 +187,12 @@
       <DependentUpon>LtrRlt.vb</DependentUpon>
     </Compile>
     <Compile Include="Framework\System\Globalization\LtrRlt.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Framework\System\Windows\Forms\AutoSize.Designer.vb">
+      <DependentUpon>AutoSize.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Framework\System\Windows\Forms\AutoSize.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmTests.vb">
@@ -367,6 +379,9 @@
       <SubType>Designer</SubType>
       <DependentUpon>SettingsAttributes.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ContentTree.resx">
+      <DependentUpon>ContentTree.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Diagnostics\ImageVisualizer.resx">
       <DependentUpon>ImageVisualizer.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -384,6 +399,9 @@
     <EmbeddedResource Include="Framework\System\Globalization\LtrRlt.resx">
       <DependentUpon>LtrRlt.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Framework\System\Windows\Forms\AutoSize.resx">
+      <DependentUpon>AutoSize.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>

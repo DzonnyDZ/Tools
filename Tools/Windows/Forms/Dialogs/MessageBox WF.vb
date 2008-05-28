@@ -30,7 +30,10 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Common actions taken when form is closed or disposed</summary>
         Private Sub CommonDisposeActions()
-            If MessageBox.CheckBox IsNot Nothing Then MessageBox.CheckBox.Control = Nothing : AttachCheckBoxHandlers(MessageBox.CheckBox, False)
+            For Each CheckBox In MessageBox.CheckBoxes
+                CheckBox.Control = Nothing
+                AttachCheckBoxHandlers(CheckBox, False)
+            Next
             If MessageBox.ComboBox IsNot Nothing Then MessageBox.ComboBox.Control = Nothing : AttachComboBoxHandlers(MessageBox.ComboBox, False)
             For Each Button In MessageBox.Buttons
                 Button.Control = Nothing
@@ -96,7 +99,9 @@ Namespace WindowsT.FormsT
             'Propmpt
             lblPrompt.Text = MessageBox.Prompt
             'Checkbox
-            ApplyCheckBox()
+            flpChecks.Controls.Clear()
+            If MessageBox.CheckBoxes.Count <= 0 Then flpChecks.Visible = False _
+            Else flpChecks.Controls.AddRange((From Check In MessageBox.CheckBoxes Select CreateCheckBox(Check)).toarray)
             'Combobox
             ApplyComboBox()
             'Radios
@@ -124,7 +129,9 @@ Namespace WindowsT.FormsT
             tlpMain.ReplaceControl(lblPlhBottom, MessageBox.BottomControlControl)
             AttachMessageBoxHandlers()
             AttachComboBoxHandlers(MessageBox.ComboBox)
-            AttachCheckBoxHandlers(MessageBox.CheckBox)
+            For Each CheckBox In MessageBox.CheckBoxes
+                AttachCheckBoxHandlers(CheckBox)
+            Next
             For Each Button In MessageBox.Buttons
                 AttachButtonHandlers(Button)
             Next
@@ -230,7 +237,7 @@ Namespace WindowsT.FormsT
                 AddHandler MessageBox.ComboBoxChanged, AddressOf__MessageBox_ComboBoxChanged
                 AddHandler MessageBox.CountDown, AddressOf__MessageBox_CountDown
                 AddHandler MessageBox.DefaultButtonChanged, AddressOf__MessageBox_DefaultButtonChanged
-                AddHandler MessageBox.CheckBoxChanged, AddressOf__MessageBox_CheckBoxChanged
+                AddHandler MessageBox.CheckBoxesChanged, AddressOf__MessageBox_CheckBoxesChanged
                 AddHandler MessageBox.PromptChanged, AddressOf__MessageBox_PromptChanged
                 AddHandler MessageBox.TitleChanged, AddressOf__MessageBox_TitleChanged
                 AddHandler MessageBox.ButtonsChanged, AddressOf__MessageBox_ButtonsChanged
@@ -245,7 +252,7 @@ Namespace WindowsT.FormsT
                 RemoveHandler MessageBox.ComboBoxChanged, AddressOf__MessageBox_ComboBoxChanged
                 RemoveHandler MessageBox.CountDown, AddressOf__MessageBox_CountDown
                 RemoveHandler MessageBox.DefaultButtonChanged, AddressOf__MessageBox_DefaultButtonChanged
-                RemoveHandler MessageBox.CheckBoxChanged, AddressOf__MessageBox_CheckBoxChanged
+                RemoveHandler MessageBox.CheckBoxesChanged, AddressOf__MessageBox_CheckBoxesChanged
                 RemoveHandler MessageBox.PromptChanged, AddressOf__MessageBox_PromptChanged
                 RemoveHandler MessageBox.TitleChanged, AddressOf__MessageBox_TitleChanged
                 RemoveHandler MessageBox.ButtonsChanged, AddressOf__MessageBox_ButtonsChanged
@@ -270,31 +277,28 @@ Namespace WindowsT.FormsT
                 Next item
                 If MessageBox.ComboBox.SelectedItem IsNot Nothing Then cmbCombo.SelectedItem = MessageBox.ComboBox.SelectedItem
                 If MessageBox.ComboBox.SelectedIndex >= 0 Then cmbCombo.SelectedIndex = MessageBox.ComboBox.SelectedIndex
-                If MessageBox.ComboBox.Editable AndAlso MessageBox.CheckBox.Text <> "" Then cmbCombo.Text = MessageBox.ComboBox.Text
-                If MessageBox.ComboBox.ToolTip <> "" Then totToolTip.SetToolTip(cmbCombo, MessageBox.ComboBox.ToolTip)
+                If MessageBox.ComboBox.Editable AndAlso MessageBox.ComboBox.Text <> "" Then cmbCombo.Text = MessageBox.ComboBox.Text
+                If MessageBox.ComboBox.ToolTip <> "" Then totToolTip.SetToolTip(cmbCombo, MessageBox.ComboBox.ToolTip) _
+                Else totToolTip.SetToolTip(cmbCombo, "")
             End If
         End Sub
-        ''' <summary>Applies the <see cref="CheckBox"/> property onto <see cref="chkCheckBox"/></summary>
-        Private Sub ApplyCheckBox()
-            If MessageBox.CheckBox Is Nothing Then
-                chkCheckBox.Visible = False
-            Else
-                chkCheckBox.Visible = True
-                chkCheckBox.Text = MessageBox.CheckBox.Text
-                MessageBox.CheckBox.Control = chkCheckBox
-                chkCheckBox.CheckState = MessageBox.CheckBox.State
-                chkCheckBox.ThreeState = MessageBox.CheckBox.ThreeState
-                If MessageBox.CheckBox.ToolTip <> "" Then totToolTip.SetToolTip(chkCheckBox, MessageBox.CheckBox.ToolTip)
-                chkCheckBox.Enabled = MessageBox.CheckBox.Enabled
-            End If
-        End Sub
+        ''' <summary>Creates <see cref="CheckBox"/> from given <see cref="iMsg.MessageBoxCheckBox"/></summary>
+        ''' <param name="Chk">A <see cref="iMsg.MessageBoxCheckBox"/> to create <see cref="CheckBox"/> from</param>
+        ''' <returns><see cref="CheckBox"/> initiated by <paramref name="Chk"/></returns>
+        Private Function CreateCheckBox(ByVal Chk As MessageBox.MessageBoxCheckBox) As CheckBox
+            Dim ret As New CheckBox With {.Text = Chk.Text, .Tag = Chk, .CheckState = Chk.State, .ThreeState = Chk.ThreeState, .Enabled = Chk.Enabled, .Anchor = AnchorStyles.None}
+            If Chk.ToolTip <> "" Then totToolTip.SetToolTip(ret, Chk.ToolTip)
+            Chk.Control = ret
+            AddHandler ret.CheckStateChanged, AddressOf__CheckBox_CheckStateChanged
+            Return ret
+        End Function
         ''' <summary>Creates <see cref="Button"/> from <see cref="MessageBox.MessageBoxButton"/></summary>
         ''' <param name="Button"><see cref="MessageBox.MessageBoxButton"/> to initialize new <see cref="Button"/> with</param>
         ''' <returns>Newly created <see cref="Button"/> with attached <see cref="Button.Click"/> event to <see cref="Button_Click"/></returns>
         Private Function CreateButton(ByVal Button As MessageBox.MessageBoxButton) As Button
             Dim text As String = If(Button.Text IsNot Nothing, Button.Text.Replace("&", "&&"), "")
             If Button.AccessKey <> vbNullChar AndAlso text.IndexOf(Button.AccessKey) >= 0 Then text = text.Insert(text.IndexOf(Button.AccessKey), "&")
-            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink}
+            Dim CmdButton As New Button With {.Text = text, .Enabled = Button.Enabled, .DialogResult = Button.Result, .Tag = Button, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .Anchor = AnchorStyles.None}
             If Button.ToolTip <> "" Then totToolTip.SetToolTip(CmdButton, Button.ToolTip)
             Button.Control = CmdButton
             AddHandler CmdButton.Click, AddressOf Button_Click
@@ -304,10 +308,10 @@ Namespace WindowsT.FormsT
         ''' <param name="Radio"><see cref="iMsg.MessageBoxRadioButton"/> to initialize new <see cref="RadioButton"/> with</param>
         ''' <returns>New created <see cref="RadioButton"/> with attached <see cref="RadioButton.CheckedChanged"/> event to <see cref="Radio_CheckedChanged"/></returns>
         Private Function CreateRadio(ByVal Radio As iMsg.MessageBoxRadioButton) As RadioButton
-            Dim NewRadio As RadioButton = New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio}
+            Dim NewRadio As RadioButton = New RadioButton With {.Text = Radio.Text, .Enabled = Radio.Enabled, .Checked = Radio.Checked, .UseMnemonic = False, .Tag = Radio, .Anchor = AnchorStyles.None}
             If Radio.ToolTip <> "" Then totToolTip.SetToolTip(NewRadio, Radio.ToolTip)
             Radio.Control = NewRadio
-            AddHandler DirectCast(NewRadio, RadioButton).CheckedChanged, AddressOf__Radio_CheckedChanged
+            AddHandler NewRadio.CheckedChanged, AddressOf__Radio_CheckedChanged
             Return NewRadio
         End Function
 #Region "Handlers"
@@ -398,7 +402,7 @@ Namespace WindowsT.FormsT
             End If
         End Sub
         Private Sub cmbCombo_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.SelectedIndexChanged
-            If MessageBox.CheckBox Is Nothing Then Exit Sub
+            If MessageBox.CheckBoxes Is Nothing Then Exit Sub
             If MessageBox.ComboBox.SelectedIndex <> sender.SelectedIndex OrElse (sender.SelectedItem Is Nothing Xor MessageBox.ComboBox.SelectedItem Is Nothing) OrElse (sender.SelectedItem IsNot Nothing AndAlso Not sender.SelectedItem.Equals(MessageBox.ComboBox.SelectedItem)) Then
                 sender.SelectedIndex = cmbCombo.SelectedIndex
                 sender.SelectedItem = cmbCombo.SelectedItem
@@ -411,13 +415,15 @@ Namespace WindowsT.FormsT
 #End Region
 #Region "CheckBox"
         Private Sub CheckBox_ThreeStateChanged(ByVal sender As MessageBox.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
-            chkCheckBox.ThreeState = sender.ThreeState
+            CheckPlh1.ThreeState = sender.ThreeState
         End Sub
         Private Sub CheckBox_StateChanged(ByVal sender As MessageBox.MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
-            If chkCheckBox.CheckState <> sender.State Then chkCheckBox.CheckState = sender.State
+            Dim chk As CheckBox = sender.Control
+            If chk.CheckState <> sender.State Then chk.CheckState = sender.State
         End Sub
-        Private Sub chkCheckBox_CheckStateChanged(ByVal sender As CheckBox, ByVal e As System.EventArgs) Handles chkCheckBox.CheckStateChanged
-            If MessageBox.CheckBox IsNot Nothing AndAlso MessageBox.CheckBox.State <> sender.CheckState Then MessageBox.CheckBox.State = sender.CheckState
+        Private Sub CheckBox_CheckStateChanged(ByVal sender As CheckBox, ByVal e As System.EventArgs)
+            Dim mChk As MessageBox.MessageBoxCheckBox = sender.Tag
+            If mChk.State <> sender.CheckState Then mChk.State = sender.CheckState
         End Sub
 #End Region
 #Region "Button"
@@ -481,12 +487,34 @@ Namespace WindowsT.FormsT
             Me.AcceptButton = Nothing
             If e.NewValue >= 0 AndAlso e.NewValue < MessageBox.Buttons.Count Then Me.AcceptButton = MessageBox.Buttons(e.NewValue).Control
         End Sub
-        Private Sub MessageBox_CheckBoxChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxCheckBox))
-            If e.OldValue IsNot e.NewValue Then
-                If e.OldValue IsNot Nothing Then AttachCheckBoxHandlers(e.OldValue, False)
-                ApplyCheckBox()
-                If e.NewValue IsNot Nothing Then AttachCheckBoxHandlers(e.OldValue)
-            End If
+        ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
+        Private Sub MessageBox_CheckBoxesChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxCheckBox).ListChangedEventArgs)
+            Select Case e.Action
+                Case CollectionsT.GenericT.CollectionChangeAction.Add
+                    Dim NewCheck = CreateCheckBox(e.NewValue)
+                    flpChecks.Controls.Insert(e.Index, NewCheck)
+                    AttachCheckBoxHandlers(e.NewValue)
+                    flpChecks.Visible = True
+                Case CollectionsT.GenericT.CollectionChangeAction.Clear
+                    Dim e2 = DirectCast(e.ChangeEventArgs, ListWithEvents(Of iMsg.MessageBoxCheckBox).ItemsEventArgs)
+                    flpChecks.Controls.Clear()
+                    For Each old In e2.Items
+                        PerformCheckBoxRemoval(old)
+                    Next
+                    Me.flpChecks.Visible = False
+                Case CollectionsT.GenericT.CollectionChangeAction.ItemChange 'Do nothing
+                Case CollectionsT.GenericT.CollectionChangeAction.Remove
+                    Me.flpChecks.Controls.RemoveAt(e.Index)
+                    PerformCheckBoxRemoval(e.OldValue.Control)
+                    flpChecks.Visible = flpChecks.Controls.Count > 0
+                Case CollectionsT.GenericT.CollectionChangeAction.Replace
+                    Dim NewCheck = CreateCheckBox(e.NewValue)
+                    PerformButtonRemoval(e.OldValue.Control)
+                    Me.flpChecks.Controls.Replace(e.Index, NewCheck)
+                    AttachCheckBoxHandlers(e.NewValue)
+                    EnsureCancelButton()
+                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "CheckBoxes"))     'Localize:Exception
+            End Select
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
         Private Sub MessageBox_RadiosChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBox.MessageBoxRadioButton).ListChangedEventArgs)
@@ -514,7 +542,7 @@ Namespace WindowsT.FormsT
                     Me.flpRadio.Controls.Replace(e.Index, NewRadio)
                     AttachRadioHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Buttons"))     'Localize:Exception
+                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Radios"))     'Localize:Exception
             End Select
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
@@ -567,12 +595,22 @@ Namespace WindowsT.FormsT
             AttachButtonHandlers(Button, False)
         End Sub
         ''' <summary>Performs actions needed when radio button is about to be removed. Does not remove radio button from <see cref="flpRadio"/>.</summary>
+        ''' <param name="Button"><see cref="iMsg.MessageBoxRadioButton"/> to be removed</param>
         Private Sub PerformRadioRemoval(ByVal Button As iMsg.MessageBoxRadioButton)
             Dim opt As RadioButton = Button.Control
             opt.Tag = Nothing
             Button.Control = Nothing
             RemoveHandler opt.CheckedChanged, AddressOf__Radio_CheckedChanged
             AttachRadioHandlers(Button, False)
+        End Sub
+        ''' <summary>Performs actions needed when check box is about to be removed. Does not remove radio button from <see cref="flpChecks"/>.</summary>
+        ''' <param name="mChk"><see cref="iMsg.MessageBoxCheckBox"/> to be removed</param>
+        Private Sub PerformCheckBoxRemoval(ByVal mChk As iMsg.MessageBoxCheckBox)
+            Dim chk As CheckBox = mChk.Control
+            chk.Tag = Nothing
+            mChk.Control = Nothing
+            RemoveHandler chk.CheckStateChanged, AddressOf__CheckBox_CheckStateChanged
+            AttachCheckBoxHandlers(mChk, False)
         End Sub
         ''' <summary>Ensures that <see cref="CancelButton"/> is set to button with <see cref="Button.DialogResult">DialogResult</see> same as <see cref="MessageBox">MessageBox</see>.<see cref="iMsg.CloseResponse">CloseResponse</see> or to null if appropriate button does not exist</summary>
         Private Sub EnsureCancelButton()
@@ -602,7 +640,7 @@ Namespace WindowsT.FormsT
         Private ReadOnly AddressOf__MessageBox_ComboBoxChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxComboBox)) = AddressOf MessageBox_ComboBoxChanged
         Private ReadOnly AddressOf__MessageBox_CountDown As EventHandler(Of iMsg, EventArgs) = AddressOf MessageBox_CountDown
         Private ReadOnly AddressOf__MessageBox_DefaultButtonChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of Integer)) = AddressOf MessageBox_DefaultButtonChanged
-        Private ReadOnly AddressOf__MessageBox_CheckBoxChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of iMsg.MessageBoxCheckBox)) = AddressOf MessageBox_CheckBoxChanged
+        Private ReadOnly AddressOf__MessageBox_CheckBoxesChanged As iMsg.CheckBoxesChangedEventHandler = AddressOf MessageBox_CheckBoxesChanged
         Private ReadOnly AddressOf__MessageBox_PromptChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of String)) = AddressOf MessageBox_PromptChanged
         Private ReadOnly AddressOf__MessageBox_TitleChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of String)) = AddressOf MessageBox_TitleChanged
         Private ReadOnly AddressOf__MessageBox_ButtonsChanged As iMsg.ButtonsChangedEventHandler = AddressOf MessageBox_ButtonsChanged
@@ -610,6 +648,7 @@ Namespace WindowsT.FormsT
         Private ReadOnly AddressOf__Radio_CheckedChanged As EventHandler = AddressOf New EventHandler(Of RadioButton, EventArgs)(AddressOf Radio_CheckedChanged).Invoke
         Private ReadOnly AddressOf__MessageBox_IconChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of Drawing.Image)) = AddressOf MessageBox_IconChanged
         Private ReadOnly AddressOf__MessageBox_OptionsChanged As EventHandler(Of iMsg, IReportsChange.ValueChangedEventArgs(Of MessageBox.MessageBoxOptions)) = AddressOf MessageBox_OptionsChanged
+        Private ReadOnly AddressOf__CheckBox_CheckStateChanged As EventHandler = AddressOf CheckBox_CheckStateChanged
 #End Region
         Private Sub Button_Click(ByVal sender As Button, ByVal e As EventArgs)
             Dim button As iMsg.MessageBoxButton = sender.Tag
@@ -648,7 +687,7 @@ Namespace WindowsT.FormsT
         End Sub
 
         Private Sub MessageBoxForm_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
-            Me.MaximumSize = DesktopBounds.Size
+            'Me.MaximumSize = DesktopBounds.Size
         End Sub
 
         Private Sub MessageBoxForm_Shown(ByVal sender As MessageBoxForm, ByVal e As System.EventArgs) Handles Me.Shown

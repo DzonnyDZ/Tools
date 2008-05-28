@@ -80,10 +80,12 @@ Namespace WindowsT.FormsT
             Log("Reycled")
             ApplyState()
         End Sub
-
+        Private WithEvents FloatingTree As New ContentTree
         Private Sub Box_Shown(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Shown
             Log("Shown")
             ApplyState()
+            FloatingTree.Root = sender.Form
+            FloatingTree.Show(sender.Form)
         End Sub
 #End Region
         ''' <summary>Logs messagebox action</summary>
@@ -100,6 +102,13 @@ Namespace WindowsT.FormsT
         ''' <seealso cref="String.Format"/>
         Private Sub Log(ByVal Text$, ByVal ParamArray Params As Object())
             Log(String.Format(Text, Params))
+        End Sub
+
+        Private Sub FloatingTree_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles FloatingTree.FormClosed
+            Dim NewTree As New ContentTree
+            NewTree.DesktopBounds = FloatingTree.DesktopBounds
+            NewTree.StartPosition = FormStartPosition.Manual
+            FloatingTree = NewTree
         End Sub
     End Class
 End Namespace

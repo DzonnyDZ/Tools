@@ -43,6 +43,10 @@ Namespace Framework.SystemF.GlobalizationF
             If Not Loaded Then Exit Sub
             Me.RightToLeftLayout = chkRightToLeftLayout.Checked
         End Sub
-
+        ''' <summary>CTor</summary>
+        Public Sub New()
+            InitializeComponent()
+            Me.Icon = Tools.ResourcesT.ToolsIcon
+        End Sub
     End Class
 End Namespace

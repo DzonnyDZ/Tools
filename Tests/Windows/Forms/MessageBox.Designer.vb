@@ -24,7 +24,7 @@ Namespace WindowsT.FormsT
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.FlowLayoutPanel1 = New System.Windows.Forms.FlowLayoutPanel
+            Me.flpCommands = New System.Windows.Forms.FlowLayoutPanel
             Me.cmdCreate = New System.Windows.Forms.Button
             Me.cmdShowDialog = New System.Windows.Forms.Button
             Me.cmdShow = New System.Windows.Forms.Button
@@ -33,24 +33,24 @@ Namespace WindowsT.FormsT
             Me.cmdDestroy = New System.Windows.Forms.Button
             Me.prgGrid = New System.Windows.Forms.PropertyGrid
             Me.txtLog = New System.Windows.Forms.TextBox
-            Me.FlowLayoutPanel1.SuspendLayout()
+            Me.flpCommands.SuspendLayout()
             Me.SuspendLayout()
             '
-            'FlowLayoutPanel1
+            'flpCommands
             '
-            Me.FlowLayoutPanel1.AutoSize = True
-            Me.FlowLayoutPanel1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.FlowLayoutPanel1.Controls.Add(Me.cmdCreate)
-            Me.FlowLayoutPanel1.Controls.Add(Me.cmdShowDialog)
-            Me.FlowLayoutPanel1.Controls.Add(Me.cmdShow)
-            Me.FlowLayoutPanel1.Controls.Add(Me.cmdShowFloating)
-            Me.FlowLayoutPanel1.Controls.Add(Me.cmdClose)
-            Me.FlowLayoutPanel1.Controls.Add(Me.cmdDestroy)
-            Me.FlowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Top
-            Me.FlowLayoutPanel1.Location = New System.Drawing.Point(0, 0)
-            Me.FlowLayoutPanel1.Name = "FlowLayoutPanel1"
-            Me.FlowLayoutPanel1.Size = New System.Drawing.Size(294, 58)
-            Me.FlowLayoutPanel1.TabIndex = 0
+            Me.flpCommands.AutoSize = True
+            Me.flpCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.flpCommands.Controls.Add(Me.cmdCreate)
+            Me.flpCommands.Controls.Add(Me.cmdShowDialog)
+            Me.flpCommands.Controls.Add(Me.cmdShow)
+            Me.flpCommands.Controls.Add(Me.cmdShowFloating)
+            Me.flpCommands.Controls.Add(Me.cmdClose)
+            Me.flpCommands.Controls.Add(Me.cmdDestroy)
+            Me.flpCommands.Dock = System.Windows.Forms.DockStyle.Top
+            Me.flpCommands.Location = New System.Drawing.Point(0, 0)
+            Me.flpCommands.Name = "flpCommands"
+            Me.flpCommands.Size = New System.Drawing.Size(294, 58)
+            Me.flpCommands.TabIndex = 0
             '
             'cmdCreate
             '
@@ -155,19 +155,19 @@ Namespace WindowsT.FormsT
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.ClientSize = New System.Drawing.Size(294, 498)
             Me.Controls.Add(Me.prgGrid)
-            Me.Controls.Add(Me.FlowLayoutPanel1)
+            Me.Controls.Add(Me.flpCommands)
             Me.Controls.Add(Me.txtLog)
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "frmMessageBox"
             Me.Text = "Testing Tool.WindowsT.FormsT.MessageBox"
-            Me.FlowLayoutPanel1.ResumeLayout(False)
-            Me.FlowLayoutPanel1.PerformLayout()
+            Me.flpCommands.ResumeLayout(False)
+            Me.flpCommands.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
         End Sub
-        Friend WithEvents FlowLayoutPanel1 As System.Windows.Forms.FlowLayoutPanel
+        Friend WithEvents flpCommands As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents cmdCreate As System.Windows.Forms.Button
         Friend WithEvents cmdShowDialog As System.Windows.Forms.Button
         Friend WithEvents cmdShow As System.Windows.Forms.Button

@@ -48,7 +48,7 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "MessageBox Definition fields"
         ''' <summary>Contaions value of the <see cref="Buttons"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Buttons As New ListWithEvents(Of MessageBoxButton)(True, True)
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Buttons As New ListWithEvents(Of MessageBoxButton)(False, True)
         ''' <summary>Contaions value of the <see cref="DefaultButton"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _DefaultButton As Integer = 0
         ''' <summary>Contaions value of the <see cref="CloseResponse"/> property</summary>
@@ -61,12 +61,12 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Icon As Drawing.Image
         ''' <summary>Contaions value of the <see cref="Options"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Options As MessageBoxOptions
-        ''' <summary>Contaions value of the <see cref="CheckBox"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _CheckBox As MessageBoxCheckBox
+        ''' <summary>Contaions value of the <see cref="CheckBoxes"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CheckBoxes As New ListWithEvents(Of MessageBoxCheckBox)(False, True)
         ''' <summary>Contaions value of the <see cref="ComboBox"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ComboBox As MessageBoxComboBox
         ''' <summary>Contaions value of the <see cref="Radios"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Radios As New ListWithEvents(Of MessageBoxRadioButton)(True, True)
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Radios As New ListWithEvents(Of MessageBoxRadioButton)(False, True)
         ''' <summary>Contaions value of the <see cref="TopControl"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _TopControl As Object
         ''' <summary>Contaions value of the <see cref="MidControl"/> property</summary>
@@ -98,7 +98,8 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Defines buttons displayed on message box</summary>
-        ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.</remarks>
+        ''' <remarks>This collection reports event. You can use them to track changed of the collection either via events of the collection itself or via the <see cref="ButtonsChanged"/> event.
+        ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <Description("Defines buttons displayed on message box")> _
@@ -207,7 +208,7 @@ Namespace WindowsT.IndependentT
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <Description("Text of prompt displayed to the user.")> _
-        <Localizable(True)> _
+        <Localizable(True), Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(UITypeEditor))> _
         Public Property Prompt() As String 'Localize:Description
             <DebuggerStepThrough()> Get
                 Return _Prompt
@@ -235,7 +236,7 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Gets or sets icon image to display on the message box</summary>
-        ''' <remarks>Expected image size is 32×32px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
+        ''' <remarks>Expected image size is 64×64px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
         <DefaultValue(GetType(Drawing.Image), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <Description("Icon shown in left to corner (lrt) of dialog")> _
@@ -267,22 +268,26 @@ Namespace WindowsT.IndependentT
                 If old <> value Then OnOptionsChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBoxOptions)(old, value, "Options"))
             End Set
         End Property
-        ''' <summary>Gets or sets check box displayed in messaqge box</summary>
-        <DefaultValue(GetType(MessageBoxCheckBox), Nothing)> _
-        <TypeConverter(GetType(ExpandableObjectConverter))> _
-        <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
+        ''' <summary>Check boxes displayed in messaqge box</summary>
+        ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="CheckBoxesChanged"/> event.
+        ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <Description("Check box displayed for message box. Can be used for example for 'Do not show this message in future' option.")> _
-        Public Property CheckBox() As MessageBoxCheckBox 'Localize:Description
+        <Description("Check boxes displayed for message box. Can be used for example for 'Do not show this message in future' option.")> _
+        Public ReadOnly Property CheckBoxes() As ListWithEvents(Of MessageBoxCheckBox) 'Localize:Description
             <DebuggerStepThrough()> Get
-                Return _CheckBox
+                Return _CheckBoxes
             End Get
-            <DebuggerStepThrough()> Set(ByVal value As MessageBoxCheckBox)
-                Dim old = CheckBox
-                _CheckBox = value
-                If old IsNot value Then OnCheckBoxChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox)(old, value, "CheckBox"))
-            End Set
         End Property
+        ''' <summary>Gets value indicating if the <see cref="CheckBoxes"/> property has changed and thus should be serialized</summary>
+        ''' <returns>True when <see cref="CheckBoxes"/>.<see cref="ListWithEvents.Count">Count</see> is non-zero</returns>
+        Private Function ShouldSerializeCheckBoxes() As Boolean
+            Return CheckBoxes.Count <> 0
+        End Function
+        ''' <summary>Resets value of the <see cref="CheckBoxes"/> property to its default value (clears it)</summary>
+        Private Sub ResetCheckBoxes()
+            CheckBoxes.Clear()
+        End Sub
         ''' <summary>Gets or sets combo box (drop down list) displayed in message box</summary>
         <DefaultValue(GetType(MessageBoxComboBox), Nothing)> _
         <TypeConverter(GetType(ExpandableObjectConverter))> _
@@ -300,7 +305,8 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Radio buttons displayed on message box</summary>
-        ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="RadiosChanged"/> event.</remarks>
+        ''' <remarks>This collection reports event. You can use them to track changes of the collection either via handling events of the collection or via the <see cref="RadiosChanged"/> event.
+        ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
         <Description("Radio buttons (options) displayed on messagebox")> _
@@ -402,6 +408,16 @@ Namespace WindowsT.IndependentT
         Private Sub AddHandlers()
             AddHandler Buttons.CollectionChanged, AddressOf OnButtonsChanged
             AddHandler Radios.CollectionChanged, AddressOf OnRadiosChanged
+            AddHandler CheckBoxes.CollectionChanged, AddressOf OnCheckBoxesChanged
+            AddHandler Buttons.Adding, AddressOf Buttons_Adding
+            AddHandler Radios.Adding, AddressOf Radios_Adding
+            AddHandler CheckBoxes.Adding, AddressOf CheckBoxes_Adding
+            AddHandler Buttons.ItemChanging, AddressOf Buttons_ItemChanging
+            AddHandler Radios.ItemChanging, AddressOf Radios_ItemChanging
+            AddHandler CheckBoxes.ItemChanging, AddressOf CheckBoxes_ItemChanging
+            CheckBoxes.AllowAddCancelableEventsHandlers = False
+            Radios.AllowAddCancelableEventsHandlers = False
+            Buttons.AllowAddCancelableEventsHandlers = False
         End Sub
         ''' <summary>Default CTor - creates messagebox with just one button <see cref="MessageBoxButton.OK"/></summary>
         Public Sub New()
@@ -424,7 +440,7 @@ Namespace WindowsT.IndependentT
         End Sub
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
-        ''' <param name="e">Event information. For changes of <see cref="Buttons"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents.CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents.Changed"/>.</param>
+        ''' <param name="e">Event information. For changes of <see cref="Buttons"/>, <see cref="CheckBoxes"/> and <see cref="Radios"/> collections event argument of <see cref="ListWithEvents.CollectionChanged"/> is passed instead of argument of <see cref="ListWithEvents.Changed"/>.</param>
         ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="IReportsChange.ValueChangedEventArgs"/> class)</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
@@ -487,14 +503,16 @@ Namespace WindowsT.IndependentT
             RaiseEvent OptionsChanged(Me, e)
             OnChanged(e)
         End Sub
-        ''' <summary>Raised wghen value of the <see cref="CheckBox"/> property changes</summary>
-        ''' <remarks>This event tracks only changes of value of the <see cref="CheckBox"/> property itsels. It does not track changes of values of its inner properties.</remarks>
+        ''' <summary>Raised when content of the <see cref="CheckBoxes"/> collection changes</summary>
+        ''' <param name="sender">Source of the event - always this instance of <see  cref="MessageBox"/></param>
+        ''' <param name="e">Event arguments. Argument e of <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxCheckBox).CollectionChanged"/> is passed directly here.</param>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
-        Public Event CheckBoxChanged As EventHandler(Of MessageBox, IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox))
-        ''' <summary>Raises the <see cref="CheckBoxChanged"/> event, calls <see cref="OnChanged"/></summary>
-        ''' <param name="e">Event arguments</param>
-        Protected Overridable Sub OnCheckBoxChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBoxCheckBox))
-            RaiseEvent CheckBoxChanged(Me, e)
+        Public Event CheckBoxesChanged(ByVal sender As MessageBox, ByVal e As ListWithEvents(Of MessageBoxCheckBox).ListChangedEventArgs)
+        ''' <summary>Raises the <see cref="CheckBoxesChanged"/> event. Handles <see cref="Radios">Radios</see>.<see cref="ListWithEvents(Of MessageBoxRadioButton).CollectionChanged">CollectionChanged</see> event. Calls <see cref="OnChanged"/>.</summary>
+        ''' <param name="sender">Source ot the event - <see cref="Radios"/></param>
+        ''' <param name="e">Event arguments. Those arguemnts are directly passed to <see cref="RadiosChanged"/> and <see cref="OnChanged"/></param>
+        Protected Overridable Sub OnCheckBoxesChanged(ByVal sender As ListWithEvents(Of MessageBoxCheckBox), ByVal e As ListWithEvents(Of MessageBoxCheckBox).ListChangedEventArgs)
+            RaiseEvent CheckBoxesChanged(Me, e)
             OnChanged(e)
         End Sub
         ''' <summary>Raised wghen value of the <see cref="ComboBox"/> property changes</summary>
@@ -1562,6 +1580,7 @@ Namespace WindowsT.IndependentT
                 _State = value
             End Set
         End Property
+#Region "Result"
         ''' <summary>Gets result of dialog (<see cref="MessageBoxButton.Result"/> of button user has clicked on)</summary>
         ''' <returns><see cref="MessageBoxButton.Result"/> of button user have clicked to or <see cref="CloseResponse"/> when message box was closed by pressing escape, closing the window or timer.</returns>
         ''' <value>Should be set by derived class when dialog is closed</value>
@@ -1576,7 +1595,7 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="DialogResult"/> property</summary>
-        Private _DialogResult As DialogResult = Windows.Forms.DialogResult.None
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _DialogResult As DialogResult = Windows.Forms.DialogResult.None
         ''' <summary>Gets button user have clicked on</summary>
         ''' <returns>Button user have clicked on (or null if dialog was closed by window close button, pressing escape or timer)</returns>
         ''' <remarks>Value of this property is valid only when <see cref="State"/> is <see cref="States.Closed"/></remarks>
@@ -1591,7 +1610,17 @@ Namespace WindowsT.IndependentT
             End Set
         End Property
         ''' <summary>Contaisn value of the <see cref="ClickedButton"/> property</summary>
-        Private _ClickedButton As MessageBox.MessageBoxButton
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ClickedButton As MessageBox.MessageBoxButton
+        ''' <summary>Contains value of the <see cref="ClosedByTimer"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ClosedByTimer As Boolean
+        ''' <summary>Gets value indicationg if the message box was closed automatically after the time specified in <see cref="Timer"/> elapsed</summary>
+        ''' <returns>True if the message box was closed due to time elapsed, false otherwise</returns>
+        Public ReadOnly Property ClosedByTimer() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _ClosedByTimer
+            End Get
+        End Property
+#End Region
 #End Region
 #Region "Timer"
         Private Sub CountDownTimer_Tick(ByVal sender As Object, ByVal e As System.EventArgs) Handles CountDownTimer.Tick
@@ -1607,6 +1636,7 @@ Namespace WindowsT.IndependentT
                     Case Else : Me.Close()
                 End Select
                 CountDownTimer.Enabled = False
+                _ClosedByTimer = True
             End If
         End Sub
         ''' <summary>Gets value indicationg if counting down is curently in progress</summary>
@@ -1707,7 +1737,28 @@ Namespace WindowsT.IndependentT
             Me.DialogResult = Windows.Forms.DialogResult.None
             Me.ClickedButton = Nothing
             State = States.Created
+            _ClosedByTimer = False
         End Sub
+#Region "Internal handlers"
+        Private Sub Buttons_Adding(ByVal sender As ListWithEvents(Of MessageBoxButton), ByVal e As ListWithEvents(Of MessageBoxButton).CancelableItemIndexEventArgs)
+            If e.Item Is Nothing Then e.Cancel = True
+        End Sub
+        Private Sub Radios_Adding(ByVal sender As ListWithEvents(Of MessageBoxRadioButton), ByVal e As ListWithEvents(Of MessageBoxRadioButton).CancelableItemIndexEventArgs)
+            If e.Item Is Nothing Then e.Cancel = True
+        End Sub
+        Private Sub CheckBoxes_Adding(ByVal sender As ListWithEvents(Of MessageBoxCheckBox), ByVal e As ListWithEvents(Of MessageBoxCheckBox).CancelableItemIndexEventArgs)
+            If e.Item Is Nothing Then e.Cancel = True
+        End Sub
+        Private Sub Buttons_ItemChanging(ByVal sender As ListWithEvents(Of MessageBoxButton), ByVal e As ListWithEvents(Of MessageBoxButton).CancelableItemIndexEventArgs)
+            If e.Item Is Nothing Then e.Cancel = True
+        End Sub
+        Private Sub Radios_ItemChanging(ByVal sender As ListWithEvents(Of MessageBoxRadioButton), ByVal e As ListWithEvents(Of MessageBoxRadioButton).CancelableItemIndexEventArgs)
+            If e.Item Is Nothing Then e.Cancel = True
+        End Sub
+        Private Sub CheckBoxes_ItemChanging(ByVal sender As ListWithEvents(Of MessageBoxCheckBox), ByVal e As ListWithEvents(Of MessageBoxCheckBox).CancelableItemIndexEventArgs)
+            If e.Item Is Nothing Then e.Cancel = True
+        End Sub
+#End Region
     End Class
 End Namespace
 #End If

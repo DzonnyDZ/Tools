@@ -3,11 +3,12 @@
 <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="01/03/2007")> _
 Public Interface IReportsChange
     ''' <summary>Raised when value of member changes</summary>
+    ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>
+    Event Changed As ChangedEventHandler
+    ''' <summary>Delegate for the <see cref="Changed"/> event</summary>
     ''' <param name="sender">The source of the event</param>
     ''' <param name="e">Event information</param>
-    ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>
-    Event Changed(ByVal sender As IReportsChange, ByVal e As EventArgs)
-
+    Delegate Sub ChangedEventHandler(ByVal sender As IReportsChange, ByVal e As EventArgs)
     ''' <summary>Represents common base for all <see cref="ValueChangedEventArgs"/> generic's instances</summary>
     MustInherit Class ValueChangedEventArgsBase : Inherits EventArgs
         ''' <summary>Name of changed value</summary>
