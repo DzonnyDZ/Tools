@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -111,7 +111,12 @@
     <Import Include="Tools.VisualBasicT" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyStage.vb" />
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
     <Compile Include="Diagnostics\ImageVisualizer.vb">
       <SubType>Form</SubType>
     </Compile>

@@ -1,6 +1,5 @@
-﻿Imports Tools.InternalT
-
-'This file should be shared with all VB project in Tools
+﻿'This file should be shared with all VB project in Tools
+Imports Tools.InternalT
 #If Config = Nightly Then
 <Assembly: AssemblyBuildStage(BuildStates.Nightly)> 
 #ElseIf Config = Alpha Then

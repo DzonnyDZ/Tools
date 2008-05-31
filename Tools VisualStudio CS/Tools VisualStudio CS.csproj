@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30428</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -97,7 +97,12 @@
     <Reference Include="VSLangProj, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyStage.cs" />
+    <Compile Include="..\SharedFiles\AssemblyStage.cs">
+      <Link>AssemblyStage.cs</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.cs">
+      <Link>Version.cs</Link>
+    </Compile>
     <Compile Include="Generators\CustomToolAttribute.cs" />
     <Compile Include="Generators\CustomToolBase.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

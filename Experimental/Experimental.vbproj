@@ -139,7 +139,12 @@
     <Import Include="Tools.InternalT" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyStage.vb" />
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
     <Compile Include="EOS\DayView\BlackHoleQueue.vb" />
     <Compile Include="EOS\CM-EDL\OrderByEditor.designer.vb">
       <DependentUpon>OrderByEditor.vb</DependentUpon>

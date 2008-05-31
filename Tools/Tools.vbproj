@@ -139,7 +139,12 @@
     <Import Include="Tools.InternalT" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyStage.vb" />
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
     <Compile Include="Collections\Generic\CollectionTools.vb" />
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
     <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
@@ -693,5 +698,7 @@
   <PropertyGroup>
     <PostBuildEvent>REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
 "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"</PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
   </PropertyGroup>
 </Project>

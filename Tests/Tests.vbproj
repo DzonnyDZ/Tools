@@ -119,7 +119,12 @@
     <Import Include="System.Windows.Forms" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssemblyStage.vb" />
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.Designer.vb">
       <DependentUpon>ReadOnlyListAdapter.vb</DependentUpon>
     </Compile>
