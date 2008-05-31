@@ -243,5 +243,65 @@ Public Module TypeTools
     Public Function FlagsFromString(Of T As {Structure, IConvertible})(ByVal Flags As String) As T
         Return CObj(FlagsFromString(Flags, GetType(T), Globalization.CultureInfo.CurrentCulture))
     End Function
+    ''' <summary>Gets toolbox bitmap assciated with given <see cref="Type"/></summary>
+    ''' <param name="Type">Type to get toolbox bitmap for</param>
+    ''' <param name="Large">True to obtain large bitmap (32×32), false to obtain small one (16×16))</param>
+    ''' <param name="Inherit">True to allow inheriting of toolbox bitmap from base type of <paramref name="Type"/></param>
+    ''' <returns>Bitmap assciated with <see cref="Type"/> if any</returns>
+    ''' <remarks>If <paramref name="Type"/> is decorated with <see cref="Drawing.ToolboxBitmapAttribute"/> then it is used. If not static method <see cref="Drawing.ToolboxBitmapAttribute.GetImageFromResource"/> is used with <see cref="Type.Name"/> of <paramref name="Type"/>.</remarks>
+    ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    <Extension()> _
+    Public Function GetToolBoxBitmap(ByVal Type As Type, Optional ByVal Large As Boolean = False, Optional ByVal Inherit As Boolean = False) As Drawing.Image
+        If Type Is Nothing Then Throw New ArgumentException("Type")
+        Dim attr = Type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(False)
+        If attr Is Nothing AndAlso Inherit Then attr = Type.GetAttribute(Of Drawing.ToolboxBitmapAttribute)(True)
+        If attr IsNot Nothing Then
+            Return attr.GetImage(Type, Large)
+        Else
+            Dim bmp = Drawing.ToolboxBitmapAttribute.GetImageFromResource(Type, Type.Name, Large)
+            If bmp IsNot Nothing Then Return bmp
+        End If
+        If Inherit AndAlso Not Type.Equals(GetType(Object)) AndAlso Type.BaseType IsNot Nothing Then
+            Return Type.BaseType.GetToolBoxBitmap(Large, Inherit)
+        Else
+            Return Nothing
+        End If
+    End Function
+    ''' <summary>Gets default CTor for given type</summary>
+    ''' <param name="Type"><see cref="Type"/> to get default CTor for</param>
+    ''' <param name="Attributes">Optionaly specifies aaccesibility attributes for default constructor. Default is <see cref="Reflection.BindingFlags.[Public]"/>.</param>
+    ''' <returns><see cref="Reflection.ConstructorInfo"/> refresenting default CTor of type <paramref name="Type"/>. Null if there is no default (parameter-less) CTor</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    ''' <seealso cref="HasDefaultCTor"/>
+    <Extension()> _
+    Public Function GetDefaltCTor(ByVal Type As Type, Optional ByVal Attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo
+        If Type Is Nothing Then Throw New ArgumentException("Type")
+        Return Type.GetConstructor(Attributes And Reflection.BindingFlags.Instance, Nothing, Type.EmptyTypes, Nothing)
+    End Function
+    ''' <summary>Gets value indicationg if given <see cref="Type"/> has default constructor</summary>
+    ''' <param name="Type"><see cref="Type"/> to check</param>
+    ''' <param name="Attributes">Optionaly specifies aaccesibility attributes for default constructor. Default is <see cref="Reflection.BindingFlags.[Public]"/>.</param>
+    ''' <remarks>True if type has default (parameterless) CTor, fale otherwise.</remarks>
+    ''' <seealso cref="GetDefaltCTor"/>
+    ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    <Extension()> _
+    Public Function HasDefaultCTor(ByVal Type As Type, Optional ByVal Attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Boolean
+        If Type Is Nothing Then Throw New ArgumentException("Type")
+        Return Type.GetDefaltCTor(Attributes) IsNot Nothing
+    End Function
+    ''' <summary>Gets value indicating if instance of geven type can be easily created using default CTor</summary>
+    ''' <param name="Type"><see cref="Type"/> to check</param>
+    ''' <returns>False if type is either interface, abstract or open; true if type has default contructor or is value type</returns>
+    ''' <seealso cref="HasDefaultCTor"/>
+    ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+    <Extension()> _
+    Public Function CanAutomaticallyCreateInstance(ByVal Type As Type) As Boolean
+        If Type Is Nothing Then Throw New ArgumentException("Type")
+        If Type.IsInterface Then Return False
+        If Type.IsAbstract Then Return False
+        If Type.IsGenericTypeDefinition Then Return False
+        If Type.IsValueType Then Return True
+        If Type.HasDefaultCTor Then Return True
+    End Function
 End Module
 #End If

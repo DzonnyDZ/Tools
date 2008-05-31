@@ -3,7 +3,6 @@ Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, 
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 '#If Config <= Nightly Then 'Set in project file
 'Stage:Nightly
-'TODO: Autosize in shown time
 Namespace WindowsT.FormsT
     ''' <summary>Implements GUI (form) for <see cref="MessageBox"/></summary>
     ''' <remarks>
@@ -101,7 +100,7 @@ Namespace WindowsT.FormsT
             'Checkbox
             flpChecks.Controls.Clear()
             If MessageBox.CheckBoxes.Count <= 0 Then flpChecks.Visible = False _
-            Else flpChecks.Controls.AddRange((From Check In MessageBox.CheckBoxes Select CreateCheckBox(Check)).toarray)
+            Else flpChecks.Controls.AddRange((From Check In MessageBox.CheckBoxes Select CreateCheckBox(Check)).ToArray)
             'Combobox
             ApplyComboBox()
             'Radios
@@ -456,7 +455,7 @@ Namespace WindowsT.FormsT
             Me.Text = sender.Title
         End Sub
         Private Sub MessageBox_CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
-            Const Format As String = "{0} ({1})" 'TODO: Formating
+            Const Format As String = "{0} ({1:s})"
             Select Case MessageBox.TimeButton
                 Case -1
                     For Each Button In MessageBox.Buttons

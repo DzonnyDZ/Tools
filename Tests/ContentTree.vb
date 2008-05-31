@@ -28,10 +28,8 @@ Public Class ContentTree
         node.Tag = ctl
         Dim Key = ctl.GetType.AssemblyQualifiedName
         If Not imlImages.Images.ContainsKey(Key) Then
-            Dim attr = ctl.GetType.GetAttribute(Of ToolboxBitmapAttribute)(True)
-            If attr IsNot Nothing Then
-                imlImages.Images.Add(Key, attr.GetImage(ctl))
-            End If
+            Dim bmp = ctl.GetType.GetToolBoxBitmap(, True)
+            If bmp IsNot Nothing Then imlImages.Images.Add(Key, bmp)
         End If
         node.SelectedImageKey = Key
         node.ImageKey = Key

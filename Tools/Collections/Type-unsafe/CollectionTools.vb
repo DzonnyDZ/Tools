@@ -34,6 +34,12 @@ Namespace CollectionsT
             If Collection.Count = 0 Then Return Nothing
             Return Collection(Collection.Count - 1)
         End Function
+        ''' <summary>Gets value indicationg if given colection is empty</summary>
+        ''' <param name="collection">Collection to examine</param>
+        ''' <returns>True if <paramref name="collection"/>.<see cref="Collections.IEnumerable.GetEnumerator">GetEnumerator</see>.<see cref="Collections.IEnumerator.MoveNext">MoveNext</see> returns false.</returns>
+        <Extension()> Public Function IsEmpty(ByVal collection As IEnumerable) As Boolean
+            Return Not collection.GetEnumerator.MoveNext
+        End Function
     End Module
 End Namespace
 #End If

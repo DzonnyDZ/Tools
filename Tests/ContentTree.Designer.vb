@@ -52,8 +52,12 @@ Partial Class ContentTree
         'tvwTree
         '
         Me.tvwTree.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tvwTree.HideSelection = False
+        Me.tvwTree.ImageIndex = 0
+        Me.tvwTree.ImageList = Me.imlImages
         Me.tvwTree.Location = New System.Drawing.Point(0, 0)
         Me.tvwTree.Name = "tvwTree"
+        Me.tvwTree.SelectedImageIndex = 0
         Me.tvwTree.Size = New System.Drawing.Size(132, 264)
         Me.tvwTree.TabIndex = 0
         '

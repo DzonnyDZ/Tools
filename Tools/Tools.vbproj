@@ -221,6 +221,7 @@
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
+    <Compile Include="misc\CharT.vb" />
     <Compile Include="misc\Delegates.vb" />
     <Compile Include="misc\ICloneable%28of T%29.vb" />
     <Compile Include="misc\IReportsChange.vb" />
@@ -254,6 +255,11 @@
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
     <Compile Include="Reflection\SignatureProvider.vb" />
+    <Compile Include="Resources\Tools\Icons.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icons.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\Tools\Resources.vb" />
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
@@ -262,7 +268,7 @@
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
-        <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\WPF\AssemblyInfo.vb" />
@@ -616,7 +622,26 @@
     </EmbeddedResource>
     <None Include="Resources\NavBack.png" />
     <None Include="Resources\NavForward.png" />
+    <EmbeddedResource Include="Resources\Tools\Icons.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Icons.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\WindowsT.FormsT.MessageBox.bmp" />
+    <None Include="Resources\Icons\Asterisk.ico" />
+    <None Include="Resources\Icons\Error.ico" />
+    <None Include="Resources\Icons\Exclamation.ico" />
+    <None Include="Resources\Icons\Hand.ico" />
+    <None Include="Resources\Icons\Information.ico" />
+    <None Include="Resources\Icons\OK.ico" />
+    <None Include="Resources\Icons\Question.ico" />
+    <None Include="Resources\Icons\SecurityError.ico" />
+    <None Include="Resources\Icons\SecurityInformation.ico" />
+    <None Include="Resources\Icons\SecurityOK.ico" />
+    <None Include="Resources\Icons\SecurityQuestion.ico" />
+    <None Include="Resources\Icons\SecurityWarning.ico" />
+    <None Include="Resources\Icons\Stop.ico" />
+    <None Include="Resources\Icons\Warning.ico" />
     <Content Include="Resources\T.png" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.StatusMarker.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />

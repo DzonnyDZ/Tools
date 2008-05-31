@@ -5,13 +5,17 @@ Imports System.Drawing.Design
 #If Config <= Nightly Then 'Stage: Nightly
 Imports System.Windows.Forms
 Namespace WindowsT.NativeT
-    'ASAP: Mark, Wiki, Forum
+    'ASAP:  Wiki, Forum
     ''' <summary>Represents native window used in Microsoft Windows</summary>
     ''' <remarks>This class can be used to manipulate windows and controls that originates from non-.NET applications as well as .NET ones. It can be used in 64b environment as well.</remarks>
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(1, 1, GetType(Win32Window), LastChange:="05/29/2008")> _
+    <FirstVersion("12/02/2007")> _
     <DebuggerDisplay("{ToString}")> _
     Public Class Win32Window
-        Implements IWin32Window, IDisposable, ICloneable(Of IWin32Window), ICloneable(Of Win32Window)
-        Implements IEquatable(Of IWin32Window), IEquatable(Of Win32Window), IEquatable(Of Control)
+        Implements IWin32Window, IDisposable, Windows.Interop.IWin32Window
+        Implements ICloneable(Of IWin32Window), ICloneable(Of Win32Window)
+        Implements IEquatable(Of IWin32Window), IEquatable(Of Win32Window), IEquatable(Of Control), IEquatable(Of Windows.Window)
 #Region "Basic"
         ''' <summary>Contains value of the <see cref="Handle"/> property</summary>
         Private _Handle As System.IntPtr
@@ -28,18 +32,44 @@ Namespace WindowsT.NativeT
         End Sub
         ''' <summary>CTor from <see cref="Control"/> (including <see cref="Form"/>)</summary>
         ''' <param name="Control">Control to create new instance from</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Control"/> is null</exception>
         Public Sub New(ByVal Control As Control)
-            Me.New(Control.Handle)
+            Me.New(chNull(Control, "Control").Handle)
         End Sub
+        ''' <summary>Checks if given object is null. Throws <see cref="ArgumentNullException"/> if so.</summary>
+        ''' <param name="obj">Object to check</param>
+        ''' <param name="param">Name of parameter, passed to <see cref="ArgumentNullException.ParamName"/>.</param>
+        ''' <typeparam name="T">Type of object being checked. Must be reference type.</typeparam>
+        ''' <returns><paramref name="obj"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="obj"/> is null</exception>
+        Private Shared Function chNull(Of T As Class)(ByVal obj As T, ByVal param$) As T
+            If obj Is Nothing Then Throw New ArgumentNullException(param)
+            Return obj
+        End Function
         ''' <summary>CTor from <see cref="IWin32Window"/></summary>
         ''' <param name="Window">Window to create new instance from</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
         Public Sub New(ByVal Window As IWin32Window)
-            Me.New(Window.Handle)
+            Me.New(chNull(Window, "Window").Handle)
+        End Sub
+        ''' <summary>CTor from <see cref="Windows.Window"/></summary>
+        ''' <param name="Window"><see cref="Windows.Window"/> to create new instance from</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null</exception>
+        Public Sub New(ByVal Window As Windows.Window)
+            Me.New(New Windows.Interop.WindowInteropHelper(chNull(Window, "Window")).Handle)
         End Sub
         ''' <summary>Converts <see cref="Control"/> to <see cref="Win32Window"/></summary>
         ''' <param name="a">A <see cref="Control"/></param>
         ''' <returns>A <see cref="Win32Window"/> with same handle as <paramref name="a"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="a"/> is null</exception>
         Public Shared Widening Operator CType(ByVal a As Control) As Win32Window
+            Return New Win32Window(a)
+        End Operator
+        ''' <summary>Converts <see cref="Windows.Window"/> to <see cref="Win32Window"/></summary>
+        ''' <param name="a">A <see cref="Windows.Window"/></param>
+        ''' <returns>A <see cref="Win32Window"/> with same handle as <paramref name="a"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="a"/> is null</exception>
+        Public Shared Widening Operator CType(ByVal a As Windows.Window) As Win32Window
             Return New Win32Window(a)
         End Operator
 #End Region
@@ -47,7 +77,7 @@ Namespace WindowsT.NativeT
         ''' <summary>Gets the handle to the window represented by the implementer.</summary>
         ''' <returns>A handle to the window represented by the implementer.</returns>
         <Category("Handle")> _
-        Public ReadOnly Property Handle() As System.IntPtr Implements System.Windows.Forms.IWin32Window.Handle 'Localize: Category
+        Public ReadOnly Property Handle() As System.IntPtr Implements System.Windows.Forms.IWin32Window.Handle, Windows.Interop.IWin32Window.Handle  'Localize: Category
             Get
                 Return _Handle
             End Get
@@ -473,9 +503,9 @@ Namespace WindowsT.NativeT
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
         ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
-
         Public Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             If TypeOf obj Is IWin32Window Then Return DirectCast(obj, IWin32Window).Handle = Me.Handle
+            If TypeOf obj Is Windows.Window Then Return New Win32Window(DirectCast(obj, Windows.Window)).Handle = Me.Handle
             Return MyBase.Equals(obj)
         End Function
         ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
@@ -496,12 +526,32 @@ Namespace WindowsT.NativeT
         Public Overloads Function Equals(ByVal other As Win32Window) As Boolean Implements System.IEquatable(Of Win32Window).Equals
             Return Equals(CObj(other))
         End Function
+        ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        ''' <param name="other">An object to compare with this object.</param>
+        ''' <returns>true if the current object is equal to the other parameter; otherwise, false.</returns>
+        Public Overloads Function Equals(ByVal other As Windows.Window) As Boolean Implements IEquatable(Of System.Windows.Window).Equals
+            Return Equals(CObj(other))
+        End Function
         ''' <summary>Compares <see cref="IWin32Window"/> and <see cref="Win32Window"/></summary>
         ''' <param name="a">A <see cref="IWin32Window"/></param>
         ''' <param name="b">A <see cref="Win32Window"/></param>
         ''' <returns>True if <paramref name="a"/>.<see cref="IWin32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see></returns>
         Public Shared Operator =(ByVal a As IWin32Window, ByVal b As Win32Window) As Boolean
             Return b.Equals(a)
+        End Operator
+        ''' <summary>Compares <see cref="Win32Window"/> and <see cref="Windows.Window"/></summary>
+        ''' <param name="a">A <see cref="IWin32Window"/></param>
+        ''' <param name="b">A <see cref="Windows.Window"/></param>
+        ''' <returns>True if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to handle of <paramref name="b"/></returns>
+        Public Shared Operator =(ByVal a As Win32Window, ByVal b As Windows.Window) As Boolean
+            Return a.Equals(b)
+        End Operator
+        ''' <summary>Compares <see cref="Windows.Window"/> and <see cref="Win32Window"/></summary>
+        ''' <param name="b">A <see cref="IWin32Window"/></param>
+        ''' <param name="a">A <see cref="Windows.Window"/></param>
+        ''' <returns>True if <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see> equals to handle of <paramref name="a"/></returns>
+        Public Shared Operator =(ByVal b As Windows.Window, ByVal a As Win32Window) As Boolean
+            Return a.Equals(b)
         End Operator
         ''' <summary>Compares <see cref="Win32Window"/> and <see cref="IWin32Window"/></summary>
         ''' <param name="a">A <see cref="Win32Window"/></param>
@@ -536,6 +586,20 @@ Namespace WindowsT.NativeT
         ''' <param name="b">A <see cref="Win32Window"/></param>
         ''' <returns>False if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see></returns>
         Public Shared Operator <>(ByVal a As Win32Window, ByVal b As Win32Window) As Boolean
+            Return Not a = b
+        End Operator
+        ''' <summary>Compares <see cref="Win32Window"/> and <see cref="Windows.Window"/></summary>
+        ''' <param name="a">A <see cref="IWin32Window"/></param>
+        ''' <param name="b">A <see cref="Windows.Window"/></param>
+        ''' <returns>False if <paramref name="a"/>.<see cref="Win32Window.Handle">Handle</see> equals to handle of <paramref name="b"/></returns>
+        Public Shared Operator <>(ByVal a As Win32Window, ByVal b As Windows.Window) As Boolean
+            Return Not a = b
+        End Operator
+        ''' <summary>Compares <see cref="Windows.Window"/> and <see cref="Win32Window"/></summary>
+        ''' <param name="b">A <see cref="IWin32Window"/></param>
+        ''' <param name="a">A <see cref="Windows.Window"/></param>
+        ''' <returns>False if <paramref name="b"/>.<see cref="Win32Window.Handle">Handle</see> equals to handle of <paramref name="a"/></returns>
+        Public Shared Operator <>(ByVal a As Windows.Window, ByVal b As Win32Window) As Boolean
             Return Not a = b
         End Operator
 #End Region
