@@ -7,7 +7,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{088CB10C-E5D3-4537-979F-F5BED401DB25}</ProjectGuid>
     <OutputType>Library</OutputType>
-    <RootNamespace>Tools</RootNamespace>
+    <RootNamespace>Tools.Experimental</RootNamespace>
     <AssemblyName>Tools Experimental</AssemblyName>
     <MyType>Windows</MyType>
     <Nightly>1</Nightly>
@@ -232,6 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="EOS\DayView\ItemMembers.xml" />
+    <None Include="Resources\DeleteHS.png" />
     <None Include="TWAIN\GdiPlusLib.cs" />
     <None Include="TWAIN\TwainDefs.cs" />
     <None Include="TWAIN\TwainLib.cs" />

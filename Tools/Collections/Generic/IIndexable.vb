@@ -4,7 +4,7 @@ Namespace CollectionsT.GenericT
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIndexable(Of Byte, Byte)), LastChange:="04/23/2007")> _
+    <Version(1, 0, GetType(IIndexable(Of ,)), LastChange:="04/23/2007")> _
     Public Interface IIndexable(Of TItem, TIndex)
         Inherits IReadOnlyIndexable(Of TItem, TIndex)
         ''' <summary>Gets or sets value on specified index</summary>
@@ -18,7 +18,7 @@ Namespace CollectionsT.GenericT
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IReadOnlyIndexable(Of Byte, Byte)), LastChange:="04/23/2007")> _
+    <Version(1, 0, GetType(IReadOnlyIndexable(Of ,)), LastChange:="04/23/2007")> _
     Public Interface IReadOnlyIndexable(Of TItem, TIndex)
         ''' <summary>Gets value on specified index</summary>
         ''' <param name="index">Index to obtain value</param>
