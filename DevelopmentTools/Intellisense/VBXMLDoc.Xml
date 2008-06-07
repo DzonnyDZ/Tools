@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--This file redefines Visual Basic XML comments intellisense-->
+<!--Copy this file to c:\Documents and Settings\<user>\Application Data\Microsoft\VisualStudio\9.0\-->
+<XMLDocCommentSchema>
+    <CodeElement type="Module">
+        <Template>
+            <summary />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <permission cref="" />
+            <remarks />
+            <summary />
+            <filterpriority/>
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <seealso/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Namespace">
+        <Template>
+            <summary />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <remarks />
+            <summary />
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Class">
+        <Template>
+            <summary />
+            <typeparam />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <completionlist cref=""/>
+            <seelaso cref=""/>
+            <typeparam name="" />
+            <filterpriority/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Structure">
+        <Template>
+            <summary />
+            <typeparam />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <completionlist cref=""/>
+            <typeparam name=""/>
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Interface">
+        <Template>
+            <summary />
+            <typeparam />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <typeparam name=""/>
+            <completionlist cref=""/>
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Enum">
+        <Template>
+            <summary />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <completionlist cref=""/>
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Property">
+        <Template>
+            <summary />
+            <param />
+            <value />
+            <returns/>
+        </Template>
+        <CompletionList>
+            <exception cref="" />
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet/>
+            <remarks />
+            <summary />
+            <value />
+            <filterpriority/>
+            <returns/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Sub">
+        <Template>
+            <summary />
+            <param />
+            <typeparam />
+        </Template>
+        <CompletionList>
+            <exception cref="" />
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <typeparam name=""/>
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Function">
+        <Template>
+            <summary />
+            <param />
+            <returns />
+            <typeparam />
+        </Template>
+        <CompletionList>
+            <exception cref="" />
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <returns />
+            <summary />
+            <typeparam name=""/>
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Operator">
+        <Template>
+            <summary />
+            <param />
+            <returns />
+        </Template>
+        <CompletionList>
+            <exception cref="" />
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <returns />
+            <summary />
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Declare">
+        <Template>
+            <summary />
+            <param />
+            <returns />
+        </Template>
+        <CompletionList>
+            <exception cref="" />
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <returns />
+            <summary />
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Field">
+        <Template>
+            <summary />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Delegate">
+        <Template>
+            <summary />
+            <param />
+            <returns />
+            <typeparam />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <returns />
+            <summary />
+            <typeparam name="" />
+            <completionlist cref=""/>
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <CodeElement type="Event">
+        <Template>
+            <summary />
+            <param />
+        </Template>
+        <CompletionList>
+            <include file="" path="" />
+            <param name="" />
+            <permission cref="" />
+            <PermissionSet>
+                <IPermission class="" version="" Flags=""/>
+            </PermissionSet>
+            <remarks />
+            <summary />
+            <filterpriority/>
+            <seelaso cref=""/>
+        </CompletionList>
+    </CodeElement>
+    <ChildCompletionList>
+        <c />
+        <code />
+        <example />
+        <list type="">
+            <listheader>
+                <term />
+                <description />
+            </listheader>
+            <item>
+                <term />
+                <description />
+            </item>
+        </list>
+        <para />
+        <paramref name="" />
+        <see cref="" />
+        <IPermission class="" version="" Flags=""/>
+    </ChildCompletionList>
+</XMLDocCommentSchema>

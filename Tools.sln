@@ -67,9 +67,16 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 		SharedFiles\Version.vb = SharedFiles\Version.vb
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Intellisense", "Intellisense", "{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Intellisense\intellisense.xsd = DevelopmentTools\Intellisense\intellisense.xsd
+		DevelopmentTools\Intellisense\intellisense.xsd.generator.vbs = DevelopmentTools\Intellisense\intellisense.xsd.generator.vbs
+		DevelopmentTools\Intellisense\VBXMLDoc.Xml = DevelopmentTools\Intellisense\VBXMLDoc.Xml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 17
+		SccNumberOfProjects = 18
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -125,6 +132,7 @@ Global
 		SccProjectUniqueName16 = Experimental\\Experimental.vbproj
 		SccProjectName16 = Experimental
 		SccLocalPath16 = Experimental
+		SccLocalPath17 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
@@ -453,6 +461,7 @@ Global
 		{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{B1BD67A4-BEC2-442D-8F70-DAEB27735602} = {847298BA-D4D1-4EBD-AF69-0193A77DC90C}
 		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
+		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE} = {982F36B7-A3E5-4782-96B0-9979A95610F1}
