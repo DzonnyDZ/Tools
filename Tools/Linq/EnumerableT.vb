@@ -2,13 +2,13 @@
 #If Config <= Nightly Then
 Namespace LinqT
     ''' <summary>Tools for working with <see cref="IEnumerable(Of T)"/></summary>
-    Module EnumerableT
+    Public Module EnumerableT
         ''' <summary>Creates union of all given collections</summary>
         ''' <param name="collections">Collections to create union of</param>
         ''' <typeparam name="T">Type of items in collection(s)</typeparam>
         ''' <returns>Collection that contains members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
         Public Function UnionAll(Of T)(ByVal ParamArray collections As IEnumerable(Of T)()) As IEnumerable(Of T)
-            Return UnionAll(DirectCast(Collections, IEnumerable(Of IEnumerable(Of T))))
+            Return UnionAll(DirectCast(collections, IEnumerable(Of IEnumerable(Of T))))
         End Function
         ''' <summary>Creates union of all given collections</summary>
         ''' <param name="collections">Collections to create union of</param>

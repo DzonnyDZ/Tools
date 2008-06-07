@@ -3,7 +3,7 @@
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
  */
-namespace Tools.Generators {
+namespace Tools.GeneratorsT {
     using System;
     using System.Runtime.InteropServices;
 

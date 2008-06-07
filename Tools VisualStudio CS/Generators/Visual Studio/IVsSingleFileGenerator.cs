@@ -1,5 +1,5 @@
 #if Nightly || Alpha || Beta || RC || Release
-namespace Tools.Generators {
+namespace Tools.GeneratorsT {
     using System;
     using System.Runtime.InteropServices;
     /// <summary>Transforms a single input file into a single output file that can be compiled or added to a project. Any COM component that implements the IVsSingleFileGenerator is a custom tool.</summary>

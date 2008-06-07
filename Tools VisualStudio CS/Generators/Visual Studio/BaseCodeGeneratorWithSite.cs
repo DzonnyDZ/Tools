@@ -1,5 +1,5 @@
 #if Nightly || Alpha || Beta || RC || Release
-namespace Tools.Generators {
+namespace Tools.GeneratorsT {
 
     using System;
     using System.CodeDom;

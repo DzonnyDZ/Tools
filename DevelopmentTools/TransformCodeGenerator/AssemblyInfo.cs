@@ -16,7 +16,7 @@ using System.Resources;
 [assembly: AssemblyDescription("XSL Transformation Code Generator for Visual Studio 2005/8")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Chris Stefano, ÐTools team")]
-[assembly: AssemblyProduct("TransformCodeGenerator")]
+[assembly: AssemblyProduct("ÐTools")]
 [assembly: AssemblyCopyright("Copyright © 2006 Chris Stefano, Ðonny 2008")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]		

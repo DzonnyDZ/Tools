@@ -49,15 +49,14 @@
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <OutputPath>bin\Release\</OutputPath>
+    <OutputPath>..\..\bin\Release\</OutputPath>
     <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
     <BaseAddress>285212672</BaseAddress>
     <CheckForOverflowUnderflow>false</CheckForOverflowUnderflow>
     <ConfigurationOverrideFile>
     </ConfigurationOverrideFile>
-    <DefineConstants>TRACE</DefineConstants>
-    <DocumentationFile>
-    </DocumentationFile>
+    <DefineConstants>TRACE;Release</DefineConstants>
+    <DocumentationFile>..\..\bin\Release\TransformCodeGenerator.XML</DocumentationFile>
     <DebugSymbols>false</DebugSymbols>
     <FileAlignment>4096</FileAlignment>
     <NoStdLib>false</NoStdLib>
@@ -69,10 +68,39 @@
     <TreatWarningsAsErrors>false</TreatWarningsAsErrors>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Nightly\</OutputPath>
-    <DefineConstants>TRACE;DEBUG</DefineConstants>
-    <DocumentationFile>bin\Nightly\TransformCodeGenerator.XML</DocumentationFile>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
+    <OutputPath>..\..\bin\Nightly\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Nightly</DefineConstants>
+    <DocumentationFile>..\..\bin\Nightly\TransformCodeGenerator.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\Alpha\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Alpha</DefineConstants>
+    <DocumentationFile>..\..\bin\Alpha\TransformCodeGenerator.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <OutputPath>..\..\bin\Beta\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;Beta</DefineConstants>
+    <DocumentationFile>..\..\bin\Beta\TransformCodeGenerator.XML</DocumentationFile>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
+    <OutputPath>..\..\bin\RC\</OutputPath>
+    <DefineConstants>TRACE;RC</DefineConstants>
+    <BaseAddress>285212672</BaseAddress>
+    <DocumentationFile>..\..\bin\RC\TransformCodeGenerator.XML</DocumentationFile>
+    <Optimize>true</Optimize>
+    <FileAlignment>4096</FileAlignment>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <CodeAnalysisUseTypeNameInSuppression>true</CodeAnalysisUseTypeNameInSuppression>
+    <CodeAnalysisModuleSuppressionsFile>GlobalSuppressions.cs</CodeAnalysisModuleSuppressionsFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="EnvDTE, Version=7.0.3300.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -101,6 +129,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\..\SharedFiles\AssemblyStage.cs">
+      <Link>AssemblyStage.cs</Link>
+    </Compile>
     <Compile Include="..\..\SharedFiles\Version.cs">
       <Link>Version.cs</Link>
     </Compile>
@@ -138,6 +169,10 @@
     <ProjectReference Include="..\..\Tools VisualStudio CS\Tools VisualStudio CS.csproj">
       <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
       <Name>Tools VisualStudio CS</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />

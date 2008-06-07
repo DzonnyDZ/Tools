@@ -3,7 +3,7 @@
  *       cnjs@mweb.co.za
  * I've foundthis great tool dunno where on the Internet and I hope I'm not violating any rights when I'v included it as development tool in ÐTools and tweaked it a little.      
  */
-namespace Tools.Generators
+namespace Tools.GeneratorsT
 {
   using System;
   using System.IO;

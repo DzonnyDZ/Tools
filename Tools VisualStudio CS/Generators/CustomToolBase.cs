@@ -3,13 +3,13 @@
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
  */
-namespace Tools.Generators {
+namespace Tools.GeneratorsT {
     using System;
     using System.IO;
     using System.Text;
     using Microsoft.Win32;
     using System.Runtime.InteropServices;
-    using Tools.Generators;
+    using Tools.GeneratorsT;
 
     /// <summary>
     /// Abstract base for custom tools for text files

@@ -1,0 +1,105 @@
+﻿<project schemaVersion="1.6.0.7">
+    <assemblies>
+        <assembly assemblyPath=".\bin\Latest\Tools Experimental.dll" xmlCommentsPath=".\bin\Latest\Tools Experimental.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\Latest\Tools IL.dll" xmlCommentsPath=".\bin\Latest\Tools IL.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\Latest\Tools Win.dll" xmlCommentsPath=".\bin\Latest\Tools Win.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\Latest\Tools.dll" xmlCommentsPath=".\bin\Latest\Tools.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\Latest\Tools.VisualStudio.CS.dll" xmlCommentsPath=".\bin\Latest\Tools.VisualStudio.CS.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\Latest\Tools.VisualStudio.dll" xmlCommentsPath=".\bin\Latest\Tools.VisualStudio.xml" commentsOnly="False" />
+        <assembly assemblyPath=".\bin\Latest\TransformCodeGenerator.dll" xmlCommentsPath=".\bin\Latest\TransformCodeGenerator.xml" commentsOnly="False" />
+    </assemblies>
+    <namespaceSummaries>
+        <namespaceSummaryItem name="" isDocumented="True" />
+        <namespaceSummaryItem name="Tools" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.API" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.API.Messages" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.API.Messages.lParam" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.API.Messages.ReturnValues" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.API.Messages.wParam" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.API.Public" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.CollectionsT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.CollectionsT.GenericT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.CollectionsT.SpecializedT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.ComponentModelT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.DataStructuresT.GenericT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.DiagnosticsT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.DrawingT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.DrawingT.DesignT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.DrawingT.IO.JPEG" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.DrawingT.MetadataT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.Experimental" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.GeneratorsT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.GlobalizationT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.InternalT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.IOt" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.LinqT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.ReflectionT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.ResourcesT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.SpecialT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.TextT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.VisualBasicT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.WindowsT.FormsT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.WindowsT.FormsT.UtilitiesT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.WindowsT.IndependentT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.WindowsT.NativeT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.WindowsT.WPF.ControlsT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.WindowsT.WPF.ConvertersT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.XamlGeneratedNamespace" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.XmlT.XPathT" isDocumented="True" />
+    </namespaceSummaries>
+    <componentConfigurations>
+        <component id="Cached Framework Comments Index Data" enabled="True" configuration="&lt;component id=&quot;Cached Framework Comments Index Data&quot; type=&quot;SandcastleBuilder.Components.CachedCopyFromIndexComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&#xD;&#xA;&lt;index name=&quot;comments&quot; value=&quot;/doc/members/member&quot; key=&quot;@name&quot; cache=&quot;100&quot;&gt;&#xD;&#xA;{@CachedFrameworkCommentList}&#xD;&#xA;{@CommentFileList}&#xD;&#xA;            &lt;/index&gt;&#xD;&#xA;&lt;copy name=&quot;comments&quot; source=&quot;*&quot; target=&quot;/document/comments&quot; /&gt;&#xD;&#xA;&lt;/component&gt;" />
+        <component id="Cached MSDN URL References" enabled="True" configuration="&lt;component id=&quot;Cached MSDN URL References&quot; type=&quot;SandcastleBuilder.Components.CachedResolveReferenceLinksComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&#xD;&#xA;&lt;cache filename=&quot;{@AppDataFolder}Cache\MsdnUrl.cache&quot; /&gt;&#xD;&#xA;&lt;targets base=&quot;{@SandcastlePath}Data\Reflection&quot; recurse=&quot;true&quot; files=&quot;*.xml&quot; type=&quot;{@SDKLinks}&quot; /&gt;&#xD;&#xA;&lt;targets files=&quot;reflection.xml&quot; type=&quot;{@ProjectLinks}&quot; /&gt;&#xD;&#xA;&lt;/component&gt;" />
+        <component id="Cached Reflection Index Data" enabled="True" configuration="&lt;component id=&quot;Cached Reflection Index Data&quot; type=&quot;SandcastleBuilder.Components.CachedCopyFromIndexComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&#xD;&#xA;&lt;index name=&quot;reflection&quot; value=&quot;/reflection/apis/api&quot; key=&quot;@id&quot; cache=&quot;10&quot;&gt;&#xD;&#xA;  &lt;cache base=&quot;{@SandcastlePath}Data\Reflection&quot; recurse=&quot;true&quot; files=&quot;*.xml&quot; cacheFile=&quot;{@AppDataFolder}Cache\Reflection.cache&quot; /&gt;&#xD;&#xA;  &lt;data files=&quot;reflection.xml&quot; /&gt;&#xD;&#xA;&lt;/index&gt;&#xD;&#xA;&lt;copy name=&quot;reflection&quot; source=&quot;*&quot; target=&quot;/document/reference&quot; /&gt;&#xD;&#xA;&lt;/component&gt;" />
+        <component id="Code Block Component" enabled="True" configuration="&lt;component id=&quot;Code Block Component&quot; type=&quot;SandcastleBuilder.Components.CodeBlockComponent&quot; assembly=&quot;{@SHFBFolder}SandcastleBuilder.Components.dll&quot;&gt;&lt;!-- Base path for relative filenames in source attributes&#xD;&#xA;                 (optional) --&gt;&lt;basePath value=&quot;{@ProjectFolder}&quot; /&gt;&lt;!-- Connect to language filter (optional).  If omitted,&#xD;&#xA;                 language filtering is enabled by default. --&gt;&lt;languageFilter value=&quot;true&quot; /&gt;&lt;!-- Code colorizer options (required).&#xD;&#xA;                 Attributes:&#xD;&#xA;                    Language syntax configuration file (required)&#xD;&#xA;                    XSLT style file (required)&#xD;&#xA;                    &quot;Copy&quot; image file URL (required)&#xD;&#xA;                    Default language (optional)&#xD;&#xA;                    Enable line numbering (optional)&#xD;&#xA;                    Enable outlining (optional)&#xD;&#xA;                    Keep XML comment &quot;see&quot; tags within the code (optional)&#xD;&#xA;                    Tab size override (optional, 0 = Use syntax file setting)&#xD;&#xA;                    Use language name as default title (optional) --&gt;&lt;colorizer syntaxFile=&quot;{@SHFBFolder}Colorizer\highlight.xml&quot; styleFile=&quot;{@SHFBFolder}Colorizer\highlight.xsl&quot; copyImageUrl=&quot;../icons/CopyCode.gif&quot; language=&quot;vbnet&quot; numberLines=&quot;false&quot; outlining=&quot;false&quot; keepSeeTags=&quot;false&quot; tabSize=&quot;4&quot; defaultTitle=&quot;true&quot; /&gt;&lt;/component&gt;" />
+    </componentConfigurations>
+    <plugInConfigurations>
+        <plugIn id="Hierarchical Table of Content" enabled="True" configuration="&lt;configuration&gt;&lt;toc minParts=&quot;2&quot; insertBelow=&quot;True&quot; /&gt;&lt;/configuration&gt;" />
+    </plugInConfigurations>
+    <apiFilter>
+        <filter entryType="Namespace" fullName="System" isExposed="True">
+            <filter entryType="Class" fullName="System.Object" filterName="Object" isExposed="False" />
+        </filter>
+    </apiFilter>
+    <ProjectSummary>ĐTools project gathers varoius asorted tools that are missing fon .NET framework.</ProjectSummary>
+    <MissingTags>Summary, Parameter, Returns, AutoDocumentCtors, Namespace, TypeParameter</MissingTags>
+    <VisibleItems>Attributes, ExplicitInterfaceImplementations, InheritedMembers, InheritedFrameworkMembers, Protected, SealedProtected</VisibleItems>
+    <HtmlHelp1xCompilerPath path="" />
+    <HtmlHelp2xCompilerPath path="" />
+    <OutputPath>.\Help\</OutputPath>
+    <SandcastlePath path="" />
+    <WorkingPath path="" />
+    <CleanIntermediates>False</CleanIntermediates>
+    <KeepLogFile>True</KeepLogFile>
+    <BuildLogFile path=".\Help\log.log" />
+    <HelpFileFormat>Help1xAnd2xAndWebsite</HelpFileFormat>
+    <CppCommentsFixup>False</CppCommentsFixup>
+    <FrameworkVersion>3.5</FrameworkVersion>
+    <IndentHtml>False</IndentHtml>
+    <Preliminary>True</Preliminary>
+    <RootNamespaceContainer>False</RootNamespaceContainer>
+    <RootNamespaceTitle>ĐTools</RootNamespaceTitle>
+    <HelpTitle>ĐTools Documentation</HelpTitle>
+    <HtmlHelpName>Tools</HtmlHelpName>
+    <Language>en-US</Language>
+    <CopyrightHref>http://codeplex.com/Dtools</CopyrightHref>
+    <CopyrightText>© Đonny 2006÷8</CopyrightText>
+    <FeedbackEMailAddress />
+    <FeedbackEMailLinkText />
+    <HeaderText />
+    <FooterText>Generated by Sandcastle Help File Builder GUI</FooterText>
+    <ProjectLinkType>Local</ProjectLinkType>
+    <SdkLinkType>Msdn</SdkLinkType>
+    <SdkLinkTarget>Blank</SdkLinkTarget>
+    <PresentationStyle>hana</PresentationStyle>
+    <NamingMethod>MemberName</NamingMethod>
+    <SyntaxFilters>CSharp, VisualBasic</SyntaxFilters>
+    <ShowFeedbackControl>False</ShowFeedbackControl>
+    <BinaryTOC>True</BinaryTOC>
+    <IncludeFavorites>False</IncludeFavorites>
+    <CollectionTocStyle>Hierarchical</CollectionTocStyle>
+    <IncludeStopWordList>True</IncludeStopWordList>
+    <PlugInNamespaces>ms.vsipcc+, ms.vsexpresscc+</PlugInNamespaces>
+    <HelpFileVersion>1.5.0.39050</HelpFileVersion>
+    <ContentPlacement>AboveNamespaces</ContentPlacement>
+</project>
