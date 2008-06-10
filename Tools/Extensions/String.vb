@@ -4,8 +4,8 @@ Imports System.Globalization
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.String"/></summary>
     <Author("functionĐonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
- <FirstVersion(2008, 5, 1), Version(1, 0, GetType([String]))> _
-  Module [String]
+ <FirstVersion(2008, 5, 1), Version(1, 0, GetType([StringExtensions]))> _
+  Module [StringExtensions]
         ''' <summary>Indicates whether the specified <see cref="System.String" /> object is null or an <see cref="System.String.Empty" /> string.</summary>
         ''' <param name="s">A <see cref="System.String" /> reference.</param>
         ''' <returns>true if the value parameter is null or an empty string (""); otherwise, false.</returns>

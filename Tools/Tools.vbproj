@@ -175,6 +175,7 @@
     <Compile Include="ComponentModel\RestrictAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="ComponentModel\TypeConverter.vb" />
+    <Compile Include="DataStructures\Generic\Graph.vb" />
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />
@@ -210,6 +211,7 @@
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Extensions\Char.vb" />
     <Compile Include="Extensions\String.vb" />
+    <Compile Include="Extensions\TypeCode.vb" />
     <Compile Include="Globalization\ISOLanguage.vb" />
     <Compile Include="Globalization\ISOLanguages.vb">
       <DependentUpon>ISOLanguages.xml</DependentUpon>
@@ -226,6 +228,7 @@
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
     <Compile Include="Math\LE-BE.vb" />
+    <Compile Include="Math\Number.vb" />
     <Compile Include="misc\CharT.vb" />
     <Compile Include="misc\Delegates.vb" />
     <Compile Include="misc\ICloneable%28of T%29.vb" />
