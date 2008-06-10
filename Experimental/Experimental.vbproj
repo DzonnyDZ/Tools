@@ -103,6 +103,7 @@
     <Reference Include="System.Data.OracleClient" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Design" />
+    <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
@@ -145,6 +146,12 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="EOS\CSV\FileDialogWithEncoding.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EOS\CSV\ToolStripCheckBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="EOS\DayView\BlackHoleQueue.vb" />
     <Compile Include="EOS\CM-EDL\OrderByEditor.designer.vb">
       <DependentUpon>OrderByEditor.vb</DependentUpon>
@@ -177,6 +184,46 @@
     <Compile Include="EOS\DayView\ToolStripLabelLabel.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="EOS\EOSTools\ComponentModel\TypeDescriptor.vb" />
+    <Compile Include="EOS\EOSTools\CSV.vb" />
+    <Compile Include="EOS\EOSTools\DateTools.vb" />
+    <Compile Include="EOS\EOSTools\Deploy\ClickOnceUninstall.vb" />
+    <Compile Include="EOS\EOSTools\GUI\CloseButton.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\GUI\Misc.vb" />
+    <Compile Include="EOS\EOSTools\GUI\NullableDateTimePicker.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\GUI\OverflowProgressBar.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\GUI\ToolStripComboBox.vb" />
+    <Compile Include="EOS\EOSTools\GUI\Wizard.Designer.vb">
+      <DependentUpon>Wizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EOS\EOSTools\GUI\Wizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\Login\ActiveDirectory\ADUser.vb" />
+    <Compile Include="EOS\EOSTools\Login\ActiveDirectory\frmGroupOverride.Designer.vb">
+      <DependentUpon>frmGroupOverride.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EOS\EOSTools\Login\ActiveDirectory\frmGroupOverride.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\Login\IUser.vb" />
+    <Compile Include="EOS\EOSTools\Login\Old\frmLogin.Designer.vb">
+      <DependentUpon>frmLogin.vb</DependentUpon>
+    </Compile>
+    <Compile Include="EOS\EOSTools\Login\Old\frmLogin.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\Login\Old\Login.vb" />
+    <Compile Include="EOS\EOSTools\Login\Old\LoginDialog.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="EOS\EOSTools\Login\Old\User.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -202,6 +249,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EOS\DayView\DayView.resx">
       <DependentUpon>DayView.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EOS\EOSTools\GUI\Wizard.resx">
+      <DependentUpon>Wizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EOS\EOSTools\Login\ActiveDirectory\frmGroupOverride.resx">
+      <DependentUpon>frmGroupOverride.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="EOS\EOSTools\Login\Old\frmLogin.resx">
+      <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
@@ -231,7 +287,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="EOS\DayView\ItemMembers.xml" />
     <None Include="Resources\DeleteHS.png" />
     <None Include="TWAIN\GdiPlusLib.cs" />
     <None Include="TWAIN\TwainDefs.cs" />
