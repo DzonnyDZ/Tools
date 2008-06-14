@@ -6,8 +6,9 @@ Imports System.ComponentModel
 #If Config <= Nightly Then 'Stage Nightly
 Namespace IOt
     ''' <summary>Represents a *.LNK file (also called shortcut or link)</summary>
+    ''' <remarks>Implementation based on Mattias Sjögren (© 2001÷2002) example http://www.msjogren.net/dotnet/, mattias@mvps.org</remarks>
     Public Class ShellLink
-        Implements IDisposable
+        Implements IDisposable, IPathProvider
         ''' <summary>The <see cref="IShellLinkW"/> object this class is wrapper to</summary>
         Private link As IShellLinkW
         Private path$
@@ -25,17 +26,7 @@ Namespace IOt
         ''' <exception cref="ArgumentException">Link cannot be opened</exception>
         Public Sub New(ByVal ExistingLink As String)
             If Not IO.File.Exists(ExistingLink) Then Throw New IO.FileNotFoundException(String.Format("File {0} does not exist.", ExistingLink))
-            'Dim objShell = New WshShell
-            'Dim shCreated As Object
-            'Try
-            '    shCreated = objShell.CreateShortcut(ExistingLink)
-            'Catch ex As COMException
-            '    Throw New ArgumentException(String.Format("Cannot create link from file {0}.", ExistingLink), "ExistingLink", ex)
-            'End Try
-            'If Not TypeOf shCreated Is IWshShortcut Then Throw New TypeMismatchException("ExistingLink", shCreated, GetType(IWshShortcut), String.Format("File {0} does not represent *.LNK shortcut.", ExistingLink))
-            'Dim objShortcut As IWshShortcut = shCreated
-            'link = New ShellLink(objShortcut)
-            Dim pf As IPersistFile
+              Dim pf As IPersistFile
             Try
                 link = CType(New COM.ShellLink.ShellLink(), IShellLinkW)
                 path = ExistingLink
@@ -54,7 +45,6 @@ Namespace IOt
         Public Property TargetPath() As String
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'Return link.TargetPath
                 Dim wfd As New WIN32_FIND_DATAW
                 Dim sb As StringBuilder = New StringBuilder(API.FileSystem.MAX_PATH)
                 link.GetPath(sb, sb.Capacity, wfd, SLGP_FLAGS.SLGP_UNCPRIORITY)
@@ -62,7 +52,6 @@ Namespace IOt
             End Get
             Set(ByVal value As String)
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'link.TargetPath = value
                 link.SetPath(value)
             End Set
         End Property
@@ -75,7 +64,6 @@ Namespace IOt
         Public Property WindowStyle() As ProcessWindowStyle
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'Return link.WindowStyle
                 Dim nWS As Integer
                 link.GetShowCmd(nWS)
                 Select Case nWS
@@ -89,7 +77,6 @@ Namespace IOt
             End Get
             Set(ByVal value As ProcessWindowStyle)
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'link.WindowStyle = value
                 Dim nWS As ShellLinkWindowStyle
                 Select Case value
                     Case ProcessWindowStyle.Normal
@@ -116,32 +103,19 @@ Namespace IOt
         Public Property Arguments() As String
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'Return link.Arguments
                 Dim sb As StringBuilder = New StringBuilder(INFOTIPSIZE)
                 link.GetArguments(sb, sb.Capacity)
                 Return sb.ToString()
             End Get
             Set(ByVal value As String)
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'link.Arguments = value
                 link.SetArguments(value)
             End Set
         End Property
-        ''' <summary>Assigns a key-combination to a shortcut, or identifies the key-combination assigned to a shortcut.</summary>
-        ''' <value>The syntax of hotkey is:<c>[KeyModifier]KeyName</c> where
-        ''' <list type="table">
-        ''' <item><term><c>KeyModifier</c></term><description>Can be any one of the following: ALT+, CTRL+, SHIFT+, EXT+.<para>EXT+ means "Extended key." — it appears here in case a new type of SHIFT-key is added to the character set in the future.</para></description></item>
-        ''' <item><term>KeyName </term><description>a ... z, 0 ... 9, F1 F12, ... The KeyName is not case-sensitive.</description></item>
-        ''' </list>
-        ''' </value>
-        ''' <remarks>In Windows 2000, valid Hotkeys always begin with CTRL + ALT.</remarks>
-        ''' <returns>A string representing the key-combination to assign to the shortcut.</returns>
-        ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
-        ''' <exception cref="ArgumentException">Value being set is not valid shortcut</exception>
+        ''' <summary>Gets or sets the hotkey for the shortcut.</summary>
         Public Property Hotkey() As Keys
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'Return link.Hotkey
                 Dim wHotkey As Short
                 Dim dwHotkey As Integer
                 link.GetHotkey(wHotkey)
@@ -172,10 +146,10 @@ Namespace IOt
             End Set
         End Property
         ''' <summary>Assigns an icon to a shortcut, or identifies the icon assigned to a shortcut.</summary>
-        ''' <value>A string that locates the icon. The string should contain a fully qualified path and an index associated with the icon. Index is appendex after comma (,) and space.</value>
+        ''' <value>A string that locates the icon. The string should contain a fully qualified path associated with the icon.</value>
         ''' <returns>Identifies the icon assigned to a shortcut</returns>
-        ''' <remarks>Example value: <c>notepad.exe, 0</c></remarks>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
+        ''' <seelaso cref="IconIndex"/>
         Public Property IconPath() As String
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
@@ -191,7 +165,9 @@ Namespace IOt
                 link.SetIconLocation(value, IconIndex)
             End Set
         End Property
+        ''' <remarks>Gets or sets 0-based index of icon within file <see cref="IconPath"/></remarks>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
+        ''' <seelaso cref="IconPath"/>
         Public Property IconIndex() As Integer
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
@@ -212,25 +188,15 @@ Namespace IOt
         Public Property Description() As String
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'Return link.Description
                 Dim sb As StringBuilder = New StringBuilder(INFOTIPSIZE)
                 link.GetDescription(sb, sb.Capacity)
                 Return sb.ToString()
             End Get
             Set(ByVal value As String)
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'link.Description = value
                 link.SetDescription(value)
             End Set
         End Property
-        '''' <summary>Assigns a relative path to a shortcut.</summary>
-        '''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
-        'Public WriteOnly Property RelativePath$() Implements IWshShortcut.RelativePath
-        '    Set(ByVal value$)
-        '        If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-        '        link.RelativePath = value
-        '    End Set
-        'End Property
         ''' <summary>Assign a working directory to a shortcut, or identifies the working directory used by a shortcut.</summary>
         ''' <value>String. Directory in which the shortcut starts.</value>
         ''' <returns>String. Directory in which the shortcut starts.</returns>
@@ -238,21 +204,19 @@ Namespace IOt
         Public Property WorkingDirectory() As String
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'Return link.WorkingDirectory
                 Dim sb As StringBuilder = New StringBuilder(API.FileSystem.MAX_PATH)
                 link.GetWorkingDirectory(sb, sb.Capacity)
                 Return sb.ToString()
             End Get
             Set(ByVal value As String)
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-                'link.WorkingDirectory = value
                 link.SetWorkingDirectory(value)
             End Set
         End Property
         ''' <summary>Returns the fully qualified path of the shortcut object's target.</summary>
         ''' <returns>The FullName property contains a read-only string value indicating the fully qualified path to the shortcut's target.</returns>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
-        Public ReadOnly Property FullName() As String
+        Public ReadOnly Property FullName() As String Implements IPathProvider.Path
             Get
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
                 Return path
@@ -265,17 +229,15 @@ Namespace IOt
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
         Public Sub Save()
             If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-            'link.Save()
             Dim pf As IPersistFile = CType(link, IPersistFile)
             pf.Save(path, True)
         End Sub
-        '''' <summary>Load shortcut from given path</summary>
-        '''' <param name="PathLink">Path of *.lnk file</param>
-        '''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
-        'Private Sub IWshShortcut_Load(ByVal PathLink As String) Implements IWshRuntimeLibrary.IWshShortcut.Load
-        '    If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
-        '    link.Load(PathLink)
-        'End Sub
+        ''' <summary>Sets the relative path to the Shell link object.</summary>
+        ''' <param name="RelativePath">String contains the new relative path. It should be a file name, not a folder name.</param>
+        ''' <remarks>Clients commonly define a relative link when it may be moved along with its target, causing the absolute path to become invalid. The SetRelativePath method can be used to help the link resolution process find its target based on a common path prefix between the target and the relative path. To assist in the resolution process, clients should set the relative path as part of the link creation process.</remarks>
+        Public Sub SetRelativePath(ByVal RelativePath$)
+            link.SetRelativePath(RelativePath, 0)
+        End Sub
 #End Region
 #Region "Sahred"
         ''' <summary>Creates new *.LNK link</summary>
@@ -288,21 +250,12 @@ Namespace IOt
         Public Shared Function CreateLink(ByVal Target$, ByVal LinkLocation$, Optional ByVal Arguments$ = Nothing) As ShellLink
             If IO.File.Exists(LinkLocation) Then Throw New ArgumentException(String.Format("File {0} already exists.", LinkLocation), "LinkLocation")
             If IO.Directory.Exists(LinkLocation) Then Throw New ArgumentException(String.Format("There is already directory named {0}.", LinkLocation), "LinkLocation")
-            'Dim objShell = New WshShell
-            'Dim objShortcut As IWshShortcut
-            Dim objShortcut As IShellLinkW
-            'Try
-            'objShortcut = objShell.CreateShortcut(LinkLocation)
+           Dim objShortcut As IShellLinkW
             objShortcut = CType(New COM.ShellLink.ShellLink(), IShellLinkW)
-            'Catch ex As COMException
-            'Throw New ArgumentException(String.Format("Cannot create shortcut {0}. Ensure that you can write there and that shortcut extension is *.lnk.", LinkLocation), "LinkLocation", ex)
-            'End Try
-            Dim link = New ShellLink(objShortcut, LinkLocation)
+             Dim link = New ShellLink(objShortcut, LinkLocation)
             link.TargetPath = Target
             If Arguments <> "" Then _
                 link.Arguments = Arguments
-            'If IconFile <> "" Then _
-            '    link.IconPath = IconFile
             link.Save()
             Return link
         End Function
@@ -329,9 +282,6 @@ Namespace IOt
             End If
             Me.disposedValue = True
         End Sub
-
-
-
         ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         ''' <remarks>This code added by Visual Basic to correctly implement the disposable pattern.</remarks>
         Public Sub Dispose() Implements IDisposable.Dispose

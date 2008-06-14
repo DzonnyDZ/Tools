@@ -1,13 +1,14 @@
-Imports Tools.VisualBasicT, System.IO
+Imports Tools.VisualBasicT, System.IO, System.Linq, Tools.LinqT
 #If Config <= RC Then 'Stage:RC
 Namespace IOt
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
-    ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise)</remarks>
+    ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise).</remarks>
+    ''' <seelaso cref="M:Tools.IOt.FileTystemTools.GetIcon(Tools.IOt.Path,System.Boolean,System.Boolean)"/>
     <Version(1, 2, GetType(Path), LastChange:="11/28/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <FirstVersion("03/05/2007")> _
     <DebuggerDisplay("{Path}")> _
     Public Class Path
-        Implements IEnumerable(Of Path)
+        Implements IEnumerable(Of Path), IPathProvider
 #Region "Basic behavior"
         ''' <summary>Contains value of the <see cref="Path"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -36,7 +37,7 @@ Namespace IOt
         ''' <paramref name="value"/> contains invalid character as defined in <see cref="System.IO.Path.GetInvalidPathChars"/>
         ''' </exception>
         Public Property Path() As String
-            Get
+            <DebuggerStepThrough()> Get
                 Return _Path
             End Get
             Set(ByVal value As String)
@@ -47,6 +48,12 @@ Namespace IOt
                 Next ch
                 _Path = value
             End Set
+        End Property
+        ''' <summary>String representaion of path</summary>
+        Private ReadOnly Property IPathProvider_Path() As String Implements IPathProvider.Path
+            <DebuggerStepThrough()> Get
+                Return Path
+            End Get
         End Property
         ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="Path"/>.</summary>
         ''' <returns>A <see cref="System.String"/> that represents the current <see cref="Path"/></returns>
@@ -708,7 +715,6 @@ Namespace IOt
         End Function
 #End Region
 
-
         ''' <summary>Returns an enumerator that iterates through the all files and folder under current folder recursivelly. Current folder is included in enumeration. Files are listed before folders at each level.</summary>
         ''' <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the file system recursivelly.</returns>
         ''' <remarks>If current instance points to file instead of folder then return enumerator thet enumerates throught array of exactly one item - current path; otherwise <see cref="FileSystemEnumerator"/> is returned.</remarks>
@@ -734,6 +740,170 @@ Namespace IOt
         Private Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
             Return GetEnumerator()
         End Function
+#Region "GetChildren"
+#Region "Simple"
+        ''' <summary>Gets all files and folders in this folder</summary>
+        ''' <returns>Files and folders in folder represented by this instance</returns>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetChildren() As IEnumerable(Of Path)
+            Return From strpath In IO.Directory.GetFiles(Me.Path).Union(IO.Directory.GetDirectories(Me.Path)) Select New Path(strpath)
+        End Function
+        ''' <summary>Gets all files in this folder</summary>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetFiles() As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsFile)
+        End Function
+        ''' <summary>Gets all folders in this folder</summary>
+        ''' <returns>Folders in folder represented by this instance</returns>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetSubFolders() As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsDirectory)
+        End Function
+#End Region
+        ''' <summary>Gets all files and folders in this folder restricted by AND operation among given conditions</summary>
+        ''' <param name="Conditions">Conditions to be evaluated and ANDed</param>
+        ''' <returns>Files and folders in folder represented by this instance</returns>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Function GetChildren(ByVal ParamArray Conditions As Func(Of Path, Boolean)()) As IEnumerable(Of Path)
+            Return From strpath In IO.Directory.GetFiles(Me.Path).Union(IO.Directory.GetDirectories(Me.Path)) Select Path = New Path(strpath) Where Conditions.And(Path)
+        End Function
+#Region "Mask"
+        ''' <summary>Gets all files and folders in this folder restricted by mask</summary>
+        ''' <returns>Files and folders in folder represented by this instance</returns>
+        ''' <param name="Mask">Mask used to restrict files and folders. The mask is in format of <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic operator Like</see> and is case-insensitive</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetChildren(ByVal Mask As String) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) LikeFS(p.FileName, Mask))
+        End Function
+        ''' <summary>Gets all files in this folder restricted by mask</summary>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <param name="Mask">Mask used to restrict files. The mask is in format of <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic operator Like</see> and is case insensitive</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetFiles(ByVal Mask As String) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsFile, Function(p As Path) LikeFS(p.FileName, Mask))
+        End Function
+        ''' <summary>Gets all subfolders in this folder restricked by mask</summary>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <param name="Mask">Mask used to restrict folders. The mask is in format of <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic operator Like</see> and is case insensitive</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetSubFolders(ByVal Mask As String) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsDirectory, Function(p As Path) LikeFS(p.FileName, Mask))
+        End Function
+#End Region
+#Region "Condition"
+        ''' <summary>Gets all files and folders in this folder restricted by condition</summary>
+        ''' <returns>Files and folders in folder represented by this instance</returns>
+        ''' <param name="Condition">Condition to be avaluated for each child. Only those children for which the condition is true are returned.</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetChildren(ByVal Condition As Func(Of Path, Boolean)) As IEnumerable(Of Path)
+            Return GetChildren(New Func(Of Path, Boolean)() {Condition})
+        End Function
+        ''' <summary>Gets all files in this folder restricted by condition</summary>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <param name="Condition">Condition to be avaluated for each file. Only those files for which the condition is true are returned.</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetFiles(ByVal Condition As Func(Of Path, Boolean)) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsFile, Condition)
+        End Function
+        ''' <summary>Gets all subfolders in this folder restricked by condition</summary>
+        ''' <param name="Condition">Condition to be avaluated for each subfolder. Only those subfolders for which the condition is true are returned.</param>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetSubFolders(ByVal Condition As Func(Of Path, Boolean)) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsDirectory, Condition)
+        End Function
+#End Region
+#Region "Masks"
+        ''' <summary>Gets all files and folders in this folder restricted by mask</summary>
+        ''' <returns>Files and folders in folder represented by this instance</returns>
+        ''' <param name="Masks">Masks used to restrict files and folders. The mask is in format of <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic operator Like</see> and is case insensitive. The OR operation is pefromed between all masks.</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetChildren(ByVal ParamArray Masks As String()) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) (From m In Masks Select LikeFS(p.Path, m)).Or)
+        End Function
+        ''' <summary>Gets all files in this folder restricted by masks</summary>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <param name="Masks">Masks used to restrict files. The mask is in format of <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic operator Like</see> and is case insinsitive. The OR operation is pefromed between all masks.</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetFiles(ByVal ParamArray Masks As String()) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsFile, Function(p As Path) (From m In Masks Select LikeFS(p.Path, m)).Or)
+        End Function
+        ''' <summary>Gets all subfolders in this folder restricked by masks</summary>
+        ''' <returns>Files in folder represented by this instance</returns>
+        ''' <param name="Masks">Masks used to restrict folders. The mask is in format of <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic operator Like</see> nad is case insensitive. The OR operation is pefromed between all masks.</param>
+        ''' <exception cref="System.IO.IOException">This instance represents a file.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.ArgumentException"><see cref="Path.Path"/> is a zero-length string, contains only white space, or contains one or more invalid characters as defined by <see cref="System.IO.Path.InvalidPathChars"/>.</exception>
+        ''' <exception cref="System.IO.PathTooLongException">The specified <see cref="Path.Path"/>, name of children, or both exceed the system-defined maximum length.</exception>
+        ''' <exception cref="System.IO.DirectoryNotFoundException"><see cref="Path.Path"/> is invalid (for example, it is on an unmapped drive).</exception>
+        Public Function GetSubFolders(ByVal ParamArray Masks As String()) As IEnumerable(Of Path)
+            Return GetChildren(Function(p As Path) p.IsDirectory, Function(p As Path) (From m In Masks Select LikeFS(p.Path, m)).Or)
+        End Function
+#End Region
+        ''' <summary>Represents <see cref="Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText">Visual Basic Like operator</see> in Option Compare Text (case insensitive) mode</summary>
+        ''' <param name="pattern">Patter to text <paramref name="text"/> against</param>
+        ''' <param name="text">Text to test agains <paramref name="pattern"/></param>
+        ''' <returns>True or false depending on if <paramref name="text"/> matches <paramref name="pattern"/></returns>
+        Private Function LikeFS(ByVal text$, ByVal pattern$) As Boolean
+            Return Microsoft.VisualBasic.CompilerServices.StringType.StrLikeText(text, pattern)
+        End Function
+#End Region
     End Class
+
+    ''' <summary>Interface of object that provides path</summary>
+    Public Interface IPathProvider
+        ''' <summary>Path of file or directory represented by this object</summary>
+        ReadOnly Property Path$()
+    End Interface
 End Namespace
 #End If
