@@ -5,12 +5,12 @@ Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.String"/></summary>
     <Author("functionĐonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
  <FirstVersion(2008, 5, 1), Version(1, 0, GetType([StringExtensions]))> _
-  Module [StringExtensions]
+ Public Module [StringExtensions]
         ''' <summary>Indicates whether the specified <see cref="System.String" /> object is null or an <see cref="System.String.Empty" /> string.</summary>
         ''' <param name="s">A <see cref="System.String" /> reference.</param>
         ''' <returns>true if the value parameter is null or an empty string (""); otherwise, false.</returns>
         ''' <seealso cref="System.String.IsNullOrEmpty"/>
-        <Extension()> Public Function IsNullOrEmpry(ByVal s As String) As Boolean
+        <Extension()> Public Function IsNullOrEmpty(ByVal s As String) As Boolean
             Return String.IsNullOrEmpty(s)
         End Function
         ''' <summary>Replaces the format item in a specified <see cref="System.String" /> with the text equivalent of the value of a corresponding <see cref="System.Object" /> instance in a specified array. A specified parameter supplies culture-specific formatting information.</summary>

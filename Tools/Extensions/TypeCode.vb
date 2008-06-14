@@ -3,7 +3,7 @@
 #If Config <= Nightly Then
 Namespace ExtensionsT
     ''' <summary>Extension functions for <see cref="TypeCode"/></summary>
-    Module TypeCodeExtensions
+    Public Module TypeCodeExtensions
         ''' <summary>Gets value idicating if given <see cref="TypeCode"/> represents numeric type</summary>
         ''' <param name="tc"><see cref="TypeCode"/> to check</param>
         ''' <returns>True if <paramref name="tc"/> is one of <see cref="TypeCode.[SByte]"/>, <see cref="TypeCode.[Byte]"/>, <see cref="TypeCode.Int16"/>, <see cref="TypeCode.Int32"/>, <see cref="TypeCode.Int64"/>, <see cref="TypeCode.UInt16"/>, <see cref="TypeCode.UInt32"/>, <see cref="TypeCode.UInt64"/>, <see cref="typecode.[Decimal]"/>, <see cref="TypeCode.[Single]"/>, <see cref="TypeCode.[Double]"/></returns>
@@ -111,7 +111,7 @@ Namespace ExtensionsT
         <Extension()> _
         Public Function GetSigned(ByVal tc As TypeCode) As TypeCode
             Select Case tc
-                Case TypeCode.SByte, TypeCode.Byte : Return TypeCode.sByte
+                Case TypeCode.SByte, TypeCode.Byte : Return TypeCode.SByte
                 Case TypeCode.Int16, TypeCode.UInt16, TypeCode.Char : Return TypeCode.Int16
                 Case TypeCode.Int32, TypeCode.UInt32 : Return TypeCode.Int32
                 Case TypeCode.Int64, TypeCode.UInt64 : Return TypeCode.Int64

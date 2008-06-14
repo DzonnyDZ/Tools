@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 
 Namespace DrawingT
     'ASAP: Mark, WiKi, COmment, Forum
+    ''' <summary>Contains extension methods for working with images</summary>
     Public Module ImageTools
 #If Framework >= 3.5 Then
         ''' <summary>Gets thumbnail size that best fits into given size</summary>
@@ -90,12 +91,64 @@ Namespace DrawingT
             Return ret
         End Function
 
+        ''' <summary>Draws image at given position in its pixel size (unscaled)</summary>
+        ''' <param name="g">Graphic to draw the image</param>
+        ''' <param name="img">Image to be drawn</param>
+        ''' <param name="Position">Position (in pixels) to draw the image</param>
         <Extension()> Public Sub DrawImageInPixels(ByVal g As Graphics, ByVal img As Image, ByVal Position As Point)
+            Dim oldu = g.PageUnit
             g.PageUnit = GraphicsUnit.Pixel
-            g.DrawImage(img, Position.X, Position.Y, img.Size.Width, img.Size.Height)
+            Try
+                g.DrawImage(img, Position.X, Position.Y, img.Size.Width, img.Size.Height)
+            Finally
+                g.PageUnit = oldu
+            End Try
         End Sub
+        ''' <summary>Draws image at given position in its pixel size (unscaled)</summary>
+        ''' <param name="g">Graphic to draw the image</param>
+        ''' <param name="img">Image to be drawn</param>
+        ''' <param name="x">X part of position of image</param>
+        ''' <param name="y">Y part of position of image</param>
         <Extension()> Public Sub DrawImageInPixels(ByVal g As Graphics, ByVal img As Image, ByVal x As Integer, ByVal y As Integer)
             g.DrawImageInPixels(img, New Point(x, y))
         End Sub
+
+
+        ''' <summary>Gets thumbnail for given image</summary>
+        ''' <param name="img">Image to get thumbnail of</param>
+        ''' <param name="Bounds">Maximum size of thumbnail</param>
+        ''' <param name="CancelFunction">Optional function that can be used to cancel long-lasting thumbmail creation</param>
+        ''' <returns>Image that is guaranted to fit in <paramref name="Bounds"/> and has the same proportions as original image</returns>
+        ''' <remarks>Uses <see cref="Image.GetThumbnailImage"/>.</remarks>
+        ''' <seelaso cref="Image.GetThumbnailImage"/>
+        ''' <exception cref="ArgumentNullException"><paramref name="img"/> is null</exception>
+        <Extension()> _
+        Public Function GetThumbnail(ByVal img As Image, ByVal Bounds As Size, Optional ByVal CancelFunction As Image.GetThumbnailImageAbort = Nothing) As Image
+            If img Is Nothing Then Throw New ArgumentNullException("img")
+            Dim thSize = img.ThumbSize(Bounds)
+            If CancelFunction Is Nothing Then CancelFunction = Function() False
+            Dim th = img.GetThumbnailImage(thSize.Width, thSize.Height, CancelFunction, IntPtr.Zero)
+            Return th
+        End Function
+        ''' <summary>Gets thumbnail for given image drawn on specified background</summary>
+        ''' <param name="img">Image to get thumbnail of</param>
+        ''' <param name="bounds">Size of restangle to place image on</param>
+        ''' <param name="Background">Background color for rectangle</param>
+        ''' <param name="CancelFunction">Optional function that can be used to cancel long-lasting thumbnail creation</param>
+        ''' <returns>Image that consists of rectangle of color <paramref name="Background"/> and image <paramref name="img"/> proportionally scaled to fit to <paramref name="bounds"/> and centered within <paramref name="bounds"/>.</returns>
+        ''' <remarks>Uses <see cref="Graphics.DrawImage"/>.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="img"/> is null</exception>
+        <Extension()> _
+        Public Function GetThumbnail(ByVal img As Image, ByVal bounds As Size, ByVal Background As Color, Optional ByVal CancelFunction As Graphics.DrawImageAbort = Nothing) As Image
+            If img Is Nothing Then Throw New ArgumentNullException("img")
+            Dim thsize = img.ThumbSize(bounds)
+            Dim ret As New Bitmap(bounds.Width, bounds.Height)
+            Dim g = Graphics.FromImage(ret)
+            g.FillRectangle(New SolidBrush(Background), 0, 0, ret.Width, ret.Height)
+            If CancelFunction Is Nothing Then CancelFunction = Function() False
+            g.DrawImage(img, New Rectangle(New Point((bounds.Width - thsize.Width) / 2, (bounds.Height - thsize.Height) / 2), thsize), 0, 0, img.Width, img.Height, GraphicsUnit.Pixel, New Imaging.ImageAttributes, CancelFunction)
+            g.Flush()
+            Return ret
+        End Function
     End Module
 End Namespace

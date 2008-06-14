@@ -5,7 +5,7 @@ Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.Char"/></summary>
     <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
    <FirstVersion(2008, 5, 1), Version(1, 0, GetType([CharExtensions]))> _
-   Module [CharExtensions]
+ Public Module [CharExtensions]
         ''' <summary>Converts the specified numeric Unicode character to a double-precision floating point number.</summary>
         ''' <param name="c">A Unicode character.</param>
         ''' <returns>The numeric value of c if that character represents a number; otherwise, -1.0.</returns>

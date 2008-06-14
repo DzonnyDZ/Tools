@@ -100,6 +100,9 @@
                 <node name="Win32Window" image="Class" tag="Tools.Tests.WindowsT.NativeT.frmWin32Window.Test" />
             </node>
         </node>
+        <node name="IOt" image="Namespace">
+            <node name="ShellLink" image="Class" tag="Tools.Tests.IOt.frmShellLink.test" />
+        </node>
     </node>
     <node name=".NET" image="Library" SortOrder="1">
         <node name="System" image="Namespace">

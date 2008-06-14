@@ -121,12 +121,16 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="API\FileSystem.vb" />
     <Compile Include="API\GUI.vb">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="API\Messages.vb" />
     <Compile Include="API\Misc.vb" />
     <Compile Include="API\Public.vb" />
+    <Compile Include="COM\ShellLinkNative.vb" />
+    <Compile Include="IO\FileSystemTools.vb" />
+    <Compile Include="IO\ShellLink.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
