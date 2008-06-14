@@ -1,9 +1,12 @@
-﻿Public Class frmFolderDialog
-
+﻿''' <summary>Dialog for selecting folder either by typing or by browsing</summary>
+Friend Class frmFolderDialog
+    ''' <summary>CTor</summary>
     Public Sub New()
         InitializeComponent()
         Me.DialogResult = Windows.Forms.DialogResult.Cancel
     End Sub
+    ''' <summary>CTor with path</summary>
+    ''' <param name="Path">Path to be shown by default</param>
     Public Sub New(ByVal Path$)
         Me.New()
         txtPath.Text = Path
@@ -13,7 +16,11 @@
             fbdBrowse.SelectedPath = txtPath.Text
         Catch : End Try
         If fbdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
-            txtPath.Text = fbdBrowse.SelectedPath
+            Try
+                txtPath.Text = fbdBrowse.SelectedPath
+            Catch ex As Exception
+                WindowsT.IndependentT.MessageBox.Error(ex, "Error")
+            End Try
         End If
     End Sub
 End Class

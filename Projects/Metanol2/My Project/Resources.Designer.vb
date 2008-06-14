@@ -60,10 +60,58 @@ Namespace My.Resources
             End Set
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Display.
+        '''</summary>
+        Friend ReadOnly Property catDisplay() As String
+            Get
+                Return ResourceManager.GetString("catDisplay", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property GoLtrHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GoLtrHS", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property NavBack() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("NavBack", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property NavForward() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("NavForward", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Refresh() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Refresh", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Size of image preview in main window.
+        '''</summary>
+        Friend ReadOnly Property ThumbSize_d() As String
+            Get
+                Return ResourceManager.GetString("ThumbSize_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Thumbnail size.
+        '''</summary>
+        Friend ReadOnly Property ThumbSize_n() As String
+            Get
+                Return ResourceManager.GetString("ThumbSize_n", resourceCulture)
             End Get
         End Property
         

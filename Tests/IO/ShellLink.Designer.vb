@@ -27,8 +27,10 @@ Namespace IOt
             Me.flpCommands = New System.Windows.Forms.FlowLayoutPanel
             Me.cmdCreate = New System.Windows.Forms.Button
             Me.cmdOpen = New System.Windows.Forms.Button
+            Me.cmdOpenByPath = New System.Windows.Forms.Button
             Me.tlpSave = New System.Windows.Forms.TableLayoutPanel
             Me.cmdSave = New System.Windows.Forms.Button
+            Me.cmdSaveAs = New System.Windows.Forms.Button
             Me.ofdOpenLink = New System.Windows.Forms.OpenFileDialog
             Me.ofdSelectFile = New System.Windows.Forms.OpenFileDialog
             Me.sfdSaveLink = New System.Windows.Forms.SaveFileDialog
@@ -50,6 +52,7 @@ Namespace IOt
             Me.flpCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.flpCommands.Controls.Add(Me.cmdCreate)
             Me.flpCommands.Controls.Add(Me.cmdOpen)
+            Me.flpCommands.Controls.Add(Me.cmdOpenByPath)
             Me.flpCommands.Dock = System.Windows.Forms.DockStyle.Top
             Me.flpCommands.Location = New System.Drawing.Point(0, 0)
             Me.flpCommands.Name = "flpCommands"
@@ -80,13 +83,27 @@ Namespace IOt
             Me.cmdOpen.Text = "&Open"
             Me.cmdOpen.UseVisualStyleBackColor = True
             '
+            'cmdOpenByPath
+            '
+            Me.cmdOpenByPath.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdOpenByPath.AutoSize = True
+            Me.cmdOpenByPath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdOpenByPath.Location = New System.Drawing.Point(106, 3)
+            Me.cmdOpenByPath.Name = "cmdOpenByPath"
+            Me.cmdOpenByPath.Size = New System.Drawing.Size(81, 23)
+            Me.cmdOpenByPath.TabIndex = 1
+            Me.cmdOpenByPath.Text = "Open by &path"
+            Me.cmdOpenByPath.UseVisualStyleBackColor = True
+            '
             'tlpSave
             '
             Me.tlpSave.AutoSize = True
             Me.tlpSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpSave.ColumnCount = 1
-            Me.tlpSave.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+            Me.tlpSave.ColumnCount = 2
+            Me.tlpSave.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpSave.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
             Me.tlpSave.Controls.Add(Me.cmdSave, 0, 0)
+            Me.tlpSave.Controls.Add(Me.cmdSaveAs, 1, 0)
             Me.tlpSave.Dock = System.Windows.Forms.DockStyle.Bottom
             Me.tlpSave.Location = New System.Drawing.Point(0, 378)
             Me.tlpSave.Name = "tlpSave"
@@ -101,12 +118,25 @@ Namespace IOt
             Me.cmdSave.AutoSize = True
             Me.cmdSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdSave.Enabled = False
-            Me.cmdSave.Location = New System.Drawing.Point(164, 3)
+            Me.cmdSave.Location = New System.Drawing.Point(71, 3)
             Me.cmdSave.Name = "cmdSave"
             Me.cmdSave.Size = New System.Drawing.Size(42, 23)
             Me.cmdSave.TabIndex = 0
             Me.cmdSave.Text = "&Save"
             Me.cmdSave.UseVisualStyleBackColor = True
+            '
+            'cmdSaveAs
+            '
+            Me.cmdSaveAs.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdSaveAs.AutoSize = True
+            Me.cmdSaveAs.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdSaveAs.Enabled = False
+            Me.cmdSaveAs.Location = New System.Drawing.Point(249, 3)
+            Me.cmdSaveAs.Name = "cmdSaveAs"
+            Me.cmdSaveAs.Size = New System.Drawing.Size(56, 23)
+            Me.cmdSaveAs.TabIndex = 0
+            Me.cmdSaveAs.Text = "&Save as"
+            Me.cmdSaveAs.UseVisualStyleBackColor = True
             '
             'ofdOpenLink
             '
@@ -155,5 +185,7 @@ Namespace IOt
         Friend WithEvents ofdOpenLink As System.Windows.Forms.OpenFileDialog
         Friend WithEvents ofdSelectFile As System.Windows.Forms.OpenFileDialog
         Friend WithEvents sfdSaveLink As System.Windows.Forms.SaveFileDialog
+        Friend WithEvents cmdSaveAs As System.Windows.Forms.Button
+        Friend WithEvents cmdOpenByPath As System.Windows.Forms.Button
     End Class
 End Namespace

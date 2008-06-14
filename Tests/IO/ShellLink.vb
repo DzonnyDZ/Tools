@@ -17,8 +17,9 @@ Namespace IOt
             Dim frm As New frmShellLink
             frm.Show()
         End Sub
-
+        ''' <summary>Contains value of the <see cref="Link"/> property</summary>
         Private _link As ShellLink
+        ''' <summary>Current link</summary>
         Private Property Link() As ShellLink
             Get
                 Return _link
@@ -26,12 +27,13 @@ Namespace IOt
             Set(ByVal value As ShellLink)
                 If value IsNot Link AndAlso Link IsNot Nothing Then Link.Dispose()
                 cmdSave.Enabled = value IsNot Nothing
+                cmdSaveAs.Enabled = value IsNot Nothing
                 prgGrid.SelectedObject = value
                 _link = value
             End Set
         End Property
 
-        Private Sub cmdCreate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCreate.Click
+        Private Sub cmdCreate_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdCreate.Click
             If ofdSelectFile.ShowDialog = Windows.Forms.DialogResult.OK AndAlso sfdSaveLink.ShowDialog = Windows.Forms.DialogResult.OK Then
                 Try
                     Link = ShellLink.CreateLink(ofdSelectFile.FileName, sfdSaveLink.FileName)
@@ -41,7 +43,7 @@ Namespace IOt
             End If
         End Sub
 
-        Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
+        Private Sub cmdOpen_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdOpen.Click
             If ofdOpenLink.ShowDialog = Windows.Forms.DialogResult.OK Then
                 Try
                     Link = New ShellLink(ofdOpenLink.FileName)
@@ -51,9 +53,30 @@ Namespace IOt
             End If
         End Sub
 
-        Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
+        Private Sub cmdSave_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdSave.Click
             Try
                 Link.Save()
+            Catch ex As Exception
+                Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+            End Try
+        End Sub
+
+        Private Sub cmdSaveAs_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdSaveAs.Click
+            If sfdSaveLink.ShowDialog = Windows.Forms.DialogResult.OK Then
+                Try
+                    Link.SaveAs(sfdSaveLink.FileName)
+                Catch ex As Exception
+                    Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                End Try
+            End If
+        End Sub
+
+ 
+        Private Sub cmdOpenByPath_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdOpenByPath.Click
+            Dim result = InputBox("Etner path", "Open link")
+            If result = "" Then Return
+            Try
+                Link = New ShellLink(result)
             Catch ex As Exception
                 Tools.WindowsT.IndependentT.MessageBox.Error(ex)
             End Try

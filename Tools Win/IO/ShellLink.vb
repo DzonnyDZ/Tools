@@ -6,11 +6,12 @@ Imports System.ComponentModel
 #If Config <= Nightly Then 'Stage Nightly
 Namespace IOt
     ''' <summary>Represents a *.LNK file (also called shortcut or link)</summary>
-    ''' <remarks>Implementation based on Mattias Sjögren (© 2001÷2002) example http://www.msjogren.net/dotnet/, mattias@mvps.org</remarks>
+    ''' <remarks>Implementation based on Mattias Sjögren's (© 2001÷2002) example http://www.msjogren.net/dotnet/, mattias@mvps.org</remarks>
     Public Class ShellLink
         Implements IDisposable, IPathProvider
         ''' <summary>The <see cref="IShellLinkW"/> object this class is wrapper to</summary>
         Private link As IShellLinkW
+        ''' <summary>Path of the *.LNK file this link is stored in</summary>
         Private path$
         ''' <summary>Creates new instance of <see cref="ShellLink"/> from <see cref="IShellLinkW"/></summary>
         ''' <param name="link">A <see cref="IShellLinkW"/> object</param>
@@ -19,10 +20,16 @@ Namespace IOt
             Me.link = link
             Me.path = Path
         End Sub
+        ''' <summary>Gets COM object that represents the link</summary>
+        ''' <returns>The object which im plements <see cref="IPersistFile"/> and <see cref="IShellLinkW"/> interfaces</returns>
+        Protected ReadOnly Property IShellLinkObject() As Object
+            Get
+                Return link
+            End Get
+        End Property
         ''' <summary>Creates new instace of the <see cref="ShellLink"/> class</summary>
         ''' <param name="ExistingLink">Path of existing *.LNK file</param>
         ''' <exception cref="IO.FileNotFoundException">File <paramref name="ExistingLink"/> does not exist</exception>
-        ''' <exception cref="TypeMismatchException">File <paramref name="ExistingLink"/> does not represent *.LNK file, it is another kind of link - such as URL.</exception>
         ''' <exception cref="ArgumentException">Link cannot be opened</exception>
         Public Sub New(ByVal ExistingLink As String)
             If Not IO.File.Exists(ExistingLink) Then Throw New IO.FileNotFoundException(String.Format("File {0} does not exist.", ExistingLink))
@@ -93,7 +100,7 @@ Namespace IOt
                 link.SetShowCmd(nWS)
             End Set
         End Property
-        'ASAP:Comment
+        ''' <summary>Maximum length of certain COM strings</summary>
         Private Const INFOTIPSIZE As Integer = 1024
        
         ''' <summary>Link argumens</summary>
@@ -227,10 +234,35 @@ Namespace IOt
         ''' <summary>Saves a shortcut object to disk.</summary>
         ''' <remarks>You must use this method to confir changes made to shortcut. The Save method uses the information in the shortcut object's FullName property to determine where to save the shortcut object on a disk. You can only create shortcuts to system objects. This includes files, directories, and drives (but does not include printer links or scheduled tasks).</remarks>
         ''' <exception cref="ObjectDisposedException">The <see cref="Disposed"/> property is true</exception>
+        ''' <exception cref="IO.FileNotFoundException">File <see cref="FullName"/> was not found</exception>
+        ''' <exception cref="IO.IOException">Exception ocured while writing to file <see cref="FullName"/></exception>
         Public Sub Save()
             If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
             Dim pf As IPersistFile = CType(link, IPersistFile)
-            pf.Save(path, True)
+            Try
+                pf.Save(path, True)
+            Catch ex As IO.FileNotFoundException
+                Throw New IO.FileNotFoundException(String.Format("The file {0} cannot be found.", path), path, ex)
+            Catch ex As COMException
+                Throw New IO.IOException(String.Format("There was an error saving file {0}.", path), ex)
+            End Try
+        End Sub
+        ''' <summary>Saves a shortcut object to disk on different place then where it is saved now</summary>
+        ''' <param name="Path">Path to be saved</param>
+        ''' <remarks>Invoking this method cnages value of the <see cref="FullName"/> property</remarks>
+        ''' <exception cref="IO.FileNotFoundException">File <paramref name="Path"/> was not found</exception>
+        ''' <exception cref="IO.IOException">Exception ocured while writing to file <paramref name="Path"/></exception>
+        Public Sub SaveAs(ByVal Path As String)
+            If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
+            Dim pf As IPersistFile = CType(link, IPersistFile)
+            Try
+                pf.Save(Path, True)
+            Catch ex As IO.FileNotFoundException
+                Throw New IO.FileNotFoundException(String.Format("The file {0} cannot be found.", Path), Path, ex)
+            Catch ex As COMException
+                Throw New IO.IOException(String.Format("There was an error saving file {0}.", Path), ex)
+            End Try
+            Me.path = Path
         End Sub
         ''' <summary>Sets the relative path to the Shell link object.</summary>
         ''' <param name="RelativePath">String contains the new relative path. It should be a file name, not a folder name.</param>
@@ -252,12 +284,34 @@ Namespace IOt
             If IO.Directory.Exists(LinkLocation) Then Throw New ArgumentException(String.Format("There is already directory named {0}.", LinkLocation), "LinkLocation")
            Dim objShortcut As IShellLinkW
             objShortcut = CType(New COM.ShellLink.ShellLink(), IShellLinkW)
-             Dim link = New ShellLink(objShortcut, LinkLocation)
+            Dim link = New ShellLink(objShortcut, LinkLocation)
             link.TargetPath = Target
             If Arguments <> "" Then _
                 link.Arguments = Arguments
             link.Save()
             Return link
+        End Function
+        ''' <summary>Resolves link target</summary>
+        ''' <param name="link">Address of *.LNK file</param>
+        ''' <returns>Address of link target. Returns null when link cannot be resolved (i.e. <paramref name="link"/> is not valid *.LNK file)</returns>
+        ''' <exception cref="IO.FileNotFoundException">File <paramref name="link"/> does not exist</exception>
+        Public Shared Function ResolveLink(ByVal link As String) As String
+            Try
+                Dim l As New ShellLink(link)
+                Return l.TargetPath
+            Catch ex As IO.FileNotFoundException
+                Throw
+            Catch ex As ArgumentException
+                Return Nothing
+            End Try
+        End Function
+        ''' <summary>Resolves link target</summary>
+        ''' <param name="link">Address of *.LNK file</param>
+        ''' <returns>Address of link target. Returns null when link cannot be resolved (i.e. <paramref name="link"/> is not valid *.LNK file)</returns>
+        ''' <exception cref="IO.FileNotFoundException">File <paramref name="link"/> does not exist</exception>
+        Public Shared Function ResolveLink(ByVal link As Path) As Path
+            Dim ret = ResolveLink(link.Path)
+            If ret = "" Then Return Nothing Else Return ret
         End Function
 #End Region
 #Region " IDisposable Support "
@@ -265,6 +319,7 @@ Namespace IOt
         Private disposedValue As Boolean = False
         ''' <summary>Gets value idicationg if object was disposed</summary>
         ''' <remarks>If object was disposed it is not valid to perform actions on it</remarks>
+        <Browsable(False)> _
         Public ReadOnly Property Disposed() As Boolean
             Get
                 Return disposedValue

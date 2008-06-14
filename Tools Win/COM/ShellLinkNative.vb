@@ -12,7 +12,6 @@ Imports Tools.COM.ShellLink
 Imports Tools.API.FileSystem
 Imports System.ComponentModel
 
-'ASAP:Comments
 Namespace COM.ShellLink
 
     ''' <summary><see cref="IShellLinkW.Resolve"/> flags</summary>
@@ -47,21 +46,6 @@ Namespace COM.ShellLink
         SLGP_RAWPATH = &H4
     End Enum
 
-    '<StructLayoutAttribute(LayoutKind.Sequential, CharSet:=CharSet.Ansi)> _
-    '<EditorBrowsable(EditorBrowsableState.Never)> _
-    'Friend Structure WIN32_FIND_DATAA
-    '    Public dwFileAttributes As Integer
-    '    Public ftCreationTime As ComTypes.FILETIME
-    '    Public ftLastAccessTime As ComTypes.FILETIME
-    '    Public ftLastWriteTime As ComTypes.FILETIME
-    '    Public nFileSizeHigh As Integer
-    '    Public nFileSizeLow As Integer
-    '    Public dwReserved0 As Integer
-    '    Public dwReserved1 As Integer
-    '    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=MAX_PATH)> Public cFileName As String
-    '    <MarshalAs(UnmanagedType.ByValTStr, SizeConst:=14)> Public cAlternateFileName As String
-    '    Private Const MAX_PATH As Integer = 260
-    'End Structure
     ''' <summary>Contains information about the file</summary>
     <StructLayoutAttribute(LayoutKind.Sequential, CharSet:=CharSet.Unicode)> _
     Friend Structure WIN32_FIND_DATAW
@@ -129,79 +113,6 @@ Namespace COM.ShellLink
           ByRef ppszFileName As IntPtr)
 
     End Interface
-
-    '''' <summary>Exposes methods that create, modify, and resolve Shell links. ANSI Version</summary>
-    '''' <remarks>Note  This interface cannot be used to create a link to a URL.</remarks>
-    '<EditorBrowsable(EditorBrowsableState.Never)> _
-    '<ComImport(), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)> _
-    '<Guid("000214EE-0000-0000-C000-000000000046")> _
-    'Friend Interface IShellLinkA
-    '    Sub GetPath( _
-    '      <Out(), MarshalAs(UnmanagedType.LPStr)> ByVal pszFile As StringBuilder, _
-    '      ByVal cchMaxPath As Integer, _
-    '      <Out()> ByRef pfd As WIN32_FIND_DATAA, _
-    '      ByVal fFlags As SLGP_FLAGS)
-
-    '    Sub GetIDList( _
-    '      ByRef ppidl As IntPtr)
-
-    '    Sub SetIDList( _
-    '      ByVal pidl As IntPtr)
-
-    '    Sub GetDescription( _
-    '      <Out(), MarshalAs(UnmanagedType.LPStr)> ByVal pszName As StringBuilder, _
-    '      ByVal cchMaxName As Integer)
-
-    '    Sub SetDescription( _
-    '      <MarshalAs(UnmanagedType.LPStr)> ByVal pszName As String)
-
-    '    Sub GetWorkingDirectory( _
-    '      <Out(), MarshalAs(UnmanagedType.LPStr)> ByVal pszDir As StringBuilder, _
-    '      ByVal cchMaxPath As Integer)
-
-    '    Sub SetWorkingDirectory( _
-    '      <MarshalAs(UnmanagedType.LPStr)> ByVal pszDir As String)
-
-    '    Sub GetArguments( _
-    '      <Out(), MarshalAs(UnmanagedType.LPStr)> ByVal pszArgs As StringBuilder, _
-    '      ByVal cchMaxPath As Integer)
-
-    '    Sub SetArguments( _
-    '      <MarshalAs(UnmanagedType.LPStr)> ByVal pszArgs As String)
-
-    '    Sub GetHotkey( _
-    '      ByRef pwHotkey As Short)
-
-    '    Sub SetHotkey( _
-    '      ByVal wHotkey As Short)
-
-    '    Sub GetShowCmd( _
-    '      ByRef piShowCmd As Integer)
-
-    '    Sub SetShowCmd( _
-    '      ByVal iShowCmd As Integer)
-
-    '    Sub GetIconLocation( _
-    '      <Out(), MarshalAs(UnmanagedType.LPStr)> ByVal pszIconPath As StringBuilder, _
-    '      ByVal cchIconPath As Integer, _
-    '      ByRef piIcon As Integer)
-
-    '    Sub SetIconLocation( _
-    '      <MarshalAs(UnmanagedType.LPStr)> ByVal pszIconPath As String, _
-    '      ByVal iIcon As Integer)
-
-    '    Sub SetRelativePath( _
-    '      <MarshalAs(UnmanagedType.LPStr)> ByVal pszPathRel As String, _
-    '      ByVal dwReserved As Integer)
-
-    '    Sub Resolve( _
-    '      ByVal hwnd As IntPtr, _
-    '      ByVal fFlags As SLR_FLAGS)
-
-    '    Sub SetPath( _
-    '      <MarshalAs(UnmanagedType.LPStr)> ByVal pszFile As String)
-
-    'End Interface
 
     ''' <summary>Exposes methods that create, modify, and resolve Shell links. UNICODE Version</summary>
     ''' <remarks>Note  This interface cannot be used to create a link to a URL.</remarks>
@@ -325,179 +236,82 @@ Namespace COM.ShellLink
           <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFile As String)
 
     End Interface
-    ' The following does currently not compile correctly. Use
-    ' Type.GetTypeFromCLSID() and Activator.CreateInstance() instead.
+    ''' <summary>COM-imported class which implements the <see cref="IShellLinkW"/> interface</summary>
     <ComImport()> _
-      <Guid("00021401-0000-0000-C000-000000000046")> _
-    Friend Class ShellLink
-        'Implements IPersistFile, IShellLinkA, IShellLinkW
-        'Public Sub GetClassID(ByRef pClassID As System.Guid) Implements IPersistFile.GetClassID
-
-        'End Sub
-
-        'Public Sub GetCurFile(ByRef ppszFileName As System.IntPtr) Implements IPersistFile.GetCurFile
-
-        'End Sub
-
-        'Public Function IsDirty() As Integer Implements IPersistFile.IsDirty
-
-        'End Function
-
-        'Public Sub Load(ByVal pszFileName As String, ByVal dwMode As Integer) Implements IPersistFile.Load
-
-        'End Sub
-
-        'Public Sub Save(ByVal pszFileName As String, ByVal fRemember As Boolean) Implements IPersistFile.Save
-
-        'End Sub
-
-        'Public Sub SaveCompleted(ByVal pszFileName As String) Implements IPersistFile.SaveCompleted
-
-        'End Sub
-
-        'Public Sub GetArguments(ByVal pszArgs As System.Text.StringBuilder, ByVal cchMaxPath As Integer) Implements IShellLinkA.GetArguments
-
-        'End Sub
-
-        'Public Sub GetDescription(ByVal pszName As System.Text.StringBuilder, ByVal cchMaxName As Integer) Implements IShellLinkA.GetDescription
-
-        'End Sub
-
-        'Public Sub GetHotkey(ByRef pwHotkey As Short) Implements IShellLinkA.GetHotkey
-
-        'End Sub
-
-        'Public Sub GetIconLocation(ByVal pszIconPath As System.Text.StringBuilder, ByVal cchIconPath As Integer, ByRef piIcon As Integer) Implements IShellLinkA.GetIconLocation
-
-        'End Sub
-
-        'Public Sub GetIDList(ByRef ppidl As System.IntPtr) Implements IShellLinkA.GetIDList
-
-        'End Sub
-
-        'Public Sub GetPath(ByVal pszFile As System.Text.StringBuilder, ByVal cchMaxPath As Integer, ByRef pfd As WIN32_FIND_DATAA, ByVal fFlags As SLGP_FLAGS) Implements IShellLinkA.GetPath
-
-        'End Sub
-
-        'Public Sub GetShowCmd(ByRef piShowCmd As Integer) Implements IShellLinkA.GetShowCmd
-
-        'End Sub
-
-        'Public Sub GetWorkingDirectory(ByVal pszDir As System.Text.StringBuilder, ByVal cchMaxPath As Integer) Implements IShellLinkA.GetWorkingDirectory
-
-        'End Sub
-
-        'Public Sub Resolve(ByVal hwnd As System.IntPtr, ByVal fFlags As SLR_FLAGS) Implements IShellLinkA.Resolve
-
-        'End Sub
-
-        'Public Sub SetArguments(ByVal pszArgs As String) Implements IShellLinkA.SetArguments
-
-        'End Sub
-
-        'Public Sub SetDescription(ByVal pszName As String) Implements IShellLinkA.SetDescription
-
-        'End Sub
-
-        'Public Sub SetHotkey(ByVal wHotkey As Short) Implements IShellLinkA.SetHotkey
-
-        'End Sub
-
-        'Public Sub SetIconLocation(ByVal pszIconPath As String, ByVal iIcon As Integer) Implements IShellLinkA.SetIconLocation
-
-        'End Sub
-
-        'Public Sub SetIDList(ByVal pidl As System.IntPtr) Implements IShellLinkA.SetIDList
-
-        'End Sub
-
-        'Public Sub SetPath(ByVal pszFile As String) Implements IShellLinkA.SetPath
-
-        'End Sub
-
-        'Public Sub SetRelativePath(ByVal pszPathRel As String, ByVal dwReserved As Integer) Implements IShellLinkA.SetRelativePath
-
-        'End Sub
-
-        'Public Sub SetShowCmd(ByVal iShowCmd As Integer) Implements IShellLinkA.SetShowCmd
-
-        'End Sub
-
-        'Public Sub SetWorkingDirectory(ByVal pszDir As String) Implements IShellLinkA.SetWorkingDirectory
-
-        'End Sub
-
-        'Public Sub GetArguments1(ByVal pszArgs As System.Text.StringBuilder, ByVal cchMaxPath As Integer) Implements IShellLinkW.GetArguments
-
-        'End Sub
-
-        'Public Sub GetDescription1(ByVal pszName As System.Text.StringBuilder, ByVal cchMaxName As Integer) Implements IShellLinkW.GetDescription
-
-        'End Sub
-
-        'Public Sub GetHotkey1(ByRef pwHotkey As Short) Implements IShellLinkW.GetHotkey
-
-        'End Sub
-
-        'Public Sub GetIconLocation1(ByVal pszIconPath As System.Text.StringBuilder, ByVal cchIconPath As Integer, ByRef piIcon As Integer) Implements IShellLinkW.GetIconLocation
-
-        'End Sub
-
-        'Public Sub GetIDList1(ByRef ppidl As System.IntPtr) Implements IShellLinkW.GetIDList
-
-        'End Sub
-
-        'Public Sub GetPath1(ByVal pszFile As System.Text.StringBuilder, ByVal cchMaxPath As Integer, ByRef pfd As WIN32_FIND_DATAW, ByVal fFlags As SLGP_FLAGS) Implements IShellLinkW.GetPath
-
-        'End Sub
-
-        'Public Sub GetShowCmd1(ByRef piShowCmd As Integer) Implements IShellLinkW.GetShowCmd
-
-        'End Sub
-
-        'Public Sub GetWorkingDirectory1(ByVal pszDir As System.Text.StringBuilder, ByVal cchMaxPath As Integer) Implements IShellLinkW.GetWorkingDirectory
-
-        'End Sub
-
-        'Public Sub Resolve1(ByVal hwnd As System.IntPtr, ByVal fFlags As SLR_FLAGS) Implements IShellLinkW.Resolve
-
-        'End Sub
-
-        'Public Sub SetArguments1(ByVal pszArgs As String) Implements IShellLinkW.SetArguments
-
-        'End Sub
-
-        'Public Sub SetDescription1(ByVal pszName As String) Implements IShellLinkW.SetDescription
-
-        'End Sub
-
-        'Public Sub SetHotkey1(ByVal wHotkey As Short) Implements IShellLinkW.SetHotkey
-
-        'End Sub
-
-        'Public Sub SetIconLocation1(ByVal pszIconPath As String, ByVal iIcon As Integer) Implements IShellLinkW.SetIconLocation
-
-        'End Sub
-
-        'Public Sub SetIDList1(ByVal pidl As System.IntPtr) Implements IShellLinkW.SetIDList
-
-        'End Sub
-
-        'Public Sub SetPath1(ByVal pszFile As String) Implements IShellLinkW.SetPath
-
-        'End Sub
-
-        'Public Sub SetRelativePath1(ByVal pszPathRel As String, ByVal dwReserved As Integer) Implements IShellLinkW.SetRelativePath
-
-        'End Sub
-
-        'Public Sub SetShowCmd1(ByVal iShowCmd As Integer) Implements IShellLinkW.SetShowCmd
-
-        'End Sub
-
-        'Public Sub SetWorkingDirectory1(ByVal pszDir As String) Implements IShellLinkW.SetWorkingDirectory
-
-        'End Sub
+    <Guid("00021401-0000-0000-C000-000000000046")> _
+    Friend NotInheritable Class ShellLink
+        Implements IShellLinkW, IPersistFile
+        ''' <summary>Implements <see cref="IPersistFile.GetClassID"/></summary>
+        Private Sub GetClassID(ByRef pClassID As System.Guid) Implements IPersistFile.GetClassID
+        End Sub
+        ''' <summary>Implements <see cref="IPersistFile.GetCurFile"/></summary>
+        Private Sub GetCurFile(ByRef ppszFileName As System.IntPtr) Implements IPersistFile.GetCurFile
+        End Sub
+        Private Function IsDirty() As Integer Implements IPersistFile.IsDirty
+        End Function
+        ''' <summary>Implements <see cref="IPersistFile.Load"/></summary>
+        Private Sub Load(ByVal pszFileName As String, ByVal dwMode As Integer) Implements IPersistFile.Load
+        End Sub
+        ''' <summary>Implements <see cref="IPersistFile.Save"/></summary>
+        Private Sub Save(ByVal pszFileName As String, ByVal fRemember As Boolean) Implements IPersistFile.Save
+        End Sub
+        ''' <summary>Implements <see cref="IPersistFile.SaveCompleted"/></summary>
+        Private Sub SaveCompleted(ByVal pszFileName As String) Implements IPersistFile.SaveCompleted
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetArguments"/></summary>
+        Private Sub GetArguments(ByVal pszArgs As System.Text.StringBuilder, ByVal cchMaxPath As Integer) Implements IShellLinkW.GetArguments
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetDescription"/></summary>
+        Private Sub GetDescription(ByVal pszName As System.Text.StringBuilder, ByVal cchMaxName As Integer) Implements IShellLinkW.GetDescription
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetHotkey"/></summary>
+        Private Sub GetHotkey(ByRef pwHotkey As Short) Implements IShellLinkW.GetHotkey
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetIconLocation"/></summary>
+        Private Sub GetIconLocation(ByVal pszIconPath As System.Text.StringBuilder, ByVal cchIconPath As Integer, ByRef piIcon As Integer) Implements IShellLinkW.GetIconLocation
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetIDList"/></summary>
+        Private Sub GetIDList(ByRef ppidl As System.IntPtr) Implements IShellLinkW.GetIDList
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetPath"/></summary>
+        Private Sub GetPath(ByVal pszFile As System.Text.StringBuilder, ByVal cchMaxPath As Integer, ByRef pfd As WIN32_FIND_DATAW, ByVal fFlags As SLGP_FLAGS) Implements IShellLinkW.GetPath
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetShowCmd"/></summary>
+        Private Sub GetShowCmd(ByRef piShowCmd As Integer) Implements IShellLinkW.GetShowCmd
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.GetWorkingDirectory"/></summary>
+        Private Sub GetWorkingDirectory(ByVal pszDir As System.Text.StringBuilder, ByVal cchMaxPath As Integer) Implements IShellLinkW.GetWorkingDirectory
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.Resolve"/></summary>
+        Private Sub Resolve(ByVal hwnd As System.IntPtr, ByVal fFlags As SLR_FLAGS) Implements IShellLinkW.Resolve
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetArguments"/></summary>
+        Private Sub SetArguments(ByVal pszArgs As String) Implements IShellLinkW.SetArguments
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetDescription"/></summary>
+        Private Sub SetDescription(ByVal pszName As String) Implements IShellLinkW.SetDescription
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetHotkey"/></summary>
+        Private Sub SetHotkey(ByVal wHotkey As Short) Implements IShellLinkW.SetHotkey
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetIconLocation"/></summary>
+        Private Sub SetIconLocation(ByVal pszIconPath As String, ByVal iIcon As Integer) Implements IShellLinkW.SetIconLocation
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetIDList"/></summary>
+        Private Sub SetIDList(ByVal pidl As System.IntPtr) Implements IShellLinkW.SetIDList
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetPath"/></summary>
+        Private Sub SetPath(ByVal pszFile As String) Implements IShellLinkW.SetPath
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetRelativePath"/></summary>
+        Private Sub SetRelativePath(ByVal pszPathRel As String, ByVal dwReserved As Integer) Implements IShellLinkW.SetRelativePath
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetShowCmd"/></summary>
+        Private Sub SetShowCmd(ByVal iShowCmd As Integer) Implements IShellLinkW.SetShowCmd
+        End Sub
+        ''' <summary>Implements <see cref="IShellLinkW.SetWorkingDirectory"/></summary>
+        Private Sub SetWorkingDirectory(ByVal pszDir As String) Implements IShellLinkW.SetWorkingDirectory
+        End Sub
     End Class
 
     ''' <summary>Window styles <see cref="IShellLinkW.SetShowCmd"/>, <see cref="IShellLinkW.GetShowCmd"/></summary>

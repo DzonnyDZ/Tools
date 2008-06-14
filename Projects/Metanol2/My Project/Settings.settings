@@ -11,5 +11,20 @@
     <Setting Name="ThumbSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">64, 64</Value>
     </Setting>
+    <Setting Name="FormSize" Type="System.Drawing.Size" Scope="User">
+      <Value Profile="(Default)">495, 240</Value>
+    </Setting>
+    <Setting Name="FormLocation" Type="System.Drawing.Point" Scope="User">
+      <Value Profile="(Default)">0, 0</Value>
+    </Setting>
+    <Setting Name="FormState" Type="System.Windows.Forms.FormWindowState" Scope="User">
+      <Value Profile="(Default)">Normal</Value>
+    </Setting>
+    <Setting Name="BrowserSplitter" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">89</Value>
+    </Setting>
+    <Setting Name="MainSplitter" Type="System.Int32" Scope="User">
+      <Value Profile="(Default)">230</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

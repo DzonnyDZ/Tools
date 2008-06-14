@@ -89,6 +89,66 @@ Namespace My
                 Me("ThumbSize") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("495, 240")>  _
+        Public Property FormSize() As Global.System.Drawing.Size
+            Get
+                Return CType(Me("FormSize"),Global.System.Drawing.Size)
+            End Get
+            Set
+                Me("FormSize") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("0, 0")>  _
+        Public Property FormLocation() As Global.System.Drawing.Point
+            Get
+                Return CType(Me("FormLocation"),Global.System.Drawing.Point)
+            End Get
+            Set
+                Me("FormLocation") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("Normal")>  _
+        Public Property FormState() As Global.System.Windows.Forms.FormWindowState
+            Get
+                Return CType(Me("FormState"),Global.System.Windows.Forms.FormWindowState)
+            End Get
+            Set
+                Me("FormState") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("89")>  _
+        Public Property BrowserSplitter() As Integer
+            Get
+                Return CType(Me("BrowserSplitter"),Integer)
+            End Get
+            Set
+                Me("BrowserSplitter") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("230")>  _
+        Public Property MainSplitter() As Integer
+            Get
+                Return CType(Me("MainSplitter"),Integer)
+            End Get
+            Set
+                Me("MainSplitter") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

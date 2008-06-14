@@ -199,5 +199,11 @@
         <member name="N:Tools.WindowsT.NativeT">
             <summary>Contains tools for manipulating native (unmanaged) Win32 windows via PInvoke</summary>
         </member>
+        <member name="N:Tools.COM">
+            <sumary>Contains declaration of COM-related classes, strucrures and enumerations</sumary>
+        </member>
+        <member name="N:Tools.COM.ShellLink">
+            <summary>Contains COM declarations related to the <see cref="T:Tools.COM.ShellLink.ShellLink"/> class. Those declarations servers as code-behind for implementation of the <see cref="T:Tools.IOt.ShellLink"/> class, a tool for manipulating *.LNK files.</summary>
+        </member>
     </members>    
 </doc>
