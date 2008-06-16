@@ -279,6 +279,7 @@ Public Class CSV
     ''' <summary>Obsahuje hodnotu vlastnosti <see cref="Errors"/></summary>
     Private _Errors As New List(Of CSVErrorException)
     ''' <summary>Seznam chyb pøi naèítání</summary>
+    <CLSCompliant(False)> _
     Public ReadOnly Property Errors() As List(Of CSVErrorException)
         Get
             Return _Errors
@@ -334,6 +335,7 @@ Public Class CSV
         End Get
     End Property
     ''' <summary>Zjistí nejèastìji se vyskytující poèet sloupcù</summary>
+    <CLSCompliant(False)> _
     Public ReadOnly Property MeanColCount() As UInteger
         Get
             Dim ColCounts As New Dictionary(Of UInteger, UInteger)
@@ -353,6 +355,7 @@ Public Class CSV
 
 
     ''' <summary>Indikuje chybu v CSV souboru</summary>
+    <CLSCompliant(False)> _
     Public Class CSVErrorException : Inherits Exception
         ''' <summary>Obsahuje hodnotu vlastnosti <see cref="Line"/></summary>
         Private ReadOnly _Line As Integer

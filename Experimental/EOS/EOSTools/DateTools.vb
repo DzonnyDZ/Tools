@@ -2,12 +2,14 @@
 Public Module DateTools
     ''' <summary>Pøiète ke dnešku zadaný poèet dní a pokud to víde na víkend pøesune to na pondìlí</summary>
     ''' <param name="Days">Poèet dní k pøiètení</param>
+    <CLSCompliant(False)> _
     Public Function DaysFromNow(ByVal Days As UInteger) As Date
         Return DaysFrom(Now, Days)
     End Function
     ''' <summary>Pøiète k zadanému datu zadaný poèet dní a pokud to víde na víkend pøesune to na pondìlí</summary>
     ''' <param name="Day">Poèáteèní datum</param>
     ''' <param name="Days">Poèet dní k pøiètení</param>
+    <CLSCompliant(False)> _
     Public Function DaysFrom(ByVal Day As Date, ByVal Days As UInteger) As Date
         Return Weekend2Monday(Day.AddDays(Days))
     End Function
