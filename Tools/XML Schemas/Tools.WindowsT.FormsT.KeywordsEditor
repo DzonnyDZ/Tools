@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="Tools"
+    targetNamespace="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor"
+    xmlns:kwe="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <!--Example:
+        <Keywords>
+            <keywords>
+                <kw>keyword</kw>
+                <kw>keyword</kw>
+            </keywords>
+            <synonyms>
+                <pair>
+                    <keys>
+                        <key>Key</key>
+                        <key>Key</key>
+                    </keys>
+                    <values>
+                        <word>Word</word>
+                        <word>Word</word>
+                    </values>
+                </pair>
+            </synonyms>
+        </Keywords>
+    -->
+    <xs:annotation>
+        <xs:documentation>Defines XML schema used by Tools.WindowsT.FormsT.KeyWordsEditor to store keyords in file.</xs:documentation>
+    </xs:annotation>
+    <xs:element name="Keywords">
+        <xs:annotation>
+            <xs:documentation>Root element to store exported keywords in</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element name="keywords" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Stores list of keywords</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="1">
+                            <xs:element name="kw" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>Single exported keyword</xs:documentation>
+                                </xs:annotation>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="synonyms" minOccurs="0" maxOccurs="1">
+                    <xs:annotation>
+                        <xs:documentation>Stores list of synonyms</xs:documentation>
+                    </xs:annotation>
+                    <xs:complexType>
+                        <xs:sequence minOccurs="1" maxOccurs="1">
+                            <xs:element name="pair" minOccurs="0" maxOccurs="unbounded">
+                                <xs:annotation>
+                                    <xs:documentation>Stores single synonmy pair</xs:documentation>
+                                </xs:annotation>
+                                <xs:complexType>
+                                    <xs:sequence minOccurs="1" maxOccurs="1">
+                                        <xs:element name="keys" minOccurs="1" maxOccurs="1">
+                                            <xs:annotation>
+                                                <xs:documentation>Stored synonym pair keys. When one of these keywords is typed all other keywords in pair are added as well.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence maxOccurs="1" minOccurs="1">
+                                                    <xs:element name="key" minOccurs="1" maxOccurs="unbounded" type="xs:string">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Represents single keyword - pair key.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                        <xs:element name="values" minOccurs="0" maxOccurs="1">
+                                            <xs:annotation>
+                                                <xs:documentation>Stores additional keywords in pair. Those keywords are added when one of keys is typed, but has no effed when typed itself.</xs:documentation>
+                                            </xs:annotation>
+                                            <xs:complexType>
+                                                <xs:sequence minOccurs="1" maxOccurs="1">
+                                                    <xs:element name="word" minOccurs="0" maxOccurs="unbounded" type="xs:string">
+                                                        <xs:annotation>
+                                                            <xs:documentation>Represents single word.</xs:documentation>
+                                                        </xs:annotation>
+                                                    </xs:element>
+                                                </xs:sequence>
+                                            </xs:complexType>
+                                        </xs:element>
+                                    </xs:sequence>
+                                </xs:complexType>
+                            </xs:element>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

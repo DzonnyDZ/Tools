@@ -1,7 +1,7 @@
-Imports Tools.DrawingT.IO, Tools.DrawingT.MetadataT
+Imports Tools.DrawingT.DrawingIOt, Tools.DrawingT.MetadataT
 Namespace DrawingT.MetadataT
     '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
-    ''' <summary>Tests <see cref="Tools.DrawingT.IO.JPEG"/></summary>
+    ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
     Public Class frmIPTC
         ''' <summary>CTor</summary>
         Public Sub New()

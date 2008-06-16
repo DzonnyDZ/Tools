@@ -103,7 +103,7 @@ Namespace COM.ShellLink
           <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String, _
           <MarshalAs(UnmanagedType.Bool)> ByVal fRemember As Boolean)
 
-        ''' <summary>Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can). The component enters NoScribble mode when it receives an <see cref="IPersistFile::Save"/> call.</summary>
+        ''' <summary>Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can). The component enters NoScribble mode when it receives an <see cref="IPersistFile.Save"/> call.</summary>
         ''' <param name="pszFileName">[in] Points to the absolute path of the file where the object was previously saved.</param>
         Sub SaveCompleted( _
           <MarshalAs(UnmanagedType.LPWStr)> ByVal pszFileName As String)
@@ -184,7 +184,7 @@ Namespace COM.ShellLink
           ByRef pwHotkey As Short)
 
         ''' <summary>Sets a hot key for a Shell link object.</summary>
-        ''' <param name="wHotkey">The new hot key. The virtual key code is in the low-order byte, and the modifier flags are in the high-order byte. The modifier flags can be a combination of the values specified in the description of the <see cref="IShellLink.GetHotkey"/> method.</param>
+        ''' <param name="wHotkey">The new hot key. The virtual key code is in the low-order byte, and the modifier flags are in the high-order byte. The modifier flags can be a combination of the values specified in the description of the <see cref="IShellLinkW.GetHotkey"/> method.</param>
         Sub SetHotkey( _
           ByVal wHotkey As Short)
 

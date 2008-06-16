@@ -61,6 +61,26 @@ Namespace CollectionsT.GenericT
             If Collection.Length = 0 Then Return Nothing
             Return Collection(Collection.GetUpperBound(0))
         End Function
+        ''' <summary>Inserts all items from one collection to another</summary>
+        ''' <param name="Collection">Collection to insert items to</param>
+        ''' <param name="Items">Items to be inserted</param>
+        ''' <typeparam name="T">Type of item</typeparam>
+        <Extension()> _
+        Public Sub AddRange(Of T)(ByVal Collection As ICollection(Of T), ByVal Items As IEnumerable(Of T))
+            For Each item In Items
+                Collection.Add(item)
+            Next
+        End Sub
+        ''' <summary>Inserts all items from one collection to another</summary>
+        ''' <param name="Collection">Collection to insert items to</param>
+        ''' <param name="Items">Items to be inserted</param>
+        ''' <typeparam name="T">Type of item</typeparam>
+        <Extension()> _
+        Public Sub AddRange(Of T)(ByVal Collection As IAddable(Of T), ByVal Items As IEnumerable(Of T))
+            For Each item In Items
+                Collection.Add(item)
+            Next
+        End Sub
     End Module
 End Namespace
 #End If

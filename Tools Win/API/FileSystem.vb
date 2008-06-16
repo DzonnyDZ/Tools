@@ -9,7 +9,7 @@ Namespace API
         ''' <summary>Contains information about a file object.</summary>
         <StructLayout(LayoutKind.Sequential)> _
         Public Structure SHFILEINFO 'ASAP:MSDN
-            ''' <summary>A handle to the icon that represents the file. You are responsible for destroying this handle with <see cref="DestroyIcon"/> when you no longer need it.</summary>
+            ''' <summary>A handle to the icon that represents the file. You are responsible for destroying this handle with DestroyIcon when you no longer need it.</summary>
             Public hIcon As IntPtr
             ''' <summary>The index of the icon image within the system image list.</summary>
             Public iIcon As IntPtr
@@ -165,8 +165,8 @@ Namespace API
             <EditorBrowsable(EditorBrowsableState.Never)> SFGAO_DISPLAYATTRMASK = &HF0000UI
             ''' <summary>The specified items are drop targets.</summary>
             SFGAO_DROPTARGET = &H100UI
-            '''' <summary>The item is encrypted and may require special presentation.</summary>
-            'TODO: Value of SFGAO_ENCRYPTED
+            ''' <summary>The item is encrypted and may require special presentation.</summary>
+            SFGAO_ENCRYPTED = &H2000UI
             ''' <summary>The specified folder objects are either file system folders or have at least one descendant (child, grandchild, or later) that is a file system folder.</summary>
             SFGAO_FILESYSANCESTOR = &H10000000UI
             ''' <summary>The specified items are part of the file system (that is, they are files, directories, or root directories). The parsed names of the items can be assumed to be valid Win32 file system paths. These paths can be either Universal Naming Convention (UNC) or drive-letter based.</summary>
@@ -192,8 +192,8 @@ Namespace API
             SFGAO_NEWCONTENT = &H200000UI
             ''' <summary>The specified items are nonenumerated items. That is, they are not returned by the enumerator created by the IShellFolder::EnumObjects method.</summary>
             SFGAO_NONENUMERATED = &H100000UI
-            '''' <summary>Mask for PKEY_SFGAOFlags attributes such as SFGAO_VALIDATE, SFGAO_ISSLOW, and SFGAO_HASSUBFOLDER. They are considered to cause slow calculations or lack context.</summary>
-            'TODO: Value of SFGAO_PKEYSFGAOMASK
+            ''' <summary>Mask for PKEY_SFGAOFlags attributes such as SFGAO_VALIDATE, SFGAO_ISSLOW, and SFGAO_HASSUBFOLDER. They are considered to cause slow calculations or lack context.</summary>
+            SFGAO_PKEYSFGAOMASK = &H81044000UI
             ''' <summary>The specified items are read-only. In the case of folders, this means that new items cannot be created in those folders. </summary>
             [SFGAO_READONLY] = &H40000UI
             ''' <summary>The specified items are on removable media or are themselves removable devices.</summary>
@@ -202,10 +202,10 @@ Namespace API
             SFGAO_SHARE = &H20000UI
             ''' <summary>The item can be bound to an IStorage interface through IShellFolder::BindToObject.</summary>
             SFGAO_STORAGEANCESTOR = &H10000000UI
-            '''' <summary>This flag is a mask for the storage capability attributes.</summary>
-            'TODO:Value of SFGAO_STORAGECAPMASK
-            '''' <summary>Indicates that the item has a stream associated with it that can be accessed by a call to IShellFolder::BindToObject with IID_IStream in the riid parameter. The pbc parameter in that same call provides the IBindCtx interface that specifies the access mode, such as read-only or read-write. Some items can be flagged with both SFGAO_STREAM and SFGAO_FOLDER, such as a .zip file. Some applications may include this flag when testing for items that are both files and containers.</summary>
-            'TODO:Value of SFGAO_STREAM
+            ''' <summary>This flag is a mask for the storage capability attributes.</summary>
+            SFGAO_STORAGECAPMASK = &H70C50008UI
+            ''' <summary>Indicates that the item has a stream associated with it that can be accessed by a call to IShellFolder::BindToObject with IID_IStream in the riid parameter. The pbc parameter in that same call provides the IBindCtx interface that specifies the access mode, such as read-only or read-write. Some items can be flagged with both SFGAO_STREAM and SFGAO_FOLDER, such as a .zip file. Some applications may include this flag when testing for items that are both files and containers.</summary>
+            SFGAO_STREAM = &H400000UI
             ''' <summary>When specified as input, SFGAO_VALIDATE instructs the folder to validate that the items pointed to by the contents of apidl exist. If one or more of those items do not exist, IShellFolder::GetAttributesOf returns a failure code. When used with the file system folder, SFGAO_VALIDATE instructs the folder to discard cached properties retrieved by clients of IShellFolder2::GetDetailsEx that may have accumulated for the specified items.</summary>
             SFGAO_VALIDATE = &H1000000UI
         End Enum

@@ -3,7 +3,7 @@ Imports Tools.DrawingT.DesignT
 Imports System.Drawing.Design
 Imports Tools.ComponentModelT
 Imports System.Reflection, System.Drawing
-Imports Icons = Tools.ResourcesT.Icons
+Imports Icons = Tools.ResourcesT.Icons, Tools.TypeTools
 
 #If Config <= Nightly Then 'Stage Nightly
 Imports System.Windows.Forms
@@ -882,6 +882,71 @@ Namespace WindowsT.IndependentT
                 IsConstructing = True
                 Me.Result = Result
                 IsConstructing = False
+            End Sub
+            ''' <summary>CTor from <see cref="DialogResult"/></summary>
+            ''' <param name="Result">Result of this button. Also determines text.</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Result"/> is not member of <see cref="DialogResult"/></exception>
+            ''' <exception cref="ArgumentException"><paramref name="Result"/> is <see cref="DialogResult.None"/></exception>
+            Public Sub New(ByVal Result As DialogResult)
+                Select Case Result
+                    Case Windows.Forms.DialogResult.Abort : InitBy(Abort)
+                    Case Windows.Forms.DialogResult.Cancel : InitBy(Cancel)
+                    Case Windows.Forms.DialogResult.Ignore : InitBy(Ignore)
+                    Case Windows.Forms.DialogResult.No : InitBy(No)
+                    Case Windows.Forms.DialogResult.None : Throw New ArgumentException("Result cannot be None", "Result")
+                    Case Windows.Forms.DialogResult.OK : InitBy(OK)
+                    Case Windows.Forms.DialogResult.Retry : InitBy(Retry)
+                    Case Windows.Forms.DialogResult.Yes : InitBy(Yes)
+                    Case Else : Throw New InvalidEnumArgumentException("Result", Result, Result.GetType)
+                End Select
+            End Sub
+            ''' <summary>CTor from <see cref="Windows.MessageBoxResult"/></summary>
+            ''' <param name="Result">Result of this button. Also determines text.</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Result"/> is not member of <see cref="Windows.MessageBoxResult"/></exception>
+            ''' <exception cref="ArgumentException"><paramref name="Result"/> is <see cref="Windows.MessageBoxResult.None"/></exception>
+            Public Sub New(ByVal Result As Windows.MessageBoxResult)
+                Select Case Result
+                    Case Windows.MessageBoxResult.Cancel : InitBy(Cancel)
+                    Case Windows.MessageBoxResult.No : InitBy(No)
+                    Case Windows.MessageBoxResult.No : Throw New ArgumentException("Result cannot be None", "Result")
+                    Case Windows.MessageBoxResult.OK : InitBy(OK)
+                    Case Windows.MessageBoxResult.Yes : InitBy(Yes)
+                    Case Else : Throw New InvalidEnumArgumentException("Result", Result, Result.GetType)
+                End Select
+            End Sub
+            ''' <summary>CTor from <see cref="Microsoft.VisualBasic.MsgBoxResult"/></summary>
+            ''' <param name="Result">Result of this button. Also determines text.</param>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="Result"/> is not member of <see cref="Microsoft.VisualBasic.MsgBoxResult"/></exception>
+            Public Sub New(ByVal Result As Microsoft.VisualBasic.MsgBoxResult)
+                Select Case Result
+                    Case Microsoft.VisualBasic.MsgBoxResult.Abort : InitBy(Abort)
+                    Case Microsoft.VisualBasic.MsgBoxResult.Cancel : InitBy(Cancel)
+                    Case Microsoft.VisualBasic.MsgBoxResult.Ignore : InitBy(Ignore)
+                    Case Microsoft.VisualBasic.MsgBoxResult.No : InitBy(No)
+                    Case Microsoft.VisualBasic.MsgBoxResult.Ok : InitBy(OK)
+                    Case Microsoft.VisualBasic.MsgBoxResult.Retry : InitBy(Retry)
+                    Case Microsoft.VisualBasic.MsgBoxResult.Yes : InitBy(Yes)
+                    Case Else : Throw New InvalidEnumArgumentException("Result", Result, Result.GetType)
+                End Select
+            End Sub
+
+            ''' <summary>Cloning CTor</summary>
+            ''' <param name="Other">Instance to initialize new instance with</param>
+            ''' <remarks>Does not copy event handler, uses properties only.</remarks>
+            Public Sub New(ByVal Other As MessageBoxButton)
+                Me.InitBy(Other)
+            End Sub
+            ''' <summary>Initializes current instance by another instance</summary>
+            ''' <param name="Button">Instance to initialize current instance with</param>
+            ''' <remarks>Does not initializes button events</remarks>
+            Private Sub InitBy(ByVal Button As MessageBoxButton)
+                With Button
+                    Me.Text = .Text
+                    Me.AccessKey = .AccessKey
+                    Me.ToolTip = .ToolTip
+                    Me.Enabled = .Enabled
+                    Me.Result = .Result
+                End With
             End Sub
             ''' <summary>CTor from text, tool tip text, dialog result and access key</summary>
             ''' <param name="Text">Button's text (see <see cref="Text"/>)</param>

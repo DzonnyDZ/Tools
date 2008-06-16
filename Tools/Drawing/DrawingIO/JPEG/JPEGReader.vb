@@ -1,5 +1,5 @@
 Imports System.IO, Tools.IOt
-Namespace DrawingT.IO.JPEG
+Namespace DrawingT.DrawingIOt.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

@@ -44,10 +44,14 @@ Namespace WindowsT.FormsT
             Me.cmdAddSyn = New System.Windows.Forms.Button
             Me.cmbSyn = New System.Windows.Forms.ComboBox
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
+            Me.cmdOpen = New System.Windows.Forms.Button
+            Me.cmdSave = New System.Windows.Forms.Button
             Me.tlpButtons = New System.Windows.Forms.TableLayoutPanel
             Me.flpButtons = New System.Windows.Forms.FlowLayoutPanel
             Me.cmdOK = New System.Windows.Forms.Button
             Me.cmdCancel = New System.Windows.Forms.Button
+            Me.sfdSave = New System.Windows.Forms.SaveFileDialog
+            Me.ofdLoad = New System.Windows.Forms.OpenFileDialog
             Me.splVertical.Panel1.SuspendLayout()
             Me.splVertical.Panel2.SuspendLayout()
             Me.splVertical.SuspendLayout()
@@ -118,7 +122,6 @@ Namespace WindowsT.FormsT
             '
             'kweAutoComplete
             '
-            Me.kweAutoComplete.AutoCompleteStable = Nothing
             Me.kweAutoComplete.Dock = System.Windows.Forms.DockStyle.Fill
             Me.kweAutoComplete.Location = New System.Drawing.Point(3, 16)
             Me.kweAutoComplete.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
@@ -133,16 +136,16 @@ Namespace WindowsT.FormsT
             Me.kweAutoComplete.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.kweAutoComplete.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweAutoComplete.Status.Enabled = False
-            Me.kweAutoComplete.Status.Location = New System.Drawing.Point(269, 1)
+            Me.kweAutoComplete.Status.Location = New System.Drawing.Point(269, 0)
             Me.kweAutoComplete.Status.Margin = New System.Windows.Forms.Padding(0)
             Me.kweAutoComplete.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.kweAutoComplete.Status.Name = "stmStatus"
             Me.kweAutoComplete.Status.Size = New System.Drawing.Size(24, 24)
+            Me.kweAutoComplete.Status.StatusedControl = Nothing
             Me.kweAutoComplete.Status.TabIndex = 2
             Me.kweAutoComplete.Status.TabStop = False
             Me.kweAutoComplete.Status.Visible = False
             Me.kweAutoComplete.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweAutoComplete.Synonyms = Nothing
             Me.kweAutoComplete.TabIndex = 0
             Me.kweAutoComplete.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             '
@@ -245,7 +248,6 @@ Namespace WindowsT.FormsT
             '
             'kweKeys
             '
-            Me.kweKeys.AutoCompleteStable = Nothing
             Me.kweKeys.Dock = System.Windows.Forms.DockStyle.Fill
             Me.kweKeys.Location = New System.Drawing.Point(3, 16)
             Me.kweKeys.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
@@ -260,16 +262,16 @@ Namespace WindowsT.FormsT
             Me.kweKeys.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.kweKeys.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweKeys.Status.Enabled = False
-            Me.kweKeys.Status.Location = New System.Drawing.Point(266, 1)
+            Me.kweKeys.Status.Location = New System.Drawing.Point(266, 0)
             Me.kweKeys.Status.Margin = New System.Windows.Forms.Padding(0)
             Me.kweKeys.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.kweKeys.Status.Name = "stmStatus"
             Me.kweKeys.Status.Size = New System.Drawing.Size(24, 24)
+            Me.kweKeys.Status.StatusedControl = Nothing
             Me.kweKeys.Status.TabIndex = 2
             Me.kweKeys.Status.TabStop = False
             Me.kweKeys.Status.Visible = False
             Me.kweKeys.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweKeys.Synonyms = Nothing
             Me.kweKeys.TabIndex = 0
             Me.kweKeys.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             '
@@ -288,7 +290,6 @@ Namespace WindowsT.FormsT
             '
             'kweValues
             '
-            Me.kweValues.AutoCompleteStable = Nothing
             Me.kweValues.Dock = System.Windows.Forms.DockStyle.Fill
             Me.kweValues.Location = New System.Drawing.Point(3, 16)
             Me.kweValues.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
@@ -303,16 +304,16 @@ Namespace WindowsT.FormsT
             Me.kweValues.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.kweValues.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweValues.Status.Enabled = False
-            Me.kweValues.Status.Location = New System.Drawing.Point(266, 1)
+            Me.kweValues.Status.Location = New System.Drawing.Point(266, 0)
             Me.kweValues.Status.Margin = New System.Windows.Forms.Padding(0)
             Me.kweValues.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.kweValues.Status.Name = "stmStatus"
             Me.kweValues.Status.Size = New System.Drawing.Size(24, 24)
+            Me.kweValues.Status.StatusedControl = Nothing
             Me.kweValues.Status.TabIndex = 2
             Me.kweValues.Status.TabStop = False
             Me.kweValues.Status.Visible = False
             Me.kweValues.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweValues.Synonyms = Nothing
             Me.kweValues.TabIndex = 0
             Me.kweValues.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             '
@@ -377,6 +378,36 @@ Namespace WindowsT.FormsT
             Me.cmbSyn.Size = New System.Drawing.Size(271, 21)
             Me.cmbSyn.TabIndex = 0
             '
+            'cmdOpen
+            '
+            Me.cmdOpen.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdOpen.AutoSize = True
+            Me.cmdOpen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdOpen.FlatAppearance.BorderSize = 0
+            Me.cmdOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdOpen.Image = Global.Tools.My.Resources.Resources.openHS
+            Me.cmdOpen.Location = New System.Drawing.Point(97, 3)
+            Me.cmdOpen.Name = "cmdOpen"
+            Me.cmdOpen.Size = New System.Drawing.Size(22, 22)
+            Me.cmdOpen.TabIndex = 3
+            Me.totToolTip.SetToolTip(Me.cmdOpen, "Import keywords from file")
+            Me.cmdOpen.UseVisualStyleBackColor = True
+            '
+            'cmdSave
+            '
+            Me.cmdSave.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdSave.AutoSize = True
+            Me.cmdSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdSave.FlatAppearance.BorderSize = 0
+            Me.cmdSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdSave.Image = Global.Tools.My.Resources.Resources.saveHS
+            Me.cmdSave.Location = New System.Drawing.Point(125, 3)
+            Me.cmdSave.Name = "cmdSave"
+            Me.cmdSave.Size = New System.Drawing.Size(22, 22)
+            Me.cmdSave.TabIndex = 2
+            Me.totToolTip.SetToolTip(Me.cmdSave, "Save keywords to file")
+            Me.cmdSave.UseVisualStyleBackColor = True
+            '
             'tlpButtons
             '
             Me.tlpButtons.AutoSize = True
@@ -398,14 +429,17 @@ Namespace WindowsT.FormsT
             Me.flpButtons.AutoSize = True
             Me.flpButtons.Controls.Add(Me.cmdOK)
             Me.flpButtons.Controls.Add(Me.cmdCancel)
-            Me.flpButtons.Location = New System.Drawing.Point(278, 0)
+            Me.flpButtons.Controls.Add(Me.cmdOpen)
+            Me.flpButtons.Controls.Add(Me.cmdSave)
+            Me.flpButtons.Location = New System.Drawing.Point(250, 0)
             Me.flpButtons.Margin = New System.Windows.Forms.Padding(0)
             Me.flpButtons.Name = "flpButtons"
-            Me.flpButtons.Size = New System.Drawing.Size(94, 29)
+            Me.flpButtons.Size = New System.Drawing.Size(150, 29)
             Me.flpButtons.TabIndex = 0
             '
             'cmdOK
             '
+            Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmdOK.AutoSize = True
             Me.cmdOK.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK
@@ -418,6 +452,7 @@ Namespace WindowsT.FormsT
             '
             'cmdCancel
             '
+            Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmdCancel.AutoSize = True
             Me.cmdCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
@@ -427,6 +462,18 @@ Namespace WindowsT.FormsT
             Me.cmdCancel.TabIndex = 1
             Me.cmdCancel.Text = "&Cancel"
             Me.cmdCancel.UseVisualStyleBackColor = True
+            '
+            'sfdSave
+            '
+            Me.sfdSave.DefaultExt = "xml"
+            Me.sfdSave.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
+            Me.sfdSave.Title = "Save keywords"
+            '
+            'ofdLoad
+            '
+            Me.ofdLoad.DefaultExt = "xml"
+            Me.ofdLoad.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
+            Me.ofdLoad.Title = "Load keywords"
             '
             'ThesaurusForm
             '
@@ -494,6 +541,10 @@ Namespace WindowsT.FormsT
         Friend WithEvents flpButtons As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents cmdOK As System.Windows.Forms.Button
         Friend WithEvents cmdCancel As System.Windows.Forms.Button
+        Friend WithEvents cmdSave As System.Windows.Forms.Button
+        Friend WithEvents cmdOpen As System.Windows.Forms.Button
+        Friend WithEvents sfdSave As System.Windows.Forms.SaveFileDialog
+        Friend WithEvents ofdLoad As System.Windows.Forms.OpenFileDialog
     End Class
 #End If
 End Namespace

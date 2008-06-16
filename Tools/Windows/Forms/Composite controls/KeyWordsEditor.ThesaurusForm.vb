@@ -1,4 +1,5 @@
-Imports Tools.CollectionsT.GenericT, System.Windows.Forms
+Imports Tools.CollectionsT.GenericT, System.Windows.Forms, System.Linq
+Imports MBox = Tools.WindowsT.IndependentT.MessageBox
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then Set in Tools.vbproj
     'Stage: Alpha
@@ -183,6 +184,10 @@ Namespace WindowsT.FormsT
 
         Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
             'Store synonyms
+            PerformOK()
+            Me.Close()
+        End Sub
+        Private Sub PerformOK()
             StoreOldItem()
             If Me.For.Synonyms IsNot Nothing Then
                 Me.For.Synonyms.Clear()
@@ -196,7 +201,6 @@ Namespace WindowsT.FormsT
                     Me.For.AutoCompleteStable.Add(Stable)
                 Next Stable
             End If
-            Me.Close()
         End Sub
 
         Private Sub cmdCancel_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCancel.Click
@@ -216,6 +220,21 @@ Namespace WindowsT.FormsT
                 End With
             End If
             Me.Close()
+        End Sub
+
+        Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
+            If MBox.ModalEx("This action requires all changes to be confirmed.", "Confirm changes", New Object() {New MBox.MessageBoxButton("Continue", Windows.Forms.DialogResult.OK, "C"c), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = Windows.Forms.DialogResult.OK AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                PerformOK()
+Retry:          Try
+                    Me.For.GetKeywordsAsXML.Save(sfdSave.FileName)
+                Catch ex As Exception
+                    If MBox.Error(ex, "Error", IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
+                End Try
+            End If
+        End Sub
+
+        Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
+            'TODO:Implement
         End Sub
     End Class
     '#End If

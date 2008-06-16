@@ -1,6 +1,6 @@
 Namespace IOt.StreamTools
     '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
-    ''' <summary>Tests <see cref="Tools.DrawingT.IO.JPEG"/></summary>
+    ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
     Public Class frmInsertInto
         ''' <summary>CTor</summary>
         Public Sub New()

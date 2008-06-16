@@ -1,4 +1,6 @@
 Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms, Tools.ComponentModelT
+Imports System.Linq
+Imports <xmlns:kw="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor">
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then set in tools.vbproj
     'Stage: Alpha
@@ -499,5 +501,33 @@ Namespace WindowsT.FormsT
         Private Sub tmiManage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiManage.Click
             ShowDialog()
         End Sub
+        ''' <summary>Gets all keywords and synonyms used by this <see cref="KeyWordsEditor"/> as <see cref="Xml.Linq.XDocument"/> that can be saved.</summary>
+        Public Function GetKeywordsAsXML() As System.Xml.Linq.XDocument
+            Return _
+                <?xml version="1.0"?>
+                <kw:Keywords>
+                    <%= If(Me.KeyWords.Count > 0, _
+                        <kw:keywords>
+                            <%= From kw In Me.KeyWords Select <kw:kw><%= kw %></kw:kw> %>
+                        </kw:keywords>, Nothing) _
+                    %>
+                    <%= If(Me.Synonyms IsNot Nothing AndAlso Me.Synonyms.Count > 0, _
+                        <kw:synonyms>
+                            <%= From pair In Me.Synonyms Select _
+                                <kw:pair>
+                                    <kw:keys>
+                                        <%= From key In pair.Key Select <kw:key><%= key %></kw:key> %>
+                                    </kw:keys>
+                                    <%= If(pair.Value IsNot Nothing AndAlso pair.Value.Length > 0, _
+                                        <kw:values>
+                                            <%= From word In pair.Value Select <kw:word><%= word %></kw:word> %>
+                                        </kw:values>, Nothing) _
+                                    %>
+                                </kw:pair> _
+                            %>
+                        </kw:synonyms>, Nothing) _
+                    %>
+                </kw:Keywords>
+        End Function
     End Class
 End Namespace

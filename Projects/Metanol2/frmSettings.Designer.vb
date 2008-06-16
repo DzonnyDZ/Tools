@@ -94,6 +94,7 @@ Partial Class frmSettings
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmSettings"
+        Me.ShowInTaskbar = False
         Me.Text = "Settings"
         Me.tlpButtons.ResumeLayout(False)
         Me.tlpButtons.PerformLayout()

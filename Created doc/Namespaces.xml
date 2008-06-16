@@ -66,10 +66,10 @@
             <summary>The <see cref="N:Tools.DrawingT.DesignT"/> namespace contains classes that extend design-time user interface (UI) logic and drawing.</summary>
             <seealso cref="N:System.Drawing.Desing"/>
         </member>
-        <member name="N:Tools.DrawingT.IO">
+        <member name="N:Tools.DrawingT.DrawingIOt">
             <summary>Contains tools for working with image file of different formats.</summary>
         </member>
-        <member name="N:Tools.DrawingT.IO.JPEG">
+        <member name="N:Tools.DrawingT.DrawingIOt.JPEG">
             <summary>Contains tools for working with images in JPEG (JFIF) file format.</summary>
         </member>
         <member name="N:Tools.DrawingT.MetadataT">

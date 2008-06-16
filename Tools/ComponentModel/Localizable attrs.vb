@@ -464,8 +464,8 @@ Namespace ComponentModelT
         End Property
         ''' <summary>Base name of resource (used by CTor of <see cref="Resources.ResourceManager"/></summary>
         ''' <remarks>
-        ''' If this property IS NOT null value is obtained from resorce with name <see cref="ResourceName"/> from item <see cref="PropertyName"/> from assembly where type <see cref="Resource"/> is defined.
-        ''' If this property IS null value is obtained from static (shared in VB) property with name <see cref="PropertyName"/> or type <see cref="Resource"/>.
+        ''' If this property IS NOT null value is obtained from resorce with name <see cref="ResourceName"/> from item <see cref="[Property]"/> from assembly where type <see cref="Resource"/> is defined.
+        ''' If this property IS null value is obtained from static (shared in VB) property with name <see cref="[Property]"/> or type <see cref="Resource"/>.
         ''' <para><see cref="System.String.Empty"/> is not null!</para>
         ''' </remarks>
         Public Overridable ReadOnly Property ResourceName() As String

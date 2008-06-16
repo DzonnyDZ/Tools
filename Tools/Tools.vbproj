@@ -185,8 +185,8 @@
     <Compile Include="Drawing\Design\NewEditor.vb" />
     <Compile Include="Drawing\Design\UITypeEditor.vb">
     </Compile>
-    <Compile Include="Drawing\IO\JPEG\JPEGMarkerReader.vb" />
-    <Compile Include="Drawing\IO\JPEG\JPEGReader.vb" />
+    <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
+    <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\Metadata\Exif\Rational.vb" />
     <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
@@ -210,6 +210,7 @@
     <Compile Include="Drawing\ImageTools.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Extensions\Char.vb" />
+    <Compile Include="Extensions\General.vb" />
     <Compile Include="Extensions\String.vb" />
     <Compile Include="Extensions\TypeCode.vb" />
     <Compile Include="Globalization\ISOLanguage.vb" />
@@ -651,6 +652,8 @@
     <None Include="Resources\Icons\SecurityWarning.ico" />
     <None Include="Resources\Icons\Stop.ico" />
     <None Include="Resources\Icons\Warning.ico" />
+    <None Include="Resources\saveHS.png" />
+    <None Include="Resources\openHS.png" />
     <Content Include="Resources\T.png" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.StatusMarker.bmp" />
     <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
@@ -674,6 +677,7 @@
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />
+    <EmbeddedResource Include="XML Schemas\Tools.WindowsT.FormsT.KeywordsEditor" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />

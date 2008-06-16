@@ -69,10 +69,37 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Error.
+        '''</summary>
+        Friend ReadOnly Property Error_() As String
+            Get
+                Return ResourceManager.GetString("Error_", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property GoLtrHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GoLtrHS", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Does preview window float over main window?.
+        '''</summary>
+        Friend ReadOnly Property LargeFloating_d() As String
+            Get
+                Return ResourceManager.GetString("LargeFloating_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Floating preview.
+        '''</summary>
+        Friend ReadOnly Property LargeFloating_n() As String
+            Get
+                Return ResourceManager.GetString("LargeFloating_n", resourceCulture)
             End Get
         End Property
         
@@ -97,6 +124,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property Symbol_Delete() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Symbol-Delete", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         '''<summary>
         '''  Looks up a localized string similar to Size of image preview in main window.
         '''</summary>
@@ -112,6 +146,15 @@ Namespace My.Resources
         Friend ReadOnly Property ThumbSize_n() As String
             Get
                 Return ResourceManager.GetString("ThumbSize_n", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unknown splitter.
+        '''</summary>
+        Friend ReadOnly Property UnknownSplitter() As String
+            Get
+                Return ResourceManager.GetString("UnknownSplitter", resourceCulture)
             End Get
         End Property
         

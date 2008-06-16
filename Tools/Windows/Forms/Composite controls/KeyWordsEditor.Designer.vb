@@ -88,7 +88,7 @@ Namespace WindowsT.FormsT
             Me.tlpTop.RowCount = 1
             Me.tlpTop.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpTop.Size = New System.Drawing.Size(485, 24)
-            Me.tlpTop.TabIndex = 1
+            Me.tlpTop.TabIndex = 0
             '
             'stmStatus
             '
@@ -102,6 +102,7 @@ Namespace WindowsT.FormsT
             Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.stmStatus.Name = "stmStatus"
             Me.stmStatus.Size = New System.Drawing.Size(24, 24)
+            Me.stmStatus.StatusedControl = Nothing
             Me.stmStatus.TabIndex = 2
             Me.stmStatus.TabStop = False
             '
@@ -150,6 +151,7 @@ Namespace WindowsT.FormsT
             Me.cmdAdd.Name = "cmdAdd"
             Me.cmdAdd.Size = New System.Drawing.Size(24, 24)
             Me.cmdAdd.TabIndex = 1
+            Me.cmdAdd.TabStop = False
             Me.totToolTip.SetToolTip(Me.cmdAdd, "Add word (Enter)")
             Me.cmdAdd.UseVisualStyleBackColor = True
             '
@@ -159,7 +161,7 @@ Namespace WindowsT.FormsT
             Me.cmsThesaurus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
             Me.cmsThesaurus.Name = "cmsThesaurus"
             Me.cmsThesaurus.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-            Me.cmsThesaurus.Size = New System.Drawing.Size(206, 136)
+            Me.cmsThesaurus.Size = New System.Drawing.Size(217, 136)
             '
             'tmiLabel
             '
@@ -170,7 +172,7 @@ Namespace WindowsT.FormsT
             Me.tmiLabel.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
             Me.tmiLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
             Me.tmiLabel.Name = "tmiLabel"
-            Me.tmiLabel.Size = New System.Drawing.Size(205, 22)
+            Me.tmiLabel.Size = New System.Drawing.Size(216, 22)
             Me.tmiLabel.Text = "Thesaurus menu"
             '
             'tmiAddSelected
@@ -178,7 +180,7 @@ Namespace WindowsT.FormsT
             Me.tmiAddSelected.Enabled = False
             Me.tmiAddSelected.Image = Global.Tools.My.Resources.Resources.Plus
             Me.tmiAddSelected.Name = "tmiAddSelected"
-            Me.tmiAddSelected.Size = New System.Drawing.Size(205, 22)
+            Me.tmiAddSelected.Size = New System.Drawing.Size(216, 22)
             Me.tmiAddSelected.Text = "Add selected keywords"
             Me.tmiAddSelected.Visible = False
             '
@@ -187,7 +189,7 @@ Namespace WindowsT.FormsT
             Me.tmiRemoveSelected.Enabled = False
             Me.tmiRemoveSelected.Image = Global.Tools.My.Resources.Resources.DeleteHS
             Me.tmiRemoveSelected.Name = "tmiRemoveSelected"
-            Me.tmiRemoveSelected.Size = New System.Drawing.Size(205, 22)
+            Me.tmiRemoveSelected.Size = New System.Drawing.Size(216, 22)
             Me.tmiRemoveSelected.Text = "Remove selected keywords"
             Me.tmiRemoveSelected.Visible = False
             '
@@ -195,7 +197,7 @@ Namespace WindowsT.FormsT
             '
             Me.tmiClearCache.Enabled = False
             Me.tmiClearCache.Name = "tmiClearCache"
-            Me.tmiClearCache.Size = New System.Drawing.Size(205, 22)
+            Me.tmiClearCache.Size = New System.Drawing.Size(216, 22)
             Me.tmiClearCache.Text = "&Clear cache"
             Me.tmiClearCache.Visible = False
             '
@@ -203,7 +205,7 @@ Namespace WindowsT.FormsT
             '
             Me.tmiManage.Enabled = False
             Me.tmiManage.Name = "tmiManage"
-            Me.tmiManage.Size = New System.Drawing.Size(205, 22)
+            Me.tmiManage.Size = New System.Drawing.Size(216, 22)
             Me.tmiManage.Text = "&Manage..."
             Me.tmiManage.Visible = False
             '
@@ -212,7 +214,7 @@ Namespace WindowsT.FormsT
             Me.tmiSynonyms.Enabled = False
             Me.tmiSynonyms.Image = Global.Tools.My.Resources.Resources.T
             Me.tmiSynonyms.Name = "tmiSynonyms"
-            Me.tmiSynonyms.Size = New System.Drawing.Size(205, 22)
+            Me.tmiSynonyms.Size = New System.Drawing.Size(216, 22)
             Me.tmiSynonyms.Text = "&Synonyms"
             Me.tmiSynonyms.ToolTipText = "Adds new group of synonyms with all selected words as keys"
             Me.tmiSynonyms.Visible = False

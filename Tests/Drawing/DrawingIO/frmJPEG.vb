@@ -1,6 +1,6 @@
-Namespace DrawingT.IO
+Namespace DrawingT.DrawingIOt
     '#If Config <= Nightly Then Stage co      nditional compilation of this file is set in Tests.vbproj
-    ''' <summary>Tests <see cref="Tools.DrawingT.IO.JPEG"/></summary>
+    ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
     Public Class frmJPEG
         ''' <summary>CTor</summary>
         Public Sub New()
@@ -22,9 +22,9 @@ Namespace DrawingT.IO
                 Try
                     tvwResults.Nodes.Clear()
                     'JPEG file
-                    Dim jpeg As Tools.DrawingT.IO.JPEG.JPEGReader
+                    Dim jpeg As Tools.DrawingT.DrawingIOt.JPEG.JPEGReader
                     Try
-                        jpeg = New Tools.DrawingT.IO.JPEG.JPEGReader(ofdOpen.FileName)
+                        jpeg = New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(ofdOpen.FileName)
                     Catch ex As Exception
                         MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
                         Exit Sub
@@ -33,10 +33,10 @@ Namespace DrawingT.IO
                     root.Text &= "Size " & jpeg.ImageStream.Length & "B"
                     root.Tag = jpeg
                     'JPEG markers
-                    For Each Marker As Tools.DrawingT.IO.JPEG.JPEGMarkerReader In jpeg.Markers
+                    For Each Marker As Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader In jpeg.Markers
                         Dim mNode As TreeNode = root.Nodes.Add(Hex(Marker.MarkerCode))
-                        If Marker.MarkerCode <> Tools.DrawingT.IO.JPEG.JPEGMarkerReader.Markers.Unknown Then
-                            mNode.Text &= " " & [Enum].GetName(GetType(Tools.DrawingT.IO.JPEG.JPEGMarkerReader.Markers), Marker.MarkerCode)
+                        If Marker.MarkerCode <> Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader.Markers.Unknown Then
+                            mNode.Text &= " " & [Enum].GetName(GetType(Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader.Markers), Marker.MarkerCode)
                         End If
                         mNode.Text &= String.Format(" size {0}B, stream size {1}B", Marker.Length, Marker.Data.Length)
                         mNode.Text &= " " & Marker.Data.ToString
@@ -107,7 +107,7 @@ Namespace DrawingT.IO
                         Dim PhotoShopNode As TreeNode = root.Nodes(PhotoShopIndex).Nodes.Add(String.Format("PhotoShop size {0}B", PhotoShopStream.Length))
                         PhotoShopNode.Tag = ExifStream
                         PhotoShopNode.Text &= " " & PhotoShopStream.ToString
-                        For Each BIM8 As Tools.DrawingT.IO.JPEG.Photoshop8BIMReader In jpeg.Get8BIMSegments
+                        For Each BIM8 As Tools.DrawingT.DrawingIOt.JPEG.Photoshop8BIMReader In jpeg.Get8BIMSegments
                             Dim Node8 As TreeNode = PhotoShopNode.Nodes.Add(String.Format("8BIM {0} name '{1}' size {2}B", Hex(BIM8.Type), BIM8.Name, BIM8.DataSize))
                             Node8.Tag = BIM8
                             Node8.Text &= " " & BIM8.Data.ToString

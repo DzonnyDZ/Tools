@@ -18,8 +18,8 @@
             </node>
         </node>
         <node name="DrawingT" image="Namespace">
-            <node name="IO" image="Namespace">
-                <node name="JPEG" image="Namespace" tag="Tools.Tests.DrawingT.IO.frmJPEG.test" />
+            <node name="DrawingIOt" image="Namespace">
+                <node name="JPEG" image="Namespace" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test" />
             </node>
             <node name="SystemColorsExtension" image="Class Sealed (NotInheritable)" tag="Tools.Tests.WindowsT.FormsT.UtilitiesT.frmLinkProperties.Test" />
             <node name="MetadataT" image="Namespace">

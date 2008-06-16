@@ -78,6 +78,12 @@
     <Compile Include="FolderDialog.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="frmLarge.Designer.vb">
+      <DependentUpon>frmLarge.vb</DependentUpon>
+    </Compile>
+    <Compile Include="frmLarge.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="frmMain.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -110,6 +116,9 @@
   <ItemGroup>
     <EmbeddedResource Include="FolderDialog.resx">
       <DependentUpon>FolderDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmLarge.resx">
+      <DependentUpon>frmLarge.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmMain.resx">
       <DependentUpon>frmMain.vb</DependentUpon>
@@ -156,6 +165,7 @@
     <None Include="Resources\NavBack.png" />
     <None Include="Resources\NavForward.png" />
     <None Include="Resources\Net 31.ico" />
+    <None Include="Resources\Symbol-Delete.png" />
     <Content Include="Resources\Up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

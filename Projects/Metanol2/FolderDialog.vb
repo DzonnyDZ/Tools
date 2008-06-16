@@ -19,7 +19,7 @@ Friend Class frmFolderDialog
             Try
                 txtPath.Text = fbdBrowse.SelectedPath
             Catch ex As Exception
-                WindowsT.IndependentT.MessageBox.Error(ex, "Error")
+                WindowsT.IndependentT.MessageBox.Error(ex, My.Resources.Error_)
             End Try
         End If
     End Sub
