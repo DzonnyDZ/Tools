@@ -1,3 +1,4 @@
+'Extracted
 Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms, Tools.ComponentModelT
 Imports System.Linq
 Imports <xmlns:kw="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor">
@@ -5,7 +6,6 @@ Namespace WindowsT.FormsT
     '#If Config <= Alpha Then set in tools.vbproj
     'Stage: Alpha
     'ASAP:Bitmap
-    'Localize: UI
     ''' <summary>Control that allows eas and very sophisticated editing of set of keywords</summary>
     ''' <remarks>There is a list of known keywords (which can be adited by user and persisted). Synonyms of keywords can be defined and added automatically in list.</remarks>
     <ComponentModelT.Prefix("kwe")> _
@@ -37,8 +37,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Name of per-session cache of keywords used by this instance</summary>
         ''' <value>An enmpty <see cref="String"/> to use no temporary chache</value>
         <DefaultValue(""), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Name of per-session cache of keywords used by this instance")> _
-        Public Property AutoCompleteCacheName() As String 'Localize:Description
+        <LDescription(GetType(CompositeControls), "AutoCompleteCacheName_d")> _
+        Public Property AutoCompleteCacheName() As String
             Get
                 Return _AutoCompleteCacheName
             End Get
@@ -174,9 +174,9 @@ Namespace WindowsT.FormsT
         Private _CaseSensitive As Boolean = False
         ''' <summary>Gets or sets value idicating if keywords are case sensitive</summary>
         <DefaultValue(False)> _
-        <Description("Gets or sets value idicating if keywords are case sensitive")> _
+        <LDescription(GetType(CompositeControls), "CaseSensitive_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        Public Property CaseSensitive() As Boolean 'Localize:Description
+        Public Property CaseSensitive() As Boolean
             Get
                 Return _CaseSensitive
             End Get
@@ -189,9 +189,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets state of <see cref="Status"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(ControlState), "Enabled")> _
-        <Description("Gets or sets state of Status")> _
+        <LDescription(GetType(CompositeControls), "StatusState_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-        Public Property StatusState() As ControlState 'Localize:Description
+        Public Property StatusState() As ControlState
             Get
                 Return Misc.ControlState(stmStatus)
             End Get
@@ -201,9 +201,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary><see cref="StatusMarker"/> present on this control</summary>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <Description("StatusMarker present on this control")> _
+        <LDescription(GetType(CompositeControls), "Status_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-        Public ReadOnly Property Status() As StatusMarker 'Localile: Description
+        Public ReadOnly Property Status() As StatusMarker
             Get
                 Return stmStatus
             End Get
@@ -211,9 +211,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets state of thesaurus button</summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(ControlState), "Enabled")> _
-        <Description("Gets or sets state of thesaurus button")> _
+        <LDescription(GetType(CompositeControls), "ThesaurusButtonAttribute_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        Public Property ThesaurusButtonState() As ControlState 'Localize: Description
+        Public Property ThesaurusButtonState() As ControlState
             Get
                 Return Misc.ControlState(cmdThesaurus)
             End Get
@@ -223,9 +223,9 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or sets state of merge button</summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
-        <Description("Gets or sets state of merge button"), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(CompositeControls), "MergeButtonState_d"), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(GetType(ControlState), "Enabled")> _
-        Public Property MergeButtonState() As ControlState 'Localize: Description
+        Public Property MergeButtonState() As ControlState
             Get
                 Return Misc.ControlState(cmdMerge)
             End Get
@@ -235,8 +235,8 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets or sets value indicating if merge button is checked (orange) or not (gray)</summary>
         <DefaultValue(True)> _
-        <Description("Gets or sets value indicating if merge button is checked (orange) or not (gray)"), KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        Public Property Merge() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "Merge_d"), KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        Public Property Merge() As Boolean
             Get
                 Return cmdMerge.BackColor = Drawing.Color.Orange
             End Get
@@ -251,8 +251,8 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Raised after value of the <see cref="Merge"/> property changes</summary>
-        <Category("Value Changed"), Description("Raised after value of the Merge property changed")> _
-        Public Event MergeChanged As EventHandler 'Localize: Category(How are categories of .NET controls set), Description
+        <LCategory(GetType(My.Resources.Resources), "ValueChanged_cat", "Value Changed"), LDescription(GetType(CompositeControls), "MergeChanged_d")> _
+        Public Event MergeChanged As EventHandler
         ''' <summary>Raises the <see cref="MergeChanged"/> event</summary>
         ''' <param name="e">Event params</param>
         Protected Overridable Sub OnMergeChanged(ByVal e As EventArgs)
@@ -328,7 +328,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised when user adds keyword</summary>
         ''' <remarks>Not raised when keyword is added programatically</remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action), Description("Raised when usr adds keyword")> _
-        Public Event KeywordAdded As EventHandler(Of ListWithEvents(Of String).ItemEventArgs) 'Localize: Description
+        Public Event KeywordAdded As EventHandler(Of ListWithEvents(Of String).ItemEventArgs)
         ''' <summary>Raises the <see cref="KeywordAdded"/> event</summary> 
         ''' <param name="e">event parameters</param>
         Protected Overridable Sub OnKeywordAdded(ByVal e As ListWithEvents(Of String).ItemEventArgs)
@@ -376,15 +376,15 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised after user manually removes keyword(s)</summary>
         ''' <remarks>Not raised when keywords are removed programatically</remarks>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action), Description("Raised after user manually removes keyword(s)")> _
-        Public Event KeyWordRemoved As EventHandler(Of ListWithEvents(Of String).ItemsEventArgs) 'Localize: Description
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action), LDescription(GetType(CompositeControls), "KeyWordRemoved_d")> _
+        Public Event KeyWordRemoved As EventHandler(Of ListWithEvents(Of String).ItemsEventArgs)
         ''' <summary>Contains value of the <see cref="AutoChange"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _AutoChange As Boolean = True
         ''' <summary>Gets or sets value indicating if <see cref="Status">Status</see>.<see cref="StatusMarker.Status">Status</see> automatically changes when keyword is added or removed</summary>
-        <Description("Gets or sets value indicating if Status.Status automatically changes when keyword is added or removed")> _
+        <LDescription(GetType(CompositeControls), "AutoChange_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(True)> _
-        Public Property AutoChange() As Boolean 'Localize: Description
+        Public Property AutoChange() As Boolean
             Get
                 Return _AutoChange
             End Get
@@ -502,6 +502,8 @@ Namespace WindowsT.FormsT
             ShowDialog()
         End Sub
         ''' <summary>Gets all keywords and synonyms used by this <see cref="KeyWordsEditor"/> as <see cref="Xml.Linq.XDocument"/> that can be saved.</summary>
+        ''' <remarks><see cref="Xml.Linq.XDocument"/> that contains all the keywords and synonyms ready to be stored in file.</remarks>
+        ''' <seelaso cref="LoadFromXML"/>
         Public Function GetKeywordsAsXML() As System.Xml.Linq.XDocument
             Return _
                 <?xml version="1.0"?>
@@ -529,5 +531,12 @@ Namespace WindowsT.FormsT
                     %>
                 </kw:Keywords>
         End Function
+        Public Sub LoadFromXML(ByVal xml As System.Xml.Linq.XDocument)
+            Dim rm As New Resources.ResourceManager("Tools.WindowsT.FormsT.KeywordsEditor.xsd", GetType(KeyWordsEditor).Assembly)
+        End Sub
+
+        Private Sub lstKW_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstKW.SelectedIndexChanged
+
+        End Sub
     End Class
 End Namespace

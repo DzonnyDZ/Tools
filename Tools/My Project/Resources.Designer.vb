@@ -67,10 +67,44 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Confirm changes.
+        '''</summary>
+        Friend ReadOnly Property ConfirmChanges() As String
+            Get
+                Return ResourceManager.GetString("ConfirmChanges", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Continue.
+        '''</summary>
+        Friend ReadOnly Property Continue_() As String
+            Get
+                Return ResourceManager.GetString("Continue_", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Continue_AccessKey() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Continue_AccessKey", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
         Friend ReadOnly Property DeleteHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("DeleteHS", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error.
+        '''</summary>
+        Friend ReadOnly Property Error_() As String
+            Get
+                Return ResourceManager.GetString("Error_", resourceCulture)
             End Get
         End Property
         
@@ -130,10 +164,28 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to This action requires all changes to be confirmed..
+        '''</summary>
+        Friend ReadOnly Property ThisActionRequiresAllChangesToBeConfirmed() As String
+            Get
+                Return ResourceManager.GetString("ThisActionRequiresAllChangesToBeConfirmed", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property ToolsIcon() As System.Drawing.Icon
             Get
                 Dim obj As Object = ResourceManager.GetObject("ToolsIcon", resourceCulture)
                 Return CType(obj,System.Drawing.Icon)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value Changed.
+        '''</summary>
+        Friend ReadOnly Property ValueChanged_cat() As String
+            Get
+                Return ResourceManager.GetString("ValueChanged_cat", resourceCulture)
             End Get
         End Property
         

@@ -1,3 +1,4 @@
+'Extracted
 Imports Tools.CollectionsT.GenericT, System.Windows.Forms, System.Linq
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox
 Namespace WindowsT.FormsT
@@ -223,18 +224,19 @@ Namespace WindowsT.FormsT
         End Sub
 
         Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
-            If MBox.ModalEx("This action requires all changes to be confirmed.", "Confirm changes", New Object() {New MBox.MessageBoxButton("Continue", Windows.Forms.DialogResult.OK, "C"c), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = Windows.Forms.DialogResult.OK AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+            If MBox.ModalEx(My.Resources.ThisActionRequiresAllChangesToBeConfirmed, My.Resources.ConfirmChanges, New Object() {New MBox.MessageBoxButton(My.Resources.Continue_, Windows.Forms.DialogResult.OK, My.Resources.Continue_AccessKey), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = Windows.Forms.DialogResult.OK AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
                 PerformOK()
 Retry:          Try
                     Me.For.GetKeywordsAsXML.Save(sfdSave.FileName)
                 Catch ex As Exception
-                    If MBox.Error(ex, "Error", IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
+                    If MBox.Error(ex, My.Resources.Error_, IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
                 End Try
             End If
         End Sub
 
         Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
             'TODO:Implement
+            Me.For.LoadFromXML(Nothing)
         End Sub
     End Class
     '#End If

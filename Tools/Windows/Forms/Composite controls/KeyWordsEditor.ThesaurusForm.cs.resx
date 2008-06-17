@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,60 +117,68 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="saveHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fraAutoComplete.Text" xml:space="preserve">
+    <value>Seznam pro automatické dokončování</value>
   </data>
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fraCache.Text" xml:space="preserve">
+    <value>Dočasné položky automatického dokončování</value>
   </data>
-  <data name="RepeatHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fraSynonyms.Text" xml:space="preserve">
+    <value>Synonyma</value>
   </data>
-  <data name="ToolsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ĐTools.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdClearCache.ToolTip" xml:space="preserve">
+    <value>Vymazat dočasné položky</value>
   </data>
-  <data name="Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\+.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fraKeys.Text" xml:space="preserve">
+    <value>Klíče</value>
   </data>
-  <data name="Zip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zip.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="fraValues.Text" xml:space="preserve">
+    <value>Hodnoty</value>
   </data>
-  <data name="NewReportHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NewReportHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdDelSyn.ToolTip" xml:space="preserve">
+    <value>Odstranit vybranou skupinu synonym</value>
   </data>
-  <data name="T" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\T.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdAddSyn.ToolTip" xml:space="preserve">
+    <value>Přidat novou skupinu synonym</value>
   </data>
-  <data name="DeleteHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DeleteHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cmdOpen.Location" type="System.Drawing.Point, System.Drawing">
+    <value>95, 3</value>
   </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdOpen.ToolTip" xml:space="preserve">
+    <value>Importovat klíčová slova ze souboru</value>
   </data>
-  <data name="CommentHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CommentHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
+    <value>123, 3</value>
   </data>
-  <data name="openHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\openHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdSave.ToolTip" xml:space="preserve">
+    <value>Uložit klíčová slova do souboru</value>
   </data>
-  <data name="Error_" xml:space="preserve">
-    <value>Error</value>
+  <data name="flpButtons.Location" type="System.Drawing.Point, System.Drawing">
+    <value>251, 0</value>
   </data>
-  <data name="ThisActionRequiresAllChangesToBeConfirmed" xml:space="preserve">
-    <value>This action requires all changes to be confirmed.</value>
+  <data name="flpButtons.Size" type="System.Drawing.Size, System.Drawing">
+    <value>148, 29</value>
   </data>
-  <data name="ConfirmChanges" xml:space="preserve">
-    <value>Confirm changes</value>
+  <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 23</value>
   </data>
-  <data name="Continue_" xml:space="preserve">
-    <value>Continue</value>
+  <data name="cmdCancel.Text" xml:space="preserve">
+    <value>&amp;Storno</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib" />
-  <data name="Continue_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
-    <value>C</value>
+  <data name="sfdSave.Filter" xml:space="preserve">
+    <value>Soubory XML (*.xml)|*.xml|Všechny soubory (*.*)|*.*</value>
   </data>
-  <data name="ValueChanged_cat" xml:space="preserve">
-    <value>Value Changed</value>
+  <data name="sfdSave.Title" xml:space="preserve">
+    <value>Uložit klíčová slova</value>
+  </data>
+  <data name="ofdLoad.Filter" xml:space="preserve">
+    <value>Soubory XML (*.xml)|*.xml|Další soubory (*.*)|*.*</value>
+  </data>
+  <data name="ofdLoad.Title" xml:space="preserve">
+    <value>Načíst klíčová slova</value>
+  </data>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Editor seznamů automatického dokončování a synonym</value>
   </data>
 </root>

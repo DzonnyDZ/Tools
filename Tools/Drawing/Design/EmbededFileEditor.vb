@@ -151,7 +151,7 @@ Namespace DrawingT.DesignT
                                     Case ".emf" : f = Drawing.Imaging.ImageFormat.Emf
                                     Case "ico" : f = Drawing.Imaging.ImageFormat.Icon
                                     Case Else
-                                        MsgBox("Unknown image extension, image will not be saved.", MsgBoxStyle.Exclamation, "Error") 'Localize: Message
+                                        MsgBox("Unknown image extension, image will not be saved.", MsgBoxStyle.Exclamation, My.Resources.Error_) 'Localize: Message
                                         Exit Sub
                                 End Select
                                 Value.Save(dlg.FileName, f)

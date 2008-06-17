@@ -25,6 +25,7 @@ Namespace WindowsT.FormsT
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ThesaurusForm))
             Me.splVertical = New System.Windows.Forms.SplitContainer
             Me.splAutoComplete = New System.Windows.Forms.SplitContainer
             Me.fraAutoComplete = New System.Windows.Forms.GroupBox
@@ -74,422 +75,465 @@ Namespace WindowsT.FormsT
             '
             'splVertical
             '
-            Me.splVertical.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.splVertical.Location = New System.Drawing.Point(0, 0)
+            Me.splVertical.AccessibleDescription = Nothing
+            Me.splVertical.AccessibleName = Nothing
+            resources.ApplyResources(Me.splVertical, "splVertical")
+            Me.splVertical.BackgroundImage = Nothing
+            Me.splVertical.Font = Nothing
             Me.splVertical.Name = "splVertical"
             '
             'splVertical.Panel1
             '
+            Me.splVertical.Panel1.AccessibleDescription = Nothing
+            Me.splVertical.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splVertical.Panel1, "splVertical.Panel1")
+            Me.splVertical.Panel1.BackgroundImage = Nothing
             Me.splVertical.Panel1.Controls.Add(Me.splAutoComplete)
+            Me.splVertical.Panel1.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splVertical.Panel1, resources.GetString("splVertical.Panel1.ToolTip"))
             '
             'splVertical.Panel2
             '
+            Me.splVertical.Panel2.AccessibleDescription = Nothing
+            Me.splVertical.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splVertical.Panel2, "splVertical.Panel2")
+            Me.splVertical.Panel2.BackgroundImage = Nothing
             Me.splVertical.Panel2.Controls.Add(Me.fraSynonyms)
-            Me.splVertical.Size = New System.Drawing.Size(651, 399)
-            Me.splVertical.SplitterDistance = 322
-            Me.splVertical.TabIndex = 0
+            Me.splVertical.Panel2.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splVertical.Panel2, resources.GetString("splVertical.Panel2.ToolTip"))
+            Me.totToolTip.SetToolTip(Me.splVertical, resources.GetString("splVertical.ToolTip"))
             '
             'splAutoComplete
             '
-            Me.splAutoComplete.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splAutoComplete.AccessibleDescription = Nothing
+            Me.splAutoComplete.AccessibleName = Nothing
+            resources.ApplyResources(Me.splAutoComplete, "splAutoComplete")
+            Me.splAutoComplete.BackgroundImage = Nothing
             Me.splAutoComplete.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-            Me.splAutoComplete.Location = New System.Drawing.Point(0, 0)
+            Me.splAutoComplete.Font = Nothing
             Me.splAutoComplete.Name = "splAutoComplete"
-            Me.splAutoComplete.Orientation = System.Windows.Forms.Orientation.Horizontal
             '
             'splAutoComplete.Panel1
             '
+            Me.splAutoComplete.Panel1.AccessibleDescription = Nothing
+            Me.splAutoComplete.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splAutoComplete.Panel1, "splAutoComplete.Panel1")
+            Me.splAutoComplete.Panel1.BackgroundImage = Nothing
             Me.splAutoComplete.Panel1.Controls.Add(Me.fraAutoComplete)
+            Me.splAutoComplete.Panel1.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splAutoComplete.Panel1, resources.GetString("splAutoComplete.Panel1.ToolTip"))
             '
             'splAutoComplete.Panel2
             '
+            Me.splAutoComplete.Panel2.AccessibleDescription = Nothing
+            Me.splAutoComplete.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splAutoComplete.Panel2, "splAutoComplete.Panel2")
+            Me.splAutoComplete.Panel2.BackgroundImage = Nothing
             Me.splAutoComplete.Panel2.Controls.Add(Me.fraCache)
-            Me.splAutoComplete.Size = New System.Drawing.Size(322, 399)
-            Me.splAutoComplete.SplitterDistance = 346
-            Me.splAutoComplete.TabIndex = 0
+            Me.splAutoComplete.Panel2.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splAutoComplete.Panel2, resources.GetString("splAutoComplete.Panel2.ToolTip"))
+            Me.totToolTip.SetToolTip(Me.splAutoComplete, resources.GetString("splAutoComplete.ToolTip"))
             '
             'fraAutoComplete
             '
+            Me.fraAutoComplete.AccessibleDescription = Nothing
+            Me.fraAutoComplete.AccessibleName = Nothing
+            resources.ApplyResources(Me.fraAutoComplete, "fraAutoComplete")
+            Me.fraAutoComplete.BackgroundImage = Nothing
             Me.fraAutoComplete.Controls.Add(Me.kweAutoComplete)
-            Me.fraAutoComplete.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.fraAutoComplete.Location = New System.Drawing.Point(0, 0)
-            Me.fraAutoComplete.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraAutoComplete.Font = Nothing
             Me.fraAutoComplete.Name = "fraAutoComplete"
-            Me.fraAutoComplete.Size = New System.Drawing.Size(322, 346)
-            Me.fraAutoComplete.TabIndex = 1
             Me.fraAutoComplete.TabStop = False
-            Me.fraAutoComplete.Text = "Autocomplete list"
+            Me.totToolTip.SetToolTip(Me.fraAutoComplete, resources.GetString("fraAutoComplete.ToolTip"))
             '
             'kweAutoComplete
             '
-            Me.kweAutoComplete.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.kweAutoComplete.Location = New System.Drawing.Point(3, 16)
+            Me.kweAutoComplete.AccessibleDescription = Nothing
+            Me.kweAutoComplete.AccessibleName = Nothing
+            resources.ApplyResources(Me.kweAutoComplete, "kweAutoComplete")
+            Me.kweAutoComplete.BackgroundImage = Nothing
+            Me.kweAutoComplete.Font = Nothing
             Me.kweAutoComplete.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweAutoComplete.Name = "kweAutoComplete"
-            Me.kweAutoComplete.Size = New System.Drawing.Size(316, 327)
             '
             '
             '
+            Me.kweAutoComplete.Status.AccessibleDescription = Nothing
+            Me.kweAutoComplete.Status.AccessibleName = Nothing
             Me.kweAutoComplete.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweAutoComplete.Status.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.kweAutoComplete.Status.Anchor = CType(resources.GetObject("kweAutoComplete.Status.Anchor"), System.Windows.Forms.AnchorStyles)
             Me.kweAutoComplete.Status.AutoChanged = False
-            Me.kweAutoComplete.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.kweAutoComplete.Status.AutoScroll = CType(resources.GetObject("kweAutoComplete.Status.AutoScroll"), Boolean)
+            Me.kweAutoComplete.Status.AutoSize = CType(resources.GetObject("kweAutoComplete.Status.AutoSize"), Boolean)
+            Me.kweAutoComplete.Status.AutoSizeMode = CType(resources.GetObject("kweAutoComplete.Status.AutoSizeMode"), System.Windows.Forms.AutoSizeMode)
+            Me.kweAutoComplete.Status.BackgroundImage = Nothing
+            Me.kweAutoComplete.Status.BackgroundImageLayout = CType(resources.GetObject("kweAutoComplete.Status.BackgroundImageLayout"), System.Windows.Forms.ImageLayout)
             Me.kweAutoComplete.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweAutoComplete.Status.Enabled = False
-            Me.kweAutoComplete.Status.Location = New System.Drawing.Point(269, 0)
-            Me.kweAutoComplete.Status.Margin = New System.Windows.Forms.Padding(0)
+            Me.kweAutoComplete.Status.Dock = CType(resources.GetObject("kweAutoComplete.Status.Dock"), System.Windows.Forms.DockStyle)
+            Me.kweAutoComplete.Status.Enabled = CType(resources.GetObject("kweAutoComplete.Status.Enabled"), Boolean)
+            Me.kweAutoComplete.Status.Font = Nothing
+            Me.kweAutoComplete.Status.ImeMode = CType(resources.GetObject("kweAutoComplete.Status.ImeMode"), System.Windows.Forms.ImeMode)
+            Me.kweAutoComplete.Status.Location = CType(resources.GetObject("kweAutoComplete.Status.Location"), System.Drawing.Point)
+            Me.kweAutoComplete.Status.Margin = CType(resources.GetObject("kweAutoComplete.Status.Margin"), System.Windows.Forms.Padding)
             Me.kweAutoComplete.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.kweAutoComplete.Status.Name = "stmStatus"
-            Me.kweAutoComplete.Status.Size = New System.Drawing.Size(24, 24)
+            Me.kweAutoComplete.Status.RightToLeft = CType(resources.GetObject("kweAutoComplete.Status.RightToLeft"), System.Windows.Forms.RightToLeft)
+            Me.kweAutoComplete.Status.Size = CType(resources.GetObject("kweAutoComplete.Status.Size"), System.Drawing.Size)
             Me.kweAutoComplete.Status.StatusedControl = Nothing
-            Me.kweAutoComplete.Status.TabIndex = 2
+            Me.kweAutoComplete.Status.TabIndex = CType(resources.GetObject("kweAutoComplete.Status.TabIndex"), Integer)
             Me.kweAutoComplete.Status.TabStop = False
-            Me.kweAutoComplete.Status.Visible = False
+            Me.kweAutoComplete.Status.Visible = CType(resources.GetObject("kweAutoComplete.Status.Visible"), Boolean)
             Me.kweAutoComplete.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweAutoComplete.TabIndex = 0
             Me.kweAutoComplete.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+            Me.totToolTip.SetToolTip(Me.kweAutoComplete, resources.GetString("kweAutoComplete.ToolTip"))
             '
             'fraCache
             '
+            Me.fraCache.AccessibleDescription = Nothing
+            Me.fraCache.AccessibleName = Nothing
+            resources.ApplyResources(Me.fraCache, "fraCache")
+            Me.fraCache.BackgroundImage = Nothing
             Me.fraCache.Controls.Add(Me.lblCache)
             Me.fraCache.Controls.Add(Me.tlpClearCache)
-            Me.fraCache.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.fraCache.Location = New System.Drawing.Point(0, 0)
-            Me.fraCache.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraCache.Font = Nothing
             Me.fraCache.Name = "fraCache"
-            Me.fraCache.Size = New System.Drawing.Size(322, 49)
-            Me.fraCache.TabIndex = 1
             Me.fraCache.TabStop = False
-            Me.fraCache.Text = "Autocomplete chache"
+            Me.totToolTip.SetToolTip(Me.fraCache, resources.GetString("fraCache.ToolTip"))
             '
             'lblCache
             '
+            Me.lblCache.AccessibleDescription = Nothing
+            Me.lblCache.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblCache, "lblCache")
             Me.lblCache.AutoEllipsis = True
-            Me.lblCache.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblCache.Location = New System.Drawing.Point(3, 16)
+            Me.lblCache.Font = Nothing
             Me.lblCache.Name = "lblCache"
-            Me.lblCache.Size = New System.Drawing.Size(292, 30)
-            Me.lblCache.TabIndex = 0
+            Me.totToolTip.SetToolTip(Me.lblCache, resources.GetString("lblCache.ToolTip"))
             '
             'tlpClearCache
             '
-            Me.tlpClearCache.AutoSize = True
-            Me.tlpClearCache.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpClearCache.ColumnCount = 1
-            Me.tlpClearCache.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpClearCache.AccessibleDescription = Nothing
+            Me.tlpClearCache.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpClearCache, "tlpClearCache")
+            Me.tlpClearCache.BackgroundImage = Nothing
             Me.tlpClearCache.Controls.Add(Me.cmdClearCache, 0, 0)
-            Me.tlpClearCache.Dock = System.Windows.Forms.DockStyle.Right
-            Me.tlpClearCache.Location = New System.Drawing.Point(295, 16)
-            Me.tlpClearCache.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpClearCache.Font = Nothing
             Me.tlpClearCache.Name = "tlpClearCache"
-            Me.tlpClearCache.RowCount = 1
-            Me.tlpClearCache.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            Me.tlpClearCache.Size = New System.Drawing.Size(24, 30)
-            Me.tlpClearCache.TabIndex = 2
+            Me.totToolTip.SetToolTip(Me.tlpClearCache, resources.GetString("tlpClearCache.ToolTip"))
             '
             'cmdClearCache
             '
-            Me.cmdClearCache.Anchor = System.Windows.Forms.AnchorStyles.Right
-            Me.cmdClearCache.AutoSize = True
-            Me.cmdClearCache.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdClearCache.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdClearCache.AccessibleDescription = Nothing
+            Me.cmdClearCache.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdClearCache, "cmdClearCache")
+            Me.cmdClearCache.BackgroundImage = Nothing
+            Me.cmdClearCache.Font = Nothing
             Me.cmdClearCache.Image = Global.Tools.My.Resources.Resources.DeleteHS
-            Me.cmdClearCache.Location = New System.Drawing.Point(0, 3)
-            Me.cmdClearCache.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdClearCache.Name = "cmdClearCache"
-            Me.cmdClearCache.Size = New System.Drawing.Size(24, 24)
-            Me.cmdClearCache.TabIndex = 1
-            Me.totToolTip.SetToolTip(Me.cmdClearCache, "Clear cache")
+            Me.totToolTip.SetToolTip(Me.cmdClearCache, resources.GetString("cmdClearCache.ToolTip"))
             Me.cmdClearCache.UseVisualStyleBackColor = True
             '
             'fraSynonyms
             '
+            Me.fraSynonyms.AccessibleDescription = Nothing
+            Me.fraSynonyms.AccessibleName = Nothing
+            resources.ApplyResources(Me.fraSynonyms, "fraSynonyms")
+            Me.fraSynonyms.BackgroundImage = Nothing
             Me.fraSynonyms.Controls.Add(Me.splSynonyms)
             Me.fraSynonyms.Controls.Add(Me.tlpSelect)
-            Me.fraSynonyms.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.fraSynonyms.Location = New System.Drawing.Point(0, 0)
-            Me.fraSynonyms.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraSynonyms.Font = Nothing
             Me.fraSynonyms.Name = "fraSynonyms"
-            Me.fraSynonyms.Size = New System.Drawing.Size(325, 399)
-            Me.fraSynonyms.TabIndex = 0
             Me.fraSynonyms.TabStop = False
-            Me.fraSynonyms.Text = "Synonyms"
+            Me.totToolTip.SetToolTip(Me.fraSynonyms, resources.GetString("fraSynonyms.ToolTip"))
             '
             'splSynonyms
             '
-            Me.splSynonyms.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.splSynonyms.Location = New System.Drawing.Point(3, 40)
+            Me.splSynonyms.AccessibleDescription = Nothing
+            Me.splSynonyms.AccessibleName = Nothing
+            resources.ApplyResources(Me.splSynonyms, "splSynonyms")
+            Me.splSynonyms.BackgroundImage = Nothing
+            Me.splSynonyms.Font = Nothing
             Me.splSynonyms.Name = "splSynonyms"
-            Me.splSynonyms.Orientation = System.Windows.Forms.Orientation.Horizontal
             '
             'splSynonyms.Panel1
             '
+            Me.splSynonyms.Panel1.AccessibleDescription = Nothing
+            Me.splSynonyms.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splSynonyms.Panel1, "splSynonyms.Panel1")
+            Me.splSynonyms.Panel1.BackgroundImage = Nothing
             Me.splSynonyms.Panel1.Controls.Add(Me.fraKeys)
+            Me.splSynonyms.Panel1.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splSynonyms.Panel1, resources.GetString("splSynonyms.Panel1.ToolTip"))
             '
             'splSynonyms.Panel2
             '
+            Me.splSynonyms.Panel2.AccessibleDescription = Nothing
+            Me.splSynonyms.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splSynonyms.Panel2, "splSynonyms.Panel2")
+            Me.splSynonyms.Panel2.BackgroundImage = Nothing
             Me.splSynonyms.Panel2.Controls.Add(Me.fraValues)
-            Me.splSynonyms.Size = New System.Drawing.Size(319, 356)
-            Me.splSynonyms.SplitterDistance = 168
-            Me.splSynonyms.TabIndex = 0
+            Me.splSynonyms.Panel2.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splSynonyms.Panel2, resources.GetString("splSynonyms.Panel2.ToolTip"))
+            Me.totToolTip.SetToolTip(Me.splSynonyms, resources.GetString("splSynonyms.ToolTip"))
             '
             'fraKeys
             '
+            Me.fraKeys.AccessibleDescription = Nothing
+            Me.fraKeys.AccessibleName = Nothing
+            resources.ApplyResources(Me.fraKeys, "fraKeys")
+            Me.fraKeys.BackgroundImage = Nothing
             Me.fraKeys.Controls.Add(Me.kweKeys)
-            Me.fraKeys.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.fraKeys.Enabled = False
-            Me.fraKeys.Location = New System.Drawing.Point(0, 0)
-            Me.fraKeys.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraKeys.Font = Nothing
             Me.fraKeys.Name = "fraKeys"
-            Me.fraKeys.Size = New System.Drawing.Size(319, 168)
-            Me.fraKeys.TabIndex = 0
             Me.fraKeys.TabStop = False
-            Me.fraKeys.Text = "Keys"
+            Me.totToolTip.SetToolTip(Me.fraKeys, resources.GetString("fraKeys.ToolTip"))
             '
             'kweKeys
             '
-            Me.kweKeys.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.kweKeys.Location = New System.Drawing.Point(3, 16)
+            Me.kweKeys.AccessibleDescription = Nothing
+            Me.kweKeys.AccessibleName = Nothing
+            resources.ApplyResources(Me.kweKeys, "kweKeys")
+            Me.kweKeys.BackgroundImage = Nothing
+            Me.kweKeys.Font = Nothing
             Me.kweKeys.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweKeys.Name = "kweKeys"
-            Me.kweKeys.Size = New System.Drawing.Size(313, 149)
             '
             '
             '
+            Me.kweKeys.Status.AccessibleDescription = Nothing
+            Me.kweKeys.Status.AccessibleName = Nothing
             Me.kweKeys.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweKeys.Status.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.kweKeys.Status.Anchor = CType(resources.GetObject("kweKeys.Status.Anchor"), System.Windows.Forms.AnchorStyles)
             Me.kweKeys.Status.AutoChanged = False
-            Me.kweKeys.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.kweKeys.Status.AutoScroll = CType(resources.GetObject("kweKeys.Status.AutoScroll"), Boolean)
+            Me.kweKeys.Status.AutoSize = CType(resources.GetObject("kweKeys.Status.AutoSize"), Boolean)
+            Me.kweKeys.Status.AutoSizeMode = CType(resources.GetObject("kweKeys.Status.AutoSizeMode"), System.Windows.Forms.AutoSizeMode)
+            Me.kweKeys.Status.BackgroundImage = Nothing
+            Me.kweKeys.Status.BackgroundImageLayout = CType(resources.GetObject("kweKeys.Status.BackgroundImageLayout"), System.Windows.Forms.ImageLayout)
             Me.kweKeys.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweKeys.Status.Enabled = False
-            Me.kweKeys.Status.Location = New System.Drawing.Point(266, 0)
-            Me.kweKeys.Status.Margin = New System.Windows.Forms.Padding(0)
+            Me.kweKeys.Status.Dock = CType(resources.GetObject("kweKeys.Status.Dock"), System.Windows.Forms.DockStyle)
+            Me.kweKeys.Status.Enabled = CType(resources.GetObject("kweKeys.Status.Enabled"), Boolean)
+            Me.kweKeys.Status.Font = Nothing
+            Me.kweKeys.Status.ImeMode = CType(resources.GetObject("kweKeys.Status.ImeMode"), System.Windows.Forms.ImeMode)
+            Me.kweKeys.Status.Location = CType(resources.GetObject("kweKeys.Status.Location"), System.Drawing.Point)
+            Me.kweKeys.Status.Margin = CType(resources.GetObject("kweKeys.Status.Margin"), System.Windows.Forms.Padding)
             Me.kweKeys.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.kweKeys.Status.Name = "stmStatus"
-            Me.kweKeys.Status.Size = New System.Drawing.Size(24, 24)
+            Me.kweKeys.Status.RightToLeft = CType(resources.GetObject("kweKeys.Status.RightToLeft"), System.Windows.Forms.RightToLeft)
+            Me.kweKeys.Status.Size = CType(resources.GetObject("kweKeys.Status.Size"), System.Drawing.Size)
             Me.kweKeys.Status.StatusedControl = Nothing
-            Me.kweKeys.Status.TabIndex = 2
+            Me.kweKeys.Status.TabIndex = CType(resources.GetObject("kweKeys.Status.TabIndex"), Integer)
             Me.kweKeys.Status.TabStop = False
-            Me.kweKeys.Status.Visible = False
+            Me.kweKeys.Status.Visible = CType(resources.GetObject("kweKeys.Status.Visible"), Boolean)
             Me.kweKeys.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweKeys.TabIndex = 0
             Me.kweKeys.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+            Me.totToolTip.SetToolTip(Me.kweKeys, resources.GetString("kweKeys.ToolTip"))
             '
             'fraValues
             '
+            Me.fraValues.AccessibleDescription = Nothing
+            Me.fraValues.AccessibleName = Nothing
+            resources.ApplyResources(Me.fraValues, "fraValues")
+            Me.fraValues.BackgroundImage = Nothing
             Me.fraValues.Controls.Add(Me.kweValues)
-            Me.fraValues.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.fraValues.Enabled = False
-            Me.fraValues.Location = New System.Drawing.Point(0, 0)
-            Me.fraValues.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraValues.Font = Nothing
             Me.fraValues.Name = "fraValues"
-            Me.fraValues.Size = New System.Drawing.Size(319, 184)
-            Me.fraValues.TabIndex = 0
             Me.fraValues.TabStop = False
-            Me.fraValues.Text = "Values"
+            Me.totToolTip.SetToolTip(Me.fraValues, resources.GetString("fraValues.ToolTip"))
             '
             'kweValues
             '
-            Me.kweValues.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.kweValues.Location = New System.Drawing.Point(3, 16)
+            Me.kweValues.AccessibleDescription = Nothing
+            Me.kweValues.AccessibleName = Nothing
+            resources.ApplyResources(Me.kweValues, "kweValues")
+            Me.kweValues.BackgroundImage = Nothing
+            Me.kweValues.Font = Nothing
             Me.kweValues.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweValues.Name = "kweValues"
-            Me.kweValues.Size = New System.Drawing.Size(313, 165)
             '
             '
             '
+            Me.kweValues.Status.AccessibleDescription = Nothing
+            Me.kweValues.Status.AccessibleName = Nothing
             Me.kweValues.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweValues.Status.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.kweValues.Status.Anchor = CType(resources.GetObject("kweValues.Status.Anchor"), System.Windows.Forms.AnchorStyles)
             Me.kweValues.Status.AutoChanged = False
-            Me.kweValues.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.kweValues.Status.AutoScroll = CType(resources.GetObject("kweValues.Status.AutoScroll"), Boolean)
+            Me.kweValues.Status.AutoSize = CType(resources.GetObject("kweValues.Status.AutoSize"), Boolean)
+            Me.kweValues.Status.AutoSizeMode = CType(resources.GetObject("kweValues.Status.AutoSizeMode"), System.Windows.Forms.AutoSizeMode)
+            Me.kweValues.Status.BackgroundImage = Nothing
+            Me.kweValues.Status.BackgroundImageLayout = CType(resources.GetObject("kweValues.Status.BackgroundImageLayout"), System.Windows.Forms.ImageLayout)
             Me.kweValues.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweValues.Status.Enabled = False
-            Me.kweValues.Status.Location = New System.Drawing.Point(266, 0)
-            Me.kweValues.Status.Margin = New System.Windows.Forms.Padding(0)
+            Me.kweValues.Status.Dock = CType(resources.GetObject("kweValues.Status.Dock"), System.Windows.Forms.DockStyle)
+            Me.kweValues.Status.Enabled = CType(resources.GetObject("kweValues.Status.Enabled"), Boolean)
+            Me.kweValues.Status.Font = Nothing
+            Me.kweValues.Status.ImeMode = CType(resources.GetObject("kweValues.Status.ImeMode"), System.Windows.Forms.ImeMode)
+            Me.kweValues.Status.Location = CType(resources.GetObject("kweValues.Status.Location"), System.Drawing.Point)
+            Me.kweValues.Status.Margin = CType(resources.GetObject("kweValues.Status.Margin"), System.Windows.Forms.Padding)
             Me.kweValues.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             Me.kweValues.Status.Name = "stmStatus"
-            Me.kweValues.Status.Size = New System.Drawing.Size(24, 24)
+            Me.kweValues.Status.RightToLeft = CType(resources.GetObject("kweValues.Status.RightToLeft"), System.Windows.Forms.RightToLeft)
+            Me.kweValues.Status.Size = CType(resources.GetObject("kweValues.Status.Size"), System.Drawing.Size)
             Me.kweValues.Status.StatusedControl = Nothing
-            Me.kweValues.Status.TabIndex = 2
+            Me.kweValues.Status.TabIndex = CType(resources.GetObject("kweValues.Status.TabIndex"), Integer)
             Me.kweValues.Status.TabStop = False
-            Me.kweValues.Status.Visible = False
+            Me.kweValues.Status.Visible = CType(resources.GetObject("kweValues.Status.Visible"), Boolean)
             Me.kweValues.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweValues.TabIndex = 0
             Me.kweValues.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+            Me.totToolTip.SetToolTip(Me.kweValues, resources.GetString("kweValues.ToolTip"))
             '
             'tlpSelect
             '
-            Me.tlpSelect.AutoSize = True
-            Me.tlpSelect.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpSelect.ColumnCount = 3
-            Me.tlpSelect.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpSelect.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.tlpSelect.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+            Me.tlpSelect.AccessibleDescription = Nothing
+            Me.tlpSelect.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpSelect, "tlpSelect")
+            Me.tlpSelect.BackgroundImage = Nothing
             Me.tlpSelect.Controls.Add(Me.cmdDelSyn, 2, 0)
             Me.tlpSelect.Controls.Add(Me.cmdAddSyn, 1, 0)
             Me.tlpSelect.Controls.Add(Me.cmbSyn, 0, 0)
-            Me.tlpSelect.Dock = System.Windows.Forms.DockStyle.Top
-            Me.tlpSelect.Location = New System.Drawing.Point(3, 16)
-            Me.tlpSelect.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpSelect.Font = Nothing
             Me.tlpSelect.Name = "tlpSelect"
-            Me.tlpSelect.RowCount = 1
-            Me.tlpSelect.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpSelect.Size = New System.Drawing.Size(319, 24)
-            Me.tlpSelect.TabIndex = 1
+            Me.totToolTip.SetToolTip(Me.tlpSelect, resources.GetString("tlpSelect.ToolTip"))
             '
             'cmdDelSyn
             '
-            Me.cmdDelSyn.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdDelSyn.AutoSize = True
-            Me.cmdDelSyn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdDelSyn.Enabled = False
-            Me.cmdDelSyn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdDelSyn.AccessibleDescription = Nothing
+            Me.cmdDelSyn.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdDelSyn, "cmdDelSyn")
+            Me.cmdDelSyn.BackgroundImage = Nothing
+            Me.cmdDelSyn.Font = Nothing
             Me.cmdDelSyn.Image = Global.Tools.My.Resources.Resources.DeleteHS
-            Me.cmdDelSyn.Location = New System.Drawing.Point(295, 0)
-            Me.cmdDelSyn.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdDelSyn.Name = "cmdDelSyn"
-            Me.cmdDelSyn.Size = New System.Drawing.Size(24, 24)
-            Me.cmdDelSyn.TabIndex = 2
-            Me.totToolTip.SetToolTip(Me.cmdDelSyn, "Delete selected group of synonyms")
+            Me.totToolTip.SetToolTip(Me.cmdDelSyn, resources.GetString("cmdDelSyn.ToolTip"))
             Me.cmdDelSyn.UseVisualStyleBackColor = True
             '
             'cmdAddSyn
             '
-            Me.cmdAddSyn.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdAddSyn.AutoSize = True
-            Me.cmdAddSyn.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdAddSyn.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdAddSyn.AccessibleDescription = Nothing
+            Me.cmdAddSyn.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdAddSyn, "cmdAddSyn")
+            Me.cmdAddSyn.BackgroundImage = Nothing
+            Me.cmdAddSyn.Font = Nothing
             Me.cmdAddSyn.Image = Global.Tools.My.Resources.Resources.Plus
-            Me.cmdAddSyn.Location = New System.Drawing.Point(271, 0)
-            Me.cmdAddSyn.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdAddSyn.Name = "cmdAddSyn"
-            Me.cmdAddSyn.Size = New System.Drawing.Size(24, 24)
-            Me.cmdAddSyn.TabIndex = 1
-            Me.totToolTip.SetToolTip(Me.cmdAddSyn, "Add new group of synonyms")
+            Me.totToolTip.SetToolTip(Me.cmdAddSyn, resources.GetString("cmdAddSyn.ToolTip"))
             Me.cmdAddSyn.UseVisualStyleBackColor = True
             '
             'cmbSyn
             '
-            Me.cmbSyn.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            Me.cmbSyn.AccessibleDescription = Nothing
+            Me.cmbSyn.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmbSyn, "cmbSyn")
+            Me.cmbSyn.BackgroundImage = Nothing
+            Me.cmbSyn.Font = Nothing
             Me.cmbSyn.FormattingEnabled = True
-            Me.cmbSyn.Location = New System.Drawing.Point(0, 1)
-            Me.cmbSyn.Margin = New System.Windows.Forms.Padding(0)
             Me.cmbSyn.Name = "cmbSyn"
-            Me.cmbSyn.Size = New System.Drawing.Size(271, 21)
-            Me.cmbSyn.TabIndex = 0
+            Me.totToolTip.SetToolTip(Me.cmbSyn, resources.GetString("cmbSyn.ToolTip"))
             '
             'cmdOpen
             '
-            Me.cmdOpen.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdOpen.AutoSize = True
-            Me.cmdOpen.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdOpen.AccessibleDescription = Nothing
+            Me.cmdOpen.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdOpen, "cmdOpen")
+            Me.cmdOpen.BackgroundImage = Nothing
             Me.cmdOpen.FlatAppearance.BorderSize = 0
-            Me.cmdOpen.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdOpen.Font = Nothing
             Me.cmdOpen.Image = Global.Tools.My.Resources.Resources.openHS
-            Me.cmdOpen.Location = New System.Drawing.Point(97, 3)
             Me.cmdOpen.Name = "cmdOpen"
-            Me.cmdOpen.Size = New System.Drawing.Size(22, 22)
-            Me.cmdOpen.TabIndex = 3
-            Me.totToolTip.SetToolTip(Me.cmdOpen, "Import keywords from file")
+            Me.totToolTip.SetToolTip(Me.cmdOpen, resources.GetString("cmdOpen.ToolTip"))
             Me.cmdOpen.UseVisualStyleBackColor = True
             '
             'cmdSave
             '
-            Me.cmdSave.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdSave.AutoSize = True
-            Me.cmdSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdSave.AccessibleDescription = Nothing
+            Me.cmdSave.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdSave, "cmdSave")
+            Me.cmdSave.BackgroundImage = Nothing
             Me.cmdSave.FlatAppearance.BorderSize = 0
-            Me.cmdSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            Me.cmdSave.Font = Nothing
             Me.cmdSave.Image = Global.Tools.My.Resources.Resources.saveHS
-            Me.cmdSave.Location = New System.Drawing.Point(125, 3)
             Me.cmdSave.Name = "cmdSave"
-            Me.cmdSave.Size = New System.Drawing.Size(22, 22)
-            Me.cmdSave.TabIndex = 2
-            Me.totToolTip.SetToolTip(Me.cmdSave, "Save keywords to file")
+            Me.totToolTip.SetToolTip(Me.cmdSave, resources.GetString("cmdSave.ToolTip"))
             Me.cmdSave.UseVisualStyleBackColor = True
             '
             'tlpButtons
             '
-            Me.tlpButtons.AutoSize = True
-            Me.tlpButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpButtons.ColumnCount = 1
-            Me.tlpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpButtons.AccessibleDescription = Nothing
+            Me.tlpButtons.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpButtons, "tlpButtons")
+            Me.tlpButtons.BackgroundImage = Nothing
             Me.tlpButtons.Controls.Add(Me.flpButtons, 0, 0)
-            Me.tlpButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-            Me.tlpButtons.Location = New System.Drawing.Point(0, 399)
+            Me.tlpButtons.Font = Nothing
             Me.tlpButtons.Name = "tlpButtons"
-            Me.tlpButtons.RowCount = 1
-            Me.tlpButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            Me.tlpButtons.Size = New System.Drawing.Size(651, 29)
-            Me.tlpButtons.TabIndex = 1
+            Me.totToolTip.SetToolTip(Me.tlpButtons, resources.GetString("tlpButtons.ToolTip"))
             '
             'flpButtons
             '
-            Me.flpButtons.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.flpButtons.AutoSize = True
+            Me.flpButtons.AccessibleDescription = Nothing
+            Me.flpButtons.AccessibleName = Nothing
+            resources.ApplyResources(Me.flpButtons, "flpButtons")
+            Me.flpButtons.BackgroundImage = Nothing
             Me.flpButtons.Controls.Add(Me.cmdOK)
             Me.flpButtons.Controls.Add(Me.cmdCancel)
             Me.flpButtons.Controls.Add(Me.cmdOpen)
             Me.flpButtons.Controls.Add(Me.cmdSave)
-            Me.flpButtons.Location = New System.Drawing.Point(250, 0)
-            Me.flpButtons.Margin = New System.Windows.Forms.Padding(0)
+            Me.flpButtons.Font = Nothing
             Me.flpButtons.Name = "flpButtons"
-            Me.flpButtons.Size = New System.Drawing.Size(150, 29)
-            Me.flpButtons.TabIndex = 0
+            Me.totToolTip.SetToolTip(Me.flpButtons, resources.GetString("flpButtons.ToolTip"))
             '
             'cmdOK
             '
-            Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdOK.AutoSize = True
-            Me.cmdOK.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdOK.AccessibleDescription = Nothing
+            Me.cmdOK.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdOK, "cmdOK")
+            Me.cmdOK.BackgroundImage = Nothing
             Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK
-            Me.cmdOK.Location = New System.Drawing.Point(3, 3)
+            Me.cmdOK.Font = Nothing
             Me.cmdOK.Name = "cmdOK"
-            Me.cmdOK.Size = New System.Drawing.Size(32, 23)
-            Me.cmdOK.TabIndex = 0
-            Me.cmdOK.Text = "&OK"
+            Me.totToolTip.SetToolTip(Me.cmdOK, resources.GetString("cmdOK.ToolTip"))
             Me.cmdOK.UseVisualStyleBackColor = True
             '
             'cmdCancel
             '
-            Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdCancel.AutoSize = True
-            Me.cmdCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdCancel.AccessibleDescription = Nothing
+            Me.cmdCancel.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdCancel, "cmdCancel")
+            Me.cmdCancel.BackgroundImage = Nothing
             Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.cmdCancel.Location = New System.Drawing.Point(41, 3)
+            Me.cmdCancel.Font = Nothing
             Me.cmdCancel.Name = "cmdCancel"
-            Me.cmdCancel.Size = New System.Drawing.Size(50, 23)
-            Me.cmdCancel.TabIndex = 1
-            Me.cmdCancel.Text = "&Cancel"
+            Me.totToolTip.SetToolTip(Me.cmdCancel, resources.GetString("cmdCancel.ToolTip"))
             Me.cmdCancel.UseVisualStyleBackColor = True
             '
             'sfdSave
             '
             Me.sfdSave.DefaultExt = "xml"
-            Me.sfdSave.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
-            Me.sfdSave.Title = "Save keywords"
+            resources.ApplyResources(Me.sfdSave, "sfdSave")
             '
             'ofdLoad
             '
             Me.ofdLoad.DefaultExt = "xml"
-            Me.ofdLoad.Filter = "XML files (*.xml)|*.xml|All files (*.*)|*.*"
-            Me.ofdLoad.Title = "Load keywords"
+            resources.ApplyResources(Me.ofdLoad, "ofdLoad")
             '
             'ThesaurusForm
             '
             Me.AcceptButton = Me.cmdOK
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.AccessibleDescription = Nothing
+            Me.AccessibleName = Nothing
+            resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.BackgroundImage = Nothing
             Me.CancelButton = Me.cmdCancel
-            Me.ClientSize = New System.Drawing.Size(651, 428)
             Me.ControlBox = False
             Me.Controls.Add(Me.splVertical)
             Me.Controls.Add(Me.tlpButtons)
+            Me.Font = Nothing
+            Me.Icon = Nothing
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "ThesaurusForm"
             Me.ShowInTaskbar = False
-            Me.Text = "Autocomplete list and synonyms for key words editor"
+            Me.totToolTip.SetToolTip(Me, resources.GetString("$this.ToolTip"))
             Me.splVertical.Panel1.ResumeLayout(False)
             Me.splVertical.Panel2.ResumeLayout(False)
             Me.splVertical.ResumeLayout(False)

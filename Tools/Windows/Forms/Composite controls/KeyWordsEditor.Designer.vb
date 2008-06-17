@@ -24,10 +24,10 @@ Namespace WindowsT.FormsT
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(KeyWordsEditor))
             Me.txtEdit = New System.Windows.Forms.TextBox
             Me.lstKW = New System.Windows.Forms.ListBox
             Me.tlpTop = New System.Windows.Forms.TableLayoutPanel
-            Me.stmStatus = New Tools.WindowsT.FormsT.StatusMarker
             Me.cmdThesaurus = New System.Windows.Forms.Button
             Me.cmdMerge = New System.Windows.Forms.Button
             Me.cmdAdd = New System.Windows.Forms.Button
@@ -39,6 +39,7 @@ Namespace WindowsT.FormsT
             Me.tmiManage = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiSynonyms = New System.Windows.Forms.ToolStripMenuItem
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
+            Me.stmStatus = New Tools.WindowsT.FormsT.StatusMarker
             Me.tlpTop.SuspendLayout()
             Me.cmsThesaurus.SuspendLayout()
             Me.SuspendLayout()
@@ -46,113 +47,55 @@ Namespace WindowsT.FormsT
             'txtEdit
             '
             Me.txtEdit.AcceptsReturn = True
-            Me.txtEdit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+            resources.ApplyResources(Me.txtEdit, "txtEdit")
             Me.txtEdit.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
             Me.txtEdit.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource
-            Me.txtEdit.Location = New System.Drawing.Point(0, 2)
-            Me.txtEdit.Margin = New System.Windows.Forms.Padding(0)
             Me.txtEdit.Name = "txtEdit"
-            Me.txtEdit.Size = New System.Drawing.Size(390, 20)
-            Me.txtEdit.TabIndex = 0
             '
             'lstKW
             '
-            Me.lstKW.Dock = System.Windows.Forms.DockStyle.Fill
+            resources.ApplyResources(Me.lstKW, "lstKW")
             Me.lstKW.FormattingEnabled = True
-            Me.lstKW.Location = New System.Drawing.Point(0, 24)
             Me.lstKW.Name = "lstKW"
             Me.lstKW.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended
-            Me.lstKW.Size = New System.Drawing.Size(485, 238)
-            Me.lstKW.TabIndex = 1
             '
             'tlpTop
             '
-            Me.tlpTop.AutoSize = True
-            Me.tlpTop.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpTop.ColumnCount = 5
-            Me.tlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.tlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.tlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.tlpTop.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+            resources.ApplyResources(Me.tlpTop, "tlpTop")
             Me.tlpTop.Controls.Add(Me.txtEdit, 0, 0)
             Me.tlpTop.Controls.Add(Me.stmStatus, 2, 0)
             Me.tlpTop.Controls.Add(Me.cmdThesaurus, 3, 0)
             Me.tlpTop.Controls.Add(Me.cmdMerge, 4, 0)
             Me.tlpTop.Controls.Add(Me.cmdAdd, 1, 0)
-            Me.tlpTop.Dock = System.Windows.Forms.DockStyle.Top
             Me.tlpTop.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns
-            Me.tlpTop.Location = New System.Drawing.Point(0, 0)
-            Me.tlpTop.Margin = New System.Windows.Forms.Padding(0)
             Me.tlpTop.Name = "tlpTop"
-            Me.tlpTop.RowCount = 1
-            Me.tlpTop.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpTop.Size = New System.Drawing.Size(485, 24)
-            Me.tlpTop.TabIndex = 0
-            '
-            'stmStatus
-            '
-            Me.stmStatus.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.stmStatus.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.stmStatus.AutoChanged = False
-            Me.stmStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.stmStatus.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.stmStatus.Location = New System.Drawing.Point(414, 0)
-            Me.stmStatus.Margin = New System.Windows.Forms.Padding(0)
-            Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.stmStatus.Name = "stmStatus"
-            Me.stmStatus.Size = New System.Drawing.Size(24, 24)
-            Me.stmStatus.StatusedControl = Nothing
-            Me.stmStatus.TabIndex = 2
-            Me.stmStatus.TabStop = False
             '
             'cmdThesaurus
             '
-            Me.cmdThesaurus.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdThesaurus.AutoSize = True
-            Me.cmdThesaurus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdThesaurus.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            resources.ApplyResources(Me.cmdThesaurus, "cmdThesaurus")
             Me.cmdThesaurus.Image = Global.Tools.My.Resources.Resources.T
-            Me.cmdThesaurus.Location = New System.Drawing.Point(438, 0)
-            Me.cmdThesaurus.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdThesaurus.Name = "cmdThesaurus"
-            Me.cmdThesaurus.Size = New System.Drawing.Size(23, 24)
-            Me.cmdThesaurus.TabIndex = 3
             Me.cmdThesaurus.TabStop = False
-            Me.totToolTip.SetToolTip(Me.cmdThesaurus, "Thesaurus")
+            Me.totToolTip.SetToolTip(Me.cmdThesaurus, resources.GetString("cmdThesaurus.ToolTip"))
             Me.cmdThesaurus.UseVisualStyleBackColor = True
             '
             'cmdMerge
             '
-            Me.cmdMerge.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdMerge.AutoSize = True
-            Me.cmdMerge.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            resources.ApplyResources(Me.cmdMerge, "cmdMerge")
             Me.cmdMerge.BackColor = System.Drawing.Color.Orange
-            Me.cmdMerge.FlatStyle = System.Windows.Forms.FlatStyle.Flat
             Me.cmdMerge.Image = Global.Tools.My.Resources.Resources.Zip
-            Me.cmdMerge.Location = New System.Drawing.Point(461, 0)
-            Me.cmdMerge.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdMerge.Name = "cmdMerge"
-            Me.cmdMerge.Size = New System.Drawing.Size(24, 24)
-            Me.cmdMerge.TabIndex = 4
             Me.cmdMerge.TabStop = False
-            Me.totToolTip.SetToolTip(Me.cmdMerge, "Merge enabled for multiple items")
+            Me.totToolTip.SetToolTip(Me.cmdMerge, resources.GetString("cmdMerge.ToolTip"))
             Me.cmdMerge.UseVisualStyleBackColor = False
             '
             'cmdAdd
             '
-            Me.cmdAdd.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdAdd.AutoSize = True
-            Me.cmdAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+            resources.ApplyResources(Me.cmdAdd, "cmdAdd")
             Me.cmdAdd.Image = Global.Tools.My.Resources.Resources.Plus
-            Me.cmdAdd.Location = New System.Drawing.Point(390, 0)
-            Me.cmdAdd.Margin = New System.Windows.Forms.Padding(0)
             Me.cmdAdd.Name = "cmdAdd"
-            Me.cmdAdd.Size = New System.Drawing.Size(24, 24)
-            Me.cmdAdd.TabIndex = 1
             Me.cmdAdd.TabStop = False
-            Me.totToolTip.SetToolTip(Me.cmdAdd, "Add word (Enter)")
+            Me.totToolTip.SetToolTip(Me.cmdAdd, resources.GetString("cmdAdd.ToolTip"))
             Me.cmdAdd.UseVisualStyleBackColor = True
             '
             'cmsThesaurus
@@ -161,72 +104,63 @@ Namespace WindowsT.FormsT
             Me.cmsThesaurus.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
             Me.cmsThesaurus.Name = "cmsThesaurus"
             Me.cmsThesaurus.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
-            Me.cmsThesaurus.Size = New System.Drawing.Size(217, 136)
+            resources.ApplyResources(Me.cmsThesaurus, "cmsThesaurus")
             '
             'tmiLabel
             '
             Me.tmiLabel.AccessibleRole = System.Windows.Forms.AccessibleRole.TitleBar
             Me.tmiLabel.BackColor = System.Drawing.SystemColors.ActiveCaption
-            Me.tmiLabel.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center
+            resources.ApplyResources(Me.tmiLabel, "tmiLabel")
             Me.tmiLabel.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
-            Me.tmiLabel.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Bold)
             Me.tmiLabel.ForeColor = System.Drawing.SystemColors.ActiveCaptionText
             Me.tmiLabel.Name = "tmiLabel"
-            Me.tmiLabel.Size = New System.Drawing.Size(216, 22)
-            Me.tmiLabel.Text = "Thesaurus menu"
             '
             'tmiAddSelected
             '
-            Me.tmiAddSelected.Enabled = False
+            resources.ApplyResources(Me.tmiAddSelected, "tmiAddSelected")
             Me.tmiAddSelected.Image = Global.Tools.My.Resources.Resources.Plus
             Me.tmiAddSelected.Name = "tmiAddSelected"
-            Me.tmiAddSelected.Size = New System.Drawing.Size(216, 22)
-            Me.tmiAddSelected.Text = "Add selected keywords"
-            Me.tmiAddSelected.Visible = False
             '
             'tmiRemoveSelected
             '
-            Me.tmiRemoveSelected.Enabled = False
+            resources.ApplyResources(Me.tmiRemoveSelected, "tmiRemoveSelected")
             Me.tmiRemoveSelected.Image = Global.Tools.My.Resources.Resources.DeleteHS
             Me.tmiRemoveSelected.Name = "tmiRemoveSelected"
-            Me.tmiRemoveSelected.Size = New System.Drawing.Size(216, 22)
-            Me.tmiRemoveSelected.Text = "Remove selected keywords"
-            Me.tmiRemoveSelected.Visible = False
             '
             'tmiClearCache
             '
-            Me.tmiClearCache.Enabled = False
+            resources.ApplyResources(Me.tmiClearCache, "tmiClearCache")
             Me.tmiClearCache.Name = "tmiClearCache"
-            Me.tmiClearCache.Size = New System.Drawing.Size(216, 22)
-            Me.tmiClearCache.Text = "&Clear cache"
-            Me.tmiClearCache.Visible = False
             '
             'tmiManage
             '
-            Me.tmiManage.Enabled = False
+            resources.ApplyResources(Me.tmiManage, "tmiManage")
             Me.tmiManage.Name = "tmiManage"
-            Me.tmiManage.Size = New System.Drawing.Size(216, 22)
-            Me.tmiManage.Text = "&Manage..."
-            Me.tmiManage.Visible = False
             '
             'tmiSynonyms
             '
-            Me.tmiSynonyms.Enabled = False
+            resources.ApplyResources(Me.tmiSynonyms, "tmiSynonyms")
             Me.tmiSynonyms.Image = Global.Tools.My.Resources.Resources.T
             Me.tmiSynonyms.Name = "tmiSynonyms"
-            Me.tmiSynonyms.Size = New System.Drawing.Size(216, 22)
-            Me.tmiSynonyms.Text = "&Synonyms"
-            Me.tmiSynonyms.ToolTipText = "Adds new group of synonyms with all selected words as keys"
-            Me.tmiSynonyms.Visible = False
+            '
+            'stmStatus
+            '
+            Me.stmStatus.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
+            resources.ApplyResources(Me.stmStatus, "stmStatus")
+            Me.stmStatus.AutoChanged = False
+            Me.stmStatus.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+            Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
+            Me.stmStatus.Name = "stmStatus"
+            Me.stmStatus.StatusedControl = Nothing
+            Me.stmStatus.TabStop = False
             '
             'KeyWordsEditor
             '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
             Me.Controls.Add(Me.lstKW)
             Me.Controls.Add(Me.tlpTop)
             Me.Name = "KeyWordsEditor"
-            Me.Size = New System.Drawing.Size(485, 264)
             Me.tlpTop.ResumeLayout(False)
             Me.tlpTop.PerformLayout()
             Me.cmsThesaurus.ResumeLayout(False)
