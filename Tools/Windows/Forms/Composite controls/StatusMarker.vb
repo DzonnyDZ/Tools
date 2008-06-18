@@ -1,4 +1,6 @@
 Imports System.Windows.Forms
+Imports Tools.ComponentModelT
+'Extracted
 '#If Config <= Nightly Then set in Tools.vbproj
 'Stage: Nightly
 Namespace WindowsT.FormsT
@@ -34,23 +36,22 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets shown status of the control</summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="Statuses"/></exception>
         <DefaultValue(GetType(Statuses), "Normal")> _
-        <Description("Sown status of control")> _
+        <LDescription(GetType(CompositeControls), "StatusMarkerStatus_d")> _
         <Category(UtilitiesT.CategoryAttributeValues.Data)> _
         <Bindable(True)> _
-        Public Overridable Property Status() As Statuses Implements IControlWithStatus.Status  'Localize: Description
+        Public Overridable Property Status() As Statuses Implements IControlWithStatus.Status
             Get
                 Return _Status
             End Get
             Set(ByVal value As Statuses)
                 Select Case value
-                    'Localize: Tooltips
-                    Case Statuses.Deleted : cmdStatus.ImageKey = "Deleted" : totToolTip.SetToolTip(cmdStatus, "Deleted")
+                    Case Statuses.Deleted : cmdStatus.ImageKey = "Deleted" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Deleted)
                     Case Statuses.Error : cmdStatus.ImageKey = "Error" : totToolTip.SetToolTip(cmdStatus, My.Resources.Error_)
-                    Case Statuses.Changed : cmdStatus.ImageKey = "Changed" : totToolTip.SetToolTip(cmdStatus, "Changed")
-                    Case Statuses.NA : cmdStatus.ImageKey = "N/A" : totToolTip.SetToolTip(cmdStatus, "N/A")
-                    Case Statuses.[New] : cmdStatus.ImageKey = "New" : totToolTip.SetToolTip(cmdStatus, "New")
-                    Case Statuses.Normal : cmdStatus.ImageKey = "Normal" : totToolTip.SetToolTip(cmdStatus, "Normal")
-                    Case Statuses.Null : cmdStatus.ImageKey = "Null" : totToolTip.SetToolTip(cmdStatus, "Null")
+                    Case Statuses.Changed : cmdStatus.ImageKey = "Changed" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Changed)
+                    Case Statuses.NA : cmdStatus.ImageKey = "N/A" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.NA)
+                    Case Statuses.[New] : cmdStatus.ImageKey = "New" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.New_)
+                    Case Statuses.Normal : cmdStatus.ImageKey = "Normal" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Normal)
+                    Case Statuses.Null : cmdStatus.ImageKey = "Null" : totToolTip.SetToolTip(cmdStatus, WindowsT.FormsT.CompositeControls.Null)
                     Case Else : Throw New InvalidEnumArgumentException("value", value, GetType(Statuses))
                 End Select
                 _Status = value
@@ -59,8 +60,8 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Raised after <see cref="Status"/> changes</summary>
         <Category(UtilitiesT.CategoryAttributeValues.PropertyChanged)> _
-        <Description("Raised after the Status property changes")> _
-        Public Event StatusChanged As EventHandler Implements IControlWithStatus.StatusChanged 'Localize: Description
+        <LDescription(GetType(CompositeControls), "StatusChanged_d")> _
+        Public Event StatusChanged As EventHandler Implements IControlWithStatus.StatusChanged
         ''' <summary>Raises the <see cref="StatusChanged"/> event</summary>
         ''' <param name="e">Event parameters (<see cref="EventArgs.Empty"/>)</param>
         Protected Overridable Sub OnStatusChanged(ByVal e As EventArgs)
@@ -69,9 +70,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or set state of <see cref="tmiDelete"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
-        <Description("State of the Delete menu item")> _
+        <LDescription(GetType(CompositeControls), "DeleteMenuState_d")> _
         <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
-        Public Property DeleteMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.DeleteMenustate  'Localize: Description
+        Public Property DeleteMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.DeleteMenustate
             Get
                 Return MenuState(tmiDelete)
             End Get
@@ -82,9 +83,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or set state of <see cref="tmiMarkAsChanged"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
-        <Description("State of the Mark-as-changed menu item")> _
+        <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")> _
         <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
-        Public Property MarkAsChangedMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.MarkAsChangedMenuState  'Localize: Description
+        Public Property MarkAsChangedMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.MarkAsChangedMenuState
             Get
                 Return MenuState(tmiMarkAsChanged)
             End Get
@@ -95,9 +96,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or set state of <see cref="tmiReset"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
-        <Description("State of the Reset menu item")> _
+        <LDescription(GetType(CompositeControls), "ResetMenuState_d")> _
         <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
-        Public Property ResetMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.ResetMenuState  'Localize: Description
+        Public Property ResetMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.ResetMenuState
             Get
                 Return MenuState(tmiReset)
             End Get
@@ -133,9 +134,9 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or set state of <see cref="tmiAdd"/></summary>
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
-        <Description("State of the Add menu item")> _
+        <LDescription(GetType(CompositeControls), "AddMenuState_d")> _
         <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
-        Public Property AddMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.AddMenuState  'Localize: Description
+        Public Property AddMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.AddMenuState
             Get
                 Return MenuState(tmiAdd)
             End Get
@@ -149,7 +150,7 @@ Namespace WindowsT.FormsT
 
         ''' <summary>Gets or sets value indicating if <see cref="Status"/> automatically changes to <see cref="Statuses.Changed"/> when <see cref="tmiMarkAsChanged"/> is clicked</summary>
         <DefaultValue(True)> _
-        <Description("Gets or sets value indicating if Status automatically changes to Statuses.Changed when tmiMarkAsChanged is clicked")> _
+        <LDescription(GetType(CompositeControls), "AutoChanged_d")> _
         <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
         Public Property AutoChanged() As Boolean Implements IControlWithStatus.AutoChanged
             Get
@@ -175,8 +176,8 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised after <see cref="tmiAdd"/> is clicked</summary>
         <Category(UtilitiesT.CategoryAttributeValues.Action)> _
-        <Description("Raised after Add menu item is clicked")> _
-        Public Event Add As EventHandler Implements IControlWithStatus.Add 'Localize: Description
+        <LDescription(GetType(CompositeControls), "Add_d")> _
+        Public Event Add As EventHandler Implements IControlWithStatus.Add
         ''' <summary>Raises the <see cref="Add"/> event</summary>
         ''' <param name="e">Event parameters</param>
         Protected Overridable Sub OnAdd(ByVal e As EventArgs)
@@ -184,8 +185,8 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised after <see cref="tmiMarkAsChanged"/> is clicked</summary>
         <Category(UtilitiesT.CategoryAttributeValues.Action)> _
-                <Description("Raised after Mark-as-changed menu item is clicked")> _
-        Public Event MarkAsChanged As EventHandler Implements IControlWithStatus.MarkAsChanged 'Localize: Description
+        <LDescription(GetType(CompositeControls), "MarkAsChanged_d")> _
+        Public Event MarkAsChanged As EventHandler Implements IControlWithStatus.MarkAsChanged
         ''' <summary>Raises the <see cref="MarkAsChanged"/> event</summary>
         ''' <param name="e">Event parameters</param>
         Protected Overridable Sub OnMarkAsChanged(ByVal e As EventArgs)
@@ -194,8 +195,8 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised after <see cref="tmiReset"/> is clicked</summary>
         <Category(UtilitiesT.CategoryAttributeValues.Action)> _
-        <Description("Raised after Reset menu item is clicked")> _
-        Public Event Reset As EventHandler Implements IControlWithStatus.Reset 'Localize: Description
+        <LDescription(GetType(CompositeControls), "Reset_d")> _
+        Public Event Reset As EventHandler Implements IControlWithStatus.Reset
         ''' <summary>Raises the <see cref="Reset"/> event</summary>
         ''' <param name="e">Event parameters</param>
         Protected Overridable Sub OnReset(ByVal e As EventArgs)
@@ -203,8 +204,8 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Raised after <see cref="tmiDelete"/> is clicked</summary>
         <Category(UtilitiesT.CategoryAttributeValues.Action)> _
-        <Description("Raised after Delete menu item is clicked")> _
-        Public Event Delete As EventHandler Implements IControlWithStatus.Delete 'Localize: Description
+        <LDescription(GetType(CompositeControls), "Delete_d")> _
+        Public Event Delete As EventHandler Implements IControlWithStatus.Delete
         ''' <summary>Raises the <see cref="Delete"/> event</summary>
         ''' <param name="e">Event parameters</param>
         Protected Overridable Sub OnDelete(ByVal e As EventArgs)
@@ -434,6 +435,4 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised after <see cref="Status"/> is changed</summary>
         Event StatusChanged As EventHandler
     End Interface
-
-
 End Namespace

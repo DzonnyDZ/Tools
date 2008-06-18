@@ -65,11 +65,38 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Raised after Add menu item is clicked.
+        '''</summary>
+        Friend Shared ReadOnly Property Add_d() As String
+            Get
+                Return ResourceManager.GetString("Add_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to State of the Add menu item.
+        '''</summary>
+        Friend Shared ReadOnly Property AddMenuState_d() As String
+            Get
+                Return ResourceManager.GetString("AddMenuState_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Gets or sets value indicating if Status.Status automatically changes when keyword is added or removed.
         '''</summary>
         Friend Shared ReadOnly Property AutoChange_d() As String
             Get
                 Return ResourceManager.GetString("AutoChange_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Status automatically changes to Statuses.Changed when tmiMarkAsChanged is clicked.
+        '''</summary>
+        Friend Shared ReadOnly Property AutoChanged_d() As String
+            Get
+                Return ResourceManager.GetString("AutoChanged_d", resourceCulture)
             End Get
         End Property
         
@@ -92,11 +119,65 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Changed.
+        '''</summary>
+        Friend Shared ReadOnly Property Changed() As String
+            Get
+                Return ResourceManager.GetString("Changed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after Delete menu item is clicked.
+        '''</summary>
+        Friend Shared ReadOnly Property Delete_d() As String
+            Get
+                Return ResourceManager.GetString("Delete_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Deleted.
+        '''</summary>
+        Friend Shared ReadOnly Property Deleted() As String
+            Get
+                Return ResourceManager.GetString("Deleted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to State of the Delete menu item.
+        '''</summary>
+        Friend Shared ReadOnly Property DeleteMenuState_d() As String
+            Get
+                Return ResourceManager.GetString("DeleteMenuState_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Raised after user manually removes keyword(s).
         '''</summary>
         Friend Shared ReadOnly Property KeyWordRemoved_d() As String
             Get
                 Return ResourceManager.GetString("KeyWordRemoved_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after Mark-as-changed menu item is clicked.
+        '''</summary>
+        Friend Shared ReadOnly Property MarkAsChanged_d() As String
+            Get
+                Return ResourceManager.GetString("MarkAsChanged_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to State of the Mark-as-changed menu item.
+        '''</summary>
+        Friend Shared ReadOnly Property MarkAsChangedMenuState_d() As String
+            Get
+                Return ResourceManager.GetString("MarkAsChangedMenuState_d", resourceCulture)
             End Get
         End Property
         
@@ -128,11 +209,83 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to N/A.
+        '''</summary>
+        Friend Shared ReadOnly Property NA() As String
+            Get
+                Return ResourceManager.GetString("NA", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to New.
+        '''</summary>
+        Friend Shared ReadOnly Property New_() As String
+            Get
+                Return ResourceManager.GetString("New_", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Normal.
+        '''</summary>
+        Friend Shared ReadOnly Property Normal() As String
+            Get
+                Return ResourceManager.GetString("Normal", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Null.
+        '''</summary>
+        Friend Shared ReadOnly Property Null() As String
+            Get
+                Return ResourceManager.GetString("Null", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after Reset menu item is clicked.
+        '''</summary>
+        Friend Shared ReadOnly Property Reset_d() As String
+            Get
+                Return ResourceManager.GetString("Reset_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to State of the Reset menu item.
+        '''</summary>
+        Friend Shared ReadOnly Property ResetMenuState_d() As String
+            Get
+                Return ResourceManager.GetString("ResetMenuState_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to StatusMarker present on this control.
         '''</summary>
         Friend Shared ReadOnly Property Status_d() As String
             Get
                 Return ResourceManager.GetString("Status_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after the Status property changes.
+        '''</summary>
+        Friend Shared ReadOnly Property StatusChanged_d() As String
+            Get
+                Return ResourceManager.GetString("StatusChanged_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Shown status of control.
+        '''</summary>
+        Friend Shared ReadOnly Property StatusMarkerStatus_d() As String
+            Get
+                Return ResourceManager.GetString("StatusMarkerStatus_d", resourceCulture)
             End Get
         End Property
         

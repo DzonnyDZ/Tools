@@ -180,6 +180,24 @@
   <data name="tlpTop.ColumnCount" type="System.Int32, mscorlib">
     <value>5</value>
   </data>
+  <data name="stmStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="stmStatus.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
+    <value>GrowAndShrink</value>
+  </data>
+  <data name="stmStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>414, 0</value>
+  </data>
+  <data name="stmStatus.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="stmStatus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>24, 24</value>
+  </data>
+  <data name="stmStatus.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
   <data name="&gt;&gt;stmStatus.Name" xml:space="preserve">
     <value>stmStatus</value>
   </data>
@@ -191,75 +209,6 @@
   </data>
   <data name="&gt;&gt;stmStatus.ZOrder" xml:space="preserve">
     <value>1</value>
-  </data>
-  <data name="&gt;&gt;cmdThesaurus.Name" xml:space="preserve">
-    <value>cmdThesaurus</value>
-  </data>
-  <data name="&gt;&gt;cmdThesaurus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdThesaurus.Parent" xml:space="preserve">
-    <value>tlpTop</value>
-  </data>
-  <data name="&gt;&gt;cmdThesaurus.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;cmdMerge.Name" xml:space="preserve">
-    <value>cmdMerge</value>
-  </data>
-  <data name="&gt;&gt;cmdMerge.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdMerge.Parent" xml:space="preserve">
-    <value>tlpTop</value>
-  </data>
-  <data name="&gt;&gt;cmdMerge.ZOrder" xml:space="preserve">
-    <value>3</value>
-  </data>
-  <data name="&gt;&gt;cmdAdd.Name" xml:space="preserve">
-    <value>cmdAdd</value>
-  </data>
-  <data name="&gt;&gt;cmdAdd.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Button, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;cmdAdd.Parent" xml:space="preserve">
-    <value>tlpTop</value>
-  </data>
-  <data name="&gt;&gt;cmdAdd.ZOrder" xml:space="preserve">
-    <value>4</value>
-  </data>
-  <data name="tlpTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Top</value>
-  </data>
-  <data name="tlpTop.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
-  </data>
-  <data name="tlpTop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="tlpTop.RowCount" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="tlpTop.Size" type="System.Drawing.Size, System.Drawing">
-    <value>485, 24</value>
-  </data>
-  <data name="tlpTop.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
-  </data>
-  <data name="&gt;&gt;tlpTop.Name" xml:space="preserve">
-    <value>tlpTop</value>
-  </data>
-  <data name="&gt;&gt;tlpTop.Type" xml:space="preserve">
-    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tlpTop.Parent" xml:space="preserve">
-    <value>$this</value>
-  </data>
-  <data name="&gt;&gt;tlpTop.ZOrder" xml:space="preserve">
-    <value>2</value>
-  </data>
-  <data name="tlpTop.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
-    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="txtEdit" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="stmStatus" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cmdThesaurus" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="cmdMerge" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="cmdAdd" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
   </data>
   <metadata name="totToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>140, 17</value>
@@ -390,6 +339,39 @@
   <data name="&gt;&gt;cmdAdd.ZOrder" xml:space="preserve">
     <value>4</value>
   </data>
+  <data name="tlpTop.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="tlpTop.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tlpTop.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
+    <value>0, 0, 0, 0</value>
+  </data>
+  <data name="tlpTop.RowCount" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="tlpTop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>485, 24</value>
+  </data>
+  <data name="tlpTop.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tlpTop.Name" xml:space="preserve">
+    <value>tlpTop</value>
+  </data>
+  <data name="&gt;&gt;tlpTop.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TableLayoutPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tlpTop.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;tlpTop.ZOrder" xml:space="preserve">
+    <value>2</value>
+  </data>
+  <data name="tlpTop.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
+    <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="txtEdit" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="stmStatus" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cmdThesaurus" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="cmdMerge" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="cmdAdd" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
+  </data>
   <metadata name="cmsThesaurus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
@@ -480,36 +462,6 @@
   <metadata name="totToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>140, 17</value>
   </metadata>
-  <data name="stmStatus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
-    <value>None</value>
-  </data>
-  <data name="stmStatus.AutoSizeMode" type="System.Windows.Forms.AutoSizeMode, System.Windows.Forms">
-    <value>GrowAndShrink</value>
-  </data>
-  <data name="stmStatus.Location" type="System.Drawing.Point, System.Drawing">
-    <value>414, 0</value>
-  </data>
-  <data name="stmStatus.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="stmStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>24, 24</value>
-  </data>
-  <data name="stmStatus.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
-  </data>
-  <data name="&gt;&gt;stmStatus.Name" xml:space="preserve">
-    <value>stmStatus</value>
-  </data>
-  <data name="&gt;&gt;stmStatus.Type" xml:space="preserve">
-    <value>Tools.WindowsT.FormsT.StatusMarker, Tools, Version=1.5.0.19658, Culture=neutral, PublicKeyToken=null</value>
-  </data>
-  <data name="&gt;&gt;stmStatus.Parent" xml:space="preserve">
-    <value>tlpTop</value>
-  </data>
-  <data name="&gt;&gt;stmStatus.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

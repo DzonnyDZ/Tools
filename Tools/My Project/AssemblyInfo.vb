@@ -1,4 +1,6 @@
-﻿Imports System
+﻿Imports System.Resources
+
+Imports System
 Imports System.Reflection
 Imports System.Runtime.InteropServices
 
@@ -15,7 +17,7 @@ Imports System.Runtime.InteropServices
 <Assembly: AssemblyCopyright("Copyright © ĐTools team 2006/7/8")> 
 <Assembly: AssemblyTrademark("")> 
 
-<Assembly: ComVisible(False)>
+<Assembly: ComVisible(False)> 
 
 'The following GUID is for the ID of the typelib if this project is exposed to COM
 <Assembly: Guid("b4a72b33-f780-4d17-b446-4ba531640201")> 
@@ -33,3 +35,5 @@ Imports System.Runtime.InteropServices
 
 
 <Assembly: CLSCompliant(True)> 
+
+<Assembly: NeutralResourcesLanguageAttribute("en")> 

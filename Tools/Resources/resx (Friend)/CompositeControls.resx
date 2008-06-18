@@ -147,4 +147,61 @@
   <data name="KeyWordRemoved_d" xml:space="preserve">
     <value>Raised after user manually removes keyword(s)</value>
   </data>
+  <data name="AddMenuState_d" xml:space="preserve">
+    <value>State of the Add menu item</value>
+  </data>
+  <data name="DeleteMenuState_d" xml:space="preserve">
+    <value>State of the Delete menu item</value>
+  </data>
+  <data name="MarkAsChangedMenuState_d" xml:space="preserve">
+    <value>State of the Mark-as-changed menu item</value>
+  </data>
+  <data name="ResetMenuState_d" xml:space="preserve">
+    <value>State of the Reset menu item</value>
+  </data>
+  <data name="AutoChanged_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Status automatically changes to Statuses.Changed when tmiMarkAsChanged is clicked</value>
+  </data>
+  <data name="StatusMarkerStatus_d" xml:space="preserve">
+    <value>Shown status of control</value>
+  </data>
+  <data name="StatusChanged_d" xml:space="preserve">
+    <value>Raised after the Status property changes</value>
+  </data>
+  <data name="Add_d" xml:space="preserve">
+    <value>Raised after Add menu item is clicked</value>
+  </data>
+  <data name="MarkAsChanged_d" xml:space="preserve">
+    <value>Raised after Mark-as-changed menu item is clicked</value>
+  </data>
+  <data name="Reset_d" xml:space="preserve">
+    <value>Raised after Reset menu item is clicked</value>
+  </data>
+  <data name="Delete_d" xml:space="preserve">
+    <value>Raised after Delete menu item is clicked</value>
+  </data>
+  <data name="Deleted" xml:space="preserve">
+    <value>Deleted</value>
+    <comment>Tooltip</comment>
+  </data>
+  <data name="Changed" xml:space="preserve">
+    <value>Changed</value>
+    <comment>Tooltip</comment>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+    <comment>Tooltip</comment>
+  </data>
+  <data name="New_" xml:space="preserve">
+    <value>New</value>
+    <comment>Tooltip</comment>
+  </data>
+  <data name="Normal" xml:space="preserve">
+    <value>Normal</value>
+    <comment>Tooltip</comment>
+  </data>
+  <data name="Null" xml:space="preserve">
+    <value>Null</value>
+    <comment>Tooltip</comment>
+  </data>
 </root>

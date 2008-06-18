@@ -203,9 +203,29 @@ Namespace WindowsT.FormsT
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <LDescription(GetType(CompositeControls), "Status_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+        <Browsable(False)> _
         Public ReadOnly Property Status() As StatusMarker
             Get
                 Return stmStatus
+            End Get
+        End Property
+        ''' <summary>Gets value indicationg if the <see cref="Status_"/> property should be serialized</summary>
+        ''' <returns>True if designer should serialize the <see cref="Status_"/> property</returns>
+        Private Function ShouldSerializeStatus_() As Boolean
+            If StatusState = ControlState.Hidden Then Return False
+            Return Status_.shouldserialize
+        End Function
+        ''' <summary>Design-time proxy for the <see cref="Status"/> property</summary>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        <LDescription(GetType(CompositeControls), "Status_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+        <DisplayName("Status")> _
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
+        Public ReadOnly Property Status_() As StatusProxy
+            Get
+                Static px As New StatusProxy(Me)
+                Return px
             End Get
         End Property
         ''' <summary>Gets or sets state of thesaurus button</summary>
@@ -535,8 +555,104 @@ Namespace WindowsT.FormsT
             Dim rm As New Resources.ResourceManager("Tools.WindowsT.FormsT.KeywordsEditor.xsd", GetType(KeyWordsEditor).Assembly)
         End Sub
 
-        Private Sub lstKW_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstKW.SelectedIndexChanged
-
-        End Sub
+        ''' <summary>Proxy for the <see cref="Status"/> property in design time</summary>
+        ''' <remarks>This class supports design-time behaviour of <see cref="KeyWordsEditor"/> and should not be used directly</remarks>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Class StatusProxy
+            ''' <summary><see cref="KeyWordsEditor"/> which owns <see cref="StatusMarker"/> this instance is proxy for</summary>
+            Private ReadOnly kwe As KeyWordsEditor
+            ''' <summary><see cref="StatusMarker"/> this instance is proxy for</summary>
+            Private ReadOnly Property sm() As StatusMarker
+                <DebuggerStepThrough()> Get
+                    Return kwe.Status
+                End Get
+            End Property
+            ''' <summary>CTor</summary>
+            ''' <param name="kwe"><see cref="KeyWordsEditor"/> which owns <see cref="StatusMarker"/> this instance is proxy for</param>
+            Friend Sub New(ByVal kwe As KeyWordsEditor)
+                If kwe Is Nothing Then Throw New ArgumentNullException("kwe")
+                Me.kwe = kwe
+            End Sub
+            ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.AddMenuState">AddMenuState</see></summary>
+            <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
+            <LDescription(GetType(CompositeControls), "AddMenuState_d")> _
+            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            Public Property AddMenuState() As ControlState
+                <DebuggerStepThrough()> Get
+                    Return sm.AddMenuState
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As ControlState)
+                    sm.AddMenuState = value
+                End Set
+            End Property
+            ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.DeleteMenuState">DeleteMenuState</see></summary>
+            <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
+            <LDescription(GetType(CompositeControls), "DeleteMenuState_d")> _
+            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            Public Property DeleteMenuState() As ControlState
+                <DebuggerStepThrough()> Get
+                    Return sm.DeleteMenuState
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As ControlState)
+                    sm.DeleteMenuState = value
+                End Set
+            End Property
+            ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.MarkAsChangedMenuState">MarkAsChangedMenuState</see></summary>
+            <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
+           <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")> _
+           <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            Public Property MarkAsChangedMenuState() As ControlState
+                <DebuggerStepThrough()> Get
+                    Return sm.MarkAsChangedMenuState
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As ControlState)
+                    sm.MarkAsChangedMenuState = value
+                End Set
+            End Property
+            ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.ResetMenuState">ResetMenuState</see></summary>
+            <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
+            <LDescription(GetType(CompositeControls), "ResetMenuState_d")> _
+            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            Public Property ResetMenuState() As ControlState
+                <DebuggerStepThrough()> Get
+                    Return sm.ResetMenuState
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As ControlState)
+                    sm.ResetMenuState = value
+                End Set
+            End Property
+            ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.AutoChanged">AutoChanged</see></summary>
+            <DefaultValue(False)> _
+            <LDescription(GetType(CompositeControls), "AutoChanged_d")> _
+            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            Public Property AutoChanged() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return sm.AutoChanged
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As Boolean)
+                    sm.AutoChanged = value
+                End Set
+            End Property
+            ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.Status">Status</see></summary>
+            ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="StatusMarker.Statuses"/></exception>
+            <DefaultValue(GetType(StatusMarker.Statuses), "Normal")> _
+            <LDescription(GetType(CompositeControls), "StatusMarkerStatus_d")> _
+            <Category(UtilitiesT.CategoryAttributeValues.Data)> _
+            Public Property Status() As StatusMarker.Statuses
+                <DebuggerStepThrough()> Get
+                    Return sm.Status
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value As StatusMarker.Statuses)
+                    sm.Status = value
+                End Set
+            End Property
+            ''' <summary>Gets value indicatiiong if any of properties should be serialized</summary>
+            ''' <returns>True if any of properties has value different from default</returns>
+            Friend ReadOnly Property ShouldSerialize() As Boolean
+                Get
+                    Return AddMenuState <> ControlState.Hidden OrElse DeleteMenuState <> ControlState.Enabled OrElse MarkAsChangedMenuState <> ControlState.Enabled OrElse ResetMenuState <> ControlState.Enabled OrElse AutoChanged <> False OrElse Status <> StatusMarker.Statuses.Normal
+                End Get
+            End Property
+        End Class
     End Class
 End Namespace

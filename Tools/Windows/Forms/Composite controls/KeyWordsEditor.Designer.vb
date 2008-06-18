@@ -28,6 +28,7 @@ Namespace WindowsT.FormsT
             Me.txtEdit = New System.Windows.Forms.TextBox
             Me.lstKW = New System.Windows.Forms.ListBox
             Me.tlpTop = New System.Windows.Forms.TableLayoutPanel
+            Me.stmStatus = New Tools.WindowsT.FormsT.StatusMarker
             Me.cmdThesaurus = New System.Windows.Forms.Button
             Me.cmdMerge = New System.Windows.Forms.Button
             Me.cmdAdd = New System.Windows.Forms.Button
@@ -39,7 +40,6 @@ Namespace WindowsT.FormsT
             Me.tmiManage = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiSynonyms = New System.Windows.Forms.ToolStripMenuItem
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
-            Me.stmStatus = New Tools.WindowsT.FormsT.StatusMarker
             Me.tlpTop.SuspendLayout()
             Me.cmsThesaurus.SuspendLayout()
             Me.SuspendLayout()
@@ -69,6 +69,15 @@ Namespace WindowsT.FormsT
             Me.tlpTop.Controls.Add(Me.cmdAdd, 1, 0)
             Me.tlpTop.GrowStyle = System.Windows.Forms.TableLayoutPanelGrowStyle.AddColumns
             Me.tlpTop.Name = "tlpTop"
+            '
+            'stmStatus
+            '
+            resources.ApplyResources(Me.stmStatus, "stmStatus")
+            Me.stmStatus.AutoChanged = False
+            Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
+            Me.stmStatus.Name = "stmStatus"
+            Me.stmStatus.StatusedControl = Nothing
+            Me.stmStatus.TabStop = False
             '
             'cmdThesaurus
             '
@@ -124,7 +133,7 @@ Namespace WindowsT.FormsT
             'tmiRemoveSelected
             '
             resources.ApplyResources(Me.tmiRemoveSelected, "tmiRemoveSelected")
-            Me.tmiRemoveSelected.Image = Global.Tools.My.Resources.Resources.DeleteHS
+            Me.tmiRemoveSelected.Image = Global.Tools.My.Resources.Resources.Delete
             Me.tmiRemoveSelected.Name = "tmiRemoveSelected"
             '
             'tmiClearCache
@@ -142,17 +151,6 @@ Namespace WindowsT.FormsT
             resources.ApplyResources(Me.tmiSynonyms, "tmiSynonyms")
             Me.tmiSynonyms.Image = Global.Tools.My.Resources.Resources.T
             Me.tmiSynonyms.Name = "tmiSynonyms"
-            '
-            'stmStatus
-            '
-            Me.stmStatus.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            resources.ApplyResources(Me.stmStatus, "stmStatus")
-            Me.stmStatus.AutoChanged = False
-            Me.stmStatus.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.stmStatus.Name = "stmStatus"
-            Me.stmStatus.StatusedControl = Nothing
-            Me.stmStatus.TabStop = False
             '
             'KeyWordsEditor
             '

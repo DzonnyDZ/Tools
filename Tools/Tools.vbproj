@@ -258,27 +258,27 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Reflection\CodeImages.vb" />
-    <Compile Include="Reflection\ObjectImages.Designer.vb">
+    <Compile Include="Reflection\ReflectionT.ObjectImages.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>ObjectImages.resx</DependentUpon>
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
     <Compile Include="Reflection\SignatureProvider.vb" />
-    <Compile Include="Resources\Tools\Icons.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Icons.resx</DependentUpon>
-    </Compile>
-    <Compile Include="Resources\Tools\Resources.vb" />
-    <Compile Include="Resources\Tools\SystemResources.vb" />
-    <Compile Include="Text\Misc.vb" />
-    <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Forms\Composite controls\CompositeControls.Designer.vb">
+    <Compile Include="Resources\resx %28Friend%29\WindowsT.FormsT.CompositeControls.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CompositeControls.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Tools\Resources.vb" />
+    <Compile Include="Resources\Tools\ResourcesT.Icons.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icons.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Tools\SystemResources.vb" />
+    <Compile Include="Text\Misc.vb" />
+    <Compile Include="VBSpecific\Interaction.vb" />
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </Compile>
@@ -443,7 +443,7 @@
     <None Include="Resources\ĐTools.ico" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentLabel.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentLabel.bmp" />
     <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.resx">
       <SubType>Designer</SubType>
       <DependentUpon>EncodingDialog.vb</DependentUpon>
@@ -480,8 +480,8 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.DataBoundToolStripComboBox.bmp" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.DataBoundToolStripLabel.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.DataBoundToolStripComboBox.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.DataBoundToolStripLabel.bmp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Globalization\ISOLanguages.xml">
@@ -491,10 +491,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.Encoding.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.Encoding.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.ProgressBarWithText.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.ProgressBarWithText.bmp" />
     <EmbeddedResource Include="Windows\Forms\Composite controls\ComboWithStatus.resx">
       <DependentUpon>ComboWithStatus.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -628,21 +628,23 @@
     <None Include="Reflection\Resources\Extension.png" />
     <None Include="Reflection\Resources\BackwardReference.png" />
     <None Include="Reflection\Resources\ForwardReference.png" />
-    <Content Include="Resources\CommentHS.png" />
+    <None Include="Resources\CommentHS.png" />
     <EmbeddedResource Include="Reflection\ObjectImages.resx">
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <CustomToolNamespace>ReflectionT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>ObjectImages.Designer.vb</LastGenOutput>
+      <LastGenOutput>ReflectionT.ObjectImages.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
+      <LogicalName>Tools.ReflectionT.ObjectImages.resources</LogicalName>
     </EmbeddedResource>
     <None Include="Resources\NavBack.png" />
     <None Include="Resources\NavForward.png" />
     <EmbeddedResource Include="Resources\Tools\Icons.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
-      <LastGenOutput>Icons.Designer.vb</LastGenOutput>
+      <LastGenOutput>ResourcesT.Icons.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.Icons.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.MessageBox.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.MessageBox.bmp" />
     <None Include="Resources\Icons\Asterisk.ico" />
     <None Include="Resources\Icons\Error.ico" />
     <None Include="Resources\Icons\Exclamation.ico" />
@@ -659,13 +661,14 @@
     <None Include="Resources\Icons\Warning.ico" />
     <None Include="Resources\saveHS.png" />
     <None Include="Resources\openHS.png" />
-    <Content Include="Resources\T.png" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.StatusMarker.bmp" />
-    <EmbeddedResource Include="Resources\WindowsT.FormsT.TransparentTextBox.bmp" />
-    <EmbeddedResource Include="Windows\Forms\Composite controls\CompositeControls.resx">
+    <None Include="Resources\T.png" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.StatusMarker.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentTextBox.bmp" />
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>CompositeControls.Designer.vb</LastGenOutput>
+      <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">
       <SubType>Designer</SubType>
@@ -693,7 +696,7 @@
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />
-    <None Include="XML Schemas\WindowsT.FormsT.KeywordsEditor.xsd" />
+    <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />

@@ -57,24 +57,24 @@ Namespace WindowsT.FormsT
             'tmiAdd
             '
             resources.ApplyResources(Me.tmiAdd, "tmiAdd")
-            Me.tmiAdd.Image = Global.Tools.My.Resources.Resources.NewReportHS
+            Me.tmiAdd.Image = Global.Tools.My.Resources.Resources.NewReport
             Me.tmiAdd.Name = "tmiAdd"
             '
             'tmiReset
             '
-            Me.tmiReset.Image = Global.Tools.My.Resources.Resources.RepeatHS
+            Me.tmiReset.Image = Global.Tools.My.Resources.Resources.Repeat
             Me.tmiReset.Name = "tmiReset"
             resources.ApplyResources(Me.tmiReset, "tmiReset")
             '
             'tmiMarkAsChanged
             '
             resources.ApplyResources(Me.tmiMarkAsChanged, "tmiMarkAsChanged")
-            Me.tmiMarkAsChanged.Image = Global.Tools.My.Resources.Resources.CommentHS
+            Me.tmiMarkAsChanged.Image = Global.Tools.My.Resources.Resources.Comment
             Me.tmiMarkAsChanged.Name = "tmiMarkAsChanged"
             '
             'tmiDelete
             '
-            Me.tmiDelete.Image = Global.Tools.My.Resources.Resources.DeleteHS
+            Me.tmiDelete.Image = Global.Tools.My.Resources.Resources.Delete
             Me.tmiDelete.Name = "tmiDelete"
             resources.ApplyResources(Me.tmiDelete, "tmiDelete")
             '

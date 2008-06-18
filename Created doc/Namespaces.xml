@@ -205,5 +205,8 @@
         <member name="N:Tools.COM.ShellLink">
             <summary>Contains COM declarations related to the <see cref="T:Tools.COM.ShellLink.ShellLink"/> class. Those declarations servers as code-behind for implementation of the <see cref="T:Tools.IOt.ShellLink"/> class, a tool for manipulating *.LNK files.</summary>
         </member>
+        <member name="N:Tools.Metanol">
+            <summary>Root namespace of the Metanol project - and Win exe application for manipulating IPTC data.</summary>
+        </member>
     </members>    
 </doc>

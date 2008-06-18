@@ -228,7 +228,7 @@ Namespace WindowsT.FormsT
             resources.ApplyResources(Me.cmdClearCache, "cmdClearCache")
             Me.cmdClearCache.BackgroundImage = Nothing
             Me.cmdClearCache.Font = Nothing
-            Me.cmdClearCache.Image = Global.Tools.My.Resources.Resources.DeleteHS
+            Me.cmdClearCache.Image = Global.Tools.My.Resources.Resources.Delete
             Me.cmdClearCache.Name = "cmdClearCache"
             Me.totToolTip.SetToolTip(Me.cmdClearCache, resources.GetString("cmdClearCache.ToolTip"))
             Me.cmdClearCache.UseVisualStyleBackColor = True
@@ -402,7 +402,7 @@ Namespace WindowsT.FormsT
             resources.ApplyResources(Me.cmdDelSyn, "cmdDelSyn")
             Me.cmdDelSyn.BackgroundImage = Nothing
             Me.cmdDelSyn.Font = Nothing
-            Me.cmdDelSyn.Image = Global.Tools.My.Resources.Resources.DeleteHS
+            Me.cmdDelSyn.Image = Global.Tools.My.Resources.Resources.Delete
             Me.cmdDelSyn.Name = "cmdDelSyn"
             Me.totToolTip.SetToolTip(Me.cmdDelSyn, resources.GetString("cmdDelSyn.ToolTip"))
             Me.cmdDelSyn.UseVisualStyleBackColor = True
@@ -438,7 +438,7 @@ Namespace WindowsT.FormsT
             Me.cmdOpen.BackgroundImage = Nothing
             Me.cmdOpen.FlatAppearance.BorderSize = 0
             Me.cmdOpen.Font = Nothing
-            Me.cmdOpen.Image = Global.Tools.My.Resources.Resources.openHS
+            Me.cmdOpen.Image = Global.Tools.My.Resources.Resources.Open
             Me.cmdOpen.Name = "cmdOpen"
             Me.totToolTip.SetToolTip(Me.cmdOpen, resources.GetString("cmdOpen.ToolTip"))
             Me.cmdOpen.UseVisualStyleBackColor = True
@@ -451,7 +451,7 @@ Namespace WindowsT.FormsT
             Me.cmdSave.BackgroundImage = Nothing
             Me.cmdSave.FlatAppearance.BorderSize = 0
             Me.cmdSave.Font = Nothing
-            Me.cmdSave.Image = Global.Tools.My.Resources.Resources.saveHS
+            Me.cmdSave.Image = Global.Tools.My.Resources.Resources.Save
             Me.cmdSave.Name = "cmdSave"
             Me.totToolTip.SetToolTip(Me.cmdSave, resources.GetString("cmdSave.ToolTip"))
             Me.cmdSave.UseVisualStyleBackColor = True

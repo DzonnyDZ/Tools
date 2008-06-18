@@ -39,7 +39,6 @@ Partial Class frmMain
         Me.cmdErrInfo = New System.Windows.Forms.Button
         Me.sptImage = New System.Windows.Forms.Splitter
         Me.fraKeywords = New System.Windows.Forms.GroupBox
-        Me.kweKeywords = New Tools.WindowsT.FormsT.KeyWordsEditor
         Me.sptKeywords = New System.Windows.Forms.Splitter
         Me.fraAuthor = New System.Windows.Forms.GroupBox
         Me.tlpAuthor = New System.Windows.Forms.TableLayoutPanel
@@ -94,6 +93,7 @@ Partial Class frmMain
         Me.tsbForward = New System.Windows.Forms.ToolStripButton
         Me.tsbRefresh = New System.Windows.Forms.ToolStripButton
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
+        Me.kweKeywords = New Tools.WindowsT.FormsT.KeyWordsEditor
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
@@ -317,36 +317,6 @@ Partial Class frmMain
         Me.fraKeywords.TabIndex = 2
         Me.fraKeywords.TabStop = False
         Me.fraKeywords.Text = "Keywords"
-        '
-        'kweKeywords
-        '
-        Me.kweKeywords.AutoCompleteCacheName = "Keywords"
-        Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
-        Me.kweKeywords.Margin = New System.Windows.Forms.Padding(0)
-        Me.kweKeywords.Name = "kweKeywords"
-        Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
-        '
-        '
-        '
-        Me.kweKeywords.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-        Me.kweKeywords.Status.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.kweKeywords.Status.AutoChanged = False
-        Me.kweKeywords.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.kweKeywords.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-        Me.kweKeywords.Status.Enabled = False
-        Me.kweKeywords.Status.Location = New System.Drawing.Point(85, 0)
-        Me.kweKeywords.Status.Margin = New System.Windows.Forms.Padding(0)
-        Me.kweKeywords.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-        Me.kweKeywords.Status.Name = "stmStatus"
-        Me.kweKeywords.Status.Size = New System.Drawing.Size(24, 24)
-        Me.kweKeywords.Status.Status = Tools.WindowsT.FormsT.StatusMarker.Statuses.NA
-        Me.kweKeywords.Status.StatusedControl = Nothing
-        Me.kweKeywords.Status.TabIndex = 2
-        Me.kweKeywords.Status.TabStop = False
-        Me.kweKeywords.Status.Visible = False
-        Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-        Me.kweKeywords.TabIndex = 1
         '
         'sptKeywords
         '
@@ -921,6 +891,31 @@ Partial Class frmMain
         Me.tsbRefresh.Size = New System.Drawing.Size(23, 22)
         Me.tsbRefresh.Text = "Refresh folder"
         '
+        'kweKeywords
+        '
+        Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
+        Me.kweKeywords.Name = "kweKeywords"
+        Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
+        '
+        '
+        '
+        Me.kweKeywords.Status.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.kweKeywords.Status.AutoChanged = False
+        Me.kweKeywords.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.kweKeywords.Status.Enabled = False
+        Me.kweKeywords.Status.Location = New System.Drawing.Point(85, 0)
+        Me.kweKeywords.Status.Margin = New System.Windows.Forms.Padding(0)
+        Me.kweKeywords.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
+        Me.kweKeywords.Status.Name = "stmStatus"
+        Me.kweKeywords.Status.Size = New System.Drawing.Size(24, 24)
+        Me.kweKeywords.Status.StatusedControl = Nothing
+        Me.kweKeywords.Status.TabIndex = 2
+        Me.kweKeywords.Status.TabStop = False
+        Me.kweKeywords.Status.Visible = False
+        Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+        Me.kweKeywords.TabIndex = 0
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1011,7 +1006,6 @@ Partial Class frmMain
     Friend WithEvents flpCommon As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents tapIPTC As System.Windows.Forms.TabPage
     Friend WithEvents panImage As System.Windows.Forms.Panel
-    Friend WithEvents kweKeywords As Tools.WindowsT.FormsT.KeyWordsEditor
     Friend WithEvents fraAuthor As System.Windows.Forms.GroupBox
     Friend WithEvents fraLocation As System.Windows.Forms.GroupBox
     Friend WithEvents fraStatus As System.Windows.Forms.GroupBox
@@ -1050,5 +1044,6 @@ Partial Class frmMain
     Friend WithEvents sptTitle As System.Windows.Forms.Splitter
     Friend WithEvents picPreview As System.Windows.Forms.PictureBox
     Friend WithEvents prgIPTC As System.Windows.Forms.PropertyGrid
+    Friend WithEvents kweKeywords As Tools.WindowsT.FormsT.KeyWordsEditor
 
 End Class

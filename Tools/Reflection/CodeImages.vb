@@ -165,62 +165,62 @@ Namespace ReflectionT
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="ObjectType"/> is not member of <see cref="Objects"/></exception>
         Public Function GetImage(ByVal ObjectType As Objects) As Image
             Select Case ObjectType
-                Case Objects.NoObject : Return My.Resources.ObjectImages.iEmpty
-                Case Objects.Assembly : Return My.Resources.ObjectImages.iAssembly
-                Case Objects.Attribute : Return My.Resources.ObjectImages.iAttribute
-                Case Objects.Class : Return My.Resources.ObjectImages.iClass
-                Case Objects.Constant : Return My.Resources.ObjectImages.iConstant
-                Case Objects.CTor : Return My.Resources.ObjectImages.iCTor
-                Case Objects.Delegate : Return My.Resources.ObjectImages.iDelegate
-                Case Objects.Enum : Return My.Resources.ObjectImages.iEnum
-                Case Objects.EnumItem : Return My.Resources.ObjectImages.iEnumItem
-                Case Objects.Event : Return My.Resources.ObjectImages.iEvent
-                Case Objects.Exception : Return My.Resources.ObjectImages.iException
-                Case Objects.Field : Return My.Resources.ObjectImages.iField
-                Case Objects.Getter : Return My.Resources.ObjectImages.iGetter
-                Case Objects.Interface : Return My.Resources.ObjectImages.iInterface
-                Case Objects.Library : Return My.Resources.ObjectImages.iLibrary
-                Case Objects.Macro : Return My.Resources.ObjectImages.iMacro
-                Case Objects.Map : Return My.Resources.ObjectImages.iMap
-                Case Objects.MapItem : Return My.Resources.ObjectImages.iMapItem
-                Case Objects.Method : Return My.Resources.ObjectImages.iMethod
-                Case Objects.MethodOverload : Return My.Resources.ObjectImages.iMethodOverload
-                Case Objects.Module : Return My.Resources.ObjectImages.iModule
-                Case Objects.Namespace : Return My.Resources.ObjectImages.iNamespace
-                Case Objects.Object : Return My.Resources.ObjectImages.iObject
-                Case Objects.Operator : Return My.Resources.ObjectImages.iOperator
-                Case Objects.Property : Return My.Resources.ObjectImages.iProperty
-                Case Objects.Resource : Return My.Resources.ObjectImages.iResource
-                Case Objects.Resources : Return My.Resources.ObjectImages.iResources
-                Case Objects.Setter : Return My.Resources.ObjectImages.iSetter
-                Case Objects.StandardModule : Return My.Resources.ObjectImages.iStandardModule
-                Case Objects.Structure : Return My.Resources.ObjectImages.iStructure
-                Case Objects.Template : Return My.Resources.ObjectImages.iTemplate
-                Case Objects.Type : Return My.Resources.ObjectImages.iType
-                Case Objects.TypeDef : Return My.Resources.ObjectImages.iTypeDef
-                Case Objects.Union : Return My.Resources.ObjectImages.iUnion
-                Case Objects.ValueType : Return My.Resources.ObjectImages.iValueType
-                Case Objects.Error : Return My.Resources.ObjectImages.iError
-                Case Objects.Question : Return My.Resources.ObjectImages.iQuestion
-                Case Objects.GenericClassClosed : Return My.Resources.ObjectImages.iGenericInstanceClass
-                Case Objects.GenericClassOpen : Return My.Resources.ObjectImages.iGenericClass
-                Case Objects.GenericMethodClosed : Return My.Resources.ObjectImages.iGenericInstanceMethod
-                Case Objects.GenericMethodOpen : Return My.Resources.ObjectImages.iGenericMethod
-                Case Objects.GenericParameter : Return My.Resources.ObjectImages.iGenericParameter
-                Case Objects.GenericStructureClosed : Return My.Resources.ObjectImages.iGenericInstanceStructure
-                Case Objects.GenericStructureOpen : Return My.Resources.ObjectImages.iGenericStructure
-                Case Objects.GenericTypeClosed : Return My.Resources.ObjectImages.iGenericInstance
-                Case Objects.GenericInterfaceClosed : Return My.Resources.ObjectImages.iGenericInstanceInterface
-                Case Objects.GenericInterfaceOpen : Return My.Resources.ObjectImages.iGenericInterface
-                Case Objects.GenericTypeOpen : Return My.Resources.ObjectImages.iGeneric
-                Case Objects.GenericAttributeClosed : Return My.Resources.ObjectImages.iAttribute_GenericClosed
-                Case Objects.GenericAttributeOpen : Return My.Resources.ObjectImages.iAttribute_GenericOpen
-                Case Objects.GenericExceptionClosed : Return My.Resources.ObjectImages.iException_GenericClosed
-                Case Objects.GenericExceptionOpen : Return My.Resources.ObjectImages.iException_GenericOpen
-                Case Objects.GenericDelegateClosed : Return My.Resources.ObjectImages.iDelegate_GenericClosed
-                Case Objects.GenericDelegateOpen : Return My.Resources.ObjectImages.iDelegate_GenericOpen
-                Case Objects.Forwardreference : Return My.Resources.ObjectImages.iForwardReference
-                Case Objects.BackwardReference : Return My.Resources.ObjectImages.iBackwardReference
+                Case Objects.NoObject : Return ObjectImages.iEmpty
+                Case Objects.Assembly : Return ObjectImages.iAssembly
+                Case Objects.Attribute : Return ObjectImages.iAttribute
+                Case Objects.Class : Return ObjectImages.iClass
+                Case Objects.Constant : Return ObjectImages.iConstant
+                Case Objects.CTor : Return ObjectImages.iCTor
+                Case Objects.Delegate : Return ObjectImages.iDelegate
+                Case Objects.Enum : Return ObjectImages.iEnum
+                Case Objects.EnumItem : Return ObjectImages.iEnumItem
+                Case Objects.Event : Return ObjectImages.iEvent
+                Case Objects.Exception : Return ObjectImages.iException
+                Case Objects.Field : Return ObjectImages.iField
+                Case Objects.Getter : Return ObjectImages.iGetter
+                Case Objects.Interface : Return ObjectImages.iInterface
+                Case Objects.Library : Return ObjectImages.iLibrary
+                Case Objects.Macro : Return ObjectImages.iMacro
+                Case Objects.Map : Return ObjectImages.iMap
+                Case Objects.MapItem : Return ObjectImages.iMapItem
+                Case Objects.Method : Return ObjectImages.iMethod
+                Case Objects.MethodOverload : Return ObjectImages.iMethodOverload
+                Case Objects.Module : Return ObjectImages.iModule
+                Case Objects.Namespace : Return ObjectImages.iNamespace
+                Case Objects.Object : Return ObjectImages.iObject
+                Case Objects.Operator : Return ObjectImages.iOperator
+                Case Objects.Property : Return ObjectImages.iProperty
+                Case Objects.Resource : Return ObjectImages.iResource
+                Case Objects.Resources : Return ObjectImages.iResources
+                Case Objects.Setter : Return ObjectImages.iSetter
+                Case Objects.StandardModule : Return ObjectImages.iStandardModule
+                Case Objects.Structure : Return ObjectImages.iStructure
+                Case Objects.Template : Return ObjectImages.iTemplate
+                Case Objects.Type : Return ObjectImages.iType
+                Case Objects.TypeDef : Return ObjectImages.iTypeDef
+                Case Objects.Union : Return ObjectImages.iUnion
+                Case Objects.ValueType : Return ObjectImages.iValueType
+                Case Objects.Error : Return ObjectImages.iError
+                Case Objects.Question : Return ObjectImages.iQuestion
+                Case Objects.GenericClassClosed : Return ObjectImages.iGenericInstanceClass
+                Case Objects.GenericClassOpen : Return ObjectImages.iGenericClass
+                Case Objects.GenericMethodClosed : Return ObjectImages.iGenericInstanceMethod
+                Case Objects.GenericMethodOpen : Return ObjectImages.iGenericMethod
+                Case Objects.GenericParameter : Return ObjectImages.iGenericParameter
+                Case Objects.GenericStructureClosed : Return ObjectImages.iGenericInstanceStructure
+                Case Objects.GenericStructureOpen : Return ObjectImages.iGenericStructure
+                Case Objects.GenericTypeClosed : Return ObjectImages.iGenericInstance
+                Case Objects.GenericInterfaceClosed : Return ObjectImages.iGenericInstanceInterface
+                Case Objects.GenericInterfaceOpen : Return ObjectImages.iGenericInterface
+                Case Objects.GenericTypeOpen : Return ObjectImages.iGeneric
+                Case Objects.GenericAttributeClosed : Return ObjectImages.iAttribute_GenericClosed
+                Case Objects.GenericAttributeOpen : Return ObjectImages.iAttribute_GenericOpen
+                Case Objects.GenericExceptionClosed : Return ObjectImages.iException_GenericClosed
+                Case Objects.GenericExceptionOpen : Return ObjectImages.iException_GenericOpen
+                Case Objects.GenericDelegateClosed : Return ObjectImages.iDelegate_GenericClosed
+                Case Objects.GenericDelegateOpen : Return ObjectImages.iDelegate_GenericOpen
+                Case Objects.ForwardReference : Return ObjectImages.iForwardReference
+                Case Objects.BackwardReference : Return ObjectImages.iBackwardReference
                 Case Else : Throw New InvalidEnumArgumentException("ObjectType", ObjectType, GetType(Objects))
             End Select
         End Function
@@ -267,45 +267,45 @@ Namespace ReflectionT
             If Modifiers = ObjectModifiers.None Then Return Nothing
             Dim BottomLeft As Image = Nothing
             Select Case Modifiers And Reflection.MethodAttributes.MemberAccessMask
-                Case ObjectModifiers.Private : BottomLeft = My.Resources.ObjectImages.oPrivate
-                Case ObjectModifiers.Protected : BottomLeft = My.Resources.ObjectImages.oProtected
-                Case ObjectModifiers.Friend : BottomLeft = My.Resources.ObjectImages.oFriend
+                Case ObjectModifiers.Private : BottomLeft = ObjectImages.oPrivate
+                Case ObjectModifiers.Protected : BottomLeft = ObjectImages.oProtected
+                Case ObjectModifiers.Friend : BottomLeft = ObjectImages.oFriend
                 Case ObjectModifiers.ProtectedFriend : BottomLeft = ProtectedFriend
                 Case ObjectModifiers.FriendProtected : BottomLeft = FriendProtected
             End Select
             Dim TopLeft As Image = Nothing
             If Modifiers And ObjectModifiers.Static Then _
-                TopLeft = My.Resources.ObjectImages.oStatic
+                TopLeft = ObjectImages.oStatic
             Dim BottomRight As Image = Nothing
             Dim TopRight As Image = Nothing
             If Modifiers And ObjectModifiers.Sealed Then
                 If BottomLeft Is Nothing Then
-                    BottomLeft = My.Resources.ObjectImages.oNotInheritable
+                    BottomLeft = ObjectImages.oNotInheritable
                 ElseIf (Modifiers And Reflection.MethodAttributes.MemberAccessMask) <> ObjectModifiers.ProtectedFriend AndAlso (Modifiers And Reflection.MethodAttributes.MemberAccessMask) <> ObjectModifiers.FriendProtected Then
-                    BottomRight = My.Resources.ObjectImages.oNotInheritable
+                    BottomRight = ObjectImages.oNotInheritable
                 Else
                     TopRight = Nothing
                 End If
             End If
             If Modifiers And ObjectModifiers.Shortcut Then
                 If BottomLeft Is Nothing Then
-                    BottomLeft = My.Resources.ObjectImages.oShortcut
+                    BottomLeft = ObjectImages.oShortcut
                 ElseIf (Modifiers And Reflection.MethodAttributes.MemberAccessMask) <> ObjectModifiers.ProtectedFriend AndAlso (Modifiers And Reflection.MethodAttributes.MemberAccessMask) <> ObjectModifiers.FriendProtected AndAlso BottomRight Is Nothing Then
-                    BottomRight = My.Resources.ObjectImages.oShortcut
+                    BottomRight = ObjectImages.oShortcut
                 ElseIf TopRight Is Nothing Then
-                    TopRight = My.Resources.ObjectImages.oShortcut
+                    TopRight = ObjectImages.oShortcut
                 ElseIf TopLeft Is Nothing Then
-                    TopLeft = My.Resources.ObjectImages.oShortcut
+                    TopLeft = ObjectImages.oShortcut
                 Else
-                    BottomRight = My.Resources.ObjectImages.oShortcut
+                    BottomRight = ObjectImages.oShortcut
                 End If
             End If
             Dim img As New Bitmap(16, 16)
             img = img.Overlay(BottomLeft, ContentAlignment.BottomLeft)
             img = img.Overlay(TopLeft, ContentAlignment.TopLeft)
             img = img.Overlay(TopRight, ContentAlignment.TopRight)
-            If Modifiers And ObjectModifiers.Extension Then img = img.Overlay(My.Resources.ObjectImages.oExtension, ContentAlignment.BottomRight)
-            If BottomRight Is My.Resources.ObjectImages.oShortcut AndAlso (BottomLeft Is ProtectedFriend OrElse BottomLeft Is FriendProtected) Then
+            If Modifiers And ObjectModifiers.Extension Then img = img.Overlay(ObjectImages.oExtension, ContentAlignment.BottomRight)
+            If BottomRight Is ObjectImages.oShortcut AndAlso (BottomLeft Is ProtectedFriend OrElse BottomLeft Is FriendProtected) Then
                 img = img.Overlay(BottomRight, ContentAlignment.BottomLeft)
             Else
                 img = img.Overlay(BottomRight, ContentAlignment.BottomRight)
@@ -319,11 +319,11 @@ Namespace ReflectionT
             Get
                 Static val As Image
                 If val IsNot Nothing Then Return val
-                val = New Bitmap(My.Resources.ObjectImages.oFriend.Width + My.Resources.ObjectImages.oProtected.Width, Math.Max(My.Resources.ObjectImages.oProtected.Height, My.Resources.ObjectImages.oFriend.Height))
+                val = New Bitmap(ObjectImages.oFriend.Width + ObjectImages.oProtected.Width, Math.Max(ObjectImages.oProtected.Height, ObjectImages.oFriend.Height))
                 Dim g = Graphics.FromImage(val)
-                g.DrawImageInPixels(My.Resources.ObjectImages.oProtected, 0, val.Height - My.Resources.ObjectImages.oProtected.Height)
-                g.DrawImageInPixels(My.Resources.ObjectImages.oFriend, val.Width - My.Resources.ObjectImages.oFriend.Width, val.Height - My.Resources.ObjectImages.oFriend.Height)
-                g.DrawImageInPixels(My.Resources.ObjectImages.oOr, val.Width \ 2 - My.Resources.ObjectImages.oOr.Width \ 2, val.Height - My.Resources.ObjectImages.oOr.Height)
+                g.DrawImageInPixels(ObjectImages.oProtected, 0, val.Height - ObjectImages.oProtected.Height)
+                g.DrawImageInPixels(ObjectImages.oFriend, val.Width - ObjectImages.oFriend.Width, val.Height - ObjectImages.oFriend.Height)
+                g.DrawImageInPixels(ObjectImages.oOr, val.Width \ 2 - ObjectImages.oOr.Width \ 2, val.Height - ObjectImages.oOr.Height)
                 g.Flush(Drawing2D.FlushIntention.Sync)
                 Return val
             End Get
@@ -334,11 +334,11 @@ Namespace ReflectionT
             Get
                 Static val As Image
                 If val IsNot Nothing Then Return val
-                val = New Bitmap(My.Resources.ObjectImages.oFriend.Width + My.Resources.ObjectImages.oProtected.Width, Math.Max(My.Resources.ObjectImages.oProtected.Height, My.Resources.ObjectImages.oFriend.Height))
+                val = New Bitmap(ObjectImages.oFriend.Width + ObjectImages.oProtected.Width, Math.Max(ObjectImages.oProtected.Height, ObjectImages.oFriend.Height))
                 Dim g = Graphics.FromImage(val)
-                g.DrawImageInPixels(My.Resources.ObjectImages.oProtected, 0, val.Height - My.Resources.ObjectImages.oProtected.Height)
-                g.DrawImageInPixels(My.Resources.ObjectImages.oFriend, val.Width - My.Resources.ObjectImages.oFriend.Width, val.Height - My.Resources.ObjectImages.oFriend.Height)
-                g.DrawImageInPixels(My.Resources.ObjectImages.oAnd, val.Width \ 2 - My.Resources.ObjectImages.oAnd.Width \ 2, val.Height - My.Resources.ObjectImages.oAnd.Height)
+                g.DrawImageInPixels(ObjectImages.oProtected, 0, val.Height - ObjectImages.oProtected.Height)
+                g.DrawImageInPixels(ObjectImages.oFriend, val.Width - ObjectImages.oFriend.Width, val.Height - ObjectImages.oFriend.Height)
+                g.DrawImageInPixels(ObjectImages.oAnd, val.Width \ 2 - ObjectImages.oAnd.Width \ 2, val.Height - ObjectImages.oAnd.Height)
                 g.Flush(Drawing2D.FlushIntention.Sync)
                 Return val
             End Get

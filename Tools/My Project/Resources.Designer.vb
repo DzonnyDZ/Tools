@@ -60,9 +60,9 @@ Namespace My.Resources
             End Set
         End Property
         
-        Friend ReadOnly Property CommentHS() As System.Drawing.Bitmap
+        Friend ReadOnly Property Comment() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("CommentHS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Comment", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -92,9 +92,9 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property DeleteHS() As System.Drawing.Bitmap
+        Friend ReadOnly Property Delete() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("DeleteHS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Delete", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -122,16 +122,16 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property NewReportHS() As System.Drawing.Bitmap
+        Friend ReadOnly Property NewReport() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("NewReportHS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("NewReport", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property openHS() As System.Drawing.Bitmap
+        Friend ReadOnly Property Open() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("openHS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Open", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -143,16 +143,16 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property RepeatHS() As System.Drawing.Bitmap
+        Friend ReadOnly Property Repeat() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("RepeatHS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Repeat", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
-        Friend ReadOnly Property saveHS() As System.Drawing.Bitmap
+        Friend ReadOnly Property Save() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("saveHS", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("Save", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
