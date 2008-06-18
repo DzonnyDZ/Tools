@@ -18,7 +18,10 @@ Namespace WindowsT.FormsT
         Public Sub New(ByVal [For] As KeyWordsEditor)
             InitializeComponent()
             Me.For = [For]
-
+            initialize()
+        End Sub
+        ''' <summary>Initializes form</summary>
+        Private Sub Initialize()
             kweAutoComplete.AutoCompleteCacheName = Me.For.AutoCompleteCacheName
             kweKeys.AutoCompleteCacheName = Me.For.AutoCompleteCacheName
             kweValues.AutoCompleteCacheName = Me.For.AutoCompleteCacheName
@@ -31,6 +34,7 @@ Namespace WindowsT.FormsT
             kweKeys.CaseSensitive = Me.For.CaseSensitive
             kweValues.CaseSensitive = Me.For.CaseSensitive
 
+            kweAutoComplete.KeyWords.Clear()
             If Me.For.AutoCompleteStable IsNot Nothing Then
                 'BackupStable = New List(Of String)(Me.For.AutoCompleteStable)
                 For Each KW As String In Me.For.AutoCompleteStable
@@ -42,6 +46,7 @@ Namespace WindowsT.FormsT
                 ShowCache()
                 AutoCompleteCache = Me.For.InstanceAutoCompleteChache
             End If
+            cmbSyn.Items.Clear()
             If Me.For.Synonyms IsNot Nothing Then
                 cmbSyn.DisplayMember = "DisplayMember"
                 For Each Syn As KeyValuePair(Of String(), String()) In Me.For.Synonyms
@@ -49,10 +54,9 @@ Namespace WindowsT.FormsT
                 Next Syn
                 If cmbSyn.Items.Count > 0 Then cmbSyn.SelectedIndex = 0
             End If
-
         End Sub
         ''' <summary>Proxy of <see cref="KeyValuePair(Of String(), String())"/> for <see cref="ComboBox"/></summary>
-        Private Class SynProxy
+        Private NotInheritable Class SynProxy
             ''' <summary>Value being proxied</summary>
             Public Syns As KeyValuePair(Of String(), String())
             ''' <summary>CTor</summary>
@@ -235,8 +239,15 @@ Retry:          Try
         End Sub
 
         Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
-            'TODO:Implement
-            Me.For.LoadFromXML(Nothing)
+            If ofdLoad.ShowDialog = Windows.Forms.DialogResult.OK Then
+                Try
+                    Me.For.LoadFromXML(Xml.Linq.XDocument.Load(ofdLoad.FileName))
+                Catch ex As Exception
+                    MBox.Error(ex, My.Resources.Error_)
+                    Exit Sub
+                End Try
+                Me.Initialize()
+            End If
         End Sub
     End Class
     '#End If

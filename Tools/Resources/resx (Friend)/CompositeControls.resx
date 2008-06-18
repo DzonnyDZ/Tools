@@ -204,4 +204,7 @@
     <value>Null</value>
     <comment>Tooltip</comment>
   </data>
+  <data name="AutomaticLists_d" xml:space="preserve">
+    <value>Indicates if editor uses automatically shared lists of keywords and synonyms (among instances with same AutoCompleteCacheName) or not.</value>
+  </data>
 </root>

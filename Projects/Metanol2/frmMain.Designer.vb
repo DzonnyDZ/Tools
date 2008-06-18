@@ -893,6 +893,8 @@ Partial Class frmMain
         '
         'kweKeywords
         '
+        Me.kweKeywords.AutoCompleteCacheName = "Keywords"
+        Me.kweKeywords.AutomaticsLists_Designer = True
         Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
         Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
         Me.kweKeywords.Name = "kweKeywords"
@@ -900,6 +902,7 @@ Partial Class frmMain
         '
         '
         '
+        Me.kweKeywords.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
         Me.kweKeywords.Status.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.kweKeywords.Status.AutoChanged = False
         Me.kweKeywords.Status.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink

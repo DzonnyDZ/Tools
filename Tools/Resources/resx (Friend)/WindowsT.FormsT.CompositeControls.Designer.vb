@@ -110,6 +110,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Indicates if editor uses automatically shared lists of keywords and synonyms (among instances with same AutoCompleteCacheName) or not..
+        '''</summary>
+        Friend Shared ReadOnly Property AutomaticLists_d() As String
+            Get
+                Return ResourceManager.GetString("AutomaticLists_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Gets or sets value idicating if keywords are case sensitive.
         '''</summary>
         Friend Shared ReadOnly Property CaseSensitive_d() As String

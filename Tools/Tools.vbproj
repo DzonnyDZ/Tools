@@ -226,6 +226,7 @@
     <Compile Include="IO\Path.vb" />
     <Compile Include="IO\StreamTools.vb" />
     <Compile Include="Linq\EnumerableT.vb" />
+    <Compile Include="Linq\Misc.vb" />
     <Compile Include="Linq\Specialized.vb" />
     <Compile Include="Math\LCM GCD.vb" />
     <Compile Include="Math\Min-Max.vb" />
@@ -265,6 +266,7 @@
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
     <Compile Include="Reflection\SignatureProvider.vb" />
+    <Compile Include="Resources\resx %28Friend%29\Helpers.vb" />
     <Compile Include="Resources\resx %28Friend%29\WindowsT.FormsT.CompositeControls.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -1,6 +1,6 @@
 'Extracted
 Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms, Tools.ComponentModelT
-Imports System.Linq
+Imports System.Linq, System.Xml.Schema, Tools.ExtensionsT
 Imports <xmlns:kw="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor">
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then set in tools.vbproj
@@ -11,7 +11,7 @@ Namespace WindowsT.FormsT
     <ComponentModelT.Prefix("kwe")> _
     <FirstVersion("06/26/2007")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(KeyWordsEditor), LastChange:="10/18/2007")> _
+    <Version(1, 0, GetType(KeyWordsEditor), LastChange:="06/18/2008")> _
     Public Class KeyWordsEditor
         Implements IComparer(Of String)
 #Region "Auto complete"
@@ -19,6 +19,10 @@ Namespace WindowsT.FormsT
         Private _AutoCompleteCacheName As String = ""
         ''' <summary>Autocomplete chache shared across instances with same <see cref="AutoCompleteCacheName"/></summary>
         Protected Shared ReadOnly AutocompleteCache As New Dictionary(Of String, ListWithEvents(Of String))
+        ''' <summary>Automatically shared lists of keywords for the <see cref="KeyWords"/> property. Sharred accross instances with same <see cref="AutoCompleteCacheName"/> and <see cref="AutomaticLists"/> = True</summary>
+        Protected Shared ReadOnly SharedStableList As New Dictionary(Of String, ListWithEvents(Of String))
+        ''' <summary>Automatically shared lists of synonyms for the <see cref="Synonyms"/> property. Sharred accross instances with same <see cref="AutoCompleteCacheName"/> and <see cref="AutomaticLists"/> = True</summary>
+        Protected Shared ReadOnly SharedSynonymList As New Dictionary(Of String, List(Of KeyValuePair(Of String(), String())))
         ''' <summary>Contains value of the <see cref="Synonyms"/> property</summary>
         Private _Synonyms As List(Of KeyValuePair(Of String(), String()))
         ''' <summary>Gets or sets synonyms configuration</summary>
@@ -27,15 +31,87 @@ Namespace WindowsT.FormsT
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property Synonyms() As List(Of KeyValuePair(Of String(), String()))
             Get
+                If AutomaticLists AndAlso _Synonyms Is Nothing Then Synonyms = GetSharedSynonymsList(AutoCompleteCacheName)
                 Return _Synonyms
             End Get
             Set(ByVal value As List(Of KeyValuePair(Of String(), String())))
                 _Synonyms = value
+                If AutomaticLists AndAlso SharedSynonymList.ContainsKey(AutoCompleteCacheName) AndAlso value IsNot GetSharedSynonymsList(AutoCompleteCacheName) Then
+                    _AutomaticLists = False
+                End If
                 TmiEnabled()
             End Set
         End Property
-        ''' <summary>Name of per-session cache of keywords used by this instance</summary>
+        ''' <summary>Gets item of <see cref="SharedSynonymList"/> with given key. Creates new item if given key does not exists.</summary>
+        ''' <param name="Name">Key of item to be returned</param>
+        ''' <returns>Item form <see cref="SharedSynonymList"/> with given key. If such key is not presents adds an empty collection for it. If <paramref name="Name"/> is <see cref="[String].Empty"/> or null returns null.</returns>
+        Protected Shared Function GetSharedSynonymsList(ByVal Name$) As List(Of KeyValuePair(Of String(), String()))
+            If Name = "" Then Return Nothing
+            If Not SharedSynonymList.ContainsKey(Name) Then SharedSynonymList.Add(Name, New List(Of KeyValuePair(Of String(), String())))
+            Return SharedSynonymList(Name)
+        End Function
+        ''' <summary>Gets item of <see cref="SharedStableList"/> with given key. Creates new item if given key does not exists.</summary>
+        ''' <param name="Name">Key of item to be returned</param>
+        ''' <returns>Item form <see cref="SharedStableList"/> with given key. If such key is not presents adds an empty collection for it. If <paramref name="Name"/> is <see cref="[String].Empty"/> or null returns null.</returns>
+        Protected Shared Function GetSharedStableList(ByVal Name$) As ListWithEvents(Of String)
+            If Name = "" Then Return Nothing
+            If Not SharedStableList.ContainsKey(Name) Then SharedStableList.Add(Name, New ListWithEvents(Of String))
+            Return SharedStableList(Name)
+        End Function
+        ''' <summary>Contains value of the <see cref="AutomaticLists"/> property</summary>
+        Private _AutomaticLists As Boolean = True
+        ''' <summary>Gets or sets value if this instance uses automacically shared lists of keywords and synonyms (among instances with same <see cref="AutoCompleteCacheName"/>).</summary>
+        ''' <returns>In runtime indicates if both - <see cref="KeyWords"/> and <see cref="Synonyms"/> collections are automatically shared by this instance and all other instnces of <see cref="KeyWordsEditor"/> with same <see cref="AutoCompleteCacheName"/> and <see cref="AutomaticLists"/> = True.</returns>
+        ''' <value>In design time predefines run-time behaviour. In runtime chan be only changed form False to True.</value>
+        ''' <remarks>If set to false, you must set <see cref="KeyWords"/> and <see cref="Synonyms"/> properties in order editor to be fully functional.
+        ''' <para>In runtime this property cannot be changed from true to false. Set <see cref="KeyWords"/> or <see cref="Synonyms"/> property instead. (Exception is not thrown, but value does not change when changing from True to False).</para>
+        ''' </remarks>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <DefaultValue(True)> _
+        <LDescription(GetType(CompositeControls), "AutomaticLists_d")> _
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        Public Property AutomaticLists() As Boolean
+            Get
+                Return _AutomaticLists
+            End Get
+            Set(ByVal value As Boolean)
+                If DesignMode Then
+                    _AutomaticLists = value
+                ElseIf value <> AutomaticLists Then
+                    If value Then
+                        _AutomaticLists = True
+                        Synonyms = GetSharedSynonymsList(Me.AutoCompleteCacheName)
+                        AutoCompleteStable = GetSharedStableList(Me.AutoCompleteCacheName)
+                    Else
+                        'Do nothing - property cannot be changed to False in runtime
+                    End If
+                End If
+            End Set
+        End Property
+        ''' <summary>Designer serialization proxy from <see cref="AutomaticLists"/> property</summary>
+        ''' <value>Setting this property to true is same as setting <see cref="AutomaticLists"/> to true. Setting this property to false sets <see cref="AutomaticLists"/> to false and <see cref="AutoCompleteStable"/> and <see cref="Synonyms"/> to null</value>
+        ''' <returns><see cref="AutoCompleteStable"/></returns>
+        ''' <remarks>This property is not intended to be used by programmer. It supports designt-time serialization fo control.</remarks>
+        <Browsable(False), EditorBrowsable(EditorBrowsableState.Never), DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)> _
+        Public Property AutomaticsLists_Designer() As Boolean
+            Get
+                Return AutomaticLists
+            End Get
+            Set(ByVal value As Boolean)
+                If value = True Then
+                    AutomaticLists = value
+                    TmiEnabled()
+                Else
+                    Synonyms = Nothing
+                    AutoCompleteStable = Nothing
+                    _AutomaticLists = value
+                    TmiEnabled()
+                End If
+            End Set
+        End Property
+        ''' <summary>Name of per-session cache of keywords used by this instance and name of group of autocomplete items and synonyms (if used)</summary>
         ''' <value>An enmpty <see cref="String"/> to use no temporary chache</value>
+        ''' <remarks>When <see cref="AutomaticLists"/> is true sets also name for list of autocomplete words and synonyms.</remarks>
         <DefaultValue(""), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <LDescription(GetType(CompositeControls), "AutoCompleteCacheName_d")> _
         Public Property AutoCompleteCacheName() As String
@@ -46,6 +122,10 @@ Namespace WindowsT.FormsT
                 RemoveHandlers()
                 _AutoCompleteCacheName = value
                 AddHandlers()
+                If AutomaticLists Then
+                    Synonyms = GetSharedSynonymsList(AutoCompleteCacheName)
+                    AutoCompleteStable = GetSharedStableList(AutoCompleteCacheName)
+                End If
                 TmiEnabled()
             End Set
         End Property
@@ -127,6 +207,7 @@ Namespace WindowsT.FormsT
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Property AutoCompleteStable() As ListWithEvents(Of String)
             Get
+                If _AutoCompleteStable Is Nothing AndAlso AutomaticLists Then AutoCompleteStable = GetSharedStableList(AutoCompleteCacheName)
                 Return _AutoCompleteStable
             End Get
             Set(ByVal value As ListWithEvents(Of String))
@@ -136,6 +217,8 @@ Namespace WindowsT.FormsT
                 If value IsNot Nothing Then _
                     Me.txtEdit.AutoCompleteCustomSource.AddRange(value.ToArray)
                 TmiEnabled()
+                If AutomaticLists AndAlso SharedStableList.ContainsKey(AutoCompleteCacheName) AndAlso SharedStableList(AutoCompleteCacheName) IsNot value Then _
+                    _AutomaticLists = False
             End Set
         End Property
         ''' <summary>Enables/disbaled ans shows/hides items of <see cref="cmsThesaurus"/> according to values of <see cref="AutoCompleteCacheName"/> and <see cref="AutoCompleteStable"/></summary>
@@ -200,10 +283,9 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary><see cref="StatusMarker"/> present on this control</summary>
-        <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <LDescription(GetType(CompositeControls), "Status_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-        <Browsable(False)> _
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public ReadOnly Property Status() As StatusMarker
             Get
                 Return stmStatus
@@ -213,7 +295,7 @@ Namespace WindowsT.FormsT
         ''' <returns>True if designer should serialize the <see cref="Status_"/> property</returns>
         Private Function ShouldSerializeStatus_() As Boolean
             If StatusState = ControlState.Hidden Then Return False
-            Return Status_.shouldserialize
+            Return Status_.ShouldSerialize
         End Function
         ''' <summary>Design-time proxy for the <see cref="Status"/> property</summary>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
@@ -551,14 +633,57 @@ Namespace WindowsT.FormsT
                     %>
                 </kw:Keywords>
         End Function
-        Public Sub LoadFromXML(ByVal xml As System.Xml.Linq.XDocument)
-            Dim rm As New Resources.ResourceManager("Tools.WindowsT.FormsT.KeywordsEditor.xsd", GetType(KeyWordsEditor).Assembly)
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Shared ReadOnly Property XMLSchema() As XmlSchema
+            Get
+                Static schema As XmlSchema = Nothing
+                If schema Is Nothing Then
+                    Using SchemaStream = GetType(KeyWordsEditor).Assembly.GetManifestResourceStream("Tools.WindowsT.FormsT.KeyWordsEditor.xsd")
+                        Dim Schemas As New XmlSchemaSet()
+                        Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.Throw
+                        schema = XMLSchema.Read(SchemaStream, veh)
+                    End Using
+                End If
+                Return schema
+            End Get
+        End Property
+        ''' <summary>Loads keywords and synonyms from given XML document</summary>
+        ''' <param name="doc">Document to load setting from</param>
+        ''' <param name="JustThis">True to ensure that load involves only this instance of <see cref="KeyWordsEditor"/>. False to load keywords and sysnonyms to shared collections (if possible).</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="doc"/> is null</exception>
+        ''' <exception cref="XmlSchemaException">Document <paramref name="doc"/> does not comply with XML-Schema http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor. This schema is stored as embdeded resource Tools.WindowsT.FormsT.KeyWordsEditor.xsd in this assembly.</exception>
+        ''' <remarks>
+        ''' <para>If <paramref name="JustThis"/> is true, collections <see cref="AutoCompleteStable"/> and <see cref="Synonyms"/> are re-created and <see cref="AutomaticLists"/> is ste to false.</para>
+        ''' <para>If <paramref name="JustThis"/> is false, those collections are emptied and filled with newly loaded values. So, such load has effect on all instances of <see cref="KeyWordsEditor"/> which share same collections (using <see cref="AutomaticLists"/> and same <see cref="AutoCompleteCacheName"/>, or by seting those collections manuallly tu same instance). <paramref name="JustThis"/> set to false is ignored for particular collection if the collection is null (in such case it is always re-created).</para>
+        ''' </remarks>
+        Public Sub LoadFromXML(ByVal doc As System.Xml.Linq.XDocument, Optional ByVal JustThis As Boolean = False)
+            If doc Is Nothing Then Throw New ArgumentNullException("doc")
+            Dim Schemas As New XmlSchemaSet()
+            Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.Throw
+            Schemas.Add(XMLSchema)
+            doc.Validate(Schemas, veh)
+            Dim Keywords = From kw In doc.<kw:Keywords>.<kw:keywords>.<kw:kw> Select kw.Value
+            Dim Synonyms = From pair In doc.<kw:Keywords>.<kw:synonyms>.<kw:pair> Select _
+                           New KeyValuePair(Of String(), String())( _
+                                (From key In pair.<kw:keys>.<kw:key> Select key.Value).ToArray, _
+                                (From word In pair.<kw:values>.<kw:word> Select word.Value.ToArray))
+            If JustThis Then
+                AutoCompleteStable = New ListWithEvents(Of String)
+                Me.Synonyms = New List(Of KeyValuePair(Of String(), String()))
+            Else
+                If AutoCompleteStable Is Nothing Then AutoCompleteStable = New ListWithEvents(Of String) _
+                Else AutoCompleteStable.Clear()
+                If Me.Synonyms Is Nothing Then Me.Synonyms = New List(Of KeyValuePair(Of String(), String())) _
+                Else Me.Synonyms.Clear()
+            End If
+            AutoCompleteStable.AddRange(Keywords)
+            Me.Synonyms.AddRange(Synonyms)
         End Sub
 
         ''' <summary>Proxy for the <see cref="Status"/> property in design time</summary>
         ''' <remarks>This class supports design-time behaviour of <see cref="KeyWordsEditor"/> and should not be used directly</remarks>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Class StatusProxy
+        Public NotInheritable Class StatusProxy
             ''' <summary><see cref="KeyWordsEditor"/> which owns <see cref="StatusMarker"/> this instance is proxy for</summary>
             Private ReadOnly kwe As KeyWordsEditor
             ''' <summary><see cref="StatusMarker"/> this instance is proxy for</summary>
@@ -654,5 +779,10 @@ Namespace WindowsT.FormsT
                 End Get
             End Property
         End Class
+        ''' <summary>CTor</summary>
+        Public Sub New()
+            InitializeComponent()
+            TmiEnabled()
+        End Sub
     End Class
 End Namespace

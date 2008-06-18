@@ -28,6 +28,16 @@ Namespace ExtensionsT
         Public Function NewIfNull(Of T As {Structure})(ByVal obj As T?) As T
             Return If(obj, New T)
         End Function
+        ''' <summary>Throws given exception</summary>
+        ''' <param name="ex">Exception to be thrown</param>
+        ''' <typeparam name="T">Type of exception to be thrown</typeparam>
+        ''' <returns>This function never returns.</returns>
+        ''' <exception cref="Exception">Exception of type <typeparamref name="T"/> <paramref name="ex"/> is always thrown</exception>
+        ''' <remarks>You can use this function to thown an exception in place where <c>Throw</c> cannot be used because an expression is expected.</remarks>
+        <Extension()> _
+        Public Function [Throw](Of T As Exception)(ByVal ex As T) As T
+            Throw ex
+        End Function
     End Module
 End Namespace
 #End If

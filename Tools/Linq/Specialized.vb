@@ -3,6 +3,7 @@ Imports System.Runtime.CompilerServices
 
 #If Config <= Nightly Then
 Namespace LinqT
+    ''' <summary>Type specific LINQ extensions</summary>
     Module Specialized
         ''' <summary>Invokes all given delegates and returns results of them</summary>
         ''' <param name="Delegates">Delegates to be invoked</param>
