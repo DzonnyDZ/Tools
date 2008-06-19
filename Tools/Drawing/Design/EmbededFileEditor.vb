@@ -23,15 +23,15 @@ Namespace DrawingT.DesignT
                 Lst.DisplayMember = "Title"
                 If value IsNot Nothing Then
                     Dim Save As New SaveFileDialog
-                    Save.Title = "Save data as..." 'Localize: dialog title
+                    Save.Title = ResourcesT.Components.SaveDataAs
                     Lst.Items.Add(Save)
                 End If
                 Dim [ReadOnly] As ReadOnlyAttribute = context.PropertyDescriptor.Attributes(GetType(ReadOnlyAttribute))
                 If [ReadOnly] Is Nothing OrElse [ReadOnly].IsReadOnly = False Then
                     Dim Embed As New OpenFileDialog
                     Lst.Items.Add(Embed)
-                    Embed.Title = "Load from file..." 'Localize: dialog title
-                    Lst.Items.Add("Clear") 'Localize: Item
+                    Embed.Title = ResourcesT.Components.LoadFromFile
+                    Lst.Items.Add(ResourcesT.Components.Clear) 
                 End If
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
@@ -99,10 +99,10 @@ Namespace DrawingT.DesignT
                 Me.Value = value
                 Me.Context = context
                 Lst.DisplayMember = "Title"
-                Dim Filter As String = "Images (bmp,jpeg,png,gif,tiff)|*.bmp;*.jpeg;*.jpg;*.gif;*.tif;*.tiff;*.png" 'Localize "images"
+                Dim Filter As String = ResourcesT.Components.ImagesFilter
                 If value IsNot Nothing Then
                     Dim Save As New SaveFileDialog
-                    Save.Title = "Save data as..." 'Localize: dialog title
+                    Save.Title = ResourcesT.Components.SaveDataAs
                     Save.Filter = Filter
                     Save.DefaultExt = "bmp"
                     Lst.Items.Add(Save)
@@ -111,10 +111,10 @@ Namespace DrawingT.DesignT
                 If [ReadOnly] Is Nothing OrElse [ReadOnly].IsReadOnly = False Then
                     Dim Embed As New OpenFileDialog
                     Lst.Items.Add(Embed)
-                    Embed.Title = "Load from file..." 'Localize: dialog title
+                    Embed.Title = ResourcesT.Components.LoadFromFile
                     Embed.Filter = Filter
                     Embed.DefaultExt = "bmp"
-                    Lst.Items.Add("Clear") 'Localize: Item
+                    Lst.Items.Add(ResourcesT.Components.Clear)
                 End If
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
@@ -151,7 +151,7 @@ Namespace DrawingT.DesignT
                                     Case ".emf" : f = Drawing.Imaging.ImageFormat.Emf
                                     Case "ico" : f = Drawing.Imaging.ImageFormat.Icon
                                     Case Else
-                                        MsgBox("Unknown image extension, image will not be saved.", MsgBoxStyle.Exclamation, My.Resources.Error_) 'Localize: Message
+                                        MsgBox(ResourcesT.Exceptions.UnknownImageExtensionImageWillNotBeSaved, MsgBoxStyle.Exclamation, My.Resources.Error_)
                                         Exit Sub
                                 End Select
                                 Value.Save(dlg.FileName, f)

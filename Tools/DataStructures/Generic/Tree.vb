@@ -138,13 +138,13 @@ Namespace DataStructuresT.GenericT
         ''' <exception cref="NullReferenceException">Attepmt to add null reference</exception>
         ''' <remarks>When node that is being added has already parent set or this node is root of current tree then <see cref="ListWithEvents(Of Tree(Of T)).CancelableItemIndexEventArgs.Cancel"/> is set to true, which causes <see cref="OperationCanceledException"/> to be thrown by <see cref="ListWithEvents(Of Tree(Of T)).Add"/> or <see cref="ListWithEvents(Of Tree(Of T)).Insert"/></remarks>
         Protected Overridable Sub OnAdding(ByVal e As ListWithEvents(Of Tree(Of T)).CancelableItemIndexEventArgs)
-            If e Is Nothing Then Throw New NullReferenceException("Cannot add null node into tree")
+            If e Is Nothing Then Throw New NullReferenceException(ResourcesT.Exceptions.CannotAddNullNodeIntoTree)
             If e.Item.Parent IsNot Nothing Then
                 e.Cancel = True
-                e.CancelMessage = "Cannot add node that have parent already set"
+                e.CancelMessage = ResourcesT.Exceptions.CannotAddNodeThatHaveParentAlreadySet
             ElseIf e.Item Is Me.Root Then
                 e.Cancel = True
-                e.CancelMessage = "Attempt to create cyclic tree"
+                e.CancelMessage = ResourcesT.Exceptions.AttemptToCreateCyclicTree
             End If
         End Sub
         ''' <summary>Called when item was added into <see cref="Nodes"/></summary>
@@ -157,13 +157,13 @@ Namespace DataStructuresT.GenericT
         ''' <exception cref="NullReferenceException">Attepmt to assign null reference</exception>
         ''' <remarks>When node that is being passed has already parent set or this node is root of current tree then <see cref="ListWithEvents(Of Tree(Of T)).CancelableItemIndexEventArgs.Cancel"/> is set to true, which causes <see cref="OperationCanceledException"/> to be thrown by <see cref="ListWithEvents(Of Tree(Of T)).Item"/>'s setter</remarks>
         Protected Overridable Sub OnItemChanging(ByVal e As ListWithEvents(Of Tree(Of T)).CancelableItemIndexEventArgs)
-            If e Is Nothing Then Throw New NullReferenceException("Cannot put null node into tree")
+            If e Is Nothing Then Throw New NullReferenceException(ResourcesT.Exceptions.CannotPutNullNodeIntoTree)
             If e.Item.Parent IsNot Nothing AndAlso Nodes(e.NewIndex) IsNot e.Item Then
                 e.Cancel = True
-                e.CancelMessage = "Cannot assign node that gave parent already set"
+                e.CancelMessage = ResourcesT.Exceptions.CannotAssignNodeThatGaveParentAlreadySet
             ElseIf e.Item Is Me.Root Then
                 e.Cancel = True
-                e.CancelMessage = "Attempt to create cyclic tree"
+                e.CancelMessage = ResourcesT.Exceptions.AttemptToCreateCyclicTree
             End If
         End Sub
         ''' <summary>Called after item of <see cref="Nodes"/> is changed</summary>
@@ -203,14 +203,14 @@ Namespace DataStructuresT.GenericT
         ''' <param name="Node"><see cref="Tree(Of T)"/> to be adopted</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Node"/> is null</exception>
         Public Sub Adopt(ByVal Node As Tree(Of T))
-            If Node Is Nothing Then Throw New ArgumentNullException("Node", "Cannot adopt null")
+            If Node Is Nothing Then Throw New ArgumentNullException("Node", ResourcesT.Exceptions.CannotAdoptNull)
             Node.Parent = Me
         End Sub
         ''' <summary>Adopts clone of given sub-tree</summary>
         ''' <param name="Node"><see cref="Tree(Of T)"/> to be adopted</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Node"/> is null</exception>
         Public Sub AdoptClone(ByVal Node As Tree(Of T))
-            If Node Is Nothing Then Throw New ArgumentNullException("Node", "Cannot adopt null")
+            If Node Is Nothing Then Throw New ArgumentNullException("Node", ResourcesT.Exceptions.CannotAdoptNull)
             Me.Nodes.Add(New Tree(Of T)(Node))
         End Sub
         ''' <summary>Determines if current node is root</summary>

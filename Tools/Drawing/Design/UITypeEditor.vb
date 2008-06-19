@@ -63,7 +63,7 @@ Namespace DrawingT.DesignT
             ''' <remarks><paramref name="value"/></remarks>
             ''' <exception cref="TypeMismatchException"><paramref name="value"/> is not of type <typeparamref name="T"/>.</exception>
             Private Shared Function VerifyValue(ByVal value As Object) As T
-                If Not TypeOf value Is T Then Throw New TypeMismatchException(String.Format("Only value s of type {0} can be edited by {0}", GetType(T).Name, GetType(UITypeEditor(Of T)).Name), value, GetType(T))
+                If Not TypeOf value Is T Then Throw New TypeMismatchException(String.Format(ResourcesT.Exceptions.OnlyValueSOfType0CanBeEditedBy0, GetType(T).Name, GetType(UITypeEditor(Of T)).Name), value, GetType(T))
                 Return value
             End Function
             ''' <summary>Gets the value to paint.</summary>

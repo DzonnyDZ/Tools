@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
+﻿'Extracted
+Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
 Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 '#If Config <= Nightly Then 'Set in project file
@@ -377,7 +378,7 @@ Namespace WindowsT.FormsT
                 Case CollectionsT.GenericT.CollectionChangeAction.Replace
                     cmbCombo.Items(e.Index) = e.NewValue
                 Case Else
-                    Throw New InvalidOperationException("Action was not member of CollectionChangeAction") 'Localize:Exception
+                    Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.WasNotMemberOf, "Action", "CollectionChangeAction"))
             End Select
         End Sub
         Private Sub ComboBox_SelectedIndexChanged(ByVal sender As MessageBox.MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -455,7 +456,7 @@ Namespace WindowsT.FormsT
             Me.Text = sender.Title
         End Sub
         Private Sub MessageBox_CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
-            Const Format As String = "{0} ({1:s})"
+            Dim Format As String = ResourcesT.Components.MessageBoxCounDownTimeFormat
             Select Case MessageBox.TimeButton
                 Case -1
                     For Each Button In MessageBox.Buttons
@@ -512,7 +513,7 @@ Namespace WindowsT.FormsT
                     Me.flpChecks.Controls.Replace(e.Index, NewCheck)
                     AttachCheckBoxHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "CheckBoxes"))     'Localize:Exception
+                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "CheckBoxes"))
             End Select
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
@@ -541,7 +542,7 @@ Namespace WindowsT.FormsT
                     Me.flpRadio.Controls.Replace(e.Index, NewRadio)
                     AttachRadioHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Radios"))     'Localize:Exception
+                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "Radios"))
             End Select
         End Sub
         ''' <exception cref="InvalidOperationException"><paramref name="e"/>.<see cref="ListWithEvents.ListChangedEventArgs.Action">Action</see> is <see cref="CollectionsT.GenericT.CollectionChangeAction.Other"/> or is not member of <see cref="CollectionsT.GenericT.CollectionChangeAction"/>.</exception>
@@ -581,7 +582,7 @@ Namespace WindowsT.FormsT
                     Me.flpButtons.Controls.Replace(e.Index, NewButton)
                     AttachButtonHandlers(e.NewValue)
                     EnsureCancelButton()
-                Case Else : Throw New InvalidOperationException(String.Format("The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.", "Buttons"))     'Localize:Exception
+                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection, "Buttons"))
             End Select
         End Sub
         ''' <summary>Performs actions needed when button is about to be removed. Does not remove button from <see cref="flpButtons"/>.</summary>
@@ -749,7 +750,7 @@ Namespace WindowsT.FormsT
         ''' <remarks>Note for inheritors: If you override thie method and do not call base class method, you must set value of the <see cref="Form"/> property</remarks>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/></exception>
         Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As System.Windows.Forms.IWin32Window)
-            If State <> States.Created Then Throw New InvalidOperationException("MessageBox must be in Created State in order to be displyed by PerformDialog.") 'Localize: Exception
+            If State <> States.Created Then Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog)
             Form = New MessageBoxForm(Me)
             If Modal Then
                 Form.ShowDialog(Owner)

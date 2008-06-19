@@ -21,7 +21,7 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="InvalidDataException">Tag marker other than 1Ch found</exception>
         ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         Public Sub New(ByVal Container As IIPTCGetter)
-            If Container Is Nothing Then Throw New ArgumentNullException("Container", "Container cannot be null")
+            If Container Is Nothing Then Throw New ArgumentNullException("Container")
             _Stream = Container.GetIPTCStream
             If _Stream Is Nothing OrElse _Stream.Length = 0 Then Exit Sub
             Parse()
@@ -34,11 +34,11 @@ Namespace DrawingT.MetadataT
             Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             Do
                 Dim TagMarker As Byte = r.ReadByte
-                If TagMarker <> &H1C Then Throw New InvalidDataException("Tag marker must be 1Ch")
+                If TagMarker <> &H1C Then Throw New InvalidDataException(ResourcesT.Exceptions.TagMarkerMustBe1Ch)
                 Dim RecordNumber As Byte = r.ReadByte
                 Dim Tag As Byte = r.ReadByte
                 Dim Size As UShort = r.ReadUInt16
-                If Size >= &H8000 Then Throw New NotSupportedException("Extended-size tags are not supported")
+                If Size >= &H8000 Then Throw New NotSupportedException(ResourcesT.Exceptions.ExtendedSizeTagsAreNotSupported)
                 Dim Data As Byte() = r.ReadBytes(Size)
                 _Records.Add(New IPTCRecord(RecordNumber, Tag, Size, Data))
             Loop While Stream.Position + 3 < Stream.Length

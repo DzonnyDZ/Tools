@@ -200,6 +200,11 @@
     <Compile Include="Drawing\Metadata\IPTC\IPTC.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
+    <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>IPTCResources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Drawing\Metadata\IPTC\IPTCTags.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -266,6 +271,16 @@
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
     <Compile Include="Reflection\SignatureProvider.vb" />
+    <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Components.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\resx %28Friend%29\Helpers.vb" />
     <Compile Include="Resources\resx %28Friend%29\WindowsT.FormsT.CompositeControls.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -552,9 +567,9 @@
     </Content>
     <Content Include="Collections\Specialized\SpecializedWrappers.xslt" />
     <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
-    <Content Include="Drawing\Metadata\Exif\ExifTags.css" />
-    <Content Include="Drawing\Metadata\Exif\ExifTags.display.xslt" />
-    <Content Include="Drawing\Metadata\Exif\ExifTags.html" />
+    <None Include="Drawing\Metadata\Exif\ExifTags.css" />
+    <None Include="Drawing\Metadata\Exif\ExifTags.display.xslt" />
+    <None Include="Drawing\Metadata\Exif\ExifTags.html" />
     <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
@@ -631,6 +646,18 @@
     <None Include="Reflection\Resources\BackwardReference.png" />
     <None Include="Reflection\Resources\ForwardReference.png" />
     <None Include="Resources\CommentHS.png" />
+      <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx" >
+          <DependentUpon>IPTCResources.resx</DependentUpon>
+      </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
+      <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.DrawingT.MetadataT.IPTCResources.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="My Project\Resources.cs.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Reflection\ObjectImages.resx">
       <CustomToolNamespace>ReflectionT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -640,6 +667,27 @@
     </EmbeddedResource>
     <None Include="Resources\NavBack.png" />
     <None Include="Resources\NavForward.png" />
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
+      <DependentUpon>Components.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Components.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.cs.resx">
+      <DependentUpon>CompositeControls.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.cs.resx">
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\Tools\Icons.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -694,6 +742,9 @@
       <DependentUpon>MessageBox WF.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
+      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.resx">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </EmbeddedResource>
@@ -725,9 +776,11 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
-REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
-"$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"</PostBuildEvent>
+    <PostBuildEvent>
+            "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
+            REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
+            "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
+        </PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

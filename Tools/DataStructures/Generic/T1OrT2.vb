@@ -190,7 +190,7 @@
                 ElseIf contains2 Then
                     Return value2
                 End If
-                Throw New NullReferenceException("Cannot return value for this instance of T1orT2 because it contains neither value1 nor value2.")
+                Throw New NullReferenceException(ResourcesT.Exceptions.CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2)
             End Get
             Set(ByVal value As T1orT2(Of T1, T2))
                 If value.contains1 Then
@@ -222,7 +222,7 @@
             If a.contains1 Then
                 Return a.value1
             Else
-                Throw New InvalidCastException("This T1orT2 cannot be converted to T1 because it doesn't contain value of T1")
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T1"))
             End If
         End Operator
         ''' <summary>Unboxes value of type <see cref="T2"/> from <see cref="T1orT2(Of T1, T2)"/> when <paramref name="a"/> contains <see cref="value2"/>.</summary>
@@ -233,7 +233,7 @@
             If a.contains2 Then
                 Return a.value2
             Else
-                Throw New InvalidCastException("This T1orT2 cannot be converted to T2 because it doesn't contain value of T2")
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T2"))
             End If
         End Operator
         ''' <summary>Identifies whether this instance contains value of specified type</summary>
@@ -280,7 +280,7 @@
                 ElseIf contains2 Then
                     Return value2
                 Else
-                    Throw New NullReferenceException("Cannot return value for this instance of T1orT2 because it contains neither value1 nor value2.")
+                    Throw New NullReferenceException(ResourcesT.Exceptions.CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2)
                 End If
             End Get
             Set(ByVal value As Object)
@@ -289,7 +289,7 @@
                 ElseIf TypeOf value Is T2 Then
                     value2 = value
                 Else
-                    Throw New ArgumentException("Value of ObjeValue property must be either of type T1 or of type T1")
+                    Throw New ArgumentException(ResourcesT.Exceptions.ValueOfObjeValuePropertyMustBeEitherOfTypeT1OrOfTypeT1)
                 End If
             End Set
         End Property

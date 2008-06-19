@@ -10,7 +10,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="WrapThis">Collection to be wrapped</param>
         ''' <exception cref=" ArgumentNullException"><paramref name="WrapThis"/> is null</exception>
         Public Sub New(ByVal WrapThis As IEnumerable)
-            If WrapThis Is Nothing Then Throw New ArgumentNullException("WrapThis", "WrapThis cannot be null")
+            If WrapThis Is Nothing Then Throw New ArgumentNullException("WrapThis")
             Wrapped = WrapThis
         End Sub
         ''' <summary>Wrapped value</summary>
@@ -21,7 +21,7 @@ Namespace CollectionsT.GenericT
                 Return _Wrapped
             End Get
             <DebuggerStepThrough()> Set(ByVal value As IEnumerable)
-                If value Is Nothing Then Throw New ArgumentNullException("value", "Wrapped cannot be set to null")
+                If value Is Nothing Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeSetToNull, "Wrapped"))
                 _Wrapped = value
             End Set
         End Property
@@ -45,7 +45,7 @@ Namespace CollectionsT.GenericT
             ''' <param name="Wrap">type-unsafe <see cref="IEnumerator"/> to be wrapped</param>
             ''' <exception cref="ArgumentNullException"><paramref name="Wrap"/> is null</exception>
             Public Sub New(ByVal Wrap As IEnumerator)
-                If Wrap Is Nothing Then Throw New ArgumentNullException("Wrap", "Wrap cannot be null")
+                If Wrap Is Nothing Then Throw New ArgumentNullException("Wrap")
                 Me.Wrap = Wrap
             End Sub
             ''' <summary>Gets the element in the collection at the current position of the enumerator.</summary>
@@ -127,7 +127,7 @@ Namespace CollectionsT.GenericT
                 Return MyBase.Wrapped
             End Get
             Set(ByVal value As System.Collections.IEnumerable)
-                If Not TypeOf value Is IList Then Throw New ArgumentException("Only IList instances can be used in ListWrapper")
+                If Not TypeOf value Is IList Then Throw New ArgumentException(ResourcesT.Exceptions.OnlyIListInstancesCanBeUsedInListWrapper)
                 MyBase.Wrapped = value
             End Set
         End Property
@@ -157,11 +157,11 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="T:System.ArgumentException"><paramref name="array"/> is multidimensional.-or-arrayIndex is equal to or greater than the length of <paramref name="array"/>.-or-The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1"></see> is greater than the available space from <paramref name="arrayIndex"/> to the end of the destination array.</exception>
         ''' <exception cref="InvalidCastException"><see cref="List"/> contains item that cannot be automatically cast to <see cref="T"/></exception>
         Public Sub CopyTo(ByVal array() As T, ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of T).CopyTo
-            If arrayIndex < 0 Then Throw New ArgumentOutOfRangeException("arrayIndex", "arrayIndex must be non-negative")
+            If arrayIndex < 0 Then Throw New ArgumentOutOfRangeException("arrayIndex", String.Format(ResourcesT.Exceptions.MustBeNonNegative, "arrayIndex"))
             If array Is Nothing Then Throw New ArgumentNullException("array")
-            If array.Rank <> 1 Then Throw New ArgumentException("array is multidimensional", "array")
-            If arrayIndex >= array.Length Then Throw New ArgumentException("arrayIndex is greater than or equal to lenght of array")
-            If array.Length - arrayIndex < Me.Count Then Throw New ArgumentException("There is not engough space in array after arrayIndex to place all items from collection")
+            If array.Rank <> 1 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.IsMultidimensional, "array"), "array")
+            If arrayIndex >= array.Length Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.IsGreaterThanOrEqualToLenghtOfArray, "arrayIndex"))
+            If array.Length - arrayIndex < Me.Count Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThereIsNotEngoughSpaceInArrayAfter0ToPlaceAllItemsFromCollection, "arrayIndex"))
             Dim i As Integer = arrayIndex
             For Each item As T In Me
                 array(i) = item

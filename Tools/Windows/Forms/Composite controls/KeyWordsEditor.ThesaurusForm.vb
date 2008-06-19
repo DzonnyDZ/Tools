@@ -188,11 +188,11 @@ Namespace WindowsT.FormsT
         End Sub
 
         Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
-            'Store synonyms
             PerformOK()
             Me.Close()
         End Sub
         Private Sub PerformOK()
+            'Store synonyms
             StoreOldItem()
             If Me.For.Synonyms IsNot Nothing Then
                 Me.For.Synonyms.Clear()
@@ -228,10 +228,10 @@ Namespace WindowsT.FormsT
         End Sub
 
         Private Sub cmdSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdSave.Click
-            If MBox.ModalEx(My.Resources.ThisActionRequiresAllChangesToBeConfirmed, My.Resources.ConfirmChanges, New Object() {New MBox.MessageBoxButton(My.Resources.Continue_, Windows.Forms.DialogResult.OK, My.Resources.Continue_AccessKey), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = Windows.Forms.DialogResult.OK AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
-                PerformOK()
+            If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then 'MBox.ModalEx(My.Resources.ThisActionRequiresAllChangesToBeConfirmed, My.Resources.ConfirmChanges, New Object() {New MBox.MessageBoxButton(My.Resources.Continue_, Windows.Forms.DialogResult.OK, My.Resources.Continue_AccessKey), New MBox.MessageBoxButton(DialogResult.OK)}).DialogResult = Windows.Forms.DialogResult.OK AndAlso 
+                Dim Doc = KeyWordsEditor.GetXML(kweAutoComplete.KeyWords, From px As SynProxy In cmbSyn.Items Select px.Syns)
 Retry:          Try
-                    Me.For.GetKeywordsAsXML.Save(sfdSave.FileName)
+                    doc.Save(sfdSave.FileName)
                 Catch ex As Exception
                     If MBox.Error(ex, My.Resources.Error_, IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
                 End Try
@@ -240,13 +240,25 @@ Retry:          Try
 
         Private Sub cmdOpen_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOpen.Click
             If ofdLoad.ShowDialog = Windows.Forms.DialogResult.OK Then
+                Dim data As Tools.DataStructuresT.GenericT.IPair(Of System.Collections.Generic.IEnumerable(Of String), System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of String(), String())))
                 Try
-                    Me.For.LoadFromXML(Xml.Linq.XDocument.Load(ofdLoad.FileName))
+                    Data = KeyWordsEditor.ParseFromXml(Xml.Linq.XDocument.Load(ofdLoad.FileName))
                 Catch ex As Exception
                     MBox.Error(ex, My.Resources.Error_)
                     Exit Sub
                 End Try
-                Me.Initialize()
+                If Me.For.AutoCompleteStable IsNot Nothing Then
+                    kweAutoComplete.KeyWords.Clear()
+                    kweAutoComplete.KeyWords.AddRange(data.Value1)
+                End If
+                If Me.For.Synonyms IsNot Nothing Then
+                    cmbSyn.Items.Clear()
+                    cmbSyn.DisplayMember = "DisplayMember"
+                    For Each Syn In data.Value2
+                        cmbSyn.Items.Add(New SynProxy(Syn))
+                    Next Syn
+                    If cmbSyn.Items.Count > 0 Then cmbSyn.SelectedIndex = 0
+                End If
             End If
         End Sub
     End Class

@@ -17,7 +17,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="Inverse">True if enumeration should be done from end to beginning of an array</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Array"/> is null</exception>
         Public Sub New(ByVal Array As T(), Optional ByVal Inverse As Boolean = False)
-            If Array Is Nothing Then Throw New ArgumentNullException("Array", "Array cannot be null.")
+            If Array Is Nothing Then Throw New ArgumentNullException("Array")
             Me.Array = Array
             Me.Inverse = Inverse
             Index = If(Inverse, Array.GetUpperBound(0) + 1, Array.GetLowerBound(0) - 1)
@@ -31,7 +31,7 @@ Namespace CollectionsT.GenericT
                 If Index >= Array.GetLowerBound(0) AndAlso Index <= Array.GetUpperBound(0) Then
                     Return Array(Index)
                 Else
-                    Throw New InvalidOperationException("Enumerator is either not initialized yed or enumeration has already finished")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.EnumeratorIsEitherNotInitializedYedOrEnumerationHasAlreadyFinished)
                 End If
             End Get
         End Property

@@ -56,7 +56,7 @@ Namespace DrawingT.DrawingIOt.JPEG
                 Me.Stream = Stream
                 CloseStreamOnDispose = False
             Else
-                Throw New NotSupportedException("Stream to read JPEG from must be able to seek and read")
+                Throw New NotSupportedException(ResourcesT.Exceptions.StreamToReadJPEGFromMustBeAbleToSeekAndRead)
             End If
             Parse()
         End Sub
@@ -74,7 +74,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         Private Sub Parse()
             Dim SOI As New JPEGMarkerReader(Stream, 0)
             If SOI.MarkerCode <> JPEGMarkerReader.Markers.SOI OrElse SOI.Length <> 0 Then _
-                Throw New InvalidDataException("JPEG file doesn't start with correct SOI marker")
+                Throw New InvalidDataException(ResourcesT.Exceptions.JPEGFileDoesnTStartWithCorrectSOIMarker)
             _Markers.Add(SOI)
             Dim Pos As Long = 2
             Dim Marker As JPEGMarkerReader
@@ -94,9 +94,9 @@ Namespace DrawingT.DrawingIOt.JPEG
                     Exit For
                 End If
             Next i
-            If EOI Is Nothing Then Throw New InvalidDataException("EOI not found")
+            If EOI Is Nothing Then Throw New InvalidDataException(ResourcesT.Exceptions.EOINotFound)
             If EOI.MarkerCode <> JPEGMarkerReader.Markers.EOI OrElse EOI.Length <> 0 Then _
-                Throw New InvalidDataException("JPEG file doesn't end with correct EOI marker")
+                Throw New InvalidDataException(ResourcesT.Exceptions.JPEGFileDoesnTEndWithCorrectEOIMarker)
             _Markers.Add(EOI)
         End Sub
         ''' <summary>List of markers this JPEG stream</summary>
@@ -314,7 +314,7 @@ Namespace DrawingT.DrawingIOt.JPEG
                     InsertAfter = Marker
                     If Marker.Code > JPEGMarkerReader.Markers.APP13 OrElse (Marker.Code < JPEGMarkerReader.Markers.APP0 AndAlso Marker.Code <> JPEGMarkerReader.Markers.EOI) Then Exit For
                 Next Marker
-                If InsertAfter Is Nothing Then Throw New InvalidOperationException("No JPEG marker found")
+                If InsertAfter Is Nothing Then Throw New InvalidOperationException(ResourcesT.Exceptions.NoJPEGMarkerFound)
                 If InsertAfter.MarkerCode = JPEGMarkerReader.Markers.SOI Then
                     PreDataPos = 2
                 Else
@@ -436,9 +436,9 @@ Namespace DrawingT.DrawingIOt.JPEG
             If Stream.Read(Bytes8BIM, 0, 4) = 4 Then
                 Dim Str8BIM As String = System.Text.Encoding.ASCII.GetString(Bytes8BIM, 0, 4)
                 If Str8BIM <> Header8BIM Then _
-                    Throw New InvalidDataException("8BIM segment doesn't start with sting '8BIM'")
+                    Throw New InvalidDataException(ResourcesT.Exceptions.BIMSegmentDoesnTStartWithSting8BIM)
             Else
-                Throw New InvalidDataException("8BIM segment doesn't start with sting '8BIM'")
+                Throw New InvalidDataException(ResourcesT.Exceptions.BIMSegmentDoesnTStartWithSting8BIM)
             End If
             _Type = r.ReadUInt16
             Dim StrLen As Byte = r.ReadByte
@@ -455,7 +455,7 @@ Namespace DrawingT.DrawingIOt.JPEG
             If NamePaddNeeded Then Stream.ReadByte()
             _DataSize = r.ReadUInt32
             If Stream.Position + DataSize > Stream.Length Then _
-                Throw New InvalidDataException("Reported length of 8BIM segment doesn'f fit into base stream")
+                Throw New InvalidDataException(ResourcesT.Exceptions.ReportedLengthOf8BIMSegmentDoesnFFitIntoBaseStream)
             _Data = New ConstrainedReadOnlyStream(Stream, Stream.Position, DataSize)
         End Sub
         ''' <summary>True when name is padded to odd lenght (event with size specification) by one null byte</summary>

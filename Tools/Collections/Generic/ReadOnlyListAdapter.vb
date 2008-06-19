@@ -15,7 +15,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="AdaptThis">The <see cref="List(Of T)"/> to be adapted.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="AdaptThis"/> is null</exception>
         Public Sub New(ByVal AdaptThis As List(Of TFrom))
-            If AdaptThis Is Nothing Then Throw New ArgumentNullException("AdaptThis cannot be null", "AdaptThis")
+            If AdaptThis Is Nothing Then Throw New ArgumentNullException("AdaptThis")
             _InnerList = AdaptThis
         End Sub
         ''' <summary>Contains value of the <see cref="InnerList"/> property</summary>

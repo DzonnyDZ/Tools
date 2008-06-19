@@ -165,7 +165,7 @@ Namespace DrawingT.MetadataT
                 If i = a.Length Then Return New URational(Numerator, 1)
                 While a(i) = " "c : i += 1 : End While
                 If i = a.Length Then Return New URational(Numerator, 1)
-                If a(i) <> "/"c Then Throw New InvalidCastException("/ expected")
+                If a(i) <> "/"c Then Throw New InvalidCastException(ResourcesT.Exceptions.SlashExpected)
                 i += 1
                 While a(i) = " "c : i += 1 : End While
                 For i = i - 1 To a.Length
@@ -178,10 +178,10 @@ Namespace DrawingT.MetadataT
                 If i = a.Length Then Return New URational(Numerator, Denominator)
                 While a(i) = " "c : i += 1 : End While
                 If i = a.Length Then Return New URational(Numerator, Denominator)
-                Throw New InvalidCastException("Unexpected character " & a(i))
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.UnexpectedCharacter0, a(i)))
             Catch ex As Exception
                 If TypeOf ex Is InvalidCastException Then Throw
-                Throw New InvalidCastException("Cannot convert string " & a & "into URational", ex)
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, a, "URational"), ex)
             End Try
         End Operator
 #End Region
@@ -353,7 +353,7 @@ Namespace DrawingT.MetadataT
                 If i = a.Length Then Return New SRational(NumM * Numerator, 1)
                 While a(i) = " "c : i += 1 : End While
                 If i = a.Length Then Return New SRational(NumM * Numerator, 1)
-                If a(i) <> "/"c Then Throw New InvalidCastException("/ expected")
+                If a(i) <> "/"c Then Throw New InvalidCastException(ResourcesT.Exceptions.SlashExpected)
                 i += 1
                 While a(i) = " "c : i += 1 : End While
                 If a(i) = "-"c Then
@@ -371,10 +371,10 @@ Namespace DrawingT.MetadataT
                 If i = a.Length Then Return New SRational(NumM * Numerator, DenM * Denominator)
                 While a(i) = " "c : i += 1 : End While
                 If i = a.Length Then Return New SRational(NumM * Numerator, DenM * Denominator)
-                Throw New InvalidCastException("Unexpected character " & a(i))
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.UnexpectedCharacter0, a(i)))
             Catch ex As Exception
                 If TypeOf ex Is InvalidCastException Then Throw
-                Throw New InvalidCastException("Cannot convert string " & a & "into SRational", ex)
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, a, "SRational"), ex)
             End Try
         End Operator
 #End Region

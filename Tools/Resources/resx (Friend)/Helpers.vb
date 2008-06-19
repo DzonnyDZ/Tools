@@ -18,6 +18,20 @@ Namespace ResourcesT
             resourceMan = New ResourceManager("Tools.ResourcesT.Icons", GetType(Icons).Assembly)
         End Sub
     End Class
+    Partial Class Components
+        ''' <summary>Initializer - redirects resources to Tools.ResourcesT.Components</summary>
+        ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
+        Shared Sub New()
+            resourceMan = New ResourceManager("Tools.ResourcesT.Components", GetType(Components).Assembly)
+        End Sub
+    End Class
+    Partial Class Exceptions
+        ''' <summary>Initializer - redirects resources to Tools.ResourcesT.Exceptions</summary>
+        ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
+        Shared Sub New()
+            resourceMan = New ResourceManager("Tools.ResourcesT.Exceptions", GetType(Exceptions).Assembly)
+        End Sub
+    End Class
 End Namespace
 Namespace ReflectionT
     Partial Class ObjectImages
@@ -25,6 +39,15 @@ Namespace ReflectionT
         ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
         Shared Sub New()
             resourceMan = New ResourceManager("Tools.ReflectionT.ObjectImages", GetType(ObjectImages).Assembly)
+        End Sub
+    End Class
+End Namespace
+Namespace DrawingT.MetadataT
+    Partial Class IPTCResources
+        ''' <summary>Initializer - redirects resources to Tools.DrawingT.MetadataT.IPTCResources</summary>
+        ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
+        Shared Sub New()
+            resourceMan = New ResourceManager("Tools.DrawingT.MetadataT.IPTCResources", GetType(IPTCResources).Assembly)
         End Sub
     End Class
 End Namespace

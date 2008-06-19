@@ -94,7 +94,7 @@ Namespace DrawingT.MetadataT
                     Exif.Stream.Position = Offset
                     ReDim TagData(SizeTotal - 1)
                     If Exif.Stream.Read(TagData, 0, SizeTotal) <> SizeTotal Then
-                        Throw New InvalidDataException("Cannot read tag data from stream")
+                        Throw New InvalidDataException(ResourcesT.Exceptions.CannotReadTagDataFromStream)
                     End If
                 Else
                     TagData = Data

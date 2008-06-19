@@ -23,6 +23,7 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(MessageBoxOptionsEditor))
             Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
             Me.lblTextAlign = New System.Windows.Forms.Label
             Me.lblTextDirection = New System.Windows.Forms.Label
@@ -43,188 +44,154 @@
             '
             'tlpMain
             '
-            Me.tlpMain.AutoSize = True
-            Me.tlpMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpMain.ColumnCount = 2
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpMain.AccessibleDescription = Nothing
+            Me.tlpMain.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpMain, "tlpMain")
+            Me.tlpMain.BackgroundImage = Nothing
             Me.tlpMain.Controls.Add(Me.lblTextAlign, 0, 0)
             Me.tlpMain.Controls.Add(Me.lblTextDirection, 0, 1)
             Me.tlpMain.Controls.Add(Me.lblFocus, 0, 2)
             Me.tlpMain.Controls.Add(Me.chkBring, 1, 2)
             Me.tlpMain.Controls.Add(Me.flpAlign, 1, 0)
             Me.tlpMain.Controls.Add(Me.tlpFlow, 1, 1)
-            Me.tlpMain.Location = New System.Drawing.Point(0, 0)
-            Me.tlpMain.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpMain.Font = Nothing
             Me.tlpMain.Name = "tlpMain"
-            Me.tlpMain.RowCount = 3
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.Size = New System.Drawing.Size(170, 138)
-            Me.tlpMain.TabIndex = 0
             '
             'lblTextAlign
             '
-            Me.lblTextAlign.AutoSize = True
-            Me.lblTextAlign.Location = New System.Drawing.Point(3, 0)
+            Me.lblTextAlign.AccessibleDescription = Nothing
+            Me.lblTextAlign.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblTextAlign, "lblTextAlign")
+            Me.lblTextAlign.Font = Nothing
             Me.lblTextAlign.Name = "lblTextAlign"
-            Me.lblTextAlign.Size = New System.Drawing.Size(53, 13)
-            Me.lblTextAlign.TabIndex = 0
-            Me.lblTextAlign.Text = "Text align"
             '
             'lblTextDirection
             '
-            Me.lblTextDirection.AutoSize = True
-            Me.lblTextDirection.Location = New System.Drawing.Point(3, 92)
+            Me.lblTextDirection.AccessibleDescription = Nothing
+            Me.lblTextDirection.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblTextDirection, "lblTextDirection")
+            Me.lblTextDirection.Font = Nothing
             Me.lblTextDirection.Name = "lblTextDirection"
-            Me.lblTextDirection.Size = New System.Drawing.Size(71, 13)
-            Me.lblTextDirection.TabIndex = 2
-            Me.lblTextDirection.Text = "Text direction"
             '
             'lblFocus
             '
-            Me.lblFocus.AutoSize = True
-            Me.lblFocus.Location = New System.Drawing.Point(3, 115)
+            Me.lblFocus.AccessibleDescription = Nothing
+            Me.lblFocus.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblFocus, "lblFocus")
+            Me.lblFocus.Font = Nothing
             Me.lblFocus.Name = "lblFocus"
-            Me.lblFocus.Size = New System.Drawing.Size(36, 13)
-            Me.lblFocus.TabIndex = 4
-            Me.lblFocus.Text = "Focus"
             '
             'chkBring
             '
-            Me.chkBring.Anchor = System.Windows.Forms.AnchorStyles.Top
-            Me.chkBring.AutoSize = True
-            Me.chkBring.Location = New System.Drawing.Point(80, 118)
+            Me.chkBring.AccessibleDescription = Nothing
+            Me.chkBring.AccessibleName = Nothing
+            resources.ApplyResources(Me.chkBring, "chkBring")
+            Me.chkBring.BackgroundImage = Nothing
+            Me.chkBring.Font = Nothing
             Me.chkBring.Name = "chkBring"
-            Me.chkBring.Size = New System.Drawing.Size(87, 17)
-            Me.chkBring.TabIndex = 5
-            Me.chkBring.Text = "&Bring to front"
             Me.chkBring.UseVisualStyleBackColor = True
             '
             'flpAlign
             '
-            Me.flpAlign.AutoSize = True
-            Me.flpAlign.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.flpAlign.ColumnCount = 1
-            Me.flpAlign.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+            Me.flpAlign.AccessibleDescription = Nothing
+            Me.flpAlign.AccessibleName = Nothing
+            resources.ApplyResources(Me.flpAlign, "flpAlign")
+            Me.flpAlign.BackgroundImage = Nothing
             Me.flpAlign.Controls.Add(Me.optLeft, 0, 0)
             Me.flpAlign.Controls.Add(Me.optCenter, 0, 1)
             Me.flpAlign.Controls.Add(Me.optJustify, 0, 3)
             Me.flpAlign.Controls.Add(Me.optRight, 0, 2)
-            Me.flpAlign.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.flpAlign.Location = New System.Drawing.Point(77, 0)
-            Me.flpAlign.Margin = New System.Windows.Forms.Padding(0)
+            Me.flpAlign.Font = Nothing
             Me.flpAlign.Name = "flpAlign"
-            Me.flpAlign.RowCount = 4
-            Me.flpAlign.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.flpAlign.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.flpAlign.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.flpAlign.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.flpAlign.Size = New System.Drawing.Size(93, 92)
-            Me.flpAlign.TabIndex = 6
             '
             'optLeft
             '
-            Me.optLeft.AutoSize = True
-            Me.optLeft.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.optLeft.Location = New System.Drawing.Point(3, 3)
+            Me.optLeft.AccessibleDescription = Nothing
+            Me.optLeft.AccessibleName = Nothing
+            resources.ApplyResources(Me.optLeft, "optLeft")
+            Me.optLeft.BackgroundImage = Nothing
+            Me.optLeft.Font = Nothing
             Me.optLeft.Name = "optLeft"
-            Me.optLeft.Size = New System.Drawing.Size(87, 17)
-            Me.optLeft.TabIndex = 4
             Me.optLeft.TabStop = True
-            Me.optLeft.Text = "&Left"
             Me.optLeft.UseVisualStyleBackColor = True
             '
             'optCenter
             '
-            Me.optCenter.AutoSize = True
-            Me.optCenter.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.optCenter.Location = New System.Drawing.Point(3, 26)
+            Me.optCenter.AccessibleDescription = Nothing
+            Me.optCenter.AccessibleName = Nothing
+            resources.ApplyResources(Me.optCenter, "optCenter")
+            Me.optCenter.BackgroundImage = Nothing
+            Me.optCenter.Font = Nothing
             Me.optCenter.Name = "optCenter"
-            Me.optCenter.Size = New System.Drawing.Size(87, 17)
-            Me.optCenter.TabIndex = 5
             Me.optCenter.TabStop = True
-            Me.optCenter.Text = "&Center"
-            Me.optCenter.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             Me.optCenter.UseVisualStyleBackColor = True
             '
             'optJustify
             '
-            Me.optJustify.AutoSize = True
-            Me.optJustify.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.optJustify.Location = New System.Drawing.Point(3, 72)
+            Me.optJustify.AccessibleDescription = Nothing
+            Me.optJustify.AccessibleName = Nothing
+            resources.ApplyResources(Me.optJustify, "optJustify")
+            Me.optJustify.BackgroundImage = Nothing
+            Me.optJustify.Font = Nothing
             Me.optJustify.Name = "optJustify"
-            Me.optJustify.Size = New System.Drawing.Size(87, 17)
-            Me.optJustify.TabIndex = 7
             Me.optJustify.TabStop = True
-            Me.optJustify.Text = "&J u s t i f y"
-            Me.optJustify.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             Me.optJustify.UseVisualStyleBackColor = True
             '
             'optRight
             '
-            Me.optRight.AutoSize = True
-            Me.optRight.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.optRight.Location = New System.Drawing.Point(3, 49)
+            Me.optRight.AccessibleDescription = Nothing
+            Me.optRight.AccessibleName = Nothing
+            resources.ApplyResources(Me.optRight, "optRight")
+            Me.optRight.BackgroundImage = Nothing
+            Me.optRight.Font = Nothing
             Me.optRight.Name = "optRight"
-            Me.optRight.Size = New System.Drawing.Size(87, 17)
-            Me.optRight.TabIndex = 6
             Me.optRight.TabStop = True
-            Me.optRight.Text = "&Right"
-            Me.optRight.TextAlign = System.Drawing.ContentAlignment.MiddleRight
             Me.optRight.UseVisualStyleBackColor = True
             '
             'tlpFlow
             '
-            Me.tlpFlow.Anchor = System.Windows.Forms.AnchorStyles.Top
-            Me.tlpFlow.AutoSize = True
-            Me.tlpFlow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpFlow.ColumnCount = 2
-            Me.tlpFlow.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-            Me.tlpFlow.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+            Me.tlpFlow.AccessibleDescription = Nothing
+            Me.tlpFlow.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpFlow, "tlpFlow")
+            Me.tlpFlow.BackgroundImage = Nothing
             Me.tlpFlow.Controls.Add(Me.optLtR, 0, 0)
             Me.tlpFlow.Controls.Add(Me.optRtL, 1, 0)
-            Me.tlpFlow.Location = New System.Drawing.Point(84, 92)
-            Me.tlpFlow.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpFlow.Font = Nothing
             Me.tlpFlow.Name = "tlpFlow"
-            Me.tlpFlow.RowCount = 1
-            Me.tlpFlow.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpFlow.Size = New System.Drawing.Size(78, 23)
-            Me.tlpFlow.TabIndex = 7
             '
             'optLtR
             '
-            Me.optLtR.AutoSize = True
-            Me.optLtR.Location = New System.Drawing.Point(3, 3)
+            Me.optLtR.AccessibleDescription = Nothing
+            Me.optLtR.AccessibleName = Nothing
+            resources.ApplyResources(Me.optLtR, "optLtR")
+            Me.optLtR.BackgroundImage = Nothing
+            Me.optLtR.Font = Nothing
             Me.optLtR.Name = "optLtR"
-            Me.optLtR.Size = New System.Drawing.Size(33, 17)
-            Me.optLtR.TabIndex = 2
             Me.optLtR.TabStop = True
-            Me.optLtR.Text = "&ltr"
             Me.optLtR.UseVisualStyleBackColor = True
             '
             'optRtL
             '
-            Me.optRtL.AutoSize = True
-            Me.optRtL.Location = New System.Drawing.Point(42, 3)
+            Me.optRtL.AccessibleDescription = Nothing
+            Me.optRtL.AccessibleName = Nothing
+            resources.ApplyResources(Me.optRtL, "optRtL")
+            Me.optRtL.BackgroundImage = Nothing
+            Me.optRtL.Font = Nothing
             Me.optRtL.Name = "optRtL"
-            Me.optRtL.Size = New System.Drawing.Size(33, 17)
-            Me.optRtL.TabIndex = 3
             Me.optRtL.TabStop = True
-            Me.optRtL.Text = "&rtl"
             Me.optRtL.UseVisualStyleBackColor = True
             '
             'MessageBoxOptionsEditor
             '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.AccessibleDescription = Nothing
+            Me.AccessibleName = Nothing
+            resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.AutoSize = True
-            Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.BackgroundImage = Nothing
             Me.Controls.Add(Me.tlpMain)
+            Me.Font = Nothing
             Me.KeyPreview = True
             Me.Name = "MessageBoxOptionsEditor"
-            Me.Size = New System.Drawing.Size(170, 138)
             Me.tlpMain.ResumeLayout(False)
             Me.tlpMain.PerformLayout()
             Me.flpAlign.ResumeLayout(False)

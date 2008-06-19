@@ -16,6 +16,7 @@
     <!--Generates file envelop (#If and #Region)-->
     <xsl:template match="/">
         <xsl:call-template name="header-comment"/>
+        <xsl:text>'Localize: This auto-generated file was skipped during localization&#xD;&#xA;</xsl:text>
         <xsl:text>#If Config &lt;= </xsl:text>
         <xsl:value-of select="et:Root/@Stage"/>
         <xsl:if test="et:Root/@Stage!='Release'">

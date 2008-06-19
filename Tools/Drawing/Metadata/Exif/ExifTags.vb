@@ -1,14 +1,15 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2701.36373
+' Generator: TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2833.35810
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 25. ledna 2008
-' By:DZONNY\Honza
+' Created: 19. června 2008
+' By:noutbuk\Honza
 '
+'Localize: This auto-generated file was skipped during localization
 #If Config <= Nightly 'Stage: Nightly
 #Region "Generated code"
 Namespace DrawingT.MetadataT

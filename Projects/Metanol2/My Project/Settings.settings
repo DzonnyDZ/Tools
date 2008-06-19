@@ -8,7 +8,7 @@
     <Setting Name="LastVersion" Type="System.String" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="ThumbSize" Type="System.Drawing.Size" Scope="User">
+    <Setting Name="ThumbSize" Roaming="true" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">64, 64</Value>
     </Setting>
     <Setting Name="FormSize" Type="System.Drawing.Size" Scope="User">
@@ -35,7 +35,7 @@
     <Setting Name="LargeState" Type="System.Windows.Forms.FormWindowState" Scope="User">
       <Value Profile="(Default)">Normal</Value>
     </Setting>
-    <Setting Name="LargeShown" Type="System.Boolean" Scope="User">
+    <Setting Name="LargeShown" Roaming="true" Type="System.Boolean" Scope="User">
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="LargeFloating" Type="System.Boolean" Scope="User">
@@ -49,6 +49,10 @@
     </Setting>
     <Setting Name="TextHeight" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">179</Value>
+    </Setting>
+    <Setting Name="Keywords" Roaming="true" Type="System.Xml.XmlDocument" Scope="User">
+      <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
+&lt;Keywords xmlns="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor" /&gt;</Value>
     </Setting>
   </Settings>
 </SettingsFile>

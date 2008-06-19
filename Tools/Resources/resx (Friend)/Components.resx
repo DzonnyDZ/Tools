@@ -117,109 +117,124 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Save (diskette)</comment>
+  <data name="AllowClose_d" xml:space="preserve">
+    <value>Value indicationg if dialog can be closed without clicking on button. Thi is typically by closing the window that represents the dialog by the "X" button.</value>
   </data>
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Navigate backward (⇐)</comment>
+  <data name="Buttons_d" xml:space="preserve">
+    <value>Defines buttons displayed on message box</value>
   </data>
-  <data name="Repeat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Repeat (↺)</comment>
+  <data name="DefaultButton_d" xml:space="preserve">
+    <value>indicates 0-based index of button that has focus when message box is shown and is default button for message box (usually reported when user presses enter).</value>
   </data>
-  <data name="ToolsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ĐTools.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Đ</comment>
+  <data name="CloseResponse_d" xml:space="preserve">
+    <value>Value returned by the Show function / DialogResult property when user closes the dialog by closing dialog window or by pressing escape</value>
   </data>
-  <data name="Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\+.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Yellow plus with red edge</comment>
+  <data name="Prompt_d" xml:space="preserve">
+    <value>Text of prompt displayed to the user.</value>
   </data>
-  <data name="Zip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zip.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Zipper</comment>
+  <data name="Title_d" xml:space="preserve">
+    <value>Title shown in dialog header</value>
   </data>
-  <data name="NewReport" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NewReportHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>New report (green sheet)</comment>
+  <data name="Icon_d" xml:space="preserve">
+    <value>Icon shown in left to corner (lrt) of dialog</value>
   </data>
-  <data name="T" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\T.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Blue T with yellow edge</comment>
+  <data name="Options_d" xml:space="preserve">
+    <value>Addtional options controlling how dialog is displayed</value>
   </data>
-  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DeleteHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Delete (✗)</comment>
+  <data name="CheckBoxes_d" xml:space="preserve">
+    <value>Check boxes displayed for message box. Can be used for example for 'Do not show this message in future' option.</value>
   </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Navigate forward (⇒)</comment>
+  <data name="ComboBox_d" xml:space="preserve">
+    <value>Combo box displayed on dialog</value>
   </data>
-  <data name="Comment" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CommentHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Comment</comment>
+  <data name="Radios_d" xml:space="preserve">
+    <value>Radio buttons (options) displayed on messagebox</value>
   </data>
-  <data name="Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\openHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Open (opened folder with arrow)</comment>
+  <data name="Timer_d" xml:space="preserve">
+    <value>Inidcates how long the message box will be show to user before being closed automatically. If zero or less, no count-down takes effect.</value>
   </data>
-  <data name="Error_" xml:space="preserve">
-    <value>Error</value>
-    <comment>MessageBox title</comment>
+  <data name="TimeButton_d" xml:space="preserve">
+    <value>Indicates 0-based index of button which displays the count-down timer. It aslo defines result of dialog returned when time elapses. -1 chose button automatically acording to CloseResponse, &lt;-1 displays count-down in title, &gt; number of buttons hides count-down indicator.</value>
   </data>
-  <data name="ValueChanged_cat" xml:space="preserve">
-    <value>Value Changed</value>
-    <comment>PropertyGrid category</comment>
+  <data name="MessageBoxButton_Text_d" xml:space="preserve">
+    <value>Text displayed on the control</value>
   </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
+  <data name="ToolTip_d" xml:space="preserve">
+    <value>Tool tip text (help) for control</value>
   </data>
-  <data name="OK_access" xml:space="preserve" type="System.Char">
-    <value>O</value>
+  <data name="Enabled_d" xml:space="preserve">
+    <value>Indicates if control is enabled, so user can interact with it.</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="ClickPreview_d" xml:space="preserve">
+    <value>Raised when user clicks the button. Can be canceled.</value>
   </data>
-  <data name="Cancel_access" xml:space="preserve" type="System.Char">
-    <value>C</value>
+  <data name="Result_d" xml:space="preserve">
+    <value>Result of message box returned when this button is clicked.</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="AccessKey_d" xml:space="preserve">
+    <value>Access character for the button. Should be one of characters from button text.</value>
   </data>
-  <data name="Yes_access" xml:space="preserve" type="System.Char">
-    <value>Y</value>
+  <data name="StateChanged_d" xml:space="preserve">
+    <value>Raised ehrn value of the State property changed</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
+  <data name="ThreeState_d" xml:space="preserve">
+    <value>Indicateis if checkbox has 3rd intermediate state</value>
   </data>
-  <data name="No_access" xml:space="preserve" type="System.Char">
-    <value>N</value>
+  <data name="State_d" xml:space="preserve">
+    <value>Current check state of check box</value>
   </data>
-  <data name="Abort" xml:space="preserve">
-    <value>Abort</value>
+  <data name="Editable_d" xml:space="preserve">
+    <value>Indicates if user can change text of combo box (true) or must select only form list of predefined values (false).</value>
   </data>
-  <data name="Abort_access" xml:space="preserve" type="System.Char">
-    <value>A</value>
+  <data name="Items_d" xml:space="preserve">
+    <value>Items shown to user in drop down. Item can be any Object.</value>
   </data>
-  <data name="Retry_access" xml:space="preserve" type="System.Char">
-    <value>R</value>
+  <data name="DisplayMember_d" xml:space="preserve">
+    <value>Indicates member (property, field) used to obtain text to be shown to user for each item.</value>
   </data>
-  <data name="Retry" xml:space="preserve">
-    <value>Retry</value>
+  <data name="SelectedIndex_d" xml:space="preserve">
+    <value>Indicates 0-based index of selected item in combo box.</value>
   </data>
-  <data name="Ignore" xml:space="preserve">
-    <value>Ignore</value>
+  <data name="SelectedItemChanged_d" xml:space="preserve">
+    <value>Raised when value of the SelectedItem property changes</value>
   </data>
-  <data name="Ignore_access" xml:space="preserve" type="System.Char">
-    <value>I</value>
+  <data name="SelectedIndexChanged_d" xml:space="preserve">
+    <value>Raised when value of the SelectedIndex property changes.</value>
   </data>
-  <data name="Help_access" xml:space="preserve" type="System.Char">
-    <value>H</value>
+  <data name="Checked_d" xml:space="preserve">
+    <value>Indicates of option is selected</value>
   </data>
-  <data name="Help" xml:space="preserve">
-    <value>Help</value>
+  <data name="CheckedChanged_d" xml:space="preserve">
+    <value>Raised when value of the Checked property changes</value>
+  </data>
+  <data name="CountDown_d" xml:space="preserve">
+    <value>Raised when count-down time ticks - once a second.</value>
+  </data>
+  <data name="Shown_d" xml:space="preserve">
+    <value>Raised after dialog is shown</value>
+  </data>
+  <data name="Closed_d" xml:space="preserve">
+    <value>Raised after dialog is closed</value>
+  </data>
+  <data name="MessageBoxCounDownTimeFormat" xml:space="preserve">
+    <value>{0} ({1:s})</value>
+  </data>
+  <data name="SaveDataAs" xml:space="preserve">
+    <value>Save data as...</value>
+  </data>
+  <data name="LoadFromFile" xml:space="preserve">
+    <value>Load from file...</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="ImagesFilter" xml:space="preserve">
+    <value>Images (bmp,jpeg,png,gif,tiff)|*.bmp;*.jpeg;*.jpg;*.gif;*.tif;*.tiff;*.png</value>
+  </data>
+  <data name="New___" xml:space="preserve">
+    <value>New ...</value>
+  </data>
+  <data name="OnlySOIAndEOIMarkersCanHaveLenghtSetToZeroLength1IsNotAllowed" xml:space="preserve">
+    <value>Only SOI and EOI markers can have lenght set to zero, length 1 is not allowed</value>
   </data>
 </root>

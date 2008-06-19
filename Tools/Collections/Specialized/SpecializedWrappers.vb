@@ -1,4 +1,4 @@
-'This code was generated from SpecializedWrappers.xml at 21. května 2008 by TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null1.0.2833.35810
+'This code was generated from SpecializedWrappers.xml at 19. června 2008 by TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null1.0.2833.35810
 'Do not edit, your changes will be lost!
 Imports System.ComponentModel, Tools.CollectionsT.GenericT, System.Runtime.CompilerServices
 #If Config <= Nightly Then 'Stage:Nightly
@@ -751,7 +751,7 @@ Collection.Length = 0
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Security.Policy.ApplicationTrust)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Security.Policy.ApplicationTrust)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -1161,7 +1161,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Web.UI.IValidator)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Web.UI.IValidator)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -1517,7 +1517,7 @@ Collection.AddAt(index,item)
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Web.UI.WebControls.MenuItem)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Web.UI.WebControls.MenuItem)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -1640,7 +1640,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.DateTime)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.DateTime)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -1799,7 +1799,7 @@ Collection.AddAt(index, item)
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Web.UI.WebControls.WebParts.PersonalizationStateInfo)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Web.UI.WebControls.WebParts.PersonalizationStateInfo)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -2065,7 +2065,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Xml.XmlAttribute)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Xml.XmlAttribute)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -2265,7 +2265,7 @@ Collection.RemoveAll
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Diagnostics.ProcessThread)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Diagnostics.ProcessThread)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -3300,7 +3300,7 @@ Public Overrides Sub Clear()
                     Return Item(index)
                 End Get
                 Set(ByVal value As System.Web.HttpCookie)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Web.HttpCookie)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -3442,7 +3442,7 @@ Collection.Remove(Collection.GetKey(index))
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Configuration.ConnectionStringSettings)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Configuration.ConnectionStringSettings)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -5931,7 +5931,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Data.Constraint)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Data.Constraint)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -6018,7 +6018,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Data.DataColumn)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Data.DataColumn)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -6105,7 +6105,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Data.DataRelation)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Data.DataRelation)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -6192,7 +6192,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Data.DataRow)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Data.DataRow)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -6279,7 +6279,7 @@ Public Overrides Sub Clear()
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Data.DataTable)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Data.DataTable)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1
@@ -6590,7 +6590,7 @@ Collection.AddAt(index, item)
                     Return Collection.Item(index)
                 End Get
                 Set(ByVal value As System.Windows.Forms.Binding)
-                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index","index must be in range of the collection.") 'Localize:Exception
+                    If index < 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception
                     Dim OldCollection As New List(Of System.Windows.Forms.Binding)(Me)
                     Me.Clear
                     For i% = 0 To OldCollection.Count - 1

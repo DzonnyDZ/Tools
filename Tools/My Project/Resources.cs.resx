@@ -117,109 +117,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Save (diskette)</comment>
-  </data>
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Navigate backward (⇐)</comment>
-  </data>
-  <data name="Repeat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Repeat (↺)</comment>
-  </data>
-  <data name="ToolsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ĐTools.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Đ</comment>
-  </data>
-  <data name="Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\+.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Yellow plus with red edge</comment>
-  </data>
-  <data name="Zip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zip.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Zipper</comment>
-  </data>
-  <data name="NewReport" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NewReportHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>New report (green sheet)</comment>
-  </data>
-  <data name="T" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\T.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Blue T with yellow edge</comment>
-  </data>
-  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DeleteHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Delete (✗)</comment>
-  </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Navigate forward (⇒)</comment>
-  </data>
-  <data name="Comment" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CommentHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Comment</comment>
-  </data>
-  <data name="Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\openHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Open (opened folder with arrow)</comment>
-  </data>
   <data name="Error_" xml:space="preserve">
-    <value>Error</value>
-    <comment>MessageBox title</comment>
+    <value>Chyba</value>
   </data>
   <data name="ValueChanged_cat" xml:space="preserve">
-    <value>Value Changed</value>
-    <comment>PropertyGrid category</comment>
+    <value>Hodnota změněna</value>
   </data>
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="OK_access" xml:space="preserve" type="System.Char">
-    <value>O</value>
-  </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
-  </data>
-  <data name="Cancel_access" xml:space="preserve" type="System.Char">
-    <value>C</value>
+    <value>Storno</value>
   </data>
   <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
-  </data>
-  <data name="Yes_access" xml:space="preserve" type="System.Char">
-    <value>Y</value>
+    <value>Ano</value>
   </data>
   <data name="No" xml:space="preserve">
-    <value>No</value>
-  </data>
-  <data name="No_access" xml:space="preserve" type="System.Char">
-    <value>N</value>
+    <value>Ne</value>
   </data>
   <data name="Abort" xml:space="preserve">
-    <value>Abort</value>
-  </data>
-  <data name="Abort_access" xml:space="preserve" type="System.Char">
-    <value>A</value>
-  </data>
-  <data name="Retry_access" xml:space="preserve" type="System.Char">
-    <value>R</value>
+    <value>Přerušit</value>
   </data>
   <data name="Retry" xml:space="preserve">
-    <value>Retry</value>
+    <value>Opakovat</value>
   </data>
   <data name="Ignore" xml:space="preserve">
-    <value>Ignore</value>
-  </data>
-  <data name="Ignore_access" xml:space="preserve" type="System.Char">
-    <value>I</value>
-  </data>
-  <data name="Help_access" xml:space="preserve" type="System.Char">
-    <value>H</value>
+    <value>Ignorovat</value>
   </data>
   <data name="Help" xml:space="preserve">
-    <value>Help</value>
+    <value>Nápověda</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Abort_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>P</value>
+    <comment>Přerušit</comment>
+  </data>
+  <data name="Cancel_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>S</value>
+    <comment>Storno</comment>
+  </data>
+  <data name="Help_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>d</value>
+    <comment>Nápověda</comment>
+  </data>
+  <data name="Ignore_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>I</value>
+    <comment>Ignorovat</comment>
+  </data>
+  <data name="No_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>N</value>
+    <comment>Ne</comment>
+  </data>
+  <data name="OK_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>O</value>
+    <comment>OK</comment>
+  </data>
+  <data name="Retry_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>Z</value>
+    <comment>Znovu</comment>
+  </data>
+  <data name="Yes_access" type="System.Char, mscorlib" xml:space="preserve">
+    <value>A</value>
+    <comment>Ano</comment>
   </data>
 </root>

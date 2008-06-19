@@ -6,10 +6,11 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 22. listopadu 2007
+' Created: 19. června 2008
 ' By:noutbuk\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
+'Localize: This auto-generated file was skipped during localization!
 Imports System.ComponentModel
 Imports Tools.ComponentModelT
 Imports System.XML.Serialization

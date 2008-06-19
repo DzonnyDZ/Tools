@@ -647,10 +647,10 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.ArgumentNullException">array is null.</exception>
         ''' <exception cref="System.ArgumentException">array is multidimensional.-or-arrayIndex is equal to or greater than the length of array.-or-The number of elements in the source <see cref="System.Collections.Generic.ICollection(Of T)"/> is greater than the available space from arrayIndex to the end of the destination array.-or-Type T cannot be cast automatically to the type of the destination array.</exception>
         Public Sub CopyTo(ByVal array() As T, ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of T).CopyTo
-            If arrayIndex < 0 Then Throw New ArgumentOutOfRangeException("arrayIndex", "arrayIndex must be greater than or equal to zero")
-            If array Is Nothing Then Throw (New ArgumentNullException("array", "array canot be null"))
-            If array.Rank <> 1 Then Throw New ArgumentException("array must be 1-dimensional", "array")
-            If arrayIndex >= array.Length OrElse array.Length - arrayIndex < Internal.Count Then Throw New ArgumentException("There is not enough space between arrayIndex and the end of the array for items stored in collection")
+            If arrayIndex < 0 Then Throw New ArgumentOutOfRangeException("arrayIndex", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, arrayIndex))
+            If array Is Nothing Then Throw (New ArgumentNullException("array"))
+            If array.Rank <> 1 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBe1Dimensional, "array"), "array")
+            If arrayIndex >= array.Length OrElse array.Length - arrayIndex < Internal.Count Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThereIsNotEnoughSpaceBetween0AndTheEndOfTheArrayForItemsStoredInCollection, "arrayIndex"))
             Dim i As Integer = arrayIndex
             For Each itm As KeyValuePair(Of T, Object) In Internal
                 array(i) = itm.Key

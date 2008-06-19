@@ -36,7 +36,7 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
         Public Sub New(ByVal Container As IExifGetter)
-            If Container Is Nothing Then Throw New ArgumentNullException("Container", "Container cannot be null")
+            If Container Is Nothing Then Throw New ArgumentNullException("Container")
             _Stream = Container.GetExifStream
             If _Stream Is Nothing OrElse _Stream.Length = 0 Then Exit Sub
             Parse()
@@ -59,11 +59,11 @@ Namespace DrawingT.MetadataT
             ElseIf BOM1 = "M"c AndAlso BOM2 = "M"c Then
                 Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAling.BigEndian
             Else
-                Throw New InvalidDataException("Unknown byte order mark " & BOM1 & BOM2)
+                Throw New InvalidDataException(ResourcesT.Exceptions.UnknownByteOrderMark & BOM1 & BOM2)
             End If
             _ByteOrder = Reader.ByteOrder
             Dim BOMTest As UShort = Reader.ReadUInt16
-            If BOMTest <> &H2AUS Then Throw New InvalidDataException("Invalid value for byte order test at Exif header " & Hex(BOMTest))
+            If BOMTest <> &H2AUS Then Throw New InvalidDataException(ResourcesT.Exceptions.InvalidValueForByteOrderTestAtExifHeader & Hex(BOMTest))
 
             Dim IFDOffset As UInt32 = Reader.ReadUInt32
             While IFDOffset <> 0UI

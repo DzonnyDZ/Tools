@@ -1,4 +1,5 @@
-﻿Imports Tools.CollectionsT.GenericT, System.Linq, Tools.CollectionsT.CollectionTools
+﻿'Extracted
+Imports Tools.CollectionsT.GenericT, System.Linq, Tools.CollectionsT.CollectionTools
 Imports Tools.DrawingT.DesignT
 Imports System.Drawing.Design
 Imports Tools.ComponentModelT
@@ -18,7 +19,7 @@ Namespace WindowsT.IndependentT
     ''' </remarks>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(MessageBox), LastChange:="05/26/2008")> _
+    <Version(1, 0, GetType(MessageBox), LastChange:="06/19/2008")> _
     <FirstVersion("05/26/2008")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
 #Region "Shared"
@@ -37,10 +38,10 @@ Namespace WindowsT.IndependentT
             End Get
             Set(ByVal value As Type)
                 If value Is Nothing Then Throw New ArgumentNullException("value")
-                If Not value.IsSubclassOf(GetType(MessageBox)) Then Throw New ArgumentException("Type must inherit from MessageBox") 'Localize:Exception
-                If value.IsAbstract Then Throw New ArgumentException("Default MessageBox implementation cannot be abstract type.") 'Localize: Exception
-                If value.IsGenericTypeDefinition Then Throw New ArgumentException("Deffault MessageBox implementation cannot be generic type definition.") 'Localize:Exception
-                If value.GetConstructor(Type.EmptyTypes) Is Nothing Then Throw New ArgumentException("Class that represents default MessageBox implementation must have parameter-less constructor.") 'Localize:Exception
+                If Not value.IsSubclassOf(GetType(MessageBox)) Then Throw New ArgumentException(ResourcesT.Exceptions.TypeMustInheritFromMessageBox)
+                If value.IsAbstract Then Throw New ArgumentException(ResourcesT.Exceptions.DefaultMessageBoxImplementationCannotBeAbstractType)
+                If value.IsGenericTypeDefinition Then Throw New ArgumentException(ResourcesT.Exceptions.DefaultMessageBoxImplementationCannotBeGenericTypeDefinition)
+                If value.GetConstructor(Type.EmptyTypes) Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.ClassThatRepresentsDefaultMessageBoxImplementationMustHaveParameterLessConstructor)
                 _DefaultImplementation = value
             End Set
         End Property
@@ -51,7 +52,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Contaions value of the <see cref="DefaultButton"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _DefaultButton As Integer = 0
         ''' <summary>Contaions value of the <see cref="CloseResponse"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _CloseResponse As DialogResult = DialogResult.None 'TODO: In Show/Ctor adjust if Cancel/No/Abort button is defined
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CloseResponse As DialogResult = DialogResult.None
         ''' <summary>Contaions value of the <see cref="Prompt"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Prompt As String
         ''' <summary>Contaions value of the <see cref="Title"/> property</summary>
@@ -84,8 +85,8 @@ Namespace WindowsT.IndependentT
         ''' <remarks>This does not affacet possibility to close message box programatically using the <see cref="Close"/> method.</remarks>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Value indicationg if dialog can be closed without clicking on button. Thi is typically by closing the window that represents the dialog by the ""X"" button.")> _
-        Public Property AllowClose() As Boolean 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "AllowClose_d")> _
+        Public Property AllowClose() As Boolean
             Get
                 Return _AllowClose
             End Get
@@ -101,8 +102,8 @@ Namespace WindowsT.IndependentT
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <Description("Defines buttons displayed on message box")> _
-        Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton) 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "Buttons_d")> _
+        Public ReadOnly Property Buttons() As ListWithEvents(Of MessageBoxButton)
             <DebuggerStepThrough()> Get
                 Return _Buttons
             End Get
@@ -125,8 +126,8 @@ Namespace WindowsT.IndependentT
         ''' <seealso cref="System.Windows.Controls.Button.IsDefault"/>
         <DefaultValue(0I)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("indicates 0-based index of button that has focus when message box is shown and is default button fro message box (usually reported when user presses enter).")> _
-        Public Property DefaultButton() As Integer 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "DefaultButton_d")> _
+        Public Property DefaultButton() As Integer
             <DebuggerStepThrough()> Get
                 Return _DefaultButton
             End Get
@@ -142,8 +143,8 @@ Namespace WindowsT.IndependentT
         ''' <seealeo cref="DialogResult"/><seealso cref="Show"/>
         <DefaultValue(GetType(DialogResult), "None")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Value returned by the Show function / DialogResult property when user closes the dialog by closing dialog window or by pressing escape")> _
-        Public Property CloseResponse() As DialogResult 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "CloseResponse_d")> _
+        Public Property CloseResponse() As DialogResult
             <DebuggerStepThrough()> Get
                 Return _CloseResponse
             End Get
@@ -206,9 +207,9 @@ Namespace WindowsT.IndependentT
         ''' <summary>Gets or sets text of prompt of message box.</summary>
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <Description("Text of prompt displayed to the user.")> _
+        <LDescription(GetType(ResourcesT.Components), "Prompt_d")> _
         <Localizable(True), Editor(GetType(System.ComponentModel.Design.MultilineStringEditor), GetType(UITypeEditor))> _
-        Public Property Prompt() As String 'Localize:Description
+        Public Property Prompt() As String
             <DebuggerStepThrough()> Get
                 Return _Prompt
             End Get
@@ -222,9 +223,9 @@ Namespace WindowsT.IndependentT
         ''' <remarks>If value of thsi property is null or an empty string, application title is used (see <see cref="Microsoft.VisualBasic.ApplicationServices.AssemblyInfo.Title"/>)</remarks>
         <DefaultValue(GetType(String), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <Description("Title shown in dialog header")> _
+        <LDescription(GetType(ResourcesT.Components), "Title_d")> _
         <Localizable(True)> _
-        Public Property Title() As String 'Localize:Description
+        Public Property Title() As String
             <DebuggerStepThrough()> Get
                 Return _Title
             End Get
@@ -238,9 +239,9 @@ Namespace WindowsT.IndependentT
         ''' <remarks>Expected image size is 64×64px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
         <DefaultValue(GetType(Drawing.Image), Nothing)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <Description("Icon shown in left to corner (lrt) of dialog")> _
+        <LDescription(GetType(ResourcesT.Components), "Icon_d")> _
         <Localizable(True)> _
-        Public Property Icon() As Drawing.Image 'Localize:Description
+        Public Property Icon() As Drawing.Image
             <DebuggerStepThrough()> Get
                 Return _Icon
             End Get
@@ -254,10 +255,10 @@ Namespace WindowsT.IndependentT
         ''' <remarks>Text align applies only to prompt part of message box. In right-to-left reading text align has oposite meaning - <see cref="MessageBoxOptions.AlignLeft"/> aligns to right and <see cref="MessageBoxOptions.AlignRight"/> aligns to left.</remarks>
         <DefaultValue(GetType(MessageBoxOptions), "0")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <Description("Addtional options controlling how dialog si displayed")> _
+        <LDescription(GetType(ResourcesT.Components), "Options_d")> _
         <Editor(GetType(DropDownControlEditor(Of MessageBoxOptions, MessageBoxOptionsEditor)), GetType(UITypeEditor))> _
         <Localizable(True)> _
-        Public Property Options() As MessageBoxOptions 'Localize:Description
+        Public Property Options() As MessageBoxOptions
             <DebuggerStepThrough()> Get
                 Return _Options
             End Get
@@ -272,8 +273,8 @@ Namespace WindowsT.IndependentT
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <Description("Check boxes displayed for message box. Can be used for example for 'Do not show this message in future' option.")> _
-        Public ReadOnly Property CheckBoxes() As ListWithEvents(Of MessageBoxCheckBox) 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "CheckBoxes_d")> _
+        Public ReadOnly Property CheckBoxes() As ListWithEvents(Of MessageBoxCheckBox)
             <DebuggerStepThrough()> Get
                 Return _CheckBoxes
             End Get
@@ -292,8 +293,8 @@ Namespace WindowsT.IndependentT
         <TypeConverter(GetType(ExpandableObjectConverter))> _
         <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <Description("Combo box displayed on dialog")> _
-        Public Property ComboBox() As MessageBoxComboBox 'Localize:Description
+        <lDescription(GetType(ResourcesT.Components), "ComboBox_d")> _
+        Public Property ComboBox() As MessageBoxComboBox
             <DebuggerStepThrough()> Get
                 Return _ComboBox
             End Get
@@ -308,7 +309,7 @@ Namespace WindowsT.IndependentT
         ''' <para>Do not store nulls in the collection. It won't accept them and <see cref="OperationCanceledException"/> will be thrown.</para></remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <Description("Radio buttons (options) displayed on messagebox")> _
+        <LDescription(GetType(ResourcesT.Components), "Radios_d")> _
         Public ReadOnly Property Radios() As ListWithEvents(Of MessageBoxRadioButton)
             <DebuggerStepThrough()> Get
                 Return _Radios
@@ -369,8 +370,8 @@ Namespace WindowsT.IndependentT
         ''' <remarks><see cref="TimeSpan.Zero"/> or less vaklue meand then no count-down takes effect</remarks>
         <DefaultValue(GetType(TimeSpan), "0:00:00")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Inidcates how long the message box will be show to user before being closed automatically. If zero or less, no count-down takes effect.")> _
-        Public Property Timer() As TimeSpan 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "Timer_d")> _
+        Public Property Timer() As TimeSpan
             <DebuggerStepThrough()> Get
                 Return _Timer
             End Get
@@ -390,8 +391,8 @@ Namespace WindowsT.IndependentT
         ''' Count down is displayed as time in format h:mm:ss, m:ss or s depending on current value of time remaining (always the shortest possible format is used).</remarks>
         <DefaultValue(-1I)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Indicates 0-based index of button which displays the count-down timer. It aslo defines result of dialog returned when time elapses. -1 chose button automatically acording to CloseResponse, <-1 displays count-down in title, > number of buttons hides count-down indicator.")> _
-        Public Property TimeButton() As Integer 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "TimeButton_d")> _
+        Public Property TimeButton() As Integer
             <DebuggerStepThrough()> Get
                 Return _TimeButton
             End Get
@@ -624,9 +625,9 @@ Namespace WindowsT.IndependentT
             <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> Public Event EnabledChanged(ByVal sender As MessageBoxControl, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             ''' <summary>Gets or sets text displayed on control</summary>
             <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <Description("Text displayed on the control")> _
+            <LDescription(GetType(ResourcesT.Components), "MessageBoxButton_Text_d")> _
             <Localizable(True)> _
-            Public Property Text() As String 'Localize:Description
+            Public Property Text() As String
                 <DebuggerStepThrough()> Get
                     Return _Text
                 End Get
@@ -641,7 +642,7 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Gets or sets tool tip text for the button</summary>
             <DefaultValue(GetType(String), Nothing), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <Description("Tool tip text (help) for control")> _
+            <LDescription(GetType(ResourcesT.Components), "ToolTip_d")> _
             <Localizable(True)> _
             Public Property ToolTip() As String
                 <DebuggerStepThrough()> Get
@@ -658,8 +659,8 @@ Namespace WindowsT.IndependentT
             End Property
             ''' <summary>Gets or sets value indicating if button is enabled (accessible) or not</summary>
             <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <Description("Indicates if control is enabled, so user can interact with it.")> _
-            Public Property Enabled() As Boolean 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "Enabled_d")> _
+            Public Property Enabled() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _Enabled
                 End Get
@@ -738,8 +739,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="sender">Instance of <see cref="MessageBoxButton"/> that have raised the event</param>
             ''' <remarks>If <see cref="Result"/> is <see cref="HelpDialogResult"/> <paramref name="e"/>.<see cref="CancelEventArgs.Cancel">Cancel</see> is pre-set to true. That means that if it is not set to false, message box is not closed when help button is clicked.</remarks>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <Description("Raised when user clicks the button. Can be canceled.")> _
-            Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs) 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "ClickPreview_d")> _
+            Public Event ClickPreview(ByVal sender As MessageBoxButton, ByVal e As CancelEventArgs)
 #Region "Change events"
             ''' <summary>Raised when value of the <see cref="Result"/> property changes</summary>
             ''' <param name="sender">The source of the event</param>
@@ -758,8 +759,8 @@ Namespace WindowsT.IndependentT
             ''' <seealso cref="MessageBoxButton.Help"/>
             <DefaultValue(GetType(DialogResult), "None")> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <Description("Result of message box returned when this button is clicked.")> _
-            Public Property Result() As DialogResult 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "Result_d")> _
+            Public Property Result() As DialogResult
                 <DebuggerStepThrough()> Get
                     Return _Result
                 End Get
@@ -781,9 +782,9 @@ Namespace WindowsT.IndependentT
             ''' </remarks>
             <DefaultValue(CChar(vbNullChar))> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <Description("Access character for the button. Should be one of characters from button text.")> _
+            <LDescription(GetType(ResourcesT.Components), "AccessKey_d")> _
             <Localizable(True)> _
-            Public Property AccessKey() As Char 'Localize:Description
+            Public Property AccessKey() As Char
                 <DebuggerStepThrough()> Get
                     Return _AccessKey
                 End Get
@@ -810,9 +811,7 @@ Namespace WindowsT.IndependentT
 #End Region
 
 #Region "CTors"
-            'TODO:Null exceptions
-            'TODO:Comments
-            ''' <summary>Ture indicates that this instance is currently being constructed</summary>
+             ''' <summary>Ture indicates that this instance is currently being constructed</summary>
             Private ReadOnly IsConstructing As Boolean = True
             ''' <summary>CTor - creates new instance of the <see cref="MessageBoxButton"/> class</summary>
             Public Sub New()
@@ -893,7 +892,7 @@ Namespace WindowsT.IndependentT
                     Case Windows.Forms.DialogResult.Cancel : InitBy(Cancel)
                     Case Windows.Forms.DialogResult.Ignore : InitBy(Ignore)
                     Case Windows.Forms.DialogResult.No : InitBy(No)
-                    Case Windows.Forms.DialogResult.None : Throw New ArgumentException("Result cannot be None", "Result")
+                    Case Windows.Forms.DialogResult.None : Throw New ArgumentException(ResourcesT.Exceptions.ResultCannotBeNone, "Result")
                     Case Windows.Forms.DialogResult.OK : InitBy(OK)
                     Case Windows.Forms.DialogResult.Retry : InitBy(Retry)
                     Case Windows.Forms.DialogResult.Yes : InitBy(Yes)
@@ -908,7 +907,7 @@ Namespace WindowsT.IndependentT
                 Select Case Result
                     Case Windows.MessageBoxResult.Cancel : InitBy(Cancel)
                     Case Windows.MessageBoxResult.No : InitBy(No)
-                    Case Windows.MessageBoxResult.No : Throw New ArgumentException("Result cannot be None", "Result")
+                    Case Windows.MessageBoxResult.No : Throw New ArgumentException(ResourcesT.Exceptions.ResultCannotBeNone, "Result")
                     Case Windows.MessageBoxResult.OK : InitBy(OK)
                     Case Windows.MessageBoxResult.Yes : InitBy(Yes)
                     Case Else : Throw New InvalidEnumArgumentException("Result", Result, Result.GetType)
@@ -933,13 +932,20 @@ Namespace WindowsT.IndependentT
             ''' <summary>Cloning CTor</summary>
             ''' <param name="Other">Instance to initialize new instance with</param>
             ''' <remarks>Does not copy event handler, uses properties only.</remarks>
+            ''' <exception cref="ArgumentNullException"><paramref name="Other"/> is null</exception>
             Public Sub New(ByVal Other As MessageBoxButton)
-                Me.InitBy(Other)
+                Try
+                    Me.InitBy(Other)
+                Catch ex As ArgumentNullException
+                    Throw New ArgumentNullException("Other", ex)
+                End Try
             End Sub
             ''' <summary>Initializes current instance by another instance</summary>
             ''' <param name="Button">Instance to initialize current instance with</param>
             ''' <remarks>Does not initializes button events</remarks>
+            ''' <exception cref="ArgumentNullException"><paramref name="Button"/> is null</exception>
             Private Sub InitBy(ByVal Button As MessageBoxButton)
+                If Button Is Nothing Then Throw New ArgumentNullException("Button")
                 With Button
                     Me.Text = .Text
                     Me.AccessKey = .AccessKey
@@ -1007,49 +1013,49 @@ Namespace WindowsT.IndependentT
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property OK() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("OK", DialogResult.OK, "O"c) 'Localize:OK, AccessKey
+                    Return New MessageBoxButton(My.Resources.OK, DialogResult.OK, My.Resources.OK_access)
                 End Get
             End Property
             ''' <summary>Default Cancle button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Cancel() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Cancel", DialogResult.Cancel, "C"c) 'Localize:Cancel, AccessKey
+                    Return New MessageBoxButton(My.Resources.Cancel, DialogResult.Cancel, My.Resources.Cancel_access)
                 End Get
             End Property
             ''' <summary>Default Yes button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Yes() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Yes", DialogResult.Yes, "Y"c) 'Localize:Yes, AccessKey
+                    Return New MessageBoxButton(My.Resources.Yes, DialogResult.Yes, My.Resources.Yes_access)
                 End Get
             End Property
             ''' <summary>Defaut No button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property No() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("No", DialogResult.No, "N"c) 'Localize:No, AccessKey
+                    Return New MessageBoxButton(My.Resources.No, DialogResult.No, My.Resources.No_access)
                 End Get
             End Property
             ''' <summary>Default Abort button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Abort() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Abort", DialogResult.Abort, "A"c) 'Localize:Abort, AccessKey
+                    Return New MessageBoxButton(My.Resources.Abort, DialogResult.Abort, My.Resources.Abort_access)
                 End Get
             End Property
             ''' <summary>Default Retry button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Retry() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Retry", DialogResult.Retry, "R"c) 'Localize:Retry, AccessKey
+                    Return New MessageBoxButton(My.Resources.Retry, DialogResult.Retry, My.Resources.Retry_access)
                 End Get
             End Property
             ''' <summary>Default Ignore button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Ignore() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Ignore", DialogResult.Ignore, "I"c) 'Localize:Ignore , AccessKey
+                    Return New MessageBoxButton(My.Resources.Ignore, DialogResult.Ignore, My.Resources.Ignore_access)
                 End Get
             End Property
             ''' <summary>Default Help button</summary>
@@ -1061,7 +1067,7 @@ Namespace WindowsT.IndependentT
             ''' </remarks>
             Public Shared ReadOnly Property Help() As MessageBoxButton
                 Get
-                    Return New MessageBoxButton("Help", HelpDialogResult, "H"c) 'Localize:Help, AccessKey
+                    Return New MessageBoxButton(My.Resources.Help, HelpDialogResult, My.Resources.Help_access)
                 End Get
             End Property
 #End Region
@@ -1172,14 +1178,14 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="State"/> can be changed by user or programatically</remarks>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <Description("Raised ehrn value of the State property changed")> _
-            Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState)) 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "StateChanged_d")> _
+            Public Event StateChanged(ByVal sender As MessageBoxCheckBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of CheckState))
             ''' <summary>Gets or sets value indicating if user can change state of checkbox between 3 or 2 states</summary>
             ''' <remarks>2-state CheckBox allows user to change state only to <see cref="CheckState.Checked"/> or <see cref="CheckState.Unchecked"/></remarks>
             <DefaultValue(False)> _
-            <Description("Indicateis if checkbox has 3rd intermediate state")> _
+            <LDescription(GetType(ResourcesT.Components), "ThreeState_d")> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            Public Property ThreeState() As Boolean 'Localize:Description
+            Public Property ThreeState() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _ThreeState
                 End Get
@@ -1196,8 +1202,8 @@ Namespace WindowsT.IndependentT
             ''' <remarks>If <see cref="ThreeState"/> is false user cannot set checkbox to <see cref="CheckState.Indeterminate"/>, however you can achieve it programatically</remarks>
             <DefaultValue(GetType(CheckState), "Unchecked")> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <Description("Current check state of check box")> _
-            Public Property State() As CheckState 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "State_d")> _
+            Public Property State() As CheckState
                 <DebuggerStepThrough()> Get
                     Return _State
                 End Get
@@ -1261,8 +1267,8 @@ Namespace WindowsT.IndependentT
             ''' <summary>gets or sets value indicating if user can type any text to combo box</summary>
             <DefaultValue(False)> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-            <Description("Indicates if user can change text of combo box (true) or must select only form list of predefined values (false).")> _
-            Public Property Editable() As Boolean 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "Editable_d")> _
+            Public Property Editable() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _Editable
                 End Get
@@ -1279,7 +1285,7 @@ Namespace WindowsT.IndependentT
             ''' <remarks>Register handlers with events of <see cref="ListWithEvents(Of T)"/> returned by this property or use <see cref="ItemsChanged"/> event in order to track changes of the collection.</remarks>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-            <Description("Items shown to user in drop down. Item can be any Object.")> _
+            <LDescription(GetType(ResourcesT.Components), "Items_d")> _
             <Localizable(True)> _
             Public ReadOnly Property Items() As ListWithEvents(Of Object)
                 <DebuggerStepThrough()> Get
@@ -1298,8 +1304,8 @@ Namespace WindowsT.IndependentT
             ''' <seealso cref="ComboBox.DisplayMember"/>
             <DefaultValue(GetType(String), Nothing)> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-            <Description("Indicates member (property, field) used to obtain text to be shown to user for each item.")> _
-            Public Property DisplayMember() As String 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "DisplayMember_d")> _
+            Public Property DisplayMember() As String
                 <DebuggerStepThrough()> Get
                     Return _DisplayMember
                 End Get
@@ -1332,8 +1338,8 @@ Namespace WindowsT.IndependentT
             ''' <seealso cref="SelectedItem"/>
             <DefaultValue(-1I)> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
-            <Description("Indicates 0-based index of selected item in combo box.")> _
-            Public Property SelectedIndex() As Integer 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "SelectedIndex_d")> _
+            Public Property SelectedIndex() As Integer
                 <DebuggerStepThrough()> Get
                     Return _SelectedIndex
                 End Get
@@ -1373,8 +1379,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="SelectedItem"/> can be changed by user or programatically</remarks>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <Description("Raised when value of the SelectedItem property changes")> _
-            Public Event SelectedItemChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "SelectedItemChanged_d")> _
+            Public Event SelectedItemChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
             ''' <summary>Raises the <see cref="SelectedItemChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnSelectedItemChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
@@ -1386,8 +1392,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Information about old and new value</param>
             ''' <remarks><see cref="SelectedIndex"/> can be changed by user or programatically</remarks>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <Description("Raised when value of the SelectedIndex property changes.")> _
-            Public Event SelectedIndexChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer)) 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "SelectedIndexChanged_d")> _
+            Public Event SelectedIndexChanged(ByVal sender As MessageBoxComboBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
             ''' <summary>Raises the <see cref="SelectedIndexChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnSelectedIndexChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Integer))
@@ -1447,8 +1453,8 @@ Namespace WindowsT.IndependentT
             ''' <summary>Gets or sets value indicating if control is checked or not</summary>
             <DefaultValue(False)> _
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-            <Description("Indicates of option is selected")> _
-            Public Property Checked() As Boolean 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "Checked_d")> _
+            Public Property Checked() As Boolean
                 <DebuggerStepThrough()> Get
                     Return _Checked
                 End Get
@@ -1466,8 +1472,8 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Event arguments containing infomation about new and old value</param>
             ''' <remarks>The <see cref="Checked"/> property can be changed programatically or by user</remarks>
             <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-            <Description("Raised when value of the Checked property changes")> _
-            Public Event CheckedChanged(ByVal sender As MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean)) 'Localize:Description
+            <LDescription(GetType(ResourcesT.Components), "CheckedChanged_d")> _
+            Public Event CheckedChanged(ByVal sender As MessageBoxRadioButton, ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
             ''' <summary>Raises the <see cref="CheckedChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event parameters</param>
             Protected Overridable Sub OnCheckedChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Boolean))
@@ -1745,14 +1751,14 @@ Namespace WindowsT.IndependentT
         End Sub
         ''' <summary>Resumes previously stopped count down timer</summary>
         Public Sub ResumeCountDown()
-            If Me.CurrentTimer <= TimeSpan.Zero Then Throw New InvalidOperationException("Cannot resume count-down timer when there is no time left.") 'Localize:Exception
+            If Me.CurrentTimer <= TimeSpan.Zero Then Throw New InvalidOperationException(ResourcesT.Exceptions.CannotResumeCountDownTimerWhenThereIsNoTimeLeft)
             CountDownTimer.Enabled = True
             OnCountDown(New EventArgs)
         End Sub
         ''' <summary>Resumes previouskly stopped count down timer with new timer value</summary>
         ''' <param name="TimeLeft">Count down timer time (after which the message box is closed)</param>
         Public Sub ResumeCountDown(ByVal TimeLeft As TimeSpan)
-            If TimeLeft <= TimeSpan.Zero Then Throw New ArgumentOutOfRangeException("TimeLeft", "Count down time must be greater than zero.") 'Localize:Exception
+            If TimeLeft <= TimeSpan.Zero Then Throw New ArgumentOutOfRangeException("TimeLeft", ResourcesT.Exceptions.CountDownTimeMustBeGreaterThanZero)
             Me.CurrentTimer = TimeLeft
             ResumeCountDown()
         End Sub
@@ -1761,16 +1767,16 @@ Namespace WindowsT.IndependentT
         ''' <summary>Raised when count-down timer ticks</summary>
         ''' <remarks>Count down timer ticks each second once. First the event is raised immediatelly after the dialog is shown or count-down is resumed</remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <Description("Raised when count-down time ticks - once a second.")> _
-        Public Event CountDown As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "CountDown_d")> _
+        Public Event CountDown As EventHandler(Of MessageBox, EventArgs)
         ''' <summary>Raised after dialog is shown</summary>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <Description("Raised after dialog is shown")> _
-        Public Event Shown As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "Shown_d")> _
+        Public Event Shown As EventHandler(Of MessageBox, EventArgs)
         ''' <summary>Raised after dialog is closed</summary>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
-        <Description("Raised after dialog is closed")> _
-        Public Event Closed As EventHandler(Of MessageBox, EventArgs) 'Localize:Description
+        <LDescription(GetType(ResourcesT.Components), "Closed_d")> _
+        Public Event Closed As EventHandler(Of MessageBox, EventArgs)
 #End Region
 #Region "Recycle"
         ''' <summary>Switches <see cref="MessageBox"/> from <see cref="States.Closed"/> to <see cref="States.Created"/> <see cref="State"/></summary>
@@ -1782,7 +1788,7 @@ Namespace WindowsT.IndependentT
         Public Sub Recycle()
             Select Case Me.State
                 Case States.Created 'Do nothing
-                Case States.Shown : Throw New InvalidOperationException("MessageBox cannot be re-cycled when it is shown.")
+                Case States.Shown : Throw New InvalidOperationException(ResourcesT.Exceptions.MessageBoxCannotBeReCycledWhenItIsShown)
                 Case Else : RecycleInternal() : OnRecycled(New EventArgs)
             End Select
         End Sub
@@ -1800,7 +1806,7 @@ Namespace WindowsT.IndependentT
         ''' <para>Note to inheritors: Always call base-class method <see cref="RecycleInternal"/>.</para></remarks>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Closed"/>. This exception never occures in this implementation because <see cref="Recycle"/> ensures that <see cref="RecycleInternal"/> is caled only when <see cref="State"/> is <see cref="States.Closed"/>.</exception>
         Protected Overridable Sub RecycleInternal()
-            If Me.State <> States.Closed Then Throw New InvalidOperationException("RecycleInternal can be called on on closed messagebox.")
+            If Me.State <> States.Closed Then Throw New InvalidOperationException(ResourcesT.Exceptions.RecycleInternalCanBeCalledOnlyOnClosedMessagebox)
             Me.DialogResult = Windows.Forms.DialogResult.None
             Me.ClickedButton = Nothing
             State = States.Created
@@ -1850,7 +1856,7 @@ Namespace WindowsT.IndependentT
             ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
             ''' <exception cref="NotImplementedException">Always</exception>
             Public Overloads Overrides Sub Close(ByVal Response As System.Windows.Forms.DialogResult)
-                Throw New NotImplementedException("Class cannot be used as message box.")
+                Throw New NotImplementedException(ResourcesT.Exceptions.ClassCannotBeUsedAsMessageBox)
             End Sub
             ''' <summary>If overriden in derived class shows the dialog</summary>
             ''' <param name="Modal">Indicates if dialog should be shown modally (true) or modells (false)</param>
@@ -1858,7 +1864,7 @@ Namespace WindowsT.IndependentT
             ''' <exception cref="InvalidOperationException"><see cref="State"/> is not <see cref="States.Created"/>. Overriding method shall check this condition and thrown an exception if condition is vialoted.</exception>
             ''' <exception cref="NotImplementedException">Always</exception>
             Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As System.Windows.Forms.IWin32Window)
-                Throw New NotImplementedException("Class cannot be used as message box.")
+                Throw New NotImplementedException(ResourcesT.Exceptions.ClassCannotBeUsedAsMessageBox)
             End Sub
         End Class
         ''' <summary>Initializes instance of <see cref="MessageBox"/> obtained via <see cref="GetDefault"/> using <see cref="InitializeFrom"/></summary>
@@ -1870,7 +1876,7 @@ Namespace WindowsT.IndependentT
             Try
                 Inst = GetDefault()
             Catch ex As Exception
-                Throw New TargetInvocationException("There was an error obtainin instance of default implementation of MessageBox. See inner exception for details.", ex)
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
             Inst.InitializeFrom(Other)
             Return Inst
@@ -1944,7 +1950,7 @@ Namespace WindowsT.IndependentT
             Try
                 lGetDefault = GetDefault()
             Catch ex As Exception
-                Throw New TargetInvocationException("There was an error obtainin instance of default implementation of MessageBox. See inner exception for details.", ex)
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
             Return Show(lGetDefault, InitializeFrom, Owner)
         End Function
@@ -1960,7 +1966,7 @@ Namespace WindowsT.IndependentT
             Try
                 lGetDefault = GetDefault()
             Catch ex As Exception
-                Throw New TargetInvocationException("There was an error obtaining instance of default implementation of MessageBox. See inner exception for details.", ex)
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
             Return Display(lGetDefault, InitializeFrom, Owner)
         End Function
@@ -2510,7 +2516,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                 If (options And Windows.MessageBoxOptions.RtlReading) = Windows.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
                 Return Show(box, New WPFWindow(owner))
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
-                Throw New TargetInvocationException("There was an error invoking MessageBox. See inner exception for details.", ex) 'Localize exception
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex) 
             End Try
         End Function
 #End Region
@@ -2858,7 +2864,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                 If (options And Windows.Forms.MessageBoxOptions.RtlReading) = Windows.Forms.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
                 Return Show(box, owner)
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
-                Throw New TargetInvocationException("There was an error invoking MessageBox. See inner exception for details.", ex) 'Localize exception
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex) 'Localize exception
             End Try
         End Function
         ''' <summary>Performs modal dialog for WinForms-like functions with <see cref="Windows.Forms.MessageBoxIcon"/></summary>
@@ -2916,7 +2922,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                     Case Else : Return result
                 End Select
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
-                Throw New TargetInvocationException("There was an error invoking MessageBox. See inner exception for details.", ex) 'Localize exception
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
         End Function
 #End Region
@@ -3042,7 +3048,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return Modalf(Prompt, Title, Options, Buttons, MessageBoxIcons.None, arguments)
+            Return ModalF(Prompt, Title, Options, Buttons, MessageBoxIcons.None, arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options and predefined icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3270,7 +3276,8 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
-            Return ModalEx(Prompt, Title, Icon, Options, Owner, Timer, ShownHandler, DirectCast(Items, IEnumerable(Of Object)))
+            '              Prompt, Title, Items,                                   [Icon], [Options],[Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, Options, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner, timer, show ahndler and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3282,7 +3289,8 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
-            Return ModalEx(Prompt, Title, Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler, DirectCast(Items, IEnumerable(Of Object)))
+            '              Prompt, Title, Items,                                   [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner, timer, show ahndler and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3296,7 +3304,8 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
-            Return ModalEx(Prompt, Title, Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler, New Wrapper(Of Object)(Buttons))
+            '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3306,7 +3315,8 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Items As Object()) As MessageBox
-            Return ModalEx(Prompt, Title, Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing, DirectCast(Items, IEnumerable(Of Object)))
+            '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon and owner and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3317,8 +3327,9 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
-            If buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
-            Return ModalEx(Prompt, Title, Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing, New Wrapper(Of Object)(Buttons))
+            If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
+            '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3326,7 +3337,8 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal ParamArray Items As Object()) As MessageBox
-            Return ModalEx(Prompt, Title, Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing, DirectCast(Items, IEnumerable(Of Object)))
+            '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3336,7 +3348,8 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
         Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
-            Return ModalEx(Prompt, Title, Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing, New Wrapper(Of Object)(Buttons))
+            '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
+            Return ModalEx(Prompt, Title, New Wrapper(Of Object)(Buttons), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
         End Function
 #End Region
 #Region "Error"

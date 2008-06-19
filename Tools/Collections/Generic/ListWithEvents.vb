@@ -99,7 +99,7 @@ Namespace CollectionsT.GenericT
                 If value = False Then
                     _AllowAddCancelableEventsHandlers = value
                 ElseIf value = True AndAlso AllowAddCancelableEventsHandlers = False Then
-                    Throw New InvalidOperationException("AllowAddCancelableEventsHandlers  can be changed only from True to False")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.AllowAddCancelableEventsHandlersCanBeChangedOnlyFromTrueToFalse)
                 End If
             End Set
         End Property
@@ -152,7 +152,7 @@ Namespace CollectionsT.GenericT
                 If AllowAddCancelableEventsHandlers Then
                     AddingEventHandlerList.Add(value)
                 Else
-                    Throw New InvalidOperationException("Cannot add handler to the Adding event when AllowAddCancelableEventsHandlers is False")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheAddingEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
             <DebuggerStepThrough()> _
@@ -177,7 +177,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         Public Overridable Sub Add(ByVal item As T) Implements System.Collections.Generic.ICollection(Of T).Add
-            If Locked Then Throw New InvalidOperationException("List is locked")
+            If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelableItemIndexEventArgs(item, List.Count, AddingReadOnly)
             OnAdding(e)
             If Not e.Cancel Then
@@ -219,7 +219,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Sub Insert(ByVal index As Integer, ByVal item As T) Implements System.Collections.Generic.IList(Of T).Insert
-            If Locked Then Throw New InvalidOperationException("List is locked")
+            If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelableItemIndexEventArgs(item, index, AddingReadOnly)
             OnAdding(e)
             If Not e.Cancel Then
@@ -266,7 +266,7 @@ Namespace CollectionsT.GenericT
                 If AllowAddCancelableEventsHandlers Then
                     ClearingEventHandlerList.Add(value)
                 Else
-                    Throw New InvalidOperationException("Cannot add handler to the Clearig event when AllowAddCancelableEventsHandlers is False")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheClearigEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
             <DebuggerStepThrough()> _
@@ -290,7 +290,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Call <see cref="OnClearing"/> before clearing of the list and <see cref="OnCleared"/> after clearing of the list,, do not forgot to check <see cref="CancelEventArgs.Cancel"/></remarks>
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
         Public Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear, System.Collections.IList.Clear
-            If Locked Then Throw New InvalidOperationException("List is locked")
+            If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelMessageEventArgs
             OnClearing(e)
             If Not e.Cancel Then
@@ -307,7 +307,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
         Protected Overridable Sub OnClearing(ByVal e As CancelMessageEventArgs)
             RaiseEvent Clearing(Me, e)
-            If e.Cancel AndAlso Me.CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Clearing was canceled in eventhendler"))
+            If e.Cancel AndAlso Me.CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, ResourcesT.Exceptions.ClearingWasCanceledInEventhendler))
         End Sub
         ''' <summary>Raises <see cref="Cleared"/> event</summary>
         ''' <param name="e">Event arguments</param>
@@ -369,7 +369,7 @@ Namespace CollectionsT.GenericT
                 If AllowAddCancelableEventsHandlers Then
                     RemovingEventHandlerList.Add(value)
                 Else
-                    Throw New InvalidOperationException("Cannot add handler to the Removing event when AllowAddCancelableEventsHandlers is False")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheRemovingEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
             <DebuggerStepThrough()> _
@@ -399,7 +399,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         Protected Overridable Sub OnRemoving(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent Removing(Me, e)
-            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Removing was cenceled in event handler"))
+            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, ResourcesT.Exceptions.RemovingWasCenceledInEventHandler))
         End Sub
         ''' <summary>Raises <see cref="Removed"/> event</summary>
         ''' <param name="e">Event arguments</param>
@@ -417,7 +417,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
-            If Locked Then Throw New InvalidOperationException("List is locked")
+            If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             If Contains(item) Then
                 Dim e As New CancelableItemIndexEventArgs(item, IndexOf(item), True)
                 Lock()
@@ -449,7 +449,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         Public Overridable Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt, System.Collections.IList.RemoveAt
-            If Locked Then Throw New InvalidOperationException("List is locked")
+            If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelableItemIndexEventArgs(Me(index), index, True)
             If index >= 0 AndAlso index < Count Then
                 Lock()
@@ -546,7 +546,7 @@ Namespace CollectionsT.GenericT
                 If AllowAddCancelableEventsHandlers Then
                     ItemChangingEventHandlerList.Add(value)
                 Else
-                    Throw New InvalidOperationException("Cannot add handler to the ItemChanging event when AllowAddCancelableEventsHandlers is False")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.CannotAddHandlerToTheItemChangingEventWhenAllowAddCancelableEventsHandlersIsFalse)
                 End If
             End AddHandler
             <DebuggerStepThrough()> _
@@ -574,7 +574,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event</exception>
         Protected Overridable Sub OnItemChanging(ByVal e As CancelableItemIndexEventArgs)
             RaiseEvent ItemChanging(Me, e)
-            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Changing was canceled in eventhandler"))
+            If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, ResourcesT.Exceptions.ChangingWasCanceledInEventhandler))
         End Sub
         ''' <summary>Raises <see cref="ItemChanged"/> event</summary>
         ''' <param name="e">Event arguments</param>
@@ -596,7 +596,7 @@ Namespace CollectionsT.GenericT
                 Return List(index)
             End Get
             Set(ByVal value As T)
-                If Locked Then Throw New InvalidOperationException("List is locked")
+                If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
                 Dim e As New CancelableItemIndexEventArgs(value, index, AddingReadOnly)
                 If index >= 0 AndAlso index < List.Count Then
                     Lock()
@@ -699,7 +699,7 @@ Namespace CollectionsT.GenericT
                     If Not [ReadOnly] Then
                         _Item = value
                     Else
-                        Throw New System.Data.ReadOnlyException("Cannot change Item property when ReadOnly is True")
+                        Throw New System.Data.ReadOnlyException(ResourcesT.Exceptions.CannotChangeItemPropertyWhenReadOnlyIsTrue)
                     End If
                 End Set
             End Property
@@ -928,7 +928,7 @@ Namespace CollectionsT.GenericT
         <Security.Permissions.SecurityPermission(Security.Permissions.SecurityAction.LinkDemand, Flags:=Security.Permissions.SecurityPermissionFlag.SerializationFormatter)> _
         Public Overridable Sub GetObjectData(ByVal info As System.Runtime.Serialization.SerializationInfo, ByVal context As System.Runtime.Serialization.StreamingContext) Implements System.Runtime.Serialization.ISerializable.GetObjectData
             If info Is Nothing Then
-                Throw New System.ArgumentNullException("info", "info cannot be null")
+                Throw New System.ArgumentNullException("info")
             End If
             info.AddValue(ItemsName, Me.InternalList)
         End Sub
@@ -944,7 +944,7 @@ Namespace CollectionsT.GenericT
         ''' </remarks>
         Protected Sub New(ByVal info As Runtime.Serialization.SerializationInfo, ByVal context As Runtime.Serialization.StreamingContext)
             If info Is Nothing Then
-                Throw New System.ArgumentNullException("info", "info cannot be null")
+                Throw New System.ArgumentNullException("info")
             End If
             Try
                 MyClass.List = info.GetValue(ItemsName, GetType(List(Of T)))
@@ -953,7 +953,7 @@ Namespace CollectionsT.GenericT
             Catch ex As Runtime.Serialization.SerializationException
                 Throw
             Catch ex As Exception
-                Throw New Runtime.Serialization.SerializationException("Error while deserializing LinkLabelItem", ex)
+                Throw New Runtime.Serialization.SerializationException(ResourcesT.Exceptions.ErrorWhileDeserializingLinkLabelItem, ex)
             End Try
         End Sub
         ''' <summary>Name used for serialization of the <see cref="InternalList"/> property</summary>

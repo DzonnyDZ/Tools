@@ -131,6 +131,9 @@ Public Class frmMain
         My.Settings.PreviewHeight = panImage.Height
         My.Settings.KeywordsHeight = fraKeywords.Height
         My.Settings.TextHeight = fraTitle.Height
+        Dim doc As New System.Xml.XmlDocument
+        doc.Load(kweKeywords.GetKeywordsAsXML.CreateReader)
+        My.Settings.Keywords = doc
         ToolStripManager.SaveSettings(Me, "tosMain")
         If Large IsNot Nothing Then Large.Close()
     End Sub
@@ -164,6 +167,11 @@ Public Class frmMain
             LoadFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
         Else
             LoadFolder(My.Settings.Folder)
+        End If
+        If My.Settings.Keywords IsNot Nothing Then
+            Using r = New Xml.XmlNodeReader(My.Settings.Keywords)
+                kweKeywords.LoadFromXML(XDocument.Load(r))
+            End Using
         End If
     End Sub
 

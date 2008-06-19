@@ -117,109 +117,88 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\saveHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Save (diskette)</comment>
+  <data name="AutoCompleteCacheName_d" xml:space="preserve">
+    <value>Název per-session chache klíčových slov používaných touto instací</value>
   </data>
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Navigate backward (⇐)</comment>
+  <data name="CaseSensitive_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určující jestli klíčová slova jsou case sensitive</value>
   </data>
-  <data name="Repeat" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RepeatHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Repeat (↺)</comment>
+  <data name="StatusState_d" xml:space="preserve">
+    <value>Získá nebo bastaví stav Statusu</value>
   </data>
-  <data name="ToolsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ĐTools.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Đ</comment>
+  <data name="Status_d" xml:space="preserve">
+    <value>StatusMarker používaný na tomto ovládacím prvku</value>
   </data>
-  <data name="Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\+.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Yellow plus with red edge</comment>
+  <data name="ThesaurusButtonAttribute_d" xml:space="preserve">
+    <value>Získá nebo nastaví stav tlačítka tezauru</value>
   </data>
-  <data name="Zip" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Zip.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Zipper</comment>
+  <data name="MergeButtonState_d" xml:space="preserve">
+    <value>Získá nebo nastaví stav tlačítka slučování</value>
   </data>
-  <data name="NewReport" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NewReportHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>New report (green sheet)</comment>
+  <data name="Merge_d" xml:space="preserve">
+    <value>Získá nebo nastaví jestli tlačítko slučování je zaškrtnuto (oranžové) nebo ne (šedivé)</value>
   </data>
-  <data name="T" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\T.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Blue T with yellow edge</comment>
+  <data name="MergeChanged_d" xml:space="preserve">
+    <value>Vyvolána po změně hodnoty vlastnosti Merge</value>
   </data>
-  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\DeleteHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Delete (✗)</comment>
+  <data name="AutoChange_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určující jestli Status.Status se automaticky změní, když je klíčové slovo přidáno nebo odstraněno</value>
   </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Navigate forward (⇒)</comment>
+  <data name="KeyWordRemoved_d" xml:space="preserve">
+    <value>Vyvolána po té, co uživatel ručně odebere klíčové/á slova/o</value>
   </data>
-  <data name="Comment" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\CommentHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Comment</comment>
+  <data name="AddMenuState_d" xml:space="preserve">
+    <value>Stav položky menu přidat</value>
   </data>
-  <data name="Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\openHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Open (opened folder with arrow)</comment>
+  <data name="DeleteMenuState_d" xml:space="preserve">
+    <value>Stav položky menu odebrat</value>
   </data>
-  <data name="Error_" xml:space="preserve">
-    <value>Error</value>
-    <comment>MessageBox title</comment>
+  <data name="MarkAsChangedMenuState_d" xml:space="preserve">
+    <value>Stav menu Označit jako změněné</value>
   </data>
-  <data name="ValueChanged_cat" xml:space="preserve">
-    <value>Value Changed</value>
-    <comment>PropertyGrid category</comment>
+  <data name="ResetMenuState_d" xml:space="preserve">
+    <value>Stav menu Reset</value>
   </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
+  <data name="AutoChanged_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určující jestli se Status automaticky změní na Statuses.Changed, když tmiMarkAsChanged je kliknuto</value>
   </data>
-  <data name="OK_access" xml:space="preserve" type="System.Char">
-    <value>O</value>
+  <data name="StatusMarkerStatus_d" xml:space="preserve">
+    <value>Zobrazený sttus ovládacího prvku</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="StatusChanged_d" xml:space="preserve">
+    <value>Vyvolána po té co se změné vlastnost Status</value>
   </data>
-  <data name="Cancel_access" xml:space="preserve" type="System.Char">
-    <value>C</value>
+  <data name="Add_d" xml:space="preserve">
+    <value>Vyvolána po té co je kliknuto ne položku menu Přidat</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="MarkAsChanged_d" xml:space="preserve">
+    <value>Vyvolána po té co je kliknuto na položku menu Označit jako přečtené</value>
   </data>
-  <data name="Yes_access" xml:space="preserve" type="System.Char">
-    <value>Y</value>
+  <data name="Reset_d" xml:space="preserve">
+    <value>Vyvolána po té co je kliknuto na položku menu Reset</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
+  <data name="Delete_d" xml:space="preserve">
+    <value>Vyvolána po té co je kliknuto na položku menu Odstranit</value>
   </data>
-  <data name="No_access" xml:space="preserve" type="System.Char">
-    <value>N</value>
+  <data name="Deleted" xml:space="preserve">
+    <value>Odstraněno</value>
   </data>
-  <data name="Abort" xml:space="preserve">
-    <value>Abort</value>
+  <data name="Changed" xml:space="preserve">
+    <value>Změněno</value>
   </data>
-  <data name="Abort_access" xml:space="preserve" type="System.Char">
-    <value>A</value>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
   </data>
-  <data name="Retry_access" xml:space="preserve" type="System.Char">
-    <value>R</value>
+  <data name="New_" xml:space="preserve">
+    <value>Nové</value>
   </data>
-  <data name="Retry" xml:space="preserve">
-    <value>Retry</value>
+  <data name="Normal" xml:space="preserve">
+    <value>Normální</value>
   </data>
-  <data name="Ignore" xml:space="preserve">
-    <value>Ignore</value>
+  <data name="Null" xml:space="preserve">
+    <value>Nenastaveno</value>
   </data>
-  <data name="Ignore_access" xml:space="preserve" type="System.Char">
-    <value>I</value>
-  </data>
-  <data name="Help_access" xml:space="preserve" type="System.Char">
-    <value>H</value>
-  </data>
-  <data name="Help" xml:space="preserve">
-    <value>Help</value>
+  <data name="AutomaticLists_d" xml:space="preserve">
+    <value>Určuje jestli editor automaticky používá sdílené seznamy klíčových slov a synonym (mezi instancemi se stejným AutoCompleteCacheName) nebo ne.</value>
   </data>
 </root>

@@ -80,7 +80,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("64, 64")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("64, 64"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
         Public Property ThumbSize() As Global.System.Drawing.Size
             Get
                 Return CType(Me("ThumbSize"),Global.System.Drawing.Size)
@@ -188,7 +189,8 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
         Public Property LargeShown() As Boolean
             Get
                 Return CType(Me("LargeShown"),Boolean)
@@ -243,6 +245,20 @@ Namespace My
             End Get
             Set
                 Me("TextHeight") = value
+            End Set
+        End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("<?xml version=""1.0"" encoding=""utf-16""?>"&Global.Microsoft.VisualBasic.ChrW(13)&Global.Microsoft.VisualBasic.ChrW(10)&"<Keywords xmlns=""http://dzonny.cz/xml/To"& _ 
+            "ols.WindowsT.FormsT.KeyWordsEditor"" />"),  _
+         Global.System.Configuration.SettingsManageabilityAttribute(Global.System.Configuration.SettingsManageability.Roaming)>  _
+        Public Property Keywords() As Global.System.Xml.XmlDocument
+            Get
+                Return CType(Me("Keywords"),Global.System.Xml.XmlDocument)
+            End Get
+            Set
+                Me("Keywords") = value
             End Set
         End Property
     End Class

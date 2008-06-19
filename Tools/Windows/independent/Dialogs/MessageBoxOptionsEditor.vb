@@ -5,7 +5,7 @@ Imports Tools.DrawingT.DesignT
 'Stage: Nightly
 Namespace WindowsT.IndependentT
     ''' <summary>Implements editor for <see cref="MessageBox.MessageBoxOptions"/></summary>
-    Friend NotInheritable Class MessageBoxOptionsEditor 'Localize:Control UI
+    Friend NotInheritable Class MessageBoxOptionsEditor
         Inherits UserControlExtended
         Implements IEditor(Of MessageBox.MessageBoxOptions)
         ''' <summary>Default CTor</summary>

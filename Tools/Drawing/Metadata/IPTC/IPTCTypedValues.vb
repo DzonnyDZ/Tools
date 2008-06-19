@@ -76,7 +76,7 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of Boolean))
-                If Bytes = 0 Then Throw New ArgumentException("Bytes cannot be 0")
+                If Bytes = 0 Then Throw New ArgumentException(ResourcesT.Exceptions.BytesCannotBe0)
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each val As Boolean In value
@@ -169,11 +169,11 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of Decimal))
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As Decimal In value
-                        If item < 0 Then Throw New ArgumentException("Number cannot be negative")
+                        If item < 0 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBeNegative, "Number"))
                         values.Add(ToBytes(Len, item, Fixed))
                     Next item
                 End If
@@ -207,15 +207,15 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
-                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", "Len cannot be negative")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
+                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsGraphicCharacters(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic character"))
+                        If Not IsGraphicCharacters(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonGraphicCharacter))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
                         If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
+                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -251,15 +251,15 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
-                If Len < 0 Then Throw New ArgumentException("Len cannot be negative")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
+                If Len < 0 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsTextWithSpaces(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space character", item))
+                        If Not IsTextWithSpaces(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonGraphicNonSpaceCharacter, item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
                         If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
+                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -296,15 +296,15 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
-                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", "Len cannot be negative")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
+                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsText(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-graphic-non-space-non-cr-non-lf character", item))
+                        If Not IsText(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonGraphicNonSpaceNonCrNonLfCharacter, item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
                         If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
+                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -336,7 +336,7 @@ Namespace DrawingT.MetadataT
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     'Dim ba As New BitArray(item)
-                    If (item.Length * 8) Mod BW460_460 <> 0 Then Throw New ArgumentException("Invalid bitmap. Number of bits in bitmap must be multiplication of 460")
+                    If (item.Length * 8) Mod BW460_460 <> 0 Then Throw New ArgumentException(ResourcesT.Exceptions.InvalidBitmapNumberOfBitsInBitmapMustBeMultiplicationOf460)
                     Dim bmp As New Drawing.Bitmap(BW460_460, (item.Length * 8) \ BW460_460)
                     'Dim g As Drawing.Graphics = Drawing.Graphics.FromImage(bmp)
                     For i As Integer = 0 To item.Length * 8 - 1 Step BW460_460
@@ -360,12 +360,12 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of Drawing.Bitmap))
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
-                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", "Len cannot be negative")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
+                If Len < 0 Then Throw New ArgumentOutOfRangeException("Len", String.Format(ResourcesT.Exceptions.CannotBeNegative, "Len"))
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As Drawing.Bitmap In value
-                        If item.Width <> BW460_460 Then Throw New ArgumentException("Bitmap's width must be 460px")
+                        If item.Width <> BW460_460 Then Throw New ArgumentException(ResourcesT.Exceptions.BitmapWidthMustBe460px)
                         Dim ba As New BitArray(item.Width * item.Height)
                         For i As Integer = 0 To item.Height - 1
                             For j As Integer = 0 To item.Width - 1
@@ -374,7 +374,7 @@ Namespace DrawingT.MetadataT
                         Next i
                         values.Add(Ba2Bytes(ba))
                         Dim BLen As Integer = values(values.Count - 1).Length
-                        If (BLen > Len AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then Throw New ArgumentException(String.Format("Bitmap violates lenght constraint. Image size must be 460×{0}px", Len * 8 / 460))
+                        If (BLen > Len AndAlso Len <> 0) OrElse (Fixed AndAlso BLen <> Len) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.BitmapViolatesLenghtConstraintImageSizeMustBe4600Px, Len * 8 / 460))
                     Next item
                 End If
                 Tag(Key) = values
@@ -410,7 +410,7 @@ Namespace DrawingT.MetadataT
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Enum_Binary_Value(ByVal Key As DataSetIdentification, ByVal Type As Type) As List(Of [Enum])
             Get
-                If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of [Enum])(values.Count)
@@ -424,7 +424,7 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of [Enum]))
-                If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim Attrs As Object() = Type.GetCustomAttributes(GetType(RestrictAttribute), False)
                 Dim Restrict As Boolean
                 If Attrs Is Nothing OrElse Attrs.Length = 0 Then Restrict = True Else Restrict = DirectCast(Attrs(0), RestrictAttribute).Restrict
@@ -449,7 +449,7 @@ Namespace DrawingT.MetadataT
                         ElseIf [Enum].GetUnderlyingType(Type).Equals(GetType(Long)) Then
                             values.Add(ToBytes(CByte(8), CLng(CObj(item))))
                         Else
-                            Throw New ArgumentException("Unknown base type of enum")
+                            Throw New ArgumentException(ResourcesT.Exceptions.UnknownBaseTypeOfEnum)
                         End If
                     Next item
                 End If
@@ -473,7 +473,7 @@ Namespace DrawingT.MetadataT
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Enum_NumChar_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of [Enum])
             Get
-                If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim values As List(Of Byte()) = Tag(Key)
                 If values Is Nothing OrElse values.Count = 0 Then Return Nothing
                 Dim ret As New List(Of [Enum])(values.Count)
@@ -485,8 +485,8 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of [Enum]))
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
-                If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim values As New List(Of Byte())
                 Dim Attrs As Object() = Type.GetCustomAttributes(GetType(RestrictAttribute), False)
                 Dim Restrict As Boolean
@@ -515,7 +515,7 @@ Namespace DrawingT.MetadataT
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
-                    If ItemStr.Length <> 8 Then Throw New ArgumentException("Length of data stored under this tag is different from 8 which is necessary for datatype CCYYMMDD")
+                    If ItemStr.Length <> 8 Then Throw New ArgumentException(ResourcesT.Exceptions.LengthOfDataStoredUnderThisTagIsDifferentFrom8WhichIsNecessaryForDatatypeCCYYMMDD)
                     ret.Add(New Date(ItemStr.Substring(0, 4), ItemStr.Substring(4, 2), ItemStr.Substring(6)))
                 Next item
                 If ret.Count = 0 Then Return Nothing
@@ -550,7 +550,7 @@ Namespace DrawingT.MetadataT
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
-                    If ItemStr.Length <> 8 Then Throw New ArgumentException("Length of data stored under this tag is different from 8 which is necessary for datatype CCYYMMDD")
+                    If ItemStr.Length <> 8 Then Throw New ArgumentException(ResourcesT.Exceptions.LengthOfDataStoredUnderThisTagIsDifferentFrom8WhichIsNecessaryForDatatypeCCYYMMDD)
                     ret.Add(New OmmitableDate(ItemStr.Substring(0, 4), ItemStr.Substring(4, 2), ItemStr.Substring(6)))
                 Next item
                 If ret.Count = 0 Then Return Nothing
@@ -588,9 +588,9 @@ Namespace DrawingT.MetadataT
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim ItemStr As String = System.Text.Encoding.ASCII.GetString(item)
-                    If ItemStr.Length <> 11 Then Throw New ArgumentException("Length of data stored under this tag is different then 11 which is necessary for datatype HHMMSS_HHMM")
+                    If ItemStr.Length <> 11 Then Throw New ArgumentException(ResourcesT.Exceptions.LengthOfDataStoredUnderThisTagIsDifferentThen11WhichIsNecessaryForDatatypeHHMMSSHHMM)
                     Dim Sig As String = ItemStr(6)
-                    If Sig <> "-"c AndAlso Sig <> "+"c Then Throw New ArgumentException("Stored time does not contain valied character on time zone offset sign position")
+                    If Sig <> "-"c AndAlso Sig <> "+"c Then Throw New ArgumentException(ResourcesT.Exceptions.StoredTimeDoesNotContainValidCharacterOnTimeZoneOffsetSignPosition)
 #If Framework >= 3.5 Then
                     ret.Add(New Time(ItemStr.Substring(0, 2), ItemStr.Substring(2, 2), ItemStr.Substring(4, 2), If(Sig = "+"c, 1, -1) * ItemStr.Substring(7, 2), ItemStr.Substring(9, 2)))
 #Else
@@ -626,9 +626,9 @@ Namespace DrawingT.MetadataT
                 Return values
             End Get
             Set(ByVal value As List(Of Byte()))
-                If Len = 0 AndAlso Fixed Then Throw New ArgumentException("When Fixed is True Len cannot be 0")
+                If Len = 0 AndAlso Fixed Then Throw New ArgumentException(ResourcesT.Exceptions.WhenFixedIsTrueLenCannotBe0)
                 For Each item As Byte() In value
-                    If (Len <> 0 AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then Throw New ArgumentException("Lenght constraint violation")
+                    If (Len <> 0 AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
                 Next item
                 Tag(Key) = value
             End Set
@@ -693,7 +693,7 @@ Namespace DrawingT.MetadataT
                     For Each item As NumStr2 In value
                         Dim B1 As Byte() = System.Text.Encoding.ASCII.GetBytes(item.Number.ToString("00", InvariantCulture))
                         Dim B2 As Byte() = Encoding.GetBytes(item.String)
-                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 2 Then Throw New ArgumentException("Lenght constraint violation")
+                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
                         Dim B3(B1.Length + B2.Length - 1) As Byte
                         B1.CopyTo(B3, 0)
                         B2.CopyTo(B3, 2)
@@ -733,7 +733,7 @@ Namespace DrawingT.MetadataT
                     For Each item As NumStr3 In value
                         Dim B1 As Byte() = System.Text.Encoding.ASCII.GetBytes(item.Number.ToString("000", InvariantCulture))
                         Dim B2 As Byte() = Encoding.GetBytes(item.String)
-                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 3 Then Throw New ArgumentException("Lenght constraint violation")
+                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 3 Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
                         Dim B3(B1.Length + B2.Length - 1) As Byte
                         B1.CopyTo(B3, 0)
                         B2.CopyTo(B3, 3)
@@ -801,14 +801,14 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of String))
                 If Encoding Is Nothing Then Encoding = Me.Encoding
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As String In value
-                        If Not IsAlpha(item) Then Throw New ArgumentException(String.Format("Item {0} contains non-alpha character", item))
+                        If Not IsAlpha(item) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Item0ContainsNonAlphaCharacter, item))
                         Dim bytes As Byte() = Encoding.GetBytes(item)
                         If (Len <> 0 AndAlso bytes.Length > Len) OrElse (Fixed AndAlso bytes.Length <> Len) Then
-                            Throw New ArgumentException(String.Format("String ""{0}"" canot be stored without violating length and/or fixed constraint", item))
+                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint, item))
                         Else
                             values.Add(bytes)
                         End If
@@ -852,18 +852,18 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of StringEnum))
-                If Len = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+                If Len = 0 And Fixed = True Then Throw New ArgumentException(ResourcesT.Exceptions.LenCannotBe0WhenFixedIsTrue)
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As StringEnum In value
-                        If Not item.GetType.IsGenericType OrElse Not Type.Equals(item.GetType.GetGenericArguments(0)) Then Throw New ArrayTypeMismatchException("EnumType of items passed to StringEnum_Value must be same as that in the Type parameter")
+                        If Not item.GetType.IsGenericType OrElse Not Type.Equals(item.GetType.GetGenericArguments(0)) Then Throw New ArrayTypeMismatchException(ResourcesT.Exceptions.EnumTypeOfItemsPassedToStringEnumValueMustBeSameAsThatInTheTypeParameter)
                         Dim Attrs As Object() = item.EnumType.GetCustomAttributes(GetType(RestrictAttribute), False)
                         Dim ra As RestrictAttribute = Nothing
                         If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then ra = Attrs(0)
-                        If Not item.ContainsEnum AndAlso (ra Is Nothing OrElse ra.Restrict) Then Throw New InvalidEnumArgumentException("This enumeration does not allow values that are not member of it")
+                        If Not item.ContainsEnum AndAlso (ra Is Nothing OrElse ra.Restrict) Then Throw New InvalidEnumArgumentException(ResourcesT.Exceptions.ThisEnumerationDoesNotAllowValuesThatAreNotMemberOfIt)
                         Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.StringValue)
-                        If Fixed AndAlso Bytes.Length <> Len OrElse Len <> 0 AndAlso Bytes.Length > Len Then Throw New ArgumentException("Lenght constraint violation")
+                        If Fixed AndAlso Bytes.Length <> Len OrElse Len <> 0 AndAlso Bytes.Length > Len Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
                         values.Add(Bytes)
                     Next item
                 End If
@@ -885,7 +885,7 @@ Namespace DrawingT.MetadataT
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim val As New iptcImageType
-                    If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
+                    If item.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.StoredValueHasInvalidLenght)
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = ChrW(item(1))
                     ret.Add(val)
@@ -920,7 +920,7 @@ Namespace DrawingT.MetadataT
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
                     Dim val As New iptcAudioType
-                    If item.Length <> 2 Then Throw New ArgumentException("Stored value has invalid lenght")
+                    If item.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.StoredValueHasInvalidLenght)
                     val.Components = CStr(ChrW(item(0)))
                     val.TypeCode = CStr(ChrW(item(1)))
                     ret.Add(val)
@@ -933,7 +933,7 @@ Namespace DrawingT.MetadataT
                 If value IsNot Nothing Then
                     For Each item As iptcAudioType In value
                         Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.ToString)
-                        If Bytes.Length <> 2 Then Throw New ArgumentException("Serialized value has not length 2 bytes.")
+                        If Bytes.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.SerializedValueHasNotLength2Bytes)
                         values.Add(Bytes)
                     Next item
                 End If
@@ -953,7 +953,7 @@ Namespace DrawingT.MetadataT
                 Dim ret As New List(Of TimeSpan)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then Continue For
-                    If item.Length <> 6 Then Throw New ArgumentException("Stored item's lenght must be 6")
+                    If item.Length <> 6 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.StoredItemLenghtMustBe0, 6))
                     Dim Str As String = System.Text.Encoding.ASCII.GetString(item)
                     ret.Add(New TimeSpan(Str.Substring(0, 2), Str.Substring(2, 2), Str.Substring(4, 2)))
                 Next item
@@ -964,7 +964,7 @@ Namespace DrawingT.MetadataT
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As TimeSpan In value
-                        If item < TimeSpan.Zero OrElse item.TotalDays > 1 Then Throw New ArgumentOutOfRangeException("Time must be non-negative and less then 1 day")
+                        If item < TimeSpan.Zero OrElse item.TotalDays > 1 Then Throw New ArgumentOutOfRangeException(ResourcesT.Exceptions.TimeMustBeNonNegativeAndLessThen1Day)
                         values.Add(System.Text.Encoding.ASCII.GetBytes(String.Format("{0:00}{1:00}{2:00}", item.Hours, item.Minutes, item.Seconds)))
                     Next item
                 End If

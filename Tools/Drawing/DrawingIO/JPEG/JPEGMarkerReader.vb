@@ -80,10 +80,10 @@ Namespace DrawingT.DrawingIOt.JPEG
             Stream.Position = Offset
             Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
             _Code = r.ReadUInt16()
-            If (Code And &HFF00) >> 8 <> &HFF Then Throw New InvalidDataException("Given marker's code doesn't start with FFh")
+            If (Code And &HFF00) >> 8 <> &HFF Then Throw New InvalidDataException(ResourcesT.Exceptions.GivenMarkerSCodeDoesnTStartWithFFh)
             If MarkerCode <> Markers.SOI AndAlso MarkerCode <> Markers.EOI Then
                 _Length = r.ReadUInt16
-                If Length < 2 Then Throw New InvalidDataException("Only SOI and EOI markers can have lenght set to zero, length 1 is not allowed")
+                If Length < 2 Then Throw New InvalidDataException(ResourcesT.Components.OnlySOIAndEOIMarkersCanHaveLenghtSetToZeroLength1IsNotAllowed)
                 _Data = New ConstrainedReadOnlyStream(Stream, Offset + 4, Length - 2)
             Else
                 _Length = 0

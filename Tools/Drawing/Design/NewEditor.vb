@@ -25,7 +25,7 @@ Namespace DrawingT.DesignT
             Using Lbl As New Label
                 Lbl.BackColor = SystemColors.Window
                 Lbl.ForeColor = SystemColors.WindowText
-                Lbl.Text = "New ..." 'Localize: label text
+                Lbl.Text = ResourcesT.Components.[New___]
                 Lbl.Tag = context
                 AddHandler Lbl.Click, AddressOf Lbl_Click
                 Me.Context = context

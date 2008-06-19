@@ -535,13 +535,13 @@ Namespace ComponentModelT
         ''' <exception cref="ArgumentException">Length of <paramref name="value"/> is odd -or- <paramref name="value"/> contaions non-hexa character</exception>
         Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As Byte()
             If value Is Nothing Then Return Nothing
-            If value.Length Mod 2 <> 0 Then Throw New ArgumentException("String must consist of event number of hexadeimal numerals")
+            If value.Length Mod 2 <> 0 Then Throw New ArgumentException(ResourcesT.Exceptions.StringMustConsistOfEventNumberOfHexadeimalNumerals)
             Dim ret(value.Length \ 2 - 1) As Byte
             For i As Integer = 0 To value.Length - 1 Step 2
                 Try
                     ret(i \ 2) = "&h" & value(i) & value(i + 1)
                 Catch ex As Exception
-                    Throw New ArgumentException(String.Format("Invalid character near ""{0}{1}""", value(i), value(i + 1)), ex)
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.InvalidCharacterNear01, value(i), value(i + 1)), ex)
                 End Try
             Next i
             Return ret
@@ -618,7 +618,7 @@ Namespace ComponentModelT
             Next cns
             Dim Rest As RestrictAttribute = GetAttribute(Of RestrictAttribute)(GetType(T))
             If Rest Is Nothing OrElse Rest.Restrict Then
-                Throw New InvalidEnumArgumentException(String.Format("Cannot interpret value ""{0}"" as {1}", value, GetType(T).Name))
+                Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.CannotInterpretValue0As1, value, GetType(T).Name))
             Else
                 Dim EType As Type = [Enum].GetUnderlyingType(GetType(T))
                 Dim EValue As Object = Nothing

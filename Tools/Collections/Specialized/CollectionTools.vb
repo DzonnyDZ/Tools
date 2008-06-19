@@ -57,7 +57,7 @@ Namespace CollectionsT.SpecializedT
         <Extension()> Sub Insert(ByVal Collection As Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
             If Control Is Nothing Then Throw New ArgumentNullException("Control")
-            If index < 0 OrElse index > Collection.Count Then Throw New IndexOutOfRangeException("index was out of range of controls collection.") 'Localize:Exception
+            If index < 0 OrElse index > Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection) 
             Dim RemovedControls As New List(Of Windows.Forms.Control)(From ToRemove In Collection.AsTypeSafe Skip index)
             If Collection.Owner IsNot Nothing Then Collection.Owner.SuspendLayout()
             Try
@@ -82,7 +82,7 @@ Namespace CollectionsT.SpecializedT
         ''' <seealso cref="WindowsT.FormsT.UtilitiesT.Misc.ReplaceControl"/>
         <Extension()> Sub Replace(ByVal Collection As Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
-            If index < 0 OrElse index >= Collection.Count Then Throw New IndexOutOfRangeException("index was out of range of controls collection.") 'Localize:Exception
+            If index < 0 OrElse index >= Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection) 'Localize:Exception
             Collection.RemoveAt(index)
             If Control Is Nothing Then Exit Sub
             Collection.Insert(index, Control)

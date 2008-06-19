@@ -138,7 +138,7 @@ Namespace DrawingT.MetadataT
                             Array.IndexOf([Enum].GetValues(GetType(SubjectMatterNumbers)), CType(value, SubjectMatterNumbers)) < 0 AndAlso _
                             Array.IndexOf([Enum].GetValues(GetType(EconomySubjectDetail)), CType(value, EconomySubjectDetail)) < 0 AndAlso _
                             value <> 0 Then
-                        Throw New InvalidEnumArgumentException("SubjectReferenceNumber must be member of either SubjectReferenceNumbers, SubjectMatterNumbers or EconomySubjectDetail")
+                        Throw New InvalidEnumArgumentException(ResourcesT.Exceptions.SubjectReferenceNumberMustBeMemberOfEitherSubjectReferenceNumbersSubjectMatterNumbersOrEconomySubjectDetail)
                     End If
                     _SubjectReferenceNumber = value
                 End Set
@@ -149,8 +149,8 @@ Namespace DrawingT.MetadataT
             ''' <returns>Subject number value or zero if none specified</returns>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="SubjectReferenceNumbers"/> and it is not zero</exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            <DisplayName("Subject Number"), Description("Subject component of Subject Reference Number")> _
-            Public Property SubjectNumber() As SubjectReferenceNumbers 'Localize: Description and DisplayName
+            <LDisplayName(GetType(IPTCResources), "SubjectNumber_n"), LDescription(GetType(IPTCResources), "SubjectNumber_d")> _
+            Public Property SubjectNumber() As SubjectReferenceNumbers
                 Get
                     Return (SubjectReferenceNumber \ SubjRefNMask) * SubjRefNMask
                 End Get
@@ -165,8 +165,8 @@ Namespace DrawingT.MetadataT
             ''' <returns>Subject matter number value or zero if none specified</returns>
             ''' <exception cref="InvalidEnumArgumentException">Valùue being set is not member of <see cref="SubjectMatterNumbers"/> and it is not zero</exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            <DisplayName("Subject Matter Number"), Description("Matter component of Subject Reference Number")> _
-            Public Property SubjectMatterNumber() As SubjectMatterNumbers 'Localize: Description and DisplayName
+            <LDisplayName(GetType(IPTCResources), "SubjectMatterNumber_n"), LDescription(GetType(IPTCResources), "SubjectMatterNumber_d")> _
+            Public Property SubjectMatterNumber() As SubjectMatterNumbers
                 Get
                     Return ((SubjectReferenceNumber) \ SubjMatterMask) * SubjMatterMask
                 End Get
@@ -181,8 +181,8 @@ Namespace DrawingT.MetadataT
             ''' <returns>Subject detail number value or zero if none specified</returns>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="EconomySubjectDetail"/> and it is not zero</exception>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            <DisplayName("Subject Detail Number"), Description("Detail component of Subject Reference Number")> _
-            Public Property SubjectDetailNumber() As EconomySubjectDetail 'Localize: Description and DisplayName
+            <LDisplayName(GetType(IPTCResources), "SubjectDetailNumber_n"), LDescription(GetType(IPTCResources), "SubjectDetailNumber_d")> _
+            Public Property SubjectDetailNumber() As EconomySubjectDetail
                 Get
                     Return SubjectReferenceNumber 'Mod SubjMatterMask
                 End Get
@@ -196,14 +196,14 @@ Namespace DrawingT.MetadataT
             ''' <summary>A text representation of the <see cref="SubjectNumber"/> (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix H, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)</summary>
             ''' <remarks>The Subject identifies the general content of the objectdata as determined by the provider.</remarks>
             ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
-            <DisplayName("Subject Name"), Description("A text representation of the Subject Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix H, or in the language of the service as indicated in DataSet Language Identifier (2:135)")> _
-            Public Property SubjectName() As String 'Localize: DisplayName and Description
+            <LDisplayName(GetType(IPTCResources), "SubjectName_n"), LDescription(GetType(IPTCResources), "SubjectName_d")> _
+            Public Property SubjectName() As String
                 Get
                     Return _SubjectName
                 End Get
                 Set(ByVal value As String)
-                    If value.Length > 64 Then Throw New ArgumentException("Lenght of SubjectName must fit into 64")
-                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException("SubjectName can contain only graphic characters except :, ? and *")
+                    If value.Length > 64 Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtOfSubjectNameMustFitInto64)
+                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException(ResourcesT.Exceptions.SubjectNameCanContainOnlyGraphicCharactersExceptAnd)
                     _SubjectName = value
                 End Set
             End Property
@@ -212,14 +212,14 @@ Namespace DrawingT.MetadataT
             ''' <summary>A text representation of the <see cref="SubjectMatterNumber"/></summary>
             ''' <remarks>Maximum 64 octets consisting of graphic characters plus spaces either in English, as defined in Appendix I, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135). A Subject Matter further refines the Subject of a News Object.</remarks>
             ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
-            <DisplayName("Subject Matter Name"), Description("A text representation of the Subject Matter Number")> _
-            Public Property SubjectMatterName() As String 'Localize: DisplayName and Description
+            <LDisplayName(GetType(IPTCResources), "SubjectMatterName_n"), LDescription(GetType(IPTCResources), "SubjectMatterName_d")> _
+            Public Property SubjectMatterName() As String
                 Get
                     Return _SubjectMatterName
                 End Get
                 Set(ByVal value As String)
-                    If value.Length > 64 Then Throw New ArgumentException("Lenght of SubjectReference must fit into 64")
-                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException("SubjectReference can contain only graphic characters except :, ? and *")
+                    If value.Length > 64 Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtOfSubjectReferenceMustFitInto64)
+                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CanContainOnlyGraphicCharactersExceptAnd, "SubjectReference"))
                     _SubjectMatterName = value
                 End Set
             End Property
@@ -230,14 +230,14 @@ Namespace DrawingT.MetadataT
             ''' Maximum 64 octets consisting of graphic characters plus spaces either in English, as defined in Appendix J, or in the language of the service as indicated in DataSet <see cref="LanguageIdentifier"/> (2:135)
             ''' <para>A Subject Detail further refines the Subject Matter of a News Object. A registry of Subject Reference Numbers, Subject Matter Names and Subject Detail Names, descriptions (if available) and their corresponding parent Subjects will be held by the IPTC in different languages, with translations as supplied by members. See Appendices I and J.</para></remarks>
             ''' <exception cref="ArgumentException">Value being set is longer than 64 characters -or- value being set contains non-graphic character or * or ? or :</exception>
-            <DisplayName("Subject Detail Name"), Description("A text representation of the Subject Detail Number")> _
-            Public Property SubjectDetailName() As String 'Localize: DisplayName and Description
+            <LDisplayName(GetType(IPTCResources), "SubjectDetailName_n"), LDescription(GetType(IPTCResources), "SubjectDetailName_d")> _
+            Public Property SubjectDetailName() As String
                 Get
                     Return _SubjectDetailName
                 End Get
                 Set(ByVal value As String)
-                    If value.Length > 64 Then Throw New ArgumentException("Lenght of SubjectDetailName must fit into 64")
-                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException("SubjectDetailName can contain only graphic characters except :, ? and *")
+                    If value.Length > 64 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.LenghtOf0MustFitInto1, "SubjectDetailName", 64))
+                    If Not IsGraphicCharacters(value) OrElse value.Contains("*"c) OrElse value.Contains("?"c) OrElse value.Contains(":") Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CanContainOnlyGraphicCharactersExceptAnd, "SubjectDetailName"))
                     _SubjectDetailName = value
                 End Set
             End Property
@@ -266,7 +266,7 @@ Namespace DrawingT.MetadataT
                 Next i
                 Parts(PartI) = New Pair(Of Integer)(LastColon + 1, Bytes.Length - 1 - LastColon)
                 PartI += 1
-                If PartI <> 5 Then Throw New ArgumentException("SubjectReference must contain exactly 5 parts")
+                If PartI <> 5 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustContainExactly1Parts, "SubjectReference", 5))
                 Me.IPR = System.Text.Encoding.ASCII.GetString(Bytes, Parts(0).Value1, Parts(0).Value2)
                 Me.SubjectReferenceNumber = System.Text.Encoding.ASCII.GetString(Bytes, Parts(1).Value1, Parts(1).Value2)
                 If Parts(2).Value2 > 0 Then
@@ -302,9 +302,9 @@ Namespace DrawingT.MetadataT
                 Else
                     Bytes(4) = New Byte() {}
                 End If
-                If Bytes(0).Length > 32 Or Bytes(0).Length < 1 Then Throw New InvalidOperationException("Length of serialized IPR is not within range 1÷32 bytes")
-                If Bytes(1).Length <> 8 Then Throw New InvalidOperationException("Lenght of serialized SubjectreferenceNumber diffrs from 8 bytes")
-                If Bytes(2).Length > 64 OrElse Bytes(3).Length > 64 OrElse Bytes(4).Length > 64 Then Throw New InvalidOperationException("Lenght of serialized name exceeds 64 bytes")
+                If Bytes(0).Length > 32 Or Bytes(0).Length < 1 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LengthOfSerialized0IsNotWithinRange12Bytes, DrawingT.MetadataT.IPTCResources.IPR_n, 1, 32))
+                If Bytes(1).Length <> 8 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LenghtOfSerialized0DiffersFrom1Bytes, "SubjectreferenceNumber", 8))
+                If Bytes(2).Length > 64 OrElse Bytes(3).Length > 64 OrElse Bytes(4).Length > 64 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LenghtOfSerializedNameExceeds0Bytes, 64))
                 Dim arr(Bytes(0).Length + Bytes(1).Length + Bytes(2).Length + Bytes(3).Length + Bytes(4).Length - 1 + 4) As Byte
                 Dim CurrPos As Integer = 0
                 For i As Integer = 0 To 4
@@ -327,19 +327,19 @@ Namespace DrawingT.MetadataT
             ''' <remarks>A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO</remarks>
             ''' <value>A minimum of one and a maximum of 32 octets. A string of graphic characters, except colon ‘:’ solidus ‘/’, asterisk ‘*’ and question mark ‘?’, registered with, and approved by, the IPTC.</value>
             ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its <see cref="String.Length"/> if more than 32 -or- length of value being set exceeds <see cref="IPRLengthLimit"/> -or- value being set contains character with code higher than 127</exception>
-            <Description("Information Provider Reference A name, registered with the IPTC/NAA, identifying the provider that guarantees the uniqueness of the UNO")> _
+            <LDescription(GetType(IPTCResources), "IPR_d")> _
             <Browsable(False)> _
-            Public Overridable Property IPR() As String 'Localize: Description
+            Public Overridable Property IPR() As String
                 Get
                     Return _IPR
                 End Get
                 Set(ByVal value As String)
-                    If Not IsGraphicCharacters(value) Then Throw New ArgumentException("Only graphic characters are allowd in IPR")
-                    If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException("IPR cannot contain characters *, /, ? and :")
-                    If value = "" OrElse value.Length > 32 Then Throw New ArgumentException("IPR must be string with length from 1 to 32 characters")
-                    If value.Length > IPRLengthLimit Then Throw New ArgumentException("The lenght of IPR exceeds limit")
+                    If Not IsGraphicCharacters(value) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.OnlyGraphicCharactersAreAllowedIn0, DrawingT.MetadataT.IPTCResources.IPR_n))
+                    If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotContainCharactersAnd, DrawingT.MetadataT.IPTCResources.IPR_n))
+                    If value = "" OrElse value.Length > 32 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeStringWithLengthFrom1To2Characters, DrawingT.MetadataT.IPTCResources.IPR_n, 1, 32))
+                    If value.Length > IPRLengthLimit Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TheLenghtOf0ExceedsLimit, DrawingT.MetadataT.IPTCResources.IPR_n))
                     For Each ch As Char In value
-                        If AscW(ch) > 127 Then Throw New ArgumentException("IPR text must be encodeable by ASCII")
+                        If AscW(ch) > 127 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TextMustBeEncodeableByASCII, DrawingT.MetadataT.IPTCResources.IPR_n))
                     Next ch
                     _IPR = value
                 End Set
@@ -367,9 +367,9 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Value of either <see cref="IPR"/> or <see cref="ListedIPR"/> depending on if <see cref="IPR"/> is one of <see cref="InformationProviders"/> members</summary>
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            <DisplayName("IPR"), Description("Information Provider Reference")> _
+            <LDisplayName(GetType(IPTCResources), "IPR_n"), LDescription(GetType(IPTCResources), "IPR_d2")> _
             <CLSCompliant(False)> _
-            Public Property IPRValue() As StringEnum(Of InformationProviders) 'Localize: Description
+            Public Property IPRValue() As StringEnum(Of InformationProviders)
                 Get
                     If ListedIPR = -1 Then
                         Return New StringEnum(Of InformationProviders)(IPR)
@@ -397,7 +397,7 @@ Namespace DrawingT.MetadataT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _UCD As Date = Now.Date
             ''' <summary>UNO Creation Date Specifies a 24 hour period in which the further elements of the UNO have to be unique.</summary>            
             ''' <remarks>It also provides a search facility.</remarks>
-            <Description("UNO Creation Date Specifies a 24 hour period in which the further elements of the UNO have to be unique.")> _
+            <LDescription(GetType(IPTCResources), "UCD_d")> _
             Public Property UCD() As Date 'Localize: Description
                 Get
                     Return _UCD
@@ -470,7 +470,7 @@ Namespace DrawingT.MetadataT
             ''' <exception cref="InvalidCastException">UCD component contains non-numeric character</exception>
             ''' <exception cref="OperationCanceledException">ODE part is invalid. See <seealso cref="ODE"/> for more information.</exception>
             Private Sub Init(ByVal Text As String)
-                If Text Is Nothing OrElse Text = "" Then Throw New ArgumentNullException("Text", "Text cannot be null or empty")
+                If Text Is Nothing OrElse Text = "" Then Throw New ArgumentNullException("Text", String.Format(ResourcesT.Exceptions.CannotBeNullOrEmpty, "Text"))
                 Dim Parts As String() = Text.Split(":"c)
                 'UCD:IPR:ODE1/ODE2/ODE3:OVI
                 Me.UCD = New Date(Parts(0).Substring(0, 4), Parts(0).Substring(4, 2), Parts(0).Substring(6, 2))
@@ -516,7 +516,7 @@ Namespace DrawingT.MetadataT
             Private Sub ODE_Removing(ByVal sender As ListWithEvents(Of String), ByVal e As ListWithEvents(Of String).CancelableItemIndexEventArgs)
                 If _ODE.Count = 0 Then
                     e.Cancel = True
-                    e.CancelMessage = "Cannot remove last item from ODE"
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.CannotRemoveLastItemFrom0, "ODE")
                 End If
             End Sub
             ''' <summary>Block <see cref="ODE"/> from being cleared</summary>
@@ -524,26 +524,26 @@ Namespace DrawingT.MetadataT
             ''' <param name="e">Event parameters</param>
             Private Sub ODE_Clearing(ByVal sender As ListWithEvents(Of String), ByVal e As ComponentModelT.CancelMessageEventArgs)
                 e.Cancel = True
-                e.CancelMessage = "ODE cannot be cleared"
+                e.CancelMessage = String.Format(ResourcesT.Exceptions.CannotBeCleared, "ODE")
             End Sub
             ''' <summary>Controls if item added to <see cref="ODE"/> are valid</summary>
             ''' <param name="sender"><see cref="_ODE"/></param>
             ''' <param name="e">parameters of event</param>
             Private Sub ODE_Adding(ByVal sender As ListWithEvents(Of String), ByVal e As ListWithEvents(Of String).CancelableItemIndexEventArgs)
                 If Not IsGraphicCharacters(e.Item) Then
-                    e.CancelMessage = "ODE can consist only of graphic characters"
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.CanConsistOnlyOfGraphicCharacters, "ODE")
                     e.CancelMessage = True
                 ElseIf e.Item.Contains("*"c) OrElse e.Item.Contains("/"c) OrElse e.Item.Contains("?"c) OrElse e.Item.Contains(":"c) Then
                     e.Cancel = True
-                    e.CancelMessage = "ODE cannot contain /, *, ? or :"
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.CannotContainCharactersAnd, "ODE")
                 ElseIf e.Item = "" Then
                     e.Cancel = True
-                    e.CancelMessage = "ODE component cannot be an empty string"
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.ComponentCannotBeAnEmptyString, "ODE")
                 Else
                     For Each ch As Char In e.Item
                         If AscW(ch) > 127 Then
                             e.Cancel = True
-                            e.CancelMessage = "ODE component must be encodeable by ASCII"
+                            e.CancelMessage = String.Format(ResourcesT.Exceptions.ComponentMustBeEncodeableByASCII, "ODE")
                         End If
                     Next ch
                     Dim Arr() As String
@@ -557,7 +557,7 @@ Namespace DrawingT.MetadataT
                     Dim WholeOde As String = String.Join("/"c, Arr)
                     If WholeOde.Length + IPR.Length + 1 > 61 Then
                         e.Cancel = True
-                        e.CancelMessage = "Length of ODE and IPR together with separators must wit into 61"
+                        e.CancelMessage = ResourcesT.Exceptions.LengthOfODEAndIPRTogetherWithSeparatorsMustWitInto61
                     End If
                 End If
             End Sub
@@ -581,10 +581,10 @@ Namespace DrawingT.MetadataT
             ''' Trying to set an empty array
             ''' </exception>
             ''' <exception cref="ArgumentNullException">Value being set is null</exception>
-            <DisplayName("ODE"), DesignOnly(True), EditorBrowsable(EditorBrowsableState.Never)> _
-            <Description("Object Descriptor Element In conjunction with the UCD and the IPR, a string of characters ensuring the uniqueness of the UNO.")> _
+            <LDisplayName(GetType(IPTCResources), "ODE_n"), DesignOnly(True), EditorBrowsable(EditorBrowsableState.Never)> _
+            <LDescription(GetType(IPTCResources), "ODE_d")> _
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-            Public Property ODEDesign() As String() 'Localize: Description
+            Public Property ODEDesign() As String()
                 Get
                     Return New List(Of String)(ODE).ToArray
                 End Get
@@ -610,17 +610,17 @@ Namespace DrawingT.MetadataT
             ''' <summary>Object Variant Indicator A string of characters indicating technical variants of the object such as partial objects, or changes of file formats, and coded character sets.</summary>             
             ''' <value>A minimum of one and a maximum of 9 octets, consisting of graphic characters, except colon ‘:’, asterisk ‘*’ and question mark ‘?’. To indicate a technical variation of the object as so far identified by the first three elements. Such variation may be required, for instance, for the indication of part of the object, or variations of the file format, or coded character set. The default value is a single ‘0’ (zero) character indicating no further use of the OVI.</value>
             ''' <exception cref="ArgumentException">Value being set contains unallowed characters (white space, *, :, /, ? or control characters) -or- value being set is an empty <see cref="String"/> or its lenght is larger than 9 -or- value being set contains character with code higher than 127</exception>
-            <Description("Object Variant Indicator A string of characters indicating technical variants of the object such as partial objects, or changes of file formats, and coded character sets.")> _
-            Public Property OVI() As String 'Localize: Description
+            <LDescription(GetType(IPTCResources), "OVI_d")> _
+            Public Property OVI() As String
                 Get
                     Return _OVI
                 End Get
                 Set(ByVal value As String)
-                    If Not IsGraphicCharacters(value) Then Throw New ArgumentException("Only graphic characters are allowd in OVI")
-                    If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException("OVI cannot contain characters *, /, ? and :")
-                    If value.Length > 9 OrElse value = "" Then Throw New ArgumentException("OVI must be string with length from 1 to 9")
+                    If Not IsGraphicCharacters(value) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.OnlyGraphicCharactersAreAllowedIn0, "OVI"))
+                    If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotContainCharactersAnd, "OVI"))
+                    If value.Length > 9 OrElse value = "" Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeStringWithLengthFrom1To2Characters, "OVI", 1, 9))
                     For Each ch As Char In value
-                        If AscW(ch) > 127 Then Throw New ArgumentException("OVI text must be encodeable by ASCII")
+                        If AscW(ch) > 127 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TextMustBeEncodeableByASCII, "OVI"))
                     Next ch
                     _OVI = value
                 End Set
@@ -730,8 +730,8 @@ Namespace DrawingT.MetadataT
                     Return _Number
                 End Get
                 Set(ByVal value As Integer)
-                    If Number.ToString(New String("0"c, NumberDigits), InvariantCulture).Length > NumberDigits Then Throw New ArgumentException("Number has to many digits")
-                    If Number < 0 Then Throw New ArgumentOutOfRangeException("Number cannot be negative")
+                    If Number.ToString(New String("0"c, NumberDigits), InvariantCulture).Length > NumberDigits Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.HasToManyDigits, "Number"))
+                    If Number < 0 Then Throw New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.CannotBeNegative, "Number"))
                     _Number = value
                 End Set
             End Property
@@ -838,7 +838,7 @@ Namespace DrawingT.MetadataT
                         ElseIf GetCreateInstanceSupported(context) Then
                             Return Activator.CreateInstance(context.PropertyDescriptor.PropertyType, CInt(Parts(0)), Parts(1))
                         Else
-                            Throw New InvalidOperationException("Type is specified neither via property nor in value")
+                            Throw New InvalidOperationException(ResourcesT.Exceptions.TypeIsSpecifiedNeitherViaPropertyNorInValue)
                         End If
                     End If
                     Return MyBase.ConvertFrom(context, culture, value)
@@ -1074,7 +1074,7 @@ Namespace DrawingT.MetadataT
                     Return _Year
                 End Get
                 Set(ByVal value As Short)
-                    If value < 0 OrElse value > 9999 Then Throw New ArgumentOutOfRangeException("value", "Year must be from range 1÷9999 or 0 if unknown")
+                    If value < 0 OrElse value > 9999 Then Throw New ArgumentOutOfRangeException("value", String.Format(ResourcesT.Exceptions.MustBeFromRange12Or3IfUnknown, "Year", 1, 9999, 0))
                     _Year = value
                 End Set
             End Property
@@ -1087,7 +1087,7 @@ Namespace DrawingT.MetadataT
                     Return _Day
                 End Get
                 Set(ByVal value As Byte)
-                    If value > 31 Then Throw New ArgumentOutOfRangeException("value", "Day must be less then or equal to 31")
+                    If value > 31 Then Throw New ArgumentOutOfRangeException("value", String.Format(ResourcesT.Exceptions.MustBeLessThenOrEqualTo1, "Day", 31))
                     _Day = value
                 End Set
             End Property
@@ -1100,7 +1100,7 @@ Namespace DrawingT.MetadataT
                     Return _Month
                 End Get
                 Set(ByVal value As Byte)
-                    If value > 12 Then Throw New ArgumentOutOfRangeException("value", "Month must be less than or equal to 12")
+                    If value > 12 Then Throw New ArgumentOutOfRangeException("value", String.Format(ResourcesT.Exceptions.MustBeLessThenOrEqualTo1, "Month", 12))
                     _Month = value
                 End Set
             End Property
@@ -1116,7 +1116,7 @@ Namespace DrawingT.MetadataT
                 Try
                     Return New OmmitableDate(From.Substring(0, 4), From.Substring(4, 2), From.Substring(6, 2))
                 Catch ex As Exception
-                    Throw New InvalidCastException(String.Format("Cannot convert string {0} to OmmitableDate", From), ex)
+                    Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, From, "OmmitableDate"), ex)
                 End Try
             End Operator
             ''' <summary>Converts <see cref="OmmitableDate"/> to <see cref="String"/></summary>
@@ -1212,7 +1212,7 @@ Namespace DrawingT.MetadataT
                     Return _Time
                 End Get
                 Set(ByVal value As TimeSpan)
-                    If value < Minimum OrElse value > Maximum Then Throw New ArgumentOutOfRangeException("value", "Time must be positive and less than 99:59:59")
+                    If value < Minimum OrElse value > Maximum Then Throw New ArgumentOutOfRangeException("value", String.Format(ResourcesT.Exceptions.MustBePositiveAndLessThan1H0MmSs, Time, New TimeSpanFormattable(99, 59, 59)))
                     _Time = TimeSpan.FromSeconds(Math.Truncate(value.TotalSeconds))
                 End Set
             End Property
@@ -1224,8 +1224,8 @@ Namespace DrawingT.MetadataT
                     Return _Offset
                 End Get
                 Set(ByVal value As TimeSpan)
-                    If Offset.TotalMinutes <> Int(Offset.TotalMinutes) Then Throw New ArgumentException("Offset must be in whole minutes")
-                    If value < MinOffset OrElse value > MaxOffset Then Throw New ArgumentOutOfRangeException(String.Format("value", "Offset must be within range {0}÷{1}", MinOffset, MaxOffset))
+                    If Offset.TotalMinutes <> Int(Offset.TotalMinutes) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeInWholeMinutes, "Offset"))
+                    If value < MinOffset OrElse value > MaxOffset Then Throw New ArgumentOutOfRangeException(String.Format("value", ResourcesT.Exceptions.MustBeWithinRange01, MinOffset, MaxOffset, "Offset"))
                     _Offset = value
                 End Set
             End Property
@@ -1392,7 +1392,7 @@ Namespace DrawingT.MetadataT
                                 Select Case ch
                                     Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
                                         state = ParseAutomat.H2
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.H2
                                 Select Case ch
@@ -1402,18 +1402,18 @@ Namespace DrawingT.MetadataT
                                     Case ":"c
                                         rH = CStr(value).Substring(i - 1, 1)
                                         state = ParseAutomat.M1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.H3
                                 Select Case ch
                                     Case ":"c : state = ParseAutomat.M1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.M1
                                 Select Case ch
                                     Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
                                         state = ParseAutomat.M2
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.M2
                                 Select Case ch
@@ -1430,7 +1430,7 @@ Namespace DrawingT.MetadataT
                                     Case "+"c
                                         rM = CStr(value).Substring(i - 1, 1)
                                         state = ParseAutomat.OH1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.M3
                                 Select Case ch
@@ -1439,7 +1439,7 @@ Namespace DrawingT.MetadataT
                                         rMinus = True
                                         state = ParseAutomat.OH1
                                     Case "+"c : state = ParseAutomat.OH1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.S1
                                 Select Case ch
@@ -1459,7 +1459,7 @@ Namespace DrawingT.MetadataT
                                     Case "+"c
                                         rS = CStr(value).Substring(i - 1, 1)
                                         state = ParseAutomat.OH1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.S3
                                 Select Case ch
@@ -1467,13 +1467,13 @@ Namespace DrawingT.MetadataT
                                         rMinus = True
                                         state = ParseAutomat.OH1
                                     Case "+"c : state = ParseAutomat.OH1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.OH1
                                 Select Case ch
                                     Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
                                         state = ParseAutomat.OH2
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.OH2
                                 Select Case ch
@@ -1483,28 +1483,28 @@ Namespace DrawingT.MetadataT
                                     Case ":"c
                                         rOH = CStr(value).Substring(i - 1, 1)
                                         state = ParseAutomat.OM1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.OH3
                                 Select Case ch
                                     Case ":"c : state = ParseAutomat.OM1
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.OM1
                                 Select Case ch
                                     Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
                                         state = ParseAutomat.OM2
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.OM2
                                 Select Case ch
                                     Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c
                                         rOM = CStr(value).Substring(i - 1, 2)
                                         state = ParseAutomat.All
-                                    Case Else : Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                    Case Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                                 End Select
                             Case ParseAutomat.All
-                                Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                         End Select
                         i += 1
                     Next ch
@@ -1519,7 +1519,7 @@ Namespace DrawingT.MetadataT
                             rM = CStr(value).Substring(CStr(value).Length - 1)
                         Case ParseAutomat.All, ParseAutomat.OH3, ParseAutomat.S3, ParseAutomat.M3
                         Case Else
-                            Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value))
+                            Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"))
                     End Select
                     Try
                         Dim Time As New TimeSpan(rH, rM, rS)
@@ -1527,7 +1527,7 @@ Namespace DrawingT.MetadataT
                         If rMinus Then Offset = -Offset
                         Return New Time(Time, Offset)
                     Catch ex As Exception
-                        Throw New InvalidCastException(String.Format("Cannot convert string ""{0}"" into IPTC.Time", value), ex)
+                        Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, value, "IPTC.Time"), ex)
                     End Try
                 End Function
                 ''' <summary>Performs conversion from <see cref="Time"/> to <see cref="String"/></summary>
@@ -1565,7 +1565,7 @@ Namespace DrawingT.MetadataT
                         End If
                     End If
                 Next cns
-                Throw New InvalidEnumArgumentException(String.Format("{0} cannot be interpreted as member of ImageTypeContents", TypeCode))
+                Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.CannotBeInterpretedAsMemberOf1, TypeCode, "ImageTypeContents"))
             End Sub
             ''' <summary>Contains value of the <see cref="Type"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -1575,8 +1575,8 @@ Namespace DrawingT.MetadataT
             Private _Components As ImageTypeComponents
             ''' <summary>Type of components</summary>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ImageTypeContents"/></exception>
-            <Description("Type of components")> _
-            Public Property Type() As ImageTypeContents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Code 'Localize:Description
+            <LDescription(GetType(IPTCResources), "Type_d")> _
+            Public Property Type() As ImageTypeContents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Code
                 Get
                     Return _Type
                 End Get
@@ -1587,8 +1587,8 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Number of components</summary>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ImageTypeComponents"/></exception>
-            <Description("Number of components")> _
-            Public Property Components() As ImageTypeComponents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Count 'Localize:Description
+            <LDescription(GetType(IPTCResources), "Components_d")> _
+            Public Property Components() As ImageTypeComponents Implements IMediaType(Of Tools.DrawingT.MetadataT.IPTC.ImageTypeComponents, Tools.DrawingT.MetadataT.IPTC.ImageTypeContents).Count
                 Get
                     Return _Components
                 End Get
@@ -1612,7 +1612,7 @@ Namespace DrawingT.MetadataT
                             Return
                         End If
                     Next Constant
-                    Throw New ArgumentException(String.Format("{0} cannot be interpreted as ImageTypeContents", value))
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBeInterpretedAs1, value, "ImageTypeContents"))
                 End Set
             End Property
             ''' <summary>String representation in form 0T (components, type)</summary>
@@ -1684,8 +1684,8 @@ Namespace DrawingT.MetadataT
             Private _Components As Byte
             ''' <summary>Type of components</summary>
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ImageTypeContents"/></exception>
-            <Description("Type of components")> _
-            Public Property Type() As AudioDataType Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Code 'Localize:Description
+            <LDescription(GetType(IPTCResources), "Type_d")> _
+            Public Property Type() As AudioDataType Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Code
                 Get
                     Return _Type
                 End Get
@@ -1696,13 +1696,13 @@ Namespace DrawingT.MetadataT
             End Property
             ''' <summary>Number of components</summary>
             ''' <exception cref="ArgumentOutOfRangeException">Value being set is ot of range 0÷9</exception>
-            <Description("Number of components")> _
-            Public Property Components() As Byte Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Count 'Localize:Description
+            <LDescription(GetType(IPTCResources), "Components_d")> _
+            Public Property Components() As Byte Implements IMediaType(Of Byte, Tools.DrawingT.MetadataT.IPTC.AudioDataType).Count
                 Get
                     Return _Components
                 End Get
                 Set(ByVal value As Byte)
-                    If Not value >= 0 AndAlso value <= 9 Then Throw New ArgumentOutOfRangeException("value", "Number of components of AudioType must be from 0 to 9")
+                    If Not value >= 0 AndAlso value <= 9 Then Throw New ArgumentOutOfRangeException("value", String.Format(ResourcesT.Exceptions.NumberOfComponentsOf0MustBeFrom1To2, "AudioType", 0, 9))
                     _Components = value
                 End Set
             End Property
@@ -1721,7 +1721,7 @@ Namespace DrawingT.MetadataT
                             Return
                         End If
                     Next Constant
-                    Throw New ArgumentException(String.Format("{0} cannot be interpreted as AudioDataType", value))
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBeInterpretedAs1, value, "AudioDataType"))
                 End Set
             End Property
             ''' <summary>String representation in form 0T (components, type)</summary>
@@ -1932,7 +1932,7 @@ Namespace DrawingT.MetadataT
                     If ContainsEnum Then Return _EnumValue Else Return CObj(0)
                 End Get
                 Set(ByVal value As TEnum)
-                    If Not InEnum(value) Then Throw New InvalidEnumArgumentException("EnumValue must be member of enumeration " & GetType(TEnum).Name)
+                    If Not InEnum(value) Then Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.MustBeMemberOfEnumeration1, EnumValue, GetType(TEnum).Name))
                     _ContainsEnum = True
                     _EnumValue = value
                     _StringValue = Nothing
@@ -1958,7 +1958,7 @@ Namespace DrawingT.MetadataT
                     End If
                 End Get
                 Set(ByVal value As String)
-                    If value Is Nothing Then Throw New ArgumentNullException("value", "StringValue cannot be null")
+                    If value Is Nothing Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeSetToNull, "StringValue"))
                     Dim Vals As Array = [Enum].GetValues(GetType(TEnum))
                     For Each Constant As TEnum In Vals
                         Dim Cns As Reflection.FieldInfo = GetConstant(Constant)
@@ -1975,9 +1975,9 @@ Namespace DrawingT.MetadataT
                         End If
                     Next Constant
                     Dim attrs2 As Object() = GetType(TEnum).GetCustomAttributes(GetType(RestrictAttribute), False)
-                    If attrs2 Is Nothing OrElse attrs2.Length = 0 OrElse DirectCast(attrs2(0), RestrictAttribute).Restrict Then Throw New InvalidEnumArgumentException(String.Format("'{0}' cannot be converted to {1}", value, GetType(TEnum).Name))
+                    If attrs2 Is Nothing OrElse attrs2.Length = 0 OrElse DirectCast(attrs2(0), RestrictAttribute).Restrict Then Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.CannotBeConvertedTo1, value, GetType(TEnum).Name))
                     For Each ch As Char In value
-                        If AscW(ch) < AscW(" ") OrElse AscW(ch) > 127 Then Throw New ArgumentException("StringValue can contain only ASCII-encodable graphic characters and spaces")
+                        If AscW(ch) < AscW(" ") OrElse AscW(ch) > 127 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CanContainOnlyASCIIEncodableGraphicCharactersAndSpaces, "StringValue"))
                     Next ch
                     _EnumValue = CObj(0)
                     _StringValue = value
@@ -2004,7 +2004,7 @@ Namespace DrawingT.MetadataT
                 End Get
                 <EditorBrowsable(EditorBrowsableState.Never)> _
                 Set(ByVal value As Boolean)
-                    If value <> ContainsEnum Then Throw New NotSupportedException("StringEnum.ContainsEnum cannot be changed")
+                    If value <> ContainsEnum Then Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.CannotBeChanged, "StringEnum.ContainsEnum"))
                 End Set
             End Property
 
@@ -2018,7 +2018,7 @@ Namespace DrawingT.MetadataT
                     Return True
                 End Get
                 Set(ByVal value As Boolean)
-                    If value <> True Then Throw New NotSupportedException("StringEnum.ContainsString cannot be set to false")
+                    If value <> True Then Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.CannotBeSetToFalse, "StringEnum.ContainsString"))
                 End Set
             End Property
 
@@ -2046,7 +2046,7 @@ Namespace DrawingT.MetadataT
                     ElseIf TypeOf value Is IConvertible Then
                         EnumValue = CObj(DirectCast(value, IConvertible).ToDecimal(InvariantCulture))
                     Else
-                        Throw New ArgumentException("Value of incompatible type is being set")
+                        Throw New ArgumentException(ResourcesT.Exceptions.ValueOfIncompatibleTypeIsBeingSet)
                     End If
                 End Set
             End Property
@@ -2189,9 +2189,9 @@ Namespace DrawingT.MetadataT
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Group"/> is not member of <see cref="Groups"/></exception>
             ''' <exception cref="ArgumentException"><paramref name="Tags"/> is null or have less than 2 items</exception>
             Public Sub New(ByVal Name As String, ByVal HumanName As String, ByVal Group As Groups, ByVal Type As Type, ByVal Category As String, ByVal Description As String, ByVal Mandatory As Boolean, ByVal Repeatable As Boolean, ByVal ParamArray Tags As IPTCTag())
-                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException("Each group must have at least 2 tags")
+                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.EachGroupMustHaveAtLeast0Tags, 2))
                 If Not InEnum(Group) Then Throw New InvalidEnumArgumentException("Group", Group, GetType(Groups))
-                If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                If Type Is Nothing Then Throw New ArgumentNullException("Type")
                 _Tags = Tags
                 _Mandatory = Mandatory
                 _Repeatable = Repeatable
@@ -2268,7 +2268,7 @@ Namespace DrawingT.MetadataT
             ''' <returns><see cref="List(Of Integer())"/> where each item of list means one group instance and contains indexes of tags when obtained via tag properties</returns>
             ''' <exception cref="ArgumentNullException"><paramref name="Tags"/> is null or contains less then 2 items -or- <paramref name="IPTC"/> is null</exception>
             Protected Shared Function GetGroupMap(ByVal IPTC As IPTC, ByVal ParamArray Tags As IPTCTag()) As List(Of Integer())
-                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException("tags", "Tags must contain at least 2 items")
+                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException("tags", String.Format(ResourcesT.Exceptions.MustContainAtLeast1Items, "Tags", 2))
                 If IPTC Is Nothing Then Throw New ArgumentNullException("IPTC")
                 Dim Counters(Tags.Length - 1) As Integer 'Count of searched tags
                 Dim Stage As Integer = -1 'Index of tag expected to be found
@@ -2351,7 +2351,7 @@ Namespace DrawingT.MetadataT
                 Case 8 'Long
                     Return Str.ReadInt64
                 Case Else
-                    Throw New ArgumentException("Only 1,2,4 and 8-bytes integers can be read via IntFromBytes")
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Only124And8BytesIntegersCanBeReadVia0, "IntFromBytes"))
             End Select
         End Function
         ''' <summary>Ready unsigned ingere from byte array</summary>
@@ -2373,7 +2373,7 @@ Namespace DrawingT.MetadataT
                 Case 8 'ULong
                     Return Str.ReadUInt64
                 Case Else
-                    Throw New ArgumentException("Only 1,2,4 and 8-bytes integers can be read via UIntFromBytes")
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Only124And8BytesIntegersCanBeReadVia0, "UIntFromBytes"))
             End Select
         End Function
         ''' <summary>Converts array of bytes that contains string to number</summary>
@@ -2396,7 +2396,7 @@ Namespace DrawingT.MetadataT
         ''' <paramref name="Count"/> is not 0 and number cannot be stored in number of bytes specified in <paramref name="Count"/>
         ''' </exception>
         Protected Shared Function ToBytes(ByVal Count As Byte, ByVal Number As Decimal, Optional ByVal Fixed As Boolean = True) As Byte()
-            If Count = 0 And Fixed = True Then Throw New ArgumentException("Len cannot be 0 when Fixed is true")
+            If Count = 0 And Fixed = True Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotBe1When2Is3, "Len", 0, "Fixed", "true"))
             ToBytes = Nothing
             Try
                 If Fixed Then
@@ -2406,7 +2406,7 @@ Namespace DrawingT.MetadataT
                 End If
             Finally
                 If ToBytes Is Nothing Then ToBytes = New Byte() {}
-                If Count <> 0 AndAlso ToBytes.Length > Count Then Throw New ArgumentException(String.Format("Number {0} cannot be stored in {1} bytes", Number, Count))
+                If Count <> 0 AndAlso ToBytes.Length > Count Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Number0CannotBeStoredIn1Bytes, Number, Count))
             End Try
         End Function
         ''' <summary>Converts signed integer to array of bytes</summary>
@@ -2427,7 +2427,7 @@ Namespace DrawingT.MetadataT
                 Case 5 'Long
                     Str.Write(MathT.LEBE(CLng(Int)))
                 Case Else
-                    Throw New ArgumentException("Only 1,2,4 and 8-bytes integers can be read via IntToBytes")
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Only124And8BytesIntegersCanBeReadVia0, "IntToBytes"))
             End Select
             Dim Arr(Count - 1) As Byte
             Dim Buff As Byte() = DirectCast(Str.BaseStream, System.IO.MemoryStream).GetBuffer
@@ -2453,7 +2453,7 @@ Namespace DrawingT.MetadataT
                 Case 8 'Long
                     Str.Write(MathT.LEBE(CULng(Int)))
                 Case Else
-                    Throw New ArgumentException("Only 1,2,4 and 8-bytes integers can be read via ToBytes")
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Only124And8BytesIntegersCanBeReadVia0, "ToBytes"))
             End Select
             Dim Arr(Count - 1) As Byte
             Dim Buff As Byte() = DirectCast(Str.BaseStream, System.IO.MemoryStream).GetBuffer
@@ -2544,3 +2544,4 @@ Namespace DrawingT.MetadataT
     End Class
 #End If
 End Namespace
+'Localize: Localization finished here!

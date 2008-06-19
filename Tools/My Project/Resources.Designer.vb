@@ -60,35 +60,42 @@ Namespace My.Resources
             End Set
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Abort.
+        '''</summary>
+        Friend ReadOnly Property Abort() As String
+            Get
+                Return ResourceManager.GetString("Abort", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Abort_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Abort_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cancel.
+        '''</summary>
+        Friend ReadOnly Property Cancel() As String
+            Get
+                Return ResourceManager.GetString("Cancel", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Cancel_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Cancel_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Comment() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Comment", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to Confirm changes.
-        '''</summary>
-        Friend ReadOnly Property ConfirmChanges() As String
-            Get
-                Return ResourceManager.GetString("ConfirmChanges", resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to Continue.
-        '''</summary>
-        Friend ReadOnly Property Continue_() As String
-            Get
-                Return ResourceManager.GetString("Continue_", resourceCulture)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property Continue_AccessKey() As Char
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Continue_AccessKey", resourceCulture)
-                Return CType(obj,Char)
             End Get
         End Property
         
@@ -105,6 +112,38 @@ Namespace My.Resources
         Friend ReadOnly Property Error_() As String
             Get
                 Return ResourceManager.GetString("Error_", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Help.
+        '''</summary>
+        Friend ReadOnly Property Help() As String
+            Get
+                Return ResourceManager.GetString("Help", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Help_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Help_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Ignore.
+        '''</summary>
+        Friend ReadOnly Property Ignore() As String
+            Get
+                Return ResourceManager.GetString("Ignore", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Ignore_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Ignore_access", resourceCulture)
+                Return CType(obj,Char)
             End Get
         End Property
         
@@ -129,6 +168,38 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to No.
+        '''</summary>
+        Friend ReadOnly Property No() As String
+            Get
+                Return ResourceManager.GetString("No", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property No_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("No_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to OK.
+        '''</summary>
+        Friend ReadOnly Property OK() As String
+            Get
+                Return ResourceManager.GetString("OK", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property OK_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("OK_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Open() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Open", resourceCulture)
@@ -150,6 +221,22 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Retry.
+        '''</summary>
+        Friend ReadOnly Property Retry() As String
+            Get
+                Return ResourceManager.GetString("Retry", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Retry_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Retry_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Save() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Save", resourceCulture)
@@ -161,15 +248,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("T", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''  Looks up a localized string similar to This action requires all changes to be confirmed..
-        '''</summary>
-        Friend ReadOnly Property ThisActionRequiresAllChangesToBeConfirmed() As String
-            Get
-                Return ResourceManager.GetString("ThisActionRequiresAllChangesToBeConfirmed", resourceCulture)
             End Get
         End Property
         
@@ -186,6 +264,22 @@ Namespace My.Resources
         Friend ReadOnly Property ValueChanged_cat() As String
             Get
                 Return ResourceManager.GetString("ValueChanged_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Yes.
+        '''</summary>
+        Friend ReadOnly Property Yes() As String
+            Get
+                Return ResourceManager.GetString("Yes", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Yes_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Yes_access", resourceCulture)
+                Return CType(obj,Char)
             End Get
         End Property
         

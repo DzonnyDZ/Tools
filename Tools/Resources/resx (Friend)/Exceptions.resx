@@ -1,0 +1,567 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="TypeMustInheritFromMessageBox" xml:space="preserve">
+    <value>Type must inherit from MessageBox</value>
+  </data>
+  <data name="DefaultMessageBoxImplementationCannotBeAbstractType" xml:space="preserve">
+    <value>Default MessageBox implementation cannot be abstract type.</value>
+  </data>
+  <data name="DefaultMessageBoxImplementationCannotBeGenericTypeDefinition" xml:space="preserve">
+    <value>Default MessageBox implementation cannot be generic type definition.</value>
+  </data>
+  <data name="ClassThatRepresentsDefaultMessageBoxImplementationMustHaveParameterLessConstructor" xml:space="preserve">
+    <value>Class that represents default MessageBox implementation must have parameter-less constructor.</value>
+  </data>
+  <data name="ResultCannotBeNone" xml:space="preserve">
+    <value>Result cannot be None</value>
+  </data>
+  <data name="CannotResumeCountDownTimerWhenThereIsNoTimeLeft" xml:space="preserve">
+    <value>Cannot resume count-down timer when there is no time left.</value>
+  </data>
+  <data name="CountDownTimeMustBeGreaterThanZero" xml:space="preserve">
+    <value>Count down time must be greater than zero.</value>
+  </data>
+  <data name="MessageBoxCannotBeReCycledWhenItIsShown" xml:space="preserve">
+    <value>MessageBox cannot be re-cycled when it is shown.</value>
+  </data>
+  <data name="RecycleInternalCanBeCalledOnlyOnClosedMessagebox" xml:space="preserve">
+    <value>RecycleInternal can be called only on closed messagebox.</value>
+  </data>
+  <data name="ClassCannotBeUsedAsMessageBox" xml:space="preserve">
+    <value>Class cannot be used as message box.</value>
+  </data>
+  <data name="ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails" xml:space="preserve">
+    <value>There was an error obtainin instance of default implementation of MessageBox. See inner exception for details.</value>
+  </data>
+  <data name="ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails" xml:space="preserve">
+    <value>There was an error invoking MessageBox. See inner exception for details.</value>
+  </data>
+  <data name="WasNotMemberOf" xml:space="preserve">
+    <value>{0} was not member of {1}</value>
+  </data>
+  <data name="TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection" xml:space="preserve">
+    <value>The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection.</value>
+  </data>
+  <data name="MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog" xml:space="preserve">
+    <value>MessageBox must be in Created State in order to be displyed by PerformDialog.</value>
+  </data>
+  <data name="MustBeGreaterThanOrEqualToZero" xml:space="preserve">
+    <value>{0} must be greater than or equal to zero</value>
+  </data>
+  <data name="MustBe1Dimensional" xml:space="preserve">
+    <value>{0} must be 1-dimensional</value>
+  </data>
+  <data name="ThereIsNotEnoughSpaceBetween0AndTheEndOfTheArrayForItemsStoredInCollection" xml:space="preserve">
+    <value>There is not enough space between {0} and the end of the array for items stored in collection</value>
+  </data>
+  <data name="EnumeratorIsPositionedOutsideIReadOnlyIndexableBounds" xml:space="preserve">
+    <value>Enumerator is positioned outside IReadOnlyIndexable bounds</value>
+  </data>
+  <data name="AllowAddCancelableEventsHandlersCanBeChangedOnlyFromTrueToFalse" xml:space="preserve">
+    <value>AllowAddCancelableEventsHandlers  can be changed only from True to False</value>
+  </data>
+  <data name="CannotAddHandlerToTheAddingEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Cannot add handler to the Adding event when AllowAddCancelableEventsHandlers is False</value>
+  </data>
+  <data name="ListIsLocked" xml:space="preserve">
+    <value>List is locked</value>
+  </data>
+  <data name="CannotAddHandlerToTheClearigEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Cannot add handler to the Clearig event when AllowAddCancelableEventsHandlers is False</value>
+  </data>
+  <data name="ClearingWasCanceledInEventhendler" xml:space="preserve">
+    <value>Clearing was canceled in eventhendler</value>
+  </data>
+  <data name="CannotAddHandlerToTheRemovingEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Cannot add handler to the Removing event when AllowAddCancelableEventsHandlers is False</value>
+  </data>
+  <data name="RemovingWasCenceledInEventHandler" xml:space="preserve">
+    <value>Removing was cenceled in event handler</value>
+  </data>
+  <data name="CannotAddHandlerToTheItemChangingEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Cannot add handler to the ItemChanging event when AllowAddCancelableEventsHandlers is False</value>
+  </data>
+  <data name="ChangingWasCanceledInEventhandler" xml:space="preserve">
+    <value>Changing was canceled in eventhandler</value>
+  </data>
+  <data name="CannotChangeItemPropertyWhenReadOnlyIsTrue" xml:space="preserve">
+    <value>Cannot change Item property when ReadOnly is True</value>
+  </data>
+  <data name="ErrorWhileDeserializingLinkLabelItem" xml:space="preserve">
+    <value>Error while deserializing LinkLabelItem</value>
+  </data>
+  <data name="EnumeratorIsEitherNotInitializedYedOrEnumerationHasAlreadyFinished" xml:space="preserve">
+    <value>Enumerator is either not initialized yed or enumeration has already finished</value>
+  </data>
+  <data name="CannotBeSetToNull" xml:space="preserve">
+    <value>{0} cannot be set to null</value>
+  </data>
+  <data name="OnlyIListInstancesCanBeUsedInListWrapper" xml:space="preserve">
+    <value>Only IList instances can be used in ListWrapper</value>
+  </data>
+  <data name="MustBeNonNegative" xml:space="preserve">
+    <value>{0} must be non-negative</value>
+  </data>
+  <data name="IsMultidimensional" xml:space="preserve">
+    <value>{0} is multidimensional</value>
+  </data>
+  <data name="IsGreaterThanOrEqualToLenghtOfArray" xml:space="preserve">
+    <value>{0} is greater than or equal to lenght of array</value>
+  </data>
+  <data name="ThereIsNotEngoughSpaceInArrayAfter0ToPlaceAllItemsFromCollection" xml:space="preserve">
+    <value>There is not engough space in array after {0}  to place all items from collection</value>
+  </data>
+  <data name="IndexWasOutOfRangeOfControlsCollection" xml:space="preserve">
+    <value>index was out of range of controls collection.</value>
+  </data>
+  <data name="IndexMustBeInRangeOfTheCollection" xml:space="preserve">
+    <value>index must be in range of the collection.</value>
+  </data>
+  <data name="StringMustConsistOfEventNumberOfHexadeimalNumerals" xml:space="preserve">
+    <value>String must consist of event number of hexadeimal numerals</value>
+  </data>
+  <data name="InvalidCharacterNear01" xml:space="preserve">
+    <value>Invalid character near "{0}{1}"</value>
+  </data>
+  <data name="CannotInterpretValue0As1" xml:space="preserve">
+    <value>Cannot interpret value "{0}" as {1}</value>
+  </data>
+  <data name="CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2" xml:space="preserve">
+    <value>Cannot return value for this instance of T1orT2 because it contains neither value1 nor value2.</value>
+  </data>
+  <data name="ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1" xml:space="preserve">
+    <value>This T1orT2 cannot be converted to {0} because it doesn't contain value of {1}</value>
+  </data>
+  <data name="ValueOfObjeValuePropertyMustBeEitherOfTypeT1OrOfTypeT1" xml:space="preserve">
+    <value>Value of ObjeValue property must be either of type T1 or of type T1</value>
+  </data>
+  <data name="CannotAddNodeThatHaveParentAlreadySet" xml:space="preserve">
+    <value>Cannot add node that have parent already set</value>
+  </data>
+  <data name="AttemptToCreateCyclicTree" xml:space="preserve">
+    <value>Attempt to create cyclic tree</value>
+  </data>
+  <data name="CannotAddNullNodeIntoTree" xml:space="preserve">
+    <value>Cannot add null node into tree</value>
+  </data>
+  <data name="CannotPutNullNodeIntoTree" xml:space="preserve">
+    <value>Cannot put null node into tree</value>
+  </data>
+  <data name="CannotAssignNodeThatGaveParentAlreadySet" xml:space="preserve">
+    <value>Cannot assign node that gave parent already set</value>
+  </data>
+  <data name="CannotAdoptNull" xml:space="preserve">
+    <value>Cannot adopt null</value>
+  </data>
+  <data name="OnlyValueSOfType0CanBeEditedBy0" xml:space="preserve">
+    <value>Only value s of type {0} can be edited by {0}</value>
+  </data>
+  <data name="JPEGFileDoesnTStartWithCorrectSOIMarker" xml:space="preserve">
+    <value>JPEG file doesn't start with correct SOI marker</value>
+  </data>
+  <data name="GivenMarkerSCodeDoesnTStartWithFFh" xml:space="preserve">
+    <value>Given marker's code doesn't start with FFh</value>
+  </data>
+  <data name="StreamToReadJPEGFromMustBeAbleToSeekAndRead" xml:space="preserve">
+    <value>Stream to read JPEG from must be able to seek and read</value>
+  </data>
+  <data name="UnknownImageExtensionImageWillNotBeSaved" xml:space="preserve">
+    <value>Unknown image extension, image will not be saved.</value>
+  </data>
+  <data name="EOINotFound" xml:space="preserve">
+    <value>EOI not found</value>
+  </data>
+  <data name="JPEGFileDoesnTEndWithCorrectEOIMarker" xml:space="preserve">
+    <value>JPEG file doesn't end with correct EOI marker</value>
+  </data>
+  <data name="NoJPEGMarkerFound" xml:space="preserve">
+    <value>No JPEG marker found</value>
+  </data>
+  <data name="BIMSegmentDoesnTStartWithSting8BIM" xml:space="preserve">
+    <value>8BIM segment doesn't start with sting '8BIM'</value>
+  </data>
+  <data name="ReportedLengthOf8BIMSegmentDoesnFFitIntoBaseStream" xml:space="preserve">
+    <value>Reported length of 8BIM segment doesn'f fit into base stream</value>
+  </data>
+  <data name="IndexMustBeInRangeDefinedByCounfOfIFDs" xml:space="preserve">
+    <value>Index must be in range defined by counf of IFDs</value>
+  </data>
+  <data name="NumberOfElementsCannotBe0" xml:space="preserve">
+    <value>Number of elements cannot be 0</value>
+  </data>
+  <data name="DataTypesCannotBeNullAndMustContainAtLeastOneElement" xml:space="preserve">
+    <value>DataTypes cannot be null and must contain at least one element</value>
+  </data>
+  <data name="CannotChangeNumberOfComponentsOfThisRecord" xml:space="preserve">
+    <value>Cannot change number of components of this record</value>
+  </data>
+  <data name="ValueOfIncompatibleTypePassedToASCIIRecord" xml:space="preserve">
+    <value>Value of incompatible type passed to ASCII record</value>
+  </data>
+  <data name="ValueOfIncompatibleTypePassedToExifRecord" xml:space="preserve">
+    <value>Value of incompatible type passed to Exif record</value>
+  </data>
+  <data name="CannotReadTagDataFromStream" xml:space="preserve">
+    <value>Cannot read tag data from stream</value>
+  </data>
+  <data name="UnknownByteOrderMark" xml:space="preserve">
+    <value>Unknown byte order mark </value>
+  </data>
+  <data name="InvalidValueForByteOrderTestAtExifHeader" xml:space="preserve">
+    <value>Invalid value for byte order test at Exif header </value>
+  </data>
+  <data name="UnexpectedCharacter0" xml:space="preserve">
+    <value>Unexpected character {0}</value>
+  </data>
+  <data name="SlashExpected" xml:space="preserve">
+    <value>/ expected</value>
+  </data>
+  <data name="DataSetsLongerThan32767BAreNotSupported" xml:space="preserve">
+    <value>DataSets longer than 32767B are not supported</value>
+  </data>
+  <data name="IPTCDataSetsLongerThat32767BytesAreNotSupported" xml:space="preserve">
+    <value>IPTC DataSets longer that 32767 bytes are not supported</value>
+  </data>
+  <data name="DataSetNumberMustBeLessThanOrEqualTo9" xml:space="preserve">
+    <value>DataSetNumber must be less than or equal to 9</value>
+  </data>
+  <data name="ThisInstanceIsLocked" xml:space="preserve">
+    <value>This instance is locked</value>
+  </data>
+  <data name="RecordMustBeFrom0To9" xml:space="preserve">
+    <value>Record must be from 0 to 9</value>
+  </data>
+  <data name="GivenTypeIsNotEnum" xml:space="preserve">
+    <value>Given type is not enum</value>
+  </data>
+  <data name="CannotSetFixedToTrueWhenLengthIs0" xml:space="preserve">
+    <value>Cannot set Fixed to True when Length is 0</value>
+  </data>
+  <data name="CannotSetLengthTo0WhenFixedIsTrue" xml:space="preserve">
+    <value>Cannot set Length to 0 when Fixed is true</value>
+  </data>
+  <data name="TagMarkerMustBe1Ch" xml:space="preserve">
+    <value>Tag marker must be 1Ch</value>
+  </data>
+  <data name="ExtendedSizeTagsAreNotSupported" xml:space="preserve">
+    <value>Extended-size tags are not supported</value>
+  </data>
+  <data name="BytesCannotBe0" xml:space="preserve">
+    <value>Bytes cannot be 0</value>
+  </data>
+  <data name="LenCannotBe0WhenFixedIsTrue" xml:space="preserve">
+    <value>Len cannot be 0 when Fixed is true</value>
+  </data>
+  <data name="CannotBeNegative" xml:space="preserve">
+    <value>{0} cannot be negative</value>
+  </data>
+  <data name="Item0ContainsNonGraphicCharacter" xml:space="preserve">
+    <value>Item {0} contains non-graphic character</value>
+  </data>
+  <data name="String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint" xml:space="preserve">
+    <value>String "{0}" canot be stored without violating length and/or fixed constraint</value>
+  </data>
+  <data name="Item0ContainsNonGraphicNonSpaceCharacter" xml:space="preserve">
+    <value>Item {0} contains non-graphic-non-space character</value>
+  </data>
+  <data name="Item0ContainsNonGraphicNonSpaceNonCrNonLfCharacter" xml:space="preserve">
+    <value>Item {0} contains non-graphic-non-space-non-cr-non-lf character</value>
+  </data>
+  <data name="InvalidBitmapNumberOfBitsInBitmapMustBeMultiplicationOf460" xml:space="preserve">
+    <value>Invalid bitmap. Number of bits in bitmap must be multiplication of 460</value>
+  </data>
+  <data name="BitmapWidthMustBe460px" xml:space="preserve">
+    <value>Bitmap width must be 460px</value>
+  </data>
+  <data name="BitmapViolatesLenghtConstraintImageSizeMustBe4600Px" xml:space="preserve">
+    <value>Bitmap violates lenght constraint. Image size must be 460×{0}px</value>
+  </data>
+  <data name="UnknownBaseTypeOfEnum" xml:space="preserve">
+    <value>Unknown base type of enum</value>
+  </data>
+  <data name="LengthOfDataStoredUnderThisTagIsDifferentFrom8WhichIsNecessaryForDatatypeCCYYMMDD" xml:space="preserve">
+    <value>Length of data stored under this tag is different from 8 which is necessary for datatype CCYYMMDD</value>
+  </data>
+  <data name="LengthOfDataStoredUnderThisTagIsDifferentThen11WhichIsNecessaryForDatatypeHHMMSSHHMM" xml:space="preserve">
+    <value>Length of data stored under this tag is different then 11 which is necessary for datatype HHMMSS_HHMM</value>
+  </data>
+  <data name="StoredTimeDoesNotContainValidCharacterOnTimeZoneOffsetSignPosition" xml:space="preserve">
+    <value>Stored time does not contain valid character on time zone offset sign position</value>
+  </data>
+  <data name="WhenFixedIsTrueLenCannotBe0" xml:space="preserve">
+    <value>When Fixed is True Len cannot be 0</value>
+  </data>
+  <data name="LenghtConstraintViolation" xml:space="preserve">
+    <value>Lenght constraint violation</value>
+  </data>
+  <data name="Item0ContainsNonAlphaCharacter" xml:space="preserve">
+    <value>Item {0} contains non-alpha character</value>
+  </data>
+  <data name="EnumTypeOfItemsPassedToStringEnumValueMustBeSameAsThatInTheTypeParameter" xml:space="preserve">
+    <value>EnumType of items passed to StringEnum_Value must be same as that in the Type parameter</value>
+  </data>
+  <data name="ThisEnumerationDoesNotAllowValuesThatAreNotMemberOfIt" xml:space="preserve">
+    <value>This enumeration does not allow values that are not member of it</value>
+  </data>
+  <data name="StoredValueHasInvalidLenght" xml:space="preserve">
+    <value>Stored value has invalid lenght</value>
+  </data>
+  <data name="SerializedValueHasNotLength2Bytes" xml:space="preserve">
+    <value>Serialized value has not length 2 bytes.</value>
+  </data>
+  <data name="StoredItemLenghtMustBe0" xml:space="preserve">
+    <value>Stored item lenght must be {0}</value>
+  </data>
+  <data name="TimeMustBeNonNegativeAndLessThen1Day" xml:space="preserve">
+    <value>Time must be non-negative and less then 1 day</value>
+  </data>
+  <data name="SubjectReferenceNumberMustBeMemberOfEitherSubjectReferenceNumbersSubjectMatterNumbersOrEconomySubjectDetail" xml:space="preserve">
+    <value>SubjectReferenceNumber must be member of either SubjectReferenceNumbers, SubjectMatterNumbers or EconomySubjectDetail</value>
+  </data>
+  <data name="LenghtOfSubjectNameMustFitInto64" xml:space="preserve">
+    <value>Lenght of SubjectName must fit into 64</value>
+  </data>
+  <data name="SubjectNameCanContainOnlyGraphicCharactersExceptAnd" xml:space="preserve">
+    <value>SubjectName can contain only graphic characters except :, ? and *</value>
+  </data>
+  <data name="LenghtOfSubjectReferenceMustFitInto64" xml:space="preserve">
+    <value>Lenght of SubjectReference must fit into 64</value>
+  </data>
+  <data name="CanContainOnlyGraphicCharactersExceptAnd" xml:space="preserve">
+    <value>{0} can contain only graphic characters except :, ? and *</value>
+  </data>
+  <data name="LenghtOf0MustFitInto1" xml:space="preserve">
+    <value>Lenght of {0} must fit into {1}</value>
+  </data>
+  <data name="MustContainExactly1Parts" xml:space="preserve">
+    <value>{0} must contain exactly {1} parts</value>
+  </data>
+  <data name="LengthOfSerialized0IsNotWithinRange12Bytes" xml:space="preserve">
+    <value>Length of serialized {0} is not within range {1}÷{2} bytes</value>
+  </data>
+  <data name="LenghtOfSerialized0DiffersFrom1Bytes" xml:space="preserve">
+    <value>Lenght of serialized {0} differs from {1} bytes</value>
+  </data>
+  <data name="LenghtOfSerializedNameExceeds0Bytes" xml:space="preserve">
+    <value>Lenght of serialized name exceeds {0} bytes</value>
+  </data>
+  <data name="OnlyGraphicCharactersAreAllowedIn0" xml:space="preserve">
+    <value>Only graphic characters are allowed in {0}</value>
+  </data>
+  <data name="CannotContainCharactersAnd" xml:space="preserve">
+    <value>{0} cannot contain characters *, /, ? and :</value>
+  </data>
+  <data name="MustBeStringWithLengthFrom1To2Characters" xml:space="preserve">
+    <value>{0} must be string with length from {1} to {2} characters</value>
+  </data>
+  <data name="TheLenghtOf0ExceedsLimit" xml:space="preserve">
+    <value>The lenght of {0} exceeds limit</value>
+  </data>
+  <data name="TextMustBeEncodeableByASCII" xml:space="preserve">
+    <value>{0} text must be encodeable by ASCII</value>
+  </data>
+  <data name="CannotBeNullOrEmpty" xml:space="preserve">
+    <value>{0} cannot be null or empty</value>
+  </data>
+  <data name="CannotRemoveLastItemFrom0" xml:space="preserve">
+    <value>Cannot remove last item from {0}</value>
+  </data>
+  <data name="CannotBeCleared" xml:space="preserve">
+    <value>{0} cannot be cleared</value>
+  </data>
+  <data name="CanConsistOnlyOfGraphicCharacters" xml:space="preserve">
+    <value>{0} can consist only of graphic characters</value>
+  </data>
+  <data name="ComponentCannotBeAnEmptyString" xml:space="preserve">
+    <value>{0} component cannot be an empty string</value>
+  </data>
+  <data name="ComponentMustBeEncodeableByASCII" xml:space="preserve">
+    <value>{0} component must be encodeable by ASCII</value>
+  </data>
+  <data name="LengthOfODEAndIPRTogetherWithSeparatorsMustWitInto61" xml:space="preserve">
+    <value>Length of ODE and IPR together with separators must wit into 61</value>
+  </data>
+  <data name="HasToManyDigits" xml:space="preserve">
+    <value>{0} has to many digits</value>
+  </data>
+  <data name="TypeIsSpecifiedNeitherViaPropertyNorInValue" xml:space="preserve">
+    <value>Type is specified neither via property nor in value</value>
+  </data>
+  <data name="MustBeFromRange12Or3IfUnknown" xml:space="preserve">
+    <value>{0} must be from range {1}÷{2} or {3} if unknown</value>
+  </data>
+  <data name="MustBeLessThenOrEqualTo1" xml:space="preserve">
+    <value>{0} must be less then or equal to {1}</value>
+  </data>
+  <data name="CannotConvertString0To1" xml:space="preserve">
+    <value>Cannot convert string "{0}" to {1}</value>
+  </data>
+  <data name="MustBePositiveAndLessThan1H0MmSs" xml:space="preserve">
+    <value>{0} must be positive and less than {1:h(0):mm:ss}</value>
+  </data>
+  <data name="MustBeInWholeMinutes" xml:space="preserve">
+    <value>{0} must be in whole minutes</value>
+  </data>
+  <data name="MustBeWithinRange01" xml:space="preserve">
+    <value>{2} must be within range {0}÷{1}</value>
+  </data>
+  <data name="CannotBeInterpretedAsMemberOf1" xml:space="preserve">
+    <value>{0} cannot be interpreted as member of {1}</value>
+  </data>
+  <data name="CannotBeInterpretedAs1" xml:space="preserve">
+    <value>{0} cannot be interpreted as {1}</value>
+  </data>
+  <data name="NumberOfComponentsOf0MustBeFrom1To2" xml:space="preserve">
+    <value>Number of components of {0} must be from {1} to {2}</value>
+  </data>
+  <data name="MustBeMemberOfEnumeration1" xml:space="preserve">
+    <value>{0} must be member of enumeration {1}</value>
+  </data>
+  <data name="CanContainOnlyASCIIEncodableGraphicCharactersAndSpaces" xml:space="preserve">
+    <value>{0} can contain only ASCII-encodable graphic characters and spaces</value>
+  </data>
+  <data name="CannotBeConvertedTo1" xml:space="preserve">
+    <value>'{0}' cannot be converted to {1}</value>
+  </data>
+  <data name="CannotBeChanged" xml:space="preserve">
+    <value>{0} cannot be changed</value>
+  </data>
+  <data name="CannotBeSetToFalse" xml:space="preserve">
+    <value>{0} cannot be set to false</value>
+  </data>
+  <data name="ValueOfIncompatibleTypeIsBeingSet" xml:space="preserve">
+    <value>Value of incompatible type is being set</value>
+  </data>
+  <data name="EachGroupMustHaveAtLeast0Tags" xml:space="preserve">
+    <value>Each group must have at least {0} tags</value>
+  </data>
+  <data name="MustContainAtLeast1Items" xml:space="preserve">
+    <value>{0} must contain at least {1} items</value>
+  </data>
+  <data name="Only124And8BytesIntegersCanBeReadVia0" xml:space="preserve">
+    <value>Only 1,2,4 and 8-bytes integers can be read via {0}</value>
+  </data>
+  <data name="Number0CannotBeStoredIn1Bytes" xml:space="preserve">
+    <value>Number {0} cannot be stored in {1} bytes</value>
+  </data>
+  <data name="CannotBe1When2Is3" xml:space="preserve">
+    <value>{0} cannot be {1} when {2} is {3}</value>
+  </data>
+</root>

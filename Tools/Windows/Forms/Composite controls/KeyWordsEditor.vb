@@ -2,6 +2,9 @@
 Imports Tools.CollectionsT.GenericT, Tools.WindowsT.FormsT.UtilitiesT, System.Windows.Forms, Tools.ComponentModelT
 Imports System.Linq, System.Xml.Schema, Tools.ExtensionsT
 Imports <xmlns:kw="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor">
+Imports System.Xml.Linq, Tools.LinqT
+Imports Tools.DataStructuresT.GenericT
+
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then set in tools.vbproj
     'Stage: Alpha
@@ -603,36 +606,47 @@ Namespace WindowsT.FormsT
         Private Sub tmiManage_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiManage.Click
             ShowDialog()
         End Sub
+        ''' <summary>Stores collection used by <see cref="KeyWordsEditor"/> in <see cref="XDocument"/></summary>
+        ''' <param name="Keywords"><see cref="AutoCompleteStable"/> collection. Can be null.</param>
+        ''' <param name="Synonyms"><see cref="Synonyms"/> collection. Can be null.</param>
+        ''' <returns><see cref="XDocument"/> that stores given collections</returns>
+        ''' <seelaso cref="GetKeywordsAsXML"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Shared Function GetXML(ByVal Keywords As IEnumerable(Of String), ByVal Synonyms As IEnumerable(Of KeyValuePair(Of String(), String()))) As XDocument
+            Return _
+              <?xml version="1.0"?>
+              <kw:Keywords>
+                  <%= If(Keywords IsNot Nothing AndAlso Not Keywords.IsEmpty, _
+                      <kw:keywords>
+                          <%= From kw In Keywords Select <kw:kw><%= kw %></kw:kw> %>
+                      </kw:keywords>, Nothing) _
+                  %>
+                  <%= If(Synonyms IsNot Nothing AndAlso Not Synonyms.IsEmpty, _
+                      <kw:synonyms>
+                          <%= From pair In Synonyms Select _
+                              <kw:pair>
+                                  <kw:keys>
+                                      <%= From key In pair.Key Select <kw:key><%= key %></kw:key> %>
+                                  </kw:keys>
+                                  <%= If(pair.Value IsNot Nothing AndAlso pair.Value.Length > 0, _
+                                      <kw:values>
+                                          <%= From word In pair.Value Select <kw:word><%= word %></kw:word> %>
+                                      </kw:values>, Nothing) _
+                                  %>
+                              </kw:pair> _
+                          %>
+                      </kw:synonyms>, Nothing) _
+                  %>
+              </kw:Keywords>
+        End Function
         ''' <summary>Gets all keywords and synonyms used by this <see cref="KeyWordsEditor"/> as <see cref="Xml.Linq.XDocument"/> that can be saved.</summary>
         ''' <remarks><see cref="Xml.Linq.XDocument"/> that contains all the keywords and synonyms ready to be stored in file.</remarks>
         ''' <seelaso cref="LoadFromXML"/>
         Public Function GetKeywordsAsXML() As System.Xml.Linq.XDocument
-            Return _
-                <?xml version="1.0"?>
-                <kw:Keywords>
-                    <%= If(Me.KeyWords.Count > 0, _
-                        <kw:keywords>
-                            <%= From kw In Me.KeyWords Select <kw:kw><%= kw %></kw:kw> %>
-                        </kw:keywords>, Nothing) _
-                    %>
-                    <%= If(Me.Synonyms IsNot Nothing AndAlso Me.Synonyms.Count > 0, _
-                        <kw:synonyms>
-                            <%= From pair In Me.Synonyms Select _
-                                <kw:pair>
-                                    <kw:keys>
-                                        <%= From key In pair.Key Select <kw:key><%= key %></kw:key> %>
-                                    </kw:keys>
-                                    <%= If(pair.Value IsNot Nothing AndAlso pair.Value.Length > 0, _
-                                        <kw:values>
-                                            <%= From word In pair.Value Select <kw:word><%= word %></kw:word> %>
-                                        </kw:values>, Nothing) _
-                                    %>
-                                </kw:pair> _
-                            %>
-                        </kw:synonyms>, Nothing) _
-                    %>
-                </kw:Keywords>
+            Return GetXML(Me.AutoCompleteStable, Me.Synonyms)
         End Function
+        ''' <summary>Gets XML-Schema used for storing keywords and synonyms</summary>
+        ''' <seelaso cref="LoadFromXML"/><seelaso cref="GetKeywordsAsXML"/>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Shared ReadOnly Property XMLSchema() As XmlSchema
             Get
@@ -657,16 +671,7 @@ Namespace WindowsT.FormsT
         ''' <para>If <paramref name="JustThis"/> is false, those collections are emptied and filled with newly loaded values. So, such load has effect on all instances of <see cref="KeyWordsEditor"/> which share same collections (using <see cref="AutomaticLists"/> and same <see cref="AutoCompleteCacheName"/>, or by seting those collections manuallly tu same instance). <paramref name="JustThis"/> set to false is ignored for particular collection if the collection is null (in such case it is always re-created).</para>
         ''' </remarks>
         Public Sub LoadFromXML(ByVal doc As System.Xml.Linq.XDocument, Optional ByVal JustThis As Boolean = False)
-            If doc Is Nothing Then Throw New ArgumentNullException("doc")
-            Dim Schemas As New XmlSchemaSet()
-            Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.Throw
-            Schemas.Add(XMLSchema)
-            doc.Validate(Schemas, veh)
-            Dim Keywords = From kw In doc.<kw:Keywords>.<kw:keywords>.<kw:kw> Select kw.Value
-            Dim Synonyms = From pair In doc.<kw:Keywords>.<kw:synonyms>.<kw:pair> Select _
-                           New KeyValuePair(Of String(), String())( _
-                                (From key In pair.<kw:keys>.<kw:key> Select key.Value).ToArray, _
-                                (From word In pair.<kw:values>.<kw:word> Select word.Value.ToArray))
+            Dim ParsedData = ParseFromXml(doc)
             If JustThis Then
                 AutoCompleteStable = New ListWithEvents(Of String)
                 Me.Synonyms = New List(Of KeyValuePair(Of String(), String()))
@@ -676,9 +681,29 @@ Namespace WindowsT.FormsT
                 If Me.Synonyms Is Nothing Then Me.Synonyms = New List(Of KeyValuePair(Of String(), String())) _
                 Else Me.Synonyms.Clear()
             End If
-            AutoCompleteStable.AddRange(Keywords)
-            Me.Synonyms.AddRange(Synonyms)
+            AutoCompleteStable.AddRange(ParsedData.Value1)
+            Me.Synonyms.AddRange(ParsedData.Value2)
         End Sub
+        ''' <summary>Parses given <see cref="XDocument"/> to collections used by <see cref="KeyWordsEditor"/></summary>
+        ''' <param name="doc">Document to be parsed</param>
+        ''' <returns><see cref="IPair(Of IEnumerable(Of String), IEnumerable(Of KeyValuePair(Of String(), String())))"/>. <see cref="IPair(Of IEnumerable(Of String), IEnumerable(Of KeyValuePair(Of String(), String()))).Value1"/> contains list of keywords for autocomplete, <see cref="IPair(Of IEnumerable(Of String), IEnumerable(Of KeyValuePair(Of String(), String()))).Value2"/> contains pairs of synonyms.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="doc"/> is null</exception>
+        ''' <exception cref="XmlSchemaException">Document <paramref name="doc"/> does not comply with XML-Schema http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor. This schema is stored as embdeded resource Tools.WindowsT.FormsT.KeyWordsEditor.xsd in this assembly.</exception>
+        ''' <seelaso cref="LoadFromXML"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Shared Function ParseFromXml(ByVal doc As XDocument) As IPair(Of IEnumerable(Of String), IEnumerable(Of KeyValuePair(Of String(), String())))
+            If doc Is Nothing Then Throw New ArgumentNullException("doc")
+            Dim Schemas As New XmlSchemaSet()
+            Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.Throw
+            Schemas.Add(XMLSchema)
+            doc.Validate(Schemas, veh)
+            Dim Keywords = From kw In doc.<kw:Keywords>.<kw:keywords>.<kw:kw> Select kw.Value
+            Dim Synonyms = From pair In doc.<kw:Keywords>.<kw:synonyms>.<kw:pair> Select _
+                           New KeyValuePair(Of String(), String())( _
+                                (From key In pair.<kw:keys>.<kw:key> Select key.Value).ToArray, _
+                                (From word In pair.<kw:values>.<kw:word> Select word.Value).ToArray)
+            Return New Pair(Of IEnumerable(Of String), IEnumerable(Of KeyValuePair(Of String(), String())))(Keywords, Synonyms)
+        End Function
 
         ''' <summary>Proxy for the <see cref="Status"/> property in design time</summary>
         ''' <remarks>This class supports design-time behaviour of <see cref="KeyWordsEditor"/> and should not be used directly</remarks>

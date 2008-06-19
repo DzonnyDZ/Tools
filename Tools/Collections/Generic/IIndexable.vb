@@ -93,7 +93,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.InvalidOperationException">The enumerator is positioned before the first element of the collection or after the last element.</exception>
         Public ReadOnly Property Current() As TItem Implements System.Collections.Generic.IEnumerator(Of TItem).Current
             Get
-                If IsSmaller(Position, Collection.Minimum) OrElse IsGreater(Position, Collection.Maximum) Then Throw New InvalidOperationException("Enumerator is positioned outside IReadOnlyIndexable bounds")
+                If IsSmaller(Position, Collection.Minimum) OrElse IsGreater(Position, Collection.Maximum) Then Throw New InvalidOperationException(ResourcesT.Exceptions.EnumeratorIsPositionedOutsideIReadOnlyIndexableBounds)
                 Return Collection(Position)
             End Get
         End Property

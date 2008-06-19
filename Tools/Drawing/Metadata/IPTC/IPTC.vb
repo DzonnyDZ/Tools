@@ -19,7 +19,7 @@ Namespace DrawingT.MetadataT
         Private Sub _Tags_Change(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of System.Collections.Generic.KeyValuePair(Of DataSetIdentification, Byte())), ByVal e As CollectionsT.GenericT.ListWithEvents(Of System.Collections.Generic.KeyValuePair(Of DataSetIdentification, Byte())).CancelableItemIndexEventArgs)
             If e.Item.Value.Length > 32767 Then
                 e.Cancel = True
-                e.CancelMessage = "DataSets longer than 32767B are not supported"
+                e.CancelMessage = ResourcesT.Exceptions.DataSetsLongerThan32767BAreNotSupported
             End If
         End Sub
         ''' <summary>Contains value of the <see cref="Tags"/> property</summary>
@@ -103,7 +103,7 @@ Namespace DrawingT.MetadataT
             End Get
             Set(ByVal value As List(Of Byte()))
                 For Each item As Byte() In value
-                    If item.Length > 32767 Then Throw New NotSupportedException("IPTC DataSets longer that 32767 bytes are not supported")
+                    If item.Length > 32767 Then Throw New NotSupportedException(ResourcesT.Exceptions.IPTCDataSetsLongerThat32767BytesAreNotSupported)
                 Next item
                 Dim Already As IReadOnlyList(Of Integer) = New DataSetIdentification.PairMatch(Key).GetIndices(Tags)
                 Dim i As Integer = 0
@@ -195,7 +195,7 @@ Namespace DrawingT.MetadataT
                     Return _RecordNumber
                 End Get
                 <DebuggerStepThrough()> Set(ByVal value As RecordNumbers)
-                    If value > 9 Then Throw New ArgumentOutOfRangeException("DataSetNumber must be less than or equal to 9")
+                    If value > 9 Then Throw New ArgumentOutOfRangeException(ResourcesT.Exceptions.DataSetNumberMustBeLessThanOrEqualTo9)
                     _RecordNumber = value
                 End Set
             End Property
@@ -321,7 +321,6 @@ Namespace DrawingT.MetadataT
         ''' <typeparam name="T">Type of enumeration to be searched</typeparam>
         ''' <exception cref="ArgumentException"><paramref name="T"/> is not <see cref="[Enum]"/></exception>
         Private Shared Function IsEnumMember(Of T As {IComparable, Structure})(ByVal value As T) As Boolean
-            'TODO:Extract as separate tool
             Return Array.IndexOf([Enum].GetValues(GetType(T)), value) >= 0
         End Function
         ''' <summary>Describes IPTC dataset's (tag) properties</summary>
@@ -407,7 +406,7 @@ Namespace DrawingT.MetadataT
                     Return _Number
                 End Get
                 Set(ByVal value As Byte)
-                    If Locked And value <> Number Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Number Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Number = value
                 End Set
             End Property
@@ -421,8 +420,8 @@ Namespace DrawingT.MetadataT
                     Return _Record
                 End Get
                 Set(ByVal value As RecordNumbers)
-                    If Locked And value <> Record Then Throw New InvalidOperationException("This instance is locked")
-                    If value < 0 OrElse value > 9 Then Throw New ArgumentOutOfRangeException("Record must be from 0 to 9")
+                    If Locked And value <> Record Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
+                    If value < 0 OrElse value > 9 Then Throw New ArgumentOutOfRangeException(ResourcesT.Exceptions.RecordMustBeFrom0To9)
                     _Record = value
                 End Set
             End Property
@@ -435,7 +434,7 @@ Namespace DrawingT.MetadataT
                     Return _Name
                 End Get
                 Set(ByVal value As String)
-                    If Locked And value <> Name Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Name Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Name = value
                 End Set
             End Property
@@ -448,7 +447,7 @@ Namespace DrawingT.MetadataT
                     Return _HumanName
                 End Get
                 Set(ByVal value As String)
-                    If Locked And value <> HumanName Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> HumanName Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _HumanName = value
                 End Set
             End Property
@@ -463,7 +462,7 @@ Namespace DrawingT.MetadataT
                     Return _Type
                 End Get
                 Set(ByVal value As IPTCTypes)
-                    If Locked And value <> Type Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Type Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     If Not IsEnumMember(value) Then Throw New InvalidEnumArgumentException("value", value, GetType(IPTCTypes))
                     _Type = value
                 End Set
@@ -485,8 +484,8 @@ Namespace DrawingT.MetadataT
                     Return _Enum
                 End Get
                 Set(ByVal value As Type)
-                    If Locked And value IsNot [Enum] Then Throw New InvalidOperationException("This instance is locked")
-                    If value IsNot Nothing AndAlso Not value.IsSubclassOf(GetType([Enum])) Then Throw New ArgumentException("Given type is not enum")
+                    If Locked And value IsNot [Enum] Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
+                    If value IsNot Nothing AndAlso Not value.IsSubclassOf(GetType([Enum])) Then Throw New ArgumentException(ResourcesT.Exceptions.GivenTypeIsNotEnum)
                     _Enum = value
                 End Set
             End Property
@@ -499,7 +498,7 @@ Namespace DrawingT.MetadataT
                     Return _Mandatory
                 End Get
                 Set(ByVal value As Boolean)
-                    If Locked And value <> Mandatory Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Mandatory Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Mandatory = value
                 End Set
             End Property
@@ -512,7 +511,7 @@ Namespace DrawingT.MetadataT
                     Return _Repeatable
                 End Get
                 Set(ByVal value As Boolean)
-                    If Locked And value <> Repeatable Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Repeatable Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Repeatable = value
                 End Set
             End Property
@@ -525,8 +524,8 @@ Namespace DrawingT.MetadataT
                     Return _Fixed
                 End Get
                 Set(ByVal value As Boolean)
-                    If Locked And value <> Fixed Then Throw New InvalidOperationException("This instance is locked")
-                    If value AndAlso Length = 0 Then Throw New InvalidOperationException("Cannot set Fixed to True when Length is 0")
+                    If Locked And value <> Fixed Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
+                    If value AndAlso Length = 0 Then Throw New InvalidOperationException(ResourcesT.Exceptions.CannotSetFixedToTrueWhenLengthIs0)
                     _Fixed = value
                 End Set
             End Property
@@ -541,9 +540,9 @@ Namespace DrawingT.MetadataT
                     Return _Length
                 End Get
                 Set(ByVal value As Short)
-                    If Locked And value <> Length Then Throw New InvalidOperationException("This instance is locked")
-                    If value = 0 AndAlso Fixed Then Throw New InvalidOperationException("Cannot set Length to 0 when Fixed is true")
-                    If value < 0 Then Throw New ArgumentOutOfRangeException("Length mus be non-negative")
+                    If Locked And value <> Length Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
+                    If value = 0 AndAlso Fixed Then Throw New InvalidOperationException(ResourcesT.Exceptions.CannotSetLengthTo0WhenFixedIsTrue)
+                    If value < 0 Then Throw New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.MustBeNonNegative, "Lenght"))
                     _Length = value
                 End Set
             End Property
@@ -556,7 +555,7 @@ Namespace DrawingT.MetadataT
                     Return _Category
                 End Get
                 Set(ByVal value As String)
-                    If Locked And value <> Category Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Category Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Category = value
                 End Set
             End Property
@@ -569,7 +568,7 @@ Namespace DrawingT.MetadataT
                     Return _Description
                 End Get
                 Set(ByVal value As String)
-                    If Locked And value <> Description Then Throw New InvalidOperationException("This instance is locked")
+                    If Locked And value <> Description Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Description = value
                 End Set
             End Property

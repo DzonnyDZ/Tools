@@ -12,7 +12,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <xsl:output method="text" version="1.0" encoding="UTF-8" indent="no" omit-xml-declaration="yes"/>
 
     <!-- parameters passed in by the TransformCodeGenerator -->
-    <xsl:param name="generator"></xsl:param>
+    <xsl:param name="generator"></xsl:param>         
     <xsl:param name="version"></xsl:param>
     <xsl:param name="fullfilename"></xsl:param>
     <xsl:param name="filename"></xsl:param>
@@ -25,6 +25,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <!--Main template-->
     <xsl:template match="/">
         <xsl:call-template name="header-comment"/>
+        <xsl:text>'Localize: This auto-generated file was skipped during localization!&#xD;&#xA;</xsl:text>
         <xsl:call-template name="Imports"/>
         <xsl:if test="$namespace!=''">
             <xsl:text>Namespace </xsl:text>

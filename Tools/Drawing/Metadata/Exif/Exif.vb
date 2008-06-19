@@ -91,10 +91,10 @@ Namespace DrawingT.MetadataT
         ''' </exception>
         Public ReadOnly Property MainIFDs(ByVal index As Integer) As IFD
             Get
-                If index < 0 Then Throw (New ArgumentOutOfRangeException("Index must be greater than or equal to zero"))
+                If index < 0 Then Throw (New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "Index")))
                 If index <= 1 AndAlso _MainIFDs.Count = 0 Then _MainIFDs.Add(New IFDMain)
                 If index = 1 AndAlso _MainIFDs.Count = 1 Then _MainIFDs.Add(New IFDMain)
-                If index >= _MainIFDs.Count Then Throw New ArgumentException("Index must be in range defined by counf of IFDs")
+                If index >= _MainIFDs.Count Then Throw New ArgumentException(ResourcesT.Exceptions.IndexMustBeInRangeDefinedByCounfOfIFDs)
                 Return _MainIFDs(index)
             End Get
         End Property
@@ -154,7 +154,7 @@ Namespace DrawingT.MetadataT
             <CLSCompliant(False)> _
             Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
                 Get
-                    If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                    If Type Is Nothing Then Throw New ArgumentNullException("Type")
                     If Records.ContainsKey(Type.Tag) Then
                         With Records(Type.Tag)
                             If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
@@ -172,7 +172,7 @@ Namespace DrawingT.MetadataT
                     End If
                 End Get
                 Set(ByVal value As ExifRecord)
-                    If Type Is Nothing Then Throw New ArgumentNullException("Type", "Type cannot be null")
+                    If Type Is Nothing Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeSetToNull, "Record"))
                     If value Is Nothing Then
                         If Records.ContainsKey(Type.Tag) Then Records.Remove(Type.Tag)
                     Else
@@ -218,7 +218,7 @@ Namespace DrawingT.MetadataT
             ''' <param name="NumberOfElements">Number of elements of type <paramref name="DataType"/> in record.</param>
             ''' <exception cref="ArgumentOutOfRangeException"><paramref name="NumberOfElements"/> is 0</exception>
             Public Sub New(ByVal DataType As ExifIFDReader.DirectoryEntry.ExifDataTypes, ByVal NumberOfElements As UShort)
-                If NumberOfElements = 0 Then Throw New ArgumentOutOfRangeException("NumberOfElements", "Number of elements cannot be 0")
+                If NumberOfElements = 0 Then Throw New ArgumentOutOfRangeException("NumberOfElements", ResourcesT.Exceptions.NumberOfElementsCannotBe0)
                 Me.DataType = DataType
                 Me.NumberOfElements = NumberOfElements
             End Sub
@@ -254,7 +254,7 @@ Namespace DrawingT.MetadataT
             ''' <remarks>Used by ctor</remarks>
             ''' <exception cref="ArgumentNullException"><paramref name="DataTypes"/> is null or contains no element</exception>
             Private Shared Function TestThrowReturn(ByVal DataTypes As ExifIFDReader.DirectoryEntry.ExifDataTypes()) As ExifIFDReader.DirectoryEntry.ExifDataTypes()
-                If DataTypes Is Nothing OrElse DataTypes.Length = 0 Then Throw New ArgumentNullException("DataTypes", "DataTypes cannot be null and must contain at lesat one element")
+                If DataTypes Is Nothing OrElse DataTypes.Length = 0 Then Throw New ArgumentNullException("DataTypes", ResourcesT.Exceptions.DataTypesCannotBeNullAndMustContainAtLeastOneElement)
                 Return DataTypes
             End Function
             ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
@@ -320,7 +320,7 @@ Namespace DrawingT.MetadataT
                     Return _Data
                 End Get
                 Protected Set(ByVal value As Object)
-                    If value Is Nothing Then Throw New ArgumentNullException("Value cannot be null")
+                    If value Is Nothing Then Throw New ArgumentNullException("value")
                     Select Case DataType.DataType
                         Case ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII
                             If TypeOf value Is Char Then value = CStr(CChar(value))
@@ -330,10 +330,10 @@ Namespace DrawingT.MetadataT
                                     _Data = newV
                                     Me.DataType.NumberOfElements = CStr(_Data).Length
                                 Else
-                                    Throw New ArgumentException("Cannot change number of components of this record")
+                                    Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
                                 End If
                             Else
-                                Throw New InvalidCastException("Value of incompatible type passed to ASII record")
+                                Throw New InvalidCastException(ResourcesT.Exceptions.ValueOfIncompatibleTypePassedToASCIIRecord)
                             End If
                         Case ExifIFDReader.DirectoryEntry.ExifDataTypes.Byte
                             SetDataValue(Of Byte)(value)
@@ -373,7 +373,7 @@ Namespace DrawingT.MetadataT
                         _Data = newV
                         Me.DataType.NumberOfElements = 1
                     Else
-                        Throw New ArgumentException("Cannot change number of components of this record")
+                        Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
                     End If
                 Catch
                     Try
@@ -382,10 +382,10 @@ Namespace DrawingT.MetadataT
                             _Data = newV
                             Me.DataType.NumberOfElements = newV.Length
                         Else
-                            Throw New ArgumentException("Cannot change number of components of this record")
+                            Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
                         End If
                     Catch ex As Exception
-                        Throw New InvalidCastException("Value of incompatible type passed to Exif record")
+                        Throw New InvalidCastException(ResourcesT.Exceptions.ValueOfIncompatibleTypePassedToExifRecord)
                     End Try
                 End Try
             End Sub
