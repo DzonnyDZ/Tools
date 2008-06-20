@@ -80,7 +80,7 @@ Namespace GlobalizationT
                 If value = "" Then
                     value = Nothing
                 ElseIf Not ValidateCode(value, 2) Then
-                    Throw New ArgumentException("ISO 639-1 code must contain exactly 2 lowercase latin letters.")
+                    Throw New ArgumentException(ResourcesT.Exceptions.ISO6391CodeMustContainExactly2LowercaseLatinLetters)
                 End If
                 _ISO2 = value
             End Set
@@ -114,7 +114,7 @@ Namespace GlobalizationT
                 If value = "" Then
                     value = Nothing
                 ElseIf Not ValidateCode(value, 3) Then
-                    Throw New ArgumentException("ISO 639-2 code must contain exactly 3 lowercase latin letters.")
+                    Throw New ArgumentException(ResourcesT.Exceptions.ISO6392CodeMustContainExactly3LowercaseLatinLetters)
                 End If
                 _ISO2 = value
             End Set
@@ -129,7 +129,7 @@ Namespace GlobalizationT
                 Return _English
             End Get
             Set(ByVal value As String)
-                If value Is Nothing OrElse value = "" Then Throw New ArgumentNullException("English name cannot be null or an empty string")
+                If value Is Nothing OrElse value = "" Then Throw New ArgumentNullException("Value", String.Format(ResourcesT.Exceptions.CannotBeNullOrAnEmptyString, "English"))
                 _English = value
             End Set
         End Property
@@ -145,7 +145,7 @@ Namespace GlobalizationT
                 Return _Native
             End Get
             Set(ByVal value As String)
-                If value Is Nothing OrElse value = "" Then Throw New ArgumentNullException("Native name cannot be null or an empty string")
+                If value Is Nothing OrElse value = "" Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeNullOrAnEmptyString, "Native"))
                 _Native = value
             End Set
         End Property
@@ -196,7 +196,7 @@ Namespace GlobalizationT
                 If value = "" Then
                     value = Nothing
                 ElseIf Not ValidateCode(value, 3) Then
-                    Throw New ArgumentException("ISO 639-2 duplicate code must contain exactly 3 lowercase latin letters.")
+                    Throw New ArgumentException(ResourcesT.Exceptions.ISO6392DuplicateCodeMustContainExactly3LowercaseLatinLetters)
                 End If
                 _Duplicate = value
             End Set
@@ -213,7 +213,7 @@ Namespace GlobalizationT
         ''' <exception cref="ArgumentException"><paramref name="code"/> is valid neither for ISO 639-1 nor for ISO 639-2 code (contains invalid characters or is too long or too short)</exception>
         Public Shared Function GetByCode(ByVal code As String) As ISOLanguage
             If code = "" OrElse code Is Nothing OrElse (Not ValidateCode(code, 2) AndAlso Not ValidateCode(code, 3)) Then
-                Throw New ArgumentException("Code is not valid ISO 639 language code", "code")
+                Throw New ArgumentException(ResourcesT.Exceptions.CodeIsNotValidISO639LanguageCode, "code")
             End If
             If code.Length = 3 AndAlso String.CompareOrdinal(code, qaa) >= 0 AndAlso String.CompareOrdinal(code, qtz) <= 0 Then
                 Return New ISOLanguage(code, "Reserved", "Reserved", , CodeTypes.Reserved)
@@ -233,9 +233,9 @@ Namespace GlobalizationT
             Try
                 ret = GetByCode(a)
             Catch ex As ArgumentException
-                Throw New InvalidCastException(String.Format("Cannot convert string {0} to ISOLanguage"), ex)
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, a, "ISOLanguage"), ex)
             End Try
-            If ret Is Nothing Then Throw New InvalidCastException(String.Format("Cannot convert string {0} to ISOLanguage"))
+            If ret Is Nothing Then Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertString0To1, a, "ISOLanguage"))
             Return ret
         End Operator
         ''' <summary>String representation (code(s) and english name)</summary>
@@ -266,12 +266,12 @@ Namespace GlobalizationT
         ''' <exception cref="InvalidOperationException">State of comparison is abou to be changed when it is <see cref="CompState.Equal"/> or <see cref="CompState.NotEqual"/></exception>
         Private Shared Function Compare(ByVal a As String, ByVal b As String, ByVal State As CompState) As CompState
             If a = b AndAlso a IsNot Nothing Then
-                If State = CompState.NotEqual Then Throw New InvalidOperationException("Cannot change state from NotEqual to Equal")
+                If State = CompState.NotEqual Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.CannotChangeStateFrom0To1, "NotEqual", "Equal"))
                 Return CompState.Equal
             ElseIf a Is Nothing OrElse b Is Nothing Then
                 Return State
             Else
-                If State = CompState.Equal Then Throw New InvalidOperationException("Cannot change state from Equal to NotEqual")
+                If State = CompState.Equal Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.CannotChangeStateFrom0To1, "Equal", "NotEqual"))
                 Return CompState.NotEqual
             End If
         End Function
@@ -285,12 +285,12 @@ Namespace GlobalizationT
         ''' <exception cref="InvalidOperationException">State of comparison is abou to be changed when it is <see cref="CompState.Equal"/> or <see cref="CompState.NotEqual"/></exception>
         Private Shared Function Compare(ByVal a1 As String, ByVal a2 As String, ByVal b1 As String, ByVal b2 As String, ByVal State As CompState) As CompState
             If (a1 = b1 AndAlso a1 IsNot Nothing) OrElse (a2 = b2 AndAlso a2 IsNot Nothing) OrElse (a1 = b2 AndAlso b2 IsNot Nothing) OrElse (a2 = b1 AndAlso a2 IsNot Nothing) Then
-                If State = CompState.NotEqual Then Throw New InvalidOperationException("Cannot change state from NotEqual to Equal")
+                If State = CompState.NotEqual Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.CannotChangeStateFrom0To1, "NotEqual", "Equal"))
                 Return CompState.Equal
             ElseIf a1 Is Nothing AndAlso a2 Is Nothing OrElse b1 Is Nothing AndAlso b2 Is Nothing Then
                 Return State
             Else
-                If State = CompState.Equal Then Throw New InvalidOperationException("Cannot change state from Equal to NotEqual")
+                If State = CompState.Equal Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.CannotChangeStateFrom0To1, "Equal", "NotEqual"))
                 Return CompState.NotEqual
             End If
         End Function
@@ -315,7 +315,7 @@ Namespace GlobalizationT
         ''' <param name="obj">The <see cref="System.Object"/> to compare with the current <see cref="System.Object"/>.</param>
         ''' <returns>true if the specified System.Object is equal to the current <see cref="System.Object"/>; otherwise, false.</returns>
         ''' <remarks>Use type safe overload <see cref="Equals"/> instead. This function uses it internally</remarks>
-        <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type safe ovcerload instead")> _
+        <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type safe overload instead")> _
         Public NotOverridable Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             If TypeOf obj Is ISOLanguage Then
                 Return Equals(DirectCast(obj, ISOLanguage))

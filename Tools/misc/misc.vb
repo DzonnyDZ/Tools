@@ -35,10 +35,10 @@
         Dim rE = results.GetEnumerator
         Dim eqc = EqualityComparer(Of TC).Default
         While cE.MoveNext
-            If Not rE.MoveNext Then Throw New ArgumentException("There is not enought results.", "results") 'Localize:Exception
+            If Not rE.MoveNext Then Throw New ArgumentException(ResourcesT.Exceptions.ThereIsNotEnoughtResults, "results")
             If eqc.Equals(cE.Current, Value) Then Return rE.Current
         End While
-        If ThrowOnError Then Throw New ArgumentException("No condition was true.", "conditions") 'Localize exception
+        If ThrowOnError Then Throw New ArgumentException(ResourcesT.Exceptions.NoConditionWasTrue, "conditions")
         Return Nothing
     End Function
     ''' <summary>Returns one of results depending on conditions compared to given value</summary>

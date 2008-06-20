@@ -6,9 +6,10 @@
 '
 ' Generated code from "ISOLanguages.xml"
 '
-' Created: 22. listopadu 2007
+' Created: 20. června 2008
 ' By:noutbuk\Honza
 '
+'Localize:ISO languages (Localization of this auto-generated file was skipped)
 Namespace GlobalizationT
 #If Congig <= Alpha 'Stage: Alpha
 	Partial Public Class ISOLanguage
@@ -573,7 +574,7 @@ Namespace GlobalizationT
 		''' <summary>Code for Dogrib (Tłįchǫ)</summary>
 		<DebuggerNonUserCode()> Public Shared Readonly Property [dgr]() As ISOLanguage
 			Get
-                Return New ISOLanguage("", "dgr", "Dogrib", "Tłįchǫ", 2110UI, CodeTypes.spoken, "")
+				Return New ISOLanguage("", "dgr", "Dogrib", "Tłįchǫ", 2110UI, CodeTypes.spoken, "")
 			End Get
 		End Property
 		''' <summary>Code for Dinka (Thuɔŋjäŋ)</summary>

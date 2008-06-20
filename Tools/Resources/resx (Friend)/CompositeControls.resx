@@ -207,4 +207,125 @@
   <data name="AutomaticLists_d" xml:space="preserve">
     <value>Indicates if editor uses automatically shared lists of keywords and synonyms (among instances with same AutoCompleteCacheName) or not.</value>
   </data>
+  <data name="DisplayStype_d" xml:space="preserve">
+    <value>Gets or sets format string used to display name of encodings in list.
+{0} is replaced by user friendly encoding name, {1} is replaced with IANA-registered name and {2} is replaced with code page number</value>
+  </data>
+  <data name="Style_d" xml:space="preserve">
+    <value>Defines control used for showing encodings</value>
+  </data>
+  <data name="SelectedIndexChanged_d" xml:space="preserve">
+    <value>Raised after the SelectedIndex property is changed</value>
+  </data>
+  <data name="SelectedCodePage_d" xml:space="preserve">
+    <value>Gets code page identifier of selected encoding or tries to select encoding with given code page</value>
+  </data>
+  <data name="SelectedName_d" xml:space="preserve">
+    <value>Gets The Internet Assigned Numbers Authority (IANA) name of selected encoding or tries to select encoding with given name</value>
+  </data>
+  <data name="NameColumnHeaderWidth_d" xml:space="preserve">
+    <value>Defines width of ColumnHeader which displays Name of encoding. Applicable only when Style is ListView</value>
+  </data>
+  <data name="DisplayNameColumnHeaderWidth_d" xml:space="preserve">
+    <value>Defines width of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView</value>
+  </data>
+  <data name="CodePageColumnHeaderWidht_d" xml:space="preserve">
+    <value>Defines width of ColumnHeader which displays CodePage of encoding. Applicable only when Style is ListView</value>
+  </data>
+  <data name="NameColumnHeaderText_d" xml:space="preserve">
+    <value>Gets or sets text of ColumnHeader which displays Name of encoding. Applicable only when Style is ListView</value>
+  </data>
+  <data name="DisplayNameColumnHeaderText_d" xml:space="preserve">
+    <value>Gets or sets text of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView</value>
+  </data>
+  <data name="CodePageColumnHeaderText_d" xml:space="preserve">
+    <value>Gets or sets text of ColumnHeader which displays CodePage of encoding. Applicable only when Style is ListView</value>
+  </data>
+  <data name="Sorting_d" xml:space="preserve">
+    <value>Specifies column and order of sorting. Applies only when Style is ListBox.</value>
+  </data>
+  <data name="ColumnOrder_d" xml:space="preserve">
+    <value>Gets or sets order of columns of ListView when Style is ListView</value>
+  </data>
+  <data name="ItemDoubleClick_d" xml:space="preserve">
+    <value>Raised when Style is ListView or ListBox and user double clicks some item or raised when item is selected and user presses the enter key not depending on Style.</value>
+  </data>
+  <data name="ShowInheritedMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if inherited members are shown.</value>
+  </data>
+  <data name="ShowFlatNamespaces_d" xml:space="preserve">
+    <value>Gets or sets value indicating if namespaces are shown flat (true) or hierarchically (false).</value>
+  </data>
+  <data name="ShowNestedTypes_d" xml:space="preserve">
+    <value>Gets or sets value indicating if nested types are shown.</value>
+  </data>
+  <data name="ShowPrivateMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if private members are shown.</value>
+  </data>
+  <data name="ShowInternalMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Internal members are shown.</value>
+  </data>
+  <data name="ShowProtectedMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Protected members are shown.</value>
+  </data>
+  <data name="ShowInstanceMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if instance members are shown.</value>
+  </data>
+  <data name="ShowStaticMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if static members are shown.</value>
+  </data>
+  <data name="ShowSpecialMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if special members (parts of properties and events) are shown.</value>
+  </data>
+  <data name="ShowGlobalMembers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Global members (parts of properties and events) are shown.</value>
+  </data>
+  <data name="ShowProperties_d" xml:space="preserve">
+    <value>Gets or sets value indicating if properties are shown.</value>
+  </data>
+  <data name="ShowEvents_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Events are shown.</value>
+  </data>
+  <data name="ShowMethods_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Methods are shown.</value>
+  </data>
+  <data name="ShowFields_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Fields are shown.</value>
+  </data>
+  <data name="ShowCTors_d" xml:space="preserve">
+    <value>Gets or sets value indicating if CTors are shown.</value>
+  </data>
+  <data name="ShowInitializers_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Initializers are shown.</value>
+  </data>
+  <data name="ShowGenericArguments_d" xml:space="preserve">
+    <value>Gets or sets value indicating if generic arguments (type parameters) are shown.</value>
+  </data>
+  <data name="ShowReferences_d" xml:space="preserve">
+    <value>Gets or sets value indicating if references are shown.</value>
+  </data>
+  <data name="ShowBaseTypes_d" xml:space="preserve">
+    <value>Gets or sets value indicating if base types are shown.</value>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Please wait...</value>
+  </data>
+  <data name="ShowChanged_d" xml:space="preserve">
+    <value>Raised after property that controls which members are displayed in ListView was changed.</value>
+  </data>
+  <data name="ShowShowMenu_d" xml:space="preserve">
+    <value>Gets or sets value indicating if Show menu is shown.</value>
+  </data>
+  <data name="ShowToolbar_d" xml:space="preserve">
+    <value>Gets or sets value indicating if the toolbar is shown.</value>
+  </data>
+  <data name="Objects_d" xml:space="preserve">
+    <value>List of assemblies or any other objects listed at top-level of tree-view</value>
+  </data>
+  <data name="BaseTypes" xml:space="preserve">
+    <value>Base Types</value>
+  </data>
+  <data name="References" xml:space="preserve">
+    <value>References</value>
+  </data>
 </root>

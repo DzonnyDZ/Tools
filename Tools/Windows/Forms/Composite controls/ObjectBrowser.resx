@@ -117,13 +117,618 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <metadata name="imlImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="tosMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>120, 17</value>
-  </metadata>
+  <data name="&gt;&gt;rtbShort.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tmiShowGenericArguments.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;rtbShort.Parent" xml:space="preserve">
+    <value>splLeft.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel2.Name" xml:space="preserve">
+    <value>splLeft.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tdbShow.Text" xml:space="preserve">
+    <value>Show</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="tmiShowGenericArguments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;imlImages.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ImageList, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splMain.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tmiShowBaseTypes.Name" xml:space="preserve">
+    <value>tmiShowBaseTypes</value>
+  </data>
+  <data name="rtbShort.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;rtbShort.Name" xml:space="preserve">
+    <value>rtbShort</value>
+  </data>
+  <data name="&gt;&gt;tmiShowPrivateMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tmiShowProperties.Text" xml:space="preserve">
+    <value>Properties</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel1.Name" xml:space="preserve">
+    <value>splTopRight.Panel1</value>
+  </data>
+  <data name="&gt;&gt;tmiShowFlatNamespaces.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsbBack.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splRight.SplitterDistance" type="System.Int32, mscorlib">
+    <value>343</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tosMenu.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splRight.Name" xml:space="preserve">
+    <value>splRight</value>
+  </data>
+  <data name="tsbForward.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="tsbForward.Text" xml:space="preserve">
+    <value>Forward</value>
+  </data>
+  <data name="&gt;&gt;prgProperties.Type" xml:space="preserve">
+    <value>System.Windows.Forms.PropertyGrid, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tmiShowPrivateMembers.Text" xml:space="preserve">
+    <value>Private members</value>
+  </data>
+  <data name="lblObjType.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="rtbShort.Text" xml:space="preserve">
+    <value />
+  </data>
+  <data name="&gt;&gt;tdbShow.Name" xml:space="preserve">
+    <value>tdbShow</value>
+  </data>
+  <data name="tmiShowNestedTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="tmiShowProperties.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="imlImages.ImageSize" type="System.Drawing.Size, System.Drawing">
+    <value>16, 16</value>
+  </data>
+  <data name="&gt;&gt;tmiShowFields.Name" xml:space="preserve">
+    <value>tmiShowFields</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInstanceMembers.Name" xml:space="preserve">
+    <value>tmiShowInstanceMembers</value>
+  </data>
+  <data name="rtbShort.Font" type="System.Drawing.Font, System.Drawing">
+    <value>Courier New, 8.25pt</value>
+  </data>
+  <data name="tosMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>749, 25</value>
+  </data>
+  <data name="tsbForward.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;tmiShowNestedTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="splTopRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;tmiShowFields.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel1.Parent" xml:space="preserve">
+    <value>splRight</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel1.Name" xml:space="preserve">
+    <value>splLeft.Panel1</value>
+  </data>
+  <data name="tmiShowProtectedMembers.Text" xml:space="preserve">
+    <value>Protected members</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="prgProperties.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;tmiShowMethods.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel1.Parent" xml:space="preserve">
+    <value>splLeft</value>
+  </data>
+  <data name="&gt;&gt;tsbForward.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowBaseTypes.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;$this.Name" xml:space="preserve">
+    <value>ObjectBrowser</value>
+  </data>
+  <data name="tmiShowSpecialMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="splTopRight.SplitterDistance" type="System.Int32, mscorlib">
+    <value>211</value>
+  </data>
+  <data name="tmiShowMethods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splMain.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 25</value>
+  </data>
+  <data name="tmiShowEvents.Text" xml:space="preserve">
+    <value>Events</value>
+  </data>
+  <data name="tdbShow.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="&gt;&gt;tmiShowEvents.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
+    <value>6, 13</value>
+  </data>
+  <data name="tmiShowInternalMembers.Text" xml:space="preserve">
+    <value>Internal members</value>
+  </data>
+  <data name="tmiShowPrivateMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="tmiShowGlobalMembers.Text" xml:space="preserve">
+    <value>Global members</value>
+  </data>
+  <data name="lblObjType.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Top</value>
+  </data>
+  <data name="&gt;&gt;cohItem.Name" xml:space="preserve">
+    <value>cohItem</value>
+  </data>
+  <data name="&gt;&gt;tvwObjects.Name" xml:space="preserve">
+    <value>tvwObjects</value>
+  </data>
+  <data name="tmiShowCTors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;tmiShowProtectedMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel2.Parent" xml:space="preserve">
+    <value>splTopRight</value>
+  </data>
+  <data name="&gt;&gt;tmiShowProperties.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tsbBack.Text" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="&gt;&gt;tmiShowEvents.Name" xml:space="preserve">
+    <value>tmiShowEvents</value>
+  </data>
+  <data name="&gt;&gt;tmiShowSpecialMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splRight.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="rtbShort.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;tmiShowStaticMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splLeft.SplitterDistance" type="System.Int32, mscorlib">
+    <value>443</value>
+  </data>
+  <data name="tmiShowBaseTypes.Text" xml:space="preserve">
+    <value>Base types</value>
+  </data>
+  <data name="tsbBack.ImageTransparentColor" type="System.Drawing.Color, System.Drawing">
+    <value>Magenta</value>
+  </data>
+  <data name="rtbShort.Size" type="System.Drawing.Size, System.Drawing">
+    <value>314, 58</value>
+  </data>
+  <data name="splTopRight.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;tmiShowFlatNamespaces.Name" xml:space="preserve">
+    <value>tmiShowFlatNamespaces</value>
+  </data>
+  <data name="&gt;&gt;splRight.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;$this.Type" xml:space="preserve">
+    <value>Tools.WindowsT.FormsT.UserControlExtended, Tools, Version=1.5.0.19658, Culture=neutral, PublicKeyToken=null</value>
+  </data>
+  <data name="&gt;&gt;prgProperties.Name" xml:space="preserve">
+    <value>prgProperties</value>
+  </data>
+  <data name="&gt;&gt;tosMenu.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Name" xml:space="preserve">
+    <value>splTopRight</value>
+  </data>
+  <data name="splTopRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>431, 343</value>
+  </data>
+  <data name="tsbBack.Enabled" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="&gt;&gt;tvwObjects.Parent" xml:space="preserve">
+    <value>splLeft.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splMain.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tmiShowCTors.Text" xml:space="preserve">
+    <value>Constructors</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;rtbShort.Type" xml:space="preserve">
+    <value>System.Windows.Forms.RichTextBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowProperties.Name" xml:space="preserve">
+    <value>tmiShowProperties</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tmiShowProtectedMembers.Name" xml:space="preserve">
+    <value>tmiShowProtectedMembers</value>
+  </data>
+  <data name="&gt;&gt;cohItem.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowStaticMembers.Name" xml:space="preserve">
+    <value>tmiShowStaticMembers</value>
+  </data>
+  <data name="tmiShowInheritedMembers.Text" xml:space="preserve">
+    <value>Inherited members</value>
+  </data>
+  <data name="splTopRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="cohItem.Text" xml:space="preserve">
+    <value>Item</value>
+  </data>
+  <data name="tvwObjects.ImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splMain.Parent" xml:space="preserve">
+    <value>$this</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel2.Name" xml:space="preserve">
+    <value>splMain.Panel2</value>
+  </data>
+  <data name="&gt;&gt;tvwObjects.Type" xml:space="preserve">
+    <value>System.Windows.Forms.TreeView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tsbBack.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Parent" xml:space="preserve">
+    <value>splMain.Panel1</value>
+  </data>
+  <data name="&gt;&gt;tmiShowPrivateMembers.Name" xml:space="preserve">
+    <value>tmiShowPrivateMembers</value>
+  </data>
+  <data name="lblObjType.TextAlign" type="System.Drawing.ContentAlignment, System.Drawing">
+    <value>TopCenter</value>
+  </data>
+  <data name="tmiShowReferences.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;tmiShowSpecialMembers.Name" xml:space="preserve">
+    <value>tmiShowSpecialMembers</value>
+  </data>
+  <data name="&gt;&gt;lblObjType.Name" xml:space="preserve">
+    <value>lblObjType</value>
+  </data>
+  <data name="tmiShowFields.Text" xml:space="preserve">
+    <value>Fields</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel2.Name" xml:space="preserve">
+    <value>splTopRight.Panel2</value>
+  </data>
+  <data name="splLeft.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="rtbShort.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tmiShowNestedTypes.Text" xml:space="preserve">
+    <value>Nested types</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel2.Parent" xml:space="preserve">
+    <value>splLeft</value>
+  </data>
+  <data name="splRight.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
+    <value>Horizontal</value>
+  </data>
+  <data name="&gt;&gt;lblObjType.Parent" xml:space="preserve">
+    <value>splTopRight.Panel2</value>
+  </data>
+  <data name="&gt;&gt;tmiShowGlobalMembers.Name" xml:space="preserve">
+    <value>tmiShowGlobalMembers</value>
+  </data>
+  <data name="splMain.Size" type="System.Drawing.Size, System.Drawing">
+    <value>749, 505</value>
+  </data>
+  <data name="&gt;&gt;tsbForward.Name" xml:space="preserve">
+    <value>tsbForward</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="prgProperties.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 13</value>
+  </data>
+  <data name="tmiShowGenericArguments.Text" xml:space="preserve">
+    <value>Generic arguments</value>
+  </data>
+  <data name="tmiShowFields.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;lblObjType.Type" xml:space="preserve">
+    <value>System.Windows.Forms.Label, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tvwObjects.SelectedImageIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tosMenu.Name" xml:space="preserve">
+    <value>tosMenu</value>
+  </data>
+  <data name="tmiShowGlobalMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInheritedMembers.Name" xml:space="preserve">
+    <value>tmiShowInheritedMembers</value>
+  </data>
+  <data name="tmiShowInstanceMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splLeft.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;splMain.Name" xml:space="preserve">
+    <value>splMain</value>
+  </data>
+  <data name="tvwObjects.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="splRight.Size" type="System.Drawing.Size, System.Drawing">
+    <value>431, 505</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Parent" xml:space="preserve">
+    <value>splRight.Panel1</value>
+  </data>
+  <data name="&gt;&gt;splRight.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitContainer, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="tosMenu.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="tosMenu.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;lvwMembers.Name" xml:space="preserve">
+    <value>lvwMembers</value>
+  </data>
+  <data name="&gt;&gt;lvwMembers.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tmiShowInheritedMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;lvwMembers.Parent" xml:space="preserve">
+    <value>splTopRight.Panel1</value>
+  </data>
+  <data name="tsbForward.Size" type="System.Drawing.Size, System.Drawing">
+    <value>23, 22</value>
+  </data>
+  <data name="rtbShort.WordWrap" type="System.Boolean, mscorlib">
+    <value>False</value>
+  </data>
+  <data name="splMain.TabIndex" type="System.Int32, mscorlib">
+    <value>2</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel1.Name" xml:space="preserve">
+    <value>splRight.Panel1</value>
+  </data>
+  <data name="splMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="tdbShow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>49, 22</value>
+  </data>
+  <data name="splLeft.Size" type="System.Drawing.Size, System.Drawing">
+    <value>314, 505</value>
+  </data>
+  <data name="tvwObjects.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tosMenu.Text" xml:space="preserve">
+    <value>Commands</value>
+  </data>
+  <data name="lvwMembers.TabIndex" type="System.Int32, mscorlib">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowReferences.Name" xml:space="preserve">
+    <value>tmiShowReferences</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Name" xml:space="preserve">
+    <value>splLeft</value>
+  </data>
+  <data name="tmiShowInitializers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="tmiShowBaseTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="splMain.SplitterDistance" type="System.Int32, mscorlib">
+    <value>314</value>
+  </data>
+  <data name="tmiShowProtectedMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="tmiShowInstanceMembers.Text" xml:space="preserve">
+    <value>Instance members</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel2.Name" xml:space="preserve">
+    <value>splRight.Panel2</value>
+  </data>
+  <data name="splLeft.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;splRight.Parent" xml:space="preserve">
+    <value>splMain.Panel2</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splLeft.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel1.Parent" xml:space="preserve">
+    <value>splMain</value>
+  </data>
+  <data name="&gt;&gt;imlImages.Name" xml:space="preserve">
+    <value>imlImages</value>
+  </data>
+  <data name="&gt;&gt;prgProperties.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="tmiShowEvents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel1.Parent" xml:space="preserve">
+    <value>splTopRight</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInternalMembers.Name" xml:space="preserve">
+    <value>tmiShowInternalMembers</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel2.Parent" xml:space="preserve">
+    <value>splRight</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel2.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splTopRight.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lblObjType.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="&gt;&gt;tvwObjects.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="splLeft.Orientation" type="System.Windows.Forms.Orientation, System.Windows.Forms">
+    <value>Horizontal</value>
+  </data>
+  <data name="tmiShowStaticMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInitializers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lvwMembers.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="&gt;&gt;tmiShowGenericArguments.Name" xml:space="preserve">
+    <value>tmiShowGenericArguments</value>
+  </data>
+  <data name="splRight.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="tvwObjects.Size" type="System.Drawing.Size, System.Drawing">
+    <value>314, 443</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel1.Name" xml:space="preserve">
+    <value>splMain.Panel1</value>
+  </data>
+  <data name="lvwMembers.Location" type="System.Drawing.Point, System.Drawing">
+    <value>0, 0</value>
+  </data>
+  <data name="cohItem.Width" type="System.Int32, mscorlib">
+    <value>208</value>
+  </data>
+  <data name="tvwObjects.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>Fill</value>
+  </data>
+  <data name="lblObjType.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 13</value>
+  </data>
+  <data name="tmiShowFlatNamespaces.Text" xml:space="preserve">
+    <value>Flat namespaces</value>
+  </data>
+  <data name="&gt;&gt;tdbShow.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripDropDownButton, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="prgProperties.Size" type="System.Drawing.Size, System.Drawing">
+    <value>216, 330</value>
+  </data>
+  <data name="tmiShowFlatNamespaces.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="tmiShowStaticMembers.Text" xml:space="preserve">
+    <value>Static memebers</value>
+  </data>
+  <data name="&gt;&gt;tsbBack.Name" xml:space="preserve">
+    <value>tsbBack</value>
+  </data>
+  <data name="tmiShowReferences.Text" xml:space="preserve">
+    <value>References</value>
+  </data>
+  <data name="&gt;&gt;lblObjType.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel2.Parent" xml:space="preserve">
+    <value>splMain</value>
+  </data>
   <data name="tdbShow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
@@ -139,7 +744,94 @@
         s1c0gHPmbrPTpHNJKOCo2G1mZs20zcwUJ5yp1AB5+8/zEwgF5GMVDxh4AAAAAElFTkSuQmCC
 </value>
   </data>
+  <data name="&gt;&gt;splLeft.Panel1.ZOrder" xml:space="preserve">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tosMenu.ZOrder" xml:space="preserve">
+    <value>1</value>
+  </data>
+  <data name="prgProperties.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;lvwMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowCTors.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="splRight.TabIndex" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInternalMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="tmiShowInitializers.Text" xml:space="preserve">
+    <value>Initializers</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInstanceMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowCTors.Name" xml:space="preserve">
+    <value>tmiShowCTors</value>
+  </data>
+  <data name="rtbShort.MaxLength" type="System.Int32, mscorlib">
+    <value>0</value>
+  </data>
+  <data name="tmiShowInternalMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 22</value>
+  </data>
+  <data name="tmiShowSpecialMembers.Text" xml:space="preserve">
+    <value>Special members</value>
+  </data>
+  <data name="&gt;&gt;tmiShowGlobalMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splLeft.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;splRight.Panel1.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowMethods.Name" xml:space="preserve">
+    <value>tmiShowMethods</value>
+  </data>
+  <data name="&gt;&gt;tmiShowNestedTypes.Name" xml:space="preserve">
+    <value>tmiShowNestedTypes</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInheritedMembers.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiShowInitializers.Name" xml:space="preserve">
+    <value>tmiShowInitializers</value>
+  </data>
+  <data name="&gt;&gt;splMain.Panel2.Type" xml:space="preserve">
+    <value>System.Windows.Forms.SplitterPanel, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="lvwMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>211, 343</value>
+  </data>
+  <data name="tmiShowMethods.Text" xml:space="preserve">
+    <value>Methods</value>
+  </data>
+  <data name="&gt;&gt;prgProperties.Parent" xml:space="preserve">
+    <value>splTopRight.Panel2</value>
+  </data>
+  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
+    <value>749, 530</value>
+  </data>
+  <data name="&gt;&gt;tmiShowReferences.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>65</value>
+  </metadata>
+  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>True</value>
+  </metadata>
+  <metadata name="imlImages.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>17, 17</value>
+  </metadata>
+  <metadata name="tosMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>0, 0</value>
   </metadata>
 </root>

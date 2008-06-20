@@ -440,8 +440,8 @@ Public Structure TimeSpanFormattable
     ''' <returns><paramref name="Time"/> multiplied <paramref name="multiplier"/> times. Accurancy of theis operation is milliseconds</returns>
     ''' <exception cref="OverflowException">Resulting value is up to be less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/></exception>
     Public Shared Operator *(ByVal multiplier As Double, ByVal Time As TimeSpanFormattable) As TimeSpanFormattable
-        If multiplier.IsInfinity Then Throw New OverflowException("multiplier was infinity") 'Localize exception
-        If multiplier.IsNaN Then Throw New ArgumentException("multiplier was NaN", "multiplier") 'Localize exception
+        If multiplier.IsInfinity Then Throw New OverflowException(String.Format(ResourcesT.Exceptions.WasInfinity, "multiplier"))
+        If multiplier.IsNaN Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.WasNaN, "multiplier"), "multiplier")
         Return TimeSpan.FromMilliseconds(Time.TotalMilliseconds * multiplier)
     End Operator
     ''' <summary>Multiplies given <see cref="TimeSpanFormattable"/> with given multiplier</summary>
@@ -450,8 +450,8 @@ Public Structure TimeSpanFormattable
     ''' <returns><paramref name="Time"/> multiplied <paramref name="multiplier"/> times. Accurancy of theis operation is milliseconds</returns>
     ''' <exception cref="OverflowException">Resulting value is up to be less than <see cref="System.TimeSpan.MinValue"/> or greater than <see cref="System.TimeSpan.MaxValue"/></exception>
     Public Shared Operator *(ByVal Time As TimeSpanFormattable, ByVal multiplier As Double) As TimeSpanFormattable
-        If multiplier.IsInfinity Then Throw New OverflowException("multiplier was infinity") 'Localize exception
-        If multiplier.IsNaN Then Throw New ArgumentException("multiplier was NaN", "multiplier") 'Localize exception
+        If multiplier.IsInfinity Then Throw New OverflowException(String.Format(ResourcesT.Exceptions.WasInfinity, "multiplier"))
+        If multiplier.IsNaN Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.WasNaN, "multiplier"), "multiplier")
         Return TimeSpan.FromMilliseconds(Time.TotalMilliseconds * multiplier)
     End Operator
 #End Region
@@ -1159,7 +1159,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.Days).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.dFormatb 'd(\
@@ -1168,14 +1168,14 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.D_ 'D
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.D_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'D' must be followed with '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringDMustBeFollowedWithAt0, i + 1))
                     End Select
                 Case FormatAutomatState.D_Format 'D(
                     Select Case format(i)
                         Case "\"c : state = FormatAutomatState.D_Formatb
                         Case ")"c : state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.TotalDays).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.D_Formatb 'D(\
@@ -1185,7 +1185,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "d"c : state = FormatAutomatState.leftBd1
                         Case "D"c : state = FormatAutomatState.leftBD_
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. '[' must be followed with 'd' or 'D' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringMustBeFollowedWithDOrDAt0, i + 1))
                     End Select
                 Case FormatAutomatState.leftBd1 '[d
                     Select Case format(i)
@@ -1212,7 +1212,7 @@ Public Structure TimeSpanFormattable
                             state = FormatAutomatState.leftBEnd
                             If TS.Days <> 0 Then _
                                 Append.Invoke(Abs(TS.Days).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.leftBdFormatb '[d(\
@@ -1221,7 +1221,7 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.leftBD_ '[D
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.leftBD_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'D' must be followed with '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringDMustBeFollowedWithAt0, i + 1))
                     End Select
                 Case FormatAutomatState.leftBD_Format '[D(
                     Select Case format(i)
@@ -1229,7 +1229,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c : state = FormatAutomatState.leftBEnd
                             If TS.Days <> 0 Then _
                                 Append.Invoke(Abs(TS.TotalDays).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.leftBD_Formatb '[D(\
@@ -1240,7 +1240,7 @@ Public Structure TimeSpanFormattable
                         Case "]"c
                             state = FormatAutomatState.nth
                         Case Else
-                            Throw New FormatException(String.Format("Syntax error in formast string. ']' expected at {0}.", i + 1))
+                            Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormastStringExpectedAt0, i + 1))
                     End Select
                 Case FormatAutomatState.h1 'h
                     Select Case format(i)
@@ -1256,7 +1256,7 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.H_ 'H
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.H_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'H' must be followed with '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringHMustBeFollowedWithAt0, i + 1))
                     End Select
                 Case FormatAutomatState.hFormat 'h(
                     Select Case format(i)
@@ -1264,7 +1264,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.TotalHours)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.hFormatb 'h(\
@@ -1276,7 +1276,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.Hours)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.h2Formatb 'hh(\
@@ -1287,7 +1287,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.H_Formatb
                         Case ")"c : state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.TotalHours).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.H_Formatb 'H(\
@@ -1307,7 +1307,7 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.M_ 'M
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.M_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'M' must be followed with '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringMMustBeFollowedWithAt0, i + 1))
                     End Select
                 Case FormatAutomatState.mFormat 'm(
                     Select Case format(i)
@@ -1315,7 +1315,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.TotalMinutes)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.m2Formatb 'm(\
@@ -1327,7 +1327,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.Minutes)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.m2Formatb 'mm(\
@@ -1338,7 +1338,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.M_Formatb
                         Case ")"c : state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.TotalMinutes).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.M_Formatb 'M(\
@@ -1358,7 +1358,7 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.S_ 'S
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.S_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'S' must be followed with '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringSMustBeFollowedWithAt0, i + 1))
                     End Select
                 Case FormatAutomatState.sFormat 's(
                     Select Case format(i)
@@ -1366,7 +1366,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.TotalSeconds)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.sFormatb 's(\
@@ -1378,7 +1378,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.Seconds)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.s2Formatb 'ss(\
@@ -1389,7 +1389,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.M_Formatb
                         Case ")"c : state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.TotalSeconds).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.M_Formatb 'S(\
@@ -1410,7 +1410,7 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.L_ 'L
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.L_Format : InFormat = ""
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'L' must be followed with '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringLMustBeFollowedWithAt0, i + 1))
                     End Select
                 Case FormatAutomatState.lFormat 'l(
                     Select Case format(i)
@@ -1418,7 +1418,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.TotalMilliseconds)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.lFormatb 'l(\
@@ -1430,7 +1430,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Truncate(Abs(TS.Milliseconds)).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.l2Formatb 'll(\
@@ -1441,7 +1441,7 @@ Public Structure TimeSpanFormattable
                         Case "\"c : state = FormatAutomatState.L_Formatb
                         Case ")"c : state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.TotalMilliseconds).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.L_Formatb 'L(\
@@ -1467,7 +1467,7 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.T_ 'T
                     Select Case format(i)
                         Case "("c : state = FormatAutomatState.T_Format
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. 'T' must be followed by '(' at {0}.", i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringTMustBeFollowedByAt0, i + 1))
                     End Select
                 Case FormatAutomatState.tFormat 't(
                     Select Case format(i)
@@ -1475,7 +1475,7 @@ Public Structure TimeSpanFormattable
                         Case ")"c
                             state = FormatAutomatState.nth
                             Append.Invoke(Abs(TS.Ticks).ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.tFormatb 't(\
@@ -1490,7 +1490,7 @@ Public Structure TimeSpanFormattable
                             If used.TotalMilliseconds < 0 Then used = -used
                             Dim used2 As Date = Date.MinValue + used
                             Append.Invoke(used2.ToString(InFormat, prov))
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in inner format specification at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0, i + 1))
                         Case Else : InFormat &= format(i)
                     End Select
                 Case FormatAutomatState.T_Formatb 'T(\
@@ -1500,7 +1500,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\" : state = FormatAutomatState.singleQb
                         Case "'"c : state = FormatAutomatState.nth
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in quoted string at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0, i + 1))
                         Case Else : Append.Invoke(format(i))
                     End Select
                 Case FormatAutomatState.singleQb ''\
@@ -1510,7 +1510,7 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "\" : state = FormatAutomatState.singleQb
                         Case """"c : state = FormatAutomatState.nth
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in quoted string at {0}.", i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0, i + 1))
                         Case Else : Append.Invoke(format(i))
                     End Select
                 Case FormatAutomatState.doubleQb '"\
@@ -1545,8 +1545,8 @@ Public Structure TimeSpanFormattable
                         Case "D"c : state = FormatAutomatState.AwaitComparison : CompareValue = TS.TotalDays
                         Case "L"c : state = FormatAutomatState.AwaitComparison : CompareValue = TS.TotalMilliseconds
                         Case "t" : state = FormatAutomatState.AwaitComparison : CompareValue = TS.Ticks
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition left side {0}.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unexpected character in format string (condition left side) {0} at {1}.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSide0, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSide0At1, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.OpenPipe
                     Select Case format(i)
@@ -1562,8 +1562,8 @@ Public Structure TimeSpanFormattable
                         Case "s"c : state = FormatAutomatState.OpenPipes
                         Case "d"c : state = FormatAutomatState.OpenPiped
                         Case "l"c : state = FormatAutomatState.OpenPipel
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition left side absolute value {0}.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unexpected character in format string (condition left side absolute value) {0} at {1}.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValue0, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSideAbsoluteValue0At1, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.Openh
                     Select Case format(i)
@@ -1618,16 +1618,16 @@ Public Structure TimeSpanFormattable
                 Case FormatAutomatState.AwaitPipe
                     Select Case format(i)
                         Case "|"c : state = FormatAutomatState.AwaitComparison
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition left side absolute value at {0}. Expected '{1}'.", i + 1, "|"c))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unexpected character '{0}' in condition left side absolute value at {1}. Expected '{2}'.", format(i), i + 1, "|"c))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValueAt0Expected1, i + 1, "|"c))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedCharacter0InConditionLeftSideAbsoluteValueAt1Expected2, format(i), i + 1, "|"c))
                     End Select
                 Case FormatAutomatState.AwaitComparison
                     Select Case format(i)
                         Case "<"c : state = FormatAutomatState.Clt
                         Case ">"c : state = FormatAutomatState.Cgt
                         Case "="c : state = FormatAutomatState.AwaitNumber : CompareOperator = ComparisonOperators.Equal
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Expected comparison operator.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unexpected character '{0}' in condition at {1}. Expected comparison operator.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedComparisonOperator, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedCharacter0InConditionAt1ExpectedComparisonOperator, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.Clt
                     Select Case format(i)
@@ -1647,16 +1647,16 @@ Public Structure TimeSpanFormattable
                         Case "-"c : state = FormatAutomatState.AfterMinus
                         Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c : NumberBuilder = format(i).NumericValue : state = FormatAutomatState.BeforeDot
                         Case "."c : state = FormatAutomatState.AfterDot
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.AfterMinus
                     Select Case format(i)
                         Case "0"c : state = FormatAutomatState.BeforeDot : NumberBuilder = Double.NegativeInfinity
                         Case "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c : state = FormatAutomatState.BeforeDot : NumberBuilder = -format(i).NumericValue
                         Case "."c : state = FormatAutomatState.AfterDot : NumberBuilder = Double.NegativeInfinity
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.BeforeDot
                     Select Case format(i)
@@ -1666,8 +1666,8 @@ Public Structure TimeSpanFormattable
                         Case "0"c : If NumberBuilder <> Double.NegativeInfinity Then NumberBuilder *= 10
                         Case "."c : state = FormatAutomatState.AfterDot
                         Case ")"c : Conditions.Push(GetCondition(CompareValue, NumberBuilder, CompareOperator)) : state = FormatAutomatState.nth
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Expected number or ')'.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Expected number or ')'.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedNumberOr, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1ExpectedNumberOr, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.AfterDot
                     Select Case format(i)
@@ -1677,22 +1677,22 @@ Public Structure TimeSpanFormattable
                             DecimalPlace += 1
                         Case "0"c : DecimalPlace += 1
                         Case ")"c : NumberBuilder = If(NumberBuilder = Double.NegativeInfinity, 0, NumberBuilder) : Conditions.Push(GetCondition(CompareValue, NumberBuilder, CompareOperator)) : state = FormatAutomatState.nth
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Expected number or ')'.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Expected number or ')'.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedNumberOr, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1ExpectedNumberOr, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.OpenPipeT
                     Select Case format(i)
                         Case "|"c : state = FormatAutomatState.OpenT
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition left side absolute value at {0}. Expected '{1}'.", i + 1, "|"c))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unexpected character '{0}' in condition left side absolute value at {1}. Expected '{2}'.", format(i), i + 1, "|"c))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValueAt0Expected1, i + 1, "|"c))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedCharacter0InConditionLeftSideAbsoluteValueAt1Expected2, format(i), i + 1, "|"c))
                     End Select
                 Case FormatAutomatState.OpenT
                     Select Case format(i)
                         Case "<"c : state = FormatAutomatState.Tlt
                         Case ">"c : state = FormatAutomatState.Tgt
                         Case "="c : state = FormatAutomatState.AwaitNumber : CompareOperator = ComparisonOperators.Equal
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Expected comparison operator.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unexpected character '{0}' in condition at {1}. Expected comparison operator.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedComparisonOperator, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedCharacter0InConditionAt1ExpectedComparisonOperator, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.Tlt
                     Select Case format(i)
@@ -1710,15 +1710,15 @@ Public Structure TimeSpanFormattable
                     Select Case format(i)
                         Case "0"c, "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c : TimeSpanBuilder = TimeSpan.FromDays(format(i).NumericValue) : state = FormatAutomatState.TNumber1
                         Case "-"c : state = FormatAutomatState.TMinus
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TMinus
                     Select Case format(i)
                         Case "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c : TimeSpanBuilder = TimeSpan.FromDays(-format(i).NumericValue) : state = FormatAutomatState.TNumber1
                         Case "0"c : state = FormatAutomatState.TNumber1 : NegativeZero = True
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TNumber1
                     Select Case format(i)
@@ -1729,15 +1729,15 @@ Public Structure TimeSpanFormattable
                         Case "."c : state = FormatAutomatState.TAwaitH
                         Case ":"c : TimeSpanBuilder = TimeSpan.FromHours(If(TimeSpanBuilder < TimeSpan.Zero, -1, 1) * TimeSpanBuilder.Days) : state = FormatAutomatState.TAwaitM
                         Case ")"c : TimeSpanBuilder = TimeSpan.FromHours(If(TimeSpanBuilder < TimeSpan.Zero, -1, 1) * TimeSpanBuilder.Days) : Conditions.Push(GetCondition(TimeSpanBuilder, CompareValue, CompareOperator)) : state = FormatAutomatState.nth
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number, '.' or ':' expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number, '.' or ':' expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TAwaitH
                     NumberBuilder = 0
                     Select Case format(i)
                         Case "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c, "0"c : NumberBuilder = format(i).NumericValue : state = FormatAutomatState.TH
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TH
                     Select Case format(i)
@@ -1751,15 +1751,15 @@ Public Structure TimeSpanFormattable
                             If NegativeZero AndAlso NumberBuilder <> 0 Then NegativeZero = False : TimeSpanBuilder = TimeSpan.FromHours(-NumberBuilder) _
                             Else TimeSpanBuilder = TimeSpan.FromHours(TimeSpanBuilder.TotalHours + If(TimeSpanBuilder < TimeSpan.Zero, -1, 1) * NumberBuilder)
                             state = FormatAutomatState.TAwaitM
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number or ':' expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number or ':' expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected_, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected_, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TAwaitM
                     NumberBuilder = 0
                     Select Case format(i)
                         Case "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c, "0"c : NumberBuilder = format(i).NumericValue : state = FormatAutomatState.TM
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TM
                     Select Case format(i)
@@ -1773,15 +1773,15 @@ Public Structure TimeSpanFormattable
                             If NegativeZero AndAlso NumberBuilder <> 0 Then NegativeZero = False : TimeSpanBuilder = TimeSpan.FromMinutes(-NumberBuilder) _
                             Else TimeSpanBuilder = TimeSpan.FromMinutes(TimeSpanBuilder.TotalMinutes + If(TimeSpanBuilder < TimeSpan.Zero, -1, 1) * NumberBuilder)
                             state = FormatAutomatState.TAwaitS
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number or ':' expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number or ':' expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected_, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected_, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TAwaitS
                     NumberBuilder = 0
                     Select Case format(i)
                         Case "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c, "0"c : NumberBuilder = format(i).NumericValue : state = FormatAutomatState.TS
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TS
                     Select Case format(i)
@@ -1795,15 +1795,15 @@ Public Structure TimeSpanFormattable
                             If NegativeZero AndAlso NumberBuilder <> 0 Then NegativeZero = False : TimeSpanBuilder = TimeSpan.FromSeconds(-NumberBuilder) _
                             Else TimeSpanBuilder = TimeSpan.FromSeconds(TimeSpanBuilder.TotalSeconds + If(TimeSpanBuilder < TimeSpan.Zero, -1, 1) * NumberBuilder)
                             state = FormatAutomatState.TAwaitL
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number or '.' expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number or '.' expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected__, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TAwaitL
                     NumberBuilder = 0 : DecimalPlace = 1
                     Select Case format(i)
                         Case "1"c, "2"c, "3"c, "4"c, "5"c, "6"c, "7"c, "8"c, "9"c, "0"c : NumberBuilder = format(i).NumericValue / 10 : state = FormatAutomatState.TS : DecimalPlace += 1
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case FormatAutomatState.TL
                     Select Case format(i)
@@ -1813,13 +1813,13 @@ Public Structure TimeSpanFormattable
                             Else TimeSpanBuilder = TimeSpan.FromSeconds(TimeSpanBuilder.TotalSeconds + If(TimeSpanBuilder < TimeSpan.Zero, -1, 1) * NumberBuilder)
                             If NegativeZero Then TimeSpanBuilder = TimeSpan.Zero
                             Conditions.Push(GetCondition(TimeSpanBuilder, CompareValue, CompareOperator)) : state = FormatAutomatState.nth
-                        Case NullChar : Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.", i + 1))
-                        Case Else : Throw New FormatException(String.Format("Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.", format(i), i + 1))
+                        Case NullChar : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected, i + 1))
+                        Case Else : Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected, format(i), i + 1))
                     End Select
                 Case Else : Stop 'This must not happen!
             End Select
         Next i
-        If Conditions.Count > 1 Then Throw New FormatException(String.Format("Syntax error in format string. Unexpected end of fomat string at {0}. Expected ')' for condition.", format.Length))
+        If Conditions.Count > 1 Then Throw New FormatException(String.Format(ResourcesT.Exceptions.SyntaxErrorInFormatStringUnexpectedEndOfFomatStringAt0ExpectedForCondition, format.Length))
         Return ret.ToString
     End Function
     ''' <summary>Creates boolean condition for <see cref="TimeSpan"/></summary>
@@ -1891,7 +1891,7 @@ Public Structure TimeSpanFormattable
                 Case ComparisonOperators.NotEqual : Return v <> CompareTo
                 Case Else : Throw New InvalidEnumArgumentException("op", op, op.GetType)
             End Select
-        Else : Throw New ArgumentException(String.Format("Unsupported type for comparison ({0}).", Value.GetType.Name), "Value")
+        Else : Throw New ArgumentException(String.Format(ResourcesT.Exceptions.UnsupportedTypeForComparison0, Value.GetType.Name), "Value")
         End If
     End Function
     ''' <summary>Comparison operators for format string conditions</summary>

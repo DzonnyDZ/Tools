@@ -564,4 +564,208 @@
   <data name="CannotBe1When2Is3" xml:space="preserve">
     <value>{0} cannot be {1} when {2} is {3}</value>
   </data>
+  <data name="ISO6391CodeMustContainExactly2LowercaseLatinLetters" xml:space="preserve">
+    <value>ISO 639-1 code must contain exactly 2 lowercase latin letters.</value>
+  </data>
+  <data name="ISO6392CodeMustContainExactly3LowercaseLatinLetters" xml:space="preserve">
+    <value>ISO 639-2 code must contain exactly 3 lowercase latin letters.</value>
+  </data>
+  <data name="CannotBeNullOrAnEmptyString" xml:space="preserve">
+    <value>{0} cannot be null or an empty string</value>
+  </data>
+  <data name="ISO6392DuplicateCodeMustContainExactly3LowercaseLatinLetters" xml:space="preserve">
+    <value>ISO 639-2 duplicate code must contain exactly 3 lowercase latin letters.</value>
+  </data>
+  <data name="CodeIsNotValidISO639LanguageCode" xml:space="preserve">
+    <value>Code is not valid ISO 639 language code</value>
+  </data>
+  <data name="CannotChangeStateFrom0To1" xml:space="preserve">
+    <value>Cannot change state from {0} to {1}</value>
+  </data>
+  <data name="This0CannotBeConvertedTo1BecauseItDoesnTContain1" xml:space="preserve">
+    <value>This {0} cannot be converted to {1} because it doesn't contain {1}.</value>
+  </data>
+  <data name="VersionComponentMustBeGreaterThanOrEqualToZero" xml:space="preserve">
+    <value>Version component must be greater than or equal to zero</value>
+  </data>
+  <data name="StreamMustSupportReadingAndSeeking" xml:space="preserve">
+    <value>Stream must support reading and seeking</value>
+  </data>
+  <data name="SizeOfConstrainedStreamMustFitIntoBaseStream" xml:space="preserve">
+    <value>Size of constrained stream must fit into base stream.</value>
+  </data>
+  <data name="SupportsNeitherWritingNorSeeking" xml:space="preserve">
+    <value>{0} supports neither writing nor seeking</value>
+  </data>
+  <data name="DoesnTSupportWriting" xml:space="preserve">
+    <value>{0} doesn't support writing</value>
+  </data>
+  <data name="TheEnumerationHasNotStartedYetOrHasAlreadyFinished" xml:space="preserve">
+    <value>The enumeration has not started yet or has already finished.</value>
+  </data>
+  <data name="Property0HasAlreadyBeenSetAndItCannotBeChanged" xml:space="preserve">
+    <value>Property {0} has already been set and it cannot be changed</value>
+  </data>
+  <data name="PathCannotBeBasedOnNullString" xml:space="preserve">
+    <value>Path cannot be based on null string</value>
+  </data>
+  <data name="PathCannotBeBasedOnAnEmptyStringOrStringContainingOnlyWhitespaces" xml:space="preserve">
+    <value>Path cannot be based on an empty string or string containing only whitespaces</value>
+  </data>
+  <data name="PathStringContainsInvalidCharacter0" xml:space="preserve">
+    <value>Path string contains invalid character '{0}'</value>
+  </data>
+  <data name="ShouldBeGreaterThanZero" xml:space="preserve">
+    <value>{0} should be greater than zero</value>
+  </data>
+  <data name="ThePathSDepthIsNotEnoughToRemove0Levels" xml:space="preserve">
+    <value>The path's depth is not enough to remove {0} levels</value>
+  </data>
+  <data name="SourceFileOrDirectoryNotFound" xml:space="preserve">
+    <value>Source file or directory not found</value>
+  </data>
+  <data name="MustBePositive" xml:space="preserve">
+    <value>{0} must be positive</value>
+  </data>
+  <data name="MustBeWithinRange12" xml:space="preserve">
+    <value>{0} must be within range &lt;{1}; {2})</value>
+  </data>
+  <data name="MustContainAtLeastOneItem" xml:space="preserve">
+    <value>{0} must contain at least one item.</value>
+  </data>
+  <data name="ThereIsNotEnoughtResults" xml:space="preserve">
+    <value>There is not enought results.</value>
+  </data>
+  <data name="NoConditionWasTrue" xml:space="preserve">
+    <value>No condition was true.</value>
+  </data>
+  <data name="NumberOfBitIn0MustBeLessThat1" xml:space="preserve">
+    <value>Number of bit in {0} must be less that {1}</value>
+  </data>
+  <data name="WasInfinity" xml:space="preserve">
+    <value>{0} was infinity</value>
+  </data>
+  <data name="WasNaN" xml:space="preserve">
+    <value>{0} was NaN</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in inner format specification at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringDMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntax error in format string. 'D' must be followed with '(' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringMustBeFollowedWithDOrDAt0" xml:space="preserve">
+    <value>Syntax error in format string. '[' must be followed with 'd' or 'D' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormastStringExpectedAt0" xml:space="preserve">
+    <value>Syntax error in formast string. ']' expected at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringHMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntax error in format string. 'H' must be followed with '(' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringMMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntax error in format string. 'M' must be followed with '(' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringSMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntax error in format string. 'S' must be followed with '(' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringLMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntax error in format string. 'L' must be followed with '(' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringTMustBeFollowedByAt0" xml:space="preserve">
+    <value>Syntax error in format string. 'T' must be followed by '(' at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in quoted string at {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSide0" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition left side {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSide0At1" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected character in format string (condition left side) {0} at {1}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValue0" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition left side absolute value {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSideAbsoluteValue0At1" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected character in format string (condition left side absolute value) {0} at {1}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValueAt0Expected1" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition left side absolute value at {0}. Expected '{1}'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacter0InConditionLeftSideAbsoluteValueAt1Expected2" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected character '{0}' in condition left side absolute value at {1}. Expected '{2}'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedComparisonOperator" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition at {0}. Expected comparison operator.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacter0InConditionAt1ExpectedComparisonOperator" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected character '{0}' in condition at {1}. Expected comparison operator.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected" xml:space="preserve">
+    <value>Syntax error in format string. Unextected character '{0}' in condition at {1}. Number expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedNumberOr" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition at {0}. Expected number or ')'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1ExpectedNumberOr" xml:space="preserve">
+    <value>Syntax error in format string. Unextected character '{0}' in condition at {1}. Expected number or ')'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition at {0}. Number, '.' or ':' expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected" xml:space="preserve">
+    <value>Syntax error in format string. Unextected character '{0}' in condition at {1}. Number, '.' or ':' expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected_" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition at {0}. Number or ':' expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected_" xml:space="preserve">
+    <value>Syntax error in format string. Unextected character '{0}' in condition at {1}. Number or ':' expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected__" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of format string in condition at {0}. Number or '.' expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__" xml:space="preserve">
+    <value>Syntax error in format string. Unextected character '{0}' in condition at {1}. Number or '.' expected.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFomatStringAt0ExpectedForCondition" xml:space="preserve">
+    <value>Syntax error in format string. Unexpected end of fomat string at {0}. Expected ')' for condition.</value>
+  </data>
+  <data name="UnsupportedTypeForComparison0" xml:space="preserve">
+    <value>Unsupported type for comparison ({0}).</value>
+  </data>
+  <data name="ValueOfSomeTypeWasPassedWhereItIsNotAcceptable" xml:space="preserve">
+    <value>Value of some type was passed where it is not acceptable.</value>
+  </data>
+  <data name="OnlyValuesOfType0AreAcceptable" xml:space="preserve">
+    <value>Only values of type {0} are acceptable</value>
+  </data>
+  <data name="ValueOfType0IsNotAcceptable" xml:space="preserve">
+    <value>Value of type {0} is not acceptable.</value>
+  </data>
+  <data name="ValueOfUnexpectedType0Expected1" xml:space="preserve">
+    <value>Value of unexpected type {0}. Expected {1}.</value>
+  </data>
+  <data name="UnknownUnderlyingType0" xml:space="preserve">
+    <value>Unknown underlying type {0}</value>
+  </data>
+  <data name="MustBeEnumeration" xml:space="preserve">
+    <value>{0} must be enumeration</value>
+  </data>
+  <data name="Constant0DoesNotExistInType1" xml:space="preserve">
+    <value>Constant {0} does not exist in type {1}</value>
+  </data>
+  <data name="EnumerationDoesNotAllowNegativeValues" xml:space="preserve">
+    <value>Enumeration does not allow negative values</value>
+  </data>
+  <data name="EncodingWithSameCodepageIsNotInList" xml:space="preserve">
+    <value>Encoding with same codepage is not in list</value>
+  </data>
+  <data name="CannotBeNull" xml:space="preserve">
+    <value>{0} cannot be null</value>
+  </data>
 </root>

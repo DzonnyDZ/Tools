@@ -282,6 +282,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} cannot be null.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotBeNull() As String
+            Get
+                Return ResourceManager.GetString("CannotBeNull", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} cannot be null or an empty string.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotBeNullOrAnEmptyString() As String
+            Get
+                Return ResourceManager.GetString("CannotBeNullOrAnEmptyString", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} cannot be null or empty.
         '''</summary>
         Friend Shared ReadOnly Property CannotBeNullOrEmpty() As String
@@ -323,6 +341,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property CannotChangeNumberOfComponentsOfThisRecord() As String
             Get
                 Return ResourceManager.GetString("CannotChangeNumberOfComponentsOfThisRecord", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cannot change state from {0} to {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotChangeStateFrom0To1() As String
+            Get
+                Return ResourceManager.GetString("CannotChangeStateFrom0To1", resourceCulture)
             End Get
         End Property
         
@@ -454,6 +481,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Code is not valid ISO 639 language code.
+        '''</summary>
+        Friend Shared ReadOnly Property CodeIsNotValidISO639LanguageCode() As String
+            Get
+                Return ResourceManager.GetString("CodeIsNotValidISO639LanguageCode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} component cannot be an empty string.
         '''</summary>
         Friend Shared ReadOnly Property ComponentCannotBeAnEmptyString() As String
@@ -468,6 +504,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ComponentMustBeEncodeableByASCII() As String
             Get
                 Return ResourceManager.GetString("ComponentMustBeEncodeableByASCII", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Constant {0} does not exist in type {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property Constant0DoesNotExistInType1() As String
+            Get
+                Return ResourceManager.GetString("Constant0DoesNotExistInType1", resourceCulture)
             End Get
         End Property
         
@@ -526,11 +571,38 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} doesn&apos;t support writing.
+        '''</summary>
+        Friend Shared ReadOnly Property DoesnTSupportWriting() As String
+            Get
+                Return ResourceManager.GetString("DoesnTSupportWriting", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Each group must have at least {0} tags.
         '''</summary>
         Friend Shared ReadOnly Property EachGroupMustHaveAtLeast0Tags() As String
             Get
                 Return ResourceManager.GetString("EachGroupMustHaveAtLeast0Tags", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Encoding with same codepage is not in list.
+        '''</summary>
+        Friend Shared ReadOnly Property EncodingWithSameCodepageIsNotInList() As String
+            Get
+                Return ResourceManager.GetString("EncodingWithSameCodepageIsNotInList", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Enumeration does not allow negative values.
+        '''</summary>
+        Friend Shared ReadOnly Property EnumerationDoesNotAllowNegativeValues() As String
+            Get
+                Return ResourceManager.GetString("EnumerationDoesNotAllowNegativeValues", resourceCulture)
             End Get
         End Property
         
@@ -693,6 +765,33 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property IsMultidimensional() As String
             Get
                 Return ResourceManager.GetString("IsMultidimensional", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ISO 639-1 code must contain exactly 2 lowercase latin letters..
+        '''</summary>
+        Friend Shared ReadOnly Property ISO6391CodeMustContainExactly2LowercaseLatinLetters() As String
+            Get
+                Return ResourceManager.GetString("ISO6391CodeMustContainExactly2LowercaseLatinLetters", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ISO 639-2 code must contain exactly 3 lowercase latin letters..
+        '''</summary>
+        Friend Shared ReadOnly Property ISO6392CodeMustContainExactly3LowercaseLatinLetters() As String
+            Get
+                Return ResourceManager.GetString("ISO6392CodeMustContainExactly3LowercaseLatinLetters", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ISO 639-2 duplicate code must contain exactly 3 lowercase latin letters..
+        '''</summary>
+        Friend Shared ReadOnly Property ISO6392DuplicateCodeMustContainExactly3LowercaseLatinLetters() As String
+            Get
+                Return ResourceManager.GetString("ISO6392DuplicateCodeMustContainExactly3LowercaseLatinLetters", resourceCulture)
             End Get
         End Property
         
@@ -888,6 +987,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must be enumeration.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeEnumeration() As String
+            Get
+                Return ResourceManager.GetString("MustBeEnumeration", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must be from range {1}÷{2} or {3} if unknown.
         '''</summary>
         Friend Shared ReadOnly Property MustBeFromRange12Or3IfUnknown() As String
@@ -942,6 +1050,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must be positive.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBePositive() As String
+            Get
+                Return ResourceManager.GetString("MustBePositive", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must be positive and less than {1:h(0):mm:ss}.
         '''</summary>
         Friend Shared ReadOnly Property MustBePositiveAndLessThan1H0MmSs() As String
@@ -969,6 +1086,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must be within range &lt;{1}; {2}).
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeWithinRange12() As String
+            Get
+                Return ResourceManager.GetString("MustBeWithinRange12", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must contain at least {1} items.
         '''</summary>
         Friend Shared ReadOnly Property MustContainAtLeast1Items() As String
@@ -978,11 +1104,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must contain at least one item..
+        '''</summary>
+        Friend Shared ReadOnly Property MustContainAtLeastOneItem() As String
+            Get
+                Return ResourceManager.GetString("MustContainAtLeastOneItem", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must contain exactly {1} parts.
         '''</summary>
         Friend Shared ReadOnly Property MustContainExactly1Parts() As String
             Get
                 Return ResourceManager.GetString("MustContainExactly1Parts", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No condition was true..
+        '''</summary>
+        Friend Shared ReadOnly Property NoConditionWasTrue() As String
+            Get
+                Return ResourceManager.GetString("NoConditionWasTrue", resourceCulture)
             End Get
         End Property
         
@@ -1001,6 +1145,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property Number0CannotBeStoredIn1Bytes() As String
             Get
                 Return ResourceManager.GetString("Number0CannotBeStoredIn1Bytes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Number of bit in {0} must be less that {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property NumberOfBitIn0MustBeLessThat1() As String
+            Get
+                Return ResourceManager.GetString("NumberOfBitIn0MustBeLessThat1", resourceCulture)
             End Get
         End Property
         
@@ -1050,11 +1203,56 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Only values of type {0} are acceptable.
+        '''</summary>
+        Friend Shared ReadOnly Property OnlyValuesOfType0AreAcceptable() As String
+            Get
+                Return ResourceManager.GetString("OnlyValuesOfType0AreAcceptable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Only value s of type {0} can be edited by {0}.
         '''</summary>
         Friend Shared ReadOnly Property OnlyValueSOfType0CanBeEditedBy0() As String
             Get
                 Return ResourceManager.GetString("OnlyValueSOfType0CanBeEditedBy0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Path cannot be based on an empty string or string containing only whitespaces.
+        '''</summary>
+        Friend Shared ReadOnly Property PathCannotBeBasedOnAnEmptyStringOrStringContainingOnlyWhitespaces() As String
+            Get
+                Return ResourceManager.GetString("PathCannotBeBasedOnAnEmptyStringOrStringContainingOnlyWhitespaces", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Path cannot be based on null string.
+        '''</summary>
+        Friend Shared ReadOnly Property PathCannotBeBasedOnNullString() As String
+            Get
+                Return ResourceManager.GetString("PathCannotBeBasedOnNullString", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Path string contains invalid character &apos;{0}&apos;.
+        '''</summary>
+        Friend Shared ReadOnly Property PathStringContainsInvalidCharacter0() As String
+            Get
+                Return ResourceManager.GetString("PathStringContainsInvalidCharacter0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Property {0} has already been set and it cannot be changed.
+        '''</summary>
+        Friend Shared ReadOnly Property Property0HasAlreadyBeenSetAndItCannotBeChanged() As String
+            Get
+                Return ResourceManager.GetString("Property0HasAlreadyBeenSetAndItCannotBeChanged", resourceCulture)
             End Get
         End Property
         
@@ -1113,11 +1311,38 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} should be greater than zero.
+        '''</summary>
+        Friend Shared ReadOnly Property ShouldBeGreaterThanZero() As String
+            Get
+                Return ResourceManager.GetString("ShouldBeGreaterThanZero", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Size of constrained stream must fit into base stream..
+        '''</summary>
+        Friend Shared ReadOnly Property SizeOfConstrainedStreamMustFitIntoBaseStream() As String
+            Get
+                Return ResourceManager.GetString("SizeOfConstrainedStreamMustFitIntoBaseStream", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to / expected.
         '''</summary>
         Friend Shared ReadOnly Property SlashExpected() As String
             Get
                 Return ResourceManager.GetString("SlashExpected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Source file or directory not found.
+        '''</summary>
+        Friend Shared ReadOnly Property SourceFileOrDirectoryNotFound() As String
+            Get
+                Return ResourceManager.GetString("SourceFileOrDirectoryNotFound", resourceCulture)
             End Get
         End Property
         
@@ -1145,6 +1370,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property StoredValueHasInvalidLenght() As String
             Get
                 Return ResourceManager.GetString("StoredValueHasInvalidLenght", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Stream must support reading and seeking.
+        '''</summary>
+        Friend Shared ReadOnly Property StreamMustSupportReadingAndSeeking() As String
+            Get
+                Return ResourceManager.GetString("StreamMustSupportReadingAndSeeking", resourceCulture)
             End Get
         End Property
         
@@ -1195,6 +1429,287 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} supports neither writing nor seeking.
+        '''</summary>
+        Friend Shared ReadOnly Property SupportsNeitherWritingNorSeeking() As String
+            Get
+                Return ResourceManager.GetString("SupportsNeitherWritingNorSeeking", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in formast string. &apos;]&apos; expected at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormastStringExpectedAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormastStringExpectedAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;D&apos; must be followed with &apos;(&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringDMustBeFollowedWithAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringDMustBeFollowedWithAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;H&apos; must be followed with &apos;(&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringHMustBeFollowedWithAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringHMustBeFollowedWithAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;L&apos; must be followed with &apos;(&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringLMustBeFollowedWithAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringLMustBeFollowedWithAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;M&apos; must be followed with &apos;(&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringMMustBeFollowedWithAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringMMustBeFollowedWithAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;[&apos; must be followed with &apos;d&apos; or &apos;D&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringMustBeFollowedWithDOrDAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringMustBeFollowedWithDOrDAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;S&apos; must be followed with &apos;(&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringSMustBeFollowedWithAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringSMustBeFollowedWithAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. &apos;T&apos; must be followed by &apos;(&apos; at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringTMustBeFollowedByAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringTMustBeFollowedByAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected character &apos;{0}&apos; in condition at {1}. Expected comparison operator..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedCharacter0InConditionAt1ExpectedComparisonOperator() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedCharacter0InConditionAt1ExpectedComparisonOper"& _ 
+                        "ator", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected character &apos;{0}&apos; in condition left side absolute value at {1}. Expected &apos;{2}&apos;..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedCharacter0InConditionLeftSideAbsoluteValueAt1Expected2() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedCharacter0InConditionLeftSideAbsoluteValueAt1E"& _ 
+                        "xpected2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected character in format string (condition left side) {0} at {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSide0At1() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSide0At1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected character in format string (condition left side absolute value) {0} at {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSideAbsoluteValue0At1() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSideAbsolu"& _ 
+                        "teValue0At1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of fomat string at {0}. Expected &apos;)&apos; for condition..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFomatStringAt0ExpectedForCondition() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFomatStringAt0ExpectedForCondition", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition at {0}. Expected comparison operator..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedComparisonOperator() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedCompari"& _ 
+                        "sonOperator", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition at {0}. Expected number or &apos;)&apos;..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedNumberOr() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedNumberO"& _ 
+                        "r", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition at {0}. Number expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition at {0}. Number, &apos;.&apos; or &apos;:&apos; expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpecte"& _ 
+                        "d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition at {0}. Number or &apos;:&apos; expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected_() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpecte"& _ 
+                        "d_", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition at {0}. Number or &apos;.&apos; expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected__() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpecte"& _ 
+                        "d__", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition left side {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSide0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSide0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition left side absolute value {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValue0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteVa"& _ 
+                        "lue0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in condition left side absolute value at {0}. Expected &apos;{1}&apos;..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValueAt0Expected1() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteVa"& _ 
+                        "lueAt0Expected1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in inner format specification at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0"& _ 
+                        "", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unexpected end of format string in quoted string at {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unextected character &apos;{0}&apos; in condition at {1}. Expected number or &apos;)&apos;..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1ExpectedNumberOr() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1ExpectedNumberOr", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unextected character &apos;{0}&apos; in condition at {1}. Number expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unextected character &apos;{0}&apos; in condition at {1}. Number, &apos;.&apos; or &apos;:&apos; expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unextected character &apos;{0}&apos; in condition at {1}. Number or &apos;:&apos; expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected_() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected_", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Syntax error in format string. Unextected character &apos;{0}&apos; in condition at {1}. Number or &apos;.&apos; expected..
+        '''</summary>
+        Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__() As String
+            Get
+                Return ResourceManager.GetString("SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Tag marker must be 1Ch.
         '''</summary>
         Friend Shared ReadOnly Property TagMarkerMustBe1Ch() As String
@@ -1223,11 +1738,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The enumeration has not started yet or has already finished..
+        '''</summary>
+        Friend Shared ReadOnly Property TheEnumerationHasNotStartedYetOrHasAlreadyFinished() As String
+            Get
+                Return ResourceManager.GetString("TheEnumerationHasNotStartedYetOrHasAlreadyFinished", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to The lenght of {0} exceeds limit.
         '''</summary>
         Friend Shared ReadOnly Property TheLenghtOf0ExceedsLimit() As String
             Get
                 Return ResourceManager.GetString("TheLenghtOf0ExceedsLimit", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The path&apos;s depth is not enough to remove {0} levels.
+        '''</summary>
+        Friend Shared ReadOnly Property ThePathSDepthIsNotEnoughToRemove0Levels() As String
+            Get
+                Return ResourceManager.GetString("ThePathSDepthIsNotEnoughToRemove0Levels", resourceCulture)
             End Get
         End Property
         
@@ -1250,6 +1783,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to There is not enought results..
+        '''</summary>
+        Friend Shared ReadOnly Property ThereIsNotEnoughtResults() As String
+            Get
+                Return ResourceManager.GetString("ThereIsNotEnoughtResults", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to There was an error invoking MessageBox. See inner exception for details..
         '''</summary>
         Friend Shared ReadOnly Property ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails() As String
@@ -1265,6 +1807,15 @@ Namespace ResourcesT
             Get
                 Return ResourceManager.GetString("ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExcepti"& _ 
                         "onForDetails", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This {0} cannot be converted to {1} because it doesn&apos;t contain {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property This0CannotBeConvertedTo1BecauseItDoesnTContain1() As String
+            Get
+                Return ResourceManager.GetString("This0CannotBeConvertedTo1BecauseItDoesnTContain1", resourceCulture)
             End Get
         End Property
         
@@ -1359,6 +1910,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Unknown underlying type {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UnknownUnderlyingType0() As String
+            Get
+                Return ResourceManager.GetString("UnknownUnderlyingType0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsupported type for comparison ({0})..
+        '''</summary>
+        Friend Shared ReadOnly Property UnsupportedTypeForComparison0() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedTypeForComparison0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Value of incompatible type is being set.
         '''</summary>
         Friend Shared ReadOnly Property ValueOfIncompatibleTypeIsBeingSet() As String
@@ -1391,6 +1960,60 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ValueOfObjeValuePropertyMustBeEitherOfTypeT1OrOfTypeT1() As String
             Get
                 Return ResourceManager.GetString("ValueOfObjeValuePropertyMustBeEitherOfTypeT1OrOfTypeT1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value of some type was passed where it is not acceptable..
+        '''</summary>
+        Friend Shared ReadOnly Property ValueOfSomeTypeWasPassedWhereItIsNotAcceptable() As String
+            Get
+                Return ResourceManager.GetString("ValueOfSomeTypeWasPassedWhereItIsNotAcceptable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value of type {0} is not acceptable..
+        '''</summary>
+        Friend Shared ReadOnly Property ValueOfType0IsNotAcceptable() As String
+            Get
+                Return ResourceManager.GetString("ValueOfType0IsNotAcceptable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value of unexpected type {0}. Expected {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property ValueOfUnexpectedType0Expected1() As String
+            Get
+                Return ResourceManager.GetString("ValueOfUnexpectedType0Expected1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Version component must be greater than or equal to zero.
+        '''</summary>
+        Friend Shared ReadOnly Property VersionComponentMustBeGreaterThanOrEqualToZero() As String
+            Get
+                Return ResourceManager.GetString("VersionComponentMustBeGreaterThanOrEqualToZero", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} was infinity.
+        '''</summary>
+        Friend Shared ReadOnly Property WasInfinity() As String
+            Get
+                Return ResourceManager.GetString("WasInfinity", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} was NaN.
+        '''</summary>
+        Friend Shared ReadOnly Property WasNaN() As String
+            Get
+                Return ResourceManager.GetString("WasNaN", resourceCulture)
             End Get
         End Property
         

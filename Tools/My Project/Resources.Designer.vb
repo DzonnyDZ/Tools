@@ -244,6 +244,15 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to start {0}, end {1}.
+        '''</summary>
+        Friend ReadOnly Property Start0End1() As String
+            Get
+                Return ResourceManager.GetString("Start0End1", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property T() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("T", resourceCulture)

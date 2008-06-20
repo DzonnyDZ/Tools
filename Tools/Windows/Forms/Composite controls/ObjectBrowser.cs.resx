@@ -117,145 +117,149 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="cohName.Text" xml:space="preserve">
-    <value>Name</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cohCodePage.Width" type="System.Int32, mscorlib">
-    <value>70</value>
-  </data>
-  <data name="cmbEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>1</value>
-  </data>
-  <data name="&gt;&gt;lvwEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListView, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="cohCodePage.TextAlign" type="System.Windows.Forms.HorizontalAlignment, System.Windows.Forms">
-    <value>Right</value>
-  </data>
-  <data name="cohDisplayName.Width" type="System.Int32, mscorlib">
-    <value>120</value>
-  </data>
-  <data name="&gt;&gt;cmbEncoding.ZOrder" xml:space="preserve">
-    <value>1</value>
-  </data>
-  <data name="cmbEncoding.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
-  </data>
-  <data name="cmbEncoding.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
-  </data>
-  <data name="lvwEncoding.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="cohItem.Text" xml:space="preserve">
+    <value>Položka</value>
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cmbEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="tmiShowCTors.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;cohName.Name" xml:space="preserve">
-    <value>cohName</value>
+  <data name="tmiShowCTors.Text" xml:space="preserve">
+    <value>Konstruktory</value>
   </data>
-  <data name="&gt;&gt;lstEncoding.Name" xml:space="preserve">
-    <value>lstEncoding</value>
+  <data name="tmiShowEvents.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;lstEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ListBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiShowEvents.Text" xml:space="preserve">
+    <value>Události</value>
   </data>
-  <data name="&gt;&gt;cohCodePage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiShowFields.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;lvwEncoding.Name" xml:space="preserve">
-    <value>lvwEncoding</value>
+  <data name="tmiShowFields.Text" xml:space="preserve">
+    <value>Proměnné</value>
   </data>
-  <data name="&gt;&gt;cohDisplayName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiShowGenericArguments.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;lstEncoding.ZOrder" xml:space="preserve">
-    <value>2</value>
+  <data name="tmiShowGenericArguments.Text" xml:space="preserve">
+    <value>Generické argumenty</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.UserControl, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiShowGlobalMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="cohDisplayName.Text" xml:space="preserve">
-    <value>Encoding</value>
+  <data name="tmiShowGlobalMembers.Text" xml:space="preserve">
+    <value>Globální členy</value>
   </data>
-  <data name="cohName.Width" type="System.Int32, mscorlib">
-    <value>70</value>
+  <data name="tmiShowInheritedMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="lstEncoding.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="tmiShowInheritedMembers.Text" xml:space="preserve">
+    <value>Zděděné členy</value>
   </data>
-  <data name="lstEncoding.Visible" type="System.Boolean, mscorlib">
-    <value>False</value>
+  <data name="tmiShowInitializers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="lstEncoding.Margin" type="System.Windows.Forms.Padding, System.Windows.Forms">
-    <value>0, 0, 0, 0</value>
+  <data name="tmiShowInitializers.Text" xml:space="preserve">
+    <value>Inicializátory</value>
   </data>
-  <data name="&gt;&gt;lstEncoding.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tmiShowInstanceMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;cohDisplayName.Name" xml:space="preserve">
-    <value>cohDisplayName</value>
+  <data name="tmiShowInstanceMembers.Text" xml:space="preserve">
+    <value>Instanční členy</value>
   </data>
-  <data name="lstEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="tmiShowInternalMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;cohCodePage.Name" xml:space="preserve">
-    <value>cohCodePage</value>
+  <data name="tmiShowInternalMembers.Text" xml:space="preserve">
+    <value>Interní členy</value>
   </data>
-  <data name="lvwEncoding.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
-    <value>Fill</value>
+  <data name="tmiShowMethods.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 22</value>
   </data>
-  <data name="&gt;&gt;lvwEncoding.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tmiShowMethods.Text" xml:space="preserve">
+    <value>Metody</value>
   </data>
-  <data name="$this.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
+  <data name="tmiShowNestedTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="cohCodePage.Text" xml:space="preserve">
-    <value>Code page</value>
+  <data name="tmiShowNestedTypes.Text" xml:space="preserve">
+    <value>Vnořené členy</value>
   </data>
-  <data name="lvwEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>2</value>
+  <data name="tmiShowPrivateMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="&gt;&gt;cohName.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ColumnHeader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiShowPrivateMembers.Text" xml:space="preserve">
+    <value>Privátní členy</value>
   </data>
-  <data name="lvwEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
+  <data name="tmiShowProperties.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="&gt;&gt;cmbEncoding.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ComboBox, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiShowProperties.Text" xml:space="preserve">
+    <value>Vlastnosti</value>
   </data>
-  <data name="lstEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 17</value>
+  <data name="tmiShowProtectedMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="&gt;&gt;cmbEncoding.Parent" xml:space="preserve">
-    <value>$this</value>
+  <data name="tmiShowProtectedMembers.Text" xml:space="preserve">
+    <value>Chráněné členy</value>
   </data>
-  <data name="&gt;&gt;lvwEncoding.ZOrder" xml:space="preserve">
-    <value>0</value>
+  <data name="tmiShowSpecialMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>EncodingSelector</value>
+  <data name="tmiShowSpecialMembers.Text" xml:space="preserve">
+    <value>Speciální členy</value>
   </data>
-  <data name="lvwEncoding.Location" type="System.Drawing.Point, System.Drawing">
-    <value>0, 0</value>
+  <data name="tmiShowReferences.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="cmbEncoding.Size" type="System.Drawing.Size, System.Drawing">
-    <value>434, 21</value>
+  <data name="tmiShowReferences.Text" xml:space="preserve">
+    <value>Reference</value>
   </data>
-  <data name="&gt;&gt;cmbEncoding.Name" xml:space="preserve">
-    <value>cmbEncoding</value>
+  <data name="tmiShowBaseTypes.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
   </data>
-  <data name="lstEncoding.TabIndex" type="System.Int32, mscorlib">
-    <value>0</value>
+  <data name="tmiShowBaseTypes.Text" xml:space="preserve">
+    <value>Bázové typy</value>
   </data>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
-  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>Czech</value>
-  </metadata>
+  <data name="tmiShowStaticMembers.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
+  </data>
+  <data name="tmiShowStaticMembers.Text" xml:space="preserve">
+    <value>Statické členy</value>
+  </data>
+  <data name="tmiShowFlatNamespaces.Size" type="System.Drawing.Size, System.Drawing">
+    <value>200, 22</value>
+  </data>
+  <data name="tmiShowFlatNamespaces.Text" xml:space="preserve">
+    <value>Ploché jmenné prostory</value>
+  </data>
+  <data name="tdbShow.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
+        YQUAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAgxJREFUOE+lkvtL
+        U2EYx+0PEbtpFwnBKPGKiJImGP0gYhIYs1E5GF5gIxkpA00JRSmMEF0ohMh+GaRWYlqabMVcNdS2QpaI
+        VqiDIYhk397vA6fXhCjyhYdzeM/5fp7vczkAdeL2cwho7v/wWzT1zcN+Pwhr51uY2/y41PQaF+wzKKiZ
+        QvaN58g0jyLd5KEUcQbg+84P/Cm2tncQjW3j68YWIqubCC3FcOJc478BAuGoZM6zvoRnakXEruEIjhc4
+        /g5gZop9c+voGAyLbQIfeBZxLL9BA1jzXvuGbWamuKh+GmmVbswE19A59FEBbmoAG7YbsLtm2mZmiml9
+        cvabNDwpz6YB7LYBoMXCumkJr7LOmnnHzBQ/9X2Bo2cOibm1GsBREbAQiYmw/8lnuCeWkVzcgnZlnw1j
+        3HV/wuNXK6i/9x5Hc6wawDlTXHbLJ+LZUBQPRyKwdQdxutwl1h+NLXHh5Ht1ewBHsiwawCW57HyDAfWR
+        dvl0uhZQ1eqX8aVc7EKLqrum651ATLf9OJx5XQM4KmY0xPzZ0hFAiQJnXB0WwME0E3IsL5B17ZlADqWb
+        NYDrOepdlcysmTWWOrxqbceRWtaLk0VO1XW72D5Vckd2gMBfq8zdpmUG62NJvKM4+XyziDk24xmfWoGE
+        s1c0gHPmbrPTpHNJKOCo2G1mZs20zcwUJ5yp1AB5+8/zEwgF5GMVDxh4AAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="tdbShow.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 22</value>
+  </data>
+  <data name="tdbShow.Text" xml:space="preserve">
+    <value>Zobrazit</value>
+  </data>
+  <data name="tsbBack.Text" xml:space="preserve">
+    <value>Zpět</value>
+  </data>
+  <data name="tsbForward.Text" xml:space="preserve">
+    <value>Vpřed</value>
+  </data>
 </root>

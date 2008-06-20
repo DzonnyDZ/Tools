@@ -177,34 +177,35 @@
   <data name="OK" xml:space="preserve">
     <value>OK</value>
   </data>
-  <data name="OK_access" xml:space="preserve" type="System.Char">
+  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="OK_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>O</value>
   </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
-  <data name="Cancel_access" xml:space="preserve" type="System.Char">
+  <data name="Cancel_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>C</value>
   </data>
   <data name="Yes" xml:space="preserve">
     <value>Yes</value>
   </data>
-  <data name="Yes_access" xml:space="preserve" type="System.Char">
+  <data name="Yes_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>Y</value>
   </data>
   <data name="No" xml:space="preserve">
     <value>No</value>
   </data>
-  <data name="No_access" xml:space="preserve" type="System.Char">
+  <data name="No_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>N</value>
   </data>
   <data name="Abort" xml:space="preserve">
     <value>Abort</value>
   </data>
-  <data name="Abort_access" xml:space="preserve" type="System.Char">
+  <data name="Abort_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>A</value>
   </data>
-  <data name="Retry_access" xml:space="preserve" type="System.Char">
+  <data name="Retry_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>R</value>
   </data>
   <data name="Retry" xml:space="preserve">
@@ -213,13 +214,16 @@
   <data name="Ignore" xml:space="preserve">
     <value>Ignore</value>
   </data>
-  <data name="Ignore_access" xml:space="preserve" type="System.Char">
+  <data name="Ignore_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>I</value>
   </data>
-  <data name="Help_access" xml:space="preserve" type="System.Char">
+  <data name="Help_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>H</value>
   </data>
   <data name="Help" xml:space="preserve">
     <value>Help</value>
+  </data>
+  <data name="Start0End1" xml:space="preserve">
+    <value>start {0}, end {1}</value>
   </data>
 </root>

@@ -26,10 +26,10 @@ Namespace IOt
                 Me.StartPosition = StartPosition
                 Me.ConstrainedLenght = Lenght
             Else
-                Throw New NotSupportedException("Stream must support reading and seeking")
+                Throw New NotSupportedException(ResourcesT.Exceptions.StreamMustSupportReadingAndSeeking)
             End If
-            If Length < 0 Then Throw New ArgumentException("Lenght must be greater than or equal to zero", "Length")
-            If Length > 0 AndAlso StartPosition + Length > Stream.Length Then Throw New ArgumentException("Size of constrained stream must fit into base stream.")
+            If Length < 0 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "Lenght"), "Length")
+            If Length > 0 AndAlso StartPosition + Length > Stream.Length Then Throw New ArgumentException(ResourcesT.Exceptions.SizeOfConstrainedStreamMustFitIntoBaseStream)
         End Sub
         ''' <summary>Gets a value indicating whether the current stream supports reading.</summary>
         ''' <returns>Always true</returns>
@@ -140,7 +140,7 @@ Namespace IOt
         ''' <exception cref="System.NotSupportedException">Always: The stream does not support both writing and seeking, such as if the stream is constructed from a pipe or console output.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Public Overrides Sub SetLength(ByVal value As Long)
-            Throw New NotSupportedException("ConstrainedReadonlyStream supports neither writing nor seeking")
+            Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.SupportsNeitherWritingNorSeeking, "ConstrainedReadonlyStream"))
         End Sub
         ''' <summary>Throws <see cref="System.NotSupportedException"/></summary>
         ''' <param name="offset">Ignored</param>
@@ -149,7 +149,7 @@ Namespace IOt
         ''' <exception cref="System.NotSupportedException">Always: The stream does not support writing.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Public Overrides Sub Write(ByVal buffer() As Byte, ByVal offset As Integer, ByVal count As Integer)
-            Throw New NotSupportedException("ConstrainedReadonlyStream doesn't support writing")
+            Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.DoesnTSupportWriting, "ConstrainedReadonlyStream"))
         End Sub
         ''' <summary>Returns an enumerator that iterates through the collection.</summary>
         ''' <returns>A <see cref="System.Collections.Generic.IEnumerator(Of T1)"/> that can be used to iterate through the collection.</returns>
@@ -168,7 +168,7 @@ Namespace IOt
         ''' <exception cref="ArgumentException">Specified <paramref name="index"/> is invalid</exception>
         Default Public ReadOnly Property Item(ByVal index As Long) As Byte Implements CollectionsT.GenericT.IReadOnlyIndexable(Of Byte, Long).Item
             Get
-                If index < 0 OrElse index >= ConstrainedLenght Then Throw New ArgumentOutOfRangeException("index", "index is out of range")
+                If index < 0 OrElse index >= ConstrainedLenght Then Throw New ArgumentOutOfRangeException("index")
                 Dim OldP As Long = Position
                 Try
                     Position = index
@@ -215,7 +215,7 @@ Namespace IOt
         ''' <summary>String representation</summary>
         Public Overrides Function ToString() As String
             If Me.Length > 0 Then
-                Return String.Format("start {0}, end {1}", Hex(TranslatePosition(0)), Hex(TranslatePosition(Length - 1)))
+                Return String.Format(My.Resources.Start0End1, Hex(TranslatePosition(0)), Hex(TranslatePosition(Length - 1)))
             Else
                 Return "<0>"
             End If

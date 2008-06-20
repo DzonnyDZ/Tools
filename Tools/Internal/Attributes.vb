@@ -173,7 +173,7 @@ Namespace InternalT
             ''' <exception cref="InvalidOperationException"><paramref name="a"/> doesn't contain value of type <see cref="System.Type"/></exception>
             Public Shared Narrowing Operator CType(ByVal a As TypeOrInt32) As Type
                 If a.Type Is Nothing Then
-                    Throw New InvalidOperationException("This TypeOrInt32 cannot be converted to Type because it doesn't contain Type.")
+                    Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.This0CannotBeConvertedTo1BecauseItDoesnTContain1, "TypeOrInt32", "Type"))
                 Else
                     Return a.Type
                 End If
@@ -184,7 +184,7 @@ Namespace InternalT
             ''' <exception cref="InvalidOperationException"><paramref name="a"/> doesn't contain value of type <see cref="System.Int32"/></exception>
             Public Shared Narrowing Operator CType(ByVal a As TypeOrInt32) As Int32
                 If a.Int32 Is Nothing Then
-                    Throw New InvalidOperationException("This TypeOrInt32 cannot be converted to Int32 because it doesn't contain Int32.")
+                    Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.This0CannotBeConvertedTo1BecauseItDoesnTContain1, "TypeOrInt32", "Int32"))
                 Else
                     Return a.Int32
                 End If
@@ -227,7 +227,7 @@ Namespace InternalT
                 Return _Major
             End Get
             Set(ByVal value As Integer)
-                If value < 0 Then Throw New ArgumentOutOfRangeException("value", "Version component must be greater than or equal to zero")
+                If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
                 _Major = value
             End Set
         End Property
@@ -239,7 +239,7 @@ Namespace InternalT
                 Return _Minor
             End Get
             Set(ByVal value As Integer)
-                If value < 0 Then Throw New ArgumentOutOfRangeException("value", "Version component must be greater than or equal to zero")
+                If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
                 _Minor = value
             End Set
         End Property
@@ -251,7 +251,7 @@ Namespace InternalT
                 Return _Build
             End Get
             Set(ByVal value As Integer)
-                If value < 0 Then Throw New ArgumentOutOfRangeException("value", "Version component must be greater than or equal to zero")
+                If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
                 _Build = value
             End Set
         End Property
@@ -263,7 +263,7 @@ Namespace InternalT
                 Return _Revision
             End Get
             Set(ByVal value As Integer)
-                If value < 0 Then Throw New ArgumentOutOfRangeException("value", "Version component must be greater than or equal to zero")
+                If value < 0 Then Throw New ArgumentOutOfRangeException("value", ResourcesT.Exceptions.VersionComponentMustBeGreaterThanOrEqualToZero)
                 _Revision = value
             End Set
         End Property

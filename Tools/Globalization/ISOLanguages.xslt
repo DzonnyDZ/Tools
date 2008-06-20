@@ -15,6 +15,7 @@
 
     <xsl:template match="/">
         <xsl:call-template name="header-comment"/>
+        <xsl:text>'Localize:ISO languages (Localization of this auto-generated file was skipped)&#xD;&#xA;</xsl:text>
         <xsl:if test="$namespace!=''">
             <xsl:text>Namespace </xsl:text>
             <xsl:value-of select="$namespace"/>

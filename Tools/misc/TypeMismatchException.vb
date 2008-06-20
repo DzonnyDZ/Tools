@@ -71,10 +71,10 @@ Public Class TypeMismatchException : Inherits ArgumentException
     ''' <returns>Exception message</returns>
     ''' <remarks>Either of both arguments can be null and appropriate message will be created</remarks>
     Protected Shared Function CreateMessage$(Optional ByVal ActualValue As Object = Nothing, Optional ByVal ExpectedType As Type = Nothing)
-        If ActualValue Is Nothing AndAlso ExpectedType Is Nothing Then Return "Value of some type was passed where it is not acceptable."
-        If ActualValue Is Nothing Then Return String.Format("Only values of type {0} are acceptable", ExpectedType.FullName)
-        If ExpectedType Is Nothing Then Return String.Format("Value of type {0} is not acceptable.", ActualValue.GetType.FullName)
-        Return String.Format("Value of unexpected type {0}. Expected {1}.", ActualValue.GetType.Name, ExpectedType.Name) 'Localize:Message
+        If ActualValue Is Nothing AndAlso ExpectedType Is Nothing Then Return ResourcesT.Exceptions.ValueOfSomeTypeWasPassedWhereItIsNotAcceptable
+        If ActualValue Is Nothing Then Return String.Format(ResourcesT.Exceptions.OnlyValuesOfType0AreAcceptable, ExpectedType.FullName)
+        If ExpectedType Is Nothing Then Return String.Format(ResourcesT.Exceptions.ValueOfType0IsNotAcceptable, ActualValue.GetType.FullName)
+        Return String.Format(ResourcesT.Exceptions.ValueOfUnexpectedType0Expected1, ActualValue.GetType.Name, ExpectedType.Name)
     End Function
 
     ''' <summary>Contains value of the <see cref="ActualValue"/> property</summary>

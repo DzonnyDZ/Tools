@@ -62,7 +62,7 @@ Public Module TypeTools
         ElseIf GetType(UInteger).Equals(EType) Then : Return Value.ToUInt32(System.Globalization.CultureInfo.InvariantCulture)
         ElseIf GetType(Long).Equals(EType) Then : Return Value.ToInt64(System.Globalization.CultureInfo.InvariantCulture)
         ElseIf GetType(ULong).Equals(EType) Then : Return Value.ToUInt64(System.Globalization.CultureInfo.InvariantCulture)
-        Else : Throw New ArgumentException(String.Format("Unknown underlying type {0}", EType.Name))
+        Else : Throw New ArgumentException(String.Format(ResourcesT.Exceptions.UnknownUnderlyingType0, EType.Name))
         End If
     End Function
     ''' <summary>Gets name of given enumeration value</summary>
@@ -85,7 +85,7 @@ Public Module TypeTools
     ''' <returns><see cref="Reflection.FieldInfo"/> that represents constant enum member of type <paramref name="EnumType"/> with name <paramref name="name"/>. Null if such constant doesnot exists.</returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration</exception>
     Public Function GetConstant(ByVal name As String, ByVal EnumType As Type) As Reflection.FieldInfo
-        If Not EnumType.IsEnum Then Throw New ArgumentException("Type must be enumeration") 'Localize exception
+        If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "Type"), "Type")
         Dim field = EnumType.GetField(name, Reflection.BindingFlags.Static Or Reflection.BindingFlags.Public)
         If field Is Nothing Then Return Nothing
         If Not field.IsLiteral Then Return Nothing
@@ -113,7 +113,7 @@ Public Module TypeTools
     ''' <returns>Value of constant with name <paramref name="name"/> in type <paramref name="EnumType"/></returns>
     Public Function GetValue(ByVal name$, ByVal EnumType As Type) As [Enum]
         Dim cns = GetConstant(name, EnumType)
-        If cns Is Nothing Then Throw New ArgumentException(String.Format("Constant {0} does not exist in type {1}", name, EnumType.Name))
+        If cns Is Nothing Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Constant0DoesNotExistInType1, name, EnumType.Name))
         Return cns.GetValue(Nothing)
     End Function
     ''' <summary>Gets value of enum member</summary>
@@ -157,7 +157,7 @@ Public Module TypeTools
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal Separator As String) As [Enum]
-        If Not EnumType.IsEnum Then Throw New ArgumentException("Type must be enumeration", "EnumType") 'Localize exception
+        If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "EnumType"), "EnumType") 'Localize exception
         If [Enum].GetUnderlyingType(EnumType).Equals(GetType(SByte)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Short)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Integer)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Long)) Then
             Dim ret As Long = 0
             For Each item In Flags.Split(Separator)
@@ -169,7 +169,7 @@ Public Module TypeTools
             Dim ret As ULong = 0
             For Each item In Flags.Split(Separator)
                 If IsNumeric(item) AndAlso CDec(item) >= 0 Then : ret = ret Or CULng(item)
-                ElseIf IsNumeric(item) Then : Throw New ArgumentException("Enumeration does not allow negative values")
+                ElseIf IsNumeric(item) Then : Throw New ArgumentException(ResourcesT.Exceptions.EnumerationDoesNotAllowNegativeValues)
                 Else : ret = ret Or CType(GetValue(item, EnumType).GetValue, ULong) : End If
             Next
             Return [Enum].ToObject(EnumType, GetValueInEnumBaseType(EnumType, ret))

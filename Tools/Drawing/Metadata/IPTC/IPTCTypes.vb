@@ -2544,4 +2544,3 @@ Namespace DrawingT.MetadataT
     End Class
 #End If
 End Namespace
-'Localize: Localization finished here!

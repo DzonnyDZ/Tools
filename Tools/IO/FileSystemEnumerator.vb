@@ -40,7 +40,7 @@ Namespace IOt
                 If _Current IsNot Nothing Then
                     Return _Current
                 Else
-                    Throw New InvalidOperationException("The enumeration has not started yet or has already finished.")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.TheEnumerationHasNotStartedYetOrHasAlreadyFinished)
                 End If
             End Get
         End Property
@@ -166,7 +166,7 @@ Namespace IOt
             End Get
             <DebuggerStepThrough()> Set(ByVal value As Func(Of String, FilterReasons, Boolean))
                 If value Is Nothing Then Throw New ArgumentNullException("value")
-                If _Filter IsNot Nothing Then Throw New InvalidOperationException("Property filter has already been set and it cannot be changed")
+                If _Filter IsNot Nothing Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.Property0HasAlreadyBeenSetAndItCannotBeChanged, "Filter"))
                 _Filter = value
             End Set
         End Property

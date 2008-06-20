@@ -243,7 +243,7 @@
     <Compile Include="misc\IReportsChange.vb" />
     <Compile Include="misc\Box.vb" />
     <Compile Include="misc\misc.vb" />
-    <Compile Include="misc\Numbers.vb" />
+    <Compile Include="Extensions\Numbers.vb" />
     <Compile Include="misc\TimeSpanFormattable.vb" />
     <Compile Include="misc\TriBool.vb" />
     <Compile Include="misc\TypeMismatchException.vb" />
@@ -646,9 +646,9 @@
     <None Include="Reflection\Resources\BackwardReference.png" />
     <None Include="Reflection\Resources\ForwardReference.png" />
     <None Include="Resources\CommentHS.png" />
-      <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx" >
-          <DependentUpon>IPTCResources.resx</DependentUpon>
-      </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
+      <DependentUpon>IPTCResources.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
       <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
@@ -719,6 +719,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">
       <SubType>Designer</SubType>
@@ -729,6 +730,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.cs.resx">
       <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.cs.resx">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>

@@ -22,14 +22,14 @@ Partial Public Class MathT
     ''' <remarks><seealso cref="Max"/></remarks>
     <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChange:="12/20/2006")> _
     Public Shared Function Min(Of T As IComparable(Of T))(ByVal Numbers As IEnumerable(Of T)) As T
-        If Numbers Is Nothing Then Throw New ArgumentNullException("Numbers", "Numbers cannot be null")
+        If Numbers Is Nothing Then Throw New ArgumentNullException("Numbers")
         Dim Current As Box(Of T) = Nothing
         For Each itm As T In Numbers
             If Current Is Nothing OrElse itm.CompareTo(Current) < 0 Then
                 Current = itm
             End If
         Next itm
-        If Current Is Nothing Then Throw New ArgumentException("Numbers", "Numbers must contain at least one item.")
+        If Current Is Nothing Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustContainAtLeastOneItem, "Numbers", 1), "Numbers")
         Return Current
     End Function
     ''' <summary>Finds the biggest of parameters</summary>
@@ -52,14 +52,14 @@ Partial Public Class MathT
     ''' <remarks><seealso cref="Min"/></remarks>
     <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(Math), LastChange:="12/20/2006")> _
     Public Shared Function Max(Of T As IComparable(Of T))(ByVal Numbers As IEnumerable(Of T)) As T
-        If Numbers Is Nothing Then Throw New ArgumentNullException("Numbers", "Numbers cannot be null")
+        If Numbers Is Nothing Then Throw New ArgumentNullException("Numbers")
         Dim Current As Box(Of T) = Nothing
         For Each itm As T In Numbers
             If Current Is Nothing OrElse itm.CompareTo(Current) > 0 Then
                 Current = itm
             End If
         Next itm
-        If Current Is Nothing Then Throw New ArgumentException("Numbers", "Numbers must contain at least one item.")
+        If Current Is Nothing Then Throw New ArgumentException("Numbers", String.Format(ResourcesT.Exceptions.MustContainAtLeastOneItem, "Numbers"))
         Return Current
     End Function
 End Class

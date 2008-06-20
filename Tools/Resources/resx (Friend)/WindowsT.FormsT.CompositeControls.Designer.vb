@@ -119,6 +119,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Base Types.
+        '''</summary>
+        Friend Shared ReadOnly Property BaseTypes() As String
+            Get
+                Return ResourceManager.GetString("BaseTypes", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Gets or sets value idicating if keywords are case sensitive.
         '''</summary>
         Friend Shared ReadOnly Property CaseSensitive_d() As String
@@ -133,6 +142,33 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property Changed() As String
             Get
                 Return ResourceManager.GetString("Changed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets text of ColumnHeader which displays CodePage of encoding. Applicable only when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property CodePageColumnHeaderText_d() As String
+            Get
+                Return ResourceManager.GetString("CodePageColumnHeaderText_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Defines width of ColumnHeader which displays CodePage of encoding. Applicable only when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property CodePageColumnHeaderWidht_d() As String
+            Get
+                Return ResourceManager.GetString("CodePageColumnHeaderWidht_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets order of columns of ListView when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property ColumnOrder_d() As String
+            Get
+                Return ResourceManager.GetString("ColumnOrder_d", resourceCulture)
             End Get
         End Property
         
@@ -160,6 +196,43 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property DeleteMenuState_d() As String
             Get
                 Return ResourceManager.GetString("DeleteMenuState_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets text of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayNameColumnHeaderText_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayNameColumnHeaderText_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Defines width of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayNameColumnHeaderWidth_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayNameColumnHeaderWidth_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets format string used to display name of encodings in list.
+        '''{0} is replaced by user friendly encoding name, {1} is replaced with IANA-registered name and {2} is replaced with code page number.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayStype_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayStype_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised when Style is ListView or ListBox and user double clicks some item or raised when item is selected and user presses the enter key not depending on Style..
+        '''</summary>
+        Friend Shared ReadOnly Property ItemDoubleClick_d() As String
+            Get
+                Return ResourceManager.GetString("ItemDoubleClick_d", resourceCulture)
             End Get
         End Property
         
@@ -227,6 +300,24 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Gets or sets text of ColumnHeader which displays Name of encoding. Applicable only when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property NameColumnHeaderText_d() As String
+            Get
+                Return ResourceManager.GetString("NameColumnHeaderText_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Defines width of ColumnHeader which displays Name of encoding. Applicable only when Style is ListView.
+        '''</summary>
+        Friend Shared ReadOnly Property NameColumnHeaderWidth_d() As String
+            Get
+                Return ResourceManager.GetString("NameColumnHeaderWidth_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to New.
         '''</summary>
         Friend Shared ReadOnly Property New_() As String
@@ -254,6 +345,33 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to List of assemblies or any other objects listed at top-level of tree-view.
+        '''</summary>
+        Friend Shared ReadOnly Property Objects_d() As String
+            Get
+                Return ResourceManager.GetString("Objects_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Please wait....
+        '''</summary>
+        Friend Shared ReadOnly Property PleaseWait() As String
+            Get
+                Return ResourceManager.GetString("PleaseWait", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to References.
+        '''</summary>
+        Friend Shared ReadOnly Property References() As String
+            Get
+                Return ResourceManager.GetString("References", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Raised after Reset menu item is clicked.
         '''</summary>
         Friend Shared ReadOnly Property Reset_d() As String
@@ -268,6 +386,240 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property ResetMenuState_d() As String
             Get
                 Return ResourceManager.GetString("ResetMenuState_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets code page identifier of selected encoding or tries to select encoding with given code page.
+        '''</summary>
+        Friend Shared ReadOnly Property SelectedCodePage_d() As String
+            Get
+                Return ResourceManager.GetString("SelectedCodePage_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after the SelectedIndex property is changed.
+        '''</summary>
+        Friend Shared ReadOnly Property SelectedIndexChanged_d() As String
+            Get
+                Return ResourceManager.GetString("SelectedIndexChanged_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets The Internet Assigned Numbers Authority (IANA) name of selected encoding or tries to select encoding with given name.
+        '''</summary>
+        Friend Shared ReadOnly Property SelectedName_d() As String
+            Get
+                Return ResourceManager.GetString("SelectedName_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if base types are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowBaseTypes_d() As String
+            Get
+                Return ResourceManager.GetString("ShowBaseTypes_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after property that controls which members are displayed in ListView was changed..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowChanged_d() As String
+            Get
+                Return ResourceManager.GetString("ShowChanged_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if CTors are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowCTors_d() As String
+            Get
+                Return ResourceManager.GetString("ShowCTors_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Events are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowEvents_d() As String
+            Get
+                Return ResourceManager.GetString("ShowEvents_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Fields are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowFields_d() As String
+            Get
+                Return ResourceManager.GetString("ShowFields_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if namespaces are shown flat (true) or hierarchically (false)..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowFlatNamespaces_d() As String
+            Get
+                Return ResourceManager.GetString("ShowFlatNamespaces_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if generic arguments (type parameters) are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowGenericArguments_d() As String
+            Get
+                Return ResourceManager.GetString("ShowGenericArguments_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Global members (parts of properties and events) are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowGlobalMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowGlobalMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if inherited members are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowInheritedMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowInheritedMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Initializers are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowInitializers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowInitializers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if instance members are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowInstanceMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowInstanceMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Internal members are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowInternalMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowInternalMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Methods are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowMethods_d() As String
+            Get
+                Return ResourceManager.GetString("ShowMethods_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if nested types are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowNestedTypes_d() As String
+            Get
+                Return ResourceManager.GetString("ShowNestedTypes_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if private members are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowPrivateMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowPrivateMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if properties are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowProperties_d() As String
+            Get
+                Return ResourceManager.GetString("ShowProperties_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Protected members are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowProtectedMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowProtectedMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if references are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowReferences_d() As String
+            Get
+                Return ResourceManager.GetString("ShowReferences_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if Show menu is shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowShowMenu_d() As String
+            Get
+                Return ResourceManager.GetString("ShowShowMenu_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if special members (parts of properties and events) are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowSpecialMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowSpecialMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if static members are shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowStaticMembers_d() As String
+            Get
+                Return ResourceManager.GetString("ShowStaticMembers_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets value indicating if the toolbar is shown..
+        '''</summary>
+        Friend Shared ReadOnly Property ShowToolbar_d() As String
+            Get
+                Return ResourceManager.GetString("ShowToolbar_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Specifies column and order of sorting. Applies only when Style is ListBox..
+        '''</summary>
+        Friend Shared ReadOnly Property Sorting_d() As String
+            Get
+                Return ResourceManager.GetString("Sorting_d", resourceCulture)
             End Get
         End Property
         
@@ -304,6 +656,15 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property StatusState_d() As String
             Get
                 Return ResourceManager.GetString("StatusState_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Defines control used for showing encodings.
+        '''</summary>
+        Friend Shared ReadOnly Property Style_d() As String
+            Get
+                Return ResourceManager.GetString("Style_d", resourceCulture)
             End Get
         End Property
         

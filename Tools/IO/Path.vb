@@ -41,10 +41,10 @@ Namespace IOt
                 Return _Path
             End Get
             Set(ByVal value As String)
-                If value Is Nothing Then Throw New ArgumentNullException("value", "Path cannot be based on null string")
-                If value.Trim = "" Then Throw New ArgumentException("Path cannot be based on an empty string or string containing only whitespaces")
+                If value Is Nothing Then Throw New ArgumentNullException("value", ResourcesT.Exceptions.PathCannotBeBasedOnNullString)
+                If value.Trim = "" Then Throw New ArgumentException(ResourcesT.Exceptions.PathCannotBeBasedOnAnEmptyStringOrStringContainingOnlyWhitespaces)
                 For Each ch As Char In System.IO.Path.GetInvalidPathChars
-                    If value.Contains(ch) Then Throw New ArgumentException(String.Format("Path string contains invalid character '{0}'", ch))
+                    If value.Contains(ch) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.PathStringContainsInvalidCharacter0, ch))
                 Next ch
                 _Path = value
             End Set
@@ -446,9 +446,9 @@ Namespace IOt
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Levels"/> is less then zero -or- <paramref name="Levels"/> is greater or equal to number of segments in current path</exception>
         Public Sub Up(Optional ByVal Levels As Integer = 1)
             If Levels = 0 Then Exit Sub
-            If Levels < 0 Then Throw New ArgumentOutOfRangeException("Levels", "Levels should be greater than zero")
+            If Levels < 0 Then Throw New ArgumentOutOfRangeException("Levels", String.Format(ResourcesT.Exceptions.ShouldBeGreaterThanZero, "Levels"))
             Dim Segments As String() = Me.Segments
-            If Levels >= Segments.Length Then Throw New ArgumentOutOfRangeException("Levels", String.Format("The path's depth is not enough to remove {0} levels", Levels))
+            If Levels >= Segments.Length Then Throw New ArgumentOutOfRangeException("Levels", String.Format(ResourcesT.Exceptions.ThePathSDepthIsNotEnoughToRemove0Levels, Levels))
             Dim NewArr(Segments.Length - Levels - 1) As String
             Array.ConstrainedCopy(Segments, 0, NewArr, 0, NewArr.Length)
             Me.Path = IOt.Path.Join(NewArr).Path
@@ -475,7 +475,7 @@ Namespace IOt
         ''' <param name="Segments">Parts to maked path of</param>
         ''' <exception cref="ArgumentNullException">Segments is null</exception>
         Public Shared Function Join(ByVal Segments As IEnumerable(Of String)) As Path
-            If Segments Is Nothing Then Throw New ArgumentNullException("Segments", "Segments is null")
+            If Segments Is Nothing Then Throw New ArgumentNullException("Segments")
             Dim ret As New System.Text.StringBuilder
             Dim i As Integer = 0
             For Each Part As String In Segments
@@ -669,7 +669,7 @@ Namespace IOt
                 Next dir
                 Return ret
             Else
-                Throw New FileNotFoundException("Source file or directory not found", Path)
+                Throw New FileNotFoundException(ResourcesT.Exceptions.SourceFileOrDirectoryNotFound, Path)
             End If
         End Function
         ''' <summary>Moves file or directory from one location to another</summary>
@@ -710,7 +710,7 @@ Namespace IOt
                     End Try
                 Next dir
             Else
-                Throw New FileNotFoundException("Source file or directory not found", Path)
+                Throw New FileNotFoundException(ResourcesT.Exceptions.SourceFileOrDirectoryNotFound, Path)
             End If
         End Function
 #End Region

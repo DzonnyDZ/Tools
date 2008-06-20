@@ -32,9 +32,9 @@ Namespace IOt
 #End If
             If Stream Is Nothing Then Throw New ArgumentNullException("Stream")
             If Data Is Nothing Then Throw New ArgumentNullException("Data")
-            If Position < 0 OrElse Position >= Stream.Length Then Throw New ArgumentOutOfRangeException("Position must be within range <0; Stream.Length)", "Position")
-            If BytesToReplace < 0 OrElse BytesToReplace + Position >= Stream.Length + 1 Then Throw New ArgumentException("BytesToReplace must by within range <0; Stream.Lenght - Position)", "BytesToReplace")
-            If Chunk <= 0 Then Throw New ArgumentOutOfRangeException("Chunk", "Chunk must be positive")
+            If Position < 0 OrElse Position >= Stream.Length Then Throw New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.MustBeWithinRange12, "Position", 0, "Stream.Length"), "Position")
+            If BytesToReplace < 0 OrElse BytesToReplace + Position >= Stream.Length + 1 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeWithinRange12, "BytesToReplace", 0, "Stream.Lenght - Position"), "BytesToReplace")
+            If Chunk <= 0 Then Throw New ArgumentOutOfRangeException("Chunk", String.Format(ResourcesT.Exceptions.MustBePositive, "Chunk"))
             If BytesToReplace >= Data.Length Then
                 Stream.Seek(Position, SeekOrigin.Begin)
                 Stream.Write(Data, 0, Data.Length)

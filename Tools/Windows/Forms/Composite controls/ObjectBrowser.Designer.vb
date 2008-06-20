@@ -25,15 +25,15 @@
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(ObjectBrowser))
-            Me.tvwObjects = New System.Windows.Forms.TreeView
-            Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
-            Me.lvwMembers = New System.Windows.Forms.ListView
-            Me.cohItem = New System.Windows.Forms.ColumnHeader
             Me.splMain = New System.Windows.Forms.SplitContainer
             Me.splLeft = New System.Windows.Forms.SplitContainer
+            Me.tvwObjects = New System.Windows.Forms.TreeView
+            Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
             Me.rtbShort = New System.Windows.Forms.RichTextBox
             Me.splRight = New System.Windows.Forms.SplitContainer
             Me.splTopRight = New System.Windows.Forms.SplitContainer
+            Me.lvwMembers = New System.Windows.Forms.ListView
+            Me.cohItem = New System.Windows.Forms.ColumnHeader
             Me.prgProperties = New System.Windows.Forms.PropertyGrid
             Me.lblObjType = New System.Windows.Forms.Label
             Me.tosMenu = New System.Windows.Forms.ToolStrip
@@ -73,361 +73,458 @@
             Me.tosMenu.SuspendLayout()
             Me.SuspendLayout()
             '
+            'splMain
+            '
+            Me.splMain.AccessibleDescription = Nothing
+            Me.splMain.AccessibleName = Nothing
+            resources.ApplyResources(Me.splMain, "splMain")
+            Me.splMain.BackgroundImage = Nothing
+            Me.splMain.Font = Nothing
+            Me.splMain.Name = "splMain"
+            '
+            'splMain.Panel1
+            '
+            Me.splMain.Panel1.AccessibleDescription = Nothing
+            Me.splMain.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splMain.Panel1, "splMain.Panel1")
+            Me.splMain.Panel1.BackgroundImage = Nothing
+            Me.splMain.Panel1.Controls.Add(Me.splLeft)
+            Me.splMain.Panel1.Font = Nothing
+            '
+            'splMain.Panel2
+            '
+            Me.splMain.Panel2.AccessibleDescription = Nothing
+            Me.splMain.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splMain.Panel2, "splMain.Panel2")
+            Me.splMain.Panel2.BackgroundImage = Nothing
+            Me.splMain.Panel2.Controls.Add(Me.splRight)
+            Me.splMain.Panel2.Font = Nothing
+            '
+            'splLeft
+            '
+            Me.splLeft.AccessibleDescription = Nothing
+            Me.splLeft.AccessibleName = Nothing
+            resources.ApplyResources(Me.splLeft, "splLeft")
+            Me.splLeft.BackgroundImage = Nothing
+            Me.splLeft.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+            Me.splLeft.Font = Nothing
+            Me.splLeft.Name = "splLeft"
+            '
+            'splLeft.Panel1
+            '
+            Me.splLeft.Panel1.AccessibleDescription = Nothing
+            Me.splLeft.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splLeft.Panel1, "splLeft.Panel1")
+            Me.splLeft.Panel1.BackgroundImage = Nothing
+            Me.splLeft.Panel1.Controls.Add(Me.tvwObjects)
+            Me.splLeft.Panel1.Font = Nothing
+            '
+            'splLeft.Panel2
+            '
+            Me.splLeft.Panel2.AccessibleDescription = Nothing
+            Me.splLeft.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splLeft.Panel2, "splLeft.Panel2")
+            Me.splLeft.Panel2.BackgroundImage = Nothing
+            Me.splLeft.Panel2.Controls.Add(Me.rtbShort)
+            Me.splLeft.Panel2.Font = Nothing
+            '
             'tvwObjects
             '
-            Me.tvwObjects.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tvwObjects.AccessibleDescription = Nothing
+            Me.tvwObjects.AccessibleName = Nothing
+            resources.ApplyResources(Me.tvwObjects, "tvwObjects")
+            Me.tvwObjects.BackgroundImage = Nothing
+            Me.tvwObjects.Font = Nothing
             Me.tvwObjects.HideSelection = False
-            Me.tvwObjects.ImageIndex = 0
             Me.tvwObjects.ImageList = Me.imlImages
-            Me.tvwObjects.Location = New System.Drawing.Point(0, 0)
             Me.tvwObjects.Name = "tvwObjects"
-            Me.tvwObjects.SelectedImageIndex = 0
-            Me.tvwObjects.Size = New System.Drawing.Size(314, 443)
-            Me.tvwObjects.TabIndex = 0
             '
             'imlImages
             '
             Me.imlImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit
-            Me.imlImages.ImageSize = New System.Drawing.Size(16, 16)
+            resources.ApplyResources(Me.imlImages, "imlImages")
             Me.imlImages.TransparentColor = System.Drawing.Color.Transparent
+            '
+            'rtbShort
+            '
+            Me.rtbShort.AccessibleDescription = Nothing
+            Me.rtbShort.AccessibleName = Nothing
+            resources.ApplyResources(Me.rtbShort, "rtbShort")
+            Me.rtbShort.BackgroundImage = Nothing
+            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
+            Me.rtbShort.Name = "rtbShort"
+            Me.rtbShort.ReadOnly = True
+            '
+            'splRight
+            '
+            Me.splRight.AccessibleDescription = Nothing
+            Me.splRight.AccessibleName = Nothing
+            resources.ApplyResources(Me.splRight, "splRight")
+            Me.splRight.BackgroundImage = Nothing
+            Me.splRight.Font = Nothing
+            Me.splRight.Name = "splRight"
+            '
+            'splRight.Panel1
+            '
+            Me.splRight.Panel1.AccessibleDescription = Nothing
+            Me.splRight.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splRight.Panel1, "splRight.Panel1")
+            Me.splRight.Panel1.BackgroundImage = Nothing
+            Me.splRight.Panel1.Controls.Add(Me.splTopRight)
+            Me.splRight.Panel1.Font = Nothing
+            '
+            'splRight.Panel2
+            '
+            Me.splRight.Panel2.AccessibleDescription = Nothing
+            Me.splRight.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splRight.Panel2, "splRight.Panel2")
+            Me.splRight.Panel2.BackgroundImage = Nothing
+            Me.splRight.Panel2.Font = Nothing
+            '
+            'splTopRight
+            '
+            Me.splTopRight.AccessibleDescription = Nothing
+            Me.splTopRight.AccessibleName = Nothing
+            resources.ApplyResources(Me.splTopRight, "splTopRight")
+            Me.splTopRight.BackgroundImage = Nothing
+            Me.splTopRight.Font = Nothing
+            Me.splTopRight.Name = "splTopRight"
+            '
+            'splTopRight.Panel1
+            '
+            Me.splTopRight.Panel1.AccessibleDescription = Nothing
+            Me.splTopRight.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splTopRight.Panel1, "splTopRight.Panel1")
+            Me.splTopRight.Panel1.BackgroundImage = Nothing
+            Me.splTopRight.Panel1.Controls.Add(Me.lvwMembers)
+            Me.splTopRight.Panel1.Font = Nothing
+            '
+            'splTopRight.Panel2
+            '
+            Me.splTopRight.Panel2.AccessibleDescription = Nothing
+            Me.splTopRight.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splTopRight.Panel2, "splTopRight.Panel2")
+            Me.splTopRight.Panel2.BackgroundImage = Nothing
+            Me.splTopRight.Panel2.Controls.Add(Me.prgProperties)
+            Me.splTopRight.Panel2.Controls.Add(Me.lblObjType)
+            Me.splTopRight.Panel2.Font = Nothing
             '
             'lvwMembers
             '
+            Me.lvwMembers.AccessibleDescription = Nothing
+            Me.lvwMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.lvwMembers, "lvwMembers")
+            Me.lvwMembers.BackgroundImage = Nothing
             Me.lvwMembers.Columns.AddRange(New System.Windows.Forms.ColumnHeader() {Me.cohItem})
-            Me.lvwMembers.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lvwMembers.Location = New System.Drawing.Point(0, 0)
+            Me.lvwMembers.Font = Nothing
             Me.lvwMembers.MultiSelect = False
             Me.lvwMembers.Name = "lvwMembers"
-            Me.lvwMembers.Size = New System.Drawing.Size(211, 343)
             Me.lvwMembers.SmallImageList = Me.imlImages
-            Me.lvwMembers.TabIndex = 1
             Me.lvwMembers.UseCompatibleStateImageBehavior = False
             Me.lvwMembers.View = System.Windows.Forms.View.List
             '
             'cohItem
             '
-            Me.cohItem.Text = "Item"
-            Me.cohItem.Width = 208
-            '
-            'splMain
-            '
-            Me.splMain.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.splMain.Location = New System.Drawing.Point(0, 25)
-            Me.splMain.Name = "splMain"
-            '
-            'splMain.Panel1
-            '
-            Me.splMain.Panel1.Controls.Add(Me.splLeft)
-            '
-            'splMain.Panel2
-            '
-            Me.splMain.Panel2.Controls.Add(Me.splRight)
-            Me.splMain.Size = New System.Drawing.Size(749, 505)
-            Me.splMain.SplitterDistance = 314
-            Me.splMain.TabIndex = 2
-            '
-            'splLeft
-            '
-            Me.splLeft.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.splLeft.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-            Me.splLeft.Location = New System.Drawing.Point(0, 0)
-            Me.splLeft.Name = "splLeft"
-            Me.splLeft.Orientation = System.Windows.Forms.Orientation.Horizontal
-            '
-            'splLeft.Panel1
-            '
-            Me.splLeft.Panel1.Controls.Add(Me.tvwObjects)
-            '
-            'splLeft.Panel2
-            '
-            Me.splLeft.Panel2.Controls.Add(Me.rtbShort)
-            Me.splLeft.Size = New System.Drawing.Size(314, 505)
-            Me.splLeft.SplitterDistance = 443
-            Me.splLeft.TabIndex = 1
-            '
-            'rtbShort
-            '
-            Me.rtbShort.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle
-            Me.rtbShort.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.rtbShort.Font = New System.Drawing.Font("Courier New", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
-            Me.rtbShort.Location = New System.Drawing.Point(0, 0)
-            Me.rtbShort.MaxLength = 0
-            Me.rtbShort.Name = "rtbShort"
-            Me.rtbShort.ReadOnly = True
-            Me.rtbShort.Size = New System.Drawing.Size(314, 58)
-            Me.rtbShort.TabIndex = 0
-            Me.rtbShort.Text = ""
-            Me.rtbShort.WordWrap = False
-            '
-            'splRight
-            '
-            Me.splRight.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.splRight.Location = New System.Drawing.Point(0, 0)
-            Me.splRight.Name = "splRight"
-            Me.splRight.Orientation = System.Windows.Forms.Orientation.Horizontal
-            '
-            'splRight.Panel1
-            '
-            Me.splRight.Panel1.Controls.Add(Me.splTopRight)
-            Me.splRight.Size = New System.Drawing.Size(431, 505)
-            Me.splRight.SplitterDistance = 343
-            Me.splRight.TabIndex = 0
-            '
-            'splTopRight
-            '
-            Me.splTopRight.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.splTopRight.Location = New System.Drawing.Point(0, 0)
-            Me.splTopRight.Name = "splTopRight"
-            '
-            'splTopRight.Panel1
-            '
-            Me.splTopRight.Panel1.Controls.Add(Me.lvwMembers)
-            '
-            'splTopRight.Panel2
-            '
-            Me.splTopRight.Panel2.Controls.Add(Me.prgProperties)
-            Me.splTopRight.Panel2.Controls.Add(Me.lblObjType)
-            Me.splTopRight.Size = New System.Drawing.Size(431, 343)
-            Me.splTopRight.SplitterDistance = 211
-            Me.splTopRight.TabIndex = 2
+            resources.ApplyResources(Me.cohItem, "cohItem")
             '
             'prgProperties
             '
-            Me.prgProperties.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.prgProperties.Location = New System.Drawing.Point(0, 13)
+            Me.prgProperties.AccessibleDescription = Nothing
+            Me.prgProperties.AccessibleName = Nothing
+            resources.ApplyResources(Me.prgProperties, "prgProperties")
+            Me.prgProperties.BackgroundImage = Nothing
+            Me.prgProperties.Font = Nothing
             Me.prgProperties.Name = "prgProperties"
-            Me.prgProperties.Size = New System.Drawing.Size(216, 330)
-            Me.prgProperties.TabIndex = 0
             '
             'lblObjType
             '
+            Me.lblObjType.AccessibleDescription = Nothing
+            Me.lblObjType.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblObjType, "lblObjType")
             Me.lblObjType.AutoEllipsis = True
-            Me.lblObjType.Dock = System.Windows.Forms.DockStyle.Top
-            Me.lblObjType.Location = New System.Drawing.Point(0, 0)
+            Me.lblObjType.Font = Nothing
             Me.lblObjType.Name = "lblObjType"
-            Me.lblObjType.Size = New System.Drawing.Size(216, 13)
-            Me.lblObjType.TabIndex = 1
-            Me.lblObjType.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
             'tosMenu
             '
+            Me.tosMenu.AccessibleDescription = Nothing
+            Me.tosMenu.AccessibleName = Nothing
+            resources.ApplyResources(Me.tosMenu, "tosMenu")
+            Me.tosMenu.BackgroundImage = Nothing
+            Me.tosMenu.Font = Nothing
             Me.tosMenu.GripMargin = New System.Windows.Forms.Padding(0)
             Me.tosMenu.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
             Me.tosMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tdbShow, Me.tsbBack, Me.tsbForward})
-            Me.tosMenu.Location = New System.Drawing.Point(0, 0)
             Me.tosMenu.Name = "tosMenu"
-            Me.tosMenu.Size = New System.Drawing.Size(749, 25)
-            Me.tosMenu.TabIndex = 2
-            Me.tosMenu.Text = "Commands"
             '
             'tdbShow
             '
+            Me.tdbShow.AccessibleDescription = Nothing
+            Me.tdbShow.AccessibleName = Nothing
+            resources.ApplyResources(Me.tdbShow, "tdbShow")
+            Me.tdbShow.BackgroundImage = Nothing
             Me.tdbShow.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text
             Me.tdbShow.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiShowCTors, Me.tmiShowEvents, Me.tmiShowFields, Me.tmiShowGenericArguments, Me.tmiShowGlobalMembers, Me.tmiShowInheritedMembers, Me.tmiShowInitializers, Me.tmiShowInstanceMembers, Me.tmiShowInternalMembers, Me.tmiShowMethods, Me.tmiShowNestedTypes, Me.tmiShowPrivateMembers, Me.tmiShowProperties, Me.tmiShowProtectedMembers, Me.tmiShowSpecialMembers, Me.tmiShowReferences, Me.tmiShowBaseTypes, Me.tmiShowStaticMembers, Me.tmiShowFlatNamespaces})
-            Me.tdbShow.Image = CType(resources.GetObject("tdbShow.Image"), System.Drawing.Image)
-            Me.tdbShow.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.tdbShow.Name = "tdbShow"
-            Me.tdbShow.Size = New System.Drawing.Size(46, 22)
-            Me.tdbShow.Text = "Show"
             '
             'tmiShowCTors
             '
+            Me.tmiShowCTors.AccessibleDescription = Nothing
+            Me.tmiShowCTors.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowCTors, "tmiShowCTors")
+            Me.tmiShowCTors.BackgroundImage = Nothing
             Me.tmiShowCTors.Checked = True
             Me.tmiShowCTors.CheckOnClick = True
             Me.tmiShowCTors.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowCTors.Name = "tmiShowCTors"
-            Me.tmiShowCTors.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowCTors.Text = "Constructors"
+            Me.tmiShowCTors.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowEvents
             '
+            Me.tmiShowEvents.AccessibleDescription = Nothing
+            Me.tmiShowEvents.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowEvents, "tmiShowEvents")
+            Me.tmiShowEvents.BackgroundImage = Nothing
             Me.tmiShowEvents.Checked = True
             Me.tmiShowEvents.CheckOnClick = True
             Me.tmiShowEvents.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowEvents.Name = "tmiShowEvents"
-            Me.tmiShowEvents.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowEvents.Text = "Events"
+            Me.tmiShowEvents.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowFields
             '
+            Me.tmiShowFields.AccessibleDescription = Nothing
+            Me.tmiShowFields.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowFields, "tmiShowFields")
+            Me.tmiShowFields.BackgroundImage = Nothing
             Me.tmiShowFields.Checked = True
             Me.tmiShowFields.CheckOnClick = True
             Me.tmiShowFields.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowFields.Name = "tmiShowFields"
-            Me.tmiShowFields.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowFields.Text = "Fields"
+            Me.tmiShowFields.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowGenericArguments
             '
+            Me.tmiShowGenericArguments.AccessibleDescription = Nothing
+            Me.tmiShowGenericArguments.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowGenericArguments, "tmiShowGenericArguments")
+            Me.tmiShowGenericArguments.BackgroundImage = Nothing
             Me.tmiShowGenericArguments.Checked = True
             Me.tmiShowGenericArguments.CheckOnClick = True
             Me.tmiShowGenericArguments.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowGenericArguments.Name = "tmiShowGenericArguments"
-            Me.tmiShowGenericArguments.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowGenericArguments.Text = "Generic arguments"
+            Me.tmiShowGenericArguments.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowGlobalMembers
             '
+            Me.tmiShowGlobalMembers.AccessibleDescription = Nothing
+            Me.tmiShowGlobalMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowGlobalMembers, "tmiShowGlobalMembers")
+            Me.tmiShowGlobalMembers.BackgroundImage = Nothing
             Me.tmiShowGlobalMembers.Checked = True
             Me.tmiShowGlobalMembers.CheckOnClick = True
             Me.tmiShowGlobalMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowGlobalMembers.Name = "tmiShowGlobalMembers"
-            Me.tmiShowGlobalMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowGlobalMembers.Text = "Global members"
+            Me.tmiShowGlobalMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowInheritedMembers
             '
+            Me.tmiShowInheritedMembers.AccessibleDescription = Nothing
+            Me.tmiShowInheritedMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowInheritedMembers, "tmiShowInheritedMembers")
+            Me.tmiShowInheritedMembers.BackgroundImage = Nothing
             Me.tmiShowInheritedMembers.CheckOnClick = True
             Me.tmiShowInheritedMembers.Name = "tmiShowInheritedMembers"
-            Me.tmiShowInheritedMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowInheritedMembers.Text = "Inherited members"
+            Me.tmiShowInheritedMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowInitializers
             '
+            Me.tmiShowInitializers.AccessibleDescription = Nothing
+            Me.tmiShowInitializers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowInitializers, "tmiShowInitializers")
+            Me.tmiShowInitializers.BackgroundImage = Nothing
             Me.tmiShowInitializers.Checked = True
             Me.tmiShowInitializers.CheckOnClick = True
             Me.tmiShowInitializers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowInitializers.Name = "tmiShowInitializers"
-            Me.tmiShowInitializers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowInitializers.Text = "Initializers"
+            Me.tmiShowInitializers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowInstanceMembers
             '
+            Me.tmiShowInstanceMembers.AccessibleDescription = Nothing
+            Me.tmiShowInstanceMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowInstanceMembers, "tmiShowInstanceMembers")
+            Me.tmiShowInstanceMembers.BackgroundImage = Nothing
             Me.tmiShowInstanceMembers.Checked = True
             Me.tmiShowInstanceMembers.CheckOnClick = True
             Me.tmiShowInstanceMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowInstanceMembers.Name = "tmiShowInstanceMembers"
-            Me.tmiShowInstanceMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowInstanceMembers.Text = "Instance members"
+            Me.tmiShowInstanceMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowInternalMembers
             '
+            Me.tmiShowInternalMembers.AccessibleDescription = Nothing
+            Me.tmiShowInternalMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowInternalMembers, "tmiShowInternalMembers")
+            Me.tmiShowInternalMembers.BackgroundImage = Nothing
             Me.tmiShowInternalMembers.Checked = True
             Me.tmiShowInternalMembers.CheckOnClick = True
             Me.tmiShowInternalMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowInternalMembers.Name = "tmiShowInternalMembers"
-            Me.tmiShowInternalMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowInternalMembers.Text = "Internal members"
+            Me.tmiShowInternalMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowMethods
             '
+            Me.tmiShowMethods.AccessibleDescription = Nothing
+            Me.tmiShowMethods.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowMethods, "tmiShowMethods")
+            Me.tmiShowMethods.BackgroundImage = Nothing
             Me.tmiShowMethods.Checked = True
             Me.tmiShowMethods.CheckOnClick = True
             Me.tmiShowMethods.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowMethods.Name = "tmiShowMethods"
-            Me.tmiShowMethods.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowMethods.Text = "Methods"
+            Me.tmiShowMethods.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowNestedTypes
             '
+            Me.tmiShowNestedTypes.AccessibleDescription = Nothing
+            Me.tmiShowNestedTypes.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowNestedTypes, "tmiShowNestedTypes")
+            Me.tmiShowNestedTypes.BackgroundImage = Nothing
             Me.tmiShowNestedTypes.Checked = True
             Me.tmiShowNestedTypes.CheckOnClick = True
             Me.tmiShowNestedTypes.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowNestedTypes.Name = "tmiShowNestedTypes"
-            Me.tmiShowNestedTypes.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowNestedTypes.Text = "Nested types"
+            Me.tmiShowNestedTypes.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowPrivateMembers
             '
+            Me.tmiShowPrivateMembers.AccessibleDescription = Nothing
+            Me.tmiShowPrivateMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowPrivateMembers, "tmiShowPrivateMembers")
+            Me.tmiShowPrivateMembers.BackgroundImage = Nothing
             Me.tmiShowPrivateMembers.Checked = True
             Me.tmiShowPrivateMembers.CheckOnClick = True
             Me.tmiShowPrivateMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowPrivateMembers.Name = "tmiShowPrivateMembers"
-            Me.tmiShowPrivateMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowPrivateMembers.Text = "Private members"
+            Me.tmiShowPrivateMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowProperties
             '
+            Me.tmiShowProperties.AccessibleDescription = Nothing
+            Me.tmiShowProperties.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowProperties, "tmiShowProperties")
+            Me.tmiShowProperties.BackgroundImage = Nothing
             Me.tmiShowProperties.Checked = True
             Me.tmiShowProperties.CheckOnClick = True
             Me.tmiShowProperties.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowProperties.Name = "tmiShowProperties"
-            Me.tmiShowProperties.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowProperties.Text = "Properties"
+            Me.tmiShowProperties.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowProtectedMembers
             '
+            Me.tmiShowProtectedMembers.AccessibleDescription = Nothing
+            Me.tmiShowProtectedMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowProtectedMembers, "tmiShowProtectedMembers")
+            Me.tmiShowProtectedMembers.BackgroundImage = Nothing
             Me.tmiShowProtectedMembers.Checked = True
             Me.tmiShowProtectedMembers.CheckOnClick = True
             Me.tmiShowProtectedMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowProtectedMembers.Name = "tmiShowProtectedMembers"
-            Me.tmiShowProtectedMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowProtectedMembers.Text = "Protected members"
+            Me.tmiShowProtectedMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowSpecialMembers
             '
+            Me.tmiShowSpecialMembers.AccessibleDescription = Nothing
+            Me.tmiShowSpecialMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowSpecialMembers, "tmiShowSpecialMembers")
+            Me.tmiShowSpecialMembers.BackgroundImage = Nothing
             Me.tmiShowSpecialMembers.Checked = True
             Me.tmiShowSpecialMembers.CheckOnClick = True
             Me.tmiShowSpecialMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowSpecialMembers.Name = "tmiShowSpecialMembers"
-            Me.tmiShowSpecialMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowSpecialMembers.Text = "Special members"
+            Me.tmiShowSpecialMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowReferences
             '
+            Me.tmiShowReferences.AccessibleDescription = Nothing
+            Me.tmiShowReferences.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowReferences, "tmiShowReferences")
+            Me.tmiShowReferences.BackgroundImage = Nothing
             Me.tmiShowReferences.Checked = True
             Me.tmiShowReferences.CheckOnClick = True
             Me.tmiShowReferences.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowReferences.Name = "tmiShowReferences"
-            Me.tmiShowReferences.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowReferences.Text = "References"
+            Me.tmiShowReferences.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowBaseTypes
             '
+            Me.tmiShowBaseTypes.AccessibleDescription = Nothing
+            Me.tmiShowBaseTypes.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowBaseTypes, "tmiShowBaseTypes")
+            Me.tmiShowBaseTypes.BackgroundImage = Nothing
             Me.tmiShowBaseTypes.Checked = True
             Me.tmiShowBaseTypes.CheckOnClick = True
             Me.tmiShowBaseTypes.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowBaseTypes.Name = "tmiShowBaseTypes"
-            Me.tmiShowBaseTypes.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowBaseTypes.Text = "Base types"
+            Me.tmiShowBaseTypes.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowStaticMembers
             '
+            Me.tmiShowStaticMembers.AccessibleDescription = Nothing
+            Me.tmiShowStaticMembers.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowStaticMembers, "tmiShowStaticMembers")
+            Me.tmiShowStaticMembers.BackgroundImage = Nothing
             Me.tmiShowStaticMembers.Checked = True
             Me.tmiShowStaticMembers.CheckOnClick = True
             Me.tmiShowStaticMembers.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowStaticMembers.Name = "tmiShowStaticMembers"
-            Me.tmiShowStaticMembers.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowStaticMembers.Text = "Static memebers"
+            Me.tmiShowStaticMembers.ShortcutKeyDisplayString = Nothing
             '
             'tmiShowFlatNamespaces
             '
+            Me.tmiShowFlatNamespaces.AccessibleDescription = Nothing
+            Me.tmiShowFlatNamespaces.AccessibleName = Nothing
+            resources.ApplyResources(Me.tmiShowFlatNamespaces, "tmiShowFlatNamespaces")
+            Me.tmiShowFlatNamespaces.BackgroundImage = Nothing
             Me.tmiShowFlatNamespaces.Checked = True
             Me.tmiShowFlatNamespaces.CheckOnClick = True
             Me.tmiShowFlatNamespaces.CheckState = System.Windows.Forms.CheckState.Checked
             Me.tmiShowFlatNamespaces.Name = "tmiShowFlatNamespaces"
-            Me.tmiShowFlatNamespaces.Size = New System.Drawing.Size(167, 22)
-            Me.tmiShowFlatNamespaces.Text = "Flat namespaces"
+            Me.tmiShowFlatNamespaces.ShortcutKeyDisplayString = Nothing
             '
             'tsbBack
             '
+            Me.tsbBack.AccessibleDescription = Nothing
+            Me.tsbBack.AccessibleName = Nothing
+            resources.ApplyResources(Me.tsbBack, "tsbBack")
+            Me.tsbBack.BackgroundImage = Nothing
             Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.tsbBack.Enabled = False
             Me.tsbBack.Image = Global.Tools.My.Resources.Resources.NavBack
-            Me.tsbBack.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.tsbBack.Name = "tsbBack"
-            Me.tsbBack.Size = New System.Drawing.Size(23, 22)
-            Me.tsbBack.Text = "Back"
             '
             'tsbForward
             '
+            Me.tsbForward.AccessibleDescription = Nothing
+            Me.tsbForward.AccessibleName = Nothing
+            resources.ApplyResources(Me.tsbForward, "tsbForward")
+            Me.tsbForward.BackgroundImage = Nothing
             Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-            Me.tsbForward.Enabled = False
             Me.tsbForward.Image = Global.Tools.My.Resources.Resources.NavForward
-            Me.tsbForward.ImageTransparentColor = System.Drawing.Color.Magenta
             Me.tsbForward.Name = "tsbForward"
-            Me.tsbForward.Size = New System.Drawing.Size(23, 22)
-            Me.tsbForward.Text = "Forward"
             '
             'ObjectBrowser
             '
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.AccessibleDescription = Nothing
+            Me.AccessibleName = Nothing
+            resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.BackgroundImage = Nothing
             Me.Controls.Add(Me.splMain)
             Me.Controls.Add(Me.tosMenu)
+            Me.Font = Nothing
             Me.KeyPreview = True
             Me.Name = "ObjectBrowser"
-            Me.Size = New System.Drawing.Size(749, 530)
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel2.ResumeLayout(False)
             Me.splMain.ResumeLayout(False)

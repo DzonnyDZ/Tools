@@ -7,6 +7,8 @@ Imports Tools.ComponentModelT
 Namespace WindowsT.FormsT
     'ASAP: Mark
     ''' <summary>Control for browsing .NET assemblies</summary>
+    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    <Version(0, 9, GetType(ObjectBrowser)), FirstVersion(2008, 6, 20)> _
     Public Class ObjectBrowser : Inherits UserControlExtended
         ''' <summary>Contains value of the <see cref="Objects"/> property</summary>
         ''' <remarks>Can be any object</remarks>
@@ -47,8 +49,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if inherited members are shown</returns>
         <DefaultValue(False)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if inherited members are shown.")> _
-        Public Property ShowInheritedMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowInheritedMembers_d")> _
+        Public Property ShowInheritedMembers() As Boolean
             Get
                 Return _ShowInheritedMembers
             End Get
@@ -67,8 +69,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if namespaces are shown flat or hierarchic</returns>
         <DefaultValue(False)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
-        <Description("Gets or sets value indicating if namespaces are shown flat (true) or hierarchically (false).")> _
-        Public Property ShowFlatNamespaces() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowFlatNamespaces_d")> _
+        Public Property ShowFlatNamespaces() As Boolean
             Get
                 Return _ShowFlatNamespaces
             End Get
@@ -87,8 +89,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if nested types are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if nested types are shown.")> _
-        Public Property ShowNestedTypes() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowNestedTypes_d")> _
+        Public Property ShowNestedTypes() As Boolean
             Get
                 Return _ShowNestedTypes
             End Get
@@ -106,8 +108,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if private members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if private members are shown.")> _
-        Public Property ShowPrivateMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowPrivateMembers_d")> _
+        Public Property ShowPrivateMembers() As Boolean
             Get
                 Return _ShowPrivateMembers
             End Get
@@ -125,8 +127,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if internal members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Internal members are shown.")> _
-        Public Property ShowInternalMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowInternalMembers_d")> _
+        Public Property ShowInternalMembers() As Boolean
             Get
                 Return _ShowInternalMembers
             End Get
@@ -144,8 +146,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if protected members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Protected members are shown.")> _
-        Public Property ShowProtectedMembers() As Boolean 'Localize: Description
+        <lDescription(GetType(CompositeControls), "ShowProtectedMembers_d")> _
+        Public Property ShowProtectedMembers() As Boolean
             Get
                 Return _ShowProtectedMembers
             End Get
@@ -163,8 +165,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if instance members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if instance members are shown.")> _
-        Public Property ShowInstanceMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowInstanceMembers_d")> _
+        Public Property ShowInstanceMembers() As Boolean
             Get
                 Return _ShowInstanceMembers
             End Get
@@ -182,8 +184,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if static members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if static members are shown.")> _
-        Public Property ShowStaticMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowStaticMembers_d")> _
+        Public Property ShowStaticMembers() As Boolean
             Get
                 Return _ShowStaticMembers
             End Get
@@ -201,8 +203,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if special members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if special members (parts of properties and events) are shown.")> _
-        Public Property ShowSpecialMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowSpecialMembers_d")> _
+        Public Property ShowSpecialMembers() As Boolean
             Get
                 Return _ShowSpecialMembers
             End Get
@@ -220,8 +222,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if Global members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Global members (parts of properties and events) are shown.")> _
-        Public Property ShowGlobalMembers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowGlobalMembers_d")> _
+        Public Property ShowGlobalMembers() As Boolean
             Get
                 Return _ShowGlobalMembers
             End Get
@@ -239,8 +241,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if properties are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if properties are shown.")> _
-        Public Property ShowProperties() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowProperties_d")> _
+        Public Property ShowProperties() As Boolean
             Get
                 Return _ShowProperties
             End Get
@@ -258,8 +260,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if Events are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Events are shown.")> _
-        Public Property ShowEvents() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowEvents_d")> _
+        Public Property ShowEvents() As Boolean
             Get
                 Return _ShowEvents
             End Get
@@ -277,8 +279,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if Methods are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Methods are shown.")> _
-        Public Property ShowMethods() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowMethods_d")> _
+        Public Property ShowMethods() As Boolean
             Get
                 Return _ShowMethods
             End Get
@@ -296,8 +298,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if Fields are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Fields are shown.")> _
-        Public Property ShowFields() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowFields_d")> _
+        Public Property ShowFields() As Boolean
             Get
                 Return _ShowFields
             End Get
@@ -315,8 +317,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if CTors are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if CTors are shown.")> _
-        Public Property ShowCTors() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowCTors_d")> _
+        Public Property ShowCTors() As Boolean
             Get
                 Return _ShowCTors
             End Get
@@ -334,8 +336,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if Initializers are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if Initializers are shown.")> _
-        Public Property ShowInitializers() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowInitializers_d")> _
+        Public Property ShowInitializers() As Boolean
             Get
                 Return _ShowInitializers
             End Get
@@ -353,8 +355,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if generic arguments are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if generic arguments (type parameters) are shown.")> _
-        Public Property ShowGenericArguments() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowGenericArguments_d")> _
+        Public Property ShowGenericArguments() As Boolean
             Get
                 Return _ShowgenericArguments
             End Get
@@ -372,8 +374,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if references are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if references are shown.")> _
-        Public Property ShowReferences() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowReferences_d")> _
+        Public Property ShowReferences() As Boolean
             Get
                 Return _ShowReferences
             End Get
@@ -391,8 +393,8 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if base types are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets value indicating if base types are shown.")> _
-        Public Property ShowBaseTypes() As Boolean 'Localize: Description
+        <LDescription(GetType(CompositeControls), "ShowBaseTypes_d")> _
+        Public Property ShowBaseTypes() As Boolean
             Get
                 Return _ShowBaseTypes
             End Get
@@ -413,13 +415,13 @@ Namespace WindowsT.FormsT
                     ActualizeNode(Node)
                 ElseIf Node.Nodes.Count <> 0 Then
                     Node.Nodes.Clear()
-                    Node.Nodes.Add(New TreeNode("Please wait...")) 'Localize: Please wait
+                    Node.Nodes.Add(New TreeNode(WindowsT.FormsT.CompositeControls.PleaseWait))
                 End If
             Next Node
         End Sub
         ''' <summary>Raised after property that controls which members are displayed in <see cref="ListView"/> was changed.</summary>
         ''' <remarks>See <seealso cref="OnShowChanged"/> for list of properties that causes this event to be raised.</remarks>
-        <Description("Raised after property that controls which members are displayed in ListView was changed.")> _
+        <LDescription(GetType(CompositeControls), "ShowChanged_d")> _
         <Category(WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.PropertyChanged)> _
         Public Event ShowChanged As ControlEventHandler(Of ObjectBrowser, EventArgs) 'Localize: Description
         ''' <summary>Called recursivelly by <see cref="OnShowChanged"/> and itself in order to actualize content of each expanded node.</summary>
@@ -452,7 +454,7 @@ Namespace WindowsT.FormsT
                     ActualizeNode(SubNode)
                 ElseIf SubNode.Nodes.Count <> 0 Then
                     SubNode.Nodes.Clear()
-                    SubNode.Nodes.Add(New TreeNode("Please wait...")) 'Localize: Please wait
+                    SubNode.Nodes.Add(New TreeNode(WindowsT.FormsT.CompositeControls.PleaseWait))
                 End If
             Next
         End Sub
@@ -462,8 +464,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets value indicating if the Show menu is shown</summary>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(True)> _
-        <Description("Gets or sets value indicating if Show menu is shown.")> _
-        Public Property ShowShowMenu() As Boolean 'Localize:Description
+        <LDescription(GetType(CompositeControls), "ShowShowMenu_d")> _
+        Public Property ShowShowMenu() As Boolean
             Get
                 Return _ShowShowMenu
             End Get
@@ -478,8 +480,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets value indicating if the toolbar is shown</summary>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(True)> _
-        <Description("Gets or sets value indicating if the toolbar is shown.")> _
-        Public Property ShowToolbar() As Boolean 'Localize:Description
+        <LDescription(GetType(CompositeControls), "ShowToolbar_d")> _
+        Public Property ShowToolbar() As Boolean
             Get
                 Return _ShowToolbar
             End Get
@@ -491,8 +493,8 @@ Namespace WindowsT.FormsT
 
         ''' <summary>List of assemblies or any other objects listed at top-level of tree-view</summary>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <Description("List of assemblies or any other objects listed at top-level of tree-view")> _
-        Public ReadOnly Property Objects() As IList(Of Object) 'Localize: Description
+        <LDescription(GetType(CompositeControls), "Objects_d")> _
+        Public ReadOnly Property Objects() As IList(Of Object)
             Get
                 Return Assemblies
             End Get
@@ -561,7 +563,7 @@ Namespace WindowsT.FormsT
                                 .GetImage()
                             End With
                         Case kpBaseTypes
-                            tn.Text = "Base Types" 'Localize:Base types
+                            tn.Text = WindowsT.FormsT.CompositeControls.BaseTypes
                             GetImage(CodeImages.Objects.BackwardReference, ObjectModifiers.None)
                         Case kpReference
                             With DirectCast(.Value, AssemblyName)
@@ -570,7 +572,7 @@ Namespace WindowsT.FormsT
                                 Expandable = False
                             End With
                         Case kpReferences
-                            tn.Text = "References" 'Localize references
+                            tn.Text = WindowsT.FormsT.CompositeControls.References
                             GetImage(CodeImages.Objects.ForwardReference, ObjectModifiers.None)
                         Case Else
                             tn.Text = .Key
@@ -586,7 +588,7 @@ Namespace WindowsT.FormsT
             tn.ImageKey = LastRequestedKey
             tn.SelectedImageKey = LastRequestedKey
             tn.Tag = Obj
-            If Expandable Then tn.Nodes.Add("please wait...") 'Localize: Please wait...
+            If Expandable Then tn.Nodes.Add(WindowsT.FormsT.CompositeControls.PleaseWait)
             Return tn
         End Function
         ''' <summary>Converts any object to <see cref="ListViewItem"/></summary>
@@ -703,8 +705,8 @@ Namespace WindowsT.FormsT
                 With DirectCast(Obj, KeyValuePair(Of String, Object))
                     Select Case .Key
                         Case kpBaseType, kpReference : GetShortDesc(.Value)
-                        Case kpBaseTypes : rtbShort.Text = "Base types" 'Localize:Base types
-                        Case kpReferences : rtbShort.Text = "References" 'Localize: References
+                        Case kpBaseTypes : rtbShort.Text = WindowsT.FormsT.CompositeControls.BaseTypes
+                        Case kpReferences : rtbShort.Text = WindowsT.FormsT.CompositeControls.References
                     End Select
                 End With
             Else
@@ -1156,3 +1158,4 @@ Namespace WindowsT.FormsT
 #End Region
     End Class
 End Namespace
+'Localize: This is last localized file
