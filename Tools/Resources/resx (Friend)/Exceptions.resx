@@ -768,4 +768,13 @@
   <data name="CannotBeNull" xml:space="preserve">
     <value>{0} cannot be null</value>
   </data>
+  <data name="GivenValueIsNotKnownSystemSound" xml:space="preserve">
+    <value>Given value is not known system sound</value>
+  </data>
+  <data name="OnlySoundsWithKnownLocationCanBeConverted" xml:space="preserve">
+    <value>Only sounds with known location can be converted</value>
+  </data>
+  <data name="OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported" xml:space="preserve">
+    <value>Only sounds of type SystemSoundPlayer and SoundPlayerWrapper are supported</value>
+  </data>
 </root>

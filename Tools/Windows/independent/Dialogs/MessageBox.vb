@@ -1,4 +1,5 @@
 ﻿'Extracted
+'TODO: Automatic sounds
 Imports Tools.CollectionsT.GenericT, System.Linq, Tools.CollectionsT.CollectionTools
 Imports Tools.DrawingT.DesignT
 Imports System.Drawing.Design
@@ -79,6 +80,8 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _TimeButton As Integer = -1
         ''' <summary>Contains value of the <see cref="AllowClose"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _AllowClose As Boolean = True
+        ''' <summary>Contains value of the <see cref="PlayOnShow"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _PlayOnShow As MediaT.Sound
 #End Region
 #Region "Properties"
         ''' <summary>Gets or sets value indicating if dialog can be closed without clicking any of buttons</summary>
@@ -400,6 +403,20 @@ Namespace WindowsT.IndependentT
                 Dim old = TimeButton
                 _TimeButton = value
                 If old <> value Then OnTimeButtonChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "TimeButton"))
+            End Set
+        End Property
+        ''' <summary>Gets or sets sound played when message box is shown</summary>
+        ''' <value>Sound played when message box is shown. Null if no sound shall be played.</value>
+        ''' <remarks>Current sound to be played when message box is show. Null if no sound is played.</remarks>
+        <DefaultValue(GetType(MediaT.Sound), Nothing)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(ResourcesT.Components), "PlayOnShow_d")> _
+        Public Property PlayOnShow() As MediaT.Sound
+            Get
+                Return _PlayOnShow
+            End Get
+            Set(ByVal value As MediaT.Sound)
+                _PlayOnShow = value
             End Set
         End Property
 #End Region
@@ -1618,9 +1635,10 @@ Namespace WindowsT.IndependentT
             State = States.Closed
             RaiseEvent Closed(Me, e)
         End Sub
-        ''' <summary>Called when dialog is shown. Performs some initialization (timer). Raises the <see cref="Shown"/> event.</summary>
+        ''' <summary>Called when dialog is shown. Performs some initialization (timer). Calls <see cref="PlaySound"/>. Raises the <see cref="Shown"/> event.</summary>
         ''' <remarks>Derived class should call this method after dialog is shown.</remarks>
         Protected Friend Overridable Sub OnShown()
+            PlaySound()
             If Me.Timer > TimeSpan.Zero Then
                 Me.CurrentTimer = Me.Timer
                 Me.CountDownTimer.Enabled = True
@@ -1628,6 +1646,14 @@ Namespace WindowsT.IndependentT
             End If
             State = States.Shown
             RaiseEvent Shown(Me, New EventArgs)
+        End Sub
+        ''' <summary>If <see cref="PlayOnShow"/> is not null, plays it</summary>
+        Protected Overridable Sub PlaySound()
+            If Me.PlayOnShow IsNot Nothing Then
+                Try
+                    Me.PlayOnShow.PlayOnBackground()
+                Catch : End Try
+            End If
         End Sub
         ''' <summary>Possible state of the message box class instance</summary>
         Public Enum States

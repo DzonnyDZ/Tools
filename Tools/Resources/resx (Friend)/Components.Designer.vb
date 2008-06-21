@@ -83,6 +83,33 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Asterisk.
+        '''</summary>
+        Friend Shared ReadOnly Property Asterisk() As String
+            Get
+                Return ResourceManager.GetString("Asterisk", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Beep.
+        '''</summary>
+        Friend Shared ReadOnly Property Beep() As String
+            Get
+                Return ResourceManager.GetString("Beep", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Browse....
+        '''</summary>
+        Friend Shared ReadOnly Property Browse() As String
+            Get
+                Return ResourceManager.GetString("Browse", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Defines buttons displayed on message box.
         '''</summary>
         Friend Shared ReadOnly Property Buttons_d() As String
@@ -209,6 +236,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Exclamation.
+        '''</summary>
+        Friend Shared ReadOnly Property Exclamation() As String
+            Get
+                Return ResourceManager.GetString("Exclamation", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Hand.
+        '''</summary>
+        Friend Shared ReadOnly Property Hand() As String
+            Get
+                Return ResourceManager.GetString("Hand", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Icon shown in left to corner (lrt) of dialog.
         '''</summary>
         Friend Shared ReadOnly Property Icon_d() As String
@@ -290,11 +335,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Sound to be played when message box is shown.
+        '''</summary>
+        Friend Shared ReadOnly Property PlayOnShow_d() As String
+            Get
+                Return ResourceManager.GetString("PlayOnShow_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Text of prompt displayed to the user..
         '''</summary>
         Friend Shared ReadOnly Property Prompt_d() As String
             Get
                 Return ResourceManager.GetString("Prompt_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Question.
+        '''</summary>
+        Friend Shared ReadOnly Property Question() As String
+            Get
+                Return ResourceManager.GetString("Question", resourceCulture)
             End Get
         End Property
         
@@ -349,6 +412,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property SelectedItemChanged_d() As String
             Get
                 Return ResourceManager.GetString("SelectedItemChanged_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Select wav file.
+        '''</summary>
+        Friend Shared ReadOnly Property SelectWavFile() As String
+            Get
+                Return ResourceManager.GetString("SelectWavFile", resourceCulture)
             End Get
         End Property
         
@@ -421,6 +493,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ToolTip_d() As String
             Get
                 Return ResourceManager.GetString("ToolTip_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to wav files (*.wav)|*.wav.
+        '''</summary>
+        Friend Shared ReadOnly Property WavFilter() As String
+            Get
+                Return ResourceManager.GetString("WavFilter", resourceCulture)
             End Get
         End Property
     End Class

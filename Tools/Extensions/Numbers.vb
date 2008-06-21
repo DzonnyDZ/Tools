@@ -64,36 +64,42 @@ Namespace ExtensionsT
         ''' <summary>Gets low (least significant) byte from <see cref="UShort"/> value</summary>
         ''' <param name="n">Value to get byte from</param>
         ''' <returns>Least significant byte of <paramref name="n"/></returns>
+        <CLSCompliant(False)> _
         <Extension()> Function Low(ByVal n As UShort) As Byte
             Return n And &HFFUS
         End Function
         ''' <summary>Gets high (most significant) byte from <see cref="UShort"/> value</summary>
         ''' <param name="n">Value to get byte from</param>
         ''' <returns>Most significant of <paramref name="n"/></returns>
+        <CLSCompliant(False)> _
         <Extension()> Function High(ByVal n As UShort) As Byte
             Return (n And &HFF00US) >> 8
         End Function
         ''' <summary>Gets high (most significant) word (2 bytes) from <see cref="Uinteger"/> value</summary>
         ''' <param name="n">Value to get word from</param>
         ''' <returns>Most significant word of <paramref name="n"/></returns>
+        <CLSCompliant(False)> _
         <Extension()> Function High(ByVal n As UInteger) As UShort
             Return (n And &HFFFF0000UI) >> 16
         End Function
         ''' <summary>Gets low (leastLeast significant) word (2 bytes) from <see cref="UInteger"/> value</summary>
         ''' <param name="n">Value to get word from</param>
         ''' <returns>Least significant word of <paramref name="n"/></returns>
+        <CLSCompliant(False)> _
         <Extension()> Function Low(ByVal n As UInteger) As UShort
             Return n And &HFFFFUI
         End Function
         ''' <summary>Gets high (most significant) dword (4 bytes) from <see cref="ULong"/> value</summary>
         ''' <param name="n">Value to get dword from</param>
         ''' <returns>Most significant dword of <paramref name="n"/></returns>
+        <CLSCompliant(False)> _
         <Extension()> Function High(ByVal n As ULong) As UInteger
             Return (n And &HFFFFFFFF00000000UL) >> 32
         End Function
         ''' <summary>Gets low (least significant) dword (4 bytes) from <see cref="ULong"/> value</summary>
         ''' <param name="n">Value to get dword from</param>
         ''' <returns>Least significant dword of <paramref name="n"/></returns>
+        <CLSCompliant(False)> _
         <Extension()> Function Low(ByVal n As ULong) As UInteger
             Return n And &HFFFFFFFFUL
         End Function
@@ -144,24 +150,28 @@ Namespace ExtensionsT
         ''' <summary>Gets bits form given <see cref="USHort"/></summary>
         ''' <param name="n">Number to get bits of</param>
         ''' <returns>Bits from given byte. Index 0 is LSB, index 15 is MSB.</returns>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBits(ByVal n As UShort) As BitArray
             Return New BitArray(New Byte() {n.Low, n.High})
         End Function
         ''' <summary>Gets bits form given <see cref="UInteger"/></summary>
         ''' <param name="n">Number to get bits of</param>
         ''' <returns>Bits from given byte. Index 0 is LSB, index 31 is MSB.</returns>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBits(ByVal n As UInteger) As BitArray
             Return New BitArray(New Byte() {n.Low.Low, n.Low.High, n.High.Low, n.High.High})
         End Function
         ''' <summary>Gets bits form given <see cref="ULong"/></summary>
         ''' <param name="n">Number to get bits of</param>
         ''' <returns>Bits from given byte. Index 0 is LSB, index 63 is MSB.</returns>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBits(ByVal n As ULong) As BitArray
             Return New BitArray(New Byte() {n.Low.Low.Low, n.Low.Low.High, n.Low.High.Low, n.Low.High.High, n.High.Low.Low, n.High.Low.High, n.High.High.Low, n.High.High.High})
         End Function
         ''' <summary>Gets bits form given <see cref="SByte"/></summary>
         ''' <param name="n">Number to get bits of</param>
         ''' <returns>Bits from given byte. Index 0 is LSB, index 7 is MSB.</returns>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBits(ByVal n As SByte) As BitArray
             Return n.BitwiseSame.GetBits
         End Function
@@ -188,12 +198,14 @@ Namespace ExtensionsT
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Byte) As SByte
             Return If(n > SByte.MaxValue, CShort(n) - Byte.MaxValue - 1, n)
         End Function
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As UShort) As Short
             Return If(n > Short.MaxValue, CInt(n) - UShort.MaxValue - 1, n)
         End Function
@@ -206,30 +218,35 @@ Namespace ExtensionsT
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As ULong) As Long
             Return If(n > Long.MaxValue, CDec(n) - ULong.MaxValue - 1, n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As SByte) As Byte
             Return If(n < 0, n + Byte.MaxValue + 1, n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Short) As UShort
             Return If(n < 0, n + UShort.MaxValue + 1, n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Integer) As UInteger
             Return If(n < 0, n + UInteger.MaxValue + 1, n)
         End Function
         ''' <summary>Gets unsigned number with same hexadecimal value as given signed number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is unsigned</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As Long) As ULong
             Return If(n < 0, n + ULong.MaxValue + 1, n)
         End Function
@@ -247,6 +264,7 @@ Namespace ExtensionsT
         ''' <param name="n">Number to get bit of</param>
         ''' <param name="bit">Number of bit to get (0 for LSB, 15 for MSB)</param>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="bit"/> is greater than 15</exception>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBit(ByVal n As UShort, ByVal bit As Byte) As Boolean
             If bit > 15 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "UInt16", 16))
             Return (n And (1US << bit)) = (1US << bit)
@@ -255,6 +273,7 @@ Namespace ExtensionsT
         ''' <param name="n">Number to get bit of</param>
         ''' <param name="bit">Number of bit to get (0 for LSB, 31 for MSB)</param>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="bit"/> is greater than 31</exception>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBit(ByVal n As UInteger, ByVal bit As Byte) As Boolean
             If bit > 31 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "UInt32", 32))
             Return (n And (1UI << bit)) = (1UI << bit)
@@ -263,6 +282,7 @@ Namespace ExtensionsT
         ''' <param name="n">Number to get bit of</param>
         ''' <param name="bit">Number of bit to get (0 for LSB, 63 for MSB)</param>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="bit"/> is greater than 63</exception>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBit(ByVal n As ULong, ByVal bit As Byte) As Boolean
             If bit > 63 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "UInt64", 64))
             Return (n And (1UL << bit)) = (1UL << bit)
@@ -272,6 +292,7 @@ Namespace ExtensionsT
         ''' <param name="n">Number to get bit of</param>
         ''' <param name="bit">Number of bit to get (0 for LSB, 7 for MSB)</param>
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="bit"/> is greater than 7</exception>
+        <CLSCompliant(False)> _
         <Extension()> Function GetBit(ByVal n As SByte, ByVal bit As Byte) As Boolean
             Return n.BitwiseSame.GetBit(n)
         End Function
@@ -312,6 +333,7 @@ Namespace ExtensionsT
         ''' <param name="bit">Number of bit to be set. 0 for LSB, 7 for MSB</param>
         ''' <param name="value">New value of bit number <paramref name="bit"/></param>
         ''' <exception cref="ArgumentNullException"><paramref name="bit"/> is greater than 7</exception>
+        <CLSCompliant(False)> _
         <Extension()> Sub SetBit(ByRef n As SByte, ByVal bit As Byte, ByVal value As Boolean)
             If bit > 7 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "SByte", 8))
             If value Then n = n Or (CSByte(1) << bit) _
@@ -322,6 +344,7 @@ Namespace ExtensionsT
         ''' <param name="bit">Number of bit to be set. 0 for LSB, 15 for MSB</param>
         ''' <param name="value">New value of bit number <paramref name="bit"/></param>
         ''' <exception cref="ArgumentNullException"><paramref name="bit"/> is greater than 15</exception>
+        <CLSCompliant(False)> _
         <Extension()> Sub SetBit(ByRef n As UShort, ByVal bit As Byte, ByVal value As Boolean)
             If bit > 15 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "UInt16", 16))
             If value Then n = n Or (1US << bit) _
@@ -362,6 +385,7 @@ Namespace ExtensionsT
         ''' <param name="bit">Number of bit to be set. 0 for LSB, 31 for MSB</param>
         ''' <param name="value">New value of bit number <paramref name="bit"/></param>
         ''' <exception cref="ArgumentNullException"><paramref name="bit"/> is greater than 31</exception>
+        <CLSCompliant(False)> _
         <Extension()> Sub SetBit(ByRef n As UInteger, ByVal bit As Byte, ByVal value As Boolean)
             If bit > 31 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "UInt32", 32))
             If value Then n = n Or (1UI << bit) _
@@ -372,6 +396,7 @@ Namespace ExtensionsT
         ''' <param name="bit">Number of bit to be set. 0 for LSB, 63 for MSB</param>
         ''' <param name="value">New value of bit number <paramref name="bit"/></param>
         ''' <exception cref="ArgumentNullException"><paramref name="bit"/> is greater than 63</exception>
+        <CLSCompliant(False)> _
         <Extension()> Sub SetBit(ByRef n As ULong, ByVal bit As Byte, ByVal value As Boolean)
             If bit > 63 Then Throw New ArgumentOutOfRangeException("bit", String.Format(ResourcesT.Exceptions.NumberOfBitIn0MustBeLessThat1, "UInt64", 64))
             If value Then n = n Or (1UL << bit) _

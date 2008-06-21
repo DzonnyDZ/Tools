@@ -679,6 +679,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Given value is not known system sound.
+        '''</summary>
+        Friend Shared ReadOnly Property GivenValueIsNotKnownSystemSound() As String
+            Get
+                Return ResourceManager.GetString("GivenValueIsNotKnownSystemSound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} has to many digits.
         '''</summary>
         Friend Shared ReadOnly Property HasToManyDigits() As String
@@ -1199,6 +1208,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property OnlyIListInstancesCanBeUsedInListWrapper() As String
             Get
                 Return ResourceManager.GetString("OnlyIListInstancesCanBeUsedInListWrapper", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only sounds of type SystemSoundPlayer and SoundPlayerWrapper are supported.
+        '''</summary>
+        Friend Shared ReadOnly Property OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported() As String
+            Get
+                Return ResourceManager.GetString("OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only sounds with known location can be converted.
+        '''</summary>
+        Friend Shared ReadOnly Property OnlySoundsWithKnownLocationCanBeConverted() As String
+            Get
+                Return ResourceManager.GetString("OnlySoundsWithKnownLocationCanBeConverted", resourceCulture)
             End Get
         End Property
         

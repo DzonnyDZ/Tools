@@ -237,4 +237,31 @@
   <data name="OnlySOIAndEOIMarkersCanHaveLenghtSetToZeroLength1IsNotAllowed" xml:space="preserve">
     <value>Only SOI and EOI markers can have lenght set to zero, length 1 is not allowed</value>
   </data>
+  <data name="PlayOnShow_d" xml:space="preserve">
+    <value>Sound to be played when message box is shown</value>
+  </data>
+  <data name="Asterisk" xml:space="preserve">
+    <value>Asterisk</value>
+  </data>
+  <data name="Beep" xml:space="preserve">
+    <value>Beep</value>
+  </data>
+  <data name="Exclamation" xml:space="preserve">
+    <value>Exclamation</value>
+  </data>
+  <data name="Hand" xml:space="preserve">
+    <value>Hand</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Question</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Browse...</value>
+  </data>
+  <data name="SelectWavFile" xml:space="preserve">
+    <value>Select wav file</value>
+  </data>
+  <data name="WavFilter" xml:space="preserve">
+    <value>wav files (*.wav)|*.wav</value>
+  </data>
 </root>

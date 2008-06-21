@@ -107,6 +107,7 @@
     <Reference Include="System.Drawing.Design" />
     <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
     <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.RegularExpressions" />
     <Reference Include="System.Windows.Forms" />
@@ -200,6 +201,10 @@
     <Compile Include="Drawing\Metadata\IPTC\IPTC.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
+    <Compile Include="Extensions\DelegateExtensions.vb" />
+    <Compile Include="Media\Sound.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -620,6 +625,7 @@
     <None Include="Reflection\Resources\Union.png" />
     <None Include="Reflection\Resources\ValueType.png" />
     <Content Include="Reflection\Resources\Attribute.png" />
+    <None Include="Resources\Play.png" />
     <None Include="Reflection\Resources\⋀.png" />
     <None Include="Reflection\Resources\⋁.png" />
     <None Include="Reflection\Resources\Error.png" />
