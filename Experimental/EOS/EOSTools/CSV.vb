@@ -1,4 +1,5 @@
 Imports System.ComponentModel
+Imports Tools.ComponentModelT
 
 ''' <summary>Spoleèné rozhraní pro tabulky importované tøídou OracleImporter</summary>
 Public Interface ITable(Of T) : Inherits IEnumerable(Of IEnumerable(Of T))

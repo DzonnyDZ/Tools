@@ -184,7 +184,6 @@
     <Compile Include="EOS\DayView\ToolStripLabelLabel.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\ComponentModel\TypeDescriptor.vb" />
     <Compile Include="EOS\EOSTools\CSV.vb" />
     <Compile Include="EOS\EOSTools\DateTools.vb" />
     <Compile Include="EOS\EOSTools\Deploy\ClickOnceUninstall.vb" />
@@ -224,6 +223,16 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="EOS\EOSTools\Login\Old\User.vb" />
+    <Compile Include="eĐit\Tools\Container.Designer.vb">
+      <DependentUpon>Container.vb</DependentUpon>
+    </Compile>
+    <Compile Include="eĐit\Tools\Container.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="eĐit\Tools\SyncFSWatcher.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="eĐit\Tools\Utils.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -242,6 +251,8 @@
     <Compile Include="TWAIN\TWAIN constants.vb" />
     <Compile Include="TWAIN\TWAIN functions.vb" />
     <Compile Include="TWAIN\TWAIN structures.vb" />
+    <Compile Include="Web\Numberings.vb" />
+    <Compile Include="Web\Pager.vb" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="EOS\CM-EDL\OrderByEditor.resx">
@@ -291,6 +302,9 @@
     <None Include="TWAIN\GdiPlusLib.cs" />
     <None Include="TWAIN\TwainDefs.cs" />
     <None Include="TWAIN\TwainLib.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Web\Pager.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
