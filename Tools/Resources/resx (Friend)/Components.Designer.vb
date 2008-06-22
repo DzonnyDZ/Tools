@@ -335,6 +335,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Play.
+        '''</summary>
+        Friend Shared ReadOnly Property Play() As String
+            Get
+                Return ResourceManager.GetString("Play", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Sound to be played when message box is shown.
         '''</summary>
         Friend Shared ReadOnly Property PlayOnShow_d() As String

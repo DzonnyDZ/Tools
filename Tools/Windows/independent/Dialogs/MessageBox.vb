@@ -442,9 +442,6 @@ Namespace WindowsT.IndependentT
             Me.Buttons.Add(MessageBoxButton.OK)
         End Sub
 #End Region
-#Region "Shared Show"
-
-#End Region
 #Region "Property events"
         ''' <summary>Raised when value of the <see cref="AllowClose"/> property changes</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
@@ -1713,6 +1710,7 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ClosedByTimer As Boolean
         ''' <summary>Gets value indicationg if the message box was closed automatically after the time specified in <see cref="Timer"/> elapsed</summary>
         ''' <returns>True if the message box was closed due to time elapsed, false otherwise</returns>
+        <Browsable(False)> _
         Public ReadOnly Property ClosedByTimer() As Boolean
             <DebuggerStepThrough()> Get
                 Return _ClosedByTimer
@@ -1808,7 +1806,7 @@ Namespace WindowsT.IndependentT
         ''' <summary>Switches <see cref="MessageBox"/> from <see cref="States.Closed"/> to <see cref="States.Created"/> <see cref="State"/></summary>
         ''' <remarks>This method cannot be overriden. Override <see cref="RecycleInternal"/> instead which is called only when necessary.
         ''' <para>Calling this method has no effect when <see  cref="State"/> is <see cref="States.Created"/> and causes <see cref="InvalidOperationException"/> when <see cref="State"/> is <see cref="States.Shown"/>.</para>
-        ''' <para><see cref="Show"/> and <see cref="Display"/> instance methods call <see cref="Recycle"/> if necessary.</para>
+        ''' <para><see cref="Show"/> and <see cref="DisplayTemplate"/> instance methods call <see cref="Recycle"/> if necessary.</para>
         ''' <para>When re-cycling message boxex, you should keep in mind that youre can change state of it (check boxes, radio buttons, combo boxes, custom controls)</para></remarks>
         ''' <exception cref="InvalidOperationException"><see cref="State"/> is <see cref="States.Shown"/> or <see cref="State"/> is not member of <see cref="States"/></exception>
         Public Sub Recycle()
@@ -1877,7 +1875,11 @@ Namespace WindowsT.IndependentT
             Return Activator.CreateInstance(DefaultImplementation)
         End Function
         ''' <summary>Does not implement <see cref="MessageBox"/>. Used for initializing messageboxes using <see cref="InitializeFrom"/>.</summary>
-        Private NotInheritable Class FakeBox : Inherits MessageBox
+        ''' <remarks>This class cannot be used as message box directly. But you can create instance of it and use it as template for another message boxes.</remarks>
+        ''' <seelaso cref="ShowTemplate"/>
+        ''' <seelaso cref="DisplayTemplate"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public NotInheritable Class FakeBox : Inherits MessageBox
             ''' <summary>If overriden in derived class closes the message box with given response</summary>
             ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
             ''' <exception cref="NotImplementedException">Always</exception>
@@ -1934,19 +1936,24 @@ Namespace WindowsT.IndependentT
             Me.Timer = Other.Timer
             Me.Title = Other.Title
             Me.TopControl = Other.TopControl
+            Me.PlayOnShow = Other.PlayOnShow
         End Sub
         ''' <summary>Shows given modal message box initialized with given instance of <see cref="MessageBox"/></summary>
         ''' <param name="Instance">Instance to be show</param>
         ''' <param name="InitializeFrom">Instance to initialize <paramref name="Instance"/> with</param>
         ''' <param name="Owner">Owner window (can be null)</param>
+        ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
+        ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
         ''' <returns>Message box result</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="InitializeFrom"/> is null</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Shared Function Show(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        Protected Shared Function ShowTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             If InitializeFrom Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
             Instance.InitializeFrom(InitializeFrom)
+            If Prompt IsNot Nothing Then Instance.Prompt = Prompt
+            If Title IsNot Nothing Then Instance.Title = Title
             Return Instance.ShowDialog(Owner)
         End Function
         ''' <summary>Display given message box initialized with given instance of <see cref="MessageBox"/> modeless</summary>
@@ -1955,11 +1962,15 @@ Namespace WindowsT.IndependentT
         ''' <param name="Owner">Owner window (can be null)</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="InitializeFrom"/> is null</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
+        ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
+        ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Shared Function Display(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing) As MessageBox
+        Protected Shared Function DisplayTemplate(ByVal Instance As MessageBox, ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
             If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
             If InitializeFrom Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
             Instance.InitializeFrom(InitializeFrom)
+            If Prompt IsNot Nothing Then Instance.Prompt = Prompt
+            If Title IsNot Nothing Then Instance.Title = Title
             Instance.DisplayBox(Owner)
             Return Instance
         End Function
@@ -1970,15 +1981,17 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
         ''' <exception cref="TargetInvocationException">Ther was an error obtainin default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
+        ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
+        ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Shared Function Show(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        Public Shared Function ShowTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As DialogResult
             Dim lGetDefault As Tools.WindowsT.IndependentT.MessageBox
             Try
                 lGetDefault = GetDefault()
             Catch ex As Exception
                 Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
-            Return Show(lGetDefault, InitializeFrom, Owner)
+            Return ShowTemplate(lGetDefault, InitializeFrom, Owner, Prompt, Title)
         End Function
         ''' <summary>Display default (<see cref="GetDefault"/>) message box initialized with given instance of <see cref="MessageBox"/> modeless</summary>
         ''' <param name="InitializeFrom">Instance to initialize default message box with</param>
@@ -1986,15 +1999,17 @@ Namespace WindowsT.IndependentT
         ''' <exception cref="ArgumentNullException"><paramref name="InitializeFrom"/> is null</exception>
         ''' <exception cref="TargetInvocationException">Ther was an error obtainin default implementation instance via <see cref="GetDefault"/>. See <see cref="Exception.InnerException"/> for details.</exception>
         ''' <remarks>For same reason as <see cref="InitializeFrom"/>, do not use <paramref name="InitializeFrom"/> to clonning live message boxes</remarks>
+        ''' <param name="Prompt">If not null sets dfferent prompt then <paramref name="InitializeFrom"/></param>
+        ''' <param name="Title">Is not null sets diffetent title then <paramref name="InitializeFrom"/></param>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Protected Shared Function Display(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing) As MessageBox
+        Public Shared Function DisplayTemplate(ByVal InitializeFrom As MessageBox, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing) As MessageBox
             Dim lGetDefault As Tools.WindowsT.IndependentT.MessageBox
             Try
                 lGetDefault = GetDefault()
             Catch ex As Exception
                 Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
-            Return Display(lGetDefault, InitializeFrom, Owner)
+            Return DisplayTemplate(lGetDefault, InitializeFrom, Owner, Prompt, Title)
         End Function
         ''' <summary>Default function used for converting enumeration values to icons for message box</summary>
         ''' <param name="code">Code of icon to be obtained</param>
@@ -2218,7 +2233,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <remarks>This function is provided for compatibility with <see cref="Windows.MessageBox"/></remarks>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function ShowWPF(ByVal messageBoxText As String, ByVal caption As String) As Windows.MessageBoxResult
+        Public Shared Function ShowWPF(ByVal messageBoxText As String, ByVal caption As String) As Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, Windows.MessageBoxButton.OK, Windows.MessageBoxImage.None, Windows.MessageBoxResult.None, Windows.MessageBoxOptions.None)
         End Function
 #End Region
@@ -2269,7 +2284,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String, ByVal caption As 
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function is provided mainly for compatibility with <see cref="Windows.MessageBox"/>. You'd bete use overload which's <paramref name="icon"/> parameter is <see cref="MessageBoxIcons"/>. See <see cref="ConvertIconConstant"/> for explanation.</remarks>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage) As System.Windows.MessageBoxResult
+        Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
         ''' <summary>Displays a message box that has a message, title bar caption, button, and icon; and that returns a result.</summary>
@@ -2277,7 +2292,7 @@ Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As Str
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageboxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimics the <see cref="Windows.MessageBox.Show"/> function but provides the <paramref name="icon"/> parameter as <see cref="MessageBoxIcons"/></remarks>
@@ -2311,7 +2326,7 @@ Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As Str
         ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
+        Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, System.Windows.MessageBoxOptions.None)
         End Function
         ''' <summary>Displays a message box that has a message, title bar caption, button, and icon; and that accepts a default message box result and returns a result.</summary>
@@ -2319,7 +2334,7 @@ Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As Str
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageBoxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
         ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
@@ -2342,7 +2357,7 @@ Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As Str
         ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage) As System.Windows.MessageBoxResult
+        Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, System.Windows.MessageBoxResult.None, System.Windows.MessageBoxOptions.None)
         End Function
         ''' <summary>Displays a message box in front of the specified window. The message box displays a message, title bar caption, button, and icon; and it also returns a result.</summary>
@@ -2351,7 +2366,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageBoxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
         ''' </exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
@@ -2375,7 +2390,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
+        Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(IntPtr.Zero, messageBoxText, caption, button, icon, defaultResult, options)
         End Function
         ''' <summary>Displays a message box that has a message, title bar caption, button, and icon; and that accepts a default message box result, complies with the specified options, and returns a result.</summary>
@@ -2383,7 +2398,7 @@ Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As Str
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageBoxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
@@ -2410,7 +2425,7 @@ Public Shared Function Show(ByVal messageBoxText As String, ByVal caption As Str
         ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
+        Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, defaultResult, System.Windows.MessageBoxOptions.None)
         End Function
         ''' <summary>Displays a message box in front of the specified window. The message box displays a message, title bar caption, button, and icon; and accepts a default message box result and returns a result.</summary>
@@ -2419,7 +2434,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageBoxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
         ''' =or= <paramref name="defaultResult"/> is not member of <see cref="Windows.MessageBoxResult"/>
@@ -2446,7 +2461,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' =or = <paramref name="icon"/> is not member of <see cref="Windows.MessageBoxImage"/></exception>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-       Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
+        Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageBoxText As String, ByVal caption As String, ByVal button As System.Windows.MessageBoxButton, ByVal icon As System.Windows.MessageBoxImage, ByVal defaultResult As System.Windows.MessageBoxResult, ByVal options As System.Windows.MessageBoxOptions) As System.Windows.MessageBoxResult
             Return MessageBox.ShowCore(New System.Windows.Interop.WindowInteropHelper(owner).Handle, messageBoxText, caption, button, icon, defaultResult, options)
         End Function
         ''' <summary>Displays a message box in front of the specified window. The message box displays a message, title bar caption, button, and icon; and accepts a default message box result, complies with the specified options, and returns a result.</summary>
@@ -2455,7 +2470,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageBoxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
@@ -2476,7 +2491,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
@@ -2495,7 +2510,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="messageBoxText">A <see cref="T:System.String" /> that specifies the text to display.</param>
         ''' <param name="caption">A <see cref="T:System.String" /> that specifies the title bar caption to display.</param>
         ''' <param name="button">A <see cref="T:System.Windows.MessageBoxButton" /> value that specifies which button or buttons to display.</param>
-        ''' <param name="icon">A <see cref="MessageBoxIcons" /> value that specifies the icon to display.</param>
+        ''' <param name="icon">A <see cref="system.Windows.MessageBoxImage" /> value that specifies the icon to display. Values <see cref="System.Windows.MessageBoxImage.Asterisk"/>, <see cref="System.Windows.MessageBoxImage.Hand"/>, <see cref="System.Windows.MessageBoxImage.Exclamation"/> and <see cref="System.Windows.MessageBoxImage.Question"/> are assciated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="defaultResult">A <see cref="T:System.Windows.MessageBoxResult" /> value that specifies the default result of the message box.</param>
         ''' <param name="options">A <see cref="T:System.Windows.MessageBoxOptions" /> value object that specifies the options.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="button"/> is not member of <see cref="Windows.MessageBoxButton"/>
@@ -2538,11 +2553,17 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                         End Select
                 End Select
                 box.Icon = GetIconDelegate.Invoke(icon)
+                Select Case icon
+                    Case MessageBoxIcons.Asterisk : box.PlayOnShow = Media.SystemSounds.Asterisk
+                    Case MessageBoxIcons.Hand : box.PlayOnShow = Media.SystemSounds.Hand
+                    Case MessageBoxIcons.Exclamation : box.PlayOnShow = Media.SystemSounds.Exclamation
+                    Case MessageBoxIcons.Question : box.PlayOnShow = Media.SystemSounds.Question
+                End Select
                 If (options And Windows.MessageBoxOptions.RightAlign) = Windows.MessageBoxOptions.RightAlign Then box.Options = box.Options Or MessageBoxOptions.AlignRight
                 If (options And Windows.MessageBoxOptions.RtlReading) = Windows.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
-                Return Show(box, New WPFWindow(owner))
+                Return ShowTemplate(box, New WPFWindow(owner))
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
-                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex) 
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
         End Function
 #End Region
@@ -2611,7 +2632,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
 
         ''' <summary>Displays a message box with specified text, caption, buttons, and icon.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
@@ -2628,7 +2649,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         End Function
         ''' <summary>Displays a message box with specified text, caption, buttons, and icon.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="icon">One of the <see cref="MessageBoxIcons"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="text">The text to display in the message box. </param>
@@ -2679,7 +2700,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         End Function
         ''' <summary>Displays a message box with the specified text, caption, buttons, icon, and default button.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="icon">One of the <see cref="MessageBoxIcons"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values that specifies the default button for the message box. </param>
@@ -2717,7 +2738,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, and icon.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
-        ''' <param name="Icon">One of the <see cref="MessageBoxIcons"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
         ''' <param name="Caption">The text to display in the title bar of the message box. </param>
@@ -2754,7 +2775,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         End Function
         ''' <summary>Displays a message box with the specified text, caption, buttons, icon, default button, and options.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="icon">One of the <see cref="MessageBoxIcons"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
         ''' <param name="caption">The text to display in the title bar of the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
@@ -2794,7 +2815,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         End Function
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, and default button.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
-        ''' <param name="Icon">One of the <see cref="MessageBoxIcons"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
         ''' <param name="defaultButton">One of the <see cref="T:System.Windows.Forms.MessageBoxDefaultButton"></see> values that specifies the default button for the message box. </param>
         ''' <param name="buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
@@ -2836,7 +2857,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <summary>Displays a message box in front of the specified object and with the specified text, caption, buttons, icon, default button, and options.</summary>
         ''' <returns>One of the <see cref="T:System.Windows.Forms.DialogResult"></see> values.</returns>
         ''' <param name="Text">The text to display in the message box. </param>
-        ''' <param name="Icon">One of the <see cref="MessageBoxIcons"></see> values that specifies which icon to display in the message box. </param>
+        ''' <param name="icon">One of the <see cref="T:System.Windows.Forms.MessageBoxIcon"></see> values that specifies which icon to display in the message box. Values <see cref="System.Windows.Forms.MessageBoxIcon.Asterisk"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Exclamation"/>, <see cref="System.Windows.Forms.MessageBoxIcon.Hand"/> and <see cref="System.Windows.Forms.MessageBoxIcon.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="Options">One of the <see cref="T:System.Windows.Forms.MessageBoxOptions"></see> values that specifies which display and association options will be used for the message box. You may pass in 0 if you wish to use the defaults.</param>
         ''' <param name="Owner">An implementation of <see cref="T:System.Windows.Forms.IWin32Window"></see> that will own the modal dialog box.</param>
         ''' <param name="Buttons">One of the <see cref="T:System.Windows.Forms.MessageBoxButtons"></see> values that specifies which buttons to display in the message box. </param>
@@ -2886,9 +2907,15 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                     Case MessageBoxDefaultButton.Button3 : box.DefaultButton = 2
                 End Select
                 box.Icon = GetIconDelegate.Invoke(icon)
+                Select Case icon
+                    Case MessageBoxIcons.Asterisk : box.PlayOnShow = Media.SystemSounds.Asterisk
+                    Case MessageBoxIcons.Hand : box.PlayOnShow = Media.SystemSounds.Hand
+                    Case MessageBoxIcons.Exclamation : box.PlayOnShow = Media.SystemSounds.Exclamation
+                    Case MessageBoxIcons.Question : box.PlayOnShow = Media.SystemSounds.Question
+                End Select
                 If (options And Windows.Forms.MessageBoxOptions.RightAlign) = Windows.Forms.MessageBoxOptions.RightAlign Then box.Options = box.Options Or MessageBoxOptions.AlignRight
                 If (options And Windows.Forms.MessageBoxOptions.RtlReading) = Windows.Forms.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
-                Return Show(box, owner)
+                Return ShowTemplate(box, owner)
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
                 Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex) 'Localize exception
             End Try
@@ -2916,7 +2943,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
 #Region "Microsoft.VisualBasic.Interaction.MsgBox"
         ''' <summary>Displays a message in a dialog box, waits for the user to click a button, and then returns an integer indicating which button the user clicked.</summary>
         ''' <param name="Prompt">Required. String expression displayed as the message in the dialog box.</param>
-        ''' <param name="Buttons">Optional. Numeric expression that is the sum of values specifying the number and type of buttons to display, the icon style to use, the identity of the default button, and the modality of the message box. If you omit Buttons, the default value is zero.</param>
+        ''' <param name="Buttons">Optional. Numeric expression that is the sum of values specifying the number and type of buttons to display, the icon style to use, the identity of the default button, and the modality of the message box. If you omit Buttons, the default value is zero. Values <see cref="MsgBoxStyle.Critical"/>, <see cref="MsgBoxStyle.Exclamation"/> and <see cref="MsgBoxStyle.Question"/> are associated with appropriate <see cref="Media.SystemSounds"/>.</param>
         ''' <param name="Title">Optional. String expression displayed in the title bar of the dialog box. If you omit Title, the application name is placed in the title bar.</param>
         ''' <returns>The result of message box indicatin pressed button.</returns>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
@@ -2933,10 +2960,15 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                     Case MsgBoxStyle.DefaultButton3 : box.DefaultButton = 2
                     Case Else : box.DefaultButton = -1
                 End Select
+                Select Case Buttons And (MsgBoxStyle.Critical Or MsgBoxStyle.Exclamation Or MsgBoxStyle.Information Or MsgBoxStyle.Question)
+                    Case MsgBoxStyle.Critical : box.PlayOnShow = Media.SystemSounds.Hand
+                    Case MsgBoxStyle.Exclamation : box.PlayOnShow = Media.SystemSounds.Exclamation
+                    Case MsgBoxStyle.Question : box.PlayOnShow = Media.SystemSounds.Question
+                End Select
                 If (Buttons And MsgBoxStyle.MsgBoxSetForeground) = MsgBoxStyle.MsgBoxSetForeground Then box.Options = box.Options Or MessageBoxOptions.BringToFront
                 If (Buttons And MsgBoxStyle.MsgBoxRight) = MsgBoxStyle.MsgBoxRight Then box.Options = box.Options Or MessageBoxOptions.AlignRight
                 If (Buttons And MsgBoxStyle.MsgBoxRtlReading) = MsgBoxStyle.MsgBoxRtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
-                Dim result As DialogResult = Show(box)
+                Dim result As DialogResult = ShowTemplate(box)
                 Select Case result
                     Case Windows.Forms.DialogResult.Abort : Return MsgBoxResult.Abort
                     Case Windows.Forms.DialogResult.Cancel : Return MsgBoxResult.Cancel
@@ -3027,7 +3059,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Title">Message box title</param>
-        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/>. Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <returns>Indicates button clicked by user</returns>
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
             Return ModalF(Prompt, Title, MessageBoxButton.Buttons.OK, Icon, arguments)
@@ -3036,7 +3068,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
-        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/> Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
@@ -3048,14 +3080,36 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.None) As DialogResult
+        ''' <param name="Sound">Sound to be played when message box is shown. If null, it is chosen automatically.</param>
+        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.None, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
             Dim IconValue = GetIconDelegate.Invoke(Icon)
             Dim iconImage As Image
             If IconValue.contains(GetType(Icon)) Then
                 iconImage = IconValue.value1.ToBitmap
             Else : iconImage = IconValue.value2
             End If
-            Return Modal(Prompt, Title, Options, iconImage, Buttons)
+            If Sound Is Nothing Then Sound = GetAssociatedSound(Icon)
+            Return Modal(Prompt, Title, Options, iconImage, Buttons, Sound)
+        End Function
+        ''' <summary>Gets sound associated with given icon</summary>
+        ''' <param name="Icon">Icon to get sound for</param>
+        ''' <returns>An instance of <see cref="MediaT.SystemSoundPlayer"/> if there is sound associated with <paramref name="Icon"/>; null otherwise</returns>
+        ''' <remarks>Current associatins are:
+        ''' <list type="table"><listheader><term>Icon</term><description>Sound</description></listheader>
+        ''' <item><see cref="MessageBoxIcons.Asterisk"/><description><see cref="Media.SystemSounds.Asterisk"/></description></item>
+        ''' <item><term><see cref="MessageBoxIcons.[Error]"/>, <see cref="MessageBoxIcons.Hand"/>, <see cref="MessageBoxIcons.[Stop]"/></term><description><see cref="Media.SystemSounds.Hand"/></description></item>
+        ''' <item><term><see cref="MessageBoxIcons.Question"/></term><description><see cref="Media.SystemSounds.Question"/></description></item>
+        ''' <item><term><see cref="MessageBoxIcons.Exclamation"/>, <see cref="MessageBoxIcons.Warning"/></term><see cref="Media.SystemSounds.Exclamation"/></item>
+        ''' </list>
+        ''' </remarks>
+        Protected Shared Function GetAssociatedSound(ByVal Icon As MessageBoxIcons) As MediaT.SystemSoundPlayer
+            Select Case Icon
+                Case MessageBoxIcons.Asterisk : Return Media.SystemSounds.Asterisk
+                Case MessageBoxIcons.Error, MessageBoxIcons.Hand, MessageBoxIcons.Stop : Return Media.SystemSounds.Hand
+                Case MessageBoxIcons.Question : Return Media.SystemSounds.Question
+                Case MessageBoxIcons.Exclamation, MessageBoxIcons.Warning : Return Media.SystemSounds.Exclamation
+                Case Else : Return Nothing
+            End Select
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title and options </summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3080,7 +3134,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/> Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
@@ -3090,7 +3144,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/>. Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
@@ -3101,7 +3155,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                 iconImage = IconValue.value1.ToBitmap
             Else : iconImage = IconValue.value2
             End If
-            Return ModalF(Prompt, Title, Options, iconImage, Buttons, arguments)
+            Return ModalF(Prompt, Title, Options, iconImage, Buttons, GetAssociatedSound(Icon), arguments)
         End Function
 #Region "Custom Icon"
         ''' <summary>Displays modal message with given prompt, title, buttons and custom icon</summary>
@@ -3138,11 +3192,12 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK) As DialogResult
-            Dim box As New FakeBox With {.Prompt = Prompt, .Title = Title, .Options = Options, .Icon = Icon}
+        ''' <param name="Sound">Sound to be played when message box is shown</param>
+        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
+            Dim box As New FakeBox With {.Prompt = Prompt, .Title = Title, .Options = Options, .Icon = Icon, .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
-            Return Show(box)
+            Return ShowTemplate(box)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options and custom icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3154,6 +3209,16 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
             Return ModalF(Prompt, Title, Options, MessageBoxButton.Buttons.OK, Icon, arguments)
         End Function
+        ''' <summary>Displays modal message box with formated prompt, given title, options and custom icon</summary>
+        ''' <param name="Prompt">Format string for promt to be shown to user</param>
+        ''' <param name="Title">Message box title</param>
+        ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
+        ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"></paramref> can be null. Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
+        ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"></paramref> using the <see cref="String.Format"></see> function.</param>
+        ''' <returns>Indicates button clicked by user</returns>
+        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal Sound As MediaT.Sound, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF(Prompt, Title, Options, MessageBoxButtons.OK, Icon, Sound, arguments)
+        End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options, buttons and custom icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="Title">Message box title</param>
@@ -3163,10 +3228,22 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
-            Dim box As New FakeBox With {.Prompt = String.Format(Prompt, arguments), .Title = Title, .Options = Options, .Icon = Icon}
+            Return ModalF(Prompt$, Title$, Options, Buttons, Icon, DirectCast(Nothing, MediaT.Sound), arguments)
+        End Function
+        ''' <summary>Displays modal message box with formated prompt, given title, options, buttons and custom icon</summary>
+        ''' <param name="Prompt">Format string for promt to be shown to user</param>
+        ''' <param name="Title">Message box title</param>
+        ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
+        ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
+        ''' <param name="Buttons">Defines which buttons will be available to user</param>
+        ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
+        ''' <param name="Sound">Sound to be played when message box is shown</param>
+        ''' <returns>Indicates button clicked by user</returns>
+        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal Sound As MediaT.Sound, ByVal ParamArray arguments As Object()) As DialogResult
+            Dim box As New FakeBox With {.Prompt = String.Format(Prompt, arguments), .Title = Title, .Options = Options, .Icon = Icon, .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
-            Return Show(box)
+            Return ShowTemplate(box)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and custom icon</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3198,7 +3275,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal ParamArray Buttons As MessageBoxButton()) As DialogResult
             Dim box As New FakeBox With {.Prompt = Prompt, .Title = Title, .Options = Options, .Icon = Icon}
             box.SetButtons(Buttons)
-            Return Show(box)
+            Return ShowTemplate(box)
         End Function
         ''' <summary>Display modal message box with given prompt, title and owner. Optionally specifies buttons, icon and options</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3213,7 +3290,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                 .Prompt = Prompt, .title = Title, _
                 .Options = Options, .icon = Icon}
             box.SetButtons(Buttons)
-            Show(box, Owner)
+            ShowTemplate(box, Owner)
         End Function
         ''' <summary>Display modal message box with formated promt, given title, owner, buttons, icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3249,7 +3326,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
                 .Prompt = Prompt, .title = Title, _
                 .Options = Options, .icon = Icon, .Timer = Timer}
             box.SetButtons(Buttons)
-            Show(box, Owner)
+            ShowTemplate(box, Owner)
         End Function
         ''' <summary>Displays autoclosing modal message box</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3265,7 +3342,7 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         End Function
 #End Region
 #Region "ModalEx"
-        ''' <summary>Displays modal messagebox with given prompt, title, items and optionally icon, options, owner, timer and show handler</summary>
+        ''' <summary>Displays modal messagebox with given prompt, title, items and optionally icon, options, owner, timer, show handler and sound</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
@@ -3274,9 +3351,10 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
+        ''' <param name="Sound">Sound to be played whne message box is shown.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing) As MessageBox
-            Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer)}
+        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
+            Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer), .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(Items.OfType(Of MessageBoxButton))
             box.CheckBoxes.AddRange(Items.OfType(Of MessageBoxCheckBox))
@@ -3449,7 +3527,6 @@ Public Shared Function Show(ByVal owner As System.Windows.Window, ByVal messageB
         Public Shared Function [Error](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
             Return ModalF(Prompt & vbCrLf & ex.Message, Title, Owner, Buttons, Icon, Options)
         End Function
-
 #End Region
 #End Region
 #Region "Other methods"

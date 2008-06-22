@@ -777,4 +777,10 @@
   <data name="OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported" xml:space="preserve">
     <value>Only sounds of type SystemSoundPlayer and SoundPlayerWrapper are supported</value>
   </data>
+  <data name="SystemSoundPlayerWrapperCanBeConvertedOnlyWhenItProvidesSoundLocation" xml:space="preserve">
+    <value>SystemSoundPlayerWrapper can be converted only when it provides sound location.</value>
+  </data>
+  <data name="CannotConvertGiven0To1BecauseItDoesNotRepresentKnown2" xml:space="preserve">
+    <value>Cannot convert given {0} to {1} because it does not represent known {2}.</value>
+  </data>
 </root>

@@ -1,10 +1,12 @@
 ﻿Imports Tools.ExtensionsT, System.Media, Tools.ComponentModelT, Tools.DataStructuresT.GenericT
 Imports System.Drawing.Design
 Imports System.Windows.Forms
-Imports System.Drawing
+Imports System.Drawing, System.CodeDom
+Imports System.ComponentModel.Design.Serialization
+Imports Tools.DrawingT.DesignT
 
 'TODO: Test how it behaves in PropertyGrid for MessageBox
-'TODO: CodeDom serializer
+'TODO: Verify codedom serialization behaviour
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace MediaT
     ''' <summary>Abstract class that represents short sound to be played</summary>
@@ -29,12 +31,12 @@ Namespace MediaT
         ''' <summary>Plays sound on background</summary>
         ''' <param name="times">Defines how many times shound will be played</param>
         Public Sub PlayOnBackground(Optional ByVal times As Integer = 1)
-            PlayOnBackground(TryCast(Nothing, dSub(Of Sound)), times)
+            PlayOnBackground(TryCast(Nothing, Action(Of Sound)), times)
         End Sub
         ''' <summary>Plays sound on background</summary>
         ''' <param name="times">Defines how many times shound will be played</param>
         ''' <param name="Callback">Callback method that will be called after playing is finished. Can be null.</param>
-        Public Sub PlayOnBackground(ByVal Callback As dSub(Of Sound), Optional ByVal times As Integer = 1)
+        Public Sub PlayOnBackground(ByVal Callback As Action(Of Sound), Optional ByVal times As Integer = 1)
             PlayOnBackground(Of Object)(If(Callback IsNot Nothing, Callback.AddArgument(Of Object), Nothing), Nothing, times)
         End Sub
         ''' <summary>Plays sound on background</summary>
@@ -42,11 +44,11 @@ Namespace MediaT
         ''' <param name="Callback">Callback method that will be called after playing is finished. Can be nothing.</param>
         ''' <param name="CustomObject">Custom object passed to <paramref name="Callback"/> method</param>
         ''' <typeparam name="T">Type of custom object passed to <paramref name="Callback"/> method</typeparam>
-        Public Overridable Sub PlayOnBackground(Of T)(ByVal Callback As dSub(Of Sound, T), ByVal CustomObject As T, Optional ByVal times As Integer = 1)
+        Public Overridable Sub PlayOnBackground(Of T)(ByVal Callback As Action(Of Sound, T), ByVal CustomObject As T, Optional ByVal times As Integer = 1)
             Dim bgw As New BackgroundWorker
             AddHandler bgw.DoWork, AddressOf Me.PlayOnBackground
             If Callback IsNot Nothing Then AddHandler bgw.RunWorkerCompleted, AddressOf OnPlayed
-            Dim CallbackUnsafe As dSub(Of Sound, Object) = Nothing
+            Dim CallbackUnsafe As Action(Of Sound, Object) = Nothing
             If Callback IsNot Nothing Then CallbackUnsafe = AddressOf Callback.Invoke
             bgw.RunWorkerAsync(New Object() {CallbackUnsafe, times, CustomObject})
         End Sub
@@ -64,7 +66,7 @@ Namespace MediaT
         ''' <param name="e">Event arguments. <paramref name="e"/>.<see cref="RunWorkerCompletedEventArgs.Result">Result</see> contains 1D array with callback method, number of times to repeat the sound and custom return object</param>
         Private Sub OnPlayed(ByVal sender As BackgroundWorker, ByVal e As RunWorkerCompletedEventArgs)
             Dim arg As Object() = e.Result
-            Dim Callback As dSub(Of Sound, Object) = arg(0)
+            Dim Callback As Action(Of Sound, Object) = arg(0)
             Dim CustomObject As Object = arg(2)
             If Callback IsNot Nothing Then
                 Callback.Invoke(Me, CustomObject)
@@ -81,7 +83,7 @@ Namespace MediaT
         ''' <summary>Implements type convertor for <see cref="Sound"/> and <see cref="String"/></summary>
         Friend Class SoundTypeConverter
             Inherits TypeConverter(Of Sound, String)
-
+            Implements ITypeConverter(Of InstanceDescriptor)
             ''' <summary>Performs conversion from type <see cref="String"/> to type <see cref="Sound"/></summary>
             ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
             ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
@@ -129,23 +131,51 @@ Namespace MediaT
                 End If
                 Throw New TypeMismatchException(ResourcesT.Exceptions.OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported, value)
             End Function
+
+            ''' <summary>Performs conversion from type <see cref="InstanceDescriptor"/> to type <see cref="Sound"/></summary>
+            ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+            ''' <param name="value">Value to be converted to type <see cref="Sound"/></param>
+            ''' <returns>Value of type <see cref="Sound"/> initialized by <paramref name="value"/></returns>
+            Public Overloads Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As System.ComponentModel.Design.Serialization.InstanceDescriptor) As Sound Implements ITypeConverterFrom(Of System.ComponentModel.Design.Serialization.InstanceDescriptor).ConvertFrom
+                Return value.Invoke
+            End Function
+
+            ''' <summary>Performs conversion from type <see cref="Sound"/> to type <see cref="InstanceDescriptor"/></summary>
+            ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+            ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+            ''' <param name="value">Value to be converted</param>
+            ''' <returns>Representation of <paramref name="value"/> in type <see cref="InstanceDescriptor"/></returns>
+            Public Overloads Function ConvertToInstanceDescriptor(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Sound) As System.ComponentModel.Design.Serialization.InstanceDescriptor Implements ITypeConverterTo(Of System.ComponentModel.Design.Serialization.InstanceDescriptor).ConvertTo
+                If value Is Nothing Then Return Nothing
+                If TypeOf value Is SoundPlayerWrapper Then
+                    With DirectCast(value, SoundPlayerWrapper)
+                        If .Player.SoundLocation.IsNullOrEmpty Then Throw New ArgumentException(ResourcesT.Exceptions.SystemSoundPlayerWrapperCanBeConvertedOnlyWhenItProvidesSoundLocation)
+                        Return New InstanceDescriptor(GetType(SoundPlayerWrapper).GetConstructor(New Type() {GetType(String)}), New Object() {.Player.SoundLocation}, True)
+                    End With
+                ElseIf TypeOf value Is SystemSoundPlayer Then
+                    Dim SSvalue As SystemSoundPlayer.KnownSystemSounds = DirectCast(value, SystemSoundPlayer)
+                    Return New InstanceDescriptor(GetType(SystemSoundPlayer).GetConstructor(New Type() {GetType(SystemSoundPlayer.KnownSystemSounds)}), New Object() {SSvalue}, True)
+                End If
+                Throw New TypeMismatchException(ResourcesT.Exceptions.OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported, value)
+            End Function
         End Class
         ''' <summary>Implements editing control for editing <see cref="Sound"/> in <see cref="PropertyGrid"/></summary>
         Friend Class SoundDropDownList
-            Inherits System.Windows.Forms.UserControl
-            Implements DrawingT.DesignT.IEditor(Of Sound)
-            ''' <summary>Contains value of the <see cref="Context"/> property</summary>
-            Private _Context As System.ComponentModel.ITypeDescriptorContext
+            'TODO: Test behavior when Enter/Escape is pressed
+            Inherits DropDownUITypeEditorControlBase(Of Sound)
             ''' <summary><see cref="ListBox"/> which contains values to chose between</summary>
-            Private WithEvents lstList As New ListBox
+            Private WithEvents lstList As New ListBox With {.TabIndex = 0}
             ''' <summary><see cref="Label"/> to browse for file</summary>
-            Private WithEvents lblBrowse As New Label
+            Private WithEvents cmdBrowse As New Button With {.AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .TabIndex = 0}
             ''' <summary>Button which plays the sound</summary>
-            Private WithEvents cmdPlay As New Button With {.Image = My.Resources.Play}
-            ''' <summary>Layout panel for <see cref="lblBrowse"/> and <see cref="cmdPlay"/></summary>
-            Private tlbBottom As New TableLayoutPanel With {.ColumnCount = 2, .RowCount = 1}
+            Private WithEvents cmdPlay As New Button With {.Image = My.Resources.Play, .AutoSize = True, .AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink, .TabIndex = 1}
+            ''' <summary>Layout panel for <see cref="cmdBrowse"/> and <see cref="cmdPlay"/></summary>
+            Private tlbBottom As New TableLayoutPanel With {.ColumnCount = 2, .RowCount = 1, .TabIndex = 1}
+            ''' <summary>Tooltip for <see cref="cmdPlay"/></summary>
+            Private totToolTip As New ToolTip
             ''' <summary>Contains value of the <see cref="Value"/> property</summary>
-            Private _Value As Sound
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Value As Sound
             ''' <summary>CTor</summary>
             Public Sub New()
                 lstList.DisplayMember = "Value2"
@@ -156,36 +186,32 @@ Namespace MediaT
                     New Pair(Of SystemSoundPlayer, String)(SystemSounds.Hand, ResourcesT.Components.Hand), _
                     New Pair(Of SystemSoundPlayer, String)(SystemSounds.Question, ResourcesT.Components.Question) _
                 })
-                lblBrowse.Text = ResourcesT.Components.Browse
+                cmdBrowse.Text = ResourcesT.Components.Browse
                 lstList.Dock = DockStyle.Fill
-                lblBrowse.Anchor = AnchorStyles.Left
+                lstList.ClientSize = New Size(lstList.ClientSize.Width, lstList.ItemHeight * lstList.Items.Count)
+                Me.AutoSize = True
+                Me.AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink
+                cmdBrowse.Anchor = AnchorStyles.Left
                 tlbBottom.Dock = DockStyle.Bottom
                 tlbBottom.AutoSize = True
                 tlbBottom.AutoSizeMode = Windows.Forms.AutoSizeMode.GrowAndShrink
+                If tlbBottom.RowStyles.Count < 1 Then tlbBottom.RowStyles.Add(New RowStyle)
                 tlbBottom.RowStyles(0).SizeType = SizeType.AutoSize
+                If tlbBottom.ColumnStyles.Count < 1 Then tlbBottom.ColumnStyles.Add(New ColumnStyle)
                 tlbBottom.ColumnStyles(0).SizeType = SizeType.AutoSize
+                If tlbBottom.ColumnStyles.Count < 2 Then tlbBottom.ColumnStyles.Add(New ColumnStyle)
                 tlbBottom.ColumnStyles(1).SizeType = SizeType.Percent
                 tlbBottom.ColumnStyles(1).Width = 100
                 cmdPlay.Anchor = AnchorStyles.Right
-                tlbBottom.Controls.Add(lblBrowse, 0, 0)
-                tlbBottom.Controls.Add(lblBrowse, 1, 0)
+                tlbBottom.Controls.Add(cmdBrowse, 0, 0)
+                tlbBottom.Controls.Add(cmdPlay, 1, 0)
                 Me.BackColor = SystemColors.Window
                 Me.Controls.Add(lstList)
                 Me.Controls.Add(tlbBottom)
+                totToolTip.SetToolTip(cmdPlay, ResourcesT.Components.Play)
             End Sub
-            ''' <summary>Stores context of current editing session</summary>
-            ''' <remarks>This property is set by owner of the control and is valid between calls of <see cref="OnBeforeShow"/> and <see cref="OnClosed"/>.</remarks>
-            Private Property Context() As System.ComponentModel.ITypeDescriptorContext Implements DrawingT.DesignT.IEditor(Of Sound).Context
-                Get
-                    Return _Context
-                End Get
-                Set(ByVal value As System.ComponentModel.ITypeDescriptorContext)
-                    _Context = value
-                End Set
-            End Property
-
             ''' <summary>Owner of control informs control that it is about to be shown by calling this methos. It is called just befiore the control is shown.</summary>
-            Private Sub OnBeforeShow() Implements DrawingT.DesignT.IEditor(Of Sound).OnBeforeShow
+            Protected Overrides Sub OnBeforeShow()
                 lstList.SelectedIndex = -1
                 If Value IsNot Nothing AndAlso TypeOf Value Is SystemSoundPlayer Then
                     Dim i As Integer = 0
@@ -199,51 +225,9 @@ Namespace MediaT
                 End If
             End Sub
 
-            ''' <summary>Informs control that it was just hidden by calling this method.</summary>
-            ''' <remarks>When implementing editor for reference type that is edited by changin its properties instead of changing its instance. Properties shouldbe changed in this method and onyl if <see cref="Result"/> is true.</remarks>
-            Private Sub OnClosed() Implements DrawingT.DesignT.IEditor(Of Sound).OnClosed
-                'Do nothing
-            End Sub
-            ''' <summary>Contains value of the <see cref="Result"/> property</summary>
-            Private _Result As Boolean
-            ''' <summary>Stores editing result</summary>
-            ''' <returns>True if editing was terminated with success, false if it was canceled</returns>
-            ''' <remarks>This property is set by owner of the control and is valid when and after <see cref="OnClosed"/> is called</remarks>
-            Private Property Result() As Boolean Implements DrawingT.DesignT.IEditor(Of Sound).Result
-                Get
-                    Return _Result
-                End Get
-                Set(ByVal value As Boolean)
-                    _Result = value
-                End Set
-            End Property
-            ''' <summary>Contains value of the <see cref="Service"/> property</summary>
-            Private _Service As System.Windows.Forms.Design.IWindowsFormsEditorService
-            ''' <summary>Stores <see cref="System.Windows.Forms.Design.IWindowsFormsEditorService"/> valid for current editing session</summary>
-            ''' <remarks>This property is set by owner of the control and is valid between calls of <see cref="OnBeforeShow"/> and <see cref="OnClosed"/>.</remarks>
-            Private Property Service() As System.Windows.Forms.Design.IWindowsFormsEditorService Implements DrawingT.DesignT.IEditor(Of Sound).Service
-                Get
-                    Return _Service
-                End Get
-                Set(ByVal value As System.Windows.Forms.Design.IWindowsFormsEditorService)
-                    _Service = value
-                End Set
-            End Property
-
-
-            ''' <summary>Gets or sets edited value</summary>
-            Public Property Value() As Sound Implements DrawingT.DesignT.IEditor(Of Sound).Value
-                Get
-                    Return _Value
-                End Get
-                Set(ByVal value As Sound)
-                    _Value = value
-                End Set
-            End Property
-
-            Private Sub lblBrowse_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles lblBrowse.Click
+            Private Sub lblBrowse_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
                 Dim ofd As New OpenFileDialog With {.Title = ResourcesT.Components.SelectWavFile, .Filter = ResourcesT.Components.WavFilter}
-                If ofd.ShowDialog Then
+                If ofd.ShowDialog = DialogResult.OK Then
                     Dim val As SoundPlayerWrapper
                     Try
                         val = New SoundPlayer(ofd.FileName)
@@ -261,22 +245,6 @@ Namespace MediaT
                 End If
             End Sub
 
-            Private Sub lstList_KeyDown(ByVal sender As ListBox, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lstList.KeyDown
-                Select Case e.KeyCode
-                    Case Keys.Enter
-                        If sender.SelectedItem Is Nothing Then
-                            Value = Nothing
-                        Else
-                            Value = DirectCast(sender.SelectedItem, Pair(Of SystemSoundPlayer, String)).Value1
-                        End If
-                        Result = True
-                        Service.CloseDropDown()
-                    Case Keys.Escape
-                        Result = False
-                        Service.CloseDropDown()
-                End Select
-            End Sub
-
             Private Sub lstList_MouseClick(ByVal sender As ListBox, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstList.MouseClick
                 If sender.SelectedItem Is Nothing Then
                     Value = Nothing
@@ -290,11 +258,16 @@ Namespace MediaT
             Private Sub cmdPlay_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdPlay.Click
                 If Value IsNot Nothing Then Value.PlayOnBackground()
             End Sub
+
+            ''' <summary>Raises the <see cref="E:System.Windows.Forms.Control.GotFocus" /> event.</summary>
+            ''' <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
+            Protected Overrides Sub OnGotFocus(ByVal e As System.EventArgs)
+                lstList.Select()
+            End Sub
         End Class
     End Class
     ''' <summary>Implements <see cref="Sound"/> which plays given <see cref="SystemSound"/></summary>
-    ''' <completionlist cref="SystemSounds"/>
-    ''' 
+    ''' <completionlist cref="System.Media.SystemSounds"/>
     <DebuggerDisplay("{ToString}")> _
     Public NotInheritable Class SystemSoundPlayer : Inherits Sound
         ''' <summary><see cref="SystemSound"/> to be played</summary>
@@ -303,7 +276,7 @@ Namespace MediaT
         ''' <param name="SystemSound">System sound to be played</param>
         ''' <exception cref="ArgumentNullException"><paramref name="SystemSound"/> is null</exception>
         Public Sub New(ByVal SystemSound As SystemSound)
-            If SystemSound Is Nothing Then [Throw](New ArgumentNullException("SystemSound"))
+            If SystemSound Is Nothing Then [DoThrow](New ArgumentNullException("SystemSound"))
             Me.SystemSound = SystemSound
         End Sub
         ''' <summary>Plays system sound represented by this instance</summary>
@@ -337,6 +310,72 @@ Namespace MediaT
             Else : Return MyBase.ToString()
             End If
         End Function
+        ''' <summary>Represents known system sounds as defined by the <see cref="SystemSounds"/> class</summary>
+        Public Enum KnownSystemSounds
+            ''' <summary>Sound associated with the Asterisk program event in the current Windows sound scheme</summary>
+            Asterisk = &H40
+            ''' <summary>Sound associated with the Beep program event in the current Windows sound scheme.</summary>
+            Beep = 0
+            ''' <summary>Sound associated with the Exclamation program event in the current Windows sound scheme.</summary>
+            Exclamation = &H30
+            ''' <summary>Sound associated with the Hand program event in the current Windows sound scheme.</summary>
+            Hand = &H10
+            ''' <summary>Sound associated with the Question program event in the current Windows sound scheme.</summary>
+            Question = &H20
+        End Enum
+        ''' <summary>CTor from <see cref="KnownSystemSounds"/></summary>
+        ''' <param name="known">One of <see cref="KnownSystemSounds"/> values</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="known"/> is not one of <see cref="KnownSystemSounds"/> values</exception>
+        Public Sub New(ByVal known As KnownSystemSounds)
+            Select Case known
+                Case KnownSystemSounds.Asterisk : Me.SystemSound = SystemSounds.Asterisk
+                Case KnownSystemSounds.Beep : Me.SystemSound = SystemSounds.Beep
+                Case KnownSystemSounds.Exclamation : Me.SystemSound = SystemSounds.Exclamation
+                Case KnownSystemSounds.Hand : Me.SystemSound = SystemSounds.Hand
+                Case KnownSystemSounds.Question : Me.SystemSound = SystemSounds.Question
+                Case Else : Throw New InvalidEnumArgumentException("known", known, known.GetType)
+            End Select
+        End Sub
+        ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
+        ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
+        ''' <exception cref="T:System.NullReferenceException">The 
+        ''' <paramref name="obj" /> parameter is null.</exception>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+            Dim SS As SystemSound = Nothing
+            If obj IsNot Nothing AndAlso TypeOf obj Is SystemSoundPlayer Then
+                SS = DirectCast(obj, SystemSoundPlayer).SystemSound
+            ElseIf obj IsNot Nothing AndAlso TypeOf obj Is SystemSound Then
+                SS = obj
+            End If
+            If SS IsNot Nothing Then
+                Return SS Is Me.SystemSound
+            End If
+            Return MyBase.Equals(obj)
+        End Function
+        ''' <summary>Converts <see cref="SystemSoundPlayer"/> to <see cref="KnownSystemSounds"/></summary>
+        ''' <param name="a">A <see cref="SystemSoundPlayer"/></param>
+        ''' <remarks>A <see cref="KnownSystemSounds"/> value that represents <paramref name="a"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="a"/> is null</exception>
+        ''' <exception cref="InvalidCastException"><paramref name="a"/> doesn't represent one of <see cref="SystemSounds"/> values. This situation may hardly ocure.</exception>
+        Public Overloads Shared Widening Operator CType(ByVal a As SystemSoundPlayer) As KnownSystemSounds
+            If a Is Nothing Then Throw New ArgumentNullException("a")
+            If a.SystemSound Is SystemSounds.Asterisk Then : Return KnownSystemSounds.Asterisk
+            ElseIf a.SystemSound Is SystemSounds.Beep Then : Return KnownSystemSounds.Beep
+            ElseIf a.SystemSound Is SystemSounds.Exclamation Then : Return KnownSystemSounds.Exclamation
+            ElseIf a.SystemSound Is SystemSounds.Hand Then : Return KnownSystemSounds.Hand
+            ElseIf a.SystemSound Is SystemSounds.Question Then : Return KnownSystemSounds.Question
+            Else : Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.CannotConvertGiven0To1BecauseItDoesNotRepresentKnown2, "SystemSoundPlayer", "KnownSystemSounds", "SystemSound"))
+            End If
+        End Operator
+        ''' <summary>Converts <see cref="KnownSystemSounds"/> value to <see cref="SystemSoundPlayer"/></summary>
+        ''' <param name="a">A <see cref="KnownSystemSounds"/> value</param>
+        ''' <returns><see cref="SystemSoundPlayer"/> initialized with <paramref name="a"/></returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="a"/> is not member of <see cref="KnownSystemSounds"/></exception>
+        Public Overloads Shared Narrowing Operator CType(ByVal a As KnownSystemSounds) As SystemSoundPlayer
+            Return New SystemSoundPlayer(a)
+        End Operator
     End Class
     ''' <summary>Wraps <see cref="SoundPlayer"/> as <see cref="Sound"/></summary>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _

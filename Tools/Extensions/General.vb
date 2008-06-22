@@ -35,7 +35,7 @@ Namespace ExtensionsT
         ''' <exception cref="Exception">Exception of type <typeparamref name="T"/> <paramref name="ex"/> is always thrown</exception>
         ''' <remarks>You can use this function to thown an exception in place where <c>Throw</c> cannot be used because an expression is expected.</remarks>
         <Extension()> _
-        Public Function [Throw](Of T As Exception)(ByVal ex As T) As T
+        Public Function [DoThrow](Of T As Exception)(ByVal ex As T) As T
             Throw ex
         End Function
     End Module

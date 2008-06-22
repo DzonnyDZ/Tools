@@ -147,7 +147,7 @@ Namespace ReflectionT
         ''' <param name="Multiline">True to span attributtes on multiple lines. Note: <see cref="SignatureFlags.NoMultiline"/> is set, multiple lines will not be produced.</param>
         ''' <param name="filter">Attribute callback filter. Used only when <see cref="SignatureFlags.SomeAttributes"/> is set and <see cref="SignatureFlags.AllAttributes"/> is not set. Only attributes for which it is true will be returned.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="ret"/> is null ==or== <paramref name="filter"/> is null and <see cref="SignatureFlags.AllAttributes"/> is not set and <see cref="SignatureFlags.SomeAttributes"/> is set. ==or== <paramref name="Attributes"/> is null</exception>
-        Private Sub AppendCustomAttributes(ByVal Attributes As IList(Of CustomAttributeData), ByVal ret As System.Text.StringBuilder, ByVal flags As SignatureFlags, ByVal Way As CustomAttributeFlags, ByVal Multiline As Boolean, ByVal filter As dFunction(Of Boolean, Type))
+        Private Sub AppendCustomAttributes(ByVal Attributes As IList(Of CustomAttributeData), ByVal ret As System.Text.StringBuilder, ByVal flags As SignatureFlags, ByVal Way As CustomAttributeFlags, ByVal Multiline As Boolean, ByVal filter As Func(Of Type, Boolean))
             If ret Is Nothing Then Throw New ArgumentNullException("ret")
             If filter Is Nothing AndAlso (flags And SignatureFlags.SomeAttributes) AndAlso Not CBool(flags And SignatureFlags.AllAttributes) Then Throw New ArgumentNullException("filter")
             If Attributes Is Nothing Then Throw New ArgumentNullException("Attributes")

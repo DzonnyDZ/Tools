@@ -5,7 +5,7 @@ Namespace ComponentModelT
     ''' <typeparam name="T">Type that is converted from and to other types</typeparam>
     ''' <remarks>It's not enough to derive from this class to get working type-safe <see cref="ComponentModel.TypeConverter"/>. After deriving from this class you must implement one or more type converter interfaces (protected nested interfaces in this class). Those interfaces tells this class which conversions are available and provides conversion methods.</remarks>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TypeConverter(Of )), LastChange:="06/17/2007")> _
+    <Version(1, 1, GetType(TypeConverter(Of )), LastChange:="06/22/2008")> _
     <FirstVersion("06/16/2007")> _
     Public MustInherit Class TypeConverter(Of T) : Inherits TypeConverter
 #Region "Interfaces"
@@ -172,12 +172,36 @@ Namespace ComponentModelT
         ''' <exception cref="System.NotSupportedException">The conversion cannot be performed.</exception>
         ''' <remarks>This function searches for <see cref="ITypeConverterFrom(Of TOther)"/> implementation and calls its <see cref="ITypeConverterFrom.ConvertFrom"/> method if found. Otherwise it calls <see cref="ComponentModel.TypeConverter.ConvertFrom"/></remarks>
         Public NotOverridable Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As Object) As Object
-            Dim Conv As dConvertFrom = ConverterFrom(value.GetType)
+            Dim Conv As dConvertFrom = Nothing
+            If value IsNot Nothing Then Conv = ConverterFrom(value.GetType) Else Return ConvertFromNull(context, culture)
             If Conv Is Nothing Then
                 Return MyBase.ConvertFrom(context, culture, value)
             Else
                 Return Conv.Invoke(context, culture, value)
             End If
+        End Function
+        ''' <summary>If overriden in derived class performs conversion form null to type <see cref="T"/></summary>
+        ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <returns>Null value converted to type <see cref="T"/></returns>
+        ''' <remarks>
+        ''' <para>This method is called by base class when <see cref="ConverterFrom"/> method (type-unsafe) is called with value null. Sou type to convert from cannot be distinguished.</para>
+        ''' <para>This implementation simply returns null (which means default value for value types). You can override it to (for example) throw an exception. You can also call <see cref="BaseConvertFrom"/> with null value, which efectivelly throws <see cref="NotSupportedException"/>.</para>
+        ''' <exception cref="NotSupportedException">Given conversion is not supported (not thrown by this implementation, but can be thorown when implemented in derived class).</exception>
+        ''' </remarks>
+        Public Overridable Function ConvertFromNull(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo) As T
+            Return Nothing
+        End Function
+        ''' <summary>Calls <see cref="System.ComponentModel.TypeConverter.ConvertFrom"/> method (of very base class of this)</summary>
+        ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+        ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+        ''' <param name="value">The <see cref="System.Object"/> to convert.</param>
+        ''' <returns>An <see cref="System.Object"/> that represents the converted value.</returns>
+        ''' <exception cref="System.NotSupportedException">The conversion cannot be performed.</exception>
+        ''' <remarks>This function is provided in order to allow access to method of most base class from derived classes if you want access to very default behavior in your derived class.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Function BaseConvertFrom(ByVal context As ITypeDescriptorContext, ByVal culture As CultureInfo, ByVal value As Object) As Object
+            Return MyBase.ConvertFrom(context, culture, value)
         End Function
         ''' <summary>Converts the given value object to the specified type, using the specified context and culture information.</summary>
         ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>

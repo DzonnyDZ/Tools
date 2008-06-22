@@ -377,7 +377,7 @@ Namespace ReflectionT
         ''' <summary>For each image in cache calls given callback method</summary>
         ''' <param name="Callback">Method to call. Parameters are same as of the <see cref="ImageAdded"/> event.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Callback"/> is null</exception>
-        Public Sub WithAllImages(ByVal Callback As dSub(Of Image, Objects, ObjectModifiers))
+        Public Sub WithAllImages(ByVal Callback As Action(Of Image, Objects, ObjectModifiers))
             If Callback Is Nothing Then Throw New ArgumentNullException("Callback")
             For Each item In Cache
                 Callback.Invoke(item.Value, item.Key >> 32, item.Key And &HFFFFFFFF)

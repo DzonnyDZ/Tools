@@ -6,7 +6,7 @@ Namespace DrawingT.DesignT
     ''' <summary>Base class for type-safe <see cref="UITypeEditor">UITypeEditors</see></summary>
     ''' <typeparam name="T">Type of value being edited</typeparam>
     <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(UITypeEditor(Of )), LastChange:="05/25/2008")> _
+    <Version(1, 1, GetType(UITypeEditor(Of )), LastChange:="06/22/2008")> _
     <FirstVersion("05/25/2008")> _
     Public MustInherit Class UITypeEditor(Of T)
         Inherits UITypeEditor
@@ -16,10 +16,10 @@ Namespace DrawingT.DesignT
         ''' <param name="provider">An <see cref="T:System.IServiceProvider" /> that this editor can use to obtain services. </param>
         ''' <param name="value">The object to edit. </param>
         ''' <remarks>Use type-safe overload instead</remarks>
-        ''' <exception cref="TypeMismatchException"><paramref name="value"/> is not of type <typeparamref name="T"/>.</exception>
+        ''' <exception cref="TypeMismatchException"><paramref name="value"/> is not of type <typeparamref name="T"/> and it is not null.</exception>
         <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type safe-overload instead")> _
         Public NotOverridable Overrides Function EditValue(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal provider As System.IServiceProvider, ByVal value As Object) As Object
-            If Not TypeOf value Is T Then Throw New TypeMismatchException("value", value, GetType(T))
+            If value IsNot Nothing AndAlso Not TypeOf value Is T Then Throw New TypeMismatchException("value", value, GetType(T))
             Return EditValue(context, provider, DirectCast(value, T))
         End Function
         ''' <summary>Edits the specified object's value using the editor style indicated by the <see cref="M:System.Drawing.Design.UITypeEditor.GetEditStyle" /> method.</summary>
@@ -78,7 +78,8 @@ Namespace DrawingT.DesignT
 
     ''' <summary>Implements drop-down <see cref="UITypeEditor"/> represented by WinForms <see cref="Control"/></summary>
     ''' <typeparam name="T">Type of value being edited</typeparam>
-    ''' <typeparam name=" TControl">Type of <see cref="Control"/> that serves as editor GUI. It must implement <see cref="IEditor(Of T)"/> and has default CTor</typeparam>
+    ''' <typeparam name=" TControl">Type of <see cref="Control"/> that serves as editor GUI. It must implement <see cref="IEditor(Of T)"/> and has default CTor. You can derive your control from <see cref="DropDownUITypeEditorControlBase(Of T)"/> whic implements basic functionality of <see cref="IEditor(Of T)"/> interface</typeparam>
+    ''' <seelaso cref="IEditor(Of T)"/><seelaso cref="DropDownUITypeEditorControlBase(Of T)"/>
     Public Class DropDownControlEditor(Of T, TControl As {IEditor(Of T), New, Control})
         Inherits UITypeEditor(Of T)
         ''' <summary>Performs all tasks needed to show drop down</summary>
@@ -98,14 +99,8 @@ Namespace DrawingT.DesignT
                 If edSvc IsNot Nothing Then
                     control.Service = edSvc
                     control.Context = context
-                    Dim AddressOf__control_KeyDown As KeyEventHandler = AddressOf control_KeyDown
-                    Try
-                        AddHandler control.KeyDown, AddressOf__control_KeyDown
-                        control.Result = True
-                        ShowDropDown(control, edSvc)
-                    Finally
-                        RemoveHandler control.KeyDown, AddressOf__control_KeyDown
-                    End Try
+                    control.Result = True
+                    ShowDropDown(control, edSvc)
                     Return True
                 End If
             End If
@@ -123,34 +118,6 @@ Namespace DrawingT.DesignT
             edSvc.DropDownControl(Control)
             Control.OnClosed()
         End Sub
-
-        ''' <summary>Handles <see cref="Control.KeyDown"/> event of drop-down control</summary>
-        ''' <param name="sender">Source of the event - the control</param>
-        ''' <param name="e">Event arguments</param>
-        Private Sub control_KeyDown(ByVal sender As TControl, ByVal e As KeyEventArgs)
-            Select Case OnControlKeyDown(sender, e)
-                Case DialogResult.OK
-                    sender.Service.CloseDropDown()
-                    sender.Result = True
-                Case DialogResult.Cancel
-                    sender.Service.CloseDropDown()
-                    sender.Result = False
-            End Select
-        End Sub
-        ''' <summary>Called when user presses key on drop-down control (when it raises <see cref="Control.KeyDown"/> event.</summary>
-        ''' <param name="control">Control that is currently shown</param>
-        ''' <param name="e">Event arguments</param>
-        ''' <returns><see cref="DialogResult.OK"/> id drop down should be closed and result accepted; <see cref="DialogResult.Cancel"/> if dialog should be closed and result canceled; <see cref="DialogResult.None"/> if key event should be ignored.</returns>
-        ''' <remarks>This implementation favors <see cref="Keys.Escape"/> and <see cref="Keys.Enter"/> in no-shift state for cancel and OK.</remarks>
-        Protected Overridable Function OnControlKeyDown(ByVal control As TControl, ByVal e As KeyEventArgs) As DialogResult
-            If e.Shift OrElse e.Control OrElse e.Alt Then Return DialogResult.None
-            Select Case e.KeyCode
-                Case Keys.Escape : Return DialogResult.Cancel
-                Case Keys.Enter : Return DialogResult.OK
-            End Select
-            Return DialogResult.None
-        End Function
-
         ''' <summary>Edits the specified object's value using the editor style indicated by the <see cref="M:System.Drawing.Design.UITypeEditor.GetEditStyle" /> method.</summary>
         ''' <returns>The new value of the object. If the value of the object has not changed, this should return the same object it was passed.</returns>
         ''' <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that can be used to gain additional context information. </param>
@@ -173,9 +140,14 @@ Namespace DrawingT.DesignT
             Return UITypeEditorEditStyle.DropDown
         End Function
         ''' <summary>Gets a value indicating whether drop-down editors should be resizable by the user.</summary>
-        ''' <returns>This implementation always returns false</returns>
+        ''' <returns>This implementation returns false unless <see cref="TControl"/> implements <see cref="IEditorExtended(Of T)"/> - in such case it retuns <see cref="IEditorExtended(Of T).IsDropDownResizable"/>.</returns>
         Public Overrides ReadOnly Property IsDropDownResizable() As Boolean
             Get
+                If GetType(IEditorExtended(Of T)).IsAssignableFrom(GetType(TControl)) Then
+                    Using ctl As New TControl
+                        Return DirectCast(ctl, IEditorExtended(Of T)).IsDropDownResizable
+                    End Using
+                End If
                 Return False
             End Get
         End Property
@@ -186,7 +158,7 @@ Namespace DrawingT.DesignT
         End Function
     End Class
     ''' <summary>Interface for control that implements GUI for <see cref="DropDownControlEditor"/></summary>
-    ''' <remarks>This type is usually implemnetd by class derived from <see cref="Control"/>
+    ''' <remarks>This type is usually implemnetd by class derived from <see cref="Control"/> (such as <see cref="DropDownUITypeEditorControlBase(Of T)"/>).
     ''' <para>However <see cref="DropDownControlEditor"/> does not do so, control implementation can be recycled. This means shown, closed and the shown again, closed again and then shown again ...</para></remarks>
     ''' <typeparam name="T">Type of value being edited</typeparam>
     Public Interface IEditor(Of T)
@@ -200,7 +172,7 @@ Namespace DrawingT.DesignT
         Property Context() As ITypeDescriptorContext
         ''' <summary>Stores editing result</summary>
         ''' <returns>True if editing was terminated with success, false if it was canceled</returns>
-        ''' <remarks>This property is set by owner of the control and is valid when and after <see cref="OnClosed"/> is called</remarks>
+        ''' <remarks>Implementing control is responsible for setting this property typically to false when Esc is pressed and true when Enter is pressed. Value must be valid after <see cref="OnClosed"/> is called.</remarks>
         Property Result() As Boolean
         ''' <summary>Owner of control informs control that it is about to be shown by calling this methos. It is called just befiore the control is shown.</summary>
         Sub OnBeforeShow()
@@ -208,5 +180,88 @@ Namespace DrawingT.DesignT
         ''' <remarks>When implementing editor for reference type that is edited by changin its properties instead of changing its instance. Properties shouldbe changed in this method and onyl if <see cref="Result"/> is true.</remarks>
         Sub OnClosed()
     End Interface
+    ''' <summary>Extends <see cref="IEditor(Of T)"/> with additional members to control behavior and appearance</summary>
+    ''' <typeparam name="T">Type of value being edited</typeparam>
+    Public Interface IEditorExtended(Of T)
+        Inherits IEditor(Of T)
+        ''' <summary>Gets value indicating if editor drop-down control should be resizable</summary>
+        ''' <returns>True if editor drop down control should be resizable, false if not</returns>
+        ''' <seelaso cref="UITypeEditor.IsDropDownResizable"/>
+        ReadOnly Property IsDropDownResizable() As Boolean
+    End Interface
+    ''' <summary>Provides base abstract implementation of drop down control <see cref="DropDownControlEditor(Of T, TControl)"/></summary>
+    ''' <typeparam name="T">Type of value being edited</typeparam>
+    Public MustInherit Class DropDownUITypeEditorControlBase(Of T)
+        Inherits UserControl
+        Implements IEditor(Of T)
+        ''' <summary>Processes a dialog key.</summary>
+        ''' <returns>true if the key was processed by the control; otherwise, false. This implementation always returns false. It only track keys <see cref="Keys.Enter"/> and <see cref="Keys.Escape"/> to <see cref="Result"/>.</returns>
+        ''' <param name="keyData">One of the <see cref="T:System.Windows.Forms.Keys" /> values that represents the key to process. </param>
+        Protected Overrides Function ProcessDialogKey(ByVal keyData As System.Windows.Forms.Keys) As Boolean
+            Dim e As New KeyEventArgs(keyData)
+            If e.Control = False AndAlso e.Alt = False AndAlso e.Shift = False AndAlso e.KeyCode = Keys.Escape Then Result = False
+            If e.Control = False AndAlso e.Alt = False AndAlso e.Shift = False AndAlso e.KeyCode = Keys.Enter Then Result = True
+            Return MyBase.ProcessDialogKey(keyData)
+        End Function
+        ''' <summary>Contains value of the <see cref="Context"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Context As ITypeDescriptorContext
+        ''' <summary>Stores context of current editing session</summary>
+        ''' <remarks>This property is set by owner of the control and is valid between calls of <see cref="OnBeforeShow"/> and <see cref="OnClosed"/>.</remarks>
+        Protected Overridable Property Context() As System.ComponentModel.ITypeDescriptorContext Implements IEditor(Of T).Context
+            <DebuggerStepThrough()> Get
+                Return _Context
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As System.ComponentModel.ITypeDescriptorContext)
+                _Context = value
+            End Set
+        End Property
+        ''' <summary>Owner of control informs control that it is about to be shown by calling this methos. It is called just befiore the control is shown.</summary>
+        ''' <remarks>This implementation does nothing</remarks>
+        Protected Overridable Sub OnBeforeShow() Implements IEditor(Of T).OnBeforeShow
+        End Sub
+        ''' <summary>Informs control that it was just hidden by calling this method.</summary>
+        ''' <remarks>When implementing editor for reference type that is edited by changin its properties instead of changing its instance. Properties shouldbe changed in this method and onyl if <see cref="Result"/> is true.<para>This implementation does nothing.</para></remarks>
+        Protected Overridable Sub OnClosed() Implements IEditor(Of T).OnClosed
+        End Sub
+        ''' <summary>Contains value of the <see cref="Result"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Result As Boolean
+        ''' <summary>Stores editing result</summary>
+        ''' <returns>True if editing was terminated with success, false if it was canceled</returns>
+        ''' <remarks>
+        ''' Implementing control is responsible for setting this property typically to false when Esc is pressed and true when Enter is pressed. Value must be valid after <see cref="OnClosed"/> is called.
+        ''' <see cref="DropDownUITypeEditorControlBase(Of T)"/> provides such behavior by <see cref="ProcessDialogKey"/> function.
+        ''' </remarks>
+        Public Overridable Property Result() As Boolean Implements IEditor(Of T).Result
+            <DebuggerStepThrough()> Get
+                Return _Result
+            End Get
+            <DebuggerStepThrough()> Protected Set(ByVal value As Boolean)
+                _Result = value
+            End Set
+        End Property
+        ''' <summary>Countains value of the <see cref="Service"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Service As IWindowsFormsEditorService
+        ''' <summary>Stores <see cref="IWindowsFormsEditorService"/> valid for current editing session</summary>
+        ''' <remarks>This property is set by owner of the control and is valid between calls of <see cref="OnBeforeShow"/> and <see cref="OnClosed"/>.</remarks>
+        Protected Overridable Property Service() As System.Windows.Forms.Design.IWindowsFormsEditorService Implements IEditor(Of T).Service
+            <DebuggerStepThrough()> Get
+                Return _Service
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As System.Windows.Forms.Design.IWindowsFormsEditorService)
+                _Service = value
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="Value"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _Value As T
+        ''' <summary>Gets or sets edited value</summary>
+        Public Overridable Property Value() As T Implements IEditor(Of T).Value
+            <DebuggerStepThrough()> Get
+                Return _Value
+            End Get
+            <DebuggerStepThrough()> Protected Set(ByVal value As T)
+                _Value = value
+            End Set
+        End Property
+    End Class
 End Namespace
 #End If

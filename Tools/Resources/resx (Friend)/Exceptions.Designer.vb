@@ -363,6 +363,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot convert given {0} to {1} because it does not represent known {2}..
+        '''</summary>
+        Friend Shared ReadOnly Property CannotConvertGiven0To1BecauseItDoesNotRepresentKnown2() As String
+            Get
+                Return ResourceManager.GetString("CannotConvertGiven0To1BecauseItDoesNotRepresentKnown2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Cannot convert string &quot;{0}&quot; to {1}.
         '''</summary>
         Friend Shared ReadOnly Property CannotConvertString0To1() As String
@@ -1733,6 +1742,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__() As String
             Get
                 Return ResourceManager.GetString("SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to SystemSoundPlayerWrapper can be converted only when it provides sound location..
+        '''</summary>
+        Friend Shared ReadOnly Property SystemSoundPlayerWrapperCanBeConvertedOnlyWhenItProvidesSoundLocation() As String
+            Get
+                Return ResourceManager.GetString("SystemSoundPlayerWrapperCanBeConvertedOnlyWhenItProvidesSoundLocation", resourceCulture)
             End Get
         End Property
         

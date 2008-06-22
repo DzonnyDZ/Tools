@@ -264,4 +264,7 @@
   <data name="WavFilter" xml:space="preserve">
     <value>wav files (*.wav)|*.wav</value>
   </data>
+  <data name="Play" xml:space="preserve">
+    <value>Play</value>
+  </data>
 </root>

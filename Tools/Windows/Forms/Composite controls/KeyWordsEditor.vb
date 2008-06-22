@@ -654,7 +654,7 @@ Namespace WindowsT.FormsT
                 If schema Is Nothing Then
                     Using SchemaStream = GetType(KeyWordsEditor).Assembly.GetManifestResourceStream("Tools.WindowsT.FormsT.KeyWordsEditor.xsd")
                         Dim Schemas As New XmlSchemaSet()
-                        Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.Throw
+                        Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.[DoThrow]
                         schema = XMLSchema.Read(SchemaStream, veh)
                     End Using
                 End If
@@ -694,7 +694,7 @@ Namespace WindowsT.FormsT
         Public Shared Function ParseFromXml(ByVal doc As XDocument) As IPair(Of IEnumerable(Of String), IEnumerable(Of KeyValuePair(Of String(), String())))
             If doc Is Nothing Then Throw New ArgumentNullException("doc")
             Dim Schemas As New XmlSchemaSet()
-            Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.Throw
+            Dim veh As ValidationEventHandler = Function(sender As Object, e As ValidationEventArgs) e.Exception.[DoThrow]
             Schemas.Add(XMLSchema)
             doc.Validate(Schemas, veh)
             Dim Keywords = From kw In doc.<kw:Keywords>.<kw:keywords>.<kw:kw> Select kw.Value
