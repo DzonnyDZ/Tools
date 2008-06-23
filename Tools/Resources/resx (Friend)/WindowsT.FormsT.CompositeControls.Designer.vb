@@ -128,6 +128,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Indicates if dialog supports cancelation..
+        '''</summary>
+        Friend Shared ReadOnly Property CanCancel_d() As String
+            Get
+                Return ResourceManager.GetString("CanCancel_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Gets or sets value idicating if keywords are case sensitive.
         '''</summary>
         Friend Shared ReadOnly Property CaseSensitive_d() As String
@@ -142,6 +151,15 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property Changed() As String
             Get
                 Return ResourceManager.GetString("Changed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Indicates if form automatically closes when BackgroundWorker finishes its work..
+        '''</summary>
+        Friend Shared ReadOnly Property CloseOnFinish_d() As String
+            Get
+                Return ResourceManager.GetString("CloseOnFinish_d", resourceCulture)
             End Get
         End Property
         
@@ -224,6 +242,24 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property DisplayStype_d() As String
             Get
                 Return ResourceManager.GetString("DisplayStype_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to When true form will automatically start BackgroundWorker whne the Shown events occurs..
+        '''</summary>
+        Friend Shared ReadOnly Property DoWorkOnShow_d() As String
+            Get
+                Return ResourceManager.GetString("DoWorkOnShow_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Informative text displayed below the progress bar.
+        '''</summary>
+        Friend Shared ReadOnly Property Information_d() As String
+            Get
+                Return ResourceManager.GetString("Information_d", resourceCulture)
             End Get
         End Property
         
@@ -359,6 +395,24 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property PleaseWait() As String
             Get
                 Return ResourceManager.GetString("PleaseWait", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Style of ProgressBar that shows progresss.
+        '''</summary>
+        Friend Shared ReadOnly Property ProgressBarStyle_d() As String
+            Get
+                Return ResourceManager.GetString("ProgressBarStyle_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Information text displayed in upper part of form.
+        '''</summary>
+        Friend Shared ReadOnly Property Prompt_d() As String
+            Get
+                Return ResourceManager.GetString("Prompt_d", resourceCulture)
             End Get
         End Property
         
@@ -674,6 +728,15 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property ThesaurusButtonAttribute_d() As String
             Get
                 Return ResourceManager.GetString("ThesaurusButtonAttribute_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Argument passed to RunWorkerAsync method when DoWorkOnShow is true..
+        '''</summary>
+        Friend Shared ReadOnly Property WorkerArgument_d() As String
+            Get
+                Return ResourceManager.GetString("WorkerArgument_d", resourceCulture)
             End Get
         End Property
     End Class

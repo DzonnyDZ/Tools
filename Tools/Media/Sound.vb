@@ -224,6 +224,10 @@ Namespace MediaT
                     Next item
                 End If
             End Sub
+            ''' <summary>If there is any selected system sound passest it to <see cref="Value"/>.</summary>
+            Protected Overrides Sub UpdateValue()
+                If lstList.SelectedIndex <> -1 Then Value = DirectCast(lstList.SelectedItem, Pair(Of SystemSoundPlayer, String)).Value1
+            End Sub
 
             Private Sub lblBrowse_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
                 Dim ofd As New OpenFileDialog With {.Title = ResourcesT.Components.SelectWavFile, .Filter = ResourcesT.Components.WavFilter}
@@ -236,6 +240,7 @@ Namespace MediaT
                         Result = False
                         Exit Sub
                     End Try
+                    lstList.SelectedIndex = -1
                     Value = val
                     Result = True
                     Service.CloseDropDown()

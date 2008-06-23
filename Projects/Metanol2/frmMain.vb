@@ -1,6 +1,9 @@
 ﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileTystemTools, Tools.CollectionsT.GenericT
 Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
 Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt
+Imports System.Reflection
+Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
+Imports Tools.WindowsT.FormsT
 
 ''' <summary>Main form</summary>
 Public Class frmMain
@@ -17,11 +20,32 @@ Public Class frmMain
         cmdErrInfo.Parent = picPreview
         llbLarge.Parent = picPreview
         llbLarge.TabStop = False
-
+        InitializeEditors()
         For Each item As Control In flpCommon.Controls
             item.AutoSize = False
         Next
         SizeInFlpCommon()
+    End Sub
+    ''' <summary>Contains controls used for editing single properties</summary>
+    Private Editors As Control()
+    ''' <summary>Initializes tags of editor controls and the <see cref="Editors"/> field</summary>
+    Private Sub InitializeEditors()
+        txtSublocation.Tag = CommonProperties.Sublocation
+        txtProvince.Tag = CommonProperties.Province
+        txtObjectName.Tag = CommonProperties.ObjectName
+        txtEditStatus.Tag = CommonProperties.EditStatus
+        txtCredit.Tag = CommonProperties.Credit
+        txtCountry.Tag = CommonProperties.Country
+        txtCopyright.Tag = CommonProperties.Copyright
+        txtCity.Tag = CommonProperties.City
+        txtCaption.Tag = CommonProperties.Caption
+        nudUrgency.Tag = CommonProperties.Urgency
+        kweKeywords.Tag = CommonProperties.Keywords
+        cmbCountryCode.Tag = CommonProperties.CountryCode
+        Editors = New Control() {txtSublocation, txtProvince, txtObjectName, _
+            txtEditStatus, txtCredit, txtCountry, _
+            txtCopyright, txtCity, txtCaption, _
+            nudUrgency, kweKeywords, cmbCountryCode}
     End Sub
     ''' <summary>Current folder</summary>
     Private CurrentFolder$
@@ -39,12 +63,13 @@ Public Class frmMain
     End Sub
 
     Private Sub tmiBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiBrowse.Click
+        If Not OnBeforeFolderChange() Then Exit Sub
         If fbdGoTo.ShowDialog = Windows.Forms.DialogResult.OK Then
             Dim spath$
             Try
                 spath = fbdGoTo.SelectedPath
             Catch ex As Exception
-                IndependentT.MessageBox.Error(ex, My.Resources.Error_)
+                MBox.Error(ex, My.Resources.Error_)
                 Exit Sub
             End Try
             LoadFolder(spath)
@@ -58,6 +83,8 @@ Public Class frmMain
     ''' <param name="Path">Path of folder to load. May also be apth of link to follow.</param>
     ''' <param name="isBack">True when backward navigation is occuring</param>
     Private Sub LoadFolder(ByVal Path As IOt.Path, Optional ByVal isBack As Boolean = False)
+        ChangedIPTCs.Clear()
+        Changed = False
         Dim old = CurrentFolder
         If bgwImages.IsBusy Then
             bgwImages.CancelAsync()
@@ -86,7 +113,7 @@ Public Class frmMain
                     )) _
                 Order By sf.IsDirectory Descending, sf.FileName Ascending
         Catch ex As Exception
-            IndependentT.MessageBox.Error(ex, My.Resources.Error_)
+            MBox.Error(ex, My.Resources.Error_)
             Exit Sub
         End Try
         CurrentFolder = Path
@@ -139,6 +166,7 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
+        If Not OnBeforeFolderChange() Then e.Cancel = True : Exit Sub
         If bgwImages.IsBusy Then bgwImages.CancelAsync()
         My.Settings.LargeShown = Me.Large IsNot Nothing
     End Sub
@@ -207,6 +235,7 @@ Public Class frmMain
 
     Private Sub lvwFolders_ItemActivate(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwFolders.ItemActivate
         If sender.SelectedItems.Count = 0 Then Exit Sub
+        If Not OnBeforeFolderChange() Then Exit Sub
         With sender.SelectedItems(0)
             Dim oldf As String = Nothing
             Try
@@ -220,6 +249,7 @@ Public Class frmMain
     End Sub
 
     Private Sub tmiGoTo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiGoTo.Click
+        If Not OnBeforeFolderChange() Then Exit Sub
         Dim dlg As New frmFolderDialog(CurrentFolder)
         If dlg.ShowDialog = Windows.Forms.DialogResult.OK Then
             LoadFolder(dlg.txtPath.Text)
@@ -372,8 +402,26 @@ Public Class frmMain
             prgIPTC.SelectedObjects = New Object() {}
         End If
     End Sub
+    Private Enum CommonProperties
+        <EditorBrowsable(EditorBrowsableState.Never)> None = 0
+        All = Copyright Or Credit Or City Or CountryCode Or Country Or Province Or Sublocation Or EditStatus Or Urgency Or ObjectName Or Caption Or Keywords
+        Copyright = 1
+        Credit = 2
+        City = 4
+        CountryCode = 8
+        Country = 16
+        Province = 32
+        Sublocation = 64
+        EditStatus = 128
+        Urgency = 256
+        ObjectName = 1024
+        Caption = 2048
+        Keywords = 1096
+    End Enum
     ''' <summary>Shows common values</summary>
-    Private Sub ShowValues(ByVal IPTCs As List(Of IPTCInternal))
+    ''' <param name="IPTCs">IPTCs to load values from</param>
+    ''' <param name="Filter">Filter properties (load only those which ors with <paramref name="Filter"/></param>
+    Private Sub ShowValues(ByVal IPTCs As List(Of IPTCInternal), Optional ByVal Filter As CommonProperties = CommonProperties.All)
         Dim Copyright = New With {.Value = CStr(Nothing), .Same = True}
         Dim Credit = New With {.Value = CStr(Nothing), .Same = True}
         Dim City = New With {.Value = CStr(Nothing), .Same = True}
@@ -389,70 +437,85 @@ Public Class frmMain
         Dim i = 0
         For Each IPTC In IPTCs
             If i = 0 Then
-                Copyright.Value = IPTC.CopyrightNotice
-                Credit.Value = IPTC.Credit
-                City.Value = IPTC.City
-                CountryCode.Value = IPTC.CountryPrimaryLocationCode
-                Country.Value = IPTC.CountryPrimaryLocationName
-                Province.Value = IPTC.ProvinceState
-                Sublocation.Value = IPTC.SubLocation
-                EditStatus.Value = IPTC.EditStatus
-                Urgency.Value = IPTC.Urgency
-                ObjectName.Value = IPTC.ObjectName
-                Caption.Value = IPTC.CaptionAbstract
-                Keywords.AddRange(IPTC.Keywords.NewIfNull)
+                If Filter And CommonProperties.Copyright Then Copyright.Value = IPTC.CopyrightNotice
+                If Filter And CommonProperties.Credit Then Credit.Value = IPTC.Credit
+                If Filter And CommonProperties.City Then City.Value = IPTC.City
+                If Filter And CommonProperties.CountryCode Then CountryCode.Value = IPTC.CountryPrimaryLocationCode
+                If Filter And CommonProperties.Country Then Country.Value = IPTC.CountryPrimaryLocationName
+                If Filter And CommonProperties.Province Then Province.Value = IPTC.ProvinceState
+                If Filter And CommonProperties.Sublocation Then Sublocation.Value = IPTC.SubLocation
+                If Filter And CommonProperties.EditStatus Then EditStatus.Value = IPTC.EditStatus
+                If Filter And CommonProperties.Urgency Then Urgency.Value = IPTC.Urgency
+                If Filter And CommonProperties.ObjectName Then ObjectName.Value = IPTC.ObjectName
+                If Filter And CommonProperties.Caption Then Caption.Value = IPTC.CaptionAbstract
+                If Filter And CommonProperties.Keywords Then Keywords.AddRange(IPTC.Keywords.NewIfNull)
             Else
-                Copyright.Same = IPTC.CopyrightNotice = Copyright.Value
-                Credit.Same = IPTC.Credit = Credit.Value
-                City.Same = IPTC.City = City.Value
-                CountryCode.Same = IPTC.CountryPrimaryLocationCode = CountryCode.Value
-                Country.Same = IPTC.CountryPrimaryLocationName = Country.Value
-                Province.Same = IPTC.ProvinceState = Province.Value
-                Sublocation.Same = IPTC.SubLocation = Sublocation.Value
-                EditStatus.Same = IPTC.EditStatus = EditStatus.Value
-                Urgency.Same = IPTC.Urgency = Urgency.Value
-                ObjectName.Same = IPTC.ObjectName = ObjectName.Value
-                Caption.Same = IPTC.CaptionAbstract = Caption.Value
-                Dim kws As New List(Of String)(IPTC.Keywords)
-                Keywords.RemoveAll(Function(kw As String) Not kws.Contains(kw))
+                If Filter And CommonProperties.Copyright Then Copyright.Same = IPTC.CopyrightNotice = Copyright.Value
+                If Filter And CommonProperties.Credit Then Credit.Same = IPTC.Credit = Credit.Value
+                If Filter And CommonProperties.City Then City.Same = IPTC.City = City.Value
+                If Filter And CommonProperties.CountryCode Then CountryCode.Same = IPTC.CountryPrimaryLocationCode = CountryCode.Value
+                If Filter And CommonProperties.Country Then Country.Same = IPTC.CountryPrimaryLocationName = Country.Value
+                If Filter And CommonProperties.Province Then Province.Same = IPTC.ProvinceState = Province.Value
+                If Filter And CommonProperties.Sublocation Then Sublocation.Same = IPTC.SubLocation = Sublocation.Value
+                If Filter And CommonProperties.EditStatus Then EditStatus.Same = IPTC.EditStatus = EditStatus.Value
+                If Filter And CommonProperties.Urgency Then Urgency.Same = IPTC.Urgency = Urgency.Value
+                If Filter And CommonProperties.ObjectName Then ObjectName.Same = IPTC.ObjectName = ObjectName.Value
+                If Filter And CommonProperties.Caption Then Caption.Same = IPTC.CaptionAbstract = Caption.Value
+                If Filter And CommonProperties.Keywords Then
+                    Dim kws As New List(Of String)(IPTC.Keywords)
+                    Keywords.RemoveAll(Function(kw As String) Not kws.Contains(kw))
+                End If
             End If
             i += 1
         Next
-        txtCopyright.Text = If(Copyright.Same, Copyright.Value, "")
-        txtCredit.Text = If(Credit.Same, Credit.Value, "")
-        txtCity.Text = If(City.Same, City.Value, "")
-        cmbCountryCode.Text = If(CountryCode.Same, CountryCode.Value, "")
-        txtCountry.Text = If(Country.Same, Country.Value, "")
-        txtProvince.Text = If(Province.Same, Province.Value, "")
-        txtSublocation.Text = If(Sublocation.Same, Sublocation.Value, "")
-        txtEditStatus.Text = If(EditStatus.Same, EditStatus.Value, "")
-        nudUrgency.Text = If(Urgency.Same, Urgency.Value.ToString, "") 'TODO: Does it work?
-        txtObjectName.Text = If(ObjectName.Same, ObjectName.Value, "")
-        txtCaption.Text = If(Caption.Same, Caption.Value, "")
-        kweKeywords.KeyWords.Clear()
-        kweKeywords.KeyWords.AddRange(Keywords)
+        If Filter And CommonProperties.Copyright Then txtCopyright.Text = If(Copyright.Same, Copyright.Value, "")
+        If Filter And CommonProperties.Credit Then txtCredit.Text = If(Credit.Same, Credit.Value, "")
+        If Filter And CommonProperties.City Then txtCity.Text = If(City.Same, City.Value, "")
+        If Filter And CommonProperties.CountryCode Then cmbCountryCode.Text = If(CountryCode.Same, CountryCode.Value, "")
+        If Filter And CommonProperties.Country Then txtCountry.Text = If(Country.Same, Country.Value, "")
+        If Filter And CommonProperties.Province Then txtProvince.Text = If(Province.Same, Province.Value, "")
+        If Filter And CommonProperties.Sublocation Then txtSublocation.Text = If(Sublocation.Same, Sublocation.Value, "")
+        If Filter And CommonProperties.EditStatus Then txtEditStatus.Text = If(EditStatus.Same, EditStatus.Value, "")
+        If Filter And CommonProperties.Urgency Then nudUrgency.Text = If(Urgency.Same, Urgency.Value.ToString, "") 'TODO: Does it work?
+        If Filter And CommonProperties.ObjectName Then txtObjectName.Text = If(ObjectName.Same, ObjectName.Value, "")
+        If Filter And CommonProperties.Caption Then txtCaption.Text = If(Caption.Same, Caption.Value, "")
+        If Filter And CommonProperties.Keywords Then
+            kweKeywords.KeyWords.Clear()
+            kweKeywords.KeyWords.AddRange(Keywords)
+        End If
     End Sub
     ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
     Private _Changed As Boolean
     ''' <summary>Gets value indicating if there is any unsaved change</summary>
-    Public ReadOnly Property Changed() As Boolean
+    Public Property Changed() As Boolean
         Get
             Return _Changed
         End Get
+        Private Set(ByVal value As Boolean)
+            If value <> Changed Then
+                If value Then
+                    Me.Text = String.Format("{0} {1} *", My.Application.Info.Title, My.Application.Info.Version)
+                Else
+                    Me.Text = String.Format("{0} {1}", My.Application.Info.Title, My.Application.Info.Version)
+                End If
+            End If
+            _Changed = value
+        End Set
     End Property
     Private Sub IPTC_ValueChanged(ByVal sender As IPTCInternal, ByVal e As EventArgs)
         If Not ChangedIPTCs.Contains(sender) Then ChangedIPTCs.Add(sender)
-        If Not Changed Then Me.Text = String.Format("{0} {1} *", My.Application.Info.Title, My.Application.Info.Version)
-        _Changed = True
-        lvwImages.Items(sender.ImagePath).Text = System.IO.Path.GetFileName(sender.ImagePath) & "*"
+        Changed = True
+        With lvwImages.Items(sender.ImagePath)
+            .Text = System.IO.Path.GetFileName(sender.ImagePath) & "*"
+        End With
     End Sub
 
     Private Sub cmdErrInfo_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdErrInfo.Click
-        WindowsT.IndependentT.MessageBox.Error(sender.tag)
+        MBox.Error(sender.Tag)
     End Sub
 
     Private Sub llbLarge_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles llbLarge.LinkClicked
-        showlarge()
+        ShowLarge()
         e.Link.Visited = True
     End Sub
     ''' <summary>Shows large preview form</summary>
@@ -471,7 +534,7 @@ Public Class frmMain
 
     Private Sub frmMain_Shown(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Shown
         If My.Settings.LargeShown AndAlso Large Is Nothing Then
-            showlarge()
+            ShowLarge()
         End If
     End Sub
 
@@ -490,7 +553,7 @@ Public Class frmMain
             sender.Capture = True
         End If
     End Sub
-
+    ''' <summary>Gets control controlled by given <see cref="Splitter"/></summary>
     Private ReadOnly Property SplittedControl(ByVal splitter As Splitter) As Control
         Get
             If splitter Is sptImage Then : Return panImage
@@ -563,5 +626,201 @@ Public Class frmMain
         End Property
         ''' <summary>Raised when value of any tag changes</summary>
         Public Event ValueChanged As EventHandler(Of IPTCInternal, EventArgs)
+        ''' <summary>Gets or sets value of common property identified by value of <see cref="CommonProperties"/></summary>
+        ''' <param name="Property">Property tpo get/set</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Property"/> is none of predefined <see cref="CommonProperties"/> values or it is <see cref="CommonProperties.None"/> or <see cref="CommonProperties.All"/>.</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="Property"/> is <see cref="CommonProperties.Keywords"/></exception>
+        Friend Property Common(ByVal [Property] As CommonProperties) As String
+            Get
+                Select Case [Property]
+                    Case CommonProperties.Caption : Return CaptionAbstract
+                    Case CommonProperties.City : Return City
+                    Case CommonProperties.Copyright : Return CopyrightNotice
+                    Case CommonProperties.Country : Return CountryPrimaryLocationName
+                    Case CommonProperties.CountryCode : Return CountryPrimaryLocationCode
+                    Case CommonProperties.Credit : Return Credit
+                    Case CommonProperties.EditStatus : Return EditStatus
+                    Case CommonProperties.Keywords : Throw New NotSupportedException(My.Resources.KeywordsAreNotSupportedByCommponProperty_internalError)
+                    Case CommonProperties.ObjectName : Return ObjectName
+                    Case CommonProperties.Province : Return ProvinceState
+                    Case CommonProperties.Sublocation : Return SubLocation
+                    Case CommonProperties.ObjectName : Return ObjectName
+                    Case Else : Throw New InvalidEnumArgumentException("Property", [Property], [Property].GetType)
+                End Select
+            End Get
+            Set(ByVal value As String)
+                Select Case [Property]
+                    Case CommonProperties.Caption : If value <> CaptionAbstract Then CaptionAbstract = value
+                    Case CommonProperties.City : If value <> City Then City = value
+                    Case CommonProperties.Copyright : If value <> CopyrightNotice Then CopyrightNotice = value
+                    Case CommonProperties.Country : If value <> CountryPrimaryLocationName Then CountryPrimaryLocationName = value
+                    Case CommonProperties.CountryCode : If value <> CountryPrimaryLocationCode Then CountryPrimaryLocationCode = value
+                    Case CommonProperties.Credit : If value <> Credit Then Credit = value
+                    Case CommonProperties.EditStatus : If value <> EditStatus Then EditStatus = value
+                    Case CommonProperties.Keywords : Throw New NotSupportedException(My.Resources.KeywordsAreNotSupportedByCommponProperty_internalError)
+                    Case CommonProperties.ObjectName : If value <> ObjectName Then ObjectName = value
+                    Case CommonProperties.Province : If value <> ProvinceState Then ProvinceState = value
+                    Case CommonProperties.Sublocation : If value <> SubLocation Then SubLocation = value
+                    Case CommonProperties.Urgency : If value <> Urgency Then Urgency = value
+                    Case Else : Throw New InvalidEnumArgumentException("Property", [Property], [Property].GetType)
+                End Select
+            End Set
+        End Property
+        ''' <summary>Saves current IPTC stream to file <see cref="ImagePath"/></summary>
+        ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <see cref="ImagePath"/> is invalid, such as being on an unmapped drive.</exception>
+        ''' <exception cref="System.UnauthorizedAccessException">The access requested (readonly) is not permitted by the operating system for the specified path.</exception>
+        ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
+        ''' <exception cref="System.IO.FileNotFoundException">The file cannot be found.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="IO.InvalidDataException">
+        ''' Invalid JPEG marker found (code doesn't start with FFh, length set to 0 or 2) -or-
+        ''' JPEG stream doesn't start with corect SOI marker -or-
+        ''' JPEG stream doesn't end with corect EOI marker
+        ''' </exception>
+        ''' <exception cref="InvalidOperationException">No JPEG marker found</exception>
+        Friend Sub Save()
+            Using jw As New JPEG.JPEGReader(Me.ImagePath, True)
+                jw.IPTCEmbed(Me.GetBytes)
+            End Using
+        End Sub
     End Class
+
+    Private Sub Control_Validating(ByVal sender As Control, ByVal e As System.ComponentModel.CancelEventArgs) _
+        Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, _
+            txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, _
+            txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, _
+            nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
+        e.Cancel = Not StoreControl(sender)
+    End Sub
+    ''' <summary>Stores value of given editor control to all items in <see cref="SelectedIPTCs"/></summary>
+    ''' <param name="ctl">Control to store value of</param>
+    ''' <remarks>True if value was stored, false if value was not stored (there was an exception. It was already reported to user).</remarks>
+    Private Function StoreControl(ByVal ctl As Control) As Boolean
+        Dim Prp As CommonProperties = ctl.Tag
+        Dim ctc As StringComparer = Nothing
+        If ctl Is kweKeywords Then _
+            ctc = StringComparer.Create(System.Globalization.CultureInfo.CurrentCulture, Not kweKeywords.CaseSensitive)
+        Dim i As Integer = 0
+        Try
+            For Each currentitem In SelectedIPTCs
+                If ctl Is nudUrgency Then 'Needs special handling
+                    If currentitem.Urgency <> nudUrgency.Value Then _
+                        currentitem.Urgency = nudUrgency.Value
+                ElseIf ctl Is kweKeywords Then 'Needs very special handling
+                    Dim currKws = currentitem.Keywords
+                    If SelectedIPTCs.Count = 1 OrElse Not kweKeywords.Merge Then
+                        'Do not make unnecessary changes
+                        If currKws.Length <> kweKeywords.KeyWords.Count Then
+                            currentitem.Keywords = kweKeywords.KeyWords.ToArray
+                        Else
+                            Dim diffFound As Boolean = False
+                            For Each currentKeyword In currKws
+                                If Not kweKeywords.KeyWords.Contains(currentKeyword, ctc) Then diffFound = True : Exit For
+                            Next
+                            If Not diffFound Then
+                                For Each editorKeyword In kweKeywords.KeyWords
+                                    If Not currKws.Contains(editorKeyword, ctc) Then diffFound = True : Exit For
+                                Next
+                            End If
+                            If diffFound Then _
+                                currentitem.Keywords = kweKeywords.KeyWords.ToArray
+                        End If
+                    Else
+                        Dim newList As New List(Of String)
+                        If Not currKws Is Nothing Then newList.AddRange(currKws)
+                        Dim added As Boolean = False
+                        For Each kw In kweKeywords.KeyWords
+                            If Not newList.Contains(kw, ctc) Then _
+                                newList.Add(kw) : added = True
+                        Next
+                        If added Then currentitem.Keywords = newList.ToArray
+                    End If
+                Else
+                    Try
+                        currentitem.Common(Prp) = ctl.Text
+                    Catch ex As TargetInvocationException
+                        If ex.InnerException IsNot Nothing Then Throw ex.InnerException Else Throw
+                    End Try
+                End If
+                i += 1
+            Next
+        Catch ex As Exception
+            Dim msg$ = ex.Message
+            If i > 0 Then msg &= vbCrLf & My.Resources.SomeChangedSomeNot
+            Select Case MBox.Modal(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, , MBox.MessageBoxIcons.Error)
+                Case Windows.Forms.DialogResult.OK : Return False
+                Case Else
+                    ShowValues(SelectedIPTCs, Prp)
+                    Return True
+            End Select
+        End Try
+        Return True
+    End Function
+
+    ''' <summary>Gets the inner-most active control on form</summary>
+    Private ReadOnly Property InnerActiveControl() As Control
+        Get
+            Dim c As ContainerControl = Me
+            While c.ActiveControl IsNot Nothing
+                Dim ac As Control = c.ActiveControl
+                If TypeOf ac Is ContainerControl Then c = ac Else Return ac
+            End While
+            Return c
+        End Get
+    End Property
+    ''' <summary>If curent <see cref="InnerActiveControl"/> is editing control stores its value using <see cref="StoreControl"/></summary>
+    Private Sub StoreActiveConrol()
+        If TypeOf Me.InnerActiveControl.Tag Is CommonProperties Then
+            StoreControl(Me.InnerActiveControl)
+        End If
+    End Sub
+    ''' <summary>Called before current folder changes or before application is closed. If necessary save changes.</summary>
+    ''' <returns>True if folder can be changed. False if it cannot.</returns>
+    ''' <remarks>Note for plugin implementers: If you are changin folder manually you should always call this method before calling <see cref="LoadFolder"/> anc besed on return value decide whether load that folder or not. If you are implementing some wizard, for example, which's last step changes folder, that you should call this before invoking the wizard.</remarks>
+    Public Function OnBeforeFolderChange() As Boolean
+        If Not Me.Changed Then Return True
+        Select Case MBox.Modal(My.Resources.UnsavedChanges, My.Resources.SaveChanges_dlgTitle, MBox.MessageBoxOptions.AlignLeft, MBox.GetIconDelegate.Invoke(MBox.MessageBoxIcons.Question), _
+                New MButton(My.Resources.Save_cmd, Nothing, Windows.Forms.DialogResult.OK, My.Resources.Save_access), _
+                New MButton(My.Resources.DontSave_cmd, Nothing, Windows.Forms.DialogResult.No, My.Resources.DontSave_access), _
+                MButton.Cancel)
+            Case Windows.Forms.DialogResult.OK : Return SaveAll()
+            Case Windows.Forms.DialogResult.Cancel : Return False
+            Case Else 'No
+                Return True
+        End Select
+    End Function
+    ''' <summary>Saves all changes</summary>
+    ''' <remarks>True if all changes have been saved or whan it have not been saved but user confirmed that changes may be lost.</remarks>
+    Private Function SaveAll() As Boolean
+        If Not Changed Then Return True
+        If ChangedIPTCs.Count <= 3 Then
+            Dim result = DoSave()
+            Return result
+        Else
+            Dim result = ProgressMonitor.Show(bgwSave, My.Resources.SavingChangedImages, "", Me)
+            Return result.Result
+        End If
+    End Function
+
+    Private Sub bgwSave_DoWork(ByVal sender As BackgroundWorker, ByVal e As System.ComponentModel.DoWorkEventArgs) Handles bgwSave.DoWork
+        DoSave(sender, e)
+    End Sub
+    ''' <summary>Performs saving operations</summary>
+    ''' <param name="bgw">If called assynchronously <see cref="bgwSave"/></param>
+    ''' <param name="e">If called assynchronously argument e of <see cref="bgwSave"/>.<see cref="BackgroundWorker.DoWork">DoWork</see></param>
+    ''' <remarks>True if all changes have been saved or whan it have not been saved but user confirmed that changes may be lost.</remarks>
+    Private Function DoSave(Optional ByVal bgw As BackgroundWorker = Nothing, Optional ByVal e As DoWorkEventArgs = Nothing) As Boolean
+        Try
+            Dim i As Integer = 0
+            For Each item In ChangedIPTCs
+                bgw.ReportProgress(-1, item.ImagePath)
+                item.save()
+                'TODO: Catch error and show SYSNC messagebox
+                i += 1
+                bgw.ReportProgress(i / ChangedIPTCs.Count * 100)
+            Next
+        Finally
+            If e IsNot Nothing Then e.Result = DoSave
+        End Try
+    End Function
 End Class

@@ -69,6 +69,22 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property DontSave_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("DontSave_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Don&apos;t save.
+        '''</summary>
+        Friend ReadOnly Property DontSave_cmd() As String
+            Get
+                Return ResourceManager.GetString("DontSave_cmd", resourceCulture)
+            End Get
+        End Property
+        
         '''<summary>
         '''  Looks up a localized string similar to Error.
         '''</summary>
@@ -82,6 +98,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("GoLtrHS", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Keywords are not supported by Commpon property.
+        '''</summary>
+        Friend ReadOnly Property KeywordsAreNotSupportedByCommponProperty_internalError() As String
+            Get
+                Return ResourceManager.GetString("KeywordsAreNotSupportedByCommponProperty_internalError", resourceCulture)
             End Get
         End Property
         
@@ -124,6 +149,49 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property Save_access() As Char
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Save_access", resourceCulture)
+                Return CType(obj,Char)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Save.
+        '''</summary>
+        Friend ReadOnly Property Save_cmd() As String
+            Get
+                Return ResourceManager.GetString("Save_cmd", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Save changes.
+        '''</summary>
+        Friend ReadOnly Property SaveChanges_dlgTitle() As String
+            Get
+                Return ResourceManager.GetString("SaveChanges_dlgTitle", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Saving changed images.
+        '''</summary>
+        Friend ReadOnly Property SavingChangedImages() As String
+            Get
+                Return ResourceManager.GetString("SavingChangedImages", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Warning: Some values were changed. Same value weren&apos;t changed.
+        '''</summary>
+        Friend ReadOnly Property SomeChangedSomeNot() As String
+            Get
+                Return ResourceManager.GetString("SomeChangedSomeNot", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Symbol_Delete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Symbol-Delete", resourceCulture)
@@ -155,6 +223,15 @@ Namespace My.Resources
         Friend ReadOnly Property UnknownSplitter() As String
             Get
                 Return ResourceManager.GetString("UnknownSplitter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Current folder contains unsaved chages. Do you want to save them now? If you select not to save, changes will be lost!.
+        '''</summary>
+        Friend ReadOnly Property UnsavedChanges() As String
+            Get
+                Return ResourceManager.GetString("UnsavedChanges", resourceCulture)
             End Get
         End Property
         

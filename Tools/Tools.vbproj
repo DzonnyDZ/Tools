@@ -301,6 +301,12 @@
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </Compile>
@@ -751,6 +757,12 @@
     <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBox WF.resx">
       <DependentUpon>MessageBox WF.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.cs.resx">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.resx">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>

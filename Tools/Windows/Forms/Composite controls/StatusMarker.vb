@@ -333,7 +333,7 @@ Namespace WindowsT.FormsT
             ElseIf TypeOf Component Is ToolStripMenuItem Then
                 RemoveHandler DirectCast(Component, ToolStripMenuItem).CheckedChanged, AddressOf Handler
             Else
-                Throw New NotSupportedException(String.Format("Type {0} is not supported as value of StatusedControl property.", Component.GetType.FullName))
+                Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.Type0IsNotSupportedAsValueOfStatusedControlProperty, Component.GetType.FullName))
             End If
         End Sub
         ''' <summary>Adds method <see cref="Handler"/> as handler of appropriate event of given component</summary>
@@ -393,7 +393,7 @@ Namespace WindowsT.FormsT
             ElseIf TypeOf Component Is ToolStripMenuItem Then
                 AddHandler DirectCast(Component, ToolStripMenuItem).CheckedChanged, AddressOf Handler
             Else
-                Throw New NotSupportedException(String.Format("Type {0} is not supported as value of StatusedControl property.", Component.GetType.FullName))
+                Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.Type0IsNotSupportedAsValueOfStatusedControlProperty, Component.GetType.FullName))
             End If
         End Sub
         ''' <summary>Handles change of value of monitored control</summary>

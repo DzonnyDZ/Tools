@@ -1901,6 +1901,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Type {0} is not supported as value of StatusedControl property..
+        '''</summary>
+        Friend Shared ReadOnly Property Type0IsNotSupportedAsValueOfStatusedControlProperty() As String
+            Get
+                Return ResourceManager.GetString("Type0IsNotSupportedAsValueOfStatusedControlProperty", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Type is specified neither via property nor in value.
         '''</summary>
         Friend Shared ReadOnly Property TypeIsSpecifiedNeitherViaPropertyNorInValue() As String

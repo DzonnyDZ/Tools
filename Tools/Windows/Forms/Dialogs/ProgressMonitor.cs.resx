@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,79 +117,17 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="ThumbSize_n" xml:space="preserve">
-    <value>Thumbnail size</value>
-    <comment>PropertyGrid property name</comment>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cmdCancel.Location" type="System.Drawing.Point, System.Drawing">
+    <value>164, 102</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavBack.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 23</value>
   </data>
-  <data name="GoLtrHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\GoLtrHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="cmdCancel.Text" xml:space="preserve">
+    <value>&amp;Storno</value>
   </data>
-  <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="ThumbSize_d" xml:space="preserve">
-    <value>Size of image preview in main window</value>
-    <comment>PropertyGrid description</comment>
-  </data>
-  <data name="catDisplay" xml:space="preserve">
-    <value>Display</value>
-    <comment>PropertyGrid category</comment>
-  </data>
-  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Net 31.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="Symbol-Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Symbol-Delete.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="LargeFloating_d" xml:space="preserve">
-    <value>Does preview window float over main window?</value>
-    <comment>PropertyGrid description</comment>
-  </data>
-  <data name="LargeFloating_n" xml:space="preserve">
-    <value>Floating preview</value>
-    <comment>Property gerid property name</comment>
-  </data>
-  <data name="UnknownSplitter" xml:space="preserve">
-    <value>Unknown splitter</value>
-    <comment>Internal exception</comment>
-  </data>
-  <data name="Error_" xml:space="preserve">
-    <value>Error</value>
-    <comment>Dialog title</comment>
-  </data>
-  <data name="UnsavedChanges" xml:space="preserve">
-    <value>Current folder contains unsaved chages. Do you want to save them now? If you select not to save, changes will be lost!</value>
-  </data>
-  <data name="SaveChanges_dlgTitle" xml:space="preserve">
-    <value>Save changes</value>
-  </data>
-  <data name="Save_cmd" xml:space="preserve">
-    <value>Save</value>
-  </data>
-  <data name="DontSave_cmd" xml:space="preserve">
-    <value>Don't save</value>
-  </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="Save_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>S</value>
-  </data>
-  <data name="DontSave_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>D</value>
-  </data>
-  <data name="SomeChangedSomeNot" xml:space="preserve">
-    <value>Warning: Some values were changed. Same value weren't changed</value>
-  </data>
-  <data name="KeywordsAreNotSupportedByCommponProperty_internalError" xml:space="preserve">
-    <value>Keywords are not supported by Commpon property</value>
-  </data>
-  <data name="SavingChangedImages" xml:space="preserve">
-    <value>Saving changed images</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Průběh</value>
   </data>
 </root>

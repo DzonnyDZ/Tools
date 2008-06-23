@@ -783,4 +783,7 @@
   <data name="CannotConvertGiven0To1BecauseItDoesNotRepresentKnown2" xml:space="preserve">
     <value>Cannot convert given {0} to {1} because it does not represent known {2}.</value>
   </data>
+  <data name="Type0IsNotSupportedAsValueOfStatusedControlProperty" xml:space="preserve">
+    <value>Type {0} is not supported as value of StatusedControl property.</value>
+  </data>
 </root>

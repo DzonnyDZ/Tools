@@ -125,7 +125,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj0yLjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAABO
-        DwAAAk1TRnQBSQFMAgEBBwEAAQkBAAEEAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        DwAAAk1TRnQBSQFMAgEBBwEAAQwBAAEEAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAASADAAEBAQABCAYAAQgYAAGAAgABgAMAAoABAAGAAwABgAEAAYABAAKAAgADwAEAAcAB3AHA
         AQAB8AHKAaYBAAEzBQABMwEAATMBAAEzAQACMwIAAxYBAAMcAQADIgEAAykBAANVAQADTQEAA0IBAAM5
         AQABgAF8Af8BAAJQAf8BAAGTAQAB1gEAAf8B7AHMAQABxgHWAe8BAAHWAucBAAGQAakBrQIAAf8BMwMA
@@ -202,7 +202,7 @@
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tmiAdd.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>164, 22</value>
   </data>
   <data name="tmiAdd.Text" xml:space="preserve">
     <value>&amp;Add</value>
@@ -211,7 +211,7 @@
     <value>False</value>
   </data>
   <data name="tmiReset.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>164, 22</value>
   </data>
   <data name="tmiReset.Text" xml:space="preserve">
     <value>&amp;Reset</value>
@@ -220,7 +220,7 @@
     <value>False</value>
   </data>
   <data name="tmiMarkAsChanged.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>164, 22</value>
   </data>
   <data name="tmiMarkAsChanged.Text" xml:space="preserve">
     <value>&amp;Mark as changed</value>
@@ -229,13 +229,13 @@
     <value>False</value>
   </data>
   <data name="tmiDelete.Size" type="System.Drawing.Size, System.Drawing">
-    <value>155, 22</value>
+    <value>164, 22</value>
   </data>
   <data name="tmiDelete.Text" xml:space="preserve">
     <value>&amp;Delete</value>
   </data>
   <data name="cmsStatus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>156, 114</value>
+    <value>165, 92</value>
   </data>
   <data name="&gt;&gt;cmsStatus.Name" xml:space="preserve">
     <value>cmsStatus</value>
@@ -283,6 +283,9 @@
   <data name="&gt;&gt;cmdStatus.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
+  <metadata name="$this.Language" type="System.Globalization.CultureInfo, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
+    <value>Czech</value>
+  </metadata>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>

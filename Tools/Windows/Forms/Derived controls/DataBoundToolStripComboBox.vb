@@ -1,3 +1,4 @@
+'Localize: ocalization should continuhe from HERE
 Imports System.Windows.Forms, System.ComponentModel
 Namespace WindowsT.FormsT
 #If Config <= RC Then 'Stage: RC

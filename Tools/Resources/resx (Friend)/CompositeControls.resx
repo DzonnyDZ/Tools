@@ -328,4 +328,25 @@
   <data name="References" xml:space="preserve">
     <value>References</value>
   </data>
+  <data name="ProgressBarStyle_d" xml:space="preserve">
+    <value>Style of ProgressBar that shows progresss</value>
+  </data>
+  <data name="CloseOnFinish_d" xml:space="preserve">
+    <value>Indicates if form automatically closes when BackgroundWorker finishes its work.</value>
+  </data>
+  <data name="Prompt_d" xml:space="preserve">
+    <value>Information text displayed in upper part of form</value>
+  </data>
+  <data name="Information_d" xml:space="preserve">
+    <value>Informative text displayed below the progress bar</value>
+  </data>
+  <data name="CanCancel_d" xml:space="preserve">
+    <value>Indicates if dialog supports cancelation.</value>
+  </data>
+  <data name="DoWorkOnShow_d" xml:space="preserve">
+    <value>When true form will automatically start BackgroundWorker whne the Shown events occurs.</value>
+  </data>
+  <data name="WorkerArgument_d" xml:space="preserve">
+    <value>Argument passed to RunWorkerAsync method when DoWorkOnShow is true.</value>
+  </data>
 </root>
