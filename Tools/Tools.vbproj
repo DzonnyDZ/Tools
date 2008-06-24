@@ -185,6 +185,7 @@
     <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
     <Compile Include="Drawing\Design\NewEditor.vb" />
     <Compile Include="Drawing\Design\UITypeEditor.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
@@ -204,6 +205,16 @@
     <Compile Include="Extensions\DelegateExtensions.vb" />
     <Compile Include="Media\Sound.vb">
       <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Resources\resx %28Friend%29\DerivedControls.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DerivedControls.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\resx %28Friend%29\Dialogs.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dialogs.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -658,6 +669,24 @@
     <None Include="Reflection\Resources\BackwardReference.png" />
     <None Include="Reflection\Resources\ForwardReference.png" />
     <None Include="Resources\CommentHS.png" />
+    <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
+      <DependentUpon>DerivedControls.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
+      <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>DerivedControls.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.DerivedControls.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.cs.resx">
+      <DependentUpon>Dialogs.resx</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.resx">
+      <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Dialogs.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.Dialogs.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
       <DependentUpon>IPTCResources.resx</DependentUpon>
     </EmbeddedResource>
@@ -749,6 +778,9 @@
     <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.cs.resx">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.vb</DependentUpon>

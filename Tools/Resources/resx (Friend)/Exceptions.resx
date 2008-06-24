@@ -786,4 +786,43 @@
   <data name="Type0IsNotSupportedAsValueOfStatusedControlProperty" xml:space="preserve">
     <value>Type {0} is not supported as value of StatusedControl property.</value>
   </data>
+  <data name="TextCannotBeChangedViaTheTextProperty" xml:space="preserve">
+    <value>Text cannot be changed via the Text property</value>
+  </data>
+  <data name="CannotBeSet" xml:space="preserve">
+    <value>{0} cannot be set.</value>
+  </data>
+  <data name="LinkLabelInternalExceptionLinkForItemNotFound" xml:space="preserve">
+    <value>LinkLabel internal exception: Link for item not found</value>
+  </data>
+  <data name="CannotLocate0In1" xml:space="preserve">
+    <value>Cannot locate {0} in {1}</value>
+  </data>
+  <data name="LinkLabelInternalErrorItemFoundInItemsButNotFoundInLinks" xml:space="preserve">
+    <value>LinkLabel internal error: Item found in Items but not found in Links</value>
+  </data>
+  <data name="NotFoundIn1" xml:space="preserve">
+    <value>{0} not found in {1}</value>
+  </data>
+  <data name="ErrorWhileDeserializing0" xml:space="preserve">
+    <value>Error while deserializing {0}</value>
+  </data>
+  <data name="ValueCanBeConverterNeitherTo0NorTo1" xml:space="preserve">
+    <value>Value can be converter neither to {0} nor to {1}</value>
+  </data>
+  <data name="Type0IsNotSupported" xml:space="preserve">
+    <value>Type {0} is not supported</value>
+  </data>
+  <data name="MustBe1" xml:space="preserve">
+    <value>{0} must be {1}</value>
+  </data>
+  <data name="AllTypesIn0MustInheritFrom0" xml:space="preserve">
+    <value>All types in {0} must inherit from {0}</value>
+  </data>
+  <data name="CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstance" xml:space="preserve">
+    <value>Cannot create instance of type {0}. {1} was thrown when obtaining new instance:</value>
+  </data>
+  <data name="ValueOfType0CannotBeConvertedTo1" xml:space="preserve">
+    <value>Value of type {0} cannot be converted to {1}.</value>
+  </data>
 </root>

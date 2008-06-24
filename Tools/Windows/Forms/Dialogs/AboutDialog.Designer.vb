@@ -23,6 +23,7 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(AboutDialog))
             Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
             Me.lblProductNameI = New System.Windows.Forms.Label
             Me.lblProductName = New System.Windows.Forms.Label
@@ -44,11 +45,10 @@
             '
             'tlpMain
             '
-            Me.tlpMain.AutoSize = True
-            Me.tlpMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.tlpMain.ColumnCount = 2
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpMain.AccessibleDescription = Nothing
+            Me.tlpMain.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpMain, "tlpMain")
+            Me.tlpMain.BackgroundImage = Nothing
             Me.tlpMain.Controls.Add(Me.lblProductNameI, 0, 0)
             Me.tlpMain.Controls.Add(Me.lblProductName, 1, 0)
             Me.tlpMain.Controls.Add(Me.lblTitleI, 0, 1)
@@ -64,174 +64,151 @@
             Me.tlpMain.Controls.Add(Me.lblDescriptionI, 0, 6)
             Me.tlpMain.Controls.Add(Me.lblDescription, 1, 6)
             Me.tlpMain.Controls.Add(Me.cmdOK, 0, 7)
-            Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tlpMain.Location = New System.Drawing.Point(0, 0)
+            Me.tlpMain.Font = Nothing
             Me.tlpMain.Name = "tlpMain"
-            Me.tlpMain.RowCount = 8
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpMain.Size = New System.Drawing.Size(292, 273)
-            Me.tlpMain.TabIndex = 0
             '
             'lblProductNameI
             '
-            Me.lblProductNameI.AutoSize = True
-            Me.lblProductNameI.Location = New System.Drawing.Point(3, 0)
+            Me.lblProductNameI.AccessibleDescription = Nothing
+            Me.lblProductNameI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblProductNameI, "lblProductNameI")
+            Me.lblProductNameI.Font = Nothing
             Me.lblProductNameI.Name = "lblProductNameI"
-            Me.lblProductNameI.Size = New System.Drawing.Size(76, 13)
-            Me.lblProductNameI.TabIndex = 0
-            Me.lblProductNameI.Text = "Product name:"
             '
             'lblProductName
             '
-            Me.lblProductName.AutoSize = True
-            Me.lblProductName.Location = New System.Drawing.Point(85, 0)
+            Me.lblProductName.AccessibleDescription = Nothing
+            Me.lblProductName.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblProductName, "lblProductName")
+            Me.lblProductName.Font = Nothing
             Me.lblProductName.Name = "lblProductName"
-            Me.lblProductName.Size = New System.Drawing.Size(39, 13)
-            Me.lblProductName.TabIndex = 1
-            Me.lblProductName.Text = "Label2"
             '
             'lblTitleI
             '
-            Me.lblTitleI.AutoSize = True
-            Me.lblTitleI.Location = New System.Drawing.Point(3, 13)
+            Me.lblTitleI.AccessibleDescription = Nothing
+            Me.lblTitleI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblTitleI, "lblTitleI")
+            Me.lblTitleI.Font = Nothing
             Me.lblTitleI.Name = "lblTitleI"
-            Me.lblTitleI.Size = New System.Drawing.Size(30, 13)
-            Me.lblTitleI.TabIndex = 2
-            Me.lblTitleI.Text = "Title:"
             '
             'lblTitle
             '
-            Me.lblTitle.AutoSize = True
-            Me.lblTitle.Location = New System.Drawing.Point(85, 13)
+            Me.lblTitle.AccessibleDescription = Nothing
+            Me.lblTitle.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblTitle, "lblTitle")
+            Me.lblTitle.Font = Nothing
             Me.lblTitle.Name = "lblTitle"
-            Me.lblTitle.Size = New System.Drawing.Size(39, 13)
-            Me.lblTitle.TabIndex = 3
-            Me.lblTitle.Text = "Label4"
             '
             'lblVersionI
             '
-            Me.lblVersionI.AutoSize = True
-            Me.lblVersionI.Location = New System.Drawing.Point(3, 26)
+            Me.lblVersionI.AccessibleDescription = Nothing
+            Me.lblVersionI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblVersionI, "lblVersionI")
+            Me.lblVersionI.Font = Nothing
             Me.lblVersionI.Name = "lblVersionI"
-            Me.lblVersionI.Size = New System.Drawing.Size(45, 13)
-            Me.lblVersionI.TabIndex = 4
-            Me.lblVersionI.Text = "Version:"
             '
             'lblVersion
             '
-            Me.lblVersion.AutoSize = True
-            Me.lblVersion.Location = New System.Drawing.Point(85, 26)
+            Me.lblVersion.AccessibleDescription = Nothing
+            Me.lblVersion.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblVersion, "lblVersion")
+            Me.lblVersion.Font = Nothing
             Me.lblVersion.Name = "lblVersion"
-            Me.lblVersion.Size = New System.Drawing.Size(39, 13)
-            Me.lblVersion.TabIndex = 5
-            Me.lblVersion.Text = "Label6"
             '
             'lblCompanyI
             '
-            Me.lblCompanyI.AutoSize = True
-            Me.lblCompanyI.Location = New System.Drawing.Point(3, 39)
+            Me.lblCompanyI.AccessibleDescription = Nothing
+            Me.lblCompanyI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblCompanyI, "lblCompanyI")
+            Me.lblCompanyI.Font = Nothing
             Me.lblCompanyI.Name = "lblCompanyI"
-            Me.lblCompanyI.Size = New System.Drawing.Size(54, 13)
-            Me.lblCompanyI.TabIndex = 6
-            Me.lblCompanyI.Text = "Company:"
             '
             'lblCompany
             '
-            Me.lblCompany.AutoSize = True
-            Me.lblCompany.Location = New System.Drawing.Point(85, 39)
+            Me.lblCompany.AccessibleDescription = Nothing
+            Me.lblCompany.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblCompany, "lblCompany")
+            Me.lblCompany.Font = Nothing
             Me.lblCompany.Name = "lblCompany"
-            Me.lblCompany.Size = New System.Drawing.Size(39, 13)
-            Me.lblCompany.TabIndex = 7
-            Me.lblCompany.Text = "Label8"
             '
             'lblCopyrightI
             '
-            Me.lblCopyrightI.AutoSize = True
-            Me.lblCopyrightI.Location = New System.Drawing.Point(3, 52)
+            Me.lblCopyrightI.AccessibleDescription = Nothing
+            Me.lblCopyrightI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblCopyrightI, "lblCopyrightI")
+            Me.lblCopyrightI.Font = Nothing
             Me.lblCopyrightI.Name = "lblCopyrightI"
-            Me.lblCopyrightI.Size = New System.Drawing.Size(54, 13)
-            Me.lblCopyrightI.TabIndex = 8
-            Me.lblCopyrightI.Text = "Copyright:"
             '
             'lblCopyright
             '
-            Me.lblCopyright.AutoSize = True
-            Me.lblCopyright.Location = New System.Drawing.Point(85, 52)
+            Me.lblCopyright.AccessibleDescription = Nothing
+            Me.lblCopyright.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblCopyright, "lblCopyright")
+            Me.lblCopyright.Font = Nothing
             Me.lblCopyright.Name = "lblCopyright"
-            Me.lblCopyright.Size = New System.Drawing.Size(45, 13)
-            Me.lblCopyright.TabIndex = 9
-            Me.lblCopyright.Text = "Label10"
             '
             'lblAssemblyI
             '
-            Me.lblAssemblyI.AutoSize = True
-            Me.lblAssemblyI.Location = New System.Drawing.Point(3, 65)
+            Me.lblAssemblyI.AccessibleDescription = Nothing
+            Me.lblAssemblyI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblAssemblyI, "lblAssemblyI")
+            Me.lblAssemblyI.Font = Nothing
             Me.lblAssemblyI.Name = "lblAssemblyI"
-            Me.lblAssemblyI.Size = New System.Drawing.Size(54, 13)
-            Me.lblAssemblyI.TabIndex = 10
-            Me.lblAssemblyI.Text = "Assembly:"
             '
             'lblAssembly
             '
-            Me.lblAssembly.AutoSize = True
-            Me.lblAssembly.Location = New System.Drawing.Point(85, 65)
+            Me.lblAssembly.AccessibleDescription = Nothing
+            Me.lblAssembly.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblAssembly, "lblAssembly")
+            Me.lblAssembly.Font = Nothing
             Me.lblAssembly.Name = "lblAssembly"
-            Me.lblAssembly.Size = New System.Drawing.Size(45, 13)
-            Me.lblAssembly.TabIndex = 11
-            Me.lblAssembly.Text = "Label12"
             '
             'lblDescriptionI
             '
-            Me.lblDescriptionI.AutoSize = True
-            Me.lblDescriptionI.Location = New System.Drawing.Point(3, 78)
+            Me.lblDescriptionI.AccessibleDescription = Nothing
+            Me.lblDescriptionI.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblDescriptionI, "lblDescriptionI")
+            Me.lblDescriptionI.Font = Nothing
             Me.lblDescriptionI.Name = "lblDescriptionI"
-            Me.lblDescriptionI.Size = New System.Drawing.Size(63, 13)
-            Me.lblDescriptionI.TabIndex = 12
-            Me.lblDescriptionI.Text = "Description:"
             '
             'lblDescription
             '
-            Me.lblDescription.AutoSize = True
-            Me.lblDescription.Location = New System.Drawing.Point(85, 78)
+            Me.lblDescription.AccessibleDescription = Nothing
+            Me.lblDescription.AccessibleName = Nothing
+            resources.ApplyResources(Me.lblDescription, "lblDescription")
+            Me.lblDescription.Font = Nothing
             Me.lblDescription.Name = "lblDescription"
-            Me.lblDescription.Size = New System.Drawing.Size(45, 13)
-            Me.lblDescription.TabIndex = 13
-            Me.lblDescription.Text = "Label14"
             '
-            'Button1
+            'cmdOK
             '
-            Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdOK.AccessibleDescription = Nothing
+            Me.cmdOK.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdOK, "cmdOK")
+            Me.cmdOK.BackgroundImage = Nothing
             Me.tlpMain.SetColumnSpan(Me.cmdOK, 2)
             Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.cmdOK.Location = New System.Drawing.Point(108, 170)
-            Me.cmdOK.Name = "Button1"
-            Me.cmdOK.Size = New System.Drawing.Size(75, 23)
-            Me.cmdOK.TabIndex = 14
-            Me.cmdOK.Text = "&OK"
+            Me.cmdOK.Font = Nothing
+            Me.cmdOK.Name = "cmdOK"
             Me.cmdOK.UseVisualStyleBackColor = True
             '
-            'frmAbout
+            'AboutDialog
             '
             Me.AcceptButton = Me.cmdOK
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.AccessibleDescription = Nothing
+            Me.AccessibleName = Nothing
+            resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.BackgroundImage = Nothing
             Me.CancelButton = Me.cmdOK
-            Me.ClientSize = New System.Drawing.Size(292, 273)
             Me.Controls.Add(Me.tlpMain)
+            Me.Font = Nothing
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog
+            Me.Icon = Nothing
             Me.MaximizeBox = False
             Me.MinimizeBox = False
-            Me.Name = "frmAbout"
+            Me.Name = "AboutDialog"
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
-            Me.Text = "About"
             Me.tlpMain.ResumeLayout(False)
             Me.tlpMain.PerformLayout()
             Me.ResumeLayout(False)

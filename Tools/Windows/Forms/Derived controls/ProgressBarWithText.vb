@@ -48,7 +48,7 @@ Namespace WindowsT.FormsT
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _AutoText As Boolean = True
         ''' <summary>Get or sets value indicating if text automatically displays value of progress bar</summary>
-        <Category(CategoryAttributeValues.Behavior), Description("Get or sets value indicating if text automatically displays value of progress bar")> _
+        <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls),"AutoText_d")> _
         <DefaultValue(True)> _
         Public Property AutoText() As Boolean
             Get
@@ -65,7 +65,7 @@ Namespace WindowsT.FormsT
         Private _AutoTextFormat As String
         ''' <summary>Format string used to format value when displayed as text of control automatically.</summary>
         ''' <remarks><seealso cref="Integer.ToString(System.String)"/></remarks>
-        <Category(CategoryAttributeValues.Appearance), Description("Format string used to format value when displayed as text of control automatically.")> _
+        <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"AutoTextFormat_d")> _
         <Localizable(True)> _
         Public Property AutoTextFormat() As String
             Get
@@ -86,13 +86,13 @@ Namespace WindowsT.FormsT
         End Sub
 #Region "Events"
         ''' <summary>Occurs when <see cref="Value"/> changes</summary>
-        <Category(CategoryAttributeValues.PropertyChanged), Description("Occurs when Value changes")> _
+        <Category(CategoryAttributeValues.PropertyChanged), LDescription(GetType(WindowsT.FormsT.DerivedControls),"ValueChanged_d")> _
         Public Event ValueChanged As EventHandler
         ''' <summary>Ocuurs when <see cref="AutoText"/> changes</summary>
-        <Category(CategoryAttributeValues.PropertyChanged), Description("Ocuurs when AutoText changes")> _
+        <Category(CategoryAttributeValues.PropertyChanged), LDescription(GetType(WindowsT.FormsT.DerivedControls),"AutoTextChanged_d")> _
         Public Event AutoTextChanged As EventHandler
         ''' <summary>Ocuurs when <see cref="AutoTextFormat"/> changes</summary>
-        <Category(CategoryAttributeValues.PropertyChanged), Description("Ocuurs when AutoTextFormat changes")> _
+        <Category(CategoryAttributeValues.PropertyChanged), LDescription(GetType(WindowsT.FormsT.DerivedControls),"AutoTextFormatChanged_d")> _
         Public Event AutoTextFormatChanged As EventHandler
 #End Region
 #Region "On"
@@ -150,7 +150,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="InvalidEnumArgumentException">The value assigned is not one of the <see cref="ContentAlignment"/> values. </exception>
         <Category(CategoryAttributeValues.Appearance)> _
         <DefaultValue(GetType(ContentAlignment), "MiddleCenter")> _
-        <Description("Gets or sets the alignment of text in the label.")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"TextAlign_d")> _
         <Localizable(True)> _
         Public Property TextAlign() As ContentAlignment
             Get

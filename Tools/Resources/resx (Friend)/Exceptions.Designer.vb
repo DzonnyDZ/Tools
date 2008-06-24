@@ -74,6 +74,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to All types in {0} must inherit from {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property AllTypesIn0MustInheritFrom0() As String
+            Get
+                Return ResourceManager.GetString("AllTypesIn0MustInheritFrom0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Attempt to create cyclic tree.
         '''</summary>
         Friend Shared ReadOnly Property AttemptToCreateCyclicTree() As String
@@ -309,6 +318,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} cannot be set..
+        '''</summary>
+        Friend Shared ReadOnly Property CannotBeSet() As String
+            Get
+                Return ResourceManager.GetString("CannotBeSet", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} cannot be set to false.
         '''</summary>
         Friend Shared ReadOnly Property CannotBeSetToFalse() As String
@@ -381,11 +399,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot create instance of type {0}. {1} was thrown when obtaining new instance:.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstance() As String
+            Get
+                Return ResourceManager.GetString("CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstance", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Cannot interpret value &quot;{0}&quot; as {1}.
         '''</summary>
         Friend Shared ReadOnly Property CannotInterpretValue0As1() As String
             Get
                 Return ResourceManager.GetString("CannotInterpretValue0As1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cannot locate {0} in {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotLocate0In1() As String
+            Get
+                Return ResourceManager.GetString("CannotLocate0In1", resourceCulture)
             End Get
         End Property
         
@@ -648,6 +684,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property EOINotFound() As String
             Get
                 Return ResourceManager.GetString("EOINotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error while deserializing {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ErrorWhileDeserializing0() As String
+            Get
+                Return ResourceManager.GetString("ErrorWhileDeserializing0", resourceCulture)
             End Get
         End Property
         
@@ -969,6 +1014,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to LinkLabel internal error: Item found in Items but not found in Links.
+        '''</summary>
+        Friend Shared ReadOnly Property LinkLabelInternalErrorItemFoundInItemsButNotFoundInLinks() As String
+            Get
+                Return ResourceManager.GetString("LinkLabelInternalErrorItemFoundInItemsButNotFoundInLinks", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to LinkLabel internal exception: Link for item not found.
+        '''</summary>
+        Friend Shared ReadOnly Property LinkLabelInternalExceptionLinkForItemNotFound() As String
+            Get
+                Return ResourceManager.GetString("LinkLabelInternalExceptionLinkForItemNotFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to List is locked.
         '''</summary>
         Friend Shared ReadOnly Property ListIsLocked() As String
@@ -992,6 +1055,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog() As String
             Get
                 Return ResourceManager.GetString("MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} must be {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBe1() As String
+            Get
+                Return ResourceManager.GetString("MustBe1", resourceCulture)
             End Get
         End Property
         
@@ -1154,6 +1226,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property NoJPEGMarkerFound() As String
             Get
                 Return ResourceManager.GetString("NoJPEGMarkerFound", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} not found in {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property NotFoundIn1() As String
+            Get
+                Return ResourceManager.GetString("NotFoundIn1", resourceCulture)
             End Get
         End Property
         
@@ -1764,6 +1845,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Text cannot be changed via the Text property.
+        '''</summary>
+        Friend Shared ReadOnly Property TextCannotBeChangedViaTheTextProperty() As String
+            Get
+                Return ResourceManager.GetString("TextCannotBeChangedViaTheTextProperty", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} text must be encodeable by ASCII.
         '''</summary>
         Friend Shared ReadOnly Property TextMustBeEncodeableByASCII() As String
@@ -1901,6 +1991,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Type {0} is not supported.
+        '''</summary>
+        Friend Shared ReadOnly Property Type0IsNotSupported() As String
+            Get
+                Return ResourceManager.GetString("Type0IsNotSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Type {0} is not supported as value of StatusedControl property..
         '''</summary>
         Friend Shared ReadOnly Property Type0IsNotSupportedAsValueOfStatusedControlProperty() As String
@@ -1982,6 +2081,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Value can be converter neither to {0} nor to {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property ValueCanBeConverterNeitherTo0NorTo1() As String
+            Get
+                Return ResourceManager.GetString("ValueCanBeConverterNeitherTo0NorTo1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Value of incompatible type is being set.
         '''</summary>
         Friend Shared ReadOnly Property ValueOfIncompatibleTypeIsBeingSet() As String
@@ -2023,6 +2131,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ValueOfSomeTypeWasPassedWhereItIsNotAcceptable() As String
             Get
                 Return ResourceManager.GetString("ValueOfSomeTypeWasPassedWhereItIsNotAcceptable", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value of type {0} cannot be converted to {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property ValueOfType0CannotBeConvertedTo1() As String
+            Get
+                Return ResourceManager.GetString("ValueOfType0CannotBeConvertedTo1", resourceCulture)
             End Get
         End Property
         

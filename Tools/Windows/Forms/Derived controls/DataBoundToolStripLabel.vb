@@ -1,4 +1,6 @@
 Imports System.Windows.Forms, System.ComponentModel
+Imports Tools.ComponentModelT
+
 Namespace WindowsT.FormsT
 #If Config <= RC Then 'Stage:RC
     ''' <summary><see cref="ToolStripLabel"/> that allows databinding</summary>
@@ -36,7 +38,7 @@ Namespace WindowsT.FormsT
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <ParenthesizePropertyName(True), RefreshProperties(RefreshProperties.All)> _
         <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
-        <Description("Gets the collection of data-binding objects for this DataBoundToolStripLabel")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "DataBindings_d")> _
         Public ReadOnly Property DataBindings() As System.Windows.Forms.ControlBindingsCollection Implements System.Windows.Forms.IBindableComponent.DataBindings
             Get
                 If _bindings Is Nothing Then
@@ -65,7 +67,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Fired when <see cref="System.Windows.Forms.ComboBox.BindingContextChanged"/> of <see cref="ComboBox"/> occures</summary>
         ''' <param name="sender">Source of the event - rhis isntance of <see cref="DataBoundToolStripComboBox"/></param>
         ''' <param name="e">Event parameters</param>
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data), Description("Fired when BindingContextChanged of internal ComboBox occurs")> _
+        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"BindingContextChanged_d")> _
         Public Event BindingContextChanged(ByVal sender As Object, ByVal e As EventArgs)
     End Class
 #End If

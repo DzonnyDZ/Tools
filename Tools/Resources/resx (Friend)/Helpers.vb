@@ -9,6 +9,20 @@ Namespace WindowsT.FormsT
             resourceMan = New ResourceManager("Tools.WindowsT.FormsT.CompositeControls", GetType(CompositeControls).Assembly)
         End Sub
     End Class
+    Partial Class DerivedControls
+        ''' <summary>Initializer - redirects resources to Tools.WindowsT.FormsT.DerivedControls</summary>
+        ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
+        Shared Sub New()
+            resourceMan = New ResourceManager("Tools.WindowsT.FormsT.DerivedControls", GetType(DerivedControls).Assembly)
+        End Sub
+    End Class
+    Partial Class Dialogs
+        ''' <summary>Initializer - redirects resources to Tools.WindowsT.FormsT.Dialogs</summary>
+        ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
+        Shared Sub New()
+            resourceMan = New ResourceManager("Tools.WindowsT.FormsT.Dialogs", GetType(DerivedControls).Assembly)
+        End Sub
+    End Class
 End Namespace
 Namespace ResourcesT
     Partial Class Icons

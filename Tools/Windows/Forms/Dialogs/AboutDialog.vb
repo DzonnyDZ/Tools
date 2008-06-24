@@ -1,4 +1,5 @@
-﻿Imports System.Windows.Forms
+﻿'Localize: This is last localized file
+Imports System.Windows.Forms
 Namespace WindowsT.FormsT
     'ASAP: Wiki, forum, mark
     ''' <summary>Represents about dialog for application</summary>
@@ -15,7 +16,7 @@ Namespace WindowsT.FormsT
             Me.lblAssembly.Text = My.Application.Info.AssemblyName
             Me.lblDescription.Text = My.Application.Info.Description
 
-            Me.Text = String.Format("About {0}", My.Application.Info.Title)
+            Me.Text = String.Format(WindowsT.FormsT.Dialogs.About0, My.Application.Info.Title)
 
             Me.DialogResult = Windows.Forms.DialogResult.Cancel
         End Sub
@@ -31,5 +32,7 @@ Namespace WindowsT.FormsT
             Me.DialogResult = Windows.Forms.DialogResult.OK
             Me.Close()
         End Sub
+
+        
     End Class
 End Namespace

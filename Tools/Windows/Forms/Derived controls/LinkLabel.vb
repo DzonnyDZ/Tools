@@ -34,7 +34,7 @@ Namespace WindowsT.FormsT
             End Get
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Set(ByVal value As String)
-                Throw New NotSupportedException("Text cannot be changed via the Text property")
+                Throw New NotSupportedException(ResourcesT.Exceptions.TextCannotBeChangedViaTheTextProperty)
             End Set
         End Property
         ''' <summary>Gets the range in the text treated as a link.</summary>
@@ -47,12 +47,13 @@ Namespace WindowsT.FormsT
                 Return MyBase.LinkArea
             End Get
             Set(ByVal value As LinkArea)
-                Throw New NotSupportedException("LinkArea cannot be set.")
+                Throw New NotSupportedException(string.Format ResourcesT.Exceptions.CannotBeSet,"LinkArea"))
             End Set
         End Property
         ''' <summary>List of all items in label</summary>
         ''' <remarks><see cref="ListWithEvents(Of LinkLabelItem).AllowAddCancelableEventsHandlers"/> is set to False</remarks>
-        <Category(CategoryAttributeValues.Appearance), Description("List of all items in label")> _
+        <Category(CategoryAttributeValues.Appearance)> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"ListOfAllItemsInLabel")> _
         <Editor(GetType(LinkLabelItemsEditor), GetType(UITypeEditor))> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <TypeConverter(GetType(ItemsNameTypeConverter))> _
@@ -245,7 +246,7 @@ Namespace WindowsT.FormsT
         ''' <para><see cref="LinkLabel.MouseDown"/>, <see cref="LinkLabel.MouseUp"/> and <see cref="MouseClick"/> events are not raised</para>
         ''' </remarks>
         Public Overridable Sub PerformClick(ByVal Item As LinkItem, Optional ByVal button As MouseButtons = System.Windows.Forms.MouseButtons.None)
-            If Item Is Nothing Then Throw New ArgumentNullException("Item", "Item cannot be null")
+            If Item Is Nothing Then Throw New ArgumentNullException("Item")
             If Items.Contains(Item) Then
                 For Each l As Link In MyBase.Links
                     If l.LinkData Is Item Then
@@ -253,9 +254,9 @@ Namespace WindowsT.FormsT
                         Return
                     End If
                 Next l
-                Throw New InvalidOperationException("LinkLabel internal exception: Link for item not found")
+                Throw New InvalidOperationException(ResourcesT.Exceptions.LinkLabelInternalExceptionLinkForItemNotFound)
             Else
-                Throw New ArgumentOutOfRangeException("Item", "Cannot locate Item in Items")
+                Throw New ArgumentOutOfRangeException("Item", String.Format(ResourcesT.Exceptions.CannotLocate0In1, "Item", "Items"))
             End If
         End Sub
 
@@ -289,9 +290,9 @@ Namespace WindowsT.FormsT
                     For Each l As Link In MyBase.Links
                         If l.LinkData Is Item Then Return l
                     Next l
-                    Throw New InvalidOperationException("LinkLabel internal error: Item found in Items but not found in Links")
+                    Throw New InvalidOperationException(ResourcesT.Exceptions.LinkLabelInternalErrorItemFoundInItemsButNotFoundInLinks)
                 Else
-                    Throw New ArgumentOutOfRangeException("Item", "Item not found in Items")
+                    Throw New ArgumentOutOfRangeException("Item", String.Format(ResourcesT.Exceptions.NotFoundIn1, "Item", "Items"))
                 End If
             End Get
         End Property
@@ -307,7 +308,7 @@ Namespace WindowsT.FormsT
             Private _Text As String
             ''' <summary>Gets or sets text shown in place of this item</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after change of value (unless calling base class setter <see cref="Text"/>)</remarks>
-            <Description("Text to be show in place of this item"), Category(CategoryAttributeValues.Appearance)> _
+            <LDescription(GetType(WindowsT.FormsT.DerivedControls),"Text_LinkLabelItem_d"), Category(CategoryAttributeValues.Appearance)> _
             <DefaultValue("")> _
             <Editor(GetType(MultilineStringEditor), GetType(UITypeEditor))> _
             Public Overridable Property Text() As String
@@ -346,7 +347,7 @@ Namespace WindowsT.FormsT
             <Security.Permissions.SecurityPermission(Security.Permissions.SecurityAction.LinkDemand, Flags:=Security.Permissions.SecurityPermissionFlag.SerializationFormatter)> _
             Public Overridable Sub GetObjectData(ByVal info As System.Runtime.Serialization.SerializationInfo, ByVal context As System.Runtime.Serialization.StreamingContext) Implements System.Runtime.Serialization.ISerializable.GetObjectData
                 If info Is Nothing Then
-                    Throw New System.ArgumentNullException("info", "info cannot be null")
+                    Throw New System.ArgumentNullException("info")
                 End If
                 info.AddValue(TextPropertyName, Text)
             End Sub
@@ -359,7 +360,7 @@ Namespace WindowsT.FormsT
             ''' <remarks>Note to inheritors: If you want perform deserialization (stronly recomended) provide your own version of this CTor. In order to deserialize the <see cref="Text"/> property you can either call this base class CTor or deserialize it by your own.</remarks>
             Protected Sub New(ByVal info As SerializationInfo, ByVal context As StreamingContext)
                 If info Is Nothing Then
-                    Throw New System.ArgumentNullException("info", "info cannot be null")
+                    Throw New System.ArgumentNullException("info")
                 End If
                 Try
                     Text = info.GetValue(TextPropertyName, GetType(String))
@@ -368,7 +369,7 @@ Namespace WindowsT.FormsT
                 Catch ex As SerializationException
                     Throw
                 Catch ex As Exception
-                    Throw New SerializationException("Error while deserializing LinkLabelItem", ex)
+                    Throw New SerializationException(String.Format(ResourcesT.Exceptions.ErrorWhileDeserializing0, "LinkLabelItem"), ex)
                 End Try
             End Sub
             ''' <summary>CTor</summary>
@@ -455,7 +456,7 @@ Namespace WindowsT.FormsT
                 Catch ex As SerializationException
                     Throw
                 Catch ex As Exception
-                    Throw New SerializationException("Error while deserializing LinkLabelItem", ex)
+                    Throw New SerializationException(String.Format(ResourcesT.Exceptions.ErrorWhileDeserializing0, "LinkLabelItem"), ex)
                 End Try
             End Sub
             ''' <summary>Populates a <see cref="System.Runtime.Serialization.SerializationInfo"/> with the data needed to serialize the target object.</summary>
@@ -479,7 +480,7 @@ Namespace WindowsT.FormsT
             Private _LinkData As Object
             ''' <summary>Gets or sets data associated with the link</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after tha value is changed (unless calling base class setter <see cref="LinkData"/>)</remarks>
-            <Category(CategoryAttributeValues.Behavior), Description("Data associated with this link")> _
+            <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkData_d")> _
             <System.ComponentModel.DefaultValue(GetType(Object), "null pointer")> _
             <System.ComponentModel.TypeConverter(GetType(ObjectStringConverter))> _
             Public Overridable Property LinkData() As Object
@@ -496,7 +497,7 @@ Namespace WindowsT.FormsT
 #Region "Other props"
             ''' <summary>Stores value for the <see cref="Link.Description"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Appearance), Description("Stores value for the Link.Description of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Description_d")> _
             <DefaultValue("")> _
             Public Overridable Property Description() As String
                 <DebuggerStepThrough()> Get
@@ -512,7 +513,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Description As String = ""
             ''' <summary>Stores value for the <see cref="Link.Name"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Misc), Description("Stores value for the Link.Name of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Misc), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Name_d")> _
             <DefaultValue(""), DisplayName(NamePropertyName)> _
             Public Overridable Property Name() As String
                 <DebuggerStepThrough()> Get
@@ -528,7 +529,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Name As String = ""
             ''' <summary>Stores value for the <see cref="Link.Tag"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Data), Description("Stores value for the Link.Tag of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Data), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Tag_d")> _
             <System.ComponentModel.DefaultValue(GetType(Object), "null pointer")> _
             <System.ComponentModel.TypeConverter(GetType(ObjectStringConverter))> _
             Public Overridable Property Tag() As Object
@@ -545,7 +546,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As Object = Nothing
             ''' <summary>Stores value for the <see cref="Link.Visited"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Appearance), Description("Stores value for the Link.Visited of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Visited_d")> _
             <DefaultValue(False)> _
             Public Overridable Property Visited() As Boolean
                 <DebuggerStepThrough()> Get
@@ -561,7 +562,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Visited As Boolean = False
             ''' <summary>Stores value for the <see cref="Link.Enabled"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Appearance), Description("Stores value for the Link.Enabled of Link that represents this LinkItem")> _
+            <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Enabled_d")> _
             <DefaultValue(True)> _
             Public Overridable Property Enabled() As Boolean
                 <DebuggerStepThrough()> Get
@@ -650,7 +651,7 @@ Namespace WindowsT.FormsT
                     ElseIf TypeOf value Is String OrElse value Is Nothing Then
                         LinkPath = value
                     Else
-                        Throw New InvalidCastException("Value can be converter neither to Uri nor to String")
+                        Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ValueCanBeConverterNeitherTo0NorTo1, "Uri", "String"))
                     End If
                 End Set
             End Property
@@ -658,7 +659,7 @@ Namespace WindowsT.FormsT
             ''' <value>Actuall URI or target of the link</value>
             ''' <returns>New URI of target of the link</returns>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after value is changed (unless calling base class setter <see cref="LinkURI"/>)</remarks>
-            <Category(CategoryAttributeValues.Behavior), Description("URI of target of the link")> _
+            <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls),"LinkURI_d")> _
             <DefaultValue(GetType(Uri), "null pointer")> _
             <TypeConverter(GetType(UriTypeConverter))> _
             Public Overridable Property LinkURI() As Uri
@@ -679,10 +680,10 @@ Namespace WindowsT.FormsT
             ''' <exception cref="System.UriFormatException"><paramref name="value"/> is empty.-or- The scheme specified in <paramref name="value"/> is not correctly formed. See <see cref="System.Uri.CheckSchemeName"/>.-or- <paramref name="value"/> contains too many slashes.-or- The password specified in <paramref name="value"/> is not valid.-or- The host name specified in <paramref name="value"/> is not valid.-or- The file name specified in <paramref name="value"/> is not valid. -or- The user name specified in <paramref name="value"/> is not valid.-or- The host or authority name specified in <paramref name="value"/> cannot be terminated by backslashes.-or- The port number specified in <paramref name="value"/> is not valid or cannot be parsed.-or- The length of <paramref name="value"/> exceeds 65534 characters.-or- The length of the scheme specified in <paramref name="value"/> exceeds 1023 characters.-or- There is an invalid character sequence in <paramref name="value"/>.-or- The MS-DOS path specified in <paramref name="value"/> must start with c:\\.</exception>
             ''' <remarks>
             ''' <para>Exceptions thrown by <see cref="Uri"/>'s CTor</para>
-            ''' <para>Note for inheritors: Call <see cref="OnChanged"/> (unless callin base class setter <see cref="LinkPath"/> or <see cref="LinkURI"/></para>
+            ''' <para>Note for inheritors: Call <see cref="OnChanged"/> (unless calling base class setter <see cref="LinkPath"/> or <see cref="LinkURI"/></para>
             ''' <para>Change of this value causes raising <see cref="Changed"/> event with <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> set to <see cref="LinkURIPropertyName"/></para>
             ''' </remarks>
-            <Category(CategoryAttributeValues.Behavior), Description("Path (string representation of URI) of target of the link")> _
+            <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls),"LinkPath_d")> _
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             <DefaultValue("")> _
             Public Property LinkPath() As String
@@ -758,7 +759,7 @@ Namespace WindowsT.FormsT
                 ElseIf itemType.Equals(GetType(LinkLabelItem)) Then
                     ret = New TextItem("textItem")
                 Else
-                    Throw New ArgumentException("Type " & itemType.FullName & " is not supported", "itemType")
+                    Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Type0IsNotSupported, itemType.FullName), "itemType")
                 End If
                 Return ret
             End Function
@@ -1110,10 +1111,10 @@ Namespace WindowsT.FormsT
                 Public Sub New(ByVal Editor As LinkLabelItemsEditor)
                     MyBase.New(Editor)
                     If Not Editor.CollectionType.Equals(GetType(ListWithEvents(Of LinkLabelItem))) AndAlso Not Editor.CollectionType.IsSubclassOf(GetType(ListWithEvents(Of LinkLabelItem))) Then
-                        Throw New ArgumentException("Editor.CollectionType must be ListWithEvents(Of LinkLabelItem)")
+                        Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBe1, "Editor.CollectionType", GetType(ListWithEvents(Of LinkLabelItem)).FullName))
                     End If
                     If Not Editor.CollectionItemType.Equals(GetType(LinkLabelItem)) AndAlso Not Editor.CollectionType.IsSubclassOf(GetType(LinkLabelItem)) Then
-                        Throw (New ArgumentException("Editor.CollectionItemType must be LinkLabelItem"))
+                        Throw (New ArgumentException(String.Format(ResourcesT.Exceptions.MustBe1, "Editor.CollectionItemType", "LinkLabelItem")))
                     End If
                     Me.Editor = Editor
 
@@ -1123,7 +1124,7 @@ Namespace WindowsT.FormsT
                     'Show types that can be added into collection
                     For Each t As Type In Editor.NewItemTypes
                         If Not t.IsSubclassOf(GetType(LinkLabelItem)) AndAlso Not t.Equals(GetType(LinkLabelItem)) Then
-                            Throw New ArgumentException("All types in Editor.NewItemTypes must inherit from LinkLabelItem")
+                            Throw New ArgumentException(String.Format(ResourcesT.Exceptions.AllTypesIn0MustInheritFrom0, "Editor.NewItemTypes", "LinkLabelItem"))
                         Else
                             Dim itm As ToolStripItem = tsbAdd.DropDownItems.Add(t.Name)
                             itm.Tag = t
@@ -1154,7 +1155,7 @@ Namespace WindowsT.FormsT
                         lstItems.SelectedIndex = index
                         MyBase.Items = New ArrayList(lstItems.Items).ToArray
                     Catch ex As Exception
-                        MsgBox("Cannot create instance of type " & CType(CType(sender, ToolStripItem).Tag, Type).FullName & ". " & ex.GetType.FullName & " was thrown when obtaining new instance:" & vbCrLf & ex.Message, MsgBoxStyle.Critical, "LinkLabel Items Editor")
+                        MsgBox(String.Format(ResourcesT.Exceptions.CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstance & vbCrLf & ex.Message, CType(CType(sender, ToolStripItem).Tag, Type).FullName, ex.GetType.FullName), MsgBoxStyle.Critical, "LinkLabel Items Editor")
                     End Try
                 End Sub
 
@@ -1174,7 +1175,7 @@ Namespace WindowsT.FormsT
                 ''' <exception cref="InvalidCastException"><see cref="System.ComponentModel.Design.CollectionEditor.CollectionForm.EditValue"/> is not of type <see cref="ListWithEvents(Of LinkLabelItem)"/></exception>
                 Protected Overrides Sub OnEditValueChanged()
                     If MyBase.EditValue IsNot Nothing AndAlso Not TypeOf MyBase.EditValue Is ListWithEvents(Of LinkLabelItem) Then
-                        Throw New InvalidCastException("Value of type " & Me.EditValue.GetType.FullName & " cannot be converted to " & GetType(ListWithEvents(Of LinkLabelItem)).FullName)
+                        Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ValueOfType0CannotBeConvertedTo1, Me.EditValue.GetType.FullName, GetType(ListWithEvents(Of LinkLabelItem)).FullName))
                     End If
                     lstItems.Items.Clear()
                     If EditValue IsNot Nothing Then

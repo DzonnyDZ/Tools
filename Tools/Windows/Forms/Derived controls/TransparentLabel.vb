@@ -78,7 +78,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</summary>
         ''' <returns>true if the control adjusts its width to closely fit its contents; otherwise, false. The default is false.</returns>
         <DefaultValue(True), EditorBrowsable(EditorBrowsableState.Always)> _
-        <Description("Gets or sets a value indicating whether the control is automatically resized to display its entire contents.")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"AutoSize_d")> _
         <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Layout), RefreshProperties(RefreshProperties.All), Localizable(True)> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Visible), Browsable(True)> _
         Public Overrides Property AutoSize() As Boolean

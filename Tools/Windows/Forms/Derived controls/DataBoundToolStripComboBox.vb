@@ -1,5 +1,6 @@
-'Localize: ocalization should continuhe from HERE
 Imports System.Windows.Forms, System.ComponentModel
+Imports Tools.ComponentModelT
+
 Namespace WindowsT.FormsT
 #If Config <= RC Then 'Stage: RC
     ''' <summary><see cref="System.Windows.Forms.ToolStripComboBox"/> that allows databinding</summary>
@@ -17,7 +18,7 @@ Namespace WindowsT.FormsT
         <DefaultValue(""), TypeConverter("System.Windows.Forms.Design.DataMemberFieldConverter, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")> _
         <Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(System.Drawing.Design.UITypeEditor))> _
         <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
-        <Description("Gets or sets the property to display for internal ComboBox.")> _
+        <LDescription(GetType(DerivedControls), "DisplayMember_d")> _
         Public Property DisplayMember() As String
             Get
                 Return Me.ComboBox.DisplayMember
@@ -30,7 +31,7 @@ Namespace WindowsT.FormsT
         ''' <returns>A <see cref="System.String"/> representing the name of an object property that is contained in the collection specified by the <see cref="System.Windows.Forms.ListControl.DataSource"/> property. The default is an empty string ("").</returns>
         ''' <exception cref="System.ArgumentException">The specified property cannot be found on the object specified by the <see cref="System.Windows.Forms.ListControl.DataSource"/> property.</exception>
         <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data), DefaultValue("")> _
-        <Description("Gets or sets the property to use as the actual value for the items in internal ComboBox.")> _
+        <LDescription(GetType(DerivedControls), "ValueMember_d")> _
         <Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(System.Drawing.Design.UITypeEditor))> _
         Public Property ValueMember() As String
             Get
@@ -44,7 +45,7 @@ Namespace WindowsT.FormsT
         ''' <returns>An object that implements the <see cref="System.Collections.IList"/> interface, such as a <see cref="System.Data.DataSet"/> or an <see cref="System.Array"/>. The default is null.</returns>
         <DefaultValue(CStr(Nothing)), AttributeProvider(GetType(IListSource))> _
         <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data), RefreshProperties(RefreshProperties.Repaint)> _
-        <Description("Gets or sets the data source for internal ComboBox")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls.),"DataSource_d")> _
         Public Property DataSource() As Object
             Get
                 Return Me.ComboBox.DataSource
@@ -83,7 +84,7 @@ Namespace WindowsT.FormsT
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <ParenthesizePropertyName(True), RefreshProperties(RefreshProperties.All)> _
         <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
-        <Description("Gets the data bindings for the control.")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "DataBindings_d")> _
         Public ReadOnly Property DataBindings() As ControlBindingsCollection Implements System.Windows.Forms.IBindableComponent.DataBindings
             Get
                 Return Me.ComboBox.DataBindings
