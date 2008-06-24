@@ -65,11 +65,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Accessibility.
+        '''</summary>
+        Friend Shared ReadOnly Property Accessibility_cat() As String
+            Get
+                Return ResourceManager.GetString("Accessibility_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Access character for the button. Should be one of characters from button text..
         '''</summary>
         Friend Shared ReadOnly Property AccessKey_d() As String
             Get
                 Return ResourceManager.GetString("AccessKey_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Action.
+        '''</summary>
+        Friend Shared ReadOnly Property Action_cat() As String
+            Get
+                Return ResourceManager.GetString("Action_cat", resourceCulture)
             End Get
         End Property
         
@@ -83,6 +101,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Appearance.
+        '''</summary>
+        Friend Shared ReadOnly Property Appearance_cat() As String
+            Get
+                Return ResourceManager.GetString("Appearance_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Asterisk.
         '''</summary>
         Friend Shared ReadOnly Property Asterisk() As String
@@ -92,11 +119,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Asynchronous.
+        '''</summary>
+        Friend Shared ReadOnly Property Asynchronous_cat() As String
+            Get
+                Return ResourceManager.GetString("Asynchronous_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Beep.
         '''</summary>
         Friend Shared ReadOnly Property Beep() As String
             Get
                 Return ResourceManager.GetString("Beep", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Behavior.
+        '''</summary>
+        Friend Shared ReadOnly Property Behavior_cat() As String
+            Get
+                Return ResourceManager.GetString("Behavior_cat", resourceCulture)
             End Get
         End Property
         
@@ -182,11 +227,38 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Colors.
+        '''</summary>
+        Friend Shared ReadOnly Property Colors_cat() As String
+            Get
+                Return ResourceManager.GetString("Colors_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Gets or sets sort column index. Set this property to value out of range of columns (e.g. -1) to avoid sorting..
+        '''</summary>
+        Friend Shared ReadOnly Property Column_d() As String
+            Get
+                Return ResourceManager.GetString("Column_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Combo box displayed on dialog.
         '''</summary>
         Friend Shared ReadOnly Property ComboBox_d() As String
             Get
                 Return ResourceManager.GetString("ComboBox_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Config.
+        '''</summary>
+        Friend Shared ReadOnly Property Config_cat() As String
+            Get
+                Return ResourceManager.GetString("Config_cat", resourceCulture)
             End Get
         End Property
         
@@ -200,6 +272,33 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Data.
+        '''</summary>
+        Friend Shared ReadOnly Property Data_cat() As String
+            Get
+                Return ResourceManager.GetString("Data_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to DDE.
+        '''</summary>
+        Friend Shared ReadOnly Property DDE_cat() As String
+            Get
+                Return ResourceManager.GetString("DDE_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Default.
+        '''</summary>
+        Friend Shared ReadOnly Property Default_cat() As String
+            Get
+                Return ResourceManager.GetString("Default_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to indicates 0-based index of button that has focus when message box is shown and is default button for message box (usually reported when user presses enter)..
         '''</summary>
         Friend Shared ReadOnly Property DefaultButton_d() As String
@@ -209,11 +308,47 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Gets or sets if sorting order is reversed.
+        '''</summary>
+        Friend Shared ReadOnly Property Descending_d() As String
+            Get
+                Return ResourceManager.GetString("Descending_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Design.
+        '''</summary>
+        Friend Shared ReadOnly Property Design_cat() As String
+            Get
+                Return ResourceManager.GetString("Design_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Display.
+        '''</summary>
+        Friend Shared ReadOnly Property Display_cat() As String
+            Get
+                Return ResourceManager.GetString("Display_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Indicates member (property, field) used to obtain text to be shown to user for each item..
         '''</summary>
         Friend Shared ReadOnly Property DisplayMember_d() As String
             Get
                 Return ResourceManager.GetString("DisplayMember_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to DragDrop.
+        '''</summary>
+        Friend Shared ReadOnly Property DragDrop_cat() As String
+            Get
+                Return ResourceManager.GetString("DragDrop_cat", resourceCulture)
             End Get
         End Property
         
@@ -245,6 +380,42 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Focus.
+        '''</summary>
+        Friend Shared ReadOnly Property Focus_cat() As String
+            Get
+                Return ResourceManager.GetString("Focus_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Folder Browsing.
+        '''</summary>
+        Friend Shared ReadOnly Property FolderBrowsing_cat() As String
+            Get
+                Return ResourceManager.GetString("FolderBrowsing_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Font.
+        '''</summary>
+        Friend Shared ReadOnly Property Font_cat() As String
+            Get
+                Return ResourceManager.GetString("Font_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Format.
+        '''</summary>
+        Friend Shared ReadOnly Property Format_cat() As String
+            Get
+                Return ResourceManager.GetString("Format_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Hand.
         '''</summary>
         Friend Shared ReadOnly Property Hand() As String
@@ -272,11 +443,47 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Items.
+        '''</summary>
+        Friend Shared ReadOnly Property Items_cat() As String
+            Get
+                Return ResourceManager.GetString("Items_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Items shown to user in drop down. Item can be any Object..
         '''</summary>
         Friend Shared ReadOnly Property Items_d() As String
             Get
                 Return ResourceManager.GetString("Items_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Key.
+        '''</summary>
+        Friend Shared ReadOnly Property Key_cat() As String
+            Get
+                Return ResourceManager.GetString("Key_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Layout.
+        '''</summary>
+        Friend Shared ReadOnly Property Layout_cat() As String
+            Get
+                Return ResourceManager.GetString("Layout_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to List.
+        '''</summary>
+        Friend Shared ReadOnly Property List_cat() As String
+            Get
+                Return ResourceManager.GetString("List_cat", resourceCulture)
             End Get
         End Property
         
@@ -304,6 +511,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property MessageBoxCounDownTimeFormat() As String
             Get
                 Return ResourceManager.GetString("MessageBoxCounDownTimeFormat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Misc.
+        '''</summary>
+        Friend Shared ReadOnly Property Misc_cat() As String
+            Get
+                Return ResourceManager.GetString("Misc_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Mouse.
+        '''</summary>
+        Friend Shared ReadOnly Property Mouse_cat() As String
+            Get
+                Return ResourceManager.GetString("Mouse_cat", resourceCulture)
             End Get
         End Property
         
@@ -353,11 +578,38 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Position.
+        '''</summary>
+        Friend Shared ReadOnly Property Position_cat() As String
+            Get
+                Return ResourceManager.GetString("Position_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Private.
+        '''</summary>
+        Friend Shared ReadOnly Property Private_cat() As String
+            Get
+                Return ResourceManager.GetString("Private_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Text of prompt displayed to the user..
         '''</summary>
         Friend Shared ReadOnly Property Prompt_d() As String
             Get
                 Return ResourceManager.GetString("Prompt_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Property Changed.
+        '''</summary>
+        Friend Shared ReadOnly Property PropertyChanged_cat() As String
+            Get
+                Return ResourceManager.GetString("PropertyChanged_cat", resourceCulture)
             End Get
         End Property
         
@@ -394,6 +646,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property SaveDataAs() As String
             Get
                 Return ResourceManager.GetString("SaveDataAs", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Scale.
+        '''</summary>
+        Friend Shared ReadOnly Property Scale_cat() As String
+            Get
+                Return ResourceManager.GetString("Scale_cat", resourceCulture)
             End Get
         End Property
         
@@ -443,6 +704,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Gets or sets the way of sorting.
+        '''</summary>
+        Friend Shared ReadOnly Property SortMode_d() As String
+            Get
+                Return ResourceManager.GetString("SortMode_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Current check state of check box.
         '''</summary>
         Friend Shared ReadOnly Property State_d() As String
@@ -457,6 +727,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property StateChanged_d() As String
             Get
                 Return ResourceManager.GetString("StateChanged_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Text.
+        '''</summary>
+        Friend Shared ReadOnly Property Text_cat() As String
+            Get
+                Return ResourceManager.GetString("Text_cat", resourceCulture)
             End Get
         End Property
         
@@ -511,6 +790,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property WavFilter() As String
             Get
                 Return ResourceManager.GetString("WavFilter", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Window Style.
+        '''</summary>
+        Friend Shared ReadOnly Property WindowStyle_cat() As String
+            Get
+                Return ResourceManager.GetString("WindowStyle_cat", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Defines fill width applicable when SortMode is ZeroFill. Items will be filled with zeros (&quot;0&quot;) to specified width and then sorted as strings..
+        '''</summary>
+        Friend Shared ReadOnly Property ZerofillWidth_d() As String
+            Get
+                Return ResourceManager.GetString("ZerofillWidth_d", resourceCulture)
             End Get
         End Property
     End Class

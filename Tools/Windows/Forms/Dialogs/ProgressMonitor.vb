@@ -7,7 +7,7 @@ Namespace WindowsT.FormsT
     ''' <remarks>See documentation of the <see cref="ProgressMonitor.OnProgressChanged"/> method in order to see rich options for reporting progress.</remarks>
     Public Class ProgressMonitor
         ''' <summary>Default CTor</summary>
-        ''' <remarks>Value of the <see cref="BackgroundWorker"/> property is populated with new instance of <see cref="ComponentModel.BackgroundWorker"/></remarks>
+        ''' <remarks>Value of the <see cref="BackgroundWorker"/> property is populated with new instance of <see cref="System.ComponentModel.BackgroundWorker"/></remarks>
         ''' <filterpriority>3</filterpriority>
         Public Sub New()
             Me.new(New BackgroundWorker With {.WorkerReportsProgress = True, .WorkerSupportsCancellation = True})

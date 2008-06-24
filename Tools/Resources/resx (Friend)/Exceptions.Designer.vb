@@ -562,6 +562,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Conversion to {0} failed.
+        '''</summary>
+        Friend Shared ReadOnly Property ConversionTo0Failed() As String
+            Get
+                Return ResourceManager.GetString("ConversionTo0Failed", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Count down time must be greater than zero..
         '''</summary>
         Friend Shared ReadOnly Property CountDownTimeMustBeGreaterThanZero() As String
@@ -1136,6 +1145,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property MustBeNonNegative() As String
             Get
                 Return ResourceManager.GetString("MustBeNonNegative", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} must be one of {1} or {2} values.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeOneOf1Or2Values() As String
+            Get
+                Return ResourceManager.GetString("MustBeOneOf1Or2Values", resourceCulture)
             End Get
         End Property
         

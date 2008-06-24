@@ -1,4 +1,5 @@
-﻿#If Stage <= Nightly Then 'Stage: Nightly
+﻿'Localize: Localization should continue here
+#If Stage <= Nightly Then 'Stage: Nightly
 Imports System
 Imports System.Windows
 Imports System.Windows.Controls

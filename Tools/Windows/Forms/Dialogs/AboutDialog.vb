@@ -1,5 +1,4 @@
-﻿'Localize: This is last localized file
-Imports System.Windows.Forms
+﻿Imports System.Windows.Forms
 Namespace WindowsT.FormsT
     'ASAP: Wiki, forum, mark
     ''' <summary>Represents about dialog for application</summary>

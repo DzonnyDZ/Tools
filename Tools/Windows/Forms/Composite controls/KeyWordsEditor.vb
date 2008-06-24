@@ -726,7 +726,7 @@ Namespace WindowsT.FormsT
             ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.AddMenuState">AddMenuState</see></summary>
             <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
             <LDescription(GetType(CompositeControls), "AddMenuState_d")> _
-            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
             Public Property AddMenuState() As ControlState
                 <DebuggerStepThrough()> Get
                     Return sm.AddMenuState
@@ -738,7 +738,7 @@ Namespace WindowsT.FormsT
             ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.DeleteMenuState">DeleteMenuState</see></summary>
             <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
             <LDescription(GetType(CompositeControls), "DeleteMenuState_d")> _
-            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
             Public Property DeleteMenuState() As ControlState
                 <DebuggerStepThrough()> Get
                     Return sm.DeleteMenuState
@@ -750,7 +750,7 @@ Namespace WindowsT.FormsT
             ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.MarkAsChangedMenuState">MarkAsChangedMenuState</see></summary>
             <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
            <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")> _
-           <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+           <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
             Public Property MarkAsChangedMenuState() As ControlState
                 <DebuggerStepThrough()> Get
                     Return sm.MarkAsChangedMenuState
@@ -762,7 +762,7 @@ Namespace WindowsT.FormsT
             ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.ResetMenuState">ResetMenuState</see></summary>
             <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
             <LDescription(GetType(CompositeControls), "ResetMenuState_d")> _
-            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
             Public Property ResetMenuState() As ControlState
                 <DebuggerStepThrough()> Get
                     Return sm.ResetMenuState
@@ -774,7 +774,7 @@ Namespace WindowsT.FormsT
             ''' <summary>Proxies <see cref="KeyWordsEditor.Status"/>.<see cref="StatusMarker.AutoChanged">AutoChanged</see></summary>
             <DefaultValue(False)> _
             <LDescription(GetType(CompositeControls), "AutoChanged_d")> _
-            <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
             Public Property AutoChanged() As Boolean
                 <DebuggerStepThrough()> Get
                     Return sm.AutoChanged
@@ -787,7 +787,7 @@ Namespace WindowsT.FormsT
             ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="StatusMarker.Statuses"/></exception>
             <DefaultValue(GetType(StatusMarker.Statuses), "Normal")> _
             <LDescription(GetType(CompositeControls), "StatusMarkerStatus_d")> _
-            <Category(UtilitiesT.CategoryAttributeValues.Data)> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
             Public Property Status() As StatusMarker.Statuses
                 <DebuggerStepThrough()> Get
                     Return sm.Status

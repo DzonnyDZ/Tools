@@ -17,7 +17,7 @@ Namespace WindowsT.FormsT
         ''' <returns>A <see cref="System.String"/> specifying the name of an object property that is contained in the collection specified by the <see cref="System.Windows.Forms.ListControl.DataSource"/> property. The default is an empty string ("").</returns>
         <DefaultValue(""), TypeConverter("System.Windows.Forms.Design.DataMemberFieldConverter, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a")> _
         <Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(System.Drawing.Design.UITypeEditor))> _
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <LDescription(GetType(DerivedControls), "DisplayMember_d")> _
         Public Property DisplayMember() As String
             Get
@@ -30,7 +30,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets the property to use as the actual value for the items in <see cref="ComboBox"/>.</summary>
         ''' <returns>A <see cref="System.String"/> representing the name of an object property that is contained in the collection specified by the <see cref="System.Windows.Forms.ListControl.DataSource"/> property. The default is an empty string ("").</returns>
         ''' <exception cref="System.ArgumentException">The specified property cannot be found on the object specified by the <see cref="System.Windows.Forms.ListControl.DataSource"/> property.</exception>
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data), DefaultValue("")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), DefaultValue("")> _
         <LDescription(GetType(DerivedControls), "ValueMember_d")> _
         <Editor("System.Windows.Forms.Design.DataMemberFieldEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(System.Drawing.Design.UITypeEditor))> _
         Public Property ValueMember() As String
@@ -44,8 +44,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets the data source for <see cref="ComboBox"/>.</summary>
         ''' <returns>An object that implements the <see cref="System.Collections.IList"/> interface, such as a <see cref="System.Data.DataSet"/> or an <see cref="System.Array"/>. The default is null.</returns>
         <DefaultValue(CStr(Nothing)), AttributeProvider(GetType(IListSource))> _
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data), RefreshProperties(RefreshProperties.Repaint)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls.),"DataSource_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), RefreshProperties(RefreshProperties.Repaint)> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "DataSource_d")> _
         Public Property DataSource() As Object
             Get
                 Return Me.ComboBox.DataSource
@@ -83,7 +83,7 @@ Namespace WindowsT.FormsT
         ''' <returns>A <see cref="System.Windows.Forms.ControlBindingsCollection"/> that contains the <see cref="System.Windows.Forms.Binding"/> objects for the control.</returns>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <ParenthesizePropertyName(True), RefreshProperties(RefreshProperties.All)> _
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <LDescription(GetType(WindowsT.FormsT.DerivedControls), "DataBindings_d")> _
         Public ReadOnly Property DataBindings() As ControlBindingsCollection Implements System.Windows.Forms.IBindableComponent.DataBindings
             Get
@@ -122,7 +122,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Fired when <see cref="System.Windows.Forms.ComboBox.BindingContextChanged"/> of <see cref="ComboBox"/> occures</summary>
         ''' <param name="sender">Source of the event - rhis isntance of <see cref="DataBoundToolStripComboBox"/></param>
         ''' <param name="e">Event parameters</param>
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data), Description("Fired when BindingContextChanged of internal ComboBox occurs")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), Description("Fired when BindingContextChanged of internal ComboBox occurs")> _
         Public Event BindingContextChanged(ByVal sender As Object, ByVal e As EventArgs)
     End Class
 #End If

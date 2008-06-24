@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,37 +117,20 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="About0" xml:space="preserve">
-    <value>About {0}</value>
+  <data name="fraPreview.Text" xml:space="preserve">
+    <value>Náhled</value>
   </data>
-  <data name="SelectEncodingPlease" xml:space="preserve">
-    <value>Select encoding please.</value>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 23</value>
   </data>
-  <data name="NoEncodingSelected" xml:space="preserve">
-    <value>No encoding selected</value>
+  <data name="cmdCancel.Text" xml:space="preserve">
+    <value>&amp;Storno</value>
   </data>
-  <data name="Preselected_d" xml:space="preserve">
-    <value>Specifies code page of encoding that will be preselected when dialog is shown (if available). Set to negative value in order to preselect no encoding</value>
+  <data name="chkOK.ToolTip" xml:space="preserve">
+    <value>Ukazuje jestli vybrané kódování můžebýt na textu použito bez problémů</value>
   </data>
-  <data name="PreviewBytes_d" xml:space="preserve">
-    <value>Text to decode using selected encoding and show as preview</value>
-  </data>
-  <data name="PreviewString_d" xml:space="preserve">
-    <value>Text to encode using selected encoding and inform user if all characters can be encoded</value>
-  </data>
-  <data name="RequireCorrect_d" xml:space="preserve">
-    <value>Defines if user can select encoding that can be used only with problems on given PreviewString on PreviewBytes</value>
-  </data>
-  <data name="Text_d" xml:space="preserve">
-    <value>Text displayed in title of window</value>
-  </data>
-  <data name="Text_dv" xml:space="preserve">
-    <value>Select encoding</value>
-  </data>
-  <data name="ShowHelp_d" xml:space="preserve">
-    <value>Determines if help button will be shown</value>
-  </data>
-  <data name="OKClicked_d" xml:space="preserve">
-    <value>Raised after user clicks OK and dialogs allows him to select encoding</value>
+  <data name="$this.Text" xml:space="preserve">
+    <value>Vybrat kódování</value>
   </data>
 </root>

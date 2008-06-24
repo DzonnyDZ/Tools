@@ -219,7 +219,7 @@ Namespace WindowsT.FormsT
         ''' <seealso cref="String.Format"/>
         ''' <seealso cref="EncodingInfoToDisplay.DisplayStyle"/>
         ''' </remarks>
-        <DefaultValue("{0}"), Category(CategoryAttributeValues.Appearance)> _
+        <DefaultValue("{0}"), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <LDescription(GetType(CompositeControls), "DisplayStype_d")> _
         Public Property DisplayStyle() As String
             <DebuggerStepThrough()> Get
@@ -243,7 +243,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Defines control used for showing encodings</summary>
         ''' <exception cref="InvalidEnumArgumentException">Setting value that is not member of <see cref="EncodingSelectorStyle"/></exception>
         <DefaultValue(GetType(EncodingSelectorStyle), "ComboBox")> _
-        <Category(CategoryAttributeValues.Appearance)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <LDescription(GetType(CompositeControls), "Style_d")> _
         Public Overridable Property Style() As EncodingSelectorStyle
             Get
@@ -403,7 +403,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised after the <see cref="SelectedIndex"/> property is changed</summary>
         ''' <param name="sender">The source of the evemt</param> 
         ''' <param name="e">Arguments</param>
-        <Category(CategoryAttributeValues.List), LDescription(GetType(CompositeControls), "SelectedIndexChanged_d")> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List), LDescription(GetType(CompositeControls), "SelectedIndexChanged_d")> _
         Public Event SelectedIndexChanged(ByVal sender As EncodingSelector, ByVal e As EventArgs)
 
         ''' <summary>Raises the <see cref="SelectedIndexChanged"/> event</summary>
@@ -444,7 +444,7 @@ Namespace WindowsT.FormsT
         ''' <returns>Code page identifier of selected encoding</returns>
         ''' <remarks><seealso cref="EncodingInfo.CodePage"/></remarks>
         <LDescription(GetType(CompositeControls), "SelectedCodePage_d")> _
-        <Category(CategoryAttributeValues.List)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List)> _
         <DefaultValue(-1I)> _
         Public Property SelectedCodepage() As Integer
             Get
@@ -472,7 +472,7 @@ Namespace WindowsT.FormsT
         ''' <returns>The Internet Assigned Numbers Authority (IANA) name of selected encoding</returns>
         ''' <remarks><seealso cref="EncodingInfo.Name"/></remarks>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        <Category(CategoryAttributeValues.List)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List)> _
         <LDescription(GetType(CompositeControls), "SelectedName_d")> _
         <DefaultValue("")> _
         Public Property SelectedName() As String
@@ -561,7 +561,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.Name"/></summary>
         ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <LDescription(GetType(CompositeControls), "NameColumnHeaderWidth_d")> _
-        <Category(CategoryAttributeValues.List)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List)> _
         <DefaultValue(70), Localizable(True)> _
         Public Property NameColumnHeaderWidth() As Integer
             Get
@@ -589,7 +589,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.DisplayName"/></summary>
         ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <LDescription(GetType(CompositeControls), "DisplayNameColumnHeaderWidth_d")> _
-        <Category(CategoryAttributeValues.List)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List)> _
         <DefaultValue(120), Localizable(True)> _
         Public Property DisplayNameColumnHeaderWidth() As Integer
             Get
@@ -617,7 +617,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Defines width of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.CodePage"/></summary>
         ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <LDescription(GetType(CompositeControls), "CodePageColumnHeaderWidht_d")> _
-        <Category(CategoryAttributeValues.List)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List)> _
         <DefaultValue(70), Localizable(True)> _
         Public Property CodePageColumnHeaderWidth() As Integer
             Get
@@ -647,7 +647,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets text of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.Name"/></summary>
         ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <LDescription(GetType(CompositeControls), "NameColumnHeaderText_d")> _
-        <Category(CategoryAttributeValues.List), Localizable(True)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List), Localizable(True)> _
         Public Property NameColumnHeaderText() As String
             Get
                 Return cohName.Text
@@ -674,7 +674,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets text of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.DisplayName"/></summary>
         ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <LDescription(GetType(CompositeControls), "DisplayNameColumnHeaderText_d")> _
-        <Category(CategoryAttributeValues.List), Localizable(True)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List), Localizable(True)> _
         Public Property DisplayNameColumnHeaderText() As String
             Get
                 Return cohDisplayName.Text
@@ -701,7 +701,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets text of <see cref="ColumnHeader"/> which displays <see cref="EncodingInfo.CodePage"/></summary>
         ''' <remarks>Applicable only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <LDescription(GetType(CompositeControls), "CodePageColumnHeaderText_d")> _
-        <Category(CategoryAttributeValues.List), Localizable(True)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List), Localizable(True)> _
         Public Property CodePageColumnHeaderText() As String
             Get
                 Return cohCodePage.Text
@@ -729,7 +729,7 @@ Namespace WindowsT.FormsT
         ''' <remarks>Sorting can be changed by user by clicking column header. Sorting applies only when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></remarks>
         <TypeConverter(GetType(ExpandableObjectConverter))> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
-        <Category(CategoryAttributeValues.List), LDescription(GetType(CompositeControls), "Sorting_d")> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List), LDescription(GetType(CompositeControls), "Sorting_d")> _
         Public ReadOnly Property Sorting() As ListViewItemComparer
             Get
                 Return lvwEncoding.ListViewItemSorter
@@ -769,7 +769,7 @@ Namespace WindowsT.FormsT
         End Enum
         ''' <summary>Gets or setrs order of columns of <see cref="ListView"/> if <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListView"/></summary>
         <DefaultValue(GetType(enmColumnOrder), "DisplayName_Name_CodePage")> _
-        <Category(CategoryAttributeValues.List), LDescription(GetType(CompositeControls), "ColumnOrder_d")> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.List), LDescription(GetType(CompositeControls), "ColumnOrder_d")> _
         Public Property ColumnOrder() As enmColumnOrder
             Get
                 Return CShort(cohDisplayName.DisplayIndex + 1) Or CShort(cohName.DisplayIndex + 1) << 4 Or CShort(cohCodePage.DisplayIndex + 1) << 8
@@ -862,7 +862,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised when <see cref="Style"/> is <see cref="EncodingSelectorStyle.ListBox"/> or <see cref="EncodingSelectorStyle.ListView"/> and user doubleclicks on item or raised when use presses the enter key and some item is selected not depending on <see cref="Style"/></summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters</param>
-        <Category(CategoryAttributeValues.Mouse), LDescription(GetType(CompositeControls), "ItemDoubleClick_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Mouse), LDescription(GetType(CompositeControls), "ItemDoubleClick_d")> _
         Public Event ItemDoubleClick(ByVal sender As EncodingSelector, ByVal e As EncodingSelectorItemClickEventArgs)
 
         ''' <summary>Erguments of the <see cref="ItemDoubleClick"/> event</summary>

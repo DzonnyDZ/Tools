@@ -5,67 +5,68 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <para>This class contains values that when used for <see cref="CategoryAttribute"/> are recognized by the .NET Framework and localized to current language.</para>
     ''' <para>You can pass these constans either directly into <see cref="CategoryAttribute"/> or you can use <see cref="ComponentModelT.KnownCategoryAttribute"/>'s overloaded CTor that have better intellisense support.</para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 1, GetType(CategoryAttributeValues), LastChange:="05/14/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 1, GetType(Tools.WindowsT.FormsT.UtilitiesT.Misc), LastChange:="05/14/2007")> _
+    <Obsolete("Members of this class were changed. They are no longer constant, so they cannot be used for CategoryAttribute. If you want to use this class use LCategoryAttribute, but you'd better using KnownCategoryAttribute")> _
     Public Class CategoryAttributeValues
         ''' <summary>Private in order not to pe possible to create instance or inherit from this class</summary>
         Private Sub New()
         End Sub
         ''' <summary>The Accessibility category</summary>
-        Public Const Accessibility$ = "Accessibility"
+        Public Shared ReadOnly Accessibility$ = ResourcesT.Components.Accessibility_cat
         ''' <summary>The Action category</summary>
-        Public Const Action$ = "Action"
+        Public Shared ReadOnly Action$ = ResourcesT.Components.Action_cat
         ''' <summary>The Appearance category</summary>
-        Public Const Appearance$ = "Appearance"
+        Public Shared ReadOnly Appearance$ = ResourcesT.Components.Appearance_cat
         ''' <summary>The Asynchronous category</summary>
-        Public Const Asynchronous$ = "Asynchronous"
+        Public Shared ReadOnly Asynchronous$ = ResourcesT.Components.Asynchronous_cat
         ''' <summary>The Behavior category</summary>
-        Public Const Behavior$ = "Behavior"
+        Public Shared ReadOnly Behavior$ = ResourcesT.Components.Behavior_cat
         ''' <summary>The Configurations category</summary>
-        Public Const Configurations$ = "Config"
+        Public Shared ReadOnly Configurations$ = ResourcesT.Components.Config_cat
         ''' <summary>The Data category</summary>
-        Public Const Data$ = "Data"
+        Public Shared ReadOnly Data$ = ResourcesT.Components.Data_cat
         ''' <summary>The DDE category</summary>
-        Public Const DDE$ = "DDE"
+        Public Shared ReadOnly DDE$ = ResourcesT.Components.DDE_cat
         ''' <summary>The Misc category</summary>
-        Public Const Misc$ = "Default"
+        Public Shared ReadOnly Misc$ = ResourcesT.Components.Default_cat
         ''' <summary>The Design category</summary>
-        Public Const Design$ = "Design"
+        Public Shared ReadOnly Design$ = ResourcesT.Components.Design_cat
         ''' <summary>The DragDrop category</summary>
-        Public Const DragDrop$ = "DragDrop"
+        Public Shared ReadOnly DragDrop$ = ResourcesT.Components.DragDrop_cat
         ''' <summary>The Focus category</summary>
-        Public Const Focus$ = "Focus"
+        Public Shared ReadOnly Focus$ = ResourcesT.Components.Focus_cat
         ''' <summary>The Font category</summary>
-        Public Const Font$ = "Font"
+        Public Shared ReadOnly Font$ = ResourcesT.Components.Font_cat
         ''' <summary>The Format category</summary>
-        Public Const Format$ = "Format"
+        Public Shared ReadOnly Format$ = ResourcesT.Components.Format_cat
         ''' <summary>The Key category</summary>
-        Public Const Key$ = "Key"
+        Public Shared ReadOnly Key$ = ResourcesT.Components.Key_cat
         ''' <summary>The Layout category</summary>
-        Public Const Layout$ = "Layout"
+        Public Shared ReadOnly Layout$ = ResourcesT.Components.Layout_cat
         ''' <summary>The List category</summary>
-        Public Const List$ = "List"
+        Public Shared ReadOnly List$ = ResourcesT.Components.List_cat
         ''' <summary>The Mouse category</summary>
-        Public Const Mouse$ = "Mouse"
+        Public Shared ReadOnly Mouse$ = ResourcesT.Components.Mouse_cat
         ''' <summary>The Position category</summary>
-        Public Const Position$ = "Position"
+        Public Shared ReadOnly Position$ = ResourcesT.Components.Position_cat
         ''' <summary>The Scale category</summary>
-        Public Const Scale$ = "Scale"
+        Public Shared ReadOnly Scale$ = ResourcesT.Components.Scale_cat
         ''' <summary>The Text category</summary>
-        Public Const Text$ = "Text"
+        Public Shared ReadOnly Text$ = ResourcesT.Components.Text_cat
         ''' <summary>The Window Style category</summary>
-        Public Const WindowStyle$ = "WindowStyle"
+        Public Shared ReadOnly WindowStyle$ = ResourcesT.Components.WindowStyle_cat
         ''' <summary>The Colors category</summary>
-        Friend Const Colors$ = "Colors"
+        Friend Shared ReadOnly Colors$ = ResourcesT.Components.Colors_cat
         ''' <summary>The Display category</summary>
-        Friend Const Display$ = "Display"
+        Friend Shared ReadOnly Display$ = ResourcesT.Components.Display_cat
         ''' <summary>The Folder Browsing category</summary>
-        Friend Const FolderBrowsing$ = "Folder Browsing"
+        Friend Shared ReadOnly FolderBrowsing$ = ResourcesT.Components.FolderBrowsing_cat
         ''' <summary>The Items category</summary>
-        Friend Const Items$ = "Items"
+        Friend Shared ReadOnly Items$ = ResourcesT.Components.Items_cat
         ''' <summary>The Private category</summary>
-        Friend Const Private$ = "Private"
+        Friend Shared ReadOnly Private$ = ResourcesT.Components.Private_cat
         ''' <summary>The Property Chenged category</summary>
-        Friend Const PropertyChanged$ = "Property Changed"
+        Friend Shared ReadOnly PropertyChanged$ = ResourcesT.Components.PropertyChanged_cat
         ''' <summary>Represents known value of <see cref="CategoryAttribute"/> as defined in <see cref="CategoryAttributeValues"/></summary>
         ''' <remarks>This structure is only hint for intellisense</remarks>
         ''' <completionlist cref="CategoryAttributeValues"/>

@@ -164,6 +164,24 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Gets or sets a value indicating whether the form will receive key events before the event is passed to the control that has focus..
+        '''</summary>
+        Friend Shared ReadOnly Property KeyPreview_d() As String
+            Get
+                Return ResourceManager.GetString("KeyPreview_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Contains default value of the KeyPreview property..
+        '''</summary>
+        Friend Shared ReadOnly Property KeyPreviewDefaultValue_d() As String
+            Get
+                Return ResourceManager.GetString("KeyPreviewDefaultValue_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Data associated with this link.
         '''</summary>
         Friend Shared ReadOnly Property LinkData_d() As String

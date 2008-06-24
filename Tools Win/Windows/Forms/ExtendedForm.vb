@@ -51,7 +51,7 @@ Namespace WindowsT.FormsT
         ''' <returns>Curent state of button</returns>
         ''' <remarks>Status of menu is not re-set after changing <see cref="MinimizeBox"/> or <see cref="MaximizeBox"/> property. You have to refresh user-visible status of this property manually!</remarks>
         ''' <exception cref="ArgumentException">Error while accessing system menu status (may be caused by no close item in system menu - e.g. because <see cref="CloseBox"/> is false)</exception>
-        <Category(CategoryAttributeValues.WindowStyle), Description("Gets or sets state of the close button ('X') of current form. Cannot be chaged when CloseBox is False.")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle), Description("Gets or sets state of the close button ('X') of current form. Cannot be chaged when CloseBox is False.")> _
         Public Property CloseBoxEnabled() As SystemMenuState
             Get
                 Return _CloseBoxEnabled
@@ -109,7 +109,7 @@ Namespace WindowsT.FormsT
         ''' <remarks>Setting this property to false causes mennuitem "Close" disappearing and the X button being grayed. User CANNOT use Alt+F4 or other 'non-killing' method to close the window. Property <see cref="CloseBoxEnabled"/> cannot be changed while <see cref="CloseBox"/> is False.
         ''' You'd better use <see cref="CloseBoxEnabled"/>
         ''' Windows Vista: The close (X) button is NOT grayed but does nothing when user click it.</remarks>
-        <DefaultValue(True), Category(CategoryAttributeValues.WindowStyle), Description("Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed (even not grayed on Vista). So, use rather CloseBoxEnabled.")> _
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle), Description("Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed (even not grayed on Vista). So, use rather CloseBoxEnabled.")> _
         Public Property CloseBox() As Boolean
             Get
                 Return _CloseBox
@@ -142,7 +142,7 @@ Namespace WindowsT.FormsT
         ''' <param name="sender">source of the event</param>
         ''' <param name="e">Event params (always <see cref="EventArgs.Empty"/>)</param>
         <Description("Raised after the WindowState property is changed")> _
-        <Category(CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         Public Event WindowStateChanged(ByVal sender As Object, ByVal e As EventArgs)
         ''' <summary>Raises the <see cref="WindowStateChanged"/> event</summary>
         ''' <param name="e">Event arguments (always <see cref="EventArgs.Empty"/>)</param>

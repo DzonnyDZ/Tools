@@ -1,4 +1,6 @@
 Imports System.Windows.Forms
+Imports Tools.ComponentModelT
+
 Namespace WindowsT.FormsT
     '#If Config <= Nightly Then set in tools.vbproj
     'Stage:Nightly
@@ -62,7 +64,7 @@ Namespace WindowsT.FormsT
                 _AutoChange = value
             End Set
         End Property
-        <Localizable(True), DefaultValue(0), Category(UtilitiesT.CategoryAttributeValues.Appearance)> _
+        <Localizable(True), DefaultValue(0), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         Public Property ScrollBars() As ScrollBars
             Get
                 Return txtText.ScrollBars
@@ -71,7 +73,7 @@ Namespace WindowsT.FormsT
                 txtText.ScrollBars = value
             End Set
         End Property
-        <DefaultValue(True), Category(UtilitiesT.CategoryAttributeValues.Appearance), Localizable(True)> _
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), Localizable(True)> _
         Public Property WordWrap() As Boolean
             Get
                 Return txtText.WordWrap

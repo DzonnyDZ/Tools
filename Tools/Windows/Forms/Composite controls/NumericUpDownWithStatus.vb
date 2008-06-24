@@ -1,4 +1,6 @@
 Imports System.Windows.Forms
+Imports Tools.ComponentModelT
+
 Namespace WindowsT.FormsT
     '#If Config <= Nightly Then set in Tools.vbproj
     'Stage:Nightly
@@ -73,7 +75,7 @@ Namespace WindowsT.FormsT
         End Sub
 
 
-        <RefreshProperties(RefreshProperties.All), Category(UtilitiesT.CategoryAttributeValues.Data)> _
+        <RefreshProperties(RefreshProperties.All), KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
     Public Property Maximum() As Decimal
             Get
                 Return nudNumber.Maximum
@@ -83,7 +85,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
 
-        <Category(UtilitiesT.CategoryAttributeValues.Data), RefreshProperties(RefreshProperties.All)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), RefreshProperties(RefreshProperties.All)> _
         Public Property Minimum() As Decimal
             Get
                 Return nudNumber.Minimum
@@ -93,7 +95,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
 
-        <Category(UtilitiesT.CategoryAttributeValues.Data)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         Public Property Increment() As Decimal
             Get
                 Return nudNumber.Increment
@@ -103,7 +105,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
 
-        <Category(UtilitiesT.CategoryAttributeValues.Data), DefaultValue(0)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), DefaultValue(0)> _
         Public Property DecimalPlaces() As Integer
             Get
                 Return nudNumber.DecimalPlaces
@@ -113,7 +115,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
 
-        <Category(UtilitiesT.CategoryAttributeValues.Data), Bindable(True)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), Bindable(True)> _
         Public Property Value() As Decimal
             Get
                 Return nudNumber.Value

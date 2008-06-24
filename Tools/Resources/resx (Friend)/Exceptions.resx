@@ -825,4 +825,10 @@
   <data name="ValueOfType0CannotBeConvertedTo1" xml:space="preserve">
     <value>Value of type {0} cannot be converted to {1}.</value>
   </data>
+  <data name="MustBeOneOf1Or2Values" xml:space="preserve">
+    <value>{0} must be one of {1} or {2} values</value>
+  </data>
+  <data name="ConversionTo0Failed" xml:space="preserve">
+    <value>Conversion to {0} failed</value>
+  </data>
 </root>

@@ -30,8 +30,8 @@ Namespace WindowsT.FormsT
         ''' <para>Note for inheritors: You do not need to override this property (even you cannot) in order to change its design-time default value. You can simply set value of <see cref="KeyPreviewDefaultValue"/> in CTor. You must also set same default value to <see cref="KeyPreview"/> in CTor.</para>
         ''' </remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <Description("Gets or sets a value indicating whether the form will receive key events before the event is passed to the control that has focus.")> _
-        Public Overridable Property KeyPreview() As Boolean 'Localize description
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "KeyPreview_d")> _
+        Public Overridable Property KeyPreview() As Boolean
             Get
                 Return _KeyPreview
             End Get
@@ -46,7 +46,7 @@ Namespace WindowsT.FormsT
         ''' You can change value of this in CTor of derived class in order to change design-time behaviour of your derived control</remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(False)> _
-        <Description("Contains default value of the KeyPreview property.")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"KeyPreviewDefaultValue_d")> _
         Protected Property KeyPreviewDefaultValue() As Boolean
             Get
                 Return _KeyPreviewDefaultValue

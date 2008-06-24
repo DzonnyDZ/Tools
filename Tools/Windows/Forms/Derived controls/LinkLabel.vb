@@ -47,13 +47,13 @@ Namespace WindowsT.FormsT
                 Return MyBase.LinkArea
             End Get
             Set(ByVal value As LinkArea)
-                Throw New NotSupportedException(string.Format ResourcesT.Exceptions.CannotBeSet,"LinkArea"))
+                Throw New NotSupportedException(String.Format(ResourcesT.Exceptions.CannotBeSet, "LinkArea"))
             End Set
         End Property
         ''' <summary>List of all items in label</summary>
         ''' <remarks><see cref="ListWithEvents(Of LinkLabelItem).AllowAddCancelableEventsHandlers"/> is set to False</remarks>
-        <Category(CategoryAttributeValues.Appearance)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"ListOfAllItemsInLabel")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "ListOfAllItemsInLabel")> _
         <Editor(GetType(LinkLabelItemsEditor), GetType(UITypeEditor))> _
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <TypeConverter(GetType(ItemsNameTypeConverter))> _
@@ -308,7 +308,7 @@ Namespace WindowsT.FormsT
             Private _Text As String
             ''' <summary>Gets or sets text shown in place of this item</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after change of value (unless calling base class setter <see cref="Text"/>)</remarks>
-            <LDescription(GetType(WindowsT.FormsT.DerivedControls),"Text_LinkLabelItem_d"), Category(CategoryAttributeValues.Appearance)> _
+            <LDescription(GetType(WindowsT.FormsT.DerivedControls), "Text_LinkLabelItem_d"), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
             <DefaultValue("")> _
             <Editor(GetType(MultilineStringEditor), GetType(UITypeEditor))> _
             Public Overridable Property Text() As String
@@ -480,7 +480,7 @@ Namespace WindowsT.FormsT
             Private _LinkData As Object
             ''' <summary>Gets or sets data associated with the link</summary>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after tha value is changed (unless calling base class setter <see cref="LinkData"/>)</remarks>
-            <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkData_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkData_d")> _
             <System.ComponentModel.DefaultValue(GetType(Object), "null pointer")> _
             <System.ComponentModel.TypeConverter(GetType(ObjectStringConverter))> _
             Public Overridable Property LinkData() As Object
@@ -497,7 +497,7 @@ Namespace WindowsT.FormsT
 #Region "Other props"
             ''' <summary>Stores value for the <see cref="Link.Description"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Description_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls), "Description_d")> _
             <DefaultValue("")> _
             Public Overridable Property Description() As String
                 <DebuggerStepThrough()> Get
@@ -513,7 +513,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Description As String = ""
             ''' <summary>Stores value for the <see cref="Link.Name"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Misc), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Name_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Default), LDescription(GetType(WindowsT.FormsT.DerivedControls), "Name_d")> _
             <DefaultValue(""), DisplayName(NamePropertyName)> _
             Public Overridable Property Name() As String
                 <DebuggerStepThrough()> Get
@@ -529,7 +529,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Name As String = ""
             ''' <summary>Stores value for the <see cref="Link.Tag"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Data), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Tag_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Data), LDescription(GetType(WindowsT.FormsT.DerivedControls), "Tag_d")> _
             <System.ComponentModel.DefaultValue(GetType(Object), "null pointer")> _
             <System.ComponentModel.TypeConverter(GetType(ObjectStringConverter))> _
             Public Overridable Property Tag() As Object
@@ -546,7 +546,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As Object = Nothing
             ''' <summary>Stores value for the <see cref="Link.Visited"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Visited_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls), "Visited_d")> _
             <DefaultValue(False)> _
             Public Overridable Property Visited() As Boolean
                 <DebuggerStepThrough()> Get
@@ -562,7 +562,7 @@ Namespace WindowsT.FormsT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Visited As Boolean = False
             ''' <summary>Stores value for the <see cref="Link.Enabled"/> of <see cref="Link"/> that represents this <see cref="LinkItem"/></summary>
             ''' <remarks>Note for inheritors: Call base class setter or <see cref="OnChanged"/> method in order to raise the <see cref="Changed"/> event</remarks>
-            <Category(CategoryAttributeValues.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls),"Enabled_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), LDescription(GetType(WindowsT.FormsT.DerivedControls), "Enabled_d")> _
             <DefaultValue(True)> _
             Public Overridable Property Enabled() As Boolean
                 <DebuggerStepThrough()> Get
@@ -659,7 +659,7 @@ Namespace WindowsT.FormsT
             ''' <value>Actuall URI or target of the link</value>
             ''' <returns>New URI of target of the link</returns>
             ''' <remarks>Note for inheritors: Call <see cref="OnChanged"/> after value is changed (unless calling base class setter <see cref="LinkURI"/>)</remarks>
-            <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls),"LinkURI_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkURI_d")> _
             <DefaultValue(GetType(Uri), "null pointer")> _
             <TypeConverter(GetType(UriTypeConverter))> _
             Public Overridable Property LinkURI() As Uri
@@ -683,7 +683,7 @@ Namespace WindowsT.FormsT
             ''' <para>Note for inheritors: Call <see cref="OnChanged"/> (unless calling base class setter <see cref="LinkPath"/> or <see cref="LinkURI"/></para>
             ''' <para>Change of this value causes raising <see cref="Changed"/> event with <see cref="IReportsChange.ValueChangedEventArgs(Of Uri).ValueName"/> set to <see cref="LinkURIPropertyName"/></para>
             ''' </remarks>
-            <Category(CategoryAttributeValues.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls),"LinkPath_d")> _
+            <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior), LDescription(GetType(WindowsT.FormsT.DerivedControls), "LinkPath_d")> _
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             <DefaultValue("")> _
             Public Property LinkPath() As String

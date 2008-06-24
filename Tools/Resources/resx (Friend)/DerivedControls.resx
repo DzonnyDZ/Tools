@@ -183,4 +183,10 @@
   <data name="AutoSize_d" xml:space="preserve">
     <value>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</value>
   </data>
+  <data name="KeyPreview_d" xml:space="preserve">
+    <value>Gets or sets a value indicating whether the form will receive key events before the event is passed to the control that has focus.</value>
+  </data>
+  <data name="KeyPreviewDefaultValue_d" xml:space="preserve">
+    <value>Contains default value of the KeyPreview property.</value>
+  </data>
 </root>

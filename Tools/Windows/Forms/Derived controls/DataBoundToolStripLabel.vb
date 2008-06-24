@@ -37,7 +37,7 @@ Namespace WindowsT.FormsT
         ''' <returns>The <see cref="System.Windows.Forms.ControlBindingsCollection"/> for this <see cref="DataBoundToolStripLabel"/>.</returns>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Content)> _
         <ParenthesizePropertyName(True), RefreshProperties(RefreshProperties.All)> _
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <LDescription(GetType(WindowsT.FormsT.DerivedControls), "DataBindings_d")> _
         Public ReadOnly Property DataBindings() As System.Windows.Forms.ControlBindingsCollection Implements System.Windows.Forms.IBindableComponent.DataBindings
             Get
@@ -67,8 +67,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Fired when <see cref="System.Windows.Forms.ComboBox.BindingContextChanged"/> of <see cref="ComboBox"/> occures</summary>
         ''' <param name="sender">Source of the event - rhis isntance of <see cref="DataBoundToolStripComboBox"/></param>
         ''' <param name="e">Event parameters</param>
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Data)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"BindingContextChanged_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "BindingContextChanged_d")> _
         Public Event BindingContextChanged(ByVal sender As Object, ByVal e As EventArgs)
     End Class
 #End If

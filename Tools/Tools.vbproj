@@ -786,6 +786,9 @@
       <DependentUpon>AboutDialog.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.cs.resx">
+      <DependentUpon>EncodingDialog.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBox WF.resx">
       <DependentUpon>MessageBox WF.vb</DependentUpon>
       <SubType>Designer</SubType>

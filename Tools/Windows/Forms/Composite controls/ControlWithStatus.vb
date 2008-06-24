@@ -1,4 +1,6 @@
 Imports Tools.WindowsT.FormsT
+Imports Tools.ComponentModelT
+
 Namespace WindowsT.FormsT
     '#If Config <= Nightly Then set in Tools.vbproj
     'Stage: Nightly
@@ -18,12 +20,12 @@ Namespace WindowsT.FormsT
             RaiseEvent Add(Me, e)
         End Sub
         ''' <summary>Raised after add menu item is clicked</summary>        
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <Description("Raised after Add menu item is clicked")> _
         Public Event Add(ByVal sender As Object, ByVal e As System.EventArgs) Implements IControlWithStatus.Add 'Localize: Description
 
         ''' <summary>state of add menu item</summary>        
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
         <Description("State of the Add menu item")> _
         Public Overridable Property AddMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.AddMenuState
@@ -38,7 +40,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Indicates if <see cref="Status"/> automatically chnages to <see cref="StatusMarker.Statuses.Changed"/> and <see cref="StatusMarker.Statuses.[New]"/> if user takes appropriate action</summary>        
         <DefaultValue(True)> _
         <Description("Gets or sets value indicating if Status automatically changes to Statuses.Changed when tmiMarkAsChanged is clicked")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property AutoChanged() As Boolean Implements IControlWithStatus.AutoChanged 'Localize: Description
             Get
                 Return stmStatus.AutoChanged
@@ -53,14 +55,14 @@ Namespace WindowsT.FormsT
             RaiseEvent Delete(Me, e)
         End Sub
         ''' <summary>Raised after delete menu item is clcked</summary>        
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <Description("Raised after Delete menu item is clicked")> _
         Public Event Delete(ByVal sender As Object, ByVal e As System.EventArgs) Implements IControlWithStatus.Delete 'Localize: Description
 
         ''' <summary>State of delete menu item</summary>        
         <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
         <Description("State of the Delete menu item")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Overridable Property DeleteMenustate() As UtilitiesT.ControlState Implements IControlWithStatus.DeleteMenustate 'Localize: Description
             Get
                 Return stmStatus.DeleteMenuState
@@ -76,14 +78,14 @@ Namespace WindowsT.FormsT
         End Sub
 
         ''' <summary>Raised after mark-as-changed menu item is clicked</summary>        
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <Description("Raised after Mark-as-changed menu item is clicked")> _
         Public Event MarkAsChanged(ByVal sender As Object, ByVal e As System.EventArgs) Implements IControlWithStatus.MarkAsChanged 'Localize: Description
 
-        ''' <summary>State of mar-as-changed menu item</summary>        
+        ''' <summary>State of mark-as-changed menu item</summary>        
         <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
         <Description("State of the Mark-as-changed menu item")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Overridable Property MarkAsChangedMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.MarkAsChangedMenuState 'Localize: Description
             Get
                 Return stmStatus.MarkAsChangedMenuState
@@ -98,14 +100,14 @@ Namespace WindowsT.FormsT
             RaiseEvent Reset(Me, e)
         End Sub
         ''' <summary>Raised after reset menu item is clicked</summary>        
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <Description("Raised after Reset menu item is clicked")> _
         Public Event Reset(ByVal sender As Object, ByVal e As System.EventArgs) Implements IControlWithStatus.Reset 'Localize: Description
 
         ''' <summary>state of reset menu item</summary>        
         <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
         <Description("State of the Reset menu item")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Overridable Property ResetMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.ResetMenuState 'Localize: Description
             Get
                 Try
@@ -123,7 +125,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Current status of control</summary>        
         <DefaultValue(GetType(StatusMarker.Statuses), "Normal")> _
         <Description("Sown status of control")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Data)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <Bindable(True)> _
         Public Overridable Property Status() As StatusMarker.Statuses Implements IControlWithStatus.Status 'Localize: Description
             Get
@@ -139,7 +141,7 @@ Namespace WindowsT.FormsT
             RaiseEvent StatusChanged(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="Status"/> is changed</summary>        
-        <Category(UtilitiesT.CategoryAttributeValues.PropertyChanged)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
         <Description("Raised after the Status property changes")> _
         Public Event StatusChanged(ByVal sender As Object, ByVal e As System.EventArgs) Implements IControlWithStatus.StatusChanged 'Localize: Description
 #Region "Designer generated"

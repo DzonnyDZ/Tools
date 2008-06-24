@@ -1,4 +1,6 @@
 ﻿Imports System.Windows.Forms, System.ComponentModel
+Imports Tools.ComponentModelT
+
 #If Config <= Release Then
 Namespace WindowsT.FormsT.UtilitiesT
     ''' <summary>Implements the manual sorting of items in <see cref="ListView"/> by columns.</summary>
@@ -39,14 +41,14 @@ Namespace WindowsT.FormsT.UtilitiesT
         ''' <exception cref="ArgumentOutOfRangeException">Setting value less than zero</exception>
         ''' <remarks>When setting to value that differs from contemporary value the <see cref="Changed"/> event is raised</remarks>
         <NotifyParentProperty(True)> _
-        <Description("Defines fill width applicable when SortMode is ZeroFill. Items will be filled with zeros (""0"") to specified width and then sorted as strings.")> _
+        <LDescription(GetType(ResourcesT.Components),"ZerofillWidth_d")> _
         <DefaultValue(CByte(0))> _
         Public Property ZerofillWidth() As Byte
             <DebuggerStepThrough()> Get
                 Return _ZerofillWidth
             End Get
             Set(ByVal value As Byte)
-                If value < 0 Then Throw New ArgumentOutOfRangeException("value", "ZerofillWidth must be greater than or equal to zero")
+                If value < 0 Then Throw New ArgumentOutOfRangeException("value", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "ZerofillWidth"))
                 Dim raise As Boolean = value <> _ZerofillWidth
                 _ZerofillWidth = value
                 If raise Then RaiseEvent Changed(Me, EventArgs.Empty)
@@ -56,7 +58,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         ''' <summary>Gets or sets the way of sorting</summary>
         ''' <remarks>When setting to value that differs from contemporary value the <see cref="Changed"/> event is raised</remarks>
         <NotifyParentProperty(True)> _
-        <Description("Gets or sets the way of sorting")> _
+        <LDescription(GetType(ResourcesT.Components), "SortMode_d")> _
         <DefaultValue(GetType(SortModes), "String")> _
         Public Property SortMode() As SortModes
             <DebuggerStepThrough()> Get
@@ -73,7 +75,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         ''' <remarks><para>Columns are index in zero-based way including first column. If column is out of range no exceprion is thrown but no sorting done. You can set column to e.g. -1 to avoid sorting.</para>
         ''' <para>When setting to value that differs from contemporary value the <see cref="Changed"/> event is raised.</para></remarks>
         <NotifyParentProperty(True)> _
-        <Description("Gets or sets sort column index. Set this property to value out of range of columns (e.g. -1) to avoid sorting.")> _
+        <LDescription(GetType(ResourcesT.Components), "Column_d")> _
         <DefaultValue(0I)> Public Property Column() As Integer
             <DebuggerStepThrough()> Get
                 Return _Column
@@ -87,7 +89,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         ''' <summary>Gets or sets if sorting order is reversed</summary>
         ''' <remarks>When setting to value that differs from contemporary value the <see cref="Changed"/> event is raised</remarks>
         <NotifyParentProperty(True)> _
-        <DefaultValue(False), Description("Gets or sets if sorting order is reversed")> _
+        <DefaultValue(False), LDescription(GetType(ResourcesT.Components),"Descending_d")> _
         Public Property Descending() As Boolean
             <DebuggerStepThrough()> Get
                 Return _Descending
@@ -106,7 +108,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         ''' <exception cref="ArgumentOutOfRangeException"><paramref name="ZeroFillWidth"/> is less than zero</exception>
         ''' <remarks>In case some of parameters differs from value of corresponding property the <see cref="Changed"/> event is raised</remarks>
         Public Sub [Set](ByVal Column As Integer, Optional ByVal Descending As Boolean = False, Optional ByVal SortMode As SortModes = SortModes.String, Optional ByVal ZeroFillWidth As Integer = 0)
-            If ZeroFillWidth < 0 Then Throw New ArgumentOutOfRangeException("Zerofillwidth", "ZarofillWidth must be greater than or equal to zero")
+            If ZeroFillWidth < 0 Then Throw New ArgumentOutOfRangeException("Zerofillwidth", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "ZerofillWidth"))
             Dim raise As Boolean = Column <> _Column OrElse Descending <> _Descending OrElse SortMode <> _SortMode OrElse ZeroFillWidth <> ZeroFillWidth
             _Column = Column
             _Descending = Descending
@@ -127,7 +129,7 @@ Namespace WindowsT.FormsT.UtilitiesT
                 liX = x
                 liY = y
             Catch ex As Exception
-                Throw New ArgumentException("Conversion to ListViewItemFailed", ex)
+                Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ConversionTo0Failed, "ListViewItem"), ex)
             End Try
             Return Compare(liX, liY)
         End Function

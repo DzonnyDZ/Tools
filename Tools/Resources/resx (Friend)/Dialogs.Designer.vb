@@ -72,5 +72,95 @@ Namespace WindowsT.FormsT
                 Return ResourceManager.GetString("About0", resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to No encoding selected.
+        '''</summary>
+        Friend Shared ReadOnly Property NoEncodingSelected() As String
+            Get
+                Return ResourceManager.GetString("NoEncodingSelected", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised after user clicks OK and dialogs allows him to select encoding.
+        '''</summary>
+        Friend Shared ReadOnly Property OKClicked_d() As String
+            Get
+                Return ResourceManager.GetString("OKClicked_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Specifies code page of encoding that will be preselected when dialog is shown (if available). Set to negative value in order to preselect no encoding.
+        '''</summary>
+        Friend Shared ReadOnly Property Preselected_d() As String
+            Get
+                Return ResourceManager.GetString("Preselected_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Text to decode using selected encoding and show as preview.
+        '''</summary>
+        Friend Shared ReadOnly Property PreviewBytes_d() As String
+            Get
+                Return ResourceManager.GetString("PreviewBytes_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Text to encode using selected encoding and inform user if all characters can be encoded.
+        '''</summary>
+        Friend Shared ReadOnly Property PreviewString_d() As String
+            Get
+                Return ResourceManager.GetString("PreviewString_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Defines if user can select encoding that can be used only with problems on given PreviewString on PreviewBytes.
+        '''</summary>
+        Friend Shared ReadOnly Property RequireCorrect_d() As String
+            Get
+                Return ResourceManager.GetString("RequireCorrect_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Select encoding please..
+        '''</summary>
+        Friend Shared ReadOnly Property SelectEncodingPlease() As String
+            Get
+                Return ResourceManager.GetString("SelectEncodingPlease", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Determines if help button will be shown.
+        '''</summary>
+        Friend Shared ReadOnly Property ShowHelp_d() As String
+            Get
+                Return ResourceManager.GetString("ShowHelp_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Text displayed in title of window.
+        '''</summary>
+        Friend Shared ReadOnly Property Text_d() As String
+            Get
+                Return ResourceManager.GetString("Text_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Select encoding.
+        '''</summary>
+        Friend Shared ReadOnly Property Text_dv() As String
+            Get
+                Return ResourceManager.GetString("Text_dv", resourceCulture)
+            End Get
+        End Property
     End Class
 End Namespace

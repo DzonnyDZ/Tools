@@ -37,7 +37,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="Statuses"/></exception>
         <DefaultValue(GetType(Statuses), "Normal")> _
         <LDescription(GetType(CompositeControls), "StatusMarkerStatus_d")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Data)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         <Bindable(True)> _
         Public Overridable Property Status() As Statuses Implements IControlWithStatus.Status
             Get
@@ -59,7 +59,7 @@ Namespace WindowsT.FormsT
             End Set
         End Property
         ''' <summary>Raised after <see cref="Status"/> changes</summary>
-        <Category(UtilitiesT.CategoryAttributeValues.PropertyChanged)> _
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
         <LDescription(GetType(CompositeControls), "StatusChanged_d")> _
         Public Event StatusChanged As EventHandler Implements IControlWithStatus.StatusChanged
         ''' <summary>Raises the <see cref="StatusChanged"/> event</summary>
@@ -71,7 +71,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
         <LDescription(GetType(CompositeControls), "DeleteMenuState_d")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property DeleteMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.DeleteMenustate
             Get
                 Return MenuState(tmiDelete)
@@ -84,7 +84,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
         <LDescription(GetType(CompositeControls), "MarkAsChangedMenuState_d")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property MarkAsChangedMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.MarkAsChangedMenuState
             Get
                 Return MenuState(tmiMarkAsChanged)
@@ -97,7 +97,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Enabled")> _
         <LDescription(GetType(CompositeControls), "ResetMenuState_d")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property ResetMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.ResetMenuState
             Get
                 Return MenuState(tmiReset)
@@ -135,7 +135,7 @@ Namespace WindowsT.FormsT
         ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="UtilitiesT.ControlState"/></exception>
         <DefaultValue(GetType(UtilitiesT.ControlState), "Hidden")> _
         <LDescription(GetType(CompositeControls), "AddMenuState_d")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property AddMenuState() As UtilitiesT.ControlState Implements IControlWithStatus.AddMenuState
             Get
                 Return MenuState(tmiAdd)
@@ -151,7 +151,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets value indicating if <see cref="Status"/> automatically changes to <see cref="Statuses.Changed"/> when <see cref="tmiMarkAsChanged"/> is clicked</summary>
         <DefaultValue(True)> _
         <LDescription(GetType(CompositeControls), "AutoChanged_d")> _
-        <Category(UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property AutoChanged() As Boolean Implements IControlWithStatus.AutoChanged
             Get
                 Return _AutoChanged
@@ -175,7 +175,7 @@ Namespace WindowsT.FormsT
             OnMarkAsChanged(e)
         End Sub
         ''' <summary>Raised after <see cref="tmiAdd"/> is clicked</summary>
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(CompositeControls), "Add_d")> _
         Public Event Add As EventHandler Implements IControlWithStatus.Add
         ''' <summary>Raises the <see cref="Add"/> event</summary>
@@ -184,7 +184,7 @@ Namespace WindowsT.FormsT
             RaiseEvent Add(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="tmiMarkAsChanged"/> is clicked</summary>
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(CompositeControls), "MarkAsChanged_d")> _
         Public Event MarkAsChanged As EventHandler Implements IControlWithStatus.MarkAsChanged
         ''' <summary>Raises the <see cref="MarkAsChanged"/> event</summary>
@@ -194,7 +194,7 @@ Namespace WindowsT.FormsT
             RaiseEvent MarkAsChanged(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="tmiReset"/> is clicked</summary>
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(CompositeControls), "Reset_d")> _
         Public Event Reset As EventHandler Implements IControlWithStatus.Reset
         ''' <summary>Raises the <see cref="Reset"/> event</summary>
@@ -203,7 +203,7 @@ Namespace WindowsT.FormsT
             RaiseEvent Reset(Me, e)
         End Sub
         ''' <summary>Raised after <see cref="tmiDelete"/> is clicked</summary>
-        <Category(UtilitiesT.CategoryAttributeValues.Action)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(CompositeControls), "Delete_d")> _
         Public Event Delete As EventHandler Implements IControlWithStatus.Delete
         ''' <summary>Raises the <see cref="Delete"/> event</summary>

@@ -1,3 +1,5 @@
+Imports Tools.ResourcesT
+
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace ComponentModelT
     ''' <summary><see cref="CategoryAttribute"/> which's value is one of known values</summary>
@@ -6,38 +8,77 @@ Namespace ComponentModelT
     <FirstVersion("10/02/2007")> _
     Public Class KnownCategoryAttribute : Inherits CategoryAttribute
         ''' <summary>Represents shared (static) properties of <see cref="CategoryAttribute"/></summary>
+        ''' <remarks>This enumeration represents categories predefined by the .NET framework. <para>Values of <see cref="AnotherCategories"/> and <see cref="KnownCategories"/> are distinct. With exception of <see cref="AnotherCategories.Misc"/> = <see cref="KnownCategories.[Default]"/>.</para></remarks>
+        ''' <seelaso cref="AnotherCategories"/>
         Public Enum KnownCategories As Byte
             ''' <summary><see cref="CategoryAttribute.Action"/></summary>
-            Action
+            Action = 1
             ''' <summary><see cref="CategoryAttribute.Appearance"/></summary>
-            Appearance
+            Appearance = 2
             ''' <summary><see cref="CategoryAttribute.Asynchronous"/></summary>
-            Asynchronous
+            Asynchronous = 3
             ''' <summary><see cref="CategoryAttribute.Behavior"/></summary>
-            Behavior
+            Behavior = 4
             ''' <summary><see cref="CategoryAttribute.Data"/></summary>
-            Data
+            Data = 5
             ''' <summary><see cref="CategoryAttribute.[Default]"/></summary>
-            [Default]
+            [Default] = 0
             ''' <summary><see cref="CategoryAttribute.Design"/></summary>
-            Design
+            Design = 1
             ''' <summary><see cref="CategoryAttribute.DragDrop"/></summary>
-            DragDrop
+            DragDrop = 2
             ''' <summary><see cref="CategoryAttribute.Focus"/></summary>
-            Focus
+            Focus = 3
             ''' <summary><see cref="CategoryAttribute.Format"/></summary>
-            Format
+            Format = 4
             ''' <summary><see cref="CategoryAttribute.Key"/></summary>
-            Key
+            Key = 5
             ''' <summary><see cref="CategoryAttribute.Layout"/></summary>
-            Layout
+            Layout = 6
             ''' <summary><see cref="CategoryAttribute.Mouse"/></summary>
-            Mouse
+            Mouse = 7
             ''' <summary><see cref="CategoryAttribute.WindowStyle"/></summary>
-            WindowStyle
+            WindowStyle = 8
+        End Enum
+        ''' <summary>Defines more categories commonly used by <see cref="CategoryAttribute"/>, but not predefined by the .NET framework as shared properties of the <see cref="CategoryAttribute"/></summary>
+        ''' <seelaso cref="KnownCategories"/>
+        ''' <remarks>Values of <see cref="AnotherCategories"/> and <see cref="KnownCategories"/> are distinct. With exception of <see cref="AnotherCategories.Misc"/> = <see cref="KnownCategories.[Default]"/>.</remarks>
+        Public Enum AnotherCategories As Byte
+            ''' <summary>The Accessibility category</summary>
+            Accessibility = 128
+            ''' <summary>The Configurations category</summary>
+            Configurations = 129
+            ''' <summary>The DDE category</summary>
+            DDE = 130
+            ''' <summary>The Misc category</summary>
+            Misc = 0
+            ''' <summary>The Focus category</summary>
+            Font = 132
+            ''' <summary>The List category</summary>
+            List = 133
+            ''' <summary>The Mouse category</summary>
+            Position = 134
+            ''' <summary>The Scale category</summary>
+            Scale = 135
+            ''' <summary>The Text category</summary>
+            Text = 136
+            ''' <summary>The Colors category</summary>
+            Colors = 137
+            ''' <summary>The Display category</summary>
+            Display = 138
+            ''' <summary>The Folder Browsing category</summary>
+            FolderBrowsing = 139
+            ''' <summary>The Items category</summary>
+            Items = 140
+            ''' <summary>The Private category</summary>
+            [Private] = 141
+            ''' <summary>The Property Changed category</summary>
+            PropertyChanged = 142
         End Enum
         ''' <summary>CTor from value preconfigured in .NET framework as shared (static) property of <see cref="CategoryAttribute"/></summary>
-        ''' <param name="KnownCategory">Known value for <see cref="CategoryAttribute"/></param>
+        ''' <param name="KnownCategory">Known value for <see cref="CategoryAttribute"/>. This parameter does <strong>not</strong> accept <see cref="AnotherCategories"/> values.</param>
+        ''' <remarks>Names of <see cref="KnownCategories"/> categories are localized by .NET framework itself</remarks>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="KnownCategory"/> is not member of <see cref="KnownCategories"/></exception>
         Public Sub New(ByVal KnownCategory As KnownCategories)
             MyBase.New(KnownAttribute(KnownCategory).Category)
         End Sub
@@ -57,6 +98,42 @@ Namespace ComponentModelT
         Public Sub New(ByVal AnyCategory As String)
             MyBase.New(AnyCategory)
         End Sub
+        ''' <summary>CTor form one of <see cref="AnotherCategories"/> values.</summary>
+        ''' <param name="KnownCategory">One of <see cref="AnotherCategories"/> values which determines string name of category. <see cref="KnownCategories"/> values are also valid.</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="KnownCategories"/> nor <see cref="AnotherCategories"/> values</exception>
+        ''' <remarks><see cref="KnownCategories"/> are localized by .NET framework itself, <see cref="AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+        Public Sub New(ByVal KnownCategory As AnotherCategories)
+            MyBase.New(CategoryText(KnownCategory))
+        End Sub
+        ''' <summary>Gets localized text - name of given known category</summary>
+        ''' <param name="KnownCategory">One of <see cref="KnownCategories"/> or <see cref="AnotherCategories"/> values</param>
+        ''' <returns>String representing localized name of given category</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="KnownCategories"/> nor <see cref="AnotherCategories"/> values</exception>
+        ''' <remarks><see cref="KnownCategories"/> are localized by .NET framework itself, <see cref="AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+        Public Shared Function CategoryText(ByVal KnownCategory As AnotherCategories) As String
+            If KnownCategory <> AnotherCategories.Misc AndAlso [Enum].IsDefined(GetType(KnownCategories), CByte(KnownCategory)) Then Return CategoryText(CType(KnownCategory, KnownCategories))
+            Select Case KnownCategory
+                Case AnotherCategories.Accessibility : Return Components.Accessibility_cat
+                Case AnotherCategories.Colors : Return Components.Colors_cat
+                Case AnotherCategories.DDE : Return Components.DDE_cat
+                Case AnotherCategories.Display : Return Components.Display_cat
+                Case AnotherCategories.FolderBrowsing : Return Components.FolderBrowsing_cat
+                Case AnotherCategories.Font : Return Components.Font_cat
+                Case AnotherCategories.Items : Return Components.Items_cat
+                Case AnotherCategories.List : Return Components.List_cat
+                Case AnotherCategories.Misc : Return ResourcesT.Components.Misc_cat
+            End Select
+            Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.MustBeOneOf1Or2Values, "KnownCategory", "KnownCategories", "AnotherCategories"))
+        End Function
+        ''' <summary>Gets localized text - name of given known category</summary>
+        ''' <param name="KnownCategory">One of <see cref="KnownCategories"/> or <see cref="AnotherCategories"/> values</param>
+        ''' <returns>String representing localized name of given category</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="KnownCategories"/> nor <see cref="AnotherCategories"/> values</exception>
+        ''' <remarks><see cref="KnownCategories"/> are localized by .NET framework itself, <see cref="AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+        Public Shared Function CategoryText(ByVal KnownCategory As KnownCategories) As String
+            If KnownCategory <> KnownCategories.Default AndAlso [Enum].IsDefined(GetType(AnotherCategories), CByte(KnownCategory)) Then Return CategoryText(CType(KnownCategory, AnotherCategories))
+            Return KnownAttribute(KnownCategory).Category
+        End Function
 
         ''' <summary></summary>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="KnownCategory"/> is not member of <see cref="KnownCategories"/></exception>

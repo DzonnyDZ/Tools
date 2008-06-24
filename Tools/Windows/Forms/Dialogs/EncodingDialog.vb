@@ -28,85 +28,135 @@ Namespace WindowsT.FormsT
         Private Sub InitializeComponent()
             Me.components = New System.ComponentModel.Container
             Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmEncodingDialog))
+            Me.splMain = New System.Windows.Forms.SplitContainer
             Me.ensMain = New Tools.WindowsT.FormsT.EncodingSelector
+            Me.fraPreview = New System.Windows.Forms.GroupBox
+            Me.txtPreview = New System.Windows.Forms.TextBox
             Me.tlpButtons = New System.Windows.Forms.TableLayoutPanel
             Me.cmdCancel = New System.Windows.Forms.Button
             Me.cmdOK = New System.Windows.Forms.Button
             Me.chkOK = New System.Windows.Forms.CheckBox
-            Me.fraPreview = New System.Windows.Forms.GroupBox
-            Me.txtPreview = New System.Windows.Forms.TextBox
-            Me.splMain = New System.Windows.Forms.SplitContainer
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
             Me.bgwTestEncoding = New System.ComponentModel.BackgroundWorker
-            Me.tlpButtons.SuspendLayout()
-            Me.fraPreview.SuspendLayout()
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
+            Me.fraPreview.SuspendLayout()
+            Me.tlpButtons.SuspendLayout()
             Me.SuspendLayout()
-            '
-            'ensMain
-            '
-            resources.ApplyResources(Me.ensMain, "ensMain")
-            Me.ensMain.Name = "ensMain"
-            Me.ensMain.Style = Tools.WindowsT.FormsT.EncodingSelector.EncodingSelectorStyle.ListView
-            '
-            'tlpButtons
-            '
-            resources.ApplyResources(Me.tlpButtons, "tlpButtons")
-            Me.tlpButtons.Controls.Add(Me.cmdCancel, 2, 0)
-            Me.tlpButtons.Controls.Add(Me.cmdOK, 1, 0)
-            Me.tlpButtons.Controls.Add(Me.chkOK, 3, 0)
-            Me.tlpButtons.Name = "tlpButtons"
-            '
-            'cmdCancel
-            '
-            resources.ApplyResources(Me.cmdCancel, "cmdCancel")
-            Me.cmdCancel.Name = "cmdCancel"
-            Me.cmdCancel.UseVisualStyleBackColor = True
-            '
-            'cmdOK
-            '
-            resources.ApplyResources(Me.cmdOK, "cmdOK")
-            Me.cmdOK.Name = "cmdOK"
-            Me.cmdOK.UseVisualStyleBackColor = True
-            '
-            'chkOK
-            '
-            resources.ApplyResources(Me.chkOK, "chkOK")
-            Me.chkOK.Name = "chkOK"
-            Me.chkOK.TabStop = False
-            Me.totToolTip.SetToolTip(Me.chkOK, resources.GetString("chkOK.ToolTip"))
-            Me.chkOK.UseVisualStyleBackColor = True
-            '
-            'fraPreview
-            '
-            Me.fraPreview.Controls.Add(Me.txtPreview)
-            resources.ApplyResources(Me.fraPreview, "fraPreview")
-            Me.fraPreview.Name = "fraPreview"
-            Me.fraPreview.TabStop = False
-            '
-            'txtPreview
-            '
-            Me.txtPreview.BackColor = System.Drawing.SystemColors.Control
-            resources.ApplyResources(Me.txtPreview, "txtPreview")
-            Me.txtPreview.Name = "txtPreview"
-            Me.txtPreview.ReadOnly = True
-            Me.txtPreview.TabStop = False
             '
             'splMain
             '
+            Me.splMain.AccessibleDescription = Nothing
+            Me.splMain.AccessibleName = Nothing
             resources.ApplyResources(Me.splMain, "splMain")
+            Me.splMain.BackgroundImage = Nothing
             Me.splMain.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
+            Me.splMain.Font = Nothing
             Me.splMain.Name = "splMain"
             '
             'splMain.Panel1
             '
+            Me.splMain.Panel1.AccessibleDescription = Nothing
+            Me.splMain.Panel1.AccessibleName = Nothing
+            resources.ApplyResources(Me.splMain.Panel1, "splMain.Panel1")
+            Me.splMain.Panel1.BackgroundImage = Nothing
             Me.splMain.Panel1.Controls.Add(Me.ensMain)
+            Me.splMain.Panel1.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splMain.Panel1, resources.GetString("splMain.Panel1.ToolTip"))
             '
             'splMain.Panel2
             '
+            Me.splMain.Panel2.AccessibleDescription = Nothing
+            Me.splMain.Panel2.AccessibleName = Nothing
+            resources.ApplyResources(Me.splMain.Panel2, "splMain.Panel2")
+            Me.splMain.Panel2.BackgroundImage = Nothing
             Me.splMain.Panel2.Controls.Add(Me.fraPreview)
+            Me.splMain.Panel2.Font = Nothing
+            Me.totToolTip.SetToolTip(Me.splMain.Panel2, resources.GetString("splMain.Panel2.ToolTip"))
+            Me.totToolTip.SetToolTip(Me.splMain, resources.GetString("splMain.ToolTip"))
+            '
+            'ensMain
+            '
+            Me.ensMain.AccessibleDescription = Nothing
+            Me.ensMain.AccessibleName = Nothing
+            resources.ApplyResources(Me.ensMain, "ensMain")
+            Me.ensMain.BackgroundImage = Nothing
+            Me.ensMain.Font = Nothing
+            Me.ensMain.Name = "ensMain"
+            Me.ensMain.Style = Tools.WindowsT.FormsT.EncodingSelector.EncodingSelectorStyle.ListView
+            Me.totToolTip.SetToolTip(Me.ensMain, resources.GetString("ensMain.ToolTip"))
+            '
+            'fraPreview
+            '
+            Me.fraPreview.AccessibleDescription = Nothing
+            Me.fraPreview.AccessibleName = Nothing
+            resources.ApplyResources(Me.fraPreview, "fraPreview")
+            Me.fraPreview.BackgroundImage = Nothing
+            Me.fraPreview.Controls.Add(Me.txtPreview)
+            Me.fraPreview.Font = Nothing
+            Me.fraPreview.Name = "fraPreview"
+            Me.fraPreview.TabStop = False
+            Me.totToolTip.SetToolTip(Me.fraPreview, resources.GetString("fraPreview.ToolTip"))
+            '
+            'txtPreview
+            '
+            Me.txtPreview.AccessibleDescription = Nothing
+            Me.txtPreview.AccessibleName = Nothing
+            resources.ApplyResources(Me.txtPreview, "txtPreview")
+            Me.txtPreview.BackColor = System.Drawing.SystemColors.Control
+            Me.txtPreview.BackgroundImage = Nothing
+            Me.txtPreview.Name = "txtPreview"
+            Me.txtPreview.ReadOnly = True
+            Me.txtPreview.TabStop = False
+            Me.totToolTip.SetToolTip(Me.txtPreview, resources.GetString("txtPreview.ToolTip"))
+            '
+            'tlpButtons
+            '
+            Me.tlpButtons.AccessibleDescription = Nothing
+            Me.tlpButtons.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpButtons, "tlpButtons")
+            Me.tlpButtons.BackgroundImage = Nothing
+            Me.tlpButtons.Controls.Add(Me.cmdCancel, 2, 0)
+            Me.tlpButtons.Controls.Add(Me.cmdOK, 1, 0)
+            Me.tlpButtons.Controls.Add(Me.chkOK, 3, 0)
+            Me.tlpButtons.Font = Nothing
+            Me.tlpButtons.Name = "tlpButtons"
+            Me.totToolTip.SetToolTip(Me.tlpButtons, resources.GetString("tlpButtons.ToolTip"))
+            '
+            'cmdCancel
+            '
+            Me.cmdCancel.AccessibleDescription = Nothing
+            Me.cmdCancel.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdCancel, "cmdCancel")
+            Me.cmdCancel.BackgroundImage = Nothing
+            Me.cmdCancel.Font = Nothing
+            Me.cmdCancel.Name = "cmdCancel"
+            Me.totToolTip.SetToolTip(Me.cmdCancel, resources.GetString("cmdCancel.ToolTip"))
+            Me.cmdCancel.UseVisualStyleBackColor = True
+            '
+            'cmdOK
+            '
+            Me.cmdOK.AccessibleDescription = Nothing
+            Me.cmdOK.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdOK, "cmdOK")
+            Me.cmdOK.BackgroundImage = Nothing
+            Me.cmdOK.Font = Nothing
+            Me.cmdOK.Name = "cmdOK"
+            Me.totToolTip.SetToolTip(Me.cmdOK, resources.GetString("cmdOK.ToolTip"))
+            Me.cmdOK.UseVisualStyleBackColor = True
+            '
+            'chkOK
+            '
+            Me.chkOK.AccessibleDescription = Nothing
+            Me.chkOK.AccessibleName = Nothing
+            resources.ApplyResources(Me.chkOK, "chkOK")
+            Me.chkOK.BackgroundImage = Nothing
+            Me.chkOK.Font = Nothing
+            Me.chkOK.Name = "chkOK"
+            Me.chkOK.TabStop = False
+            Me.totToolTip.SetToolTip(Me.chkOK, resources.GetString("chkOK.ToolTip"))
+            Me.chkOK.UseVisualStyleBackColor = True
             '
             'bgwTestEncoding
             '
@@ -114,21 +164,27 @@ Namespace WindowsT.FormsT
             '
             'frmEncodingDialog
             '
+            Me.AccessibleDescription = Nothing
+            Me.AccessibleName = Nothing
             resources.ApplyResources(Me, "$this")
+            Me.BackgroundImage = Nothing
             Me.Controls.Add(Me.splMain)
             Me.Controls.Add(Me.tlpButtons)
+            Me.Font = Nothing
+            Me.Icon = Nothing
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "frmEncodingDialog"
             Me.ShowIcon = False
             Me.ShowInTaskbar = False
-            Me.tlpButtons.ResumeLayout(False)
-            Me.tlpButtons.PerformLayout()
-            Me.fraPreview.ResumeLayout(False)
-            Me.fraPreview.PerformLayout()
+            Me.totToolTip.SetToolTip(Me, resources.GetString("$this.ToolTip"))
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel2.ResumeLayout(False)
             Me.splMain.ResumeLayout(False)
+            Me.fraPreview.ResumeLayout(False)
+            Me.fraPreview.PerformLayout()
+            Me.tlpButtons.ResumeLayout(False)
+            Me.tlpButtons.PerformLayout()
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -156,7 +212,7 @@ Namespace WindowsT.FormsT
             If ServesFor.SelectedEncoding IsNot Nothing AndAlso ValidateEncoding() Then
                 Me.DialogResult = System.Windows.Forms.DialogResult.OK
             ElseIf ServesFor.SelectedEncoding Is Nothing Then
-                MsgBox("Select encoding please.", , "No encoding selected") 'TODO:Localize
+                MsgBox(WindowsT.FormsT.Dialogs.SelectEncodingPlease, , WindowsT.FormsT.Dialogs.NoEncodingSelected)
             End If
         End Sub
         ''' <summary>Performs action before user is allowed to close the dialog</summary>
@@ -295,8 +351,8 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="EncodingInfo.CodePage"/> of preselected encoding or negativ value if no encoding will be preselected</returns>
         ''' <remarks>After dialog has ran this property stays unchanged</remarks>
         <DefaultValue(-1I)> _
-        <Category(CategoryAttributeValues.Behavior)> _
-        <Description("Specifies code page of encoding that will be preselected when dialog is shown (if available). Set to negative value in order to preselect no encoding")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "Preselected_d")> _
         Public Overridable Property Preselected() As Integer
             Get
                 Return _Preselected
@@ -311,8 +367,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets or sets text to decode by selected encoding and show preview to the user</summary>
         ''' <remarks>If set preview will be shown</remarks>
         <System.ComponentModel.DefaultValue(GetType(Byte()), "null pointer")> _
-        <Category(CategoryAttributeValues.Behavior)> _
-        <Description("Text to decode using selected encoding and show as preview")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "PreviewBytes_d")> _
         Public Overridable Property PreviewBytes() As Byte()
             Get
                 Return _PreviewBytes
@@ -325,8 +381,8 @@ Namespace WindowsT.FormsT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _PreviewString As String
         ''' <summary>Gets or sets text to encode by selected encoding and inform user if all characters can be encoded using selected encoding</summary>
         <System.ComponentModel.DefaultValue("")> _
-        <Category(CategoryAttributeValues.Behavior)> _
-        <Description("Text to encode using selected encoding and inform user if all characters can be encoded")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "PreviewString_d")> _
         Public Overridable Property PreviewString() As String
             Get
                 Return _PreviewString
@@ -340,8 +396,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Defines if user can select encoding that cannot be used on specified <see cref="PreviewBytes"/> or <see cref="PreviewString"/> without problems</summary>
         ''' <remarks>Applicable only if at least one of <see cref="PreviewBytes"/> or <see cref="PreviewString"/> properties is set</remarks>
         <DefaultValue(True)> _
-        <Category(CategoryAttributeValues.Behavior)> _
-        <Description("Defines if user can select encoding that can be used only with problems on given PreviewString on PreviewBytes")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "RequireCorrect_d")> _
         Public Overridable Property RequireCorrect() As Boolean
             Get
                 Return _RequireCorrect
@@ -353,11 +409,10 @@ Namespace WindowsT.FormsT
         ''' <summary>Contains value of the <see cref="Text"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Text As String
         ''' <summary>Gets or sets text displayed in title of window of dialog</summary>
-        <DefaultValue("Select encoding")> _
-        <Category(CategoryAttributeValues.Appearance)> _
-        <Description("Text displayed in title of window")> _
+        <LDefaultValue(GetType(Dialogs), "Text_dv")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "Text_d")> _
         Public Overridable Property Text() As String
-            'TODO: Localizable default value
             Get
                 Return _Text
             End Get
@@ -370,10 +425,9 @@ Namespace WindowsT.FormsT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowHelp As String
         ''' <summary>Determines if help button will be shown</summary>
         <DefaultValue(False)> _
-        <Category(CategoryAttributeValues.Appearance)> _
-        <Description("Determines if help button will be shown")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "ShowHelp_d")> _
         Public Overridable Property ShowHelp() As Boolean
-            'TODO: Localizable default value
             Get
                 Return _ShowHelp
             End Get
@@ -386,6 +440,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised after user clicks OK and dialog allows him co select encoding</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Arguments of event</param>
+        <LDescription(GetType(WindowsT.FormsT.Dialogs),"OKClicked_d")> _
         Public Event OKClicked(ByVal sender As EncodingDialog, ByVal e As EncodingCancelEventArgs)
         ''' <summary>Raises the <see cref="OKClicked"/> event</summary>
         ''' <param name="e">Event arguments</param>

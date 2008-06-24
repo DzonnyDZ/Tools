@@ -267,4 +267,103 @@
   <data name="Play" xml:space="preserve">
     <value>Play</value>
   </data>
+  <data name="Accessibility_cat" xml:space="preserve">
+    <value>Accessibility</value>
+  </data>
+  <data name="Action_cat" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="Appearance_cat" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="Asynchronous_cat" xml:space="preserve">
+    <value>Asynchronous</value>
+  </data>
+  <data name="Behavior_cat" xml:space="preserve">
+    <value>Behavior</value>
+  </data>
+  <data name="Config_cat" xml:space="preserve">
+    <value>Config</value>
+  </data>
+  <data name="Data_cat" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DDE_cat" xml:space="preserve">
+    <value>DDE</value>
+  </data>
+  <data name="Default_cat" xml:space="preserve">
+    <value>Default</value>
+  </data>
+  <data name="Design_cat" xml:space="preserve">
+    <value>Design</value>
+  </data>
+  <data name="DragDrop_cat" xml:space="preserve">
+    <value>DragDrop</value>
+  </data>
+  <data name="Focus_cat" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="Font_cat" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="Format_cat" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="Key_cat" xml:space="preserve">
+    <value>Key</value>
+  </data>
+  <data name="Layout_cat" xml:space="preserve">
+    <value>Layout</value>
+  </data>
+  <data name="List_cat" xml:space="preserve">
+    <value>List</value>
+  </data>
+  <data name="Mouse_cat" xml:space="preserve">
+    <value>Mouse</value>
+  </data>
+  <data name="Position_cat" xml:space="preserve">
+    <value>Position</value>
+  </data>
+  <data name="Scale_cat" xml:space="preserve">
+    <value>Scale</value>
+  </data>
+  <data name="Text_cat" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="WindowStyle_cat" xml:space="preserve">
+    <value>Window Style</value>
+  </data>
+  <data name="Colors_cat" xml:space="preserve">
+    <value>Colors</value>
+  </data>
+  <data name="Display_cat" xml:space="preserve">
+    <value>Display</value>
+  </data>
+  <data name="FolderBrowsing_cat" xml:space="preserve">
+    <value>Folder Browsing</value>
+  </data>
+  <data name="Items_cat" xml:space="preserve">
+    <value>Items</value>
+  </data>
+  <data name="Private_cat" xml:space="preserve">
+    <value>Private</value>
+  </data>
+  <data name="PropertyChanged_cat" xml:space="preserve">
+    <value>Property Changed</value>
+  </data>
+  <data name="Misc_cat" xml:space="preserve">
+    <value>Misc</value>
+  </data>
+  <data name="ZerofillWidth_d" xml:space="preserve">
+    <value>Defines fill width applicable when SortMode is ZeroFill. Items will be filled with zeros ("0") to specified width and then sorted as strings.</value>
+  </data>
+  <data name="SortMode_d" xml:space="preserve">
+    <value>Gets or sets the way of sorting</value>
+  </data>
+  <data name="Column_d" xml:space="preserve">
+    <value>Gets or sets sort column index. Set this property to value out of range of columns (e.g. -1) to avoid sorting.</value>
+  </data>
+  <data name="Descending_d" xml:space="preserve">
+    <value>Gets or sets if sorting order is reversed</value>
+  </data>
 </root>

@@ -422,8 +422,8 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised after property that controls which members are displayed in <see cref="ListView"/> was changed.</summary>
         ''' <remarks>See <seealso cref="OnShowChanged"/> for list of properties that causes this event to be raised.</remarks>
         <LDescription(GetType(CompositeControls), "ShowChanged_d")> _
-        <Category(WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.PropertyChanged)> _
-        Public Event ShowChanged As ControlEventHandler(Of ObjectBrowser, EventArgs) 'Localize: Description
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
+        Public Event ShowChanged As ControlEventHandler(Of ObjectBrowser, EventArgs)
         ''' <summary>Called recursivelly by <see cref="OnShowChanged"/> and itself in order to actualize content of each expanded node.</summary>
         ''' <param name="Node">Node to actualize content of</param>
         ''' <remarks>Note for inheritors: After actualizing content of this node, if there are any ünchanged nodes (that is your actualization logic is not delete all nodes and create them again) you should call this method on all the expanded nodes and replace content of all colapsed nodes by only tag-less node.</remarks>
