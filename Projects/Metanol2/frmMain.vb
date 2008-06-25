@@ -4,12 +4,16 @@ Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT
-
 ''' <summary>Main form</summary>
 Public Class frmMain
     ''' <summary>Imake gey of ... item</summary>
     Private Const UpKey As String = ".\.."
+    ''' <summary>Number of columns in <see cref="flpCommon"/></summary>
     Private Const CommonColumns% = 2
+    ''' <summary>Selected IPTCs</summary>
+    Private WithEvents SelectedIPTCs As New ListWithEvents(Of IPTCInternal)
+    ''' <summary>Metadatas that was changed</summary>
+    Private WithEvents ChangedIPTCs As New ListWithEvents(Of IPTCInternal)
     ''' <summary>CTor</summary>
     Friend Sub New()
         InitializeComponent()
@@ -376,25 +380,25 @@ Public Class frmMain
         End If
         ShowInfo()
     End Sub
-    ''' <summary>Selected IPTCs</summary>
-    Private SelectedIPTCs As New List(Of IPTCInternal)
-    ''' <summary>Metadatas that was changed</summary>
-    Private ChangedIPTCs As New List(Of IPTCInternal)
     ''' <summary>Shows info about selected images</summary>
     Private Sub ShowInfo()
-        For Each item In SelectedIPTCs
-            RemoveHandler item.ValueChanged, AddressOf IPTC_ValueChanged
-        Next item
+        'For Each item In SelectedIPTCs
+        '    RemoveHandler item.ValueChanged, AddressOf IPTC_ValueChanged
+        'Next item
         SelectedIPTCs.Clear()
         splMain.Panel2.Enabled = lvwImages.SelectedItems.Count > 0
         If lvwImages.SelectedItems.Count > 0 Then
             For Each item As ListViewItem In lvwImages.SelectedItems
                 If TypeOf item.Tag Is String Then
-                    'TODO:Handle exception
-                    item.Tag = New IPTCInternal(item.Tag)
+                    Try
+                        item.Tag = New IPTCInternal(item.Tag)
+                    Catch ex As Exception
+                        MBox.MsgBox(String.Format(My.Resources.ErrorWhileLoading0, item.Tag) & vbCrLf & ex.Message, MsgBoxStyle.Critical, My.Resources.Error_)
+                        item.Selected = False 'This causes this sub to be recalled
+                        Exit Sub
+                    End Try
                 End If
-                SelectedIPTCs.Add(item.Tag)
-                AddHandler DirectCast(item.Tag, IPTCInternal).ValueChanged, AddressOf IPTC_ValueChanged
+                SelectedIPTCs.Add(DirectCast(item.Tag, IPTCInternal))
             Next
             ShowValues(SelectedIPTCs)
             prgIPTC.SelectedObjects = SelectedIPTCs.ToArray
@@ -421,7 +425,7 @@ Public Class frmMain
     ''' <summary>Shows common values</summary>
     ''' <param name="IPTCs">IPTCs to load values from</param>
     ''' <param name="Filter">Filter properties (load only those which ors with <paramref name="Filter"/></param>
-    Private Sub ShowValues(ByVal IPTCs As List(Of IPTCInternal), Optional ByVal Filter As CommonProperties = CommonProperties.All)
+    Private Sub ShowValues(ByVal IPTCs As ListWithEvents(Of IPTCInternal), Optional ByVal Filter As CommonProperties = CommonProperties.All)
         Dim Copyright = New With {.Value = CStr(Nothing), .Same = True}
         Dim Credit = New With {.Value = CStr(Nothing), .Same = True}
         Dim City = New With {.Value = CStr(Nothing), .Same = True}
@@ -502,8 +506,11 @@ Public Class frmMain
             _Changed = value
         End Set
     End Property
+    ''' <summary>Handles <see cref="IPTCInternal.ValueChanged"/></summary>
     Private Sub IPTC_ValueChanged(ByVal sender As IPTCInternal, ByVal e As EventArgs)
-        If Not ChangedIPTCs.Contains(sender) Then ChangedIPTCs.Add(sender)
+        If Not ChangedIPTCs.Contains(sender) Then
+            ChangedIPTCs.Add(sender)
+        End If
         Changed = True
         With lvwImages.Items(sender.ImagePath)
             .Text = System.IO.Path.GetFileName(sender.ImagePath) & "*"
@@ -579,111 +586,6 @@ Public Class frmMain
         Handles sptImage.MouseUp, sptKeywords.MouseUp, sptTitle.MouseUp
         If e.Button = Windows.Forms.MouseButtons.Left Then sender.Capture = False
     End Sub
-
-    ''' <summary>Extends <see cref="IPTC"/> with some extra stuff</summary>
-    <DebuggerDisplay("{ImagePath}")> _
-    Private Class IPTCInternal
-        Inherits IPTC
-        ''' <summary>CTor</summary>
-        ''' <param name="ImagePath">Path of JPEG file</param>
-        Public Sub New(ByVal ImagePath As String)
-            MyBase.New(New JPEG.JPEGReader(ImagePath, False))
-            _ImagePath = ImagePath
-            _Changed = False
-        End Sub
-        ''' <summary>Contains value of the <see cref="ImagePath"/> property</summary>
-        Private _ImagePath As String
-        ''' <summary>Path of image this instance holds information for</summary>
-        Public ReadOnly Property ImagePath() As String
-            Get
-                Return _ImagePath
-            End Get
-        End Property
-        ''' <summary>String representation</summary>
-        ''' <returns><see cref="ImagePath"/></returns>
-        Public Overrides Function ToString() As String
-            Return _ImagePath
-        End Function
-        ''' <summary>Raises the <see cref="ValueChanged"/> event</summary>
-        ''' <param name="Tag">Recod and dataset number</param>
-        ''' <remarks>
-        ''' <para>Called by <see cref="Tag"/>'s setter.</para>
-        ''' <para>Note for inheritors: Call base class method in order to automatically compute size of embdeded file and invalidate cache for <see cref="BW460_Value"/></para>
-        ''' </remarks>
-        Protected Overrides Sub OnValueChanged(ByVal Tag As DrawingT.MetadataT.IPTC.DataSetIdentification)
-            MyBase.OnValueChanged(Tag)
-            _Changed = True
-            RaiseEvent ValueChanged(Me, EventArgs.Empty)
-        End Sub
-        ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
-        Private _Changed As Boolean
-        ''' <summary>Gets value indicating if this instance is dirty</summary>
-        ''' <returns>True if instance was changed since save/load</returns>
-        Public ReadOnly Property Changed() As Boolean
-            Get
-                Return _Changed
-            End Get
-        End Property
-        ''' <summary>Raised when value of any tag changes</summary>
-        Public Event ValueChanged As EventHandler(Of IPTCInternal, EventArgs)
-        ''' <summary>Gets or sets value of common property identified by value of <see cref="CommonProperties"/></summary>
-        ''' <param name="Property">Property tpo get/set</param>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Property"/> is none of predefined <see cref="CommonProperties"/> values or it is <see cref="CommonProperties.None"/> or <see cref="CommonProperties.All"/>.</exception>
-        ''' <exception cref="NotSupportedException"><paramref name="Property"/> is <see cref="CommonProperties.Keywords"/></exception>
-        Friend Property Common(ByVal [Property] As CommonProperties) As String
-            Get
-                Select Case [Property]
-                    Case CommonProperties.Caption : Return CaptionAbstract
-                    Case CommonProperties.City : Return City
-                    Case CommonProperties.Copyright : Return CopyrightNotice
-                    Case CommonProperties.Country : Return CountryPrimaryLocationName
-                    Case CommonProperties.CountryCode : Return CountryPrimaryLocationCode
-                    Case CommonProperties.Credit : Return Credit
-                    Case CommonProperties.EditStatus : Return EditStatus
-                    Case CommonProperties.Keywords : Throw New NotSupportedException(My.Resources.KeywordsAreNotSupportedByCommponProperty_internalError)
-                    Case CommonProperties.ObjectName : Return ObjectName
-                    Case CommonProperties.Province : Return ProvinceState
-                    Case CommonProperties.Sublocation : Return SubLocation
-                    Case CommonProperties.ObjectName : Return ObjectName
-                    Case Else : Throw New InvalidEnumArgumentException("Property", [Property], [Property].GetType)
-                End Select
-            End Get
-            Set(ByVal value As String)
-                Select Case [Property]
-                    Case CommonProperties.Caption : If value <> CaptionAbstract Then CaptionAbstract = value
-                    Case CommonProperties.City : If value <> City Then City = value
-                    Case CommonProperties.Copyright : If value <> CopyrightNotice Then CopyrightNotice = value
-                    Case CommonProperties.Country : If value <> CountryPrimaryLocationName Then CountryPrimaryLocationName = value
-                    Case CommonProperties.CountryCode : If value <> CountryPrimaryLocationCode Then CountryPrimaryLocationCode = value
-                    Case CommonProperties.Credit : If value <> Credit Then Credit = value
-                    Case CommonProperties.EditStatus : If value <> EditStatus Then EditStatus = value
-                    Case CommonProperties.Keywords : Throw New NotSupportedException(My.Resources.KeywordsAreNotSupportedByCommponProperty_internalError)
-                    Case CommonProperties.ObjectName : If value <> ObjectName Then ObjectName = value
-                    Case CommonProperties.Province : If value <> ProvinceState Then ProvinceState = value
-                    Case CommonProperties.Sublocation : If value <> SubLocation Then SubLocation = value
-                    Case CommonProperties.Urgency : If value <> Urgency Then Urgency = value
-                    Case Else : Throw New InvalidEnumArgumentException("Property", [Property], [Property].GetType)
-                End Select
-            End Set
-        End Property
-        ''' <summary>Saves current IPTC stream to file <see cref="ImagePath"/></summary>
-        ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <see cref="ImagePath"/> is invalid, such as being on an unmapped drive.</exception>
-        ''' <exception cref="System.UnauthorizedAccessException">The access requested (readonly) is not permitted by the operating system for the specified path.</exception>
-        ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
-        ''' <exception cref="System.IO.FileNotFoundException">The file cannot be found.</exception>
-        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
-        ''' <exception cref="IO.InvalidDataException">
-        ''' Invalid JPEG marker found (code doesn't start with FFh, length set to 0 or 2) -or-
-        ''' JPEG stream doesn't start with corect SOI marker -or-
-        ''' JPEG stream doesn't end with corect EOI marker
-        ''' </exception>
-        ''' <exception cref="InvalidOperationException">No JPEG marker found</exception>
-        Friend Sub Save()
-            Using jw As New JPEG.JPEGReader(Me.ImagePath, True)
-                jw.IPTCEmbed(Me.GetBytes)
-            End Using
-        End Sub
-    End Class
 
     Private Sub Control_Validating(ByVal sender As Control, ByVal e As System.ComponentModel.CancelEventArgs) _
         Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, _
@@ -812,10 +714,19 @@ Public Class frmMain
     Private Function DoSave(Optional ByVal bgw As BackgroundWorker = Nothing, Optional ByVal e As DoWorkEventArgs = Nothing) As Boolean
         Try
             Dim i As Integer = 0
-            For Each item In ChangedIPTCs
+            For Each item In ChangedIPTCs.ToArray 'Walking on copy!
                 bgw.ReportProgress(-1, item.ImagePath)
-                item.save()
-                'TODO: Catch error and show SYSNC messagebox
+                Try
+Retry:              item.Save()
+                Catch ex As Exception
+                    Select Case MBox.ModalSyncTemplate(Me, _
+                            New MBox.FakeBox(MButton.Buttons.Cancel Or MButton.Buttons.Retry Or MButton.Buttons.Ignore), _
+                            String.Format(My.Resources.ErrorWhileSaving0, item.ImagePath) & vbCrLf & ex.Message, My.Resources.Error_)
+                        Case Windows.Forms.DialogResult.Cancel : Return False
+                        Case Windows.Forms.DialogResult.Retry : GoTo Retry
+                            'Case Else do nothing
+                    End Select
+                End Try
                 i += 1
                 bgw.ReportProgress(i / ChangedIPTCs.Count * 100)
             Next
@@ -823,4 +734,43 @@ Public Class frmMain
             If e IsNot Nothing Then e.Result = DoSave
         End Try
     End Function
+
+    Private Sub tsbSaveAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+        Handles tsbSaveAll.Click, tmiSaveAll.Click
+        SaveAll()
+    End Sub
+#Region "ChangedIPTCs handlers"
+    Private Sub ChangedIPTCs_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles ChangedIPTCs.Added
+        AddHandler e.Item.Saved, AddressOf Changed_Saved
+    End Sub
+
+    Private Sub ChangedIPTCs_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemsEventArgs) Handles ChangedIPTCs.Cleared
+        For Each item In e.Items
+            RemoveHandler item.Saved, AddressOf Changed_Saved
+        Next
+    End Sub
+
+    Private Sub ChangedIPTCs_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles ChangedIPTCs.Removed
+        RemoveHandler e.Item.Saved, AddressOf Changed_Saved
+    End Sub
+    ''' <summary>Handles <see cref="IPTCInternal.Saved"/> event</summary>
+    Private Sub Changed_Saved(ByVal sender As IPTCInternal)
+        ChangedIPTCs.Remove(sender)
+    End Sub
+#End Region
+#Region "SelectedIPTCs handlers"
+    Private Sub SelectedIPTCs_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles SelectedIPTCs.Added
+        AddHandler e.Item.ValueChanged, AddressOf IPTC_ValueChanged
+    End Sub
+    Private Sub SelectedIPTCs_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemsEventArgs) Handles SelectedIPTCs.Cleared
+        For Each item In e.Items
+            RemoveHandler item.ValueChanged, AddressOf IPTC_ValueChanged
+        Next
+    End Sub
+    Private Sub SelectedIPTCs_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles SelectedIPTCs.Removed
+        RemoveHandler e.Item.ValueChanged, AddressOf IPTC_ValueChanged
+    End Sub
+#End Region
+
+    
 End Class

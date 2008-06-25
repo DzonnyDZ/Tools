@@ -97,6 +97,9 @@
     <Compile Include="frmSettings.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="IPTCInternal.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -166,6 +169,7 @@
     <None Include="Resources\NavForward.png" />
     <None Include="Resources\Net 31.ico" />
     <None Include="Resources\Symbol-Delete.png" />
+    <None Include="Resources\SaveAllHS.png" />
     <Content Include="Resources\Up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

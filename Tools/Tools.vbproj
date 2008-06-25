@@ -203,6 +203,9 @@
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
     <Compile Include="Extensions\DelegateExtensions.vb" />
+    <Compile Include="IO\SyncFSWatcher.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Media\Sound.vb">
       <SubType>UserControl</SubType>
     </Compile>

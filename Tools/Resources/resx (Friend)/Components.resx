@@ -366,4 +366,16 @@
   <data name="Descending_d" xml:space="preserve">
     <value>Gets or sets if sorting order is reversed</value>
   </data>
+  <data name="CreatedSync_d" xml:space="preserve">
+    <value>Raised when file is created</value>
+  </data>
+  <data name="DeletedSync_d" xml:space="preserve">
+    <value>Raised when file is deleted</value>
+  </data>
+  <data name="RenamedSync_d" xml:space="preserve">
+    <value>Raised when file is renamed</value>
+  </data>
+  <data name="ChangedSync_d" xml:space="preserve">
+    <value>Raised when file is changed</value>
+  </data>
 </root>

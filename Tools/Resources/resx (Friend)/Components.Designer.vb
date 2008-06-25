@@ -164,6 +164,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Raised when file is changed.
+        '''</summary>
+        Friend Shared ReadOnly Property ChangedSync_d() As String
+            Get
+                Return ResourceManager.GetString("ChangedSync_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Check boxes displayed for message box. Can be used for example for &apos;Do not show this message in future&apos; option..
         '''</summary>
         Friend Shared ReadOnly Property CheckBoxes_d() As String
@@ -272,6 +281,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Raised when file is created.
+        '''</summary>
+        Friend Shared ReadOnly Property CreatedSync_d() As String
+            Get
+                Return ResourceManager.GetString("CreatedSync_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Data.
         '''</summary>
         Friend Shared ReadOnly Property Data_cat() As String
@@ -304,6 +322,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property DefaultButton_d() As String
             Get
                 Return ResourceManager.GetString("DefaultButton_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised when file is deleted.
+        '''</summary>
+        Friend Shared ReadOnly Property DeletedSync_d() As String
+            Get
+                Return ResourceManager.GetString("DeletedSync_d", resourceCulture)
             End Get
         End Property
         
@@ -628,6 +655,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property Radios_d() As String
             Get
                 Return ResourceManager.GetString("Radios_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Raised when file is renamed.
+        '''</summary>
+        Friend Shared ReadOnly Property RenamedSync_d() As String
+            Get
+                Return ResourceManager.GetString("RenamedSync_d", resourceCulture)
             End Get
         End Property
         

@@ -93,8 +93,10 @@ Partial Class frmMain
         Me.tsbBack = New System.Windows.Forms.ToolStripButton
         Me.tsbForward = New System.Windows.Forms.ToolStripButton
         Me.tsbRefresh = New System.Windows.Forms.ToolStripButton
+        Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
         Me.bgwSave = New System.ComponentModel.BackgroundWorker
+        Me.tmiSaveAll = New System.Windows.Forms.ToolStripMenuItem
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
@@ -258,6 +260,7 @@ Partial Class frmMain
         'picPreview
         '
         Me.picPreview.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.picPreview.InitialImage = Global.Tools.Metanol.My.Resources.Resources.Metanol
         Me.picPreview.Location = New System.Drawing.Point(0, 0)
         Me.picPreview.Margin = New System.Windows.Forms.Padding(0)
         Me.picPreview.Name = "picPreview"
@@ -811,7 +814,7 @@ Partial Class frmMain
         '
         'tmiFile
         '
-        Me.tmiFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiBrowse, Me.tmiGoTo, Me.tssFileSep1, Me.tmiExit})
+        Me.tmiFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiBrowse, Me.tmiGoTo, Me.tmiSaveAll, Me.tssFileSep1, Me.tmiExit})
         Me.tmiFile.Name = "tmiFile"
         Me.tmiFile.Size = New System.Drawing.Size(37, 20)
         Me.tmiFile.Text = "&File"
@@ -868,10 +871,10 @@ Partial Class frmMain
         'tosMain
         '
         Me.tosMain.Dock = System.Windows.Forms.DockStyle.None
-        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh})
+        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
         Me.tosMain.Location = New System.Drawing.Point(3, 24)
         Me.tosMain.Name = "tosMain"
-        Me.tosMain.Size = New System.Drawing.Size(81, 25)
+        Me.tosMain.Size = New System.Drawing.Size(135, 25)
         Me.tosMain.TabIndex = 1
         '
         'tsbBack
@@ -903,9 +906,26 @@ Partial Class frmMain
         Me.tsbRefresh.Size = New System.Drawing.Size(23, 22)
         Me.tsbRefresh.Text = "Refresh folder"
         '
+        'tsbSaveAll
+        '
+        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        Me.tsbSaveAll.ImageTransparentColor = System.Drawing.Color.Magenta
+        Me.tsbSaveAll.Name = "tsbSaveAll"
+        Me.tsbSaveAll.Size = New System.Drawing.Size(23, 22)
+        Me.tsbSaveAll.Text = "Save all"
+        '
         'bgwSave
         '
         Me.bgwSave.WorkerReportsProgress = True
+        '
+        'tmiSaveAll
+        '
+        Me.tmiSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        Me.tmiSaveAll.Name = "tmiSaveAll"
+        Me.tmiSaveAll.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.tmiSaveAll.Size = New System.Drawing.Size(176, 22)
+        Me.tmiSaveAll.Text = "&Save all"
         '
         'frmMain
         '
@@ -1037,5 +1057,7 @@ Partial Class frmMain
     Friend WithEvents prgIPTC As System.Windows.Forms.PropertyGrid
     Friend WithEvents kweKeywords As Tools.WindowsT.FormsT.KeyWordsEditor
     Friend WithEvents bgwSave As System.ComponentModel.BackgroundWorker
+    Friend WithEvents tsbSaveAll As System.Windows.Forms.ToolStripButton
+    Friend WithEvents tmiSaveAll As System.Windows.Forms.ToolStripMenuItem
 
 End Class

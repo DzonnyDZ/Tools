@@ -1894,6 +1894,17 @@ Namespace WindowsT.IndependentT
             Protected Overrides Sub PerformDialog(ByVal Modal As Boolean, ByVal Owner As System.Windows.Forms.IWin32Window)
                 Throw New NotImplementedException(ResourcesT.Exceptions.ClassCannotBeUsedAsMessageBox)
             End Sub
+            ''' <summary>Default CTor</summary>
+            Public Sub New()
+            End Sub
+            ''' <summary>CTor from buttons specified as OR-ed mask of <see cref="MessageBoxButton.Buttons"/> values</summary>
+            ''' <param name="Buttons">OR-ed values from <see cref="MessageBoxButton.Buttons"/></param>
+            ''' <seelaso cref="MessageBoxButton.GetButtons"/>
+            Public Sub New(ByVal Buttons As MessageBoxButton.Buttons)
+                Me.New()
+                Me.Buttons.Clear()
+                Me.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
+            End Sub
         End Class
         ''' <summary>Initializes instance of <see cref="MessageBox"/> obtained via <see cref="GetDefault"/> using <see cref="InitializeFrom"/></summary>
         ''' <param name="Other">Instance properties of which will be used to initialize returned instance</param>
@@ -2948,7 +2959,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <returns>The result of message box indicatin pressed button.</returns>
         ''' <exception cref="TargetInvocationException">There was an error working working with customized static properties such as <see cref="DefaultImplementation"/> or message box implementation failed.</exception>
         ''' <remarks>This function mimisc behaviour of the <see cref="Microsoft.VisualBasic.Interaction.MsgBox"/> function</remarks>
-        Public Shared Function Show(ByVal Prompt As Object, Optional ByVal Buttons As MsgBoxStyle = 0, Optional ByVal Title As Object = Nothing) As MsgBoxResult
+        Public Shared Function MsgBox(ByVal Prompt As Object, Optional ByVal Buttons As MsgBoxStyle = 0, Optional ByVal Title As Object = Nothing) As MsgBoxResult
             Try
                 Dim box As New FakeBox With {.Prompt = Prompt.ToString, .Title = Title.ToString}
                 box.Buttons.Clear()
@@ -3544,6 +3555,45 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
             Me.Buttons.Clear()
             Me.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
         End Sub
+#End Region
+#Region "Modal sync"
+        ''' <summary>Displays modal messagebox in sync with given control</summary>
+        ''' <param name="Control">Control to diplay dialog in thread control was created by</param>
+        ''' <param name="Owner">Optional owner of dialog (the window dialog will be modal to)</param>
+        ''' <returns>Result of diloag identifiing pressed button</returns>
+        ''' <remarks>This function can be used to display dialogs from background worker thread</remarks>
+        Public Function ModalSync(ByVal Control As Control, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+            If Control.InvokeRequired Then
+                Dim shd As Func(Of IWin32Window, DialogResult) = AddressOf Me.ShowDialog
+                Return Control.Invoke(shd, Owner)
+            Else
+                Return Me.ShowDialog(Owner)
+            End If
+        End Function
+        ''' <summary>Displays modal message box in sync with given control</summary>
+        ''' <param name="Control">Control to diplay dialog in thread control was created by</param>
+        ''' <param name="Template">Instance to initialize default message box with</param>
+        ''' <param name="Prompt">If not null specified different prompt of messagebox</param>
+        ''' <param name="Title">If not null specifies different title of messagebox</param>
+        ''' <param name="Owner">Optional owner of messagebox - the window messagebox will be modal to</param>
+        ''' <returns>Result of messagebox which identified button that was pressed</returns>
+        ''' <seelaso cref="FakeBox"/>
+        ''' <seelaso cref="ShowTemplate"/>
+        ''' <seelaso cref="DisplayTemplate"/>
+        ''' <seelaso cref="ModalSync"/>
+        Public Shared Function ModalSyncTemplate(ByVal Control As Control, ByVal Template As MessageBox, Optional ByVal Prompt$ = Nothing, Optional ByVal Title$ = Nothing, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+            Dim Instance As Tools.WindowsT.IndependentT.MessageBox
+            Try
+                Instance = GetDefault()
+            Catch ex As Exception
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExceptionForDetails, ex)
+            End Try
+            If Template Is Nothing Then Throw New ArgumentNullException("InitializeFrom")
+            Instance.InitializeFrom(Template)
+            If Prompt IsNot Nothing Then Instance.Prompt = Prompt
+            If Title IsNot Nothing Then Instance.Title = Title
+            Return Instance.ModalSync(Control, Owner)
+        End Function
 #End Region
     End Class
 End Namespace

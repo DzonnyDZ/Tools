@@ -94,6 +94,24 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Error while loading {0}:.
+        '''</summary>
+        Friend ReadOnly Property ErrorWhileLoading0() As String
+            Get
+                Return ResourceManager.GetString("ErrorWhileLoading0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Error while saving {0}:.
+        '''</summary>
+        Friend ReadOnly Property ErrorWhileSaving0() As String
+            Get
+                Return ResourceManager.GetString("ErrorWhileSaving0", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property GoLtrHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GoLtrHS", resourceCulture)
@@ -125,6 +143,13 @@ Namespace My.Resources
         Friend ReadOnly Property LargeFloating_n() As String
             Get
                 Return ResourceManager.GetString("LargeFloating_n", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property Metanol() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("Metanol", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -162,6 +187,13 @@ Namespace My.Resources
         Friend ReadOnly Property Save_cmd() As String
             Get
                 Return ResourceManager.GetString("Save_cmd", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property SaveAllHS() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("SaveAllHS", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
