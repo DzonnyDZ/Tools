@@ -6,6 +6,7 @@ Imports System.Drawing.Design
 Imports Tools.ComponentModelT
 Imports System.Reflection, System.Drawing
 Imports Icons = Tools.ResourcesT.Icons, Tools.TypeTools
+Imports Tools.DrawingT
 
 #If Config <= Nightly Then 'Stage Nightly
 Imports System.Windows.Forms
@@ -296,7 +297,7 @@ Namespace WindowsT.IndependentT
         <TypeConverter(GetType(ExpandableObjectConverter))> _
         <Editor(GetType(NewEditor), GetType(UITypeEditor))> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle)> _
-        <lDescription(GetType(ResourcesT.Components), "ComboBox_d")> _
+        <LDescription(GetType(ResourcesT.Components), "ComboBox_d")> _
         Public Property ComboBox() As MessageBoxComboBox
             <DebuggerStepThrough()> Get
                 Return _ComboBox
@@ -825,7 +826,7 @@ Namespace WindowsT.IndependentT
 #End Region
 
 #Region "CTors"
-             ''' <summary>Ture indicates that this instance is currently being constructed</summary>
+            ''' <summary>Ture indicates that this instance is currently being constructed</summary>
             Private ReadOnly IsConstructing As Boolean = True
             ''' <summary>CTor - creates new instance of the <see cref="MessageBoxButton"/> class</summary>
             Public Sub New()
@@ -2027,7 +2028,7 @@ Namespace WindowsT.IndependentT
         ''' <returns>Appropriate icon to code or null if no icon is associated with code</returns>
         ''' <remarks>You can change which function <see cref="MessageBox"/> globaly uses for obtaining icons by setting the <see cref="GetIconDelegate"/> static property</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Function GetIcon(ByVal code As MessageBoxIcons) As DataStructuresT.GenericT.T1orT2(Of Icon, Bitmap)
+        Public Shared Function GetIcon(ByVal code As MessageBoxIcons) As IconOrBitmap
             Select Case code
                 Case MessageBoxIcons.Asterisk : Return Icons.Asterisk
                 Case MessageBoxIcons.Error : Return Icons.ErrorIcon
@@ -2098,18 +2099,18 @@ Namespace WindowsT.IndependentT
         End Function
         ''' <summary>Contains value of the <see cref="GetIconDelegate"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private Shared _GetIconDelegate As Func(Of MessageBoxIcons, DataStructuresT.GenericT.T1orT2(Of Icon, Bitmap)) = AddressOf GetIcon
+        Private Shared _GetIconDelegate As Func(Of MessageBoxIcons, IconOrBitmap) = AddressOf GetIcon
         ''' <summary>Gets or sets delegate which is used for converting enumeration values to icons for message box</summary>
         ''' <value>New delegate to be shared by all messageboxes for converting enumeration members to icons</value>
         ''' <returns>Current delegate that converts enumeration values to icons for message box</returns>
         ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         ''' <remarks>Default value is <see cref="GetIcon"/> function</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        Public Shared Property GetIconDelegate() As Func(Of MessageBoxIcons, DataStructuresT.GenericT.T1orT2(Of Icon, Bitmap))
+        Public Shared Property GetIconDelegate() As Func(Of MessageBoxIcons, IconOrBitmap)
             <DebuggerStepThrough()> Get
                 Return _GetIconDelegate
             End Get
-            Set(ByVal value As Func(Of MessageBoxIcons, DataStructuresT.GenericT.T1orT2(Of Icon, Bitmap)))
+            Set(ByVal value As Func(Of MessageBoxIcons, IconOrBitmap))
                 If value Is Nothing Then Throw New ArgumentNullException("value")
                 _GetIconDelegate = value
             End Set
@@ -3093,14 +3094,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <param name="Sound">Sound to be played when message box is shown. If null, it is chosen automatically.</param>
         Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.None, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
-            Dim IconValue = GetIconDelegate.Invoke(Icon)
-            Dim iconImage As Image
-            If IconValue.contains(GetType(Icon)) Then
-                iconImage = IconValue.value1.ToBitmap
-            Else : iconImage = IconValue.value2
-            End If
             If Sound Is Nothing Then Sound = GetAssociatedSound(Icon)
-            Return Modal(Prompt, Title, Options, iconImage, Buttons, Sound)
+            Return Modal(Prompt, Title, Options, GetIconDelegate.Invoke(Icon), Buttons, Sound)
         End Function
         ''' <summary>Gets sound associated with given icon</summary>
         ''' <param name="Icon">Icon to get sound for</param>
@@ -3160,13 +3155,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
         Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
-            Dim IconValue = GetIconDelegate.Invoke(Icon)
-            Dim iconImage As Image
-            If IconValue.contains(GetType(Icon)) Then
-                iconImage = IconValue.value1.ToBitmap
-            Else : iconImage = IconValue.value2
-            End If
-            Return ModalF(Prompt, Title, Options, iconImage, Buttons, GetAssociatedSound(Icon), arguments)
+            Return ModalF(Prompt, Title, Options, GetIconDelegate.Invoke(Icon), Buttons, GetAssociatedSound(Icon), arguments)
         End Function
 #Region "Custom Icon"
         ''' <summary>Displays modal message with given prompt, title, buttons and custom icon</summary>

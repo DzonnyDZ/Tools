@@ -169,7 +169,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;lstKW.ZOrder" xml:space="preserve">
-    <value>1</value>
+    <value>2</value>
   </data>
   <data name="tlpTop.AutoSize" type="System.Boolean, mscorlib">
     <value>True</value>
@@ -202,7 +202,7 @@
     <value>stmStatus</value>
   </data>
   <data name="&gt;&gt;stmStatus.Type" xml:space="preserve">
-    <value>Tools.WindowsT.FormsT.StatusMarker, Tools, Version=1.5.0.19658, Culture=neutral, PublicKeyToken=null</value>
+    <value>Tools.WindowsT.FormsT.StatusMarker, Tools, Version=1.5.0.35577, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;stmStatus.Parent" xml:space="preserve">
     <value>tlpTop</value>
@@ -210,9 +210,6 @@
   <data name="&gt;&gt;stmStatus.ZOrder" xml:space="preserve">
     <value>1</value>
   </data>
-  <metadata name="totToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>140, 17</value>
-  </metadata>
   <data name="cmdThesaurus.Anchor" type="System.Windows.Forms.AnchorStyles, System.Windows.Forms">
     <value>None</value>
   </data>
@@ -240,6 +237,9 @@
   <data name="cmdThesaurus.TabIndex" type="System.Int32, mscorlib">
     <value>3</value>
   </data>
+  <metadata name="totToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>140, 17</value>
+  </metadata>
   <data name="cmdThesaurus.ToolTip" xml:space="preserve">
     <value>Thesaurus</value>
   </data>
@@ -367,7 +367,7 @@
     <value>$this</value>
   </data>
   <data name="&gt;&gt;tlpTop.ZOrder" xml:space="preserve">
-    <value>2</value>
+    <value>3</value>
   </data>
   <data name="tlpTop.LayoutSettings" type="System.Windows.Forms.TableLayoutSettings, System.Windows.Forms">
     <value>&lt;?xml version="1.0" encoding="utf-16"?&gt;&lt;TableLayoutSettings&gt;&lt;Controls&gt;&lt;Control Name="txtEdit" Row="0" RowSpan="1" Column="0" ColumnSpan="1" /&gt;&lt;Control Name="stmStatus" Row="0" RowSpan="1" Column="2" ColumnSpan="1" /&gt;&lt;Control Name="cmdThesaurus" Row="0" RowSpan="1" Column="3" ColumnSpan="1" /&gt;&lt;Control Name="cmdMerge" Row="0" RowSpan="1" Column="4" ColumnSpan="1" /&gt;&lt;Control Name="cmdAdd" Row="0" RowSpan="1" Column="1" ColumnSpan="1" /&gt;&lt;/Controls&gt;&lt;Columns Styles="Percent,100,AutoSize,0,AutoSize,0,AutoSize,0,AutoSize,0" /&gt;&lt;Rows Styles="AutoSize,0" /&gt;&lt;/TableLayoutSettings&gt;</value>
@@ -375,15 +375,6 @@
   <metadata name="cmsThesaurus.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>17, 17</value>
   </metadata>
-  <data name="cmsThesaurus.Size" type="System.Drawing.Size, System.Drawing">
-    <value>217, 136</value>
-  </data>
-  <data name="&gt;&gt;cmsThesaurus.Name" xml:space="preserve">
-    <value>cmsThesaurus</value>
-  </data>
-  <data name="&gt;&gt;cmsThesaurus.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="tmiLabel.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
     <value>Center</value>
   </data>
@@ -459,9 +450,63 @@
   <data name="tmiSynonyms.Visible" type="System.Boolean, mscorlib">
     <value>False</value>
   </data>
-  <metadata name="totToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>140, 17</value>
+  <data name="cmsThesaurus.Size" type="System.Drawing.Size, System.Drawing">
+    <value>217, 136</value>
+  </data>
+  <data name="&gt;&gt;cmsThesaurus.Name" xml:space="preserve">
+    <value>cmsThesaurus</value>
+  </data>
+  <data name="&gt;&gt;cmsThesaurus.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <metadata name="cmsContext.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+    <value>263, 31</value>
   </metadata>
+  <data name="tmiCut.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+X</value>
+  </data>
+  <data name="tmiCut.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="tmiCut.Text" xml:space="preserve">
+    <value>Cut</value>
+  </data>
+  <data name="tmiCopy.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+C</value>
+  </data>
+  <data name="tmiCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="tmiCopy.Text" xml:space="preserve">
+    <value>Copy</value>
+  </data>
+  <data name="tmiPaste.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Ctrl+V</value>
+  </data>
+  <data name="tmiPaste.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="tmiPaste.Text" xml:space="preserve">
+    <value>Paste</value>
+  </data>
+  <data name="tmiDelete.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Del</value>
+  </data>
+  <data name="tmiDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>144, 22</value>
+  </data>
+  <data name="tmiDelete.Text" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="cmsContext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>145, 92</value>
+  </data>
+  <data name="&gt;&gt;cmsContext.Name" xml:space="preserve">
+    <value>cmsContext</value>
+  </data>
+  <data name="&gt;&gt;cmsContext.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>True</value>
   </metadata>
@@ -512,6 +557,30 @@
   </data>
   <data name="&gt;&gt;totToolTip.Type" xml:space="preserve">
     <value>System.Windows.Forms.ToolTip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiCut.Name" xml:space="preserve">
+    <value>tmiCut</value>
+  </data>
+  <data name="&gt;&gt;tmiCut.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiCopy.Name" xml:space="preserve">
+    <value>tmiCopy</value>
+  </data>
+  <data name="&gt;&gt;tmiCopy.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiPaste.Name" xml:space="preserve">
+    <value>tmiPaste</value>
+  </data>
+  <data name="&gt;&gt;tmiPaste.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="&gt;&gt;tmiDelete.Name" xml:space="preserve">
+    <value>tmiDelete</value>
+  </data>
+  <data name="&gt;&gt;tmiDelete.Type" xml:space="preserve">
+    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
   <data name="&gt;&gt;$this.Name" xml:space="preserve">
     <value>KeyWordsEditor</value>

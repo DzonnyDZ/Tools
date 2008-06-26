@@ -91,7 +91,7 @@
         End Sub
         ''' <summary>CTor - initializes new instance of <see cref="T1orT2(Of T1, T2)"/> with value of type <see cref="T2"/></summary>
         ''' <param name="value">Value to be contained in new instance</param>
-        Private Sub New(ByVal value As T2)
+        Public Sub New(ByVal value As T2)
             value2 = value
         End Sub
         ''' <summary>Gets or sets value of type <see cref="T1"/></summary>
@@ -119,7 +119,7 @@
         ''' </remarks>
         Public Overridable Property value2() As T2 Implements IT1orT2(Of T1, T2).value2, IPair(Of T1, T2).Value2
             Get
-                If value2 Is Nothing Then Return Nothing Else Return CType(_value2, T2)
+                If _value2 Is Nothing Then Return Nothing Else Return CType(_value2, T2)
             End Get
             Set(ByVal value As T2)
                 If value Is Nothing Then _value2 = Nothing Else _value2 = CType(value, Box(Of T2))
@@ -222,7 +222,7 @@
             If a.contains1 Then
                 Return a.value1
             Else
-                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T1"))
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T1", "T1"))
             End If
         End Operator
         ''' <summary>Unboxes value of type <see cref="T2"/> from <see cref="T1orT2(Of T1, T2)"/> when <paramref name="a"/> contains <see cref="value2"/>.</summary>
@@ -233,7 +233,7 @@
             If a.contains2 Then
                 Return a.value2
             Else
-                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T2"))
+                Throw New InvalidCastException(String.Format(ResourcesT.Exceptions.ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1, "T2", "T2"))
             End If
         End Operator
         ''' <summary>Identifies whether this instance contains value of specified type</summary>

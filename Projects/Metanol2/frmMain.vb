@@ -3,7 +3,7 @@ Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
 Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
-Imports Tools.WindowsT.FormsT
+Imports Tools.WindowsT.FormsT, Tools, Tools.ReflectionT
 ''' <summary>Main form</summary>
 Public Class frmMain
     ''' <summary>Imake gey of ... item</summary>
@@ -14,6 +14,30 @@ Public Class frmMain
     Private WithEvents SelectedIPTCs As New ListWithEvents(Of IPTCInternal)
     ''' <summary>Metadatas that was changed</summary>
     Private WithEvents ChangedIPTCs As New ListWithEvents(Of IPTCInternal)
+    ''' <summary>If nonzero item properties are not shown as selection in <see cref="lvwImages"/> changes</summary>
+    ''' <seelaso cref="IsChangingSuspended"/>
+    <EditorBrowsable(EditorBrowsableState.Never)> _
+    Private ChangingSuspendedCounter As Byte = 0
+    ''' <summary>Gets value indicationg if properties of items are updated as selection in <see cref="lvwImages"/> changes</summary>
+    ''' <returns>True if properties are not updated, false if the are</returns>
+    Private ReadOnly Property IsChangingSuspended() As Boolean
+        Get
+            Return ChangingSuspendedCounter <> 0
+        End Get
+    End Property
+    ''' <summary>Suspends updating of properties as selected image changes</summary>
+    ''' <remarks>Calls to <see cref="SuspendUpdate"/> and <see cref="ResumeUpdate"/> chan be stacked up to 255 levels</remarks>
+    Private Sub SuspendUpdate()
+        ChangingSuspendedCounter += 1
+    End Sub
+    ''' <summary>Resume updating of properties as selected image changes</summary>
+    ''' <remarks>Calls to <see cref="SuspendUpdate"/> and <see cref="ResumeUpdate"/> chan be stacked up to 255 levels</remarks>
+    ''' <param name="Force">True to ignore stacked calls and resume updating immediatelly</param>
+    Private Sub ResumeUpdate(Optional ByVal Force As Boolean = False)
+        If Force Then ChangingSuspendedCounter = 0 Else ChangingSuspendedCounter -= 1
+        DoSelectedImageChanged()
+    End Sub
+
     ''' <summary>CTor</summary>
     Friend Sub New()
         InitializeComponent()
@@ -29,7 +53,14 @@ Public Class frmMain
             item.AutoSize = False
         Next
         SizeInFlpCommon()
+        SetCountryCodes()
     End Sub
+    ''' <summary>Prepares country codes</summary>
+    Private Sub SetCountryCodes()
+        Dim c As New IPTC.StringEnum(Of IPTC.ISO3166).Converter
+        cmbCountryCode.Items.AddRange(c.GetStandardValues.OfType(Of Object).ToArray)
+    End Sub
+
     ''' <summary>Contains controls used for editing single properties</summary>
     Private Editors As Control()
     ''' <summary>Initializes tags of editor controls and the <see cref="Editors"/> field</summary>
@@ -127,7 +158,10 @@ Public Class frmMain
         imlFolders.Images.Add(UpKey, My.Resources.Up)
         Try
             If Path.DirectoryName <> "" Then
-                lvwFolders.Items.Add("...", UpKey).Tag = Path.DirectoryName
+                Dim parent = Path.DirectoryName
+                If Path.Path.Length > 1 AndAlso Path.Path(Path.Path.Length - 1) = "\"c AndAlso Path.Path.Substring(0, Path.Path.Length - 1) = parent Then _
+                    parent = New IOt.Path(parent).DirectoryName
+                lvwFolders.Items.Add("...", UpKey).Tag = Parent
             End If
         Catch : End Try
         For Each subfolder In subfolders
@@ -136,20 +170,25 @@ Public Class frmMain
             lvwFolders.Items.Add(subfolder.FileName, subfolder.FileName).Tag = subfolder.Path
         Next subfolder
         imlImages.Images.Clear()
-        lvwImages.Items.Clear()
-        'Load files
-        Dim ImagesToLoad As New List(Of String)
+        SuspendUpdate()
         Try
-            For Each file In From f In Path.GetFiles("*.jpg", "*.jpeg") Order By f.FileName
-                lvwImages.Items.Add(file.FileName, file.FileName).Tag = file.Path
-                ImagesToLoad.Add(file.Path)
-            Next
-        Catch : End Try
-        bgwImages.RunWorkerAsync(ImagesToLoad)
-        If old IsNot Nothing Then
-            If isBack Then ForwardStack.Push(old) Else BackwardStack.Push(old)
-            ApplyStacks()
-        End If
+            lvwImages.Items.Clear()
+            'Load files
+            Dim ImagesToLoad As New List(Of String)
+            Try
+                For Each file In From f In Path.GetFiles("*.jpg", "*.jpeg") Order By f.FileName
+                    lvwImages.Items.Add(file.FileName, file.FileName, file.FileName).Tag = file.Path
+                    ImagesToLoad.Add(file.Path)
+                Next
+            Catch : End Try
+            bgwImages.RunWorkerAsync(ImagesToLoad)
+            If old IsNot Nothing Then
+                If isBack Then ForwardStack.Push(old) Else BackwardStack.Push(old)
+                ApplyStacks()
+            End If
+        Finally
+            ResumeUpdate()
+        End Try
     End Sub
 
     Private Sub frmMain_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -167,6 +206,10 @@ Public Class frmMain
         My.Settings.Keywords = doc
         ToolStripManager.SaveSettings(Me, "tosMain")
         If Large IsNot Nothing Then Large.Close()
+        Try : My.Settings.Save()
+        Catch ex As Exception
+            MBox.Error(ex)
+        End Try
     End Sub
 
     Private Sub frmMain_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
@@ -309,6 +352,7 @@ Public Class frmMain
 
     ''' <summary>Reoads content of current folder</summary>
     Public Sub RefreshFolder()
+        If Not OnBeforeFolderChange() Then Exit Sub
         LoadFolder(CurrentFolder)
     End Sub
     ''' <summary>Loads folder identified by path</summary>
@@ -327,7 +371,8 @@ Public Class frmMain
         NavigateForward()
     End Sub
 
-    Private Sub tsbRefresh_Click(ByVal sender As ToolStripButton, ByVal e As System.EventArgs) Handles tsbRefresh.Click
+    Private Sub tsbRefresh_Click(ByVal sender As Component, ByVal e As System.EventArgs) _
+        Handles tsbRefresh.Click, tmiRefresh.Click
         RefreshFolder()
     End Sub
 
@@ -361,7 +406,25 @@ Public Class frmMain
         Next
     End Sub
 
+    Private Sub lvwImages_KeyDown(ByVal sender As ListView, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lvwImages.KeyDown
+        If e.Control AndAlso e.KeyCode = Keys.A AndAlso Not e.Shift AndAlso Not e.Alt Then
+            SuspendUpdate()
+            Try
+                For Each item In sender.Items.AsTypeSafe
+                    item.Selected = True
+                Next
+            Finally
+                ResumeUpdate()
+            End Try
+        End If
+    End Sub
+
     Private Sub lvwImages_SelectedIndexChanged(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+        DoSelectedImageChanged()
+    End Sub
+    ''' <summary>Handles the <see cref="lvwImages"/>.<see cref="ListView.SelectedIndexChanged">SelectedIndexChange</see> event</summary>
+    Private Sub DoSelectedImageChanged()
+        If IsChangingSuspended Then Return
         cmdErrInfo.Visible = False
         If lvwImages.FocusedItem IsNot Nothing Then
             Try
@@ -454,19 +517,19 @@ Public Class frmMain
                 If Filter And CommonProperties.Caption Then Caption.Value = IPTC.CaptionAbstract
                 If Filter And CommonProperties.Keywords Then Keywords.AddRange(IPTC.Keywords.NewIfNull)
             Else
-                If Filter And CommonProperties.Copyright Then Copyright.Same = IPTC.CopyrightNotice = Copyright.Value
-                If Filter And CommonProperties.Credit Then Credit.Same = IPTC.Credit = Credit.Value
-                If Filter And CommonProperties.City Then City.Same = IPTC.City = City.Value
-                If Filter And CommonProperties.CountryCode Then CountryCode.Same = IPTC.CountryPrimaryLocationCode = CountryCode.Value
-                If Filter And CommonProperties.Country Then Country.Same = IPTC.CountryPrimaryLocationName = Country.Value
-                If Filter And CommonProperties.Province Then Province.Same = IPTC.ProvinceState = Province.Value
-                If Filter And CommonProperties.Sublocation Then Sublocation.Same = IPTC.SubLocation = Sublocation.Value
-                If Filter And CommonProperties.EditStatus Then EditStatus.Same = IPTC.EditStatus = EditStatus.Value
-                If Filter And CommonProperties.Urgency Then Urgency.Same = IPTC.Urgency = Urgency.Value
-                If Filter And CommonProperties.ObjectName Then ObjectName.Same = IPTC.ObjectName = ObjectName.Value
-                If Filter And CommonProperties.Caption Then Caption.Same = IPTC.CaptionAbstract = Caption.Value
+                If Filter And CommonProperties.Copyright Then Copyright.Same = Copyright.Same AndAlso IPTC.CopyrightNotice = Copyright.Value
+                If Filter And CommonProperties.Credit Then Credit.Same = Credit.Same AndAlso IPTC.Credit = Credit.Value
+                If Filter And CommonProperties.City Then City.Same = City.Same AndAlso IPTC.City = City.Value
+                If Filter And CommonProperties.CountryCode Then CountryCode.Same = CountryCode.Same AndAlso IPTC.CountryPrimaryLocationCode = CountryCode.Value
+                If Filter And CommonProperties.Country Then Country.Same = Country.Same AndAlso IPTC.CountryPrimaryLocationName = Country.Value
+                If Filter And CommonProperties.Province Then Province.Same = Province.Same AndAlso IPTC.ProvinceState = Province.Value
+                If Filter And CommonProperties.Sublocation Then Sublocation.Same = Sublocation.Same AndAlso IPTC.SubLocation = Sublocation.Value
+                If Filter And CommonProperties.EditStatus Then EditStatus.Same = EditStatus.Same AndAlso IPTC.EditStatus = EditStatus.Value
+                If Filter And CommonProperties.Urgency Then Urgency.Same = Urgency.Same AndAlso IPTC.Urgency = Urgency.Value
+                If Filter And CommonProperties.ObjectName Then ObjectName.Same = ObjectName.Same AndAlso IPTC.ObjectName = ObjectName.Value
+                If Filter And CommonProperties.Caption Then Caption.Same = Caption.Same AndAlso IPTC.CaptionAbstract = Caption.Value
                 If Filter And CommonProperties.Keywords Then
-                    Dim kws As New List(Of String)(IPTC.Keywords)
+                    Dim kws As New List(Of String)(If(IPTC.Keywords, New String() {}))
                     Keywords.RemoveAll(Function(kw As String) Not kws.Contains(kw))
                 End If
             End If
@@ -512,7 +575,7 @@ Public Class frmMain
             ChangedIPTCs.Add(sender)
         End If
         Changed = True
-        With lvwImages.Items(sender.ImagePath)
+        With lvwImages.Items(System.IO.Path.GetFileName(sender.ImagePath))
             .Text = System.IO.Path.GetFileName(sender.ImagePath) & "*"
         End With
     End Sub
@@ -587,6 +650,18 @@ Public Class frmMain
         If e.Button = Windows.Forms.MouseButtons.Left Then sender.Capture = False
     End Sub
 
+    Private Sub cmbCountryCode_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCountryCode.SelectedIndexChanged
+        If sender.SelectedIndex >= 0 Then
+            Dim selectedItem As IPTC.StringEnum(Of IPTC.ISO3166) = sender.SelectedItem
+            If selectedItem.ContainsEnum Then
+                Dim desc = selectedItem.EnumValue.GetConstant.GetAttribute(Of DisplayNameAttribute)()
+                If desc IsNot Nothing Then
+                    txtCountry.Text = desc.DisplayName
+                End If
+            End If
+        End If
+    End Sub
+
     Private Sub Control_Validating(ByVal sender As Control, ByVal e As System.ComponentModel.CancelEventArgs) _
         Handles txtSublocation.Validating, txtProvince.Validating, txtObjectName.Validating, _
             txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, _
@@ -649,7 +724,7 @@ Public Class frmMain
         Catch ex As Exception
             Dim msg$ = ex.Message
             If i > 0 Then msg &= vbCrLf & My.Resources.SomeChangedSomeNot
-            Select Case MBox.Modal(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, , MBox.MessageBoxIcons.Error)
+            Select Case MBox.Modal(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, MBox.MessageBoxIcons.Error)
                 Case Windows.Forms.DialogResult.OK : Return False
                 Case Else
                     ShowValues(SelectedIPTCs, Prp)
@@ -665,6 +740,7 @@ Public Class frmMain
             Dim c As ContainerControl = Me
             While c.ActiveControl IsNot Nothing
                 Dim ac As Control = c.ActiveControl
+                If ac Is kweKeywords Then Return ac
                 If TypeOf ac Is ContainerControl Then c = ac Else Return ac
             End While
             Return c
@@ -680,6 +756,7 @@ Public Class frmMain
     ''' <returns>True if folder can be changed. False if it cannot.</returns>
     ''' <remarks>Note for plugin implementers: If you are changin folder manually you should always call this method before calling <see cref="LoadFolder"/> anc besed on return value decide whether load that folder or not. If you are implementing some wizard, for example, which's last step changes folder, that you should call this before invoking the wizard.</remarks>
     Public Function OnBeforeFolderChange() As Boolean
+        StoreActiveConrol()
         If Not Me.Changed Then Return True
         Select Case MBox.Modal(My.Resources.UnsavedChanges, My.Resources.SaveChanges_dlgTitle, MBox.MessageBoxOptions.AlignLeft, MBox.GetIconDelegate.Invoke(MBox.MessageBoxIcons.Question), _
                 New MButton(My.Resources.Save_cmd, Nothing, Windows.Forms.DialogResult.OK, My.Resources.Save_access), _
@@ -714,8 +791,9 @@ Public Class frmMain
     Private Function DoSave(Optional ByVal bgw As BackgroundWorker = Nothing, Optional ByVal e As DoWorkEventArgs = Nothing) As Boolean
         Try
             Dim i As Integer = 0
+            Dim OldCount = ChangedIPTCs.Count
             For Each item In ChangedIPTCs.ToArray 'Walking on copy!
-                bgw.ReportProgress(-1, item.ImagePath)
+                If bgw IsNot Nothing Then bgw.ReportProgress(-1, item.ImagePath)
                 Try
 Retry:              item.Save()
                 Catch ex As Exception
@@ -728,34 +806,45 @@ Retry:              item.Save()
                     End Select
                 End Try
                 i += 1
-                bgw.ReportProgress(i / ChangedIPTCs.Count * 100)
+                If bgw IsNot Nothing Then bgw.ReportProgress(i / OldCount * 100)
             Next
+            Return True
         Finally
             If e IsNot Nothing Then e.Result = DoSave
         End Try
     End Function
 
-    Private Sub tsbSaveAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+    Private Sub tsbSaveAll_Click(ByVal sender As Component, ByVal e As System.EventArgs) _
         Handles tsbSaveAll.Click, tmiSaveAll.Click
+        StoreActiveConrol()
         SaveAll()
     End Sub
 #Region "ChangedIPTCs handlers"
     Private Sub ChangedIPTCs_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles ChangedIPTCs.Added
         AddHandler e.Item.Saved, AddressOf Changed_Saved
+        Changed = True
     End Sub
 
     Private Sub ChangedIPTCs_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemsEventArgs) Handles ChangedIPTCs.Cleared
         For Each item In e.Items
             RemoveHandler item.Saved, AddressOf Changed_Saved
         Next
+        Changed = False
     End Sub
-
     Private Sub ChangedIPTCs_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles ChangedIPTCs.Removed
         RemoveHandler e.Item.Saved, AddressOf Changed_Saved
+        Changed = sender.Count > 0
     End Sub
     ''' <summary>Handles <see cref="IPTCInternal.Saved"/> event</summary>
+    ''' <param name="sender">The saved item</param>
+    ''' <remarks>May occur in different thread</remarks>
     Private Sub Changed_Saved(ByVal sender As IPTCInternal)
+        If Me.InvokeRequired Then
+            Me.Invoke(New Action(Of IPTCInternal)(AddressOf Changed_Saved), sender)
+            Exit Sub
+        End If
         ChangedIPTCs.Remove(sender)
+        lvwImages.Items(IO.Path.GetFileName(sender.ImagePath)).Text = IO.Path.GetFileName(sender.ImagePath)
     End Sub
 #End Region
 #Region "SelectedIPTCs handlers"
@@ -772,5 +861,65 @@ Retry:              item.Save()
     End Sub
 #End Region
 
-    
+
+    Private Sub txtCaption_KeyDown(ByVal sender As TextBox, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtCaption.KeyDown
+        If e.KeyCode = Keys.A AndAlso e.Control = True AndAlso e.Shift = False AndAlso e.Alt = False Then
+            e.Handled = True
+            sender.SelectAll()
+        End If
+    End Sub
+    ''' <summary>Selects next image</summary>
+    Public Sub GoNext()
+        StoreActiveConrol()
+        Dim item As ListViewItem = lvwImages.FocusedItem
+        If (item Is Nothing OrElse Not item.Selected) AndAlso lvwImages.SelectedItems.Count > 0 Then item = lvwImages.SelectedItems(lvwImages.SelectedItems.Count - 1)
+        If item Is Nothing Then
+            lvwImages.SelectedItems.Clear()
+            If lvwImages.Items.Count > 0 Then lvwImages.Items(0).Selected = True Else Beep()
+        Else
+            Dim index = lvwImages.Items.IndexOf(item)
+            If index >= lvwImages.Items.Count - 1 Then
+                Beep()
+            Else
+                SuspendUpdate()
+                Try
+                    lvwImages.SelectedItems.Clear()
+                    lvwImages.Items(index + 1).Selected = True
+                Finally
+                    ResumeUpdate()
+                End Try
+            End If
+        End If
+    End Sub
+    ''' <summary>Selects previous image</summary>
+    Public Sub GoPrevious()
+        StoreActiveConrol()
+        Dim item As ListViewItem = lvwImages.FocusedItem
+        If (item Is Nothing OrElse Not item.Selected) AndAlso lvwImages.SelectedItems.Count > 0 Then item = lvwImages.SelectedItems(0)
+        If item Is Nothing Then
+            lvwImages.SelectedItems.Clear()
+            If lvwImages.Items.Count > 0 Then lvwImages.Items(lvwImages.Items.Count - 1).Selected = True Else Beep()
+        Else
+            Dim index = lvwImages.Items.IndexOf(item)
+            If index <= 0 Then
+                Beep()
+            Else
+                SuspendUpdate()
+                Try
+                    lvwImages.SelectedItems.Clear()
+                    lvwImages.Items(index - 1).Selected = True
+                Finally
+                    ResumeUpdate()
+                End Try
+            End If
+        End If
+    End Sub
+
+    Private Sub tmiNext_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiNext.Click
+        GoNext()
+    End Sub
+
+    Private Sub tmiPrevious_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiPrevious.Click
+        GoPrevious()
+    End Sub
 End Class

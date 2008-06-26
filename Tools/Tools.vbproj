@@ -189,6 +189,7 @@
     </Compile>
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
+    <Compile Include="Drawing\IconOrBitmap.vb" />
     <Compile Include="Drawing\Metadata\Exif\Rational.vb" />
     <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
@@ -645,6 +646,9 @@
     <None Include="Reflection\Resources\Union.png" />
     <None Include="Reflection\Resources\ValueType.png" />
     <Content Include="Reflection\Resources\Attribute.png" />
+    <None Include="Resources\Paste.png" />
+    <None Include="Resources\Cut.png" />
+    <None Include="Resources\Copy.png" />
     <None Include="Resources\Play.png" />
     <None Include="Reflection\Resources\⋀.png" />
     <None Include="Reflection\Resources\⋁.png" />

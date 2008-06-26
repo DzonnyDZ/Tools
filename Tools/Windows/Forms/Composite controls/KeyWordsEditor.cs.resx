@@ -117,6 +117,15 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="txtEdit.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="lstKW.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="stmStatus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
   <data name="cmdThesaurus.ToolTip" xml:space="preserve">
     <value>Tezaurus</value>
   </data>
@@ -125,6 +134,9 @@
   </data>
   <data name="cmdAdd.ToolTip" xml:space="preserve">
     <value>Přidat slovo (Enter)</value>
+  </data>
+  <data name="tlpTop.ToolTip" xml:space="preserve">
+    <value />
   </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="tmiLabel.Size" type="System.Drawing.Size, System.Drawing">
@@ -168,5 +180,41 @@
   </data>
   <data name="cmsThesaurus.Size" type="System.Drawing.Size, System.Drawing">
     <value>233, 136</value>
+  </data>
+  <data name="cmsThesaurus.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="tmiCut.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 22</value>
+  </data>
+  <data name="tmiCut.Text" xml:space="preserve">
+    <value>Vyjmout</value>
+  </data>
+  <data name="tmiCopy.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 22</value>
+  </data>
+  <data name="tmiCopy.Text" xml:space="preserve">
+    <value>Kopírovat</value>
+  </data>
+  <data name="tmiPaste.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 22</value>
+  </data>
+  <data name="tmiPaste.Text" xml:space="preserve">
+    <value>Vložit</value>
+  </data>
+  <data name="tmiDelete.Size" type="System.Drawing.Size, System.Drawing">
+    <value>167, 22</value>
+  </data>
+  <data name="tmiDelete.Text" xml:space="preserve">
+    <value>Odstranit</value>
+  </data>
+  <data name="cmsContext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>168, 92</value>
+  </data>
+  <data name="cmsContext.ToolTip" xml:space="preserve">
+    <value />
+  </data>
+  <data name="$this.ToolTip" xml:space="preserve">
+    <value />
   </data>
 </root>

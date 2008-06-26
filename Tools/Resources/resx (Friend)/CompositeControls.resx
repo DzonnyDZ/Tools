@@ -349,4 +349,13 @@
   <data name="WorkerArgument_d" xml:space="preserve">
     <value>Argument passed to RunWorkerAsync method when DoWorkOnShow is true.</value>
   </data>
+  <data name="PasteManyLines" xml:space="preserve">
+    <value>There are {0} lines of text in clipboard. Do you want to paste them as keywords?</value>
+  </data>
+  <data name="ContextMenuEnabled_d" xml:space="preserve">
+    <value>Indicates if conext menu on ListBox with keywords is enabled</value>
+  </data>
+  <data name="ShortcutsEnabled_d" xml:space="preserve">
+    <value>Indicates if keyboard shortcuts for clipboard manipulation are enabled</value>
+  </data>
 </root>

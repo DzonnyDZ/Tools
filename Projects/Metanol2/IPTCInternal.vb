@@ -19,6 +19,7 @@ Partial Class frmMain
         ''' <summary>Contains value of the <see cref="ImagePath"/> property</summary>
         Private _ImagePath As String
         ''' <summary>Path of image this instance holds information for</summary>
+        <Browsable(False)> _
         Public ReadOnly Property ImagePath() As String
             Get
                 Return _ImagePath
@@ -44,6 +45,7 @@ Partial Class frmMain
         Private _Changed As Boolean
         ''' <summary>Gets value indicating if this instance is dirty</summary>
         ''' <returns>True if instance was changed since save/load</returns>
+        <Browsable(False)> _
         Public ReadOnly Property Changed() As Boolean
             Get
                 Return _Changed

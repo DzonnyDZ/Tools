@@ -12,7 +12,7 @@
       <Value Profile="(Default)">64, 64</Value>
     </Setting>
     <Setting Name="FormSize" Type="System.Drawing.Size" Scope="User">
-      <Value Profile="(Default)">495, 240</Value>
+      <Value Profile="(Default)">736, 532</Value>
     </Setting>
     <Setting Name="FormLocation" Type="System.Drawing.Point" Scope="User">
       <Value Profile="(Default)">0, 0</Value>
@@ -21,10 +21,10 @@
       <Value Profile="(Default)">Normal</Value>
     </Setting>
     <Setting Name="BrowserSplitter" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">89</Value>
+      <Value Profile="(Default)">143</Value>
     </Setting>
     <Setting Name="MainSplitter" Type="System.Int32" Scope="User">
-      <Value Profile="(Default)">230</Value>
+      <Value Profile="(Default)">231</Value>
     </Setting>
     <Setting Name="LargeSize" Type="System.Drawing.Size" Scope="User">
       <Value Profile="(Default)">300, 300</Value>
@@ -42,10 +42,10 @@
       <Value Profile="(Default)">False</Value>
     </Setting>
     <Setting Name="PreviewHeight" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">150</Value>
     </Setting>
     <Setting Name="KeywordsHeight" Type="System.UInt32" Scope="User">
-      <Value Profile="(Default)">100</Value>
+      <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="TextHeight" Type="System.UInt32" Scope="User">
       <Value Profile="(Default)">179</Value>

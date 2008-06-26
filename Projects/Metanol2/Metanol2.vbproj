@@ -170,6 +170,8 @@
     <None Include="Resources\Net 31.ico" />
     <None Include="Resources\Symbol-Delete.png" />
     <None Include="Resources\SaveAllHS.png" />
+    <None Include="Resources\RightArrowHS.png" />
+    <None Include="Resources\LeftArrowHS.png" />
     <Content Include="Resources\Up.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />

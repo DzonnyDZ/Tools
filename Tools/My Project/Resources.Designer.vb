@@ -99,6 +99,20 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property CopyIcon() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CopyIcon", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property CutIcon() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("CutIcon", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Delete() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Delete", resourceCulture)
@@ -203,6 +217,22 @@ Namespace My.Resources
         Friend ReadOnly Property Open() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Open", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Paste.
+        '''</summary>
+        Friend ReadOnly Property Paste() As String
+            Get
+                Return ResourceManager.GetString("Paste", resourceCulture)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property PasteIcon() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("PasteIcon", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

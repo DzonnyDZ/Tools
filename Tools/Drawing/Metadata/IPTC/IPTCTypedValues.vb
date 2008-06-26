@@ -840,9 +840,12 @@ Namespace DrawingT.MetadataT
                 Dim ret As New List(Of StringEnum)(values.Count)
                 For Each item As Byte() In values
                     If item Is Nothing OrElse item.Length = 0 Then
-                        Try
-                            ret.Add(StringEnum.GetInstance(Type, ""))
-                        Catch ex As InvalidEnumArgumentException : End Try
+                        Dim attr = Type.GetAttribute(Of RestrictAttribute)()
+                        If attr Is Nothing OrElse Not attr.Restrict Then 'Restricted enum can never be an empty string
+                            Try
+                                ret.Add(StringEnum.GetInstance(Type, ""))
+                            Catch ex As InvalidEnumArgumentException : End Try
+                        End If
                     Else
                         Dim str As String = System.Text.Encoding.ASCII.GetString(item)
                         ret.Add(StringEnum.GetInstance(Type, str))

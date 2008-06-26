@@ -43,8 +43,18 @@ Namespace ExtensionsT
             For Each item In strs
                 If i > 0 Then b.Append(separator)
                 b.Append(item)
+                i += 1
             Next
             Return b.ToString
+        End Function
+        ''' <summary>Returns a zero-based, one-dimensional array containing a specified number of substrings.</summary>
+        ''' <param name="Expression">Required. String expression containing substrings and delimiters.</param>
+        ''' <param name="Delimiter">Optional. Any single character used to identify substring limits. If Delimiter is omitted, the space character (" ") is assumed to be the delimiter.</param>
+        ''' <param name="Limit">Optional. Maximum number of substrings into which the input string should be split. The default, –1, indicates that the input string should be split at every occurrence of the Delimiter string.</param>
+        ''' <returns>String array. If Expression is a zero-length string (""), Split returns a single-element array containing a zero-length string. If Delimiter is a zero-length string, or if it does not appear anywhere in Expression, Split returns a single-element array containing the entire Expression string.</returns>
+        ''' <seelaso cref="String.Split"/><seelaso cref="Microsoft.VisualBasic.Split"/>
+        <Extension()> Public Function Split(ByVal Expression As String, ByVal Delimiter As String, Optional ByVal Limit As Integer = -1) As String()
+            Return Microsoft.VisualBasic.Split(Expression, Delimiter, Limit, CompareMethod.Binary)
         End Function
     End Module
 End Namespace

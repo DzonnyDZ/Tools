@@ -83,8 +83,13 @@ Partial Class frmMain
         Me.tmiFile = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiBrowse = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiGoTo = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiSaveAll = New System.Windows.Forms.ToolStripMenuItem
         Me.tssFileSep1 = New System.Windows.Forms.ToolStripSeparator
         Me.tmiExit = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiView = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiRefresh = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiNext = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiPrevious = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiTools = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiOptions = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiHelp = New System.Windows.Forms.ToolStripMenuItem
@@ -96,7 +101,6 @@ Partial Class frmMain
         Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
         Me.bgwSave = New System.ComponentModel.BackgroundWorker
-        Me.tmiSaveAll = New System.Windows.Forms.ToolStripMenuItem
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
@@ -230,13 +234,13 @@ Partial Class frmMain
         '
         Me.flpCommon.Controls.Add(Me.panImage)
         Me.flpCommon.Controls.Add(Me.sptImage)
+        Me.flpCommon.Controls.Add(Me.fraTitle)
+        Me.flpCommon.Controls.Add(Me.sptTitle)
+        Me.flpCommon.Controls.Add(Me.fraLocation)
         Me.flpCommon.Controls.Add(Me.fraKeywords)
         Me.flpCommon.Controls.Add(Me.sptKeywords)
         Me.flpCommon.Controls.Add(Me.fraAuthor)
-        Me.flpCommon.Controls.Add(Me.fraLocation)
         Me.flpCommon.Controls.Add(Me.fraStatus)
-        Me.flpCommon.Controls.Add(Me.fraTitle)
-        Me.flpCommon.Controls.Add(Me.sptTitle)
         Me.flpCommon.Dock = System.Windows.Forms.DockStyle.Fill
         Me.flpCommon.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
         Me.flpCommon.Location = New System.Drawing.Point(3, 3)
@@ -312,7 +316,7 @@ Partial Class frmMain
         'fraKeywords
         '
         Me.fraKeywords.Controls.Add(Me.kweKeywords)
-        Me.fraKeywords.Location = New System.Drawing.Point(0, 103)
+        Me.fraKeywords.Location = New System.Drawing.Point(202, 0)
         Me.fraKeywords.Margin = New System.Windows.Forms.Padding(0)
         Me.fraKeywords.MinimumSize = New System.Drawing.Size(0, 100)
         Me.fraKeywords.Name = "fraKeywords"
@@ -336,7 +340,7 @@ Partial Class frmMain
         'sptKeywords
         '
         Me.sptKeywords.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptKeywords.Location = New System.Drawing.Point(0, 203)
+        Me.sptKeywords.Location = New System.Drawing.Point(202, 100)
         Me.sptKeywords.Margin = New System.Windows.Forms.Padding(0)
         Me.sptKeywords.Name = "sptKeywords"
         Me.sptKeywords.Size = New System.Drawing.Size(3, 3)
@@ -348,7 +352,7 @@ Partial Class frmMain
         Me.fraAuthor.AutoSize = True
         Me.fraAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.fraAuthor.Controls.Add(Me.tlpAuthor)
-        Me.fraAuthor.Location = New System.Drawing.Point(0, 206)
+        Me.fraAuthor.Location = New System.Drawing.Point(202, 103)
         Me.fraAuthor.Margin = New System.Windows.Forms.Padding(0)
         Me.fraAuthor.Name = "fraAuthor"
         Me.fraAuthor.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
@@ -394,6 +398,7 @@ Partial Class frmMain
         Me.txtCopyright.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtCopyright.Location = New System.Drawing.Point(51, 0)
         Me.txtCopyright.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtCopyright.MaxLength = 128
         Me.txtCopyright.Name = "txtCopyright"
         Me.txtCopyright.Size = New System.Drawing.Size(100, 20)
         Me.txtCopyright.TabIndex = 1
@@ -414,6 +419,7 @@ Partial Class frmMain
         Me.txtCredit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtCredit.Location = New System.Drawing.Point(51, 20)
         Me.txtCredit.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtCredit.MaxLength = 32
         Me.txtCredit.Name = "txtCredit"
         Me.txtCredit.Size = New System.Drawing.Size(100, 20)
         Me.txtCredit.TabIndex = 3
@@ -423,7 +429,7 @@ Partial Class frmMain
         Me.fraLocation.AutoSize = True
         Me.fraLocation.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.fraLocation.Controls.Add(Me.tlpLocation)
-        Me.fraLocation.Location = New System.Drawing.Point(0, 262)
+        Me.fraLocation.Location = New System.Drawing.Point(0, 218)
         Me.fraLocation.Margin = New System.Windows.Forms.Padding(0)
         Me.fraLocation.Name = "fraLocation"
         Me.fraLocation.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
@@ -479,6 +485,7 @@ Partial Class frmMain
         Me.txtCity.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtCity.Location = New System.Drawing.Point(79, 0)
         Me.txtCity.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtCity.MaxLength = 32
         Me.txtCity.Name = "txtCity"
         Me.txtCity.Size = New System.Drawing.Size(121, 20)
         Me.txtCity.TabIndex = 1
@@ -500,6 +507,7 @@ Partial Class frmMain
         Me.cmbCountryCode.FormattingEnabled = True
         Me.cmbCountryCode.Location = New System.Drawing.Point(79, 20)
         Me.cmbCountryCode.Margin = New System.Windows.Forms.Padding(0)
+        Me.cmbCountryCode.MaxLength = 3
         Me.cmbCountryCode.Name = "cmbCountryCode"
         Me.cmbCountryCode.Size = New System.Drawing.Size(121, 21)
         Me.cmbCountryCode.TabIndex = 5
@@ -520,6 +528,7 @@ Partial Class frmMain
         Me.txtCountry.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtCountry.Location = New System.Drawing.Point(79, 41)
         Me.txtCountry.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtCountry.MaxLength = 64
         Me.txtCountry.Name = "txtCountry"
         Me.txtCountry.Size = New System.Drawing.Size(121, 20)
         Me.txtCountry.TabIndex = 7
@@ -540,6 +549,7 @@ Partial Class frmMain
         Me.txtProvince.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtProvince.Location = New System.Drawing.Point(79, 61)
         Me.txtProvince.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtProvince.MaxLength = 32
         Me.txtProvince.Name = "txtProvince"
         Me.txtProvince.Size = New System.Drawing.Size(121, 20)
         Me.txtProvince.TabIndex = 9
@@ -560,6 +570,7 @@ Partial Class frmMain
         Me.txtSublocation.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtSublocation.Location = New System.Drawing.Point(79, 81)
         Me.txtSublocation.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtSublocation.MaxLength = 32
         Me.txtSublocation.Name = "txtSublocation"
         Me.txtSublocation.Size = New System.Drawing.Size(121, 20)
         Me.txtSublocation.TabIndex = 11
@@ -569,7 +580,7 @@ Partial Class frmMain
         Me.fraStatus.AutoSize = True
         Me.fraStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.fraStatus.Controls.Add(Me.tlpStatus)
-        Me.fraStatus.Location = New System.Drawing.Point(202, 0)
+        Me.fraStatus.Location = New System.Drawing.Point(202, 159)
         Me.fraStatus.Margin = New System.Windows.Forms.Padding(0)
         Me.fraStatus.Name = "fraStatus"
         Me.fraStatus.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
@@ -615,6 +626,7 @@ Partial Class frmMain
         Me.txtEditStatus.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtEditStatus.Location = New System.Drawing.Point(56, 0)
         Me.txtEditStatus.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtEditStatus.MaxLength = 64
         Me.txtEditStatus.Name = "txtEditStatus"
         Me.txtEditStatus.Size = New System.Drawing.Size(120, 20)
         Me.txtEditStatus.TabIndex = 1
@@ -644,7 +656,7 @@ Partial Class frmMain
         Me.fraTitle.AutoSize = True
         Me.fraTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.fraTitle.Controls.Add(Me.tlpTitle)
-        Me.fraTitle.Location = New System.Drawing.Point(202, 56)
+        Me.fraTitle.Location = New System.Drawing.Point(0, 103)
         Me.fraTitle.Margin = New System.Windows.Forms.Padding(0)
         Me.fraTitle.MinimumSize = New System.Drawing.Size(0, 100)
         Me.fraTitle.Name = "fraTitle"
@@ -716,6 +728,7 @@ Partial Class frmMain
         Me.tlpTitle.SetColumnSpan(Me.txtCaption, 2)
         Me.txtCaption.Location = New System.Drawing.Point(3, 33)
         Me.txtCaption.Margin = New System.Windows.Forms.Padding(3, 0, 0, 0)
+        Me.txtCaption.MaxLength = 2000
         Me.txtCaption.Multiline = True
         Me.txtCaption.Name = "txtCaption"
         Me.txtCaption.ScrollBars = System.Windows.Forms.ScrollBars.Both
@@ -725,7 +738,7 @@ Partial Class frmMain
         'sptTitle
         '
         Me.sptTitle.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptTitle.Location = New System.Drawing.Point(202, 170)
+        Me.sptTitle.Location = New System.Drawing.Point(0, 217)
         Me.sptTitle.Margin = New System.Windows.Forms.Padding(0)
         Me.sptTitle.Name = "sptTitle"
         Me.sptTitle.Size = New System.Drawing.Size(25, 1)
@@ -805,7 +818,7 @@ Partial Class frmMain
         'msnMain
         '
         Me.msnMain.Dock = System.Windows.Forms.DockStyle.None
-        Me.msnMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiFile, Me.tmiTools, Me.tmiHelp})
+        Me.msnMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiFile, Me.tmiView, Me.tmiTools, Me.tmiHelp})
         Me.msnMain.Location = New System.Drawing.Point(0, 0)
         Me.msnMain.Name = "msnMain"
         Me.msnMain.Size = New System.Drawing.Size(720, 24)
@@ -822,25 +835,66 @@ Partial Class frmMain
         'tmiBrowse
         '
         Me.tmiBrowse.Name = "tmiBrowse"
-        Me.tmiBrowse.Size = New System.Drawing.Size(176, 22)
+        Me.tmiBrowse.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
+        Me.tmiBrowse.Size = New System.Drawing.Size(219, 22)
         Me.tmiBrowse.Text = "&Browse for folder ..."
         '
         'tmiGoTo
         '
         Me.tmiGoTo.Name = "tmiGoTo"
-        Me.tmiGoTo.Size = New System.Drawing.Size(176, 22)
+        Me.tmiGoTo.Size = New System.Drawing.Size(219, 22)
         Me.tmiGoTo.Text = "&Go to folder ..."
+        '
+        'tmiSaveAll
+        '
+        Me.tmiSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        Me.tmiSaveAll.Name = "tmiSaveAll"
+        Me.tmiSaveAll.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
+        Me.tmiSaveAll.Size = New System.Drawing.Size(219, 22)
+        Me.tmiSaveAll.Text = "&Save all"
         '
         'tssFileSep1
         '
         Me.tssFileSep1.Name = "tssFileSep1"
-        Me.tssFileSep1.Size = New System.Drawing.Size(173, 6)
+        Me.tssFileSep1.Size = New System.Drawing.Size(216, 6)
         '
         'tmiExit
         '
         Me.tmiExit.Name = "tmiExit"
-        Me.tmiExit.Size = New System.Drawing.Size(176, 22)
+        Me.tmiExit.ShortcutKeyDisplayString = "Alt+F4"
+        Me.tmiExit.Size = New System.Drawing.Size(219, 22)
         Me.tmiExit.Text = "&Exit"
+        '
+        'tmiView
+        '
+        Me.tmiView.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiRefresh, Me.tmiNext, Me.tmiPrevious})
+        Me.tmiView.Name = "tmiView"
+        Me.tmiView.Size = New System.Drawing.Size(44, 20)
+        Me.tmiView.Text = "&View"
+        '
+        'tmiRefresh
+        '
+        Me.tmiRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
+        Me.tmiRefresh.Name = "tmiRefresh"
+        Me.tmiRefresh.ShortcutKeyDisplayString = "F5"
+        Me.tmiRefresh.Size = New System.Drawing.Size(203, 22)
+        Me.tmiRefresh.Text = "&Refresh"
+        '
+        'tmiNext
+        '
+        Me.tmiNext.Image = Global.Tools.Metanol.My.Resources.Resources.RightArrowHS
+        Me.tmiNext.Name = "tmiNext"
+        Me.tmiNext.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.Right), System.Windows.Forms.Keys)
+        Me.tmiNext.Size = New System.Drawing.Size(203, 22)
+        Me.tmiNext.Text = "Select &next"
+        '
+        'tmiPrevious
+        '
+        Me.tmiPrevious.Image = Global.Tools.Metanol.My.Resources.Resources.LeftArrowHS
+        Me.tmiPrevious.Name = "tmiPrevious"
+        Me.tmiPrevious.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.Left), System.Windows.Forms.Keys)
+        Me.tmiPrevious.Size = New System.Drawing.Size(203, 22)
+        Me.tmiPrevious.Text = "Select &previous"
         '
         'tmiTools
         '
@@ -874,7 +928,7 @@ Partial Class frmMain
         Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
         Me.tosMain.Location = New System.Drawing.Point(3, 24)
         Me.tosMain.Name = "tosMain"
-        Me.tosMain.Size = New System.Drawing.Size(135, 25)
+        Me.tosMain.Size = New System.Drawing.Size(104, 25)
         Me.tosMain.TabIndex = 1
         '
         'tsbBack
@@ -918,14 +972,6 @@ Partial Class frmMain
         'bgwSave
         '
         Me.bgwSave.WorkerReportsProgress = True
-        '
-        'tmiSaveAll
-        '
-        Me.tmiSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
-        Me.tmiSaveAll.Name = "tmiSaveAll"
-        Me.tmiSaveAll.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.tmiSaveAll.Size = New System.Drawing.Size(176, 22)
-        Me.tmiSaveAll.Text = "&Save all"
         '
         'frmMain
         '
@@ -1059,5 +1105,9 @@ Partial Class frmMain
     Friend WithEvents bgwSave As System.ComponentModel.BackgroundWorker
     Friend WithEvents tsbSaveAll As System.Windows.Forms.ToolStripButton
     Friend WithEvents tmiSaveAll As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmiView As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmiRefresh As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmiNext As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmiPrevious As System.Windows.Forms.ToolStripMenuItem
 
 End Class

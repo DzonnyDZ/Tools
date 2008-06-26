@@ -93,7 +93,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("495, 240")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("736, 532")>  _
         Public Property FormSize() As Global.System.Drawing.Size
             Get
                 Return CType(Me("FormSize"),Global.System.Drawing.Size)
@@ -129,7 +129,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("89")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("143")>  _
         Public Property BrowserSplitter() As Integer
             Get
                 Return CType(Me("BrowserSplitter"),Integer)
@@ -141,7 +141,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("230")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("231")>  _
         Public Property MainSplitter() As Integer
             Get
                 Return CType(Me("MainSplitter"),Integer)
@@ -214,7 +214,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("150")>  _
         Public Property PreviewHeight() As UInteger
             Get
                 Return CType(Me("PreviewHeight"),UInteger)
@@ -226,7 +226,7 @@ Namespace My
         
         <Global.System.Configuration.UserScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("100")>  _
+         Global.System.Configuration.DefaultSettingValueAttribute("200")>  _
         Public Property KeywordsHeight() As UInteger
             Get
                 Return CType(Me("KeywordsHeight"),UInteger)

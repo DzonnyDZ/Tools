@@ -40,8 +40,14 @@ Namespace WindowsT.FormsT
             Me.tmiManage = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiSynonyms = New System.Windows.Forms.ToolStripMenuItem
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
+            Me.cmsContext = New System.Windows.Forms.ContextMenuStrip(Me.components)
+            Me.tmiCut = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiCopy = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiPaste = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiDelete = New System.Windows.Forms.ToolStripMenuItem
             Me.tlpTop.SuspendLayout()
             Me.cmsThesaurus.SuspendLayout()
+            Me.cmsContext.SuspendLayout()
             Me.SuspendLayout()
             '
             'txtEdit
@@ -72,6 +78,7 @@ Namespace WindowsT.FormsT
             '
             'stmStatus
             '
+            Me.stmStatus.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
             resources.ApplyResources(Me.stmStatus, "stmStatus")
             Me.stmStatus.AutoChanged = False
             Me.stmStatus.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
@@ -152,6 +159,38 @@ Namespace WindowsT.FormsT
             Me.tmiSynonyms.Image = Global.Tools.My.Resources.Resources.T
             Me.tmiSynonyms.Name = "tmiSynonyms"
             '
+            'cmsContext
+            '
+            Me.cmsContext.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiCut, Me.tmiCopy, Me.tmiPaste, Me.tmiDelete})
+            Me.cmsContext.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Table
+            Me.cmsContext.Name = "cmsThesaurus"
+            Me.cmsContext.RenderMode = System.Windows.Forms.ToolStripRenderMode.Professional
+            resources.ApplyResources(Me.cmsContext, "cmsContext")
+            '
+            'tmiCut
+            '
+            Me.tmiCut.Image = Global.Tools.My.Resources.Resources.CutIcon
+            Me.tmiCut.Name = "tmiCut"
+            resources.ApplyResources(Me.tmiCut, "tmiCut")
+            '
+            'tmiCopy
+            '
+            Me.tmiCopy.Image = Global.Tools.My.Resources.Resources.CopyIcon
+            Me.tmiCopy.Name = "tmiCopy"
+            resources.ApplyResources(Me.tmiCopy, "tmiCopy")
+            '
+            'tmiPaste
+            '
+            Me.tmiPaste.Image = Global.Tools.My.Resources.Resources.PasteIcon
+            Me.tmiPaste.Name = "tmiPaste"
+            resources.ApplyResources(Me.tmiPaste, "tmiPaste")
+            '
+            'tmiDelete
+            '
+            Me.tmiDelete.Image = Global.Tools.My.Resources.Resources.Delete
+            Me.tmiDelete.Name = "tmiDelete"
+            resources.ApplyResources(Me.tmiDelete, "tmiDelete")
+            '
             'KeyWordsEditor
             '
             resources.ApplyResources(Me, "$this")
@@ -162,6 +201,7 @@ Namespace WindowsT.FormsT
             Me.tlpTop.ResumeLayout(False)
             Me.tlpTop.PerformLayout()
             Me.cmsThesaurus.ResumeLayout(False)
+            Me.cmsContext.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -181,6 +221,11 @@ Namespace WindowsT.FormsT
         Friend WithEvents cmdAdd As System.Windows.Forms.Button
         Friend WithEvents tmiSynonyms As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents totToolTip As System.Windows.Forms.ToolTip
+        Friend WithEvents cmsContext As System.Windows.Forms.ContextMenuStrip
+        Friend WithEvents tmiCut As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiCopy As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiPaste As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tmiDelete As System.Windows.Forms.ToolStripMenuItem
 
     End Class
 End Namespace

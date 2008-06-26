@@ -3937,7 +3937,7 @@ Namespace DrawingT.MetadataT
 			End Get
 			Set
 				Try
-					TextWithSpaces_Value(DataSetIdentification.CopyrightNotice, 128, false) = New List(Of String)(New String(){value})
+                    TextWithSpaces_Value(DataSetIdentification.CopyrightNotice, 128, False) = New List(Of String)(New String() {Value})
 				Catch ex As Exception
 					Throw New IPTCSetException(ex)
 				End Try

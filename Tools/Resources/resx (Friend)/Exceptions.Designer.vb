@@ -1392,6 +1392,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Property is read only.
+        '''</summary>
+        Friend Shared ReadOnly Property PropertyIsReadOnly() As String
+            Get
+                Return ResourceManager.GetString("PropertyIsReadOnly", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Record must be from 0 to 9.
         '''</summary>
         Friend Shared ReadOnly Property RecordMustBeFrom0To9() As String

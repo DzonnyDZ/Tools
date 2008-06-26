@@ -1844,11 +1844,12 @@ Namespace DrawingT.MetadataT
                 ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
                 ''' <param name="value">Value to be converted to <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></param>
                 ''' <returns><see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/> initialized by <paramref name="value"/></returns>
-                ''' <exception cref="NullReferenceException"><paramref name="context"/> is null</exception>
+                ''' <exception cref="ArgumentNullException"><paramref name="context"/> is null</exception>
                 ''' <exception cref="System.MissingMethodException">Cannot create an instance of generic class <see cref="StringEnum(Of TEnum)"/>. The constructor is missing.</exception>
                 ''' <exception cref="System.MemberAccessException">Cannot create an instance of generic class <see cref="StringEnum(Of TEnum)"/>. E.g. the class is abstract.</exception>
                 ''' <exception cref="System.Reflection.TargetInvocationException">Constructor of <see cref="StringEnum(Of TEnum)"/> has thrown an exception.</exception>
                 Public Overloads Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As StringEnum
+                    If context Is Nothing Then Throw New ArgumentNullException("context")
                     Return Activator.CreateInstance(context.PropertyDescriptor.PropertyType, value)
                 End Function
                 ''' <summary>Performs conversion from <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/> to <see cref="String"/></summary>
@@ -1863,23 +1864,26 @@ Namespace DrawingT.MetadataT
                 ''' <summary>Returns whether this object supports a standard set of values that can be picked from a list, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <returns>True when <paramref name="context"/>'s <see cref="ITypeDescriptorContext.PropertyDescriptor"/>'s <see cref="PropertyDescriptor.PropertyType"/> is <see cref="StringEnum(Of TEnum)"/></returns>
-                ''' <exception cref="NullReferenceException"><paramref name="context"/> is null</exception>
+                ''' <exception cref="ArgumentNullException"><paramref name="context"/> is null</exception>
                 Public Overrides Function GetStandardValuesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    If context Is Nothing Then Throw New ArgumentNullException("context")
                     Return context.PropertyDescriptor.PropertyType.IsGenericType AndAlso GetType(StringEnum(Of )).Equals(context.PropertyDescriptor.PropertyType.GetGenericTypeDefinition)
                 End Function
                 ''' <summary>Returns whether the collection of standard values returned from <see cref="GetStandardValues"/> is an exclusive list of possible values, using the specified context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
                 ''' <returns>True when underlying enumeration of <paramref name="context"/>'s <see cref="ITypeDescriptorContext.PropertyDescriptor"/>'s <see cref="PropertyDescriptor.PropertyType"/> has no <see cref="RestrictAttribute"/> or its <see cref="RestrictAttribute"/> has <see cref="RestrictAttribute.Restrict"/> True</returns>
-                ''' <exception cref="NullReferenceException"><paramref name="context"/> is null</exception>
+                ''' <exception cref="ArgumentNullException"><paramref name="context"/> is null</exception>
                 Public Overrides Function GetStandardValuesExclusive(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    If context Is Nothing Then Throw New ArgumentNullException("context")
                     Dim Attrs As Object() = context.PropertyDescriptor.PropertyType.GetGenericArguments(0).GetCustomAttributes(GetType(RestrictAttribute), False)
                     Return Attrs Is Nothing OrElse Attrs.Length = 0 OrElse DirectCast(Attrs(0), RestrictAttribute).Restrict
                 End Function
                 ''' <summary>Returns a collection of standard values for the data type this type converter is designed for when provided with a format context.</summary>
                 ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context that can be used to extract additional information about the environment from which this converter is invoked. This parameter or properties of this parameter should not be null.</param>
                 ''' <returns>A <see cref="System.ComponentModel.TypeConverter.StandardValuesCollection"/> that holds a standard set of valid values obtained from underlying enumeration of <paramref name="context"/>'s <see cref="ITypeDescriptorContext.PropertyDescriptor"/>'s <see cref="PropertyDescriptor.PropertyType"/> as values of <see cref="Xml.Serialization.XmlEnumAttribute"/> (preffred) or names of items</returns>
-                ''' <exception cref="NullReferenceException"><paramref name="context"/> is null</exception>
+                ''' <exception cref="ArgumentNullException"><paramref name="context"/> is null</exception>
                 Public Overrides Function GetStandardValues(ByVal context As System.ComponentModel.ITypeDescriptorContext) As System.ComponentModel.TypeConverter.StandardValuesCollection
+                    If context Is Nothing Then Throw New ArgumentNullException("context")
                     Dim ret As New List(Of StringEnum)
                     For Each field As Reflection.FieldInfo In context.PropertyDescriptor.PropertyType.GetGenericArguments(0).GetFields(Reflection.BindingFlags.Public Or Reflection.BindingFlags.Static Or Reflection.BindingFlags.GetField)
                         If field.IsLiteral Then
@@ -2115,6 +2119,222 @@ Namespace DrawingT.MetadataT
             Public Sub New(ByVal EnumValue As TEnum)
                 Me.EnumValue = EnumValue
             End Sub
+            ''' <summary>Extends <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum.Converter"/> so that it works even if it is given with null <see cref="ITypeDescriptorContext"/>. Supplies very simple fake own <see cref="ITypeDescriptorContext"/>.</summary>
+            Public Shadows Class Converter
+                Inherits StringEnum.Converter
+                ''' <summary>Gets substitution <see cref="ITypeDescriptorContext"/></summary>
+                Private Shared Function GetPropertyDescriptor() As EnumPropertyDescriptor
+                    Return New EnumPropertyDescriptor
+                End Function
+                ''' <summary>Very simple, context-less, read-only implementation of <see cref="PropertyDescriptor"/> and <see cref="ITypeDescriptorContext"/></summary>
+                ''' <remarks>This class simply describes type <see cref="StringEnum(Of T)"/>[<typeparamref name="TEnum"/>]</remarks>
+                Private NotInheritable Class EnumPropertyDescriptor
+                    Inherits PropertyDescriptor
+                    Implements System.ComponentModel.ITypeDescriptorContext
+                    ''' <summary>CTor</summary>
+                    Public Sub New()
+                        MyBase.new("property", New Attribute() {})
+                    End Sub
+#Region "ITypeDescriptorContext"
+                    ''' <summary>Gets the container representing this <see cref="T:System.ComponentModel.TypeDescriptor" /> request.</summary>
+                    ''' <returns>Null</returns>
+                    Private ReadOnly Property Container() As System.ComponentModel.IContainer Implements System.ComponentModel.ITypeDescriptorContext.Container
+                        Get
+                            Return Nothing
+                        End Get
+                    End Property
+
+                    ''' <summary>Gets the object that is connected with this type descriptor request.</summary>
+                    ''' <returns>Null</returns>
+                    Private ReadOnly Property Instance() As Object Implements System.ComponentModel.ITypeDescriptorContext.Instance
+                        Get
+                            Return Nothing
+                        End Get
+                    End Property
+
+                    ''' <summary>Does nothing</summary>
+                    Private Sub OnComponentChanged() Implements System.ComponentModel.ITypeDescriptorContext.OnComponentChanged
+                    End Sub
+
+                    ''' <summary>Does nothing</summary>
+                    ''' <returns>True</returns>
+                    Private Function OnComponentChanging() As Boolean Implements System.ComponentModel.ITypeDescriptorContext.OnComponentChanging
+                        Return True
+                    End Function
+
+                    ''' <summary>Gets the <see cref="T:System.ComponentModel.PropertyDescriptor" /> that is associated with the given context item.</summary>
+                    ''' <returns>This instance</returns>
+                    Public ReadOnly Property PropertyDescriptor() As System.ComponentModel.PropertyDescriptor Implements System.ComponentModel.ITypeDescriptorContext.PropertyDescriptor
+                        Get
+                            Return Me
+                        End Get
+                    End Property
+
+                    ''' <summary>Gets the service object of the specified type.</summary>
+                    ''' <returns>null</returns>
+                    ''' <param name="serviceType">Ignored.</param>
+                    ''' <filterpriority>2</filterpriority>
+                    Private Function GetService(ByVal serviceType As System.Type) As Object Implements System.IServiceProvider.GetService
+                        Return Nothing
+                    End Function
+#End Region
+#Region "PropertyDescriptor"
+                    ''' <summary>Returns whether resetting an object changes its value.</summary>
+                    ''' <returns>false</returns>
+                    ''' <param name="component">Ignored.</param>
+                    Public Overrides Function CanResetValue(ByVal component As Object) As Boolean
+                        Return False
+                    End Function
+
+                    ''' <summary>Gets the type of the component this property is bound to.</summary>
+                    ''' <returns>The <see cref="Object"/> type</returns>
+                    Public Overrides ReadOnly Property ComponentType() As System.Type
+                        Get
+                            Return GetType(Object)
+                        End Get
+                    End Property
+
+                    ''' <summary>Gets the current value of the property on a component.</summary>
+                    ''' <returns>Default value of type <see cref="StringEnum(Of T)"/>[<typeparamref name="TEnum"/>]</returns>
+                    ''' <param name="component">Ignored</param>
+                    Public Overrides Function GetValue(ByVal component As Object) As Object
+                        Return Activator.CreateInstance(GetType(StringEnum(Of TEnum)), New Object() {})
+                    End Function
+
+                    ''' <summary>Gets a value indicating whether this property is read-only.</summary>
+                    ''' <returns>true</returns>
+                    Public Overrides ReadOnly Property IsReadOnly() As Boolean
+                        Get
+                            Return True
+                        End Get
+                    End Property
+
+                    ''' <summary>Gets the type of the property.</summary>
+                    ''' <returns>Type <see cref="StringEnum(Of T)"/>[<typeparamref name="TEnum"/>]</returns>
+                    Public Overrides ReadOnly Property PropertyType() As System.Type
+                        Get
+                            Return GetType(StringEnum(Of TEnum))
+                        End Get
+                    End Property
+
+                    ''' <summary>Not supported</summary>
+                    ''' <param name="component">Ignored</param>
+                    ''' <exception cref="NotSupportedException">Always</exception>
+                    Public Overrides Sub ResetValue(ByVal component As Object)
+                        Throw New NotSupportedException(ResourcesT.Exceptions.PropertyIsReadOnly)
+                    End Sub
+
+                    ''' <summary>Not supported</summary>
+                    ''' <param name="component">Ignored</param>
+                    ''' <param name="value">Ignored</param>
+                    ''' <exception cref="NotSupportedException">Always</exception>
+                    Public Overrides Sub SetValue(ByVal component As Object, ByVal value As Object)
+                        Throw New NotSupportedException(ResourcesT.Exceptions.PropertyIsReadOnly)
+                    End Sub
+
+                    ''' <summary>Determines a value indicating whether the value of this property needs to be persisted.</summary>
+                    ''' <returns>true</returns>
+                    ''' <param name="component">Ignored</param>
+                    Public Overrides Function ShouldSerializeValue(ByVal component As Object) As Boolean
+                        Return True
+                    End Function
+#End Region
+                End Class
+#Region "overrides"
+                ''' <summary>Returns a collection of standard values for the data type this type converter is designed for when provided with a format context.</summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context that can be used to extract additional information about the environment from which this converter is invoked. This parameter or properties of this parameter should not be null.</param>
+                ''' <returns>A <see cref="System.ComponentModel.TypeConverter.StandardValuesCollection"/> that holds a standard set of valid values obtained from underlying enumeration of <paramref name="context"/>'s <see cref="ITypeDescriptorContext.PropertyDescriptor"/>'s <see cref="PropertyDescriptor.PropertyType"/> as values of <see cref="Xml.Serialization.XmlEnumAttribute"/> (preffred) or names of items</returns>
+                ''' <remarks>Unlike <see cref="M:Tools.DrawingT.MetadataT.IPTC.StringEnum.Converter.GetStandardValues(System.ComponentModel.ITypeDescriptorContext)"/>, this method works even if <paramref name="context"/> is null</remarks>
+                Public Overrides Function GetStandardValues(ByVal context As System.ComponentModel.ITypeDescriptorContext) As System.ComponentModel.TypeConverter.StandardValuesCollection
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.GetStandardValues(context)
+                End Function
+                ''' <summary>Returns whether this object supports a standard set of values that can be picked from a list, using the specified context.</summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>True when <paramref name="context"/>'s <see cref="ITypeDescriptorContext.PropertyDescriptor"/>'s <see cref="PropertyDescriptor.PropertyType"/> is <see cref="StringEnum(Of TEnum)"/></returns>
+                ''' <remarks>Unlike <see cref="M:Tools.DrawingT.MetadataT.IPTC.StringEnum.Converter.GetStandardValuesSupported(System.ComponentModel.ITypeDescriptorContext)"/>, this method works even if <paramref name="context"/> is null</remarks>
+                Public Overrides Function GetStandardValuesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.GetStandardValuesSupported(context)
+                End Function
+                ''' <summary>Returns whether the collection of standard values returned from <see cref="GetStandardValues"/> is an exclusive list of possible values, using the specified context.</summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>True when underlying enumeration of <paramref name="context"/>'s <see cref="ITypeDescriptorContext.PropertyDescriptor"/>'s <see cref="PropertyDescriptor.PropertyType"/> has no <see cref="RestrictAttribute"/> or its <see cref="RestrictAttribute"/> has <see cref="RestrictAttribute.Restrict"/> True</returns>
+                ''' <remarks>Unlike <see cref="M:Tools.DrawingT.MetadataT.IPTC.StringEnum.Converter.GetStandardValuesExclusive(System.ComponentModel.ITypeDescriptorContext)"/>, this method works even if <paramref name="context"/> is null</remarks>
+                Public Overrides Function GetStandardValuesExclusive(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.GetStandardValuesExclusive(context)
+                End Function
+                ''' <summary>Performs conversion from <see cref="String"/> to <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+                ''' <param name="value">Value to be converted to <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></param>
+                ''' <returns><see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/> initialized by <paramref name="value"/></returns>
+                ''' <exception cref="System.MissingMethodException">Cannot create an instance of generic class <see cref="StringEnum(Of TEnum)"/>. The constructor is missing.</exception>
+                ''' <exception cref="System.MemberAccessException">Cannot create an instance of generic class <see cref="StringEnum(Of TEnum)"/>. E.g. the class is abstract.</exception>
+                ''' <exception cref="System.Reflection.TargetInvocationException">Constructor of <see cref="StringEnum(Of TEnum)"/> has thrown an exception.</exception>
+                ''' <remarks>Unlike <see cref="M:Tools.DrawingT.MetadataT.IPTC.StringEnum.Converter.ConvertFrom(System.ComponentModel.ITypeDescriptorContext,System.Globalization.CultureInfo,System.String)"/>, this method works even if <paramref name="context"/> is null</remarks>
+                Public Overrides Function ConvertFrom(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As String) As StringEnum
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.ConvertFrom(context, culture, value)
+                End Function
+                ''' <summary>If overriden in derived class performs conversion form null to type <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></summary>
+                ''' <param name="culture">The <see cref="System.Globalization.CultureInfo"/> to use as the current culture.</param>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <returns>Null value converted to type <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></returns>
+                Public Overrides Function ConvertFromNull(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo) As StringEnum
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.ConvertFromNull(context, culture)
+                End Function
+                ''' <summary>Performs conversion from <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/> to <see cref="String"/></summary>
+                ''' <param name="context"> An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="culture">A <see cref="System.Globalization.CultureInfo"/>. If null is passed, the current culture is assumed.</param>
+                ''' <param name="value">Value to be converted</param>
+                ''' <returns>Representation of <paramref name="value"/> in <see cref="String"/></returns>
+                ''' <remarks>Calls <see cref="M:Tools.DrawingT.MetadataT.IPTC.StringEnum.StringValue"/></remarks>
+                Public Overrides Function ConvertTo(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal culture As System.Globalization.CultureInfo, ByVal value As StringEnum) As String
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.ConvertTo(context, culture, value)
+                End Function
+                ''' <summary>Returns whether changing a value on this object requires a call to the <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)" /> method to create a new value.</summary>
+                ''' <returns>true if changing a property on this object requires a call to <see cref="M:System.ComponentModel.TypeConverter.CreateInstance(System.Collections.IDictionary)" /> to create a new value; otherwise, false.</returns>
+                Public Overrides Function GetCreateInstanceSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.GetCreateInstanceSupported(context)
+                End Function
+                ''' <summary>Returns a collection of properties for the type of array specified by the value parameter, using the specified context and attributes.</summary>
+                ''' <returns>A <see cref="T:System.ComponentModel.PropertyDescriptorCollection" /> with the properties that are exposed for this data type, or null if there are no properties.</returns>
+                ''' <param name="context">An <see cref="T:System.ComponentModel.ITypeDescriptorContext" /> that provides a format context. </param>
+                ''' <param name="value">An <see cref="T:System.Object" /> that specifies the type of array for which to get properties. </param>
+                ''' <param name="attributes">An array of type <see cref="T:System.Attribute" /> that is used as a filter. </param>
+                Public Overrides Function GetProperties(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As Object, ByVal attributes() As System.Attribute) As System.ComponentModel.PropertyDescriptorCollection
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.GetProperties(context, value, attributes)
+                End Function
+                ''' <summary>Returns whether this object supports properties.</summary>
+                ''' <returns>true if <see cref="M:System.ComponentModel.TypeConverter.GetProperties(System.Object)" /> should be called to find the properties of this object; otherwise, false.</returns>
+                Public Overrides Function GetPropertiesSupported(ByVal context As System.ComponentModel.ITypeDescriptorContext) As Boolean
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.GetPropertiesSupported(context)
+                End Function
+                ''' <summary>Returns whether the given instance of <see cref="String"/> is valid for type <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/></summary>
+                ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>
+                ''' <param name="value">Value to test validity</param>
+                ''' <returns>true if the specified value is valid for this type <see cref="T:Tools.DrawingT.MetadataT.IPTC.StringEnum"/>; otherwise, false.</returns>
+                ''' <remarks>If not overriden in derived class thi method calls <see cref="ConvertFrom"/> and checks if it throws an exception or not.</remarks>
+                Public Overrides Function IsValid(ByVal context As System.ComponentModel.ITypeDescriptorContext, ByVal value As String) As Boolean
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.IsValid(context, value)
+                End Function
+                ''' <summary>Re-creates an <see cref="System.Object"/> given a set of property values for the object.</summary>
+                ''' <param name="propertyValues">An <see cref="System.Collections.IDictionary"/> that represents a dictionary of new property values.</param>
+                ''' <returns>An <see cref="System.Object"/> representing the given <see cref="System.Collections.IDictionary"/>, or null if the object cannot be created. This method always returns null.</returns>
+                Public Overrides Function CreateInstance(ByVal propertyValues As System.Collections.IDictionary, ByVal context As System.ComponentModel.ITypeDescriptorContext) As StringEnum
+                    If context Is Nothing Then context = GetPropertyDescriptor()
+                    Return MyBase.CreateInstance(propertyValues, context)
+                End Function
+#End Region
+            End Class
         End Class
 #End Region
         ''' <summary>Returns <see cref="Type"/> that is used to store values of particular <see cref="IPTCTypes">IPTC type</see></summary>

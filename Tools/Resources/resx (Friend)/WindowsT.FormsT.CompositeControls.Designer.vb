@@ -191,6 +191,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Indicates if conext menu on ListBox with keywords is enabled.
+        '''</summary>
+        Friend Shared ReadOnly Property ContextMenuEnabled_d() As String
+            Get
+                Return ResourceManager.GetString("ContextMenuEnabled_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Raised after Delete menu item is clicked.
         '''</summary>
         Friend Shared ReadOnly Property Delete_d() As String
@@ -390,6 +399,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to There are {0} lines of text in clipboard. Do you want to paste them as keywords?.
+        '''</summary>
+        Friend Shared ReadOnly Property PasteManyLines() As String
+            Get
+                Return ResourceManager.GetString("PasteManyLines", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Please wait....
         '''</summary>
         Friend Shared ReadOnly Property PleaseWait() As String
@@ -467,6 +485,15 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property SelectedName_d() As String
             Get
                 Return ResourceManager.GetString("SelectedName_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Indicates if keyboard shortcuts for clipboard manipulation are enabled.
+        '''</summary>
+        Friend Shared ReadOnly Property ShortcutsEnabled_d() As String
+            Get
+                Return ResourceManager.GetString("ShortcutsEnabled_d", resourceCulture)
             End Get
         End Property
         

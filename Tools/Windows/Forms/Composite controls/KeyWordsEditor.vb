@@ -14,7 +14,7 @@ Namespace WindowsT.FormsT
     <ComponentModelT.Prefix("kwe")> _
     <FirstVersion("06/26/2007")> _
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(KeyWordsEditor), LastChange:="06/18/2008")> _
+    <Version(1, 1, GetType(KeyWordsEditor), LastChange:="06/27/2008")> _
     Public Class KeyWordsEditor
         Implements IComparer(Of String)
 #Region "Auto complete"
@@ -452,11 +452,60 @@ Namespace WindowsT.FormsT
             End Get
         End Property
 
-        Private Sub lstKW_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lstKW.KeyDown
-            If e.KeyCode = Keys.Delete Then
-                RemoveSelectedItems()
-            End If
+        Private Sub lstKW_KeyDown(ByVal sender As ListBox, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lstKW.KeyDown
+            Select Case e.KeyData
+                Case Keys.Delete : RemoveSelectedItems() : e.Handled = True
+                Case Keys.C Or Keys.Control : If ShortcutsEnabled Then Copy() : e.Handled = True : e.SuppressKeyPress = True
+                Case Keys.X Or Keys.Control : If ShortcutsEnabled Then Cut() : e.Handled = True : e.SuppressKeyPress = True
+                Case Keys.V Or Keys.Control : If ShortcutsEnabled Then Paste() : e.Handled = True : e.SuppressKeyPress = True
+                Case Keys.A Or Keys.Control : sender.SelectedItems.Clear() : e.Handled = True : e.SuppressKeyPress = True
+                    For i As Integer = 0 To sender.Items.Count - 1 : sender.SelectedIndices.Add(i) : Next
+            End Select
         End Sub
+        ''' <summary>Copies actually selected keywords to clipboard</summary>
+        ''' <seelaso cref="Cut"/><seelaso cref="Paste"/>
+        ''' <remarks><see cref="KeyWordsEditor"/> uses clipboard format <see cref="TextDataFormat.UnicodeText"/> - one keyword on line</remarks>
+        Public Sub Copy()
+            Dim CopyData = lstKW.SelectedItems.OfType(Of String).Join(Environment.NewLine)
+            My.Computer.Clipboard.SetText(CopyData, TextDataFormat.UnicodeText)
+        End Sub
+        ''' <summary>Copies actually selected keywords to clipboard and removes them from editor</summary>
+        ''' <seelaso cref="Copy"/><seelaso cref="Paste"/>
+        ''' <remarks><see cref="KeyWordsEditor"/> uses clipboard format <see cref="TextDataFormat.UnicodeText"/> - one keyword on line</remarks>
+        Public Sub Cut()
+            Copy()
+            RemoveSelectedItems()
+        End Sub
+        ''' <summary>pastes keywords form clipboard to editor</summary>
+        ''' <seelaso cref="Cut"/><seelaso cref="Copy"/>
+        ''' <remarks><see cref="KeyWordsEditor"/> uses clipboard format <see cref="TextDataFormat.UnicodeText"/> - one keyword on line</remarks>
+        ''' <param name="SuppressMessageBoxes">True not to show any messages to the ueser (if false user may be promped when pasting more than 50 keywords or when any signgle keyword (line in text) is longer than 32 characters)</param>
+        ''' <returns>True if any keyword was added. False may be returned due empy clipboard, incompatible data in clipboard, user revocation or because all keywords wa already in list. Lines are separated by <see cref="Environment.NewLine"/> - any other separator causes improperly separated keywords to be pasted.</returns>
+        Public Function Paste(Optional ByVal SuppressMessageBoxes As Boolean = False) As Boolean
+            If My.Computer.Clipboard.ContainsText(TextDataFormat.UnicodeText) Then
+                Dim LinesA As String
+                Try : LinesA = My.Computer.Clipboard.GetText(TextDataFormat.UnicodeText)
+                Catch : Return False
+                End Try
+                Dim Lines = LinesA.Split(Environment.NewLine)
+                If Lines IsNot Nothing AndAlso Lines.Length > 0 Then
+                    If Lines.Count <= 50 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format(WindowsT.FormsT.CompositeControls.PasteManyLines, Lines.Length), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.Paste) = MsgBoxResult.Yes Then
+                        Dim Max = (From line In Lines Select line.Length).Max
+                        If Max <= 32 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format("Some lines in text in clipboard are up to {0} characters long. Do you want to paste each line as keyword?", Max), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.Paste) = MsgBoxResult.Yes Then
+                            Dim Comparer = StringComparer.Create(Globalization.CultureInfo.CurrentCulture, Not CaseSensitive)
+                            Dim added As Boolean = False
+                            For Each line In Lines
+                                If Not Me.KeyWords.Contains(line, Comparer) Then _
+                                    Me.KeyWords.Add(line) _
+                                    : added = True
+                            Next
+                            Return added
+                        End If
+                    End If
+                End If
+            End If
+            Return False
+        End Function
         ''' <summary>Deletes selected items from <see cref="lstKW"/></summary>
         Private Sub RemoveSelectedItems()
             If lstKW.SelectedItems.Count > 0 Then
@@ -808,6 +857,76 @@ Namespace WindowsT.FormsT
         Public Sub New()
             InitializeComponent()
             TmiEnabled()
+        End Sub
+        ''' <summary>Contains value of the <see cref="ContextMenuEnabled"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ContextMenuEnabled As Boolean = True
+        ''' <summary>Contains value of the <see cref="ShortcutsEnabled"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _ShortcutsEnabled As Boolean = True
+        ''' <summary>Gets or sets value indicating if context menu for <see cref="ListBox"/> which shows keybords is enabled</summary>
+        ''' <value>Default value is true</value>
+        ''' <returns>True if it is enabled, false if it is not</returns>
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(CompositeControls), "ContextMenuEnabled_d")> _
+        Public Property ContextMenuEnabled() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _ContextMenuEnabled
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Boolean)
+                _ContextMenuEnabled = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicating if keyboard shortcuts for clipboard operations are allowed for keywords</summary>
+        ''' <value>Default value is true</value>
+        ''' <returns>True if shortcuts are enabled, false if they are not</returns>
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
+        <LDescription(GetType(CompositeControls), "ShortcutsEnabled_d")> _
+        Public Property ShortcutsEnabled() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _ShortcutsEnabled
+            End Get
+            Set(ByVal value As Boolean)
+                Dim old = ShortcutsEnabled
+                _ShortcutsEnabled = value
+                If value <> old Then
+                    If value Then
+                        tmiCut.ShortcutKeyDisplayString = "Ctrl+X"
+                        tmiCopy.ShortcutKeyDisplayString = "Ctrl+C"
+                        tmiPaste.ShortcutKeyDisplayString = "Ctrl+V"
+                    Else
+                        tmiCut.ShortcutKeyDisplayString = ""
+                        tmiCopy.ShortcutKeyDisplayString = ""
+                        tmiPaste.ShortcutKeyDisplayString = ""
+                    End If
+                End If
+            End Set
+        End Property
+        Private Sub lstKW_MouseDown(ByVal sender As ListBox, ByVal e As System.Windows.Forms.MouseEventArgs) Handles lstKW.MouseDown
+            If e.Button = Windows.Forms.MouseButtons.Right Then
+                If Not ContextMenuEnabled Then Exit Sub
+                tmiCopy.Enabled = sender.SelectedItems.Count > 0
+                tmiCut.Enabled = tmiCopy.Enabled
+                tmiDelete.Enabled = tmiCopy.Enabled
+                tmiPaste.Enabled = My.Computer.Clipboard.ContainsText(TextDataFormat.UnicodeText)
+                If tmiCopy.Enabled OrElse tmiPaste.Enabled Then
+                    cmsContext.Show(sender, e.Location)
+                End If
+            End If
+        End Sub
+
+        Private Sub tmiCut_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiCut.Click
+            Cut()
+        End Sub
+
+        Private Sub tmiCopy_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiCopy.Click
+            Copy()
+        End Sub
+
+        Private Sub tmiPaste_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiPaste.Click
+            Paste()
+        End Sub
+
+        Private Sub tmiDelete_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiDelete.Click
+            RemoveSelectedItems()
         End Sub
     End Class
 End Namespace

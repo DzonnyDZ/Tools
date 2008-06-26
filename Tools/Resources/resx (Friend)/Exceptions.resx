@@ -831,4 +831,7 @@
   <data name="ConversionTo0Failed" xml:space="preserve">
     <value>Conversion to {0} failed</value>
   </data>
+  <data name="PropertyIsReadOnly" xml:space="preserve">
+    <value>Property is read only</value>
+  </data>
 </root>
