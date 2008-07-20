@@ -186,7 +186,12 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:value-of select="@name"/>
             <xsl:text>", "</xsl:text>
             <xsl:value-of select="@human-name"/>
-            <xsl:text>")&#xD;&#xA;</xsl:text>
+            <xsl:text>"</xsl:text>
+            <!--<xsl:if test="local-name(parent::node())='group'">
+                <xsl:text>, Group:=GroupInfo.</xsl:text>
+                <xsl:value-of select="parent::I:group/@name"/>
+            </xsl:if>-->
+            <xsl:text>)&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
         </xsl:for-each>
@@ -365,6 +370,10 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                     <xsl:value-of select="@enum"/>
                     <xsl:text>)</xsl:text>
                 </xsl:if>
+                <xsl:if test="parent::I:group">
+                    <xsl:text>, Group:=GroupInfo.</xsl:text>
+                    <xsl:value-of select="parent::I:group/@name"/>
+                </xsl:if>
                 <xsl:text>, Lock:=True)&#xD;&#xA;</xsl:text>
             </xsl:for-each>
             <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Case Else : Throw New InvalidEnumArgumentException("TagNumber",TagNumber,GetType(</xsl:text>
@@ -403,7 +412,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <!--Generates tag groups-->
     <xsl:template name="Groups">
         <xsl:text>#Region "Groups"&#xD;&#xA;</xsl:text>
-        <!--Groups-->
+        <!--Groups - enum-->
         <xsl:text>&#9;&#9;''' &lt;summary>Groups of tags&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Public Enum Groups&#xD;&#xA;</xsl:text>
         <xsl:for-each select="I:Root/I:record/I:group">
@@ -419,17 +428,23 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:call-template name="nl"/>
         </xsl:for-each>
         <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
-        <!--GetGroup-->
-        <xsl:text>&#9;&#9;''' &lt;summary>Gets information about known group of IPTC tags&lt;/summary>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;''' &lt;param name="Group">Code of group to get information about&lt;/param>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;Public Shared Function GetGroup(ByVal Group As Groups) As GroupInfo&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;&#9;Select Case Group&#xD;&#xA;</xsl:text>
+        <!--Groups - property for each group-->
+        <xsl:text>&#9;&#9;Partial Class GroupInfo&#xD;&#xA;</xsl:text>
         <xsl:for-each select="I:Root/I:record/I:group">
             <xsl:sort order="ascending" data-type="number" select="ancestor::I:record/@number"/>
             <xsl:sort order="ascending" data-type="number" select="I:tag[1]/@number"/>
-            <xsl:text>&#9;&#9;&#9;&#9;Case Groups.</xsl:text>
+            <xsl:call-template name="Summary">
+                <xsl:with-param name="Tab" select="3"/>
+            </xsl:call-template>
+            <xsl:text>&#9;&#9;&#9;''' <![CDATA[<returns>Information about known group <see cref="Groups.]]></xsl:text>
             <xsl:value-of select="@name"/>
-            <xsl:text> : Return New GroupInfo("</xsl:text>
+            <xsl:text><![CDATA["/></returns>]]></xsl:text>
+            <xsl:call-template name="nl"/>
+            <xsl:text>&#9;&#9;&#9;Public Shared ReadOnly Property </xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text> As GroupInfo&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Return New GroupInfo("</xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text>", "</xsl:text>
             <xsl:value-of select="@name"/>
@@ -458,6 +473,70 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                 <xsl:text>)</xsl:text>
             </xsl:for-each>
             <xsl:text>)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+        <!--GetAllGroups-->
+        <xsl:text>&#9;&#9;&#9;''' <![CDATA[<summary>Gets all known groups of IPTC tags</summary>]]></xsl:text>
+        <xsl:call-template name="nl"/>
+        <xsl:text>&#9;&#9;&#9;''' <![CDATA[<returns>All known groups of IPTC tags</returns>]]></xsl:text>
+        <xsl:call-template name="nl"/>
+        <xsl:text>&#9;&#9;&#9;Public Shared Function GetAllGroups() As GroupInfo()&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;&#9;Return New GroupInfo(){</xsl:text>
+        <xsl:for-each select="I:Root/I:record/I:group">
+            <xsl:sort order="ascending" data-type="number" select="ancestor::I:record/@number"/>
+            <xsl:sort order="ascending" data-type="number" select="I:tag[1]/@number"/>
+            <xsl:if test="not(position()=1)">
+                <xsl:text>, </xsl:text>
+            </xsl:if>
+            <xsl:text>GroupInfo.</xsl:text>
+            <xsl:value-of select="@name"/>
+        </xsl:for-each>
+        <xsl:text>}&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;End Function&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;End Class&#xD;&#xA;</xsl:text>
+        <!--GetGroup-->
+        <xsl:text>&#9;&#9;''' &lt;summary>Gets information about known group of IPTC tags&lt;/summary>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;param name="Group">Code of group to get information about&lt;/param>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;Public Shared Function GetGroup(ByVal Group As Groups) As GroupInfo&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;Select Case Group&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="I:Root/I:record/I:group">
+            <xsl:sort order="ascending" data-type="number" select="ancestor::I:record/@number"/>
+            <xsl:sort order="ascending" data-type="number" select="I:tag[1]/@number"/>
+            <xsl:text>&#9;&#9;&#9;&#9;Case Groups.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text> : Return GroupInfo.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:call-template name="nl"/>
+            <!--<xsl:text> : Return New GroupInfo("</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>", "</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>", Groups.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>, GetType(</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>Group), "</xsl:text>
+            <xsl:value-of select="@category"/>
+            <xsl:text>", "</xsl:text>
+            <xsl:call-template name="SummaryString">
+                <xsl:with-param name="Node" select="I:desc"/>
+            </xsl:call-template>
+            <xsl:text>", </xsl:text>
+            <xsl:value-of select="@mandatory"/>
+            <xsl:text>, </xsl:text>
+            <xsl:value-of select="@repeatable"/>
+            <xsl:for-each select="I:tag">
+                <xsl:sort data-type="number" order="ascending" select="@number"/>
+                <xsl:text>, GetTag(RecordNumbers.</xsl:text>
+                <xsl:value-of select="../../@name"/>
+                <xsl:text>, </xsl:text>
+                <xsl:value-of select="../../@name"/>
+                <xsl:text>Tags.</xsl:text>
+                <xsl:value-of select="@name"/>
+                <xsl:text>)</xsl:text>
+            </xsl:for-each>
+            <xsl:text>)&#xD;&#xA;</xsl:text>-->
         </xsl:for-each>
         <xsl:text>&#9;&#9;&#9;&#9;Case Else : Throw New InvalidEnumArgumentException("Group", Group, GetType(Groups))&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>

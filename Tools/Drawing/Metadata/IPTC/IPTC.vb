@@ -215,14 +215,22 @@ Namespace DrawingT.MetadataT
             ''' <summary>Gets or sets name of property of the <see cref="IPTC"/> class this dataset is accessible via. Null if this is not known dataset.</summary>
             ''' <returns>Name of property of the <see cref="IPTC"/> class this data set is accessible via. Null if this is not standard dataset.</returns>
             ''' <value>Name of property of the <see cref="IPTC"/> class this dataset is accessible via. Such property must exist.</value>
-            ''' <exception cref="MissingMemberException">Property with name same as value being set does not exist on the <see cref="IPTC"/> class (when value being set is not null).</exception>
             ''' <seelaso cref="IPTCTag.Name"/>
             Public Property PropertyName$()
                 <DebuggerStepThrough()> Get
                     Return _PropertyName
                 End Get
-                <DebuggerStepThrough()> Set(ByVal value$)
-                    If value IsNot Nothing AndAlso GetType(IPTC).GetProperty(value) Is Nothing Then Throw New MissingMemberException(GetType(IPTC).FullName, value)
+                Set(ByVal value$)
+                    'If value IsNot Nothing Then
+                    '    If GetType(IPTC).GetProperty(value) Is Nothing Then
+                    '        Dim found As Boolean = False
+                    '        For Each Group In GroupInfo.GetAllGroups
+                    '            If Group.Type.GetProperty(value) IsNot Nothing Then _
+                    '                found = True : Exit For
+                    '        Next
+                    '        If Not found Then Throw New MissingMemberException(GetType(IPTC).FullName, value)
+                    '    End If
+                    'End If
                     _PropertyName = value
                 End Set
             End Property
@@ -256,7 +264,6 @@ Namespace DrawingT.MetadataT
             ''' <param name="DataSetNumber">Number of dataset (tag)</param>
             ''' <param name="DisplayName">Localized display name of data set property (null if data set has no name)</param>
             ''' <param name="PropertyName">Name of property of the <see cref="IPTC"/> class this data set is accessible via (null if this is not known data set accessible via property of the <see cref="IPTC"/> class)</param>
-            ''' <exception cref="MissingMemberException">The <see cref="IPTC"/> class does not contain property named as value of <paramref name="DisplayName"/>.</exception>
             <DebuggerStepThrough()> _
             Public Sub New(ByVal RecordNumber As RecordNumbers, ByVal DataSetNumber As Byte, ByVal PropertyName$, ByVal DisplayName$)
                 Me.RecordNumber = RecordNumber
@@ -333,9 +340,9 @@ Namespace DrawingT.MetadataT
                     If _KnownDataSetsInternal Is Nothing Then
                         SyncLock KnownDataSetsInternalSyncLock
                             If _KnownDataSetsInternal IsNot Nothing Then Return _KnownDataSetsInternal
-                            KnownDataSetsInternal = New Dictionary(Of DataSetIdentification, DataSetIdentification)()
-                            For Each dataset In KnownDataSets()
-                                KnownDataSetsInternal.Add(dataset, dataset)
+                            _KnownDataSetsInternal = New Dictionary(Of DataSetIdentification, DataSetIdentification)
+                            For Each dataset In KnownDataSets(False)
+                                _KnownDataSetsInternal.Add(dataset, dataset)
                             Next
                         End SyncLock
                     End If
@@ -417,6 +424,7 @@ Namespace DrawingT.MetadataT
             ''' <param name="Description">Description of tag</param>
             ''' <param name="Enum">Type of enumeration if tag is enumeration</param>
             ''' <param name="Lock">Lock properties after construction</param>
+            ''' <param name="Group">Group the tag ius member of (or null if tag is member of no group)</param>
             ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Record"/> is greater than 9 -or- <paramref name="Length"/> is less than zero</exception>
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="IPTCTypes"/></exception>
             Public Sub New( _
@@ -432,7 +440,8 @@ Namespace DrawingT.MetadataT
                     ByVal Category As String, _
                     ByVal Description As String, _
                     Optional ByVal [Enum] As Type = Nothing, _
-                    Optional ByVal Lock As Boolean = False _
+                    Optional ByVal Lock As Boolean = False, _
+                    Optional ByVal Group As GroupInfo = Nothing _
             )
                 Me.Number = Number
                 Me.Record = Record
@@ -451,6 +460,7 @@ Namespace DrawingT.MetadataT
                 Me.Category = Category
                 Me.Description = Description
                 Me.Enum = [Enum]
+                Me.Group = Group
                 Me._Locked = Lock
             End Sub
             ''' <summary>Contains value of the <see cref="Locked"/> property</summary>
@@ -486,6 +496,20 @@ Namespace DrawingT.MetadataT
                 Set(ByVal value As Byte)
                     If Locked And value <> Number Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
                     _Number = value
+                End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Group"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _Group As GroupInfo
+            ''' <summary>If the tag is member of some group, gets the group</summary>
+            ''' <returns>If the tag is member of some group returns the group otherwise returns null</returns>
+            ''' <value>Group the tag is member of</value>
+            Public Property Group() As GroupInfo
+                Get
+                    Return _Group
+                End Get
+                Set(ByVal value As GroupInfo)
+                    If Locked And value IsNot Group Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisInstanceIsLocked)
+                    _Group = value
                 End Set
             End Property
             ''' <summary>Contains value of the <see cref="Record"/> property</summary>

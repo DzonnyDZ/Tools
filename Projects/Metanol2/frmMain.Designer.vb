@@ -101,6 +101,7 @@ Partial Class frmMain
         Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
         Me.bgwSave = New System.ComponentModel.BackgroundWorker
+        Me.tapExif = New System.Windows.Forms.TabPage
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
@@ -211,6 +212,7 @@ Partial Class frmMain
         '
         Me.tabInfo.Controls.Add(Me.tapCommon)
         Me.tabInfo.Controls.Add(Me.tapIPTC)
+        Me.tabInfo.Controls.Add(Me.tapExif)
         Me.tabInfo.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tabInfo.Location = New System.Drawing.Point(0, 0)
         Me.tabInfo.Name = "tabInfo"
@@ -577,10 +579,12 @@ Partial Class frmMain
         Me.kweKeywords.AutomaticsLists_Designer = True
         Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
         Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
+        Me.kweKeywords.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         Me.kweKeywords.Name = "kweKeywords"
         Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
         Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         Me.kweKeywords.TabIndex = 0
+        Me.kweKeywords.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         '
         'sptKeywords
         '
@@ -973,6 +977,16 @@ Partial Class frmMain
         '
         Me.bgwSave.WorkerReportsProgress = True
         '
+        'tapExif
+        '
+        Me.tapExif.Location = New System.Drawing.Point(4, 22)
+        Me.tapExif.Name = "tapExif"
+        Me.tapExif.Padding = New System.Windows.Forms.Padding(3)
+        Me.tapExif.Size = New System.Drawing.Size(477, 399)
+        Me.tapExif.TabIndex = 2
+        Me.tapExif.Text = "Exif"
+        Me.tapExif.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1109,5 +1123,6 @@ Partial Class frmMain
     Friend WithEvents tmiRefresh As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tmiNext As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tmiPrevious As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tapExif As System.Windows.Forms.TabPage
 
 End Class

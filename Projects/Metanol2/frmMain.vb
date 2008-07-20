@@ -11,9 +11,9 @@ Public Class frmMain
     ''' <summary>Number of columns in <see cref="flpCommon"/></summary>
     Private Const CommonColumns% = 2
     ''' <summary>Selected IPTCs</summary>
-    Private WithEvents SelectedIPTCs As New ListWithEvents(Of IPTCInternal)
+    Private WithEvents SelectedMetadata As New ListWithEvents(Of MetadataItem)
     ''' <summary>Metadatas that was changed</summary>
-    Private WithEvents ChangedIPTCs As New ListWithEvents(Of IPTCInternal)
+    Private WithEvents ChangedMetadata As New ListWithEvents(Of MetadataItem)
     ''' <summary>If nonzero item properties are not shown as selection in <see cref="lvwImages"/> changes</summary>
     ''' <seelaso cref="IsChangingSuspended"/>
     <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -65,18 +65,18 @@ Public Class frmMain
     Private Editors As Control()
     ''' <summary>Initializes tags of editor controls and the <see cref="Editors"/> field</summary>
     Private Sub InitializeEditors()
-        txtSublocation.Tag = CommonProperties.Sublocation
-        txtProvince.Tag = CommonProperties.Province
-        txtObjectName.Tag = CommonProperties.ObjectName
-        txtEditStatus.Tag = CommonProperties.EditStatus
-        txtCredit.Tag = CommonProperties.Credit
-        txtCountry.Tag = CommonProperties.Country
-        txtCopyright.Tag = CommonProperties.Copyright
-        txtCity.Tag = CommonProperties.City
-        txtCaption.Tag = CommonProperties.Caption
-        nudUrgency.Tag = CommonProperties.Urgency
-        kweKeywords.Tag = CommonProperties.Keywords
-        cmbCountryCode.Tag = CommonProperties.CountryCode
+        txtSublocation.Tag = CommonIPTCProperties.Sublocation
+        txtProvince.Tag = CommonIPTCProperties.Province
+        txtObjectName.Tag = CommonIPTCProperties.ObjectName
+        txtEditStatus.Tag = CommonIPTCProperties.EditStatus
+        txtCredit.Tag = CommonIPTCProperties.Credit
+        txtCountry.Tag = CommonIPTCProperties.Country
+        txtCopyright.Tag = CommonIPTCProperties.Copyright
+        txtCity.Tag = CommonIPTCProperties.City
+        txtCaption.Tag = CommonIPTCProperties.Caption
+        nudUrgency.Tag = CommonIPTCProperties.Urgency
+        kweKeywords.Tag = CommonIPTCProperties.Keywords
+        cmbCountryCode.Tag = CommonIPTCProperties.CountryCode
         Editors = New Control() {txtSublocation, txtProvince, txtObjectName, _
             txtEditStatus, txtCredit, txtCountry, _
             txtCopyright, txtCity, txtCaption, _
@@ -118,7 +118,7 @@ Public Class frmMain
     ''' <param name="Path">Path of folder to load. May also be apth of link to follow.</param>
     ''' <param name="isBack">True when backward navigation is occuring</param>
     Private Sub LoadFolder(ByVal Path As IOt.Path, Optional ByVal isBack As Boolean = False)
-        ChangedIPTCs.Clear()
+        ChangedMetadata.Clear()
         Changed = False
         Dim old = CurrentFolder
         If bgwImages.IsBusy Then
@@ -177,7 +177,8 @@ Public Class frmMain
             Dim ImagesToLoad As New List(Of String)
             Try
                 For Each file In From f In Path.GetFiles("*.jpg", "*.jpeg") Order By f.FileName
-                    lvwImages.Items.Add(file.FileName, file.FileName, file.FileName).Tag = file.Path
+                    'lvwImages.Items.Add(file.FileName, file.FileName, file.FileName).Tag = file.Path
+                    lvwImages.Items.Add(New MetadataItem(file))
                     ImagesToLoad.Add(file.Path)
                 Next
             Catch : End Try
@@ -247,7 +248,7 @@ Public Class frmMain
         Me.fraKeywords.Height = My.Settings.KeywordsHeight
         Me.fraTitle.Height = My.Settings.TextHeight
         ToolStripManager.LoadSettings(Me, "tosMain")
-        If My.Settings.Folder = "" Then
+        If My.Settings.Folder = "" OrElse Not IO.Directory.Exists(My.Settings.Folder) Then
             LoadFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
         Else
             LoadFolder(My.Settings.Folder)
@@ -436,9 +437,9 @@ Public Class frmMain
         If IsChangingSuspended Then Return
         cmdErrInfo.Visible = False
         If lvwImages.SelectedItems.Count > 0 Then
-            Dim prevItem =  lvwImages.SelectedItems(0)
+            Dim prevItem As MetadataItem = lvwImages.SelectedItems(0)
             Try
-                picPreview.LoadAsync(prevItem.Tag.ToString)
+                picPreview.LoadAsync(prevItem.Path.Path)
             Catch ex As Exception
                 panImage.BackgroundImage = Nothing
                 cmdErrInfo.Visible = True
@@ -456,47 +457,42 @@ Public Class frmMain
         'For Each item In SelectedIPTCs
         '    RemoveHandler item.ValueChanged, AddressOf IPTC_ValueChanged
         'Next item
-        SelectedIPTCs.Clear()
+        SelectedMetadata.Clear()
         splMain.Panel2.Enabled = lvwImages.SelectedItems.Count > 0
         If lvwImages.SelectedItems.Count > 0 Then
-            For Each item As ListViewItem In lvwImages.SelectedItems
-                If TypeOf item.Tag Is String Then
+            For Each item As MetadataItem In lvwImages.SelectedItems
+                If Not item.IPTCLoaded Then
                     Try
-                        item.Tag = New IPTCInternal(item.Tag)
+                        item.IPTCLoad()
                     Catch ex As Exception
-                        MBox.MsgBox(String.Format(My.Resources.ErrorWhileLoading0, item.Tag) & vbCrLf & ex.Message, MsgBoxStyle.Critical, My.Resources.Error_)
+                        MBox.MsgBox(String.Format(My.Resources.ErrorWhileLoading0, item.Path.Path) & vbCrLf & ex.Message, MsgBoxStyle.Critical, My.Resources.Error_)
                         item.Selected = False 'This causes this sub to be recalled
+                        'TODO: Line abowe may not work when metadata showing is optimalized
                         Exit Sub
                     End Try
                 End If
-                SelectedIPTCs.Add(DirectCast(item.Tag, IPTCInternal))
+                ''TODO: Rewrite!
+                'If TypeOf item.Tag Is String Then
+                '    Try
+                '        item.Tag = New IPTCInternal(item.Tag)
+                '    Catch ex As Exception
+                '        MBox.MsgBox(String.Format(My.Resources.ErrorWhileLoading0, item.Tag) & vbCrLf & ex.Message, MsgBoxStyle.Critical, My.Resources.Error_)
+                '        item.Selected = False 'This causes this sub to be recalled
+                '        Exit Sub
+                '    End Try
+                'End If
+                SelectedMetadata.Add(item)
             Next
-            ShowValues(SelectedIPTCs)
-            prgIPTC.SelectedObjects = SelectedIPTCs.ToArray
+            ShowIPTCValues(From item In SelectedMetadata Select item.IPTC)
+            prgIPTC.SelectedObjects = SelectedMetadata.ToArray
         Else
             prgIPTC.SelectedObjects = New Object() {}
         End If
     End Sub
-    Private Enum CommonProperties
-        <EditorBrowsable(EditorBrowsableState.Never)> None = 0
-        All = Copyright Or Credit Or City Or CountryCode Or Country Or Province Or Sublocation Or EditStatus Or Urgency Or ObjectName Or Caption Or Keywords
-        Copyright = 1
-        Credit = 2
-        City = 4
-        CountryCode = 8
-        Country = 16
-        Province = 32
-        Sublocation = 64
-        EditStatus = 128
-        Urgency = 256
-        ObjectName = 1024
-        Caption = 2048
-        Keywords = 1096
-    End Enum
     ''' <summary>Shows common values</summary>
     ''' <param name="IPTCs">IPTCs to load values from</param>
     ''' <param name="Filter">Filter properties (load only those which ors with <paramref name="Filter"/></param>
-    Private Sub ShowValues(ByVal IPTCs As ListWithEvents(Of IPTCInternal), Optional ByVal Filter As CommonProperties = CommonProperties.All)
+    Private Sub ShowIPTCValues(ByVal IPTCs As IEnumerable(Of IPTCInternal), Optional ByVal Filter As CommonIPTCProperties = CommonIPTCProperties.All)
         Dim Copyright = New With {.Value = CStr(Nothing), .Same = True}
         Dim Credit = New With {.Value = CStr(Nothing), .Same = True}
         Dim City = New With {.Value = CStr(Nothing), .Same = True}
@@ -512,49 +508,49 @@ Public Class frmMain
         Dim i = 0
         For Each IPTC In IPTCs
             If i = 0 Then
-                If Filter And CommonProperties.Copyright Then Copyright.Value = IPTC.CopyrightNotice
-                If Filter And CommonProperties.Credit Then Credit.Value = IPTC.Credit
-                If Filter And CommonProperties.City Then City.Value = IPTC.City
-                If Filter And CommonProperties.CountryCode Then CountryCode.Value = IPTC.CountryPrimaryLocationCode
-                If Filter And CommonProperties.Country Then Country.Value = IPTC.CountryPrimaryLocationName
-                If Filter And CommonProperties.Province Then Province.Value = IPTC.ProvinceState
-                If Filter And CommonProperties.Sublocation Then Sublocation.Value = IPTC.SubLocation
-                If Filter And CommonProperties.EditStatus Then EditStatus.Value = IPTC.EditStatus
-                If Filter And CommonProperties.Urgency Then Urgency.Value = IPTC.Urgency
-                If Filter And CommonProperties.ObjectName Then ObjectName.Value = IPTC.ObjectName
-                If Filter And CommonProperties.Caption Then Caption.Value = IPTC.CaptionAbstract
-                If Filter And CommonProperties.Keywords Then Keywords.AddRange(IPTC.Keywords.NewIfNull)
+                If Filter And CommonIPTCProperties.Copyright Then Copyright.Value = IPTC.CopyrightNotice
+                If Filter And CommonIPTCProperties.Credit Then Credit.Value = IPTC.Credit
+                If Filter And CommonIPTCProperties.City Then City.Value = IPTC.City
+                If Filter And CommonIPTCProperties.CountryCode Then CountryCode.Value = IPTC.CountryPrimaryLocationCode
+                If Filter And CommonIPTCProperties.Country Then Country.Value = IPTC.CountryPrimaryLocationName
+                If Filter And CommonIPTCProperties.Province Then Province.Value = IPTC.ProvinceState
+                If Filter And CommonIPTCProperties.Sublocation Then Sublocation.Value = IPTC.SubLocation
+                If Filter And CommonIPTCProperties.EditStatus Then EditStatus.Value = IPTC.EditStatus
+                If Filter And CommonIPTCProperties.Urgency Then Urgency.Value = IPTC.Urgency
+                If Filter And CommonIPTCProperties.ObjectName Then ObjectName.Value = IPTC.ObjectName
+                If Filter And CommonIPTCProperties.Caption Then Caption.Value = IPTC.CaptionAbstract
+                If Filter And CommonIPTCProperties.Keywords Then Keywords.AddRange(IPTC.Keywords.NewIfNull)
             Else
-                If Filter And CommonProperties.Copyright Then Copyright.Same = Copyright.Same AndAlso IPTC.CopyrightNotice = Copyright.Value
-                If Filter And CommonProperties.Credit Then Credit.Same = Credit.Same AndAlso IPTC.Credit = Credit.Value
-                If Filter And CommonProperties.City Then City.Same = City.Same AndAlso IPTC.City = City.Value
-                If Filter And CommonProperties.CountryCode Then CountryCode.Same = CountryCode.Same AndAlso IPTC.CountryPrimaryLocationCode = CountryCode.Value
-                If Filter And CommonProperties.Country Then Country.Same = Country.Same AndAlso IPTC.CountryPrimaryLocationName = Country.Value
-                If Filter And CommonProperties.Province Then Province.Same = Province.Same AndAlso IPTC.ProvinceState = Province.Value
-                If Filter And CommonProperties.Sublocation Then Sublocation.Same = Sublocation.Same AndAlso IPTC.SubLocation = Sublocation.Value
-                If Filter And CommonProperties.EditStatus Then EditStatus.Same = EditStatus.Same AndAlso IPTC.EditStatus = EditStatus.Value
-                If Filter And CommonProperties.Urgency Then Urgency.Same = Urgency.Same AndAlso IPTC.Urgency = Urgency.Value
-                If Filter And CommonProperties.ObjectName Then ObjectName.Same = ObjectName.Same AndAlso IPTC.ObjectName = ObjectName.Value
-                If Filter And CommonProperties.Caption Then Caption.Same = Caption.Same AndAlso IPTC.CaptionAbstract = Caption.Value
-                If Filter And CommonProperties.Keywords Then
+                If Filter And CommonIPTCProperties.Copyright Then Copyright.Same = Copyright.Same AndAlso IPTC.CopyrightNotice = Copyright.Value
+                If Filter And CommonIPTCProperties.Credit Then Credit.Same = Credit.Same AndAlso IPTC.Credit = Credit.Value
+                If Filter And CommonIPTCProperties.City Then City.Same = City.Same AndAlso IPTC.City = City.Value
+                If Filter And CommonIPTCProperties.CountryCode Then CountryCode.Same = CountryCode.Same AndAlso IPTC.CountryPrimaryLocationCode = CountryCode.Value
+                If Filter And CommonIPTCProperties.Country Then Country.Same = Country.Same AndAlso IPTC.CountryPrimaryLocationName = Country.Value
+                If Filter And CommonIPTCProperties.Province Then Province.Same = Province.Same AndAlso IPTC.ProvinceState = Province.Value
+                If Filter And CommonIPTCProperties.Sublocation Then Sublocation.Same = Sublocation.Same AndAlso IPTC.SubLocation = Sublocation.Value
+                If Filter And CommonIPTCProperties.EditStatus Then EditStatus.Same = EditStatus.Same AndAlso IPTC.EditStatus = EditStatus.Value
+                If Filter And CommonIPTCProperties.Urgency Then Urgency.Same = Urgency.Same AndAlso IPTC.Urgency = Urgency.Value
+                If Filter And CommonIPTCProperties.ObjectName Then ObjectName.Same = ObjectName.Same AndAlso IPTC.ObjectName = ObjectName.Value
+                If Filter And CommonIPTCProperties.Caption Then Caption.Same = Caption.Same AndAlso IPTC.CaptionAbstract = Caption.Value
+                If Filter And CommonIPTCProperties.Keywords Then
                     Dim kws As New List(Of String)(If(IPTC.Keywords, New String() {}))
                     Keywords.RemoveAll(Function(kw As String) Not kws.Contains(kw))
                 End If
             End If
             i += 1
         Next
-        If Filter And CommonProperties.Copyright Then txtCopyright.Text = If(Copyright.Same, Copyright.Value, "")
-        If Filter And CommonProperties.Credit Then txtCredit.Text = If(Credit.Same, Credit.Value, "")
-        If Filter And CommonProperties.City Then txtCity.Text = If(City.Same, City.Value, "")
-        If Filter And CommonProperties.CountryCode Then cmbCountryCode.Text = If(CountryCode.Same, CountryCode.Value, "")
-        If Filter And CommonProperties.Country Then txtCountry.Text = If(Country.Same, Country.Value, "")
-        If Filter And CommonProperties.Province Then txtProvince.Text = If(Province.Same, Province.Value, "")
-        If Filter And CommonProperties.Sublocation Then txtSublocation.Text = If(Sublocation.Same, Sublocation.Value, "")
-        If Filter And CommonProperties.EditStatus Then txtEditStatus.Text = If(EditStatus.Same, EditStatus.Value, "")
-        If Filter And CommonProperties.Urgency Then nudUrgency.Text = If(Urgency.Same, Urgency.Value.ToString, "") 'TODO: Does it work?
-        If Filter And CommonProperties.ObjectName Then txtObjectName.Text = If(ObjectName.Same, ObjectName.Value, "")
-        If Filter And CommonProperties.Caption Then txtCaption.Text = If(Caption.Same, Caption.Value, "")
-        If Filter And CommonProperties.Keywords Then
+        If Filter And CommonIPTCProperties.Copyright Then txtCopyright.Text = If(Copyright.Same, Copyright.Value, "")
+        If Filter And CommonIPTCProperties.Credit Then txtCredit.Text = If(Credit.Same, Credit.Value, "")
+        If Filter And CommonIPTCProperties.City Then txtCity.Text = If(City.Same, City.Value, "")
+        If Filter And CommonIPTCProperties.CountryCode Then cmbCountryCode.Text = If(CountryCode.Same, CountryCode.Value, "")
+        If Filter And CommonIPTCProperties.Country Then txtCountry.Text = If(Country.Same, Country.Value, "")
+        If Filter And CommonIPTCProperties.Province Then txtProvince.Text = If(Province.Same, Province.Value, "")
+        If Filter And CommonIPTCProperties.Sublocation Then txtSublocation.Text = If(Sublocation.Same, Sublocation.Value, "")
+        If Filter And CommonIPTCProperties.EditStatus Then txtEditStatus.Text = If(EditStatus.Same, EditStatus.Value, "")
+        If Filter And CommonIPTCProperties.Urgency Then nudUrgency.Text = If(Urgency.Same, Urgency.Value.ToString, "") 'TODO: Does it work?
+        If Filter And CommonIPTCProperties.ObjectName Then txtObjectName.Text = If(ObjectName.Same, ObjectName.Value, "")
+        If Filter And CommonIPTCProperties.Caption Then txtCaption.Text = If(Caption.Same, Caption.Value, "")
+        If Filter And CommonIPTCProperties.Keywords Then
             kweKeywords.KeyWords.Clear()
             kweKeywords.KeyWords.AddRange(Keywords)
         End If
@@ -578,14 +574,11 @@ Public Class frmMain
         End Set
     End Property
     ''' <summary>Handles <see cref="IPTCInternal.ValueChanged"/></summary>
-    Private Sub IPTC_ValueChanged(ByVal sender As IPTCInternal, ByVal e As EventArgs)
-        If Not ChangedIPTCs.Contains(sender) Then
-            ChangedIPTCs.Add(sender)
+    Private Sub Item_Changed(ByVal sender As MetadataItem, ByVal e As MetadataItem.PartEventArgs)
+        If Not ChangedMetadata.Contains(sender) Then
+            ChangedMetadata.Add(sender)
         End If
         Changed = True
-        With lvwImages.Items(System.IO.Path.GetFileName(sender.ImagePath))
-            .Text = System.IO.Path.GetFileName(sender.ImagePath) & "*"
-        End With
     End Sub
 
     Private Sub cmdErrInfo_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdErrInfo.Click
@@ -665,8 +658,8 @@ Public Class frmMain
                 Dim desc = selectedItem.EnumValue.GetConstant.GetAttribute(Of DisplayNameAttribute)()
                 If desc IsNot Nothing Then
                     txtCountry.Text = desc.DisplayName
-                    StoreControl(sender)
-                    StoreControl(txtCountry)
+                    StoreControl_IPTC(sender)
+                    StoreControl_IPTC(txtCountry)
                 End If
             End If
         End If
@@ -677,25 +670,25 @@ Public Class frmMain
             txtEditStatus.Validating, txtCredit.Validating, txtCountry.Validating, _
             txtCopyright.Validating, txtCity.Validating, txtCaption.Validating, _
             nudUrgency.Validating, kweKeywords.Validating, cmbCountryCode.Validating
-        e.Cancel = Not StoreControl(sender)
+        e.Cancel = Not StoreControl_IPTC(sender)
     End Sub
-    ''' <summary>Stores value of given editor control to all items in <see cref="SelectedIPTCs"/></summary>
+    ''' <summary>Stores value of given editor control to all items in <see cref="SelectedMetadata"/></summary>
     ''' <param name="ctl">Control to store value of</param>
     ''' <remarks>True if value was stored, false if value was not stored (there was an exception. It was already reported to user).</remarks>
-    Private Function StoreControl(ByVal ctl As Control) As Boolean
-        Dim Prp As CommonProperties = ctl.Tag
+    Private Function StoreControl_IPTC(ByVal ctl As Control) As Boolean
+        Dim Prp As CommonIPTCProperties = ctl.Tag
         Dim ctc As StringComparer = Nothing
         If ctl Is kweKeywords Then _
             ctc = StringComparer.Create(System.Globalization.CultureInfo.CurrentCulture, Not kweKeywords.CaseSensitive)
         Dim i As Integer = 0
         Try
-            For Each currentitem In SelectedIPTCs
+            For Each currentitem In From item In SelectedMetadata Select item.IPTC
                 If ctl Is nudUrgency Then 'Needs special handling
                     If currentitem.Urgency <> nudUrgency.Value Then _
                         currentitem.Urgency = nudUrgency.Value
                 ElseIf ctl Is kweKeywords Then 'Needs very special handling
                     Dim currKws = currentitem.Keywords
-                    If SelectedIPTCs.Count = 1 OrElse Not kweKeywords.Merge Then
+                    If SelectedMetadata.Count = 1 OrElse Not kweKeywords.Merge Then
                         'Do not make unnecessary changes
                         If (currKws Is Nothing AndAlso kweKeywords.KeyWords.Count <> 0) OrElse (currKws.Length <> kweKeywords.KeyWords.Count) Then
                             currentitem.Keywords = kweKeywords.KeyWords.ToArray
@@ -737,7 +730,7 @@ Public Class frmMain
             Select Case MBox.Modal(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, MBox.MessageBoxIcons.Error)
                 Case Windows.Forms.DialogResult.OK : Return False
                 Case Else
-                    ShowValues(SelectedIPTCs, Prp)
+                    ShowIPTCValues((From item In SelectedMetadata Select item.IPTC), Prp)
                     Return True
             End Select
         End Try
@@ -758,8 +751,8 @@ Public Class frmMain
     End Property
     ''' <summary>If curent <see cref="InnerActiveControl"/> is editing control stores its value using <see cref="StoreControl"/></summary>
     Private Sub StoreActiveConrol()
-        If TypeOf Me.InnerActiveControl.Tag Is CommonProperties Then
-            StoreControl(Me.InnerActiveControl)
+        If TypeOf Me.InnerActiveControl.Tag Is CommonIPTCProperties Then
+            StoreControl_IPTC(Me.InnerActiveControl)
         End If
     End Sub
     ''' <summary>Called before current folder changes or before application is closed. If necessary save changes.</summary>
@@ -782,7 +775,7 @@ Public Class frmMain
     ''' <remarks>True if all changes have been saved or whan it have not been saved but user confirmed that changes may be lost.</remarks>
     Private Function SaveAll() As Boolean
         If Not Changed Then Return True
-        If ChangedIPTCs.Count <= 3 Then
+        If ChangedMetadata.Count <= 3 Then
             Dim result = DoSave()
             Return result
         Else
@@ -801,15 +794,15 @@ Public Class frmMain
     Private Function DoSave(Optional ByVal bgw As BackgroundWorker = Nothing, Optional ByVal e As DoWorkEventArgs = Nothing) As Boolean
         Try
             Dim i As Integer = 0
-            Dim OldCount = ChangedIPTCs.Count
-            For Each item In ChangedIPTCs.ToArray 'Walking on copy!
-                If bgw IsNot Nothing Then bgw.ReportProgress(-1, item.ImagePath)
+            Dim OldCount = ChangedMetadata.Count
+            For Each item In ChangedMetadata.ToArray 'Walking on copy!
+                If bgw IsNot Nothing Then bgw.ReportProgress(-1, item.Path)
                 Try
 Retry:              item.Save()
                 Catch ex As Exception
                     Select Case MBox.ModalSyncTemplate(Me, _
                             New MBox.FakeBox(MButton.Buttons.Cancel Or MButton.Buttons.Retry Or MButton.Buttons.Ignore), _
-                            String.Format(My.Resources.ErrorWhileSaving0, item.ImagePath) & vbCrLf & ex.Message, My.Resources.Error_, Me)
+                            String.Format(My.Resources.ErrorWhileSaving0, item.Path) & vbCrLf & ex.Message, My.Resources.Error_, Me)
                         Case Windows.Forms.DialogResult.Cancel : Return False
                         Case Windows.Forms.DialogResult.Retry : GoTo Retry
                             'Case Else do nothing
@@ -830,44 +823,43 @@ Retry:              item.Save()
         SaveAll()
     End Sub
 #Region "ChangedIPTCs handlers"
-    Private Sub ChangedIPTCs_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles ChangedIPTCs.Added
-        AddHandler e.Item.Saved, AddressOf Changed_Saved
+    Private Sub ChangedMetadata_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of MetadataItem), ByVal e As CollectionsT.GenericT.ListWithEvents(Of MetadataItem).ItemIndexEventArgs) Handles ChangedMetadata.Added
+        AddHandler e.Item.PartSaved, AddressOf Changed_Saved
         Changed = True
     End Sub
 
-    Private Sub ChangedIPTCs_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemsEventArgs) Handles ChangedIPTCs.Cleared
+    Private Sub ChangedMetadata_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of MetadataItem), ByVal e As CollectionsT.GenericT.ListWithEvents(Of MetadataItem).ItemsEventArgs) Handles ChangedMetadata.Cleared
         For Each item In e.Items
-            RemoveHandler item.Saved, AddressOf Changed_Saved
+            RemoveHandler item.PartSaved, AddressOf Changed_Saved
         Next
         Changed = False
     End Sub
-    Private Sub ChangedIPTCs_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles ChangedIPTCs.Removed
-        RemoveHandler e.Item.Saved, AddressOf Changed_Saved
+    Private Sub ChangedMetadata_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of MetadataItem), ByVal e As CollectionsT.GenericT.ListWithEvents(Of MetadataItem).ItemIndexEventArgs) Handles ChangedMetadata.Removed
+        RemoveHandler e.Item.PartSaved, AddressOf Changed_Saved
         Changed = sender.Count > 0
     End Sub
     ''' <summary>Handles <see cref="IPTCInternal.Saved"/> event</summary>
     ''' <param name="sender">The saved item</param>
     ''' <remarks>May occur in different thread</remarks>
-    Private Sub Changed_Saved(ByVal sender As IPTCInternal)
+    Private Sub Changed_Saved(ByVal sender As MetadataItem, ByVal e As MetadataItem.PartEventArgs)
         If Me.InvokeRequired Then
-            Me.Invoke(New Action(Of IPTCInternal)(AddressOf Changed_Saved), sender)
+            Me.Invoke(New Action(Of MetadataItem, MetadataItem.PartEventArgs)(AddressOf Changed_Saved), sender, e)
             Exit Sub
         End If
-        ChangedIPTCs.Remove(sender)
-        lvwImages.Items(IO.Path.GetFileName(sender.ImagePath)).Text = IO.Path.GetFileName(sender.ImagePath)
+        ChangedMetadata.Remove(sender)
     End Sub
 #End Region
 #Region "SelectedIPTCs handlers"
-    Private Sub SelectedIPTCs_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles SelectedIPTCs.Added
-        AddHandler e.Item.ValueChanged, AddressOf IPTC_ValueChanged
+    Private Sub SelectedMetadata_Added(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of MetadataItem), ByVal e As CollectionsT.GenericT.ListWithEvents(Of MetadataItem).ItemIndexEventArgs) Handles SelectedMetadata.Added
+        AddHandler e.Item.Change, AddressOf Item_Changed
     End Sub
-    Private Sub SelectedIPTCs_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemsEventArgs) Handles SelectedIPTCs.Cleared
+    Private Sub SelectedMetadata_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of MetadataItem), ByVal e As CollectionsT.GenericT.ListWithEvents(Of MetadataItem).ItemsEventArgs) Handles SelectedMetadata.Cleared
         For Each item In e.Items
-            RemoveHandler item.ValueChanged, AddressOf IPTC_ValueChanged
+            RemoveHandler item.Change, AddressOf Item_Changed
         Next
     End Sub
-    Private Sub SelectedIPTCs_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal), ByVal e As CollectionsT.GenericT.ListWithEvents(Of IPTCInternal).ItemIndexEventArgs) Handles SelectedIPTCs.Removed
-        RemoveHandler e.Item.ValueChanged, AddressOf IPTC_ValueChanged
+    Private Sub SelectedMetadata_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of MetadataItem), ByVal e As CollectionsT.GenericT.ListWithEvents(Of MetadataItem).ItemIndexEventArgs) Handles SelectedMetadata.Removed
+        RemoveHandler e.Item.Change, AddressOf Item_Changed
     End Sub
 #End Region
 
@@ -952,3 +944,36 @@ Retry:              item.Save()
         picPreview.Invalidate()
     End Sub
 End Class
+
+''' <summary>Common IPTC properties displayed at common tab of <see cref="frmMain"/></summary>
+<Flags()> _
+Friend Enum CommonIPTCProperties
+    ''' <summary>No property</summary>
+    <EditorBrowsable(EditorBrowsableState.Never)> None = 0
+    ''' <summary>All properties</summary>
+    All = Copyright Or Credit Or City Or CountryCode Or Country Or Province Or Sublocation Or EditStatus Or Urgency Or ObjectName Or Caption Or Keywords
+    ''' <summary><see cref="IPTC.CopyrightNotice"/></summary>
+    Copyright = 1
+    ''' <summary><see cref="IPTC.Credit"/></summary>
+    Credit = 2
+    ''' <summary><see cref="IPTC.City"/></summary>
+    City = 4
+    ''' <summary><see cref="IPTC.CountryPrimaryLocationCode"/></summary>
+    CountryCode = 8
+    ''' <summary><see cref="IPTC.CountryPrimaryLocationName"/></summary>
+    Country = 16
+    ''' <summary><see cref="IPTC.ProvinceState"/></summary>
+    Province = 32
+    ''' <summary><see cref="IPTC.SubLocation"/></summary>
+    Sublocation = 64
+    ''' <summary><see cref="IPTC.EditStatus"/></summary>
+    EditStatus = 128
+    ''' <summary><see cref="IPTC.Urgency"/></summary>
+    Urgency = 256
+    ''' <summary><see cref="IPTC.ObjectName"/></summary>
+    ObjectName = 1024
+    ''' <summary><see cref="IPTC.CaptionAbstract"/></summary>
+    Caption = 2048
+    ''' <summary><see cref="IPTC.Keywords"/></summary>
+    Keywords = 1096
+End Enum
