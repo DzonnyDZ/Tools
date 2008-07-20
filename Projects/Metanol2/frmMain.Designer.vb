@@ -38,15 +38,13 @@ Partial Class frmMain
         Me.llbLarge = New System.Windows.Forms.LinkLabel
         Me.cmdErrInfo = New System.Windows.Forms.Button
         Me.sptImage = New System.Windows.Forms.Splitter
-        Me.fraKeywords = New System.Windows.Forms.GroupBox
-        Me.kweKeywords = New Tools.WindowsT.FormsT.KeyWordsEditor
-        Me.sptKeywords = New System.Windows.Forms.Splitter
-        Me.fraAuthor = New System.Windows.Forms.GroupBox
-        Me.tlpAuthor = New System.Windows.Forms.TableLayoutPanel
-        Me.lblCopyright = New System.Windows.Forms.Label
-        Me.txtCopyright = New System.Windows.Forms.TextBox
-        Me.lblCredit = New System.Windows.Forms.Label
-        Me.txtCredit = New System.Windows.Forms.TextBox
+        Me.fraTitle = New System.Windows.Forms.GroupBox
+        Me.tlpTitle = New System.Windows.Forms.TableLayoutPanel
+        Me.lblObjectName = New System.Windows.Forms.Label
+        Me.txtObjectName = New System.Windows.Forms.TextBox
+        Me.lblCaption = New System.Windows.Forms.Label
+        Me.txtCaption = New System.Windows.Forms.TextBox
+        Me.sptTitle = New System.Windows.Forms.Splitter
         Me.fraLocation = New System.Windows.Forms.GroupBox
         Me.tlpLocation = New System.Windows.Forms.TableLayoutPanel
         Me.lblCity = New System.Windows.Forms.Label
@@ -59,19 +57,21 @@ Partial Class frmMain
         Me.txtProvince = New System.Windows.Forms.TextBox
         Me.lblSublocation = New System.Windows.Forms.Label
         Me.txtSublocation = New System.Windows.Forms.TextBox
+        Me.fraKeywords = New System.Windows.Forms.GroupBox
+        Me.kweKeywords = New Tools.WindowsT.FormsT.KeyWordsEditor
+        Me.sptKeywords = New System.Windows.Forms.Splitter
+        Me.fraAuthor = New System.Windows.Forms.GroupBox
+        Me.tlpAuthor = New System.Windows.Forms.TableLayoutPanel
+        Me.lblCopyright = New System.Windows.Forms.Label
+        Me.txtCopyright = New System.Windows.Forms.TextBox
+        Me.lblCredit = New System.Windows.Forms.Label
+        Me.txtCredit = New System.Windows.Forms.TextBox
         Me.fraStatus = New System.Windows.Forms.GroupBox
         Me.tlpStatus = New System.Windows.Forms.TableLayoutPanel
         Me.lblEditStatus = New System.Windows.Forms.Label
         Me.txtEditStatus = New System.Windows.Forms.TextBox
         Me.lblUrgency = New System.Windows.Forms.Label
         Me.nudUrgency = New System.Windows.Forms.NumericUpDown
-        Me.fraTitle = New System.Windows.Forms.GroupBox
-        Me.tlpTitle = New System.Windows.Forms.TableLayoutPanel
-        Me.lblObjectName = New System.Windows.Forms.Label
-        Me.txtObjectName = New System.Windows.Forms.TextBox
-        Me.lblCaption = New System.Windows.Forms.Label
-        Me.txtCaption = New System.Windows.Forms.TextBox
-        Me.sptTitle = New System.Windows.Forms.Splitter
         Me.tapIPTC = New System.Windows.Forms.TabPage
         Me.prgIPTC = New System.Windows.Forms.PropertyGrid
         Me.bgwImages = New System.ComponentModel.BackgroundWorker
@@ -112,16 +112,16 @@ Partial Class frmMain
         Me.flpCommon.SuspendLayout()
         Me.panImage.SuspendLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).BeginInit()
+        Me.fraTitle.SuspendLayout()
+        Me.tlpTitle.SuspendLayout()
+        Me.fraLocation.SuspendLayout()
+        Me.tlpLocation.SuspendLayout()
         Me.fraKeywords.SuspendLayout()
         Me.fraAuthor.SuspendLayout()
         Me.tlpAuthor.SuspendLayout()
-        Me.fraLocation.SuspendLayout()
-        Me.tlpLocation.SuspendLayout()
         Me.fraStatus.SuspendLayout()
         Me.tlpStatus.SuspendLayout()
         CType(Me.nudUrgency, System.ComponentModel.ISupportInitialize).BeginInit()
-        Me.fraTitle.SuspendLayout()
-        Me.tlpTitle.SuspendLayout()
         Me.tapIPTC.SuspendLayout()
         Me.tscMain.BottomToolStripPanel.SuspendLayout()
         Me.tscMain.ContentPanel.SuspendLayout()
@@ -313,116 +313,99 @@ Partial Class frmMain
         Me.sptImage.TabIndex = 1
         Me.sptImage.TabStop = False
         '
-        'fraKeywords
+        'fraTitle
         '
-        Me.fraKeywords.Controls.Add(Me.kweKeywords)
-        Me.fraKeywords.Location = New System.Drawing.Point(202, 0)
-        Me.fraKeywords.Margin = New System.Windows.Forms.Padding(0)
-        Me.fraKeywords.MinimumSize = New System.Drawing.Size(0, 100)
-        Me.fraKeywords.Name = "fraKeywords"
-        Me.fraKeywords.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.fraKeywords.Size = New System.Drawing.Size(160, 100)
-        Me.fraKeywords.TabIndex = 2
-        Me.fraKeywords.TabStop = False
-        Me.fraKeywords.Text = "Keywords"
+        Me.fraTitle.AutoSize = True
+        Me.fraTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.fraTitle.Controls.Add(Me.tlpTitle)
+        Me.fraTitle.Location = New System.Drawing.Point(0, 103)
+        Me.fraTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraTitle.MinimumSize = New System.Drawing.Size(0, 100)
+        Me.fraTitle.Name = "fraTitle"
+        Me.fraTitle.Padding = New System.Windows.Forms.Padding(0, 0, 3, 3)
+        Me.fraTitle.Size = New System.Drawing.Size(182, 114)
+        Me.fraTitle.TabIndex = 2
+        Me.fraTitle.TabStop = False
+        Me.fraTitle.Text = "Title"
         '
-        'kweKeywords
+        'tlpTitle
         '
-        Me.kweKeywords.AutoCompleteCacheName = "Keywords"
-        Me.kweKeywords.AutomaticsLists_Designer = True
-        Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
-        Me.kweKeywords.Name = "kweKeywords"
-        Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
-        Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-        Me.kweKeywords.TabIndex = 0
+        Me.tlpTitle.AutoSize = True
+        Me.tlpTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.tlpTitle.ColumnCount = 2
+        Me.tlpTitle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+        Me.tlpTitle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpTitle.Controls.Add(Me.lblObjectName, 0, 0)
+        Me.tlpTitle.Controls.Add(Me.txtObjectName, 1, 0)
+        Me.tlpTitle.Controls.Add(Me.lblCaption, 0, 1)
+        Me.tlpTitle.Controls.Add(Me.txtCaption, 0, 2)
+        Me.tlpTitle.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tlpTitle.Location = New System.Drawing.Point(0, 13)
+        Me.tlpTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.tlpTitle.Name = "tlpTitle"
+        Me.tlpTitle.RowCount = 3
+        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle)
+        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle)
+        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpTitle.Size = New System.Drawing.Size(179, 98)
+        Me.tlpTitle.TabIndex = 1
         '
-        'sptKeywords
+        'lblObjectName
         '
-        Me.sptKeywords.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptKeywords.Location = New System.Drawing.Point(202, 100)
-        Me.sptKeywords.Margin = New System.Windows.Forms.Padding(0)
-        Me.sptKeywords.Name = "sptKeywords"
-        Me.sptKeywords.Size = New System.Drawing.Size(3, 3)
-        Me.sptKeywords.TabIndex = 3
-        Me.sptKeywords.TabStop = False
+        Me.lblObjectName.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.lblObjectName.AutoSize = True
+        Me.lblObjectName.Location = New System.Drawing.Point(0, 3)
+        Me.lblObjectName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblObjectName.Name = "lblObjectName"
+        Me.lblObjectName.Size = New System.Drawing.Size(67, 13)
+        Me.lblObjectName.TabIndex = 0
+        Me.lblObjectName.Text = "Object &name"
         '
-        'fraAuthor
+        'txtObjectName
         '
-        Me.fraAuthor.AutoSize = True
-        Me.fraAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.fraAuthor.Controls.Add(Me.tlpAuthor)
-        Me.fraAuthor.Location = New System.Drawing.Point(202, 103)
-        Me.fraAuthor.Margin = New System.Windows.Forms.Padding(0)
-        Me.fraAuthor.Name = "fraAuthor"
-        Me.fraAuthor.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
-        Me.fraAuthor.Size = New System.Drawing.Size(153, 56)
-        Me.fraAuthor.TabIndex = 4
-        Me.fraAuthor.TabStop = False
-        Me.fraAuthor.Text = "Author"
+        Me.txtObjectName.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtObjectName.Location = New System.Drawing.Point(67, 0)
+        Me.txtObjectName.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtObjectName.Name = "txtObjectName"
+        Me.txtObjectName.Size = New System.Drawing.Size(112, 20)
+        Me.txtObjectName.TabIndex = 1
         '
-        'tlpAuthor
+        'lblCaption
         '
-        Me.tlpAuthor.AutoSize = True
-        Me.tlpAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpAuthor.ColumnCount = 2
-        Me.tlpAuthor.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpAuthor.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.tlpAuthor.Controls.Add(Me.lblCopyright, 0, 0)
-        Me.tlpAuthor.Controls.Add(Me.txtCopyright, 1, 0)
-        Me.tlpAuthor.Controls.Add(Me.lblCredit, 0, 1)
-        Me.tlpAuthor.Controls.Add(Me.txtCredit, 1, 1)
-        Me.tlpAuthor.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpAuthor.Location = New System.Drawing.Point(0, 13)
-        Me.tlpAuthor.Margin = New System.Windows.Forms.Padding(0)
-        Me.tlpAuthor.Name = "tlpAuthor"
-        Me.tlpAuthor.RowCount = 2
-        Me.tlpAuthor.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpAuthor.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpAuthor.Size = New System.Drawing.Size(151, 40)
-        Me.tlpAuthor.TabIndex = 0
+        Me.lblCaption.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.lblCaption.AutoSize = True
+        Me.tlpTitle.SetColumnSpan(Me.lblCaption, 2)
+        Me.lblCaption.Location = New System.Drawing.Point(0, 20)
+        Me.lblCaption.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCaption.Name = "lblCaption"
+        Me.lblCaption.Size = New System.Drawing.Size(86, 13)
+        Me.lblCaption.TabIndex = 2
+        Me.lblCaption.Text = "&Caption/abstract"
         '
-        'lblCopyright
+        'txtCaption
         '
-        Me.lblCopyright.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCopyright.AutoSize = True
-        Me.lblCopyright.Location = New System.Drawing.Point(0, 3)
-        Me.lblCopyright.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblCopyright.Name = "lblCopyright"
-        Me.lblCopyright.Size = New System.Drawing.Size(51, 13)
-        Me.lblCopyright.TabIndex = 0
-        Me.lblCopyright.Text = "Copyright"
+        Me.txtCaption.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+                    Or System.Windows.Forms.AnchorStyles.Left) _
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.tlpTitle.SetColumnSpan(Me.txtCaption, 2)
+        Me.txtCaption.Location = New System.Drawing.Point(3, 33)
+        Me.txtCaption.Margin = New System.Windows.Forms.Padding(3, 0, 0, 0)
+        Me.txtCaption.MaxLength = 2000
+        Me.txtCaption.Multiline = True
+        Me.txtCaption.Name = "txtCaption"
+        Me.txtCaption.ScrollBars = System.Windows.Forms.ScrollBars.Both
+        Me.txtCaption.Size = New System.Drawing.Size(176, 65)
+        Me.txtCaption.TabIndex = 3
         '
-        'txtCopyright
+        'sptTitle
         '
-        Me.txtCopyright.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCopyright.Location = New System.Drawing.Point(51, 0)
-        Me.txtCopyright.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtCopyright.MaxLength = 128
-        Me.txtCopyright.Name = "txtCopyright"
-        Me.txtCopyright.Size = New System.Drawing.Size(100, 20)
-        Me.txtCopyright.TabIndex = 1
-        '
-        'lblCredit
-        '
-        Me.lblCredit.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCredit.AutoSize = True
-        Me.lblCredit.Location = New System.Drawing.Point(0, 23)
-        Me.lblCredit.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblCredit.Name = "lblCredit"
-        Me.lblCredit.Size = New System.Drawing.Size(34, 13)
-        Me.lblCredit.TabIndex = 2
-        Me.lblCredit.Text = "Credit"
-        '
-        'txtCredit
-        '
-        Me.txtCredit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCredit.Location = New System.Drawing.Point(51, 20)
-        Me.txtCredit.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtCredit.MaxLength = 32
-        Me.txtCredit.Name = "txtCredit"
-        Me.txtCredit.Size = New System.Drawing.Size(100, 20)
-        Me.txtCredit.TabIndex = 3
+        Me.sptTitle.Cursor = System.Windows.Forms.Cursors.HSplit
+        Me.sptTitle.Location = New System.Drawing.Point(0, 217)
+        Me.sptTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.sptTitle.Name = "sptTitle"
+        Me.sptTitle.Size = New System.Drawing.Size(25, 1)
+        Me.sptTitle.TabIndex = 3
+        Me.sptTitle.TabStop = False
         '
         'fraLocation
         '
@@ -434,7 +417,7 @@ Partial Class frmMain
         Me.fraLocation.Name = "fraLocation"
         Me.fraLocation.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
         Me.fraLocation.Size = New System.Drawing.Size(202, 117)
-        Me.fraLocation.TabIndex = 5
+        Me.fraLocation.TabIndex = 4
         Me.fraLocation.TabStop = False
         Me.fraLocation.Text = "Location"
         '
@@ -478,7 +461,7 @@ Partial Class frmMain
         Me.lblCity.Name = "lblCity"
         Me.lblCity.Size = New System.Drawing.Size(24, 13)
         Me.lblCity.TabIndex = 0
-        Me.lblCity.Text = "City"
+        Me.lblCity.Text = "C&ity"
         '
         'txtCity
         '
@@ -497,9 +480,9 @@ Partial Class frmMain
         Me.lblCountryCode.Location = New System.Drawing.Point(0, 24)
         Me.lblCountryCode.Margin = New System.Windows.Forms.Padding(0)
         Me.lblCountryCode.Name = "lblCountryCode"
-        Me.lblCountryCode.Size = New System.Drawing.Size(65, 13)
+        Me.lblCountryCode.Size = New System.Drawing.Size(71, 13)
         Me.lblCountryCode.TabIndex = 4
-        Me.lblCountryCode.Text = "Contry Code"
+        Me.lblCountryCode.Text = "Country C&ode"
         '
         'cmbCountryCode
         '
@@ -521,7 +504,7 @@ Partial Class frmMain
         Me.lblCountry.Name = "lblCountry"
         Me.lblCountry.Size = New System.Drawing.Size(43, 13)
         Me.lblCountry.TabIndex = 6
-        Me.lblCountry.Text = "Country"
+        Me.lblCountry.Text = "Countr&y"
         '
         'txtCountry
         '
@@ -542,7 +525,7 @@ Partial Class frmMain
         Me.lblProvince.Name = "lblProvince"
         Me.lblProvince.Size = New System.Drawing.Size(79, 13)
         Me.lblProvince.TabIndex = 8
-        Me.lblProvince.Text = "Province/State"
+        Me.lblProvince.Text = "&Province/State"
         '
         'txtProvince
         '
@@ -563,7 +546,7 @@ Partial Class frmMain
         Me.lblSublocation.Name = "lblSublocation"
         Me.lblSublocation.Size = New System.Drawing.Size(63, 13)
         Me.lblSublocation.TabIndex = 10
-        Me.lblSublocation.Text = "Sublocation"
+        Me.lblSublocation.Text = "&Sublocation"
         '
         'txtSublocation
         '
@@ -575,6 +558,117 @@ Partial Class frmMain
         Me.txtSublocation.Size = New System.Drawing.Size(121, 20)
         Me.txtSublocation.TabIndex = 11
         '
+        'fraKeywords
+        '
+        Me.fraKeywords.Controls.Add(Me.kweKeywords)
+        Me.fraKeywords.Location = New System.Drawing.Point(202, 0)
+        Me.fraKeywords.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraKeywords.MinimumSize = New System.Drawing.Size(0, 100)
+        Me.fraKeywords.Name = "fraKeywords"
+        Me.fraKeywords.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
+        Me.fraKeywords.Size = New System.Drawing.Size(160, 100)
+        Me.fraKeywords.TabIndex = 5
+        Me.fraKeywords.TabStop = False
+        Me.fraKeywords.Text = "&Keywords"
+        '
+        'kweKeywords
+        '
+        Me.kweKeywords.AutoCompleteCacheName = "Keywords"
+        Me.kweKeywords.AutomaticsLists_Designer = True
+        Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
+        Me.kweKeywords.Name = "kweKeywords"
+        Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
+        Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+        Me.kweKeywords.TabIndex = 0
+        '
+        'sptKeywords
+        '
+        Me.sptKeywords.Cursor = System.Windows.Forms.Cursors.HSplit
+        Me.sptKeywords.Location = New System.Drawing.Point(202, 100)
+        Me.sptKeywords.Margin = New System.Windows.Forms.Padding(0)
+        Me.sptKeywords.Name = "sptKeywords"
+        Me.sptKeywords.Size = New System.Drawing.Size(3, 3)
+        Me.sptKeywords.TabIndex = 6
+        Me.sptKeywords.TabStop = False
+        '
+        'fraAuthor
+        '
+        Me.fraAuthor.AutoSize = True
+        Me.fraAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.fraAuthor.Controls.Add(Me.tlpAuthor)
+        Me.fraAuthor.Location = New System.Drawing.Point(202, 103)
+        Me.fraAuthor.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraAuthor.Name = "fraAuthor"
+        Me.fraAuthor.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
+        Me.fraAuthor.Size = New System.Drawing.Size(153, 56)
+        Me.fraAuthor.TabIndex = 7
+        Me.fraAuthor.TabStop = False
+        Me.fraAuthor.Text = "Author"
+        '
+        'tlpAuthor
+        '
+        Me.tlpAuthor.AutoSize = True
+        Me.tlpAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.tlpAuthor.ColumnCount = 2
+        Me.tlpAuthor.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
+        Me.tlpAuthor.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpAuthor.Controls.Add(Me.lblCopyright, 0, 0)
+        Me.tlpAuthor.Controls.Add(Me.txtCopyright, 1, 0)
+        Me.tlpAuthor.Controls.Add(Me.lblCredit, 0, 1)
+        Me.tlpAuthor.Controls.Add(Me.txtCredit, 1, 1)
+        Me.tlpAuthor.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.tlpAuthor.Location = New System.Drawing.Point(0, 13)
+        Me.tlpAuthor.Margin = New System.Windows.Forms.Padding(0)
+        Me.tlpAuthor.Name = "tlpAuthor"
+        Me.tlpAuthor.RowCount = 2
+        Me.tlpAuthor.RowStyles.Add(New System.Windows.Forms.RowStyle)
+        Me.tlpAuthor.RowStyles.Add(New System.Windows.Forms.RowStyle)
+        Me.tlpAuthor.Size = New System.Drawing.Size(151, 40)
+        Me.tlpAuthor.TabIndex = 0
+        '
+        'lblCopyright
+        '
+        Me.lblCopyright.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.lblCopyright.AutoSize = True
+        Me.lblCopyright.Location = New System.Drawing.Point(0, 3)
+        Me.lblCopyright.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCopyright.Name = "lblCopyright"
+        Me.lblCopyright.Size = New System.Drawing.Size(51, 13)
+        Me.lblCopyright.TabIndex = 0
+        Me.lblCopyright.Text = "Copy&right"
+        '
+        'txtCopyright
+        '
+        Me.txtCopyright.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtCopyright.Location = New System.Drawing.Point(51, 0)
+        Me.txtCopyright.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtCopyright.MaxLength = 128
+        Me.txtCopyright.Name = "txtCopyright"
+        Me.txtCopyright.Size = New System.Drawing.Size(100, 20)
+        Me.txtCopyright.TabIndex = 1
+        '
+        'lblCredit
+        '
+        Me.lblCredit.Anchor = System.Windows.Forms.AnchorStyles.Left
+        Me.lblCredit.AutoSize = True
+        Me.lblCredit.Location = New System.Drawing.Point(0, 23)
+        Me.lblCredit.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCredit.Name = "lblCredit"
+        Me.lblCredit.Size = New System.Drawing.Size(34, 13)
+        Me.lblCredit.TabIndex = 2
+        Me.lblCredit.Text = "Cre&dit"
+        '
+        'txtCredit
+        '
+        Me.txtCredit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtCredit.Location = New System.Drawing.Point(51, 20)
+        Me.txtCredit.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtCredit.MaxLength = 32
+        Me.txtCredit.Name = "txtCredit"
+        Me.txtCredit.Size = New System.Drawing.Size(100, 20)
+        Me.txtCredit.TabIndex = 3
+        '
         'fraStatus
         '
         Me.fraStatus.AutoSize = True
@@ -585,7 +679,7 @@ Partial Class frmMain
         Me.fraStatus.Name = "fraStatus"
         Me.fraStatus.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
         Me.fraStatus.Size = New System.Drawing.Size(178, 56)
-        Me.fraStatus.TabIndex = 6
+        Me.fraStatus.TabIndex = 8
         Me.fraStatus.TabStop = False
         Me.fraStatus.Text = "Status"
         '
@@ -619,7 +713,7 @@ Partial Class frmMain
         Me.lblEditStatus.Name = "lblEditStatus"
         Me.lblEditStatus.Size = New System.Drawing.Size(56, 13)
         Me.lblEditStatus.TabIndex = 0
-        Me.lblEditStatus.Text = "Edit status"
+        Me.lblEditStatus.Text = "&Edit status"
         '
         'txtEditStatus
         '
@@ -640,7 +734,7 @@ Partial Class frmMain
         Me.lblUrgency.Name = "lblUrgency"
         Me.lblUrgency.Size = New System.Drawing.Size(47, 13)
         Me.lblUrgency.TabIndex = 2
-        Me.lblUrgency.Text = "Urgency"
+        Me.lblUrgency.Text = "&Urgency"
         '
         'nudUrgency
         '
@@ -650,100 +744,6 @@ Partial Class frmMain
         Me.nudUrgency.Name = "nudUrgency"
         Me.nudUrgency.Size = New System.Drawing.Size(120, 20)
         Me.nudUrgency.TabIndex = 3
-        '
-        'fraTitle
-        '
-        Me.fraTitle.AutoSize = True
-        Me.fraTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.fraTitle.Controls.Add(Me.tlpTitle)
-        Me.fraTitle.Location = New System.Drawing.Point(0, 103)
-        Me.fraTitle.Margin = New System.Windows.Forms.Padding(0)
-        Me.fraTitle.MinimumSize = New System.Drawing.Size(0, 100)
-        Me.fraTitle.Name = "fraTitle"
-        Me.fraTitle.Padding = New System.Windows.Forms.Padding(0, 0, 3, 3)
-        Me.fraTitle.Size = New System.Drawing.Size(182, 114)
-        Me.fraTitle.TabIndex = 7
-        Me.fraTitle.TabStop = False
-        Me.fraTitle.Text = "Title"
-        '
-        'tlpTitle
-        '
-        Me.tlpTitle.AutoSize = True
-        Me.tlpTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpTitle.ColumnCount = 2
-        Me.tlpTitle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpTitle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.tlpTitle.Controls.Add(Me.lblObjectName, 0, 0)
-        Me.tlpTitle.Controls.Add(Me.txtObjectName, 1, 0)
-        Me.tlpTitle.Controls.Add(Me.lblCaption, 0, 1)
-        Me.tlpTitle.Controls.Add(Me.txtCaption, 0, 2)
-        Me.tlpTitle.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpTitle.Location = New System.Drawing.Point(0, 13)
-        Me.tlpTitle.Margin = New System.Windows.Forms.Padding(0)
-        Me.tlpTitle.Name = "tlpTitle"
-        Me.tlpTitle.RowCount = 3
-        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.tlpTitle.Size = New System.Drawing.Size(179, 98)
-        Me.tlpTitle.TabIndex = 1
-        '
-        'lblObjectName
-        '
-        Me.lblObjectName.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblObjectName.AutoSize = True
-        Me.lblObjectName.Location = New System.Drawing.Point(0, 3)
-        Me.lblObjectName.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblObjectName.Name = "lblObjectName"
-        Me.lblObjectName.Size = New System.Drawing.Size(67, 13)
-        Me.lblObjectName.TabIndex = 0
-        Me.lblObjectName.Text = "Object name"
-        '
-        'txtObjectName
-        '
-        Me.txtObjectName.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtObjectName.Location = New System.Drawing.Point(67, 0)
-        Me.txtObjectName.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtObjectName.Name = "txtObjectName"
-        Me.txtObjectName.Size = New System.Drawing.Size(112, 20)
-        Me.txtObjectName.TabIndex = 1
-        '
-        'lblCaption
-        '
-        Me.lblCaption.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCaption.AutoSize = True
-        Me.tlpTitle.SetColumnSpan(Me.lblCaption, 2)
-        Me.lblCaption.Location = New System.Drawing.Point(0, 20)
-        Me.lblCaption.Margin = New System.Windows.Forms.Padding(0)
-        Me.lblCaption.Name = "lblCaption"
-        Me.lblCaption.Size = New System.Drawing.Size(86, 13)
-        Me.lblCaption.TabIndex = 2
-        Me.lblCaption.Text = "Caption/abstract"
-        '
-        'txtCaption
-        '
-        Me.txtCaption.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.tlpTitle.SetColumnSpan(Me.txtCaption, 2)
-        Me.txtCaption.Location = New System.Drawing.Point(3, 33)
-        Me.txtCaption.Margin = New System.Windows.Forms.Padding(3, 0, 0, 0)
-        Me.txtCaption.MaxLength = 2000
-        Me.txtCaption.Multiline = True
-        Me.txtCaption.Name = "txtCaption"
-        Me.txtCaption.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtCaption.Size = New System.Drawing.Size(176, 65)
-        Me.txtCaption.TabIndex = 3
-        '
-        'sptTitle
-        '
-        Me.sptTitle.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptTitle.Location = New System.Drawing.Point(0, 217)
-        Me.sptTitle.Margin = New System.Windows.Forms.Padding(0)
-        Me.sptTitle.Name = "sptTitle"
-        Me.sptTitle.Size = New System.Drawing.Size(25, 1)
-        Me.sptTitle.TabIndex = 8
-        Me.sptTitle.TabStop = False
         '
         'tapIPTC
         '
@@ -997,24 +997,24 @@ Partial Class frmMain
         Me.panImage.ResumeLayout(False)
         Me.panImage.PerformLayout()
         CType(Me.picPreview, System.ComponentModel.ISupportInitialize).EndInit()
+        Me.fraTitle.ResumeLayout(False)
+        Me.fraTitle.PerformLayout()
+        Me.tlpTitle.ResumeLayout(False)
+        Me.tlpTitle.PerformLayout()
+        Me.fraLocation.ResumeLayout(False)
+        Me.fraLocation.PerformLayout()
+        Me.tlpLocation.ResumeLayout(False)
+        Me.tlpLocation.PerformLayout()
         Me.fraKeywords.ResumeLayout(False)
         Me.fraAuthor.ResumeLayout(False)
         Me.fraAuthor.PerformLayout()
         Me.tlpAuthor.ResumeLayout(False)
         Me.tlpAuthor.PerformLayout()
-        Me.fraLocation.ResumeLayout(False)
-        Me.fraLocation.PerformLayout()
-        Me.tlpLocation.ResumeLayout(False)
-        Me.tlpLocation.PerformLayout()
         Me.fraStatus.ResumeLayout(False)
         Me.fraStatus.PerformLayout()
         Me.tlpStatus.ResumeLayout(False)
         Me.tlpStatus.PerformLayout()
         CType(Me.nudUrgency, System.ComponentModel.ISupportInitialize).EndInit()
-        Me.fraTitle.ResumeLayout(False)
-        Me.fraTitle.PerformLayout()
-        Me.tlpTitle.ResumeLayout(False)
-        Me.tlpTitle.PerformLayout()
         Me.tapIPTC.ResumeLayout(False)
         Me.tscMain.BottomToolStripPanel.ResumeLayout(False)
         Me.tscMain.BottomToolStripPanel.PerformLayout()

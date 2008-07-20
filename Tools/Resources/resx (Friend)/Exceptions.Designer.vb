@@ -931,7 +931,7 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Lenght constraint violation.
+        '''  Looks up a localized string similar to Lenght constraint violation..
         '''</summary>
         Friend Shared ReadOnly Property LenghtConstraintViolation() As String
             Get

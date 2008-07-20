@@ -172,7 +172,11 @@
     <None Include="Resources\SaveAllHS.png" />
     <None Include="Resources\RightArrowHS.png" />
     <None Include="Resources\LeftArrowHS.png" />
+    <None Include="Resources\FullScreen.png" />
+    <None Include="Resources\RotateLeft.png" />
+    <None Include="Resources\RotateRight.png" />
     <Content Include="Resources\Up.png" />
+    <Content Include="Shortcuts.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

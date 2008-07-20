@@ -54,5 +54,8 @@
       <Value Profile="(Default)">&lt;?xml version="1.0" encoding="utf-16"?&gt;
 &lt;Keywords xmlns="http://dzonny.cz/xml/Tools.WindowsT.FormsT.KeyWordsEditor" /&gt;</Value>
     </Setting>
+    <Setting Name="LargeFullScreen" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

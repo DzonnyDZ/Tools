@@ -74,9 +74,13 @@ Namespace DrawingT.MetadataT
                 _Size = Size
                 _Data = Data
             End Sub
+            ''' <summary>Contains value of the <see cref="RecordNumber"/> property</summary>
             Private _RecordNumber As Byte
+            ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
             Private _Tag As Byte
+            ''' <summary>Contains value of the <see cref="Size"/> property</summary>
             Private _Size As UShort
+            ''' <summary>Contains value of the <see cref="Data"/> property</summary>
             Private _Data As Byte()
             ''' <summary>Group number of record</summary>
             ''' <remarks>Usually 02h</remarks>

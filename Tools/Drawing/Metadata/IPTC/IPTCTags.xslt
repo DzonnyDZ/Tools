@@ -182,7 +182,11 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:value-of select="ancestor::I:record/@name"/>
             <xsl:text>tags.</xsl:text>
             <xsl:value-of select="@name"/>
-            <xsl:text>)&#xD;&#xA;</xsl:text>
+            <xsl:text>, "</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text>", "</xsl:text>
+            <xsl:value-of select="@human-name"/>
+            <xsl:text>")&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
         </xsl:for-each>

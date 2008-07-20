@@ -180,4 +180,10 @@
   <data name="Components_d" xml:space="preserve">
     <value>Number of components</value>
   </data>
+  <data name="StringValueOfTheProperty0MustBe1BytesLong" xml:space="preserve">
+    <value>String value of the property {0} must be {1} bytes long.</value>
+  </data>
+  <data name="StringValueOfTheProperty0CanBeMaximally1BytesLong" xml:space="preserve">
+    <value>String value of the property {0} can be maximally {1} bytes long.</value>
+  </data>
 </root>

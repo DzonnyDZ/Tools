@@ -128,6 +128,24 @@ Namespace DrawingT.MetadataT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to String value of the property {0} can be maximally {1} bytes long..
+        '''</summary>
+        Friend Shared ReadOnly Property StringValueOfTheProperty0CanBeMaximally1BytesLong() As String
+            Get
+                Return ResourceManager.GetString("StringValueOfTheProperty0CanBeMaximally1BytesLong", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to String value of the property {0} must be {1} bytes long..
+        '''</summary>
+        Friend Shared ReadOnly Property StringValueOfTheProperty0MustBe1BytesLong() As String
+            Get
+                Return ResourceManager.GetString("StringValueOfTheProperty0MustBe1BytesLong", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to A text representation of the Subject Detail Number.
         '''</summary>
         Friend Shared ReadOnly Property SubjectDetailName_d() As String

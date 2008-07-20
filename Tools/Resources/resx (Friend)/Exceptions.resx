@@ -409,7 +409,7 @@
     <value>When Fixed is True Len cannot be 0</value>
   </data>
   <data name="LenghtConstraintViolation" xml:space="preserve">
-    <value>Lenght constraint violation</value>
+    <value>Lenght constraint violation.</value>
   </data>
   <data name="Item0ContainsNonAlphaCharacter" xml:space="preserve">
     <value>Item {0} contains non-alpha character</value>

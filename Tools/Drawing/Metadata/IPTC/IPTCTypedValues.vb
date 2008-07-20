@@ -614,10 +614,8 @@ Namespace DrawingT.MetadataT
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="Len">Maximal or fixed length of data (ignored in Getter)</param>
         ''' <param name="Fixed"><paramref name="Len"/> is fixed length (ignored in Getter)</param>
-        ''' <exception cref="ArgumentException">
-        ''' <paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter) -or-
-        ''' Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True
-        ''' </exception>
+        ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter)</exception>
+        ''' <exception cref="LengthConstraintViolationException"/>Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True</exception>
         <EditorBrowsable(EditorBrowsableState.Always)> _
         Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Byte())
             Get
@@ -628,7 +626,8 @@ Namespace DrawingT.MetadataT
             Set(ByVal value As List(Of Byte()))
                 If Len = 0 AndAlso Fixed Then Throw New ArgumentException(ResourcesT.Exceptions.WhenFixedIsTrueLenCannotBe0)
                 For Each item As Byte() In value
-                    If (Len <> 0 AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
+                    If (Len <> 0 AndAlso Fixed AndAlso item.Length <> Len) OrElse (Not Fixed AndAlso Len <> 0 AndAlso item.Length > Len) Then _
+                        Throw New LengthConstraintViolationException(Key, Len, Fixed)
                 Next item
                 Tag(Key) = value
             End Set
@@ -668,7 +667,7 @@ Namespace DrawingT.MetadataT
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="MaxLenght">Max length of serialized byte array (ignored in getter)</param>
         ''' <param name="Encoding">Encoding for string patr (numeric always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> is used.</param>
-        ''' <exception cref="ArgumentException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 2 bytes</exception> 
+        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 2 bytes</exception> 
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Num2_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr2)
             Get
@@ -693,7 +692,8 @@ Namespace DrawingT.MetadataT
                     For Each item As NumStr2 In value
                         Dim B1 As Byte() = System.Text.Encoding.ASCII.GetBytes(item.Number.ToString("00", InvariantCulture))
                         Dim B2 As Byte() = Encoding.GetBytes(item.String)
-                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 2 Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
+                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 2 Then _
+                            Throw New LengthConstraintViolationException(Key, MaxLenght)
                         Dim B3(B1.Length + B2.Length - 1) As Byte
                         B1.CopyTo(B3, 0)
                         B2.CopyTo(B3, 2)
@@ -708,7 +708,7 @@ Namespace DrawingT.MetadataT
         ''' <param name="Key">Record and dataset number</param>
         ''' <param name="MaxLenght">Max length of serialized byte array (ignored in getter)</param>
         ''' <param name="Encoding">Encoding for string patr (numeric always uses <see cref="System.Text.Encoding.ASCII"/>). If ommited or null then <see cref="Encoding"/> is used.</param>
-        ''' <exception cref="ArgumentException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 3 bytes</exception> 
+        ''' <exception cref="LengthConstraintViolationException">Serialized value is longer than <paramref name="MaxLenght"/> bytes or serialized numeric part is not of lenght 3 bytes</exception> 
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Property Num3_Str_Value(ByVal Key As DataSetIdentification, Optional ByVal MaxLenght As Integer = 0, Optional ByVal Encoding As System.Text.Encoding = Nothing) As List(Of NumStr3)
             Get
@@ -733,7 +733,8 @@ Namespace DrawingT.MetadataT
                     For Each item As NumStr3 In value
                         Dim B1 As Byte() = System.Text.Encoding.ASCII.GetBytes(item.Number.ToString("000", InvariantCulture))
                         Dim B2 As Byte() = Encoding.GetBytes(item.String)
-                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 3 Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
+                        If B1.Length + B2.Length > MaxLenght OrElse B1.Length <> 3 Then _
+                            Throw New LengthConstraintViolationException(Key, MaxLenght)
                         Dim B3(B1.Length + B2.Length - 1) As Byte
                         B1.CopyTo(B3, 0)
                         B2.CopyTo(B3, 3)
@@ -827,9 +828,9 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="ArgumentException">
         ''' Error while creating generic instance - caused by wrong <paramref name="Type"/> (in Getter) -or-
         ''' Stored value contains invalid character (non-graphic-non-space-non-ASCII) (in getter) -or-
-        ''' Value violates length constaraint after serialization (in Setter) -or-
         ''' <paramref name="Fixed"/> is true and <paramref name="Len"/> is 0
         ''' </exception>
+        ''' <exception cref="LengthConstraintViolationException">Value violates length constaraint after serialization (in Setter)</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Property StringEnum_Value(ByVal Key As DataSetIdentification, ByVal Type As Type, Optional ByVal Len As Byte = 0, Optional ByVal Fixed As Boolean = False) As List(Of StringEnum)
@@ -866,7 +867,8 @@ Namespace DrawingT.MetadataT
                         If Attrs IsNot Nothing AndAlso Attrs.Length > 0 Then ra = Attrs(0)
                         If Not item.ContainsEnum AndAlso (ra Is Nothing OrElse ra.Restrict) Then Throw New InvalidEnumArgumentException(ResourcesT.Exceptions.ThisEnumerationDoesNotAllowValuesThatAreNotMemberOfIt)
                         Dim Bytes As Byte() = System.Text.Encoding.ASCII.GetBytes(item.StringValue)
-                        If Fixed AndAlso Bytes.Length <> Len OrElse Len <> 0 AndAlso Bytes.Length > Len Then Throw New ArgumentException(ResourcesT.Exceptions.LenghtConstraintViolation)
+                        If Fixed AndAlso Bytes.Length <> Len OrElse Len <> 0 AndAlso Bytes.Length > Len Then _
+                            Throw New LengthConstraintViolationException(Key, Len, Fixed)
                         values.Add(Bytes)
                     Next item
                 End If
@@ -1050,6 +1052,57 @@ Namespace DrawingT.MetadataT
         End Function
 #End Region
 #End Region
+        ''' <summary>Exception thrown when length constraint of string- or byte-oriented IPTC property is violated (and such violation is not allowed)</summary>
+        Public Class LengthConstraintViolationException : Inherits ArgumentException
+            ''' <summary>CTor from property name, maximal allowed lenght (in bytes) and fixed indicator</summary>
+            ''' <param name="PropertyName">Name of property setting of which caused the exception (see <see cref="PropertyName"/>)</param>
+            ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
+            ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
+            Public Sub New(ByVal PropertyName$, ByVal MaximalLength%, Optional ByVal Fixed As Boolean = False)
+                MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, DrawingT.MetadataT.IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, DrawingT.MetadataT.IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
+                _PropertyName = PropertyName
+                _MaximalLength = MaximalLength
+                _Fixed = Fixed
+            End Sub
+            ''' <summary>CTor from <see cref="DataSetIdentification"/>, maximal allowed lenght (in bytes) and fixed indicator</summary>
+            ''' <param name="Property">DataSet (IPTC property) which caused the exception (see <see cref="PropertyName"/>)</param>
+            ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
+            ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
+            Public Sub New(ByVal [Property] As DataSetIdentification, ByVal MaximalLength%, Optional ByVal fixed As Boolean = False)
+                MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format( _
+                           If(fixed, _
+                              IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, _
+                              IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), _
+                            [Property].DisplayName & "(" & CInt([Property].RecordNumber) & ":" & [Property].DatasetNumber, MaximalLength))
+                _PropertyName = [Property].PropertyName
+                _MaximalLength = MaximalLength
+                _Fixed = fixed
+            End Sub
+            ''' <summary>Contains value of the <see cref="PropertyName"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _PropertyName$
+            ''' <summary>Contains value of the <see cref="MaximalLength"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _MaximalLength%
+            ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Fixed As Boolean
+            ''' <summary>Name of property setting of which caused the exception</summary>
+            Public ReadOnly Property PropertyName$()
+                <DebuggerStepThrough()> Get
+                    Return _PropertyName
+                End Get
+            End Property
+            ''' <summary>Maximal length (in bytes) allowed for property value</summary>
+            Public ReadOnly Property MaximalLength%()
+                <DebuggerStepThrough()> Get
+                    Return _MaximalLength
+                End Get
+            End Property
+            ''' <summary>True when <see cref="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght)</summary>
+            Public ReadOnly Property Fixed() As Boolean
+                <DebuggerStepThrough()> Get
+                    Return _Fixed
+                End Get
+            End Property
+        End Class
     End Class
 #End If
 End Namespace

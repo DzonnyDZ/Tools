@@ -219,13 +219,22 @@ Public Class frmMain
     End Sub
 
     Private Sub frmMain_KeyDown(ByVal sender As Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles Me.KeyDown
-        Select Case e.KeyCode
-            Case Keys.BrowserBack : NavigateBackward()
-            Case Keys.BrowserForward : NavigateForward()
-            Case Keys.BrowserRefresh, Keys.F5 : RefreshFolder()
-            Case Keys.BrowserHome : LoadFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
-            Case Keys.BrowserStop : If bgwImages.IsBusy Then bgwImages.CancelAsync()
-        End Select
+        If Not e.Alt AndAlso Not e.Control AndAlso Not e.Shift Then
+            'None
+            Select Case e.KeyCode
+                Case Keys.BrowserBack : NavigateBackward()
+                Case Keys.BrowserForward : NavigateForward()
+                Case Keys.BrowserRefresh, Keys.F5 : RefreshFolder()
+                Case Keys.BrowserHome : LoadFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
+                Case Keys.BrowserStop : If bgwImages.IsBusy Then bgwImages.CancelAsync()
+            End Select
+        ElseIf e.Alt AndAlso Not e.Control AndAlso e.Shift Then
+            'Alt+Shift
+            Select Case e.KeyCode
+                Case Keys.Left : GoPrevious(False)
+                Case Keys.Right : GoNext(False)
+            End Select
+        End If
     End Sub
 
     Private Sub frmMain_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -426,11 +435,10 @@ Public Class frmMain
     Private Sub DoSelectedImageChanged()
         If IsChangingSuspended Then Return
         cmdErrInfo.Visible = False
-        If lvwImages.FocusedItem IsNot Nothing Then
+        If lvwImages.SelectedItems.Count > 0 Then
+            Dim prevItem =  lvwImages.SelectedItems(0)
             Try
-                'panImage.BackgroundImage = New Bitmap(lvwImages.FocusedItem.Tag.ToString)
-                picPreview.LoadAsync(lvwImages.FocusedItem.Tag.ToString)
-                'If Large IsNot Nothing Then Large.BackgroundImage = panImage.BackgroundImage
+                picPreview.LoadAsync(prevItem.Tag.ToString)
             Catch ex As Exception
                 panImage.BackgroundImage = Nothing
                 cmdErrInfo.Visible = True
@@ -439,7 +447,7 @@ Public Class frmMain
             End Try
         Else
             picPreview.Image = Nothing
-            If Large IsNot Nothing Then Large.BackgroundImage = Nothing
+            If Large IsNot Nothing Then Large.Image = Nothing : Large.ImagePath = ""
         End If
         ShowInfo()
     End Sub
@@ -590,7 +598,7 @@ Public Class frmMain
     End Sub
     ''' <summary>Shows large preview form</summary>
     Public Sub ShowLarge()
-        If Large Is Nothing Then _Large = New frmLarge : Large.BackgroundImage = picPreview.Image
+        If Large Is Nothing Then _Large = New frmLarge(Me) : Large.Image = picPreview.Image : Large.ImagePath = picPreview.ImageLocation
         If My.Settings.LargeFloating Then
             Large.Show(Me)
         Else
@@ -609,7 +617,7 @@ Public Class frmMain
     End Sub
 
     Private Sub picPreview_LoadCompleted(ByVal sender As PictureBox, ByVal e As System.ComponentModel.AsyncCompletedEventArgs) Handles picPreview.LoadCompleted
-        If Large IsNot Nothing Then Large.BackgroundImage = sender.Image
+        If Large IsNot Nothing Then Large.Image = sender.Image : Large.ImagePath = sender.ImageLocation
     End Sub
     ''' <summary>Mouse down positions on splitters</summary>
     Private SplitterDowns As New Dictionary(Of Splitter, Point)
@@ -657,6 +665,8 @@ Public Class frmMain
                 Dim desc = selectedItem.EnumValue.GetConstant.GetAttribute(Of DisplayNameAttribute)()
                 If desc IsNot Nothing Then
                     txtCountry.Text = desc.DisplayName
+                    StoreControl(sender)
+                    StoreControl(txtCountry)
                 End If
             End If
         End If
@@ -687,7 +697,7 @@ Public Class frmMain
                     Dim currKws = currentitem.Keywords
                     If SelectedIPTCs.Count = 1 OrElse Not kweKeywords.Merge Then
                         'Do not make unnecessary changes
-                        If currKws.Length <> kweKeywords.KeyWords.Count Then
+                        If (currKws Is Nothing AndAlso kweKeywords.KeyWords.Count <> 0) OrElse (currKws.Length <> kweKeywords.KeyWords.Count) Then
                             currentitem.Keywords = kweKeywords.KeyWords.ToArray
                         Else
                             Dim diffFound As Boolean = False
@@ -799,7 +809,7 @@ Retry:              item.Save()
                 Catch ex As Exception
                     Select Case MBox.ModalSyncTemplate(Me, _
                             New MBox.FakeBox(MButton.Buttons.Cancel Or MButton.Buttons.Retry Or MButton.Buttons.Ignore), _
-                            String.Format(My.Resources.ErrorWhileSaving0, item.ImagePath) & vbCrLf & ex.Message, My.Resources.Error_)
+                            String.Format(My.Resources.ErrorWhileSaving0, item.ImagePath) & vbCrLf & ex.Message, My.Resources.Error_, Me)
                         Case Windows.Forms.DialogResult.Cancel : Return False
                         Case Windows.Forms.DialogResult.Retry : GoTo Retry
                             'Case Else do nothing
@@ -869,13 +879,18 @@ Retry:              item.Save()
         End If
     End Sub
     ''' <summary>Selects next image</summary>
-    Public Sub GoNext()
+    ''' <param name="ResetActiveControl">True to reset active control of main form to Object Name text fiels, false to keep current</param>
+    Public Sub GoNext(Optional ByVal ResetActiveControl As Boolean = True)
         StoreActiveConrol()
         Dim item As ListViewItem = lvwImages.FocusedItem
         If (item Is Nothing OrElse Not item.Selected) AndAlso lvwImages.SelectedItems.Count > 0 Then item = lvwImages.SelectedItems(lvwImages.SelectedItems.Count - 1)
         If item Is Nothing Then
-            lvwImages.SelectedItems.Clear()
-            If lvwImages.Items.Count > 0 Then lvwImages.Items(0).Selected = True Else Beep()
+            If lvwImages.Items.Count > 0 Then
+                lvwImages.SelectedItems.Clear()
+                lvwImages.Items(0).Selected = True
+                lvwImages.SelectedItems(0).EnsureVisible()
+            Else : Beep()
+            End If
         Else
             Dim index = lvwImages.Items.IndexOf(item)
             If index >= lvwImages.Items.Count - 1 Then
@@ -885,20 +900,27 @@ Retry:              item.Save()
                 Try
                     lvwImages.SelectedItems.Clear()
                     lvwImages.Items(index + 1).Selected = True
+                    lvwImages.SelectedItems(0).EnsureVisible()
                 Finally
                     ResumeUpdate()
                 End Try
             End If
         End If
+        If ResetActiveControl Then txtObjectName.Select()
     End Sub
     ''' <summary>Selects previous image</summary>
-    Public Sub GoPrevious()
+    ''' <param name="ResetActiveControl">True to reset active control of main form to Object Name text fiels, false to keep current</param>
+    Public Sub GoPrevious(Optional ByVal ResetActiveControl As Boolean = True)
         StoreActiveConrol()
         Dim item As ListViewItem = lvwImages.FocusedItem
         If (item Is Nothing OrElse Not item.Selected) AndAlso lvwImages.SelectedItems.Count > 0 Then item = lvwImages.SelectedItems(0)
         If item Is Nothing Then
-            lvwImages.SelectedItems.Clear()
-            If lvwImages.Items.Count > 0 Then lvwImages.Items(lvwImages.Items.Count - 1).Selected = True Else Beep()
+            If lvwImages.Items.Count > 0 Then
+                lvwImages.SelectedItems.Clear()
+                lvwImages.Items(lvwImages.Items.Count - 1).Selected = True
+                lvwImages.SelectedItems(0).EnsureVisible()
+            Else : Beep()
+            End If
         Else
             Dim index = lvwImages.Items.IndexOf(item)
             If index <= 0 Then
@@ -908,11 +930,13 @@ Retry:              item.Save()
                 Try
                     lvwImages.SelectedItems.Clear()
                     lvwImages.Items(index - 1).Selected = True
+                    lvwImages.SelectedItems(0).EnsureVisible()
                 Finally
                     ResumeUpdate()
                 End Try
             End If
         End If
+        If ResetActiveControl Then txtObjectName.Select()
     End Sub
 
     Private Sub tmiNext_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiNext.Click
@@ -921,5 +945,10 @@ Retry:              item.Save()
 
     Private Sub tmiPrevious_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiPrevious.Click
         GoPrevious()
+    End Sub
+
+    Private Sub Large_ImageAltered(ByVal sender As frmLarge) Handles _Large.ImageAltered
+        picPreview.Image = sender.Image
+        picPreview.Invalidate()
     End Sub
 End Class

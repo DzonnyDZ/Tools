@@ -121,8 +121,8 @@
   <data name="Symbol-Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Symbol-Delete.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SavingChangedImages" xml:space="preserve">
-    <value>Saving changed images</value>
+  <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Save_cmd" xml:space="preserve">
     <value>Save</value>
@@ -130,14 +130,14 @@
   <data name="SaveAllHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\SaveAllHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SavingChangedImages" xml:space="preserve">
+    <value>Saving changed images</value>
+  </data>
   <data name="ErrorWhileSaving0" xml:space="preserve">
     <value>Error while saving {0}:</value>
   </data>
   <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\NavForward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-  </data>
-  <data name="RightArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\RightArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="LargeFloating_n" xml:space="preserve">
     <value>Floating preview</value>
@@ -146,9 +146,6 @@
   <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
   <data name="Save_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>S</value>
-  </data>
-  <data name="Up" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\up.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="Metanol" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Metanol.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -161,8 +158,8 @@
     <value>Thumbnail size</value>
     <comment>PropertyGrid property name</comment>
   </data>
-  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\Net 31.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="UnsavedChanges" xml:space="preserve">
+    <value>Current folder contains unsaved chages. Do you want to save them now? If you select not to save, changes will be lost!</value>
   </data>
   <data name="Error_" xml:space="preserve">
     <value>Error</value>
@@ -172,11 +169,14 @@
     <value>Display</value>
     <comment>PropertyGrid category</comment>
   </data>
-  <data name="ErrorWhileLoading0" xml:space="preserve">
-    <value>Error while loading {0}:</value>
+  <data name="RightArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RightArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="SaveChanges_dlgTitle" xml:space="preserve">
-    <value>Save changes</value>
+  <data name="Refresh" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Net 31.ico;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="LeftArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\LeftArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
   <data name="GoLtrHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\GoLtrHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
@@ -191,8 +191,11 @@
   <data name="DontSave_access" type="System.Char, mscorlib" xml:space="preserve">
     <value>D</value>
   </data>
-  <data name="UnsavedChanges" xml:space="preserve">
-    <value>Current folder contains unsaved chages. Do you want to save them now? If you select not to save, changes will be lost!</value>
+  <data name="ErrorWhileLoading0" xml:space="preserve">
+    <value>Error while loading {0}:</value>
+  </data>
+  <data name="SaveChanges_dlgTitle" xml:space="preserve">
+    <value>Save changes</value>
   </data>
   <data name="ThumbSize_d" xml:space="preserve">
     <value>Size of image preview in main window</value>
@@ -207,7 +210,16 @@
   <data name="DontSave_cmd" xml:space="preserve">
     <value>Don't save</value>
   </data>
-  <data name="LeftArrowHS" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\LeftArrowHS.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="FullScreen" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\FullScreen.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="RotateLeft" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RotateLeft.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
+  <data name="RotateRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\RotateRight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

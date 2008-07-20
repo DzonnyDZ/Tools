@@ -112,6 +112,13 @@ Namespace My.Resources
             End Get
         End Property
         
+        Friend ReadOnly Property FullScreen() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("FullScreen", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
         Friend ReadOnly Property GoLtrHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("GoLtrHS", resourceCulture)
@@ -174,6 +181,15 @@ Namespace My.Resources
             End Get
         End Property
         
+        '''<summary>
+        '''  Looks up a localized string similar to Preview.
+        '''</summary>
+        Friend ReadOnly Property Preview() As String
+            Get
+                Return ResourceManager.GetString("Preview", resourceCulture)
+            End Get
+        End Property
+        
         Friend ReadOnly Property Refresh() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Refresh", resourceCulture)
@@ -184,6 +200,20 @@ Namespace My.Resources
         Friend ReadOnly Property RightArrowHS() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("RightArrowHS", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property RotateLeft() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("RotateLeft", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property RotateRight() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("RotateRight", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property

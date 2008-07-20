@@ -261,6 +261,18 @@ Namespace My
                 Me("Keywords") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("False")>  _
+        Public Property LargeFullScreen() As Boolean
+            Get
+                Return CType(Me("LargeFullScreen"),Boolean)
+            End Get
+            Set
+                Me("LargeFullScreen") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

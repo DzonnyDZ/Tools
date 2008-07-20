@@ -31,7 +31,7 @@ Namespace DrawingT.MetadataT
         Public Sub New(ByVal Reader As IPTCReader)
             Me.New()
             For Each t As IPTCReader.IPTCRecord In Reader.Records
-                Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(New DataSetIdentification(t.RecordNumber, t.Tag), t.Data))
+                Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
             Next t
         End Sub
         ''' <summary>CTor from <see cref="IIPTCGetter"/></summary>
@@ -180,14 +180,18 @@ Namespace DrawingT.MetadataT
 
         ''' <summary>Identifies IPTC tag (DataSet). Used for indexing.</summary>
         ''' <completionlist cref="DataSetIdentification"/>
-        <DebuggerDisplay("{RecordNumber}:{DatasetNumber}")> _
-        Partial Public Structure DataSetIdentification : Implements IPair(Of RecordNumbers, Byte), IEquatable(Of IPair(Of RecordNumbers, Byte))
+        <DebuggerDisplay("{RecordNumber}:{DatasetNumber} {DisplayName}")> _
+        Partial Public Structure DataSetIdentification : Implements IPair(Of RecordNumbers, Byte), IEquatable(Of IPair(Of RecordNumbers, Byte)), ICloneable(Of DataSetIdentification)
             ''' <summary>Contains value of the <see cref="RecordNumber"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _RecordNumber As RecordNumbers
             ''' <summary>Contains value of the <see cref="DatasetNumber"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _DataSetNumber As Byte
+            ''' <summary>Contains balue of the <see cref="PropertyName"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _PropertyName$
+            ''' <summary>Contains value of the <see cref="DisplayName"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private _DisplayName$
             ''' <summary>Record (tag group) number</summary>
             ''' <exception cref="ArgumentOutOfRangeException">Value being set is greater than 9</exception>
             Public Property RecordNumber() As RecordNumbers Implements DataStructuresT.GenericT.IPair(Of RecordNumbers, Byte).Value1
@@ -208,24 +212,62 @@ Namespace DrawingT.MetadataT
                     _DataSetNumber = value
                 End Set
             End Property
-            ''' <summary>Copy CTor</summary>
+            ''' <summary>Gets or sets name of property of the <see cref="IPTC"/> class this dataset is accessible via. Null if this is not known dataset.</summary>
+            ''' <returns>Name of property of the <see cref="IPTC"/> class this data set is accessible via. Null if this is not standard dataset.</returns>
+            ''' <value>Name of property of the <see cref="IPTC"/> class this dataset is accessible via. Such property must exist.</value>
+            ''' <exception cref="MissingMemberException">Property with name same as value being set does not exist on the <see cref="IPTC"/> class (when value being set is not null).</exception>
+            ''' <seelaso cref="IPTCTag.Name"/>
+            Public Property PropertyName$()
+                <DebuggerStepThrough()> Get
+                    Return _PropertyName
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value$)
+                    If value IsNot Nothing AndAlso GetType(IPTC).GetProperty(value) Is Nothing Then Throw New MissingMemberException(GetType(IPTC).FullName, value)
+                    _PropertyName = value
+                End Set
+            End Property
+            ''' <summary>Gets or localized display name of dataset.</summary>
+            ''' <returns>Localized display name of data set. Null if data set has no name.</returns>
+            ''' <value>Localized display name of data set. Null if data set has no name.</value>
+            ''' <seelaso cref="IPTCTag.HumanName"/>
+            Public Property DisplayName$()
+                <DebuggerStepThrough()> Get
+                    Return _DisplayName
+                End Get
+                <DebuggerStepThrough()> Set(ByVal value$)
+                    _DisplayName = value
+                End Set
+            End Property
+            ''' <summary>Copy CTor from <see cref="IPair(Of RecordNumbers, Byte)"/>[<see cref="RecordNumbers"/>, <see cref="Byte"/>]</summary>
             ''' <param name="From">Instance to be cloned</param>
             Public Sub New(ByVal From As IPair(Of RecordNumbers, Byte))
                 Me.RecordNumber = From.Value1
                 Me.DatasetNumber = From.Value2
             End Sub
+            ''' <summary>Copy CTor</summary>
+            ''' <param name="From">Instance to be cloned</param>
+            Public Sub New(ByVal From As DataSetIdentification)
+                Me.New(DirectCast(From, IPair(Of RecordNumbers, Byte)))
+                Me.DisplayName = From.DisplayName
+                Me.PropertyName = From.PropertyName
+            End Sub
             ''' <summary>CTor</summary>
             ''' <param name="RecordNumber">Number of record (tag group)</param>
             ''' <param name="DataSetNumber">Number of dataset (tag)</param>
+            ''' <param name="DisplayName">Localized display name of data set property (null if data set has no name)</param>
+            ''' <param name="PropertyName">Name of property of the <see cref="IPTC"/> class this data set is accessible via (null if this is not known data set accessible via property of the <see cref="IPTC"/> class)</param>
+            ''' <exception cref="MissingMemberException">The <see cref="IPTC"/> class does not contain property named as value of <paramref name="DisplayName"/>.</exception>
             <DebuggerStepThrough()> _
-            Public Sub New(ByVal RecordNumber As RecordNumbers, ByVal DataSetNumber As Byte)
+            Public Sub New(ByVal RecordNumber As RecordNumbers, ByVal DataSetNumber As Byte, ByVal PropertyName$, ByVal DisplayName$)
                 Me.RecordNumber = RecordNumber
                 Me.DatasetNumber = DataSetNumber
+                Me.PropertyName = PropertyName
+                Me.DisplayName = DisplayName
             End Sub
             ''' <summary>Creates a new object that is a copy of the current instance.</summary>
             ''' <returns>A new object that is a copy of this instance</returns>
             <Obsolete("Use type-safe Clone instead")> _
-            Private Function Clone1() As Object Implements System.ICloneable.Clone
+            Private Function ICloneable_Clone() As Object Implements System.ICloneable.Clone
                 Return Clone()
             End Function
             ''' <summary>Swaps values <see cref="IPair(Of RecordNumbers, Byte).Value1"/> and <see cref="IPair(Of RecordNumbers, Byte).Value2"/></summary>
@@ -234,7 +276,12 @@ Namespace DrawingT.MetadataT
             End Function
             ''' <summary>Creates a new object that is a copy of the current instance.</summary>
             ''' <returns>A new object that is a copy of this instance</returns>
-            Public Function Clone() As DataStructuresT.GenericT.IPair(Of RecordNumbers, Byte) Implements ICloneable(Of DataStructuresT.GenericT.IPair(Of RecordNumbers, Byte)).Clone
+            Private Function ICloneable__IPair__RecordNumbers_Byte_____Clone() As DataStructuresT.GenericT.IPair(Of RecordNumbers, Byte) Implements ICloneable(Of DataStructuresT.GenericT.IPair(Of RecordNumbers, Byte)).Clone
+                Return New DataSetIdentification(Me)
+            End Function
+            ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+            ''' <returns>A new object that is a copy of this instance</returns>
+            Public Function Clone() As DataSetIdentification Implements ICloneable(Of DataSetIdentification).Clone
                 Return New DataSetIdentification(Me)
             End Function
             ''' <summary>Compares two <see cref="DataSetIdentification"/>s</summary>
@@ -273,6 +320,37 @@ Namespace DrawingT.MetadataT
             ''' <returns>A hash code for the current System.Object</returns>
             Public Overrides Function GetHashCode() As Integer
                 Return Me.DatasetNumber * 256 + Me.RecordNumber
+            End Function
+            ''' <summary>Contains value of the <see cref="KnownDataSetsInternal"/> property (null when property has not been initialized yet)</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Private Shared _KnownDataSetsInternal As Dictionary(Of DataSetIdentification, DataSetIdentification)
+            ''' <summary>Synchronisation object for initializaion rountine of the <see cref="KnownDataSetsInternal"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Private Shared KnownDataSetsInternalSyncLock As New Object
+            ''' <summary>Contains cached value of the <see cref="KnownDataSets"/> (with hidden ones)</summary>
+            Private Shared ReadOnly Property KnownDataSetsInternal() As Dictionary(Of DataSetIdentification, DataSetIdentification)
+                Get
+                    If _KnownDataSetsInternal Is Nothing Then
+                        SyncLock KnownDataSetsInternalSyncLock
+                            If _KnownDataSetsInternal IsNot Nothing Then Return _KnownDataSetsInternal
+                            KnownDataSetsInternal = New Dictionary(Of DataSetIdentification, DataSetIdentification)()
+                            For Each dataset In KnownDataSets()
+                                KnownDataSetsInternal.Add(dataset, dataset)
+                            Next
+                        End SyncLock
+                    End If
+                    Return _KnownDataSetsInternal
+                End Get
+            End Property
+            ''' <summary>Gets known data set from record number and tag number</summary>
+            ''' <param name="RecordNumber">Recor number</param>
+            ''' <param name="Tag">Tag number</param>
+            ''' <remarks>If dataset with given <paramref name="RecordNumber"/> and <paramref name="Tag"/> exists in <see cref="KnownDataSets"/> returns item from there, otherwise returns newly created instance of <see cref="DataSetIdentification"/> initialized with <paramref name="RecordNumber"/> nad <paramref name="Tag"/> (with null <see cref="DisplayName"/> and <see cref="PropertyName"/>).</remarks>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Public Shared Function GetKnownDataSet(ByVal RecordNumber As RecordNumbers, ByVal Tag As Byte) As DataSetIdentification
+                Dim WithSameHash As New DataSetIdentification(RecordNumber, Tag, Nothing, Nothing)
+                If KnownDataSetsInternal.ContainsKey(WithSameHash) Then Return KnownDataSetsInternal(WithSameHash)
+                Return WithSameHash
             End Function
             ''' <summary>Gives acctess to <see cref="System.Predicate"/> that matches <see cref="KeyValuePair(Of DataSetIdentification, T)"/> which's <see cref="KeyValuePair.Key"/> is same as given <see cref="DataSetIdentification"/></summary>
             <DebuggerDisplay("{RecordNumber}:{DatasetNumber}")> _
@@ -389,7 +467,7 @@ Namespace DrawingT.MetadataT
             <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
             Public Property Identification() As DataSetIdentification
                 Get
-                    Return New DataSetIdentification(Me.Record, Me.Number)
+                    Return New DataSetIdentification(Me.Record, Me.Number, Me.Name, Me.HumanName)
                 End Get
                 Set(ByVal value As DataSetIdentification)
                     Me.Record = value.RecordNumber
@@ -429,6 +507,7 @@ Namespace DrawingT.MetadataT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Name As String
             ''' <summary>Tag name as used in object structure</summary>
             ''' <exception cref="InvalidOperationException">Changing value when <see cref="Locked"/> is true</exception>
+            ''' <seelaso cref="DataSetIdentification.PropertyName"/>
             Public Property Name() As String
                 Get
                     Return _Name
@@ -442,6 +521,7 @@ Namespace DrawingT.MetadataT
             <EditorBrowsable(EditorBrowsableState.Never)> Private _HumanName As String
             ''' <summary>Human-friendly name of tag</summary>
             ''' <exception cref="InvalidOperationException">Changing value when <see cref="Locked"/> is true</exception>
+            ''' <seelaso cref="DataSetIdentification.DisplayName"/>
             Public Property HumanName() As String
                 Get
                     Return _HumanName
