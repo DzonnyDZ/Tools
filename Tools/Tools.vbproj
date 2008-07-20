@@ -336,34 +336,6 @@
     <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.Designer.vb">
-      <DependentUpon>ComboWithStatus.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ComboWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ControlWithStatus.Designer.vb">
-      <DependentUpon>ControlWithStatus.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ControlWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\MaskedTextBoxWithStatus.Designer.vb">
-      <DependentUpon>MaskedTextBoxWithStatus.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\MaskedTextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.Designer.vb">
-      <DependentUpon>NumericUpDownWithStatus.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
     <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
     </Compile>
@@ -397,13 +369,6 @@
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" Condition="$(Config)&lt;=$(Nightly)">
       <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\MultiLineTextBoxWithStatus.Designer.vb">
-      <DependentUpon>MultiLineTextBoxWithStatus.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\MultiLineTextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripComboBox.vb">
@@ -538,18 +503,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.ProgressBarWithText.bmp" />
-    <EmbeddedResource Include="Windows\Forms\Composite controls\ComboWithStatus.resx">
-      <DependentUpon>ComboWithStatus.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\MaskedTextBoxWithStatus.resx">
-      <DependentUpon>MaskedTextBoxWithStatus.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\NumericUpDownWithStatus.resx">
-      <DependentUpon>NumericUpDownWithStatus.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\TextBoxWithStatus.resx">
       <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -569,10 +522,6 @@
     <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.resx">
       <SubType>Designer</SubType>
       <DependentUpon>StatusMarker.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\MultiLineTextBoxWithStatus.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>MultiLineTextBoxWithStatus.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
@@ -768,10 +717,6 @@
       <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
       <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\ControlWithStatus.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>ControlWithStatus.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>
