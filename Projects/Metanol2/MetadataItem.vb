@@ -1,4 +1,6 @@
-﻿''' <summary>Represents <see cref="ListViewItem"/> which contains metedata for given file</summary>
+﻿Imports Tools.DrawingT.MetadataT
+
+''' <summary>Represents <see cref="ListViewItem"/> which contains metedata for given file</summary>
 Public NotInheritable Class MetadataItem : Inherits ListViewItem
 #Region "CTors"
     ''' <exception cref="ArgumentNullException"><paramref name="FilePath"/> is null</exception>
@@ -87,7 +89,61 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
         OnChanged(New PartEventArgs(Parts.IPTC))
     End Sub
 #End Region
+#Region "Exif"
+    ''' <summary>Contains value of the <see cref="IPTC"/> property</summary>
+    Private WithEvents _Exif As ExifInternal
+    ''' <summary>Gets or sets IPTC data for file represented by this instance</summary>
+    Public Property Exif() As ExifInternal
+        Get
+            If ExifContains Then
+                Return _Exif
+            Else
+                Return Nothing
+            End If
+        End Get
+        Set(ByVal value As ExifInternal)
+            _Exif = value
+            _ExifContains = True
+        End Set
+    End Property
+    ''' <summary>Contains value of the <see cref="IPTCContains"/> and <see cref="IPTCLoaded"/> properties</summary>
+    Private _ExifContains As Boolean? = Nothing
+    ''' <summary>Gets value idicating if this instance contains IPTC information</summary>
+    Public ReadOnly Property ExifContains() As Boolean
+        Get
+            If Not _ExifContains.HasValue Then
+                ExifLoad(False)
+            Else
+                Return _ExifContains
+            End If
+        End Get
+    End Property
+    ''' <summary>Gets value indicating if IPTC for this instance was altready loaded</summary>
+    ''' <remarks>Getting <see cref="IPTC"/> or <see cref="IPTCContains"/> properties causes IPTC information to load automatically</remarks>
+    Public ReadOnly Property ExifLoaded() As Boolean
+        Get
+            Return _ExifContains.HasValue
+        End Get
+    End Property
+    ''' <summary>Loads (or reloads) IPTC information for this instance</summary>
+    ''' <param name="SuppressExceptions">When true any exception thrown by CTor of <see cref="IPTCInternal"/> is suppressed and <see cref="IPTCContains"/> is set to false when an exception occurs.</param>
+    ''' <remarks>This method is called automatically when <see cref="IPTC"/> or <see cref="IPTCContains"/> property is got for the first time.</remarks>
+    Public Sub ExifLoad(Optional ByVal SuppressExceptions As Boolean = False)
+        Try
+            Me.Exif = New ExifInternal(Me.Path)
+        Catch ex As Exception
+            _ExifContains = False
+            If Not SuppressExceptions Then Throw
+        End Try
+    End Sub
+    Private Sub Exif_Saved(ByVal sender As ExifInternal) 'Handles _Exif.Saved
+        OnPartSaved(New PartEventArgs(Parts.Exif))
+    End Sub
 
+    Private Sub Exif_ValueChanged(ByVal sender As ExifInternal, ByVal e As System.EventArgs) 'Handles _Exif.ValueChanged
+        OnChanged(New PartEventArgs(Parts.Exif))
+    End Sub
+#End Region
 #End Region
     ''' <summary>Gets value indicating if any part is in usaved state</summary>
     Public ReadOnly Property Changed() As Boolean
@@ -147,5 +203,5 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
         End If
     End Sub
 
-    
+
 End Class

@@ -36,6 +36,9 @@ Namespace DrawingT.MetadataT
         End Sub
         ''' <summary>CTor from <see cref="IIPTCGetter"/></summary>
         ''' <param name="Getter"><see cref="IIPTCGetter"/> that contains IPTC stream</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Getter"/> is null</exception>
+        ''' <exception cref="IO.InvalidDataException">Tag marker other than 1Ch found</exception>
+        ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         Public Sub New(ByVal Getter As IIPTCGetter)
             Me.New(New IPTCReader(Getter))
         End Sub

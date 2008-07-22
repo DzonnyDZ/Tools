@@ -834,4 +834,43 @@
   <data name="PropertyIsReadOnly" xml:space="preserve">
     <value>Property is read only</value>
   </data>
+  <data name="ThePreviousPropertyOfIFDBeingSetAsFollowingMustBeNull" xml:space="preserve">
+    <value>The Previous property of IFD being set as following must be null</value>
+  </data>
+  <data name="AttemptToCreateCyclicLinkedListOfIFDs" xml:space="preserve">
+    <value>Attempt to create cyclic linked-list of IFDs</value>
+  </data>
+  <data name="FollowingIFDCannotBeSubIFD" xml:space="preserve">
+    <value>Following IFD cannot be SubIFD</value>
+  </data>
+  <data name="FollowingIFDMustBeMemberOfSameExifOrBeMemberOfNoExifAsCurrentIFD" xml:space="preserve">
+    <value>Following IFD must be member of same Exif or be member of no Exif as current IFD.</value>
+  </data>
+  <data name="GivenIFDIsAlreadyInUse" xml:space="preserve">
+    <value>Given IFD is already in use</value>
+  </data>
+  <data name="CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPreviousIFD" xml:space="preserve">
+    <value>Cannot set value of the Exif property to other instance then is value of Exif property of Previous IFD.</value>
+  </data>
+  <data name="IFDPassedToTheIFD0PropertyMustEitherHaveNoExifAsociatedOrMustHaveAssociatedCurrrentInstance" xml:space="preserve">
+    <value>IFD passed to the IFD0 property must either have no Exif asociated or must have associated currrent instance.</value>
+  </data>
+  <data name="IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet" xml:space="preserve">
+    <value>IFD passed to the IFD0 property cannot have the Previous property set.</value>
+  </data>
+  <data name="TypeOfIFDFollowingAfterIFD0MustBeIFDMain" xml:space="preserve">
+    <value>Type of IFD following after IFD0 must be IFDMain</value>
+  </data>
+  <data name="CanNeverContainItemWithKeyOfType1" xml:space="preserve">
+    <value>{0} can never contain item with key of type {1}</value>
+  </data>
+  <data name="GivenKeyIsAlreadyPresentInTheDictionary" xml:space="preserve">
+    <value>Given key is already present in the dictionary</value>
+  </data>
+  <data name="CollectionIsReadOnly" xml:space="preserve">
+    <value>Collection is read-only</value>
+  </data>
+  <data name="ValueWasNotFound" xml:space="preserve">
+    <value>Value was not found</value>
+  </data>
 </root>

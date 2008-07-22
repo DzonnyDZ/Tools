@@ -83,6 +83,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Attempt to create cyclic linked-list of IFDs.
+        '''</summary>
+        Friend Shared ReadOnly Property AttemptToCreateCyclicLinkedListOfIFDs() As String
+            Get
+                Return ResourceManager.GetString("AttemptToCreateCyclicLinkedListOfIFDs", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Attempt to create cyclic tree.
         '''</summary>
         Friend Shared ReadOnly Property AttemptToCreateCyclicTree() As String
@@ -151,6 +160,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property CanContainOnlyGraphicCharactersExceptAnd() As String
             Get
                 Return ResourceManager.GetString("CanContainOnlyGraphicCharactersExceptAnd", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} can never contain item with key of type {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property CanNeverContainItemWithKeyOfType1() As String
+            Get
+                Return ResourceManager.GetString("CanNeverContainItemWithKeyOfType1", resourceCulture)
             End Get
         End Property
         
@@ -489,6 +507,16 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot set value of the Exif property to other instance then is value of Exif property of Previous IFD..
+        '''</summary>
+        Friend Shared ReadOnly Property CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPreviousIFD() As String
+            Get
+                Return ResourceManager.GetString("CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPrevious"& _ 
+                        "IFD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Changing was canceled in eventhandler.
         '''</summary>
         Friend Shared ReadOnly Property ChangingWasCanceledInEventhandler() As String
@@ -531,6 +559,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property CodeIsNotValidISO639LanguageCode() As String
             Get
                 Return ResourceManager.GetString("CodeIsNotValidISO639LanguageCode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Collection is read-only.
+        '''</summary>
+        Friend Shared ReadOnly Property CollectionIsReadOnly() As String
+            Get
+                Return ResourceManager.GetString("CollectionIsReadOnly", resourceCulture)
             End Get
         End Property
         
@@ -724,6 +761,42 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Following IFD cannot be SubIFD.
+        '''</summary>
+        Friend Shared ReadOnly Property FollowingIFDCannotBeSubIFD() As String
+            Get
+                Return ResourceManager.GetString("FollowingIFDCannotBeSubIFD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Following IFD must be member of same Exif or be member of no Exif as current IFD..
+        '''</summary>
+        Friend Shared ReadOnly Property FollowingIFDMustBeMemberOfSameExifOrBeMemberOfNoExifAsCurrentIFD() As String
+            Get
+                Return ResourceManager.GetString("FollowingIFDMustBeMemberOfSameExifOrBeMemberOfNoExifAsCurrentIFD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Given IFD is already in use.
+        '''</summary>
+        Friend Shared ReadOnly Property GivenIFDIsAlreadyInUse() As String
+            Get
+                Return ResourceManager.GetString("GivenIFDIsAlreadyInUse", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Given key is already present in the dictionary.
+        '''</summary>
+        Friend Shared ReadOnly Property GivenKeyIsAlreadyPresentInTheDictionary() As String
+            Get
+                Return ResourceManager.GetString("GivenKeyIsAlreadyPresentInTheDictionary", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Given marker&apos;s code doesn&apos;t start with FFh.
         '''</summary>
         Friend Shared ReadOnly Property GivenMarkerSCodeDoesnTStartWithFFh() As String
@@ -756,6 +829,25 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property HasToManyDigits() As String
             Get
                 Return ResourceManager.GetString("HasToManyDigits", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to IFD passed to the IFD0 property cannot have the Previous property set..
+        '''</summary>
+        Friend Shared ReadOnly Property IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet() As String
+            Get
+                Return ResourceManager.GetString("IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to IFD passed to the IFD0 property must either have no Exif asociated or must have associated currrent instance..
+        '''</summary>
+        Friend Shared ReadOnly Property IFDPassedToTheIFD0PropertyMustEitherHaveNoExifAsociatedOrMustHaveAssociatedCurrrentInstance() As String
+            Get
+                Return ResourceManager.GetString("IFDPassedToTheIFD0PropertyMustEitherHaveNoExifAsociatedOrMustHaveAssociatedCurrre"& _ 
+                        "ntInstance", resourceCulture)
             End Get
         End Property
         
@@ -1927,6 +2019,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The Previous property of IFD being set as following must be null.
+        '''</summary>
+        Friend Shared ReadOnly Property ThePreviousPropertyOfIFDBeingSetAsFollowingMustBeNull() As String
+            Get
+                Return ResourceManager.GetString("ThePreviousPropertyOfIFDBeingSetAsFollowingMustBeNull", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to There is not engough space in array after {0}  to place all items from collection.
         '''</summary>
         Friend Shared ReadOnly Property ThereIsNotEngoughSpaceInArrayAfter0ToPlaceAllItemsFromCollection() As String
@@ -2050,6 +2151,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property TypeMustInheritFromMessageBox() As String
             Get
                 Return ResourceManager.GetString("TypeMustInheritFromMessageBox", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Type of IFD following after IFD0 must be IFDMain.
+        '''</summary>
+        Friend Shared ReadOnly Property TypeOfIFDFollowingAfterIFD0MustBeIFDMain() As String
+            Get
+                Return ResourceManager.GetString("TypeOfIFDFollowingAfterIFD0MustBeIFDMain", resourceCulture)
             End Get
         End Property
         
@@ -2185,6 +2295,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ValueOfUnexpectedType0Expected1() As String
             Get
                 Return ResourceManager.GetString("ValueOfUnexpectedType0Expected1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Value was not found.
+        '''</summary>
+        Friend Shared ReadOnly Property ValueWasNotFound() As String
+            Get
+                Return ResourceManager.GetString("ValueWasNotFound", resourceCulture)
             End Get
         End Property
         

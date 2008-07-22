@@ -1,0 +1,34 @@
+﻿Main
+====
+Ctrl+O          Browse for folder
+Ctrl+S          Save all
+F5              Refresh
+BwRfsh          Refresh
+Alt+Right       Select next
+Alt+Shift+Right Select next (do not focus Object Name)
+Alt+Left        Select previous
+Alt+Shift+Left Select previous (do not focus Object Name)
+BwBack          Navigate backward
+BwFwd           Navigate forward
+BwHome          Go to My Pictures
+BwStop          Stop loading miniatures
+
+Main - in folder list only
+--------------------------
+Backspace       Go up
+
+Main - in image list only
+-------------------------
+Ctrl+A          Select all
+
+Preview
+=======
+Left            Select previous
+Right           Select next
+Enter           Toggle full screen
+Esc             Close
+L               Rotate left
+R               Rotate right
+
+KeyWordsEditor
+==============

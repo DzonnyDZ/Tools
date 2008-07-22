@@ -141,5 +141,34 @@ Namespace DrawingT.DrawingIOt
         Private Sub nudSize_ValueChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles nudSize.ValueChanged
             tvwResults.Font = New Font(tvwResults.Font.FontFamily, nudSize.Value, tvwResults.Font.Strikeout, GraphicsUnit.Point)
         End Sub
+
+        Private Sub cmsContext_Opening(ByVal sender As System.Object, ByVal e As System.ComponentModel.CancelEventArgs) Handles cmsContext.Opening
+            If tvwResults.SelectedNode Is Nothing Then
+                e.Cancel = True
+            Else
+                tmiExport.Enabled = TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader
+            End If
+        End Sub
+
+        Private Sub tmiExport_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiExport.Click
+            If tvwResults.SelectedNode IsNot Nothing AndAlso TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader Then
+                If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    Dim r As Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader = tvwResults.SelectedNode.Tag
+                    Dim data = r.Data
+                    data.Seek(0, IO.SeekOrigin.Begin)
+                    Using f = IO.File.Open(sfdSave.FileName, IO.FileMode.OpenOrCreate, IO.FileAccess.Write)
+                        Do
+                            Dim buffer(1023) As Byte
+                            Dim bcnt = data.Read(buffer, 0, buffer.Length)
+                            If bcnt = 0 Then Exit Do
+                            f.Write(buffer, 0, bcnt)
+                        Loop
+                        f.Flush()
+                    End Using
+                End If
+            Else
+                Beep()
+            End If
+        End Sub
     End Class
 End Namespace

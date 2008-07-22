@@ -9,6 +9,7 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' </remarks>
+    ''' <seelaso cref="DictionaryWithEvents(Of TKey, TValue)"/>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 2, GetType(ListWithEvents(Of )), LastChange:="05/13/2008")> _
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
@@ -1001,6 +1002,7 @@ Namespace CollectionsT.GenericT
         End Sub
 
         ''' <summary>Specialized <see cref="CollectionChangeEventArgs(Of T)"/> for <see cref="ListWithEvents(Of T)"/></summary>
+        ''' <seelaso cref="DictionaryWithEvents(Of TKey, TValue).DictionaryChangedEventArgs"/>
         Public Class ListChangedEventArgs : Inherits CollectionChangeEventArgs(Of T)
 #Region "CTors"
             ''' <summary>CTor</summary>

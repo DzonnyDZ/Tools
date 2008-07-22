@@ -147,6 +147,7 @@
       <Link>Version.vb</Link>
     </Compile>
     <Compile Include="Collections\Generic\CollectionTools.vb" />
+    <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
     <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
     <Compile Include="Collections\Generic\IIndexable.vb" />

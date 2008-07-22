@@ -24,6 +24,7 @@ Namespace DrawingT.DrawingIOt
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Me.components = New System.ComponentModel.Container
             Me.cmdParse = New System.Windows.Forms.Button
             Me.ofdOpen = New System.Windows.Forms.OpenFileDialog
             Me.tvwResults = New System.Windows.Forms.TreeView
@@ -31,9 +32,13 @@ Namespace DrawingT.DrawingIOt
             Me.tlpI = New System.Windows.Forms.TableLayoutPanel
             Me.flpTop = New System.Windows.Forms.FlowLayoutPanel
             Me.nudSize = New System.Windows.Forms.NumericUpDown
+            Me.cmsContext = New System.Windows.Forms.ContextMenuStrip(Me.components)
+            Me.sfdSave = New System.Windows.Forms.SaveFileDialog
+            Me.tmiExport = New System.Windows.Forms.ToolStripMenuItem
             Me.tlpI.SuspendLayout()
             Me.flpTop.SuspendLayout()
             CType(Me.nudSize, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.cmsContext.SuspendLayout()
             Me.SuspendLayout()
             '
             'cmdParse
@@ -57,6 +62,7 @@ Namespace DrawingT.DrawingIOt
             '
             'tvwResults
             '
+            Me.tvwResults.ContextMenuStrip = Me.cmsContext
             Me.tvwResults.Dock = System.Windows.Forms.DockStyle.Fill
             Me.tvwResults.Location = New System.Drawing.Point(0, 26)
             Me.tvwResults.Name = "tvwResults"
@@ -114,6 +120,18 @@ Namespace DrawingT.DrawingIOt
             Me.nudSize.TabIndex = 1
             Me.nudSize.Value = New Decimal(New Integer() {8, 0, 0, 0})
             '
+            'cmsContext
+            '
+            Me.cmsContext.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiExport})
+            Me.cmsContext.Name = "cmsContext"
+            Me.cmsContext.Size = New System.Drawing.Size(153, 48)
+            '
+            'tmiExport
+            '
+            Me.tmiExport.Name = "tmiExport"
+            Me.tmiExport.Size = New System.Drawing.Size(152, 22)
+            Me.tmiExport.Text = "Export to file ..."
+            '
             'frmJPEG
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -129,6 +147,7 @@ Namespace DrawingT.DrawingIOt
             Me.flpTop.ResumeLayout(False)
             Me.flpTop.PerformLayout()
             CType(Me.nudSize, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.cmsContext.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -140,5 +159,8 @@ Namespace DrawingT.DrawingIOt
         Friend WithEvents tlpI As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents flpTop As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents nudSize As System.Windows.Forms.NumericUpDown
+        Friend WithEvents cmsContext As System.Windows.Forms.ContextMenuStrip
+        Friend WithEvents tmiExport As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents sfdSave As System.Windows.Forms.SaveFileDialog
     End Class
 End Namespace

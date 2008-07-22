@@ -749,7 +749,7 @@ Public Class frmMain
             Return c
         End Get
     End Property
-    ''' <summary>If curent <see cref="InnerActiveControl"/> is editing control stores its value using <see cref="StoreControl"/></summary>
+    ''' <summary>If curent <see cref="InnerActiveControl"/> is editing control stores its value using <see cref="StoreControl_IPTC"/></summary>
     Private Sub StoreActiveConrol()
         If TypeOf Me.InnerActiveControl.Tag Is CommonIPTCProperties Then
             StoreControl_IPTC(Me.InnerActiveControl)

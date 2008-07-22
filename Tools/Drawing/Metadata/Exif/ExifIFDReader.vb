@@ -3,7 +3,8 @@ Namespace DrawingT.MetadataT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ExifIFDReader), LastChange:="04/24/2007")> _
+    <Version(1, 1, GetType(ExifIFDReader), LastChange:="07/22/2008")> _
+    <FirstVersion("04/24/2007")> _
     Public Class ExifIFDReader
         ''' <summary>CTor</summary>
         ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
@@ -14,6 +15,7 @@ Namespace DrawingT.MetadataT
         ''' <exception cref="InvalidDataException">Tag data of some are placed otside the tag and cannot be read</exception>
         <CLSCompliant(False)> _
         Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32)
+            _ExifReader = Exif
             _Offset = Offset
             Dim r As New Tools.IOt.BinaryReader(Exif.Stream, Exif.ByteOrder)
             Exif.Stream.Position = Offset
@@ -32,6 +34,15 @@ Namespace DrawingT.MetadataT
             Exif.Stream.Position = Pos
             _NextIFD = r.ReadUInt32
         End Sub
+        ''' <summary>Contains value of the <see cref="ExifReader"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _ExifReader As ExifReader
+        ''' <summary>Gets <see cref="ExifReader"/> this <see cref="ExifIFDReader"/> have read data from.</summary>
+        ''' <returns>Instance of <see cref="ExifReader"/> that was passed to CTor of this instance.</returns>
+        Public ReadOnly Property ExifReader() As ExifReader
+            <DebuggerStepThrough()> Get
+                Return _ExifReader
+            End Get
+        End Property
         ''' <summary>Contains value of the <see cref="Entries"/> property</summary>
         Private _Entries As New List(Of DirectoryEntry)
         ''' <summary>Contains value of the <see cref="NextIFD"/> property</summary>

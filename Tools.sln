@@ -83,7 +83,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol2", "Projects\Metano
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 19
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -117,6 +117,34 @@ Global
 		SccProjectTopLevelParentUniqueName9 = Tools.sln
 		SccProjectName9 = Projects/Metanol2
 		SccLocalPath9 = Projects\\Metanol2
+		SccProjectUniqueName10 = Tools\\Tools.vbproj
+		SccProjectName10 = Tools
+		SccLocalPath10 = Tools
+		SccProjectUniqueName11 = Tests\\Tests.vbproj
+		SccProjectName11 = Tests
+		SccLocalPath11 = Tests
+		SccProjectUniqueName12 = Tools\u0020Win\\Tools\u0020Win.vbproj
+		SccProjectName12 = Tools\u0020Win
+		SccLocalPath12 = Tools\u0020Win
+		SccProjectUniqueName13 = Tools\u0020Visual\u0020Studio\\Tools\u0020Visual\u0020Studio.vbproj
+		SccProjectName13 = Tools\u0020Visual\u0020Studio
+		SccLocalPath13 = Tools\u0020Visual\u0020Studio
+		SccProjectUniqueName14 = DevelopmentTools\\TransformCodeGenerator\\TransformCodeGenerator.csproj
+		SccProjectTopLevelParentUniqueName14 = Tools.sln
+		SccProjectName14 = DevelopmentTools/TransformCodeGenerator
+		SccLocalPath14 = DevelopmentTools\\TransformCodeGenerator
+		SccProjectUniqueName15 = Tools\u0020VisualStudio\u0020CS\\Tools\u0020VisualStudio\u0020CS.csproj
+		SccProjectName15 = Tools\u0020VisualStudio\u0020CS
+		SccLocalPath15 = Tools\u0020VisualStudio\u0020CS
+		SccProjectUniqueName16 = DevelopmentTools\\CommentsMerge\\CommentsMerge.vbproj
+		SccProjectTopLevelParentUniqueName16 = Tools.sln
+		SccProjectName16 = DevelopmentTools/CommentsMerge
+		SccLocalPath16 = DevelopmentTools\\CommentsMerge
+		SccProjectUniqueName17 = Projects\\Metanol2\\Metanol2.vbproj
+		SccProjectTopLevelParentUniqueName17 = Tools.sln
+		SccProjectName17 = Projects/Metanol2
+		SccLocalPath17 = Projects\\Metanol2
+		SccLocalPath18 = .
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU

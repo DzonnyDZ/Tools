@@ -127,7 +127,7 @@ Namespace My.Resources
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to Keywords are not supported by Commpon property.
+        '''  Looks up a localized string similar to Keywords are not supported by the Common property.
         '''</summary>
         Friend ReadOnly Property KeywordsAreNotSupportedByCommponProperty_internalError() As String
             Get

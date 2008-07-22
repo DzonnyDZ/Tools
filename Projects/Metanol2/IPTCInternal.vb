@@ -10,7 +10,22 @@ Public Class IPTCInternal
     Inherits IPTC
     ''' <summary>CTor</summary>
     ''' <param name="ImagePath">Path of JPEG file</param>
-    Public Sub New(ByVal ImagePath As String)
+    ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <paramref name="ImagePath"/> is invalid, such as being on an unmapped drive.</exception>
+    ''' <exception cref="System.ArgumentNullException"><paramref name="ImagePath"/> is null.</exception>
+    ''' <exception cref="System.UnauthorizedAccessException">The access requested (readonly) is not permitted by the operating system for the specified path.</exception>
+    ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
+    ''' <exception cref="System.ArgumentException"><paramref name="ImagePath"/> is an empty string (""), contains only white space, or contains one or more invalid characters.</exception>
+    ''' <exception cref="System.IO.FileNotFoundException">The file cannot be found.</exception>
+    ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+    ''' <exception cref="System.IO.PathTooLongException">The specified path, file name, or both exceed the system-defined maximum length. For example, on Windows-based platforms, paths must be less than 248 characters, and file names must be less than 260 characters.</exception>
+    ''' <exception cref="IO.InvalidDataException">
+    ''' Invalid JPEG marker found (code doesn't start with FFh, length set to 0 or 2) -or-
+    ''' JPEG stream doesn't start with corect SOI marker -or-
+    ''' JPEG stream doesn't end with corect EOI marker -or-
+    ''' Tag marker other than 1Ch found.
+    ''' </exception>
+    ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
+    Friend Sub New(ByVal ImagePath As String)
         MyBase.New(New JPEG.JPEGReader(ImagePath, False))
         _ImagePath = ImagePath
         _Changed = False
@@ -59,10 +74,10 @@ Public Class IPTCInternal
     'End Property
     ''' <summary>Raised when value of any tag changes</summary>
     Public Event ValueChanged As EventHandler(Of IPTCInternal, EventArgs) ', TagChangedEventArgs)
-    ''' <summary>Gets or sets value of common property identified by value of <see cref="CommonProperties"/></summary>
+    ''' <summary>Gets or sets value of common property identified by value of <see cref="CommonIPTCProperties"/></summary>
     ''' <param name="Property">Property tpo get/set</param>
-    ''' <exception cref="InvalidEnumArgumentException"><paramref name="Property"/> is none of predefined <see cref="CommonProperties"/> values or it is <see cref="CommonProperties.None"/> or <see cref="CommonProperties.All"/>.</exception>
-    ''' <exception cref="NotSupportedException"><paramref name="Property"/> is <see cref="CommonProperties.Keywords"/></exception>
+    ''' <exception cref="InvalidEnumArgumentException"><paramref name="Property"/> is none of predefined <see cref="CommonIPTCProperties"/> values or it is <see cref="CommonIPTCProperties.None"/> or <see cref="CommonIPTCProperties.All"/>.</exception>
+    ''' <exception cref="NotSupportedException"><paramref name="Property"/> is <see cref="CommonIPTCProperties.Keywords"/></exception>
     Friend Property Common(ByVal [Property] As CommonIPTCProperties) As String
         Get
             Select Case [Property]

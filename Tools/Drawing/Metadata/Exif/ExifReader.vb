@@ -118,12 +118,12 @@ Namespace DrawingT.MetadataT
             While [Next] <> 0
                 Dim SubIFD As New ExifIFDReader(Me, [Next])
                 [Next] = SubIFD.NextIFD
-                _OtherSubIFDs.Add(New SubIFD(Me, [Next], "", Container, MarkerIndex, Parent))
+                _OtherSubIFDs.Add(New SubIFDReader(Me, [Next], "", Container, MarkerIndex, Parent))
                 Parent = _OtherSubIFDs(_OtherSubIFDs.Count - 1)
             End While
         End Sub
-        ''' <summary>Represents Sub IFD</summary>
-        Public Class SubIFD : Inherits ExifIFDReader
+        ''' <summary>Represents reader of Sub IFD</summary>
+        Public Class SubIFDReader : Inherits ExifIFDReader
             ''' <summary>CTor</summary>
             ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
             ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
@@ -180,12 +180,12 @@ Namespace DrawingT.MetadataT
             End Property
         End Class
         ''' <summary>Contains value of the <see cref="OtherSubIFDs"/> property</summary>
-        Private _OtherSubIFDs As New List(Of SubIFD)
+        Private _OtherSubIFDs As New List(Of SubIFDReader)
         ''' <summary>Contains all unexpectedly (by chance) found Sub IFDs that cannot be recognized as starndard one. Those Sub IFDs are usually found as successors of standard ones</summary>
         ''' <remarks>This collection doesnù contain standard Sub IFDs that was recognized like Exif Sub IFD</remarks>
-        Public ReadOnly Property OtherSubIFDs() As Tools.CollectionsT.GenericT.IReadOnlyList(Of SubIFD)
+        Public ReadOnly Property OtherSubIFDs() As Tools.CollectionsT.GenericT.IReadOnlyList(Of SubIFDReader)
             Get
-                Return New Tools.CollectionsT.GenericT.ReadOnlyListAdapter(Of SubIFD)(_OtherSubIFDs)
+                Return New Tools.CollectionsT.GenericT.ReadOnlyListAdapter(Of SubIFDReader)(_OtherSubIFDs)
             End Get
         End Property
 
@@ -199,30 +199,30 @@ Namespace DrawingT.MetadataT
         End Property
         ''' <summary>Contains value for the <see cref="IFDs"/> property</summary>
         Private _IFDs As New List(Of ExifIFDReader)
-        ''' <summary>Contains value for the <see cref="ExifSubIFD"/> property</summary>
-        Private _ExifSubIFD As SubIFD = Nothing
-        ''' <summary>Contains value for the <see cref="GPSSubIFD"/> property</summary>
-        Private _GPSSubIFD As SubIFD = Nothing
-        ''' <summary>Contains value for the <see cref="ExifInteroperabilityIFD"/> property</summary>
-        Private _ExifInteroperabilityIFD As SubIFD = Nothing
-        ''' <summary>Returns Exif Sub IFD that contains data that are usually called Exif like setting of camera etc.</summary>
-        Public ReadOnly Property ExifSubIFD() As SubIFD
-            Get
-                Return _ExifSubIFD
-            End Get
-        End Property
-        ''' <summary>Returns GPS Sub IFD that contains GPS information.</summary>
-        Public ReadOnly Property GPSSubIFD() As SubIFD
-            Get
-                Return _GPSSubIFD
-            End Get
-        End Property
-        ''' <summary>Returns Exif Interoperability Sub IFD</summary>
-        Public ReadOnly Property ExifInteroperabilityIFD() As SubIFD
-            Get
-                Return _ExifInteroperabilityIFD
-            End Get
-        End Property
+        '''' <summary>Contains value for the <see cref="ExifSubIFD"/> property</summary>
+        'Private _ExifSubIFD As SubIFD = Nothing
+        '''' <summary>Contains value for the <see cref="GPSSubIFD"/> property</summary>
+        'Private _GPSSubIFD As SubIFD = Nothing
+        '''' <summary>Contains value for the <see cref="ExifInteroperabilityIFD"/> property</summary>
+        'Private _ExifInteroperabilityIFD As SubIFD = Nothing
+        '''' <summary>Returns Exif Sub IFD that contains data that are usually called Exif like setting of camera etc.</summary>
+        'Public ReadOnly Property ExifSubIFD() As SubIFD
+        '    Get
+        '        Return _ExifSubIFD
+        '    End Get
+        'End Property
+        '''' <summary>Returns GPS Sub IFD that contains GPS information.</summary>
+        'Public ReadOnly Property GPSSubIFD() As SubIFD
+        '    Get
+        '        Return _GPSSubIFD
+        '    End Get
+        'End Property
+        '''' <summary>Returns Exif Interoperability Sub IFD</summary>
+        'Public ReadOnly Property ExifInteroperabilityIFD() As SubIFD
+        '    Get
+        '        Return _ExifInteroperabilityIFD
+        '    End Get
+        'End Property
         ''' <summary>Contains value of the <see cref="ByteOrder"/> property</summary>
         Private _ByteOrder As Tools.IOt.BinaryReader.ByteAling
         ''' <summary>Byte order used by this <see cref="ExifReader"/></summary>
