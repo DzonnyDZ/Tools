@@ -1,4 +1,8 @@
 Imports System.Linq
+Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.Exif.ExifRecord)
+Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.Exif.SubIFD)
+Imports Tools.ComponentModelT
+
 Namespace DrawingT.MetadataT
 #If Config <= Nightly Then
     '''' <summary>Provides read-write acces to block of Exif data</summary>
@@ -129,9 +133,90 @@ Namespace DrawingT.MetadataT
         '#End Region
         ''' <summary>Provides read-write access to Image File Directory of Exif data</summary>
         Public Class IFD
+            Implements IReportsChange
             ''' <summary>CTor - empty IFD</summary>
             Public Sub New()
+                AddHandler Records.Adding, AddressOf Records_Adding
+                AddHandler Records.Added, AddressOf Records_Added
+                AddHandler Records.Removing, AddressOf Records_Removing
+                AddHandler Records.Removed, AddressOf Records_Removed
+                AddHandler Records.Clearing, AddressOf Records_Clearing
+                AddHandler Records.Cleared, AddressOf Records_Cleared
+                AddHandler Records.ItemChanging, AddressOf Records_ItemChanging
+                AddHandler Records.ItemChanged, AddressOf Records_ItemChanged
+                AddHandler Records.ItemValueChanged, AddressOf Records_ItemValueChanged
+                Records.AllowAddCancelableEventsHandlers = False
+                AddHandler SubIFDs.Adding, AddressOf SubIFDs_Adding
+                AddHandler SubIFDs.Added, AddressOf SubIFDs_Added
+                AddHandler SubIFDs.Removing, AddressOf SubIFDs_Removing
+                AddHandler SubIFDs.Removed, AddressOf SubIFDs_Removed
+                AddHandler SubIFDs.Clearing, AddressOf SubIFDs_Clearing
+                AddHandler SubIFDs.Cleared, AddressOf SubIFDs_Cleared
+                AddHandler SubIFDs.ItemChanging, AddressOf SubIFDs_ItemChanging
+                AddHandler SubIFDs.ItemChanged, AddressOf SubIFDs_ItemChanged
+                AddHandler SubIFDs.ItemValueChanged, AddressOf SubIFDs_ItemValueChanged
+                SubIFDs.AllowAddCancelableEventsHandlers = False
             End Sub
+
+#Region "Dictionaries event handlers"
+#Region "Private handlers"
+            Private Sub Records_Adding(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordAdding(e)
+            End Sub
+            Private Sub Records_Added(ByVal sender As RecordDic, ByVal e As RecordDic.KeyValueEventArgs)
+                OnRecordAdded(e)
+            End Sub
+            Private Sub Records_Removing(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordRemoving(e)
+            End Sub
+            Private Sub Records_Removed(ByVal sender As RecordDic, ByVal e As RecordDic.KeyValueEventArgs)
+                OnRecordRemoved(e)
+            End Sub
+            Private Sub Records_Clearing(ByVal sender As RecordDic, ByVal e As CancelMessageEventArgs)
+                OnRecordClearing(e)
+            End Sub
+            Private Sub Records_Cleared(ByVal sender As RecordDic, ByVal e As RecordDic.DictionaryItemsEventArgs)
+                OnRecordCleared(e)
+            End Sub
+            Private Sub Records_ItemChanging(ByVal sender As RecordDic, ByVal e)
+                OnRecordChanging(e)
+            End Sub
+            Private Sub Records_ItemChanged(ByVal sender As RecordDic, ByVal e)
+                OnRecordChanged(e)
+            End Sub
+            Private Sub Records_ItemValueChanged(ByVal sender As RecordDic, ByVal e)
+                OnRecordValueChanged(e)
+            End Sub
+
+            Private Sub SubIFDs_Adding(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDAdding(e)
+            End Sub
+            Private Sub SubIFDs_Added(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDAdded(e)
+            End Sub
+            Private Sub SubIFDs_Removing(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDRemoving(e)
+            End Sub
+            Private Sub SubIFDs_Removed(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDRemoved(e)
+            End Sub
+            Private Sub SubIFDs_Clearing(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDClearing(e)
+            End Sub
+            Private Sub SubIFDs_Cleared(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDCleared(e)
+            End Sub
+            Private Sub SubIFDs_ItemChanging(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDChanging(e)
+            End Sub
+            Private Sub SubIFDs_ItemChanged(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDChanged(e)
+            End Sub
+            Private Sub SubIFDs_ItemValueChanged(ByVal sender As SubIFDDic, ByVal e)
+                OnSubIFDValueChanged(e)
+            End Sub
+#End Region
+#End Region
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
@@ -150,11 +235,11 @@ Namespace DrawingT.MetadataT
             Protected Overridable Sub ReadStandardSubIFDs(ByVal Reader As ExifIFDReader)
             End Sub
             ''' <summary>Contains value of the <see cref="Records"/> property</summary>
-            Private _Records As New Dictionary(Of UShort, ExifRecord)
+            Private _Records As New RecordDic(False, True)
             ''' <summary>Contains value of the <see cref="Exif"/> property</summary>
             Private _Exif As Exif
             ''' <summary>Gets instance of <see cref="Exif"/> this IPTC behaves as instance of</summary>
-            ''' <value>Setting this property changes <see cref="Exif"/> property of all subsequent IFDs in <see cref="Following"/> linked-list</value>
+            ''' <value>Setting this property changes <see cref="Exif"/> property of all subsequent IFDs in <see cref="Following"/> linked-list and of all subIFDs in <see cref="SubIFDs"/>.</value>
             ''' <returns>Instance of the <see cref="MetadataT.Exif"/> class this instance is associated with; or null if this instance is not associated with instance of <see cref="Exif"/>.</returns>
             ''' <exception cref="ArgumentException">Value being set differs from value of the <see cref="Exif"/> property of <see cref="Previous"/> IFD (when <see cref="Previous"/> is non-null)</exception>
             Public Property Exif() As Exif
@@ -167,11 +252,16 @@ Namespace DrawingT.MetadataT
                         Throw New ArgumentException(ResourcesT.Exceptions.CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPreviousIFD)
                     _Exif = value
                     If Me.Following IsNot Nothing Then Me.Following.Exif = value
+                    For Each SubIFD In Me.SubIFDs
+                        SubIFD.Value.Exif = value
+                    Next
                 End Set
             End Property
+            'TODO:Describe what happens if collection is being manipulated
             ''' <summary>Records in this Image File Directory</summary>
             <CLSCompliant(False)> _
-            Public ReadOnly Property Records() As Dictionary(Of UShort, ExifRecord)
+            Public ReadOnly Property Records() As RecordDic
+                'TODO: Cls-compliant alternative
                 Get
                     Return _Records
                 End Get
@@ -270,11 +360,19 @@ Namespace DrawingT.MetadataT
                     End If
                 End Set
             End Property
-            Public ReadOnly Property SubIFDs() As DictionaryWithEvents(Of UShort, SubIFD)
-                Get
-                    'TODO:Implement
+            'TODO: CLS-compliant alternative
+            'TODO: Comment what happens when addding item to this dictionary etc.
+            ''' <summary>Gets dictionary of subIFDs of this IFD.</summary>
+            ''' <returns>Dictionary which contains all the subIFDs in this IFD. Each subIFD is pointed by one record of type <see cref="ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32"/>.</returns>
+            <CLSCompliant(False)> _
+            Public ReadOnly Property SubIFDs() As SubIFDDic
+                <DebuggerStepThroughAttribute()> Get
+                    Return _SubIFDs
                 End Get
             End Property
+            ''' <summary>Contains value of the <see cref="SubIFDs"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Private _SubIFDs As New SubIFDDic(False, True)
         End Class
         ''' <summary>Describes one Exif record</summary>
         ''' <remarks>Descibes which data type record actually contains, how many items of such datatype. For recognized tags also possible format is specified via <see cref="ExifTagFormat"/></remarks>
@@ -381,6 +479,7 @@ Namespace DrawingT.MetadataT
 
         ''' <summary>Represents one Exif record</summary>
         Public Class ExifRecord
+            Implements IReportsChange
             ''' <summary>Contains value of the <see cref="Data"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _Data As Object
@@ -766,7 +865,7 @@ Namespace DrawingT.MetadataT
                 Dim Current As IFD = IFD0
                 Dim CurrentStack As New Stack(Of IFD)
                 While Current IsNot Nothing
-                    ret = ret.union(Current.SubIFDs)
+                    ret = ret.Union(Current.SubIFDs)
                     If Current.SubIFDs.Count > 0 Then
                         If Current.Following IsNot Nothing Then CurrentStack.Push(Current.Following)
                         For Each si In Current.SubIFDs
