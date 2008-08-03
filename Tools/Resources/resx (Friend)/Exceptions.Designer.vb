@@ -752,6 +752,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to &quot;Exif pof subIFD being added/replaced must be either null or same as Exif of parent IFD.
+        '''</summary>
+        Friend Shared ReadOnly Property ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD() As String
+            Get
+                Return ResourceManager.GetString("ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Exif record key must be valid UInt16 value.
+        '''</summary>
+        Friend Shared ReadOnly Property ExifRecordKeyMustBeValidUInt16Value() As String
+            Get
+                Return ResourceManager.GetString("ExifRecordKeyMustBeValidUInt16Value", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Extended-size tags are not supported.
         '''</summary>
         Friend Shared ReadOnly Property ExtendedSizeTagsAreNotSupported() As String
@@ -848,6 +866,16 @@ Namespace ResourcesT
             Get
                 Return ResourceManager.GetString("IFDPassedToTheIFD0PropertyMustEitherHaveNoExifAsociatedOrMustHaveAssociatedCurrre"& _ 
                         "ntInstance", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to If parent IFD already contains record that is about to become parent record of subIFD it must of type one element of type UInt16.
+        '''</summary>
+        Friend Shared ReadOnly Property IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt16() As String
+            Get
+                Return ResourceManager.GetString("IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTy"& _ 
+                        "peOneElementOfTypeUInt16", resourceCulture)
             End Get
         End Property
         
@@ -1295,6 +1323,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must be within range of values of type {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeWithinRangeOfValuesOfType1() As String
+            Get
+                Return ResourceManager.GetString("MustBeWithinRangeOfValuesOfType1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must contain at least {1} items.
         '''</summary>
         Friend Shared ReadOnly Property MustContainAtLeast1Items() As String
@@ -1444,6 +1481,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property OnlyValueSOfType0CanBeEditedBy0() As String
             Get
                 Return ResourceManager.GetString("OnlyValueSOfType0CanBeEditedBy0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to ParentIFD of subIFD being added/replaced must me null..
+        '''</summary>
+        Friend Shared ReadOnly Property ParentIFDOfSubIFDBeingAddedReplacedMustMeNull() As String
+            Get
+                Return ResourceManager.GetString("ParentIFDOfSubIFDBeingAddedReplacedMustMeNull", resourceCulture)
             End Get
         End Property
         
@@ -1642,6 +1688,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property StringMustConsistOfEventNumberOfHexadeimalNumerals() As String
             Get
                 Return ResourceManager.GetString("StringMustConsistOfEventNumberOfHexadeimalNumerals", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to SubIFD.
+        '''</summary>
+        Friend Shared ReadOnly Property SubIFD() As String
+            Get
+                Return ResourceManager.GetString("SubIFD", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to SubIFD key must be valid UInt16 value.
+        '''</summary>
+        Friend Shared ReadOnly Property SubIFDKeyMustBeValidUInt16Value() As String
+            Get
+                Return ResourceManager.GetString("SubIFDKeyMustBeValidUInt16Value", resourceCulture)
             End Get
         End Property
         

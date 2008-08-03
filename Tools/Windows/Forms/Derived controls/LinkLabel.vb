@@ -93,7 +93,7 @@ Namespace WindowsT.FormsT
             RegenerateContent()
         End Sub
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private Sub _Items_ItemChanged(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).OldNewItemEvetArgs) Handles _Items.ItemChanged
+        Private Sub _Items_ItemChanged(ByVal sender As ListWithEvents(Of LinkLabelItem), ByVal e As ListWithEvents(Of LinkLabelItem).OldNewItemEventArgs) Handles _Items.ItemChanged
             RegenerateContent()
         End Sub
 

@@ -517,7 +517,7 @@ Namespace WindowsT.FormsT
             tvwObjects.Nodes.Clear()
         End Sub
 
-        Private Sub Assemblies_ItemChanged(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of Object), ByVal e As CollectionsT.GenericT.ListWithEvents(Of Object).OldNewItemEvetArgs) Handles Assemblies.ItemChanged
+        Private Sub Assemblies_ItemChanged(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of Object), ByVal e As CollectionsT.GenericT.ListWithEvents(Of Object).OldNewItemEventArgs) Handles Assemblies.ItemChanged
             tvwObjects.Nodes(e.Index) = GetNode(e.Item)
         End Sub
 

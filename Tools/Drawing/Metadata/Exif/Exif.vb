@@ -1,6 +1,8 @@
 Imports System.Linq
 Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.Exif.ExifRecord)
 Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.Exif.SubIFD)
+Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.Exif.ExifRecord)
+Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.Exif.SubIFD)
 Imports Tools.ComponentModelT
 
 Namespace DrawingT.MetadataT
@@ -134,6 +136,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Provides read-write access to Image File Directory of Exif data</summary>
         Public Class IFD
             Implements IReportsChange
+#Region "CTors"
             ''' <summary>CTor - empty IFD</summary>
             Public Sub New()
                 AddHandler Records.Adding, AddressOf Records_Adding
@@ -145,6 +148,7 @@ Namespace DrawingT.MetadataT
                 AddHandler Records.ItemChanging, AddressOf Records_ItemChanging
                 AddHandler Records.ItemChanged, AddressOf Records_ItemChanged
                 AddHandler Records.ItemValueChanged, AddressOf Records_ItemValueChanged
+                AddHandler Records.CollectionChanged, AddressOf Records_CollectionChanged
                 Records.AllowAddCancelableEventsHandlers = False
                 AddHandler SubIFDs.Adding, AddressOf SubIFDs_Adding
                 AddHandler SubIFDs.Added, AddressOf SubIFDs_Added
@@ -155,68 +159,9 @@ Namespace DrawingT.MetadataT
                 AddHandler SubIFDs.ItemChanging, AddressOf SubIFDs_ItemChanging
                 AddHandler SubIFDs.ItemChanged, AddressOf SubIFDs_ItemChanged
                 AddHandler SubIFDs.ItemValueChanged, AddressOf SubIFDs_ItemValueChanged
+                AddHandler SubIFDs.CollectionChanged, AddressOf SubIFDs_CollectionChanged
                 SubIFDs.AllowAddCancelableEventsHandlers = False
             End Sub
-
-#Region "Dictionaries event handlers"
-#Region "Private handlers"
-            Private Sub Records_Adding(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
-                OnRecordAdding(e)
-            End Sub
-            Private Sub Records_Added(ByVal sender As RecordDic, ByVal e As RecordDic.KeyValueEventArgs)
-                OnRecordAdded(e)
-            End Sub
-            Private Sub Records_Removing(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
-                OnRecordRemoving(e)
-            End Sub
-            Private Sub Records_Removed(ByVal sender As RecordDic, ByVal e As RecordDic.KeyValueEventArgs)
-                OnRecordRemoved(e)
-            End Sub
-            Private Sub Records_Clearing(ByVal sender As RecordDic, ByVal e As CancelMessageEventArgs)
-                OnRecordClearing(e)
-            End Sub
-            Private Sub Records_Cleared(ByVal sender As RecordDic, ByVal e As RecordDic.DictionaryItemsEventArgs)
-                OnRecordCleared(e)
-            End Sub
-            Private Sub Records_ItemChanging(ByVal sender As RecordDic, ByVal e)
-                OnRecordChanging(e)
-            End Sub
-            Private Sub Records_ItemChanged(ByVal sender As RecordDic, ByVal e)
-                OnRecordChanged(e)
-            End Sub
-            Private Sub Records_ItemValueChanged(ByVal sender As RecordDic, ByVal e)
-                OnRecordValueChanged(e)
-            End Sub
-
-            Private Sub SubIFDs_Adding(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDAdding(e)
-            End Sub
-            Private Sub SubIFDs_Added(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDAdded(e)
-            End Sub
-            Private Sub SubIFDs_Removing(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDRemoving(e)
-            End Sub
-            Private Sub SubIFDs_Removed(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDRemoved(e)
-            End Sub
-            Private Sub SubIFDs_Clearing(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDClearing(e)
-            End Sub
-            Private Sub SubIFDs_Cleared(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDCleared(e)
-            End Sub
-            Private Sub SubIFDs_ItemChanging(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDChanging(e)
-            End Sub
-            Private Sub SubIFDs_ItemChanged(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDChanged(e)
-            End Sub
-            Private Sub SubIFDs_ItemValueChanged(ByVal sender As SubIFDDic, ByVal e)
-                OnSubIFDValueChanged(e)
-            End Sub
-#End Region
-#End Region
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
@@ -234,14 +179,375 @@ Namespace DrawingT.MetadataT
             ''' <para>Note for inheritors: This method is called by CTor if the <see cref="IFD"/> class after all records have been initialized. This method is not intended to be called directly from user code.</para></remarks>
             Protected Overridable Sub ReadStandardSubIFDs(ByVal Reader As ExifIFDReader)
             End Sub
-            ''' <summary>Contains value of the <see cref="Records"/> property</summary>
-            Private _Records As New RecordDic(False, True)
+#End Region
+#Region "Dictionaries event handlers"
+#Region "Private handlers"
+#Region "Records"
+            Private Sub Records_Adding(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordAdding(e)
+            End Sub
+            Private Sub Records_Added(ByVal sender As RecordDic, ByVal e As RecordDic.KeyValueEventArgs)
+                OnRecordAdded(e)
+            End Sub
+            Private Sub Records_Removing(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordRemoving(e)
+            End Sub
+            Private Sub Records_Removed(ByVal sender As RecordDic, ByVal e As RecordDic.KeyValueEventArgs)
+                OnRecordRemoved(e)
+            End Sub
+            Private Sub Records_Clearing(ByVal sender As RecordDic, ByVal e As CancelMessageEventArgs)
+                OnRecordsClearing(e)
+            End Sub
+            Private Sub Records_Cleared(ByVal sender As RecordDic, ByVal e As RecordDic.DictionaryItemsEventArgs)
+                OnRecordsCleared(e)
+            End Sub
+            Private Sub Records_ItemChanging(ByVal sender As RecordDic, ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordChanging(e)
+            End Sub
+            Private Sub Records_ItemChanged(ByVal sender As RecordDic, ByVal e As RecordDic.OldNewValueEventArgs)
+                OnRecordChanged(e)
+            End Sub
+            Private Sub Records_ItemValueChanged(ByVal sender As RecordDic, ByVal e As RecordList.ItemValueChangedEventArgs)
+                OnRecordValueChanged(e)
+            End Sub
+            Private Sub Records_CollectionChanged(ByVal sender As RecordDic, ByVal e As RecordDic.DictionaryChangedEventArgs)
+                OnRecordsChanged(e)
+                OnRecordsChanged(DirectCast(e, CollectionChangedEventArgsBase))
+            End Sub
+#End Region
+#Region "SubIFDs"
+            Private Sub SubIFDs_Adding(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.CancelableKeyValueEventArgs)
+                OnSubIFDAdding(e)
+            End Sub
+            Private Sub SubIFDs_Added(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.KeyValueEventArgs)
+                OnSubIFDAdded(e)
+            End Sub
+            Private Sub SubIFDs_Removing(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.CancelableKeyValueEventArgs)
+                OnSubIFDRemoving(e)
+            End Sub
+            Private Sub SubIFDs_Removed(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.KeyValueEventArgs)
+                OnSubIFDRemoved(e)
+            End Sub
+            Private Sub SubIFDs_Clearing(ByVal sender As SubIFDDic, ByVal e As CancelMessageEventArgs)
+                OnSubIFDsClearing(e)
+            End Sub
+            Private Sub SubIFDs_Cleared(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.DictionaryItemsEventArgs)
+                OnSubIFDsCleared(e)
+            End Sub
+            Private Sub SubIFDs_ItemChanging(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.CancelableKeyValueEventArgs)
+                OnSubIFDChanging(e)
+            End Sub
+            Private Sub SubIFDs_ItemChanged(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.OldNewValueEventArgs)
+                OnSubIFDChanged(e)
+            End Sub
+            Private Sub SubIFDs_ItemValueChanged(ByVal sender As SubIFDDic, ByVal e As SubIFDList.ItemValueChangedEventArgs)
+                OnSubIFDValueChanged(e)
+            End Sub
+            Private Sub SubIFDs_CollectionChanged(ByVal sender As SubIFDDic, ByVal e As SubIFDDic.DictionaryChangedEventArgs)
+                OnSubIFDsChanged(e)
+                OnSubIFDsChanged(DirectCast(e, CollectionChangedEventArgsBase))
+            End Sub
+#End Region
+#End Region
+#Region "Protected handlers"
+#Region "Records"
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Adding">Adding</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordAdding(ByVal e As RecordDic.CancelableKeyValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Added">Added</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordAdded(ByVal e As RecordDic.KeyValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Removing">Removing</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordRemoving(ByVal e As RecordDic.CancelableKeyValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Removed">Removed</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordRemoved(ByVal e As RecordDic.KeyValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Clearing">Clearing</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive. Handler is marked as CLS-incompliant although it has CLS-compliant header because all other handlers are CLS-incompliant.</para>
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordsClearing(ByVal e As CancelMessageEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Cleared">Cleared</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordsCleared(ByVal e As RecordDic.DictionaryItemsEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.ItemChanging">ItemChanging</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive.</para>
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordChanging(ByVal e As RecordDic.CancelableKeyValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.ItemChanged">ItemChanged</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordChanged(ByVal e As RecordDic.OldNewValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.ItemValueChanged">ItemValueChanged</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordValueChanged(ByVal e As RecordList.ItemValueChangedEventArgs)
+            End Sub
+            ''' <summary>Handles any change of the <see cref="Records"/> collection or its item (the <see cref="DictionaryWithEvents.CollectionChanged"/> event)</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This method is not CLS-compliant, but there is CLS-compliant overload.
+            ''' <para>Note for inheritors: Alwas call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnRecordsChanged(ByVal e As RecordDic.DictionaryChangedEventArgs)
+                If OnRecordsChanged_OnStack.Count = 0 OrElse OnRecordsChanged_OnStack.Peek = False Then
+                    OnRecordsChanged_OnStack.Push(True)
+                    Try
+                        OnRecordsChanged(DirectCast(e, CollectionChangedEventArgsBase))
+                    Finally
+                        OnRecordsChanged_OnStack.Pop()
+                    End Try
+                End If
+                OnChanged(e)
+            End Sub
+            ''' <summary>Indicates call stack of both <see cref="OnRecordsChanged"/> overloads</summary>
+            ''' <remarks>This is here in order to CLS compliant call CLS incompliant and vice versa</remarks>
+            Private OnRecordsChanged_OnStack As New Stack(Of Boolean)
+            ''' <summary>Handles any change of the <see cref="Records"/> collection or its item (the <see cref="DictionaryWithEvents.CollectionChanged"/> event)</summary>
+            ''' <param name="e">Event arguments - this is actually instance of CLS-incompliant generic class <see cref="RecordDic.DictionaryChangedEventArgs"/>.</param>
+            ''' <remarks>In case your language can use CLS-incompliant method, you should rather use CLS-incompliant overload of this methos.
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            ''' <exception cref="TypeMismatchException"><paramref name="e"/> is not of type <see cref="DictionaryWithEvents(Of TKey, TValue)"/>[<see cref="UShort"/>, <see cref="ExifRecord"/>].<see cref="RecordDic.DictionaryChangedEventArgs">DictionaryChangedEventArgs</see></exception>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Protected Overridable Sub OnRecordsChanged(ByVal e As CollectionChangedEventArgsBase)
+                If Not TypeOf e Is RecordDic.DictionaryChangedEventArgs Then Throw New TypeMismatchException("e", e, GetType(RecordDic.DictionaryChangedEventArgs))
+                If OnRecordsChanged_OnStack.Count = 0 OrElse OnRecordsChanged_OnStack.Peek = True Then
+                    OnRecordsChanged_OnStack.Push(False)
+                    Try
+                        OnRecordsChanged(DirectCast(e, RecordDic.DictionaryChangedEventArgs))
+                    Finally
+                        OnRecordsChanged_OnStack.Pop()
+                    End Try
+                End If
+            End Sub
+#End Region
+#Region "SubIFDs"
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.Adding">Adding</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
+            ''' <para>This implementation does nothing.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDAdding(ByVal e As SubIFDDic.CancelableKeyValueEventArgs)
+                OnSubIFDAddingAlways(e.Newkey, e.Item, e)
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.Added">Added</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDAdded(ByVal e As SubIFDDic.KeyValueEventArgs)
+                OnSubIFDAddedAlways(e.Key, e.Item)
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.Removing">Removing</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
+            ''' <para>This implementation does nothing.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDRemoving(ByVal e As SubIFDDic.CancelableKeyValueEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.Removed">Removed</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDRemoved(ByVal e As SubIFDDic.KeyValueEventArgs)
+                OnSubIFDRemovedAlways(e.Item)
+            End Sub
+            ''' <summary>Handles removal of subIFD from any reason</summary>
+            ''' <param name="Item">Item that was removed</param>
+            ''' <remarks>Called by <see cref="OnSubIFDRemoved"/>, <see cref="OnSubIFDsCleared"/>, <see cref="OnSubIFDChanged"/>.
+            ''' <para>Sets <paramref name="Item"/>.<see cref="SubIFD.Exif">Exif</see> to null, <paramref name="Item"/>.<see cref="SubIFD.ParentIFD">ParentIFD</see> to null and <paramref name="Item"/>.<see cref="SubIFD.ParentRecord">ParentRecord</see> to zero.</para>
+            ''' <para>Note for inherotors: Always call base class method.</para></remarks>
+            Protected Overridable Sub OnSubIFDRemovedAlways(ByVal Item As SubIFD)
+                Item.Exif = Nothing
+                Item.ParentIFD = Nothing
+                Item.ParentRecord = 0
+            End Sub
+            ''' <summary>Handles adding of subIFD from any reason before it is addaed. This event can be cancelled.</summary>
+            ''' <param name="Item">Item being added</param>
+            ''' <param name="e">Event thet supports cancelling</param>
+            ''' <param name="Key">Record number which points to subIFD being added. This is always value form range of <see cref="UShort"/>.</param>
+            ''' <remarks>Called by <see cref="OnSubIFDAdding"/>, <see cref="OnSubIFDChanging"/>
+            ''' <para>This method checks if subIFD can be added or not. <paramref name="Item"/>.<see cref="SubIFD.Exif"/> must be null or same as of this instance, <paramref name="Item"/>.<see cref="SubIFD.ParentIFD"/> must be null.
+            ''' Also <paramref name="Key"/> must represent record which either is not present in current instance or is of type single <see cref="ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16"/>.</para>
+            ''' <para>Note for inheritors: Always call base class methosd.</para></remarks>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is not within range of values of <see cref="UInteger"/></exception>
+            Protected Overridable Sub OnSubIFDAddingAlways(ByVal Key As Integer, ByVal Item As SubIFD, ByVal e As CancelMessageEventArgs)
+                If Key < UInteger.MinValue OrElse Key > UInteger.MaxValue Then _
+                    Throw New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.MustBeWithinRangeOfValuesOfType1, "Key", "UInt16"))
+                If Item Is Nothing Then
+                    e.Cancel = True
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.CannotBeNull, ResourcesT.Exceptions.SubIFD)
+                ElseIf Item.Exif IsNot Nothing AndAlso Item.Exif IsNot Me.Exif Then
+                    e.Cancel = True
+                    e.CancelMessage = ResourcesT.Exceptions.ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD
+                ElseIf Item.ParentIFD IsNot Nothing Then
+                    e.Cancel = True
+                    e.CancelMessage = ResourcesT.Exceptions.ParentIFDOfSubIFDBeingAddedReplacedMustMeNull
+                ElseIf Me.Records.ContainsKey(Key) AndAlso (Me.Records(Key).DataType.NumberOfElements <> 1 OrElse Me.Records(Key).DataType.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16) Then
+                    e.Cancel = True
+                    e.CancelMessage = ResourcesT.Exceptions.IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt16
+                End If
+            End Sub
+            ''' <summary>Handles adding of subIFD from any reason after it is added</summary>
+            ''' <param name="Item">Item that was added</param>
+            ''' <param name="Key">Key at which it was added</param>
+            ''' <remarks>Sets <see cref="SubIFD.Exif"/>, <see cref="SubIFD.ParentIFD"/> and <see cref="SubIFD.ParentRecord"/> of <paramref name="Item"/>. Creates new record with number <paramref name="Key"/> if it does not exist yet.
+            ''' <para>Called by <see cref="OnSubIFDAdded"/> and <see cref="OnSubIFDChanged"/></para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            Protected Overridable Sub OnSubIFDAddedAlways(ByVal Key As Integer, ByVal Item As SubIFD)
+                Item.Exif = Me.Exif
+                Item.ParentIFD = Me
+                Item.ParentRecord = Key
+                If Not Me.Records.ContainsKey(Key) Then
+                    Me.Records.Add(Key, New ExifRecord(New ExifRecordDescription(ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16, 1), 0US, True))
+                End If
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.Clearing">Clearing</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive. Handler is marked as CLS-incompliant although it has CLS-compliant header because all other handlers are CLS-incompliant.</para>
+            ''' <para>This implementation does nothing.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDsClearing(ByVal e As CancelMessageEventArgs)
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.Cleared">Cleared</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDsCleared(ByVal e As SubIFDDic.DictionaryItemsEventArgs)
+                For Each item In e.Items
+                    OnSubIFDRemovedAlways(item.Value)
+                Next
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.ItemChanging">ItemChanging</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>The event can be cancelled.
+            ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
+            ''' <para>This implementation does nothing.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDChanging(ByVal e As SubIFDDic.CancelableKeyValueEventArgs)
+                If e.Item IsNot Me(e.Newkey) Then _
+                    OnSubIFDAddingAlways(e.Newkey, e.Item, e)
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.ItemChanged">ItemChanged</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDChanged(ByVal e As SubIFDDic.OldNewValueEventArgs)
+                If e.Item IsNot e.OldValue Then
+                    OnSubIFDRemovedAlways(e.OldValue)
+                    OnSubIFDAddedAlways(e.Key, e.Item)
+                End If
+            End Sub
+            ''' <summary>Handles the <see cref="SubIFDs">SubIFDs</see>.<see cref="DictionaryWithEvents.ItemValueChanged">ItemValueChanged</see> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
+            ''' <para>This implementation does nothing.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDValueChanged(ByVal e As SubIFDList.ItemValueChangedEventArgs)
+            End Sub
+            ''' <summary>Handles any change of the <see cref="SubIFDs"/> collection or its item (the <see cref="DictionaryWithEvents.CollectionChanged"/> event)</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <remarks>This method is not CLS-compliant, but there is CLS-compliant overload.
+            ''' <para>Note for inheritors: Alwas call base class method.</para></remarks>
+            <CLSCompliant(False)> _
+            Protected Overridable Sub OnSubIFDsChanged(ByVal e As SubIFDDic.DictionaryChangedEventArgs)
+                If OnSubIFDsChanged_OnStack.Count = 0 OrElse OnSubIFDsChanged_OnStack.Peek = False Then
+                    OnSubIFDsChanged_OnStack.Push(True)
+                    Try
+                        OnSubIFDsChanged(DirectCast(e, CollectionChangedEventArgsBase))
+                    Finally
+                        OnSubIFDsChanged_OnStack.Pop()
+                    End Try
+                End If
+                OnChanged(e)
+            End Sub
+            ''' <summary>Indicates call stack of both <see cref="OnSubIFDsChanged"/> overloads</summary>
+            ''' <remarks>This is here in order to CLS compliant call CLS incompliant and vice versa</remarks>
+            Private OnSubIFDsChanged_OnStack As New Stack(Of Boolean)
+            ''' <summary>Handles any change of the <see cref="SubIFDs"/> collection or its item (the <see cref="DictionaryWithEvents.CollectionChanged"/> event)</summary>
+            ''' <param name="e">Event arguments - this is actually instance of CLS-incompliant generic class <see cref="SubIFDDic.DictionaryChangedEventArgs"/>.</param>
+            ''' <remarks>In case your language can use CLS-incompliant method, you should rather use CLS-incompliant overload of this methos.
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
+            ''' <exception cref="TypeMismatchException"><paramref name="e"/> is not of type <see cref="DictionaryWithEvents(Of TKey, TValue)"/>[<see cref="UShort"/>, <see cref="ExifSubIFD"/>].<see cref="SubIFDDic.DictionaryChangedEventArgs">DictionaryChangedEventArgs</see></exception>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Protected Overridable Sub OnSubIFDsChanged(ByVal e As CollectionChangedEventArgsBase)
+                If Not TypeOf e Is SubIFDDic.DictionaryChangedEventArgs Then Throw New TypeMismatchException("e", e, GetType(SubIFDDic.DictionaryChangedEventArgs))
+                If OnSubIFDsChanged_OnStack.Count = 0 OrElse OnSubIFDsChanged_OnStack.Peek = True Then
+                    OnSubIFDsChanged_OnStack.Push(False)
+                    Try
+                        OnSubIFDsChanged(DirectCast(e, SubIFDDic.DictionaryChangedEventArgs))
+                    Finally
+                        OnSubIFDsChanged_OnStack.Pop()
+                    End Try
+                End If
+            End Sub
+#End Region
+#End Region
+            ''' <summary>Raised when value of member changes</summary>
+            ''' <remarks><paramref name="e"/>Contain additional information that can be used in event-handling code (contains instance of generic class <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/>)
+            ''' <para>Changes of the <see cref="Exif"/> and the <see cref="Previous"/> property are not tracked.</para></remarks>
+            ''' <seealso cref="OnChanged"/>
+            Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
+            ''' <summary>Raises the <see cref="Changed"/> event, handles any change in current instance</summary>
+            ''' <param name="e">Event argument</param>
+            ''' <remarks>Changes of the <see cref="Exif"/> and the <see cref="Previous"/> property are not tracked</remarks>
+            ''' <seelaso cref="Changed"/>
+            Protected Overridable Sub OnChanged(ByVal e As IReportsChange.ValueChangedEventArgsBase)
+                RaiseEvent Changed(Me, e)
+            End Sub
+#End Region
             ''' <summary>Contains value of the <see cref="Exif"/> property</summary>
             Private _Exif As Exif
             ''' <summary>Gets instance of <see cref="Exif"/> this IPTC behaves as instance of</summary>
             ''' <value>Setting this property changes <see cref="Exif"/> property of all subsequent IFDs in <see cref="Following"/> linked-list and of all subIFDs in <see cref="SubIFDs"/>.</value>
             ''' <returns>Instance of the <see cref="MetadataT.Exif"/> class this instance is associated with; or null if this instance is not associated with instance of <see cref="Exif"/>.</returns>
-            ''' <exception cref="ArgumentException">Value being set differs from value of the <see cref="Exif"/> property of <see cref="Previous"/> IFD (when <see cref="Previous"/> is non-null)</exception>
+            ''' <exception cref="ArgumentException">Internal only: Value being set differs from value of the <see cref="Exif"/> property of <see cref="Previous"/> IFD (when <see cref="Previous"/> is non-null)</exception>
             Public Property Exif() As Exif
                 Get
                     Return _Exif
@@ -252,11 +558,19 @@ Namespace DrawingT.MetadataT
                         Throw New ArgumentException(ResourcesT.Exceptions.CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPreviousIFD)
                     _Exif = value
                     If Me.Following IsNot Nothing Then Me.Following.Exif = value
-                    For Each SubIFD In Me.SubIFDs
-                        SubIFD.Value.Exif = value
+                    For Each MySubIFD In Me.SubIFDs
+                        MySubIFD.Value.Exif = value
                     Next
+                    OnExifChanged()
                 End Set
             End Property
+            ''' <summary>If overriden in derived class performs derived class-specific tasks related to change of the <see cref="Exif"/> property</summary>
+            ''' <remarks>Note for inheritors: You do not have to call base class method. <para>This implementation does nothing.</para></remarks>
+            Protected Overridable Sub OnExifChanged()
+            End Sub
+#Region "Records"
+            ''' <summary>Contains value of the <see cref="Records"/> property</summary>
+            Private _Records As New RecordDic(False, True)
             'TODO:Describe what happens if collection is being manipulated
             ''' <summary>Records in this Image File Directory</summary>
             <CLSCompliant(False)> _
@@ -266,6 +580,77 @@ Namespace DrawingT.MetadataT
                     Return _Records
                 End Get
             End Property
+            ''' <summary>Gets or sets value of specified record</summary>
+            ''' <param name="Type">Type of record specifies data types of recor as well as number of components</param>
+            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
+            ''' <returns>Value of record with tag number specified in <paramref name="Type"/> if type specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
+            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            ''' <seelaso cref="Records"/>
+            <CLSCompliant(False)> _
+            Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
+                Get
+                    If Type Is Nothing Then Throw New ArgumentNullException("Type")
+                    If Records.ContainsKey(Type.Tag) Then
+                        With Records(Type.Tag)
+                            If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
+                                If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements Then
+                                    Return Records(Type.Tag)
+                                Else
+                                    Return Nothing
+                                End If
+                            Else
+                                Return Nothing
+                            End If
+                        End With
+                    Else
+                        Return Nothing
+                    End If
+                End Get
+                Set(ByVal value As ExifRecord)
+                    'TODO: In comment explain exceptions that can be thrown by Records collection
+                    If Type Is Nothing Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeSetToNull, "Record"))
+                    If value Is Nothing Then
+                        If Records.ContainsKey(Type.Tag) Then Records.Remove(Type.Tag)
+                    Else
+                        If Records.ContainsKey(Type.Tag) Then
+                            Records(Type.Tag) = value
+                        Else
+                            Records.Add(Type.Tag, value)
+                        End If
+                    End If
+                End Set
+            End Property
+            ''' <summary>Gets or sets record by <see cref="Integer">integer</see> key</summary>
+            ''' <param name="key">Number of record to get or set</param>
+            ''' <returns>Record with given <paramref name="key"/></returns>
+            ''' <value>If record with given <paramref name="key"/> exists it si replaced. If it does not exist it is added to the <see cref="Records"/> collection.</value>
+            ''' <remarks>This is CLS-compliant overload or CLS-incompliant property.</remarks>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is less than <see cref="UShort.MinValue"/> or greater than <see cref="UShort.MaxValue"/></exception>
+            ''' <exception cref="KeyNotFoundException">In getter: <paramref name="key"/> is not member of <see cref="GetRecordKeys"/></exception>
+            ''' <seelaso cref="GetRecordKeys"/><seelaso cref="Records"/>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Default Public Property Record(ByVal key As Integer) As ExifRecord
+                Get
+                    If key < UShort.MinValue OrElse key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.ExifRecordKeyMustBeValidUInt16Value)
+                    Return Records(key)
+                End Get
+                Set(ByVal value As ExifRecord)
+                    'TODO: Explain all other exceptions
+                    If key < UShort.MinValue OrElse key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.ExifRecordKeyMustBeValidUInt16Value)
+                    If Records.ContainsKey(key) Then Records(key) = value _
+                    Else Records.Add(key, value)
+                End Set
+            End Property
+            ''' <summary>Gets all the keys in the <see cref="Records"/> collection</summary>
+            ''' <returns><see cref="Records"/>.<see cref="RecordDic.Keys">Keys</see></returns>
+            ''' <remarks>This function is here for languages which cannot consume CLS-incompliant property <see cref="Records"/>.</remarks>
+            ''' <seelaso cref="Records"/><seelaso cref="Record"/>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Public Function GetRecordKeys() As IEnumerable(Of Integer)
+                Return From key In Records.Keys Select CInt(key)
+            End Function
+#End Region
+#Region "Linked list"
             ''' <summary>Contains value of the <see cref="Following"/> property</summary>
             Private _Following As IFD
             ''' <summary>Gets or sets IFD that follows this IFD in Exif block</summary>
@@ -298,8 +683,13 @@ Namespace DrawingT.MetadataT
                     value.Previous = Me
                     Current = value
                     value.Exif = Me.Exif
+                    OnFollowingChanged()
                 End Set
             End Property
+            ''' <summary>Handles change of the <see cref="Following"/> property.</summary>
+            Protected Overridable Sub OnFollowingChanged()
+                OnChanged(e)
+            End Sub
             ''' <summary>Performs additional verification of value being passed to the <see cref="Following"/> prooperty</summary>
             ''' <param name="Following">Value to verify</param>
             ''' <exception cref="Exception">Overriden method can throw any exception when it refuses to accept given value ias new value of the <see cref="Following"/> property</exception>
@@ -322,57 +712,53 @@ Namespace DrawingT.MetadataT
                     _Previous = value
                 End Set
             End Property
-            ''' <summary>Gets or sets value of specified record</summary>
-            ''' <param name="Type">Type of record specifies data types of recor as well as number of components</param>
-            ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
-            ''' <returns>Value of record with tag number specified in <paramref name="Type"/> if type specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
-            ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
-            <CLSCompliant(False)> _
-            Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
-                Get
-                    If Type Is Nothing Then Throw New ArgumentNullException("Type")
-                    If Records.ContainsKey(Type.Tag) Then
-                        With Records(Type.Tag)
-                            If Array.IndexOf(Type.DataTypes, Records(Type.Tag).DataType.DataType) >= 0 Then
-                                If Type.NumberOfElements = 0 OrElse Type.NumberOfElements = .DataType.NumberOfElements Then
-                                    Return Records(Type.Tag)
-                                Else
-                                    Return Nothing
-                                End If
-                            Else
-                                Return Nothing
-                            End If
-                        End With
-                    Else
-                        Return Nothing
-                    End If
-                End Get
-                Set(ByVal value As ExifRecord)
-                    If Type Is Nothing Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeSetToNull, "Record"))
-                    If value Is Nothing Then
-                        If Records.ContainsKey(Type.Tag) Then Records.Remove(Type.Tag)
-                    Else
-                        If Records.ContainsKey(Type.Tag) Then
-                            Records(Type.Tag) = value
-                        Else
-                            Records.Add(Type.Tag, value)
-                        End If
-                    End If
-                End Set
-            End Property
-            'TODO: CLS-compliant alternative
-            'TODO: Comment what happens when addding item to this dictionary etc.
+#End Region
+#Region "SubIFDs"
             ''' <summary>Gets dictionary of subIFDs of this IFD.</summary>
             ''' <returns>Dictionary which contains all the subIFDs in this IFD. Each subIFD is pointed by one record of type <see cref="ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32"/>.</returns>
+            ''' <seelaso cref="SubIFD"/>
+            ''' <remarks>When an item is added to this dictionary it must have <see cref="SubIFD.Exif"/> either null or same is this instance and it must heva <see cref="SubIFD.ParentIFD"/> null. It also cannot be null itself.
+            ''' Its <see cref="SubIFD.Exif"/>, <see cref="SubIFD.ParentIFD"/> and <see cref="SubIFD.ParentRecord"/> is set to appropriate values. If this instance contains record which will become parent record of subIFD being added it must be of type <see cref="ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16"/>. If there is no record with given number, such record is created. If any constraint is violated <see cref="OperationCanceledException"/> is thrown.
+            ''' <para>When item is removed its <see cref="SubIFD.Exif"/>, <see cref="SubIFD.ParentIFD"/> are set to null.</para></remarks>
+            ''' <seelaso cref="OnSubIFDAddedAlways"/>, <seelaso cref="OnSubIFDAddingAlways"/>, <seelaso cref="OnSubIFDRemovedAlways"/>
             <CLSCompliant(False)> _
             Public ReadOnly Property SubIFDs() As SubIFDDic
                 <DebuggerStepThroughAttribute()> Get
                     Return _SubIFDs
                 End Get
             End Property
+            ''' <summary>Gets or sets SubIFD pointed by record with given number</summary>
+            ''' <param name="Key">Number of Exif record in current IFD which a) is pointer (getter) b) will become pointer (setter) of a) returned SubIFDs (getter) b) value being set (setter)</param>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is less than <see cref="UShort.MinValue"/> or greater than <see cref="UShort.MaxValue"/></exception>
+            ''' <exception cref="KeyNotFoundException">In getter: <paramref name="Key"/> does not exist (is not present in <see cref="GetSubIFDsKeys"/>)</exception>
+            ''' <remarks>You can set value for key which is not present in <see cref="GetSubIFDsKeys"/>. If the key is present, record with this number must be of type <see cref="ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32"/></remarks>
+            ''' <seelaso cref="SubIFDs"/><seelaso cref="GetSubIFDsKeys"/>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Public Property SubIFD(ByVal Key As Integer) As SubIFD
+                Get
+                    If Key < UShort.MinValue OrElse Key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.SubIFDKeyMustBeValidUInt16Value)
+                    Return SubIFDs(Key)
+                End Get
+                Set(ByVal value As SubIFD)
+                    'TODO: Explain all the exceptions that can be thrown by setter
+                    If Key < UShort.MinValue OrElse Key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.SubIFDKeyMustBeValidUInt16Value)
+                    If SubIFDs.ContainsKey(Key) Then _
+                        SubIFDs(Key) = value _
+                    Else SubIFDs.Add(Key, value)
+                End Set
+            End Property
+            ''' <summary>Gets all the keys of <see cref="SubIFDs"/> dictionary</summary>
+            ''' <returns><see cref="SubIFDs"/>.<see cref="SubIFDDic.Keys">Keys</see></returns>
+            ''' <remarks>This method is here for compatibility with languages that cannot consume CLS-incompliant property <see cref="SubIFDs"/>.</remarks>
+            ''' <seelaso cref="SubIFDs"/><seelaso cref="SubIFD"/>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Public Function GetSubIFDsKeys() As IEnumerable(Of Integer)
+                Return From key In SubIFDs.Keys Select CInt(key)
+            End Function
             ''' <summary>Contains value of the <see cref="SubIFDs"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _SubIFDs As New SubIFDDic(False, True)
+#End Region
         End Class
         ''' <summary>Describes one Exif record</summary>
         ''' <remarks>Descibes which data type record actually contains, how many items of such datatype. For recognized tags also possible format is specified via <see cref="ExifTagFormat"/></remarks>

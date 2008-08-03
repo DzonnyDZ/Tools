@@ -563,7 +563,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Raised after item in the list is changed. Raised by setter of <see cref="Item"/> property.</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters (<see cref="ItemIndexEventArgs.Item"/> contains old value, use <see cref="Item"/> to determine new value.)</param>
-        Public Event ItemChanged(ByVal sender As ListWithEvents(Of T), ByVal e As OldNewItemEvetArgs)
+        Public Event ItemChanged(ByVal sender As ListWithEvents(Of T), ByVal e As OldNewItemEventArgs)
         ''' <summary>Raises <see cref="ItemChanging"/> event</summary>
         ''' <param name="e">Event argument</param>
         ''' <remarks><para>
@@ -580,7 +580,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Raises <see cref="ItemChanged"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemChanged"/> in order the event to be raised.</remarks>
-        Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEvetArgs)
+        Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEventArgs)
             RaiseEvent ItemChanged(Me, e)
             OnChanged(e)
             OnCollectionChanged(e, CollectionChangeAction.Replace, e.OldItem, e.Item, e.Index)
@@ -612,7 +612,7 @@ Namespace CollectionsT.GenericT
                     RemoveItemHandler(index)
                     List(index) = e.Item
                     AddItemHandler(index)
-                    OnItemChanged(New OldNewItemEvetArgs(old, List(index), index))
+                    OnItemChanged(New OldNewItemEventArgs(old, List(index), index))
                 End If
             End Set
         End Property
@@ -749,7 +749,7 @@ Namespace CollectionsT.GenericT
             End Sub
         End Class
         ''' <summary>Parameter of the <see cref="ItemChanged"/> event</summary>
-        Public Class OldNewItemEvetArgs : Inherits ItemIndexEventArgs
+        Public Class OldNewItemEventArgs : Inherits ItemIndexEventArgs
             ''' <summary>Old item previosly on <see cref="Index"/></summary>
             Public ReadOnly OldItem As T
             ''' <summary>CTor</summary>

@@ -164,7 +164,7 @@ Namespace WindowsT.FormsT
                 Me.txtEdit.AutoCompleteCustomSource.Add(e.Item)
         End Sub
         ''' <summary>Handles change of item value in either autocomplete source</summary>
-        Private Sub Autocomplete_Changed(ByVal sender As ListWithEvents(Of String), ByVal e As ListWithEvents(Of String).OldNewItemEvetArgs) _
+        Private Sub Autocomplete_Changed(ByVal sender As ListWithEvents(Of String), ByVal e As ListWithEvents(Of String).OldNewItemEventArgs) _
             Handles _AutoCompleteStable.ItemChanged
             If Not InAnyList(e.OldItem) Then _
                 Me.txtEdit.AutoCompleteCustomSource.Remove(e.OldItem)

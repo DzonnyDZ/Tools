@@ -607,7 +607,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Raised after item in the list is changed. Raised by setter of <see cref="Item"/> property.</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters (<see cref="ListWithEvents(Of TValue).ItemIndexEventArgs.Item"/> contains old value, use <see cref="Item"/> to determine new value.)</param>
-        Public Event ItemChanged(ByVal sender As DictionaryWithEvents(Of TKey, TValue), ByVal e As OldNewValueEvetArgs)
+        Public Event ItemChanged(ByVal sender As DictionaryWithEvents(Of TKey, TValue), ByVal e As OldNewValueEventArgs)
         ''' <summary>Raises <see cref="ItemChanging"/> event</summary>
         ''' <param name="e">Event argument</param>
         ''' <remarks><para>
@@ -838,20 +838,6 @@ Namespace CollectionsT.GenericT
             Public ReadOnly Newkey As TKey
         End Class
 
-        ''' <summary>Parameter of the <see cref="ItemChanged"/> event</summary>
-        ''' <seelaso cref="ListWithEvents(Of T).OldNewItemEventArgs"/>
-        Public Class OldNewValueEvetArgs : Inherits KeyValueEventArgs
-            ''' <summary>Old item previosly on <see cref="Key"/></summary>
-            Public ReadOnly OldValue As TValue
-            ''' <summary>CTor</summary>
-            ''' <param name="OldValue">Old value present at position</param>
-            ''' <param name="NewValue">New value present at postion</param>
-            ''' <param name="key">Position index</param>
-            Public Sub New(ByVal key As TKey, ByVal OldValue As TValue, ByVal NewValue As TValue)
-                MyBase.New(key, NewValue)
-                Me.OldValue = OldValue
-            End Sub
-        End Class
         ''' <summary>Parameter of the <see cref="Added"/> event</summary>
         Public Class KeyValueEventArgs : Inherits ListWithEvents(Of TValue).ItemEventArgs
             ''' <summary>Key of newly added or changed item</summary>
@@ -1047,7 +1033,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Raised when value of member changes</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event information.
-        ''' As of this implementation type of <paramref name="e"/> is always one of following types: <see cref="ItemIndexEventArgs"/> (<see cref="Added"/>), <see cref="ItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="ItemIndexEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewValueEvetArgs"/> (<see cref="ItemChanged"/>), <see cref="ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).</param>
+        ''' As of this implementation type of <paramref name="e"/> is always one of following types: <see cref="KeyValueEventArgs"/> (<see cref="Added"/>), <see cref="DictionaryItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="KeyValueEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewValueEventArgs"/> (<see cref="ItemChanged"/>), <see cref="ListWithEvents(Of TValue).ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).</param>
         ''' <remarks>Raised after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
         Public Event Changed(ByVal sender As IReportsChange, ByVal e As EventArgs) Implements IReportsChange.Changed
         ''' <summary>Raises the <see cref="Changed"/> event</summary>
@@ -1059,14 +1045,14 @@ Namespace CollectionsT.GenericT
         End Sub
         ''' <summary>Raised when this <see cref="DictionaryWithEvents(Of TKey,TValue)"/> collection changes.</summary>
         ''' <param name="sender">Source ot the event</param>
-        ''' <param name="e">Event arguments. The <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> contains event argument of the <see cref="Changed"/> event raised immediatelly prior this event.
-        ''' As of this implementation type of <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> is always one of following types: <see cref="ItemIndexEventArgs"/> (<see cref="Added"/>), <see cref="ItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="ItemIndexEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewValueEvetArgs"/> (<see cref="ItemChanged"/>), <see cref="ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).
-        ''' Value of <paramref name="e"/>.<see cref="ListChangedEventArgs.Collection"/> is always this instance.</param>
+        ''' <param name="e">Event arguments. The <paramref name="e"/>.<see cref="DictionaryChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> contains event argument of the <see cref="Changed"/> event raised immediatelly prior this event.
+        ''' As of this implementation type of <paramref name="e"/>.<see cref="DictionaryChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> is always one of following types: <see cref="KeyValueEventArgs"/> (<see cref="Added"/>), <see cref="DictionaryItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="KeyValueEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewValueEventArgs"/> (<see cref="ItemChanged"/>), <see cref="ListWithEvents(Of TValue).ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).
+        ''' Value of <paramref name="e"/>.<see cref="DictionaryChangedEventArgs.Collection"/> is always this instance.</param>
         ''' <remarks>This event is raised immediatelly after each <see cref="Changed"/> event.<para>
         ''' The reason for having two duplicit events is that <see cref="Changed"/> implements <see cref="IReportsChange.Changed"/> and you cannot determine action (what happend) through it. The aim of this event is to concentrate <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events to one single event which allows handler to easily dinstinguish which action happedned on collection.</para></remarks>
         Public Event CollectionChanged(ByVal sender As DictionaryWithEvents(Of TKey, TValue), ByVal e As DictionaryChangedEventArgs)
         ''' <summary>Raises the <see cref="CollectionChanged"/> event.</summary>
-        ''' <param name="e">Event argument. The <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> should always contain event argument of preceding call of <see cref="OnChanged"/></param>
+        ''' <param name="e">Event argument. The <paramref name="e"/>.<see cref="DictionaryChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> should always contain event argument of preceding call of <see cref="OnChanged"/></param>
         ''' <remarks>You should call one of overloaded <see cref="OnChanged"/> methods after all calls of <see cref="OnChanged"/>.
         ''' This overridable overload is always called by the other overloads.</remarks>
         ''' <filterpriority>2</filterpriority>

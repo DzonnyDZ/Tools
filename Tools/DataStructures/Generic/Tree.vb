@@ -117,7 +117,7 @@ Namespace DataStructuresT.GenericT
         <EditorBrowsable(EditorBrowsableState.Never)> Private Sub Nodes_ItemChanging(ByVal sender As ListWithEvents(Of Tree(Of T)), ByVal e As ListWithEvents(Of Tree(Of T)).CancelableItemIndexEventArgs) Handles _Nodes.ItemChanging
             OnItemChanging(e)
         End Sub
-        <EditorBrowsable(EditorBrowsableState.Never)> Private Sub _Nodes_ItemChanged(ByVal sender As ListWithEvents(Of Tree(Of T)), ByVal e As ListWithEvents(Of Tree(Of T)).OldNewItemEvetArgs) Handles _Nodes.ItemChanged
+        <EditorBrowsable(EditorBrowsableState.Never)> Private Sub _Nodes_ItemChanged(ByVal sender As ListWithEvents(Of Tree(Of T)), ByVal e As ListWithEvents(Of Tree(Of T)).OldNewItemEventArgs) Handles _Nodes.ItemChanged
             OnItemChanged(e)
         End Sub
         <EditorBrowsable(EditorBrowsableState.Never)> Private Sub Nodes_Added(ByVal sender As ListWithEvents(Of Tree(Of T)), ByVal e As ListWithEvents(Of Tree(Of T)).ItemIndexEventArgs) Handles _Nodes.Added
@@ -168,7 +168,7 @@ Namespace DataStructuresT.GenericT
         End Sub
         ''' <summary>Called after item of <see cref="Nodes"/> is changed</summary>
         ''' <param name="e">Event parameters</param>
-        Protected Overridable Sub OnItemChanged(ByVal e As ListWithEvents(Of Tree(Of T)).OldNewItemEvetArgs)
+        Protected Overridable Sub OnItemChanged(ByVal e As ListWithEvents(Of Tree(Of T)).OldNewItemEventArgs)
             e.Item.Parent = Me
             e.OldItem.Parent = Nothing
         End Sub
