@@ -42,13 +42,8 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools", "Tools\Tools.vbproj
 	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tests", "Tests\Tests.vbproj", "{79B67251-D837-4367-B571-AB806C2C7C74}"
-	ProjectSection(ProjectDependencies) = postProject
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}
-	EndProjectSection
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Win", "Tools Win\Tools Win.vbproj", "{9E0E6221-AD3B-47C8-B528-C9941BBFD663}"
-EndProject
-Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol", "Projects\Metanol\Metanol.vbproj", "{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}"
 EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Tools Visual Studio", "Tools Visual Studio\Tools Visual Studio.vbproj", "{DCD6658E-6008-4668-BBDF-CCB0F0267759}"
 EndProject
@@ -83,7 +78,7 @@ Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol2", "Projects\Metano
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
-		SccNumberOfProjects = 10
+		SccNumberOfProjects = 12
 		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
 		SccTeamFoundationServer = https://tfs01.codeplex.com/
 		SccLocalPath0 = .
@@ -113,10 +108,17 @@ Global
 		SccProjectTopLevelParentUniqueName8 = Tools.sln
 		SccProjectName8 = DevelopmentTools/CommentsMerge
 		SccLocalPath8 = DevelopmentTools\\CommentsMerge
-		SccProjectUniqueName9 = Projects\\Metanol2\\Metanol2.vbproj
+		SccProjectUniqueName9 = Projects\\Metanol\u0020Screen\u0020Saver\\Metanol\u0020Screen\u0020Saver.vbproj
 		SccProjectTopLevelParentUniqueName9 = Tools.sln
-		SccProjectName9 = Projects/Metanol2
-		SccLocalPath9 = Projects\\Metanol2
+		SccProjectName9 = Projects/Metanol\u0020Screen\u0020Saver
+		SccLocalPath9 = Projects\\Metanol\u0020Screen\u0020Saver
+		SccProjectUniqueName10 = Experimental\\Experimental.vbproj
+		SccProjectName10 = Experimental
+		SccLocalPath10 = Experimental
+		SccProjectUniqueName11 = Projects\\Metanol2\\Metanol2.vbproj
+		SccProjectTopLevelParentUniqueName11 = Tools.sln
+		SccProjectName11 = Projects/Metanol2
+		SccLocalPath11 = Projects\\Metanol2
 	EndGlobalSection
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Alpha|Any CPU = Alpha|Any CPU
@@ -212,31 +214,6 @@ Global
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Mixed Platforms.Build.0 = Release|Any CPU
 		{9E0E6221-AD3B-47C8-B528-C9941BBFD663}.Release|Win32.ActiveCfg = Release|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Mixed Platforms.Build.0 = Alpha|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Alpha|Win32.ActiveCfg = Alpha|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Any CPU.ActiveCfg = Beta|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Any CPU.Build.0 = Beta|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Mixed Platforms.ActiveCfg = Beta|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Mixed Platforms.Build.0 = Beta|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Beta|Win32.ActiveCfg = Beta|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Debug|Any CPU.ActiveCfg = Nightly|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Debug|Any CPU.Build.0 = Nightly|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Debug|Mixed Platforms.ActiveCfg = Nightly|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Debug|Mixed Platforms.Build.0 = Nightly|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Debug|Win32.ActiveCfg = Nightly|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Any CPU.ActiveCfg = RC|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Any CPU.Build.0 = RC|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Mixed Platforms.ActiveCfg = RC|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Mixed Platforms.Build.0 = RC|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.RC|Win32.ActiveCfg = RC|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Mixed Platforms.ActiveCfg = Release|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Mixed Platforms.Build.0 = Release|Any CPU
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F}.Release|Win32.ActiveCfg = Release|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Alpha|Any CPU.ActiveCfg = Alpha|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Alpha|Any CPU.Build.0 = Alpha|Any CPU
 		{DCD6658E-6008-4668-BBDF-CCB0F0267759}.Alpha|Mixed Platforms.ActiveCfg = Alpha|Any CPU
@@ -416,13 +393,13 @@ Global
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC}.Release|Win32.ActiveCfg = Debug|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Any CPU.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Any CPU.Build.0 = Release|Any CPU
-		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Mixed Platforms.Build.0 = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Alpha|Win32.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Any CPU.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Any CPU.Build.0 = Release|Any CPU
-		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Mixed Platforms.ActiveCfg = Debug|Any CPU
-		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Mixed Platforms.Build.0 = Debug|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Mixed Platforms.ActiveCfg = Release|Any CPU
+		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Mixed Platforms.Build.0 = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Beta|Win32.ActiveCfg = Release|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4}.Debug|Any CPU.Build.0 = Debug|Any CPU
@@ -449,7 +426,6 @@ Global
 		{43599321-D767-4BF7-A725-34850D057B4E} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
-		{6B19E0DC-1A3A-4F3E-BD31-6773B6A0199F} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE} = {982F36B7-A3E5-4782-96B0-9979A95610F1}
