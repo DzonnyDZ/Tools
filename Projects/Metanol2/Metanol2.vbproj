@@ -216,6 +216,10 @@
     <None Include="Resources\Files\VersionHistory_3.htm" />
     <None Include="Resources\Files\VersionHistory_2.htm" />
     <None Include="Resources\Files\VersionHistory_1.htm" />
+    <Content Include="Resources\Files\VersionHistoryEnvelope.cs.htm" />
+    <Content Include="Resources\Files\VersionHistory_1.cs.htm" />
+    <Content Include="Resources\Files\VersionHistory_2.cs.htm" />
+    <Content Include="Resources\Files\VersionHistory_3.cs.htm" />
     <Content Include="Resources\MetanolBig.png" />
     <Content Include="Resources\Up.png" />
     <Content Include="Shortcuts.txt" />
