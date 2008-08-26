@@ -624,7 +624,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Raises <see cref="ItemChanged"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemChanged"/> in order the event to be raised.</remarks>
-        Protected Overridable Sub OnItemChanged(ByVal e As OldNewValueEvetArgs)
+        Protected Overridable Sub OnItemChanged(ByVal e As OldNewValueEventArgs)
             RaiseEvent ItemChanged(Me, e)
             OnChanged(e)
             OnCollectionChanged(e, CollectionChangeAction.Replace, e.Key, e.OldValue, e.Item)
@@ -660,7 +660,7 @@ Namespace CollectionsT.GenericT
                     RemoveItemHandler(key)
                     Dict(key) = e.Item
                     AddItemHandler(key)
-                    OnItemChanged(New OldNewValueEvetArgs(key, old, Dict(key)))
+                    OnItemChanged(New OldNewValueEventArgs(key, old, Dict(key)))
                 End If
             End Set
         End Property

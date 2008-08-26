@@ -61,6 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot draw item without ListView set.
+        '''</summary>
+        Friend ReadOnly Property CannotDrawItemWithoutListView() As String
+            Get
+                Return ResourceManager.GetString("CannotDrawItemWithoutListView", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Display.
         '''</summary>
         Friend ReadOnly Property catDisplay() As String
@@ -315,6 +324,15 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Up", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to In order to perform keywords merging you must select at least 3 images and make the target one of them active..
+        '''</summary>
+        Friend ReadOnly Property WhyIsNotMergePossible() As String
+            Get
+                Return ResourceManager.GetString("WhyIsNotMergePossible", resourceCulture)
             End Get
         End Property
     End Module

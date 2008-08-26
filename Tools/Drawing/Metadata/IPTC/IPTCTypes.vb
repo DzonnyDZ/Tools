@@ -2378,7 +2378,7 @@ Namespace DrawingT.MetadataT
         ''' <summary>Information about group of tags</summary>
         Public Class GroupInfo
             ''' <summary>Contains value of the <see cref="Tags"/> Proeprty</summary>
-            Private _Tags As IPTCTag()
+            Private _Tags() As IPTCTag
             ''' <summary>Contains value of the <see cref="Mandatory"/> Proeprty</summary>
             Private _Mandatory As Boolean
             ''' <summary>Contains value of the <see cref="Repeatable"/> Proeprty</summary>
@@ -2404,15 +2404,14 @@ Namespace DrawingT.MetadataT
             ''' <param name="Description">Description</param>
             ''' <param name="Mandatory">Group is mandatory according to IPTC standard</param>
             ''' <param name="Repeatable">Group is repeatable</param>
-            ''' <param name="Tags">Tags the group consists of</param>
             ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
             ''' <exception cref="InvalidEnumArgumentException"><paramref name="Group"/> is not member of <see cref="Groups"/></exception>
-            ''' <exception cref="ArgumentException"><paramref name="Tags"/> is null or have less than 2 items</exception>
-            Public Sub New(ByVal Name As String, ByVal HumanName As String, ByVal Group As Groups, ByVal Type As Type, ByVal Category As String, ByVal Description As String, ByVal Mandatory As Boolean, ByVal Repeatable As Boolean, ByVal ParamArray Tags As IPTCTag())
-                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.EachGroupMustHaveAtLeast0Tags, 2))
+            ''' <remarks>The <see cref="SetTags"/> method must be used to complete initialization using this CTor.</remarks>
+            Public Sub New(ByVal Name As String, ByVal HumanName As String, ByVal Group As Groups, ByVal Type As Type, ByVal Category As String, ByVal Description As String, ByVal Mandatory As Boolean, ByVal Repeatable As Boolean) ', ByVal ParamArray Tags As IPTCTag())
+                'If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.EachGroupMustHaveAtLeast0Tags, 2))
                 If Not InEnum(Group) Then Throw New InvalidEnumArgumentException("Group", Group, GetType(Groups))
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
-                _Tags = Tags
+                '_Tags = Tags.Clone
                 _Mandatory = Mandatory
                 _Repeatable = Repeatable
                 _Name = Name
@@ -2421,6 +2420,16 @@ Namespace DrawingT.MetadataT
                 _Category = _Category
                 _Description = Description
                 _Type = Type
+            End Sub
+            ''' <summary>Initializes the value of the <see cref="Tags"/> property</summary>
+            ''' <exception cref="InvalidOperationException">The <see cref="Tags"/> property have already been initialized</exception>
+            ''' <param name="Tags">Tags the group consists of</param>
+            ''' <exception cref="ArgumentException"><paramref name="Tags"/> is null or have less than 2 items</exception>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Public Sub SetTags(ByVal ParamArray Tags As IPTCTag())
+                If _Tags IsNot Nothing Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.The0PropertyHaveAlreadyBeenInitialized, "Tags"))
+                If Tags Is Nothing OrElse Tags.Length < 2 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.EachGroupMustHaveAtLeast0Tags, 2))
+                _Tags = Tags.Clone
             End Sub
             ''' <summary>Type that realizes object representation of this group</summary>
             Public ReadOnly Property Type() As Type
@@ -2431,6 +2440,7 @@ Namespace DrawingT.MetadataT
             ''' <summary>Tags present in this group</summary>
             Public ReadOnly Property Tags() As IPTCTag()
                 Get
+                    If _Tags Is Nothing Then Throw New InvalidOperationException(ResourcesT.Exceptions.TheTagsPropertyHaveNotBeenInitializedUseTheSetTagsMethodToInitializeIt)
                     Dim Arr(_Tags.Length - 1) As IPTCTag
                     _Tags.CopyTo(Arr, 0)
                     Return Arr

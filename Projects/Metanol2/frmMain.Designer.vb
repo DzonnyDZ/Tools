@@ -29,6 +29,8 @@ Partial Class frmMain
         Me.lvwFolders = New System.Windows.Forms.ListView
         Me.imlFolders = New System.Windows.Forms.ImageList(Me.components)
         Me.lvwImages = New System.Windows.Forms.ListView
+        Me.cmsImages = New System.Windows.Forms.ContextMenuStrip(Me.components)
+        Me.tmiMerge = New System.Windows.Forms.ToolStripMenuItem
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
         Me.tabInfo = New System.Windows.Forms.TabControl
         Me.tapCommon = New System.Windows.Forms.TabPage
@@ -74,11 +76,13 @@ Partial Class frmMain
         Me.nudUrgency = New System.Windows.Forms.NumericUpDown
         Me.tapIPTC = New System.Windows.Forms.TabPage
         Me.prgIPTC = New System.Windows.Forms.PropertyGrid
+        Me.tapExif = New System.Windows.Forms.TabPage
         Me.bgwImages = New System.ComponentModel.BackgroundWorker
         Me.tscMain = New System.Windows.Forms.ToolStripContainer
         Me.stsStatus = New System.Windows.Forms.StatusStrip
         Me.tpbLoading = New System.Windows.Forms.ToolStripProgressBar
         Me.tslFolder = New System.Windows.Forms.ToolStripStatusLabel
+        Me.tslNoFiles = New System.Windows.Forms.ToolStripStatusLabel
         Me.msnMain = New System.Windows.Forms.MenuStrip
         Me.tmiFile = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiBrowse = New System.Windows.Forms.ToolStripMenuItem
@@ -101,13 +105,13 @@ Partial Class frmMain
         Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
         Me.bgwSave = New System.ComponentModel.BackgroundWorker
-        Me.tapExif = New System.Windows.Forms.TabPage
         Me.splMain.Panel1.SuspendLayout()
         Me.splMain.Panel2.SuspendLayout()
         Me.splMain.SuspendLayout()
         Me.splBrowser.Panel1.SuspendLayout()
         Me.splBrowser.Panel2.SuspendLayout()
         Me.splBrowser.SuspendLayout()
+        Me.cmsImages.SuspendLayout()
         Me.tabInfo.SuspendLayout()
         Me.tapCommon.SuspendLayout()
         Me.flpCommon.SuspendLayout()
@@ -192,15 +196,30 @@ Partial Class frmMain
         '
         'lvwImages
         '
+        Me.lvwImages.ContextMenuStrip = Me.cmsImages
         Me.lvwImages.Dock = System.Windows.Forms.DockStyle.Fill
         Me.lvwImages.HideSelection = False
         Me.lvwImages.LargeImageList = Me.imlImages
         Me.lvwImages.Location = New System.Drawing.Point(0, 0)
         Me.lvwImages.Name = "lvwImages"
+        Me.lvwImages.OwnerDraw = True
+        Me.lvwImages.ShowItemToolTips = True
         Me.lvwImages.Size = New System.Drawing.Size(231, 278)
         Me.lvwImages.TabIndex = 0
         Me.lvwImages.TabStop = False
         Me.lvwImages.UseCompatibleStateImageBehavior = False
+        '
+        'cmsImages
+        '
+        Me.cmsImages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiMerge})
+        Me.cmsImages.Name = "cmsImages"
+        Me.cmsImages.Size = New System.Drawing.Size(162, 48)
+        '
+        'tmiMerge
+        '
+        Me.tmiMerge.Name = "tmiMerge"
+        Me.tmiMerge.Size = New System.Drawing.Size(161, 22)
+        Me.tmiMerge.Text = "Merge keywords"
         '
         'imlImages
         '
@@ -579,12 +598,10 @@ Partial Class frmMain
         Me.kweKeywords.AutomaticsLists_Designer = True
         Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
         Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
-        Me.kweKeywords.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         Me.kweKeywords.Name = "kweKeywords"
         Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
         Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         Me.kweKeywords.TabIndex = 0
-        Me.kweKeywords.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
         '
         'sptKeywords
         '
@@ -768,6 +785,16 @@ Partial Class frmMain
         Me.prgIPTC.Size = New System.Drawing.Size(471, 393)
         Me.prgIPTC.TabIndex = 0
         '
+        'tapExif
+        '
+        Me.tapExif.Location = New System.Drawing.Point(4, 22)
+        Me.tapExif.Name = "tapExif"
+        Me.tapExif.Padding = New System.Windows.Forms.Padding(3)
+        Me.tapExif.Size = New System.Drawing.Size(477, 399)
+        Me.tapExif.TabIndex = 2
+        Me.tapExif.Text = "Exif"
+        Me.tapExif.UseVisualStyleBackColor = True
+        '
         'bgwImages
         '
         Me.bgwImages.WorkerReportsProgress = True
@@ -799,7 +826,7 @@ Partial Class frmMain
         'stsStatus
         '
         Me.stsStatus.Dock = System.Windows.Forms.DockStyle.None
-        Me.stsStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tpbLoading, Me.tslFolder})
+        Me.stsStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tpbLoading, Me.tslFolder, Me.tslNoFiles})
         Me.stsStatus.Location = New System.Drawing.Point(0, 0)
         Me.stsStatus.Name = "stsStatus"
         Me.stsStatus.ShowItemToolTips = True
@@ -818,6 +845,12 @@ Partial Class frmMain
         Me.tslFolder.Name = "tslFolder"
         Me.tslFolder.Size = New System.Drawing.Size(23, 17)
         Me.tslFolder.Text = "C:\"
+        '
+        'tslNoFiles
+        '
+        Me.tslNoFiles.Name = "tslNoFiles"
+        Me.tslNoFiles.Size = New System.Drawing.Size(37, 17)
+        Me.tslNoFiles.Text = "0 files"
         '
         'msnMain
         '
@@ -977,16 +1010,6 @@ Partial Class frmMain
         '
         Me.bgwSave.WorkerReportsProgress = True
         '
-        'tapExif
-        '
-        Me.tapExif.Location = New System.Drawing.Point(4, 22)
-        Me.tapExif.Name = "tapExif"
-        Me.tapExif.Padding = New System.Windows.Forms.Padding(3)
-        Me.tapExif.Size = New System.Drawing.Size(477, 399)
-        Me.tapExif.TabIndex = 2
-        Me.tapExif.Text = "Exif"
-        Me.tapExif.UseVisualStyleBackColor = True
-        '
         'frmMain
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -1004,6 +1027,7 @@ Partial Class frmMain
         Me.splBrowser.Panel1.ResumeLayout(False)
         Me.splBrowser.Panel2.ResumeLayout(False)
         Me.splBrowser.ResumeLayout(False)
+        Me.cmsImages.ResumeLayout(False)
         Me.tabInfo.ResumeLayout(False)
         Me.tapCommon.ResumeLayout(False)
         Me.flpCommon.ResumeLayout(False)
@@ -1124,5 +1148,8 @@ Partial Class frmMain
     Friend WithEvents tmiNext As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tmiPrevious As System.Windows.Forms.ToolStripMenuItem
     Friend WithEvents tapExif As System.Windows.Forms.TabPage
+    Friend WithEvents tslNoFiles As System.Windows.Forms.ToolStripStatusLabel
+    Friend WithEvents cmsImages As System.Windows.Forms.ContextMenuStrip
+    Friend WithEvents tmiMerge As System.Windows.Forms.ToolStripMenuItem
 
 End Class

@@ -894,4 +894,16 @@
   <data name="SubIFD" xml:space="preserve">
     <value>SubIFD</value>
   </data>
+  <data name="YouShouldNotReplaceRecordsWhichServesAsPointersToSubIFDsIfYouDoSoReplacementRecordMustBeOfTypeUInt16WithOneElementFixedLength" xml:space="preserve">
+    <value>You should not replace records which serves as pointers to subIFDs. If you do so replacement record must be of type UInt16 with one element, fixed length.</value>
+  </data>
+  <data name="CannotRemoveRecordWhichPoitsToSubIFDRemoveSubIFDFirst" xml:space="preserve">
+    <value>Cannot remove record which poits to subIFD. Remove subIFD first.</value>
+  </data>
+  <data name="The0PropertyHaveAlreadyBeenInitialized" xml:space="preserve">
+    <value>The {0} property have already been initialized.</value>
+  </data>
+  <data name="TheTagsPropertyHaveNotBeenInitializedUseTheSetTagsMethodToInitializeIt" xml:space="preserve">
+    <value>The Tags property have not been initialized. Use the SetTags method to initialize it.</value>
+  </data>
 </root>

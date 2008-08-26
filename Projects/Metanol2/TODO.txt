@@ -6,7 +6,7 @@
 * Uložení rotace
 * Zobrazení Exif
 * Exif miniatura
-* Exif zvuk (requires JPEK APP2 FPXR support)
+* Exif zvuk (requires JPEG APP2 FPXR support)
 * Editace Exif
 ✓ Posouvání v náhledu
 * Zobrazení informací v náhledu
@@ -16,7 +16,7 @@
 ✓ Save progress and error messages should have correct owner
 * Miniatury fotek orientovanejch na vejšku to počítá špatně
 * Klíčová slova se po Crtl+V označí a nascrollují
-* Sloučení klíčových slov z více obrázků do jednoho
+? Sloučení klíčových slov z více obrázků do jednoho
 ✓ Object reference not set when pressing tab in Keywords editor (sometimes; with image with no saved IPTC info - but some edited)
 * Exif
 * Exif výtah
@@ -33,3 +33,8 @@
 * Follow *.lnk to images
 * IPTC/NAA/IIM file
 * Exif file
+* Editace dočasného seznamu autodoplňování klíčových slov
+* Faster response after OK Click on keywords editor thesaurus eidtor
+✓ Number of files in folder in status bar
+✓ Tool bar and status bar are sometimes hidden
+✓ Better indication of selected images when list has not focus

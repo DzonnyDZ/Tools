@@ -255,9 +255,26 @@ Namespace DrawingT.MetadataT
             ''' <param name="e">Event arguments</param>
             ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
             ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
-            ''' <para>This implementation does nothing</para></remarks>
+            ''' <para>Calls <see cref="OnRecordAddingAlways"/></para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
             <CLSCompliant(False)> _
             Protected Overridable Sub OnRecordAdding(ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordAddingAlways(e, e.Newkey, e.Item)
+            End Sub
+            ''' <summary>Called everywhen when record is aded or replaced to the <see cref="Records"/> collection</summary>
+            ''' <param name="e">Event arguments - can be used to cancel the event</param>
+            ''' <param name="Key">Key being added or replaced</param>
+            ''' <param name="Item">New item to pe placed at <paramref name="Key"/></param>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is not valid <see cref="UShort"/> value</exception>
+            ''' <remarks>This event can be cancelled.
+            ''' <para>Called by <see cref="OnRecordAdding"/> and <see cref="OnRecordChanging"/></para>
+            ''' <para>Note for inheritors: Alway call base class method.</para>
+            ''' <para>This implementation cancels the event when record with key which is used as pointer to subIFD is passed and the record being passed is not UInt16, 1 element, fixed lenght.</para></remarks>
+            Protected Overridable Sub OnRecordAddingAlways(ByVal e As CancelMessageEventArgs, ByVal Key As Integer, ByVal Item As ExifRecord)
+                If Key < UShort.MinValue OrElse Key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.MustBeWithinRangeOfValuesOfType1, "Key", "UInt16"))
+                If SubIFDs.ContainsKey(Key) AndAlso (Item.DataType.NumberOfElements <> 1 OrElse Item.Fixed = False OrElse Item.DataType.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16) Then _
+                    e.Cancel = True _
+                    : e.CancelMessage = ResourcesT.Exceptions.YouShouldNotReplaceRecordsWhichServesAsPointersToSubIFDsIfYouDoSoReplacementRecordMustBeOfTypeUInt16WithOneElementFixedLength
             End Sub
             ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Added">Added</see> event</summary>
             ''' <param name="e">Event arguments</param>
@@ -270,10 +287,24 @@ Namespace DrawingT.MetadataT
             ''' <param name="e">Event arguments</param>
             ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
             ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive</para>
-            ''' <para>This implementation does nothing</para></remarks>
+            ''' <para>Calls <see cref="OnRecordRemovingAlways"/></para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
             <CLSCompliant(False)> _
             Protected Overridable Sub OnRecordRemoving(ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordRemovingAlways(e, e.Newkey, e.Item)
             End Sub
+            ''' <summary>Called whenewer record is about to be removed from or replaced in the <see cref="Records"/> collection</summary>
+            ''' <remarks>This event can be cancelled.
+            ''' <para>Called by: <see cref="OnRecordRemoving"/>, <see cref="OnRecordsClearing"/>, <see cref="OnRecordChanging"/>.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>        
+            Protected Overridable Sub OnRecordRemovingAlways(ByVal e As CancelMessageEventArgs, ByVal Key As Integer, ByVal Item As ExifRecord)
+                If Key < UShort.MinValue OrElse Key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException(String.Format(ResourcesT.Exceptions.MustBeWithinRangeOfValuesOfType1, "Key", "UInt16"))
+                If SubIFDs.ContainsKey(Key) Then
+                    e.Cancel = True
+                    e.CancelMessage = ResourcesT.Exceptions.CannotRemoveRecordWhichPoitsToSubIFDRemoveSubIFDFirst
+                End If
+            End Sub
+
             ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Removed">Removed</see> event</summary>
             ''' <param name="e">Event arguments</param>
             ''' <remarks>This handler is not CLS-compliant an there is no CLS-compliant alternaive.
@@ -285,9 +316,14 @@ Namespace DrawingT.MetadataT
             ''' <param name="e">Event arguments</param>
             ''' <remarks>The event can be cancelled. In such case the <see cref="OperationCanceledException"/> is thrown by collection.
             ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive. Handler is marked as CLS-incompliant although it has CLS-compliant header because all other handlers are CLS-incompliant.</para>
-            ''' <para>This implementation does nothing</para></remarks>
+            ''' <para>Calls <see cref="OnRecordRemovingAlways"/> for each record in the <see cref="Records"/> collection.</para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
             <CLSCompliant(False)> _
             Protected Overridable Sub OnRecordsClearing(ByVal e As CancelMessageEventArgs)
+                For Each r In Me.Records
+                    OnRecordRemovingAlways(e, r.Key, r.Value)
+                    If e.Cancel Then Exit For
+                Next
             End Sub
             ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.Cleared">Cleared</see> event</summary>
             ''' <param name="e">Event arguments</param>
@@ -300,9 +336,12 @@ Namespace DrawingT.MetadataT
             ''' <param name="e">Event arguments</param>
             ''' <remarks>The event can be cancelled.
             ''' <para>This handler is not CLS-compliant an there is no CLS-compliant alternaive.</para>
-            ''' <para>This implementation does nothing</para></remarks>
+            ''' <para>Calls <see cref="OnRecordRemovingAlways"/> and <see cref="OnRecordAddingAlways"/></para>
+            ''' <para>Note for inheritors: Always call base class method.</para></remarks>
             <CLSCompliant(False)> _
             Protected Overridable Sub OnRecordChanging(ByVal e As RecordDic.CancelableKeyValueEventArgs)
+                OnRecordRemovingAlways(e, e.Newkey, e.Item)
+                OnRecordAddingAlways(e, e.Newkey, e.Item)
             End Sub
             ''' <summary>Handles the <see cref="Records">Records</see>.<see cref="DictionaryWithEvents.ItemChanged">ItemChanged</see> event</summary>
             ''' <param name="e">Event arguments</param>
@@ -535,10 +574,10 @@ Namespace DrawingT.MetadataT
             ''' <seealso cref="OnChanged"/>
             Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
             ''' <summary>Raises the <see cref="Changed"/> event, handles any change in current instance</summary>
-            ''' <param name="e">Event argument</param>
+            ''' <param name="e">Event argument. If the event is caused directly by this instance (not by nested object) the <paramref name="e"/> parameter is <see cref="IReportsChange.ValueChangedEventArgsBase"/>.</param>
             ''' <remarks>Changes of the <see cref="Exif"/> and the <see cref="Previous"/> property are not tracked</remarks>
             ''' <seelaso cref="Changed"/>
-            Protected Overridable Sub OnChanged(ByVal e As IReportsChange.ValueChangedEventArgsBase)
+            Protected Overridable Sub OnChanged(ByVal e As EventArgs)
                 RaiseEvent Changed(Me, e)
             End Sub
 #End Region
@@ -571,11 +610,10 @@ Namespace DrawingT.MetadataT
 #Region "Records"
             ''' <summary>Contains value of the <see cref="Records"/> property</summary>
             Private _Records As New RecordDic(False, True)
-            'TODO:Describe what happens if collection is being manipulated
             ''' <summary>Records in this Image File Directory</summary>
+            ''' <remarks>Record cannot be removed from or replaced in the collection when it points to subIFD. The <see cref="OperationCanceledException"/> is thrown in case of attempt to do so.</remarks>
             <CLSCompliant(False)> _
             Public ReadOnly Property Records() As RecordDic
-                'TODO: Cls-compliant alternative
                 Get
                     Return _Records
                 End Get
@@ -585,6 +623,7 @@ Namespace DrawingT.MetadataT
             ''' <value>New value for record. New value is assigned even if old value is of incompatible type. If value is null an item is deleted.</value>
             ''' <returns>Value of record with tag number specified in <paramref name="Type"/> if type specifies that number of components can vary or if number of components match actual number of components in record. If there is no tag with specified number present in this IFD or number of components constraint is being violated null is returned.</returns>
             ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+            ''' <exception cref="OperationCanceledException">In setter: Such record alerady exists and points to subIFD.</exception>
             ''' <seelaso cref="Records"/>
             <CLSCompliant(False)> _
             Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
@@ -607,7 +646,6 @@ Namespace DrawingT.MetadataT
                     End If
                 End Get
                 Set(ByVal value As ExifRecord)
-                    'TODO: In comment explain exceptions that can be thrown by Records collection
                     If Type Is Nothing Then Throw New ArgumentNullException("value", String.Format(ResourcesT.Exceptions.CannotBeSetToNull, "Record"))
                     If value Is Nothing Then
                         If Records.ContainsKey(Type.Tag) Then Records.Remove(Type.Tag)
@@ -627,6 +665,7 @@ Namespace DrawingT.MetadataT
             ''' <remarks>This is CLS-compliant overload or CLS-incompliant property.</remarks>
             ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is less than <see cref="UShort.MinValue"/> or greater than <see cref="UShort.MaxValue"/></exception>
             ''' <exception cref="KeyNotFoundException">In getter: <paramref name="key"/> is not member of <see cref="GetRecordKeys"/></exception>
+            ''' <exception cref="OperationCanceledException">In setter: Record with given <paramref name="key"/> already exists and points to subIFD.</exception>
             ''' <seelaso cref="GetRecordKeys"/><seelaso cref="Records"/>
             <EditorBrowsable(EditorBrowsableState.Advanced)> _
             Default Public Property Record(ByVal key As Integer) As ExifRecord
@@ -635,7 +674,6 @@ Namespace DrawingT.MetadataT
                     Return Records(key)
                 End Get
                 Set(ByVal value As ExifRecord)
-                    'TODO: Explain all other exceptions
                     If key < UShort.MinValue OrElse key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.ExifRecordKeyMustBeValidUInt16Value)
                     If Records.ContainsKey(key) Then Records(key) = value _
                     Else Records.Add(key, value)
@@ -668,6 +706,7 @@ Namespace DrawingT.MetadataT
                     If value Is Following Then Exit Property
                     If value.Previous IsNot Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.ThePreviousPropertyOfIFDBeingSetAsFollowingMustBeNull)
                     If TypeOf value Is SubIFD Then Throw New TypeMismatchException("value", value, GetType(IFD), ResourcesT.Exceptions.FollowingIFDCannotBeSubIFD)
+                    Dim old As IFD = Me.Following
                     Dim Current As IFD = value.Following
                     While Current IsNot Nothing
                         If Current Is Me Then Throw New ArgumentException(ResourcesT.Exceptions.AttemptToCreateCyclicLinkedListOfIFDs)
@@ -683,11 +722,12 @@ Namespace DrawingT.MetadataT
                     value.Previous = Me
                     Current = value
                     value.Exif = Me.Exif
-                    OnFollowingChanged()
+                    OnFollowingChanged(New IReportsChange.ValueChangedEventArgs(Of IFD)(old, value, "Following"))
                 End Set
             End Property
             ''' <summary>Handles change of the <see cref="Following"/> property.</summary>
-            Protected Overridable Sub OnFollowingChanged()
+            ''' <param name="e">Event arguments</param>
+            Protected Overridable Sub OnFollowingChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of IFD))
                 OnChanged(e)
             End Sub
             ''' <summary>Performs additional verification of value being passed to the <see cref="Following"/> prooperty</summary>
@@ -771,6 +811,7 @@ Namespace DrawingT.MetadataT
             <EditorBrowsable(EditorBrowsableState.Never)> _
             Private _NumberOfElements As UShort
             ''' <summary>Number of elements of type <see cref="DataType"/> contained in record</summary>
+            ''' <remarks>Note for inheritors: Do not expose setter of this property. Do not change value of this property during live-time of instance. This restriction is here because <see cref="ExifRecord"/> cannot track changes of this property.</remarks>
             Public Property NumberOfElements() As UShort
                 Get
                     Return _NumberOfElements
@@ -780,6 +821,7 @@ Namespace DrawingT.MetadataT
                 End Set
             End Property
             ''' <summary>Data type of items in record</summary>
+            ''' <remarks>Note for inheritors: Do not expose setter of this property. Do not change value of this property during live-time of instance. This restriction is here because <see cref="ExifRecord"/> cannot track changes of this property.</remarks>
             Public Property DataType() As ExifIFDReader.DirectoryEntry.ExifDataTypes
                 Get
                     Return _DataType
@@ -943,11 +985,14 @@ Namespace DrawingT.MetadataT
             ''' <exception cref="InvalidCastException">Setting value of incompatible type</exception>
             ''' <exception cref="ArgumentException">Attempt to assigne value with other number of components when <see cref="Fixed"/> set to true</exception>
             Private Sub SetDataValue(Of T)(ByVal value As Object)
+                Dim old As Object = _Data
+                Dim changed As Boolean = False
                 Try
                     Dim newV As T = CType(value, T)
                     If Me.DataType.NumberOfElements = 1 OrElse Not Me.Fixed Then
                         _Data = newV
                         Me.DataType.NumberOfElements = 1
+                        changed = True
                     Else
                         Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
                     End If
@@ -957,6 +1002,7 @@ Namespace DrawingT.MetadataT
                         If Me.DataType.NumberOfElements = newV.Length OrElse Not Fixed Then
                             _Data = newV
                             Me.DataType.NumberOfElements = newV.Length
+                            changed = True
                         Else
                             Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
                         End If
@@ -964,6 +1010,9 @@ Namespace DrawingT.MetadataT
                         Throw New InvalidCastException(ResourcesT.Exceptions.ValueOfIncompatibleTypePassedToExifRecord)
                     End Try
                 End Try
+                If changed Then
+                    OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, _Data, "Data"))
+                End If
             End Sub
             ''' <summary>CTor</summary>
             ''' <param name="Data">Initial value of this record</param>
@@ -988,6 +1037,16 @@ Namespace DrawingT.MetadataT
              Public Sub New(ByVal Data As Object, ByVal Type As ExifIFDReader.DirectoryEntry.ExifDataTypes, Optional ByVal NumberOfComponents As UShort = 1, Optional ByVal Fixed As Boolean = False)
                 Me.New(New ExifRecordDescription(Type, NumberOfComponents), Data, Fixed)
             End Sub
+            ''' <summary>Raises the <see cref="Changed"/> event</summary>
+            ''' <param name="e">Event argument. Should be <see cref="IReportsChange.ValueChangedEventArgsBase"/>.</param>
+            ''' <remarks>Changes of properties of <see cref="DataType"/> are not tracked.</remarks>
+            Protected Overridable Sub OnChanged(ByVal e As EventArgs)
+                RaiseEvent Changed(Me, e)
+            End Sub
+            ''' <summary>Raised when value of member changes</summary>
+            ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)
+            ''' <para>Changes of properties of <see cref="DataType"/> are not tracked.</para></remarks>
+            Public Event Changed As IReportsChange.ChangedEventHandler Implements IReportsChange.Changed
         End Class
 
 #Region "IFD classes"
@@ -1018,8 +1077,9 @@ Namespace DrawingT.MetadataT
             Protected Overrides Sub ReadStandardSubIFDs(ByVal Reader As ExifIFDReader)
                 Dim ExifIfd = Me.Record(Tags.ExifIFD)
                 If ExifIfd IsNot Nothing Then
-                    Dim ExifSubIFDReader As New ExifReader.SubIFDReader(Reader.ExifReader, ExifIfd.Data, ExifSubIFDName, Reader, Reader.Entries.FindIndex(Function(a As ExifIFDReader.DirectoryEntry) a.Tag = Tags.ExifIFD))
-
+                    Dim ExifSubIFDReader As New ExifReader.SubIFDReader(Reader.ExifReader, ExifIfd.Data, _
+                        "???", Reader, Reader.Entries.FindIndex(Function(a As ExifIFDReader.DirectoryEntry) a.Tag = Tags.ExifIFD))
+                    'TODO: Implement
                 End If
 
             End Sub
@@ -1255,7 +1315,7 @@ Namespace DrawingT.MetadataT
                     If Current.SubIFDs.Count > 0 Then
                         If Current.Following IsNot Nothing Then CurrentStack.Push(Current.Following)
                         For Each si In Current.SubIFDs
-                            CurrentStack.Push(si)
+                            CurrentStack.Push(si.Value)
                         Next
                         Current = CurrentStack.Pop
                     ElseIf Current.Following IsNot Nothing Then

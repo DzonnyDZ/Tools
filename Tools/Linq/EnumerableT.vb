@@ -13,13 +13,51 @@ Namespace LinqT
         ''' <summary>Creates union of all given collections</summary>
         ''' <param name="collections">Collections to create union of</param>
         ''' <typeparam name="T">Type of items in collection(s)</typeparam>
-        ''' <returns>Collection that contains members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
+        ''' <returns>Collection that contains all members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
         <Extension()> Public Function UnionAll(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             Dim ret As IEnumerable(Of T) = New List(Of T)
             If collections Is Nothing Then Return ret
             For Each item In collections
                 ret = ret.Union(item)
             Next item
+            Return ret
+        End Function
+        ''' <summary>Creates union of all given collections</summary>
+        ''' <param name="collections">Collections to create union of</param>
+        ''' <typeparam name="T">Type of items in collection(s)</typeparam>
+        ''' <returns>Collection that contains all members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
+        ''' <remarks>This is alias of <see cref="UnionAll"/> which takes one parameter.</remarks>
+        <Extension()> Public Function FlatAll(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+            Return UnionAll(collections)
+        End Function
+        ''' <summary>Unions all unique items in given collections to one collection</summary>
+        ''' <param name="collections">Collections to create union of</param>
+        ''' <typeparam name="T">Type of items in collection(s)</typeparam>
+        ''' <returns>Collection that contains all unique members of collections in <paramref name="collections"/></returns>
+        <Extension()> Public Function FlatDistinct(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+            Dim ret As New List(Of T)
+            If collections Is Nothing Then Return ret
+            For Each collection In collections
+                For Each item In collection
+                    If Not ret.Contains(item) Then ret.Add(item)
+                Next
+            Next
+            Return ret
+        End Function
+        ''' <summary>Unions all unique items in given collections to one collection using given <see cref="IComparer(Of T)"/></summary>
+        ''' <param name="collections">Collections to create union of</param>
+        ''' <typeparam name="T">Type of items in collection(s)</typeparam>
+        ''' <returns>Collection that contains all unique members of collections in <paramref name="collections"/></returns>
+        ''' <param name="comparer">Comparer used for distinguishing unique items</param>
+        <Extension()> Public Function FlatDistinct(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T)), ByVal comparer As IEqualityComparer(Of T)) As IEnumerable(Of T)
+            If comparer Is Nothing Then Throw New ArgumentNullException("comparer")
+            Dim ret As New List(Of T)
+            If collections Is Nothing Then Return ret
+            For Each collection In collections
+                For Each item In collection
+                    If Not ret.Contains(item, comparer) Then ret.Add(item)
+                Next
+            Next
             Return ret
         End Function
         ''' <summary>Creates union of given collection with other given collections</summary>

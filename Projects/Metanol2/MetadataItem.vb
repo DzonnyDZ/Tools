@@ -1,4 +1,5 @@
 ﻿Imports Tools.DrawingT.MetadataT
+Imports System.ComponentModel, Tools.DrawingT.ImageTools
 
 ''' <summary>Represents <see cref="ListViewItem"/> which contains metedata for given file</summary>
 Public NotInheritable Class MetadataItem : Inherits ListViewItem
@@ -196,12 +197,104 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     End Sub
     ''' <summary>Handles any possible change of the <see cref="Changed"/> property</summary>
     Private Sub OnSaveStatusChanged()
-        If Me.Changed Then
-            Me.Text = Me.Path.FileName & "*"
+        Me.ListView.Invalidate(Me.Bounds)
+    End Sub
+#Region "Colors"
+    ''' <summary><see cref="Selected"/> property</summary>
+    ''' <remarks>Must be called from outside of this class. Changes are not tracked automatically.</remarks>
+    Friend Sub OnSelectedChanged()
+        If Me.Selected Then
+            MyBase.BackColor = Me.SelectedBackColor
+            MyBase.ForeColor = Me.SelectedForeColor
         Else
-            Me.Text = Me.Path.FileName
+            MyBase.BackColor = Me.BackColor
+            MyBase.ForeColor = Me.ForeColor
         End If
     End Sub
-
-
+    ''' <summary>Contains value of the <see cref="ForeColor"/> property</summary>
+    <EditorBrowsable()> Private _ForeColor As Color = SystemColors.WindowText
+    ''' <summary>Contains value of the <see cref="BackColor"/> property</summary>
+    <EditorBrowsable()> Private _BackColor As Color = Color.Transparent
+    ''' <summary>Contains value of the <see cref="SelectedForeColor"/> property</summary>
+    <EditorBrowsable()> Private _SelectedForeColor As Color = SystemColors.HighlightText
+    ''' <summary>Contains value of the <see cref="SelectedBackColor"/> property</summary>
+    <EditorBrowsable()> Private _SelectedBackColor As Color = SystemColors.Highlight
+    ''' <summary>Gets or sets foreground color if item when it is not selected</summary>
+    Public Shadows Property ForeColor() As Color
+        Get
+            Return _ForeColor
+        End Get
+        Set(ByVal value As Color)
+            Dim Old As Color = ForeColor
+            _ForeColor = value
+            If Old <> value AndAlso Not Selected Then OnSelectedChanged()
+        End Set
+    End Property
+    ''' <summary>Gets or sets background color if item when it is not selected</summary>
+    Public Shadows Property BackColor() As Color
+        Get
+            Return _BackColor
+        End Get
+        Set(ByVal value As Color)
+            Dim old As Color = BackColor
+            _BackColor = value
+            If old <> value AndAlso Not Selected Then OnSelectedChanged()
+        End Set
+    End Property
+    ''' <summary>Gets or sets foreground color if item when it is selected</summary>
+    Public Property SelectedForeColor() As Color
+        Get
+            Return _SelectedForeColor
+        End Get
+        Set(ByVal value As Color)
+            Dim old As Color = SelectedForeColor
+            _SelectedForeColor = value
+            If old <> value AndAlso Selected Then OnSelectedChanged()
+        End Set
+    End Property
+    ''' <summary>Gets or sets background color if item when it is selected</summary>
+    Public Property SelectedBackColor() As Color
+        Get
+            Return _SelectedBackColor
+        End Get
+        Set(ByVal value As Color)
+            Dim old As Color = SelectedBackColor
+            _SelectedBackColor = value
+            If old <> value AndAlso Selected Then OnSelectedChanged()
+        End Set
+    End Property
+#End Region
+    ''' <summary>Draws item in list view</summary>
+    ''' <param name="e">Argument of the <see cref="ListView.DrawItem"/> event</param>
+    ''' <remarks>Can be used as handler of the <see cref="ListView.DrawItem"/> event</remarks>
+    ''' <exception cref="InvalidOperationException"><see cref="ListView"/> is null</exception>
+    Public Sub Draw(ByVal e As DrawListViewItemEventArgs)
+        If Me.ListView Is Nothing Then Throw New InvalidOperationException(My.Resources.CannotDrawItemWithoutListView)
+        e.DrawDefault = True
+        If (e.State And ListViewItemStates.Selected) = ListViewItemStates.Selected OrElse (e.State And ListViewItemStates.Focused) = ListViewItemStates.Focused Then
+            e.DrawBackground()
+            Dim ImageBounds = Me.GetBounds(ItemBoundsPortion.Icon)
+            Dim Image = Me.ImageList.Images(Me.ImageKey)
+            If Image IsNot Nothing Then
+                'e.Graphics.DrawImageInPixels(Image, ImageBounds.X + ImageBounds.Width / 2 - Image.Width / 2, ImageBounds.Y + ImageBounds.Height / 2 - Image.Height / 2)
+                e.Graphics.DrawImageUnscaled(Image, ImageBounds.X + ImageBounds.Width / 2 - Image.Width / 2, ImageBounds.Y + ImageBounds.Height / 2 - Image.Height / 2)
+            End If
+            If (e.State And ListViewItemStates.Focused) = ListViewItemStates.Focused Then
+                Dim sf As New StringFormat()
+                sf.Alignment = StringAlignment.Center
+                If Me.ListView.RightToLeftLayout Then sf.FormatFlags = sf.FormatFlags Or StringFormatFlags.DirectionRightToLeft
+                sf.LineAlignment = StringAlignment.Center
+                sf.Trimming = StringTrimming.Character
+                e.Graphics.DrawString(Me.Text, Me.Font, New SolidBrush(MyBase.ForeColor), Me.GetBounds(ItemBoundsPortion.Label), sf)
+            Else
+                Dim TextFlags As TextFormatFlags = TextFormatFlags.HorizontalCenter Or TextFormatFlags.Bottom Or TextFormatFlags.EndEllipsis Or TextFormatFlags.SingleLine
+                If Me.ListView.RightToLeftLayout Then TextFlags = TextFlags Or TextFormatFlags.RightToLeft
+                e.DrawText(TextFlags)
+            End If
+            e.DrawFocusRectangle()
+            e.DrawDefault = False
+        End If
+        If Changed Then _
+            e.Graphics.DrawString("✹", Me.Font, New SolidBrush(MyBase.ForeColor), e.Bounds.Location)
+    End Sub
 End Class

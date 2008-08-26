@@ -224,4 +224,10 @@
   <data name="RotateRight" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\RotateRight.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="CannotDrawItemWithoutListView" xml:space="preserve">
+    <value>Cannot draw item without ListView set</value>
+  </data>
+  <data name="WhyIsNotMergePossible" xml:space="preserve">
+    <value>In order to perform keywords merging you must select at least 3 images and make the target one of them active.</value>
+  </data>
 </root>

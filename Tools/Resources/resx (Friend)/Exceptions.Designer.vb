@@ -471,6 +471,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot remove record which poits to subIFD. Remove subIFD first..
+        '''</summary>
+        Friend Shared ReadOnly Property CannotRemoveRecordWhichPoitsToSubIFDRemoveSubIFDFirst() As String
+            Get
+                Return ResourceManager.GetString("CannotRemoveRecordWhichPoitsToSubIFDRemoveSubIFDFirst", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Cannot resume count-down timer when there is no time left..
         '''</summary>
         Friend Shared ReadOnly Property CannotResumeCountDownTimerWhenThereIsNoTimeLeft() As String
@@ -2046,6 +2055,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The {0} property have already been initialized..
+        '''</summary>
+        Friend Shared ReadOnly Property The0PropertyHaveAlreadyBeenInitialized() As String
+            Get
+                Return ResourceManager.GetString("The0PropertyHaveAlreadyBeenInitialized", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection..
         '''</summary>
         Friend Shared ReadOnly Property TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection() As String
@@ -2134,6 +2152,15 @@ Namespace ResourcesT
             Get
                 Return ResourceManager.GetString("ThereWasAnErrorObtaininInstanceOfDefaultImplementationOfMessageBoxSeeInnerExcepti"& _ 
                         "onForDetails", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to The Tags property have not been initialized. Use the SetTags method to initialize it..
+        '''</summary>
+        Friend Shared ReadOnly Property TheTagsPropertyHaveNotBeenInitializedUseTheSetTagsMethodToInitializeIt() As String
+            Get
+                Return ResourceManager.GetString("TheTagsPropertyHaveNotBeenInitializedUseTheSetTagsMethodToInitializeIt", resourceCulture)
             End Get
         End Property
         
@@ -2413,6 +2440,16 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property WhenFixedIsTrueLenCannotBe0() As String
             Get
                 Return ResourceManager.GetString("WhenFixedIsTrueLenCannotBe0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to You should not replace records which serves as pointers to subIFDs. If you do so replacement record must be of type UInt16 with one element, fixed length..
+        '''</summary>
+        Friend Shared ReadOnly Property YouShouldNotReplaceRecordsWhichServesAsPointersToSubIFDsIfYouDoSoReplacementRecordMustBeOfTypeUInt16WithOneElementFixedLength() As String
+            Get
+                Return ResourceManager.GetString("YouShouldNotReplaceRecordsWhichServesAsPointersToSubIFDsIfYouDoSoReplacementRecor"& _ 
+                        "dMustBeOfTypeUInt16WithOneElementFixedLength", resourceCulture)
             End Get
         End Property
     End Class

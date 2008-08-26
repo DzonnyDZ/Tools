@@ -1,6 +1,6 @@
 ﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileTystemTools, Tools.CollectionsT.GenericT
 Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
-Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt
+Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT, Tools, Tools.ReflectionT
@@ -190,6 +190,7 @@ Public Class frmMain
         Finally
             ResumeUpdate()
         End Try
+        tslNoFiles.Text = String.Format("{0} files", lvwImages.Items.Count)
     End Sub
 
     Private Sub frmMain_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -248,6 +249,8 @@ Public Class frmMain
         Me.fraKeywords.Height = My.Settings.KeywordsHeight
         Me.fraTitle.Height = My.Settings.TextHeight
         ToolStripManager.LoadSettings(Me, "tosMain")
+        Me.tosMain.Visible = True
+        Me.stsStatus.Visible = True
         If My.Settings.Folder = "" OrElse Not IO.Directory.Exists(My.Settings.Folder) Then
             LoadFolder(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures))
         Else
@@ -416,6 +419,12 @@ Public Class frmMain
         Next
     End Sub
 
+    Private Sub lvwImages_DrawItem(ByVal sender As ListView, ByVal e As System.Windows.Forms.DrawListViewItemEventArgs) Handles lvwImages.DrawItem
+        Dim item As MetadataItem = e.Item
+        item.Draw(e)
+    End Sub
+
+
     Private Sub lvwImages_KeyDown(ByVal sender As ListView, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lvwImages.KeyDown
         If e.Control AndAlso e.KeyCode = Keys.A AndAlso Not e.Shift AndAlso Not e.Alt Then
             SuspendUpdate()
@@ -430,14 +439,20 @@ Public Class frmMain
     End Sub
 
     Private Sub lvwImages_SelectedIndexChanged(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+        ' DoSelectedImageChanged() moved to lvwImages_ItemSelectionChanged
+    End Sub
+    Private Sub lvwImages_ItemSelectionChanged(ByVal sender As Object, ByVal e As System.Windows.Forms.ListViewItemSelectionChangedEventArgs) Handles lvwImages.ItemSelectionChanged
+        DirectCast(e.Item, MetadataItem).OnSelectedChanged()
         DoSelectedImageChanged()
     End Sub
     ''' <summary>Handles the <see cref="lvwImages"/>.<see cref="ListView.SelectedIndexChanged">SelectedIndexChange</see> event</summary>
     Private Sub DoSelectedImageChanged()
         If IsChangingSuspended Then Return
         cmdErrInfo.Visible = False
-        If lvwImages.SelectedItems.Count > 0 Then
-            Dim prevItem As MetadataItem = lvwImages.SelectedItems(0)
+        Dim prevItem As MetadataItem = lvwImages.FocusedItem
+        If ((prevItem IsNot Nothing AndAlso Not prevItem.Selected) OrElse (prevItem Is Nothing)) AndAlso lvwImages.SelectedItems.Count > 0 Then _
+            prevItem = lvwImages.SelectedItems(0)
+        If prevItem IsNot Nothing Then
             Try
                 picPreview.LoadAsync(prevItem.Path.Path)
             Catch ex As Exception
@@ -484,7 +499,7 @@ Public Class frmMain
                 SelectedMetadata.Add(item)
             Next
             ShowIPTCValues(From item In SelectedMetadata Select item.IPTC)
-            prgIPTC.SelectedObjects = SelectedMetadata.ToArray
+            prgIPTC.SelectedObjects = (From mtd In SelectedMetadata Select mtd.IPTC).ToArray
         Else
             prgIPTC.SelectedObjects = New Object() {}
         End If
@@ -942,6 +957,33 @@ Retry:              item.Save()
     Private Sub Large_ImageAltered(ByVal sender As frmLarge) Handles _Large.ImageAltered
         picPreview.Image = sender.Image
         picPreview.Invalidate()
+    End Sub
+
+    Private Sub cmsImages_Opening(ByVal sender As ContextMenuStrip, ByVal e As System.ComponentModel.CancelEventArgs) Handles cmsImages.Opening
+        tmiMerge.Visible = MergeKeywordsPossible
+        If sender.Items.AsTypeSafe.FirstOrDefault(Function(i As ToolStripMenuItem) i.Visible) Is Nothing Then _
+            e.Cancel = True : Exit Sub
+    End Sub
+    Private ReadOnly Property MergeKeywordsPossible() As Boolean
+        Get
+            Return lvwImages.SelectedItems.Count >= 3 AndAlso _
+                (From i As MetadataItem In lvwImages.SelectedItems _
+                    Where (Not i.Focused AndAlso i.IPTCContains AndAlso i.IPTC.Keywords IsNot Nothing AndAlso i.IPTC.Keywords.Length > 0) _
+                ).Count >= 2 AndAlso _
+                lvwImages.FocusedItem IsNot Nothing AndAlso lvwImages.FocusedItem.Selected
+        End Get
+    End Property
+
+    Private Sub tmiMerge_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiMerge.Click
+        If Not MergeKeywordsPossible Then
+            MBox.MsgBox(My.Resources.WhyIsNotMergePossible, MsgBoxStyle.Information,My.Resources.Error_")
+            Exit Sub
+        End If
+        Dim newKw = LinqT.EnumerableT.FlatDistinct(Of String)((From i As MetadataItem In lvwImages.SelectedItems Where Not i.Focused AndAlso i.IPTCContains AndAlso i.IPTC.Keywords IsNot Nothing Select i.IPTC.Keywords))
+        With DirectCast(lvwImages.FocusedItem, MetadataItem)
+            If .IPTC.Keywords IsNot Nothing Then newKw = newKw.Union(.IPTC.Keywords)
+            .IPTC.Keywords = newKw.ToArray
+        End With
     End Sub
 End Class
 

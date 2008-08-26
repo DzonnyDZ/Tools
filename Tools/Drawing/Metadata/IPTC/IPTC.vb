@@ -34,6 +34,15 @@ Namespace DrawingT.MetadataT
                 Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
             Next t
         End Sub
+        ''' <summary>Gets details about tag format by tag record and number</summary>
+        ''' <param name="Record">Recor number</param>
+        ''' <param name="TagNumber">Number of tag within <paramref name="Record"></paramref></param>
+        ''' <exception cref="InvalidEnumArgumentException">
+        ''' <paramref name="Record"></paramref> is not member of <see cref="RecordNumbers"></see> -or- <paramref name="TagNumber"></paramref> is not tag within <paramref name="record"></paramref></exception>
+        Public Shared Function GetTag(ByVal Record As RecordNumbers, ByVal TagNumber As Byte) As IPTCTag
+            Dim lUseThisGroup As GroupInfo = Nothing
+            Return GetTag(Record, TagNumber, lUseThisGroup)
+        End Function
         ''' <summary>CTor from <see cref="IIPTCGetter"/></summary>
         ''' <param name="Getter"><see cref="IIPTCGetter"/> that contains IPTC stream</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Getter"/> is null</exception>

@@ -321,8 +321,9 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;''' &lt;summary>Gets details about tag format by tag record and number&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Record">Recor number&lt;/param>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="TagNumber">Number of tag within &lt;paramref name="Record"/>&lt;/param>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;''' &lt;param name="UseThisGroup">If not null given instance of &lt;see cref="GroupInfo"/> is used instead of obtaining new instance using shared property of the &lt;see cref="GroupInfo"/> class. (Relevant only for tags grouped into groups.)&lt;/param></xsl:text>
         <xsl:text>&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">&lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/> -or- &lt;paramref name="TagNumber"/> is not tag within &lt;paramref name="record"/>&lt;/exception>&#xD;&#xA;</xsl:text>
-        <xsl:text>&#9;&#9;Public Shared Function GetTag(ByVal Record As RecordNumbers, TagNumber As Byte) As IPTCTag&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;Friend Shared Function GetTag(ByVal Record As RecordNumbers, TagNumber As Byte, ByVal UseThisGroup As GroupInfo) As IPTCTag&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;Select Case Record&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record">
             <xsl:sort data-type="number" order="ascending" select="@number"/>
@@ -371,8 +372,9 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                     <xsl:text>)</xsl:text>
                 </xsl:if>
                 <xsl:if test="parent::I:group">
-                    <xsl:text>, Group:=GroupInfo.</xsl:text>
+                    <xsl:text>, Group:=If(UseThisGroup,GroupInfo.</xsl:text>
                     <xsl:value-of select="parent::I:group/@name"/>
+                    <xsl:text>)</xsl:text>
                 </xsl:if>
                 <xsl:text>, Lock:=True)&#xD;&#xA;</xsl:text>
             </xsl:for-each>
@@ -444,7 +446,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:value-of select="@name"/>
             <xsl:text> As GroupInfo&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;Get&#xD;&#xA;</xsl:text>
-            <xsl:text>&#9;&#9;&#9;&#9;&#9;Return New GroupInfo("</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Dim g As New GroupInfo("</xsl:text>
             <xsl:value-of select="@name"/>
             <xsl:text>", "</xsl:text>
             <xsl:value-of select="@name"/>
@@ -462,17 +464,23 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:value-of select="@mandatory"/>
             <xsl:text>, </xsl:text>
             <xsl:value-of select="@repeatable"/>
+            <xsl:text>)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;g.SetTags(</xsl:text>
             <xsl:for-each select="I:tag">
                 <xsl:sort data-type="number" order="ascending" select="@number"/>
-                <xsl:text>, GetTag(RecordNumbers.</xsl:text>
+                <xsl:if test="position()>1">
+                    <xsl:text>, </xsl:text>
+                </xsl:if>
+                <xsl:text>GetTag(RecordNumbers.</xsl:text>
                 <xsl:value-of select="../../@name"/>
                 <xsl:text>, </xsl:text>
                 <xsl:value-of select="../../@name"/>
                 <xsl:text>Tags.</xsl:text>
                 <xsl:value-of select="@name"/>
-                <xsl:text>)</xsl:text>
+                <xsl:text>, g)</xsl:text>
             </xsl:for-each>
             <xsl:text>)&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&#9;Return g&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&#9;End Get&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;End Property&#xD;&#xA;</xsl:text>
         </xsl:for-each>
