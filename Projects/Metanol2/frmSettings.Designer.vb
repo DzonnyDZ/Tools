@@ -32,70 +32,62 @@ Partial Class frmSettings
         '
         'prgProperties
         '
-        Me.prgProperties.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.prgProperties.Location = New System.Drawing.Point(0, 0)
+        Me.prgProperties.AccessibleDescription = Nothing
+        Me.prgProperties.AccessibleName = Nothing
+        resources.ApplyResources(Me.prgProperties, "prgProperties")
+        Me.prgProperties.BackgroundImage = Nothing
+        Me.prgProperties.Font = Nothing
         Me.prgProperties.Name = "prgProperties"
-        Me.prgProperties.Size = New System.Drawing.Size(252, 327)
-        Me.prgProperties.TabIndex = 0
         '
         'tlpButtons
         '
-        Me.tlpButtons.AutoSize = True
-        Me.tlpButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpButtons.ColumnCount = 2
-        Me.tlpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.tlpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
+        Me.tlpButtons.AccessibleDescription = Nothing
+        Me.tlpButtons.AccessibleName = Nothing
+        resources.ApplyResources(Me.tlpButtons, "tlpButtons")
+        Me.tlpButtons.BackgroundImage = Nothing
         Me.tlpButtons.Controls.Add(Me.cmdOK, 0, 0)
         Me.tlpButtons.Controls.Add(Me.cmdCancel, 1, 0)
-        Me.tlpButtons.Dock = System.Windows.Forms.DockStyle.Bottom
-        Me.tlpButtons.Location = New System.Drawing.Point(0, 327)
+        Me.tlpButtons.Font = Nothing
         Me.tlpButtons.Name = "tlpButtons"
-        Me.tlpButtons.RowCount = 1
-        Me.tlpButtons.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpButtons.Size = New System.Drawing.Size(252, 29)
-        Me.tlpButtons.TabIndex = 1
         '
         'cmdOK
         '
-        Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdOK.AutoSize = True
-        Me.cmdOK.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.cmdOK.AccessibleDescription = Nothing
+        Me.cmdOK.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmdOK, "cmdOK")
+        Me.cmdOK.BackgroundImage = Nothing
         Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.cmdOK.Location = New System.Drawing.Point(47, 3)
+        Me.cmdOK.Font = Nothing
         Me.cmdOK.Name = "cmdOK"
-        Me.cmdOK.Size = New System.Drawing.Size(32, 23)
-        Me.cmdOK.TabIndex = 0
-        Me.cmdOK.Text = "&OK"
         Me.cmdOK.UseVisualStyleBackColor = True
         '
         'cmdCancel
         '
-        Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdCancel.AutoSize = True
-        Me.cmdCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.cmdCancel.AccessibleDescription = Nothing
+        Me.cmdCancel.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmdCancel, "cmdCancel")
+        Me.cmdCancel.BackgroundImage = Nothing
         Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdCancel.Location = New System.Drawing.Point(164, 3)
+        Me.cmdCancel.Font = Nothing
         Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(50, 23)
-        Me.cmdCancel.TabIndex = 1
-        Me.cmdCancel.Text = "&Cancel"
         Me.cmdCancel.UseVisualStyleBackColor = True
         '
         'frmSettings
         '
         Me.AcceptButton = Me.cmdOK
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AccessibleDescription = Nothing
+        Me.AccessibleName = Nothing
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackgroundImage = Nothing
         Me.CancelButton = Me.cmdCancel
-        Me.ClientSize = New System.Drawing.Size(252, 356)
         Me.Controls.Add(Me.prgProperties)
         Me.Controls.Add(Me.tlpButtons)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Font = Nothing
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmSettings"
         Me.ShowInTaskbar = False
-        Me.Text = "Settings"
         Me.tlpButtons.ResumeLayout(False)
         Me.tlpButtons.PerformLayout()
         Me.ResumeLayout(False)

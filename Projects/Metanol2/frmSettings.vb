@@ -27,8 +27,9 @@ Friend Class frmSettings
         End Property
         ''' <summary>CTor</summary>
         Public Sub New()
-            ThumbSize = My.Settings.ThumbSize
-            Me.LargeFloating = LargeFloating
+            Me.ThumbSize = My.Settings.ThumbSize
+            Me.LargeFloating = My.Settings.LargeFloating
+            Me.TCBehavior = My.Settings.TCBehavior
         End Sub
 #Region "Properties"
         ''' <summary>Contains value of the <see cref="ThumbSize"/> property</summary>
@@ -63,11 +64,27 @@ Friend Class frmSettings
                 _LargeFloating = value
             End Set
         End Property
+        ''' <summary>Contains value of the <see cref="TCBehavior"/> property</summary>
+        Private _TCBehavior As Boolean
+        <DefaultValue(True)> _
+        <LDisplayName("Tools.Metanol.Resources", "TCBehavior_n", GetType(SettingsProxy))> _
+        <LDescription("Tools.Metanol.Resources", "TCBehavior_d", GetType(SettingsProxy))> _
+        <LCategory("Tools.Metanol.Resources", "catBehavior", GetType(SettingsProxy), "Display", LCategoryAttribute.enmLookUpOrder.ResourceOnly)> _
+        Public Property TCBehavior() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _TCBehavior
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Boolean)
+                If value <> TCBehavior Then Changed = True
+                _TCBehavior = value
+            End Set
+        End Property
 #End Region
         ''' <summary>Save proxy to setting and saves ssetting</summary>
         Public Sub Save()
             My.Settings.ThumbSize = Me.ThumbSize
             My.Settings.LargeFloating = Me.LargeFloating
+            My.Settings.TCBehavior = Me.TCBehavior
             My.Settings.Save()
         End Sub
     End Class

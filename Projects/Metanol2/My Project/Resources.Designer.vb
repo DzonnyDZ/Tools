@@ -70,6 +70,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Behavior.
+        '''</summary>
+        Friend ReadOnly Property catBehavior() As String
+            Get
+                Return ResourceManager.GetString("catBehavior", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Display.
         '''</summary>
         Friend ReadOnly Property catDisplay() As String
@@ -172,6 +181,13 @@ Namespace My.Resources
         Friend ReadOnly Property Metanol() As System.Drawing.Bitmap
             Get
                 Dim obj As Object = ResourceManager.GetObject("Metanol", resourceCulture)
+                Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        Friend ReadOnly Property MetanolBig() As System.Drawing.Bitmap
+            Get
+                Dim obj As Object = ResourceManager.GetObject("MetanolBig", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -285,6 +301,24 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to List of images behaves like that one in Total Commander.
+        '''</summary>
+        Friend ReadOnly Property TCBehavior_d() As String
+            Get
+                Return ResourceManager.GetString("TCBehavior_d", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to TC Behavior.
+        '''</summary>
+        Friend ReadOnly Property TCBehavior_n() As String
+            Get
+                Return ResourceManager.GetString("TCBehavior_n", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Size of image preview in main window.
         '''</summary>
         Friend ReadOnly Property ThumbSize_d() As String
@@ -324,6 +358,80 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Up", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        '''&lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        '''    &lt;h2&gt;Version 2.0.0.0&lt;/h2&gt;
+        '''    &lt;p class=&quot;note&quot;&gt;Initial release of Metanol 2&lt;/p&gt;
+        '''    &lt;ul&gt;
+        '''        &lt;li&gt;Version 1.x completelly reworked.&lt;/li&gt;
+        '''    &lt;/ul&gt;
+        '''&lt;/div&gt;.
+        '''</summary>
+        Friend ReadOnly Property VersionHistory_1() As String
+            Get
+                Return ResourceManager.GetString("VersionHistory_1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        '''&lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        '''    &lt;h2&gt;Version 2.0.0.16891&lt;/h2&gt;
+        '''    &lt;p class=&quot;note&quot;&gt;Maintenance release&lt;/p&gt;
+        '''    &lt;ul&gt;
+        '''        &lt;li&gt;When you change Country Code, Country name is changed as well.&lt;/li&gt;
+        '''        &lt;li&gt;When you press Alt+Left/Alt+Right the Object name text box is activated.&lt;/li&gt;
+        '''        &lt;li&gt;FIX: When you press Alt+Left/Alt+Right image is not changed&lt;/li&gt;
+        '''    &lt;/ul&gt;
+        '''    &lt;ul&gt;
+        '''        &lt;li&gt;Version 1.x completelly reworked.&lt;/li&gt;
+        '''    &lt;/ul&gt;
+        '''&lt;/div [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property VersionHistory_2() As String
+            Get
+                Return ResourceManager.GetString("VersionHistory_2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        '''&lt;div xmlns=&quot;http://www.w3.org/1999/xhtml&quot;&gt;
+        '''    &lt;h2&gt;Version 2.0.0.????&lt;/h2&gt;
+        '''    &lt;p class=&quot;note&quot;&gt;Maintenance release with added fetures&lt;/p&gt;
+        '''    &lt;ul&gt;
+        '''        &lt;li&gt;Images in preview window can be rotated by 90° steps.&lt;/li&gt;
+        '''        &lt;li&gt;You can change current image from preview window.&lt;/li&gt;
+        '''        &lt;li&gt;FIX: Save progress and error messages has wrong owner.&lt;/li&gt;
+        '''        &lt;li&gt;Merge keywords from multiple images to one.&lt;/li&gt;
+        '''        &lt;li&gt;FIX: Object reference not set when [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property VersionHistory_3() As String
+            Get
+                Return ResourceManager.GetString("VersionHistory_3", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        '''&lt;!DOCTYPE html PUBLIC &quot;-//W3C//DTD XHTML 1.1//EN&quot; &quot;http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd&quot;&gt;
+        '''&lt;html xmlns=&quot;http://www.w3.org/1999/xhtml&quot; &gt;
+        '''    &lt;head&gt;
+        '''        &lt;title&gt;Metanol version history&lt;/title&gt;
+        '''        &lt;style type=&quot;text/css&quot;&gt;
+        '''            body{color:Black; background-color:White;}
+        '''            h1{text-align:center;}
+        '''            h1,h2{font-family:Sans-Serif;font-weight:bold;}
+        '''            p.main-note{font-size:small; color:Gray; text-align:center;}
+        '''        [rest of string was truncated]&quot;;.
+        '''</summary>
+        Friend ReadOnly Property VersionHistoryEnvelope() As String
+            Get
+                Return ResourceManager.GetString("VersionHistoryEnvelope", resourceCulture)
             End Get
         End Property
         

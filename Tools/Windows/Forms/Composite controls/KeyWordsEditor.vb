@@ -393,6 +393,8 @@ Namespace WindowsT.FormsT
         Private Sub txtEdit_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles txtEdit.KeyDown
             If e.KeyCode = Keys.Return Then
                 AddKeyword()
+                e.Handled = True
+                e.SuppressKeyPress = True
             End If
         End Sub
         ''' <summary>Adds keyword from <see cref="txtEdit"/> into <see cref="lstKW"/> (it it is not there) and to <see cref="InstanceAutoCompleteChache"/> is it is not there and if it is not null</summary>
@@ -494,11 +496,20 @@ Namespace WindowsT.FormsT
                         If Max <= 32 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format("Some lines in text in clipboard are up to {0} characters long. Do you want to paste each line as keyword?", Max), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.Paste) = MsgBoxResult.Yes Then
                             Dim Comparer = StringComparer.Create(Globalization.CultureInfo.CurrentCulture, Not CaseSensitive)
                             Dim added As Boolean = False
+                            Dim addedLines As New List(Of String)
                             For Each line In Lines
                                 If Not Me.KeyWords.Contains(line, Comparer) Then _
                                     Me.KeyWords.Add(line) _
-                                    : added = True
+                                   : addedLines.Add(line)
+                                : added = True
                             Next
+                            If added Then
+                                lstKW.ClearSelected()
+                                For Each NewlyAdded In addedLines
+                                    lstKW.SelectedItems.Add(NewlyAdded)
+                                Next
+
+                            End If
                             Return added
                         End If
                     End If

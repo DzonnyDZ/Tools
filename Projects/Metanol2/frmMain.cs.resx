@@ -118,72 +118,233 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cmsMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 142</value>
+  <data name="llbLarge.Size" type="System.Drawing.Size, System.Drawing">
+    <value>33, 13</value>
   </data>
-  <data name="rmiRoR.Text" xml:space="preserve">
-    <value>Rotate right</value>
+  <data name="llbLarge.Text" xml:space="preserve">
+    <value>Velký</value>
   </data>
-  <data name="rmiRoR.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>R</value>
+  <data name="lblObjectName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>76, 13</value>
   </data>
-  <data name="tmiClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
+  <data name="lblObjectName.Text" xml:space="preserve">
+    <value>Název &amp;objektu</value>
   </data>
-  <data name="tmiPreviousImage.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Left</value>
+  <data name="txtObjectName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>76, 0</value>
   </data>
-  <data name="sepContext1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>189, 6</value>
+  <data name="lblCaption.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 13</value>
   </data>
-  <data name="&gt;&gt;tmiClose.Name" xml:space="preserve">
-    <value>tmiClose</value>
+  <data name="lblCaption.Text" xml:space="preserve">
+    <value>&amp;Text/popis</value>
   </data>
-  <data name="&gt;&gt;cmsMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="txtCaption.Size" type="System.Drawing.Size, System.Drawing">
+    <value>185, 65</value>
   </data>
-  <data name="tmiFullScreen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
+  <data name="tlpTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>188, 98</value>
   </data>
-  <data name="&gt;&gt;sepContext1.Name" xml:space="preserve">
-    <value>sepContext1</value>
+  <data name="fraTitle.Size" type="System.Drawing.Size, System.Drawing">
+    <value>191, 114</value>
   </data>
-  <data name="tmiNextImage.Text" xml:space="preserve">
-    <value>Next image</value>
+  <data name="fraTitle.Text" xml:space="preserve">
+    <value>Název</value>
   </data>
-  <data name="&gt;&gt;tmiFullScreen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblCity.Size" type="System.Drawing.Size, System.Drawing">
+    <value>36, 13</value>
   </data>
-  <data name="tmiClose.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Esc</value>
+  <data name="lblCity.Text" xml:space="preserve">
+    <value>&amp;Město</value>
   </data>
-  <data name="tmiFullScreen.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Enter</value>
+  <data name="txtCity.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 0</value>
   </data>
-  <data name="tmiFullScreen.Text" xml:space="preserve">
-    <value>Toggle full-screen</value>
+  <data name="lblCountryCode.Size" type="System.Drawing.Size, System.Drawing">
+    <value>54, 13</value>
   </data>
-  <data name="tmiRoL.Text" xml:space="preserve">
-    <value>Rotale left</value>
+  <data name="lblCountryCode.Text" xml:space="preserve">
+    <value>Kód &amp;země</value>
   </data>
-  <data name="&gt;&gt;sepContext1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="cmbCountryCode.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 20</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblCountry.Size" type="System.Drawing.Size, System.Drawing">
+    <value>34, 13</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
+  <data name="lblCountry.Text" xml:space="preserve">
+    <value>Z&amp;emě</value>
   </data>
-  <data name="tmiNextImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
+  <data name="txtCountry.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 41</value>
   </data>
-  <data name="&gt;&gt;tmiNextImage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="lblProvince.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 13</value>
   </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>284, 264</value>
+  <data name="lblProvince.Text" xml:space="preserve">
+    <value>&amp;Provincie/stát</value>
+  </data>
+  <data name="txtProvince.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 61</value>
+  </data>
+  <data name="lblSublocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 13</value>
+  </data>
+  <data name="lblSublocation.Text" xml:space="preserve">
+    <value>S&amp;ublokace</value>
+  </data>
+  <data name="txtSublocation.Location" type="System.Drawing.Point, System.Drawing">
+    <value>73, 81</value>
+  </data>
+  <data name="tlpLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>194, 101</value>
+  </data>
+  <data name="fraLocation.Size" type="System.Drawing.Size, System.Drawing">
+    <value>196, 117</value>
+  </data>
+  <data name="fraLocation.Text" xml:space="preserve">
+    <value>Umístění</value>
+  </data>
+  <data name="fraKeywords.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 0</value>
+  </data>
+  <data name="fraKeywords.Text" xml:space="preserve">
+    <value>&amp;Klíčová slova</value>
+  </data>
+  <data name="sptKeywords.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 100</value>
+  </data>
+  <data name="lblCredit.Text" xml:space="preserve">
+    <value>Kre&amp;dit</value>
+  </data>
+  <data name="fraAuthor.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 103</value>
+  </data>
+  <data name="fraAuthor.Text" xml:space="preserve">
+    <value>Autor</value>
+  </data>
+  <data name="lblEditStatus.Text" xml:space="preserve">
+    <value>Ed&amp;it status</value>
+  </data>
+  <data name="lblUrgency.Size" type="System.Drawing.Size, System.Drawing">
+    <value>48, 13</value>
+  </data>
+  <data name="lblUrgency.Text" xml:space="preserve">
+    <value>Ur&amp;gence</value>
+  </data>
+  <data name="fraStatus.Location" type="System.Drawing.Point, System.Drawing">
+    <value>196, 159</value>
+  </data>
+  <data name="tapCommon.Text" xml:space="preserve">
+    <value>Obvyklé</value>
+  </data>
+  <data name="tpbLoading.ToolTipText" xml:space="preserve">
+    <value>Načítání obrázků</value>
+  </data>
+  <data name="tslNoFiles.Size" type="System.Drawing.Size, System.Drawing">
+    <value>55, 17</value>
+  </data>
+  <data name="tslNoFiles.Text" xml:space="preserve">
+    <value>0 souborů</value>
+  </data>
+  <data name="tmiBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="tmiBrowse.Text" xml:space="preserve">
+    <value>&amp;Najít složku ...</value>
+  </data>
+  <data name="tmiGoTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="tmiGoTo.Text" xml:space="preserve">
+    <value>&amp;Jít ke složce ...</value>
+  </data>
+  <data name="tmiSaveAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="tmiSaveAll.Text" xml:space="preserve">
+    <value>&amp;Uložit vše</value>
+  </data>
+  <data name="tssFileSep1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>180, 6</value>
+  </data>
+  <data name="tmiExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>183, 22</value>
+  </data>
+  <data name="tmiExit.Text" xml:space="preserve">
+    <value>&amp;Konec</value>
+  </data>
+  <data name="tmiFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>53, 20</value>
+  </data>
+  <data name="tmiFile.Text" xml:space="preserve">
+    <value>&amp;Soubor</value>
+  </data>
+  <data name="tmiRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="tmiRefresh.Text" xml:space="preserve">
+    <value>&amp;Obnovit</value>
+  </data>
+  <data name="tmiNext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="tmiNext.Text" xml:space="preserve">
+    <value>Vybrat &amp;další</value>
+  </data>
+  <data name="tmiPrevious.Size" type="System.Drawing.Size, System.Drawing">
+    <value>202, 22</value>
+  </data>
+  <data name="tmiPrevious.Text" xml:space="preserve">
+    <value>Vybrat &amp;předchozí</value>
+  </data>
+  <data name="tmiView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>58, 20</value>
+  </data>
+  <data name="tmiView.Text" xml:space="preserve">
+    <value>Zo&amp;brazit</value>
+  </data>
+  <data name="tmiOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="tmiOptions.Text" xml:space="preserve">
+    <value>&amp;Nastavení ...</value>
+  </data>
+  <data name="tmiTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>60, 20</value>
+  </data>
+  <data name="tmiTools.Text" xml:space="preserve">
+    <value>&amp;Nástroje</value>
+  </data>
+  <data name="tmiAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="tmiAbout.Text" xml:space="preserve">
+    <value>&amp;O aplikaci ...</value>
+  </data>
+  <data name="tmiVersionHistory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>152, 22</value>
+  </data>
+  <data name="tmiVersionHistory.Text" xml:space="preserve">
+    <value>&amp;Historie verzí...</value>
+  </data>
+  <data name="tmiHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>68, 20</value>
+  </data>
+  <data name="tmiHelp.Text" xml:space="preserve">
+    <value>Nápo&amp;věda</value>
+  </data>
+  <data name="tsbBack.Text" xml:space="preserve">
+    <value>Jít zpět</value>
+  </data>
+  <data name="tsbForward.Text" xml:space="preserve">
+    <value>Jít vpřed</value>
+  </data>
+  <data name="tsbRefresh.Text" xml:space="preserve">
+    <value>Obnovit adresář</value>
+  </data>
+  <data name="tsbSaveAll.Text" xml:space="preserve">
+    <value>Uložit vše</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -504,70 +665,4 @@
         AAD/+wAA//MAAP/zAAA=
 </value>
   </data>
-  <data name="&gt;&gt;tmiNextImage.Name" xml:space="preserve">
-    <value>tmiNextImage</value>
-  </data>
-  <data name="&gt;&gt;tmiRoL.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tmiPreviousImage.Name" xml:space="preserve">
-    <value>tmiPreviousImage</value>
-  </data>
-  <data name="&gt;&gt;tmiRoL.Name" xml:space="preserve">
-    <value>tmiRoL</value>
-  </data>
-  <data name="&gt;&gt;tmiClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Preview</value>
-  </data>
-  <data name="&gt;&gt;tmiFullScreen.Name" xml:space="preserve">
-    <value>tmiFullScreen</value>
-  </data>
-  <data name="tmiRoL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="tmiPreviousImage.Text" xml:space="preserve">
-    <value>Previous image</value>
-  </data>
-  <data name="tmiNextImage.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Right</value>
-  </data>
-  <data name="&gt;&gt;cmsMenu.Name" xml:space="preserve">
-    <value>cmsMenu</value>
-  </data>
-  <data name="&gt;&gt;rmiRoR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tmiPreviousImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="tmiClose.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="&gt;&gt;rmiRoR.Name" xml:space="preserve">
-    <value>rmiRoR</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmLarge</value>
-  </data>
-  <data name="&gt;&gt;tmiPreviousImage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="rmiRoR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="tmiRoL.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>L</value>
-  </data>
-  <metadata name="cmsMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

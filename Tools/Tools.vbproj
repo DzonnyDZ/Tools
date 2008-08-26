@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -317,6 +317,12 @@
     <Compile Include="Resources\Tools\SystemResources.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
+      <DependentUpon>HTMLDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\HTMLDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
       <DependentUpon>ProgressMonitor.vb</DependentUpon>
     </Compile>
@@ -628,33 +634,40 @@
     <None Include="Resources\CommentHS.png" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
       <DependentUpon>DerivedControls.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>DerivedControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.DerivedControls.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.cs.resx">
       <DependentUpon>Dialogs.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Dialogs.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.Dialogs.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
       <DependentUpon>IPTCResources.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
       <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
       <LogicalName>Tools.DrawingT.MetadataT.IPTCResources.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.cs.resx">
       <DependentUpon>Resources.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Reflection\ObjectImages.resx">
       <CustomToolNamespace>ReflectionT</CustomToolNamespace>
@@ -667,30 +680,36 @@
     <None Include="Resources\NavForward.png" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
       <DependentUpon>Components.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Components.Designer.vb</LastGenOutput>
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.cs.resx">
       <DependentUpon>CompositeControls.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.cs.resx">
       <DependentUpon>Exceptions.resx</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Tools\Icons.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesT.Icons.Designer.vb</LastGenOutput>
       <LogicalName>Tools.ResourcesT.Icons.resources</LogicalName>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.MessageBox.bmp" />
     <None Include="Resources\Icons\Asterisk.ico" />
@@ -721,12 +740,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.cs.resx">
       <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.cs.resx">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
@@ -734,6 +756,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.cs.resx">
       <DependentUpon>AboutDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
       <DependentUpon>AboutDialog.vb</DependentUpon>
@@ -741,6 +764,11 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.cs.resx">
       <DependentUpon>EncodingDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\HTMLDialog.resx">
+      <DependentUpon>HTMLDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBox WF.resx">
       <DependentUpon>MessageBox WF.vb</DependentUpon>
@@ -748,15 +776,19 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.cs.resx">
       <DependentUpon>ProgressMonitor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.resx">
       <DependentUpon>ProgressMonitor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.resx">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />
     <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />

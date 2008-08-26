@@ -37,73 +37,85 @@ Partial Class frmLarge
         '
         'cmsMenu
         '
+        Me.cmsMenu.AccessibleDescription = Nothing
+        Me.cmsMenu.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmsMenu, "cmsMenu")
+        Me.cmsMenu.BackgroundImage = Nothing
+        Me.cmsMenu.Font = Nothing
         Me.cmsMenu.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiNextImage, Me.tmiPreviousImage, Me.tmiFullScreen, Me.tmiClose, Me.sepContext1, Me.tmiRoL, Me.rmiRoR})
         Me.cmsMenu.Name = "cmsMenu"
-        Me.cmsMenu.Size = New System.Drawing.Size(205, 164)
         '
         'tmiNextImage
         '
+        Me.tmiNextImage.AccessibleDescription = Nothing
+        Me.tmiNextImage.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiNextImage, "tmiNextImage")
+        Me.tmiNextImage.BackgroundImage = Nothing
         Me.tmiNextImage.Image = Global.Tools.Metanol.My.Resources.Resources.RightArrowHS
         Me.tmiNextImage.Name = "tmiNextImage"
-        Me.tmiNextImage.ShortcutKeyDisplayString = "Right"
-        Me.tmiNextImage.Size = New System.Drawing.Size(204, 22)
-        Me.tmiNextImage.Text = "Next image"
         '
         'tmiPreviousImage
         '
+        Me.tmiPreviousImage.AccessibleDescription = Nothing
+        Me.tmiPreviousImage.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiPreviousImage, "tmiPreviousImage")
+        Me.tmiPreviousImage.BackgroundImage = Nothing
         Me.tmiPreviousImage.Image = Global.Tools.Metanol.My.Resources.Resources.LeftArrowHS
         Me.tmiPreviousImage.Name = "tmiPreviousImage"
-        Me.tmiPreviousImage.ShortcutKeyDisplayString = "Left"
-        Me.tmiPreviousImage.Size = New System.Drawing.Size(204, 22)
-        Me.tmiPreviousImage.Text = "Previous image"
         '
         'tmiFullScreen
         '
+        Me.tmiFullScreen.AccessibleDescription = Nothing
+        Me.tmiFullScreen.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiFullScreen, "tmiFullScreen")
+        Me.tmiFullScreen.BackgroundImage = Nothing
         Me.tmiFullScreen.Image = Global.Tools.Metanol.My.Resources.Resources.FullScreen
         Me.tmiFullScreen.Name = "tmiFullScreen"
-        Me.tmiFullScreen.ShortcutKeyDisplayString = "Enter"
-        Me.tmiFullScreen.Size = New System.Drawing.Size(204, 22)
-        Me.tmiFullScreen.Text = "Toggle full-screen"
         '
         'tmiClose
         '
+        Me.tmiClose.AccessibleDescription = Nothing
+        Me.tmiClose.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiClose, "tmiClose")
+        Me.tmiClose.BackgroundImage = Nothing
         Me.tmiClose.Name = "tmiClose"
-        Me.tmiClose.ShortcutKeyDisplayString = "Esc"
-        Me.tmiClose.Size = New System.Drawing.Size(204, 22)
-        Me.tmiClose.Text = "Close"
         '
         'sepContext1
         '
+        Me.sepContext1.AccessibleDescription = Nothing
+        Me.sepContext1.AccessibleName = Nothing
+        resources.ApplyResources(Me.sepContext1, "sepContext1")
         Me.sepContext1.Name = "sepContext1"
-        Me.sepContext1.Size = New System.Drawing.Size(201, 6)
         '
         'tmiRoL
         '
+        Me.tmiRoL.AccessibleDescription = Nothing
+        Me.tmiRoL.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiRoL, "tmiRoL")
+        Me.tmiRoL.BackgroundImage = Nothing
         Me.tmiRoL.Image = Global.Tools.Metanol.My.Resources.Resources.RotateLeft
         Me.tmiRoL.Name = "tmiRoL"
-        Me.tmiRoL.ShortcutKeyDisplayString = "L"
-        Me.tmiRoL.Size = New System.Drawing.Size(204, 22)
-        Me.tmiRoL.Text = "Rotale left"
         '
         'rmiRoR
         '
+        Me.rmiRoR.AccessibleDescription = Nothing
+        Me.rmiRoR.AccessibleName = Nothing
+        resources.ApplyResources(Me.rmiRoR, "rmiRoR")
+        Me.rmiRoR.BackgroundImage = Nothing
         Me.rmiRoR.Image = Global.Tools.Metanol.My.Resources.Resources.RotateRight
         Me.rmiRoR.Name = "rmiRoR"
-        Me.rmiRoR.ShortcutKeyDisplayString = "R"
-        Me.rmiRoR.Size = New System.Drawing.Size(204, 22)
-        Me.rmiRoR.Text = "Rotate right"
         '
         'frmLarge
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AccessibleDescription = Nothing
+        Me.AccessibleName = Nothing
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.BackColor = System.Drawing.Color.Black
-        Me.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.ClientSize = New System.Drawing.Size(284, 264)
+        Me.BackgroundImage = Nothing
         Me.ContextMenuStrip = Me.cmsMenu
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Font = Nothing
         Me.Name = "frmLarge"
-        Me.Text = "Preview"
         Me.cmsMenu.ResumeLayout(False)
         Me.ResumeLayout(False)
 

@@ -19,20 +19,23 @@ Namespace DrawingT
         <FirstVersion(2008, 1, 26)> _
         Public Function ThumbSize(ByVal ImgSize As Size, ByVal ThumbBounds As Size) As Size
 #End If
-            Dim NewS As Size
+            'Dim NewS As Size
             If ImgSize.Width <= ThumbBounds.Width AndAlso ImgSize.Height <= ThumbBounds.Width Then
                 Return ImgSize
-            ElseIf ImgSize.Height > ThumbBounds.Height Then
-                NewS = New Size(ThumbBounds.Width, ImgSize.Height / (ImgSize.Width / ThumbBounds.Width))
-            Else
-                NewS = New Size(ImgSize.Width / (ImgSize.Height / ThumbBounds.Height), ThumbBounds.Height)
+            ElseIf ImgSize.Height / ThumbBounds.Height > ImgSize.Width / ThumbBounds.Width Then  'ImgSize.Height > ThumbBounds.Height AndAlso ImgSize.Width <= ThumbBounds.Width Then
+                'NewS = New Size(ThumbBounds.Width, ImgSize.Height / (ImgSize.Width / ThumbBounds.Width))
+                Return New Size(ImgSize.Width / (ImgSize.Height / ThumbBounds.Height), ThumbBounds.Height)
+            Else 'ImgSize.Width > ThumbBounds.Width AndAlso ImgSize.Height <= ThumbBounds.Height Then
+                Return New Size(ThumbBounds.Width, ImgSize.Height / (ImgSize.Width / ThumbBounds.Width))
+                'Elseif 
+                'NewS = New Size(ImgSize.Width / (ImgSize.Height / ThumbBounds.Height), ThumbBounds.Height)
             End If
-            If NewS.Width > ThumbBounds.Width Then
-                Return New Size(ThumbBounds.Width, NewS.Height / (NewS.Width / ThumbBounds.Width))
-            ElseIf NewS.Height > ImgSize.Height Then
-                Return New Size(NewS.Width / (NewS.Height / ThumbBounds.Height), ThumbBounds.Height)
-            End If
-            Return NewS
+            'If NewS.Width > ThumbBounds.Width Then
+            '    Return New Size(ThumbBounds.Width, NewS.Height / (NewS.Width / ThumbBounds.Width))
+            'ElseIf NewS.Height > ImgSize.Height Then
+            '    Return New Size(NewS.Width / (NewS.Height / ThumbBounds.Height), ThumbBounds.Height)
+            'End If
+            'Return NewS
         End Function
 #If Framework >= 3.5 Then
         ''' <summary>Gets size of image that best fits into given size and has same proportins</summary>

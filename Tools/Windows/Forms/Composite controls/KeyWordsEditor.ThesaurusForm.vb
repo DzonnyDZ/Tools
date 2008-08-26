@@ -1,6 +1,7 @@
 'Extracted
 Imports Tools.CollectionsT.GenericT, System.Windows.Forms, System.Linq
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox
+Imports Tools.WindowsT.FormsT.UtilitiesT.Misc
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then Set in Tools.vbproj
     'Stage: Alpha
@@ -9,10 +10,10 @@ Namespace WindowsT.FormsT
     Friend NotInheritable Class ThesaurusForm
         ''' <summary><see cref="KeyWordsEditor"/> this instance is for</summary>
         Private [For] As KeyWordsEditor
-        ''' <summary>Reference to auto-complete cache of currently edited <see cref="KeyWordsEditor"/></summary>
-        Private WithEvents AutoCompleteCache As ListWithEvents(Of String)
+        '''' <summary>Reference to auto-complete cache of currently edited <see cref="KeyWordsEditor"/></summary>
+        'Private WithEvents AutoCompleteCache As ListWithEvents(Of String)
         'Private BackupStable As List(Of String)
-        Private BackupChache As List(Of String)
+        'Private BackupChache As List(Of String)
         ''' <summary>CTor</summary>
         ''' <param name="For"><see cref="KeyWordsEditor"/> to be dialog for</param>
         Public Sub New(ByVal [For] As KeyWordsEditor)
@@ -20,11 +21,16 @@ Namespace WindowsT.FormsT
             Me.For = [For]
             initialize()
         End Sub
+        ''' <summary>Appended as suffix to <see cref="KeyWordsEditor.AutoCompleteCacheName"/> of <see cref="KeyWordsEditor">KeyWordsEditors</see> on this form.</summary>
+        Private CacheGuid As New Guid
         ''' <summary>Initializes form</summary>
         Private Sub Initialize()
-            kweAutoComplete.AutoCompleteCacheName = Me.For.AutoCompleteCacheName
-            kweKeys.AutoCompleteCacheName = Me.For.AutoCompleteCacheName
-            kweValues.AutoCompleteCacheName = Me.For.AutoCompleteCacheName
+            kweAutoComplete.AutoCompleteCacheName = Me.For.AutoCompleteCacheName & CacheGuid.ToString
+            kweKeys.AutoCompleteCacheName = Me.For.AutoCompleteCacheName & CacheGuid.ToString
+            kweValues.AutoCompleteCacheName = Me.For.AutoCompleteCacheName & CacheGuid.ToString
+            kweCache.AutoCompleteCacheName = Me.For.AutoCompleteCacheName & CacheGuid.ToString
+            kweCache.InstanceAutoCompleteChache.Clear()
+            kweCache.InstanceAutoCompleteChache.AddRange(Me.For.InstanceAutoCompleteChache)
             kweKeys.AutoCompleteStable = Me.For.AutoCompleteStable
             kweValues.AutoCompleteStable = Me.For.AutoCompleteStable
             splAutoComplete.Panel1.Enabled = Me.For.AutoCompleteStable IsNot Nothing
@@ -40,11 +46,13 @@ Namespace WindowsT.FormsT
                 For Each KW As String In Me.For.AutoCompleteStable
                     kweAutoComplete.KeyWords.Add(KW)
                 Next KW
+            Else
+                fraCache.Enabled = False
             End If
-            If Me.For.AutoCompleteCacheName <> "" Then
-                BackupChache = New List(Of String)(Me.For.InstanceAutoCompleteChache)
+            If Me.For.InstanceAutoCompleteChache IsNot Nothing Then
+                'BackupChache = New List(Of String)(Me.For.InstanceAutoCompleteChache)
                 ShowCache()
-                AutoCompleteCache = Me.For.InstanceAutoCompleteChache
+                'AutoCompleteCache = Me.For.InstanceAutoCompleteChache
             End If
             cmbSyn.Items.Clear()
             If Me.For.Synonyms IsNot Nothing Then
@@ -78,29 +86,31 @@ Namespace WindowsT.FormsT
         End Class
         ''' <summary>Shows content of autocomplete cache</summary>
         Private Sub ShowCache()
-            Dim sb As New System.Text.StringBuilder
-            For Each KW As String In Me.For.InstanceAutoCompleteChache
-                If sb.Length <> 0 Then sb.Append(", ")
-                sb.Append(KW)
-            Next KW
-            lblCache.Text = sb.ToString
+            'Dim sb As New System.Text.StringBuilder
+            'For Each KW As String In Me.For.InstanceAutoCompleteChache
+            '    If sb.Length <> 0 Then sb.Append(", ")
+            '    sb.Append(KW)
+            'Next KW
+            'lblCache.Text = sb.ToString
+            kweCache.KeyWords.Clear()
+            kweCache.KeyWords.AddRange(Me.For.InstanceAutoCompleteChache)
         End Sub
 
-        Private Sub AutoCompleteCache_Added_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of String), ByVal e As CollectionsT.GenericT.ListWithEvents(Of String).ItemIndexEventArgs) Handles AutoCompleteCache.Added, AutoCompleteCache.Removed
-            ShowCache()
-        End Sub
+        'Private Sub AutoCompleteCache_Added_Removed(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of String), ByVal e As CollectionsT.GenericT.ListWithEvents(Of String).ItemIndexEventArgs) Handles AutoCompleteCache.Added, AutoCompleteCache.Removed
+        '    ShowCache()
+        'End Sub
 
-        Private Sub AutoCompleteCache_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of String), ByVal e As CollectionsT.GenericT.ListWithEvents(Of String).ItemsEventArgs) Handles AutoCompleteCache.Cleared
-            ShowCache()
-        End Sub
+        'Private Sub AutoCompleteCache_Cleared(ByVal sender As CollectionsT.GenericT.ListWithEvents(Of String), ByVal e As CollectionsT.GenericT.ListWithEvents(Of String).ItemsEventArgs) Handles AutoCompleteCache.Cleared
+        '    ShowCache()
+        'End Sub
 
-        Private Sub AutoCompleteCache_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles AutoCompleteCache.Changed
-            ShowCache()
-        End Sub
+        'Private Sub AutoCompleteCache_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles AutoCompleteCache.Changed
+        '    ShowCache()
+        'End Sub
 
-        Private Sub cmdClearCache_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearCache.Click
-            If AutoCompleteCache IsNot Nothing Then AutoCompleteCache.Clear()
-        End Sub
+        'Private Sub cmdClearCache_Click(ByVal sender As System.Object, ByVal e As System.EventArgs)
+        '    If AutoCompleteCache IsNot Nothing Then AutoCompleteCache.Clear()
+        'End Sub
         ''' <summary>Previosly selected item in <see cref="cmbSyn"/></summary>
         Private OldItem As SynProxy = Nothing
         Private Sub cmbSyn_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmbSyn.SelectedIndexChanged
@@ -189,6 +199,7 @@ Namespace WindowsT.FormsT
 
         Private Sub cmdOK_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdOK.Click
             PerformOK()
+            Me.DialogResult = Windows.Forms.DialogResult.OK
             Me.Close()
         End Sub
         Private Sub PerformOK()
@@ -200,11 +211,32 @@ Namespace WindowsT.FormsT
                     Me.For.Synonyms.Add(Syn.Syns)
                 Next Syn
             End If
+            'Store stable autocomplete list
             If Me.For.AutoCompleteStable IsNot Nothing Then
-                Me.For.AutoCompleteStable.Clear()
+                'Me.For.AutoCompleteStable.Clear()
                 For Each Stable As String In kweAutoComplete.KeyWords
-                    Me.For.AutoCompleteStable.Add(Stable)
+                    If Not Me.For.AutoCompleteStable.Contains(Stable) Then Me.For.AutoCompleteStable.Add(Stable)
                 Next Stable
+                Dim toRemove As New List(Of String)
+                For Each stable As String In Me.For.AutoCompleteStable
+                    If Not kweAutoComplete.KeyWords.Contains(stable) Then ToRemove.add(stable)
+                Next
+                For Each item As String In toRemove
+                    Me.For.AutoCompleteStable.Remove(item)
+                Next
+            End If
+            'Store cache
+            If Me.For.InstanceAutoCompleteChache IsNot Nothing Then
+                For Each Cache In kweCache.KeyWords
+                    If Not Me.For.InstanceAutoCompleteChache.Contains(Cache) Then Me.For.InstanceAutoCompleteChache.Add(Cache)
+                Next
+                Dim toRemove As New List(Of String)
+                For Each Cache In Me.For.InstanceAutoCompleteChache
+                    If Not kweCache.KeyWords.Contains(Cache) Then toRemove.Add(Cache)
+                Next
+                For Each item As String In toRemove
+                    Me.For.InstanceAutoCompleteChache.Remove(item)
+                Next
             End If
         End Sub
 
@@ -216,14 +248,15 @@ Namespace WindowsT.FormsT
             '        Me.For.AutoCompleteStable.Add(Backup)
             '    Next Backup
             'End If
-            If Me.For.InstanceAutoCompleteChache IsNot Nothing Then
-                With Me.For.InstanceAutoCompleteChache
-                    .Clear()
-                    For Each Backup As String In BackupChache
-                        .Add(Backup)
-                    Next Backup
-                End With
-            End If
+            'If Me.For.InstanceAutoCompleteChache IsNot Nothing Then
+            '    With Me.For.InstanceAutoCompleteChache
+            '        .Clear()
+            '        For Each Backup As String In BackupChache
+            '            .Add(Backup)
+            '        Next Backup
+            '    End With
+            'End If
+            Me.DialogResult = Windows.Forms.DialogResult.Cancel
             Me.Close()
         End Sub
 
@@ -259,6 +292,25 @@ Retry:          Try
                     Next Syn
                     If cmbSyn.Items.Count > 0 Then cmbSyn.SelectedIndex = 0
                 End If
+            End If
+        End Sub
+
+        Private Sub ThesaurusForm_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles MyBase.KeyDown
+            If Not e.Handled AndAlso e.KeyData = Keys.Enter Then
+                Dim ActiveControl = Me.FindActiveControl
+                If ActiveControl Is Nothing OrElse (Not TypeOf ActiveControl Is TextBox AndAlso Not TypeOf ActiveControl Is ComboBox) OrElse ((TypeOf ActiveControl Is TextBox OrElse TypeOf ActiveControl Is ComboBox) AndAlso ActiveControl.Text = "") OrElse (TypeOf ActiveControl Is ComboBox AndAlso DirectCast(ActiveControl, ComboBox).DropDownStyle = ComboBoxStyle.DropDownList) Then
+                    cmdOK_Click(cmdOK, e)
+                    e.Handled = True
+                    e.SuppressKeyPress = True
+                End If
+            End If
+        End Sub
+
+        Private Sub cmbSyn_KeyDown(ByVal sender As System.Object, ByVal e As System.Windows.Forms.KeyEventArgs) Handles cmbSyn.KeyDown
+            If e.KeyData = Keys.Return Then
+                cmdAddSyn_Click(cmdAddSyn, e)
+                e.Handled = True
+                e.SuppressKeyPress = True
             End If
         End Sub
     End Class

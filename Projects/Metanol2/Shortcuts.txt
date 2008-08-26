@@ -17,9 +17,21 @@ Main - in folder list only
 --------------------------
 Backspace       Go up
 
-Main - in image list only
--------------------------
+Main - in image list when in TC mode only
+-----------------------------------------
 Ctrl+A          Select all
+Space           Toggle selection of focused item
+Insert          Toggle selection of focused item and move to next
+Shift+Insert    Toggle selection of focused item and move to previous
+Left            Focus previous item
+Right           Focus next item
+Up              Focus item up
+Down            Focus item down
+PageUp          Focus item page up
+PageDown        Focus item page down
+Home            Focus first item
+End             Focus last item
+*               Toggle selection of all items
 
 Preview
 =======
@@ -30,5 +42,9 @@ Esc             Close
 L               Rotate left
 R               Rotate right
 
-KeyWordsEditor
-==============
+KeyWordsEditor (keyword list)
+============== --------------
+Ctrl+C          Copy selected keywords
+Ctrl+X          Cut selected keywords
+Ctrl+V          Paste
+Del             Delete selected keywords

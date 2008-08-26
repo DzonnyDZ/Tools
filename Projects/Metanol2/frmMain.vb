@@ -4,6 +4,7 @@ Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT, Tools, Tools.ReflectionT
+Imports <xmlns="http://www.w3.org/1999/xhtml">
 ''' <summary>Main form</summary>
 Public Class frmMain
     ''' <summary>Imake gey of ... item</summary>
@@ -248,6 +249,7 @@ Public Class frmMain
         Me.panImage.Height = My.Settings.PreviewHeight
         Me.fraKeywords.Height = My.Settings.KeywordsHeight
         Me.fraTitle.Height = My.Settings.TextHeight
+        Me.lvwImages.TCBehaviour = My.Settings.TCBehavior
         ToolStripManager.LoadSettings(Me, "tosMain")
         Me.tosMain.Visible = True
         Me.stsStatus.Visible = True
@@ -272,6 +274,9 @@ Public Class frmMain
                 Dim img As New Bitmap(path)
                 Dim thimg = img.GetThumbnail(My.Settings.ThumbSize, Color.Transparent, Function() sender.CancellationPending)
                 bgwImages.ReportProgress(i / Paths.Count * 100, New Pair(Of String, Image)(System.IO.Path.GetFileName(path), thimg))
+            Catch ex As Runtime.InteropServices.ExternalException
+                If bgwImages.CancellationPending Then e.Cancel = True : Exit Sub _
+                Else Throw
             Catch
                 Try
                     Dim icon = IOt.FileTystemTools.GetIcon(path, True).ToBitmap
@@ -406,6 +411,8 @@ Public Class frmMain
                 Large.Close()
                 ShowLarge()
             End If
+            If lvwImages.TCBehaviour <> My.Settings.TCBehavior Then _
+                lvwImages.TCBehaviour = My.Settings.TCBehavior
         End If
     End Sub
 
@@ -419,25 +426,18 @@ Public Class frmMain
         Next
     End Sub
 
+    Private Sub lvwImages_AfterSelectionChange(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwImages.AfterSelectionChange
+        ResumeUpdate()
+    End Sub
+
+    Private Sub lvwImages_BeforeSelectionChange(ByVal sender As Object, ByVal e As System.EventArgs) Handles lvwImages.BeforeSelectionChange
+        SuspendUpdate()
+    End Sub
+
     Private Sub lvwImages_DrawItem(ByVal sender As ListView, ByVal e As System.Windows.Forms.DrawListViewItemEventArgs) Handles lvwImages.DrawItem
         Dim item As MetadataItem = e.Item
         item.Draw(e)
     End Sub
-
-
-    Private Sub lvwImages_KeyDown(ByVal sender As ListView, ByVal e As System.Windows.Forms.KeyEventArgs) Handles lvwImages.KeyDown
-        If e.Control AndAlso e.KeyCode = Keys.A AndAlso Not e.Shift AndAlso Not e.Alt Then
-            SuspendUpdate()
-            Try
-                For Each item In sender.Items.AsTypeSafe
-                    item.Selected = True
-                Next
-            Finally
-                ResumeUpdate()
-            End Try
-        End If
-    End Sub
-
     Private Sub lvwImages_SelectedIndexChanged(ByVal sender As ListView, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
         ' DoSelectedImageChanged() moved to lvwImages_ItemSelectionChanged
     End Sub
@@ -705,16 +705,18 @@ Public Class frmMain
                     Dim currKws = currentitem.Keywords
                     If SelectedMetadata.Count = 1 OrElse Not kweKeywords.Merge Then
                         'Do not make unnecessary changes
-                        If (currKws Is Nothing AndAlso kweKeywords.KeyWords.Count <> 0) OrElse (currKws.Length <> kweKeywords.KeyWords.Count) Then
+                        If (currKws Is Nothing AndAlso kweKeywords.KeyWords.Count <> 0) OrElse (currKws IsNot Nothing AndAlso currKws.Length <> kweKeywords.KeyWords.Count) Then
                             currentitem.Keywords = kweKeywords.KeyWords.ToArray
                         Else
                             Dim diffFound As Boolean = False
-                            For Each currentKeyword In currKws
-                                If Not kweKeywords.KeyWords.Contains(currentKeyword, ctc) Then diffFound = True : Exit For
-                            Next
+                            If currKws IsNot Nothing Then
+                                For Each currentKeyword In currKws
+                                    If Not kweKeywords.KeyWords.Contains(currentKeyword, ctc) Then diffFound = True : Exit For
+                                Next
+                            End If
                             If Not diffFound Then
                                 For Each editorKeyword In kweKeywords.KeyWords
-                                    If Not currKws.Contains(editorKeyword, ctc) Then diffFound = True : Exit For
+                                    If currKws Is Nothing OrElse Not currKws.Contains(editorKeyword, ctc) Then diffFound = True : Exit For
                                 Next
                             End If
                             If diffFound Then _
@@ -961,8 +963,8 @@ Retry:              item.Save()
 
     Private Sub cmsImages_Opening(ByVal sender As ContextMenuStrip, ByVal e As System.ComponentModel.CancelEventArgs) Handles cmsImages.Opening
         tmiMerge.Visible = MergeKeywordsPossible
-        If sender.Items.AsTypeSafe.FirstOrDefault(Function(i As ToolStripMenuItem) i.Visible) Is Nothing Then _
-            e.Cancel = True : Exit Sub
+        'If sender.Items.AsTypeSafe.FirstOrDefault(Function(i As ToolStripMenuItem) i.Visible) Is Nothing Then _
+        '    e.Cancel = True : Exit Sub
     End Sub
     Private ReadOnly Property MergeKeywordsPossible() As Boolean
         Get
@@ -976,14 +978,44 @@ Retry:              item.Save()
 
     Private Sub tmiMerge_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles tmiMerge.Click
         If Not MergeKeywordsPossible Then
-            MBox.MsgBox(My.Resources.WhyIsNotMergePossible, MsgBoxStyle.Information,My.Resources.Error_")
+            MBox.MsgBox(My.Resources.WhyIsNotMergePossible, MsgBoxStyle.Information, My.Resources.Error_)
             Exit Sub
         End If
-        Dim newKw = LinqT.EnumerableT.FlatDistinct(Of String)((From i As MetadataItem In lvwImages.SelectedItems Where Not i.Focused AndAlso i.IPTCContains AndAlso i.IPTC.Keywords IsNot Nothing Select i.IPTC.Keywords))
+        Dim newKw = (From i As MetadataItem In lvwImages.SelectedItems Where Not i.Focused AndAlso i.IPTCContains AndAlso i.IPTC.Keywords IsNot Nothing Select DirectCast(i.IPTC.Keywords, IEnumerable(Of String))).FlatDistinct
         With DirectCast(lvwImages.FocusedItem, MetadataItem)
             If .IPTC.Keywords IsNot Nothing Then newKw = newKw.Union(.IPTC.Keywords)
             .IPTC.Keywords = newKw.ToArray
+            SuspendUpdate()
+            Try
+                For Each src In From Selected As MetadataItem In lvwImages.SelectedItems Where Not Selected.Focused
+                    src.Selected = False
+                Next
+            Finally
+                ResumeUpdate()
+            End Try
+            .EnsureVisible()
         End With
+        kweKeywords.Focus()
+    End Sub
+
+    Private Sub tmiVersionHistory_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiVersionHistory.Click
+        Dim d = XDocument.Parse(My.Resources.VersionHistoryEnvelope)
+        Dim div = (From el In d.<html>.<body>.<div> Where el.@id = "history").First
+        Dim i As Integer = 1
+        Dim CurrentString$
+        Do
+            Currentstring = Nothing
+            'Try
+            CurrentString = My.Resources.Resources.ResourceManager.GetString(String.Format("VersionHistory_{0}", i))
+            'Catch ex As Exception
+            'End Try
+            If CurrentString IsNot Nothing Then
+                Dim CurrentXml = XDocument.Parse(CurrentString)
+                div.AddFirst(CurrentXml.<div>.First)
+            End If
+            i += 1
+        Loop While CurrentString IsNot Nothing
+        HTMLDialog.ShowModal(d.ToString, Me)
     End Sub
 End Class
 

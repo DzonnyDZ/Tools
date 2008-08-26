@@ -91,6 +91,24 @@ Namespace WindowsT.FormsT.UtilitiesT
             tlp.SetRowSpan(NewControl, RowSpan)
             NewControl.TabIndex = TabIndex
         End Sub
+
+        ''' <summary>Recursivelly searches for innermost focused control placed on given control</summary>
+        ''' <param name="Control">Control to serach for child of</param>
+        ''' <param name="DoNotExpand">Optional. Call back function delegate. The function returns true for controls that should be treated as controls withoud child controls. If such control contains has or focus it is returned. This ¨function is called for <paramref name="Control"/> (passed in paramater) as well.</param>
+        ''' <returns>The inner most control that contain focus. Null when there is no such control and <paramref name="Control"/> also has not focus.</returns>
+        <Extension()> Public Function FindActiveControl(ByVal Control As Control, Optional ByVal DoNotExpand As Func(Of Control, Boolean) = Nothing) As Control
+            If DoNotExpand Is Nothing Then DoNotExpand = Function(c As Control) False
+            If Not DoNotExpand(Control) Then
+                For Each iControl As Control In Control.Controls
+                    If iControl.ContainsFocus AndAlso Not DoNotExpand(iControl) Then
+                        Return iControl.FindActiveControl
+                    ElseIf iControl.Focused OrElse iControl.ContainsFocus Then
+                        Return iControl
+                    End If
+                Next
+            End If
+            If Control.Focused OrElse Control.ContainsFocus Then Return Control Else Return Nothing
+        End Function
     End Module
 #End If
 End Namespace

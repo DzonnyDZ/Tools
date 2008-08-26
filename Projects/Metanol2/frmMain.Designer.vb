@@ -28,7 +28,7 @@ Partial Class frmMain
         Me.splBrowser = New System.Windows.Forms.SplitContainer
         Me.lvwFolders = New System.Windows.Forms.ListView
         Me.imlFolders = New System.Windows.Forms.ImageList(Me.components)
-        Me.lvwImages = New System.Windows.Forms.ListView
+        Me.lvwImages = New Tools.Metanol.TotalCommanderListView
         Me.cmsImages = New System.Windows.Forms.ContextMenuStrip(Me.components)
         Me.tmiMerge = New System.Windows.Forms.ToolStripMenuItem
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
@@ -77,7 +77,6 @@ Partial Class frmMain
         Me.tapIPTC = New System.Windows.Forms.TabPage
         Me.prgIPTC = New System.Windows.Forms.PropertyGrid
         Me.tapExif = New System.Windows.Forms.TabPage
-        Me.bgwImages = New System.ComponentModel.BackgroundWorker
         Me.tscMain = New System.Windows.Forms.ToolStripContainer
         Me.stsStatus = New System.Windows.Forms.StatusStrip
         Me.tpbLoading = New System.Windows.Forms.ToolStripProgressBar
@@ -98,11 +97,13 @@ Partial Class frmMain
         Me.tmiOptions = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiHelp = New System.Windows.Forms.ToolStripMenuItem
         Me.tmiAbout = New System.Windows.Forms.ToolStripMenuItem
+        Me.tmiVersionHistory = New System.Windows.Forms.ToolStripMenuItem
         Me.tosMain = New System.Windows.Forms.ToolStrip
         Me.tsbBack = New System.Windows.Forms.ToolStripButton
         Me.tsbForward = New System.Windows.Forms.ToolStripButton
         Me.tsbRefresh = New System.Windows.Forms.ToolStripButton
         Me.tsbSaveAll = New System.Windows.Forms.ToolStripButton
+        Me.bgwImages = New System.ComponentModel.BackgroundWorker
         Me.fbdGoTo = New System.Windows.Forms.FolderBrowserDialog
         Me.bgwSave = New System.ComponentModel.BackgroundWorker
         Me.splMain.Panel1.SuspendLayout()
@@ -139,51 +140,70 @@ Partial Class frmMain
         '
         'splMain
         '
-        Me.splMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.splMain.Location = New System.Drawing.Point(0, 0)
+        Me.splMain.AccessibleDescription = Nothing
+        Me.splMain.AccessibleName = Nothing
+        resources.ApplyResources(Me.splMain, "splMain")
+        Me.splMain.BackgroundImage = Nothing
+        Me.splMain.Font = Nothing
         Me.splMain.Name = "splMain"
         '
         'splMain.Panel1
         '
+        Me.splMain.Panel1.AccessibleDescription = Nothing
+        Me.splMain.Panel1.AccessibleName = Nothing
+        resources.ApplyResources(Me.splMain.Panel1, "splMain.Panel1")
+        Me.splMain.Panel1.BackgroundImage = Nothing
         Me.splMain.Panel1.Controls.Add(Me.splBrowser)
+        Me.splMain.Panel1.Font = Nothing
         '
         'splMain.Panel2
         '
+        Me.splMain.Panel2.AccessibleDescription = Nothing
+        Me.splMain.Panel2.AccessibleName = Nothing
+        resources.ApplyResources(Me.splMain.Panel2, "splMain.Panel2")
+        Me.splMain.Panel2.BackgroundImage = Nothing
         Me.splMain.Panel2.Controls.Add(Me.tabInfo)
-        Me.splMain.Panel2.Enabled = False
-        Me.splMain.Size = New System.Drawing.Size(720, 425)
-        Me.splMain.SplitterDistance = 231
-        Me.splMain.TabIndex = 0
+        Me.splMain.Panel2.Font = Nothing
         Me.splMain.TabStop = False
         '
         'splBrowser
         '
-        Me.splBrowser.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.splBrowser.Location = New System.Drawing.Point(0, 0)
+        Me.splBrowser.AccessibleDescription = Nothing
+        Me.splBrowser.AccessibleName = Nothing
+        resources.ApplyResources(Me.splBrowser, "splBrowser")
+        Me.splBrowser.BackgroundImage = Nothing
+        Me.splBrowser.Font = Nothing
         Me.splBrowser.Name = "splBrowser"
-        Me.splBrowser.Orientation = System.Windows.Forms.Orientation.Horizontal
         '
         'splBrowser.Panel1
         '
+        Me.splBrowser.Panel1.AccessibleDescription = Nothing
+        Me.splBrowser.Panel1.AccessibleName = Nothing
+        resources.ApplyResources(Me.splBrowser.Panel1, "splBrowser.Panel1")
+        Me.splBrowser.Panel1.BackgroundImage = Nothing
         Me.splBrowser.Panel1.Controls.Add(Me.lvwFolders)
+        Me.splBrowser.Panel1.Font = Nothing
         '
         'splBrowser.Panel2
         '
+        Me.splBrowser.Panel2.AccessibleDescription = Nothing
+        Me.splBrowser.Panel2.AccessibleName = Nothing
+        resources.ApplyResources(Me.splBrowser.Panel2, "splBrowser.Panel2")
+        Me.splBrowser.Panel2.BackgroundImage = Nothing
         Me.splBrowser.Panel2.Controls.Add(Me.lvwImages)
-        Me.splBrowser.Size = New System.Drawing.Size(231, 425)
-        Me.splBrowser.SplitterDistance = 143
-        Me.splBrowser.TabIndex = 0
+        Me.splBrowser.Panel2.Font = Nothing
         Me.splBrowser.TabStop = False
         '
         'lvwFolders
         '
-        Me.lvwFolders.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.lvwFolders.Location = New System.Drawing.Point(0, 0)
+        Me.lvwFolders.AccessibleDescription = Nothing
+        Me.lvwFolders.AccessibleName = Nothing
+        resources.ApplyResources(Me.lvwFolders, "lvwFolders")
+        Me.lvwFolders.BackgroundImage = Nothing
+        Me.lvwFolders.Font = Nothing
         Me.lvwFolders.MultiSelect = False
         Me.lvwFolders.Name = "lvwFolders"
-        Me.lvwFolders.Size = New System.Drawing.Size(231, 143)
         Me.lvwFolders.SmallImageList = Me.imlFolders
-        Me.lvwFolders.TabIndex = 2
         Me.lvwFolders.TabStop = False
         Me.lvwFolders.UseCompatibleStateImageBehavior = False
         Me.lvwFolders.View = System.Windows.Forms.View.List
@@ -191,68 +211,81 @@ Partial Class frmMain
         'imlFolders
         '
         Me.imlFolders.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit
-        Me.imlFolders.ImageSize = New System.Drawing.Size(16, 16)
+        resources.ApplyResources(Me.imlFolders, "imlFolders")
         Me.imlFolders.TransparentColor = System.Drawing.Color.Transparent
         '
         'lvwImages
         '
+        Me.lvwImages.AccessibleDescription = Nothing
+        Me.lvwImages.AccessibleName = Nothing
+        resources.ApplyResources(Me.lvwImages, "lvwImages")
+        Me.lvwImages.BackgroundImage = Nothing
         Me.lvwImages.ContextMenuStrip = Me.cmsImages
-        Me.lvwImages.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.lvwImages.Font = Nothing
         Me.lvwImages.HideSelection = False
         Me.lvwImages.LargeImageList = Me.imlImages
-        Me.lvwImages.Location = New System.Drawing.Point(0, 0)
         Me.lvwImages.Name = "lvwImages"
         Me.lvwImages.OwnerDraw = True
         Me.lvwImages.ShowItemToolTips = True
-        Me.lvwImages.Size = New System.Drawing.Size(231, 278)
-        Me.lvwImages.TabIndex = 0
         Me.lvwImages.TabStop = False
         Me.lvwImages.UseCompatibleStateImageBehavior = False
         '
         'cmsImages
         '
+        Me.cmsImages.AccessibleDescription = Nothing
+        Me.cmsImages.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmsImages, "cmsImages")
+        Me.cmsImages.BackgroundImage = Nothing
+        Me.cmsImages.Font = Nothing
         Me.cmsImages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiMerge})
         Me.cmsImages.Name = "cmsImages"
-        Me.cmsImages.Size = New System.Drawing.Size(162, 48)
         '
         'tmiMerge
         '
+        Me.tmiMerge.AccessibleDescription = Nothing
+        Me.tmiMerge.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiMerge, "tmiMerge")
+        Me.tmiMerge.BackgroundImage = Nothing
         Me.tmiMerge.Name = "tmiMerge"
-        Me.tmiMerge.Size = New System.Drawing.Size(161, 22)
-        Me.tmiMerge.Text = "Merge keywords"
+        Me.tmiMerge.ShortcutKeyDisplayString = Nothing
         '
         'imlImages
         '
         Me.imlImages.ColorDepth = System.Windows.Forms.ColorDepth.Depth32Bit
-        Me.imlImages.ImageSize = New System.Drawing.Size(16, 16)
+        resources.ApplyResources(Me.imlImages, "imlImages")
         Me.imlImages.TransparentColor = System.Drawing.Color.Transparent
         '
         'tabInfo
         '
+        Me.tabInfo.AccessibleDescription = Nothing
+        Me.tabInfo.AccessibleName = Nothing
+        resources.ApplyResources(Me.tabInfo, "tabInfo")
+        Me.tabInfo.BackgroundImage = Nothing
         Me.tabInfo.Controls.Add(Me.tapCommon)
         Me.tabInfo.Controls.Add(Me.tapIPTC)
         Me.tabInfo.Controls.Add(Me.tapExif)
-        Me.tabInfo.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tabInfo.Location = New System.Drawing.Point(0, 0)
+        Me.tabInfo.Font = Nothing
         Me.tabInfo.Name = "tabInfo"
         Me.tabInfo.SelectedIndex = 0
-        Me.tabInfo.Size = New System.Drawing.Size(485, 425)
-        Me.tabInfo.TabIndex = 0
         Me.tabInfo.TabStop = False
         '
         'tapCommon
         '
+        Me.tapCommon.AccessibleDescription = Nothing
+        Me.tapCommon.AccessibleName = Nothing
+        resources.ApplyResources(Me.tapCommon, "tapCommon")
+        Me.tapCommon.BackgroundImage = Nothing
         Me.tapCommon.Controls.Add(Me.flpCommon)
-        Me.tapCommon.Location = New System.Drawing.Point(4, 22)
+        Me.tapCommon.Font = Nothing
         Me.tapCommon.Name = "tapCommon"
-        Me.tapCommon.Padding = New System.Windows.Forms.Padding(3)
-        Me.tapCommon.Size = New System.Drawing.Size(477, 399)
-        Me.tapCommon.TabIndex = 0
-        Me.tapCommon.Text = "Common"
         Me.tapCommon.UseVisualStyleBackColor = True
         '
         'flpCommon
         '
+        Me.flpCommon.AccessibleDescription = Nothing
+        Me.flpCommon.AccessibleName = Nothing
+        resources.ApplyResources(Me.flpCommon, "flpCommon")
+        Me.flpCommon.BackgroundImage = Nothing
         Me.flpCommon.Controls.Add(Me.panImage)
         Me.flpCommon.Controls.Add(Me.sptImage)
         Me.flpCommon.Controls.Add(Me.fraTitle)
@@ -262,193 +295,156 @@ Partial Class frmMain
         Me.flpCommon.Controls.Add(Me.sptKeywords)
         Me.flpCommon.Controls.Add(Me.fraAuthor)
         Me.flpCommon.Controls.Add(Me.fraStatus)
-        Me.flpCommon.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.flpCommon.FlowDirection = System.Windows.Forms.FlowDirection.TopDown
-        Me.flpCommon.Location = New System.Drawing.Point(3, 3)
-        Me.flpCommon.Margin = New System.Windows.Forms.Padding(0)
+        Me.flpCommon.Font = Nothing
         Me.flpCommon.Name = "flpCommon"
-        Me.flpCommon.Size = New System.Drawing.Size(471, 393)
-        Me.flpCommon.TabIndex = 0
         '
         'panImage
         '
+        Me.panImage.AccessibleDescription = Nothing
+        Me.panImage.AccessibleName = Nothing
+        resources.ApplyResources(Me.panImage, "panImage")
+        Me.panImage.BackgroundImage = Nothing
         Me.panImage.Controls.Add(Me.picPreview)
         Me.panImage.Controls.Add(Me.llbLarge)
         Me.panImage.Controls.Add(Me.cmdErrInfo)
-        Me.panImage.Location = New System.Drawing.Point(0, 0)
-        Me.panImage.Margin = New System.Windows.Forms.Padding(0)
+        Me.panImage.Font = Nothing
         Me.panImage.MinimumSize = New System.Drawing.Size(0, 32)
         Me.panImage.Name = "panImage"
-        Me.panImage.Size = New System.Drawing.Size(157, 100)
-        Me.panImage.TabIndex = 0
         '
         'picPreview
         '
-        Me.picPreview.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.picPreview.AccessibleDescription = Nothing
+        Me.picPreview.AccessibleName = Nothing
+        resources.ApplyResources(Me.picPreview, "picPreview")
+        Me.picPreview.BackgroundImage = Nothing
+        Me.picPreview.Font = Nothing
+        Me.picPreview.ImageLocation = Nothing
         Me.picPreview.InitialImage = Global.Tools.Metanol.My.Resources.Resources.Metanol
-        Me.picPreview.Location = New System.Drawing.Point(0, 0)
-        Me.picPreview.Margin = New System.Windows.Forms.Padding(0)
         Me.picPreview.Name = "picPreview"
-        Me.picPreview.Size = New System.Drawing.Size(157, 100)
-        Me.picPreview.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
-        Me.picPreview.TabIndex = 2
         Me.picPreview.TabStop = False
         '
         'llbLarge
         '
-        Me.llbLarge.Anchor = CType((System.Windows.Forms.AnchorStyles.Bottom Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.llbLarge.AutoSize = True
-        Me.llbLarge.Location = New System.Drawing.Point(123, 87)
+        Me.llbLarge.AccessibleDescription = Nothing
+        Me.llbLarge.AccessibleName = Nothing
+        resources.ApplyResources(Me.llbLarge, "llbLarge")
+        Me.llbLarge.Font = Nothing
         Me.llbLarge.Name = "llbLarge"
-        Me.llbLarge.Size = New System.Drawing.Size(34, 13)
-        Me.llbLarge.TabIndex = 0
         Me.llbLarge.TabStop = True
-        Me.llbLarge.Text = "Large"
         '
         'cmdErrInfo
         '
-        Me.cmdErrInfo.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom
-        Me.cmdErrInfo.Dock = System.Windows.Forms.DockStyle.Fill
+        Me.cmdErrInfo.AccessibleDescription = Nothing
+        Me.cmdErrInfo.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmdErrInfo, "cmdErrInfo")
+        Me.cmdErrInfo.BackgroundImage = Nothing
         Me.cmdErrInfo.FlatAppearance.BorderSize = 0
-        Me.cmdErrInfo.FlatStyle = System.Windows.Forms.FlatStyle.Flat
+        Me.cmdErrInfo.Font = Nothing
         Me.cmdErrInfo.Image = Global.Tools.Metanol.My.Resources.Resources.Symbol_Delete
-        Me.cmdErrInfo.ImageAlign = System.Drawing.ContentAlignment.TopLeft
-        Me.cmdErrInfo.Location = New System.Drawing.Point(0, 0)
-        Me.cmdErrInfo.Margin = New System.Windows.Forms.Padding(0)
         Me.cmdErrInfo.Name = "cmdErrInfo"
-        Me.cmdErrInfo.Size = New System.Drawing.Size(157, 100)
-        Me.cmdErrInfo.TabIndex = 1
         Me.cmdErrInfo.TabStop = False
-        Me.cmdErrInfo.TextAlign = System.Drawing.ContentAlignment.TopLeft
-        Me.cmdErrInfo.TextImageRelation = System.Windows.Forms.TextImageRelation.ImageBeforeText
         Me.cmdErrInfo.UseVisualStyleBackColor = True
-        Me.cmdErrInfo.Visible = False
         '
         'sptImage
         '
+        Me.sptImage.AccessibleDescription = Nothing
+        Me.sptImage.AccessibleName = Nothing
+        resources.ApplyResources(Me.sptImage, "sptImage")
+        Me.sptImage.BackgroundImage = Nothing
         Me.sptImage.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptImage.Location = New System.Drawing.Point(0, 100)
-        Me.sptImage.Margin = New System.Windows.Forms.Padding(0)
+        Me.sptImage.Font = Nothing
         Me.sptImage.Name = "sptImage"
-        Me.sptImage.Size = New System.Drawing.Size(3, 3)
-        Me.sptImage.TabIndex = 1
         Me.sptImage.TabStop = False
         '
         'fraTitle
         '
-        Me.fraTitle.AutoSize = True
-        Me.fraTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.fraTitle.AccessibleDescription = Nothing
+        Me.fraTitle.AccessibleName = Nothing
+        resources.ApplyResources(Me.fraTitle, "fraTitle")
+        Me.fraTitle.BackgroundImage = Nothing
         Me.fraTitle.Controls.Add(Me.tlpTitle)
-        Me.fraTitle.Location = New System.Drawing.Point(0, 103)
-        Me.fraTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraTitle.Font = Nothing
         Me.fraTitle.MinimumSize = New System.Drawing.Size(0, 100)
         Me.fraTitle.Name = "fraTitle"
-        Me.fraTitle.Padding = New System.Windows.Forms.Padding(0, 0, 3, 3)
-        Me.fraTitle.Size = New System.Drawing.Size(182, 114)
-        Me.fraTitle.TabIndex = 2
         Me.fraTitle.TabStop = False
-        Me.fraTitle.Text = "Title"
         '
         'tlpTitle
         '
-        Me.tlpTitle.AutoSize = True
-        Me.tlpTitle.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpTitle.ColumnCount = 2
-        Me.tlpTitle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpTitle.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpTitle.AccessibleDescription = Nothing
+        Me.tlpTitle.AccessibleName = Nothing
+        resources.ApplyResources(Me.tlpTitle, "tlpTitle")
+        Me.tlpTitle.BackgroundImage = Nothing
         Me.tlpTitle.Controls.Add(Me.lblObjectName, 0, 0)
         Me.tlpTitle.Controls.Add(Me.txtObjectName, 1, 0)
         Me.tlpTitle.Controls.Add(Me.lblCaption, 0, 1)
         Me.tlpTitle.Controls.Add(Me.txtCaption, 0, 2)
-        Me.tlpTitle.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpTitle.Location = New System.Drawing.Point(0, 13)
-        Me.tlpTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.tlpTitle.Font = Nothing
         Me.tlpTitle.Name = "tlpTitle"
-        Me.tlpTitle.RowCount = 3
-        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpTitle.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.tlpTitle.Size = New System.Drawing.Size(179, 98)
-        Me.tlpTitle.TabIndex = 1
         '
         'lblObjectName
         '
-        Me.lblObjectName.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblObjectName.AutoSize = True
-        Me.lblObjectName.Location = New System.Drawing.Point(0, 3)
-        Me.lblObjectName.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblObjectName.AccessibleDescription = Nothing
+        Me.lblObjectName.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblObjectName, "lblObjectName")
+        Me.lblObjectName.Font = Nothing
         Me.lblObjectName.Name = "lblObjectName"
-        Me.lblObjectName.Size = New System.Drawing.Size(67, 13)
-        Me.lblObjectName.TabIndex = 0
-        Me.lblObjectName.Text = "Object &name"
         '
         'txtObjectName
         '
-        Me.txtObjectName.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtObjectName.Location = New System.Drawing.Point(67, 0)
-        Me.txtObjectName.Margin = New System.Windows.Forms.Padding(0)
+        Me.txtObjectName.AccessibleDescription = Nothing
+        Me.txtObjectName.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtObjectName, "txtObjectName")
+        Me.txtObjectName.BackgroundImage = Nothing
+        Me.txtObjectName.Font = Nothing
         Me.txtObjectName.Name = "txtObjectName"
-        Me.txtObjectName.Size = New System.Drawing.Size(112, 20)
-        Me.txtObjectName.TabIndex = 1
         '
         'lblCaption
         '
-        Me.lblCaption.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCaption.AutoSize = True
+        Me.lblCaption.AccessibleDescription = Nothing
+        Me.lblCaption.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblCaption, "lblCaption")
         Me.tlpTitle.SetColumnSpan(Me.lblCaption, 2)
-        Me.lblCaption.Location = New System.Drawing.Point(0, 20)
-        Me.lblCaption.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCaption.Font = Nothing
         Me.lblCaption.Name = "lblCaption"
-        Me.lblCaption.Size = New System.Drawing.Size(86, 13)
-        Me.lblCaption.TabIndex = 2
-        Me.lblCaption.Text = "&Caption/abstract"
         '
         'txtCaption
         '
-        Me.txtCaption.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
-                    Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtCaption.AccessibleDescription = Nothing
+        Me.txtCaption.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtCaption, "txtCaption")
+        Me.txtCaption.BackgroundImage = Nothing
         Me.tlpTitle.SetColumnSpan(Me.txtCaption, 2)
-        Me.txtCaption.Location = New System.Drawing.Point(3, 33)
-        Me.txtCaption.Margin = New System.Windows.Forms.Padding(3, 0, 0, 0)
-        Me.txtCaption.MaxLength = 2000
-        Me.txtCaption.Multiline = True
+        Me.txtCaption.Font = Nothing
         Me.txtCaption.Name = "txtCaption"
-        Me.txtCaption.ScrollBars = System.Windows.Forms.ScrollBars.Both
-        Me.txtCaption.Size = New System.Drawing.Size(176, 65)
-        Me.txtCaption.TabIndex = 3
         '
         'sptTitle
         '
+        Me.sptTitle.AccessibleDescription = Nothing
+        Me.sptTitle.AccessibleName = Nothing
+        resources.ApplyResources(Me.sptTitle, "sptTitle")
+        Me.sptTitle.BackgroundImage = Nothing
         Me.sptTitle.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptTitle.Location = New System.Drawing.Point(0, 217)
-        Me.sptTitle.Margin = New System.Windows.Forms.Padding(0)
+        Me.sptTitle.Font = Nothing
         Me.sptTitle.Name = "sptTitle"
-        Me.sptTitle.Size = New System.Drawing.Size(25, 1)
-        Me.sptTitle.TabIndex = 3
         Me.sptTitle.TabStop = False
         '
         'fraLocation
         '
-        Me.fraLocation.AutoSize = True
-        Me.fraLocation.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.fraLocation.AccessibleDescription = Nothing
+        Me.fraLocation.AccessibleName = Nothing
+        resources.ApplyResources(Me.fraLocation, "fraLocation")
+        Me.fraLocation.BackgroundImage = Nothing
         Me.fraLocation.Controls.Add(Me.tlpLocation)
-        Me.fraLocation.Location = New System.Drawing.Point(0, 218)
-        Me.fraLocation.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraLocation.Font = Nothing
         Me.fraLocation.Name = "fraLocation"
-        Me.fraLocation.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
-        Me.fraLocation.Size = New System.Drawing.Size(202, 117)
-        Me.fraLocation.TabIndex = 4
         Me.fraLocation.TabStop = False
-        Me.fraLocation.Text = "Location"
         '
         'tlpLocation
         '
-        Me.tlpLocation.AutoSize = True
-        Me.tlpLocation.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpLocation.ColumnCount = 2
-        Me.tlpLocation.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpLocation.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpLocation.AccessibleDescription = Nothing
+        Me.tlpLocation.AccessibleName = Nothing
+        resources.ApplyResources(Me.tlpLocation, "tlpLocation")
+        Me.tlpLocation.BackgroundImage = Nothing
         Me.tlpLocation.Controls.Add(Me.lblCity, 0, 0)
         Me.tlpLocation.Controls.Add(Me.txtCity, 1, 0)
         Me.tlpLocation.Controls.Add(Me.lblCountryCode, 0, 1)
@@ -459,552 +455,568 @@ Partial Class frmMain
         Me.tlpLocation.Controls.Add(Me.txtProvince, 1, 3)
         Me.tlpLocation.Controls.Add(Me.lblSublocation, 0, 4)
         Me.tlpLocation.Controls.Add(Me.txtSublocation, 1, 4)
-        Me.tlpLocation.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpLocation.Location = New System.Drawing.Point(0, 13)
-        Me.tlpLocation.Margin = New System.Windows.Forms.Padding(0)
+        Me.tlpLocation.Font = Nothing
         Me.tlpLocation.Name = "tlpLocation"
-        Me.tlpLocation.RowCount = 5
-        Me.tlpLocation.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpLocation.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpLocation.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpLocation.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpLocation.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpLocation.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
-        Me.tlpLocation.Size = New System.Drawing.Size(200, 101)
-        Me.tlpLocation.TabIndex = 1
         '
         'lblCity
         '
-        Me.lblCity.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCity.AutoSize = True
-        Me.lblCity.Location = New System.Drawing.Point(0, 3)
-        Me.lblCity.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCity.AccessibleDescription = Nothing
+        Me.lblCity.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblCity, "lblCity")
+        Me.lblCity.Font = Nothing
         Me.lblCity.Name = "lblCity"
-        Me.lblCity.Size = New System.Drawing.Size(24, 13)
-        Me.lblCity.TabIndex = 0
-        Me.lblCity.Text = "C&ity"
         '
         'txtCity
         '
-        Me.txtCity.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCity.Location = New System.Drawing.Point(79, 0)
-        Me.txtCity.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtCity.MaxLength = 32
+        Me.txtCity.AccessibleDescription = Nothing
+        Me.txtCity.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtCity, "txtCity")
+        Me.txtCity.BackgroundImage = Nothing
+        Me.txtCity.Font = Nothing
         Me.txtCity.Name = "txtCity"
-        Me.txtCity.Size = New System.Drawing.Size(121, 20)
-        Me.txtCity.TabIndex = 1
         '
         'lblCountryCode
         '
-        Me.lblCountryCode.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCountryCode.AutoSize = True
-        Me.lblCountryCode.Location = New System.Drawing.Point(0, 24)
-        Me.lblCountryCode.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCountryCode.AccessibleDescription = Nothing
+        Me.lblCountryCode.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblCountryCode, "lblCountryCode")
+        Me.lblCountryCode.Font = Nothing
         Me.lblCountryCode.Name = "lblCountryCode"
-        Me.lblCountryCode.Size = New System.Drawing.Size(71, 13)
-        Me.lblCountryCode.TabIndex = 4
-        Me.lblCountryCode.Text = "Country C&ode"
         '
         'cmbCountryCode
         '
-        Me.cmbCountryCode.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.cmbCountryCode.AccessibleDescription = Nothing
+        Me.cmbCountryCode.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmbCountryCode, "cmbCountryCode")
+        Me.cmbCountryCode.BackgroundImage = Nothing
+        Me.cmbCountryCode.Font = Nothing
         Me.cmbCountryCode.FormattingEnabled = True
-        Me.cmbCountryCode.Location = New System.Drawing.Point(79, 20)
-        Me.cmbCountryCode.Margin = New System.Windows.Forms.Padding(0)
-        Me.cmbCountryCode.MaxLength = 3
         Me.cmbCountryCode.Name = "cmbCountryCode"
-        Me.cmbCountryCode.Size = New System.Drawing.Size(121, 21)
-        Me.cmbCountryCode.TabIndex = 5
         '
         'lblCountry
         '
-        Me.lblCountry.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCountry.AutoSize = True
-        Me.lblCountry.Location = New System.Drawing.Point(0, 44)
-        Me.lblCountry.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCountry.AccessibleDescription = Nothing
+        Me.lblCountry.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblCountry, "lblCountry")
+        Me.lblCountry.Font = Nothing
         Me.lblCountry.Name = "lblCountry"
-        Me.lblCountry.Size = New System.Drawing.Size(43, 13)
-        Me.lblCountry.TabIndex = 6
-        Me.lblCountry.Text = "Countr&y"
         '
         'txtCountry
         '
-        Me.txtCountry.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCountry.Location = New System.Drawing.Point(79, 41)
-        Me.txtCountry.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtCountry.MaxLength = 64
+        Me.txtCountry.AccessibleDescription = Nothing
+        Me.txtCountry.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtCountry, "txtCountry")
+        Me.txtCountry.BackgroundImage = Nothing
+        Me.txtCountry.Font = Nothing
         Me.txtCountry.Name = "txtCountry"
-        Me.txtCountry.Size = New System.Drawing.Size(121, 20)
-        Me.txtCountry.TabIndex = 7
         '
         'lblProvince
         '
-        Me.lblProvince.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblProvince.AutoSize = True
-        Me.lblProvince.Location = New System.Drawing.Point(0, 64)
-        Me.lblProvince.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblProvince.AccessibleDescription = Nothing
+        Me.lblProvince.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblProvince, "lblProvince")
+        Me.lblProvince.Font = Nothing
         Me.lblProvince.Name = "lblProvince"
-        Me.lblProvince.Size = New System.Drawing.Size(79, 13)
-        Me.lblProvince.TabIndex = 8
-        Me.lblProvince.Text = "&Province/State"
         '
         'txtProvince
         '
-        Me.txtProvince.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtProvince.Location = New System.Drawing.Point(79, 61)
-        Me.txtProvince.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtProvince.MaxLength = 32
+        Me.txtProvince.AccessibleDescription = Nothing
+        Me.txtProvince.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtProvince, "txtProvince")
+        Me.txtProvince.BackgroundImage = Nothing
+        Me.txtProvince.Font = Nothing
         Me.txtProvince.Name = "txtProvince"
-        Me.txtProvince.Size = New System.Drawing.Size(121, 20)
-        Me.txtProvince.TabIndex = 9
         '
         'lblSublocation
         '
-        Me.lblSublocation.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblSublocation.AutoSize = True
-        Me.lblSublocation.Location = New System.Drawing.Point(0, 84)
-        Me.lblSublocation.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblSublocation.AccessibleDescription = Nothing
+        Me.lblSublocation.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblSublocation, "lblSublocation")
+        Me.lblSublocation.Font = Nothing
         Me.lblSublocation.Name = "lblSublocation"
-        Me.lblSublocation.Size = New System.Drawing.Size(63, 13)
-        Me.lblSublocation.TabIndex = 10
-        Me.lblSublocation.Text = "&Sublocation"
         '
         'txtSublocation
         '
-        Me.txtSublocation.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtSublocation.Location = New System.Drawing.Point(79, 81)
-        Me.txtSublocation.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtSublocation.MaxLength = 32
+        Me.txtSublocation.AccessibleDescription = Nothing
+        Me.txtSublocation.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtSublocation, "txtSublocation")
+        Me.txtSublocation.BackgroundImage = Nothing
+        Me.txtSublocation.Font = Nothing
         Me.txtSublocation.Name = "txtSublocation"
-        Me.txtSublocation.Size = New System.Drawing.Size(121, 20)
-        Me.txtSublocation.TabIndex = 11
         '
         'fraKeywords
         '
+        Me.fraKeywords.AccessibleDescription = Nothing
+        Me.fraKeywords.AccessibleName = Nothing
+        resources.ApplyResources(Me.fraKeywords, "fraKeywords")
+        Me.fraKeywords.BackgroundImage = Nothing
         Me.fraKeywords.Controls.Add(Me.kweKeywords)
-        Me.fraKeywords.Location = New System.Drawing.Point(202, 0)
-        Me.fraKeywords.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraKeywords.Font = Nothing
         Me.fraKeywords.MinimumSize = New System.Drawing.Size(0, 100)
         Me.fraKeywords.Name = "fraKeywords"
-        Me.fraKeywords.Padding = New System.Windows.Forms.Padding(2, 0, 2, 0)
-        Me.fraKeywords.Size = New System.Drawing.Size(160, 100)
-        Me.fraKeywords.TabIndex = 5
         Me.fraKeywords.TabStop = False
-        Me.fraKeywords.Text = "&Keywords"
         '
         'kweKeywords
         '
+        Me.kweKeywords.AccessibleDescription = Nothing
+        Me.kweKeywords.AccessibleName = Nothing
+        resources.ApplyResources(Me.kweKeywords, "kweKeywords")
         Me.kweKeywords.AutoCompleteCacheName = "Keywords"
         Me.kweKeywords.AutomaticsLists_Designer = True
-        Me.kweKeywords.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.kweKeywords.Location = New System.Drawing.Point(2, 13)
+        Me.kweKeywords.BackgroundImage = Nothing
+        Me.kweKeywords.Font = Nothing
         Me.kweKeywords.Name = "kweKeywords"
-        Me.kweKeywords.Size = New System.Drawing.Size(156, 87)
         Me.kweKeywords.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-        Me.kweKeywords.TabIndex = 0
         '
         'sptKeywords
         '
+        Me.sptKeywords.AccessibleDescription = Nothing
+        Me.sptKeywords.AccessibleName = Nothing
+        resources.ApplyResources(Me.sptKeywords, "sptKeywords")
+        Me.sptKeywords.BackgroundImage = Nothing
         Me.sptKeywords.Cursor = System.Windows.Forms.Cursors.HSplit
-        Me.sptKeywords.Location = New System.Drawing.Point(202, 100)
-        Me.sptKeywords.Margin = New System.Windows.Forms.Padding(0)
+        Me.sptKeywords.Font = Nothing
         Me.sptKeywords.Name = "sptKeywords"
-        Me.sptKeywords.Size = New System.Drawing.Size(3, 3)
-        Me.sptKeywords.TabIndex = 6
         Me.sptKeywords.TabStop = False
         '
         'fraAuthor
         '
-        Me.fraAuthor.AutoSize = True
-        Me.fraAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.fraAuthor.AccessibleDescription = Nothing
+        Me.fraAuthor.AccessibleName = Nothing
+        resources.ApplyResources(Me.fraAuthor, "fraAuthor")
+        Me.fraAuthor.BackgroundImage = Nothing
         Me.fraAuthor.Controls.Add(Me.tlpAuthor)
-        Me.fraAuthor.Location = New System.Drawing.Point(202, 103)
-        Me.fraAuthor.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraAuthor.Font = Nothing
         Me.fraAuthor.Name = "fraAuthor"
-        Me.fraAuthor.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
-        Me.fraAuthor.Size = New System.Drawing.Size(153, 56)
-        Me.fraAuthor.TabIndex = 7
         Me.fraAuthor.TabStop = False
-        Me.fraAuthor.Text = "Author"
         '
         'tlpAuthor
         '
-        Me.tlpAuthor.AutoSize = True
-        Me.tlpAuthor.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpAuthor.ColumnCount = 2
-        Me.tlpAuthor.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpAuthor.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpAuthor.AccessibleDescription = Nothing
+        Me.tlpAuthor.AccessibleName = Nothing
+        resources.ApplyResources(Me.tlpAuthor, "tlpAuthor")
+        Me.tlpAuthor.BackgroundImage = Nothing
         Me.tlpAuthor.Controls.Add(Me.lblCopyright, 0, 0)
         Me.tlpAuthor.Controls.Add(Me.txtCopyright, 1, 0)
         Me.tlpAuthor.Controls.Add(Me.lblCredit, 0, 1)
         Me.tlpAuthor.Controls.Add(Me.txtCredit, 1, 1)
-        Me.tlpAuthor.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpAuthor.Location = New System.Drawing.Point(0, 13)
-        Me.tlpAuthor.Margin = New System.Windows.Forms.Padding(0)
+        Me.tlpAuthor.Font = Nothing
         Me.tlpAuthor.Name = "tlpAuthor"
-        Me.tlpAuthor.RowCount = 2
-        Me.tlpAuthor.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpAuthor.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpAuthor.Size = New System.Drawing.Size(151, 40)
-        Me.tlpAuthor.TabIndex = 0
         '
         'lblCopyright
         '
-        Me.lblCopyright.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCopyright.AutoSize = True
-        Me.lblCopyright.Location = New System.Drawing.Point(0, 3)
-        Me.lblCopyright.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCopyright.AccessibleDescription = Nothing
+        Me.lblCopyright.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblCopyright, "lblCopyright")
+        Me.lblCopyright.Font = Nothing
         Me.lblCopyright.Name = "lblCopyright"
-        Me.lblCopyright.Size = New System.Drawing.Size(51, 13)
-        Me.lblCopyright.TabIndex = 0
-        Me.lblCopyright.Text = "Copy&right"
         '
         'txtCopyright
         '
-        Me.txtCopyright.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCopyright.Location = New System.Drawing.Point(51, 0)
-        Me.txtCopyright.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtCopyright.MaxLength = 128
+        Me.txtCopyright.AccessibleDescription = Nothing
+        Me.txtCopyright.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtCopyright, "txtCopyright")
+        Me.txtCopyright.BackgroundImage = Nothing
+        Me.txtCopyright.Font = Nothing
         Me.txtCopyright.Name = "txtCopyright"
-        Me.txtCopyright.Size = New System.Drawing.Size(100, 20)
-        Me.txtCopyright.TabIndex = 1
         '
         'lblCredit
         '
-        Me.lblCredit.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblCredit.AutoSize = True
-        Me.lblCredit.Location = New System.Drawing.Point(0, 23)
-        Me.lblCredit.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblCredit.AccessibleDescription = Nothing
+        Me.lblCredit.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblCredit, "lblCredit")
+        Me.lblCredit.Font = Nothing
         Me.lblCredit.Name = "lblCredit"
-        Me.lblCredit.Size = New System.Drawing.Size(34, 13)
-        Me.lblCredit.TabIndex = 2
-        Me.lblCredit.Text = "Cre&dit"
         '
         'txtCredit
         '
-        Me.txtCredit.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtCredit.Location = New System.Drawing.Point(51, 20)
-        Me.txtCredit.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtCredit.MaxLength = 32
+        Me.txtCredit.AccessibleDescription = Nothing
+        Me.txtCredit.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtCredit, "txtCredit")
+        Me.txtCredit.BackgroundImage = Nothing
+        Me.txtCredit.Font = Nothing
         Me.txtCredit.Name = "txtCredit"
-        Me.txtCredit.Size = New System.Drawing.Size(100, 20)
-        Me.txtCredit.TabIndex = 3
         '
         'fraStatus
         '
-        Me.fraStatus.AutoSize = True
-        Me.fraStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.fraStatus.AccessibleDescription = Nothing
+        Me.fraStatus.AccessibleName = Nothing
+        resources.ApplyResources(Me.fraStatus, "fraStatus")
+        Me.fraStatus.BackgroundImage = Nothing
         Me.fraStatus.Controls.Add(Me.tlpStatus)
-        Me.fraStatus.Location = New System.Drawing.Point(202, 159)
-        Me.fraStatus.Margin = New System.Windows.Forms.Padding(0)
+        Me.fraStatus.Font = Nothing
         Me.fraStatus.Name = "fraStatus"
-        Me.fraStatus.Padding = New System.Windows.Forms.Padding(0, 0, 2, 3)
-        Me.fraStatus.Size = New System.Drawing.Size(178, 56)
-        Me.fraStatus.TabIndex = 8
         Me.fraStatus.TabStop = False
-        Me.fraStatus.Text = "Status"
         '
         'tlpStatus
         '
-        Me.tlpStatus.AutoSize = True
-        Me.tlpStatus.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpStatus.ColumnCount = 2
-        Me.tlpStatus.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpStatus.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+        Me.tlpStatus.AccessibleDescription = Nothing
+        Me.tlpStatus.AccessibleName = Nothing
+        resources.ApplyResources(Me.tlpStatus, "tlpStatus")
+        Me.tlpStatus.BackgroundImage = Nothing
         Me.tlpStatus.Controls.Add(Me.lblEditStatus, 0, 0)
         Me.tlpStatus.Controls.Add(Me.txtEditStatus, 1, 0)
         Me.tlpStatus.Controls.Add(Me.lblUrgency, 0, 1)
         Me.tlpStatus.Controls.Add(Me.nudUrgency, 1, 1)
-        Me.tlpStatus.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpStatus.Location = New System.Drawing.Point(0, 13)
-        Me.tlpStatus.Margin = New System.Windows.Forms.Padding(0)
+        Me.tlpStatus.Font = Nothing
         Me.tlpStatus.Name = "tlpStatus"
-        Me.tlpStatus.RowCount = 2
-        Me.tlpStatus.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpStatus.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpStatus.Size = New System.Drawing.Size(176, 40)
-        Me.tlpStatus.TabIndex = 1
         '
         'lblEditStatus
         '
-        Me.lblEditStatus.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblEditStatus.AutoSize = True
-        Me.lblEditStatus.Location = New System.Drawing.Point(0, 3)
-        Me.lblEditStatus.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblEditStatus.AccessibleDescription = Nothing
+        Me.lblEditStatus.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblEditStatus, "lblEditStatus")
+        Me.lblEditStatus.Font = Nothing
         Me.lblEditStatus.Name = "lblEditStatus"
-        Me.lblEditStatus.Size = New System.Drawing.Size(56, 13)
-        Me.lblEditStatus.TabIndex = 0
-        Me.lblEditStatus.Text = "&Edit status"
         '
         'txtEditStatus
         '
-        Me.txtEditStatus.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.txtEditStatus.Location = New System.Drawing.Point(56, 0)
-        Me.txtEditStatus.Margin = New System.Windows.Forms.Padding(0)
-        Me.txtEditStatus.MaxLength = 64
+        Me.txtEditStatus.AccessibleDescription = Nothing
+        Me.txtEditStatus.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtEditStatus, "txtEditStatus")
+        Me.txtEditStatus.BackgroundImage = Nothing
+        Me.txtEditStatus.Font = Nothing
         Me.txtEditStatus.Name = "txtEditStatus"
-        Me.txtEditStatus.Size = New System.Drawing.Size(120, 20)
-        Me.txtEditStatus.TabIndex = 1
         '
         'lblUrgency
         '
-        Me.lblUrgency.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.lblUrgency.AutoSize = True
-        Me.lblUrgency.Location = New System.Drawing.Point(0, 23)
-        Me.lblUrgency.Margin = New System.Windows.Forms.Padding(0)
+        Me.lblUrgency.AccessibleDescription = Nothing
+        Me.lblUrgency.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblUrgency, "lblUrgency")
+        Me.lblUrgency.Font = Nothing
         Me.lblUrgency.Name = "lblUrgency"
-        Me.lblUrgency.Size = New System.Drawing.Size(47, 13)
-        Me.lblUrgency.TabIndex = 2
-        Me.lblUrgency.Text = "&Urgency"
         '
         'nudUrgency
         '
-        Me.nudUrgency.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.nudUrgency.Location = New System.Drawing.Point(56, 20)
-        Me.nudUrgency.Margin = New System.Windows.Forms.Padding(0)
+        Me.nudUrgency.AccessibleDescription = Nothing
+        Me.nudUrgency.AccessibleName = Nothing
+        resources.ApplyResources(Me.nudUrgency, "nudUrgency")
+        Me.nudUrgency.Font = Nothing
         Me.nudUrgency.Name = "nudUrgency"
-        Me.nudUrgency.Size = New System.Drawing.Size(120, 20)
-        Me.nudUrgency.TabIndex = 3
         '
         'tapIPTC
         '
+        Me.tapIPTC.AccessibleDescription = Nothing
+        Me.tapIPTC.AccessibleName = Nothing
+        resources.ApplyResources(Me.tapIPTC, "tapIPTC")
+        Me.tapIPTC.BackgroundImage = Nothing
         Me.tapIPTC.Controls.Add(Me.prgIPTC)
-        Me.tapIPTC.Location = New System.Drawing.Point(4, 22)
+        Me.tapIPTC.Font = Nothing
         Me.tapIPTC.Name = "tapIPTC"
-        Me.tapIPTC.Padding = New System.Windows.Forms.Padding(3)
-        Me.tapIPTC.Size = New System.Drawing.Size(477, 399)
-        Me.tapIPTC.TabIndex = 1
-        Me.tapIPTC.Text = "IPTC"
         Me.tapIPTC.UseVisualStyleBackColor = True
         '
         'prgIPTC
         '
-        Me.prgIPTC.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.prgIPTC.Location = New System.Drawing.Point(3, 3)
+        Me.prgIPTC.AccessibleDescription = Nothing
+        Me.prgIPTC.AccessibleName = Nothing
+        resources.ApplyResources(Me.prgIPTC, "prgIPTC")
+        Me.prgIPTC.BackgroundImage = Nothing
+        Me.prgIPTC.Font = Nothing
         Me.prgIPTC.Name = "prgIPTC"
-        Me.prgIPTC.Size = New System.Drawing.Size(471, 393)
-        Me.prgIPTC.TabIndex = 0
         '
         'tapExif
         '
-        Me.tapExif.Location = New System.Drawing.Point(4, 22)
+        Me.tapExif.AccessibleDescription = Nothing
+        Me.tapExif.AccessibleName = Nothing
+        resources.ApplyResources(Me.tapExif, "tapExif")
+        Me.tapExif.BackgroundImage = Nothing
+        Me.tapExif.Font = Nothing
         Me.tapExif.Name = "tapExif"
-        Me.tapExif.Padding = New System.Windows.Forms.Padding(3)
-        Me.tapExif.Size = New System.Drawing.Size(477, 399)
-        Me.tapExif.TabIndex = 2
-        Me.tapExif.Text = "Exif"
         Me.tapExif.UseVisualStyleBackColor = True
+        '
+        'tscMain
+        '
+        Me.tscMain.AccessibleDescription = Nothing
+        Me.tscMain.AccessibleName = Nothing
+        resources.ApplyResources(Me.tscMain, "tscMain")
+        '
+        'tscMain.BottomToolStripPanel
+        '
+        Me.tscMain.BottomToolStripPanel.AccessibleDescription = Nothing
+        Me.tscMain.BottomToolStripPanel.AccessibleName = Nothing
+        Me.tscMain.BottomToolStripPanel.BackgroundImage = Nothing
+        resources.ApplyResources(Me.tscMain.BottomToolStripPanel, "tscMain.BottomToolStripPanel")
+        Me.tscMain.BottomToolStripPanel.Controls.Add(Me.stsStatus)
+        Me.tscMain.BottomToolStripPanel.Font = Nothing
+        '
+        'tscMain.ContentPanel
+        '
+        Me.tscMain.ContentPanel.AccessibleDescription = Nothing
+        Me.tscMain.ContentPanel.AccessibleName = Nothing
+        resources.ApplyResources(Me.tscMain.ContentPanel, "tscMain.ContentPanel")
+        Me.tscMain.ContentPanel.BackgroundImage = Nothing
+        Me.tscMain.ContentPanel.Controls.Add(Me.splMain)
+        Me.tscMain.ContentPanel.Font = Nothing
+        Me.tscMain.Font = Nothing
+        '
+        'tscMain.LeftToolStripPanel
+        '
+        Me.tscMain.LeftToolStripPanel.AccessibleDescription = Nothing
+        Me.tscMain.LeftToolStripPanel.AccessibleName = Nothing
+        Me.tscMain.LeftToolStripPanel.BackgroundImage = Nothing
+        resources.ApplyResources(Me.tscMain.LeftToolStripPanel, "tscMain.LeftToolStripPanel")
+        Me.tscMain.LeftToolStripPanel.Font = Nothing
+        Me.tscMain.Name = "tscMain"
+        '
+        'tscMain.RightToolStripPanel
+        '
+        Me.tscMain.RightToolStripPanel.AccessibleDescription = Nothing
+        Me.tscMain.RightToolStripPanel.AccessibleName = Nothing
+        Me.tscMain.RightToolStripPanel.BackgroundImage = Nothing
+        resources.ApplyResources(Me.tscMain.RightToolStripPanel, "tscMain.RightToolStripPanel")
+        Me.tscMain.RightToolStripPanel.Font = Nothing
+        '
+        'tscMain.TopToolStripPanel
+        '
+        Me.tscMain.TopToolStripPanel.AccessibleDescription = Nothing
+        Me.tscMain.TopToolStripPanel.AccessibleName = Nothing
+        Me.tscMain.TopToolStripPanel.BackgroundImage = Nothing
+        resources.ApplyResources(Me.tscMain.TopToolStripPanel, "tscMain.TopToolStripPanel")
+        Me.tscMain.TopToolStripPanel.Controls.Add(Me.msnMain)
+        Me.tscMain.TopToolStripPanel.Controls.Add(Me.tosMain)
+        Me.tscMain.TopToolStripPanel.Font = Nothing
+        '
+        'stsStatus
+        '
+        Me.stsStatus.AccessibleDescription = Nothing
+        Me.stsStatus.AccessibleName = Nothing
+        resources.ApplyResources(Me.stsStatus, "stsStatus")
+        Me.stsStatus.BackgroundImage = Nothing
+        Me.stsStatus.Font = Nothing
+        Me.stsStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tpbLoading, Me.tslFolder, Me.tslNoFiles})
+        Me.stsStatus.Name = "stsStatus"
+        Me.stsStatus.ShowItemToolTips = True
+        '
+        'tpbLoading
+        '
+        Me.tpbLoading.AccessibleDescription = Nothing
+        Me.tpbLoading.AccessibleName = Nothing
+        resources.ApplyResources(Me.tpbLoading, "tpbLoading")
+        Me.tpbLoading.Name = "tpbLoading"
+        '
+        'tslFolder
+        '
+        Me.tslFolder.AccessibleDescription = Nothing
+        Me.tslFolder.AccessibleName = Nothing
+        resources.ApplyResources(Me.tslFolder, "tslFolder")
+        Me.tslFolder.BackgroundImage = Nothing
+        Me.tslFolder.Name = "tslFolder"
+        '
+        'tslNoFiles
+        '
+        Me.tslNoFiles.AccessibleDescription = Nothing
+        Me.tslNoFiles.AccessibleName = Nothing
+        resources.ApplyResources(Me.tslNoFiles, "tslNoFiles")
+        Me.tslNoFiles.BackgroundImage = Nothing
+        Me.tslNoFiles.Name = "tslNoFiles"
+        '
+        'msnMain
+        '
+        Me.msnMain.AccessibleDescription = Nothing
+        Me.msnMain.AccessibleName = Nothing
+        resources.ApplyResources(Me.msnMain, "msnMain")
+        Me.msnMain.BackgroundImage = Nothing
+        Me.msnMain.Font = Nothing
+        Me.msnMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiFile, Me.tmiView, Me.tmiTools, Me.tmiHelp})
+        Me.msnMain.Name = "msnMain"
+        '
+        'tmiFile
+        '
+        Me.tmiFile.AccessibleDescription = Nothing
+        Me.tmiFile.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiFile, "tmiFile")
+        Me.tmiFile.BackgroundImage = Nothing
+        Me.tmiFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiBrowse, Me.tmiGoTo, Me.tmiSaveAll, Me.tssFileSep1, Me.tmiExit})
+        Me.tmiFile.Name = "tmiFile"
+        Me.tmiFile.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiBrowse
+        '
+        Me.tmiBrowse.AccessibleDescription = Nothing
+        Me.tmiBrowse.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiBrowse, "tmiBrowse")
+        Me.tmiBrowse.BackgroundImage = Nothing
+        Me.tmiBrowse.Name = "tmiBrowse"
+        Me.tmiBrowse.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiGoTo
+        '
+        Me.tmiGoTo.AccessibleDescription = Nothing
+        Me.tmiGoTo.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiGoTo, "tmiGoTo")
+        Me.tmiGoTo.BackgroundImage = Nothing
+        Me.tmiGoTo.Name = "tmiGoTo"
+        Me.tmiGoTo.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiSaveAll
+        '
+        Me.tmiSaveAll.AccessibleDescription = Nothing
+        Me.tmiSaveAll.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiSaveAll, "tmiSaveAll")
+        Me.tmiSaveAll.BackgroundImage = Nothing
+        Me.tmiSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        Me.tmiSaveAll.Name = "tmiSaveAll"
+        Me.tmiSaveAll.ShortcutKeyDisplayString = Nothing
+        '
+        'tssFileSep1
+        '
+        Me.tssFileSep1.AccessibleDescription = Nothing
+        Me.tssFileSep1.AccessibleName = Nothing
+        resources.ApplyResources(Me.tssFileSep1, "tssFileSep1")
+        Me.tssFileSep1.Name = "tssFileSep1"
+        '
+        'tmiExit
+        '
+        Me.tmiExit.AccessibleDescription = Nothing
+        Me.tmiExit.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiExit, "tmiExit")
+        Me.tmiExit.BackgroundImage = Nothing
+        Me.tmiExit.Name = "tmiExit"
+        '
+        'tmiView
+        '
+        Me.tmiView.AccessibleDescription = Nothing
+        Me.tmiView.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiView, "tmiView")
+        Me.tmiView.BackgroundImage = Nothing
+        Me.tmiView.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiRefresh, Me.tmiNext, Me.tmiPrevious})
+        Me.tmiView.Name = "tmiView"
+        Me.tmiView.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiRefresh
+        '
+        Me.tmiRefresh.AccessibleDescription = Nothing
+        Me.tmiRefresh.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiRefresh, "tmiRefresh")
+        Me.tmiRefresh.BackgroundImage = Nothing
+        Me.tmiRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
+        Me.tmiRefresh.Name = "tmiRefresh"
+        '
+        'tmiNext
+        '
+        Me.tmiNext.AccessibleDescription = Nothing
+        Me.tmiNext.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiNext, "tmiNext")
+        Me.tmiNext.BackgroundImage = Nothing
+        Me.tmiNext.Image = Global.Tools.Metanol.My.Resources.Resources.RightArrowHS
+        Me.tmiNext.Name = "tmiNext"
+        Me.tmiNext.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiPrevious
+        '
+        Me.tmiPrevious.AccessibleDescription = Nothing
+        Me.tmiPrevious.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiPrevious, "tmiPrevious")
+        Me.tmiPrevious.BackgroundImage = Nothing
+        Me.tmiPrevious.Image = Global.Tools.Metanol.My.Resources.Resources.LeftArrowHS
+        Me.tmiPrevious.Name = "tmiPrevious"
+        Me.tmiPrevious.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiTools
+        '
+        Me.tmiTools.AccessibleDescription = Nothing
+        Me.tmiTools.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiTools, "tmiTools")
+        Me.tmiTools.BackgroundImage = Nothing
+        Me.tmiTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiOptions})
+        Me.tmiTools.Name = "tmiTools"
+        Me.tmiTools.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiOptions
+        '
+        Me.tmiOptions.AccessibleDescription = Nothing
+        Me.tmiOptions.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiOptions, "tmiOptions")
+        Me.tmiOptions.BackgroundImage = Nothing
+        Me.tmiOptions.Name = "tmiOptions"
+        Me.tmiOptions.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiHelp
+        '
+        Me.tmiHelp.AccessibleDescription = Nothing
+        Me.tmiHelp.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiHelp, "tmiHelp")
+        Me.tmiHelp.BackgroundImage = Nothing
+        Me.tmiHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiAbout, Me.tmiVersionHistory})
+        Me.tmiHelp.Name = "tmiHelp"
+        Me.tmiHelp.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiAbout
+        '
+        Me.tmiAbout.AccessibleDescription = Nothing
+        Me.tmiAbout.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiAbout, "tmiAbout")
+        Me.tmiAbout.BackgroundImage = Nothing
+        Me.tmiAbout.Name = "tmiAbout"
+        Me.tmiAbout.ShortcutKeyDisplayString = Nothing
+        '
+        'tmiVersionHistory
+        '
+        Me.tmiVersionHistory.AccessibleDescription = Nothing
+        Me.tmiVersionHistory.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmiVersionHistory, "tmiVersionHistory")
+        Me.tmiVersionHistory.BackgroundImage = Nothing
+        Me.tmiVersionHistory.Name = "tmiVersionHistory"
+        Me.tmiVersionHistory.ShortcutKeyDisplayString = Nothing
+        '
+        'tosMain
+        '
+        Me.tosMain.AccessibleDescription = Nothing
+        Me.tosMain.AccessibleName = Nothing
+        resources.ApplyResources(Me.tosMain, "tosMain")
+        Me.tosMain.BackgroundImage = Nothing
+        Me.tosMain.Font = Nothing
+        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
+        Me.tosMain.Name = "tosMain"
+        '
+        'tsbBack
+        '
+        Me.tsbBack.AccessibleDescription = Nothing
+        Me.tsbBack.AccessibleName = Nothing
+        resources.ApplyResources(Me.tsbBack, "tsbBack")
+        Me.tsbBack.BackgroundImage = Nothing
+        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
+        Me.tsbBack.Name = "tsbBack"
+        '
+        'tsbForward
+        '
+        Me.tsbForward.AccessibleDescription = Nothing
+        Me.tsbForward.AccessibleName = Nothing
+        resources.ApplyResources(Me.tsbForward, "tsbForward")
+        Me.tsbForward.BackgroundImage = Nothing
+        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
+        Me.tsbForward.Name = "tsbForward"
+        '
+        'tsbRefresh
+        '
+        Me.tsbRefresh.AccessibleDescription = Nothing
+        Me.tsbRefresh.AccessibleName = Nothing
+        resources.ApplyResources(Me.tsbRefresh, "tsbRefresh")
+        Me.tsbRefresh.BackgroundImage = Nothing
+        Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
+        Me.tsbRefresh.Name = "tsbRefresh"
+        '
+        'tsbSaveAll
+        '
+        Me.tsbSaveAll.AccessibleDescription = Nothing
+        Me.tsbSaveAll.AccessibleName = Nothing
+        resources.ApplyResources(Me.tsbSaveAll, "tsbSaveAll")
+        Me.tsbSaveAll.BackgroundImage = Nothing
+        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
+        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
+        Me.tsbSaveAll.Name = "tsbSaveAll"
         '
         'bgwImages
         '
         Me.bgwImages.WorkerReportsProgress = True
         Me.bgwImages.WorkerSupportsCancellation = True
         '
-        'tscMain
+        'fbdGoTo
         '
-        '
-        'tscMain.BottomToolStripPanel
-        '
-        Me.tscMain.BottomToolStripPanel.Controls.Add(Me.stsStatus)
-        '
-        'tscMain.ContentPanel
-        '
-        Me.tscMain.ContentPanel.Controls.Add(Me.splMain)
-        Me.tscMain.ContentPanel.Size = New System.Drawing.Size(720, 425)
-        Me.tscMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tscMain.Location = New System.Drawing.Point(0, 0)
-        Me.tscMain.Name = "tscMain"
-        Me.tscMain.Size = New System.Drawing.Size(720, 496)
-        Me.tscMain.TabIndex = 3
-        Me.tscMain.Text = "ToolStripContainer1"
-        '
-        'tscMain.TopToolStripPanel
-        '
-        Me.tscMain.TopToolStripPanel.Controls.Add(Me.msnMain)
-        Me.tscMain.TopToolStripPanel.Controls.Add(Me.tosMain)
-        '
-        'stsStatus
-        '
-        Me.stsStatus.Dock = System.Windows.Forms.DockStyle.None
-        Me.stsStatus.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tpbLoading, Me.tslFolder, Me.tslNoFiles})
-        Me.stsStatus.Location = New System.Drawing.Point(0, 0)
-        Me.stsStatus.Name = "stsStatus"
-        Me.stsStatus.ShowItemToolTips = True
-        Me.stsStatus.Size = New System.Drawing.Size(720, 22)
-        Me.stsStatus.TabIndex = 1
-        '
-        'tpbLoading
-        '
-        Me.tpbLoading.Name = "tpbLoading"
-        Me.tpbLoading.Size = New System.Drawing.Size(100, 16)
-        Me.tpbLoading.ToolTipText = "Loading images"
-        Me.tpbLoading.Visible = False
-        '
-        'tslFolder
-        '
-        Me.tslFolder.Name = "tslFolder"
-        Me.tslFolder.Size = New System.Drawing.Size(23, 17)
-        Me.tslFolder.Text = "C:\"
-        '
-        'tslNoFiles
-        '
-        Me.tslNoFiles.Name = "tslNoFiles"
-        Me.tslNoFiles.Size = New System.Drawing.Size(37, 17)
-        Me.tslNoFiles.Text = "0 files"
-        '
-        'msnMain
-        '
-        Me.msnMain.Dock = System.Windows.Forms.DockStyle.None
-        Me.msnMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiFile, Me.tmiView, Me.tmiTools, Me.tmiHelp})
-        Me.msnMain.Location = New System.Drawing.Point(0, 0)
-        Me.msnMain.Name = "msnMain"
-        Me.msnMain.Size = New System.Drawing.Size(720, 24)
-        Me.msnMain.TabIndex = 0
-        Me.msnMain.Text = "MenuStrip1"
-        '
-        'tmiFile
-        '
-        Me.tmiFile.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiBrowse, Me.tmiGoTo, Me.tmiSaveAll, Me.tssFileSep1, Me.tmiExit})
-        Me.tmiFile.Name = "tmiFile"
-        Me.tmiFile.Size = New System.Drawing.Size(37, 20)
-        Me.tmiFile.Text = "&File"
-        '
-        'tmiBrowse
-        '
-        Me.tmiBrowse.Name = "tmiBrowse"
-        Me.tmiBrowse.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.O), System.Windows.Forms.Keys)
-        Me.tmiBrowse.Size = New System.Drawing.Size(219, 22)
-        Me.tmiBrowse.Text = "&Browse for folder ..."
-        '
-        'tmiGoTo
-        '
-        Me.tmiGoTo.Name = "tmiGoTo"
-        Me.tmiGoTo.Size = New System.Drawing.Size(219, 22)
-        Me.tmiGoTo.Text = "&Go to folder ..."
-        '
-        'tmiSaveAll
-        '
-        Me.tmiSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
-        Me.tmiSaveAll.Name = "tmiSaveAll"
-        Me.tmiSaveAll.ShortcutKeys = CType((System.Windows.Forms.Keys.Control Or System.Windows.Forms.Keys.S), System.Windows.Forms.Keys)
-        Me.tmiSaveAll.Size = New System.Drawing.Size(219, 22)
-        Me.tmiSaveAll.Text = "&Save all"
-        '
-        'tssFileSep1
-        '
-        Me.tssFileSep1.Name = "tssFileSep1"
-        Me.tssFileSep1.Size = New System.Drawing.Size(216, 6)
-        '
-        'tmiExit
-        '
-        Me.tmiExit.Name = "tmiExit"
-        Me.tmiExit.ShortcutKeyDisplayString = "Alt+F4"
-        Me.tmiExit.Size = New System.Drawing.Size(219, 22)
-        Me.tmiExit.Text = "&Exit"
-        '
-        'tmiView
-        '
-        Me.tmiView.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiRefresh, Me.tmiNext, Me.tmiPrevious})
-        Me.tmiView.Name = "tmiView"
-        Me.tmiView.Size = New System.Drawing.Size(44, 20)
-        Me.tmiView.Text = "&View"
-        '
-        'tmiRefresh
-        '
-        Me.tmiRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
-        Me.tmiRefresh.Name = "tmiRefresh"
-        Me.tmiRefresh.ShortcutKeyDisplayString = "F5"
-        Me.tmiRefresh.Size = New System.Drawing.Size(203, 22)
-        Me.tmiRefresh.Text = "&Refresh"
-        '
-        'tmiNext
-        '
-        Me.tmiNext.Image = Global.Tools.Metanol.My.Resources.Resources.RightArrowHS
-        Me.tmiNext.Name = "tmiNext"
-        Me.tmiNext.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.Right), System.Windows.Forms.Keys)
-        Me.tmiNext.Size = New System.Drawing.Size(203, 22)
-        Me.tmiNext.Text = "Select &next"
-        '
-        'tmiPrevious
-        '
-        Me.tmiPrevious.Image = Global.Tools.Metanol.My.Resources.Resources.LeftArrowHS
-        Me.tmiPrevious.Name = "tmiPrevious"
-        Me.tmiPrevious.ShortcutKeys = CType((System.Windows.Forms.Keys.Alt Or System.Windows.Forms.Keys.Left), System.Windows.Forms.Keys)
-        Me.tmiPrevious.Size = New System.Drawing.Size(203, 22)
-        Me.tmiPrevious.Text = "Select &previous"
-        '
-        'tmiTools
-        '
-        Me.tmiTools.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiOptions})
-        Me.tmiTools.Name = "tmiTools"
-        Me.tmiTools.Size = New System.Drawing.Size(48, 20)
-        Me.tmiTools.Text = "&Tools"
-        '
-        'tmiOptions
-        '
-        Me.tmiOptions.Name = "tmiOptions"
-        Me.tmiOptions.Size = New System.Drawing.Size(128, 22)
-        Me.tmiOptions.Text = "&Options ..."
-        '
-        'tmiHelp
-        '
-        Me.tmiHelp.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiAbout})
-        Me.tmiHelp.Name = "tmiHelp"
-        Me.tmiHelp.Size = New System.Drawing.Size(44, 20)
-        Me.tmiHelp.Text = "&Help"
-        '
-        'tmiAbout
-        '
-        Me.tmiAbout.Name = "tmiAbout"
-        Me.tmiAbout.Size = New System.Drawing.Size(119, 22)
-        Me.tmiAbout.Text = "&About ..."
-        '
-        'tosMain
-        '
-        Me.tosMain.Dock = System.Windows.Forms.DockStyle.None
-        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tsbBack, Me.tsbForward, Me.tsbRefresh, Me.tsbSaveAll})
-        Me.tosMain.Location = New System.Drawing.Point(3, 24)
-        Me.tosMain.Name = "tosMain"
-        Me.tosMain.Size = New System.Drawing.Size(104, 25)
-        Me.tosMain.TabIndex = 1
-        '
-        'tsbBack
-        '
-        Me.tsbBack.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbBack.Enabled = False
-        Me.tsbBack.Image = Global.Tools.Metanol.My.Resources.Resources.NavBack
-        Me.tsbBack.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbBack.Name = "tsbBack"
-        Me.tsbBack.Size = New System.Drawing.Size(23, 22)
-        Me.tsbBack.Text = "Navigate backward"
-        '
-        'tsbForward
-        '
-        Me.tsbForward.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbForward.Enabled = False
-        Me.tsbForward.Image = Global.Tools.Metanol.My.Resources.Resources.NavForward
-        Me.tsbForward.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbForward.Name = "tsbForward"
-        Me.tsbForward.Size = New System.Drawing.Size(23, 22)
-        Me.tsbForward.Text = "Navigate forward"
-        '
-        'tsbRefresh
-        '
-        Me.tsbRefresh.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbRefresh.Image = Global.Tools.Metanol.My.Resources.Resources.Refresh
-        Me.tsbRefresh.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbRefresh.Name = "tsbRefresh"
-        Me.tsbRefresh.Size = New System.Drawing.Size(23, 22)
-        Me.tsbRefresh.Text = "Refresh folder"
-        '
-        'tsbSaveAll
-        '
-        Me.tsbSaveAll.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image
-        Me.tsbSaveAll.Image = Global.Tools.Metanol.My.Resources.Resources.SaveAllHS
-        Me.tsbSaveAll.ImageTransparentColor = System.Drawing.Color.Magenta
-        Me.tsbSaveAll.Name = "tsbSaveAll"
-        Me.tsbSaveAll.Size = New System.Drawing.Size(23, 22)
-        Me.tsbSaveAll.Text = "Save all"
+        resources.ApplyResources(Me.fbdGoTo, "fbdGoTo")
         '
         'bgwSave
         '
@@ -1012,15 +1024,16 @@ Partial Class frmMain
         '
         'frmMain
         '
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AccessibleDescription = Nothing
+        Me.AccessibleName = Nothing
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-        Me.ClientSize = New System.Drawing.Size(720, 496)
+        Me.BackgroundImage = Nothing
         Me.Controls.Add(Me.tscMain)
-        Me.Icon = CType(resources.GetObject("$this.Icon"), System.Drawing.Icon)
+        Me.Font = Nothing
         Me.KeyPreview = True
         Me.MainMenuStrip = Me.msnMain
         Me.Name = "frmMain"
-        Me.Text = "Metanol"
         Me.splMain.Panel1.ResumeLayout(False)
         Me.splMain.Panel2.ResumeLayout(False)
         Me.splMain.ResumeLayout(False)
@@ -1072,7 +1085,7 @@ Partial Class frmMain
     End Sub
     Friend WithEvents splMain As System.Windows.Forms.SplitContainer
     Friend WithEvents splBrowser As System.Windows.Forms.SplitContainer
-    Friend WithEvents lvwImages As System.Windows.Forms.ListView
+    Friend WithEvents lvwImages As TotalCommanderListView
     Friend WithEvents lvwFolders As System.Windows.Forms.ListView
     Friend WithEvents imlImages As System.Windows.Forms.ImageList
     Friend WithEvents bgwImages As System.ComponentModel.BackgroundWorker
@@ -1151,5 +1164,6 @@ Partial Class frmMain
     Friend WithEvents tslNoFiles As System.Windows.Forms.ToolStripStatusLabel
     Friend WithEvents cmsImages As System.Windows.Forms.ContextMenuStrip
     Friend WithEvents tmiMerge As System.Windows.Forms.ToolStripMenuItem
+    Friend WithEvents tmiVersionHistory As System.Windows.Forms.ToolStripMenuItem
 
 End Class

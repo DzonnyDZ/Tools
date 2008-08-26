@@ -22,6 +22,7 @@ Partial Class frmFolderDialog
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
+        Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(frmFolderDialog))
         Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
         Me.lblI = New System.Windows.Forms.Label
         Me.txtPath = New System.Windows.Forms.TextBox
@@ -36,116 +37,102 @@ Partial Class frmFolderDialog
         '
         'tlpMain
         '
-        Me.tlpMain.AutoSize = True
-        Me.tlpMain.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tlpMain.ColumnCount = 2
-        Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-        Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle)
-        Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 20.0!))
+        Me.tlpMain.AccessibleDescription = Nothing
+        Me.tlpMain.AccessibleName = Nothing
+        resources.ApplyResources(Me.tlpMain, "tlpMain")
+        Me.tlpMain.BackgroundImage = Nothing
         Me.tlpMain.Controls.Add(Me.lblI, 0, 0)
         Me.tlpMain.Controls.Add(Me.txtPath, 0, 1)
         Me.tlpMain.Controls.Add(Me.cmdPath, 1, 1)
         Me.tlpMain.Controls.Add(Me.tmpButtons, 0, 2)
-        Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
-        Me.tlpMain.Location = New System.Drawing.Point(0, 0)
+        Me.tlpMain.Font = Nothing
         Me.tlpMain.Name = "tlpMain"
-        Me.tlpMain.RowCount = 3
-        Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-        Me.tlpMain.Size = New System.Drawing.Size(354, 94)
-        Me.tlpMain.TabIndex = 0
         '
         'lblI
         '
-        Me.lblI.AutoSize = True
+        Me.lblI.AccessibleDescription = Nothing
+        Me.lblI.AccessibleName = Nothing
+        resources.ApplyResources(Me.lblI, "lblI")
         Me.tlpMain.SetColumnSpan(Me.lblI, 2)
-        Me.lblI.Location = New System.Drawing.Point(3, 0)
+        Me.lblI.Font = Nothing
         Me.lblI.Name = "lblI"
-        Me.lblI.Size = New System.Drawing.Size(66, 13)
-        Me.lblI.TabIndex = 0
-        Me.lblI.Text = "Select folder"
         '
         'txtPath
         '
-        Me.txtPath.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
+        Me.txtPath.AccessibleDescription = Nothing
+        Me.txtPath.AccessibleName = Nothing
+        resources.ApplyResources(Me.txtPath, "txtPath")
         Me.txtPath.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend
         Me.txtPath.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.FileSystemDirectories
-        Me.txtPath.Location = New System.Drawing.Point(3, 17)
+        Me.txtPath.BackgroundImage = Nothing
+        Me.txtPath.Font = Nothing
         Me.txtPath.Name = "txtPath"
-        Me.txtPath.Size = New System.Drawing.Size(316, 20)
-        Me.txtPath.TabIndex = 1
         '
         'cmdPath
         '
-        Me.cmdPath.Anchor = System.Windows.Forms.AnchorStyles.None
-        Me.cmdPath.AutoSize = True
-        Me.cmdPath.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.cmdPath.Location = New System.Drawing.Point(325, 16)
+        Me.cmdPath.AccessibleDescription = Nothing
+        Me.cmdPath.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmdPath, "cmdPath")
+        Me.cmdPath.BackgroundImage = Nothing
+        Me.cmdPath.Font = Nothing
         Me.cmdPath.Name = "cmdPath"
-        Me.cmdPath.Size = New System.Drawing.Size(26, 23)
-        Me.cmdPath.TabIndex = 2
-        Me.cmdPath.Text = "..."
         Me.cmdPath.UseVisualStyleBackColor = True
         '
         'tmpButtons
         '
-        Me.tmpButtons.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-        Me.tmpButtons.AutoSize = True
-        Me.tmpButtons.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-        Me.tmpButtons.ColumnCount = 2
+        Me.tmpButtons.AccessibleDescription = Nothing
+        Me.tmpButtons.AccessibleName = Nothing
+        resources.ApplyResources(Me.tmpButtons, "tmpButtons")
+        Me.tmpButtons.BackgroundImage = Nothing
         Me.tlpMain.SetColumnSpan(Me.tmpButtons, 2)
-        Me.tmpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.tmpButtons.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
         Me.tmpButtons.Controls.Add(Me.cmdOK, 0, 0)
         Me.tmpButtons.Controls.Add(Me.cmdCancel, 1, 0)
-        Me.tmpButtons.Location = New System.Drawing.Point(3, 53)
+        Me.tmpButtons.Font = Nothing
         Me.tmpButtons.Name = "tmpButtons"
-        Me.tmpButtons.RowCount = 1
-        Me.tmpButtons.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.0!))
-        Me.tmpButtons.Size = New System.Drawing.Size(348, 29)
-        Me.tmpButtons.TabIndex = 4
         '
         'cmdOK
         '
-        Me.cmdOK.Anchor = System.Windows.Forms.AnchorStyles.Left
-        Me.cmdOK.AutoSize = True
-        Me.cmdOK.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.cmdOK.AccessibleDescription = Nothing
+        Me.cmdOK.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmdOK, "cmdOK")
+        Me.cmdOK.BackgroundImage = Nothing
         Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK
-        Me.cmdOK.Location = New System.Drawing.Point(3, 3)
+        Me.cmdOK.Font = Nothing
         Me.cmdOK.Name = "cmdOK"
-        Me.cmdOK.Size = New System.Drawing.Size(32, 23)
-        Me.cmdOK.TabIndex = 0
-        Me.cmdOK.Text = "&OK"
         Me.cmdOK.UseVisualStyleBackColor = True
         '
         'cmdCancel
         '
-        Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.Right
-        Me.cmdCancel.AutoSize = True
-        Me.cmdCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.cmdCancel.AccessibleDescription = Nothing
+        Me.cmdCancel.AccessibleName = Nothing
+        resources.ApplyResources(Me.cmdCancel, "cmdCancel")
+        Me.cmdCancel.BackgroundImage = Nothing
         Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-        Me.cmdCancel.Location = New System.Drawing.Point(295, 3)
+        Me.cmdCancel.Font = Nothing
         Me.cmdCancel.Name = "cmdCancel"
-        Me.cmdCancel.Size = New System.Drawing.Size(50, 23)
-        Me.cmdCancel.TabIndex = 1
-        Me.cmdCancel.Text = "&Cancel"
         Me.cmdCancel.UseVisualStyleBackColor = True
+        '
+        'fbdBrowse
+        '
+        resources.ApplyResources(Me.fbdBrowse, "fbdBrowse")
         '
         'frmFolderDialog
         '
         Me.AcceptButton = Me.cmdOK
-        Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+        Me.AccessibleDescription = Nothing
+        Me.AccessibleName = Nothing
+        resources.ApplyResources(Me, "$this")
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+        Me.BackgroundImage = Nothing
         Me.CancelButton = Me.cmdCancel
-        Me.ClientSize = New System.Drawing.Size(354, 94)
         Me.Controls.Add(Me.tlpMain)
+        Me.Font = Nothing
+        Me.Icon = Nothing
         Me.MaximizeBox = False
         Me.MinimizeBox = False
         Me.Name = "frmFolderDialog"
         Me.ShowIcon = False
         Me.ShowInTaskbar = False
-        Me.Text = "Select folder"
         Me.tlpMain.ResumeLayout(False)
         Me.tlpMain.PerformLayout()
         Me.tmpButtons.ResumeLayout(False)

@@ -117,73 +117,54 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="tmiNextImage.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Vpravo</value>
+  </data>
   <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cmsMenu.Size" type="System.Drawing.Size, System.Drawing">
-    <value>193, 142</value>
-  </data>
-  <data name="rmiRoR.Text" xml:space="preserve">
-    <value>Rotate right</value>
-  </data>
-  <data name="rmiRoR.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>R</value>
-  </data>
-  <data name="tmiClose.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="tmiPreviousImage.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Left</value>
-  </data>
-  <data name="sepContext1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>189, 6</value>
-  </data>
-  <data name="&gt;&gt;tmiClose.Name" xml:space="preserve">
-    <value>tmiClose</value>
-  </data>
-  <data name="&gt;&gt;cmsMenu.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ContextMenuStrip, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tmiFullScreen.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="&gt;&gt;sepContext1.Name" xml:space="preserve">
-    <value>sepContext1</value>
+  <data name="tmiNextImage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 22</value>
   </data>
   <data name="tmiNextImage.Text" xml:space="preserve">
-    <value>Next image</value>
+    <value>Další obrázek</value>
   </data>
-  <data name="&gt;&gt;tmiFullScreen.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="tmiPreviousImage.ShortcutKeyDisplayString" xml:space="preserve">
+    <value>Vlevo</value>
   </data>
-  <data name="tmiClose.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Esc</value>
+  <data name="tmiPreviousImage.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 22</value>
   </data>
-  <data name="tmiFullScreen.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Enter</value>
+  <data name="tmiPreviousImage.Text" xml:space="preserve">
+    <value>Předchozí obrázek</value>
+  </data>
+  <data name="tmiFullScreen.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 22</value>
   </data>
   <data name="tmiFullScreen.Text" xml:space="preserve">
-    <value>Toggle full-screen</value>
+    <value>Přepnout celou obrazovku</value>
+  </data>
+  <data name="tmiClose.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 22</value>
+  </data>
+  <data name="tmiClose.Text" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="sepContext1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>229, 6</value>
+  </data>
+  <data name="tmiRoL.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 22</value>
   </data>
   <data name="tmiRoL.Text" xml:space="preserve">
-    <value>Rotale left</value>
+    <value>Otočit vlevo</value>
   </data>
-  <data name="&gt;&gt;sepContext1.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripSeparator, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="rmiRoR.Size" type="System.Drawing.Size, System.Drawing">
+    <value>232, 22</value>
   </data>
-  <data name="&gt;&gt;$this.Type" xml:space="preserve">
-    <value>System.Windows.Forms.Form, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  <data name="rmiRoR.Text" xml:space="preserve">
+    <value>Otočit vpravo</value>
   </data>
-  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="$this.BackgroundImageLayout" type="System.Windows.Forms.ImageLayout, System.Windows.Forms">
-    <value>Zoom</value>
-  </data>
-  <data name="tmiNextImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="&gt;&gt;tmiNextImage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="$this.ClientSize" type="System.Drawing.Size, System.Drawing">
-    <value>284, 264</value>
+  <data name="cmsMenu.Size" type="System.Drawing.Size, System.Drawing">
+    <value>233, 142</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
@@ -504,70 +485,7 @@
         AAD/+wAA//MAAP/zAAA=
 </value>
   </data>
-  <data name="&gt;&gt;tmiNextImage.Name" xml:space="preserve">
-    <value>tmiNextImage</value>
-  </data>
-  <data name="&gt;&gt;tmiRoL.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="&gt;&gt;tmiPreviousImage.Name" xml:space="preserve">
-    <value>tmiPreviousImage</value>
-  </data>
-  <data name="&gt;&gt;tmiRoL.Name" xml:space="preserve">
-    <value>tmiRoL</value>
-  </data>
-  <data name="&gt;&gt;tmiClose.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
   <data name="$this.Text" xml:space="preserve">
-    <value>Preview</value>
+    <value>Náhled</value>
   </data>
-  <data name="&gt;&gt;tmiFullScreen.Name" xml:space="preserve">
-    <value>tmiFullScreen</value>
-  </data>
-  <data name="tmiRoL.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="tmiPreviousImage.Text" xml:space="preserve">
-    <value>Previous image</value>
-  </data>
-  <data name="tmiNextImage.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>Right</value>
-  </data>
-  <data name="&gt;&gt;cmsMenu.Name" xml:space="preserve">
-    <value>cmsMenu</value>
-  </data>
-  <data name="&gt;&gt;rmiRoR.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="tmiPreviousImage.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="$this.AutoScaleDimensions" type="System.Drawing.SizeF, System.Drawing">
-    <value>6, 13</value>
-  </data>
-  <data name="tmiClose.Text" xml:space="preserve">
-    <value>Close</value>
-  </data>
-  <data name="&gt;&gt;rmiRoR.Name" xml:space="preserve">
-    <value>rmiRoR</value>
-  </data>
-  <data name="&gt;&gt;$this.Name" xml:space="preserve">
-    <value>frmLarge</value>
-  </data>
-  <data name="&gt;&gt;tmiPreviousImage.Type" xml:space="preserve">
-    <value>System.Windows.Forms.ToolStripMenuItem, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
-  </data>
-  <data name="rmiRoR.Size" type="System.Drawing.Size, System.Drawing">
-    <value>192, 22</value>
-  </data>
-  <data name="tmiRoL.ShortcutKeyDisplayString" xml:space="preserve">
-    <value>L</value>
-  </data>
-  <metadata name="cmsMenu.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 17</value>
-  </metadata>
-  <metadata name="$this.Localizable" type="System.Boolean, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-    <value>True</value>
-  </metadata>
 </root>

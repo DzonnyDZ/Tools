@@ -58,7 +58,7 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     Public ReadOnly Property IPTCContains() As Boolean
         Get
             If Not _IPTCContains.HasValue Then
-                IPTCLoad(False)
+                IPTCLoad(True)
             Else
                 Return _IPTCContains
             End If
@@ -149,7 +149,13 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
     ''' <summary>Gets value indicating if any part is in usaved state</summary>
     Public ReadOnly Property Changed() As Boolean
         Get
+            'TODO: Exif
+            'Try
+            If IPTC Is Nothing Then Return False
             Return IPTC.Changed
+            'Catch ex As NullReferenceException 'Why this happens?
+            'Return False
+            'End Try
         End Get
     End Property
     ''' <summary>Raised when any metadata part changes</summary>
@@ -274,7 +280,7 @@ Public NotInheritable Class MetadataItem : Inherits ListViewItem
         If (e.State And ListViewItemStates.Selected) = ListViewItemStates.Selected OrElse (e.State And ListViewItemStates.Focused) = ListViewItemStates.Focused Then
             e.DrawBackground()
             Dim ImageBounds = Me.GetBounds(ItemBoundsPortion.Icon)
-            Dim Image = Me.ImageList.Images(Me.ImageKey)
+            Dim Image As Image = If(Me.ImageList IsNot Nothing, Me.ImageList.Images(Me.ImageKey), Nothing)
             If Image IsNot Nothing Then
                 'e.Graphics.DrawImageInPixels(Image, ImageBounds.X + ImageBounds.Width / 2 - Image.Width / 2, ImageBounds.Y + ImageBounds.Height / 2 - Image.Height / 2)
                 e.Graphics.DrawImageUnscaled(Image, ImageBounds.X + ImageBounds.Width / 2 - Image.Width / 2, ImageBounds.Y + ImageBounds.Height / 2 - Image.Height / 2)

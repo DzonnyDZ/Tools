@@ -273,6 +273,18 @@ Namespace My
                 Me("LargeFullScreen") = value
             End Set
         End Property
+        
+        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("True")>  _
+        Public Property TCBehavior() As Boolean
+            Get
+                Return CType(Me("TCBehavior"),Boolean)
+            End Get
+            Set
+                Me("TCBehavior") = value
+            End Set
+        End Property
     End Class
 End Namespace
 

@@ -31,9 +31,7 @@ Namespace WindowsT.FormsT
             Me.fraAutoComplete = New System.Windows.Forms.GroupBox
             Me.kweAutoComplete = New Tools.WindowsT.FormsT.KeyWordsEditor
             Me.fraCache = New System.Windows.Forms.GroupBox
-            Me.lblCache = New System.Windows.Forms.Label
-            Me.tlpClearCache = New System.Windows.Forms.TableLayoutPanel
-            Me.cmdClearCache = New System.Windows.Forms.Button
+            Me.kweCache = New Tools.WindowsT.FormsT.KeyWordsEditor
             Me.fraSynonyms = New System.Windows.Forms.GroupBox
             Me.splSynonyms = New System.Windows.Forms.SplitContainer
             Me.fraKeys = New System.Windows.Forms.GroupBox
@@ -61,7 +59,6 @@ Namespace WindowsT.FormsT
             Me.splAutoComplete.SuspendLayout()
             Me.fraAutoComplete.SuspendLayout()
             Me.fraCache.SuspendLayout()
-            Me.tlpClearCache.SuspendLayout()
             Me.fraSynonyms.SuspendLayout()
             Me.splSynonyms.Panel1.SuspendLayout()
             Me.splSynonyms.Panel2.SuspendLayout()
@@ -75,333 +72,126 @@ Namespace WindowsT.FormsT
             '
             'splVertical
             '
-            Me.splVertical.AccessibleDescription = Nothing
-            Me.splVertical.AccessibleName = Nothing
             resources.ApplyResources(Me.splVertical, "splVertical")
-            Me.splVertical.BackgroundImage = Nothing
-            Me.splVertical.Font = Nothing
             Me.splVertical.Name = "splVertical"
             '
             'splVertical.Panel1
             '
-            Me.splVertical.Panel1.AccessibleDescription = Nothing
-            Me.splVertical.Panel1.AccessibleName = Nothing
-            resources.ApplyResources(Me.splVertical.Panel1, "splVertical.Panel1")
-            Me.splVertical.Panel1.BackgroundImage = Nothing
             Me.splVertical.Panel1.Controls.Add(Me.splAutoComplete)
-            Me.splVertical.Panel1.Font = Nothing
-            Me.totToolTip.SetToolTip(Me.splVertical.Panel1, resources.GetString("splVertical.Panel1.ToolTip"))
             '
             'splVertical.Panel2
             '
-            Me.splVertical.Panel2.AccessibleDescription = Nothing
-            Me.splVertical.Panel2.AccessibleName = Nothing
-            resources.ApplyResources(Me.splVertical.Panel2, "splVertical.Panel2")
-            Me.splVertical.Panel2.BackgroundImage = Nothing
             Me.splVertical.Panel2.Controls.Add(Me.fraSynonyms)
-            Me.splVertical.Panel2.Font = Nothing
-            Me.totToolTip.SetToolTip(Me.splVertical.Panel2, resources.GetString("splVertical.Panel2.ToolTip"))
-            Me.totToolTip.SetToolTip(Me.splVertical, resources.GetString("splVertical.ToolTip"))
             '
             'splAutoComplete
             '
-            Me.splAutoComplete.AccessibleDescription = Nothing
-            Me.splAutoComplete.AccessibleName = Nothing
             resources.ApplyResources(Me.splAutoComplete, "splAutoComplete")
-            Me.splAutoComplete.BackgroundImage = Nothing
-            Me.splAutoComplete.FixedPanel = System.Windows.Forms.FixedPanel.Panel2
-            Me.splAutoComplete.Font = Nothing
             Me.splAutoComplete.Name = "splAutoComplete"
             '
             'splAutoComplete.Panel1
             '
-            Me.splAutoComplete.Panel1.AccessibleDescription = Nothing
-            Me.splAutoComplete.Panel1.AccessibleName = Nothing
-            resources.ApplyResources(Me.splAutoComplete.Panel1, "splAutoComplete.Panel1")
-            Me.splAutoComplete.Panel1.BackgroundImage = Nothing
             Me.splAutoComplete.Panel1.Controls.Add(Me.fraAutoComplete)
-            Me.splAutoComplete.Panel1.Font = Nothing
-            Me.totToolTip.SetToolTip(Me.splAutoComplete.Panel1, resources.GetString("splAutoComplete.Panel1.ToolTip"))
             '
             'splAutoComplete.Panel2
             '
-            Me.splAutoComplete.Panel2.AccessibleDescription = Nothing
-            Me.splAutoComplete.Panel2.AccessibleName = Nothing
-            resources.ApplyResources(Me.splAutoComplete.Panel2, "splAutoComplete.Panel2")
-            Me.splAutoComplete.Panel2.BackgroundImage = Nothing
             Me.splAutoComplete.Panel2.Controls.Add(Me.fraCache)
-            Me.splAutoComplete.Panel2.Font = Nothing
-            Me.totToolTip.SetToolTip(Me.splAutoComplete.Panel2, resources.GetString("splAutoComplete.Panel2.ToolTip"))
-            Me.totToolTip.SetToolTip(Me.splAutoComplete, resources.GetString("splAutoComplete.ToolTip"))
             '
             'fraAutoComplete
             '
-            Me.fraAutoComplete.AccessibleDescription = Nothing
-            Me.fraAutoComplete.AccessibleName = Nothing
-            resources.ApplyResources(Me.fraAutoComplete, "fraAutoComplete")
-            Me.fraAutoComplete.BackgroundImage = Nothing
             Me.fraAutoComplete.Controls.Add(Me.kweAutoComplete)
-            Me.fraAutoComplete.Font = Nothing
+            resources.ApplyResources(Me.fraAutoComplete, "fraAutoComplete")
             Me.fraAutoComplete.Name = "fraAutoComplete"
             Me.fraAutoComplete.TabStop = False
-            Me.totToolTip.SetToolTip(Me.fraAutoComplete, resources.GetString("fraAutoComplete.ToolTip"))
             '
             'kweAutoComplete
             '
-            Me.kweAutoComplete.AccessibleDescription = Nothing
-            Me.kweAutoComplete.AccessibleName = Nothing
+            Me.kweAutoComplete.AutomaticsLists_Designer = True
             resources.ApplyResources(Me.kweAutoComplete, "kweAutoComplete")
-            Me.kweAutoComplete.BackgroundImage = Nothing
-            Me.kweAutoComplete.Font = Nothing
             Me.kweAutoComplete.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweAutoComplete.Name = "kweAutoComplete"
-            '
-            '
-            '
-            Me.kweAutoComplete.Status.AccessibleDescription = Nothing
-            Me.kweAutoComplete.Status.AccessibleName = Nothing
-            Me.kweAutoComplete.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweAutoComplete.Status.Anchor = CType(resources.GetObject("kweAutoComplete.Status.Anchor"), System.Windows.Forms.AnchorStyles)
-            Me.kweAutoComplete.Status.AutoChanged = False
-            Me.kweAutoComplete.Status.AutoScroll = CType(resources.GetObject("kweAutoComplete.Status.AutoScroll"), Boolean)
-            Me.kweAutoComplete.Status.AutoSize = CType(resources.GetObject("kweAutoComplete.Status.AutoSize"), Boolean)
-            Me.kweAutoComplete.Status.AutoSizeMode = CType(resources.GetObject("kweAutoComplete.Status.AutoSizeMode"), System.Windows.Forms.AutoSizeMode)
-            Me.kweAutoComplete.Status.BackgroundImage = Nothing
-            Me.kweAutoComplete.Status.BackgroundImageLayout = CType(resources.GetObject("kweAutoComplete.Status.BackgroundImageLayout"), System.Windows.Forms.ImageLayout)
-            Me.kweAutoComplete.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweAutoComplete.Status.Dock = CType(resources.GetObject("kweAutoComplete.Status.Dock"), System.Windows.Forms.DockStyle)
-            Me.kweAutoComplete.Status.Enabled = CType(resources.GetObject("kweAutoComplete.Status.Enabled"), Boolean)
-            Me.kweAutoComplete.Status.Font = Nothing
-            Me.kweAutoComplete.Status.ImeMode = CType(resources.GetObject("kweAutoComplete.Status.ImeMode"), System.Windows.Forms.ImeMode)
-            Me.kweAutoComplete.Status.Location = CType(resources.GetObject("kweAutoComplete.Status.Location"), System.Drawing.Point)
-            Me.kweAutoComplete.Status.Margin = CType(resources.GetObject("kweAutoComplete.Status.Margin"), System.Windows.Forms.Padding)
-            Me.kweAutoComplete.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweAutoComplete.Status.Name = "stmStatus"
-            Me.kweAutoComplete.Status.RightToLeft = CType(resources.GetObject("kweAutoComplete.Status.RightToLeft"), System.Windows.Forms.RightToLeft)
-            Me.kweAutoComplete.Status.Size = CType(resources.GetObject("kweAutoComplete.Status.Size"), System.Drawing.Size)
-            Me.kweAutoComplete.Status.StatusedControl = Nothing
-            Me.kweAutoComplete.Status.TabIndex = CType(resources.GetObject("kweAutoComplete.Status.TabIndex"), Integer)
-            Me.kweAutoComplete.Status.TabStop = False
-            Me.kweAutoComplete.Status.Visible = CType(resources.GetObject("kweAutoComplete.Status.Visible"), Boolean)
             Me.kweAutoComplete.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweAutoComplete.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.totToolTip.SetToolTip(Me.kweAutoComplete, resources.GetString("kweAutoComplete.ToolTip"))
             '
             'fraCache
             '
-            Me.fraCache.AccessibleDescription = Nothing
-            Me.fraCache.AccessibleName = Nothing
+            Me.fraCache.Controls.Add(Me.kweCache)
             resources.ApplyResources(Me.fraCache, "fraCache")
-            Me.fraCache.BackgroundImage = Nothing
-            Me.fraCache.Controls.Add(Me.lblCache)
-            Me.fraCache.Controls.Add(Me.tlpClearCache)
-            Me.fraCache.Font = Nothing
             Me.fraCache.Name = "fraCache"
             Me.fraCache.TabStop = False
-            Me.totToolTip.SetToolTip(Me.fraCache, resources.GetString("fraCache.ToolTip"))
             '
-            'lblCache
+            'kweCache
             '
-            Me.lblCache.AccessibleDescription = Nothing
-            Me.lblCache.AccessibleName = Nothing
-            resources.ApplyResources(Me.lblCache, "lblCache")
-            Me.lblCache.AutoEllipsis = True
-            Me.lblCache.Font = Nothing
-            Me.lblCache.Name = "lblCache"
-            Me.totToolTip.SetToolTip(Me.lblCache, resources.GetString("lblCache.ToolTip"))
-            '
-            'tlpClearCache
-            '
-            Me.tlpClearCache.AccessibleDescription = Nothing
-            Me.tlpClearCache.AccessibleName = Nothing
-            resources.ApplyResources(Me.tlpClearCache, "tlpClearCache")
-            Me.tlpClearCache.BackgroundImage = Nothing
-            Me.tlpClearCache.Controls.Add(Me.cmdClearCache, 0, 0)
-            Me.tlpClearCache.Font = Nothing
-            Me.tlpClearCache.Name = "tlpClearCache"
-            Me.totToolTip.SetToolTip(Me.tlpClearCache, resources.GetString("tlpClearCache.ToolTip"))
-            '
-            'cmdClearCache
-            '
-            Me.cmdClearCache.AccessibleDescription = Nothing
-            Me.cmdClearCache.AccessibleName = Nothing
-            resources.ApplyResources(Me.cmdClearCache, "cmdClearCache")
-            Me.cmdClearCache.BackgroundImage = Nothing
-            Me.cmdClearCache.Font = Nothing
-            Me.cmdClearCache.Image = Global.Tools.My.Resources.Resources.Delete
-            Me.cmdClearCache.Name = "cmdClearCache"
-            Me.totToolTip.SetToolTip(Me.cmdClearCache, resources.GetString("cmdClearCache.ToolTip"))
-            Me.cmdClearCache.UseVisualStyleBackColor = True
+            Me.kweCache.AutomaticsLists_Designer = True
+            resources.ApplyResources(Me.kweCache, "kweCache")
+            Me.kweCache.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+            Me.kweCache.Name = "kweCache"
+            Me.kweCache.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
+            Me.kweCache.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             '
             'fraSynonyms
             '
-            Me.fraSynonyms.AccessibleDescription = Nothing
-            Me.fraSynonyms.AccessibleName = Nothing
-            resources.ApplyResources(Me.fraSynonyms, "fraSynonyms")
-            Me.fraSynonyms.BackgroundImage = Nothing
             Me.fraSynonyms.Controls.Add(Me.splSynonyms)
             Me.fraSynonyms.Controls.Add(Me.tlpSelect)
-            Me.fraSynonyms.Font = Nothing
+            resources.ApplyResources(Me.fraSynonyms, "fraSynonyms")
             Me.fraSynonyms.Name = "fraSynonyms"
             Me.fraSynonyms.TabStop = False
-            Me.totToolTip.SetToolTip(Me.fraSynonyms, resources.GetString("fraSynonyms.ToolTip"))
             '
             'splSynonyms
             '
-            Me.splSynonyms.AccessibleDescription = Nothing
-            Me.splSynonyms.AccessibleName = Nothing
             resources.ApplyResources(Me.splSynonyms, "splSynonyms")
-            Me.splSynonyms.BackgroundImage = Nothing
-            Me.splSynonyms.Font = Nothing
             Me.splSynonyms.Name = "splSynonyms"
             '
             'splSynonyms.Panel1
             '
-            Me.splSynonyms.Panel1.AccessibleDescription = Nothing
-            Me.splSynonyms.Panel1.AccessibleName = Nothing
-            resources.ApplyResources(Me.splSynonyms.Panel1, "splSynonyms.Panel1")
-            Me.splSynonyms.Panel1.BackgroundImage = Nothing
             Me.splSynonyms.Panel1.Controls.Add(Me.fraKeys)
-            Me.splSynonyms.Panel1.Font = Nothing
-            Me.totToolTip.SetToolTip(Me.splSynonyms.Panel1, resources.GetString("splSynonyms.Panel1.ToolTip"))
             '
             'splSynonyms.Panel2
             '
-            Me.splSynonyms.Panel2.AccessibleDescription = Nothing
-            Me.splSynonyms.Panel2.AccessibleName = Nothing
-            resources.ApplyResources(Me.splSynonyms.Panel2, "splSynonyms.Panel2")
-            Me.splSynonyms.Panel2.BackgroundImage = Nothing
             Me.splSynonyms.Panel2.Controls.Add(Me.fraValues)
-            Me.splSynonyms.Panel2.Font = Nothing
-            Me.totToolTip.SetToolTip(Me.splSynonyms.Panel2, resources.GetString("splSynonyms.Panel2.ToolTip"))
-            Me.totToolTip.SetToolTip(Me.splSynonyms, resources.GetString("splSynonyms.ToolTip"))
             '
             'fraKeys
             '
-            Me.fraKeys.AccessibleDescription = Nothing
-            Me.fraKeys.AccessibleName = Nothing
-            resources.ApplyResources(Me.fraKeys, "fraKeys")
-            Me.fraKeys.BackgroundImage = Nothing
             Me.fraKeys.Controls.Add(Me.kweKeys)
-            Me.fraKeys.Font = Nothing
+            resources.ApplyResources(Me.fraKeys, "fraKeys")
             Me.fraKeys.Name = "fraKeys"
             Me.fraKeys.TabStop = False
-            Me.totToolTip.SetToolTip(Me.fraKeys, resources.GetString("fraKeys.ToolTip"))
             '
             'kweKeys
             '
-            Me.kweKeys.AccessibleDescription = Nothing
-            Me.kweKeys.AccessibleName = Nothing
+            Me.kweKeys.AutomaticsLists_Designer = True
             resources.ApplyResources(Me.kweKeys, "kweKeys")
-            Me.kweKeys.BackgroundImage = Nothing
-            Me.kweKeys.Font = Nothing
             Me.kweKeys.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweKeys.Name = "kweKeys"
-            '
-            '
-            '
-            Me.kweKeys.Status.AccessibleDescription = Nothing
-            Me.kweKeys.Status.AccessibleName = Nothing
-            Me.kweKeys.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweKeys.Status.Anchor = CType(resources.GetObject("kweKeys.Status.Anchor"), System.Windows.Forms.AnchorStyles)
-            Me.kweKeys.Status.AutoChanged = False
-            Me.kweKeys.Status.AutoScroll = CType(resources.GetObject("kweKeys.Status.AutoScroll"), Boolean)
-            Me.kweKeys.Status.AutoSize = CType(resources.GetObject("kweKeys.Status.AutoSize"), Boolean)
-            Me.kweKeys.Status.AutoSizeMode = CType(resources.GetObject("kweKeys.Status.AutoSizeMode"), System.Windows.Forms.AutoSizeMode)
-            Me.kweKeys.Status.BackgroundImage = Nothing
-            Me.kweKeys.Status.BackgroundImageLayout = CType(resources.GetObject("kweKeys.Status.BackgroundImageLayout"), System.Windows.Forms.ImageLayout)
-            Me.kweKeys.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweKeys.Status.Dock = CType(resources.GetObject("kweKeys.Status.Dock"), System.Windows.Forms.DockStyle)
-            Me.kweKeys.Status.Enabled = CType(resources.GetObject("kweKeys.Status.Enabled"), Boolean)
-            Me.kweKeys.Status.Font = Nothing
-            Me.kweKeys.Status.ImeMode = CType(resources.GetObject("kweKeys.Status.ImeMode"), System.Windows.Forms.ImeMode)
-            Me.kweKeys.Status.Location = CType(resources.GetObject("kweKeys.Status.Location"), System.Drawing.Point)
-            Me.kweKeys.Status.Margin = CType(resources.GetObject("kweKeys.Status.Margin"), System.Windows.Forms.Padding)
-            Me.kweKeys.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweKeys.Status.Name = "stmStatus"
-            Me.kweKeys.Status.RightToLeft = CType(resources.GetObject("kweKeys.Status.RightToLeft"), System.Windows.Forms.RightToLeft)
-            Me.kweKeys.Status.Size = CType(resources.GetObject("kweKeys.Status.Size"), System.Drawing.Size)
-            Me.kweKeys.Status.StatusedControl = Nothing
-            Me.kweKeys.Status.TabIndex = CType(resources.GetObject("kweKeys.Status.TabIndex"), Integer)
-            Me.kweKeys.Status.TabStop = False
-            Me.kweKeys.Status.Visible = CType(resources.GetObject("kweKeys.Status.Visible"), Boolean)
             Me.kweKeys.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweKeys.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.totToolTip.SetToolTip(Me.kweKeys, resources.GetString("kweKeys.ToolTip"))
             '
             'fraValues
             '
-            Me.fraValues.AccessibleDescription = Nothing
-            Me.fraValues.AccessibleName = Nothing
-            resources.ApplyResources(Me.fraValues, "fraValues")
-            Me.fraValues.BackgroundImage = Nothing
             Me.fraValues.Controls.Add(Me.kweValues)
-            Me.fraValues.Font = Nothing
+            resources.ApplyResources(Me.fraValues, "fraValues")
             Me.fraValues.Name = "fraValues"
             Me.fraValues.TabStop = False
-            Me.totToolTip.SetToolTip(Me.fraValues, resources.GetString("fraValues.ToolTip"))
             '
             'kweValues
             '
-            Me.kweValues.AccessibleDescription = Nothing
-            Me.kweValues.AccessibleName = Nothing
+            Me.kweValues.AutomaticsLists_Designer = True
             resources.ApplyResources(Me.kweValues, "kweValues")
-            Me.kweValues.BackgroundImage = Nothing
-            Me.kweValues.Font = Nothing
             Me.kweValues.MergeButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweValues.Name = "kweValues"
-            '
-            '
-            '
-            Me.kweValues.Status.AccessibleDescription = Nothing
-            Me.kweValues.Status.AccessibleName = Nothing
-            Me.kweValues.Status.AddMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweValues.Status.Anchor = CType(resources.GetObject("kweValues.Status.Anchor"), System.Windows.Forms.AnchorStyles)
-            Me.kweValues.Status.AutoChanged = False
-            Me.kweValues.Status.AutoScroll = CType(resources.GetObject("kweValues.Status.AutoScroll"), Boolean)
-            Me.kweValues.Status.AutoSize = CType(resources.GetObject("kweValues.Status.AutoSize"), Boolean)
-            Me.kweValues.Status.AutoSizeMode = CType(resources.GetObject("kweValues.Status.AutoSizeMode"), System.Windows.Forms.AutoSizeMode)
-            Me.kweValues.Status.BackgroundImage = Nothing
-            Me.kweValues.Status.BackgroundImageLayout = CType(resources.GetObject("kweValues.Status.BackgroundImageLayout"), System.Windows.Forms.ImageLayout)
-            Me.kweValues.Status.DeleteMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.kweValues.Status.Dock = CType(resources.GetObject("kweValues.Status.Dock"), System.Windows.Forms.DockStyle)
-            Me.kweValues.Status.Enabled = CType(resources.GetObject("kweValues.Status.Enabled"), Boolean)
-            Me.kweValues.Status.Font = Nothing
-            Me.kweValues.Status.ImeMode = CType(resources.GetObject("kweValues.Status.ImeMode"), System.Windows.Forms.ImeMode)
-            Me.kweValues.Status.Location = CType(resources.GetObject("kweValues.Status.Location"), System.Drawing.Point)
-            Me.kweValues.Status.Margin = CType(resources.GetObject("kweValues.Status.Margin"), System.Windows.Forms.Padding)
-            Me.kweValues.Status.MarkAsChangedMenuState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Enabled
-            Me.kweValues.Status.Name = "stmStatus"
-            Me.kweValues.Status.RightToLeft = CType(resources.GetObject("kweValues.Status.RightToLeft"), System.Windows.Forms.RightToLeft)
-            Me.kweValues.Status.Size = CType(resources.GetObject("kweValues.Status.Size"), System.Drawing.Size)
-            Me.kweValues.Status.StatusedControl = Nothing
-            Me.kweValues.Status.TabIndex = CType(resources.GetObject("kweValues.Status.TabIndex"), Integer)
-            Me.kweValues.Status.TabStop = False
-            Me.kweValues.Status.Visible = CType(resources.GetObject("kweValues.Status.Visible"), Boolean)
             Me.kweValues.StatusState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
             Me.kweValues.ThesaurusButtonState = Tools.WindowsT.FormsT.UtilitiesT.ControlState.Hidden
-            Me.totToolTip.SetToolTip(Me.kweValues, resources.GetString("kweValues.ToolTip"))
             '
             'tlpSelect
             '
-            Me.tlpSelect.AccessibleDescription = Nothing
-            Me.tlpSelect.AccessibleName = Nothing
             resources.ApplyResources(Me.tlpSelect, "tlpSelect")
-            Me.tlpSelect.BackgroundImage = Nothing
             Me.tlpSelect.Controls.Add(Me.cmdDelSyn, 2, 0)
             Me.tlpSelect.Controls.Add(Me.cmdAddSyn, 1, 0)
             Me.tlpSelect.Controls.Add(Me.cmbSyn, 0, 0)
-            Me.tlpSelect.Font = Nothing
             Me.tlpSelect.Name = "tlpSelect"
-            Me.totToolTip.SetToolTip(Me.tlpSelect, resources.GetString("tlpSelect.ToolTip"))
             '
             'cmdDelSyn
             '
-            Me.cmdDelSyn.AccessibleDescription = Nothing
-            Me.cmdDelSyn.AccessibleName = Nothing
             resources.ApplyResources(Me.cmdDelSyn, "cmdDelSyn")
-            Me.cmdDelSyn.BackgroundImage = Nothing
-            Me.cmdDelSyn.Font = Nothing
             Me.cmdDelSyn.Image = Global.Tools.My.Resources.Resources.Delete
             Me.cmdDelSyn.Name = "cmdDelSyn"
             Me.totToolTip.SetToolTip(Me.cmdDelSyn, resources.GetString("cmdDelSyn.ToolTip"))
@@ -409,11 +199,7 @@ Namespace WindowsT.FormsT
             '
             'cmdAddSyn
             '
-            Me.cmdAddSyn.AccessibleDescription = Nothing
-            Me.cmdAddSyn.AccessibleName = Nothing
             resources.ApplyResources(Me.cmdAddSyn, "cmdAddSyn")
-            Me.cmdAddSyn.BackgroundImage = Nothing
-            Me.cmdAddSyn.Font = Nothing
             Me.cmdAddSyn.Image = Global.Tools.My.Resources.Resources.Plus
             Me.cmdAddSyn.Name = "cmdAddSyn"
             Me.totToolTip.SetToolTip(Me.cmdAddSyn, resources.GetString("cmdAddSyn.ToolTip"))
@@ -421,23 +207,14 @@ Namespace WindowsT.FormsT
             '
             'cmbSyn
             '
-            Me.cmbSyn.AccessibleDescription = Nothing
-            Me.cmbSyn.AccessibleName = Nothing
             resources.ApplyResources(Me.cmbSyn, "cmbSyn")
-            Me.cmbSyn.BackgroundImage = Nothing
-            Me.cmbSyn.Font = Nothing
             Me.cmbSyn.FormattingEnabled = True
             Me.cmbSyn.Name = "cmbSyn"
-            Me.totToolTip.SetToolTip(Me.cmbSyn, resources.GetString("cmbSyn.ToolTip"))
             '
             'cmdOpen
             '
-            Me.cmdOpen.AccessibleDescription = Nothing
-            Me.cmdOpen.AccessibleName = Nothing
             resources.ApplyResources(Me.cmdOpen, "cmdOpen")
-            Me.cmdOpen.BackgroundImage = Nothing
             Me.cmdOpen.FlatAppearance.BorderSize = 0
-            Me.cmdOpen.Font = Nothing
             Me.cmdOpen.Image = Global.Tools.My.Resources.Resources.Open
             Me.cmdOpen.Name = "cmdOpen"
             Me.totToolTip.SetToolTip(Me.cmdOpen, resources.GetString("cmdOpen.ToolTip"))
@@ -445,12 +222,8 @@ Namespace WindowsT.FormsT
             '
             'cmdSave
             '
-            Me.cmdSave.AccessibleDescription = Nothing
-            Me.cmdSave.AccessibleName = Nothing
             resources.ApplyResources(Me.cmdSave, "cmdSave")
-            Me.cmdSave.BackgroundImage = Nothing
             Me.cmdSave.FlatAppearance.BorderSize = 0
-            Me.cmdSave.Font = Nothing
             Me.cmdSave.Image = Global.Tools.My.Resources.Resources.Save
             Me.cmdSave.Name = "cmdSave"
             Me.totToolTip.SetToolTip(Me.cmdSave, resources.GetString("cmdSave.ToolTip"))
@@ -458,51 +231,31 @@ Namespace WindowsT.FormsT
             '
             'tlpButtons
             '
-            Me.tlpButtons.AccessibleDescription = Nothing
-            Me.tlpButtons.AccessibleName = Nothing
             resources.ApplyResources(Me.tlpButtons, "tlpButtons")
-            Me.tlpButtons.BackgroundImage = Nothing
             Me.tlpButtons.Controls.Add(Me.flpButtons, 0, 0)
-            Me.tlpButtons.Font = Nothing
             Me.tlpButtons.Name = "tlpButtons"
-            Me.totToolTip.SetToolTip(Me.tlpButtons, resources.GetString("tlpButtons.ToolTip"))
             '
             'flpButtons
             '
-            Me.flpButtons.AccessibleDescription = Nothing
-            Me.flpButtons.AccessibleName = Nothing
             resources.ApplyResources(Me.flpButtons, "flpButtons")
-            Me.flpButtons.BackgroundImage = Nothing
             Me.flpButtons.Controls.Add(Me.cmdOK)
             Me.flpButtons.Controls.Add(Me.cmdCancel)
             Me.flpButtons.Controls.Add(Me.cmdOpen)
             Me.flpButtons.Controls.Add(Me.cmdSave)
-            Me.flpButtons.Font = Nothing
             Me.flpButtons.Name = "flpButtons"
-            Me.totToolTip.SetToolTip(Me.flpButtons, resources.GetString("flpButtons.ToolTip"))
             '
             'cmdOK
             '
-            Me.cmdOK.AccessibleDescription = Nothing
-            Me.cmdOK.AccessibleName = Nothing
             resources.ApplyResources(Me.cmdOK, "cmdOK")
-            Me.cmdOK.BackgroundImage = Nothing
             Me.cmdOK.DialogResult = System.Windows.Forms.DialogResult.OK
-            Me.cmdOK.Font = Nothing
             Me.cmdOK.Name = "cmdOK"
-            Me.totToolTip.SetToolTip(Me.cmdOK, resources.GetString("cmdOK.ToolTip"))
             Me.cmdOK.UseVisualStyleBackColor = True
             '
             'cmdCancel
             '
-            Me.cmdCancel.AccessibleDescription = Nothing
-            Me.cmdCancel.AccessibleName = Nothing
             resources.ApplyResources(Me.cmdCancel, "cmdCancel")
-            Me.cmdCancel.BackgroundImage = Nothing
             Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.cmdCancel.Font = Nothing
             Me.cmdCancel.Name = "cmdCancel"
-            Me.totToolTip.SetToolTip(Me.cmdCancel, resources.GetString("cmdCancel.ToolTip"))
             Me.cmdCancel.UseVisualStyleBackColor = True
             '
             'sfdSave
@@ -517,23 +270,17 @@ Namespace WindowsT.FormsT
             '
             'ThesaurusForm
             '
-            Me.AcceptButton = Me.cmdOK
-            Me.AccessibleDescription = Nothing
-            Me.AccessibleName = Nothing
             resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.BackgroundImage = Nothing
             Me.CancelButton = Me.cmdCancel
             Me.ControlBox = False
             Me.Controls.Add(Me.splVertical)
             Me.Controls.Add(Me.tlpButtons)
-            Me.Font = Nothing
-            Me.Icon = Nothing
+            Me.KeyPreview = True
             Me.MaximizeBox = False
             Me.MinimizeBox = False
             Me.Name = "ThesaurusForm"
             Me.ShowInTaskbar = False
-            Me.totToolTip.SetToolTip(Me, resources.GetString("$this.ToolTip"))
             Me.splVertical.Panel1.ResumeLayout(False)
             Me.splVertical.Panel2.ResumeLayout(False)
             Me.splVertical.ResumeLayout(False)
@@ -542,9 +289,6 @@ Namespace WindowsT.FormsT
             Me.splAutoComplete.ResumeLayout(False)
             Me.fraAutoComplete.ResumeLayout(False)
             Me.fraCache.ResumeLayout(False)
-            Me.fraCache.PerformLayout()
-            Me.tlpClearCache.ResumeLayout(False)
-            Me.tlpClearCache.PerformLayout()
             Me.fraSynonyms.ResumeLayout(False)
             Me.fraSynonyms.PerformLayout()
             Me.splSynonyms.Panel1.ResumeLayout(False)
@@ -564,7 +308,6 @@ Namespace WindowsT.FormsT
         End Sub
         Friend WithEvents splVertical As System.Windows.Forms.SplitContainer
         Friend WithEvents splAutoComplete As System.Windows.Forms.SplitContainer
-        Friend WithEvents lblCache As System.Windows.Forms.Label
         Friend WithEvents kweAutoComplete As Tools.WindowsT.FormsT.KeyWordsEditor
         Friend WithEvents fraAutoComplete As System.Windows.Forms.GroupBox
         Friend WithEvents fraCache As System.Windows.Forms.GroupBox
@@ -579,8 +322,6 @@ Namespace WindowsT.FormsT
         Friend WithEvents kweKeys As Tools.WindowsT.FormsT.KeyWordsEditor
         Friend WithEvents kweValues As Tools.WindowsT.FormsT.KeyWordsEditor
         Friend WithEvents totToolTip As System.Windows.Forms.ToolTip
-        Friend WithEvents tlpClearCache As System.Windows.Forms.TableLayoutPanel
-        Friend WithEvents cmdClearCache As System.Windows.Forms.Button
         Friend WithEvents tlpButtons As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents flpButtons As System.Windows.Forms.FlowLayoutPanel
         Friend WithEvents cmdOK As System.Windows.Forms.Button
@@ -589,6 +330,7 @@ Namespace WindowsT.FormsT
         Friend WithEvents cmdOpen As System.Windows.Forms.Button
         Friend WithEvents sfdSave As System.Windows.Forms.SaveFileDialog
         Friend WithEvents ofdLoad As System.Windows.Forms.OpenFileDialog
+        Friend WithEvents kweCache As Tools.WindowsT.FormsT.KeyWordsEditor
     End Class
 #End If
 End Namespace
