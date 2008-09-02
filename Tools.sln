@@ -22,6 +22,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{67
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Created doc", "Created doc", "{56EC5ABD-C261-4B90-9BD3-5956D6E82CCD}"
 	ProjectSection(SolutionItems) = preProject
+		Created doc\ISO 2022.xlsx = Created doc\ISO 2022.xlsx
 		Created doc\JPEG, EXIF, IPTC.doc = Created doc\JPEG, EXIF, IPTC.doc
 		Created doc\Namespaces.xml = Created doc\Namespaces.xml
 	EndProjectSection
