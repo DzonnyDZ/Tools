@@ -1,0 +1,278 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="ISO2022"
+    targetNamespace="http://codeplex.com/DTools/IS2022"
+    elementFormDefault="qualified"
+    xmlns="http://codeplex.com/DTools/IS2022"
+    xmlns:iso="http://codeplex.com/DTools/IS2022"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <xs:annotation>
+        <xs:documentation>Allows to specify list of ISO-2022-registered encodings and their relation to IANA-registrered encodings.</xs:documentation>
+    </xs:annotation>
+    <!--<Root xmlns="http://codeplex.com/DTools/ExifTags" transformer="ExifTags.xslt" Stage="Nightly">-->
+    <xs:element name="encodings" >
+        <xs:annotation>
+            <xs:documentation>Specifies list of encodings and type settings.</xs:documentation>
+        </xs:annotation>
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs ="1">
+                <xs:element name="type" minOccurs="9" maxOccurs="9" type="Type">
+                    <xs:annotation>
+                        <xs:documentation>Specifies information about encoding type. Specification must be provided for each type recognized by ISO 2022.</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+                <xs:element name="encoding" type="encoding" minOccurs="1" maxOccurs="unbounded">
+                    <xs:annotation>
+                        <xs:documentation>Specifies single encoding</xs:documentation>
+                    </xs:annotation>
+                </xs:element>
+            </xs:sequence>
+            <!--<xs:attribute name="transformer" use="required" type="xs:anyURI">
+                <xs:annotation>
+                    <xs:documentation>URI of stylesheet used to transform document to programing language source code.</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="Stage" use="required">
+                <xs:annotation>
+                    <xs:documentation>Stage of dicumment used for conditiona compilation</xs:documentation>
+                </xs:annotation>
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="Nightly">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Nightly stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Alpha">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Alpha stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Beta">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Beta stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="RC">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release Candidate stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                        <xs:enumeration value="Release">
+                            <xs:annotation>
+                                <xs:documentation>Generated code is in Release stage</xs:documentation>
+                            </xs:annotation>
+                        </xs:enumeration>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:attribute>-->
+        </xs:complexType>
+        <xs:unique name="unqType">
+            <xs:selector xpath="iso:type"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="unqEncoding-name">
+            <xs:selector xpath="iso:Encoding"/>
+            <xs:field xpath="@name"/>
+        </xs:unique>
+        <xs:unique name="unqEncoding-number">
+            <xs:selector xpath="iso:Encoding"/>
+            <xs:field xpath="@number"/>
+        </xs:unique>
+    </xs:element>
+
+    <xs:complexType name="encoding">
+        <!--<xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element name="G0" minOccurs="0" maxOccurs="1" type="Escape"/>
+            <xs:element name="G1" minOccurs="0" maxOccurs="1" type="Escape"/>
+            <xs:element name="G2" minOccurs="0" maxOccurs="1" type="Escape"/>
+            <xs:element name="G3" minOccurs="0" maxOccurs="1" type="Escape"/>
+            <xs:element name="C0" minOccurs="0" maxOccurs="1" type="Escape"/>
+            <xs:element name="C1" minOccurs="0" maxOccurs="1" type="Escape"/>
+        </xs:sequence>-->
+        <xs:choice minOccurs="1" maxOccurs="1">
+            <xs:element name="escape" type="Escape" minOccurs="1" maxOccurs="1">
+                <xs:annotation>
+                    <xs:documentation>Assigned escape code (Final byte only. Other bytes must be shared with other items of same type.)</xs:documentation>
+                </xs:annotation>
+            </xs:element>
+            <xs:element name="extended-escape" minOccurs="1" maxOccurs="1">
+                <xs:complexType>
+                    <xs:attributeGroup ref="Groups"/>
+                </xs:complexType>
+            </xs:element>
+        </xs:choice>
+        <xs:attribute name="number" use="required">
+            <xs:annotation>
+                <xs:documentation>
+                    Number under which the encoding is registered in the International Register of Coded Character Sets to Be Used with Escape Sequences.</xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:union memberTypes="xs:positiveInteger">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:pattern value="[1-9][0-9]*-[1-9]"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="name" use="required" type="xs:normalizedString">
+            <xs:annotation>
+                <xs:documentation>Official name under which the encoding is registered.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IANAName" use="optional" type="IANAName">
+            <xs:annotation>
+                <xs:documentation>Name under which the same encoding is registered by IANA. (see http://www.iana.org/assignments/character-sets)</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="IANAAlias" use="optional">
+            <xs:annotation>
+                <xs:documentation>
+                    Alias under which the same encoding is registered by IANA. Only when sucha alias is in form iso-ir-number.
+                </xs:documentation>
+            </xs:annotation>
+            <xs:simpleType>
+                <xs:restriction base="IANAName">
+                    <xs:pattern value="[iI][sS][oO]-[iI][rR]-[1-9][0-9]*(-[1-9])?"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="type" use="required" type="Types">
+            <xs:annotation>
+                <xs:documentation>Type which is registered for the encoding.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:simpleType name="IANAName">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[A-Za-z0-9!&quot;#$%&amp;'()*+,-./:;&lt;=>?@[\\\]^_`{|}~]*"></xs:pattern>
+            <xs:minLength value="0"/>
+            <xs:maxLength value="40"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Extended-Escape">
+        <xs:list>
+            <xs:simpleType>
+                <xs:union memberTypes="ESC-Byte">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="ESC">
+                                <xs:annotation>
+                                    <xs:documentation>Specifies ASCII ESCAPE character.</xs:documentation>
+                                </xs:annotation>
+                            </xs:enumeration>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:union>
+            </xs:simpleType>
+        </xs:list>
+    </xs:simpleType>
+
+    <xs:simpleType name="Escape">
+        <xs:list itemType="ESC-Byte"/> 
+    </xs:simpleType>
+
+    <xs:simpleType name="ESC-Byte">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="([0-9]|(1[0-5]))/([0-9]|(1[0-5]))"/>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:simpleType name="Types">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="C0">
+                <xs:annotation>
+                    <xs:documentation>C0-Control character sets</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94/1">
+                <xs:annotation>
+                    <xs:documentation>94-Character graphic character sets with one Intermediate byte.</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="S">
+                <xs:annotation>
+                    <xs:documentation>Single control functions</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="C1">
+                <xs:annotation>
+                    <xs:documentation>C1 Control character sets</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="M">
+                <xs:annotation>
+                    <xs:documentation>Multiple byte graphic character sets</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="wSR">
+                <xs:annotation>
+                    <xs:documentation>Coding systems with Standard return</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="w/oSR">
+                <xs:annotation>
+                    <xs:documentation>Coding Systems without Standard return</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="96">
+                <xs:annotation>
+                    <xs:documentation>Character graphic character set</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="94/2">
+                <xs:annotation>
+                    <xs:documentation>Character graphic character set with second Intermediate byte</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+
+    <xs:complexType name="Type">
+        <xs:attribute name="name" type="Types" use="required">
+            <xs:annotation>
+                <xs:documentation>Name of type as used in ISO 2022</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attributeGroup ref="Groups"/>
+    </xs:complexType>
+
+    <xs:attributeGroup name="Groups">
+        <xs:attribute name="G0" type="Extended-Escape" use="optional">
+            <xs:annotation>
+                <xs:documentation>Specifies escape used G0 segment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="G1" type="Extended-Escape" use="optional">
+            <xs:annotation>
+                <xs:documentation>Specifies escape used G1 segment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="G2" type="Extended-Escape" use="optional">
+            <xs:annotation>
+                <xs:documentation>Specifies escape used G2 segment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="G3" type="Extended-Escape" use="optional">
+            <xs:annotation>
+                <xs:documentation>Specifies escape used G3 segment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="C0" type="Extended-Escape" use="optional">
+            <xs:annotation>
+                <xs:documentation>Specifies escape used C0 segment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+        <xs:attribute name="C1" type="Extended-Escape" use="optional">
+            <xs:annotation>
+                <xs:documentation>Specifies escape used C1 segment.</xs:documentation>
+            </xs:annotation>
+        </xs:attribute>
+    </xs:attributeGroup>
+</xs:schema>
+
+

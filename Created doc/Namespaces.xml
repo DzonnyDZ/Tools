@@ -208,5 +208,11 @@
         <member name="N:Tools.Metanol">
             <summary>Root namespace of the Metanol project - and Win exe application for manipulating IPTC data.</summary>
         </member>
+        <member name="N:Tools.TextT">
+            <summary>Contains tools for manipulating with text and strings.</summary>
+        </member>
+        <member name="N:Tools.TextT.EncodingT">
+            <summary>Contains classes fro working with different text encodings.</summary>
+        </member>
     </members>    
 </doc>

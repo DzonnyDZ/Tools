@@ -1,0 +1,570 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<encodings xmlns="http://codeplex.com/DTools/IS2022">
+    <type name="C0" C0="ESC 2/1"/>
+    <type name="94/1" G0="ESC 2/8" G1="ESC 2/9" G2="ESC 2/10" G3="ESC 2/11"/>
+    <type name="S" C0="ESC" C1="ESC" G0="ESC" G1="ESC" G2="ESC" G3="ESC"/>
+    <type name="C1" C1="ESC 2/2"/>
+    <type name="M" G0="2/4 2/8" G1="2/4 2/9" G2="2/4 2/10" G3="2/4 2/11"/>
+    <type name="wSR" C0="ESC 2/5" C1="ESC 2/5" G0="ESC 2/5" G1="ESC 2/5" G2="ESC 2/5" G3="ESC 2/5"/>
+    <type name="w/oSR" C0="ESC 2/5 2/15" C1="ESC 2/5 2/15" G0="ESC 2/5 2/15" G1="ESC 2/5 2/15" G2="ESC 2/5 2/15" G3="ESC 2/5 2/15"/>
+    <type name="96" G1="ESC 2/13" G2="ESC 2/14" G3="ESC 2/15"/>
+    <type name="94/2" G0="ESC 2/8 2/1" G1="ESC 2/9 2/1" G2="ESC 2/10 2/1" G3="ESC 2/11 2/1"/>
+    <encoding name ='C0 Set of ISO 646' number='1' type='C0'  >
+        <escape>4/0</escape>
+    </encoding>
+    <encoding name ='IRV of ISO 646 : 1983' number='2' type='94/1' IANAName='INVARIANT' IANAAlias='iso-ir-2'>
+        <escape>4/0</escape>
+    </encoding>
+    <encoding name ='ISO 646, British Version BSI 4730' number='4' type='94/1' IANAName='BS_4730' IANAAlias='iso-ir-4'>
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='ISO 646, USA Version X3.4 - 1968' number='6' type='94/1' IANAName='ANSI_X3.4-1968' IANAAlias='iso-ir-6'>
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='NATS, C0 Set' number='7' type='C0'  >
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='ISO 646, Swedish Version SEN 850200 (Ann. B)' number='10' type='94/1' IANAName='SEN_850200_B' IANAAlias='iso-ir-10'>
+        <escape>4/7</escape>
+    </encoding>
+    <encoding name ='ISO 646, Swedish Version for Names, (SEN 850200 Ann.C)' number='11' type='94/1' IANAName='SEN_850200_C' IANAAlias='iso-ir-11'>
+        <escape>4/8</escape>
+    </encoding>
+    <encoding name ='Katakana Character Set JIS C6220-1969' number='13' type='94/1' IANAName='JIS_C6220-1969-jp' IANAAlias='iso-ir-13'>
+        <escape>4/9</escape>
+    </encoding>
+    <encoding name ='ISO 646, Japanese Version for Roman Characters JIS C6220-1969' number='14' type='94/1' IANAName='JIS_C6220-1969-ro' IANAAlias='iso-ir-14'>
+        <escape>4/10</escape>
+    </encoding>
+    <encoding name ='ISO 646, Version for Italian, ECMA (Olivetti)' number='15' type='94/1' IANAName='IT' IANAAlias='iso-ir-15'>
+        <escape>5/9</escape>
+    </encoding>
+    <encoding name ='ISO 646, Version for Portuguese, ECMA (Olivetti)' number='16' type='94/1' IANAName='PT' IANAAlias='iso-ir-16'>
+        <escape>4/12</escape>
+    </encoding>
+    <encoding name ='ISO 646, Version for Spanish, ECMA (Olivetti)' number='17' type='94/1' IANAName='ES' IANAAlias='iso-ir-17'>
+        <escape>5/10</escape>
+    </encoding>
+    <encoding name ='Character Set for Greek, ECMA (Olivetti)' number='18' type='94/1' IANAName='greek7-old' IANAAlias='iso-ir-18'>
+        <escape>5/11</escape>
+    </encoding>
+    <encoding name ='Latin-Greek Character Set, ECMA (Olivetti)' number='19' type='94/1' IANAName='latin-greek' IANAAlias='iso-ir-19'>
+        <escape>5/12</escape>
+    </encoding>
+    <encoding name ='ISO 646, German Version DIN 66083' number='21' type='94/1' IANAName='DIN_66003' IANAAlias='iso-ir-21'>
+        <escape>4/11</escape>
+    </encoding>
+    <encoding name ='ISO 646, French Version, NF Z 62010-1973 (Withdrawn in April 1985)' number='25' type='94/1' IANAName='NF_Z_62-010_(1973)' IANAAlias='iso-ir-25'>
+        <escape>5/2</escape>
+    </encoding>
+    <encoding name ='IPTC, C0 Set' number='26' type='C0'  >
+        <escape>4/3</escape>
+    </encoding>
+    <encoding name ='Latin-Greek Character Set, ECMA (Honeywell-Bull)' number='27' type='94/1' IANAName='Latin-greek-1' IANAAlias='iso-ir-27'>
+        <escape>5/5</escape>
+    </encoding>
+    <encoding name ='Greek Character Set for Bibliography, ISO 5428' number='31' type='94/1'  >
+        <escape>5/8</escape>
+    </encoding>
+    <encoding name ='DISABLE MANUAL INPUT (DMI) ECMA-48 (1986), ISO 6429 : 1988' number='32' type='S'  >
+        <escape>6/0</escape>
+    </encoding>
+    <encoding name ='INTERRUPT (INT), ECMA-48 (1986), ISO 6429 : 1988' number='33' type='S'  >
+        <escape>6/1</escape>
+    </encoding>
+    <encoding name ='ENABLE MANUAL INPUT (EMI), ECMA-48 (1986), ISO 6429 : 1988' number='34' type='S'  >
+        <escape>6/2</escape>
+    </encoding>
+    <encoding name ='RESET TO INITIAL STATE (RIS), ECMA-48 (1986), ISO 6429 : 1988' number='35' type='S'  >
+        <escape>6/3</escape>
+    </encoding>
+    <encoding name ='C0 Set of ISO 646 with SS2 instead of IS4' number='36' type='C0'  >
+        <escape>4/4</escape>
+    </encoding>
+    <encoding name ='Basic Cyrillic Character Set, ECMA (Cii Honeywell-Bull) and ISO 5427' number='37' type='94/1' IANAName='ISO_5427' IANAAlias='iso-ir-37'>
+        <escape>4/14</escape>
+    </encoding>
+    <encoding name ='Extended Graphic Character Set for Bibliography, DIN 31624' number='38' type='94/1'  >
+        <escape>4/15</escape>
+    </encoding>
+    <encoding name ='Character Set for African Languages, DIN 31625 and ISO 6438' number='39' type='94/1'  >
+        <escape>4/13</escape>
+    </encoding>
+    <encoding name ='Additional Control Functions for Bibliographic Use according to DIN 31626' number='40' type='C1'  >
+        <escape>4/5</escape>
+    </encoding>
+    <encoding name ='Japanese Character Set JISC C 6226-1978' number='42' type='M' IANAName='JIS_C6226-1978' IANAAlias='iso-ir-42'>
+        <extended-escape G0='ESC 2/4 4/0' G1='ESC 2/4 2/9 4/0' G2='ESC 2/4 2/10 4/0' G3='ESC 2/4 2/11 4/0'/>
+    </encoding>
+    <encoding name ='Character Set for Viewdata and Teletext (UK)' number='47' type='94/1' IANAName='BS_viewdata' IANAAlias='iso-ir-47'>
+        <escape>5/6</escape>
+    </encoding>
+    <encoding name ='INIS, Control Set' number='48' type='C0'  >
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='INIS, Sub-set of the IRV' number='49' type='94/1' IANAName='INIS' IANAAlias='iso-ir-49'>
+        <escape>5/7</escape>
+    </encoding>
+    <encoding name ='INIS, Non-standard Extension of Reg. 49' number='50' type='94/1' IANAName='INIS-8' IANAAlias='iso-ir-50'>
+        <escape>5/13</escape>
+    </encoding>
+    <encoding name ='INIS, Cyrillic Extension of Reg. 49' number='51' type='94/1' IANAName='INIS-cyrillic' IANAAlias='iso-ir-51'>
+        <escape>5/14</escape>
+    </encoding>
+    <encoding name ='Extended Graphic Character Set for Bibliography ISO 5426-1980' number='53' type='94/1'  >
+        <escape>5/0</escape>
+    </encoding>
+    <encoding name ='Extension of the Cyrillic Character Set of Reg. 37, ISO 5427-1981' number='54' type='94/1' IANAName='ISO_5427:1981' IANAAlias='iso-ir-54'>
+        <escape>5/1</escape>
+    </encoding>
+    <encoding name ='Greek Character Set for Bibliography, ISO 5428-1980' number='55' type='94/1' IANAName='ISO_5428:1980' IANAAlias='iso-ir-55'>
+        <escape>5/3</escape>
+    </encoding>
+    <encoding name ='Attribute Control set for UK Videotex British Telecom' number='56' type='C1'  >
+        <escape>4/0</escape>
+    </encoding>
+    <encoding name ='Coded Character Set for Information Interchange, Standard Chinese GB 1988-80' number='57' type='94/1' IANAName='GB_1988-80' IANAAlias='iso-ir-57'>
+        <escape>5/4</escape>
+    </encoding>
+    <encoding name ='Chinese Character Set Chinese Standard GB 2312-80' number='58' type='M' IANAName='GB_2312-80' IANAAlias='iso-ir-58'>
+        <extended-escape G0='ESC 2/4 4/1' G1='ESC 2/4 2/9 4/1' G2='ESC 2/4 2/10 4/1' G3='ESC 2/4 2/11 4/1'/>
+    </encoding>
+    <encoding name ='Arabic Character Set CODAR-U IERA (Morocco)' number='59' type='94/1'  >
+        <escape>5/15</escape>
+    </encoding>
+    <encoding name ='ISO 646, Norwegian Version NS 4551' number='60' type='94/1' IANAName='NS_4551-1' IANAAlias='iso-ir-60'>
+        <escape>6/0</escape>
+    </encoding>
+    <encoding name ='Norwegian Character Set, Version 2, NS 4551 (Withdrawn in June 1987)' number='61' type='94/1' IANAName='NS_4551-2' IANAAlias='iso-ir-61'>
+        <escape>6/1</escape>
+    </encoding>
+    <encoding name ='LOCKING-SHIFT TWO (LS2), ISO 2022, ECMA-48 (1986), ISO 6429 : 1988' number='62' type='S'  >
+        <escape>6/14</escape>
+    </encoding>
+    <encoding name ='LOCKING-SHIFT THREE (LS3) ISO 2022, ECMA-48 (1986), ISO 6429 : 1988' number='63' type='S'  >
+        <escape>6/15</escape>
+    </encoding>
+    <encoding name ='LOCKING-SHIFT THREE RIGHT(LS3R), ISO 2022, ECMA-48 (1986), ISO 6429 : 1988' number='64' type='S'  >
+        <escape>7/12</escape>
+    </encoding>
+    <encoding name ='LOCKING-SHIFT TWO RIGHT(LS2R), ISO 2022, ECMA-48 (1986), ISO 6429 : 1988' number='65' type='S'  >
+        <escape>7/13</escape>
+    </encoding>
+    <encoding name ='LOCKING-SHIFT ONE RIGHT (LS1R), ISO 2022, ECMA-48 (1986), ISO 6429 : 1988' number='66' type='S'  >
+        <escape>7/14</escape>
+    </encoding>
+    <encoding name ='Additional Control Functions for Bibliographic Use according to ISO 6630' number='67' type='C1'  >
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='APL Character Set, Canadian APL Working Group' number='68' type='94/1'  >
+        <escape>6/5</escape>
+    </encoding>
+    <encoding name ='ISO 646, French Version NF Z 62010-1982' number='69' type='94/1' IANAName='NF_Z_62-010' IANAAlias='iso-ir-69'>
+        <escape>6/6</escape>
+    </encoding>
+    <encoding name ='Supplementary Set for Videotex, CCITT' number='70' type='94/1' IANAName='videotex-suppl' IANAAlias='iso-ir-70'>
+        <escape>6/2</escape>
+    </encoding>
+    <encoding name ='Second Supplementary Set for Videotex (Mosaic), CCITT' number='71' type='94/1'  >
+        <escape>6/3</escape>
+    </encoding>
+    <encoding name ='Third Supplementary Set for Videotex, (Mosaic), CCITT (superseded by Reg. 173)' number='72' type='94/1'  >
+        <escape>6/4</escape>
+    </encoding>
+    <encoding name ='Attribute Control Set for Videotex CCITT' number='73' type='C1'  >
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='C0 for Japanese standard JIS C 6225-1979' number='74' type='C0'  >
+        <escape>4/6</escape>
+    </encoding>
+    <encoding name ='C1 Control Set of ISO 6429-1983' number='77' type='C1'  >
+        <escape>4/3</escape>
+    </encoding>
+    <encoding name ='ISO 646, Version for Portuguese, ECMA (IBM)' number='84' type='94/1' IANAName='PT2' IANAAlias='iso-ir-84'>
+        <escape>6/7</escape>
+    </encoding>
+    <encoding name ='ISO 646, Version for the Spanish languages, ECMA (IBM)' number='85' type='94/1' IANAName='ES2' IANAAlias='iso-ir-85'>
+        <escape>6/8</escape>
+    </encoding>
+    <encoding name ='ISO 646, Hungarian Version Hungarian standard 7795/3' number='86' type='94/1' IANAName='MSZ_7795.3' IANAAlias='iso-ir-86'>
+        <escape>6/9</escape>
+    </encoding>
+    <encoding name ='Japanese Character Set JIS C 6226-1983' number='87' type='M' IANAName='JIS_C6226-1983' IANAAlias='iso-ir-87'>
+        <extended-escape G0='ESC 2/4 4/2' G1='ESC 2/4 2/9 4/2' G2='ESC 2/4 2/10 4/2' G3='ESC 2/4 2/11 4/2'/>
+    </encoding>
+    <encoding name ='Greek Character Set ELOT, Hellenic Organization for Standardization (Withdrawn in November 1986)' number='88' type='94/1' IANAName='greek7' IANAAlias='iso-ir-88'>
+        <escape>6/10</escape>
+    </encoding>
+    <encoding name ='7-bit Arabic Code for Information Interchange, Arab standard ASMO-449, ISO 9036' number='89' type='94/1' IANAName='ASMO_449' IANAAlias='iso-ir-89'>
+        <escape>6/11</escape>
+    </encoding>
+    <encoding name ='Supplementary Set for Use with Registration No.2' number='90' type='94/1' IANAName='ASMO_449' IANAAlias='iso-ir-90'>
+        <escape>6/12</escape>
+    </encoding>
+    <encoding name ='Japanese OCR-A graphic set JIS C6229-1984' number='91' type='94/1' IANAName='iso-ir-90' IANAAlias='iso-ir-91'>
+        <escape>6/13</escape>
+    </encoding>
+    <encoding name ='Japanese OCR-B Graphic Set JIS C6229-1984' number='92' type='94/1' IANAName='JIS_C6229-1984-b' IANAAlias='iso-ir-92'>
+        <escape>6/14</escape>
+    </encoding>
+    <encoding name ='Japanese OCR-B, Additional Graphic Set, JIS C6229-1984' number='93' type='94/1' IANAName='JIS_C6229-1984-b-add' IANAAlias='iso-ir-93'>
+        <escape>6/15</escape>
+    </encoding>
+    <encoding name ='Japanese Basic Hand-printed Graphic Set for OCR JIS C6229-1984' number='94' type='94/1' IANAName='JIS_C6229-1984-hand' IANAAlias='iso-ir-94'>
+        <escape>7/0</escape>
+    </encoding>
+    <encoding name ='Japanese Additional Handprinted Graphic Character Set for OCR JIS C6229- 1984' number='95' type='94/1' IANAName='JIS_C6229-1984-hand-add' IANAAlias='iso-ir-95'>
+        <escape>7/1</escape>
+    </encoding>
+    <encoding name ='Katakana hand-printed Graphic Character Set for OCR JIS C6229-1984' number='96' type='94/1' IANAName='JIS_C6229-1984-kana' IANAAlias='iso-ir-96'>
+        <escape>7/2</escape>
+    </encoding>
+    <encoding name ='E13B Graphic Character Set Japanese National Committee for ISO/TC97/SC2' number='98' type='94/1' IANAName='ISO_2033-1983' IANAAlias='iso-ir-98'>
+        <escape>7/3</escape>
+    </encoding>
+    <encoding name ='Supplementary Set of Graphic Characters for Videotex and Teletext ANSI and Teletext ANSI and CSA (Withdrawn in November 1986)' number='99' type='94/1' IANAName='ANSI_X3.110-1983' IANAAlias='iso-ir-99'>
+        <escape>7/4</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of Latin Alphabet No.1 ISO 8859/1, ECMA-94' number='100' type='96' IANAName='ISO_8859-1:1987' IANAAlias='iso-ir-100'>
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of Latin Alphabet No.2 ISO 8859/2, ECMA-94' number='101' type='96' IANAName='ISO_8859-2:1987' IANAAlias='iso-ir-101'>
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='Teletex Primary Set of Graphic Characters CCITT Rec. T.61' number='102' type='94/1' IANAName='T.61-7bit' IANAAlias='iso-ir-102'>
+        <escape>7/5</escape>
+    </encoding>
+    <encoding name ='Teletex Supplementary Set of Graphic characters CCITT Rec. T.61' number='103' type='94/1' IANAName='T.61-8bit' IANAAlias='iso-ir-103'>
+        <escape>7/6</escape>
+    </encoding>
+    <encoding name ='Minimum C0 Set for ISO 4873' number='104' type='C0'  >
+        <escape>4/7</escape>
+    </encoding>
+    <encoding name ='Minimum C1 Set for ISO 4873' number='105' type='C1'  >
+        <escape>4/7</escape>
+    </encoding>
+    <encoding name ='Teletex primary set of Control Functions CCITT Rec. T.61' number='106' type='C0'  >
+        <escape>4/5</escape>
+    </encoding>
+    <encoding name ='Teletex Supplementary Set of Control Functions CCITT Rec. T.61' number='107' type='C1'  >
+        <escape>4/8</escape>
+    </encoding>
+    <encoding name ='Syntax of the North American Videotex/Teletex Presentation Level Protocol (NAPLPS), CSA T 500-1983' number='108' type='wSR'  >
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of Latin Alphabet No.3 ISO DIS 8859/3, ECMA-94' number='109' type='96' IANAName='ISO_8859-3:1988' IANAAlias='iso-ir-109'>
+        <escape>4/3</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of Latin Alphabet No.4 ISO DIS 8859/4, ECMA-94' number='110' type='96' IANAName='ISO_8859-4:1988' IANAAlias='iso-ir-110'>
+        <escape>4/4</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of the Latin/Cyrillic Alphabet ECMA-113 (Version of June 1986)' number='111' type='96' IANAName='ECMA-cyrillic' IANAAlias='iso-ir-111'>
+        <escape>4/0</escape>
+    </encoding>
+    <encoding name ='Alternate Primary Graphic Set No. 1 CSA Standard Z 243.4-1985' number='121' type='94/1' IANAName='CSA_Z243.4-1985-1' IANAAlias='iso-ir-121'>
+        <escape>7/7</escape>
+    </encoding>
+    <encoding name ='Alternate Primary Graphic Set No.2 CSA Standard Z 243.4-1985' number='122' type='94/1' IANAName='CSA_Z243.4-1985-2' IANAAlias='iso-ir-122'>
+        <escape>7/8</escape>
+    </encoding>
+    <encoding name ='General Purpose Supplementary Graphic Set CSA Standard Z 243.4-1985' number='123' type='96' IANAName='CSA_Z243.4-1985-gr' IANAAlias='iso-ir-123'>
+        <escape>4/5</escape>
+    </encoding>
+    <encoding name ='Upward Compatible Version of ISO 6630 (Registration 67)' number='124' type='C1'  >
+        <escape></escape>
+    </encoding>
+    <encoding name ='Virtual Terminal service Transparent Set' number='125' type='w/oSR'  >
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of the Latin/Greek Alphabet Standard ELOT 928, ECMA-118, ISO DIS 8859/7' number='126' type='96' IANAName='ISO_8859-7:1987' IANAAlias='iso-ir-126'>
+        <escape>4/6</escape>
+    </encoding>
+    <encoding name ='Right-hand Part of the Latin/Arabic Alphabet ECMA-114, ISO 8859/6' number='127' type='96' IANAName='ISO_8859-6:1987' IANAAlias='iso-ir-127'>
+        <escape>4/7</escape>
+    </encoding>
+    <encoding name ='Supplementary Set of graphic Characters for CCITT Rec. T.101, Data Syntax III' number='128' type='94/1' IANAName='T.101-G2' IANAAlias='iso-ir-128'>
+        <escape>7/12</escape>
+    </encoding>
+    <encoding name ='Supplementary Set of Mosaic Characters for CCITT Rec. 101, Data Syntax III' number='129' type='96'  >
+        <escape>7/13</escape>
+    </encoding>
+    <encoding name ='C0 Set of ISO 646 without SI and SO ASMO-662 and COMECON ST SEV 358' number='130' type='C0'  >
+        <escape>4/8</escape>
+    </encoding>
+    <encoding name ='Data Syntax I of CCITT Rec.T.101' number='131' type='wSR'  >
+        <escape>4/3</escape>
+    </encoding>
+    <encoding name ='Primary Control Set of Data Syntax I of CCITT Rec. T.101' number='132' type='C0'  >
+        <escape>4/9</escape>
+    </encoding>
+    <encoding name ='Supplementary Control Set of Data Syntax I of CCITT Rec. T.101' number='133' type='C1'  >
+        <escape>4/4</escape>
+    </encoding>
+    <encoding name ='Primary Control Set of Data Syntax II of CCITT Rec. T.101' number='134' type='C0'  >
+        <escape>4/10</escape>
+    </encoding>
+    <encoding name ='Primary Control Set of Data Syntax III of CCITT Rec. T.101' number='135' type='C0'  >
+        <escape>4/11</escape>
+    </encoding>
+    <encoding name ='Supplementary Control Set of Data Syntax III of CCITT Rec. T.101' number='136' type='C1'  >
+        <escape>4/6</escape>
+    </encoding>
+    <encoding name ='Mosaic-1 Set of Data Syntax I of CCITT Rec. T.101' number='137' type='94/1'  >
+        <escape>7/9</escape>
+    </encoding>
+    <encoding name ='Latin/Hebrew Alphabet Standard ECMA-121' number='138' type='96' IANAName='ISO_8859-8:1988' IANAAlias='iso-ir-138'>
+        <escape>4/8</escape>
+    </encoding>
+    <encoding name ='Right-hand Part for Czechoslovak Standard CSN 369103' number='139' type='96' IANAName='CSN_369103' IANAAlias='iso-ir-139'>
+        <escape>4/9</escape>
+    </encoding>
+    <encoding name ='C0 Set of ISO 646 with EM replaced by SS2 - Czechoslovak Standard CSN 369102' number='140' type='C0'  >
+        <escape>4/12</escape>
+    </encoding>
+    <encoding name ='Serbocroatian and Slovenian Latin Alphabet' number='141' type='94/1' IANAName='JUS_I.B1.002' IANAAlias='iso-ir-141'>
+        <escape>7/10</escape>
+    </encoding>
+    <encoding name ='Supplementary Set of Latin Alphabetic and non-Alphabetic Graphic Characters' number='142' type='96' IANAName='ISO_6937-2-add' IANAAlias='iso-ir-142'>
+        <escape>4/10</escape>
+    </encoding>
+    <encoding name ='Technical Set' number='143' type='96' IANAName='IEC_P27-1' IANAAlias='iso-ir-143'>
+        <escape>4/11</escape>
+    </encoding>
+    <encoding name ='Cyrillic part of the Latin/Cyrillic Alphabet' number='144' type='96' IANAName='ISO_8859-5:1988' IANAAlias='iso-ir-144'>
+        <escape>4/12</escape>
+    </encoding>
+    <encoding name ='Data Syntax II of CCITT Rec. T.101' number='145' type='wSR'  >
+        <escape>4/4</escape>
+    </encoding>
+    <encoding name ='Serbocroatian Cyrillic Alphabet' number='146' type='94/1' IANAName='JUS_I.B1.003-serb' IANAAlias='iso-ir-146'>
+        <escape>7/11</escape>
+    </encoding>
+    <encoding name ='Macedonian Cyrillic Alphabet' number='147' type='94/1' IANAName='JUS_I.B1.003-mac' IANAAlias='iso-ir-147'>
+        <escape>7/13</escape>
+    </encoding>
+    <encoding name ='Right-hand part of Latin Alphabet No.5' number='148' type='96' IANAName='ISO_8859-9:1989' IANAAlias='iso-ir-148'>
+        <escape>4/13</escape>
+    </encoding>
+    <encoding name ='Korean Graphic Character Set, Korean Standard KSC 5601-1987' number='149' type='M' IANAName='KS_C_5601-1987' IANAAlias='iso-ir-149'>
+        <extended-escape G0='ESC 2/4 2/8 4/3' G1='ESC 2/4 2/9 4/3' G2='ESC 2/4 2/10 4/3' G3='ESC 2/4 2/11 4/3'/>
+    </encoding>
+    <encoding name ='Greek Primary Set of CCITT' number='150' type='94/2' IANAName='greek-ccitt' IANAAlias='iso-ir-150'>
+        <escape>4/0</escape>
+    </encoding>
+    <encoding name ='Character Set of Cuba' number='151' type='94/2' IANAName='NC_NC00-10:81' IANAAlias='iso-ir-151'>
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='Residual Characters from ISO 6937-2 : 1983' number='152' type='96' IANAName='ISO_6937-2-25' IANAAlias='iso-ir-152'>
+        <escape>4/14</escape>
+    </encoding>
+    <encoding name ='Basic Cyrillic Character Set for 8-bit Codes' number='153' type='96' IANAName='GOST_19768-74' IANAAlias='iso-ir-153'>
+        <escape>4/15</escape>
+    </encoding>
+    <encoding name ='Supplementary set for Latin Alphabets No.1, No.2 and No.5' number='154' type='96' IANAName='ISO_8859-supp' IANAAlias='iso-ir-154'>
+        <escape>5/0</escape>
+    </encoding>
+    <encoding name ='Basic Box Drawings Set' number='155' type='96' IANAName='ISO_10367-box' IANAAlias='iso-ir-155'>
+        <escape>5/1</escape>
+    </encoding>
+    <encoding name ='Supplementary Set ISO/IEC 6937 : 1992' number='156' type='96'  >
+        <escape>5/2</escape>
+    </encoding>
+    <encoding name ='Supplementary Set for Latin Alphabet No. 6' number='157' type='96' IANAName='ISO-8859-10' IANAAlias='iso-ir-157'>
+        <escape>5/6</escape>
+    </encoding>
+    <encoding name ='Sami (Lappish) Supplementary Set' number='158' type='96' IANAName='latin-lap' IANAAlias='iso-ir-158'>
+        <escape>5/8</escape>
+    </encoding>
+    <encoding name ='Supplementary Japanese Graphic Character Set for Information Interchange' number='159' type='M' IANAName='JIS_X0212-1990' IANAAlias='iso-ir-159'>
+        <extended-escape G0='ESC 2/4 2/8 4/4' G1='ESC 2/4 2/9 4/4' G2='ESC 2/4 2/10 4/4' G3='ESC 2/4 2/11 4/4'/>
+    </encoding>
+    <encoding name ='Photo-Videotex Data Syntax of CCITT Rec. T.101' number='160' type='wSR'  >
+        <escape>4/5</escape>
+    </encoding>
+    <encoding name ='Audio Data Syntax of CCITT Rec. T.101' number='161' type='wSR'  >
+        <escape>4/6</escape>
+    </encoding>
+    <encoding name ='ISO/IEC 10646:1993, UCS-2, Level 1' number='162' type='w/oSR' IANAName='ISO-10646-UCS-2' >
+        <escape>4/0</escape>
+    </encoding>
+    <encoding name ='ISO/IEC 10646:1993, UCS-4, Level 1' number='163' type='w/oSR' IANAName='ISO-10646-UCS-4' >
+        <escape>4/1</escape>
+    </encoding>
+    <encoding name ='CCITT Hebrew Supplementary Set' number='164' type='96'  >
+        <escape>5/3</escape>
+    </encoding>
+    <encoding name ='CCITT Chinese Set' number='165' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/5' G1='ESC 2/4 2/9 4/5' G2='ESC 2/4 2/10 4/5' G3='ESC 2/4 2/11 4/5'/>
+    </encoding>
+    <encoding name ='Thai Set' number='166' type='96' IANAName='TIS-620' >
+        <escape>5/4</escape>
+    </encoding>
+    <encoding name ='Arabic/French/German Set' number='167' type='96'  >
+        <escape>5/5</escape>
+    </encoding>
+    <encoding name ='Update Registration 87 Japanese Graphic Character Set for Information Interchange' number='168' type='M'  >
+        <extended-escape G0='ESC 2/6 4/0 ESC 2/4 4/2' G1='ESC 2/6 4/0 ESC 2/4 2/9 4/2' G2='ESC 2/6 4/0 ESC 2/4 2/10 4/2' G3='ESC 2/6 4/0 ESC 2/4 2/11 4/2'/>
+    </encoding>
+    <encoding name ='Blissymbol Graphic Character Set' number='169' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/6' G1='ESC 2/4 2/9 4/6' G2='ESC 2/4 2/10 4/6' G3='ESC 2/4 2/11 4/6'/>
+    </encoding>
+    <encoding name ='Invariant characters (82) of ISO/IEC 646' number='170' type='94/2'  >
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 1, CNS 11643-1992' number='171' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/7' G1='ESC 2/4 2/9 4/7' G2='ESC 2/4 2/10 4/7' G3='ESC 2/4 2/11 4/7'/>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 2, CNS 11643-1992' number='172' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/8' G1='ESC 2/4 2/9 4/8' G2='ESC 2/4 2/10 4/8' G3='ESC 2/4 2/11 4/8'/>
+    </encoding>
+    <encoding name ='Third supplementary set of Mosaic Characters/ Videotex and Facsimile' number='173' type='94/1'  >
+        <escape>6/4</escape>
+    </encoding>
+    <encoding name ='ISO/IEC 10646:1993, UCS-2, Level 2' number='174' type='w/oSR'  >
+        <escape>4/3</escape>
+    </encoding>
+    <encoding name ='ISO/IEC 10646:1993, UCS-4, Level 2' number='175' type='w/oSR'  >
+        <escape>4/4</escape>
+    </encoding>
+    <encoding name ='ISO/IEC 10646:1993, UCS-2, Level 3' number='176' type='w/oSR'  >
+        <escape>4/5</escape>
+    </encoding>
+    <encoding name ='ISO/IEC 10646:1993, UCS-4, Level 3' number='177' type='w/oSR'  >
+        <escape>4/6</escape>
+    </encoding>
+    <encoding name ='UCS Transformation Format One (UTF-1)' number='178' type='wSR' IANAName='ISO-10646-UTF-1' >
+        <escape>4/2</escape>
+    </encoding>
+    <encoding name ='Baltic Rim Supplementary Set' number='179' type='96'  >
+        <escape>5/9</escape>
+    </encoding>
+    <encoding name ='Vietnamese Standard Code for Information Interchange' number='180' type='96'  >
+        <escape>5/10</escape>
+    </encoding>
+    <encoding name ='Technical Character Set No.1: IEC Publication 1289' number='181' type='96'  >
+        <escape>5/11</escape>
+    </encoding>
+    <encoding name ='Welsh variant of Latin Alphabet No. 1' number='182' type='96'  >
+        <escape>5/12</escape>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 3, CNS 11643-1992' number='183' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/9' G1='ESC 2/4 2/9 4/9' G2='ESC 2/4 2/10 4/9' G3='ESC 2/4 2/11 4/9'/>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 4, CNS 11643-1992' number='184' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/10' G1='ESC 2/4 2/9 4/10' G2='ESC 2/4 2/10 4/10' G3='ESC 2/4 2/11 4/10'/>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 5, CNS 11643-1992' number='185' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/11' G1='ESC 2/4 2/9 4/11' G2='ESC 2/4 2/10 4/11' G3='ESC 2/4 2/11 4/11'/>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 6, CNS 11643-1992' number='186' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/12' G1='ESC 2/4 2/9 4/12' G2='ESC 2/4 2/10 4/12' G3='ESC 2/4 2/11 4/12'/>
+    </encoding>
+    <encoding name ='Chinese Standard Interchange Code - Set 7, CNS 11643-1992' number='187' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/13' G1='ESC 2/4 2/9 4/13' G2='ESC 2/4 2/10 4/13' G3='ESC 2/4 2/11 4/13'/>
+    </encoding>
+    <encoding name ='Videotex Enhanced Man Machine Interface (VEMMI) Data Syntax of ITU-T Rec. T.107' number='188' type='wSR'  >
+        <escape>4/8</escape>
+    </encoding>
+    <encoding name ='CODING METHOD DELIMITER (CMD), ECMA-48 (1991), ISO/IEC 6429:1992' number='189' type='S'  >
+        <escape>6/4</escape>
+    </encoding>
+    <encoding name ='UTF-8 Level 1' number='190' type='w/oSR'  >
+        <escape>4/7</escape>
+    </encoding>
+    <encoding name ='UTF-8 Level 2' number='191' type='w/oSR'  >
+        <escape>4/8</escape>
+    </encoding>
+    <encoding name ='UTF-8 Level 3' number='192' type='w/oSR'  >
+        <escape>4/9</escape>
+    </encoding>
+    <encoding name ='UTF-16 Level 1' number='193' type='w/oSR'  >
+        <escape>4/10</escape>
+    </encoding>
+    <encoding name ='UTF-16 Level 2' number='194' type='w/oSR'  >
+        <escape>4/11</escape>
+    </encoding>
+    <encoding name ='UTF-16 Level 3' number='195' type='w/oSR'  >
+        <escape>4/12</escape>
+    </encoding>
+    <encoding name ='UTF-8 without implementation level' number='196' type='wSR' IANAName='UTF-8' >
+        <escape>4/7</escape>
+    </encoding>
+    <encoding name ='Sami supplementary Latin set' number='197' type='96' IANAName='iso-ir-100' >
+        <escape>5/13</escape>
+    </encoding>
+    <encoding name ='Latin/Hebrew Alphabet' number='198' type='96'  >
+        <escape>5/14</escape>
+    </encoding>
+    <encoding name ='Celtic Supplementary Latin Set' number='199' type='96' IANAName='ISO-8859-13' IANAAlias='iso-ir-199'>
+        <escape>5/15</escape>
+    </encoding>
+    <encoding name ='Uralic Supplementary Cyrllic Set' number='200' type='96'  >
+        <escape>6/0</escape>
+    </encoding>
+    <encoding name ='Volgaic Supplementary Cyrllic Set' number='201' type='96'  >
+        <escape>6/1</escape>
+    </encoding>
+    <encoding name ='DPRK Standard Korean Graphic Character Set for Information Interchange' number='202' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/14' G1='ESC 2/4 2/9 4/14' G2='ESC 2/4 2/10 4/14' G3='ESC 2/4 2/11 4/14'/>
+    </encoding>
+    <encoding name ='European Supplementary Latin Set ("Latin 9")' number='203' type='96' IANAName='ISO-8859-15' >
+        <escape>6/2</escape>
+    </encoding>
+    <encoding name ='Supplementary set for Latin-1 alternative with EURO SIGN' number='204' type='96'  >
+        <escape>6/3</escape>
+    </encoding>
+    <encoding name ='Supplementary set for Latin-4 alternative with EURO SIGN' number='205' type='96'  >
+        <escape>6/4</escape>
+    </encoding>
+    <encoding name ='Supplementary set for Latin-7 alternative with EURO SIGN' number='206' type='96'  >
+        <escape>6/5</escape>
+    </encoding>
+    <encoding name ='Variant of the ISO 7-bit coded character set for the Irish Gaelic language ' number='207' type='94'  >
+        <escape>4/3</escape>
+    </encoding>
+    <encoding name ='Ogham coded character set for information interchange' number='208' type='96'  >
+        <escape>6/7</escape>
+    </encoding>
+    <encoding name ='Sami supplementary Latin set no 2' number='209' type='96'  >
+        <escape>6/8</escape>
+    </encoding>
+    <encoding name ='Romanian Character Set for Information Interchange' number='226' type='96' IANAName='ISO-8859-16' IANAAlias='iso-ir-226'>
+        <escape>6/6</escape>
+    </encoding>
+    <encoding name ='Right-hand part of Latin/Greek alphabet' number='227' type='96'  >
+        <escape>6/9</escape>
+    </encoding>
+    <encoding name ='Japanese Graphic Character Set for Information Interchange --- Plane 1' number='228' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 4/15' G1='ESC 2/4 2/9 4/15' G2='ESC 2/4 2/10 4/15' G3='ESC 2/4 2/11 4/15'/>
+    </encoding>
+    <encoding name ='Japanese Graphic Character Set for Information Interchange --- Plane 2' number='229' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 5/0' G1='ESC 2/4 2/9 5/0' G2='ESC 2/4 2/10 5/0' G3='ESC 2/4 2/11 5/0'/>
+    </encoding>
+    <encoding name ='Turkmen Alphabet' number='230' type='94/2'  >
+        <escape>4/4</escape>
+    </encoding>
+    <encoding name ='American National Standard Extended Latin Alphabet Coded Character Set for Bibliographic Use (ANSEL)' number='231' type='94/2'  >
+        <escape>4/5</escape>
+    </encoding>
+    <encoding name ='Turkmen character set for 8-bit codes' number='232' type='94/2'  >
+        <escape>4/6</escape>
+    </encoding>
+    <encoding name ='Japanese Graphic Character Set for Information Interchange, Plane 1 (Update of ISO-IR 228)' number='233' type='M'  >
+        <extended-escape G0='ESC 2/4 2/8 5/1' G1='ESC 2/4 2/9 5/1' G2='ESC 2/4 2/10 5/1' G3='ESC 2/4 2/11 5/1'/>
+    </encoding>
+    <encoding name ='Latin/Hebrew character set for 8-bit codes' number='234' type='96'  >
+        <escape>6/10</escape>
+    </encoding>
+    <encoding name ='NATS, Primary Set for Finland and Sweden' number='8-1' type='94/1' IANAName='NATS-SEFI' IANAAlias='iso-ir-8-1'>
+        <extended-escape G0='ESC 2/8 4/3' G1='ESC 2/9 4/3'/>
+    </encoding>
+    <encoding name ='NATS, Secondary Set for Finland and Sweden' number='8-2' type='94/1' IANAName='NATS-SEFI-ADD' IANAAlias='iso-ir-8-2'>
+        <extended-escape G0='ESC 2/8 4/4' G1='ESC 2/9 4/4'/>
+    </encoding>
+    <encoding name ='NATS, Primary Set for Denmark and Norway' number='9-1' type='94/1' IANAName='NATS-DANO' IANAAlias='iso-ir-9-1'>
+        <extended-escape G0='ESC 2/8 4/5' G1='ESC 2/9 4/5'/>
+    </encoding>
+    <encoding name ='NATS, Secondary Set for Denmark and Norway' number='9-2' type='94/1' IANAName='NATS-DANO-ADD' IANAAlias='iso-ir-9-2'>
+        <extended-escape G0='ESC 2/8 4/6' G1='ESC 2/9 4/6'/>
+    </encoding>
+</encodings>
