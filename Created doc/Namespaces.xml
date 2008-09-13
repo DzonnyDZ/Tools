@@ -214,5 +214,8 @@
         <member name="N:Tools.TextT.EncodingT">
             <summary>Contains classes fro working with different text encodings.</summary>
         </member>
+        <member name="N:Tools.XmlT.LinqT">
+            <summary>Provides extensions to <see cref="N:System.Xml.Linq">Linq to Xml technology</see>.</summary>
+        </member>
     </members>    
 </doc>

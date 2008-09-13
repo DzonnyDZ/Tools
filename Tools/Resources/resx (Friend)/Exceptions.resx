@@ -906,4 +906,22 @@
   <data name="TheTagsPropertyHaveNotBeenInitializedUseTheSetTagsMethodToInitializeIt" xml:space="preserve">
     <value>The Tags property have not been initialized. Use the SetTags method to initialize it.</value>
   </data>
+  <data name="RootElementOf0MustBe1" xml:space="preserve">
+    <value>Root element of {0} must be {1}.</value>
+  </data>
+  <data name="MustRepresentXMLElement1" xml:space="preserve">
+    <value>{0} must represent XML element {1}</value>
+  </data>
+  <data name="UnknownISO2022EncodingType0" xml:space="preserve">
+    <value>Unknown ISO-2022 encoding type {0}</value>
+  </data>
+  <data name="ErrorWhileParsing0Found1Expected2AtPosition3" xml:space="preserve">
+    <value>Error while parsing {0}. Found '{1}', expected {2} at position {3}.</value>
+  </data>
+  <data name="EscapeSequenceStringIsInInvalidFormat" xml:space="preserve">
+    <value>Escape sequence string is in invalid format.</value>
+  </data>
+  <data name="GivenStreamDoesNotSupportReading" xml:space="preserve">
+    <value>Given stream does not support reading</value>
+  </data>
 </root>

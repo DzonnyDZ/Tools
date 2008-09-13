@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -208,6 +208,7 @@
     <Compile Include="IO\SyncFSWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Xml\Linq\Extensions.vb" />
     <Compile Include="Media\Sound.vb">
       <SubType>UserControl</SubType>
     </Compile>
@@ -315,7 +316,7 @@
       <DependentUpon>Icons.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Tools\SystemResources.vb" />
-    <Compile Include="Text\Encoding\ISO2022.vb"/>
+    <Compile Include="Text\Encoding\ISO2022.vb" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
@@ -603,9 +604,10 @@
     <None Include="Reflection\Resources\Union.png" />
     <None Include="Reflection\Resources\ValueType.png" />
     <Content Include="Reflection\Resources\Attribute.png" />
-      <EmbeddedResource Include="Text\Encoding\ISO2022.xml" >
-          <DependentUpon>ISO2022.vb</DependentUpon>
-      </EmbeddedResource>
+    <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
+      <DependentUpon>ISO2022.vb</DependentUpon>
+      <LogicalName>Tools.Text.Encoding.ISO2022</LogicalName>
+    </EmbeddedResource>
     <None Include="Resources\Paste.png" />
     <None Include="Resources\Cut.png" />
     <None Include="Resources\Copy.png" />
@@ -795,9 +797,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />
-      <EmbeddedResource Include="Text\Encoding\ISO2022.xsd" >
-          <DependentUpon>ISO2022.vb</DependentUpon>
-      </EmbeddedResource>
+    <EmbeddedResource Include="Text\Encoding\ISO2022.xsd">
+      <DependentUpon>ISO2022.vb</DependentUpon>
+      <LogicalName>Tools.Text.Encoding.ISO2022Schema</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
   </ItemGroup>
   <ItemGroup>
