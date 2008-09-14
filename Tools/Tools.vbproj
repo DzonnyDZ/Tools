@@ -208,6 +208,7 @@
     <Compile Include="IO\SyncFSWatcher.vb">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="IO\UnionReadOnlyStream.vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
     <Compile Include="Media\Sound.vb">
       <SubType>UserControl</SubType>

@@ -885,8 +885,8 @@
   <data name="ParentIFDOfSubIFDBeingAddedReplacedMustMeNull" xml:space="preserve">
     <value>ParentIFD of subIFD being added/replaced must me null.</value>
   </data>
-  <data name="IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt16" xml:space="preserve">
-    <value>If parent IFD already contains record that is about to become parent record of subIFD it must of type one element of type UInt16</value>
+  <data name="IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt32" xml:space="preserve">
+    <value>If parent IFD already contains record that is about to become parent record of subIFD it must of type one element of type UInt32</value>
   </data>
   <data name="MustBeWithinRangeOfValuesOfType1" xml:space="preserve">
     <value>{0} must be within range of values of type {1}.</value>
@@ -923,5 +923,23 @@
   </data>
   <data name="GivenStreamDoesNotSupportReading" xml:space="preserve">
     <value>Given stream does not support reading</value>
+  </data>
+  <data name="Key0CanHoldOnlyIFDOfType1" xml:space="preserve">
+    <value>Key {0} can hold only IFD of type {1}</value>
+  </data>
+  <data name="ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength" xml:space="preserve">
+    <value>For uncompressed thumbnail StripOffsets and StripByteCounts must have same length</value>
+  </data>
+  <data name="ThisStreamDoesNotSupportSeeking" xml:space="preserve">
+    <value>This stream does not support seeking.</value>
+  </data>
+  <data name="ThisStreamDoesNotSupportWriting" xml:space="preserve">
+    <value>This stream does not support writing.</value>
+  </data>
+  <data name="AttemptToSeekAfterEndOfStream" xml:space="preserve">
+    <value>Attempt to seek after end of stream.</value>
+  </data>
+  <data name="When0Is1Then2MustBeSet" xml:space="preserve">
+    <value>When {0} is {1} then {2} must be set</value>
   </data>
 </root>

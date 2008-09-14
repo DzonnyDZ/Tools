@@ -8,7 +8,7 @@ Namespace API
 #Region "Structures"
         ''' <summary>Contains information about a file object.</summary>
         <StructLayout(LayoutKind.Sequential)> _
-        Public Structure SHFILEINFO 'ASAP:MSDN
+        Public Structure SHFILEINFO
             ''' <summary>A handle to the icon that represents the file. You are responsible for destroying this handle with DestroyIcon when you no longer need it.</summary>
             Public hIcon As IntPtr
             ''' <summary>The index of the icon image within the system image list.</summary>
@@ -44,12 +44,12 @@ Namespace API
             ByVal dwFileAttributes As FileAttributes, _
             ByRef psfi As SHFILEINFO, _
             ByVal cbFileInfo As UInt32, _
-            ByVal uFlags As FileInformationFlags) As IntPtr 'ASAP:MSDN
+            ByVal uFlags As FileInformationFlags) As IntPtr
 #End Region
 #Region "Enumerations"
         ''' <summary>The flags that specify the file information to retrieve. USed by <see cref="SHGetFileInfo"/>.</summary>
         <Flags()> _
-        Public Enum FileInformationFlags As UInt32 'ASAP:MSDN
+        Public Enum FileInformationFlags As UInt32
             <EditorBrowsable(EditorBrowsableState.Advanced)> zeor = 0UI
             ''' <summary>Version 5.0. Apply the appropriate overlays to the file's icon. The <see cref="SHGFI_ICON"/> flag must also be set.</summary>
             SHGFI_ADDOVERLAYS = &H20UI
@@ -91,7 +91,7 @@ Namespace API
 
         ''' <summary>File attributes</summary>
         <Flags()> _
-        Public Enum FileAttributes As UInt32 'ASAP:MSDN
+        Public Enum FileAttributes As UInt32
             ''' <summary>A file or directory that is an archive file or directory. Applications use this attribute to mark files for backup or removal.</summary>
             FILE_ATTRIBUTE_ARCHIVE = &H20
             ''' <summary>A file or directory that is compressed. For a file, all of the data in the file is compressed. For a directory, compression is the default for newly created files and subdirectories.</summary>
@@ -140,7 +140,7 @@ Namespace API
         End Enum
         ''' <summary>File flags</summary>
         <Flags()> _
-        Public Enum FileFlags As UInt32   'ASAP:MSDN
+        Public Enum FileFlags As UInt32
             ''' <summary>The specified items can be browsed in place. This implies that the client can bind to this object as shown in a general form here.</summary>
             SFGAO_BROWSABLE = &H8000000UI
             ''' <summary>The specified items can be copied (same value as the <see cref="DropEfects.DROPEFFECT_COPY"/>) flag).</summary>

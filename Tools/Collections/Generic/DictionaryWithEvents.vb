@@ -19,7 +19,7 @@ Namespace CollectionsT.GenericT
         Implements IReportsChange
 #Region "CTors"
         ''' <summary>CTor</summary>
-        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
         Public Sub New(Optional ByVal AddingReadOnly As Boolean = False, Optional ByVal CancelError As Boolean = False)
             _AddingReadOnly = AddingReadOnly
@@ -32,7 +32,7 @@ Namespace CollectionsT.GenericT
         'End Function
         ''' <summary>CTor - initializes from another <see cref="IDictionary(Of TKey,Tvalue)"/></summary>
         ''' <param name="dictionary">The <see cref="System.Collections.Generic.IDictionary(Of TKey, TValue)"/> whose elements are copied to the new <see cref="DictionaryWithEvents(Of TKey, TValue)"/>.</param>
-        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <exception cref="System.ArgumentNullException"><paramref name="dictionary"/> is null</exception>
         Public Sub New(ByVal dictionary As IDictionary(Of TKey, TValue), Optional ByVal AddingReadOnly As Boolean = False, Optional ByVal CancelError As Boolean = False)
             _AddingReadOnly = AddingReadOnly
@@ -42,7 +42,7 @@ Namespace CollectionsT.GenericT
         End Sub
         ''' <summary>Initializes a new instance of the <see cref="DictionaryWithEvents(Of TKey,TValue)"/> class that is empty and has the specified initial capacity.</summary>
         ''' <param name="capacity">The number of elements that the new dictionary can initially store.</param>
-        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0</exception>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
         Public Sub New(ByVal capacity As Integer, Optional ByVal AddingReadOnly As Boolean = False, Optional ByVal CancelError As Boolean = False)
@@ -53,7 +53,7 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Initializes a new instance of the <see cref="DictionaryWithEvents(Of TKey,TValue)"/> class that is empty and has the specified initial capacity, and uses the specified <see cref="System.Collections.Generic.IEqualityComparer(Of T)"/>.</summary>
         ''' <param name="capacity">The number of elements that the new dictionary can initially store.</param>
-        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="Comparer">The <see cref="System.Collections.Generic.IEqualityComparer(Of TKey)"/> implementation to use when comparing keys, or null to use the default <see cref="System.Collections.Generic.EqualityComparer(Of TKey)"/> for the type of the key.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0</exception>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
@@ -63,7 +63,7 @@ Namespace CollectionsT.GenericT
             Dict = New Dictionary(Of TKey, TValue)(capacity, Comparer)
         End Sub
         ''' <summary>Initializes a new instance of the <see cref="DictionaryWithEvents(Of TKey,Tvalue)"/> class that is empty, uses the specified <see cref="System.Collections.Generic.IEqualityComparer(Of T)"/>.</summary>
-        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="Comparer">The <see cref="System.Collections.Generic.IEqualityComparer(Of TKey)"/> implementation to use when comparing keys, or null to use the default <see cref="System.Collections.Generic.EqualityComparer(Of TKey)"/> for the type of the key.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0</exception>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
@@ -73,7 +73,7 @@ Namespace CollectionsT.GenericT
             Dict = New Dictionary(Of TKey, TValue)(Comparer)
         End Sub
         ''' <summary>Initializes a new instance of the <see cref="DictionaryWithEvents(Of TKey,Tvalue)"/> class with given instance of <see cref="IDictionary(Of TKey, Tvalue)"/>, and uses the specified <see cref="System.Collections.Generic.IEqualityComparer(Of T)"/>.</summary>
-        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
+        ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="Comparer">The <see cref="System.Collections.Generic.IEqualityComparer(Of TKey)"/> implementation to use when comparing keys, or null to use the default <see cref="System.Collections.Generic.EqualityComparer(Of TKey)"/> for the type of the key.</param>
         ''' <exception cref="System.ArgumentOutOfRangeException">capacity is less than 0</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="dictionary"/> is null</exception>
@@ -92,7 +92,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Contains value of the <see cref="AddingReadOnly"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private ReadOnly _AddingReadOnly As Boolean = False
-        ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
+        ''' <summary>Determines <see cref="CancelableKeyValueEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
         <Browsable(False)> _
         Public ReadOnly Property AddingReadOnly() As Boolean
             <DebuggerStepThrough()> Get
@@ -149,7 +149,6 @@ Namespace CollectionsT.GenericT
         ''' <item><see cref="Add"/></item>
         ''' <item><see cref="Insert"/></item>
         ''' <item><see cref="Remove"/></item>
-        ''' <item><see cref="RemoveAt"/></item>
         ''' <item><see cref="Clear"/></item>
         ''' <item><see cref="Item"/> (only setter)</item>
         ''' </list></remarks>
@@ -209,7 +208,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Adds an item to the <see cref="DictionaryWithEvents(Of TKey,TValue)"/>.</summary>
         ''' <param name="value">The object to add to the <see cref="DictionaryWithEvents(Of TKey,TValue)"/>.</param>
         ''' <param name="key">Key of object being added</param>
-        ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
+        ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableKeyValueEventArgs.Cancel"/></remarks>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
@@ -393,7 +392,7 @@ Namespace CollectionsT.GenericT
 #Region "Remove"
         ''' <summary>List of <see cref="ItemCancelEventHandler"/> delegates to be invoked when the <see cref="Removing"/> event is raised</summary>
         Private RemovingEventHandlerList As New List(Of ItemCancelEventHandler)
-        ''' <summary>Raised before item is removed from the list. Raised by <see cref="Remove"/> and <see cref="RemoveAt"/> methods.</summary>
+        ''' <summary>Raised before item is removed from the list. Raised by <see cref="Remove"/> method.</summary>
         ''' <remarks><para>
         ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that<see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
@@ -402,7 +401,7 @@ Namespace CollectionsT.GenericT
         ''' </para><para>
         ''' <see cref="Removing"/> event is not raised when list is being cleared.
         ''' </para><para>
-        ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> cannot be changed.
+        ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableKeyValueEventArgs.Newkey"/> cannot be changed.
         ''' </para>
         ''' </remarks>
         ''' <exception cref="InvalidOperationException">Adding handler when <see cref="AllowAddCancelableEventsHandlers"/> is false</exception>
@@ -458,7 +457,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="key"/> is null</exception>
-        ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
+        ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableKeyValueEventArgs.Cancel"/></remarks>
         Public Overridable Function Remove(ByVal key As TKey) As Boolean Implements IDictionary(Of TKey, TValue).Remove
             If key Is Nothing Then Throw New ArgumentNullException("key")
             If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
@@ -579,11 +578,11 @@ Namespace CollectionsT.GenericT
         ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that <see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
         ''' </para><para>
-        ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> can be changed if <see cref="AddingReadOnly"/> is False.
+        ''' Value of parameter <paramref name="e"/>'s <see cref="CancelableKeyValueEventArgs.Item"/> can be changed if <see cref="AddingReadOnly"/> is False.
         ''' </para><para>
         ''' Do not change content of list in handler! List is locked.
         ''' </para><para>
-        ''' <paramref name="e"/>'s <see cref="CancelableItemIndexEventArgs.Item"/> contains new value. Use <see cref="Item"/> to determine old value.
+        ''' <paramref name="e"/>'s <see cref="CancelableKeyValueEventArgs.Item"/> contains new value. Use <see cref="Item"/> to determine old value.
         ''' </para></remarks>
         ''' <exception cref="InvalidOperationException">Adding handler when <see cref="AllowAddCancelableEventsHandlers"/> is false</exception>
         Public Custom Event ItemChanging As ItemCancelEventHandler
@@ -738,7 +737,7 @@ Namespace CollectionsT.GenericT
         Public Event ItemValueChanged(ByVal sender As DictionaryWithEvents(Of TKey, TValue), ByVal e As ListWithEvents(Of TValue).ItemValueChangedEventArgs)
 
 #Region "EventArgs"
-        Public Class DictionaryChangedEventArgs : Inherits CollectionChangeEventArgs(Of TValue)
+        Public Class DictionaryChangedEventArgs : Inherits CollectionChangeEventArgs(Of KeyValuePair(Of TKey, TValue))
 #Region "CTors"
             ''' <summary>CTor</summary>
             ''' <param name="ChangeEventArgs">Argumens of event that caused the collection to change</param>
@@ -798,7 +797,7 @@ Namespace CollectionsT.GenericT
                     Return _OldValue
                 End Get
             End Property
-            ''' <summary>Gets value on index <see cref="Index"/> after change (if applicable)</summary>
+            ''' <summary>Gets value with key <see cref="Key"/> after change (if applicable)</summary>
             ''' <returns>Valu at index <see cref="Key"/> after changed. If not applicable returns null (for reference types) or type default value (for <see cref="ValueType">value types</see>)</returns>
             Public ReadOnly Property NewValue() As TValue
                 <DebuggerStepThrough()> Get
@@ -1084,8 +1083,8 @@ Namespace CollectionsT.GenericT
 
 
         ''' <summary>Determines whether the <see cref="System.Collections.Generic.ICollection(Of T)" /> contains a specific value.</summary>
-        ''' <param name="item">The object to locate in the <see cref="System.Collections.Generic.ICollection(Of T)." /></param>
-        ''' <returns>true if item is found in the <see cref="System.Collections.Generic.ICollection(Of T);" /> otherwise, false.</returns>
+        ''' <param name="item">The object to locate in the <see cref="System.Collections.Generic.ICollection(Of T)" />.</param>
+        ''' <returns>true if item is found in the <see cref="System.Collections.Generic.ICollection(Of T)" />; otherwise, false.</returns>
         Private Function Contains(ByVal item As System.Collections.Generic.KeyValuePair(Of TKey, TValue)) As Boolean Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).Contains
             Return CollectionDic.Contains(item)
         End Function
@@ -1275,7 +1274,7 @@ Namespace CollectionsT.GenericT
 #Region "ICollection"
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="System.Collections.Generic.ICollection(Of T)" />.</summary>
         ''' <param name="item">The object to remove from the <see cref="System.Collections.Generic.ICollection(Of T)" />.</param>
-        ''' <returns>true if item was successfully removed from the <see cref="System.Collections.Generic.ICollection(Of T)" />; otherwise, false. This method also returns false if item is not found in the original <see cref="System.Collections.Generic.ICollection(Of T)." /></returns>
+        ''' <returns>true if item was successfully removed from the <see cref="System.Collections.Generic.ICollection(Of T)" />; otherwise, false. This method also returns false if item is not found in the original <see cref="System.Collections.Generic.ICollection(Of T)" />.</returns>
         Private Function Remove_ICollection(ByVal item As System.Collections.Generic.KeyValuePair(Of TKey, TValue)) As Boolean Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).Remove
             Dim comp = EqualityComparer(Of TValue).Default
             If ContainsKey(item.Key) AndAlso comp.Equals(item.Value, Me(item.Key)) Then Return Me.Remove(item.Key)

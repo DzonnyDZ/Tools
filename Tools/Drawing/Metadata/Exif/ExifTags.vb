@@ -1,13 +1,13 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2833.35810
+' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2701.36373
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 19. června 2008
-' By:noutbuk\Honza
+' Created: 14. září 2008
+' By:DZONNY\Honza
 '
 'Localize: This auto-generated file was skipped during localization
 #If Config <= Nightly 'Stage: Nightly
@@ -100,7 +100,11 @@ Namespace DrawingT.MetadataT
 			Public Property ExifIFD As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.ExifIFD)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -114,7 +118,11 @@ Namespace DrawingT.MetadataT
 			Public Property GPSIFD As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSIFD)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -130,7 +138,11 @@ Namespace DrawingT.MetadataT
 			Public Property ImageWidth As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.ImageWidth)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -144,7 +156,11 @@ Namespace DrawingT.MetadataT
 			Public Property ImageLength As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.ImageLength)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -158,7 +174,19 @@ Namespace DrawingT.MetadataT
 			Public Property BitsPerSample As UInt16()
 				Get
 					Dim value As ExifRecord = Record(Tags.BitsPerSample)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -181,7 +209,11 @@ Namespace DrawingT.MetadataT
 			Public Property Compression As Nullable(Of CompressionValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.Compression)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(CompressionValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(CompressionValues))
@@ -205,7 +237,11 @@ Namespace DrawingT.MetadataT
 			Public Property PhotometricInterpretation As Nullable(Of PhotometricInterpretationValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.PhotometricInterpretation)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(PhotometricInterpretationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(PhotometricInterpretationValues))
@@ -241,7 +277,11 @@ Namespace DrawingT.MetadataT
 			Public Property Orientation As Nullable(Of OrientationValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.Orientation)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(OrientationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(OrientationValues))
@@ -256,7 +296,11 @@ Namespace DrawingT.MetadataT
 			Public Property SamplesPerPixel As Nullable(Of UInt16)
 				Get
 					Dim value As ExifRecord = Record(Tags.SamplesPerPixel)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -279,7 +323,11 @@ Namespace DrawingT.MetadataT
 			Public Property PlanarConfiguration As Nullable(Of PlanarConfigurationValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.PlanarConfiguration)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(PlanarConfigurationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(PlanarConfigurationValues))
@@ -294,7 +342,19 @@ Namespace DrawingT.MetadataT
 			Public Property YCbCrSubSampling As UInt16()
 				Get
 					Dim value As ExifRecord = Record(Tags.YCbCrSubSampling)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -317,7 +377,11 @@ Namespace DrawingT.MetadataT
 			Public Property YCbCrPositioning As Nullable(Of YCbCrPositioningValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.YCbCrPositioning)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(YCbCrPositioningValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(YCbCrPositioningValues))
@@ -360,7 +424,11 @@ Namespace DrawingT.MetadataT
 			Public Property ResolutionUnit As Nullable(Of UInt16)
 				Get
 					Dim value As ExifRecord = Record(Tags.ResolutionUnit)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -376,7 +444,19 @@ Namespace DrawingT.MetadataT
 			Public Property StripOffsets As UInt32()
 				Get
 					Dim value As ExifRecord = Record(Tags.StripOffsets)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt32() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt32
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt32)
+						Next
+						Return ret
+					Else
+						Return New UInt32() {CType(value.Data, UInt32)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -390,7 +470,11 @@ Namespace DrawingT.MetadataT
 			Public Property RowsPerStrip As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.RowsPerStrip)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -404,7 +488,19 @@ Namespace DrawingT.MetadataT
 			Public Property StripByteCounts As UInt32()
 				Get
 					Dim value As ExifRecord = Record(Tags.StripByteCounts)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt32() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt32
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt32)
+						Next
+						Return ret
+					Else
+						Return New UInt32() {CType(value.Data, UInt32)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -418,7 +514,11 @@ Namespace DrawingT.MetadataT
 			Public Property JPEGInterchangeFormat As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.JPEGInterchangeFormat)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -432,7 +532,11 @@ Namespace DrawingT.MetadataT
 			Public Property JPEGInterchangeFormatLength As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.JPEGInterchangeFormatLength)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -448,7 +552,19 @@ Namespace DrawingT.MetadataT
 			Public Property TransferFunction As UInt16()
 				Get
 					Dim value As ExifRecord = Record(Tags.TransferFunction)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -462,7 +578,19 @@ Namespace DrawingT.MetadataT
 			Public Property WhitePoint As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.WhitePoint)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -476,7 +604,19 @@ Namespace DrawingT.MetadataT
 			Public Property PrimaryChromaticities As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.PrimaryChromaticities)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -490,7 +630,19 @@ Namespace DrawingT.MetadataT
 			Public Property YCbCrCoefficients As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.YCbCrCoefficients)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -504,7 +656,19 @@ Namespace DrawingT.MetadataT
 			Public Property ReferenceBlackWhite As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.ReferenceBlackWhite)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -794,7 +958,11 @@ Namespace DrawingT.MetadataT
 			Public Property InteroperabilityIFD As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.InteroperabilityIFD)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -809,7 +977,19 @@ Namespace DrawingT.MetadataT
 			Public Property ExifVersion As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.ExifVersion)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -828,7 +1008,19 @@ Namespace DrawingT.MetadataT
 			Public Property FlashpixVersion As FlashpixVersionValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.FlashpixVersion)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is FlashpixVersionValues() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As FlashpixVersionValues
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New FlashpixVersionValues() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -858,7 +1050,11 @@ Namespace DrawingT.MetadataT
 			Public Property ColorSpace As Nullable(Of ColorSpaceValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.ColorSpace)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(ColorSpaceValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(ColorSpaceValues))
@@ -892,7 +1088,19 @@ Namespace DrawingT.MetadataT
 			Public Property ComponentsConfiguration As ComponentsConfigurationValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.ComponentsConfiguration)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is ComponentsConfigurationValues() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As ComponentsConfigurationValues
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New ComponentsConfigurationValues() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -925,7 +1133,11 @@ Namespace DrawingT.MetadataT
 			Public Property PixelXDimension As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.PixelXDimension)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -939,7 +1151,11 @@ Namespace DrawingT.MetadataT
 			Public Property PixelYDimension As Nullable(Of UInt32)
 				Get
 					Dim value As ExifRecord = Record(Tags.PixelYDimension)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt32)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -954,7 +1170,19 @@ Namespace DrawingT.MetadataT
 			Public Property MakerNote As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.MakerNote)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -967,7 +1195,19 @@ Namespace DrawingT.MetadataT
 			Public Property UserComment As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.UserComment)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1116,7 +1356,11 @@ Namespace DrawingT.MetadataT
 			Public Property ExposureProgram As Nullable(Of ExposureProgramValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.ExposureProgram)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(ExposureProgramValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(ExposureProgramValues))
@@ -1131,7 +1375,19 @@ Namespace DrawingT.MetadataT
 			Public Property SpectralSensitivity As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.SpectralSensitivity)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1145,7 +1401,19 @@ Namespace DrawingT.MetadataT
 			Public Property ISOSpeedRatings As UInt16()
 				Get
 					Dim value As ExifRecord = Record(Tags.ISOSpeedRatings)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1158,7 +1426,19 @@ Namespace DrawingT.MetadataT
 			Public Property OECF As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.OECF)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1273,7 +1553,11 @@ Namespace DrawingT.MetadataT
 			Public Property MeteringMode As Nullable(Of MeteringModeValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.MeteringMode)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(MeteringModeValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(MeteringModeValues))
@@ -1335,7 +1619,11 @@ Namespace DrawingT.MetadataT
 			Public Property LightSource As Nullable(Of LightSourceValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.LightSource)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(LightSourceValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(LightSourceValues))
@@ -1350,7 +1638,11 @@ Namespace DrawingT.MetadataT
 			Public Property Flash As Nullable(Of UInt16)
 				Get
 					Dim value As ExifRecord = Record(Tags.Flash)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -1378,7 +1670,19 @@ Namespace DrawingT.MetadataT
 			Public Property SubjectArea As UInt16()
 				Get
 					Dim value As ExifRecord = Record(Tags.SubjectArea)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1405,7 +1709,19 @@ Namespace DrawingT.MetadataT
 			Public Property SpatialFrequencyResponse As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.SpatialFrequencyResponse)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1447,7 +1763,11 @@ Namespace DrawingT.MetadataT
 			Public Property FocalPlaneResolutionUnit As Nullable(Of UInt16)
 				Get
 					Dim value As ExifRecord = Record(Tags.FocalPlaneResolutionUnit)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -1461,7 +1781,19 @@ Namespace DrawingT.MetadataT
 			Public Property SubjectLocation As UInt16()
 				Get
 					Dim value As ExifRecord = Record(Tags.SubjectLocation)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is UInt16() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As UInt16
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), UInt16)
+						Next
+						Return ret
+					Else
+						Return New UInt16() {CType(value.Data, UInt16)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1506,7 +1838,11 @@ Namespace DrawingT.MetadataT
 			Public Property SensingMethod As Nullable(Of SensingMethodValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.SensingMethod)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, Int16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(SensingMethodValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(SensingMethodValues))
@@ -1553,7 +1889,19 @@ Namespace DrawingT.MetadataT
 			Public Property CFAPattern As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.CFAPattern)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1576,7 +1924,11 @@ Namespace DrawingT.MetadataT
 			Public Property CustomRendered As Nullable(Of CustomRenderedValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.CustomRendered)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(CustomRenderedValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(CustomRenderedValues))
@@ -1602,7 +1954,11 @@ Namespace DrawingT.MetadataT
 			Public Property ExposureMode As Nullable(Of ExposureModeValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.ExposureMode)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(ExposureModeValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(ExposureModeValues))
@@ -1626,7 +1982,11 @@ Namespace DrawingT.MetadataT
 			Public Property WhiteBalance As Nullable(Of WhiteBalanceValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.WhiteBalance)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(WhiteBalanceValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(WhiteBalanceValues))
@@ -1668,7 +2028,11 @@ Namespace DrawingT.MetadataT
 			Public Property FocalLengthIn35mmFilm As Nullable(Of FocalLengthIn35mmFilmValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.FocalLengthIn35mmFilm)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(FocalLengthIn35mmFilmValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(FocalLengthIn35mmFilmValues))
@@ -1683,7 +2047,11 @@ Namespace DrawingT.MetadataT
 			Public Property SceneCaptureType As Nullable(Of UInt16)
 				Get
 					Dim value As ExifRecord = Record(Tags.SceneCaptureType)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If value.HasValue Then
@@ -1712,7 +2080,11 @@ Namespace DrawingT.MetadataT
 			Public Property GainControl As Nullable(Of GainControlValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.GainControl)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(GainControlValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(GainControlValues))
@@ -1738,7 +2110,11 @@ Namespace DrawingT.MetadataT
 			Public Property Contrast As Nullable(Of ContrastValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.Contrast)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(ContrastValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(ContrastValues))
@@ -1764,7 +2140,11 @@ Namespace DrawingT.MetadataT
 			Public Property Saturation As Nullable(Of SaturationValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.Saturation)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(SaturationValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(SaturationValues))
@@ -1790,7 +2170,11 @@ Namespace DrawingT.MetadataT
 			Public Property Sharpness As Nullable(Of SharpnessValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.Sharpness)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(SharpnessValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(SharpnessValues))
@@ -1804,7 +2188,19 @@ Namespace DrawingT.MetadataT
 			Public Property DeviceSettingDescription As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.DeviceSettingDescription)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -1831,7 +2227,11 @@ Namespace DrawingT.MetadataT
 			Public Property SubjectDistanceRange As Nullable(Of SubjectDistanceRangeValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.SubjectDistanceRange)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(SubjectDistanceRangeValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(SubjectDistanceRangeValues))
@@ -2000,7 +2400,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSVersionID As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSVersionID)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2054,7 +2466,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSLatitude As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSLatitude)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2108,7 +2532,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSLongitude As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSLongitude)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2129,7 +2565,11 @@ Namespace DrawingT.MetadataT
 			Public Property GPSAltitudeRef As Nullable(Of GPSAltitudeRefValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSAltitudeRef)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, Byte)
+					End If
 				End Get
 				Set
 					If Value.HasValue AndAlso Array.IndexOf([Enum].GetValues(GetType(GPSAltitudeRefValues)), Value) = -1 Then Throw New InvalidEnumArgumentException("value", Value, GetType(GPSAltitudeRefValues))
@@ -2158,7 +2598,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSTimeStamp As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSTimeStamp)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2482,7 +2934,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSDestLatitude As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestLatitude)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2529,7 +2993,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSDestLongitude As URational()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestLongitude)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is URational() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As URational
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), URational)
+						Next
+						Return ret
+					Else
+						Return New URational() {CType(value.Data, URational)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2616,7 +3092,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSProcessingMethod As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSProcessingMethod)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2629,7 +3117,19 @@ Namespace DrawingT.MetadataT
 			Public Property GPSAreaInformation As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSAreaInformation)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					ElseIf TypeOf value.Data Is Byte() Then
+						Return value.Data
+					ElseIf IsArray(value.Data) Then
+						Dim ret(DirectCast(value.Data, Array).Length) As Byte
+						For i As Integer = 0 To ret.length - 1
+							ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), Byte)
+						Next
+						Return ret
+					Else
+						Return New Byte() {CType(value.Data, Byte)}
+					End If
 				End Get
 				Set
 					If value IsNot Nothing Then
@@ -2656,7 +3156,11 @@ Namespace DrawingT.MetadataT
 			Public Property GPSDifferential As Nullable(Of UInt16)
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDifferential)
-					If value Is Nothing Then Return Nothing Else Return value.Data
+					If value Is Nothing Then
+						Return Nothing
+					Else
+						Return CType(value.Data, UInt16)
+					End If
 				End Get
 				Set
 					If value.HasValue Then

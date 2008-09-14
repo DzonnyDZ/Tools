@@ -101,6 +101,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Attempt to seek after end of stream..
+        '''</summary>
+        Friend Shared ReadOnly Property AttemptToSeekAfterEndOfStream() As String
+            Get
+                Return ResourceManager.GetString("AttemptToSeekAfterEndOfStream", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to 8BIM segment doesn&apos;t start with sting &apos;8BIM&apos;.
         '''</summary>
         Friend Shared ReadOnly Property BIMSegmentDoesnTStartWithSting8BIM() As String
@@ -824,6 +833,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to For uncompressed thumbnail StripOffsets and StripByteCounts must have same length.
+        '''</summary>
+        Friend Shared ReadOnly Property ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength() As String
+            Get
+                Return ResourceManager.GetString("ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Given IFD is already in use.
         '''</summary>
         Friend Shared ReadOnly Property GivenIFDIsAlreadyInUse() As String
@@ -906,12 +924,12 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''  Looks up a localized string similar to If parent IFD already contains record that is about to become parent record of subIFD it must of type one element of type UInt16.
+        '''  Looks up a localized string similar to If parent IFD already contains record that is about to become parent record of subIFD it must of type one element of type UInt32.
         '''</summary>
-        Friend Shared ReadOnly Property IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt16() As String
+        Friend Shared ReadOnly Property IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt32() As String
             Get
                 Return ResourceManager.GetString("IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTy"& _ 
-                        "peOneElementOfTypeUInt16", resourceCulture)
+                        "peOneElementOfTypeUInt32", resourceCulture)
             End Get
         End Property
         
@@ -1074,6 +1092,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property JPEGFileDoesnTStartWithCorrectSOIMarker() As String
             Get
                 Return ResourceManager.GetString("JPEGFileDoesnTStartWithCorrectSOIMarker", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Key {0} can hold only IFD of type {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property Key0CanHoldOnlyIFDOfType1() As String
+            Get
+                Return ResourceManager.GetString("Key0CanHoldOnlyIFDOfType1", resourceCulture)
             End Get
         End Property
         
@@ -2237,6 +2264,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to This stream does not support seeking..
+        '''</summary>
+        Friend Shared ReadOnly Property ThisStreamDoesNotSupportSeeking() As String
+            Get
+                Return ResourceManager.GetString("ThisStreamDoesNotSupportSeeking", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This stream does not support writing..
+        '''</summary>
+        Friend Shared ReadOnly Property ThisStreamDoesNotSupportWriting() As String
+            Get
+                Return ResourceManager.GetString("ThisStreamDoesNotSupportWriting", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to This T1orT2 cannot be converted to {0} because it doesn&apos;t contain value of {1}.
         '''</summary>
         Friend Shared ReadOnly Property ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1() As String
@@ -2485,6 +2530,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property WasNotMemberOf() As String
             Get
                 Return ResourceManager.GetString("WasNotMemberOf", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to When {0} is {1} then {2} must be set.
+        '''</summary>
+        Friend Shared ReadOnly Property When0Is1Then2MustBeSet() As String
+            Get
+                Return ResourceManager.GetString("When0Is1Then2MustBeSet", resourceCulture)
             End Get
         End Property
         

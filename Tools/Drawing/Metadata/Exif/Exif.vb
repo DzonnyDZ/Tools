@@ -137,6 +137,17 @@ Namespace DrawingT.MetadataT
         Public Class IFD
             Implements IReportsChange
 #Region "CTors"
+            ''' <summary>Contains value of the <see cref="OriginalOffset"/> property</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _OriginalOffset As UInteger
+            ''' <summary>Gtes original offset of the IFD</summary>
+            ''' <returns>Original offset of IFD in Exif block. 0 if this instance was not constructed from <see cref="ExifIFDReader"/>.</returns>
+            ''' <remarks>As this property is not wery important it has no CLS-compliant alternative.</remarks>
+            <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+            Public ReadOnly Property OriginalOffset() As UInteger
+                Get
+                    Return _OriginalOffset
+                End Get
+            End Property
             ''' <summary>CTor - empty IFD</summary>
             Public Sub New()
                 AddHandler Records.Adding, AddressOf Records_Adding
@@ -164,13 +175,35 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
-            Public Sub New(ByVal Reader As ExifIFDReader)
+            ''' 
+            ''' <param name="AutoReadNext">Automatically read IFDs that follows this one</param>
+            Public Sub New(ByVal Reader As ExifIFDReader, ByVal AutoReadNext As Boolean)
                 Me.New()
                 If Reader Is Nothing Then Exit Sub
+                _OriginalOffset = Reader.Offest
                 For Each rec As ExifIFDReader.DirectoryEntry In Reader.Entries
                     Records.Add(rec.Tag, New ExifRecord(rec.Data, rec.DataType, rec.Components, rec.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII AndAlso rec.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.Byte AndAlso rec.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.NA))
                 Next rec
                 ReadStandardSubIFDs(Reader)
+                If AutoReadNext Then ReadNextIFDs(Reader)
+            End Sub
+            ''' <summary>Reads IFDs following this one</summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that read this IFD</param>
+            ''' <remarks>This implementation reads all the IFDs that follows (are pointed by) this instance. Newly read IFDs are of type <see cref="IFD"/>.
+            ''' <para>Note for inheritors: Derived class my chose to override this method and read IFDs of different type.</para></remarks>
+            Protected Overridable Sub ReadNextIFDs(ByVal Reader As ExifIFDReader)
+                Dim CurrentIfd As IFD = Me
+                Dim CurrentReader As ExifIFDReader = Reader
+                While CurrentReader.NextIFD <> 0
+                    CurrentReader = New ExifIFDReader(CurrentReader.ExifReader, CurrentReader.NextIFD)
+                    CurrentIfd.Following = New IFD(CurrentReader)
+                    CurrentIfd = CurrentIfd.Following
+                End While
+            End Sub
+            ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
+            Public Sub New(ByVal Reader As ExifIFDReader)
+                Me.New(Reader, False)
             End Sub
             ''' <summary>If overriden in derived class reads known subIFDs nested within this IFD.</summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD.</param>
@@ -363,8 +396,8 @@ Namespace DrawingT.MetadataT
             ''' <para>Note for inheritors: Alwas call base class method.</para></remarks>
             <CLSCompliant(False)> _
             Protected Overridable Sub OnRecordsChanged(ByVal e As RecordDic.DictionaryChangedEventArgs)
-                If OnRecordsChanged_OnStack.Count = 0 OrElse OnRecordsChanged_OnStack.Peek = False Then
-                    OnRecordsChanged_OnStack.Push(True)
+                If OnRecordsChanged_OnStack.Count = 0 OrElse OnRecordsChanged_OnStack.Peek IsNot e Then
+                    OnRecordsChanged_OnStack.Push(e)
                     Try
                         OnRecordsChanged(DirectCast(e, CollectionChangedEventArgsBase))
                     Finally
@@ -375,7 +408,7 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>Indicates call stack of both <see cref="OnRecordsChanged"/> overloads</summary>
             ''' <remarks>This is here in order to CLS compliant call CLS incompliant and vice versa</remarks>
-            Private OnRecordsChanged_OnStack As New Stack(Of Boolean)
+            Private OnRecordsChanged_OnStack As New Stack(Of RecordDic.DictionaryChangedEventArgs)
             ''' <summary>Handles any change of the <see cref="Records"/> collection or its item (the <see cref="DictionaryWithEvents.CollectionChanged"/> event)</summary>
             ''' <param name="e">Event arguments - this is actually instance of CLS-incompliant generic class <see cref="RecordDic.DictionaryChangedEventArgs"/>.</param>
             ''' <remarks>In case your language can use CLS-incompliant method, you should rather use CLS-incompliant overload of this methos.
@@ -384,8 +417,8 @@ Namespace DrawingT.MetadataT
             <EditorBrowsable(EditorBrowsableState.Advanced)> _
             Protected Overridable Sub OnRecordsChanged(ByVal e As CollectionChangedEventArgsBase)
                 If Not TypeOf e Is RecordDic.DictionaryChangedEventArgs Then Throw New TypeMismatchException("e", e, GetType(RecordDic.DictionaryChangedEventArgs))
-                If OnRecordsChanged_OnStack.Count = 0 OrElse OnRecordsChanged_OnStack.Peek = True Then
-                    OnRecordsChanged_OnStack.Push(False)
+                If OnRecordsChanged_OnStack.Count = 0 OrElse OnRecordsChanged_OnStack.Peek IsNot e Then
+                    OnRecordsChanged_OnStack.Push(e)
                     Try
                         OnRecordsChanged(DirectCast(e, RecordDic.DictionaryChangedEventArgs))
                     Finally
@@ -443,7 +476,7 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>Handles adding of subIFD from any reason before it is addaed. This event can be cancelled.</summary>
             ''' <param name="Item">Item being added</param>
-            ''' <param name="e">Event thet supports cancelling</param>
+            ''' <param name="e">Event that supports cancelling</param>
             ''' <param name="Key">Record number which points to subIFD being added. This is always value form range of <see cref="UShort"/>.</param>
             ''' <remarks>Called by <see cref="OnSubIFDAdding"/>, <see cref="OnSubIFDChanging"/>
             ''' <para>This method checks if subIFD can be added or not. <paramref name="Item"/>.<see cref="SubIFD.Exif"/> must be null or same as of this instance, <paramref name="Item"/>.<see cref="SubIFD.ParentIFD"/> must be null.
@@ -462,9 +495,9 @@ Namespace DrawingT.MetadataT
                 ElseIf Item.ParentIFD IsNot Nothing Then
                     e.Cancel = True
                     e.CancelMessage = ResourcesT.Exceptions.ParentIFDOfSubIFDBeingAddedReplacedMustMeNull
-                ElseIf Me.Records.ContainsKey(Key) AndAlso (Me.Records(Key).DataType.NumberOfElements <> 1 OrElse Me.Records(Key).DataType.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16) Then
+                ElseIf Me.Records.ContainsKey(Key) AndAlso (Me.Records(Key).DataType.NumberOfElements <> 1 OrElse Me.Records(Key).DataType.DataType <> ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32) Then
                     e.Cancel = True
-                    e.CancelMessage = ResourcesT.Exceptions.IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt16
+                    e.CancelMessage = ResourcesT.Exceptions.IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt32
                 End If
             End Sub
             ''' <summary>Handles adding of subIFD from any reason after it is added</summary>
@@ -536,8 +569,8 @@ Namespace DrawingT.MetadataT
             ''' <para>Note for inheritors: Alwas call base class method.</para></remarks>
             <CLSCompliant(False)> _
             Protected Overridable Sub OnSubIFDsChanged(ByVal e As SubIFDDic.DictionaryChangedEventArgs)
-                If OnSubIFDsChanged_OnStack.Count = 0 OrElse OnSubIFDsChanged_OnStack.Peek = False Then
-                    OnSubIFDsChanged_OnStack.Push(True)
+                If OnSubIFDsChanged_OnStack.Count = 0 OrElse OnSubIFDsChanged_OnStack.Peek IsNot e Then
+                    OnSubIFDsChanged_OnStack.Push(e)
                     Try
                         OnSubIFDsChanged(DirectCast(e, CollectionChangedEventArgsBase))
                     Finally
@@ -548,17 +581,17 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>Indicates call stack of both <see cref="OnSubIFDsChanged"/> overloads</summary>
             ''' <remarks>This is here in order to CLS compliant call CLS incompliant and vice versa</remarks>
-            Private OnSubIFDsChanged_OnStack As New Stack(Of Boolean)
+            Private OnSubIFDsChanged_OnStack As New Stack(Of SubIFDDic.DictionaryChangedEventArgs)
             ''' <summary>Handles any change of the <see cref="SubIFDs"/> collection or its item (the <see cref="DictionaryWithEvents.CollectionChanged"/> event)</summary>
             ''' <param name="e">Event arguments - this is actually instance of CLS-incompliant generic class <see cref="SubIFDDic.DictionaryChangedEventArgs"/>.</param>
             ''' <remarks>In case your language can use CLS-incompliant method, you should rather use CLS-incompliant overload of this methos.
             ''' <para>Note for inheritors: Always call base class method.</para></remarks>
-            ''' <exception cref="TypeMismatchException"><paramref name="e"/> is not of type <see cref="DictionaryWithEvents(Of TKey, TValue)"/>[<see cref="UShort"/>, <see cref="ExifSubIFD"/>].<see cref="SubIFDDic.DictionaryChangedEventArgs">DictionaryChangedEventArgs</see></exception>
+            ''' <exception cref="TypeMismatchException"><paramref name="e"/> is not of type <see cref="DictionaryWithEvents(Of TKey, TValue)"/>[<see cref="UShort"/>, <see cref="Exif.ExifSubIFD"/>].<see cref="SubIFDDic.DictionaryChangedEventArgs">DictionaryChangedEventArgs</see></exception>
             <EditorBrowsable(EditorBrowsableState.Advanced)> _
             Protected Overridable Sub OnSubIFDsChanged(ByVal e As CollectionChangedEventArgsBase)
                 If Not TypeOf e Is SubIFDDic.DictionaryChangedEventArgs Then Throw New TypeMismatchException("e", e, GetType(SubIFDDic.DictionaryChangedEventArgs))
-                If OnSubIFDsChanged_OnStack.Count = 0 OrElse OnSubIFDsChanged_OnStack.Peek = True Then
-                    OnSubIFDsChanged_OnStack.Push(False)
+                If OnSubIFDsChanged_OnStack.Count = 0 OrElse OnSubIFDsChanged_OnStack.Peek IsNot e Then
+                    OnSubIFDsChanged_OnStack.Push(e)
                     Try
                         OnSubIFDsChanged(DirectCast(e, SubIFDDic.DictionaryChangedEventArgs))
                     Finally
@@ -987,16 +1020,21 @@ Namespace DrawingT.MetadataT
             Private Sub SetDataValue(Of T)(ByVal value As Object)
                 Dim old As Object = _Data
                 Dim changed As Boolean = False
-                Try
-                    Dim newV As T = CType(value, T)
-                    If Me.DataType.NumberOfElements = 1 OrElse Not Me.Fixed Then
-                        _Data = newV
-                        Me.DataType.NumberOfElements = 1
-                        changed = True
-                    Else
-                        Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
-                    End If
-                Catch
+                If Not IsArray(value) Then
+                    Try
+                        Dim newV As T = CType(value, T)
+                        If Me.DataType.NumberOfElements = 1 OrElse Not Me.Fixed Then
+                            _Data = newV
+                            Me.DataType.NumberOfElements = 1
+                            changed = True
+                        Else
+                            Throw New ArgumentException(ResourcesT.Exceptions.CannotChangeNumberOfComponentsOfThisRecord)
+                        End If
+                    Catch ex As Exception
+                        Throw New InvalidCastException(ResourcesT.Exceptions.ValueOfIncompatibleTypePassedToExifRecord)
+                    End Try
+                Else
+                        'Catch
                     Try
                         Dim newV As T() = CType(value, T())
                         If Me.DataType.NumberOfElements = newV.Length OrElse Not Fixed Then
@@ -1009,7 +1047,8 @@ Namespace DrawingT.MetadataT
                     Catch ex As Exception
                         Throw New InvalidCastException(ResourcesT.Exceptions.ValueOfIncompatibleTypePassedToExifRecord)
                     End Try
-                End Try
+                    'End Try
+                End If
                 If changed Then
                     OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, _Data, "Data"))
                 End If
@@ -1044,7 +1083,7 @@ Namespace DrawingT.MetadataT
                 RaiseEvent Changed(Me, e)
             End Sub
             ''' <summary>Raised when value of member changes</summary>
-            ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)
+            ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ireportschange.ValueChangedEventArgs(Of T)"/> class)
             ''' <para>Changes of properties of <see cref="DataType"/> are not tracked.</para></remarks>
             Public Event Changed As IReportsChange.ChangedEventHandler Implements IReportsChange.Changed
         End Class
@@ -1057,8 +1096,26 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
+            ''' <param name="AutoReadNext">Automatically read IFDs that follow this one</param>
+            Public Sub New(ByVal Reader As ExifIFDReader, ByVal AutoReadNext As Boolean)
+                MyBase.New(Reader, AutoReadNext)
+            End Sub
+            ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
-                MyBase.New(Reader)
+                Me.New(Reader, False)
+            End Sub
+            ''' <summary>Reads IFDs following this one</summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that read this IFD</param>
+            ''' <remarks>This implementation reads all the IFDs that follows (are pointed by) this instance. Newly read IFDs are of type <see cref="IFDMain"/>.</remarks>
+            Protected Overrides Sub ReadNextIFDs(ByVal Reader As ExifIFDReader)
+                Dim CurrentIfd As IFD = Me
+                Dim CurrentReader As ExifIFDReader = Reader
+                While CurrentReader.NextIFD <> 0
+                    CurrentReader = New ExifIFDReader(CurrentReader.ExifReader, CurrentReader.NextIFD)
+                    CurrentIfd.Following = New IFDMain(CurrentReader)
+                    CurrentIfd = CurrentIfd.Following
+                End While
             End Sub
             ''' <summary>Gets or sets value of specified record</summary>
             ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
@@ -1074,15 +1131,148 @@ Namespace DrawingT.MetadataT
                     MyBase.Record(Me.TagFormat(Type)) = value
                 End Set
             End Property
+            ''' <summary>Reads known subIFDs nested within this IFD.</summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+            ''' <para>Note: This method is called by CTor if the <see cref="IFD"/> class after all records have been initialized.
+            ''' This method is not intended to be called directly from user code.</para></remarks>
             Protected Overrides Sub ReadStandardSubIFDs(ByVal Reader As ExifIFDReader)
+                If Reader Is Nothing Then Throw New ArgumentNullException("Reader")
                 Dim ExifIfd = Me.Record(Tags.ExifIFD)
                 If ExifIfd IsNot Nothing Then
                     Dim ExifSubIFDReader As New ExifReader.SubIFDReader(Reader.ExifReader, ExifIfd.Data, _
-                        "???", Reader, Reader.Entries.FindIndex(Function(a As ExifIFDReader.DirectoryEntry) a.Tag = Tags.ExifIFD))
-                    'TODO: Implement
+                         ExifReader.ExifSubIFDName, Reader, _
+                         Reader.Entries.FindIndex(Function(a As ExifIFDReader.DirectoryEntry) a.Tag = Tags.ExifIFD))
+                    Dim ExifSubIfd As New IFDExif(ExifSubIFDReader, True)
+                    Me.SubIFDs.Add(Tags.ExifIFD, ExifSubIfd)
                 End If
-
+                Dim GPSIfd = Me.Record(Tags.GPSIFD)
+                If GPSIfd IsNot Nothing Then
+                    Dim GPSSubIFDReader As New ExifReader.SubIFDReader(Reader.ExifReader, GPSIfd.Data, _
+                        ExifReader.GPSSubIFDName, Reader, _
+                        Reader.Entries.FindIndex(Function(a As ExifIFDReader.DirectoryEntry) a.Tag = Tags.GPSIFD))
+                    Dim GPSSubIfd As New IFDGPS(GPSSubIFDReader, True)
+                    Me.SubIFDs.Add(Tags.GPSIFD, GPSSubIfd)
+                End If
             End Sub
+            ''' <summary>Handles adding of subIFD from any reason before it is addaed. This event can be cancelled.</summary>
+            ''' <param name="Item">Item being added</param>
+            ''' <param name="e">Event that supports cancelling</param>
+            ''' <param name="Key">Record number which points to subIFD being added. This is always value form range of <see cref="UShort"/>.</param>
+            ''' <remarks>This methods calls base class method <see cref="IFD.OnSubIFDAddingAlways"/>.
+            ''' Then ensures that SubIFD on key <see cref="Tags.GPSIFD"/> is always of type <see cref="IFDGPS"/> and at <see cref="Tags.ExifIFD"/> is always of type <see cref="IFDExif"/></remarks>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is not within range of values of <see cref="UInteger"/></exception>
+            Protected Overrides Sub OnSubIFDAddingAlways(ByVal Key As Integer, ByVal Item As SubIFD, ByVal e As ComponentModelT.CancelMessageEventArgs)
+                MyBase.OnSubIFDAddingAlways(Key, Item, e)
+                If e.Cancel Then Exit Sub
+                If Key = Tags.ExifIFD AndAlso Not TypeOf Item Is IFDExif Then
+                    e.Cancel = True
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.Key0CanHoldOnlyIFDOfType1, "ExifIFD", "IFDExif")
+                    Exit Sub
+                End If
+                If Key = Tags.GPSIFD AndAlso Not TypeOf Item Is IFDGPS Then
+                    e.Cancel = True
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.Key0CanHoldOnlyIFDOfType1, "GPSIFD", "IFDGPS")
+                    Exit Sub
+                End If
+            End Sub
+            ''' <summary>Gets or sets Exif IFD nested within this IFD</summary>
+            ''' <returns>Exif IFD nested in this IFD or null</returns>
+            ''' <value>You can set or replace Exif SubIFD by setting this property. By setting it to null you can remove it.</value>
+            Public Property ExifSubIFD() As IFDExif
+                Get
+                    If Me.SubIFDs.ContainsKey(Tags.ExifIFD) Then _
+                         Return Me.SubIFDs(Tags.ExifIFD)
+                    Return Nothing
+                End Get
+                Set(ByVal value As IFDExif)
+                    If value Is Nothing Then
+                        If Me.SubIFDs.ContainsKey(Tags.ExifIFD) Then Me.SubIFDs.Remove(Tags.ExifIFD)
+                        Exit Property
+                    End If
+                    If Me.SubIFDs.ContainsKey(Tags.ExifIFD) Then Me.SubIFDs(Tags.ExifIFD) = value _
+                    Else Me.SubIFDs.Add(Tags.ExifIFD, value)
+                End Set
+            End Property
+            ''' <summary>Gets or sets GPS IFD nested within this IFD</summary>
+            ''' <returns>GPS IFD nested in this IFD or null</returns>
+            ''' <value>You can set or replace GPS SubIFD by setting this property. By setting it to null you can remove it.</value>
+            Public Property GPSSubIFD() As IFDGPS
+                Get
+                    If Me.SubIFDs.ContainsKey(Tags.GPSIFD) Then _
+                         Return Me.SubIFDs(Tags.GPSIFD)
+                    Return Nothing
+                End Get
+                Set(ByVal value As IFDGPS)
+                    If value Is Nothing Then
+                        If Me.SubIFDs.ContainsKey(Tags.GPSIFD) Then Me.SubIFDs.Remove(Tags.GPSIFD)
+                        Exit Property
+                    End If
+                    If Me.SubIFDs.ContainsKey(Tags.GPSIFD) Then Me.SubIFDs(Tags.GPSIFD) = value _
+                    Else Me.SubIFDs.Add(Tags.GPSIFD, value)
+                End Set
+            End Property
+            ''' <summary>Gets value indicating if this Exif contains link to thumbnail</summary>
+            ''' <returns>True if <see cref="Compression"/> is <see cref="CompressionValues.JPEG"/> and both <see cref="JPEGInterchangeFormat"/> and <see cref="JPEGInterchangeFormatLength"/> are set or <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and both <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> are set.</returns>
+            Public ReadOnly Property HasThumbnail() As Boolean
+                Get
+                    If Me.Compression.HasValue Then
+                        Select Case Me.Compression
+                            Case CompressionValues.JPEG
+                                Return Me.JPEGInterchangeFormat.HasValue AndAlso Me.JPEGInterchangeFormatLength.HasValue
+                            Case CompressionValues.uncompressed
+                                Return Me.StripOffsets IsNot Nothing AndAlso Me.StripByteCounts IsNot Nothing AndAlso Me.StripOffsets.Length > 0 AndAlso Me.StripByteCounts.Length > 0
+                        End Select
+                    End If
+                    Return False
+                End Get
+            End Property
+            ''' <summary>Gtes stream that contains raw thumbnail data</summary>
+            ''' <param name="Reader">Original reader that was used to retrieve all exif information from image. The reader must contain exactly same data this IFD was constructed from otherwise corrupted thumbnail image may be returned.</param>
+            ''' <returns>Stream to read image data. Format of image data depends on <see cref="Compression"/> and if <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> also depends on <see cref="PhotometricInterpretation"/>. Returns null if <see cref="HasThumbnail"/> is false.</returns>
+            ''' <exception cref="InvalidOperationException"><see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and lengths of <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> differs.</exception>
+            ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+            ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
+            ''' <seelaso cref="GetThumbnail"/>
+            Public Function GetThumbnailRawStream(ByVal Reader As ExifReader) As IO.Stream
+                If Not Me.HasThumbnail Then Return Nothing
+                If Reader Is Nothing Then Throw New ArgumentNullException("Reader")
+                Select Case Compression
+                    Case CompressionValues.JPEG
+                        Return New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.JPEGInterchangeFormat, Me.JPEGInterchangeFormatLength)
+                    Case CompressionValues.uncompressed
+                        If Me.StripOffsets.Length <> Me.StripByteCounts.Length Then Throw New InvalidOperationException(ResourcesT.Exceptions.ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength)
+                        Dim Streams As New List(Of IO.Stream)
+                        For i = 0 To Me.StripOffsets.Length - 1
+                            Streams.Add(New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.StripOffsets(i), Me.StripByteCounts(i)))
+                        Next
+                        Return New IOt.UnionReadOnlyStream(Streams)
+                End Select
+                Return Nothing
+            End Function
+            ''' <summary>Gerts thumbnail image embdeded in this IFD</summary>
+            ''' <param name="Reader">Original reader that was used to retrieve all exif information from image. The reader must contain exactly same data this IFD was constructed from otherwise corrupted thumbnail image may be returned.</param>
+            ''' <exception cref="InvalidOperationException"><see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and lengths of <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> differs.
+            ''' -or- <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and <see cref="PhotometricInterpretation"/> is not set or is not member of <see cref="PhotometricInterpretationValues"/>.</exception>
+            ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+            ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
+            ''' <seelaso cref="GetThumbnailRawStream"/>
+            Public Function GetThumbnail(ByVal Reader As ExifReader) As Drawing.Bitmap
+                Dim ImageData = GetThumbnailRawStream(Reader)
+                If ImageData Is Nothing Then Return Nothing
+                Select Case Me.Compression
+                    Case CompressionValues.JPEG : Return New Drawing.Bitmap(ImageData)
+                    Case CompressionValues.uncompressed
+                        If Not Me.PhotometricInterpretation.HasValue Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.When0Is1Then2MustBeSet, "Compression", "uncompressed", "PhotometricInterpretation"))
+                        Select Case PhotometricInterpretation
+                            Case PhotometricInterpretationValues.RGB
+                                Return New Drawing.Bitmap(ImageData)
+                            Case PhotometricInterpretationValues.YCbCr 'TODO: Does it work?
+                                Return New Drawing.Bitmap(ImageData)
+                            Case Else : Throw New InvalidOperationException(String.Format("{0} is not member of {1}.", "PhotometricInterpretation", "PhotometricInterpretationValues"), New InvalidEnumArgumentException("PhotometricInterpretation", PhotometricInterpretation, PhotometricInterpretation.GetType))
+                        End Select
+                End Select
+            End Function
         End Class
         ''' <summary>Exif Sub IFD</summary>
         Partial Class IFDExif : Inherits SubIFD
@@ -1092,7 +1282,13 @@ Namespace DrawingT.MetadataT
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
-                MyBase.New(Reader)
+                Me.New(Reader, False)
+            End Sub
+            ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
+            ''' <param name="AutoReadNext">Automatically read IFDs tha follows this one</param>
+            Public Sub New(ByVal Reader As ExifIFDReader, ByVal AutoReadNext As Boolean)
+                MyBase.New(Reader, AutoReadNext)
             End Sub
             ''' <summary>Gets or sets value of specified record</summary>
             ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
@@ -1108,6 +1304,56 @@ Namespace DrawingT.MetadataT
                     MyBase.Record(Me.TagFormat(Type)) = value
                 End Set
             End Property
+            ''' <summary>Reads known subIFDs nested within this IFD.</summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD.</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+            ''' <para>Note: This method is called by CTor if the <see cref="IFD"/> class after all records have been initialized.
+            ''' This method is not intended to be called directly from user code.</para></remarks>
+            Protected Overrides Sub ReadStandardSubIFDs(ByVal Reader As ExifIFDReader)
+                If Reader Is Nothing Then Throw New ArgumentNullException("Reader")
+                Dim InteropIfd = Me.Record(Tags.InteroperabilityIFD)
+                If InteropIfd IsNot Nothing Then
+                    Dim ExifSubIFDReader As New ExifReader.SubIFDReader(Reader.ExifReader, InteropIfd.Data, _
+                         ExifReader.ExifSubIFDName, Reader, _
+                         Reader.Entries.FindIndex(Function(a As ExifIFDReader.DirectoryEntry) a.Tag = Tags.InteroperabilityIFD))
+                    Dim ExifSubIfd As New IFDInterop(ExifSubIFDReader, True)
+                    Me.SubIFDs.Add(Tags.InteroperabilityIFD, ExifSubIfd)
+                End If
+            End Sub
+            ''' <summary>Gets or sets interoperability IFD nested within this IFD</summary>
+            ''' <returns>Interoperability IFD nested in this ExifSubIFD or null</returns>
+            ''' <value>You can set or replace interoperability SubIFD by setting this property. By setting it to null you can remove it.</value>
+            Public Property InteropSubIFD() As IFDInterop
+                Get
+                    If Me.SubIFDs.ContainsKey(Tags.InteroperabilityIFD) Then _
+                         Return Me.SubIFDs(Tags.InteroperabilityIFD)
+                    Return Nothing
+                End Get
+                Set(ByVal value As IFDInterop)
+                    If value Is Nothing Then
+                        If Me.SubIFDs.ContainsKey(Tags.InteroperabilityIFD) Then Me.SubIFDs.Remove(Tags.InteroperabilityIFD)
+                        Exit Property
+                    End If
+                    If Me.SubIFDs.ContainsKey(Tags.InteroperabilityIFD) Then Me.SubIFDs(Tags.InteroperabilityIFD) = value _
+                    Else Me.SubIFDs.Add(Tags.InteroperabilityIFD, value)
+                End Set
+            End Property
+            ''' <summary>Handles adding of subIFD from any reason before it is addaed. This event can be cancelled.</summary>
+            ''' <param name="Item">Item being added</param>
+            ''' <param name="e">Event that supports cancelling</param>
+            ''' <param name="Key">Record number which points to subIFD being added. This is always value form range of <see cref="UShort"/>.</param>
+            ''' <remarks>This methods calls base class method <see cref="IFD.OnSubIFDAddingAlways"/>.
+            ''' Then ensures that SubIFD on key <see cref="Tags.InteroperabilityIFD"/> is always of type <see cref="IFDInterop"/>.</remarks>
+            ''' <exception cref="ArgumentOutOfRangeException"><paramref name="Key"/> is not within range of values of <see cref="UInteger"/></exception>
+            Protected Overrides Sub OnSubIFDAddingAlways(ByVal Key As Integer, ByVal Item As SubIFD, ByVal e As ComponentModelT.CancelMessageEventArgs)
+                MyBase.OnSubIFDAddingAlways(Key, Item, e)
+                If e.Cancel Then Exit Sub
+                If Key <> Tags.InteroperabilityIFD AndAlso Not TypeOf Item Is IFDInterop Then
+                    e.Cancel = True
+                    e.CancelMessage = String.Format(ResourcesT.Exceptions.Key0CanHoldOnlyIFDOfType1, "InteroperabilityIFD", "IFDInterop")
+                    Exit Sub
+                End If
+            End Sub
         End Class
         ''' <summary>Exif GPS IFD</summary>
         Partial Class IFDGPS : Inherits SubIFD
@@ -1116,8 +1362,14 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
+            ''' <param name="AutoReadNext">Automatically read IFDs that follows this one</param>
+            Public Sub New(ByVal Reader As ExifIFDReader, ByVal AutoReadNext As Boolean)
+                MyBase.New(Reader, AutoReadNext)
+            End Sub
+            ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
-                MyBase.New(Reader)
+                Me.New(Reader, False)
             End Sub
             ''' <summary>Gets or sets value of specified record</summary>
             ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
@@ -1135,14 +1387,20 @@ Namespace DrawingT.MetadataT
             End Property
         End Class
         ''' <summary>Exif Interoperability IFD</summary>
-        Partial Class IFDInterop : Inherits IFD
+        Partial Class IFDInterop : Inherits SubIFD
             ''' <summary>CTor - empty IFD</summary>
             Public Sub New()
             End Sub
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
+            ''' <param name="AutoReadNext">Automatically read IFDs that follows this one</param>
+            Public Sub New(ByVal Reader As ExifIFDReader, ByVal AutoReadNext As Boolean)
+                MyBase.New(Reader, AutoReadNext)
+            End Sub
+            ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
-                MyBase.New(Reader)
+                Me.New(Reader, False)
             End Sub
             ''' <summary>Gets or sets value of specified record</summary>
             ''' <param name="Type">Recognized tagname of record that determines data type as well as number of components</param>
@@ -1166,8 +1424,14 @@ Namespace DrawingT.MetadataT
             End Sub
             ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
             ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
+            ''' <param name="AutoReadNext">Atomatically read IFDs that follows this one</param>
+            Public Sub New(ByVal Reader As ExifIFDReader, ByVal AutoReadNext As Boolean)
+                MyBase.New(Reader, AutoReadNext)
+            End Sub
+            ''' <summary>CTor - reads content from <see cref="ExifIFDReader"/></summary>
+            ''' <param name="Reader"><see cref="ExifIFDReader"/> that has read data of this IFD. Can be null</param>
             Public Sub New(ByVal Reader As ExifIFDReader)
-                MyBase.New(Reader)
+                Me.New(Reader, False)
             End Sub
             ''' <summary>Gets IFD this subIFD is nested within</summary>
             ''' <returns>IFD this subIFD is nested within or null when this subIFD have not been associated with parent IFD yet.</returns>
@@ -1227,7 +1491,7 @@ Namespace DrawingT.MetadataT
 #End Region
     End Class
 
-    ''' <summary>Generic (not tags-aware read/write Exif implementation)</summary>
+    ''' <summary>Provides high-level acces to Exif metadata</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Exif), LastChange:="07/21/2008")> _
     Partial Public Class Exif

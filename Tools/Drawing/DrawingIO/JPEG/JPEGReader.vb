@@ -119,29 +119,77 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' </remarks>
         Public Function GetExifStream() As System.IO.Stream Implements MetadataT.IExifGetter.GetExifStream
             Const Exif$ = "Exif"
+            Const NormalOffset% = 6
+            Const FujiFilmFineFix2800ZoomOffset% = 10
             If _ExifMarkerIndex = -1 Then
                 Return Nothing
             ElseIf _ExifMarkerIndex >= 0 Then
-                Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, 6, Me.Markers(ExifMarkerIndex).Data.Length - 6)
+                Dim Offset = If(SupportFujiFilmFineFix2800ZoomInEffect, FujiFilmFineFix2800ZoomOffset, NormalOffset)
+                Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, offset, Me.Markers(ExifMarkerIndex).Data.Length - offset)
             End If
             Dim i As Integer = 0
             For Each m As JPEGMarkerReader In Me.Markers
                 If m.MarkerCode = JPEGMarkerReader.Markers.APP1 Then
                     m.Data.Position = 0
-                    Dim Bytes(5) As Byte
-                    If m.Data.Read(Bytes, 0, 6) = 6 Then
-                        Dim ExifH As String = System.Text.Encoding.ASCII.GetString(Bytes, 0, 4)
-                        If ExifH = Exif AndAlso Bytes(4) = 0 AndAlso Bytes(5) = 0 Then
-                            _ExifMarkerIndex = i
-                            Return New ConstrainedReadOnlyStream(m.Data, 6, m.Data.Length - 6)
-                        End If
+                    Dim Bytes(If(SupportFujiFilmFineFix2800Zoom, 9, 6)) As Byte
+                    If m.Data.Read(Bytes, 0, 6) = 6 AndAlso System.Text.Encoding.ASCII.GetString(Bytes, 0, 4) = Exif AndAlso Bytes(4) = 0 AndAlso Bytes(5) = 0 Then
+                        _ExifMarkerIndex = i
+                        _SupportFujiFilmFineFix2800ZoomInEffect = False
+                        Return New ConstrainedReadOnlyStream(m.Data, NormalOffset, m.Data.Length - NormalOffset)
+                    ElseIf SupportFujiFilmFineFix2800Zoom AndAlso m.Data.Read(Bytes, 6, 4) = 4 AndAlso Bytes(0) = &HFF AndAlso Bytes(1) = &HE1 _
+                           AndAlso m.Length - 4 = (CUShort(Bytes(2)) << 8 Or CUShort(Bytes(3))) _
+                           AndAlso System.Text.Encoding.ASCII.GetString(Bytes, 4, 4) = Exif AndAlso Bytes(8) = 0 AndAlso Bytes(9) = 0 Then
+                        'This format have been seen in image from FujiFilm FinePix 2800 zoom
+                        'I consider it non-standard and stupid and there fore it is supported only on special request
+                        'The format is: APP1 marker starts with FFE1 (as usual) then 2-bytes lenght folloes (as usual)
+                        '               Then FFE1 is repeated and size of Exif stream + size itself follows (it is m.Length - 4)
+
+                        'Dim b1 = SupportFujiFilmFineFix2800Zoom
+                        'Dim b2 = m.Data.Read(Bytes, 6, 4) = 4
+                        'Dim b3 = Bytes(0) = &HFF
+                        'Dim b4 = Bytes(1) = &HE1
+                        'Dim b5 = m.Length - 4 = (CUShort(Bytes(2)) << 8 Or CUShort(Bytes(3)))
+                        'Dim b6 = System.Text.Encoding.ASCII.GetString(Bytes, 4, 4) = Exif
+                        'Dim b7 = Bytes(8) = 0
+                        'Dim b8 = Bytes(9) = 0
+                        'Dim b = b1 AndAlso b2 AndAlso b3 AndAlso b4 AndAlso b5 AndAlso b6 AndAlso b7 AndAlso b8
+                        'If b Then
+                        _ExifMarkerIndex = i
+                        _SupportFujiFilmFineFix2800ZoomInEffect = True
+                        Return New ConstrainedReadOnlyStream(m.Data, FujiFilmFineFix2800ZoomOffset, m.Data.Length - FujiFilmFineFix2800ZoomOffset)
+                        'End If
                     End If
                 End If
                 i += 1
             Next m
+            _SupportFujiFilmFineFix2800ZoomInEffect = False
             _ExifMarkerIndex = -1
             Return Nothing
         End Function
+        ''' <summary>Contains value of the <see cref="SupportFujiFilmFineFix2800Zoom"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _SupportFujiFilmFineFix2800Zoom As Boolean = False
+        ''' <summary>Gets or sets value indicating if non-standard way of embdeding Exif data seen in file from FujiFilm FineFix 2800 is supported</summary>
+        ''' <returns>True if the format is supported, false if not</returns>
+        ''' <value>Set value of this property prior of calling <see cref="GetExifStream"/> or <see cref="ExifMarkerIndex"/>.</value>
+        ''' <remarks>FujiFilm FinePix 2800 Zomm adds 4 more bytes between APP1 marker size indication and start of Exif block. This is considered non-standard and supported only when this property is set to true.
+        ''' <para>The bytes added has following meaning: 2 bytes FFE1 (repeated APP1 marker); 2 bytes size (unsigned, big endian). The is by 4 bytes lower then size stored in APP1 marker itself.</para></remarks>
+        Public Property SupportFujiFilmFineFix2800Zoom() As Boolean
+            Get
+                Return _SupportFujiFilmFineFix2800Zoom
+            End Get
+            Set(ByVal value As Boolean)
+                _SupportFujiFilmFineFix2800Zoom = value
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="SupportFujiFilmFineFix2800ZoomInEffect"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _SupportFujiFilmFineFix2800ZoomInEffect As Boolean = False
+        ''' <summary>Gets value indicating if <see cref="SupportFujiFilmFineFix2800Zoom"/> property being set to true has effect</summary>
+        ''' <returns>True if Exif data was found and are in format recognized only when the <see cref="SupportFujiFilmFineFix2800Zoom"/> was true</returns>
+        Public ReadOnly Property SupportFujiFilmFineFix2800ZoomInEffect() As Boolean
+            Get
+                Return _SupportFujiFilmFineFix2800ZoomInEffect
+            End Get
+        End Property
         ''' <summary>Contains value of the <see cref="ExifMarkerIndex"/> property</summary>
         ''' <remarks>If value is less than -1 <see cref="ExifMarkerIndex"/> has not been aquired, if value is -1 then there if no Exif data</remarks>
         Private _ExifMarkerIndex As Integer = -2

@@ -367,6 +367,69 @@
                     <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return ret&#xD;&#xA;</xsl:text>
                     <xsl:text>&#9;&#9;&#9;&#9;&#9;End If&#xD;&#xA;</xsl:text>                    
                 </xsl:when>
+                <xsl:when test="(et:Type[1]='UInt16' or et:Type[1]='UInt32' or et:Type[1]='Int16' or et:Type[1]='Int32' or et:Type[1]='Double' or et:Type[1]='SByte' or et:Type[1]='Single' or et:Type[1]='Byte') and @Components=1">
+                    <!--Enum-->
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;If value Is Nothing Then&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return Nothing&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;Else&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return CType(value.Data, </xsl:text>
+                    <xsl:choose>
+                        <xsl:when test="et:Type[1]='NA'">
+                            <xsl:text>Byte</xsl:text>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:value-of select="et:Type[1]"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
+                    <xsl:text>)&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;End If&#xD;&#xA;</xsl:text>
+                </xsl:when>
+                <xsl:when test="@Components != 1 and et:Type[1] != 'ASCII'">
+                    <!--Array-->
+                    <xsl:variable name="ItemType">
+                        <xsl:choose>
+                            <xsl:when test="et:Type[1]='NA'">  
+                                <xsl:text>Byte</xsl:text>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <xsl:value-of select="et:Type[1]"/>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:variable name="ExactType">
+                        <xsl:choose>
+                            <xsl:when test="count(et:enum)=0">
+                                <xsl:value-of select="$ItemType"/>
+                            </xsl:when>
+                            <xsl:when test="count(et:enum)>0">
+                                <xsl:value-of select="$EnumName"/>
+                            </xsl:when>
+                        </xsl:choose>
+                    </xsl:variable>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;If value Is Nothing Then&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return Nothing&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;ElseIf TypeOf value.Data Is </xsl:text>
+                    <xsl:value-of select="$ExactType"/>
+                    <xsl:text>() Then&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return value.Data&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;ElseIf IsArray(value.Data) Then&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Dim ret(DirectCast(value.Data, Array).Length) As </xsl:text>
+                    <xsl:value-of select="$ExactType"/>
+                    <xsl:text xml:space="preserve">&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;For i As Integer = 0 To ret.length - 1&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;&#9;ret(i) = CType(DirectCast(value.Data, Array).GetValue(i), </xsl:text>
+                    <xsl:value-of select="$ItemType"/>
+                    <xsl:text>)&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Next&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return ret&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;Else&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Return New </xsl:text>
+                    <xsl:value-of select="$ExactType"/>
+                    <xsl:text>() {CType(value.Data, </xsl:text>
+                    <xsl:value-of select="$ItemType"/>
+                    <xsl:text>)}&#xD;&#xA;</xsl:text>
+                    <xsl:text>&#9;&#9;&#9;&#9;&#9;End If&#xD;&#xA;</xsl:text>
+                </xsl:when>
                 <xsl:otherwise>
                     <xsl:text>&#9;&#9;&#9;&#9;&#9;If value Is Nothing Then Return Nothing Else Return value.Data&#xD;&#xA;</xsl:text>
                 </xsl:otherwise>
