@@ -73,14 +73,14 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     </xsl:template>
     <!--Runs other templates-->
     <xsl:template name="code-gen">
-        <xsl:text>&#9;Partial Public Class IPTC&#xD;&#xA;</xsl:text>
+        <!--<xsl:text>&#9;Partial Public Class IPTC&#xD;&#xA;</xsl:text>-->
         <xsl:call-template name="Tag-enums"/>
         <xsl:call-template name="Enums"/>
         <xsl:call-template name="sEnums"/>
         <xsl:call-template name="TagTypes"/>
         <xsl:call-template name="Groups"/>
         <xsl:call-template name="Properties"/>
-        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
+        <!--<xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>-->
     </xsl:template>
     <!--Generates imports-->
     <xsl:template name="Imports">
@@ -89,6 +89,8 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>Imports System.XML.Serialization&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.DataStructuresT.GenericT&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.DrawingT.DesignT&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.DrawingT.MetadataT.IptcT.Iptc&#xD;&#xA;</xsl:text>
     </xsl:template>
     
     <!--Main content-creating templates:-->
@@ -144,6 +146,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
         </xsl:for-each>
         <!--GetEnum-->
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;summary>Gets Enum that contains list of tags for specific record (group of tags)&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Record">Number of record to get enum for&lt;/param>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;exception cref="InvalidEnumArgumentException">Value of &lt;paramref name="Record"/> is not member of &lt;see cref="RecordNumbers"/>&lt;/exception>&#xD;&#xA;</xsl:text>
@@ -160,6 +163,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;&#9;&#9;Case Else : Throw New InvalidEnumArgumentException("Record", Record, GetType(RecordNumbers))&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <!--DataSetIdentification-->
         <xsl:text>&#9;&#9;Partial Public Structure DataSetIdentification&#xD;&#xA;</xsl:text>
         <!--DataSetIdentification - shared properties-->
@@ -229,7 +233,8 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
     <!--Generates all enums declared in XML-->
     <xsl:template name="Enums">
         <xsl:text>#Region "Enums"&#xD;&#xA;</xsl:text>
-        <xsl:for-each select="I:Root/I:record/I:enum">
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
+                <xsl:for-each select="I:Root/I:record/I:enum">
             <xsl:sort select="@name" order="ascending" data-type="text"/>
             <xsl:call-template name="XML-Doc">
                 <xsl:with-param name="Tab" select="2"/>
@@ -270,11 +275,13 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             </xsl:for-each>
             <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
         </xsl:for-each>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Generates all string enums declared in XML-->
     <xsl:template name="sEnums">
         <xsl:text>#Region "String enums"&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
         <xsl:for-each select="I:Root/I:record/I:senum">
             <xsl:sort select="@name" order="ascending" data-type="text"/>
             <xsl:call-template name="XML-Doc">
@@ -312,11 +319,13 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             </xsl:for-each>
             <xsl:text>&#9;&#9;End Enum&#xD;&#xA;</xsl:text>
         </xsl:for-each>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Generates GetTag functions-->
     <xsl:template name="TagTypes">
         <xsl:text>#Region "Tag types"&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
         <!--Common GetTag-->
         <xsl:text>&#9;&#9;''' &lt;summary>Gets details about tag format by tag record and number&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Record">Recor number&lt;/param>&#xD;&#xA;</xsl:text>
@@ -404,6 +413,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>, Number)&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
         </xsl:for-each>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Translates IPTC tag type name used in XML into IPTC tag type name used in VB-->
@@ -504,6 +514,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>&#9;&#9;&#9;End Function&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;End Class&#xD;&#xA;</xsl:text>
         <!--GetGroup-->
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;summary>Gets information about known group of IPTC tags&lt;/summary>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;''' &lt;param name="Group">Code of group to get information about&lt;/param>&#xD;&#xA;</xsl:text>
         <xsl:text>&#9;&#9;Public Shared Function GetGroup(ByVal Group As Groups) As GroupInfo&#xD;&#xA;</xsl:text>
@@ -803,12 +814,14 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             <xsl:text>&#9;&#9;End Property&#xD;&#xA;</xsl:text>
         </xsl:for-each>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Generates properties for all IPTC tags-->
     <xsl:template name="Properties">
         <!--Stand Alone-->
         <xsl:text>#Region "Properties"&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
         <xsl:for-each select="/I:Root/I:record/I:tag">
             <xsl:sort data-type="number" order="ascending" select="../@number"/>
             <xsl:sort data-type="number" order="ascending" select="@number"/>
@@ -826,6 +839,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
             </xsl:call-template>
         </xsl:for-each>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
         <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
     <!--Generates property-->

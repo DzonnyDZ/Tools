@@ -1,13 +1,13 @@
 ﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileTystemTools, Tools.CollectionsT.GenericT
 Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
-Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt
+Imports Tools.DrawingT.MetadataT.IptcT, Tools.DrawingT.DrawingIOt
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT
 ''' <summary>Extends <see cref="IPTC"/> with some extra stuff</summary>
 <DebuggerDisplay("{ImagePath}")> _
-Public Class IPTCInternal
-    Inherits IPTC
+Public Class IptcInternal
+    Inherits Iptc
     ''' <summary>CTor</summary>
     ''' <param name="ImagePath">Path of JPEG file</param>
     ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <paramref name="ImagePath"/> is invalid, such as being on an unmapped drive.</exception>
@@ -50,7 +50,7 @@ Public Class IPTCInternal
     ''' <para>Called by <see cref="Tag"/>'s setter.</para>
     ''' <para>Note for inheritors: Call base class method in order to automatically compute size of embdeded file and invalidate cache for <see cref="BW460_Value"/></para>
     ''' </remarks>
-    Protected Overrides Sub OnValueChanged(ByVal Tag As DrawingT.MetadataT.IPTC.DataSetIdentification)
+    Protected Overrides Sub OnValueChanged(ByVal Tag As DataSetIdentification)
         MyBase.OnValueChanged(Tag)
         _Changed = True
         RaiseEvent ValueChanged(Me, EventArgs.Empty)

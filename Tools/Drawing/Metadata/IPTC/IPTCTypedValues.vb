@@ -1,5 +1,6 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT, Tools.ComponentModelT
-Namespace DrawingT.MetadataT
+Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes
+Namespace DrawingT.MetadataT.IptcT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class IPTC
         ''' <summary>Contains value of the <see cref="Encoding"/> property</summary>
@@ -615,7 +616,7 @@ Namespace DrawingT.MetadataT
         ''' <param name="Len">Maximal or fixed length of data (ignored in Getter)</param>
         ''' <param name="Fixed"><paramref name="Len"/> is fixed length (ignored in Getter)</param>
         ''' <exception cref="ArgumentException"><paramref name="Fixed"/> is True and <paramref name="Len"/> is 0 (in Setter)</exception>
-        ''' <exception cref="LengthConstraintViolationException"/>Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True</exception>
+        ''' <exception cref="LengthConstraintViolationException">Lenght of byte array is greater then <paramref name="Len"/> and <paramref name="Len"/> is non-zero or length of byte array differs from <paramref name="Len"/> and <paramref name="Fixed"/> is True</exception>
         <EditorBrowsable(EditorBrowsableState.Always)> _
         Protected Overridable Property ByteArray_Value(ByVal Key As DataSetIdentification, Optional ByVal Len As Integer = 0, Optional ByVal Fixed As Boolean = False) As List(Of Byte())
             Get
@@ -686,7 +687,7 @@ Namespace DrawingT.MetadataT
                 Return ret
             End Get
             Set(ByVal value As List(Of NumStr2))
-                If encoding Is Nothing Then encoding = Me.Encoding
+                If Encoding Is Nothing Then Encoding = Me.Encoding
                 Dim values As New List(Of Byte())
                 If value IsNot Nothing Then
                     For Each item As NumStr2 In value
@@ -1052,57 +1053,57 @@ Namespace DrawingT.MetadataT
         End Function
 #End Region
 #End Region
-        ''' <summary>Exception thrown when length constraint of string- or byte-oriented IPTC property is violated (and such violation is not allowed)</summary>
-        Public Class LengthConstraintViolationException : Inherits ArgumentException
-            ''' <summary>CTor from property name, maximal allowed lenght (in bytes) and fixed indicator</summary>
-            ''' <param name="PropertyName">Name of property setting of which caused the exception (see <see cref="PropertyName"/>)</param>
-            ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
-            ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
-            Public Sub New(ByVal PropertyName$, ByVal MaximalLength%, Optional ByVal Fixed As Boolean = False)
-                MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, DrawingT.MetadataT.IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, DrawingT.MetadataT.IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
-                _PropertyName = PropertyName
-                _MaximalLength = MaximalLength
-                _Fixed = Fixed
-            End Sub
-            ''' <summary>CTor from <see cref="DataSetIdentification"/>, maximal allowed lenght (in bytes) and fixed indicator</summary>
-            ''' <param name="Property">DataSet (IPTC property) which caused the exception (see <see cref="PropertyName"/>)</param>
-            ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
-            ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
-            Public Sub New(ByVal [Property] As DataSetIdentification, ByVal MaximalLength%, Optional ByVal fixed As Boolean = False)
-                MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format( _
-                           If(fixed, _
-                              IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, _
-                              IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), _
-                            [Property].DisplayName & "(" & CInt([Property].RecordNumber) & ":" & [Property].DatasetNumber, MaximalLength))
-                _PropertyName = [Property].PropertyName
-                _MaximalLength = MaximalLength
-                _Fixed = fixed
-            End Sub
-            ''' <summary>Contains value of the <see cref="PropertyName"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _PropertyName$
-            ''' <summary>Contains value of the <see cref="MaximalLength"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _MaximalLength%
-            ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
-            <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Fixed As Boolean
-            ''' <summary>Name of property setting of which caused the exception</summary>
-            Public ReadOnly Property PropertyName$()
-                <DebuggerStepThrough()> Get
-                    Return _PropertyName
-                End Get
-            End Property
-            ''' <summary>Maximal length (in bytes) allowed for property value</summary>
-            Public ReadOnly Property MaximalLength%()
-                <DebuggerStepThrough()> Get
-                    Return _MaximalLength
-                End Get
-            End Property
-            ''' <summary>True when <see cref="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght)</summary>
-            Public ReadOnly Property Fixed() As Boolean
-                <DebuggerStepThrough()> Get
-                    Return _Fixed
-                End Get
-            End Property
-        End Class
+    End Class
+    ''' <summary>Exception thrown when length constraint of string- or byte-oriented IPTC property is violated (and such violation is not allowed)</summary>
+    Public Class LengthConstraintViolationException : Inherits ArgumentException
+        ''' <summary>CTor from property name, maximal allowed lenght (in bytes) and fixed indicator</summary>
+        ''' <param name="PropertyName">Name of property setting of which caused the exception (see <see cref="PropertyName"/>)</param>
+        ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
+        ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
+        Public Sub New(ByVal PropertyName$, ByVal MaximalLength%, Optional ByVal Fixed As Boolean = False)
+            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, DrawingT.MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, DrawingT.MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
+            _PropertyName = PropertyName
+            _MaximalLength = MaximalLength
+            _Fixed = Fixed
+        End Sub
+        ''' <summary>CTor from <see cref="DataSetIdentification"/>, maximal allowed lenght (in bytes) and fixed indicator</summary>
+        ''' <param name="Property">DataSet (IPTC property) which caused the exception (see <see cref="PropertyName"/>)</param>
+        ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
+        ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
+        Public Sub New(ByVal [Property] As DataSetIdentification, ByVal MaximalLength%, Optional ByVal fixed As Boolean = False)
+            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format( _
+                       If(fixed, _
+                          IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, _
+                          IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), _
+                        [Property].DisplayName & "(" & CInt([Property].RecordNumber) & ":" & [Property].DatasetNumber, MaximalLength))
+            _PropertyName = [Property].PropertyName
+            _MaximalLength = MaximalLength
+            _Fixed = fixed
+        End Sub
+        ''' <summary>Contains value of the <see cref="PropertyName"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _PropertyName$
+        ''' <summary>Contains value of the <see cref="MaximalLength"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _MaximalLength%
+        ''' <summary>Contains value of the <see cref="Fixed"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Fixed As Boolean
+        ''' <summary>Name of property setting of which caused the exception</summary>
+        Public ReadOnly Property PropertyName$()
+            <DebuggerStepThrough()> Get
+                Return _PropertyName
+            End Get
+        End Property
+        ''' <summary>Maximal length (in bytes) allowed for property value</summary>
+        Public ReadOnly Property MaximalLength%()
+            <DebuggerStepThrough()> Get
+                Return _MaximalLength
+            End Get
+        End Property
+        ''' <summary>True when <see cref="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght)</summary>
+        Public ReadOnly Property Fixed() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _Fixed
+            End Get
+        End Property
     End Class
 #End If
 End Namespace

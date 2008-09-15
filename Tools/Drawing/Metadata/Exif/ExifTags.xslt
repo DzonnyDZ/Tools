@@ -66,9 +66,9 @@
     </xsl:template>
 
     <xsl:template name="code-gen">
-        <xsl:text>&#9;Partial Public Class Exif&#xD;&#xA;</xsl:text>
+        <!--<xsl:text>&#9;Partial Public Class Exif&#xD;&#xA;</xsl:text>-->
         <xsl:call-template name="Tag-enums"/>
-        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
+        <!--<xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>-->
     </xsl:template>
     <xsl:template name="end-class">
         <xsl:text>&#9;&#9;&#9;&#9;&#9;&#9;Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))&#xD;&#xA;</xsl:text>
@@ -89,7 +89,7 @@
     <xsl:template name="Tag-enums">
         <!--IFD-->
         <xsl:if test="/et:Root/et:Group[@IFD='IFD']">
-            <xsl:text>&#9;&#9;Partial Public Class IFDMain&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdMain&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in IFD0 and IFD1&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='IFD']">
@@ -109,7 +109,7 @@
         </xsl:if>
         <!--Exif-->
         <xsl:if test="/et:Root/et:Group[@IFD='Exif']">
-            <xsl:text>&#9;&#9;Partial Public Class IFDExif&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdExif&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in Exif Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='Exif']">
@@ -129,7 +129,7 @@
         </xsl:if>
         <!--GPS-->
         <xsl:if test="/et:Root/et:Group[@IFD='GPS']">
-            <xsl:text>&#9;&#9;Partial Public Class IFDGPS&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdGps&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in GPS Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='GPS']">
@@ -149,7 +149,7 @@
         </xsl:if>
         <!--Interop-->
         <xsl:if test="/et:Root/et:Group[@IFD='Interop']">
-            <xsl:text>&#9;&#9;Partial Public Class IFDInterop&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;Partial Public Class IfdInterop&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in Exif Interoperability IFD&lt;/summary>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='Interop']">
@@ -201,7 +201,7 @@
         <xsl:value-of select="@Name"/>
         <xsl:text>"</xsl:text>
         <xsl:for-each select="et:Type">
-            <xsl:text>, ExifIFDReader.DirectoryEntry.ExifDataTypes.</xsl:text>
+            <xsl:text>, ExifDataTypes.</xsl:text>
             <xsl:value-of select="."/>
         </xsl:for-each>
         <xsl:text>)&#xD;&#xA;</xsl:text>

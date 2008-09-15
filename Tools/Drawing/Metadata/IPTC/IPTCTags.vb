@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 25. srpna 2008
+' Created: 16. září 2008
 ' By:noutbuk\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -16,9 +16,10 @@ Imports Tools.ComponentModelT
 Imports System.XML.Serialization
 Imports Tools.DataStructuresT.GenericT
 Imports Tools.DrawingT.DesignT
-Namespace DrawingT.MetadataT
+Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes
+Imports Tools.DrawingT.MetadataT.IptcT.Iptc
+Namespace DrawingT.MetadataT.IptcT
 #If Congig <= Nightly 'Stage: Nightly
-	Partial Public Class IPTC
 #Region "Tag Enums"
 		''' <summary>Numbers of IPTC records (groups of tags)</summary>
 		Public Enum RecordNumbers As Byte
@@ -279,6 +280,7 @@ Namespace DrawingT.MetadataT
 			''' <remarks>See <seealso cref="IPTC.ConfirmedObjectDataSize"/> for more info.</remarks>
 			<FieldDisplayName("Confirmed ObjectData Size")> <Category("Embeded object")> ConfirmedObjectDataSize = 10
 		End Enum
+	Partial Class Iptc
 		''' <summary>Gets Enum that contains list of tags for specific record (group of tags)</summary>
 		''' <param name="Record">Number of record to get enum for</param>
 		''' <exception cref="InvalidEnumArgumentException">Value of <paramref name="Record"/> is not member of <see cref="RecordNumbers"/></exception>
@@ -292,6 +294,7 @@ Namespace DrawingT.MetadataT
 				Case Else : Throw New InvalidEnumArgumentException("Record", Record, GetType(RecordNumbers))
 			End Select
 		End Function
+	End Class
 		Partial Public Structure DataSetIdentification
 			''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
 			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
@@ -817,6 +820,7 @@ Namespace DrawingT.MetadataT
 		End Structure
 #End Region
 #Region "Enums"
+	Partial Class Iptc
 		''' <summary>Possible values of <see cref="ActionAdvised"/></summary>
 		<Restrict(True)> <TypeConverter(GetType(EnumConverterWithAttributes(Of AdvisedActions)))> Public Enum AdvisedActions As Byte
 			''' <summary>Object Kill. Signifies that the provider wishes the holder of a copy of the referenced object make no further use of that information and take steps to prevent further distribution thereof.</summary>
@@ -1678,8 +1682,10 @@ Namespace DrawingT.MetadataT
 			''' <summary>The study, reporting and predic meteorological phenomena.</summary>
 			<FieldDisplayName("Weather")> Weather = 17000000
 		End Enum
+	End Class
 #End Region
 #Region "String enums"
+	Partial Class Iptc
 		''' <summary>The exact type of audio contained in the current objectdata.</summary>
 		<Restrict(True)> Public Enum AudioDataType
 			''' <summary>Actuality</summary>
@@ -2311,8 +2317,10 @@ Namespace DrawingT.MetadataT
 			''' <summary>Square</summary>
 			<FieldDisplayName("Square")> <XmlEnum("S")> Square
 		End Enum
+	End Class
 #End Region
 #Region "Tag types"
+	Partial Class Iptc
 		''' <summary>Gets details about tag format by tag record and number</summary>
 		''' <param name="Record">Recor number</param>
 		''' <param name="TagNumber">Number of tag within <paramref name="Record"/></param>
@@ -2444,6 +2452,7 @@ Namespace DrawingT.MetadataT
 		Public Shared Function GetTag(ByVal Number As PostObjectDataDescriptorRecordTags) As IPTCTag
 			Return GetTag(RecordNumbers.PostObjectDataDescriptorRecord, Number)
 		End Function
+	End Class
 #End Region
 #Region "Groups"
 		''' <summary>Groups of tags</summary>
@@ -2511,6 +2520,7 @@ Namespace DrawingT.MetadataT
 				Return New GroupInfo(){GroupInfo.ARM, GroupInfo.ContentLocation, GroupInfo.Reference, GroupInfo.ByLineInfo, GroupInfo.ObjectDataPreview}
 			End Function
 		End Class
+	Partial Class Iptc
 		''' <summary>Gets information about known group of IPTC tags</summary>
 		''' <param name="Group">Code of group to get information about</param>
 		Public Shared Function GetGroup(ByVal Group As Groups) As GroupInfo
@@ -2928,8 +2938,10 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 #End Region
+	End Class
 #End Region
 #Region "Properties"
+	Partial Class Iptc
 		''' <summary>A number identifying the version of the Information Interchange Model, Part I, utilised by the provider.</summary>
 		''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
 		''' <returns>If this instance contains this tag retuns it. Otherwise returns null</returns>
@@ -4679,7 +4691,7 @@ Namespace DrawingT.MetadataT
 			End Set
 		End Property
 #End Region
-#End Region
 	End Class
+#End Region
 #End If
 End Namespace

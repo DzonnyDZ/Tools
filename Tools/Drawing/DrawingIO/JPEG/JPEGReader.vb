@@ -6,8 +6,8 @@ Namespace DrawingT.DrawingIOt.JPEG
     <Version(1, 0, GetType(JPEGReader), LastChange:="06/29/2007")> _
     <FirstVersion("04/23/2007")> _
     Public Class JPEGReader
-        Implements MetadataT.IExifGetter, MetadataT.IIPTCGetter
-        Implements MetadataT.IIPTCWriter
+        Implements MetadataT.ExifT.IExifGetter, MetadataT.IptcT.IIptcGetter
+        Implements MetadataT.IptcT.IIptcWriter
         Implements IDisposable
         ''' <summary>Stream of opened file</summary>
         Protected ReadOnly Stream As System.IO.Stream
@@ -117,7 +117,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' <para>If there is no Exif data in file stream can be null or have zero length</para>
         ''' <para>Stream supports reading and seeking</para>
         ''' </remarks>
-        Public Function GetExifStream() As System.IO.Stream Implements MetadataT.IExifGetter.GetExifStream
+        Public Function GetExifStream() As System.IO.Stream Implements MetadataT.ExifT.IExifGetter.GetExifStream
             Const Exif$ = "Exif"
             Const NormalOffset% = 6
             Const FujiFilmFineFix2800ZoomOffset% = 10
@@ -125,7 +125,7 @@ Namespace DrawingT.DrawingIOt.JPEG
                 Return Nothing
             ElseIf _ExifMarkerIndex >= 0 Then
                 Dim Offset = If(SupportFujiFilmFineFix2800ZoomInEffect, FujiFilmFineFix2800ZoomOffset, NormalOffset)
-                Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, offset, Me.Markers(ExifMarkerIndex).Data.Length - offset)
+                Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, Offset, Me.Markers(ExifMarkerIndex).Data.Length - Offset)
             End If
             Dim i As Integer = 0
             For Each m As JPEGMarkerReader In Me.Markers
@@ -213,7 +213,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' An 8BIM segment doesn't start with string '8BIM'
         ''' Sum of reported size and start of an 8BIM segment data exceeds length of Photoshop block stream
         ''' </exception>
-        Public Function GetIPTCStream() As System.IO.Stream Implements MetadataT.IIPTCGetter.GetIPTCStream
+        Public Function GetIPTCStream() As System.IO.Stream Implements MetadataT.IptcT.IIptcGetter.GetIptcStream
             For Each BIM8 As Photoshop8BIMReader In Get8BIMSegments()
                 If BIM8.Type = IPTC8BIM Then
                     Return BIM8.Data
@@ -311,7 +311,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' <see cref="Stream"/> does not support writing -or-
         ''' <see cref="Stream"/> does not suport reading
         ''' </exception>
-        Public Sub IPTCEmbed(ByVal IPTCData() As Byte) Implements MetadataT.IIPTCWriter.IPTCEmbed
+        Public Sub IPTCEmbed(ByVal IPTCData() As Byte) Implements MetadataT.IptcT.IIptcWriter.IptcEmbded
             Dim PreData As Byte() 'Write before IPTCData
             Dim PreDataPos As Integer 'Where to start writing of PreData
             Dim LenghtToReplace As Integer 'Number of types to replace after PreDataPos

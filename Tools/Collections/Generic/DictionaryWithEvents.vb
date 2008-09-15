@@ -423,7 +423,7 @@ Namespace CollectionsT.GenericT
                 Next Handler
             End RaiseEvent
         End Event
-        ''' <summary>Raised after the list is cleared. Raised by <see cref="Remove"/> and <see cref="RemoveAt"/> methods.</summary>
+        ''' <summary>Raised after the list is cleared. Raised by <see cref="Remove"/> method.</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters</param>
         ''' <remarks><see cref="Removed"/> event is not raised when the list.</remarks>

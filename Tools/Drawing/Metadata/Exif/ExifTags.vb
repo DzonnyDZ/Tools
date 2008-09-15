@@ -1,20 +1,19 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2701.36373
+' Generator: TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2833.35810
 '
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 14. září 2008
-' By:DZONNY\Honza
+' Created: 15. září 2008
+' By:noutbuk\Honza
 '
 'Localize: This auto-generated file was skipped during localization
 #If Config <= Nightly 'Stage: Nightly
 #Region "Generated code"
-Namespace DrawingT.MetadataT
-	Partial Public Class Exif
-		Partial Public Class IFDMain
+Namespace DrawingT.MetadataT.ExifT
+		Partial Public Class IfdMain
 			''' <summary>Tag numbers used in IFD0 and IFD1</summary>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Sub IFD pointers"
@@ -777,44 +776,44 @@ Namespace DrawingT.MetadataT
 				Get
 					Const any As ushort=0
 					Select Case Tag
-						Case Tags.ExifIFD : Return New ExifTagFormat(1, &h8769, "ExifIFD", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32)
-						Case Tags.GPSIFD : Return New ExifTagFormat(1, &h8825, "GPSIFD", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32)
-						Case Tags.ImageWidth : Return New ExifTagFormat(1, &h100, "ImageWidth", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.ImageLength : Return New ExifTagFormat(1, &h101, "ImageLength", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.BitsPerSample : Return New ExifTagFormat(3, &h102, "BitsPerSample", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.Compression : Return New ExifTagFormat(1, &h103, "Compression", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.PhotometricInterpretation : Return New ExifTagFormat(1, &h106, "PhotometricInterpretation", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.Orientation : Return New ExifTagFormat(1, &h112, "Orientation", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.SamplesPerPixel : Return New ExifTagFormat(1, &h115, "SamplesPerPixel", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.PlanarConfiguration : Return New ExifTagFormat(1, &h11C, "PlanarConfiguration", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.YCbCrSubSampling : Return New ExifTagFormat(2, &h212, "YCbCrSubSampling", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.YCbCrPositioning : Return New ExifTagFormat(1, &h213, "YCbCrPositioning", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.XResolution : Return New ExifTagFormat(1, &h11A, "XResolution", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.YResolution : Return New ExifTagFormat(1, &h11B, "YResolution", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.ResolutionUnit : Return New ExifTagFormat(1, &h128, "ResolutionUnit", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.StripOffsets : Return New ExifTagFormat(any, &h111, "StripOffsets", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.RowsPerStrip : Return New ExifTagFormat(1, &h116, "RowsPerStrip", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.StripByteCounts : Return New ExifTagFormat(any, &h117, "StripByteCounts", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.JPEGInterchangeFormat : Return New ExifTagFormat(1, &h201, "JPEGInterchangeFormat", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32)
-						Case Tags.JPEGInterchangeFormatLength : Return New ExifTagFormat(1, &h202, "JPEGInterchangeFormatLength", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32)
-						Case Tags.TransferFunction : Return New ExifTagFormat(768, &h12D, "TransferFunction", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.WhitePoint : Return New ExifTagFormat(2, &h13E, "WhitePoint", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.PrimaryChromaticities : Return New ExifTagFormat(6, &h13F, "PrimaryChromaticities", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.YCbCrCoefficients : Return New ExifTagFormat(3, &h211, "YCbCrCoefficients", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.ReferenceBlackWhite : Return New ExifTagFormat(6, &h214, "ReferenceBlackWhite", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.DateTime : Return New ExifTagFormat(20, &h132, "DateTime", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.ImageDescription : Return New ExifTagFormat(any, &h10E, "ImageDescription", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.Make : Return New ExifTagFormat(any, &h10F, "Make", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.Model : Return New ExifTagFormat(any, &h110, "Model", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.Software : Return New ExifTagFormat(any, &h131, "Software", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.Artist : Return New ExifTagFormat(any, &h13B, "Artist", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.Copyright : Return New ExifTagFormat(any, &h8298, "Copyright", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
+						Case Tags.ExifIFD : Return New ExifTagFormat(1, &h8769, "ExifIFD", ExifDataTypes.UInt32)
+						Case Tags.GPSIFD : Return New ExifTagFormat(1, &h8825, "GPSIFD", ExifDataTypes.UInt32)
+						Case Tags.ImageWidth : Return New ExifTagFormat(1, &h100, "ImageWidth", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.ImageLength : Return New ExifTagFormat(1, &h101, "ImageLength", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.BitsPerSample : Return New ExifTagFormat(3, &h102, "BitsPerSample", ExifDataTypes.UInt16)
+						Case Tags.Compression : Return New ExifTagFormat(1, &h103, "Compression", ExifDataTypes.UInt16)
+						Case Tags.PhotometricInterpretation : Return New ExifTagFormat(1, &h106, "PhotometricInterpretation", ExifDataTypes.UInt16)
+						Case Tags.Orientation : Return New ExifTagFormat(1, &h112, "Orientation", ExifDataTypes.UInt16)
+						Case Tags.SamplesPerPixel : Return New ExifTagFormat(1, &h115, "SamplesPerPixel", ExifDataTypes.UInt16)
+						Case Tags.PlanarConfiguration : Return New ExifTagFormat(1, &h11C, "PlanarConfiguration", ExifDataTypes.UInt16)
+						Case Tags.YCbCrSubSampling : Return New ExifTagFormat(2, &h212, "YCbCrSubSampling", ExifDataTypes.UInt16)
+						Case Tags.YCbCrPositioning : Return New ExifTagFormat(1, &h213, "YCbCrPositioning", ExifDataTypes.UInt16)
+						Case Tags.XResolution : Return New ExifTagFormat(1, &h11A, "XResolution", ExifDataTypes.URational)
+						Case Tags.YResolution : Return New ExifTagFormat(1, &h11B, "YResolution", ExifDataTypes.URational)
+						Case Tags.ResolutionUnit : Return New ExifTagFormat(1, &h128, "ResolutionUnit", ExifDataTypes.UInt16)
+						Case Tags.StripOffsets : Return New ExifTagFormat(any, &h111, "StripOffsets", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.RowsPerStrip : Return New ExifTagFormat(1, &h116, "RowsPerStrip", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.StripByteCounts : Return New ExifTagFormat(any, &h117, "StripByteCounts", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.JPEGInterchangeFormat : Return New ExifTagFormat(1, &h201, "JPEGInterchangeFormat", ExifDataTypes.UInt32)
+						Case Tags.JPEGInterchangeFormatLength : Return New ExifTagFormat(1, &h202, "JPEGInterchangeFormatLength", ExifDataTypes.UInt32)
+						Case Tags.TransferFunction : Return New ExifTagFormat(768, &h12D, "TransferFunction", ExifDataTypes.UInt16)
+						Case Tags.WhitePoint : Return New ExifTagFormat(2, &h13E, "WhitePoint", ExifDataTypes.URational)
+						Case Tags.PrimaryChromaticities : Return New ExifTagFormat(6, &h13F, "PrimaryChromaticities", ExifDataTypes.URational)
+						Case Tags.YCbCrCoefficients : Return New ExifTagFormat(3, &h211, "YCbCrCoefficients", ExifDataTypes.URational)
+						Case Tags.ReferenceBlackWhite : Return New ExifTagFormat(6, &h214, "ReferenceBlackWhite", ExifDataTypes.URational)
+						Case Tags.DateTime : Return New ExifTagFormat(20, &h132, "DateTime", ExifDataTypes.ASCII)
+						Case Tags.ImageDescription : Return New ExifTagFormat(any, &h10E, "ImageDescription", ExifDataTypes.ASCII)
+						Case Tags.Make : Return New ExifTagFormat(any, &h10F, "Make", ExifDataTypes.ASCII)
+						Case Tags.Model : Return New ExifTagFormat(any, &h110, "Model", ExifDataTypes.ASCII)
+						Case Tags.Software : Return New ExifTagFormat(any, &h131, "Software", ExifDataTypes.ASCII)
+						Case Tags.Artist : Return New ExifTagFormat(any, &h13B, "Artist", ExifDataTypes.ASCII)
+						Case Tags.Copyright : Return New ExifTagFormat(any, &h8298, "Copyright", ExifDataTypes.ASCII)
 						Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
 					End Select
 				End Get
 			End Property
 		End Class
-		Partial Public Class IFDExif
+		Partial Public Class IfdExif
 			''' <summary>Tag numbers used in Exif Sub IFD</summary>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Sub IFD pointers"
@@ -2263,69 +2262,69 @@ Namespace DrawingT.MetadataT
 				Get
 					Const any As ushort=0
 					Select Case Tag
-						Case Tags.InteroperabilityIFD : Return New ExifTagFormat(1, &hA005, "InteroperabilityIFD", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32)
-						Case Tags.ExifVersion : Return New ExifTagFormat(4, &h9000, "ExifVersion", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.FlashpixVersion : Return New ExifTagFormat(4, &hA000, "FlashpixVersion", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.ColorSpace : Return New ExifTagFormat(1, &hA001, "ColorSpace", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.ComponentsConfiguration : Return New ExifTagFormat(4, &h9101, "ComponentsConfiguration", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.CompressedBitsPerPixel : Return New ExifTagFormat(1, &h9102, "CompressedBitsPerPixel", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.PixelXDimension : Return New ExifTagFormat(1, &hA002, "PixelXDimension", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.PixelYDimension : Return New ExifTagFormat(1, &hA003, "PixelYDimension", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32, ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.MakerNote : Return New ExifTagFormat(any, &h927C, "MakerNote", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.UserComment : Return New ExifTagFormat(any, &h9286, "UserComment", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.RelatedSoundFile : Return New ExifTagFormat(13, &hA004, "RelatedSoundFile", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.DateTimeOriginal : Return New ExifTagFormat(20, &h9003, "DateTimeOriginal", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.DateTimeDigitized : Return New ExifTagFormat(20, &h9004, "DateTimeDigitized", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.SubSecTime : Return New ExifTagFormat(any, &h9290, "SubSecTime", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.SubSecTimeOriginal : Return New ExifTagFormat(any, &h9291, "SubSecTimeOriginal", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.SubSecTimeDigitized : Return New ExifTagFormat(any, &h9292, "SubSecTimeDigitized", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.ExposureTime : Return New ExifTagFormat(1, &h829A, "ExposureTime", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.FNumber : Return New ExifTagFormat(1, &h829D, "FNumber", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.ExposureProgram : Return New ExifTagFormat(1, &h8822, "ExposureProgram", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.SpectralSensitivity : Return New ExifTagFormat(any, &h8824, "SpectralSensitivity", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.ISOSpeedRatings : Return New ExifTagFormat(any, &h8827, "ISOSpeedRatings", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.OECF : Return New ExifTagFormat(any, &h8828, "OECF", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.ShutterSpeedValue : Return New ExifTagFormat(1, &h9201, "ShutterSpeedValue", ExifIFDReader.DirectoryEntry.ExifDataTypes.SRational)
-						Case Tags.ApertureValue : Return New ExifTagFormat(1, &h9202, "ApertureValue", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.BrightnessValue : Return New ExifTagFormat(1, &h9203, "BrightnessValue", ExifIFDReader.DirectoryEntry.ExifDataTypes.SRational)
-						Case Tags.ExposureBiasValue : Return New ExifTagFormat(1, &h9204, "ExposureBiasValue", ExifIFDReader.DirectoryEntry.ExifDataTypes.SRational)
-						Case Tags.MaxApertureValue : Return New ExifTagFormat(1, &h9205, "MaxApertureValue", ExifIFDReader.DirectoryEntry.ExifDataTypes.SRational)
-						Case Tags.SubjectDistance : Return New ExifTagFormat(1, &h9206, "SubjectDistance", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.MeteringMode : Return New ExifTagFormat(1, &h9207, "MeteringMode", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.LightSource : Return New ExifTagFormat(1, &h9208, "LightSource", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.Flash : Return New ExifTagFormat(1, &h9209, "Flash", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.FocalLength : Return New ExifTagFormat(1, &h920A, "FocalLength", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.SubjectArea : Return New ExifTagFormat(any, &h9214, "SubjectArea", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.FlashEnergy : Return New ExifTagFormat(1, &hA20B, "FlashEnergy", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.SpatialFrequencyResponse : Return New ExifTagFormat(any, &hA20C, "SpatialFrequencyResponse", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.FocalPlaneXResolution : Return New ExifTagFormat(1, &hA20E, "FocalPlaneXResolution", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.FocalPlaneYResolution : Return New ExifTagFormat(1, &hA20F, "FocalPlaneYResolution", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.FocalPlaneResolutionUnit : Return New ExifTagFormat(1, &hA210, "FocalPlaneResolutionUnit", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.SubjectLocation : Return New ExifTagFormat(2, &hA214, "SubjectLocation", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.ExposureIndex : Return New ExifTagFormat(1, &hA215, "ExposureIndex", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.SensingMethod : Return New ExifTagFormat(1, &hA217, "SensingMethod", ExifIFDReader.DirectoryEntry.ExifDataTypes.Int16)
-						Case Tags.FileSource : Return New ExifTagFormat(1, &hA300, "FileSource", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.SceneType : Return New ExifTagFormat(1, &hA301, "SceneType", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.CFAPattern : Return New ExifTagFormat(any, &hA302, "CFAPattern", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.CustomRendered : Return New ExifTagFormat(1, &hA401, "CustomRendered", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.ExposureMode : Return New ExifTagFormat(1, &hA402, "ExposureMode", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.WhiteBalance : Return New ExifTagFormat(1, &hA403, "WhiteBalance", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.DigitalZoomRatio : Return New ExifTagFormat(1, &hA404, "DigitalZoomRatio", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.FocalLengthIn35mmFilm : Return New ExifTagFormat(1, &hA405, "FocalLengthIn35mmFilm", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.SceneCaptureType : Return New ExifTagFormat(1, &hA406, "SceneCaptureType", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.GainControl : Return New ExifTagFormat(1, &hA407, "GainControl", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.Contrast : Return New ExifTagFormat(1, &hA408, "Contrast", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.Saturation : Return New ExifTagFormat(1, &hA409, "Saturation", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.Sharpness : Return New ExifTagFormat(1, &hA40A, "Sharpness", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.DeviceSettingDescription : Return New ExifTagFormat(any, &hA40B, "DeviceSettingDescription", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.SubjectDistanceRange : Return New ExifTagFormat(1, &hA40C, "SubjectDistanceRange", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
-						Case Tags.ImageUniqueID : Return New ExifTagFormat(33, &hA420, "ImageUniqueID", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
+						Case Tags.InteroperabilityIFD : Return New ExifTagFormat(1, &hA005, "InteroperabilityIFD", ExifDataTypes.UInt32)
+						Case Tags.ExifVersion : Return New ExifTagFormat(4, &h9000, "ExifVersion", ExifDataTypes.NA)
+						Case Tags.FlashpixVersion : Return New ExifTagFormat(4, &hA000, "FlashpixVersion", ExifDataTypes.NA)
+						Case Tags.ColorSpace : Return New ExifTagFormat(1, &hA001, "ColorSpace", ExifDataTypes.UInt16)
+						Case Tags.ComponentsConfiguration : Return New ExifTagFormat(4, &h9101, "ComponentsConfiguration", ExifDataTypes.NA)
+						Case Tags.CompressedBitsPerPixel : Return New ExifTagFormat(1, &h9102, "CompressedBitsPerPixel", ExifDataTypes.URational)
+						Case Tags.PixelXDimension : Return New ExifTagFormat(1, &hA002, "PixelXDimension", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.PixelYDimension : Return New ExifTagFormat(1, &hA003, "PixelYDimension", ExifDataTypes.UInt32, ExifDataTypes.UInt16)
+						Case Tags.MakerNote : Return New ExifTagFormat(any, &h927C, "MakerNote", ExifDataTypes.NA)
+						Case Tags.UserComment : Return New ExifTagFormat(any, &h9286, "UserComment", ExifDataTypes.NA)
+						Case Tags.RelatedSoundFile : Return New ExifTagFormat(13, &hA004, "RelatedSoundFile", ExifDataTypes.ASCII)
+						Case Tags.DateTimeOriginal : Return New ExifTagFormat(20, &h9003, "DateTimeOriginal", ExifDataTypes.ASCII)
+						Case Tags.DateTimeDigitized : Return New ExifTagFormat(20, &h9004, "DateTimeDigitized", ExifDataTypes.ASCII)
+						Case Tags.SubSecTime : Return New ExifTagFormat(any, &h9290, "SubSecTime", ExifDataTypes.ASCII)
+						Case Tags.SubSecTimeOriginal : Return New ExifTagFormat(any, &h9291, "SubSecTimeOriginal", ExifDataTypes.ASCII)
+						Case Tags.SubSecTimeDigitized : Return New ExifTagFormat(any, &h9292, "SubSecTimeDigitized", ExifDataTypes.ASCII)
+						Case Tags.ExposureTime : Return New ExifTagFormat(1, &h829A, "ExposureTime", ExifDataTypes.URational)
+						Case Tags.FNumber : Return New ExifTagFormat(1, &h829D, "FNumber", ExifDataTypes.URational)
+						Case Tags.ExposureProgram : Return New ExifTagFormat(1, &h8822, "ExposureProgram", ExifDataTypes.UInt16)
+						Case Tags.SpectralSensitivity : Return New ExifTagFormat(any, &h8824, "SpectralSensitivity", ExifDataTypes.URational)
+						Case Tags.ISOSpeedRatings : Return New ExifTagFormat(any, &h8827, "ISOSpeedRatings", ExifDataTypes.UInt16)
+						Case Tags.OECF : Return New ExifTagFormat(any, &h8828, "OECF", ExifDataTypes.NA)
+						Case Tags.ShutterSpeedValue : Return New ExifTagFormat(1, &h9201, "ShutterSpeedValue", ExifDataTypes.SRational)
+						Case Tags.ApertureValue : Return New ExifTagFormat(1, &h9202, "ApertureValue", ExifDataTypes.URational)
+						Case Tags.BrightnessValue : Return New ExifTagFormat(1, &h9203, "BrightnessValue", ExifDataTypes.SRational)
+						Case Tags.ExposureBiasValue : Return New ExifTagFormat(1, &h9204, "ExposureBiasValue", ExifDataTypes.SRational)
+						Case Tags.MaxApertureValue : Return New ExifTagFormat(1, &h9205, "MaxApertureValue", ExifDataTypes.SRational)
+						Case Tags.SubjectDistance : Return New ExifTagFormat(1, &h9206, "SubjectDistance", ExifDataTypes.URational)
+						Case Tags.MeteringMode : Return New ExifTagFormat(1, &h9207, "MeteringMode", ExifDataTypes.UInt16)
+						Case Tags.LightSource : Return New ExifTagFormat(1, &h9208, "LightSource", ExifDataTypes.UInt16)
+						Case Tags.Flash : Return New ExifTagFormat(1, &h9209, "Flash", ExifDataTypes.UInt16)
+						Case Tags.FocalLength : Return New ExifTagFormat(1, &h920A, "FocalLength", ExifDataTypes.URational)
+						Case Tags.SubjectArea : Return New ExifTagFormat(any, &h9214, "SubjectArea", ExifDataTypes.UInt16)
+						Case Tags.FlashEnergy : Return New ExifTagFormat(1, &hA20B, "FlashEnergy", ExifDataTypes.URational)
+						Case Tags.SpatialFrequencyResponse : Return New ExifTagFormat(any, &hA20C, "SpatialFrequencyResponse", ExifDataTypes.NA)
+						Case Tags.FocalPlaneXResolution : Return New ExifTagFormat(1, &hA20E, "FocalPlaneXResolution", ExifDataTypes.URational)
+						Case Tags.FocalPlaneYResolution : Return New ExifTagFormat(1, &hA20F, "FocalPlaneYResolution", ExifDataTypes.URational)
+						Case Tags.FocalPlaneResolutionUnit : Return New ExifTagFormat(1, &hA210, "FocalPlaneResolutionUnit", ExifDataTypes.UInt16)
+						Case Tags.SubjectLocation : Return New ExifTagFormat(2, &hA214, "SubjectLocation", ExifDataTypes.UInt16)
+						Case Tags.ExposureIndex : Return New ExifTagFormat(1, &hA215, "ExposureIndex", ExifDataTypes.URational)
+						Case Tags.SensingMethod : Return New ExifTagFormat(1, &hA217, "SensingMethod", ExifDataTypes.Int16)
+						Case Tags.FileSource : Return New ExifTagFormat(1, &hA300, "FileSource", ExifDataTypes.NA)
+						Case Tags.SceneType : Return New ExifTagFormat(1, &hA301, "SceneType", ExifDataTypes.NA)
+						Case Tags.CFAPattern : Return New ExifTagFormat(any, &hA302, "CFAPattern", ExifDataTypes.NA)
+						Case Tags.CustomRendered : Return New ExifTagFormat(1, &hA401, "CustomRendered", ExifDataTypes.UInt16)
+						Case Tags.ExposureMode : Return New ExifTagFormat(1, &hA402, "ExposureMode", ExifDataTypes.UInt16)
+						Case Tags.WhiteBalance : Return New ExifTagFormat(1, &hA403, "WhiteBalance", ExifDataTypes.UInt16)
+						Case Tags.DigitalZoomRatio : Return New ExifTagFormat(1, &hA404, "DigitalZoomRatio", ExifDataTypes.URational)
+						Case Tags.FocalLengthIn35mmFilm : Return New ExifTagFormat(1, &hA405, "FocalLengthIn35mmFilm", ExifDataTypes.UInt16)
+						Case Tags.SceneCaptureType : Return New ExifTagFormat(1, &hA406, "SceneCaptureType", ExifDataTypes.UInt16)
+						Case Tags.GainControl : Return New ExifTagFormat(1, &hA407, "GainControl", ExifDataTypes.UInt16)
+						Case Tags.Contrast : Return New ExifTagFormat(1, &hA408, "Contrast", ExifDataTypes.UInt16)
+						Case Tags.Saturation : Return New ExifTagFormat(1, &hA409, "Saturation", ExifDataTypes.UInt16)
+						Case Tags.Sharpness : Return New ExifTagFormat(1, &hA40A, "Sharpness", ExifDataTypes.UInt16)
+						Case Tags.DeviceSettingDescription : Return New ExifTagFormat(any, &hA40B, "DeviceSettingDescription", ExifDataTypes.NA)
+						Case Tags.SubjectDistanceRange : Return New ExifTagFormat(1, &hA40C, "SubjectDistanceRange", ExifDataTypes.UInt16)
+						Case Tags.ImageUniqueID : Return New ExifTagFormat(33, &hA420, "ImageUniqueID", ExifDataTypes.ASCII)
 						Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
 					End Select
 				End Get
 			End Property
 		End Class
-		Partial Public Class IFDGPS
+		Partial Public Class IfdGps
 			''' <summary>Tag numbers used in GPS Sub IFD</summary>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Tags Relating to GPS"
@@ -3176,43 +3175,43 @@ Namespace DrawingT.MetadataT
 				Get
 					Const any As ushort=0
 					Select Case Tag
-						Case Tags.GPSVersionID : Return New ExifTagFormat(4, &h0, "GPSVersionID", ExifIFDReader.DirectoryEntry.ExifDataTypes.Byte)
-						Case Tags.GPSLatitudeRef : Return New ExifTagFormat(2, &h1, "GPSLatitudeRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSLatitude : Return New ExifTagFormat(3, &h2, "GPSLatitude", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSLongitudeRef : Return New ExifTagFormat(2, &h3, "GPSLongitudeRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSLongitude : Return New ExifTagFormat(3, &h4, "GPSLongitude", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSAltitudeRef : Return New ExifTagFormat(1, &h5, "GPSAltitudeRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.Byte)
-						Case Tags.GPSAltitude : Return New ExifTagFormat(1, &h6, "GPSAltitude", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSTimeStamp : Return New ExifTagFormat(3, &h7, "GPSTimeStamp", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSSatellites : Return New ExifTagFormat(any, &h8, "GPSSatellites", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSStatus : Return New ExifTagFormat(2, &h9, "GPSStatus", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSMeasureMode : Return New ExifTagFormat(2, &hA, "GPSMeasureMode", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDOP : Return New ExifTagFormat(1, &hB, "GPSDOP", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSSpeedRef : Return New ExifTagFormat(2, &hC, "GPSSpeedRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSSpeed : Return New ExifTagFormat(1, &hD, "GPSSpeed", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSTrackRef : Return New ExifTagFormat(2, &hE, "GPSTrackRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSTrack : Return New ExifTagFormat(1, &hF, "GPSTrack", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSImgDirectionRef : Return New ExifTagFormat(2, &h10, "GPSImgDirectionRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSImgDirection : Return New ExifTagFormat(1, &h11, "GPSImgDirection", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSMapDatum : Return New ExifTagFormat(any, &h12, "GPSMapDatum", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDestLatitudeRef : Return New ExifTagFormat(2, &h13, "GPSDestLatitudeRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDestLatitude : Return New ExifTagFormat(3, &h14, "GPSDestLatitude", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSDestLongitudeRef : Return New ExifTagFormat(2, &h15, "GPSDestLongitudeRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDestLongitude : Return New ExifTagFormat(3, &h16, "GPSDestLongitude", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSDestBearingRef : Return New ExifTagFormat(2, &h17, "GPSDestBearingRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDestBearing : Return New ExifTagFormat(1, &h18, "GPSDestBearing", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSDestDistanceRef : Return New ExifTagFormat(2, &h19, "GPSDestDistanceRef", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDestDistance : Return New ExifTagFormat(1, &h1A, "GPSDestDistance", ExifIFDReader.DirectoryEntry.ExifDataTypes.URational)
-						Case Tags.GPSProcessingMethod : Return New ExifTagFormat(any, &h1B, "GPSProcessingMethod", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.GPSAreaInformation : Return New ExifTagFormat(any, &h1C, "GPSAreaInformation", ExifIFDReader.DirectoryEntry.ExifDataTypes.NA)
-						Case Tags.GPSDateStamp : Return New ExifTagFormat(11, &h1D, "GPSDateStamp", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
-						Case Tags.GPSDifferential : Return New ExifTagFormat(1, &h1E, "GPSDifferential", ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt16)
+						Case Tags.GPSVersionID : Return New ExifTagFormat(4, &h0, "GPSVersionID", ExifDataTypes.Byte)
+						Case Tags.GPSLatitudeRef : Return New ExifTagFormat(2, &h1, "GPSLatitudeRef", ExifDataTypes.ASCII)
+						Case Tags.GPSLatitude : Return New ExifTagFormat(3, &h2, "GPSLatitude", ExifDataTypes.URational)
+						Case Tags.GPSLongitudeRef : Return New ExifTagFormat(2, &h3, "GPSLongitudeRef", ExifDataTypes.ASCII)
+						Case Tags.GPSLongitude : Return New ExifTagFormat(3, &h4, "GPSLongitude", ExifDataTypes.URational)
+						Case Tags.GPSAltitudeRef : Return New ExifTagFormat(1, &h5, "GPSAltitudeRef", ExifDataTypes.Byte)
+						Case Tags.GPSAltitude : Return New ExifTagFormat(1, &h6, "GPSAltitude", ExifDataTypes.URational)
+						Case Tags.GPSTimeStamp : Return New ExifTagFormat(3, &h7, "GPSTimeStamp", ExifDataTypes.URational)
+						Case Tags.GPSSatellites : Return New ExifTagFormat(any, &h8, "GPSSatellites", ExifDataTypes.ASCII)
+						Case Tags.GPSStatus : Return New ExifTagFormat(2, &h9, "GPSStatus", ExifDataTypes.ASCII)
+						Case Tags.GPSMeasureMode : Return New ExifTagFormat(2, &hA, "GPSMeasureMode", ExifDataTypes.ASCII)
+						Case Tags.GPSDOP : Return New ExifTagFormat(1, &hB, "GPSDOP", ExifDataTypes.URational)
+						Case Tags.GPSSpeedRef : Return New ExifTagFormat(2, &hC, "GPSSpeedRef", ExifDataTypes.ASCII)
+						Case Tags.GPSSpeed : Return New ExifTagFormat(1, &hD, "GPSSpeed", ExifDataTypes.URational)
+						Case Tags.GPSTrackRef : Return New ExifTagFormat(2, &hE, "GPSTrackRef", ExifDataTypes.ASCII)
+						Case Tags.GPSTrack : Return New ExifTagFormat(1, &hF, "GPSTrack", ExifDataTypes.URational)
+						Case Tags.GPSImgDirectionRef : Return New ExifTagFormat(2, &h10, "GPSImgDirectionRef", ExifDataTypes.ASCII)
+						Case Tags.GPSImgDirection : Return New ExifTagFormat(1, &h11, "GPSImgDirection", ExifDataTypes.URational)
+						Case Tags.GPSMapDatum : Return New ExifTagFormat(any, &h12, "GPSMapDatum", ExifDataTypes.ASCII)
+						Case Tags.GPSDestLatitudeRef : Return New ExifTagFormat(2, &h13, "GPSDestLatitudeRef", ExifDataTypes.ASCII)
+						Case Tags.GPSDestLatitude : Return New ExifTagFormat(3, &h14, "GPSDestLatitude", ExifDataTypes.URational)
+						Case Tags.GPSDestLongitudeRef : Return New ExifTagFormat(2, &h15, "GPSDestLongitudeRef", ExifDataTypes.ASCII)
+						Case Tags.GPSDestLongitude : Return New ExifTagFormat(3, &h16, "GPSDestLongitude", ExifDataTypes.URational)
+						Case Tags.GPSDestBearingRef : Return New ExifTagFormat(2, &h17, "GPSDestBearingRef", ExifDataTypes.ASCII)
+						Case Tags.GPSDestBearing : Return New ExifTagFormat(1, &h18, "GPSDestBearing", ExifDataTypes.URational)
+						Case Tags.GPSDestDistanceRef : Return New ExifTagFormat(2, &h19, "GPSDestDistanceRef", ExifDataTypes.ASCII)
+						Case Tags.GPSDestDistance : Return New ExifTagFormat(1, &h1A, "GPSDestDistance", ExifDataTypes.URational)
+						Case Tags.GPSProcessingMethod : Return New ExifTagFormat(any, &h1B, "GPSProcessingMethod", ExifDataTypes.NA)
+						Case Tags.GPSAreaInformation : Return New ExifTagFormat(any, &h1C, "GPSAreaInformation", ExifDataTypes.NA)
+						Case Tags.GPSDateStamp : Return New ExifTagFormat(11, &h1D, "GPSDateStamp", ExifDataTypes.ASCII)
+						Case Tags.GPSDifferential : Return New ExifTagFormat(1, &h1E, "GPSDifferential", ExifDataTypes.UInt16)
 						Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
 					End Select
 				End Get
 			End Property
 		End Class
-		Partial Public Class IFDInterop
+		Partial Public Class IfdInterop
 			''' <summary>Tag numbers used in Exif Interoperability IFD</summary>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Ineroperability Tags"
@@ -3243,13 +3242,12 @@ Namespace DrawingT.MetadataT
 				Get
 					Const any As ushort=0
 					Select Case Tag
-						Case Tags.InteroperabilityIndex : Return New ExifTagFormat(any, &h1, "InteroperabilityIndex", ExifIFDReader.DirectoryEntry.ExifDataTypes.ASCII)
+						Case Tags.InteroperabilityIndex : Return New ExifTagFormat(any, &h1, "InteroperabilityIndex", ExifDataTypes.ASCII)
 						Case Else : Throw New InvalidEnumArgumentException("Tag", Tag, GetType(Tags))
 					End Select
 				End Get
 			End Property
 		End Class
-	End Class
 End Namespace
 #End Region
 #End If

@@ -1,4 +1,4 @@
-﻿Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt
+﻿Imports Tools.DrawingT.MetadataT.ExifT, Tools.DrawingT.DrawingIOt
 Public Class ExifInternal
     Inherits Exif
     ''' <summary>CTor</summary>

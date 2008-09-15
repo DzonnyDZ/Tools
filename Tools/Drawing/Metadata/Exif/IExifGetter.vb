@@ -1,4 +1,4 @@
-Namespace DrawingT.MetadataT
+Namespace DrawingT.MetadataT.ExifT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _

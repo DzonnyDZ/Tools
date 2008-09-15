@@ -1,4 +1,4 @@
-Namespace DrawingT.MetadataT
+Namespace DrawingT.MetadataT.ExifT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represents unsigned rational number with numerator and denominator as used in Exif</summary>
     <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _

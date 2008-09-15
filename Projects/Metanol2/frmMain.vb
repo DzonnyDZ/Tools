@@ -1,6 +1,6 @@
 ﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileTystemTools, Tools.CollectionsT.GenericT
 Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
-Imports Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
+Imports Tools.DrawingT.MetadataT.IptcT, Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT, Tools, Tools.ReflectionT
@@ -58,7 +58,7 @@ Public Class frmMain
     End Sub
     ''' <summary>Prepares country codes</summary>
     Private Sub SetCountryCodes()
-        Dim c As New IPTC.StringEnum(Of IPTC.ISO3166).Converter
+        Dim c As New IptcT.IptcDataTypes.StringEnum(Of IptcT.Iptc.ISO3166).Converter
         cmbCountryCode.Items.AddRange(c.GetStandardValues.OfType(Of Object).ToArray)
     End Sub
 
@@ -668,7 +668,7 @@ Public Class frmMain
 
     Private Sub cmbCountryCode_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCountryCode.SelectedIndexChanged
         If sender.SelectedIndex >= 0 Then
-            Dim selectedItem As IPTC.StringEnum(Of IPTC.ISO3166) = sender.SelectedItem
+            Dim selectedItem As IptcT.IptcDataTypes.StringEnum(Of IptcT.Iptc.ISO3166) = sender.SelectedItem
             If selectedItem.ContainsEnum Then
                 Dim desc = selectedItem.EnumValue.GetConstant.GetAttribute(Of DisplayNameAttribute)()
                 If desc IsNot Nothing Then

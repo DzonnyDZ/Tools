@@ -217,5 +217,8 @@
         <member name="N:Tools.XmlT.LinqT">
             <summary>Provides extensions to <see cref="N:System.Xml.Linq">Linq to Xml technology</see>.</summary>
         </member>
+        <member name="N:Tools.DrawingT.MetadataT.ExifT">
+            <summary>Contains classes related to reading and manipulating Exif metadata.</summary>
+        </member>
     </members>    
 </doc>

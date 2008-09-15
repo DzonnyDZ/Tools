@@ -1,15 +1,15 @@
 Imports System.IO
-Namespace DrawingT.MetadataT
+Namespace DrawingT.MetadataT.ExifT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream of Exif data</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(ExifReader), LastChange:="04/25/2007")> _
     Public Class ExifReader
-        ''' <summary>Name of Exif Sub IFD (see <see cref="Exif.SubIFD.Desc"/>)</summary>
+        ''' <summary>Name of Exif Sub IFD (see <see cref="SubIFD.Desc"/>)</summary>
         Public Const ExifSubIFDName As String = "Exif Sub IFD"
-        ''' <summary>Name of Exif Sub IFD (see <see cref="Exif.SubIFD.Desc"/>)</summary>
+        ''' <summary>Name of Exif Sub IFD (see <see cref="SubIFD.Desc"/>)</summary>
         Public Const GPSSubIFDName As String = "GPS Sub IFD"
-        ''' <summary>Name of Exif Interoperability Sub IFD (see <see cref="Exif.IFDInterop"/>)</summary>
+        ''' <summary>Name of Exif Interoperability Sub IFD (see <see cref="IFDInterop"/>)</summary>
         Public Const ExifInteroperabilityName As String = "Exif Interoperability IFD"
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains Exif data</param>
@@ -122,63 +122,6 @@ Namespace DrawingT.MetadataT
                 Parent = _OtherSubIFDs(_OtherSubIFDs.Count - 1)
             End While
         End Sub
-        ''' <summary>Represents reader of Sub IFD</summary>
-        Public Class SubIFDReader : Inherits ExifIFDReader
-            ''' <summary>CTor</summary>
-            ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
-            ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
-            ''' <param name="Desc">Descriptive name of this Sub IFD</param>
-            ''' <param name="ParentIFD"><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</param>
-            ''' <param name="ParentRecord">Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</param>
-            ''' <param name="PreviousSubIFD">Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</param>
-            ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
-            ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
-            ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
-            ''' <exception cref="InvalidDataException">Tag data of some are placed otside the tag and cannot be read</exception>
-            <CLSCompliant(False)> _
-            Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32, ByVal Desc As String, ByVal ParentIFD As ExifIFDReader, ByVal ParentRecord As Integer, Optional ByVal PreviousSubIFD As ExifIFDReader = Nothing)
-                MyBase.New(Exif, Offset)
-                _Desc = Desc
-                _ParentIFD = ParentIFD
-                _ParentRecord = ParentRecord
-                _PreviousSubIFD = PreviousSubIFD
-            End Sub
-            ''' <summary>Contains value of the <see cref="Desc"/> property</summary>
-            Private _Desc As String
-            ''' <summary>Contains value of the <see cref="ParentIFD"/> property</summary>
-            Private _ParentIFD As ExifIFDReader
-            ''' <summary>Contains value of the <see cref="ParentRecord"/> property</summary>
-            Private _ParentRecord As Integer
-            ''' <summary>Contains value of the <see cref="PreviousSubIFD"/> property</summary>
-            Private _PreviousSubIFD As ExifIFDReader
-            ''' <summary>Descriptive name of this Sub IFD</summary>
-            ''' <returns>Usually contain an empty string for non starndard Sub IFDs and comon English name for standard Sub IFDs. For non-standard Sub IFDs only when library have some ideda what can this Sub IFD mean this Sub IFD is captioned somehow</returns>
-            ''' <remarks>Currently there are no Non Standard Sub IFDs that have any caption, Captions of staandard Sub IFDs are public onstants declared in <see cref="ExifReader"/></remarks>
-            Public ReadOnly Property Desc() As String
-                Get
-                    Return _Desc
-                End Get
-            End Property
-            ''' <summary><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</summary>
-            Public ReadOnly Property ParentIFD() As ExifIFDReader
-                Get
-                    Return _ParentIFD
-                End Get
-            End Property
-            ''' <summary>Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</summary>
-            Public ReadOnly Property ParentRecord() As Integer
-                Get
-                    Return _ParentRecord
-                End Get
-            End Property
-            ''' <summary>Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</summary>
-            ''' <remarks>This can be standart Sub IFD (like Exif Sub IFD) or nonstandart one</remarks>
-            Public ReadOnly Property PreviousSubIFD() As ExifIFDReader
-                Get
-                    Return _PreviousSubIFD
-                End Get
-            End Property
-        End Class
         ''' <summary>Contains value of the <see cref="OtherSubIFDs"/> property</summary>
         Private _OtherSubIFDs As New List(Of SubIFDReader)
         ''' <summary>Contains all unexpectedly (by chance) found Sub IFDs that cannot be recognized as starndard one. Those Sub IFDs are usually found as successors of standard ones</summary>
@@ -235,6 +178,64 @@ Namespace DrawingT.MetadataT
         Public ReadOnly Property IFDs() As CollectionsT.GenericT.IReadOnlyList(Of ExifIFDReader)
             Get
                 Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of ExifIFDReader)(_IFDs)
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Represents reader of Sub IFD</summary>
+    Public Class SubIFDReader : Inherits ExifIFDReader
+        ''' <summary>CTor</summary>
+        ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
+        ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
+        ''' <param name="Desc">Descriptive name of this Sub IFD</param>
+        ''' <param name="ParentIFD"><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</param>
+        ''' <param name="ParentRecord">Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</param>
+        ''' <param name="PreviousSubIFD">Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</param>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
+        ''' <exception cref="InvalidDataException">Tag data of some are placed otside the tag and cannot be read</exception>
+        <CLSCompliant(False)> _
+        Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32, ByVal Desc As String, ByVal ParentIFD As ExifIFDReader, ByVal ParentRecord As Integer, Optional ByVal PreviousSubIFD As ExifIFDReader = Nothing)
+            MyBase.New(Exif, Offset)
+            _Desc = Desc
+            _ParentIFD = ParentIFD
+            _ParentRecord = ParentRecord
+            _PreviousSubIFD = PreviousSubIFD
+        End Sub
+        ''' <summary>Contains value of the <see cref="Desc"/> property</summary>
+        Private _Desc As String
+        ''' <summary>Contains value of the <see cref="ParentIFD"/> property</summary>
+        Private _ParentIFD As ExifIFDReader
+        ''' <summary>Contains value of the <see cref="ParentRecord"/> property</summary>
+        Private _ParentRecord As Integer
+        ''' <summary>Contains value of the <see cref="PreviousSubIFD"/> property</summary>
+        Private _PreviousSubIFD As ExifIFDReader
+        ''' <summary>Descriptive name of this Sub IFD</summary>
+        ''' <returns>Usually contain an empty string for non starndard Sub IFDs and comon English name for standard Sub IFDs. For non-standard Sub IFDs only when library have some ideda what can this Sub IFD mean this Sub IFD is captioned somehow</returns>
+        ''' <remarks>Currently there are no Non Standard Sub IFDs that have any caption, Captions of staandard Sub IFDs are public onstants declared in <see cref="ExifReader"/></remarks>
+        Public ReadOnly Property Desc() As String
+            Get
+                Return _Desc
+            End Get
+        End Property
+        ''' <summary><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</summary>
+        Public ReadOnly Property ParentIFD() As ExifIFDReader
+            Get
+                Return _ParentIFD
+            End Get
+        End Property
+        ''' <summary>Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</summary>
+        Public ReadOnly Property ParentRecord() As Integer
+            Get
+                Return _ParentRecord
+            End Get
+        End Property
+        ''' <summary>Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</summary>
+        ''' <remarks>This can be standart Sub IFD (like Exif Sub IFD) or nonstandart one</remarks>
+        Public ReadOnly Property PreviousSubIFD() As ExifIFDReader
+            Get
+                Return _PreviousSubIFD
             End Get
         End Property
     End Class

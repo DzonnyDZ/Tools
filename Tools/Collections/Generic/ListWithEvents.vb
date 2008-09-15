@@ -1002,7 +1002,7 @@ Namespace CollectionsT.GenericT
         End Sub
 
         ''' <summary>Specialized <see cref="CollectionChangeEventArgs(Of T)"/> for <see cref="ListWithEvents(Of T)"/></summary>
-        ''' <seelaso cref="DictionaryWithEvents(Of TKey, TValue).DictionaryChangedEventArgs"/>
+        ''' <seelaso cref="DictionaryWithEvents.DictionaryChangedEventArgs"/>
         Public Class ListChangedEventArgs : Inherits CollectionChangeEventArgs(Of T)
 #Region "CTors"
             ''' <summary>CTor</summary>

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -191,6 +191,7 @@
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IconOrBitmap.vb" />
+    <Compile Include="Drawing\Metadata\Exif\IFD.vb" />
     <Compile Include="Drawing\Metadata\Exif\Rational.vb" />
     <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
@@ -201,9 +202,11 @@
       <AutoGen>True</AutoGen>
     </Compile>
     <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\Groups.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTC.vb" />
     <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
     <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes.vb" />
     <Compile Include="Extensions\DelegateExtensions.vb" />
     <Compile Include="IO\SyncFSWatcher.vb">
       <SubType>Component</SubType>
@@ -234,7 +237,7 @@
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </Compile>
     <Compile Include="Drawing\Metadata\IPTC\IPTCTypedValues.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes.vb" />
+    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes helpers.vb" />
     <Compile Include="Drawing\ImageTools.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Extensions\Char.vb" />
@@ -479,7 +482,7 @@
     <None Include="Drawing\Metadata\Exif\ExifTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>ExifTags.vb</LastGenOutput>
-      <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
+      <CustomToolNamespace>DrawingT.MetadataT.ExifT</CustomToolNamespace>
     </None>
     <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
       <SubType>
@@ -558,7 +561,7 @@
     <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
-      <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
+      <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
     </Content>
     <None Include="Reflection\MemberNumbers.xls" />
     <None Include="Resources\DeleteHS.png" />
@@ -666,10 +669,10 @@
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
-      <CustomToolNamespace>DrawingT.MetadataT</CustomToolNamespace>
+      <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
-      <LogicalName>Tools.DrawingT.MetadataT.IPTCResources.resources</LogicalName>
+      <LogicalName>Tools.DrawingT.MetadataT.IptcT.IPTCResources.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.cs.resx">
