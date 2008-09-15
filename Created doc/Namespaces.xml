@@ -220,5 +220,11 @@
         <member name="N:Tools.DrawingT.MetadataT.ExifT">
             <summary>Contains classes related to reading and manipulating Exif metadata.</summary>
         </member>
+        <member name="N:Tools.DrawingT.MetadataT.IptcT">
+            <summary>Contains classes realetd to reading and manipulating Iptc metadata.</summary>
+        </member>
+        <member name="N:Tools.DrawingT.MetadataT.IptcT.IptcDataTypes">
+            <summary>Contains classes and structures to represent data types used by IPTC metadata</summary>
+        </member>
     </members>    
 </doc>
