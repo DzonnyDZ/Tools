@@ -1015,6 +1015,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} is not member of {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property IsNotMemberOf1() As String
+            Get
+                Return ResourceManager.GetString("IsNotMemberOf1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to ISO 639-1 code must contain exactly 2 lowercase latin letters..
         '''</summary>
         Friend Shared ReadOnly Property ISO6391CodeMustContainExactly2LowercaseLatinLetters() As String
@@ -2287,6 +2296,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1() As String
             Get
                 Return ResourceManager.GetString("ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Thumbnail data are invalid.
+        '''</summary>
+        Friend Shared ReadOnly Property ThumbnailDataAreInvalid() As String
+            Get
+                Return ResourceManager.GetString("ThumbnailDataAreInvalid", resourceCulture)
             End Get
         End Property
         

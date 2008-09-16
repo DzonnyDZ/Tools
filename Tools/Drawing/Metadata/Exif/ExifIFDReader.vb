@@ -69,8 +69,6 @@ Namespace DrawingT.MetadataT.ExifT
                 Return _Offset
             End Get
         End Property
-
-
     End Class
 
     ''' <summary>Represents read-only directory entry of Exif data</summary>
@@ -122,7 +120,7 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <param name="Components">Number of components to be read</param>
         ''' <returns>Data read from buffer. If <paramref name="Components"/> is 1 scalar of specified type is returned, <see cref="Array"/> otherwise with exceptions: 1 component of type <see cref="ExifDataTypes.ASCII"/> resuts to <see cref="Char"/>, more components results to <see cref="String"/>; <see cref="ExifDataTypes.NA"/> always results to <see cref="Array"/> of <see cref="Byte"/>s</returns>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/></exception>
-        Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAling) As Object
+        Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAlign) As Object
             Dim Str As New MemoryStream(Buffer, False)
             Str.Position = 0
             Dim r As New Tools.IOt.BinaryReader(Str, System.Text.Encoding.Default, Align)

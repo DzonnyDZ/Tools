@@ -56,10 +56,10 @@ Namespace DrawingT.DrawingIOt
                         ExifNode.Text &= " " & ExifStream.ToString
                         If jpeg.SupportFujiFilmFineFix2800ZoomInEffect Then ExifNode.Text &= " FujiFilm FinePix 2800 zoom"
                         'Exif IFDs
-                        Dim Exif As New Tools.DrawingT.MetadataT.ExifReader(jpeg)
+                        Dim Exif As New Tools.DrawingT.MetadataT.ExifT.ExifReader(jpeg, True)
                         'Dim i As Integer = 0
-                        ' For Each IFD As Tools.DrawingT.MetadataT.ExifIFDReader In Exif.IFDs
-                        PresentIfd(New Tools.DrawingT.MetadataT.Exif.IFDMain(Exif.IFDs(0), True), ExifNode, 0, Exif)
+                        ' For Each IFD As Tools.DrawingT.MetadataT.ExifTIFDReader In Exif.IFDs
+                        PresentIfd(New Tools.DrawingT.MetadataT.ExifT.IfdMain(Exif.IFDs(0), True), ExifNode, 0)
                         'i += 1
                         'Next IFD
                     End If
@@ -98,8 +98,8 @@ Namespace DrawingT.DrawingIOt
                                 IPTCNode.Tag = IPTCStream
                                 IPTCNode.Text &= " " & IPTCStream.ToString
                                 'IPTC data
-                                Dim IPTC As New Tools.DrawingT.MetadataT.IPTCReader(jpeg)
-                                For Each Record As Tools.DrawingT.MetadataT.IPTCReader.IPTCRecord In IPTC.Records
+                                Dim IPTC As New Tools.DrawingT.MetadataT.IptcT.IptcReader(jpeg)
+                                For Each Record As Tools.DrawingT.MetadataT.IptcT.IptcRecord In IPTC.Records
                                     Dim RecordNode As TreeNode = IPTCNode.Nodes.Add(String.Format("{0}{1} size {2}B data {3}", Hex(Record.RecordNumber), Hex(Record.Tag), Record.Size, Record.StringData))
                                     RecordNode.Tag = Record
                                 Next Record
@@ -115,19 +115,19 @@ Namespace DrawingT.DrawingIOt
         ''' <param name="IFD">IFD to be presented</param>
         ''' <param name="Index">Index of IFD in its owner</param>
         ''' <param name="ParentNode">Parent node to present ifd to</param>
-        ''' <param name="R"><see cref="Tools.DrawingT.MetadataT.ExifReader"/> used for thumbnails</param>
-        Private Sub PresentIfd(ByVal IFD As Tools.DrawingT.MetadataT.Exif.IFD, ByVal ParentNode As TreeNode, ByVal Index As Integer, ByVal R As Tools.DrawingT.MetadataT.ExifReader)
+        ''' <param name="R"><see cref="Tools.DrawingT.MetadataT.ExifT.ExifReader"/> used for thumbnails</param>
+        Private Sub PresentIfd(ByVal IFD As Tools.DrawingT.MetadataT.ExifT.Ifd, ByVal ParentNode As TreeNode, ByVal Index As Integer)
             Dim IFDNode As New TreeNode
             Dim IfdName As String
-            If TypeOf IFD Is Tools.DrawingT.MetadataT.Exif.IFDMain Then
+            If TypeOf IFD Is Tools.DrawingT.MetadataT.ExifT.IfdMain Then
                 IfdName = String.Format("IFD {0}", Index)
-            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.Exif.IFDExif Then
+            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.ExifT.IfdExif Then
                 IfdName = "Exif Sub IFD"
-            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.Exif.IFDGPS Then
+            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.ExifT.IfdGps Then
                 IfdName = "GPS Sub IFD"
-            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.Exif.IFDInterop Then
+            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.ExifT.IfdInterop Then
                 IfdName = "Interop Sub IFD"
-            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.Exif.SubIFD Then
+            ElseIf TypeOf IFD Is Tools.DrawingT.MetadataT.ExifT.SubIFD Then
                 IfdName = "Sub IFD"
             Else
                 IfdName = "IFD"
@@ -137,6 +137,7 @@ Namespace DrawingT.DrawingIOt
             IFDNode.Tag = IFD
 
             For Each Entry In IFD.Records
+                'Exif tags
                 Dim EntryNode As TreeNode = IFDNode.Nodes.Add(String.Format( _
                     "Entry {0:x} type {1} components {2} data {3}", _
                     Entry.Key, Entry.Value.DataType.DataType, _
@@ -144,32 +145,25 @@ Namespace DrawingT.DrawingIOt
                     Entry.Value.Data))
                 EntryNode.Tag = Entry.Value
                 If IFD.SubIFDs.ContainsKey(Entry.Key) Then
-                    PresentIfd(IFD.SubIFDs(Entry.Key), EntryNode, 0, R)
+                    PresentIfd(IFD.SubIFDs(Entry.Key), EntryNode, 0)
                 End If
-                If TypeOf IFD Is Tools.DrawingT.MetadataT.Exif.IFDMain Then
-                    With DirectCast(IFD, Tools.DrawingT.MetadataT.Exif.IFDMain)
-                        If Entry.Key = Tools.DrawingT.MetadataT.Exif.IFDMain.Tags.JPEGInterchangeFormat _
-                            AndAlso .HasThumbnail AndAlso .Compression = Tools.DrawingT.MetadataT.Exif.IFDMain.CompressionValues.JPEG Then
+                'Thumbnail
+                If TypeOf IFD Is Tools.DrawingT.MetadataT.ExifT.IfdMain Then
+                    With DirectCast(IFD, Tools.DrawingT.MetadataT.ExifT.IfdMain)
+                        If Entry.Key = Tools.DrawingT.MetadataT.ExifT.IfdMain.Tags.JPEGInterchangeFormat _
+                            AndAlso .HasThumbnail AndAlso .Compression = Tools.DrawingT.MetadataT.ExifT.IfdMain.CompressionValues.JPEG Then
                             Dim JpegNode = EntryNode.Nodes.Add("JPEG thumbnail")
-                            Try
-                                JpegNode.Tag = .GetThumbnail(R)
-                            Catch ex As Exception
-                                JpegNode.Tag = ex
-                            End Try
-                        ElseIf Entry.Key = Tools.DrawingT.MetadataT.Exif.IFDMain.Tags.StripOffsets _
-                            AndAlso .HasThumbnail AndAlso .Compression = Tools.DrawingT.MetadataT.Exif.IFDMain.CompressionValues.uncompressed Then
+                            JpegNode.Tag = IFD
+                        ElseIf Entry.Key = Tools.DrawingT.MetadataT.ExifT.IfdMain.Tags.StripOffsets _
+                                AndAlso .HasThumbnail AndAlso .Compression = Tools.DrawingT.MetadataT.ExifT.IfdMain.CompressionValues.uncompressed Then
                             Dim TiffNode = EntryNode.Nodes.Add("Uncompressed thumbnail")
-                            Try
-                                TiffNode.Tag = .GetThumbnail(R)
-                            Catch ex As Exception
-                                TiffNode.Tag = ex
-                            End Try
+                            TiffNode.Tag = IFD
                         End If
                     End With
                 End If
             Next Entry
             If IFD.Following IsNot Nothing Then _
-               PresentIfd(IFD.Following, ParentNode, Index + 1, R)
+               PresentIfd(IFD.Following, ParentNode, Index + 1)
         End Sub
 
         Private Sub frmJPEG_Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
@@ -184,7 +178,8 @@ Namespace DrawingT.DrawingIOt
             If tvwResults.SelectedNode Is Nothing Then
                 e.Cancel = True
             Else
-                tmiExport.Enabled = TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader
+                tmiExport.Enabled = TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.DrawingIOt.JPEG.JPEGMarkerReader _
+                        OrElse TypeOf tvwResults.SelectedNode.Tag Is Byte() OrElse (TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.MetadataT.ExifT.IfdMain AndAlso tvwResults.SelectedNode.Text Like "*thumbnail*")
             End If
         End Sub
 
@@ -201,6 +196,20 @@ Namespace DrawingT.DrawingIOt
                             If bcnt = 0 Then Exit Do
                             f.Write(buffer, 0, bcnt)
                         Loop
+                        f.Flush()
+                    End Using
+                End If
+            ElseIf tvwResults.SelectedNode IsNot Nothing AndAlso TypeOf tvwResults.SelectedNode.Tag Is Byte() Then
+                If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    Using f = IO.File.Open(sfdSave.FileName, IO.FileMode.OpenOrCreate, IO.FileAccess.Write)
+                        f.Write(tvwResults.SelectedNode.Tag, 0, CType(tvwResults.SelectedNode.Tag, Byte()).Length)
+                        f.Flush()
+                    End Using
+                End If
+            ElseIf tvwResults.SelectedNode IsNot Nothing AndAlso TypeOf tvwResults.SelectedNode.Tag Is Tools.DrawingT.MetadataT.ExifT.IfdMain AndAlso tvwResults.SelectedNode.Text Like "*thumbnail*" Then
+                If sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then
+                    Using f = IO.File.Open(sfdSave.FileName, IO.FileMode.OpenOrCreate, IO.FileAccess.Write)
+                        f.Write(CType(tvwResults.SelectedNode.Tag, Tools.DrawingT.MetadataT.ExifT.IfdMain).ThumbnailData, 0, CType(tvwResults.SelectedNode.Tag, Tools.DrawingT.MetadataT.ExifT.IfdMain).ThumbnailData.Length)
                         f.Flush()
                     End Using
                 End If
@@ -225,6 +234,28 @@ Namespace DrawingT.DrawingIOt
                     For Each Control As Control In prgProperty.Controls(0).Controls
                         Control.BackColor = Color.Transparent
                     Next
+                ElseIf TypeOf e.Node.Tag Is Byte() AndAlso e.Node.Text Like "*thumbnail*" Then
+                    Try
+                        Dim b = Bitmap.FromStream(New IO.MemoryStream(e.Node.Tag, False))
+                        prgProperty.Controls(0).BackgroundImage = b
+                        prgProperty.Controls(0).BackgroundImageLayout = ImageLayout.Center
+                        For Each Control As Control In prgProperty.Controls(0).Controls
+                            Control.BackColor = Color.Transparent
+                        Next
+                    Catch ex As Exception
+                        Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                    End Try
+                ElseIf TypeOf e.Node.Tag Is Tools.DrawingT.MetadataT.ExifT.IfdMain AndAlso e.Node.Text Like "*thumbnail*" Then
+                    Try
+                        Dim b = DirectCast(e.Node.Tag, Tools.DrawingT.MetadataT.ExifT.IfdMain).Thumbnail
+                        prgProperty.Controls(0).BackgroundImage = b
+                        prgProperty.Controls(0).BackgroundImageLayout = ImageLayout.Center
+                        For Each Control As Control In prgProperty.Controls(0).Controls
+                            Control.BackColor = Color.Transparent
+                        Next
+                    Catch ex As Exception
+                        Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                    End Try
                 End If
             End If
         End Sub

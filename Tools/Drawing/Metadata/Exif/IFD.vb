@@ -774,6 +774,15 @@ Namespace DrawingT.MetadataT.ExifT
                 Dim GPSSubIfd As New IfdGps(GPSSubIFDReader, True)
                 Me.SubIFDs.Add(Tags.GPSIFD, GPSSubIfd)
             End If
+            If Reader.ExifReader.ReadThumbnail AndAlso HasThumbnail Then
+                Dim ths = GetThumbnailRawStream(Reader.ExifReader)
+                ReDim _ThumbnailData(ths.Length - 1)
+                Dim pos As Integer = 0
+                While pos < _ThumbnailData.Length
+                    pos += ths.Read(_ThumbnailData, pos, _ThumbnailData.Length - pos)
+                End While
+                ByteOrder = Reader.ExifReader.ByteOrder
+            End If
         End Sub
         ''' <summary>Handles adding of subIFD from any reason before it is addaed. This event can be cancelled.</summary>
         ''' <param name="Item">Item being added</param>
@@ -832,8 +841,13 @@ Namespace DrawingT.MetadataT.ExifT
                 Else Me.SubIFDs.Add(Tags.GPSIFD, value)
             End Set
         End Property
+#Region "Thumbnail"
         ''' <summary>Gets value indicating if this Exif contains link to thumbnail</summary>
         ''' <returns>True if <see cref="Compression"/> is <see cref="CompressionValues.JPEG"/> and both <see cref="JPEGInterchangeFormat"/> and <see cref="JPEGInterchangeFormatLength"/> are set or <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and both <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> are set.</returns>
+        ''' <remarks>This property may return true even if <see cref="ThumbnailData"/> and <see cref="Thumbnail"/> return null. This is caused by the fat that reading thumbnail was not allowed during file parsing.
+        ''' In such case thumbnail can be obtained using either <see cref="GetThumbnailRawStream"/> or <see cref="GetThumbnail"/>, but you must have acces to original <see cref="ExifReader"/> which was source for this instance.</remarks>
+        ''' <seealso cref="ThumbnailData"/><seealso cref="Thumbnail"/>
+        ''' <seelso cref="GetThumbnail"/><seealso cref="GetThumbnailRawStream"/>
         Public ReadOnly Property HasThumbnail() As Boolean
             Get
                 If Me.Compression.HasValue Then
@@ -847,53 +861,107 @@ Namespace DrawingT.MetadataT.ExifT
                 Return False
             End Get
         End Property
+        ''' <summary>Contains value of the <see cref="ThumbnailData"/> property</summary>
+        Private _ThumbnailData As Byte()
+        ''' <summary>Keeps byte order of original file (for purposes of thumbnail extraction)</summary>
+        Private ByteOrder As IOt.BinaryReader.ByteAlign
+        ''' <summary>Gets thumbnail data as array of bytes</summary>
+        ''' <returns>Image data of thumbnail embdeded in this IFD or null when thumbnail is not present or have not been parsed out.</returns>
+        ''' <seealso cref="Thumbnail"/><seealso cref="GetThumbnailRawStream"/>
+        Public ReadOnly Property ThumbnailData() As Byte()
+            Get
+                Return _ThumbnailData
+            End Get
+        End Property
+        ''' <summary>Gets thumbnail image embdeded in this IFD</summary>
+        ''' <returns>Enmdeded thumbnail image or null</returns>
+        ''' <exception cref="InvalidOperationException">Image data are invalid =or= <see cref="PhotometricInterpretation"/> is not member of <see cref="PhotometricInterpretationValues"/> and <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> =or= <see cref="Compression"/> is not member of <see cref="CompressionValues"/></exception>
+        ''' <seealso cref="ThumbnailData"/><seealso cref="Getthumbnail"/>
+        Public ReadOnly Property Thumbnail() As Drawing.Bitmap
+            Get
+                If ThumbnailData Is Nothing Then Return Nothing
+                Return GetThumbnailFromStream(New IO.MemoryStream(ThumbnailData, True), ByteOrder)
+            End Get
+        End Property
         ''' <summary>Gtes stream that contains raw thumbnail data</summary>
         ''' <param name="Reader">Original reader that was used to retrieve all exif information from image. The reader must contain exactly same data this IFD was constructed from otherwise corrupted thumbnail image may be returned.</param>
         ''' <returns>Stream to read image data. Format of image data depends on <see cref="Compression"/> and if <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> also depends on <see cref="PhotometricInterpretation"/>. Returns null if <see cref="HasThumbnail"/> is false.</returns>
         ''' <exception cref="InvalidOperationException"><see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and lengths of <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> differs.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
         ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
-        ''' <seelaso cref="GetThumbnail"/>
+        ''' <seelaso cref="GetThumbnail"/><seealso cref="ThumbnailData"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Function GetThumbnailRawStream(ByVal Reader As ExifReader) As IO.Stream
             If Not Me.HasThumbnail Then Return Nothing
             If Reader Is Nothing Then Throw New ArgumentNullException("Reader")
             Select Case Compression
                 Case CompressionValues.JPEG
-                    Return New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.JPEGInterchangeFormat, Me.JPEGInterchangeFormatLength)
+                    Return New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.JPEGInterchangeFormat, Me.JPEGInterchangeFormatLength) _
+                        With {.Position = 0}
                 Case CompressionValues.uncompressed
                     If Me.StripOffsets.Length <> Me.StripByteCounts.Length Then Throw New InvalidOperationException(ResourcesT.Exceptions.ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength)
                     Dim Streams As New List(Of IO.Stream)
                     For i = 0 To Me.StripOffsets.Length - 1
                         Streams.Add(New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.StripOffsets(i), Me.StripByteCounts(i)))
                     Next
-                    Return New IOt.UnionReadOnlyStream(Streams)
+                    Return New IOt.UnionReadOnlyStream(Streams) With {.Position = 0}
             End Select
             Return Nothing
         End Function
         ''' <summary>Gerts thumbnail image embdeded in this IFD</summary>
         ''' <param name="Reader">Original reader that was used to retrieve all exif information from image. The reader must contain exactly same data this IFD was constructed from otherwise corrupted thumbnail image may be returned.</param>
         ''' <exception cref="InvalidOperationException"><see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and lengths of <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> differs.
-        ''' -or- <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and <see cref="PhotometricInterpretation"/> is not set or is not member of <see cref="PhotometricInterpretationValues"/>.</exception>
+        ''' -or- <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and <see cref="PhotometricInterpretation"/> is not set or is not member of <see cref="PhotometricInterpretationValues"/> -or- 
+        ''' Image data are invalid.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
         ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
-        ''' <seelaso cref="GetThumbnailRawStream"/>
+        ''' <seelaso cref="GetThumbnailRawStream"/><seealso cref="Thumbnail"/>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Function GetThumbnail(ByVal Reader As ExifReader) As Drawing.Bitmap
             Dim ImageData = GetThumbnailRawStream(Reader)
             If ImageData Is Nothing Then Return Nothing
+            Return GetThumbnailFromStream(ImageData, Reader.ByteOrder)
+        End Function
+        ''' <summary>Creates thumbnail image from raw thumbnail data stored as stored in Exif</summary>
+        ''' <param name="ImageData">Raw image data to create thumbnail from</param>
+        ''' <returns>Image created from <paramref name="ImageData"/></returns>
+        ''' <exception cref="InvalidOperationException">Image data are invalid =or= <see cref="PhotometricInterpretation"/> is not member of <see cref="PhotometricInterpretationValues"/> and <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> =or= <see cref="Compression"/> is not member of <see cref="CompressionValues"/></exception>
+        ''' <param name="ByteAlign">Byte align of source stream</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="ByteAlign"/> is not member of <see cref="IOt.BinaryReader.ByteAlign"/> and <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/>.</exception>
+        Private Function GetThumbnailFromStream(ByVal ImageData As IO.Stream, ByVal ByteAlign As IOt.BinaryReader.ByteAlign) As Drawing.Bitmap
             Select Case Me.Compression
-                Case CompressionValues.JPEG : Return New Drawing.Bitmap(ImageData)
+                Case CompressionValues.JPEG
+                    Try
+                        Return New Drawing.Bitmap(ImageData)
+                    Catch ex As ArgumentException
+                        Throw New InvalidOperationException(ResourcesT.Exceptions.ThumbnailDataAreInvalid, ex)
+                    End Try
                 Case CompressionValues.uncompressed
                     If Not Me.PhotometricInterpretation.HasValue Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.When0Is1Then2MustBeSet, "Compression", "uncompressed", "PhotometricInterpretation"))
-                    Select Case PhotometricInterpretation
-                        Case PhotometricInterpretationValues.RGB 'TODO: DOes it work?
-                            Return New Drawing.Bitmap(ImageData)
-                        Case PhotometricInterpretationValues.YCbCr 'TODO: Does it work?
-                            Return New Drawing.Bitmap(ImageData)
-                        Case Else : Throw New InvalidOperationException(String.Format("{0} is not member of {1}.", "PhotometricInterpretation", "PhotometricInterpretationValues"), New InvalidEnumArgumentException("PhotometricInterpretation", PhotometricInterpretation, PhotometricInterpretation.GetType))
+                    Select Case PhotometricInterpretation 'Just a test
+                        Case PhotometricInterpretationValues.RGB
+                        Case PhotometricInterpretationValues.YCbCr
+                        Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.IsNotMemberOf1, "PhotometricInterpretation", "PhotometricInterpretationValues"), New InvalidEnumArgumentException("PhotometricInterpretation", PhotometricInterpretation, PhotometricInterpretation.GetType))
                     End Select
+                    'TODO: Better impelemtation
+                    'This does not work when more strips are used
+                    Dim OutS As New IO.MemoryStream
+                    Dim ew As New ExifWriter(OutS, ByteAlign)
+                    ew.WriteHeader()
+                    ew.WriteIfd(Me)
+                    Dim ImageDataB(ImageData.Length) As Byte
+                    Dim pos As Integer = 0
+                    While pos < ImageDataB.Length
+                        pos += ImageData.Read(ImageDataB, pos, ImageDataB.Length - pos)
+                    End While
+                    ew.WritePointedBlob(Tags.StripOffsets, ExifDataTypes.Int32, ImageDataB, Tags.StripByteCounts, ExifDataTypes.Int32)
+                    OutS.Flush()
+                    outs.seek(0,io.seekorigin.begin)
+                    return new drawing.bitmap(outs)
+                Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.IsNotMemberOf1, "Compression", "CompressionValues"), New InvalidEnumArgumentException("Compression", Compression, GetType(CompressionValues)))
             End Select
-            Return Nothing
         End Function
+#End Region
     End Class
     ''' <summary>Exif Sub IFD</summary>
     Partial Class IFDExif : Inherits SubIFD

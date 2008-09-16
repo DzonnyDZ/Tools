@@ -326,7 +326,7 @@ Namespace DrawingT.DrawingIOt.JPEG
                     PreDataPos = DirectCast(BIM8.Data, ConstrainedReadOnlyStream).TranslatePosition(0) 'Start of this 8BIM
                     PreDataPos -= 4 'Position of size identifier of 8BIM
                     Dim s As New MemoryStream(4)
-                    Dim w As New BinaryWriter(s)
+                    Dim w As New IO.BinaryWriter(s)
                     w.Write(MathT.LEBE(CUInt(IPTCData.Length)))
                     ReDim PreData(3)
                     Array.ConstrainedCopy(s.GetBuffer, 0, PreData, 0, 4)
@@ -376,7 +376,7 @@ Namespace DrawingT.DrawingIOt.JPEG
                     End If
                 End If
                 Dim s As New MemoryStream(34)
-                Dim w As New BinaryWriter(s)
+                Dim w As New IO.BinaryWriter(s)
                 w.Write(CByte(&HFF))
                 w.Write(JPEGMarkerReader.Markers.APP13)
                 w.Write(New Byte() {0, 0})
@@ -399,7 +399,7 @@ Namespace DrawingT.DrawingIOt.JPEG
             Else
                 PostData = New Byte() {}
             End If
-            Dim EmbedW As New BinaryWriter(Me.Stream)
+            Dim EmbedW As New IO.BinaryWriter(Me.Stream)
             For Each item As KeyValuePair(Of Integer, UShort) In Overwrite
                 Me.Stream.Seek(item.Key, SeekOrigin.Begin)
                 EmbedW.Write(MathT.LEBE(item.Value))
@@ -421,7 +421,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' <param name="IPTCDataLength">Size of segment data part to be reported</param>
         Private Function BIM8Header(ByVal IPTCDataLength As UInteger) As Byte()
             Dim s As New MemoryStream(16)
-            Dim w As New BinaryWriter(s)
+            Dim w As New IO.BinaryWriter(s)
             w.Write(New Byte() {&H38, &H42, &H49, &H4D}) '"8BIM"
             w.Write(New Byte() {&H4, &H4}) '&h1C02 - IPTC type
             w.Write(CByte(5)) 'Lenght of following string including this byte
@@ -479,7 +479,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         Public Sub New(ByVal Stream As System.IO.Stream, ByVal Offset As Long)
             Const Header8BIM$ = "8BIM"
             Stream.Position = Offset
-            Dim r As New Tools.IOt.BinaryReader(Stream, System.Text.Encoding.ASCII, Tools.IOt.BinaryReader.ByteAling.BigEndian)
+            Dim r As New Tools.IOt.BinaryReader(Stream, System.Text.Encoding.ASCII, Tools.IOt.BinaryReader.ByteAlign.BigEndian)
             Dim Bytes8BIM(3) As Byte
             If Stream.Read(Bytes8BIM, 0, 4) = 4 Then
                 Dim Str8BIM As String = System.Text.Encoding.ASCII.GetString(Bytes8BIM, 0, 4)

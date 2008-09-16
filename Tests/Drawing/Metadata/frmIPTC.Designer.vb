@@ -1,4 +1,4 @@
-Namespace DrawingT.MetadataT
+Namespace DrawingT.MetadataT.IptcT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmIPTC
         Inherits System.Windows.Forms.Form

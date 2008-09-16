@@ -5,7 +5,7 @@ Namespace IOt
     <Version(1, 0, GetType(BinaryReader), LastChange:="04/23/2007")> _
     Public Class BinaryReader : Inherits System.IO.BinaryReader
         ''' <summary>Possible byte orders</summary>
-        Public Enum ByteAling
+        Public Enum ByteAlign
             ''' <summary>LittleEndian (Intel)</summary>
             ''' <remarks>Stores 0A0B0C0D as 0D0C0B0A</remarks>
             LittleEndian
@@ -15,7 +15,7 @@ Namespace IOt
         End Enum
         ''' <summary>Contains value of the <see cref="ByteOrder"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _ByteOrder As ByteAling = ByteAling.BigEndian
+        Private _ByteOrder As ByteAlign = ByteAlign.BigEndian
         ''' <summary>Format in which numeric data are read</summary>
         ''' <remarks>Only integral numbers are affected by this property
         ''' <list><listheader>List of affected functions</listheader>
@@ -27,11 +27,11 @@ Namespace IOt
         ''' <item><see cref="ReadUInt64"/></item>
         ''' </list>
         ''' </remarks>
-        Public Property ByteOrder() As ByteAling
+        Public Property ByteOrder() As ByteAlign
             Get
                 Return _ByteOrder
             End Get
-            Set(ByVal value As ByteAling)
+            Set(ByVal value As ByteAlign)
                 _ByteOrder = value
             End Set
         End Property
@@ -39,7 +39,7 @@ Namespace IOt
         ''' <param name="input">A stream.</param>
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed</exception>
-        Public Sub New(ByVal input As System.IO.Stream, ByVal Align As ByteAling)
+        Public Sub New(ByVal input As System.IO.Stream, ByVal Align As ByteAlign)
             MyBase.New(input)
             ByteOrder = Align
         End Sub
@@ -49,7 +49,7 @@ Namespace IOt
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentNullException">encoding is null.</exception>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed.</exception>
-        Public Sub New(ByVal input As System.IO.Stream, ByVal encoding As System.Text.Encoding, ByVal Align As ByteAling)
+        Public Sub New(ByVal input As System.IO.Stream, ByVal encoding As System.Text.Encoding, ByVal Align As ByteAlign)
             MyBase.New(input, encoding)
             ByteOrder = Align
         End Sub
@@ -59,7 +59,7 @@ Namespace IOt
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         Public Overrides Function ReadInt16() As Short
-            If ByteOrder = ByteAling.BigEndian Then
+            If ByteOrder = ByteAlign.BigEndian Then
                 Return MathT.LEBE(MyBase.ReadInt16())
             Else
                 Return MyBase.ReadInt16()
@@ -71,7 +71,7 @@ Namespace IOt
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         Public Overrides Function ReadInt32() As Integer
-            If ByteOrder = ByteAling.BigEndian Then
+            If ByteOrder = ByteAlign.BigEndian Then
                 Return MathT.LEBE(MyBase.ReadInt32())
             Else
                 Return MyBase.ReadInt32()
@@ -83,7 +83,7 @@ Namespace IOt
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         Public Overrides Function ReadInt64() As Long
-            If ByteOrder = ByteAling.BigEndian Then
+            If ByteOrder = ByteAlign.BigEndian Then
                 Return MathT.LEBE(MyBase.ReadInt64())
             Else
                 Return MyBase.ReadInt64()
@@ -96,7 +96,7 @@ Namespace IOt
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         <CLSCompliant(False)> _
         Public Overrides Function ReadUInt16() As UShort
-            If ByteOrder = ByteAling.BigEndian Then
+            If ByteOrder = ByteAlign.BigEndian Then
                 Return MathT.LEBE(MyBase.ReadUInt16())
             Else
                 Return MyBase.ReadUInt16()
@@ -109,7 +109,7 @@ Namespace IOt
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         <CLSCompliant(False)> _
         Public Overrides Function ReadUInt32() As UInteger
-            If ByteOrder = ByteAling.BigEndian Then
+            If ByteOrder = ByteAlign.BigEndian Then
                 Return MathT.LEBE(MyBase.ReadUInt32())
             Else
                 Return MyBase.ReadUInt32()
@@ -122,7 +122,7 @@ Namespace IOt
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached.</exception>
         <CLSCompliant(False)> _
         Public Overrides Function ReadUInt64() As ULong
-            If ByteOrder = ByteAling.BigEndian Then
+            If ByteOrder = ByteAlign.BigEndian Then
                 Return MathT.LEBE(MyBase.ReadUInt64())
             Else
                 Return MyBase.ReadUInt64()

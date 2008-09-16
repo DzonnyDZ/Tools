@@ -1,5 +1,5 @@
 Imports Tools.DrawingT.DrawingIOt, Tools.DrawingT.MetadataT
-Namespace DrawingT.MetadataT
+Namespace DrawingT.MetadataT.IptcT
     '#If Config <= Nightly Then Stage conditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
     Public Class frmIPTC
@@ -17,7 +17,7 @@ Namespace DrawingT.MetadataT
             Dim frm As New frmIPTC
             frm.Show()
         End Sub
-        Private IPTC As IPTC
+        Private IPTC As Tools.DrawingT.MetadataT.IptcT.Iptc
         Private JPEG As JPEG.JPEGReader
 
         Private Sub frmIPTC_FormClosed(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosedEventArgs) Handles Me.FormClosed
@@ -28,7 +28,7 @@ Namespace DrawingT.MetadataT
                 Try
                     picImage.Load(ofdIPTC.FileName)
                     JPEG = New JPEG.JPEGReader(ofdIPTC.FileName, True)
-                    IPTC = New IPTC(JPEG)
+                    IPTC = New Tools.DrawingT.MetadataT.IptcT.Iptc(JPEG)
                 Catch ex As Exception
                     MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
                     Me.Close()

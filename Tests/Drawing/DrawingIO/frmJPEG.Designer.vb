@@ -34,12 +34,12 @@ Namespace DrawingT.DrawingIOt
             Me.tlpI = New System.Windows.Forms.TableLayoutPanel
             Me.flpTop = New System.Windows.Forms.FlowLayoutPanel
             Me.nudSize = New System.Windows.Forms.NumericUpDown
+            Me.chkFujiFilmFinePix2800Zoom = New System.Windows.Forms.CheckBox
             Me.sfdSave = New System.Windows.Forms.SaveFileDialog
             Me.splSplit = New System.Windows.Forms.SplitContainer
             Me.prgProperty = New System.Windows.Forms.PropertyGrid
             Me.lblToString = New System.Windows.Forms.Label
             Me.lblType = New System.Windows.Forms.Label
-            Me.chkFujiFilmFinePix2800Zoom = New System.Windows.Forms.CheckBox
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
             Me.cmsContext.SuspendLayout()
             Me.tlpI.SuspendLayout()
@@ -94,12 +94,13 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblI.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.lblI.AutoSize = True
-            Me.lblI.Location = New System.Drawing.Point(28, 0)
+            Me.lblI.Location = New System.Drawing.Point(22, 0)
             Me.lblI.Name = "lblI"
-            Me.lblI.Size = New System.Drawing.Size(491, 26)
+            Me.lblI.Size = New System.Drawing.Size(503, 26)
             Me.lblI.TabIndex = 2
-            Me.lblI.Text = "This from tests Tools.Drawing.IO.JPEG, Tools.IO.BinaryReader, Tools.IO.Constraine" & _
-                "dReadOnlyStream, Tools.Math.LEBE"
+            Me.lblI.Text = "This from tests Tools.DrawingT.IOt.Jpeg, Tools.IOt.BinaryReader, Tools.IOt.Constr" & _
+                "ainedReadOnlyStream, Tools.MathT.LEBE, Tools.DrawingT.MetadataT.ExifT, Toolos.Dr" & _
+                "awingT.MetadataT.IptcT"
             Me.lblI.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'tlpI
@@ -141,6 +142,18 @@ Namespace DrawingT.DrawingIOt
             Me.nudSize.Size = New System.Drawing.Size(58, 20)
             Me.nudSize.TabIndex = 1
             Me.nudSize.Value = New Decimal(New Integer() {8, 0, 0, 0})
+            '
+            'chkFujiFilmFinePix2800Zoom
+            '
+            Me.chkFujiFilmFinePix2800Zoom.AutoSize = True
+            Me.chkFujiFilmFinePix2800Zoom.Location = New System.Drawing.Point(120, 3)
+            Me.chkFujiFilmFinePix2800Zoom.Name = "chkFujiFilmFinePix2800Zoom"
+            Me.chkFujiFilmFinePix2800Zoom.Size = New System.Drawing.Size(152, 17)
+            Me.chkFujiFilmFinePix2800Zoom.TabIndex = 2
+            Me.chkFujiFilmFinePix2800Zoom.Text = "FujiFilm FinePix 2800 zoom"
+            Me.totToolTip.SetToolTip(Me.chkFujiFilmFinePix2800Zoom, "Support Exif where  with additional 4 bytes at start of APP1 marker (FFE1 and siz" & _
+                    "e-4)")
+            Me.chkFujiFilmFinePix2800Zoom.UseVisualStyleBackColor = True
             '
             'splSplit
             '
@@ -187,18 +200,6 @@ Namespace DrawingT.DrawingIOt
             Me.lblType.Size = New System.Drawing.Size(265, 13)
             Me.lblType.TabIndex = 1
             Me.lblType.TextAlign = System.Drawing.ContentAlignment.TopCenter
-            '
-            'chkFujiFilmFinePix2800Zoom
-            '
-            Me.chkFujiFilmFinePix2800Zoom.AutoSize = True
-            Me.chkFujiFilmFinePix2800Zoom.Location = New System.Drawing.Point(120, 3)
-            Me.chkFujiFilmFinePix2800Zoom.Name = "chkFujiFilmFinePix2800Zoom"
-            Me.chkFujiFilmFinePix2800Zoom.Size = New System.Drawing.Size(152, 17)
-            Me.chkFujiFilmFinePix2800Zoom.TabIndex = 2
-            Me.chkFujiFilmFinePix2800Zoom.Text = "FujiFilm FinePix 2800 zoom"
-            Me.totToolTip.SetToolTip(Me.chkFujiFilmFinePix2800Zoom, "Support Exif where  with additional 4 bytes at start of APP1 marker (FFE1 and siz" & _
-                    "e-4)")
-            Me.chkFujiFilmFinePix2800Zoom.UseVisualStyleBackColor = True
             '
             'frmJPEG
             '

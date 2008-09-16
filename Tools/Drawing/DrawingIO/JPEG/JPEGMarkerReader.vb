@@ -78,7 +78,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         Public Sub New(ByVal Stream As Stream, ByVal Offset As Long)
             _Offset = Offset
             Stream.Position = Offset
-            Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
+            Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAlign.BigEndian)
             _Code = r.ReadUInt16()
             If (Code And &HFF00) >> 8 <> &HFF Then Throw New InvalidDataException(ResourcesT.Exceptions.GivenMarkerSCodeDoesnTStartWithFFh)
             If MarkerCode <> Markers.SOI AndAlso MarkerCode <> Markers.EOI Then

@@ -11,6 +11,7 @@ Namespace DrawingT.MetadataT.ExifT
         Public Const GPSSubIFDName As String = "GPS Sub IFD"
         ''' <summary>Name of Exif Interoperability Sub IFD (see <see cref="IFDInterop"/>)</summary>
         Public Const ExifInteroperabilityName As String = "Exif Interoperability IFD"
+#Region "Ctors"
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains Exif data</param>
         ''' <exception cref="InvalidDataException">
@@ -21,7 +22,34 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
         Public Sub New(ByVal Stream As System.IO.Stream)
+            Me.New(Stream, False)
+        End Sub
+        ''' <summary>CTor from <see cref="IExifGetter"/></summary>
+        ''' <param name="Container">Object that contains <see cref="System.IO.Stream"/> with Exif data</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Container"/> is null</exception>
+        ''' <exception cref="InvalidDataException">
+        ''' Invalid byte order mark (other than 'II' or 'MM') at the beginning of stream -or-
+        ''' Byte order test (2 bytes next to byte order mark, 3rd and 4th bytes in stream) don't avaluates to value 2Ah
+        ''' </exception>
+        ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        Public Sub New(ByVal Container As IExifGetter)
+            Me.new(Container, False)
+        End Sub
+        ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
+        ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains Exif data</param>
+        ''' <exception cref="InvalidDataException">
+        ''' Invalid byte order mark (other than 'II' or 'MM') at the beginning of stream -or-
+        ''' Byte order test (2 bytes next to byte order mark, 3rd and 4th bytes in stream) don't avaluates to value 2Ah
+        ''' </exception>
+        ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        ''' <param name="ReadThumbnail">Instructs <see cref="IfdMain"/> to pre-read thumb nail image (if any) to property <see cref="IfdMain.ThumbnailData"/> where it can be later obtained from. By default thumbnail is not read.</param>
+        Public Sub New(ByVal Stream As System.IO.Stream, ByVal ReadThumbnail As Boolean)
             _Stream = Stream
+            Me.ReadThumbnail = ReadThumbnail
             If Stream Is Nothing OrElse Stream.Length = 0 Then Exit Sub
             Parse()
         End Sub
@@ -35,12 +63,18 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
-        Public Sub New(ByVal Container As IExifGetter)
+        ''' 
+        ''' <param name="ReadThumbnail">Instructs <see cref="IfdMain"/> to pre-read thumb nail image (if any) to property <see cref="IfdMain.ThumbnailData"/> where it can be later obtained from. By default thumbnail is not read.</param>
+        Public Sub New(ByVal Container As IExifGetter, ByVal ReadThumbnail As Boolean)
             If Container Is Nothing Then Throw New ArgumentNullException("Container")
             _Stream = Container.GetExifStream
+            Me.ReadThumbnail = ReadThumbnail
             If _Stream Is Nothing OrElse _Stream.Length = 0 Then Exit Sub
             Parse()
         End Sub
+#End Region
+        ''' <summary>If true <see cref="IfdMain"/> that reads from this reader will chache thumbnail data so it can be then obtained via <see cref="IfdMain.Thumbnail"/> or <see cref="IfdMain.ThumbnailData"/></summary>
+        Friend ReadOnly ReadThumbnail As Boolean
         ''' <summary>Parses stream of Exif data</summary>
         ''' <exception cref="InvalidDataException">
         ''' Invalid byte order mark (other than 'II' or 'MM') at the beginning of stream -or-
@@ -51,13 +85,13 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
         Private Sub Parse()
             Stream.Position = 0
-            Dim Reader As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
+            Dim Reader As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAlign.BigEndian)
             Dim BOM1 As Char = Reader.ReadChar
             Dim BOM2 As Char = Reader.ReadChar
             If BOM1 = "I"c AndAlso BOM2 = "I"c Then
-                Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAling.LittleEndian
+                Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAlign.LittleEndian
             ElseIf BOM1 = "M"c AndAlso BOM2 = "M"c Then
-                Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAling.BigEndian
+                Reader.ByteOrder = Tools.IOt.BinaryReader.ByteAlign.BigEndian
             Else
                 Throw New InvalidDataException(ResourcesT.Exceptions.UnknownByteOrderMark & BOM1 & BOM2)
             End If
@@ -71,42 +105,6 @@ Namespace DrawingT.MetadataT.ExifT
                 _IFDs.Add(New ExifIFDReader(Me, IFDOffset))
                 IFDOffset = _IFDs(_IFDs.Count - 1).NextIFD
             End While
-            ''Exif Sub IFD
-            'If IFDs.Count >= 1 Then
-            '    Dim i As Integer = 0
-            '    For Each Entry As ExifIFDReader.DirectoryEntry In IFDs(0).Entries
-            '        If Entry.Tag = Exif.IFDMain.Tags.ExifIFD AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
-            '            _ExifSubIFD = New SubIFD(Me, Entry.Data, ExifSubIFDName, IFDs(0), i)
-            '            ParseNextSubIFDs(_ExifSubIFD, IFDs(0), i)
-            '            Exit For
-            '        End If
-            '        i += 1
-            '    Next Entry
-            'End If
-            ''Exif Interoperability Sub IFD
-            'If ExifSubIFD IsNot Nothing Then
-            '    Dim i As Integer = 0
-            '    For Each Entry As ExifIFDReader.DirectoryEntry In ExifSubIFD.Entries
-            '        If Entry.Tag = Exif.IFDExif.Tags.InteroperabilityIFD AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
-            '            _ExifInteroperabilityIFD = New SubIFD(Me, Entry.Data, ExifInteroperabilityName, ExifSubIFD, i)
-            '            ParseNextSubIFDs(_ExifInteroperabilityIFD, ExifSubIFD, i)
-            '            Exit For
-            '        End If
-            '        i += 1
-            '    Next Entry
-            'End If
-            ''Exif Sub IFD
-            'If IFDs.Count >= 1 Then
-            '    Dim i As Integer = 0
-            '    For Each Entry As ExifIFDReader.DirectoryEntry In IFDs(0).Entries
-            '        If Entry.Tag = Exif.IFDMain.Tags.GPSIFD AndAlso Entry.DataType = ExifIFDReader.DirectoryEntry.ExifDataTypes.UInt32 Then
-            '            _GPSSubIFD = New SubIFD(Me, Entry.Data, GPSSubIFDName, IFDs(0), i)
-            '            ParseNextSubIFDs(_GPSSubIFD, IFDs(0), i)
-            '            Exit For
-            '        End If
-            '        i += 1
-            '    Next Entry
-            'End If
         End Sub
         ''' <summary>Founds Sub IFDs that follows passed Sub IFD and adds them into <see cref="_OtherSubIFDs"/></summary>
         ''' <param name="Previous">Sub IFD that may contain offset to other Sub IFDs</param>
@@ -167,9 +165,9 @@ Namespace DrawingT.MetadataT.ExifT
         '    End Get
         'End Property
         ''' <summary>Contains value of the <see cref="ByteOrder"/> property</summary>
-        Private _ByteOrder As Tools.IOt.BinaryReader.ByteAling
+        Private _ByteOrder As Tools.IOt.BinaryReader.ByteAlign
         ''' <summary>Byte order used by this <see cref="ExifReader"/></summary>
-        Public ReadOnly Property ByteOrder() As Tools.IOt.BinaryReader.ByteAling
+        Public ReadOnly Property ByteOrder() As Tools.IOt.BinaryReader.ByteAlign
             Get
                 Return _ByteOrder
             End Get

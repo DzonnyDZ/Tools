@@ -31,7 +31,7 @@ Namespace DrawingT.MetadataT.IptcT
         ''' <exception cref="NotSupportedException">Extended-size tag found</exception>
         Private Sub Parse()
             Stream.Position = 0
-            Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAling.BigEndian)
+            Dim r As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAlign.BigEndian)
             Do
                 Dim TagMarker As Byte = r.ReadByte
                 If TagMarker <> &H1C Then Throw New InvalidDataException(ResourcesT.Exceptions.TagMarkerMustBe1Ch)

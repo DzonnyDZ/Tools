@@ -132,7 +132,7 @@ Namespace DrawingT.MetadataT.IptcT
         ''' <exception cref="ArgumentException"><paramref name="Count"/> is not 1,2,4 or 8</exception>
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
         Protected Shared Function IntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As Long
-            Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAling.BigEndian)
+            Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAlign.BigEndian)
             Select Case Count
                 Case 1 'SByte
                     Return Str.ReadSByte
@@ -154,7 +154,7 @@ Namespace DrawingT.MetadataT.IptcT
         ''' <exception cref="System.IO.EndOfStreamException">There are not enough bytes in <paramref name="Bytes"/></exception>
         <CLSCompliant(False)> _
         Protected Shared Function UIntFromBytes(ByVal Count As Byte, ByVal Bytes As Byte()) As ULong
-            Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAling.BigEndian)
+            Dim Str As New IOt.BinaryReader(New System.IO.MemoryStream(Bytes), IOt.BinaryReader.ByteAlign.BigEndian)
             Select Case Count
                 Case 1 'Byte
                     Return Str.ReadByte

@@ -942,4 +942,10 @@
   <data name="When0Is1Then2MustBeSet" xml:space="preserve">
     <value>When {0} is {1} then {2} must be set</value>
   </data>
+  <data name="ThumbnailDataAreInvalid" xml:space="preserve">
+    <value>Thumbnail data are invalid</value>
+  </data>
+  <data name="IsNotMemberOf1" xml:space="preserve">
+    <value>{0} is not member of {1}.</value>
+  </data>
 </root>
