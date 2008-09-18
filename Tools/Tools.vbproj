@@ -170,6 +170,7 @@
     <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
     <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
     <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
+    <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />

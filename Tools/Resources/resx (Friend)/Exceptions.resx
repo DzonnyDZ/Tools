@@ -948,4 +948,10 @@
   <data name="IsNotMemberOf1" xml:space="preserve">
     <value>{0} is not member of {1}.</value>
   </data>
+  <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
+    <value>{0} cannot be set to {1} when {2} is {3}</value>
+  </data>
+  <data name="StreamRepresentingExifMetadataItemMustSupportSeekingAndReading" xml:space="preserve">
+    <value>Stream representing Exif metadata item must support seeking and reading.</value>
+  </data>
 </root>

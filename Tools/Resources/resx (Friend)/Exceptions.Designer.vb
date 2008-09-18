@@ -354,6 +354,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} cannot be set to {1} when {2} is {3}.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotBeSetTo1When2Is3() As String
+            Get
+                Return ResourceManager.GetString("CannotBeSetTo1When2Is3", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} cannot be set to false.
         '''</summary>
         Friend Shared ReadOnly Property CannotBeSetToFalse() As String
@@ -1751,6 +1760,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property StreamMustSupportReadingAndSeeking() As String
             Get
                 Return ResourceManager.GetString("StreamMustSupportReadingAndSeeking", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Stream representing Exif metadata item must support seeking and reading..
+        '''</summary>
+        Friend Shared ReadOnly Property StreamRepresentingExifMetadataItemMustSupportSeekingAndReading() As String
+            Get
+                Return ResourceManager.GetString("StreamRepresentingExifMetadataItemMustSupportSeekingAndReading", resourceCulture)
             End Get
         End Property
         

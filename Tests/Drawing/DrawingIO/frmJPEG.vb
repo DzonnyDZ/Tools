@@ -56,7 +56,7 @@ Namespace DrawingT.DrawingIOt
                         ExifNode.Text &= " " & ExifStream.ToString
                         If jpeg.SupportFujiFilmFineFix2800ZoomInEffect Then ExifNode.Text &= " FujiFilm FinePix 2800 zoom"
                         'Exif IFDs
-                        Dim Exif As New Tools.DrawingT.MetadataT.ExifT.ExifReader(jpeg, True)
+                        Dim Exif As New Tools.DrawingT.MetadataT.ExifT.ExifReader(jpeg, New Tools.DrawingT.MetadataT.ExifT.ExifReader.ExifReaderSettings() With {.ReadThumbnail = True})
                         'Dim i As Integer = 0
                         ' For Each IFD As Tools.DrawingT.MetadataT.ExifTIFDReader In Exif.IFDs
                         PresentIfd(New Tools.DrawingT.MetadataT.ExifT.IfdMain(Exif.IFDs(0), True), ExifNode, 0)
@@ -115,7 +115,6 @@ Namespace DrawingT.DrawingIOt
         ''' <param name="IFD">IFD to be presented</param>
         ''' <param name="Index">Index of IFD in its owner</param>
         ''' <param name="ParentNode">Parent node to present ifd to</param>
-        ''' <param name="R"><see cref="Tools.DrawingT.MetadataT.ExifT.ExifReader"/> used for thumbnails</param>
         Private Sub PresentIfd(ByVal IFD As Tools.DrawingT.MetadataT.ExifT.Ifd, ByVal ParentNode As TreeNode, ByVal Index As Integer)
             Dim IFDNode As New TreeNode
             Dim IfdName As String
