@@ -56,7 +56,7 @@ Namespace DrawingT.DrawingIOt
                         ExifNode.Text &= " " & ExifStream.ToString
                         If jpeg.SupportFujiFilmFineFix2800ZoomInEffect Then ExifNode.Text &= " FujiFilm FinePix 2800 zoom"
                         'Exif IFDs
-                        Dim Exif As New Tools.DrawingT.MetadataT.ExifT.ExifReader(jpeg, New Tools.DrawingT.MetadataT.ExifT.ExifReader.ExifReaderSettings() With {.ReadThumbnail = True})
+                        Dim Exif As New Tools.DrawingT.MetadataT.ExifT.ExifReader(jpeg, New Tools.DrawingT.MetadataT.ExifT.ExifReaderSettings() With {.ReadThumbnail = True})
                         'Dim i As Integer = 0
                         ' For Each IFD As Tools.DrawingT.MetadataT.ExifTIFDReader In Exif.IFDs
                         PresentIfd(New Tools.DrawingT.MetadataT.ExifT.IfdMain(Exif.IFDs(0), True), ExifNode, 0)

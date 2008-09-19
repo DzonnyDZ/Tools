@@ -6,17 +6,23 @@ Namespace DrawingT.MetadataT.ExifT
     <Version(1, 1, GetType(ExifIFDReader), LastChange:="07/22/2008")> _
     <FirstVersion("04/24/2007")> _
     Public Class ExifIFDReader
-        ''' <summary>CTor</summary>
+        ''' <summary>Advanced CTor used by <see cref="ExifT.ExifReader"/>. Allows passing settings and indication of read cancellation.</summary>
         ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
         ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
         ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
-        ''' <exception cref="InvalidDataException">Tag data of some are placed otside the tag and cannot be read</exception>
-        <CLSCompliant(False)> _
-        Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32)
+        ''' <exception cref="InvalidDataException">Tag data of some are placed outside the tag and cannot be read</exception>
+        ''' <param name="Context">Contains settings and event handlers for this reading</param>
+        ''' <param name="Cancelled">Output parameter. Is set to true when handler cancells reading of whole IFD body</param>
+        ''' <filterpriority>2</filterpriority>
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32, ByVal Context As ExifReader.ExifReaderContext, <Runtime.InteropServices.Out()> ByRef Cancelled As Boolean)
             _ExifReader = Exif
             _Offset = Offset
+            Settings = Context
+            'TODO: Cancelled
+            'TODO: Distinguish between IFDs and read sub IFDs, report image pointers
             Dim r As New Tools.IOt.BinaryReader(Exif.Stream, Exif.ByteOrder)
             Exif.Stream.Position = Offset
             Dim Entries As UShort = r.ReadUInt16
@@ -34,6 +40,21 @@ Namespace DrawingT.MetadataT.ExifT
             Exif.Stream.Position = Pos
             _NextIFD = r.ReadUInt32
         End Sub
+        ''' <summary>CTor</summary>
+        ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
+        ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
+        ''' <exception cref="InvalidDataException">Tag data of some are placed outside the tag and cannot be read</exception>
+        ''' <filterpriority>1</filterpriority>
+        <CLSCompliant(False)> _
+        Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32)
+            Me.New(Exif, Offset, New ExifReader.ExifReaderContext(Exif, New ExifReaderSettings), False)
+        End Sub
+
+        ''' <summary>Settings which take effects on reading</summary>
+        Protected ReadOnly Settings As ExifReader.ExifReaderContext
         ''' <summary>Contains value of the <see cref="ExifReader"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _ExifReader As ExifReader
         ''' <summary>Gets <see cref="ExifReader"/> this <see cref="ExifIFDReader"/> have read data from.</summary>

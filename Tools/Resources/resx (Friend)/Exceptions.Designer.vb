@@ -2498,6 +2498,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Value of the {0} property cannot be changed after it was set..
+        '''</summary>
+        Friend Shared ReadOnly Property ValueOfThe0PropertyCannotBeChangedAfterItWasSet() As String
+            Get
+                Return ResourceManager.GetString("ValueOfThe0PropertyCannotBeChangedAfterItWasSet", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Value of type {0} cannot be converted to {1}..
         '''</summary>
         Friend Shared ReadOnly Property ValueOfType0CannotBeConvertedTo1() As String

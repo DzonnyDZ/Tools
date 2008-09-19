@@ -954,4 +954,7 @@
   <data name="StreamRepresentingExifMetadataItemMustSupportSeekingAndReading" xml:space="preserve">
     <value>Stream representing Exif metadata item must support seeking and reading.</value>
   </data>
+  <data name="ValueOfThe0PropertyCannotBeChangedAfterItWasSet" xml:space="preserve">
+    <value>Value of the {0} property cannot be changed after it was set.</value>
+  </data>
 </root>
