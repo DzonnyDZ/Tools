@@ -95,11 +95,16 @@ Namespace DrawingT.MetadataT.ExifT
                 Me._CanSkip = CanSkip
                 Me._ItemStream = ItemStream
                 Me._ItemObject = ItemObject
+                Me._ItemLength = Len
+                Me._ItemAbsoluteOffset = Pos
             End Sub
         End Class
         ''' <summary>Kinds of Exif metadata items as reported by reader events</summary>
         ''' <seealso cref="ExifEventArgs"/><seealso cref="ExifEventArgs.ItemKind"/>
-        Public Enum ReaderItemKinds
+        ''' <remarks>This enumeration is also used by <see cref="ExifMapGenerator"/>, but only some (the most low-level ones) members are valid for it.</remarks>
+        Public Enum ReaderItemKinds As Byte
+            ''' <summary>Not used by <see cref="ExifReaderSettings.ReadItem"/>, but used by <see cref="ExifMapGenerator"/> to indicate bytes of unknown purpose in Exif metadata block</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> Unknown
             ''' <summary>
             ''' Raised only once at the beginning or reading.
             ''' <list type="bullet">
@@ -110,8 +115,8 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is 0.</item>
             ''' <item><see cref="ExifEventArgs.ItemLength"/> is length of whole stream.</item>
             ''' </list>
-            ''' </summary>
-            Exif
+            ''' <para>Caught by <see cref="ExifMapGenerator"/> to determine length of stream but not used in map.</para></summary>
+            Exif = 1
             ''' <summary>
             ''' Raised when the Byte Order mark (BOM) is read. This is the 2nd event and occures only once.
             ''' <list type="bullet">
@@ -121,9 +126,9 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
             ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is 0.</item>
             ''' <item><see cref="ExifEventArgs.ItemLength"/> is 2.</item>
-            ''' </list>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
             ''' </summary>
-            Bom
+            Bom = 2
             ''' <summary>
             ''' Raised when the Byte Order mark test is read. This is the 3rd event and occures only once.
             ''' <list type="bullet">
@@ -133,9 +138,9 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
             ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is 2.</item>
             ''' <item><see cref="ExifEventArgs.ItemLength"/> is 2.</item>
-            ''' </list>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
             ''' </summary>
-            BomTest
+            BomTest = 3
             ''' <summary>
             ''' Raised when offset to 1st IFD (IFD0) is read. This is the 4th event and occures only once.
             ''' <list type="bullet">
@@ -145,9 +150,181 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
             ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is 4.</item>
             ''' <item><see cref="ExifEventArgs.ItemLength"/> is 4.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
+            ''' </summary>
+            Ifd0Offset = 4
+            ''' <summary>
+            ''' Raised when number of entries in IFD is read. Occurs for each IFD and SubIFD.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="UInt16"/> number of entries</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of the number.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 2.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
+            ''' </summary>
+            IfdNumberOfEntries = 5
+            ''' <summary>
+            ''' Raised before IFD is read.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is null</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is true.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of first entry.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 12 * numjber of entries.</item>
             ''' </list>
             ''' </summary>
-            Ifd0Offset
+            Ifd = 6
+            ''' <summary>
+            ''' Raised when tag number is read.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="UInt16"/> tag number</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of tag number.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 2.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
+            ''' </summary>
+            TagNumber = 7
+            ''' <summary>
+            ''' Raised when tag data type is read.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="UInt16"/> tag data type (see <see cref="ExifDataTypes"/>)</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of data type number.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 2.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
+            ''' </summary>
+            TagDataType = 8
+            ''' <summary>
+            ''' Raised when tag number of components is read.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="UInt32"/> number of components</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of tag number of bcomponents.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 4.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
+            ''' </summary>
+            TagComponents = 9
+            ''' <summary>
+            ''' Raised when tag data part is read. Note: Tag data part contains either data or pointer to data depending on if data fits into 4 bytes.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="Byte()"/> 4-bytes data part of tag</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position data part of tag.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 4.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para>
+            ''' </summary>
+            TagDataOrOffset = 10
+            ''' <summary>
+            ''' Raised when whole tag header is read, before tag data are parsed.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIfdReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is null</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is true.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of tag number.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 12.</item>
+            ''' </list>
+            ''' This event carrys no information about tag being red. All necessary informations can be collected from events <see cref="TagNumber"/>, <see cref="TagDataType"/>, <see cref="TagComponents"/> and <see cref="TagDataOrOffset"/> which always preceed this event in given order.
+            ''' </summary>
+            TagHeader = 11
+            ''' <summary>
+            ''' Raised when tag data stored outside of tag are read. Raised ony for tags which has data longer than 4 bytes.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="DirectoryEntry"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="Byte()"/> array with data.</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is position of data.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is length of data (if previously the <see cref="InvalidOperationException"/> was recovered the actual lenght of data is less).</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            ExternalTagData = 12
+            ''' <summary>
+            ''' Raised after whole tag if read and parsed
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIFDReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="DirectoryEntry"/></item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is -1 (not supported).</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is -1 (not supported).</item>
+            ''' </list></summary>
+            Tag = 13
+            ''' <summary>
+            ''' Raised when pointer to next IFD is read at the end of each IFD
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="ExifIFDReader"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is <see cref="UInt32"/> pointer to next IFD.</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> position of pointer.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is 4.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            NextIfdOffset = 14
+            ''' <summary>
+            ''' Raised before thumbnail is read.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is null.</item>
+            ''' <item>Sender is <see cref="IfdMain"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is null.</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is true.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is -1 (not supported).</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is -1 (not supported).</item>
+            ''' </list></summary>
+            Thumbnail = 15
+            ''' <summary>
+            ''' Raised when reading JPEG thumbnail data.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is JPEG thumbnail data stream.</item>
+            ''' <item>Sender is <see cref="IfdMain"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is null.</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is offset of thumbnail SOI (where JPEG data starts).</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is length of JPEG data.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            JpegThumbnail = 16
+            ''' <summary>
+            ''' Raised when reading part of TIFF thumbnailo data (TIFF thumbnail can be placed in more than one part).
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> is stream to that part of data.</item>
+            ''' <item>Sender is <see cref="IfdMain"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is null.</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is offset to start of stream of part.</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is legnth of part.</item>
+            ''' </list><para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            TiffThumbnailPart = 17
+            ''' <summary>
+            ''' Raised after all TIFF thumbnail sub-streams are detected.
+            ''' <list type="bullet">
+            ''' <item><see cref="ExifEventArgs.ItemStream"/> stream of all TIFF thumbnail data.</item>
+            ''' <item>Sender is <see cref="IfdMain"/>.</item>
+            ''' <item><see cref="ExifEventArgs.ItemObject"/> is null.</item>
+            ''' <item><see cref="ExifEventArgs.CanSkip"/> is false.</item>
+            ''' <item><see cref="ExifEventArgs.ItemAbsoluteOffset"/> is -1 (not supported).</item>
+            ''' <item><see cref="ExifEventArgs.ItemLength"/> is -1 (not supported).</item>
+            ''' </list></summary>
+            TiffThumbNail = 18
+            ''' <summary>Or mask that applies to <see cref="IfdNumberOfEntries"/>, <see cref="Ifd"/> and <see cref="NextIfdOffset"/>
+            ''' to make <see cref="SubIfdNumberOfEntries"/>, <see cref="SubIfd"/> and <see cref="NextSubIfdOffset"/> respectively.
+            ''' This value itself is never used as event identifier.</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> SubIfdMask = 128
+            ''' <summary>Same meaning as <see cref="IfdNumberOfEntries"/> but for SubIFD. <para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            SubIfdNumberOfEntries = IfdNumberOfEntries Or SubIfdMask
+            ''' <summary>Same meaning as <see cref="Ifd"/> but for SubIFD. <para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            SubIfd = Ifd Or SubIfdMask
+            ''' <summary>Same meaning as <see cref="NextIfdOffset"/> but for SubIFD. <para>Used by <see cref="ExifMapGenerator"/></para></summary>
+            NextSubIfdOffset = NextIfdOffset Or SubIfdMask
         End Enum
         ''' <summary>Run-time read-only representation of <see cref="ExifReaderSettings"/></summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
@@ -155,9 +332,9 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <summary>Error recovery mode</summary>
             ''' <seealso cref="ExifReaderSettings.ErrorRecovery"/>
             Public ReadOnly ErrorRecovery As ErrorRecoveryModes
-            ''' <summary>Read mode</summary>
-            ''' <seealso cref="ExifReaderSettings.ReadMode"/>
-            Public ReadOnly ReadMode As ReadModes
+            '''' <summary>Read mode</summary>
+            '''' <seealso cref="ExifReaderSettings.ReadMode"/>
+            'Public ReadOnly ReadMode As ReadModes
             ''' <summary>True to read thumbnail to <see cref="IfdMain.ThumbnailData"/></summary>
             ''' <seealso cref="ExifReaderSettings.ReadThumbnail"/>
             Public ReadOnly ReadThumbnail As Boolean
@@ -165,7 +342,7 @@ Namespace DrawingT.MetadataT.ExifT
             Public ReadOnly ExifReader As ExifReader
             ''' <summary>Handler of error. </summary>
             ''' <seealso cref="ExifReaderSettings.ReadError"/>
-            Private ReadOnly OnErrorhandler As EventHandler(Of ExifReader, ComponentModelT.RecovyExceptionEventArgs)
+            Private ReadOnly OnErrorhandler As EventHandler(Of ExifReader, ComponentModelT.RecoveryExceptionEventArgs)
             ''' <summary>Handler for item-read event</summary>
             ''' <seealso cref="ExifReaderSettings.ReadItem"/>
             Private ReadOnly OnItemHandler As EventHandler(Of Object, ExifEventArgs)
@@ -193,10 +370,11 @@ Namespace DrawingT.MetadataT.ExifT
             Public Sub New(ByVal Owner As ExifReader, ByVal Settings As ExifReaderSettings)
                 If Settings Is Nothing Then Throw New ArgumentNullException("Settings")
                 Me.ErrorRecovery = Settings.ErrorRecovery
-                Me.ReadMode = Settings.ReadMode
+                'Me.ReadMode = Settings.ReadMode
                 Me.ReadThumbnail = Settings.ReadThumbnail
                 Me.OnErrorhandler = Settings.ReadErrorHandler
                 Me.ExifReader = Owner
+                Me.OnItemHandler = Settings.ReadItemEventHandler
             End Sub
             ''' <summary>Handles error during Exif parsing - either throws it or returns</summary>
             ''' <param name="Ex"><see cref="Exception"/> that is about to be thrown</param>
@@ -207,8 +385,8 @@ Namespace DrawingT.MetadataT.ExifT
                 If Ex Is Nothing Then Throw New ArgumentNullException("Ex")
                 Select Case ErrorRecovery
                     Case ErrorRecoveryModes.Custom
-                        Dim e As New ComponentModelT.RecovyExceptionEventArgs(Ex)
-                        OnErrorhandler.Invoke(ExifReader, e)
+                        Dim e As New ComponentModelT.RecoveryExceptionEventArgs(Ex)
+                        If OnErrorhandler IsNot Nothing Then OnErrorhandler.Invoke(ExifReader, e)
                         If Not e.Recover Then Throw (Ex)
                     Case ErrorRecoveryModes.ThrowException
                         Throw (Ex)
@@ -219,6 +397,7 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <param name="e">Event arguments</param>
             ''' <returns><paramref name="e"/>.<see cref="ExifEventArgs.Skip">Skip</see></returns>
             Public Function OnItem(ByVal sender As Object, ByVal e As ExifEventArgs) As Boolean
+                If OnItemHandler Is Nothing Then Return e.Skip
                 OnItemHandler.Invoke(sender, e)
                 Return e.Skip
             End Function
@@ -256,19 +435,19 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <summary>The <see cref="ExifReaderSettings.ReadError"/> event is raised. Reading continues (if possible) or terminates depending on event handler</summary>
         Custom
     End Enum
-    ''' <summary>Defines read modes for <see cref="ExifReader"/></summary>
-    Public Enum ReadModes
-        ''' <summary>Data are read and stored</summary>
-        ReadAndStore
-        ''' <summary>data are read and are not stored. You can catch data as they are read by handling events of <see cref="ExifReaderSettings"/></summary>
-        Read
-    End Enum
+    '''' <summary>Defines read modes for <see cref="ExifReader"/></summary>
+    'Public Enum ReadModes
+    '    ''' <summary>Data are read and stored</summary>
+    '    ReadAndStore
+    '    ''' <summary>data are read and are not stored. You can catch data as they are read by handling events of <see cref="ExifReaderSettings"/></summary>
+    '    Read
+    'End Enum
     ''' <summary>Settings for <see cref="ExifReader"/></summary>
     Public NotInheritable Class ExifReaderSettings
         ''' <summary>Contains value of the <see cref="ErrorRecovery"/> property</summary>
         Private _ErrorRecovery As ErrorRecoveryModes = ErrorRecoveryModes.ThrowException
-        ''' <summary>Contains value of the <see cref="ReadMode"/> property</summary>
-        Private _ReadMode As ReadModes = ReadModes.ReadAndStore
+        '''' <summary>Contains value of the <see cref="ReadMode"/> property</summary>
+        'Private _ReadMode As ReadModes = ReadModes.ReadAndStore
         ''' <summary>Contains value of the <see cref="ReadThumbnail"/> property</summary>
         Private _ReadThumbnail As Boolean
         ''' <summary>Gets or sets error recovery mode</summary>
@@ -285,25 +464,24 @@ Namespace DrawingT.MetadataT.ExifT
                 _ErrorRecovery = value
             End Set
         End Property
-        ''' <summary>Gets or sets read mode</summary>
-        ''' <returns>Current read mode</returns>
-        ''' <value>Default value is <see cref="ReadModes.ReadAndStore"/></value>
-        ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ReadModes"/></exception>
-        ''' <remarks>Changes of value of this property after parsing was started does not affect parsing</remarks>
-        Public Property ReadMode() As ReadModes
-            Get
-                Return _ReadMode
-            End Get
-            Set(ByVal value As ReadModes)
-                If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, value.GetType)
-                _ReadMode = value
-            End Set
-        End Property
+        '''' <summary>Gets or sets read mode</summary>
+        '''' <returns>Current read mode</returns>
+        '''' <value>Default value is <see cref="ReadModes.ReadAndStore"/></value>
+        '''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="ReadModes"/></exception>
+        '''' <remarks>Changes of value of this property after parsing was started does not affect parsing</remarks>
+        'Public Property ReadMode() As ReadModes
+        '    Get
+        '        Return _ReadMode
+        '    End Get
+        '    Set(ByVal value As ReadModes)
+        '        If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, value.GetType)
+        '        _ReadMode = value
+        '    End Set
+        'End Property
         ''' <summary>Gets or sets value indicating if thumbnail image from exif is read and cached</summary>
         ''' <returns>True if thumbnail is read and cached to <see cref="IfdMain.ThumbnailData"/>. False when image is not chached</returns>
         ''' <value>Default value is false</value>
-        ''' <remarks>Changes of value of this property after parsing was started does not affect parsing.
-        ''' <para>In order to read thumbnail, <see cref="ReadMode"/> must be <see cref="ReadModes.ReadAndStore"/>.</para></remarks>
+        ''' <remarks>Changes of value of this property after parsing was started does not affect parsing.</remarks>
         Public Property ReadThumbnail() As Boolean
             Get
                 Return _ReadThumbnail
@@ -317,21 +495,21 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <para>Handlers added after parsing was started are ignored.</para>
         ''' <para>Allowing reader to recover from error can cause the in-memory representation of Exif metadata to be incomplete. Incomplete representation should never be used for round-trip reads and writes because it can cause data losss.</para>
         ''' </remarks>
-        Public Custom Event ReadError As EventHandler(Of ExifReader, ComponentModelT.RecovyExceptionEventArgs)
-            AddHandler(ByVal value As EventHandler(Of ExifReader, ComponentModelT.RecovyExceptionEventArgs))
+        Public Custom Event ReadError As EventHandler(Of ExifReader, ComponentModelT.RecoveryExceptionEventArgs)
+            AddHandler(ByVal value As EventHandler(Of ExifReader, ComponentModelT.RecoveryExceptionEventArgs))
                 If ReadErrorHandler Is Nothing Then ReadErrorHandler = value _
                 Else ReadErrorHandler = [Delegate].Combine(ReadErrorHandler, value)
             End AddHandler
-            RemoveHandler(ByVal value As EventHandler(Of ExifReader, ComponentModelT.RecovyExceptionEventArgs))
+            RemoveHandler(ByVal value As EventHandler(Of ExifReader, ComponentModelT.RecoveryExceptionEventArgs))
                 If ReadErrorHandler Is Nothing Then Return
                 ReadErrorHandler = [Delegate].Remove(ReadErrorHandler, value)
             End RemoveHandler
-            RaiseEvent(ByVal sender As ExifReader, ByVal e As ComponentModelT.RecovyExceptionEventArgs)
+            RaiseEvent(ByVal sender As ExifReader, ByVal e As ComponentModelT.RecoveryExceptionEventArgs)
                 ReadErrorHandler.Invoke(sender, e)
             End RaiseEvent
         End Event
         ''' <summary>Contains invocation list for the <see cref="ReadError"/> event</summary>
-        Friend ReadErrorHandler As EventHandler(Of ExifReader, ComponentModelT.RecovyExceptionEventArgs)
+        Friend ReadErrorHandler As EventHandler(Of ExifReader, ComponentModelT.RecoveryExceptionEventArgs)
         ''' <summary>Event raised when Exif metadata item is encountered</summary>
         ''' <remarks>Handlers added after parsing was started are ignored.
         ''' <para>The only generic way to cancel reading of Exif metadata before it is completed is throwin an exception from handler. Some Exif items can be skipped.</para></remarks>

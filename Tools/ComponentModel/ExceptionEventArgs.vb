@@ -63,7 +63,7 @@ Namespace ComponentModelT
         End Property
     End Class
     ''' <summary>Event arguments to carry exception with possibility to let the consumer to decide to ignore the exception</summary>
-    Public Class RecovyExceptionEventArgs
+    Public Class RecoveryExceptionEventArgs
         Inherits ExceptionEventArgs
         ''' <summary>Contains value of the <see cref="Recover"/> property</summary>
         Private _Recover As Boolean = False
@@ -110,8 +110,9 @@ Namespace ComponentModelT
             Me.Recover = Recover
         End Sub
     End Class
+    ''' <summary>Type-safe implementation of <see cref="RecoveryExceptionEventArgs"/></summary>
     Public Class RecoveryExceptionEventArgs(Of T As Exception)
-        Inherits RecovyExceptionEventArgs
+        Inherits RecoveryExceptionEventArgs
         ''' <summary>Gtes the <typeparamref name="T"/> carried by this instance</summary>
         Public Shadows ReadOnly Property Exception() As T
             Get

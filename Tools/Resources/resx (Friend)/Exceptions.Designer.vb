@@ -797,6 +797,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to ExifMapGenerator cannot be attached to multiple readers.
+        '''</summary>
+        Friend Shared ReadOnly Property ExifMapGeneratorCannotBeAttachedToMultipleReaders() As String
+            Get
+                Return ResourceManager.GetString("ExifMapGeneratorCannotBeAttachedToMultipleReaders", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to &quot;Exif pof subIFD being added/replaced must be either null or same as Exif of parent IFD.
         '''</summary>
         Friend Shared ReadOnly Property ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD() As String

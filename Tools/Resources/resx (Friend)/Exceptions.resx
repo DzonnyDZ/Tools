@@ -957,4 +957,7 @@
   <data name="ValueOfThe0PropertyCannotBeChangedAfterItWasSet" xml:space="preserve">
     <value>Value of the {0} property cannot be changed after it was set.</value>
   </data>
+  <data name="ExifMapGeneratorCannotBeAttachedToMultipleReaders" xml:space="preserve">
+    <value>ExifMapGenerator cannot be attached to multiple readers</value>
+  </data>
 </root>

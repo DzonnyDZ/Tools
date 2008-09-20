@@ -1,8 +1,8 @@
 Imports System.Linq
 Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.ExifT.ExifRecord)
-Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.ExifT.SubIFD)
+Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.ExifT.SubIfd)
 Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.ExifT.ExifRecord)
-Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.ExifT.SubIFD)
+Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.ExifT.SubIfd)
 Imports Tools.ComponentModelT
 
 Namespace DrawingT.MetadataT.ExifT
@@ -20,16 +20,16 @@ Namespace DrawingT.MetadataT.ExifT
             Me.New()
             If Reader Is Nothing Then Exit Sub
             Dim i As Integer = 0
-            Dim LastIFD As IFD = Nothing
-            For Each IFDReader As ExifIFDReader In Reader.IFDs
+            Dim LastIFD As Ifd = Nothing
+            For Each IFDReader As ExifIfdReader In Reader.IFDs
                 If i = 0 Then
-                    LastIFD = New IFDMain(IFDReader)
+                    LastIFD = New IfdMain(IFDReader)
                     _IFD0 = LastIFD
                 ElseIf i = 1 Then
-                    LastIFD.Following = New IFDMain(IFDReader)
+                    LastIFD.Following = New IfdMain(IFDReader)
                     LastIFD = LastIFD.Following
                 Else
-                    LastIFD.Following = New IFD(IFDReader)
+                    LastIFD.Following = New Ifd(IFDReader)
                     LastIFD = LastIFD.Following
                 End If
                 LastIFD.Exif = Me
@@ -43,7 +43,7 @@ Namespace DrawingT.MetadataT.ExifT
             '    Next SubIFD
         End Sub
         ''' <summary>Contains value of the <see cref="IFD0"/> property</summary>
-        Private _IFD0 As IFDMain
+        Private _IFD0 As IfdMain
         ''' <summary>Gets or sets firts IFD of this instance (so-called Main IFD)</summary>
         ''' <returns>First IFD (so-called IFD0 or Main IFD) of current Exif metadata</returns>
         ''' <value>Sets firts IFD (so-called IFD0 or Main  IFD). It must be of type <see cref="IFDMain"/></value>
@@ -52,19 +52,19 @@ Namespace DrawingT.MetadataT.ExifT
         ''' Value being set is already used somewhere else in this <see cref="Exif"/>.</exception>
         ''' <exception cref="TypeMismatchException">Value being set has <see cref="IFD.Following"/> set but it is not of type <see cref="IFDMain"/>.</exception>
         ''' <seelaso cref="ThumbnailIFD"/>
-        Public Property IFD0() As IFDMain
+        Public Property IFD0() As IfdMain
             Get
                 Return _IFD0
             End Get
-            Set(ByVal value As IFDMain)
+            Set(ByVal value As IfdMain)
                 If value.Exif IsNot Nothing AndAlso value.Exif IsNot Me Then _
                     Throw New ArgumentException(ResourcesT.Exceptions.IFDPassedToTheIFD0PropertyMustEitherHaveNoExifAsociatedOrMustHaveAssociatedCurrrentInstance)
                 If value.Previous IsNot Nothing Then _
                     Throw New ArgumentException(ResourcesT.Exceptions.IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet)
                 If Me.ContainsIFD(value) Then _
                     Throw New ArgumentException(ResourcesT.Exceptions.GivenIFDIsAlreadyInUse)
-                If value.Following IsNot Nothing AndAlso Not TypeOf value.Following Is IFDMain Then _
-                    Throw New TypeMismatchException(ResourcesT.Exceptions.TypeOfIFDFollowingAfterIFD0MustBeIFDMain, value.Following, GetType(IFDMain))
+                If value.Following IsNot Nothing AndAlso Not TypeOf value.Following Is IfdMain Then _
+                    Throw New TypeMismatchException(ResourcesT.Exceptions.TypeOfIFDFollowingAfterIFD0MustBeIFDMain, value.Following, GetType(IfdMain))
                 _IFD0 = value
                 value.Exif = Me
             End Set
@@ -74,20 +74,20 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <value>Sets IFD1 - the <see cref="IFD.Following">following</see> IFD of <see cref="IFD0"/>. If <see cref="IFD0"/> is null it is set to an empty instance of <see cref="IFDMain"/></value>
         ''' <exception cref="ArgumentException">Value being set have <see cref="IFD0"/> as one of its <see cref="IFD.Following"/> IFDs =or= Value being set has non-null value of the <see cref="IFD.Previous"/> property. =or= Value being set has non-null <see cref="IFD.Exif"/> property which is different from current instance. =or= Value being set is already used as IFD at another position in this instance.</exception>
         ''' <seelaso cref="IFD0"/><seelaso cref="IFD.Following"/>
-        Public Property ThumbnailIFD() As IFDMain
+        Public Property ThumbnailIFD() As IfdMain
             Get
                 If IFD0 IsNot Nothing Then Return IFD0.Following Else Return Nothing
             End Get
-            Set(ByVal value As IFDMain)
-                If IFD0 Is Nothing Then IFD0 = New IFDMain
+            Set(ByVal value As IfdMain)
+                If IFD0 Is Nothing Then IFD0 = New IfdMain
                 IFD0.Following = value
             End Set
         End Property
         ''' <summary>Gets all subIFDs and sub-subIFDs etc. present in this instance</summary>
         ''' <remarks>Collection of all subIFDs in this instance. This collection does not contain IFDs folowing (linked-list connected) to subIFDs, but contains any possible subIFDs linked from such subIFD-following IFD.</remarks>
-        Public ReadOnly Property SubIFDs() As IEnumerable(Of SubIFD)
+        Public ReadOnly Property SubIFDs() As IEnumerable(Of SubIfd)
             Get
-                Dim ret As IEnumerable(Of SubIFD) = New List(Of SubIFD)
+                Dim ret As IEnumerable(Of SubIfd) = New List(Of SubIfd)
                 Dim Current As IFD = IFD0
                 Dim CurrentStack As New Stack(Of IFD)
                 While Current IsNot Nothing
@@ -118,7 +118,7 @@ Namespace DrawingT.MetadataT.ExifT
                 If Current Is IFD Then Return True
                 Current = Current.Following
             End While
-            For Each SubIfd As SubIFD In SubIFDs
+            For Each SubIfd As SubIfd In SubIFDs
                 Current = SubIfd
                 While Current IsNot Nothing
                     If Current Is IFD Then Return True

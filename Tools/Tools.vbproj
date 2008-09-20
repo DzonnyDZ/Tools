@@ -192,6 +192,7 @@
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IconOrBitmap.vb" />
+    <Compile Include="Drawing\Metadata\Exif\ExifMapGenerator.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifReader helpers.vb" />
     <Compile Include="Drawing\Metadata\Exif\ExifWriter.vb" />
     <Compile Include="Drawing\Metadata\Exif\IFD.vb" />

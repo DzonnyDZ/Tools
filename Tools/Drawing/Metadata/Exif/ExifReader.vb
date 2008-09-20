@@ -101,12 +101,12 @@ Namespace DrawingT.MetadataT.ExifT
             Settings.OnItem(Me, ReaderItemKinds.BomTest, , , BOMTest, 2, 2) 'Event
             If BOMTest <> &H2AUS Then Throw New InvalidDataException(ResourcesT.Exceptions.InvalidValueForByteOrderTestAtExifHeader & Hex(BOMTest)) 'Unrecoverable
             Dim IFDOffset As UInt32 = Reader.ReadUInt32
-            Settings.OnItem(Me, ReaderItemKinds.Ifd0Offset, , , IFDOffset, 4, 4)
+            Settings.OnItem(Me, ReaderItemKinds.Ifd0Offset, , , IFDOffset, 4, 4) 'Event
             While IFDOffset <> 0UI
                 Stream.Position = IFDOffset
                 Dim CancelIFD As Boolean
-                Dim IFDReader = New ExifIFDReader(Me, IFDOffset, Settings, CancelIFD)
-                If Settings.ReadMode = ReadModes.ReadAndStore AndAlso Not CancelIFD Then _IFDs.Add(IFDReader)
+                Dim IFDReader = New ExifIfdReader(Me, IFDOffset, Settings, CancelIFD)
+                If Not CancelIFD Then _IFDs.Add(IFDReader)
                 IFDOffset = IFDReader.NextIFD
             End While
         End Sub
@@ -143,7 +143,7 @@ Namespace DrawingT.MetadataT.ExifT
             End Get
         End Property
         ''' <summary>Contains value for the <see cref="IFDs"/> property</summary>
-        Private _IFDs As New List(Of ExifIFDReader)
+        Private _IFDs As New List(Of ExifIfdReader)
         '''' <summary>Contains value for the <see cref="ExifSubIFD"/> property</summary>
         'Private _ExifSubIFD As SubIFD = Nothing
         '''' <summary>Contains value for the <see cref="GPSSubIFD"/> property</summary>
@@ -177,69 +177,13 @@ Namespace DrawingT.MetadataT.ExifT
             End Get
         End Property
         ''' <summary>Collection of IFDs (Image File Directories) in this Exif block</summary>
-        Public ReadOnly Property IFDs() As CollectionsT.GenericT.IReadOnlyList(Of ExifIFDReader)
+        Public ReadOnly Property IFDs() As CollectionsT.GenericT.IReadOnlyList(Of ExifIfdReader)
             Get
-                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of ExifIFDReader)(_IFDs)
+                Return New CollectionsT.GenericT.ReadOnlyListAdapter(Of ExifIfdReader)(_IFDs)
             End Get
         End Property
     End Class
 
-    ''' <summary>Represents reader of Sub IFD</summary>
-    Public Class SubIFDReader : Inherits ExifIFDReader
-        ''' <summary>CTor</summary>
-        ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
-        ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
-        ''' <param name="Desc">Descriptive name of this Sub IFD</param>
-        ''' <param name="ParentIFD"><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</param>
-        ''' <param name="ParentRecord">Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</param>
-        ''' <param name="PreviousSubIFD">Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</param>
-        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
-        ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
-        ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
-        ''' <exception cref="InvalidDataException">Tag data of some are placed otside the tag and cannot be read</exception>
-        <CLSCompliant(False)> _
-        Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32, ByVal Desc As String, ByVal ParentIFD As ExifIFDReader, ByVal ParentRecord As Integer, Optional ByVal PreviousSubIFD As ExifIFDReader = Nothing)
-            MyBase.New(Exif, Offset)
-            _Desc = Desc
-            _ParentIFD = ParentIFD
-            _ParentRecord = ParentRecord
-            _PreviousSubIFD = PreviousSubIFD
-        End Sub
-        ''' <summary>Contains value of the <see cref="Desc"/> property</summary>
-        Private _Desc As String
-        ''' <summary>Contains value of the <see cref="ParentIFD"/> property</summary>
-        Private _ParentIFD As ExifIFDReader
-        ''' <summary>Contains value of the <see cref="ParentRecord"/> property</summary>
-        Private _ParentRecord As Integer
-        ''' <summary>Contains value of the <see cref="PreviousSubIFD"/> property</summary>
-        Private _PreviousSubIFD As ExifIFDReader
-        ''' <summary>Descriptive name of this Sub IFD</summary>
-        ''' <returns>Usually contain an empty string for non starndard Sub IFDs and comon English name for standard Sub IFDs. For non-standard Sub IFDs only when library have some ideda what can this Sub IFD mean this Sub IFD is captioned somehow</returns>
-        ''' <remarks>Currently there are no Non Standard Sub IFDs that have any caption, Captions of staandard Sub IFDs are public onstants declared in <see cref="ExifReader"/></remarks>
-        Public ReadOnly Property Desc() As String
-            Get
-                Return _Desc
-            End Get
-        End Property
-        ''' <summary><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</summary>
-        Public ReadOnly Property ParentIFD() As ExifIFDReader
-            Get
-                Return _ParentIFD
-            End Get
-        End Property
-        ''' <summary>Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</summary>
-        Public ReadOnly Property ParentRecord() As Integer
-            Get
-                Return _ParentRecord
-            End Get
-        End Property
-        ''' <summary>Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</summary>
-        ''' <remarks>This can be standart Sub IFD (like Exif Sub IFD) or nonstandart one</remarks>
-        Public ReadOnly Property PreviousSubIFD() As ExifIFDReader
-            Get
-                Return _PreviousSubIFD
-            End Get
-        End Property
-    End Class
+
 #End If
 End Namespace

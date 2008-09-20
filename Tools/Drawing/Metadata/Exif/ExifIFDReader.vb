@@ -3,44 +3,62 @@ Namespace DrawingT.MetadataT.ExifT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(ExifIFDReader), LastChange:="07/22/2008")> _
+    <Version(1, 1, GetType(ExifIfdReader), LastChange:="07/22/2008")> _
     <FirstVersion("04/24/2007")> _
-    Public Class ExifIFDReader
-        ''' <summary>Advanced CTor used by <see cref="ExifT.ExifReader"/>. Allows passing settings and indication of read cancellation.</summary>
+    Public Class ExifIfdReader
+        ''' <summary>Settings that apply to reading</summary>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public ReadOnly Settings As ExifReader.ExifReaderContext
+        ''' <summary>Advanced CTor used by <see cref="ExifT.ExifReader"/>. Allows passing context and indication of read cancellation.</summary>
         ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
         ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
         ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
         ''' <exception cref="InvalidDataException">Tag data of some are placed outside the tag and cannot be read</exception>
-        ''' <param name="Context">Contains settings and event handlers for this reading</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Context"/> is null.</exception>
+        ''' <param name="Context">Contains context and event handlers for this reading</param>
         ''' <param name="Cancelled">Output parameter. Is set to true when handler cancells reading of whole IFD body</param>
         ''' <filterpriority>2</filterpriority>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32, ByVal Context As ExifReader.ExifReaderContext, <Runtime.InteropServices.Out()> ByRef Cancelled As Boolean)
+            If Context Is Nothing Then Throw New ArgumentNullException("Context")
+            Settings = Context
             _ExifReader = Exif
             _Offset = Offset
-            Settings = Context
-            'TODO: Cancelled
-            'TODO: Distinguish between IFDs and read sub IFDs, report image pointers
             Dim r As New Tools.IOt.BinaryReader(Exif.Stream, Exif.ByteOrder)
             Exif.Stream.Position = Offset
             Dim Entries As UShort = r.ReadUInt16
-
+            Dim OrM As ExifReader.ReaderItemKinds = If(IsSubIfd, ExifReader.ReaderItemKinds.SubIfdMask, 0)
+            Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.IfdNumberOfEntries Or OrM, , , Entries, Offest, 2) 'Event
             Dim Pos As Long = Exif.Stream.Position
-            For i As Integer = 1 To Entries
+            If Not Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.Ifd Or OrM, True, , , Pos, 12 * Entries) Then 'Event
+                For i As Integer = 1 To Entries
+                    Exif.Stream.Position = Pos
+                    Dim Tag As UShort = r.ReadUInt16
+                    Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.TagNumber, , , Tag, Pos, 2) 'Event
+                    Dim Kind As UShort = r.ReadUInt16
+                    Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.TagDataType, , , Kind, Pos + 2, 2) 'Event
+                    Dim Components As UInt32 = r.ReadUInt32
+                    Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.TagComponents, , , Components, Pos + 4, 4) 'Event
+                    Dim Data As Byte() = r.ReadBytes(4)
+                    Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.TagDataOrOffset, , , Data, Pos + 8, 4) 'Event
+                    Pos = Exif.Stream.Position
+                    If Not Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.TagHeader, True, , , Pos - 12, 12) Then
+                        Dim TagRead As New DirectoryEntry(Tag, Kind, Components, Data, Exif, Context)
+                        Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.Tag, , , TagRead) 'Event
+                        Me._Entries.Add(TagRead)
+                    End If
+                Next i
                 Exif.Stream.Position = Pos
-                Dim Tag As UShort = r.ReadUInt16
-                Dim Kind As UShort = r.ReadUInt16
-                Dim Components As UInt32 = r.ReadUInt32
-                Dim Data As Byte() = r.ReadBytes(4)
-                Pos = Exif.Stream.Position
-                Me._Entries.Add(New DirectoryEntry(Tag, Kind, Components, Data, Exif))
-            Next i
-            Exif.Stream.Position = Pos
+            Else
+                Exif.Stream.Position = Pos + 12 * Entries
+                Cancelled = True
+            End If
             _NextIFD = r.ReadUInt32
+            Context.OnItem(Me, ExifT.ExifReader.ReaderItemKinds.NextIfdOffset Or OrM, , , _NextIFD, Exif.Stream.Position - 4, 4) 'Event
         End Sub
-        ''' <summary>CTor</summary>
+        ''' <summary>CTor (uses default settings)</summary>
         ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
         ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
@@ -52,9 +70,6 @@ Namespace DrawingT.MetadataT.ExifT
         Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32)
             Me.New(Exif, Offset, New ExifReader.ExifReaderContext(Exif, New ExifReaderSettings), False)
         End Sub
-
-        ''' <summary>Settings which take effects on reading</summary>
-        Protected ReadOnly Settings As ExifReader.ExifReaderContext
         ''' <summary>Contains value of the <see cref="ExifReader"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _ExifReader As ExifReader
         ''' <summary>Gets <see cref="ExifReader"/> this <see cref="ExifIFDReader"/> have read data from.</summary>
@@ -90,6 +105,81 @@ Namespace DrawingT.MetadataT.ExifT
                 Return _Offset
             End Get
         End Property
+
+        ''' <summary>Gets value indicating if this instance is reader of IFD or SubIFD</summary>
+        ''' <returns>True if this instance is reader of SubIFD. This implementation always returns false.</returns>
+        Protected Overridable ReadOnly Property IsSubIfd() As Boolean
+            Get
+                Return False
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Represents reader of Sub IFD</summary>
+    Public Class SubIFDReader : Inherits ExifIfdReader
+        ''' <summary>CTor</summary>
+        ''' <param name="Exif"><see cref="ExifReader"/> that contains this IFD</param>
+        ''' <param name="Offset">Offset of start of this IFD in <paramref name="Stream"/></param>
+        ''' <param name="Desc">Descriptive name of this Sub IFD</param>
+        ''' <param name="ParentIFD"><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</param>
+        ''' <param name="ParentRecord">Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</param>
+        ''' <param name="PreviousSubIFD">Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</param>
+        ''' <param name="Cancelled">Output parameter set to true if reading of the ifd was cancelled in event handler.</param>
+        ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
+        ''' <exception cref="InvalidDataException">Tag data of some are placed otside the tag and cannot be read</exception>
+        <CLSCompliant(False)> _
+        Public Sub New(ByVal Exif As ExifReader, ByVal Offset As UInt32, ByVal Desc As String, ByVal ParentIFD As ExifIfdReader, ByVal ParentRecord As Integer, Optional ByVal PreviousSubIFD As ExifIfdReader = Nothing, <Runtime.InteropServices.Out()> Optional ByRef Cancelled As Boolean = False)
+            MyBase.New(Exif, Offset, ParentIFD.Settings, Cancelled)
+            If Cancelled Then Exit Sub
+            _Desc = Desc
+            _ParentIFD = ParentIFD
+            _ParentRecord = ParentRecord
+            _PreviousSubIFD = PreviousSubIFD
+        End Sub
+        ''' <summary>Gets value indicating if this instance is reader of IFD or SubIFD</summary>
+        ''' <returns>True if this instance is reader of SubIFD. This implementation always returns true.</returns>
+        Protected Overrides ReadOnly Property IsSubIfd() As Boolean
+            Get
+                Return True
+            End Get
+        End Property
+        ''' <summary>Contains value of the <see cref="Desc"/> property</summary>
+        Private _Desc As String
+        ''' <summary>Contains value of the <see cref="ParentIFD"/> property</summary>
+        Private _ParentIFD As ExifIfdReader
+        ''' <summary>Contains value of the <see cref="ParentRecord"/> property</summary>
+        Private _ParentRecord As Integer
+        ''' <summary>Contains value of the <see cref="PreviousSubIFD"/> property</summary>
+        Private _PreviousSubIFD As ExifIfdReader
+        ''' <summary>Descriptive name of this Sub IFD</summary>
+        ''' <returns>Usually contain an empty string for non starndard Sub IFDs and comon English name for standard Sub IFDs. For non-standard Sub IFDs only when library have some ideda what can this Sub IFD mean this Sub IFD is captioned somehow</returns>
+        ''' <remarks>Currently there are no Non Standard Sub IFDs that have any caption, Captions of staandard Sub IFDs are public onstants declared in <see cref="ExifReader"/></remarks>
+        Public ReadOnly Property Desc() As String
+            Get
+                Return _Desc
+            End Get
+        End Property
+        ''' <summary><see cref="ExifIFDReader"/> that represent IFD that contains current Sub IFD</summary>
+        Public ReadOnly Property ParentIFD() As ExifIfdReader
+            Get
+                Return _ParentIFD
+            End Get
+        End Property
+        ''' <summary>Point to <see cref="ExifIFDReader.Entries"/> collection that points to record that points to this Sub IFD</summary>
+        Public ReadOnly Property ParentRecord() As Integer
+            Get
+                Return _ParentRecord
+            End Get
+        End Property
+        ''' <summary>Sub IFD which's <see cref="ExifIFDReader.NextIFD"/> points to this Sub IFD. Can be null if this is first Sub IFD in line</summary>
+        ''' <remarks>This can be standart Sub IFD (like Exif Sub IFD) or nonstandart one</remarks>
+        Public ReadOnly Property PreviousSubIFD() As ExifIfdReader
+            Get
+                Return _PreviousSubIFD
+            End Get
+        End Property
     End Class
 
     ''' <summary>Represents read-only directory entry of Exif data</summary>
@@ -103,20 +193,28 @@ Namespace DrawingT.MetadataT.ExifT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _DataIsStoredOutside As Boolean
         ''' <summary>Contains value of the <see cref="Data"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Data As Object
-        ''' <summary>CTor</summary>
+        ''' <summary>CTor with <see cref="ExifReader.ExifReaderContext"/></summary>
         ''' <param name="Tag">Tag identifier</param>
         ''' <param name="Kind">Data type</param>
         ''' <param name="Components">Number of components</param>
         ''' <param name="Data">Data or offset to data</param>
         ''' <param name="Exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
+        ''' <param name="Context">Setting which takes effect on reading.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Kind"/> is not member of <see cref="ExifDataTypes"/></exception>
         ''' <exception cref="InvalidDataException">Tag data are placed otside the tag and cannot be read</exception>
-        <CLSCompliant(False)> _
-         Public Sub New(ByVal Tag As UShort, ByVal Kind As ExifDataTypes, ByVal Components As UInt32, ByVal Data As Byte(), ByVal Exif As ExifReader)
+        ''' <exception cref="ArgumentnullException"><paramref name="Context"/> is null</exception>
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Sub New(ByVal Tag As UShort, ByVal Kind As ExifDataTypes, ByVal Components As UInt32, ByVal Data As Byte(), ByVal Exif As ExifReader, ByVal Context As ExifReader.ExifReaderContext)
             _Tag = Tag
             _DataType = Kind
             _Componets = Components
-            Dim SizeTotal As Long = BytesPerComponent(Kind) * Components
+            Dim SizeTotal As Long
+            Try
+                SizeTotal = BytesPerComponent(Kind) * Components
+            Catch ex As InvalidEnumArgumentException
+                Context.OnError(ex) 'Throw
+                SizeTotal = Components
+            End Try
             _DataIsStoredOutside = SizeTotal > 4
             Dim TagData As Byte()
             If _DataIsStoredOutside Then
@@ -126,14 +224,37 @@ Namespace DrawingT.MetadataT.ExifT
                 Dim Offset As UInt32 = r.ReadUInt32
                 Exif.Stream.Position = Offset
                 ReDim TagData(SizeTotal - 1)
-                If Exif.Stream.Read(TagData, 0, SizeTotal) <> SizeTotal Then
-                    Throw New InvalidDataException(ResourcesT.Exceptions.CannotReadTagDataFromStream)
+                Dim BytesRead As UInteger = 0
+                While BytesRead < SizeTotal
+                    Dim NowRead = Exif.Stream.Read(TagData, BytesRead, SizeTotal - BytesRead)
+                    If NowRead = 0 Then Exit While
+                    BytesRead += NowRead
+                End While
+                If BytesRead <> SizeTotal Then
+                    Context.OnError(New InvalidDataException(ResourcesT.Exceptions.CannotReadTagDataFromStream)) 'Throw
+                    If BytesRead > 0 Then _
+                        ReDim Preserve TagData(BytesRead - 1) _
+                    Else Erase TagData
                 End If
+                Context.OnItem(Me, ExifReader.ReaderItemKinds.ExternalTagData, , , TagData, Offset, SizeTotal) 'Event
             Else
                 TagData = Data
             End If
-            _Data = ReadData(Kind, TagData, Components, Exif.ByteOrder)
+            _Data = ReadData(Kind, TagData, Components, Exif.ByteOrder, Context)
         End Sub
+        ''' <summary>CTor (uses default settings)</summary>
+        ''' <param name="Tag">Tag identifier</param>
+        ''' <param name="Kind">Data type</param>
+        ''' <param name="Components">Number of components</param>
+        ''' <param name="Data">Data or offset to data</param>
+        ''' <param name="Exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Kind"/> is not member of <see cref="ExifDataTypes"/></exception>
+        ''' <exception cref="InvalidDataException">Tag data are placed otside the tag and cannot be read</exception>
+        <CLSCompliant(False)> _
+        Public Sub New(ByVal Tag As UShort, ByVal Kind As ExifDataTypes, ByVal Components As UInt32, ByVal Data As Byte(), ByVal Exif As ExifReader)
+            Me.new(Tag, Kind, Components, Data, Exif, New ExifReader.ExifReaderContext(Exif, New ExifReaderSettings()))
+        End Sub
+
         ''' <summary>Reads data of specified type freom given <see cref="Array"/> of <see cref="Byte"/>s</summary>
         ''' <param name="Type">Type of data to read</param>
         ''' <param name="Align">Format in whicvh data are stored</param>
@@ -141,7 +262,7 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <param name="Components">Number of components to be read</param>
         ''' <returns>Data read from buffer. If <paramref name="Components"/> is 1 scalar of specified type is returned, <see cref="Array"/> otherwise with exceptions: 1 component of type <see cref="ExifDataTypes.ASCII"/> resuts to <see cref="Char"/>, more components results to <see cref="String"/>; <see cref="ExifDataTypes.NA"/> always results to <see cref="Array"/> of <see cref="Byte"/>s</returns>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/></exception>
-        Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAlign) As Object
+        Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAlign, ByVal Context As ExifReader.ExifReaderContext) As Object
             Dim Str As New MemoryStream(Buffer, False)
             Str.Position = 0
             Dim r As New Tools.IOt.BinaryReader(Str, System.Text.Encoding.Default, Align)
@@ -246,7 +367,9 @@ Namespace DrawingT.MetadataT.ExifT
                         Next i
                         Return ret
                     End If
-                Case Else : Throw New InvalidEnumArgumentException("Type", Type, GetType(ExifDataTypes))
+                Case Else
+                    Context.OnError(New InvalidEnumArgumentException("Type", Type, GetType(ExifDataTypes))) 'Throw
+                    Return Buffer.Clone
             End Select
         End Function
         ''' <summary>Gets number of bytes per component of specified Exif data type</summary>
