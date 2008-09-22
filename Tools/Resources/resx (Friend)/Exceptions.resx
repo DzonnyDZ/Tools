@@ -960,4 +960,10 @@
   <data name="ExifMapGeneratorCannotBeAttachedToMultipleReaders" xml:space="preserve">
     <value>ExifMapGenerator cannot be attached to multiple readers</value>
   </data>
+  <data name="BaseStreamOfOverflowStreamMustBeAbleToReadWriteAndSeek" xml:space="preserve">
+    <value>BaseStream of OverflowStream must be able to Read, Write and Seek.</value>
+  </data>
+  <data name="WasGreaterThanLegnthOf2" xml:space="preserve">
+    <value>{0} + {1} was greater than legnth of {2}.</value>
+  </data>
 </root>

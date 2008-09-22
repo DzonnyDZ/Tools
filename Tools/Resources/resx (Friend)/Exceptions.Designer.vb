@@ -110,6 +110,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to BaseStream of OverflowStream must be able to Read, Write and Seek..
+        '''</summary>
+        Friend Shared ReadOnly Property BaseStreamOfOverflowStreamMustBeAbleToReadWriteAndSeek() As String
+            Get
+                Return ResourceManager.GetString("BaseStreamOfOverflowStreamMustBeAbleToReadWriteAndSeek", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to 8BIM segment doesn&apos;t start with sting &apos;8BIM&apos;.
         '''</summary>
         Friend Shared ReadOnly Property BIMSegmentDoesnTStartWithSting8BIM() As String
@@ -2557,6 +2566,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property VersionComponentMustBeGreaterThanOrEqualToZero() As String
             Get
                 Return ResourceManager.GetString("VersionComponentMustBeGreaterThanOrEqualToZero", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} + {1} was greater than legnth of {2}..
+        '''</summary>
+        Friend Shared ReadOnly Property WasGreaterThanLegnthOf2() As String
+            Get
+                Return ResourceManager.GetString("WasGreaterThanLegnthOf2", resourceCulture)
             End Get
         End Property
         
