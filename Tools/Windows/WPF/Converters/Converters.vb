@@ -89,7 +89,7 @@ Namespace WindowsT.WPF.ConvertersT
             ElseIf TypeOf value Is Decimal Then
                 multiplied = CDbl((CDbl(CDec(value)) * param))
             Else
-                Throw New ArgumentException("Unsupported source type", "value") 'Localize:Exception
+                Throw New ArgumentException(ResourcesT.Exceptions.UnsupportedSourceType, "value")
             End If
             If targetType.Equals(GetType(SByte)) Then
                 Return CSByte(multiplied)
@@ -114,7 +114,7 @@ Namespace WindowsT.WPF.ConvertersT
             ElseIf targetType.Equals(GetType(Decimal)) Then
                 Return CDec(multiplied)
             Else
-                Throw New ArgumentException("Unsupported target type", "targetType") 'Localize:Exception
+                Throw New ArgumentException(ResourcesT.Exceptions.UnsupportedTargetType, "targetType")
             End If
         End Function
     End Class

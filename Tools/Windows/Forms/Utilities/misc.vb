@@ -74,7 +74,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         <Extension()> Public Sub ReplaceControl(ByVal tlp As TableLayoutPanel, ByVal OldControl As Control, ByVal NewControl As Control)
             If tlp Is Nothing Then Throw New ArgumentNullException("tlp")
             If OldControl Is Nothing Then Throw New ArgumentNullException("OldControl")
-            If Not tlp.Controls.Contains(OldControl) Then Throw New InvalidOperationException("OldControl must be member of Controls collection of tlp") 'Localize:Exception
+            If Not tlp.Controls.Contains(OldControl) Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.MustBeMemberOf0CollectionOf2, "OldControl", "Controls", "tlp"))
             If NewControl Is Nothing Then
                 OldControl.Remove()
                 Exit Sub

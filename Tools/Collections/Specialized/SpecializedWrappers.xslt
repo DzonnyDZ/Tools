@@ -188,7 +188,7 @@
                 <xsl:text>                    Me.Insert(index,value)&#xd;&#xa;</xsl:text>
             </xsl:when>
             <xsl:when test="(@NoSetter='true' or @NoSetter='1')">
-                <xsl:text>                    If index &lt; 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection) 'Localize:Exception&#xd;&#xa;</xsl:text>
+                <xsl:text>                    If index &lt; 0 OrElse index >= Me.Count Then Throw New ArgumentOutOfRangeException("index",ResourcesT.Exceptions.IndexMustBeInRangeOfTheCollection)&#xd;&#xa;</xsl:text>
                 <xsl:text>                    Dim OldCollection As New List(Of </xsl:text><xsl:value-of select="$ItemFull"/><xsl:text>)(Me)&#xd;&#xa;</xsl:text>
                 <xsl:text>                    Me.Clear&#xd;&#xa;</xsl:text>
                 <xsl:text>                    For i% = 0 To OldCollection.Count - 1&#xd;&#xa;</xsl:text>

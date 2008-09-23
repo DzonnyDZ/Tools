@@ -18,8 +18,8 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
         ''' <exception cref="ArgumentException">Value is not of type <see cref="TSource"/> or <paramref name="targetType"/> cannot be assigned by value of type <see cref="TTarget"/></exception>
         Private Function Convert(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.Convert
-            If Not TypeOf value Is TSource Then Throw New ArgumentException(String.Format("This converter can convert only from {0}.", GetType(TSource).FullName), "value")
-            If Not targetType.IsAssignableFrom(GetType(TTarget)) Then Throw New ArgumentException(String.Format("This converter can convert only to {0}.", GetType(TTarget).FullName), "targetType")
+            If Not TypeOf value Is TSource Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThisConverterCanConvertOnlyFrom0, GetType(TSource).FullName), "value")
+            If Not targetType.IsAssignableFrom(GetType(TTarget)) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThisConverterCanConvertOnlyTo0, GetType(TTarget).FullName), "targetType")
             Return Convert(value, parameter, culture)
         End Function
         ''' <summary>Converts a value.</summary>
@@ -36,8 +36,8 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <returns>A converted value. If the method returns null, the valid null value is used.</returns>
         ''' <exception cref="ArgumentException">Value is not of type <see cref="TTarget"/> or <paramref name="targetType"/> cannot be assigned by value of type <see cref="TSource"/></exception>
         Private Function ConvertBack(ByVal value As Object, ByVal targetType As System.Type, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object Implements System.Windows.Data.IValueConverter.ConvertBack
-            If Not TypeOf value Is TTarget Then Throw New ArgumentException(String.Format("This converter ca convert back only from {0}.", GetType(TTarget).FullName), "value")
-            If Not targetType.IsAssignableFrom(GetType(TSource)) Then Throw New ArgumentException(String.Format("This converter can convert back only to {0}.", GetType(TSource).FullName), "targetType")
+            If Not TypeOf value Is TTarget Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThisConverterCanConvertBackOnlyFrom0, GetType(TTarget).FullName), "value")
+            If Not targetType.IsAssignableFrom(GetType(TSource)) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThisConverterCanConvertBackOnlyTo0, GetType(TSource).FullName), "targetType")
             Return ConvertBack(value, parameter, culture)
         End Function
         ''' <summary>Converts a value.</summary>

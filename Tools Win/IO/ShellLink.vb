@@ -32,7 +32,7 @@ Namespace IOt
         ''' <exception cref="IO.FileNotFoundException">File <paramref name="ExistingLink"/> does not exist</exception>
         ''' <exception cref="ArgumentException">Link cannot be opened</exception>
         Public Sub New(ByVal ExistingLink As String)
-            If Not IO.File.Exists(ExistingLink) Then Throw New IO.FileNotFoundException(String.Format("File {0} does not exist.", ExistingLink))
+            If Not IO.File.Exists(ExistingLink) Then Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.File0DoesNotExist, ExistingLink))
               Dim pf As IPersistFile
             Try
                 link = CType(New COM.ShellLink.ShellLink(), IShellLinkW)
@@ -40,7 +40,7 @@ Namespace IOt
                 pf = CType(link, IPersistFile)
                 pf.Load(ExistingLink, 0)
             Catch ex As COMException
-                Throw New ArgumentException(String.Format("Cannot create link from file {0}.", ExistingLink), "ExistingLink", ex)
+                Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotCreateLinkFromFile0, ExistingLink), "ExistingLink", ex)
             End Try
         End Sub
 #Region "Properties"
@@ -93,7 +93,7 @@ Namespace IOt
                     Case ProcessWindowStyle.Maximized
                         nWS = ShellLinkWindowStyle.SW_SHOWMAXIMIZED
                     Case ProcessWindowStyle.Hidden
-                        Throw New ArgumentException("Unsupported ProcessWindowStyle value.")
+                        Throw New ArgumentException(String.Format(ResourcesT.Exceptions.Unsupported0Value, "ProcessWindowStyle"))
                     Case Else
                         Throw New InvalidEnumArgumentException("value", value, value.GetType)
                 End Select
@@ -139,7 +139,7 @@ Namespace IOt
                 If Disposed Then Throw New ObjectDisposedException(Me.GetType.Name)
                 Dim wHotkey As Short
                 If (value And Keys.Modifiers) = 0 Then
-                    Throw New ArgumentException("Hotkey must include a modifier key.")
+                    Throw New ArgumentException(ResourcesT.Exceptions.HotkeyMustIncludeAModifierKey)
                 End If
                 '
                 ' Convert from Keys enumeration 32-bit value to IShellLink 16-bit format
@@ -242,9 +242,9 @@ Namespace IOt
             Try
                 pf.Save(path, True)
             Catch ex As IO.FileNotFoundException
-                Throw New IO.FileNotFoundException(String.Format("The file {0} cannot be found.", path), path, ex)
+                Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.TheFile0CannotBeFound, path), path, ex)
             Catch ex As COMException
-                Throw New IO.IOException(String.Format("There was an error saving file {0}.", path), ex)
+                Throw New IO.IOException(String.Format(ResourcesT.Exceptions.ThereWasAnErrorSavingFile0, path), ex)
             End Try
         End Sub
         ''' <summary>Saves a shortcut object to disk on different place then where it is saved now</summary>
@@ -258,9 +258,9 @@ Namespace IOt
             Try
                 pf.Save(Path, True)
             Catch ex As IO.FileNotFoundException
-                Throw New IO.FileNotFoundException(String.Format("The file {0} cannot be found.", Path), Path, ex)
+                Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.TheFile0CannotBeFound, Path), Path, ex)
             Catch ex As COMException
-                Throw New IO.IOException(String.Format("There was an error saving file {0}.", Path), ex)
+                Throw New IO.IOException(String.Format(ResourcesT.Exceptions.ThereWasAnErrorSavingFile0, Path), ex)
             End Try
             Me.path = Path
         End Sub
@@ -280,8 +280,8 @@ Namespace IOt
         ''' <remarks>Link extension must be *.lnk!</remarks>
         ''' <exception cref="ArgumentException">File or directory with path <paramref name="LinkLocation"/> already exists =or= Link cannot be created.</exception>
         Public Shared Function CreateLink(ByVal Target$, ByVal LinkLocation$, Optional ByVal Arguments$ = Nothing) As ShellLink
-            If IO.File.Exists(LinkLocation) Then Throw New ArgumentException(String.Format("File {0} already exists.", LinkLocation), "LinkLocation")
-            If IO.Directory.Exists(LinkLocation) Then Throw New ArgumentException(String.Format("There is already directory named {0}.", LinkLocation), "LinkLocation")
+            If IO.File.Exists(LinkLocation) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.File0AlreadyExists, LinkLocation), "LinkLocation")
+            If IO.Directory.Exists(LinkLocation) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.ThereIsAlreadyDirectoryNamed0, LinkLocation), "LinkLocation")
            Dim objShortcut As IShellLinkW
             objShortcut = CType(New COM.ShellLink.ShellLink(), IShellLinkW)
             Dim link = New ShellLink(objShortcut, LinkLocation)

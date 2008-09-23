@@ -1350,6 +1350,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must be member of {0} collection of {2}.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeMemberOf0CollectionOf2() As String
+            Get
+                Return ResourceManager.GetString("MustBeMemberOf0CollectionOf2", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must be member of enumeration {1}.
         '''</summary>
         Friend Shared ReadOnly Property MustBeMemberOfEnumeration1() As String
@@ -2227,6 +2236,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to There are not enought items in {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property ThereAreNotEnoughtItemsIn0() As String
+            Get
+                Return ResourceManager.GetString("ThereAreNotEnoughtItemsIn0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to There is not engough space in array after {0}  to place all items from collection.
         '''</summary>
         Friend Shared ReadOnly Property ThereIsNotEngoughSpaceInArrayAfter0ToPlaceAllItemsFromCollection() As String
@@ -2287,6 +2305,42 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property This0CannotBeConvertedTo1BecauseItDoesnTContain1() As String
             Get
                 Return ResourceManager.GetString("This0CannotBeConvertedTo1BecauseItDoesnTContain1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This converter can convert back only from {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property ThisConverterCanConvertBackOnlyFrom0() As String
+            Get
+                Return ResourceManager.GetString("ThisConverterCanConvertBackOnlyFrom0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This converter can convert back only to {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property ThisConverterCanConvertBackOnlyTo0() As String
+            Get
+                Return ResourceManager.GetString("ThisConverterCanConvertBackOnlyTo0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This converter can convert only from {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property ThisConverterCanConvertOnlyFrom0() As String
+            Get
+                Return ResourceManager.GetString("ThisConverterCanConvertOnlyFrom0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to This converter can convert only to {0}..
+        '''</summary>
+        Friend Shared ReadOnly Property ThisConverterCanConvertOnlyTo0() As String
+            Get
+                Return ResourceManager.GetString("ThisConverterCanConvertOnlyTo0", resourceCulture)
             End Get
         End Property
         
@@ -2449,6 +2503,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property UnknownUnderlyingType0() As String
             Get
                 Return ResourceManager.GetString("UnknownUnderlyingType0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsupported source type.
+        '''</summary>
+        Friend Shared ReadOnly Property UnsupportedSourceType() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedSourceType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unsupported target type.
+        '''</summary>
+        Friend Shared ReadOnly Property UnsupportedTargetType() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedTargetType", resourceCulture)
             End Get
         End Property
         

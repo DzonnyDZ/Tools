@@ -1,10 +1,12 @@
 Namespace DrawingT.MetadataT.IptcT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
+    ''' <seealso cref="iiptcwriter"/><seealso cref="ExifT.iexifgetter"/>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(IIptcGetter), LastChange:="04/24/2007")> _
     Public Interface IIptcGetter
         ''' <summary>Gets stream of IPTC data</summary>
+        ''' <returns>Stream of IPTC data</returns>
         ''' <remarks>
         ''' <para>Stream content must start with first tag marker 1Ch of IPTC stream</para>
         ''' <para>If there is no IPTC data in file stream can be null or have zero length</para>
@@ -14,6 +16,7 @@ Namespace DrawingT.MetadataT.IptcT
     End Interface
 
     ''' <summary>Represents provider that provides method to writed IPTC data into container</summary>
+    ''' <seealso cref="IIptcGetter"/><seealso cref="ExifT.iexifwriter"/>
     <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 0, GetType(IIptcWriter), LastChange:="07/22/2007")> _
     Public Interface IIptcWriter

@@ -295,7 +295,7 @@ Namespace DrawingT.MetadataT.IptcT.IptcDataTypes
         ''' <summary>UNO Creation Date Specifies a 24 hour period in which the further elements of the UNO have to be unique.</summary>            
         ''' <remarks>It also provides a search facility.</remarks>
         <LDescription(GetType(IPTCResources), "UCD_d")> _
-        Public Property UCD() As Date 'Localize: Description
+        Public Property UCD() As Date
             Get
                 Return _UCD
             End Get

@@ -117,4 +117,25 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommentsMergeMergesXMLCommentFiles" xml:space="preserve">
+    <value>CommentsMerge: Merges XML comment files</value>
+  </data>
+  <data name="UsageCommenstMergePrimaryFileSecondaryFileOutputFile" xml:space="preserve">
+    <value>Usage: CommenstMerge PrimaryFile SecondaryFile OutputFile</value>
+  </data>
+  <data name="FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace" xml:space="preserve">
+    <value>Files should be namespace-less or have http://dzonny.cz/xml/schemas/intellisense namespace</value>
+  </data>
+  <data name="PrimaryFile01" xml:space="preserve">
+    <value>Primary file: {0}: {1}</value>
+  </data>
+  <data name="SecondaryFile01" xml:space="preserve">
+    <value>Secondary file: {0}: {1}</value>
+  </data>
+  <data name="Transformation01" xml:space="preserve">
+    <value>Transformation: {0}: {1}</value>
+  </data>
+  <data name="Save01" xml:space="preserve">
+    <value>Save: {0}: {1}</value>
+  </data>
 </root>

@@ -219,4 +219,163 @@
   <data name="MessageBoxCounDownTimeFormat" xml:space="preserve">
     <value>{0} ({1:s})</value>
   </data>
+  <data name="SaveDataAs" xml:space="preserve">
+    <value>Uložit data jako...</value>
+  </data>
+  <data name="LoadFromFile" xml:space="preserve">
+    <value>Načíst ze souboru...</value>
+  </data>
+  <data name="Clear" xml:space="preserve">
+    <value>Vyčistit</value>
+  </data>
+  <data name="ImagesFilter" xml:space="preserve">
+    <value>Obrázky (bmp,jpeg,png,gif,tiff)|*.bmp;*.jpeg;*.jpg;*.gif;*.tif;*.tiff;*.png</value>
+  </data>
+  <data name="New___" xml:space="preserve">
+    <value>Nový ...</value>
+  </data>
+  <data name="OnlySOIAndEOIMarkersCanHaveLenghtSetToZeroLength1IsNotAllowed" xml:space="preserve">
+    <value>Jen značky SOI a EOI mohou mít délku nastavnou na nulu, délka 1 není dovolena</value>
+  </data>
+  <data name="PlayOnShow_d" xml:space="preserve">
+    <value>Zvuk k přehrání, když je dialog zobrazen</value>
+  </data>
+  <data name="Asterisk" xml:space="preserve">
+    <value>Hvězdička</value>
+  </data>
+  <data name="Beep" xml:space="preserve">
+    <value>Pípnutí</value>
+  </data>
+  <data name="Exclamation" xml:space="preserve">
+    <value>Upozornění</value>
+  </data>
+  <data name="Hand" xml:space="preserve">
+    <value>Ruka</value>
+  </data>
+  <data name="Question" xml:space="preserve">
+    <value>Otázka</value>
+  </data>
+  <data name="Browse" xml:space="preserve">
+    <value>Procházet...</value>
+  </data>
+  <data name="SelectWavFile" xml:space="preserve">
+    <value>Vyberte soubor wav</value>
+  </data>
+  <data name="WavFilter" xml:space="preserve">
+    <value>Soubory wav (*.wav)|*.wav</value>
+  </data>
+  <data name="Play" xml:space="preserve">
+    <value>Přehrát</value>
+  </data>
+  <data name="Accessibility_cat" xml:space="preserve">
+    <value>Přístupnost</value>
+  </data>
+  <data name="Action_cat" xml:space="preserve">
+    <value>Akce</value>
+  </data>
+  <data name="Appearance_cat" xml:space="preserve">
+    <value>Vzhled</value>
+  </data>
+  <data name="Asynchronous_cat" xml:space="preserve">
+    <value>Asynchronní</value>
+  </data>
+  <data name="Behavior_cat" xml:space="preserve">
+    <value>Chování</value>
+  </data>
+  <data name="Config_cat" xml:space="preserve">
+    <value>Konfig</value>
+  </data>
+  <data name="Data_cat" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="DDE_cat" xml:space="preserve">
+    <value>DDE</value>
+  </data>
+  <data name="Default_cat" xml:space="preserve">
+    <value>Výchozí</value>
+  </data>
+  <data name="Design_cat" xml:space="preserve">
+    <value>Návrh</value>
+  </data>
+  <data name="DragDrop_cat" xml:space="preserve">
+    <value>TáhniPusť</value>
+  </data>
+  <data name="Focus_cat" xml:space="preserve">
+    <value>Fokus</value>
+  </data>
+  <data name="Font_cat" xml:space="preserve">
+    <value>Font</value>
+  </data>
+  <data name="Format_cat" xml:space="preserve">
+    <value>Fromát</value>
+  </data>
+  <data name="Key_cat" xml:space="preserve">
+    <value>Klávesy</value>
+  </data>
+  <data name="Layout_cat" xml:space="preserve">
+    <value>Rozložení</value>
+  </data>
+  <data name="List_cat" xml:space="preserve">
+    <value>Seznam</value>
+  </data>
+  <data name="Mouse_cat" xml:space="preserve">
+    <value>Myš</value>
+  </data>
+  <data name="Position_cat" xml:space="preserve">
+    <value>Pozice</value>
+  </data>
+  <data name="Scale_cat" xml:space="preserve">
+    <value>Měřítko</value>
+  </data>
+  <data name="Text_cat" xml:space="preserve">
+    <value>Text</value>
+  </data>
+  <data name="WindowStyle_cat" xml:space="preserve">
+    <value>Styl okna</value>
+  </data>
+  <data name="Colors_cat" xml:space="preserve">
+    <value>Barvy</value>
+  </data>
+  <data name="Display_cat" xml:space="preserve">
+    <value>Zobrazení</value>
+  </data>
+  <data name="FolderBrowsing_cat" xml:space="preserve">
+    <value>Procházení složky</value>
+  </data>
+  <data name="Items_cat" xml:space="preserve">
+    <value>Položky</value>
+  </data>
+  <data name="Private_cat" xml:space="preserve">
+    <value>Soukromý</value>
+  </data>
+  <data name="PropertyChanged_cat" xml:space="preserve">
+    <value>Změna vlastnosti</value>
+  </data>
+  <data name="Misc_cat" xml:space="preserve">
+    <value>Různé</value>
+  </data>
+  <data name="ZerofillWidth_d" xml:space="preserve">
+    <value>Defunuje vyplňovací šířku aplikovanou když SortMode je ZeroFill. Položky budou doplněny nulami ("0") na určenou šířku a pak setříděny jako řetězce.</value>
+  </data>
+  <data name="SortMode_d" xml:space="preserve">
+    <value>Získá nebo nastaví způsob řazení</value>
+  </data>
+  <data name="Column_d" xml:space="preserve">
+    <value>Získá nebo nastavý index sloupce. Nastavte tuto vlastnost mimo rozsah sloupců (např. -1) abyste zamezili řazení.</value>
+  </data>
+  <data name="Descending_d" xml:space="preserve">
+    <value>Získá nebo nastaví jestli je pořadí řazení obráceno</value>
+  </data>
+  <data name="CreatedSync_d" xml:space="preserve">
+    <value>Vyvolána, když je vytvořen soubor</value>
+  </data>
+  <data name="DeletedSync_d" xml:space="preserve">
+    <value>Vyvolána, když je smazán soubor</value>
+  </data>
+  <data name="RenamedSync_d" xml:space="preserve">
+    <value>Vyvolána, když je přejmenován soubor</value>
+  </data>
+  <data name="ChangedSync_d" xml:space="preserve">
+    <value>Vyvolána, když je změněn soubor</value>
+  </data>
 </root>

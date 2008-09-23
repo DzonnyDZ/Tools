@@ -17,13 +17,14 @@
     <resheader name="version">2.0</resheader>
     <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
     <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
-    <data name="Name1">this is my long string</data>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
     <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
     <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
-        [base64 mime encoded serialized .NET Framework object]
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
     </data>
     <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-        [base64 mime encoded string representing a byte array form of the .NET Framework object]
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
     </data>
                 
     There are any number of "resheader" rows that contain simple 
@@ -45,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -59,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -67,9 +69,16 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="data">
@@ -78,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -107,4 +117,37 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="About0" xml:space="preserve">
+    <value>O {0}</value>
+  </data>
+  <data name="SelectEncodingPlease" xml:space="preserve">
+    <value>Vyberte kódování, prosím.</value>
+  </data>
+  <data name="NoEncodingSelected" xml:space="preserve">
+    <value>Žádné kódování nevybráno</value>
+  </data>
+  <data name="Preselected_d" xml:space="preserve">
+    <value>Určuje znakovou stránku kódování předvybraného, když je dislog zobrazen (pokud je dostupné). Nastavte na zápornou hodnotu, aby se žádné kódování nepředvybralo.</value>
+  </data>
+  <data name="PreviewBytes_d" xml:space="preserve">
+    <value>Text, který bude dekódován za použití zvoleného kódování a zobrazen jako náhled</value>
+  </data>
+  <data name="PreviewString_d" xml:space="preserve">
+    <value>Text k zakódování pomocí zvoleného kódování. Uživatel bude informován, jestli je možno zakódovat všechny znaky</value>
+  </data>
+  <data name="RequireCorrect_d" xml:space="preserve">
+    <value>Určuje jestli uživatel může vybrat kódování, které může být na zadaný PreviewString nebo PreviewBytes použito jen s problémy</value>
+  </data>
+  <data name="Text_d" xml:space="preserve">
+    <value>Text zobrazený v záhlaví okna</value>
+  </data>
+  <data name="Text_dv" xml:space="preserve">
+    <value>Vybrat kódování</value>
+  </data>
+  <data name="ShowHelp_d" xml:space="preserve">
+    <value>Určuje jestli bude zobrazeno tlačítko nápovědy</value>
+  </data>
+  <data name="OKClicked_d" xml:space="preserve">
+    <value>Vyvolána po té co uživatel klikne na tlačítko OK a dialog mu dovolí vybrat kódování</value>
+  </data>
 </root>

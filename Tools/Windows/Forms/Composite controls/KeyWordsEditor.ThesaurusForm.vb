@@ -5,7 +5,6 @@ Imports Tools.WindowsT.FormsT.UtilitiesT.Misc
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then Set in Tools.vbproj
     'Stage: Alpha
-    'Localize: UI
     ''' <summary>Editor of autocomplete list and synonym groups for <see cref="KeyWordsEditor"/></summary>
     Friend NotInheritable Class ThesaurusForm
         ''' <summary><see cref="KeyWordsEditor"/> this instance is for</summary>

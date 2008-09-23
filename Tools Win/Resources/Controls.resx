@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,140 +117,34 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="kweAutoComplete.ToolTip" xml:space="preserve">
-    <value />
+  <data name="CloseBoxEnabled_d" xml:space="preserve">
+    <value>Gets or sets state of the close button ('X') of current form. Cannot be chaged when CloseBox is False.</value>
   </data>
-  <data name="fraAutoComplete.Text" xml:space="preserve">
-    <value>Seznam pro automatické dokončování</value>
+  <data name="CloseBox_d" xml:space="preserve">
+    <value>Determines if form has close box in upper-right corner in its caption bar. Note: The X button doesn't disappear, its only grayed (even not grayed on Vista). So, use rather CloseBoxEnabled.</value>
   </data>
-  <data name="fraAutoComplete.ToolTip" xml:space="preserve">
-    <value />
+  <data name="WindowStateChanged_d" xml:space="preserve">
+    <value>Raised after the WindowState property is changed</value>
   </data>
-  <data name="splAutoComplete.Panel1.ToolTip" xml:space="preserve">
-    <value />
+  <data name="NoWindow" xml:space="preserve">
+    <value>&lt;no window&gt;</value>
   </data>
-  <data name="kweCache.ToolTip" xml:space="preserve">
-    <value />
+  <data name="LowLevel_c" xml:space="preserve">
+    <value>Low-level</value>
   </data>
-  <data name="fraCache.Text" xml:space="preserve">
-    <value>Dočasné autodokončování (platí do ukončení programu)</value>
+  <data name="WindowProperties_c" xml:space="preserve">
+    <value>Window properties</value>
   </data>
-  <data name="fraCache.ToolTip" xml:space="preserve">
-    <value />
+  <data name="Relationship_c" xml:space="preserve">
+    <value>Relationship</value>
   </data>
-  <data name="splAutoComplete.Panel2.ToolTip" xml:space="preserve">
-    <value />
+  <data name="Children_d" xml:space="preserve">
+    <value>Gets all childrens of current windows</value>
   </data>
-  <data name="splAutoComplete.ToolTip" xml:space="preserve">
-    <value />
+  <data name="SizeAndPosition_c" xml:space="preserve">
+    <value>Size and position</value>
   </data>
-  <data name="splVertical.Panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="kweKeys.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="fraKeys.Text" xml:space="preserve">
-    <value>Klíče</value>
-  </data>
-  <data name="fraKeys.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splSynonyms.Panel1.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="kweValues.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="fraValues.Text" xml:space="preserve">
-    <value>Hodnoty</value>
-  </data>
-  <data name="fraValues.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splSynonyms.Panel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splSynonyms.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmdDelSyn.ToolTip" xml:space="preserve">
-    <value>Odstranit vybranou skupinu synonym</value>
-  </data>
-  <data name="cmdAddSyn.ToolTip" xml:space="preserve">
-    <value>Přidat novou skupinu synonym</value>
-  </data>
-  <data name="cmbSyn.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tlpSelect.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="fraSynonyms.Text" xml:space="preserve">
-    <value>Synonyma</value>
-  </data>
-  <data name="fraSynonyms.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splVertical.Panel2.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="splVertical.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="cmdOpen.Location" type="System.Drawing.Point, System.Drawing">
-    <value>95, 3</value>
-  </data>
-  <data name="cmdOpen.ToolTip" xml:space="preserve">
-    <value>Importovat klíčová slova ze souboru</value>
-  </data>
-  <data name="cmdSave.Location" type="System.Drawing.Point, System.Drawing">
-    <value>123, 3</value>
-  </data>
-  <data name="cmdSave.ToolTip" xml:space="preserve">
-    <value>Uložit klíčová slova do souboru</value>
-  </data>
-  <data name="cmdOK.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="cmdCancel.Size" type="System.Drawing.Size, System.Drawing">
-    <value>48, 23</value>
-  </data>
-  <data name="cmdCancel.Text" xml:space="preserve">
-    <value>&amp;Storno</value>
-  </data>
-  <data name="cmdCancel.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="flpButtons.Location" type="System.Drawing.Point, System.Drawing">
-    <value>251, 0</value>
-  </data>
-  <data name="flpButtons.Size" type="System.Drawing.Size, System.Drawing">
-    <value>148, 29</value>
-  </data>
-  <data name="flpButtons.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="tlpButtons.ToolTip" xml:space="preserve">
-    <value />
-  </data>
-  <data name="sfdSave.Filter" xml:space="preserve">
-    <value>Soubory XML (*.xml)|*.xml|Všechny soubory (*.*)|*.*</value>
-  </data>
-  <data name="sfdSave.Title" xml:space="preserve">
-    <value>Uložit klíčová slova</value>
-  </data>
-  <data name="ofdLoad.Filter" xml:space="preserve">
-    <value>Soubory XML (*.xml)|*.xml|Další soubory (*.*)|*.*</value>
-  </data>
-  <data name="ofdLoad.Title" xml:space="preserve">
-    <value>Načíst klíčová slova</value>
-  </data>
-  <data name="$this.Text" xml:space="preserve">
-    <value>Editor seznamů automatického dokončování a synonym</value>
-  </data>
-  <data name="$this.ToolTip" xml:space="preserve">
-    <value />
+  <data name="Handle_c" xml:space="preserve">
+    <value>Handle</value>
   </data>
 </root>

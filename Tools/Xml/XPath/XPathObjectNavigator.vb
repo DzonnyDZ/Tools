@@ -123,7 +123,7 @@ Namespace XmlT.XPathT
             ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[Step]"/>.</summary>
             ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[Step]"/></returns>
             Public Overrides Function ToString() As String
-                Return String.Format("Object ""{0}"" type {1}", Me.Object, Me.Object.GetType.Name)
+                Return String.Format(My.Resources.Object0Type1, Me.Object, Me.Object.GetType.Name)
             End Function
         End Class
         ''' <summary>Represents root step of pesudo-XML structure. This step can occure only as first step of sequence.</summary>
@@ -185,7 +185,7 @@ Namespace XmlT.XPathT
             ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[PropertyStep]"/>.</summary>
             ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[PropertyStep]"/></returns>
             Public Overrides Function ToString() As String
-                Return MyBase.ToString() & String.Format(" Property {0}", Me.Property.Name)
+                Return MyBase.ToString() & " " & String.Format(My.Resources.Property0, Me.Property.Name)
             End Function
         End Class
         ''' <summary>Represents step that points to item of <see cref="IEnumerable"/></summary>
@@ -210,10 +210,10 @@ Namespace XmlT.XPathT
             Public Sub New(ByVal [Object] As IEnumerable, Optional ByVal [index] As Integer = 0)
                 MyBase.New([Object])
                 Me.Index = index
-                If index < 0 Then Throw New ArgumentOutOfRangeException("index", "index mus be greater than or equal to zero")
+                If index < 0 Then Throw New ArgumentOutOfRangeException("index", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "index"))
                 _Enumerator = Me.Object.GetEnumerator
                 For i As Integer = 0 To Me.Index
-                    If Not Enumerator.MoveNext() Then Throw New ArgumentOutOfRangeException("index", "There are not enought items in IEnumerable")
+                    If Not Enumerator.MoveNext() Then Throw New ArgumentOutOfRangeException("index", String.Format(ResourcesT.Exceptions.ThereAreNotEnoughtItemsIn0, "IEnumerable"))
                 Next i
             End Sub
             ''' <summary>Shadows <see cref="[Step].[Object]"/> by returning it casted to <see cref="IEnumerable"/></summary>
@@ -243,7 +243,7 @@ Namespace XmlT.XPathT
             ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[EnumerableStep]"/>.</summary>
             ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[EnumerableStep]"/></returns>
             Public Overrides Function ToString() As String
-                Return MyBase.ToString() & String.Format(" index {0}", Index)
+                Return MyBase.ToString() & " " & String.Format(My.Resources.Index0, Index)
             End Function
         End Class
         ''' <summary>Step that points to pseudo-CData content of pseudo-node</summary>
@@ -317,7 +317,7 @@ Namespace XmlT.XPathT
             ''' <summary>Returns a <see cref="System.String"/> that represents the current <see cref="[SpecialStep]"/>.</summary>
             ''' <returns>A <see cref="System.String"/> that represents the current <see cref="[SpecialStep]"/></returns>
             Public Overrides Function ToString() As String
-                Return MyBase.ToString() & String.Format(" type {0}", Type)
+                Return MyBase.ToString() & " " & String.Format(My.Resources.Type0, Type)
             End Function
         End Class
 #End Region

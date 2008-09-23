@@ -50,8 +50,8 @@ Namespace IOt
                 Return _OverflowStream
             End Get
         End Property
-        ''' <summary>In case the <see cref="SetLength"/> method of this instance was used and the lenght set was smaller than <see cref="SharedLenght"/> this property gets the difference bethween those two lengths (always positive value).</summary>
-        ''' <remarks>Number of bytes this stream is shorter than <see cref="SharedLenght"/> or zero if this stream is same zize or longer than <see cref="SharedLenght"/></remarks>
+        ''' <summary>In case the <see cref="SetLength"/> method of this instance was used and the lenght set was smaller than <see cref="SharedLength"/> this property gets the difference bethween those two lengths (always positive value).</summary>
+        ''' <remarks>Number of bytes this stream is shorter than <see cref="SharedLength"/> or zero if this stream is same zize or longer than <see cref="SharedLength"/></remarks>
         Protected ReadOnly Property Underflow() As Long
             Get
                 Return _Underflow
@@ -62,14 +62,14 @@ Namespace IOt
         ''' <summary>Creates new instace of the <see cref="OverflowStream"/> class</summary>
         ''' <param name="BaseStream">Stream to insert data to.</param>
         ''' <param name="Start">The byte offset from start of <paramref name="BaseStream"/> to start of area new instance will have access to. (See <see cref="Start"/>)</param>
-        ''' <param name="SharedLength">The lenght (in bytes) of area (starting at <paramref name="Start"/> new instance will have access to. (See <see cref="SharedLenght"/>)</param>
+        ''' <param name="SharedLength">The lenght (in bytes) of area (starting at <paramref name="Start"/> new instance will have access to. (See <see cref="SharedLength"/>)</param>
         Public Sub New(ByVal BaseStream As IO.Stream, ByVal Start As Long, ByVal SharedLength As Long)
             Me.New(BaseStream, Start, SharedLength, 0)
         End Sub
         ''' <summary>Creates new instace of the <see cref="OverflowStream"/> class</summary>
         ''' <param name="BaseStream">Stream to insert data to.</param>
         ''' <param name="Start">The byte offset from start of <paramref name="BaseStream"/> to start of area new instance will have access to. (See <see cref="Start"/>)</param>
-        ''' <param name="SharedLength">The lenght (in bytes) of area (starting at <paramref name="Start"/> new instance will have access to. (See <see cref="SharedLenght"/>)</param>
+        ''' <param name="SharedLength">The lenght (in bytes) of area (starting at <paramref name="Start"/> new instance will have access to. (See <see cref="SharedLength"/>)</param>
         ''' <param name="OverflowCapacity">The initial size of <see cref="OverflowStream"/> in bytes</param>
         Public Sub New(ByVal BaseStream As IO.Stream, ByVal Start As Long, ByVal SharedLength As Long, ByVal OverflowCapacity As Long)
             If BaseStream Is Nothing Then Throw New ArgumentNullException("BaseStream")
@@ -128,14 +128,28 @@ Namespace IOt
         ''' <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
         Public Overrides Sub SetLength(ByVal value As Long)
-            If value < SharedLength Then _
-                _Underflow = SharedLength - value _
-                : OverflowStream.SetLength(0) _
-            Else _
-                _Underflow = 0 _
-                : OverflowStream.SetLength(value - SharedLength)
+            If value = Length Then Exit Sub
+            If IsAtEnd Then
+                Dim OldSharedLength = SharedLength
+                BaseStream.SetLength(Start + value)
+                _SharedLength = BaseStream.Length - Start
+                OnAfterFlush(New FlushEventArgs(OldSharedLength, True))
+            ElseIf value < SharedLength Then
+                _Underflow = SharedLength - value
+                OverflowStream.SetLength(0)
+            Else
+                _Underflow = 0
+                OverflowStream.SetLength(value - SharedLength)
+            End If
             If Position > value Then _Position = value
         End Sub
+        ''' <summary>Gets value indicating if if this stream operates at the end of <see cref="BaseStream"/>, so buffering to <see cref="OverflowStream"/> can be ommitted.</summary>
+        ''' <returns>True when sum of <see cref="Start"/> and <see cref="SharedLength"/> is greater than of equal to lenght of <see cref="BaseStream"/></returns>
+        Protected ReadOnly Property IsAtEnd() As Boolean
+            Get
+                Return Start + SharedLength >= BaseStream.Length
+            End Get
+        End Property
         ''' <summary>Gets or sets the position within the current stream.</summary>
         ''' <returns>The current position within the stream.</returns>
         ''' <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
@@ -149,14 +163,24 @@ Namespace IOt
             End Set
         End Property
 #End Region
+#Region "Implementation"
         ''' <summary>Clears all buffers for this stream and causes any buffered data to be written to the underlying device.                </summary>
         ''' <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
         Public Overrides Sub Flush()
+            Dim OldSharedLenght = SharedLength
             If Underflow = 0 AndAlso OverflowStream.Length > 0 Then
                 BaseStream.InsertInto(Start, SharedLength, OverflowStream.GetBuffer, 0, OverflowStream.Length)
+                _SharedLength += OverflowStream.Length
+                OverflowStream.SetLength(0)
             ElseIf Underflow > 0 Then
+                OverflowStream.Flush()
                 BaseStream.InsertInto(Start + Length, SharedLength - (Start + Length), New Byte() {})
+                _SharedLength -= Underflow
+                _Underflow = 0
+                OverflowStream.SetLength(0)
             End If
+            OnAfterFlush(New FlushEventArgs(OldSharedLenght))
+            BaseStream.Flush()
         End Sub
 
         ''' <summary>Reads a sequence of bytes from the current stream and advances the position within the stream by the number of bytes read.</summary>
@@ -175,7 +199,36 @@ Namespace IOt
             If offset < 0 Then Throw New ArgumentOutOfRangeException("offset", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "offset"))
             If count < 0 Then Throw New ArgumentOutOfRangeException("offset", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "count"))
             If Position >= Length OrElse count = 0 Then Return 0
-            'TODO:Implement
+            If IsAtEnd Then
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                Dim ret = BaseStream.Read(buffer, offset, count)
+                Position += ret
+                Return ret
+            End If
+            Dim BytesRead%
+            'Read from base stream
+            If Position < SharedLength Then
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                Dim BaseStreamToReadCount = Math.Max(CLng(count), SharedLength - Underflow - Position)
+                Dim BaseStreamReadCount = BaseStream.Read(buffer, offset, BaseStreamToReadCount)
+                If BaseStreamReadCount < BaseStreamToReadCount Then
+                    Position += BaseStreamReadCount
+                    Return BaseStreamReadCount
+                Else
+                    BytesRead = BaseStreamReadCount
+                End If
+            End If
+            Dim Remains = count - BytesRead
+            If Remains = 0 OrElse Underflow > 0 OrElse OverflowStream.Length = 0 Then
+                Position += BytesRead
+                Return BytesRead
+            End If
+            'Read from overflow stream
+            Dim OverflowPosition = If(Position < SharedLength, 0, Position - SharedLength)
+            If OverflowStream.Position <> OverflowPosition Then OverflowStream.Position = OverflowPosition
+            BytesRead += OverflowStream.Read(buffer, offset + BytesRead, count - BytesRead)
+            Position += BytesRead
+            Return BytesRead
         End Function
         ''' <summary>Writes a sequence of bytes to the current stream and advances the current position within this stream by the number of bytes written.</summary>
         ''' <param name="buffer">An array of bytes. This method copies <paramref name="count" /> bytes from <paramref name="buffer" /> to the current stream.</param>
@@ -192,8 +245,152 @@ Namespace IOt
             If offset < 0 Then Throw New ArgumentOutOfRangeException("offset", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "offset"))
             If count < 0 Then Throw New ArgumentOutOfRangeException("offset", String.Format(ResourcesT.Exceptions.MustBeGreaterThanOrEqualToZero, "count"))
             If count = 0 Then Exit Sub
-            'TODO:Implement
+            If IsAtEnd Then
+                Dim OldSharedLenght = SharedLength
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                BaseStream.Write(buffer, offset, count)
+                _SharedLength = BaseStream.Length - Start
+                If SharedLength <> OldSharedLenght Then OnAfterFlush(New FlushEventArgs(OldSharedLenght, True))
+                Return
+            End If
+            Dim BytesWritten%
+            'Write to base stream
+            If Position < SharedLength Then
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                Dim BaseStreamToWriteCount = Math.Max(CLng(count), SharedLength - Position)
+                BaseStream.Write(buffer, offset, BaseStreamToWriteCount)
+                BytesWritten = BaseStreamToWriteCount
+            End If
+            If BytesWritten = count Then
+                Position += BytesWritten
+                Exit Sub
+            End If
+            'Write to overflow stream
+            Dim OverflowPosition = If(Position < SharedLength, 0, Position - SharedLength)
+            If OverflowStream.Position <> OverflowPosition Then OverflowStream.Position = OverflowPosition
+            OverflowStream.Write(buffer, offset + BytesWritten, count - BytesWritten)
+            BytesWritten = count
+            Position += BytesWritten
         End Sub
+
+        ''' <summary>Reads a byte from the stream and advances the position within the stream by one byte, or returns -1 if at the end of the stream.</summary>
+        ''' <returns>The unsigned byte cast to an Int32, or -1 if at the end of the stream.</returns>
+        ''' <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+        Public Overrides Function ReadByte() As Integer
+            If IsAtEnd OrElse Position < SharedLength - Underflow Then
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                Dim ret = BaseStream.ReadByte()
+                Position += 1
+                Return ret
+            ElseIf Underflow > 0 Then
+                Return -1
+            ElseIf Position < Length Then
+                If OverflowStream.Position <> Position - SharedLength Then OverflowStream.Position = Position - SharedLength
+                Dim ret = OverflowStream.ReadByte
+                Position += 1
+                Return ret
+            Else
+                Return -1
+            End If
+        End Function
+        ''' <summary>Writes a byte to the current position in the stream and advances the position within the stream by one byte.</summary>
+        ''' <param name="value">The byte to write to the stream.</param>
+        ''' <exception cref="T:System.IO.IOException">An I/O error occurs.</exception>
+        ''' <exception cref="T:System.ObjectDisposedException">Methods were called after the stream was closed.</exception>
+        ''' <filterpriority>2</filterpriority>
+        Public Overrides Sub WriteByte(ByVal value As Byte)
+            If IsAtEnd Then
+                Dim OldSharedLenght = SharedLength
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                BaseStream.WriteByte(value)
+                Position += 1
+                _SharedLength = BaseStream.Length - Start
+                If SharedLength <> OldSharedLenght Then OnAfterFlush(New FlushEventArgs(OldSharedLenght, True))
+            ElseIf Position < SharedLength AndAlso Position >= SharedLength - Underflow Then
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                BaseStream.WriteByte(value)
+                Position += 1
+                _Underflow = SharedLength - Position + 1
+            ElseIf Position < SharedLength Then
+                If BaseStream.Position <> Start + Position Then BaseStream.Position = Start + Position
+                BaseStream.WriteByte(value)
+                Position += 1
+            Else
+                If OverflowStream.Position <> Position - SharedLength Then OverflowStream.Position = Position - SharedLength
+                OverflowStream.WriteByte(value)
+                Position += 1
+            End If
+        End Sub
+#End Region
+#Region "Other stuff"
+        ''' <summary>Closes the current stream and releases any resources (such as sockets and file handles) associated with the current stream.</summary>
+        Public Overrides Sub Close()
+            MyBase.Close()
+            OnAfterClose(New EventArgs)
+            If CloseBaseStream Then BaseStream.Close()
+        End Sub
+        ''' <summary>Contains value of the <paramref name="CloseBaseStream"/> property</summary>
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CloseBaseStream As Boolean
+        ''' <summary>Gets or sets value indicating when <see cref="BaseStream">BaseStream</see>.<see cref="IO.Stream.Close">Close</see> is called when <see cref="Close"/> is called.</summary>
+        ''' <remarks>True if base stream is closed when this stream is closed.</remarks>
+        Public Property CloseBaseStream() As Boolean
+            <DebuggerStepThrough()> Get
+                Return _CloseBaseStream
+            End Get
+            <DebuggerStepThrough()> Set(ByVal value As Boolean)
+                _CloseBaseStream = value
+            End Set
+        End Property
+#End Region
+#Region "Events"
+        ''' <summary>Raises the <see cref="AfterFlush"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub OnAfterFlush(ByVal e As FlushEventArgs)
+            RaiseEvent AfterFlush(Me, e)
+        End Sub
+        ''' <summary>Raises the <see cref="AfterClose"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub OnAfterClose(ByVal e As EventArgs)
+            RaiseEvent AfterClose(Me, e)
+        End Sub
+        ''' <summary>Raised after the <see cref="Flush"/> method is called</summary>
+        ''' <remarks>Use this event to detect changes of lenght of embdeded stream.
+        ''' <para>When stream is fkushed all data are written to <see cref="BaseStream"/> and original data of <see cref="BaseStream"/> positioned after resticted area of this stream is moved (left or right) depending on if <see cref="SharedLength"/> is shinking or growing. <see cref="SharedLength"/> is updated so it is same as <see cref="Length"/>.</para>
+        ''' <para>When this stream is placed at the end of <see cref="BaseStream"/> this event is raised for each call of <see cref="Write"/> which causes change of length of stream and for each call of <see cref="SetLength"/> because buffering is ommited.</para>
+        ''' <para>The <see cref="Flush"/> method also calls the <see cref="IO.Stream.Flush"/> method of <see cref="BaseStream"/>. This event is raised before it is called.</para></remarks>
+        Public Event AfterFlush As EventHandler(Of OverflowStream, FlushEventArgs)
+        ''' <summary>Raised after the <see cref="Close"/> method is called</summary>
+        ''' <remarks>If <see cref="CloseBaseStream"/> is true, this event is raised before <see cref="BaseStream"/> is closed.</remarks>
+        Public Event AfterClose As EventHandler(Of OverflowStream, EventArgs)
+        Public Class FlushEventArgs
+            Inherits EventArgs
+            ''' <summary>Contains value of the <see cref="OldSharedLenght"/> property</summary>
+            Private ReadOnly _OldSharedLength As Long
+            ''' <summary>CTor</summary>
+            ''' <param name="OldSharedLength"><see cref="SharedLength"/> before fhush was performed.</param>
+            ''' <param name="ForWrite">Indicates if event is being raised by <see cref="Write"/> or <see cref="SetLength"/> method (true) or <see cref="Flush"/> method (false)</param>
+            Public Sub New(ByVal OldSharedLength As Long, Optional ByVal ForWrite As Boolean = False)
+                _OldSharedLength = OldSharedLength
+            End Sub
+            ''' <summary>Contains cvalue of the <see cref="ForWrite"/> property</summary>
+            Private ReadOnly _ForWrite As Boolean
+            ''' <summary>Gest value idicating if event was raised for <see cref="Write"/> or <see cref="SetLength"/> method or for <see cref="Flush"/></summary>
+            ''' <returns>True if event was raised for <see cref="Write"/> or <see cref="SetLength"/> method. False if event was raised for <see cref="Flush"/></returns>
+            ''' <remarks>The <see cref="IOt.OverflowStream"/> class raises the <see cref="AfterFlush"/> event with this property set to true whenever <see cref="Write"/> which causes change of length of stream or <see cref="SetLength"/> is called while buffering mechanism is ommited because of <see cref="IOt.OverflowStream"/> resides at the end of <see cref="BaseStream"/> </remarks>
+            Public ReadOnly Property ForWrite() As Boolean
+                Get
+                    Return _ForWrite
+                End Get
+            End Property
+            ''' <summary>Value of the <see cref="SharedLength"/> property before call of the <see cref="Flush"/> method</summary>
+            ''' <returns>Gets old value of the <see cref="SharedLength"/> property before the action thät caused the event to be raised was taken.</returns>
+            Public ReadOnly Property OldSharedLenght() As Long
+                Get
+                    Return _OldSharedLength
+                End Get
+            End Property
+        End Class
+#End Region
     End Class
 End Namespace
 #End If

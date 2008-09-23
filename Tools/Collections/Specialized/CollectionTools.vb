@@ -82,7 +82,7 @@ Namespace CollectionsT.SpecializedT
         ''' <seealso cref="WindowsT.FormsT.UtilitiesT.Misc.ReplaceControl"/>
         <Extension()> Sub Replace(ByVal Collection As Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
-            If index < 0 OrElse index >= Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection) 'Localize:Exception
+            If index < 0 OrElse index >= Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection)
             Collection.RemoveAt(index)
             If Control Is Nothing Then Exit Sub
             Collection.Insert(index, Control)

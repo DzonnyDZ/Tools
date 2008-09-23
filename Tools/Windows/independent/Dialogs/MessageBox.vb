@@ -2929,7 +2929,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
                 If (options And Windows.Forms.MessageBoxOptions.RtlReading) = Windows.Forms.MessageBoxOptions.RtlReading Then box.Options = box.Options Or MessageBoxOptions.Rtl
                 Return ShowTemplate(box, owner)
             Catch ex As Exception When Not TypeOf ex Is TargetInvocationException
-                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex) 'Localize exception
+                Throw New TargetInvocationException(ResourcesT.Exceptions.ThereWasAnErrorInvokingMessageBoxSeeInnerExceptionForDetails, ex)
             End Try
         End Function
         ''' <summary>Performs modal dialog for WinForms-like functions with <see cref="Windows.Forms.MessageBoxIcon"/></summary>

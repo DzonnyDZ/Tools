@@ -33,7 +33,7 @@ namespace Tools.GeneratorsT
     /// <returns>File converted</returns>
     public override string DoGenerateCode(string inputFileName, string inputFileContent){
 
-      string transformerFileName = "NOT FOUND";
+      string transformerFileName = Tools.Generators.Resources.NOTFOUND;
       StringWriter outputWriter = new StringWriter();
       try
       {
@@ -89,9 +89,9 @@ namespace Tools.GeneratorsT
       catch(Exception ex)
       {
         outputWriter.WriteLine("/*");
-        outputWriter.WriteLine("\tERROR: Unable to generate output for template:");
+        outputWriter.WriteLine("\t"+Tools.Generators.Resources.ERRORUnableToGenerateOutputForTemplate);
         outputWriter.WriteLine("\t'{0}'", inputFileName);
-        outputWriter.WriteLine("\tUsing transformer:");
+        outputWriter.WriteLine("\t"+Tools.Generators.Resources.UsingTransformer);
         outputWriter.WriteLine("\t'{0}'", transformerFileName);
         outputWriter.WriteLine("");
         outputWriter.WriteLine(ex.ToString());

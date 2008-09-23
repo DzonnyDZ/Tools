@@ -157,7 +157,7 @@ Public Module TypeTools
     ''' <returns>Returns value of type <paramref name="EnumType"/></returns>
     ''' <exception cref="ArgumentException"><paramref name="EnumType"/> is not enumeration =or= any flag cannot be found as member of <paramref name="EnumType"/></exception>
     Public Function FlagsFromString(ByVal Flags As String, ByVal EnumType As Type, ByVal Separator As String) As [Enum]
-        If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "EnumType"), "EnumType") 'Localize exception
+        If Not EnumType.IsEnum Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeEnumeration, "EnumType"), "EnumType")
         If [Enum].GetUnderlyingType(EnumType).Equals(GetType(SByte)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Short)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Integer)) OrElse [Enum].GetUnderlyingType(EnumType).Equals(GetType(Long)) Then
             Dim ret As Long = 0
             For Each item In Flags.Split(Separator)

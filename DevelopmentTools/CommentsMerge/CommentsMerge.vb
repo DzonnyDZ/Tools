@@ -5,9 +5,9 @@ Friend Module CommentsMerge
     ''' <summary>Entry point. Reads command line arguments and performs operation</summary>
     Public Sub Main()
         If My.Application.CommandLineArgs.Count <> 3 Then
-            Console.WriteLine("CommentsMerge: Merges XML comment files")
-            Console.WriteLine("Usage: CommenstMerge PrimaryFile SecondaryFile OutputFile")
-            Console.WriteLine("Files should be namespace-less or have http://dzonny.cz/xml/schemas/intellisense namespace")
+            Console.WriteLine(My.Resources.CommentsMergeMergesXMLCommentFiles)
+            Console.WriteLine(My.Resources.UsageCommenstMergePrimaryFileSecondaryFileOutputFile)
+            Console.WriteLine(My.Resources.FilesShouldBeNamespaceLessOrHaveHttpDzonnyCzXmlSchemasIntellisenseNamespace)
             Return
         End If
         Console.WriteLine("{0} {1} {2}", My.Application.Info.Title, My.Application.Info.Version, My.Application.Info.Copyright)
@@ -15,7 +15,7 @@ Friend Module CommentsMerge
         Try
             Pri = XDocument.Load(My.Application.CommandLineArgs(0))
         Catch ex As Exception
-            Console.Error.WriteLine("Primary file: {0}: {1}", ex.GetType.Name, ex.Message)
+            Console.Error.WriteLine(My.Resources.PrimaryFile01, ex.GetType.Name, ex.Message)
             Environment.Exit(1)
             Exit Sub
         End Try
@@ -23,7 +23,7 @@ Friend Module CommentsMerge
         Try
             Sec = XDocument.Load(My.Application.CommandLineArgs(1))
         Catch ex As Exception
-            Console.Error.WriteLine("Secondary file: {0}: {1}", ex.GetType.Name, ex.Message)
+            Console.Error.WriteLine(My.Resources.SecondaryFile01, ex.GetType.Name, ex.Message)
             Environment.Exit(2)
             Exit Sub
         End Try
@@ -31,14 +31,14 @@ Friend Module CommentsMerge
         Try
             mg = Merge(Pri, Sec)
         Catch ex As Exception
-            Console.Error.WriteLine("Transformation: {0}: {1}", ex.GetType.Name, ex.Message)
+            Console.Error.WriteLine(My.Resources.Transformation01, ex.GetType.Name, ex.Message)
             Environment.Exit(3)
             Exit Sub
         End Try
         Try
             mg.Save(My.Application.CommandLineArgs(2))
         Catch ex As Exception
-            Console.Error.WriteLine("Save: {0}: {1}", ex.GetType.Name, ex.Message)
+            Console.Error.WriteLine(My.Resources.Save01, ex.GetType.Name, ex.Message)
             Environment.Exit(4)
             Exit Sub
         End Try

@@ -966,4 +966,28 @@
   <data name="WasGreaterThanLegnthOf2" xml:space="preserve">
     <value>{0} + {1} was greater than legnth of {2}.</value>
   </data>
+  <data name="UnsupportedSourceType" xml:space="preserve">
+    <value>Unsupported source type</value>
+  </data>
+  <data name="UnsupportedTargetType" xml:space="preserve">
+    <value>Unsupported target type</value>
+  </data>
+  <data name="ThisConverterCanConvertOnlyFrom0" xml:space="preserve">
+    <value>This converter can convert only from {0}.</value>
+  </data>
+  <data name="ThisConverterCanConvertOnlyTo0" xml:space="preserve">
+    <value>This converter can convert only to {0}.</value>
+  </data>
+  <data name="ThisConverterCanConvertBackOnlyFrom0" xml:space="preserve">
+    <value>This converter can convert back only from {0}.</value>
+  </data>
+  <data name="ThisConverterCanConvertBackOnlyTo0" xml:space="preserve">
+    <value>This converter can convert back only to {0}.</value>
+  </data>
+  <data name="ThereAreNotEnoughtItemsIn0" xml:space="preserve">
+    <value>There are not enought items in {0}</value>
+  </data>
+  <data name="MustBeMemberOf0CollectionOf2" xml:space="preserve">
+    <value>{0} must be member of {0} collection of {2}</value>
+  </data>
 </root>

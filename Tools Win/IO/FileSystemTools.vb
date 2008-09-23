@@ -18,7 +18,7 @@ Namespace IOt
         Public Function GetIcon(ByVal PathP As IPathProvider, Optional ByVal Large As Boolean = False, Optional ByVal Overlays As Boolean = True) As Drawing.Icon
             If PathP Is Nothing Then Throw New ArgumentNullException("PathP")
             Dim Path = New Path(PathP.Path)
-            If Not Path.Exists Then Throw New IO.FileNotFoundException(String.Format("Path {0} does not exist.", Path))
+            If Not Path.Exists Then Throw New IO.FileNotFoundException(String.Format(ResourcesT.Exceptions.Path0DoesNotExist, Path))
             Dim shInfo As New SHFILEINFO
             Dim ret = SHGetFileInfo(Path, 0, shInfo, Marshal.SizeOf(shInfo), _
                 FileInformationFlags.SHGFI_ICON Or If(Large, FileInformationFlags.SHGFI_LARGEICON, FileInformationFlags.SHGFI_SMALLICON) Or If(Overlays, FileInformationFlags.SHGFI_ADDOVERLAYS, CType(0, FileInformationFlags)))
