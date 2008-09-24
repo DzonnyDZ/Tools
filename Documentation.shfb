@@ -1,5 +1,6 @@
 ﻿<project schemaVersion="1.6.0.7">
     <assemblies>
+        <assembly assemblyPath=".\Projects\Metanol2\bin\Debug\Metanol.exe" xmlCommentsPath=".\Projects\Metanol2\bin\Debug\Metanol.xml" commentsOnly="False" />
         <assembly assemblyPath=".\bin\Latest\Tools Experimental.dll" xmlCommentsPath=".\bin\Latest\Tools Experimental.xml" commentsOnly="False" />
         <assembly assemblyPath=".\bin\Latest\Tools IL.dll" xmlCommentsPath=".\bin\Latest\Tools IL.xml" commentsOnly="False" />
         <assembly assemblyPath=".\bin\Latest\Tools Win.dll" xmlCommentsPath=".\bin\Latest\Tools Win.xml" commentsOnly="False" />
@@ -72,7 +73,7 @@
     <CleanIntermediates>False</CleanIntermediates>
     <KeepLogFile>True</KeepLogFile>
     <BuildLogFile path=".\Help\log.log" />
-    <HelpFileFormat>Help1xAnd2xAndWebsite</HelpFileFormat>
+    <HelpFileFormat>Help2xAndWebsite</HelpFileFormat>
     <CppCommentsFixup>False</CppCommentsFixup>
     <FrameworkVersion>3.5</FrameworkVersion>
     <IndentHtml>False</IndentHtml>
