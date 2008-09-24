@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8" ?>
+<?transformer IPTCTags.xslt?>
 <Root xmlns="http://codeplex.com/DTools/IPTCTags" Stage="Nightly" transformer="IPTCTags.xslt">
     <record number="1" name="Envelope" human-name="Envelope record">
         <desc>Contains internal IPTC data used formerly in telecommunications. Now it is considered being deprecated and is not widely in use.</desc>

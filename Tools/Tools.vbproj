@@ -678,7 +678,7 @@
       <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
-      <LogicalName>Tools.DrawingT.MetadataT.IptcT.IPTCResources.resources</LogicalName>
+      <LogicalName>Tools.DrawingT.MetadataT.IptcT.IptcResources.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.cs.resx">
@@ -717,8 +717,8 @@
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
-      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
       <SubType>Designer</SubType>
+      <LogicalName>Tools.ResourcesT.Exceptions.resx</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Tools\Icons.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>

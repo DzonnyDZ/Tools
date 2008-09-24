@@ -31,14 +31,14 @@ Namespace WindowsT.FormsT
         Private Shared Property SystemMenuItemEnabled(ByVal WindowHandle As Int32, ByVal MenuItem As API.SystemMenuItems) As SystemMenuState
             Get
                 Dim Prev As enmPreviousMenuItemStatus = EnableMenuItem(GetSystemMenu(WindowHandle, 0), MenuItem, enmEnableMenuItemStatus.MF_BYCOMMAND Or enmEnableMenuItemStatus.MF_ENABLED)
-                If Prev = enmPreviousMenuItemStatus.DoesNotExist Then Throw New ArgumentException(ResourcesT.Exceptions.MenuItemDoesnTExist, "MenuItem")
+                If Prev = enmPreviousMenuItemStatus.DoesNotExist Then Throw New ArgumentException(ResourcesT.ExceptionsWin.MenuItemDoesnTExist, "MenuItem")
                 SystemMenuItemEnabled = Prev
                 SystemMenuItemEnabled(WindowHandle, MenuItem) = Prev
             End Get
             Set(ByVal value As SystemMenuState)
                 Select Case EnableMenuItem(GetSystemMenu(WindowHandle, 0), MenuItem, enmEnableMenuItemStatus.MF_BYCOMMAND Or value)
                     Case enmPreviousMenuItemStatus.DoesNotExist
-                        Throw New ArgumentException(ResourcesT.Exceptions.MenuItemDoesnTExist, "MenuItem")
+                        Throw New ArgumentException(ResourcesT.ExceptionsWin.MenuItemDoesnTExist, "MenuItem")
                     Case Else
                 End Select
             End Set
@@ -51,7 +51,7 @@ Namespace WindowsT.FormsT
         ''' <returns>Curent state of button</returns>
         ''' <remarks>Status of menu is not re-set after changing <see cref="MinimizeBox"/> or <see cref="MaximizeBox"/> property. You have to refresh user-visible status of this property manually!</remarks>
         ''' <exception cref="ArgumentException">Error while accessing system menu status (may be caused by no close item in system menu - e.g. because <see cref="CloseBox"/> is false)</exception>
-        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle), LDescription(GetType(ResourcesT.Controls), "CloseBoxEnabled_d")> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle), LDescription(GetType(WindowsT.FormsT.ControlsWin), "CloseBoxEnabled_d")> _
         Public Property CloseBoxEnabled() As SystemMenuState
             Get
                 Return _CloseBoxEnabled
@@ -109,7 +109,7 @@ Namespace WindowsT.FormsT
         ''' <remarks>Setting this property to false causes mennuitem "Close" disappearing and the X button being grayed. User CANNOT use Alt+F4 or other 'non-killing' method to close the window. Property <see cref="CloseBoxEnabled"/> cannot be changed while <see cref="CloseBox"/> is False.
         ''' You'd better use <see cref="CloseBoxEnabled"/>
         ''' Windows Vista: The close (X) button is NOT grayed but does nothing when user click it.</remarks>
-        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle), LDescription(GetType(ResourcesT.Controls), "CloseBox_d")> _
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.WindowStyle), LDescription(GetType(WindowsT.FormsT.ControlsWin), "CloseBox_d")> _
         Public Property CloseBox() As Boolean
             Get
                 Return _CloseBox
@@ -118,7 +118,7 @@ Namespace WindowsT.FormsT
                 If value <> CloseBox Then
                     If value Then
                         If GetSystemMenu(Me.Handle, APIBool.TRUE) = -1 Then
-                            Throw New InvalidOperationException(ResourcesT.Exceptions.UnableToObtainHandleToSystemMenu)
+                            Throw New InvalidOperationException(ResourcesT.ExceptionsWin.UnableToObtainHandleToSystemMenu)
                         End If
                         Me.CloseBoxEnabled = Me.CloseBoxEnabled
                     Else
@@ -141,7 +141,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised after the <see cref="WindowState"/> property is changed</summary>
         ''' <param name="sender">source of the event</param>
         ''' <param name="e">Event params (always <see cref="EventArgs.Empty"/>)</param>
-        <LDescription(GetType(ResourcesT.Controls), "WindowStateChanged_d")> _
+        <LDescription(GetType(WindowsT.FormsT.ControlsWin), "WindowStateChanged_d")> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         Public Event WindowStateChanged(ByVal sender As Object, ByVal e As EventArgs)
         ''' <summary>Raises the <see cref="WindowStateChanged"/> event</summary>

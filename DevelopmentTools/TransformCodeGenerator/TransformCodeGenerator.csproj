@@ -138,10 +138,11 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Resources\Resources.Designer.cs">
+    <Compile Include="Resources\TransforCodeGeneratorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
+      <DependentUpon>TransforCodeGeneratorResources.resx</DependentUpon>
+      <LogicalName>Tools.ResourcesT.TransforCodeGeneratorResources.resx</LogicalName>
     </Compile>
     <Compile Include="TransformCodeGenerator.cs">
       <SubType>Code</SubType>
@@ -181,9 +182,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\Resources.resx">
+    <EmbeddedResource Include="Resources\TransforCodeGeneratorResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <LastGenOutput>TransforCodeGeneratorResources.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Tools.ResourcesT</CustomToolNamespace>
     </EmbeddedResource>
   </ItemGroup>

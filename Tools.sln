@@ -10,6 +10,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "Develop
 	ProjectSection(SolutionItems) = preProject
 		DevelopmentTools\read.me.txt = DevelopmentTools\read.me.txt
 		DevelopmentTools\Robocopy.exe = DevelopmentTools\Robocopy.exe
+		DevelopmentTools\Đ.vsmacros = DevelopmentTools\Đ.vsmacros
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{677A518E-909C-414F-AC5E-528AB32023AF}"

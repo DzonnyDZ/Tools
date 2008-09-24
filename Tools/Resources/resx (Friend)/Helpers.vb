@@ -61,7 +61,7 @@ Namespace DrawingT.MetadataT.IptcT
         ''' <summary>Initializer - redirects resources to Tools.DrawingT.MetadataT.IPTCResources</summary>
         ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
         Shared Sub New()
-            resourceMan = New ResourceManager("Tools.DrawingT.MetadataT.IptcT.IPTCResources", GetType(IPTCResources).Assembly)
+            resourceMan = New ResourceManager("Tools.DrawingT.MetadataT.IptcT.IptcResources", GetType(IPTCResources).Assembly)
         End Sub
     End Class
 End Namespace

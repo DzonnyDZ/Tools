@@ -40,7 +40,7 @@ namespace Tools.GeneratorsT {
                     if(vsmdCodeDomProvider != null) {
                         codeDomProvider = (CodeDomProvider)vsmdCodeDomProvider.CodeDomProvider;
                     }
-                    Debug.Assert(codeDomProvider != null, Tools.Exceptions.GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull);
+                    Debug.Assert(codeDomProvider != null, Tools.ResourcesT.Exceptions.GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull);
                 }
                 return codeDomProvider;
             }
@@ -60,7 +60,7 @@ namespace Tools.GeneratorsT {
             get {
                 if(serviceProvider == null) {
                     IOleServiceProvider oleServiceProvider = site as IOleServiceProvider;
-                    Debug.Assert(oleServiceProvider != null, Tools.Exceptions.UnableToGetIOleServiceProviderFromSiteObject);
+                    Debug.Assert(oleServiceProvider != null, Tools.ResourcesT.Exceptions.UnableToGetIOleServiceProviderFromSiteObject);
 
                     serviceProvider = new ServiceProvider(oleServiceProvider);
                 }
@@ -93,7 +93,7 @@ namespace Tools.GeneratorsT {
         /// <returns></returns>
         public override string GetDefaultExtension() {
             CodeDomProvider codeDom = CodeProvider;
-            Debug.Assert(codeDom != null, Tools.Exceptions.CodeDomProviderIsNULL);
+            Debug.Assert(codeDom != null, Tools.ResourcesT.Exceptions.CodeDomProviderIsNULL);
             string extension = codeDom.FileExtension;
             if(extension != null && extension.Length > 0) {
                 if(extension[0] != '.') {
@@ -143,11 +143,11 @@ namespace Tools.GeneratorsT {
                 throw new ArgumentNullException("ppvSite");
             }
             if(ppvSite.Length < 1) {
-                throw new ArgumentException(String.Format(Tools.Exceptions.ArrayMustHaveAtLeast1Member, "ppvSite"), "ppvSite");
+                throw new ArgumentException(String.Format(Tools.ResourcesT.Exceptions.ArrayMustHaveAtLeast1Member, "ppvSite"), "ppvSite");
             }
 
             if(site == null) {
-                throw new COMException(Tools.Exceptions.ObjectIsNotSited, E_FAIL);
+                throw new COMException(Tools.ResourcesT.Exceptions.ObjectIsNotSited, E_FAIL);
             }
 
             IntPtr pUnknownPointer = Marshal.GetIUnknownForObject(site);
@@ -155,7 +155,7 @@ namespace Tools.GeneratorsT {
             Marshal.QueryInterface(pUnknownPointer, ref riid, out intPointer);
 
             if(intPointer == IntPtr.Zero) {
-                throw new COMException(Tools.Exceptions.SiteDoesNotSupportRequestedInterface, E_NOINTERFACE);
+                throw new COMException(Tools.ResourcesT.Exceptions.SiteDoesNotSupportRequestedInterface, E_NOINTERFACE);
             }
 
             ppvSite[0] = Marshal.GetObjectForIUnknown(intPointer);
@@ -190,25 +190,25 @@ namespace Tools.GeneratorsT {
             }
 
             object serviceObject = GetService(typeof(ProjectItem));
-            Debug.Assert(serviceObject != null, Tools.Exceptions.UnableToGetProjectItem);
+            Debug.Assert(serviceObject != null, Tools.ResourcesT.Exceptions.UnableToGetProjectItem);
             if(serviceObject == null) {
-                string errorMessage = String.Format(Tools.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
+                string errorMessage = String.Format(Tools.ResourcesT.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
                 GeneratorErrorCallback(false, 1, errorMessage, 0, 0);
                 return;
             }
 
             Project containingProject = ((ProjectItem)serviceObject).ContainingProject;
-            Debug.Assert(containingProject != null, Tools.Exceptions.GetServiceTypeofProjectReturnNull);
+            Debug.Assert(containingProject != null, Tools.ResourcesT.Exceptions.GetServiceTypeofProjectReturnNull);
             if(containingProject == null) {
-                string errorMessage = String.Format(Tools.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
+                string errorMessage = String.Format(Tools.ResourcesT.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
                 GeneratorErrorCallback(false, 1, errorMessage, 0, 0);
                 return;
             }
 
             VSProject vsProj = containingProject.Object as VSProject;
-            Debug.Assert(vsProj != null, Tools.Exceptions.UnableToADDDLLToCurrentProjectProjectObjectDoesNotImplementVSProject);
+            Debug.Assert(vsProj != null, Tools.ResourcesT.Exceptions.UnableToADDDLLToCurrentProjectProjectObjectDoesNotImplementVSProject);
             if(vsProj == null) {
-                string errorMessage = String.Format(Tools.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
+                string errorMessage = String.Format(Tools.ResourcesT.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
                 GeneratorErrorCallback(false, 1, errorMessage, 0, 0);
                 return;
             }
@@ -218,9 +218,9 @@ namespace Tools.GeneratorsT {
                     vsProj.References.Add(referenceDLL[i]);
                 }
             } catch(Exception e) {
-                Debug.Fail(Tools.Exceptions.ERRORVsProjReferencesAddThrowsException + e.ToString());
+                Debug.Fail(Tools.ResourcesT.Exceptions.ERRORVsProjReferencesAddThrowsException + e.ToString());
 
-                string errorMessage = String.Format(Tools.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
+                string errorMessage = String.Format(Tools.ResourcesT.Exceptions.UnableToAddDLLToProjectReferences0PleaseAddThemManually, GetDLLNames(referenceDLL));
                 GeneratorErrorCallback(false, 1, errorMessage, 0, 0);
                 return;
             }
@@ -253,7 +253,7 @@ namespace Tools.GeneratorsT {
         /// <param name="codeNamespace"></param>
         protected virtual void GenerateVersionComment(System.CodeDom.CodeNamespace codeNamespace) {
             codeNamespace.Comments.Add(new CodeCommentStatement(string.Empty));
-            codeNamespace.Comments.Add(new CodeCommentStatement(String.Format(Tools.Resources.ThisSourceCodeWasAutoGeneratedBy0Version1,
+            codeNamespace.Comments.Add(new CodeCommentStatement(String.Format(Tools.ResourcesT.Resources.ThisSourceCodeWasAutoGeneratedBy0Version1,
               System.Reflection.Assembly.GetExecutingAssembly().GetName().Name,
               System.Environment.Version.ToString())));
             codeNamespace.Comments.Add(new CodeCommentStatement(string.Empty));

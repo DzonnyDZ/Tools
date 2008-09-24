@@ -146,16 +146,17 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-    <Compile Include="Resources\Controls.Designer.vb">
+    <Compile Include="Resources\ControlsWin.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Controls.resx</DependentUpon>
+      <DependentUpon>ControlsWin.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Exceptions.Designer.vb">
+    <Compile Include="Resources\ExceptionsWin.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>Exceptions.resx</DependentUpon>
+      <DependentUpon>ExceptionsWin.resx</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Helpers.vb" />
     <Compile Include="Windows\Forms\ExtendedForm.vb">
       <SubType>Form</SubType>
     </Compile>
@@ -170,15 +171,17 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Controls.resx">
-      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+    <EmbeddedResource Include="Resources\ControlsWin.resx">
+      <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Controls.Designer.vb</LastGenOutput>
+      <LastGenOutput>ControlsWin.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.ControlsWin.resx</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\Exceptions.resx">
+    <EmbeddedResource Include="Resources\ExceptionsWin.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+      <LastGenOutput>ExceptionsWin.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.ExceptionsWin.resx</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

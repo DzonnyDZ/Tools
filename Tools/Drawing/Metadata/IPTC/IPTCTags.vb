@@ -1,13 +1,13 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2833.35810, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2833.35810
+' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
+' Version: 1.0.2701.36373
 '
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 16. září 2008
-' By:noutbuk\Honza
+' Created: 24. září 2008
+' By:DZONNY\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
 'Localize: This auto-generated file was skipped during localization!

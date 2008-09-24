@@ -77,14 +77,14 @@ Namespace WindowsT.NativeT
 
         ''' <summary>Gets the handle to the window represented by the implementer.</summary>
         ''' <returns>A handle to the window represented by the implementer.</returns>
-        <LCategory(GetType(ResourcesT.Controls), "Handle_c", "Handle")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "Handle_c", "Handle")> _
         Public ReadOnly Property Handle() As System.IntPtr Implements System.Windows.Forms.IWin32Window.Handle, Windows.Interop.IWin32Window.Handle
             Get
                 Return _Handle
             End Get
         End Property
         ''' <summary>Same as <see cref="Handle"/> but <see cref="Integer"/></summary>
-        <LCategory(GetType(ResourcesT.Controls), "Handle_c", "Handle")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "Handle_c", "Handle")> _
         Public ReadOnly Property hWnd() As Integer
             Get
                 Return Handle
@@ -140,7 +140,7 @@ Namespace WindowsT.NativeT
         ''' <exception cref="API.Win32APIException">Setting failed. It may indicate that <see cref="hWnd"/> does not point to existing window or attempt to set parent to the same window or to one of children.</exception>
         ''' <remarks>Setting value to <see cref="Win32Window"/> with <see cref="Handle"/> of zero has the same effect as setting it to null.
         ''' Non-top-level windows (such as button) cannot be unparented. Setting null for shuch window will cause window to be parented into desktop - not by this implementation but by the OS.</remarks>
-        <LCategory(GetType(ResourcesT.Controls), "Relationship_c", "Relationship")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "Relationship_c", "Relationship")> _
         Public Property Parent() As Win32Window
             Get
                 Dim ret As Integer = API.GetParent(Handle)
@@ -163,9 +163,9 @@ Namespace WindowsT.NativeT
         ''' <summary>Gets all childrens of current windows</summary>
         ''' <returns>Childrens of current window</returns>
         ''' <exception cref="API.Win32APIException">Error while enumerating windows. Ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "Relationship_c", "Relationship")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "Relationship_c", "Relationship")> _
         <TypeConverter(GetType(CollectionConverter))> _
-        <LDescription(GetType(ResourcesT.Controls), "Children_d")> _
+        <LDescription(GetType(WindowsT.FormsT.ControlsWin), "Children_d")> _
         Public ReadOnly Property Children() As IReadOnlyList(Of Win32Window)
             Get
                 Dim List As New List(Of Win32Window)
@@ -188,7 +188,7 @@ Namespace WindowsT.NativeT
         ''' <remarks>It's recomended to use <see cref="Parent"/> instead.
         ''' Non-top-level windows (such as button) cannot be unparented. Setting zero for shuch window will cause window to be parented into desktop - not by this implementation but by the OS.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
-        <LCategory(GetType(ResourcesT.Controls), "Relationship_c", "Relationship")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "Relationship_c", "Relationship")> _
         Public Property ParentHandle() As IntPtr
             Get
                 Return API.GetParent(Handle)
@@ -203,7 +203,7 @@ Namespace WindowsT.NativeT
         ''' <value>New value of window long</value>
         ''' <returns>Current value of window long</returns>
         ''' <exception cref="API.Win32APIException">Getting or setting of value failed (i.e. <see cref="Handle"/> is invalid or <paramref name="Long"/> is invalid)</exception>
-        <LCategory(GetType(ResourcesT.Controls), "LowLevel_c", "Low-level")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "LowLevel_c", "Low-level")> _
         Public Property WindowLong(ByVal [Long] As API.Public.WindowLongs) As Integer
             Get
                 Try
@@ -249,7 +249,7 @@ Namespace WindowsT.NativeT
         ''' <value>New rectangle covered by the window</value>
         ''' <remarks>For top-level windows screen coordinates are used. For windows with <see cref="Parent"/> coordinates of parent are used.</remarks>
         ''' <exception cref="API.Win32APIException">Setting or obtaining window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Area() As Rectangle
             Get
                 Dim ret As API.RECT
@@ -276,7 +276,7 @@ Namespace WindowsT.NativeT
         ''' <value>New size of the window. Position will be unchanged</value>
         ''' <returns>Current size of the window</returns>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Size() As Size
             Get
                 Return Area.Size
@@ -290,7 +290,7 @@ Namespace WindowsT.NativeT
         ''' <returns>Current position of window top left corner</returns>
         ''' <remarks>For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Location() As Point
             Get
                 Return Area.Location
@@ -305,7 +305,7 @@ Namespace WindowsT.NativeT
         ''' <remarks>In some multi-monitor configurations the left edge of desktop can be negative number. In such case <see cref="Left"/> can be also negative and it does not necesarilly mean that the window is outside of the desktop.
         ''' For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Left() As Integer
             Get
                 Return Location.X
@@ -320,7 +320,7 @@ Namespace WindowsT.NativeT
         ''' <remarks>In some multi-monitor configurations the top edge of desktop can be negative number. In such case <see cref="Top"/> can be also negative and it does not necesarilly mean thet the window is outside of the desktop.
         ''' For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Top() As Integer
             Get
                 Return Location.Y
@@ -333,7 +333,7 @@ Namespace WindowsT.NativeT
         ''' <value>New width of the window</value>
         ''' <returns>Current width of the window</returns>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Width() As Int32
             Get
                 Return Size.Width
@@ -346,7 +346,7 @@ Namespace WindowsT.NativeT
         ''' <value>New height of the window</value>
         ''' <returns>Current height of the window</returns>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property Height() As Integer
             Get
                 Return Size.Height
@@ -359,7 +359,7 @@ Namespace WindowsT.NativeT
         ''' <returns>Current x-coordinate of right edge of the window</returns>
         ''' <remarks>For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
         ''' <exception cref="API.Win32APIException">Obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public ReadOnly Property Right() As Integer
             Get
                 Return Area.Right
@@ -369,7 +369,7 @@ Namespace WindowsT.NativeT
         ''' <returns>Current y-coordinate of bottom edge of the window</returns>
         ''' <remarks>For top-level windows the location is in screen coordinates, for windows with <see cref="Parent"/> in parent' coordinates.</remarks>
         ''' <exception cref="API.Win32APIException">Obtaining of window's rectangle failed, ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public ReadOnly Property Bottom() As Integer
             Get
                 Return Area.Bottom
@@ -379,7 +379,7 @@ Namespace WindowsT.NativeT
         ''' <returns>Current area that windows covers on screen</returns>
         ''' <value>New area to cover</value>
         ''' <exception cref="API.Win32APIException">Error while setting or obtaining the area (ie. <see cref="Handle"/> is invalid)</exception>
-        <LCategory(GetType(ResourcesT.Controls), "SizeAndPosition_c", "Size and position")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "SizeAndPosition_c", "Size and position")> _
         Public Property ScreenArea() As Rectangle
             Get
                 Dim ret As API.RECT
@@ -408,7 +408,7 @@ Namespace WindowsT.NativeT
         ''' <remarks>For windows that represents form it is text from title bar, for other controls like labels it is text of the control. See also <seealso cref="Control.Text"/>.
         ''' This property can can get/set text for all windows in the same process as it is called from and text of windows that has title bar (forms) from any process.</remarks>
         ''' <exception cref="API.Win32APIException">Setting or obtaining of text failed. ie. <see cref="Handle"/> is invalid</exception>
-        <LCategory(GetType(ResourcesT.Controls), "WindowProperties_c", "Window properties")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "WindowProperties_c", "Window properties")> _
         Public Property Text$()
             Get
                 Dim len As Integer = API.GetWindowTextLength(Handle)
@@ -437,7 +437,7 @@ Namespace WindowsT.NativeT
         ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
         ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
         Public Overrides Function ToString() As String
-            If Handle = IntPtr.Zero Then Return ResourcesT.Controls.NoWindow
+            If Handle = IntPtr.Zero Then Return WindowsT.FormsT.ControlsWin.NoWindow
             Try : Return String.Format("{0} hWnd = {1}", Text, Handle) : Catch ex As Win32Exception : Return String.Format("hWnd = {0}", Handle) : End Try
         End Function
         ''' <summary>Gets or sets pointer to wnd proc of current window. Used for so-called sub-classing.</summary>
@@ -448,7 +448,7 @@ Namespace WindowsT.NativeT
         ''' You can do this also with <see cref="WindowLong"/> with <see cref="API.[Public].WindowLongs.WndProc"/> as argument.
         ''' </remarks>
         ''' <exception cref="API.Win32APIException">Getting or setting of value failed (i.e. <see cref="Handle"/> is invalid)</exception>
-        <LCategory(GetType(ResourcesT.Controls), "LowLevel_c", "Low-level")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "LowLevel_c", "Low-level")> _
         <Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Overridable Property WndProcPointer() As IntPtr
             Get
@@ -472,7 +472,7 @@ Namespace WindowsT.NativeT
         ''' <para>If current window represents .NET <see cref="Form"/> or other <see cref="Control"/> and you have chance to derive from it, you'd better to do so and the override <see cref="Control.WndProc"/>.
         ''' You are the proctedted from problems with keeping delegate alive. You can also derive from <see cref="Windows.Forms.NativeWindow"/> and override it's <see cref="Windows.Forms.NativeWindow.WndProc"/>.</para>
         ''' </remarks>
-        <LCategory(GetType(ResourcesT.Controls), "LowLevel_c", "Low-level")> _
+        <LCategory(GetType(WindowsT.FormsT.ControlsWin), "LowLevel_c", "Low-level")> _
         Public Overridable Property WndProc() As API.Messages.WndProc
             Get
                 Dim ret As API.Messages.WndProc = API.GetWindowLong(Handle, API.WindowProcs.GWL_WNDPROC)

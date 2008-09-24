@@ -82,7 +82,7 @@ namespace Tools.GeneratorsT {
         internal static Attribute getAttribute(Type t, Type attributeType) {
             object[] attributes = t.GetCustomAttributes(attributeType, /* inherit */ true);
             if(attributes.Length == 0)
-                throw new ArgumentException(String.Format(Tools.Exceptions.Class0DoesNotProvideA1Attribute, t.FullName, attributeType.FullName));
+                throw new ArgumentException(String.Format(Tools.ResourcesT.Exceptions.Class0DoesNotProvideA1Attribute, t.FullName, attributeType.FullName));
             return (Attribute)attributes[0];
         }
 
