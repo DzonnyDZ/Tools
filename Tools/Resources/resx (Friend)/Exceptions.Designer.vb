@@ -110,6 +110,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Attribute cannot derive from Attribute when WarningKind is NoAttributeAttribute.
+        '''</summary>
+        Friend Shared ReadOnly Property AttributeCannotDeriveFromAttributeWhenWarningKindIsNoAttributeAttribute() As String
+            Get
+                Return ResourceManager.GetString("AttributeCannotDeriveFromAttributeWhenWarningKindIsNoAttributeAttribute", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to BaseStream of OverflowStream must be able to Read, Write and Seek..
         '''</summary>
         Friend Shared ReadOnly Property BaseStreamOfOverflowStreamMustBeAbleToReadWriteAndSeek() As String
@@ -2534,6 +2543,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Unsupported type of MemberInfo of named argument of attribute.
+        '''</summary>
+        Friend Shared ReadOnly Property UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Value can be converter neither to {0} nor to {1}.
         '''</summary>
         Friend Shared ReadOnly Property ValueCanBeConverterNeitherTo0NorTo1() As String
@@ -2692,6 +2710,47 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property WhenFixedIsTrueLenCannotBe0() As String
             Get
                 Return ResourceManager.GetString("WhenFixedIsTrueLenCannotBe0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to When Stage is GetConstructorArguments, GetNamedArguments, InvokeConstructor, GetConstructorArgumentValue, SetField, SetProperty, InvokeMethod or GetNamedArgumentValue CustomAttributeData cannot be null..
+        '''</summary>
+        Friend Shared ReadOnly Property WhenStageIsGetConstructorArgumentsGetNamedArgumentsInvokeConstructorGetConstructorArgumentValueSetFieldSetPropertyInvokeMethodOrGetNamedArgumentValueCustomAttributeDataCannotBeNull() As String
+            Get
+                Return ResourceManager.GetString("WhenStageIsGetConstructorArgumentsGetNamedArgumentsInvokeConstructorGetConstructo"& _ 
+                        "rArgumentValueSetFieldSetPropertyInvokeMethodOrGetNamedArgumentValueCustomAttrib"& _ 
+                        "uteDataCannotBeNull", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to When Stage is GetConstructorArgumentValue, ArgumentIndex must be within range of CustomAttributeDate.ConstructorArguments.
+        '''</summary>
+        Friend Shared ReadOnly Property WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttributeDateConstructorArguments() As String
+            Get
+                Return ResourceManager.GetString("WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttri"& _ 
+                        "buteDateConstructorArguments", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to When Stage is GetConstructorArgumentValue, ArgumentIndex must be within range of CustomAttributeDate.NamedArguments.
+        '''</summary>
+        Friend Shared ReadOnly Property WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttributeDateNamedArguments() As String
+            Get
+                Return ResourceManager.GetString("WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttri"& _ 
+                        "buteDateNamedArguments", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to When Stage is GetCustomAttributeDate or GetCustomAttributes CustomAttribuetData must be null and ArgumentIndex must be -1.
+        '''</summary>
+        Friend Shared ReadOnly Property WhenStageIsGetCustomAttributeDateOrGetCustomAttributesCustomAttribuetDataMustBeNullAndArgumentIndexMustBe1() As String
+            Get
+                Return ResourceManager.GetString("WhenStageIsGetCustomAttributeDateOrGetCustomAttributesCustomAttribuetDataMustBeNu"& _ 
+                        "llAndArgumentIndexMustBe1", resourceCulture)
             End Get
         End Property
         

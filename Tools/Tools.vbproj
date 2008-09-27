@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -218,6 +218,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="IO\UnionReadOnlyStream.vb" />
+    <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
+    <Compile Include="Tests\AttributeTest.vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
     <Compile Include="Media\Sound.vb">
       <SubType>UserControl</SubType>
@@ -302,7 +304,7 @@
       <DependentUpon>ObjectImages.resx</DependentUpon>
     </Compile>
     <Compile Include="Reflection\ReflectionTools.vb" />
-    <Compile Include="Reflection\SignatureProvider.vb" />
+    <Compile Include="Reflection\ISignatureProvider.vb" />
     <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

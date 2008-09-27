@@ -990,4 +990,22 @@
   <data name="MustBeMemberOf0CollectionOf2" xml:space="preserve">
     <value>{0} must be member of {0} collection of {2}</value>
   </data>
+  <data name="UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute" xml:space="preserve">
+    <value>Unsupported type of MemberInfo of named argument of attribute</value>
+  </data>
+  <data name="WhenStageIsGetCustomAttributeDateOrGetCustomAttributesCustomAttribuetDataMustBeNullAndArgumentIndexMustBe1" xml:space="preserve">
+    <value>When Stage is GetCustomAttributeDate or GetCustomAttributes CustomAttribuetData must be null and ArgumentIndex must be -1</value>
+  </data>
+  <data name="WhenStageIsGetConstructorArgumentsGetNamedArgumentsInvokeConstructorGetConstructorArgumentValueSetFieldSetPropertyInvokeMethodOrGetNamedArgumentValueCustomAttributeDataCannotBeNull" xml:space="preserve">
+    <value>When Stage is GetConstructorArguments, GetNamedArguments, InvokeConstructor, GetConstructorArgumentValue, SetField, SetProperty, InvokeMethod or GetNamedArgumentValue CustomAttributeData cannot be null.</value>
+  </data>
+  <data name="WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttributeDateConstructorArguments" xml:space="preserve">
+    <value>When Stage is GetConstructorArgumentValue, ArgumentIndex must be within range of CustomAttributeDate.ConstructorArguments</value>
+  </data>
+  <data name="WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttributeDateNamedArguments" xml:space="preserve">
+    <value>When Stage is GetConstructorArgumentValue, ArgumentIndex must be within range of CustomAttributeDate.NamedArguments</value>
+  </data>
+  <data name="AttributeCannotDeriveFromAttributeWhenWarningKindIsNoAttributeAttribute" xml:space="preserve">
+    <value>Attribute cannot derive from Attribute when WarningKind is NoAttributeAttribute</value>
+  </data>
 </root>

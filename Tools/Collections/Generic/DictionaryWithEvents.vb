@@ -1448,6 +1448,8 @@ Namespace CollectionsT.GenericT
     ''' <remarks>This class can either wrap any <see cref="IDictionary(Of TKey, TValue)"/> or copy any <see cref="IDictionary(Of TKey, TValue)"/></remarks>
     Public NotInheritable Class ReadOnlyDictionary(Of TKey, TValue)
         Implements IDictionary(Of TKey, TValue)
+        Implements IReadOnlyIndexableEnumerable(Of TValue, TKey)
+        Implements IReadOnlyIndexableWithCount(Of TValue, TKey)
         ''' <summary>CTor from <see cref="IDictionary(Of TKey, TValue)"/> with choice to wrap or copy it</summary>
         ''' <param name="Dictionary"><see cref="IDictionary(Of TKey, TValue)"/> to be wrapped or copyed</param>
         ''' <param name="Wrap">True to wrap  <paramref name="Dictionary"/>, false to create copy of <paramref name="Dictionary"/>. Default is false.</param>
@@ -1534,7 +1536,7 @@ Namespace CollectionsT.GenericT
         ''' <paramref name="item" /> is found in the <see cref="T:System.Collections.Generic.ICollection`1" />; otherwise, false.</returns>
         ''' <param name="item">The object to locate in the <see cref="T:System.Collections.Generic.ICollection`1" />.</param>
         Private Function Contains(ByVal item As System.Collections.Generic.KeyValuePair(Of TKey, TValue)) As Boolean Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).Contains
-            Return dictionarycollection.contains(item)
+            Return DictionaryCollection.Contains(item)
         End Function
 
         ''' <summary>Copies the elements of the <see cref="T:System.Collections.Generic.ICollection`1" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.</summary>
@@ -1554,7 +1556,7 @@ Namespace CollectionsT.GenericT
         ''' <paramref name="T" /> cannot be cast automatically to the type of the destination 
         ''' <paramref name="array" />.</exception>
         Private Sub CopyTo(ByVal array() As System.Collections.Generic.KeyValuePair(Of TKey, TValue), ByVal arrayIndex As Integer) Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).CopyTo
-            dictionarycollection.copyto(array, arrayIndex)
+            DictionaryCollection.CopyTo(array, arrayIndex)
         End Sub
         ''' <summary>Gets a value indicating whether the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only.</summary>
         ''' <returns>true if the <see cref="T:System.Collections.Generic.ICollection`1" /> is read-only; otherwise, false.</returns>
@@ -1575,7 +1577,7 @@ Namespace CollectionsT.GenericT
 #Region "Public implementation"
         ''' <summary>Gets the number of elements contained in the <see cref="ReadOnlyDictionary(Of TKey, TValue)"/>.</summary>
         ''' <returns>The number of elements contained in the <see cref="ReadOnlyDictionary(Of TKey, TValue)" />.</returns>
-        Public ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).Count
+        Public ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).Count, IReadOnlyIndexableWithCount(Of TValue, TKey).Count
             Get
                 Return Dictionary.Count
             End Get
@@ -1596,7 +1598,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="T:System.Collections.Generic.KeyNotFoundException">The property is retrieved and 
         ''' <paramref name="key" /> is not found.</exception>
         ''' <exception cref="T:System.NotSupportedException">The property is set and the <see cref="T:System.Collections.Generic.IDictionary`2" /> is read-only.</exception>
-        Default Public ReadOnly Property Item(ByVal key As TKey) As TValue
+        Default Public ReadOnly Property Item(ByVal key As TKey) As TValue Implements IReadOnlyIndexable(Of TValue, TKey).Item
             Get
                 Return Dictionary(key)
             End Get
@@ -1632,11 +1634,87 @@ Namespace CollectionsT.GenericT
         ''' <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.</returns>
         ''' <filterpriority>1</filterpriority>
         Public Function GetEnumerator() As System.Collections.Generic.IEnumerator(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)) Implements System.Collections.Generic.IEnumerable(Of System.Collections.Generic.KeyValuePair(Of TKey, TValue)).GetEnumerator
-            Return dictionarycollection.getenumerator
+            Return DictionaryCollection.GetEnumerator
         End Function
 #End Region
-    End Class
 
+        ''' <summary>Returns an enumerator that iterates through the collection over values only.</summary>
+        ''' <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.</returns>
+        ''' <filterpriority>1</filterpriority>
+        Public Function GetValuesEnumerator() As System.Collections.Generic.IEnumerator(Of TValue) Implements System.Collections.Generic.IEnumerable(Of TValue).GetEnumerator
+            Return New IndexableEnumerator(Of TValue, TKey)(Me.Keys.GetEnumerator, Me)
+        End Function
+
+        ''' <summary>Copies the values of the <see cref="T:Tools.CollectionsT.GenericT.ReadOnlyDictionary`2" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.                </summary>
+        ''' <param name="array">The one-dimensional <see cref="T:System.Array" /> that is the destination of the elements copied from <see cref="T:System.Collections.Generic.ICollection`1" />. The <see cref="T:System.Array" /> must have zero-based indexing.                </param>
+        ''' <param name="index">The zero-based index in 
+        ''' <paramref name="array" /> at which copying begins.</param>
+        ''' <exception cref="T:System.ArgumentNullException"><paramref name="array" /> is null.</exception>
+        ''' <exception cref="T:System.ArgumentOutOfRangeException"><paramref name="arrayIndex" /> is less than 0.</exception>
+        ''' <exception cref="T:System.ArgumentException"><paramref name="array" /> is multidimensional. -or-
+        ''' <paramref name="arrayIndex" /> is equal to or greater than the length of <paramref name="array" />. -or- The number of elements in the source <see cref="T:System.Collections.Generic.ICollection`1" /> is greater than the available space from<paramref name="arrayIndex" /> to the end of the destination  <paramref name="array" />. -or-
+        ''' Type  <paramref name="T" /> cannot be cast automatically to the type of the destination  <paramref name="array" />. </exception>
+        Public Sub CopyTo(ByVal array() As TValue, ByVal index As Integer) Implements IReadOnlyCollection(Of TValue).CopyTo
+            Me.Values.CopyTo(array, index)
+        End Sub
+    End Class
+    ''' <summary>Implements <see cref="IEnumerator(Of TValue)"/> for any <see cref="IReadOnlyIndexable(Of TItem, TIndex)"/> where possible indexes are supplied from ouside</summary>
+    ''' <typeparam name="TIndex">Type of index</typeparam>
+    ''' <typeparam name="TValue">Type of value</typeparam>
+    Public Class IndexableEnumerator(Of TIndex, TValue)
+        Implements IEnumerator(Of Tvalue)
+        ''' <summary>Outside-supplied indexes</summary>
+        Private Keys As IEnumerator(Of TIndex)
+        ''' <summary>Instance to be indexed</summary>
+        Private Instance As IIndexable(Of Tvalue, TIndex)
+        ''' <summary>CTor</summary>
+        ''' <param name="KeysEnumerator"><see cref="IEnumerator"/> which supplies indexes to enumerate over</param>
+        ''' <param name="Instance"><see cref="IReadOnlyIndexable(Of TITem, TIndex)"/> to enumerate over</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Instance"/> or <paramref name="KeysEnumerator"/> is null</exception>
+        Public Sub New(ByVal KeysEnumerator As IEnumerator(Of TIndex), ByVal Instance As IReadOnlyIndexable(Of TValue, TIndex))
+            If KeysEnumerator Is [Nothing] Then Throw New ArgumentNullException("KeysEnumerator")
+            If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
+            Me.Keys = KeysEnumerator
+            Me.Instance = Instance
+        End Sub
+        ''' <summary>Gets the element in the collection at the current position of the enumerator.</summary>
+        ''' <returns>The element in the collection at the current position of the enumerator.</returns>
+        Public ReadOnly Property Current() As TValue Implements System.Collections.Generic.IEnumerator(Of TValue).Current
+            Get
+                Return Instance(Keys.Current)
+            End Get
+        End Property
+        ''' <summary>Gets the element in the collection at the current position of the enumerator.                </summary>
+        ''' <returns>The element in the collection at the current position of the enumerator.                </returns>
+        <Obsolete("Use type-safe Current instead")> _
+        Private ReadOnly Property Current1() As Object Implements System.Collections.IEnumerator.Current
+            Get
+                Return Current
+            End Get
+        End Property
+
+        ''' <summary>Advances the enumerator to the next element of the collection.</summary>
+        ''' <returns>true if the enumerator was successfully advanced to the next element; false if the enumerator has passed the end of the collection.                </returns>
+        ''' <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.                 </exception>
+        ''' <filterpriority>2</filterpriority>
+        Public Function MoveNext() As Boolean Implements System.Collections.IEnumerator.MoveNext
+            Return Keys.MoveNext
+        End Function
+
+        ''' <summary>Sets the enumerator to its initial position, which is before the first element in the collection.                </summary>
+        ''' <exception cref="T:System.InvalidOperationException">The collection was modified after the enumerator was created.                 </exception>
+        ''' <filterpriority>2</filterpriority>
+        Public Sub Reset() Implements System.Collections.IEnumerator.Reset
+            Keys.Reset()
+        End Sub
+
+        ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.                </summary>
+        ''' <filterpriority>2</filterpriority>
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Keys.Dispose()
+        End Sub
+
+    End Class
 End Namespace
 
 

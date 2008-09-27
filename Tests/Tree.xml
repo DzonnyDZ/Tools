@@ -53,6 +53,9 @@
         <node name="ResourcesT" image="Namespace">
             <node name="SystemResources" image="Class Sealed (NotInheritable)" tag="Tools.Tests.ResourcesT.frmSystemResources.Test" />
         </node>
+        <node name="TestsT" image="Namespace">
+            <node name="AttributeTest" image="Class" tag="Tools.Tests.TestsT.AttributeTest.Test"/>
+        </node> 
         <node name="TimesSpanFormattable" image="Structure" tag="Tools.Tests.frmTimeSpanFormattable.Test" />
         <node name="VisualBasicT" image="Namespace">
             <node name="Interaction" image="Module">
@@ -92,6 +95,9 @@
         </node>
     </node>
     <node name="Tools Win" image="Assembly">
+        <node name="ConsoleT" image="Class">
+            <node name="AllocateConsole" image="Method Shortcut" tag="Tools.Tests.TestsT.AttributeTest.Test"/>
+        </node>
         <node name="WindowsT" image="Namespace">
             <node name="FormsT" image="Namespace">
                 <node name="ExtendedForm" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmExtendedForm.Test" />
