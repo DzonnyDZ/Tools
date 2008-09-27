@@ -1,0 +1,26 @@
+﻿Imports System.Runtime.InteropServices
+
+Namespace API
+    ''' <summary>Contains API declarations for HW devices</summary>
+    Friend Module Devices
+        ''' <summary>The GetKeyState function retrieves the status of the specified virtual key. The status specifies whether the key is up, down, or toggled (on, off—alternating each time the key is pressed).</summary>
+        ''' <param name="nVirtKey">[in] Specifies a virtual key. If the desired virtual key is a letter or digit (A through Z, a through z, or 0 through 9), nVirtKey must be set to the ASCII value of that character. For other keys, it must be a virtual-key code.
+        ''' If a non-English keyboard layout is used, virtual keys with values in the range ASCII A through Z and 0 through 9 are used to specify most of the character keys. For example, for the German keyboard layout, the virtual key of value ASCII O (0x4F) refers to the "o" key, whereas VK_OEM_1 refers to the "o with umlaut" key.</param>
+        ''' <returns>The return value specifies the status of the specified virtual key, as follows:
+        ''' <list type="bullet">
+        ''' <item>If the high-order bit is 1, the key is down; otherwise, it is up.</item>
+        ''' <item>If the low-order bit is 1, the key is toggled. A key, such as the CAPS LOCK key, is toggled if it is turned on. The key is off and untoggled if the low-order bit is 0. A toggle key's indicator light (if any) on the keyboard will be on when the key is toggled, and off when the key is untoggled.</item>
+        ''' </list></returns>
+        ''' <remarks><para>The key status returned from this function changes as a thread reads key messages from its message queue. The status does not reflect the interrupt-level state associated with the hardware. Use the GetAsyncKeyState function to retrieve that information.</para>
+        ''' <para>An application calls GetKeyState in response to a keyboard-input message. This function retrieves the state of the key when the input message was generated.</para>
+        ''' <para>To retrieve state information for all the virtual keys, use the GetKeyboardState function.</para>
+        ''' <para>An application can use the virtual-key code constants VK_SHIFT, VK_CONTROL, and VK_MENU as values for the nVirtKey parameter. This gives the status of the SHIFT, CTRL, or ALT keys without distinguishing between left and right. An application can also use the following virtual-key code constants as values for nVirtKey to distinguish between the left and right instances of those keys.</para></remarks>
+        Public Declare Function GetKeyState Lib "user32.dll" (ByVal nVirtKey As Int32) As UShort
+        ''' <summary>The GetAsyncKeyState function determines whether a key is up or down at the time the function is called, and whether the key was pressed after a previous call to GetAsyncKeyState. </summary>
+        ''' <param name="vKey">[in] Specifies one of 256 possible virtual-key codes. For more information, see Virtual-Key Codes.
+        ''' <para>Windows NT/2000/XP: You can use left- and right-distinguishing constants to specify certain keys. See the Remarks section for further information.</para></param>
+        ''' <returns>If the function succeeds, the return value specifies whether the key was pressed since the last call to GetAsyncKeyState, and whether the key is currently up or down. If the most significant bit is set, the key is down, and if the least significant bit is set, the key was pressed after the previous call to GetAsyncKeyState. However, you should not rely on this last behavior; for more information, see the Remarks. </returns>
+        ''' <remarks>The GetAsyncKeyState function works with mouse buttons. However, it checks on the state of the physical mouse buttons, not on the logical mouse buttons that the physical buttons are mapped to. For example, the call GetAsyncKeyState(VK_LBUTTON) always returns the state of the left physical mouse button, regardless of whether it is mapped to the left or right logical mouse button. You can determine the system's current mapping of physical mouse buttons to logical mouse buttons by calling <code>GetSystemMetrics(SM_SWAPBUTTON) </code>which returns TRUE if the mouse buttons have been swapped.<para>Although the least significant bit of the return value indicates whether the key has been pressed since the last query, due to the pre-emptive multitasking nature of Windows, another application can call GetAsyncKeyState and receive the "recently pressed" bit instead of your application. The behavior of the least significant bit of the return value is retained strictly for compatibility with 16-bit Windows applications (which are non-preemptive) and should not be relied upon.</para><para>You can use the virtual-key code constants VK_SHIFT, VK_CONTROL, and VK_MENU as values for the vKey parameter. This gives the state of the SHIFT, CTRL, or ALT keys without distinguishing between left and right. </para></remarks>
+        Public Declare Function GetAsyncKeyState Lib "user32.dll" (ByVal vKey As Int32) As UShort
+    End Module
+End Namespace

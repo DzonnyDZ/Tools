@@ -226,5 +226,12 @@
         <member name="N:Tools.DrawingT.MetadataT.IptcT.IptcDataTypes">
             <summary>Contains classes and structures to represent data types used by IPTC metadata</summary>
         </member>
+        <member name="N:Tools.TestsT">
+            <summary>Contains classes for performing various general-purpose tests.</summary>
+            <remarks>Unlike namespace <see cref="N:Tools.Tests"/>, which contains tests of classes created in the tools project, this namespace contains general- purpose test.</remarks>
+        </member>
+        <member name="N:Tools.DevicesT">
+            <summary>Contains classes fro working with hardware devices such as keyboard</summary>
+        </member>
     </members>    
 </doc>

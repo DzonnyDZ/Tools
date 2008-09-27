@@ -280,6 +280,15 @@ Namespace API
         ''' <param name="lParam">Specifies additional message information. The content of this parameter depends on the value of the Msg parameter.</param>
         ''' <returns>The return value is the result of the message processing and depends on the message.</returns>
         Friend Declare Auto Function DefWindowProc Lib "user32.dll" (ByVal hwnd As IntPtr, ByVal wMsg As Messages.WindowMessages, ByVal wParam As Int32, ByVal lParam As Int32) As Int32
+        ''' <summary>The FindWindow function retrieves a handle to the top-level window whose class name and window name match the specified strings. This function does not search child windows. This function does not perform a case-sensitive search.</summary>
+        ''' <param name="lpClassName">[in] Pointer to a null-terminated string that specifies the class name or a class atom created by a previous call to the RegisterClass or RegisterClassEx function. The atom must be in the low-order word of lpClassName; the high-order word must be zero.
+        ''' <para>If lpClassName points to a string, it specifies the window class name. The class name can be any name registered with RegisterClass or RegisterClassEx, or any of the predefined control-class names.</para>
+        ''' <para>If lpClassName is NULL, it finds any window whose title matches the lpWindowName parameter. </para></param>
+        ''' <param name="lpWindowName">[in] Pointer to a null-terminated string that specifies the window name (the window's title). If this parameter is NULL, all window names match.</param>
+        ''' <returns>If the function succeeds, the return value is a handle to the window that has the specified class name and window name.
+        ''' <para>If the function fails, the return value is NULL. To get extended error information, call GetLastError.</para></returns>
+        ''' <remarks>If the lpWindowName parameter is not NULL, FindWindow calls the GetWindowText function to retrieve the window name for comparison. For a description of a potential problem that can arise, see the Remarks for GetWindowText. </remarks>
+        Public Declare Auto Function FindWindow Lib "user32.dll" (ByVal lpClassName As String, ByVal lpWindowName As String) As Int32
     End Module
 End Namespace
 

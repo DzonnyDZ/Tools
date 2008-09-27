@@ -101,6 +101,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} is invalid key. Keys must be within range from 0 to 255..
+        '''</summary>
+        Friend Shared ReadOnly Property IsInvalidKeyKeysMustBeWithinRangeFrom0To255() As String
+            Get
+                Return ResourceManager.GetString("IsInvalidKeyKeysMustBeWithinRangeFrom0To255", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Menu item doesn&apos;t exist.
         '''</summary>
         Friend Shared ReadOnly Property MenuItemDoesnTExist() As String

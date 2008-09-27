@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -121,6 +121,8 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="API\Console.vb" />
+    <Compile Include="API\Devices.vb" />
     <Compile Include="API\FileSystem.vb" />
     <Compile Include="API\GUI.vb">
       <SubType>Code</SubType>
@@ -129,7 +131,9 @@
     <Compile Include="API\Misc.vb" />
     <Compile Include="API\Public.vb" />
     <Compile Include="COM\ShellLinkNative.vb" />
+    <Compile Include="Console\ConsoleT.vb" />
     <Compile Include="IO\FileSystemTools.vb" />
+    <Compile Include="Devices\Keyboard.vb" />
     <Compile Include="IO\ShellLink.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">

@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{79B67251-D837-4367-B571-AB806C2C7C74}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -90,6 +90,9 @@
   <ItemGroup>
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="PresentationFramework">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -272,6 +275,7 @@
     </Compile>
     <Compile Include="Projects\Projects.vb" />
     <Compile Include="Special\TypeTools.vb" />
+    <Compile Include="Tests\AttributeTest.vb" />
     <Compile Include="Windows\Forms\MessageBox.Designer.vb">
       <DependentUpon>MessageBox.vb</DependentUpon>
     </Compile>
