@@ -19,8 +19,19 @@ Namespace ExtensionsT
         ''' <returns>A copy of format in which the format items have been replaced by the <see cref="System.String" /> equivalent of the corresponding instances of <see cref="System.Object" /> in args.</returns>
         ''' <exception cref="System.ArgumentNullException">format or args is null.</exception>
         ''' <exception cref="System.FormatException"><paramref name="s"/> is invalid composite format string.-or- The number indicating an argument to format is less than zero, or greater than or equal to the length of the args array.</exception>
-        ''' <seealso cref="System.String.Format"/>
+        ''' <seealso cref="System.String.Format"/><seealso cref="f"/>
         <Extension()> Public Function Format(ByVal s As String, ByVal ParamArray args As Object()) As String
+            Return String.Format(s, args)
+        End Function
+        ''' <summary>Replaces the format item in a specified <see cref="System.String" /> with the text equivalent of the value of a corresponding <see cref="System.Object" /> instance in a specified array. A specified parameter supplies culture-specific formatting information.</summary>
+        ''' <param name="s">A composite format string.</param>
+        ''' <param name="args">An <see cref="System.Object" /> array containing zero or more objects to format.</param>
+        ''' <returns>A copy of format in which the format items have been replaced by the <see cref="System.String" /> equivalent of the corresponding instances of <see cref="System.Object" /> in args.</returns>
+        ''' <exception cref="System.ArgumentNullException">format or args is null.</exception>
+        ''' <exception cref="System.FormatException"><paramref name="s"/> is invalid composite format string.-or- The number indicating an argument to format is less than zero, or greater than or equal to the length of the args array.</exception>
+        ''' <seealso cref="System.String.Format"/><seealso cref="Format"/>
+        ''' <remarks>This function is shortcut alias of <see cref="Format"/></remarks>
+        <Extension()> Public Function f(ByVal s As String, ByVal ParamArray args As Object()) As String
             Return String.Format(s, args)
         End Function
         ''' <summary>Concatenates a specified separator <see cref="System.String" /> between each element of a specified <see cref="System.String" /> array, yielding a single concatenated string.</summary>

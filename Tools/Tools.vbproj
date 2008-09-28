@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -328,7 +328,7 @@
       <DependentUpon>Icons.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\Tools\SystemResources.vb" />
-    <Compile Include="Text\Encoding\ISO2022.vb" />
+    <Compile Include="Text\Encoding\ISO2022.vb" Condition="$(Config)&lt;=$(Nightly)" />
     <Compile Include="Text\Misc.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
     <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
@@ -340,7 +340,8 @@
     <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
       <DependentUpon>ProgressMonitor.vb</DependentUpon>
     </Compile>
-    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb">
+    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
@@ -618,7 +619,7 @@
     <Content Include="Reflection\Resources\Attribute.png" />
     <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
       <DependentUpon>ISO2022.vb</DependentUpon>
-      <LogicalName>Tools.Text.Encoding.ISO2022</LogicalName>
+      <LogicalName>Tools.TextT.EncodingT.ISO2022.xml</LogicalName>
     </EmbeddedResource>
     <None Include="Resources\Paste.png" />
     <None Include="Resources\Cut.png" />
@@ -720,7 +721,7 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
-      <LogicalName>Tools.ResourcesT.Exceptions.resx</LogicalName>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\Tools\Icons.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
@@ -811,7 +812,7 @@
     <None Include="Resources\Zip.png" />
     <EmbeddedResource Include="Text\Encoding\ISO2022.xsd">
       <DependentUpon>ISO2022.vb</DependentUpon>
-      <LogicalName>Tools.Text.Encoding.ISO2022Schema</LogicalName>
+      <LogicalName>Tools.TextT.EncodingT.ISO2022Schema.xsd</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
   </ItemGroup>

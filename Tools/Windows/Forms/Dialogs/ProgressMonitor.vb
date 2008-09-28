@@ -1,7 +1,8 @@
 ﻿Imports System.Windows.Forms
 Imports Tools.ComponentModelT
 
-#If Config <= Nightly Then 'Stage: Nightly
+'#If Config <= Nightly Then Set in project file
+'Stage: Nightly
 Namespace WindowsT.FormsT
     ''' <summary>This <see cref="Form"/> serves as predefined progress monitor with <see cref="ProgressBar"/> for <see cref="BackgroundWorker"/></summary>
     ''' <remarks>See documentation of the <see cref="ProgressMonitor.OnProgressChanged"/> method in order to see rich options for reporting progress.</remarks>
@@ -258,4 +259,4 @@ Namespace WindowsT.FormsT
         End Property
     End Class
 End Namespace
-#End If
+'#End If

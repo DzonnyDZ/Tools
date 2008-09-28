@@ -139,13 +139,13 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ExceptionsVsCs.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Tools.ResourcesT</CustomToolNamespace>
-      <LogicalName>Tools.ResourcesT.ExceptionsVsCs.resx</LogicalName>
+      <LogicalName>Tools.ResourcesT.ExceptionsVsCs.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\ResourcesVsCs.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ResourcesVsCs.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Tools.ResourcesT</CustomToolNamespace>
-      <LogicalName>Tools.ResourcesT.ResourcesVsCs.resx</LogicalName>
+      <LogicalName>Tools.ResourcesT.ResourcesVsCs.resources</LogicalName>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
@@ -156,4 +156,8 @@
   <Target Name="AfterBuild">
   </Target>
   -->
+  <PropertyGroup>
+    <PostBuildEvent>REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
+"$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

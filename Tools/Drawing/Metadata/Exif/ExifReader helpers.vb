@@ -315,16 +315,20 @@ Namespace DrawingT.MetadataT.ExifT
             ''' <item><see cref="ExifEventArgs.ItemLength"/> is -1 (not supported).</item>
             ''' </list></summary>
             TiffThumbNail = 18
+            ''' <summary>Used neither by <see cref="ExifMapGenerator"/> nor by <see cref="ExifEventArgs"/>. Indicates that given byte is unused.</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> Empty = 19
             ''' <summary>Or mask that applies to <see cref="IfdNumberOfEntries"/>, <see cref="Ifd"/> and <see cref="NextIfdOffset"/>
             ''' to make <see cref="SubIfdNumberOfEntries"/>, <see cref="SubIfd"/> and <see cref="NextSubIfdOffset"/> respectively.
             ''' This value itself is never used as event identifier.</summary>
             <EditorBrowsable(EditorBrowsableState.Advanced)> SubIfdMask = 128
             ''' <summary>Same meaning as <see cref="IfdNumberOfEntries"/> but for SubIFD. <para>Used by <see cref="ExifMapGenerator"/></para></summary>
-            SubIfdNumberOfEntries = IfdNumberOfEntries Or SubIfdMask
+            SubIfdNumberOfEntries = IfdNumberOfEntries Or SubIfdMask '133
             ''' <summary>Same meaning as <see cref="Ifd"/> but for SubIFD. <para>Used by <see cref="ExifMapGenerator"/></para></summary>
-            SubIfd = Ifd Or SubIfdMask
+            SubIfd = Ifd Or SubIfdMask    '134
             ''' <summary>Same meaning as <see cref="NextIfdOffset"/> but for SubIFD. <para>Used by <see cref="ExifMapGenerator"/></para></summary>
-            NextSubIfdOffset = NextIfdOffset Or SubIfdMask
+            NextSubIfdOffset = NextIfdOffset Or SubIfdMask  '142
+            ''' <summary>Or mask applied by <see cref="ExifWriter"/> to items written by it to distinguish them from original ones. Not used by <see cref="ExifMapGenerator"/> and <see cref="ExifEventArgs"/>.</summary>
+            <EditorBrowsable(EditorBrowsableState.Advanced)> WriterMask = 64
         End Enum
         ''' <summary>Run-time read-only representation of <see cref="ExifReaderSettings"/></summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _

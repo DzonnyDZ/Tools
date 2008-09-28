@@ -17,11 +17,13 @@ Namespace IOt
         ''' <item><see cref="M:Tools.IOt.BinaryWriter.Write(System.UInt64)"/></item>
         ''' </list>
         ''' </remarks>
+        ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="BinaryReader.ByteAlign"/></exception>
         Public Property ByteOrder() As BinaryReader.ByteAlign
             Get
                 Return _ByteOrder
             End Get
             Set(ByVal value As BinaryReader.ByteAlign)
+                If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, value.GetType)
                 _ByteOrder = value
             End Set
         End Property
@@ -31,6 +33,7 @@ Namespace IOt
         ''' <param name="input">A stream.</param>
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Align"/> is not member of <see cref="BinaryReader.ByteAlign"/></exception>
         Public Sub New(ByVal input As System.IO.Stream, ByVal Align As BinaryReader.ByteAlign)
             MyBase.New(input)
             ByteOrder = Align
@@ -41,6 +44,7 @@ Namespace IOt
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentNullException">encoding is null.</exception>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed.</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Align"/> is not member of <see cref="BinaryReader.ByteAlign"/></exception>
         Public Sub New(ByVal input As System.IO.Stream, ByVal encoding As System.Text.Encoding, ByVal Align As BinaryReader.ByteAlign)
             MyBase.New(input, encoding)
             ByteOrder = Align
@@ -52,6 +56,7 @@ Namespace IOt
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.ObjectDisposedException">The stream is closed.</exception>
         Public Overrides Sub Write(ByVal value As Integer)
+            If ByteOrder = BinaryReader.ByteAlign.BigEndian Then value = MathT.LEBE(value)
             MyBase.Write(value)
         End Sub
         ''' <summary>Writes a four-byte unsigned integer to the current stream and advances the stream position by four bytes.</summary>
@@ -60,6 +65,7 @@ Namespace IOt
         ''' <exception cref="System.ObjectDisposedException">The stream is closed.</exception>
         <CLSCompliant(False)> _
         Public Overrides Sub Write(ByVal value As UInteger)
+            If ByteOrder = BinaryReader.ByteAlign.BigEndian Then value = MathT.LEBE(value)
             MyBase.Write(value)
         End Sub
         ''' <summary>Writes an eight-byte signed integer to the current stream and advances the stream position by eight bytes.</summary>
@@ -67,6 +73,7 @@ Namespace IOt
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.ObjectDisposedException">The stream is closed.</exception>
         Public Overrides Sub Write(ByVal value As Long)
+            If ByteOrder = BinaryReader.ByteAlign.BigEndian Then value = MathT.LEBE(value)
             MyBase.Write(value)
         End Sub
         ''' <summary>Writes an eight-byte unsigned integer to the current stream and advances the stream position by eight bytes.</summary>
@@ -75,6 +82,7 @@ Namespace IOt
         ''' <exception cref="System.ObjectDisposedException">The stream is closed.</exception>
         <CLSCompliant(False)> _
         Public Overrides Sub Write(ByVal value As ULong)
+            If ByteOrder = BinaryReader.ByteAlign.BigEndian Then value = MathT.LEBE(value)
             MyBase.Write(value)
         End Sub
         ''' <summary>Writes a two-byte signed integer to the current stream and advances the stream position by two bytes.</summary>
@@ -82,6 +90,7 @@ Namespace IOt
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.ObjectDisposedException">The stream is closed.</exception>
         Public Overrides Sub Write(ByVal value As Short)
+            If ByteOrder = BinaryReader.ByteAlign.BigEndian Then value = MathT.LEBE(value)
             MyBase.Write(value)
         End Sub
         ''' <summary>Writes a two-byte unsigned integer to the current stream and advances the stream position by two bytes.</summary>
@@ -90,6 +99,7 @@ Namespace IOt
         ''' <exception cref="System.ObjectDisposedException">The stream is closed.</exception>
         <CLSCompliant(False)> _
         Public Overrides Sub Write(ByVal value As UShort)
+            If ByteOrder = BinaryReader.ByteAlign.BigEndian Then value = MathT.LEBE(value)
             MyBase.Write(value)
         End Sub
     End Class

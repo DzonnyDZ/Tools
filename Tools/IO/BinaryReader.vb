@@ -27,11 +27,13 @@ Namespace IOt
         ''' <item><see cref="ReadUInt64"/></item>
         ''' </list>
         ''' </remarks>
+        ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="BinaryReader.ByteAlign"/></exception>
         Public Property ByteOrder() As ByteAlign
             Get
                 Return _ByteOrder
             End Get
             Set(ByVal value As ByteAlign)
+                If Not InEnum(value) Then Throw New InvalidEnumArgumentException("value", value, value.GetType)
                 _ByteOrder = value
             End Set
         End Property
@@ -39,6 +41,7 @@ Namespace IOt
         ''' <param name="input">A stream.</param>
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Align"/> is not member of <see cref="BinaryReader.ByteAlign"/></exception>
         Public Sub New(ByVal input As System.IO.Stream, ByVal Align As ByteAlign)
             MyBase.New(input)
             ByteOrder = Align
@@ -49,6 +52,7 @@ Namespace IOt
         ''' <param name="Align">Format in which numeric data are read</param>
         ''' <exception cref="System.ArgumentNullException">encoding is null.</exception>
         ''' <exception cref="System.ArgumentException">The stream does not support reading, the stream is null, or the stream is already closed.</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Align"/> is not member of <see cref="BinaryReader.ByteAlign"/></exception>
         Public Sub New(ByVal input As System.IO.Stream, ByVal encoding As System.Text.Encoding, ByVal Align As ByteAlign)
             MyBase.New(input, encoding)
             ByteOrder = Align

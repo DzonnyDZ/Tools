@@ -2,7 +2,8 @@
 Imports <xmlns:e="http://codeplex.com/DTools/IS2022">
 Imports System.Runtime.InteropServices
 'TODO:Test
-#If Config <= Nightly Then 'Stage=Nightly
+'#If Config <= Nightly Then set in project file
+'Stage=Nightly
 Namespace TextT.EncodingT
     ''' <summary>Provides runtime access to list of text encodings registered by ISO-IR 2022 (also known as ISO/IEC 2022 or ECMA-35)</summary>
     ''' <remarks>This class provides access to information about such encodings and possibly gives their names as registered by IANA and possibly gives instances of the <see cref="Text.Encoding"/> class to manipulate with text stored in this encoding. Not all ISO-2022 encodings are registered with IANA and not all ISO-2022 encodings are supported by .NET framework. This class does not provide more implementations of the <see cref="Text.Encoding"/> class to deal with all ISO-2022 registered encodings neither this class provides generic ISO-2022 reader/writer. The aim of this class is to provide possibility of identifiying ISO 2022 encoding by its escape sequence, not to deal with it.
@@ -25,19 +26,19 @@ Namespace TextT.EncodingT
         End Property
         ''' <summary>Default constructor. Returns new instance which operates with built-in definition of ISO-2022 encodings.</summary>
         Public Sub New()
-            Me.New(XDocument.Load(New IO.StreamReader(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.Text.Encoding.ISO2022"))))
+            Me.New(XDocument.Load(New IO.StreamReader(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.TextT.EncodingT.ISO2022"))))
         End Sub
         ''' <summary>Constructor which allows to load definitions of encodings from custom <see cref="XDocument"/></summary>
         ''' <param name="EncodingDefinitions">The <see cref="XDocument"/> containing encoding definitions</param>
         ''' <exception cref="ArgumentNullException"><paramref name="EncodingDefinitions"/> is null</exception>
         ''' <exception cref="System.Xml.XmlException">Given <paramref name="EncodingDefinitions"/> does not validate to XML-Schema</exception>
         ''' <exception cref="ArgumentException">Root element of <paramref name="EncodingDefinitions"/> is not http://codeplex.com/DTools/IS2022:encodings</exception>
-        ''' <remarks>The XML-Schema for the http://codeplex.com/DTools/IS2022 namespace is specified in file Text/Encoding/IOS2022.xsd which is included in source code of the Tools project. Actual schema can be also obtained by reading embdeded resource Tools.Text.Encoding.ISO2022Schema from this assembly.</remarks>
+        ''' <remarks>The XML-Schema for the http://codeplex.com/DTools/IS2022 namespace is specified in file Text/Encoding/IOS2022.xsd which is included in source code of the Tools project. Actual schema can be also obtained by reading embdeded resource Tools.TextT.EncodingT.ISO2022Schema from this assembly.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Sub New(ByVal EncodingDefinitions As XDocument)
             If EncodingDefinitions Is Nothing Then Throw New ArgumentNullException("EncodingDefinitions")
             Dim ss As New XmlSchemaSet
-            ss.Add(XmlSchema.Read(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.Text.Encoding.ISO2022Schema"), AddressOf veh))
+            ss.Add(XmlSchema.Read(GetType(ISO2022).Assembly.GetManifestResourceStream("Tools.TextT.EncodingT.ISO2022Schema"), AddressOf veh))
             EncodingDefinitions.Validate(ss, AddressOf veh)
             If Not EncodingDefinitions.Root.HasSameName(<e:encodings/>) Then _
                 Throw New ArgumentException(String.Format(ResourcesT.Exceptions.RootElementOf0MustBe1, "EncodingDeifinitions", "<encodings>"), "EncodingDeifinitions")
@@ -492,4 +493,4 @@ Namespace TextT.EncodingT
         End Function
     End Class
 End Namespace
-#End If
+'#End If

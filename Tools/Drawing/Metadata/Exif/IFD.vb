@@ -974,19 +974,31 @@ Namespace DrawingT.MetadataT.ExifT
                         Case PhotometricInterpretationValues.YCbCr
                         Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.IsNotMemberOf1, "PhotometricInterpretation", "PhotometricInterpretationValues"), New InvalidEnumArgumentException("PhotometricInterpretation", PhotometricInterpretation, PhotometricInterpretation.GetType))
                     End Select
-                    'TODO: Better impelemtation
-                    'This does not work when more strips are used
                     Dim OutS As New IO.MemoryStream
                     Dim ew As New ExifWriter(OutS, ByteAlign)
-                    ew.WriteHeader()
-                    ew.WriteIfd(Me)
-                    Dim ImageDataB(ImageData.Length) As Byte
-                    Dim pos As Integer = 0
-                    While pos < ImageDataB.Length
-                        pos += ImageData.Read(ImageDataB, pos, ImageDataB.Length - pos)
-                    End While
-                    ew.WritePointedBlob(Tags.StripOffsets, ExifDataTypes.Int32, ImageDataB, Tags.StripByteCounts, ExifDataTypes.Int32)
-                    OutS.Flush()
+                    Dim ifd0pos = ew.WriteHeader()
+                    ew.AllocateIfd(ifd0pos, Me.Records.Count)
+                    Dim StripsPos%
+                    For Each rc In Me.Records
+                        Dim DataPos = ew.WriteRecord(rc.Key, rc.Value)
+                        If rc.Key = Tags.StripOffsets Then StripsPos = DataPos
+                    Next
+                    If StripsPos > 0 Then
+                        Dim ReadPosition As Integer = 0
+                        For i As Integer = 0 To Me.StripByteCounts.Length - 1
+                            Dim strip(Me.StripByteCounts(i) - 1) As Byte
+                            Dim BytesRead As Integer
+                            ImageData.Seek(0, IO.SeekOrigin.Begin)
+                            While BytesRead < strip.Length
+                                Dim readNow = ImageData.Read(strip, BytesRead, strip.Length - BytesRead)
+                                BytesRead += readNow
+                                If readNow = 0 AndAlso BytesRead <> strip.Length Then Throw New InvalidOperationException(ResourcesT.Exceptions.ImageDataDoesNotContainEnoghBytes)
+                            End While
+                            ew.WritePointedBlob(StripsPos + 4 * i, strip, ExifReader.ReaderItemKinds.TiffThumbnailPart, ExifWriter.PointerSizes.UInt32)
+                            ReadPosition += strip.Length
+                        Next
+                    End If
+                    ew.EndWriting()
                     OutS.Seek(0, IO.SeekOrigin.Begin)
                     Return New Drawing.Bitmap(OutS)
                 Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.IsNotMemberOf1, "Compression", "CompressionValues"), New InvalidEnumArgumentException("Compression", Compression, GetType(CompressionValues)))

@@ -1642,7 +1642,7 @@ Namespace CollectionsT.GenericT
         ''' <returns>A <see cref="T:System.Collections.Generic.IEnumerator`1" /> that can be used to iterate through the collection.</returns>
         ''' <filterpriority>1</filterpriority>
         Public Function GetValuesEnumerator() As System.Collections.Generic.IEnumerator(Of TValue) Implements System.Collections.Generic.IEnumerable(Of TValue).GetEnumerator
-            Return New IndexableEnumerator(Of TValue, TKey)(Me.Keys.GetEnumerator, Me)
+            Return New IndexableEnumerator(Of TValue, TKey)(Me.Keys.GetEnumerator, DirectCast(Me, IReadOnlyIndexable(Of TValue, TKey)))
         End Function
 
         ''' <summary>Copies the values of the <see cref="T:Tools.CollectionsT.GenericT.ReadOnlyDictionary`2" /> to an <see cref="T:System.Array" />, starting at a particular <see cref="T:System.Array" /> index.                </summary>

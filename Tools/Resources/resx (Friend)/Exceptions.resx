@@ -1008,4 +1008,70 @@
   <data name="AttributeCannotDeriveFromAttributeWhenWarningKindIsNoAttributeAttribute" xml:space="preserve">
     <value>Attribute cannot derive from Attribute when WarningKind is NoAttributeAttribute</value>
   </data>
+  <data name="ExifStreamAndMapMustHaveSameLengths" xml:space="preserve">
+    <value>Exif stream and map must have same lengths</value>
+  </data>
+  <data name="StreamToWriteExifMedatadaToMustSupportReadingWritingAndSeeking" xml:space="preserve">
+    <value>Stream to write Exif medatada to must support reading, writing and seeking.</value>
+  </data>
+  <data name="OriginalExifStreamMustBeAlLeast12BytesLong" xml:space="preserve">
+    <value>Original Exif stream must be al least 12 bytes long.</value>
+  </data>
+  <data name="SuppliedStreamHasInvalidByteOrderMarker" xml:space="preserve">
+    <value>Supplied stream has invalid byte order marker.</value>
+  </data>
+  <data name="SuppliedStreamByteOrderDoesNotMatchByteOrderTestWord" xml:space="preserve">
+    <value>Supplied stream byte order does not match byte order test word.</value>
+  </data>
+  <data name="TheBeginnignOfExifMapIsInvalid" xml:space="preserve">
+    <value>The beginnign of Exif map is invalid</value>
+  </data>
+  <data name="UnexpectedCallOf0" xml:space="preserve">
+    <value>Unexpected call of {0}</value>
+  </data>
+  <data name="ExifMapIsInvalidBecauseItContainsWriterGeneratedItems" xml:space="preserve">
+    <value>Exif map is invalid because it contains writer-generated items</value>
+  </data>
+  <data name="PreserveThumbnailCannotBeChangedAfterWritingOfDataStarted" xml:space="preserve">
+    <value>PreserveThumbnail cannot be changed after writing of data started.</value>
+  </data>
+  <data name="ThumbnailCanBePreservedOnlyIfExifWriterOperatesOverAlreadyExistingStreamOfExifMetadata" xml:space="preserve">
+    <value>Thumbnail can be preserved only if Exif writer operates over already-existing stream of Exif metadata.</value>
+  </data>
+  <data name="MustBeGreaterThanOrEqualTo1" xml:space="preserve">
+    <value>{0} must be greater than or equal to {1}.</value>
+  </data>
+  <data name="CannotWriteIFDAtThisTime" xml:space="preserve">
+    <value>Cannot write IFD at this time.</value>
+  </data>
+  <data name="RecordsCanBeWrittenOnlyWhenWriterStateIsRecords" xml:space="preserve">
+    <value>Records can be written only when WriterState is Records</value>
+  </data>
+  <data name="AllRecordsHaveBennAlreadyWritten" xml:space="preserve">
+    <value>All records have benn already written.</value>
+  </data>
+  <data name="Type0IsNotAcceptableForDataType1" xml:space="preserve">
+    <value>Type {0} is not acceptable for data type {1}.</value>
+  </data>
+  <data name="NumberOfItemsOf0DiffersFrom1" xml:space="preserve">
+    <value>Number of items of {0} differs from {1}</value>
+  </data>
+  <data name="LengthOf0MustBeNonZero" xml:space="preserve">
+    <value>Length of {0} must be non-zero</value>
+  </data>
+  <data name="OnlyAllowedValuesForBlobTypeAreUnknownJpegThumbnailAndTiffThumbnailPart" xml:space="preserve">
+    <value>Only allowed values for BlobType are Unknown, JpegThumbnail and TiffThumbnailPart</value>
+  </data>
+  <data name="MustBeEqualToOrGreaterThan1" xml:space="preserve">
+    <value>{0} must be equal to or greater than {1}</value>
+  </data>
+  <data name="FinnishigIsNotAllowedInState0" xml:space="preserve">
+    <value>Finnishig is not allowed in state {0}</value>
+  </data>
+  <data name="WriterIsNotInitializedOrIsFinished" xml:space="preserve">
+    <value>Writer is not initialized or is finished</value>
+  </data>
+  <data name="ImageDataDoesNotContainEnoghBytes" xml:space="preserve">
+    <value>Image data does not contain enogh bytes</value>
+  </data>
 </root>

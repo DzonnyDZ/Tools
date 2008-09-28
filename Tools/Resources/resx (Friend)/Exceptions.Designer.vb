@@ -74,6 +74,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to All records have benn already written..
+        '''</summary>
+        Friend Shared ReadOnly Property AllRecordsHaveBennAlreadyWritten() As String
+            Get
+                Return ResourceManager.GetString("AllRecordsHaveBennAlreadyWritten", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to All types in {0} must inherit from {0}.
         '''</summary>
         Friend Shared ReadOnly Property AllTypesIn0MustInheritFrom0() As String
@@ -562,6 +571,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot write IFD at this time..
+        '''</summary>
+        Friend Shared ReadOnly Property CannotWriteIFDAtThisTime() As String
+            Get
+                Return ResourceManager.GetString("CannotWriteIFDAtThisTime", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Changing was canceled in eventhandler.
         '''</summary>
         Friend Shared ReadOnly Property ChangingWasCanceledInEventhandler() As String
@@ -824,6 +842,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Exif map is invalid because it contains writer-generated items.
+        '''</summary>
+        Friend Shared ReadOnly Property ExifMapIsInvalidBecauseItContainsWriterGeneratedItems() As String
+            Get
+                Return ResourceManager.GetString("ExifMapIsInvalidBecauseItContainsWriterGeneratedItems", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to &quot;Exif pof subIFD being added/replaced must be either null or same as Exif of parent IFD.
         '''</summary>
         Friend Shared ReadOnly Property ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD() As String
@@ -842,11 +869,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Exif stream and map must have same lengths.
+        '''</summary>
+        Friend Shared ReadOnly Property ExifStreamAndMapMustHaveSameLengths() As String
+            Get
+                Return ResourceManager.GetString("ExifStreamAndMapMustHaveSameLengths", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Extended-size tags are not supported.
         '''</summary>
         Friend Shared ReadOnly Property ExtendedSizeTagsAreNotSupported() As String
             Get
                 Return ResourceManager.GetString("ExtendedSizeTagsAreNotSupported", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Finnishig is not allowed in state {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property FinnishigIsNotAllowedInState0() As String
+            Get
+                Return ResourceManager.GetString("FinnishigIsNotAllowedInState0", resourceCulture)
             End Get
         End Property
         
@@ -966,6 +1011,15 @@ Namespace ResourcesT
             Get
                 Return ResourceManager.GetString("IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTy"& _ 
                         "peOneElementOfTypeUInt32", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Image data does not contain enogh bytes.
+        '''</summary>
+        Friend Shared ReadOnly Property ImageDataDoesNotContainEnoghBytes() As String
+            Get
+                Return ResourceManager.GetString("ImageDataDoesNotContainEnoghBytes", resourceCulture)
             End Get
         End Property
         
@@ -1213,6 +1267,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Length of {0} must be non-zero.
+        '''</summary>
+        Friend Shared ReadOnly Property LengthOf0MustBeNonZero() As String
+            Get
+                Return ResourceManager.GetString("LengthOf0MustBeNonZero", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Length of data stored under this tag is different from 8 which is necessary for datatype CCYYMMDD.
         '''</summary>
         Friend Shared ReadOnly Property LengthOfDataStoredUnderThisTagIsDifferentFrom8WhichIsNecessaryForDatatypeCCYYMMDD() As String
@@ -1323,11 +1386,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to {0} must be equal to or greater than {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeEqualToOrGreaterThan1() As String
+            Get
+                Return ResourceManager.GetString("MustBeEqualToOrGreaterThan1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} must be from range {1}÷{2} or {3} if unknown.
         '''</summary>
         Friend Shared ReadOnly Property MustBeFromRange12Or3IfUnknown() As String
             Get
                 Return ResourceManager.GetString("MustBeFromRange12Or3IfUnknown", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0} must be greater than or equal to {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeGreaterThanOrEqualTo1() As String
+            Get
+                Return ResourceManager.GetString("MustBeGreaterThanOrEqualTo1", resourceCulture)
             End Get
         End Property
         
@@ -1548,11 +1629,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Number of items of {0} differs from {1}.
+        '''</summary>
+        Friend Shared ReadOnly Property NumberOfItemsOf0DiffersFrom1() As String
+            Get
+                Return ResourceManager.GetString("NumberOfItemsOf0DiffersFrom1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Only 1,2,4 and 8-bytes integers can be read via {0}.
         '''</summary>
         Friend Shared ReadOnly Property Only124And8BytesIntegersCanBeReadVia0() As String
             Get
                 Return ResourceManager.GetString("Only124And8BytesIntegersCanBeReadVia0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Only allowed values for BlobType are Unknown, JpegThumbnail and TiffThumbnailPart.
+        '''</summary>
+        Friend Shared ReadOnly Property OnlyAllowedValuesForBlobTypeAreUnknownJpegThumbnailAndTiffThumbnailPart() As String
+            Get
+                Return ResourceManager.GetString("OnlyAllowedValuesForBlobTypeAreUnknownJpegThumbnailAndTiffThumbnailPart", resourceCulture)
             End Get
         End Property
         
@@ -1611,6 +1710,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Original Exif stream must be al least 12 bytes long..
+        '''</summary>
+        Friend Shared ReadOnly Property OriginalExifStreamMustBeAlLeast12BytesLong() As String
+            Get
+                Return ResourceManager.GetString("OriginalExifStreamMustBeAlLeast12BytesLong", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to ParentIFD of subIFD being added/replaced must me null..
         '''</summary>
         Friend Shared ReadOnly Property ParentIFDOfSubIFDBeingAddedReplacedMustMeNull() As String
@@ -1647,6 +1755,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to PreserveThumbnail cannot be changed after writing of data started..
+        '''</summary>
+        Friend Shared ReadOnly Property PreserveThumbnailCannotBeChangedAfterWritingOfDataStarted() As String
+            Get
+                Return ResourceManager.GetString("PreserveThumbnailCannotBeChangedAfterWritingOfDataStarted", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Property {0} has already been set and it cannot be changed.
         '''</summary>
         Friend Shared ReadOnly Property Property0HasAlreadyBeenSetAndItCannotBeChanged() As String
@@ -1670,6 +1787,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property RecordMustBeFrom0To9() As String
             Get
                 Return ResourceManager.GetString("RecordMustBeFrom0To9", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Records can be written only when WriterState is Records.
+        '''</summary>
+        Friend Shared ReadOnly Property RecordsCanBeWrittenOnlyWhenWriterStateIsRecords() As String
+            Get
+                Return ResourceManager.GetString("RecordsCanBeWrittenOnlyWhenWriterStateIsRecords", resourceCulture)
             End Get
         End Property
         
@@ -1818,6 +1944,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Stream to write Exif medatada to must support reading, writing and seeking..
+        '''</summary>
+        Friend Shared ReadOnly Property StreamToWriteExifMedatadaToMustSupportReadingWritingAndSeeking() As String
+            Get
+                Return ResourceManager.GetString("StreamToWriteExifMedatadaToMustSupportReadingWritingAndSeeking", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to String &quot;{0}&quot; canot be stored without violating length and/or fixed constraint.
         '''</summary>
         Friend Shared ReadOnly Property String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint() As String
@@ -1869,6 +2004,24 @@ Namespace ResourcesT
             Get
                 Return ResourceManager.GetString("SubjectReferenceNumberMustBeMemberOfEitherSubjectReferenceNumbersSubjectMatterNum"& _ 
                         "bersOrEconomySubjectDetail", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Supplied stream byte order does not match byte order test word..
+        '''</summary>
+        Friend Shared ReadOnly Property SuppliedStreamByteOrderDoesNotMatchByteOrderTestWord() As String
+            Get
+                Return ResourceManager.GetString("SuppliedStreamByteOrderDoesNotMatchByteOrderTestWord", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Supplied stream has invalid byte order marker..
+        '''</summary>
+        Friend Shared ReadOnly Property SuppliedStreamHasInvalidByteOrderMarker() As String
+            Get
+                Return ResourceManager.GetString("SuppliedStreamHasInvalidByteOrderMarker", resourceCulture)
             End Get
         End Property
         
@@ -2199,6 +2352,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to The beginnign of Exif map is invalid.
+        '''</summary>
+        Friend Shared ReadOnly Property TheBeginnignOfExifMapIsInvalid() As String
+            Get
+                Return ResourceManager.GetString("TheBeginnignOfExifMapIsInvalid", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to The CollectionChangeAction.Other action and actions that are not members of the CollectionAction enumeration are not supported on {0} collection..
         '''</summary>
         Friend Shared ReadOnly Property TheCollectionChangeActionOtherActionAndActionsThatAreNotMembersOfTheCollectionActionEnumerationAreNotSupportedOn0Collection() As String
@@ -2399,6 +2561,16 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Thumbnail can be preserved only if Exif writer operates over already-existing stream of Exif metadata..
+        '''</summary>
+        Friend Shared ReadOnly Property ThumbnailCanBePreservedOnlyIfExifWriterOperatesOverAlreadyExistingStreamOfExifMetadata() As String
+            Get
+                Return ResourceManager.GetString("ThumbnailCanBePreservedOnlyIfExifWriterOperatesOverAlreadyExistingStreamOfExifMet"& _ 
+                        "adata", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Thumbnail data are invalid.
         '''</summary>
         Friend Shared ReadOnly Property ThumbnailDataAreInvalid() As String
@@ -2413,6 +2585,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property TimeMustBeNonNegativeAndLessThen1Day() As String
             Get
                 Return ResourceManager.GetString("TimeMustBeNonNegativeAndLessThen1Day", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Type {0} is not acceptable for data type {1}..
+        '''</summary>
+        Friend Shared ReadOnly Property Type0IsNotAcceptableForDataType1() As String
+            Get
+                Return ResourceManager.GetString("Type0IsNotAcceptableForDataType1", resourceCulture)
             End Get
         End Property
         
@@ -2458,6 +2639,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property TypeOfIFDFollowingAfterIFD0MustBeIFDMain() As String
             Get
                 Return ResourceManager.GetString("TypeOfIFDFollowingAfterIFD0MustBeIFDMain", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Unexpected call of {0}.
+        '''</summary>
+        Friend Shared ReadOnly Property UnexpectedCallOf0() As String
+            Get
+                Return ResourceManager.GetString("UnexpectedCallOf0", resourceCulture)
             End Get
         End Property
         
@@ -2751,6 +2941,15 @@ Namespace ResourcesT
             Get
                 Return ResourceManager.GetString("WhenStageIsGetCustomAttributeDateOrGetCustomAttributesCustomAttribuetDataMustBeNu"& _ 
                         "llAndArgumentIndexMustBe1", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Writer is not initialized or is finished.
+        '''</summary>
+        Friend Shared ReadOnly Property WriterIsNotInitializedOrIsFinished() As String
+            Get
+                Return ResourceManager.GetString("WriterIsNotInitializedOrIsFinished", resourceCulture)
             End Get
         End Property
         
