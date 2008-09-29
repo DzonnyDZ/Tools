@@ -1008,4 +1008,70 @@
   <data name="AttributeCannotDeriveFromAttributeWhenWarningKindIsNoAttributeAttribute" xml:space="preserve">
     <value>Atribut nesmí dědit ot Attribute, když WarningKind je NoAttributeAttribute</value>
   </data>
+  <data name="ExifStreamAndMapMustHaveSameLengths" xml:space="preserve">
+    <value>Prod Exif a mapa musí mít stejnou délu</value>
+  </data>
+  <data name="StreamToWriteExifMedatadaToMustSupportReadingWritingAndSeeking" xml:space="preserve">
+    <value>Proud k zápisu Exif metadta musí podporovat čtení, zápis a změnu pozice</value>
+  </data>
+  <data name="OriginalExifStreamMustBeAlLeast12BytesLong" xml:space="preserve">
+    <value>Původní proud Exif metadat musí mít alespoň 12 bytů délky.</value>
+  </data>
+  <data name="SuppliedStreamHasInvalidByteOrderMarker" xml:space="preserve">
+    <value>Dodaný proud má neplatnou značku pořadí bytů.</value>
+  </data>
+  <data name="SuppliedStreamByteOrderDoesNotMatchByteOrderTestWord" xml:space="preserve">
+    <value>Značka pořadí bytů v dodaném proudu neodpovídá testovacímu slovu.</value>
+  </data>
+  <data name="TheBeginnignOfExifMapIsInvalid" xml:space="preserve">
+    <value>Začátek Exif mapy je neplatný</value>
+  </data>
+  <data name="UnexpectedCallOf0" xml:space="preserve">
+    <value>Neočekávané volání {0}</value>
+  </data>
+  <data name="ExifMapIsInvalidBecauseItContainsWriterGeneratedItems" xml:space="preserve">
+    <value>Exif mapa je neplatná protože obsahuje zapisovačem generované položky</value>
+  </data>
+  <data name="PreserveThumbnailCannotBeChangedAfterWritingOfDataStarted" xml:space="preserve">
+    <value>PreserveThumbnail nelze změnit, když zapisování dat již začalo.</value>
+  </data>
+  <data name="ThumbnailCanBePreservedOnlyIfExifWriterOperatesOverAlreadyExistingStreamOfExifMetadata" xml:space="preserve">
+    <value>Miniatura může být zachována jen pokud zapisovač Exif operuje nad již existujícím proudem Exif metadat.</value>
+  </data>
+  <data name="MustBeGreaterThanOrEqualTo1" xml:space="preserve">
+    <value>{0} musí být větší než nebo rovna {1}.</value>
+  </data>
+  <data name="CannotWriteIFDAtThisTime" xml:space="preserve">
+    <value>Nyní nelze zapsat IFD.</value>
+  </data>
+  <data name="RecordsCanBeWrittenOnlyWhenWriterStateIsRecords" xml:space="preserve">
+    <value>Záznamy lze zapisovat jen pokud WriterState je Records</value>
+  </data>
+  <data name="AllRecordsHaveBennAlreadyWritten" xml:space="preserve">
+    <value>Všechny záznamy již byly zapsány.</value>
+  </data>
+  <data name="Type0IsNotAcceptableForDataType1" xml:space="preserve">
+    <value>Tpy {0} není akceptovatelný pro datový typ {1}.</value>
+  </data>
+  <data name="NumberOfItemsOf0DiffersFrom1" xml:space="preserve">
+    <value>Počet položek v {0} je jiné než {1}</value>
+  </data>
+  <data name="LengthOf0MustBeNonZero" xml:space="preserve">
+    <value>Délka {0} musí být nenulová</value>
+  </data>
+  <data name="OnlyAllowedValuesForBlobTypeAreUnknownJpegThumbnailAndTiffThumbnailPart" xml:space="preserve">
+    <value>Jediné povolené hodnoty pro BlobType jsou Unknow, JpegThumbnail a TiffThumbnailPart</value>
+  </data>
+  <data name="MustBeEqualToOrGreaterThan1" xml:space="preserve">
+    <value>{0} musí být stejná nebo větší než {1}</value>
+  </data>
+  <data name="FinnishigIsNotAllowedInState0" xml:space="preserve">
+    <value>Ukončení není dovoleno ve stavu {0}</value>
+  </data>
+  <data name="WriterIsNotInitializedOrIsFinished" xml:space="preserve">
+    <value>Zapisovač není inicializován enbo je ukončen</value>
+  </data>
+  <data name="ImageDataDoesNotContainEnoghBytes" xml:space="preserve">
+    <value>Obrazová data neobsahují dostatečný počet bytů</value>
+  </data>
 </root>
