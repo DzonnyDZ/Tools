@@ -201,4 +201,155 @@
   <data name="AutomaticLists_d" xml:space="preserve">
     <value>Určuje jestli editor automaticky používá sdílené seznamy klíčových slov a synonym (mezi instancemi se stejným AutoCompleteCacheName) nebo ne.</value>
   </data>
+  <data name="DisplayStype_d" xml:space="preserve">
+    <value>Získá nebo nastaví formátovací žetězec použitý k zobrazení kódování v seznamu.
+{0} je nahrazena uživatelsky přátelským názvem kódvání, {1} názvem kódování regisrtovaným organizací IANA a {2} číslem kódové stránky</value>
+  </data>
+  <data name="Style_d" xml:space="preserve">
+    <value>Určuje ovládací prvek použitý ke zobrazení kódování</value>
+  </data>
+  <data name="SelectedIndexChanged_d" xml:space="preserve">
+    <value>Vyvolána po té, co se změní vlastnost SelectedINdex</value>
+  </data>
+  <data name="SelectedCodePage_d" xml:space="preserve">
+    <value>Získá identifikátor kódové stránky vybraného kódování nebo se pokusí vybrat kódování se zadanou kódovou stránkou</value>
+  </data>
+  <data name="SelectedName_d" xml:space="preserve">
+    <value>Získá název kódování registrovaný The Internet Assigned Numbers Authority (IANA) vybraného kódování nebo se pokusí vybrat kódování s daným názvem</value>
+  </data>
+  <data name="NameColumnHeaderWidth_d" xml:space="preserve">
+    <value>Určuje šířku záhlaví sloupce (ColumnHeader) zobrazujícího název (Name) kódování. Platné jen, když Style je ListView</value>
+  </data>
+  <data name="DisplayNameColumnHeaderWidth_d" xml:space="preserve">
+    <value>Určuje šířku záhlaví sloupce (ColumnHeader) zobrazujícího DisplayName kódování. Platné jen, když Style je ListView</value>
+  </data>
+  <data name="CodePageColumnHeaderWidht_d" xml:space="preserve">
+    <value>Určuje šířku záhlaví sloupce (ColumnHeader) zobrazujícího CodePage (kódovou stránku) kódování. Platné jen, když Style je ListView</value>
+  </data>
+  <data name="NameColumnHeaderText_d" xml:space="preserve">
+    <value>Získá nebo nastaví text záhlaví sloupce (ColumnHeader), který zobrazuje název (Name) kódování. Platné jen, když Style je ListView.</value>
+  </data>
+  <data name="DisplayNameColumnHeaderText_d" xml:space="preserve">
+    <value>Získá nebo nastaví text záhlaví sloupce (ColumnHeader), který zobrazuje DisplayName kódování. Platné jen, když Style je ListView</value>
+  </data>
+  <data name="CodePageColumnHeaderText_d" xml:space="preserve">
+    <value>Získá nebo nastaví text záhlaví sloupce (ColumnHeader), který zobrazuje kódovou stránku (CodePage) kódování. Platné jen, když Style je ListView</value>
+  </data>
+  <data name="Sorting_d" xml:space="preserve">
+    <value>Určuje sloupce a pořadí řazení. Platné jen, když Style je ListBox.</value>
+  </data>
+  <data name="ColumnOrder_d" xml:space="preserve">
+    <value>Získá nabo nastaví pořadí sloupců ListViewu, když Style je ListView</value>
+  </data>
+  <data name="ItemDoubleClick_d" xml:space="preserve">
+    <value>Vyvolána, když Styl je ListView nebo ListBox a uživatel poklepe na nějakou položku, nebo, když je položka vybrána a uživatel stickne enter (nezávisle na Style).</value>
+  </data>
+  <data name="ShowInheritedMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určující jestli jsou zobrazeny zděděné členy.</value>
+  </data>
+  <data name="ShowFlatNamespaces_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli jsou jmenné prostory zobrazeny ploše (true) nebo strukturovaně (false).</value>
+  </data>
+  <data name="ShowNestedTypes_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli vnořené typy jsou zobrazeny.</value>
+  </data>
+  <data name="ShowPrivateMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli prvátní členy jsou zobrazeny.</value>
+  </data>
+  <data name="ShowInternalMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli interní členy jsou zobrazeny.</value>
+  </data>
+  <data name="ShowProtectedMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli chráněné členy jsou zobrazeny.</value>
+  </data>
+  <data name="ShowInstanceMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli instanční členy jsou zobrazeny.</value>
+  </data>
+  <data name="ShowStaticMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli statické členy jsou zobrazeny.</value>
+  </data>
+  <data name="ShowSpecialMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli speciální členy (části vlastností a událostí) jsou zobrazeny.</value>
+  </data>
+  <data name="ShowGlobalMembers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli globální člany (části vlastností a událostí) jsou zobrazeny.</value>
+  </data>
+  <data name="ShowProperties_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli vlastnosti jsou zobrazeny.</value>
+  </data>
+  <data name="ShowEvents_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli události jsou zobrazeny.</value>
+  </data>
+  <data name="ShowMethods_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli metody jsou zobrazeny.</value>
+  </data>
+  <data name="ShowFields_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli proměnné jsou zobrazeny.</value>
+  </data>
+  <data name="ShowCTors_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli konstruktory jsou zobrazeny.</value>
+  </data>
+  <data name="ShowInitializers_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli inicializátory jsou zobrazeny.</value>
+  </data>
+  <data name="ShowGenericArguments_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli generické argumenty (typové parametry) jsou zobrazeny.</value>
+  </data>
+  <data name="ShowReferences_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli reference jsou zobrazeny.</value>
+  </data>
+  <data name="ShowBaseTypes_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli rodičovské typy jsou zobrazeny.</value>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>Prosím, čekejte...</value>
+  </data>
+  <data name="ShowChanged_d" xml:space="preserve">
+    <value>Vyvolána po té vlastnost určující, které člyny jsou zobrazeny v ListViewu byla změněna.</value>
+  </data>
+  <data name="ShowShowMenu_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli menu Zobrazit je zobrazeno.</value>
+  </data>
+  <data name="ShowToolbar_d" xml:space="preserve">
+    <value>Získá nebo nastaví hodnotu určujísí, jestli palenl nástrojů je zobrazen.</value>
+  </data>
+  <data name="Objects_d" xml:space="preserve">
+    <value>Seznam sestavní nebo jakýchkoliv jiných objektů zobrazených jako objekty nejvyšší úrovně stromového seznamu</value>
+  </data>
+  <data name="BaseTypes" xml:space="preserve">
+    <value>Rodičovské typy</value>
+  </data>
+  <data name="References" xml:space="preserve">
+    <value>Reference</value>
+  </data>
+  <data name="ProgressBarStyle_d" xml:space="preserve">
+    <value>Styl ProgressBaru zobrazujícího postup</value>
+  </data>
+  <data name="CloseOnFinish_d" xml:space="preserve">
+    <value>Určuje jestli se formulář automaticky zavře, když BackgroundWorker dokončí svoji práci.</value>
+  </data>
+  <data name="Prompt_d" xml:space="preserve">
+    <value>Informativní text zobrazený v horní části formuláře.</value>
+  </data>
+  <data name="Information_d" xml:space="preserve">
+    <value>Informativní text zobrazený pod ukazatelem průběhu</value>
+  </data>
+  <data name="CanCancel_d" xml:space="preserve">
+    <value>Určuje jestli dialog podporuje stornování.</value>
+  </data>
+  <data name="DoWorkOnShow_d" xml:space="preserve">
+    <value>Když je true, formulář automaticky spustí BackgroundWorker, když je vyvolána jeho událost Shown.</value>
+  </data>
+  <data name="WorkerArgument_d" xml:space="preserve">
+    <value>Argument předaný metodě RunWorkerAsync, když DoWorkOnShow je true.</value>
+  </data>
+  <data name="PasteManyLines" xml:space="preserve">
+    <value>Ve schránce je {0} řádek textu. Přejete si je vložit jako klíčová slova?</value>
+  </data>
+  <data name="ContextMenuEnabled_d" xml:space="preserve">
+    <value>Určuje jestli kontextové menu na ListBoxu s klíčovými slovy je povoleno</value>
+  </data>
+  <data name="ShortcutsEnabled_d" xml:space="preserve">
+    <value>Určuje jestli klávesové zkratky pro manipulaci se schránkou jsou povoleny</value>
+  </data>
 </root>

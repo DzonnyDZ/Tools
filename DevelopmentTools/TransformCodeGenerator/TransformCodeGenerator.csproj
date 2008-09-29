@@ -1,7 +1,7 @@
 ﻿<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
   <PropertyGroup>
     <ProjectType>Local</ProjectType>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{43599321-D767-4BF7-A725-34850D057B4E}</ProjectGuid>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -182,6 +182,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\TransforCodeGeneratorResources.cs.resx" />
     <EmbeddedResource Include="Resources\TransforCodeGeneratorResources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>TransforCodeGeneratorResources.Designer.cs</LastGenOutput>

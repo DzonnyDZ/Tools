@@ -117,73 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="IPR_n" xml:space="preserve">
-    <value>IPR</value>
+  <data name="GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull" xml:space="preserve">
+    <value>Získání rozhraní CodeDOMProvideru selhalo. GetService(QueryService(CodeDomProvider) vrátil null.</value>
   </data>
-  <data name="ODE_n" xml:space="preserve">
-    <value>ODE</value>
+  <data name="UnableToGetIOleServiceProviderFromSiteObject" xml:space="preserve">
+    <value>Nemohu získat IOleServiceProvider z objektu stanoviště.</value>
   </data>
-  <data name="SubjectNumber_n" xml:space="preserve">
-    <value>Číslo subjektu</value>
+  <data name="CodeDomProviderIsNULL" xml:space="preserve">
+    <value>CodeDomProvider je null.</value>
   </data>
-  <data name="SubjectNumber_d" xml:space="preserve">
-    <value>Část 'subjekt' z referenčního čísla subjektu</value>
+  <data name="ArrayMustHaveAtLeast1Member" xml:space="preserve">
+    <value>Pole {0} musí mít alespoň jednu položku</value>
   </data>
-  <data name="SubjectMatterNumber_n" xml:space="preserve">
-    <value>Základní číslo subjektu</value>
+  <data name="ObjectIsNotSited" xml:space="preserve">
+    <value>objekt není zastanovišťován</value>
   </data>
-  <data name="SubjectMatterNumber_d" xml:space="preserve">
-    <value>Část 'základ' referenčního čísla subjektu</value>
+  <data name="SiteDoesNotSupportRequestedInterface" xml:space="preserve">
+    <value>stanoviště nepodporuje požadované rozhraní</value>
   </data>
-  <data name="SubjectDetailNumber_n" xml:space="preserve">
-    <value>Detailní číslo subjektu</value>
+  <data name="UnableToGetProjectItem" xml:space="preserve">
+    <value>Nemohu získat položku projektu</value>
   </data>
-  <data name="SubjectDetailNumber_d" xml:space="preserve">
-    <value>Část 'detail' referenčního čísla subjektu</value>
+  <data name="UnableToAddDLLToProjectReferences0PleaseAddThemManually" xml:space="preserve">
+    <value>Nemohu přidat DLL do referencí proketu: {0}. Prosím, předejte ji ručně.</value>
   </data>
-  <data name="SubjectName_n" xml:space="preserve">
-    <value>Název subjektu</value>
+  <data name="GetServiceTypeofProjectReturnNull" xml:space="preserve">
+    <value>GetService(typeof(Project)) vrátila null.</value>
   </data>
-  <data name="SubjectName_d" xml:space="preserve">
-    <value>Textová reprezentace čísla subjektu (maximálně 64 oktetů) stávající se z grafických znaků a mezer, buďto v angličtině, jak je definováno d dodatku H, nebo v jazyce služby určeném v 'identifikátor jazyka datasetu' (2:135)</value>
+  <data name="UnableToADDDLLToCurrentProjectProjectObjectDoesNotImplementVSProject" xml:space="preserve">
+    <value>Nemohu přidat DLL do aktuálního projektu. Project.Object neimplementuje VSProject.</value>
   </data>
-  <data name="SubjectMatterName_n" xml:space="preserve">
-    <value>Základní číslo subjektu</value>
+  <data name="ERRORVsProjReferencesAddThrowsException" xml:space="preserve">
+    <value>*** CHYBA: vsProj.References.Add() vyhodila výjimku:</value>
   </data>
-  <data name="SubjectMatterName_d" xml:space="preserve">
-    <value>Textová reprezentace základního čísla subjektu</value>
-  </data>
-  <data name="SubjectDetailName_n" xml:space="preserve">
-    <value>Detailní název subketu</value>
-  </data>
-  <data name="SubjectDetailName_d" xml:space="preserve">
-    <value>Text reprezentující detailní číslo subjektu</value>
-  </data>
-  <data name="IPR_d" xml:space="preserve">
-    <value>Reference poskytovatele informací - název jak je registrován IPTC/NAA identifikující poskytovatele zaručujícího unikátnost UNO</value>
-  </data>
-  <data name="IPR_d2" xml:space="preserve">
-    <value>Reference poskytovatele informací</value>
-  </data>
-  <data name="UCD_d" xml:space="preserve">
-    <value>Datum vytvoření UNO určuje 24 hodinovou periodu, v rámci níž musí být další elementy UNO unkátní.</value>
-  </data>
-  <data name="ODE_d" xml:space="preserve">
-    <value>Element popisovače objektu spolu s UCD a IPR - řetězec znaků zajišťující unikátnost UNO.</value>
-  </data>
-  <data name="OVI_d" xml:space="preserve">
-    <value>Indikátor varianty obkjektu - řetězec znaků značící technickou variantu objektu (jako částečné objekty, změny formátu souborů a kódovací znakovou sadu).</value>
-  </data>
-  <data name="Type_d" xml:space="preserve">
-    <value>Typ komponent</value>
-  </data>
-  <data name="Components_d" xml:space="preserve">
-    <value>Počet komponent</value>
-  </data>
-  <data name="StringValueOfTheProperty0MustBe1BytesLong" xml:space="preserve">
-    <value>Řetězcová hosnota vlastnosti {0} musí být {1} bytů dlouhá.</value>
-  </data>
-  <data name="StringValueOfTheProperty0CanBeMaximally1BytesLong" xml:space="preserve">
-    <value>Řetězcová hodnota vlastnosti {0} může být maximálně {1} bytů dlouhá.</value>
+  <data name="Class0DoesNotProvideA1Attribute" xml:space="preserve">
+    <value>Třída '{0}' neposkytuje atribut '{1}'.</value>
   </data>
 </root>

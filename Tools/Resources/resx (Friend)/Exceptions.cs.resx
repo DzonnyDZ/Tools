@@ -162,4 +162,850 @@
   <data name="MessageBoxMustBeInCreatedStateInOrderToBeDisplyedByPerformDialog" xml:space="preserve">
     <value>MessageBox musí být ve stavu Created, aby mohl být zobrazen pomocí PerformDialog.</value>
   </data>
+  <data name="MustBeGreaterThanOrEqualToZero" xml:space="preserve">
+    <value>{0} musí být větší nebo rovno nule</value>
+  </data>
+  <data name="MustBe1Dimensional" xml:space="preserve">
+    <value>{0} musí být jednorozměrné</value>
+  </data>
+  <data name="ThereIsNotEnoughSpaceBetween0AndTheEndOfTheArrayForItemsStoredInCollection" xml:space="preserve">
+    <value>Mezi {0} a koncem pole není dostatek místa pro položky z kolekce</value>
+  </data>
+  <data name="EnumeratorIsPositionedOutsideIReadOnlyIndexableBounds" xml:space="preserve">
+    <value>Enumerator je napozicován mimo hranice IReadOnlyIndexable</value>
+  </data>
+  <data name="AllowAddCancelableEventsHandlersCanBeChangedOnlyFromTrueToFalse" xml:space="preserve">
+    <value>AllowAddCancelableEventHandlers lze změnit jen z True na False</value>
+  </data>
+  <data name="CannotAddHandlerToTheAddingEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Nemohu přidat ovladač události Adding, když AllowAddCancelableEventHandlers je False</value>
+  </data>
+  <data name="ListIsLocked" xml:space="preserve">
+    <value>List je zamčen</value>
+  </data>
+  <data name="CannotAddHandlerToTheClearigEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Nemohu přidat ovladač události Clearing, když AllowAddCancelableEventHandlers je False</value>
+  </data>
+  <data name="ClearingWasCanceledInEventhendler" xml:space="preserve">
+    <value>Čištění bylo stronováno v ovladači události</value>
+  </data>
+  <data name="CannotAddHandlerToTheRemovingEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Nemohu přidat ovladač události Removing, když AllowAddCancelableEventsArgs je False</value>
+  </data>
+  <data name="RemovingWasCenceledInEventHandler" xml:space="preserve">
+    <value>Odstraňování bylo stronováno v ovladači události</value>
+  </data>
+  <data name="CannotAddHandlerToTheItemChangingEventWhenAllowAddCancelableEventsHandlersIsFalse" xml:space="preserve">
+    <value>Nemohu přidat ovladač události ItemChanging, když AllowAddCancelableEventsHandlers je False</value>
+  </data>
+  <data name="ChangingWasCanceledInEventhandler" xml:space="preserve">
+    <value>Změna byla stronována v ovladači události</value>
+  </data>
+  <data name="CannotChangeItemPropertyWhenReadOnlyIsTrue" xml:space="preserve">
+    <value>Nemohu změnit položku Item, když ReadOnly je True</value>
+  </data>
+  <data name="ErrorWhileDeserializingLinkLabelItem" xml:space="preserve">
+    <value>Chyba pži deserializaci LinkLabelItem</value>
+  </data>
+  <data name="EnumeratorIsEitherNotInitializedYedOrEnumerationHasAlreadyFinished" xml:space="preserve">
+    <value>Enumerator buďto ještě není inicializován nebo enumarace již skončila</value>
+  </data>
+  <data name="CannotBeSetToNull" xml:space="preserve">
+    <value>{0} nelza nastavit na null</value>
+  </data>
+  <data name="OnlyIListInstancesCanBeUsedInListWrapper" xml:space="preserve">
+    <value>S ListWrapperem lze použít jen instance IListů</value>
+  </data>
+  <data name="MustBeNonNegative" xml:space="preserve">
+    <value>{0} musbýt nezáporné</value>
+  </data>
+  <data name="IsMultidimensional" xml:space="preserve">
+    <value>{0} je vícerozměrné</value>
+  </data>
+  <data name="IsGreaterThanOrEqualToLenghtOfArray" xml:space="preserve">
+    <value>{0} je větší než nebo rovno délce pole</value>
+  </data>
+  <data name="ThereIsNotEngoughSpaceInArrayAfter0ToPlaceAllItemsFromCollection" xml:space="preserve">
+    <value>Za {0} není v poli dostatek místa pro uložení všech položek kolekce</value>
+  </data>
+  <data name="IndexWasOutOfRangeOfControlsCollection" xml:space="preserve">
+    <value>index byl mimo rozsah kolekce ovládacích prvků</value>
+  </data>
+  <data name="IndexMustBeInRangeOfTheCollection" xml:space="preserve">
+    <value>index musí být v rozsahu kolekce</value>
+  </data>
+  <data name="StringMustConsistOfEventNumberOfHexadeimalNumerals" xml:space="preserve">
+    <value>Řetězec musí obsahovat lichý počet hexačíslic</value>
+  </data>
+  <data name="InvalidCharacterNear01" xml:space="preserve">
+    <value>Neplatný znak poblíž "{0}{1}"</value>
+  </data>
+  <data name="CannotInterpretValue0As1" xml:space="preserve">
+    <value>Nemohu interpretovat hodnotu "{0}" jako {1}</value>
+  </data>
+  <data name="CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2" xml:space="preserve">
+    <value>Nemohu vrátit hodnotu této instance T1orT2, protože neobsahuje ani hodnotu1 ani hodnotu2.</value>
+  </data>
+  <data name="ThisT1orT2CannotBeConvertedTo0BecauseItDoesnTContainValueOf1" xml:space="preserve">
+    <value>Tento T1orT2 nemůže být zkonvertován na {0} protože neobsahuje hodnotu {1}</value>
+  </data>
+  <data name="ValueOfObjeValuePropertyMustBeEitherOfTypeT1OrOfTypeT1" xml:space="preserve">
+    <value>Hosnota vlastnosti ObjectValue musí být buď typu T1 nebo T2</value>
+  </data>
+  <data name="CannotAddNodeThatHaveParentAlreadySet" xml:space="preserve">
+    <value>Nemohu přidat uzel, který již má rodiče</value>
+  </data>
+  <data name="AttemptToCreateCyclicTree" xml:space="preserve">
+    <value>Pokus o vytvožení cyklického stromu</value>
+  </data>
+  <data name="CannotAddNullNodeIntoTree" xml:space="preserve">
+    <value>Nemohu přidat nulový uzel do stromu</value>
+  </data>
+  <data name="CannotPutNullNodeIntoTree" xml:space="preserve">
+    <value>Nemohu vložit nullový uzel do stromu</value>
+  </data>
+  <data name="CannotAssignNodeThatGaveParentAlreadySet" xml:space="preserve">
+    <value>Nemohu přiřadit uzel, který již má nastaveného rodiče</value>
+  </data>
+  <data name="CannotAdoptNull" xml:space="preserve">
+    <value>Nemohu adoprovat null</value>
+  </data>
+  <data name="OnlyValueSOfType0CanBeEditedBy0" xml:space="preserve">
+    <value>Jen hodnoty typu {0} mohou být editovaány pomocí {0}</value>
+  </data>
+  <data name="JPEGFileDoesnTStartWithCorrectSOIMarker" xml:space="preserve">
+    <value>Soubor JPEG nezačíná korektní značkou SOI</value>
+  </data>
+  <data name="GivenMarkerSCodeDoesnTStartWithFFh" xml:space="preserve">
+    <value>Kód dané značky nezačíná FFh</value>
+  </data>
+  <data name="StreamToReadJPEGFromMustBeAbleToSeekAndRead" xml:space="preserve">
+    <value>Proud, z něhož má být načten JPEG, musí podporovat změnu pozice a čtení</value>
+  </data>
+  <data name="UnknownImageExtensionImageWillNotBeSaved" xml:space="preserve">
+    <value>Neznámá přípona obrázku, obrázek nebude uložen.</value>
+  </data>
+  <data name="EOINotFound" xml:space="preserve">
+    <value>EOI nenalezena</value>
+  </data>
+  <data name="JPEGFileDoesnTEndWithCorrectEOIMarker" xml:space="preserve">
+    <value>Soubor JPEG nekončí správnou značkou EOI</value>
+  </data>
+  <data name="NoJPEGMarkerFound" xml:space="preserve">
+    <value>Žádná JPEG značka nenalezena</value>
+  </data>
+  <data name="BIMSegmentDoesnTStartWithSting8BIM" xml:space="preserve">
+    <value>Segment 8BIM nezačíná řetězcem '8BIM'</value>
+  </data>
+  <data name="ReportedLengthOf8BIMSegmentDoesnFFitIntoBaseStream" xml:space="preserve">
+    <value>Oznámená délka 8BIM segmentu se nevejde do nadřazeného proudu</value>
+  </data>
+  <data name="IndexMustBeInRangeDefinedByCounfOfIFDs" xml:space="preserve">
+    <value>Index musí být v rozdahu definovaném počtem IFD</value>
+  </data>
+  <data name="NumberOfElementsCannotBe0" xml:space="preserve">
+    <value>Počet prvků nesmí být 0</value>
+  </data>
+  <data name="DataTypesCannotBeNullAndMustContainAtLeastOneElement" xml:space="preserve">
+    <value>DataTypes nesmí být bull a musí obsahovat alespoň jeden element</value>
+  </data>
+  <data name="CannotChangeNumberOfComponentsOfThisRecord" xml:space="preserve">
+    <value>Nelze změni počet položek tohoto záznamu</value>
+  </data>
+  <data name="ValueOfIncompatibleTypePassedToASCIIRecord" xml:space="preserve">
+    <value>Hodnota nekompatibilního typu vkládána do ASCII záznamu</value>
+  </data>
+  <data name="ValueOfIncompatibleTypePassedToExifRecord" xml:space="preserve">
+    <value>Hodnota nekompatibilního typu vkládána do Exif záznamu</value>
+  </data>
+  <data name="CannotReadTagDataFromStream" xml:space="preserve">
+    <value>Nemohu přečíst data tagu z proudu</value>
+  </data>
+  <data name="UnknownByteOrderMark" xml:space="preserve">
+    <value>Neznámá značka pořadí bytů</value>
+  </data>
+  <data name="InvalidValueForByteOrderTestAtExifHeader" xml:space="preserve">
+    <value>Neplatná hodnota testu pořadí bytů v hlavičce Exif</value>
+  </data>
+  <data name="UnexpectedCharacter0" xml:space="preserve">
+    <value>Neočekávaný znak {0}</value>
+  </data>
+  <data name="SlashExpected" xml:space="preserve">
+    <value>Očekáváno /</value>
+  </data>
+  <data name="DataSetsLongerThan32767BAreNotSupported" xml:space="preserve">
+    <value>DataSety delší než 32767B nesjou podporovány</value>
+  </data>
+  <data name="IPTCDataSetsLongerThat32767BytesAreNotSupported" xml:space="preserve">
+    <value>IPTC DataSety delší než 32767 bytů nejsou podporovány</value>
+  </data>
+  <data name="DataSetNumberMustBeLessThanOrEqualTo9" xml:space="preserve">
+    <value>DataSetNumber musí být menší nebo rovno 9</value>
+  </data>
+  <data name="ThisInstanceIsLocked" xml:space="preserve">
+    <value>Tato instance je zamčena</value>
+  </data>
+  <data name="RecordMustBeFrom0To9" xml:space="preserve">
+    <value>Číslo záznamu musí být od 0 do 9</value>
+  </data>
+  <data name="GivenTypeIsNotEnum" xml:space="preserve">
+    <value>Daný typ není výčet</value>
+  </data>
+  <data name="CannotSetFixedToTrueWhenLengthIs0" xml:space="preserve">
+    <value>Nelze nastavit Fixed na True, když Lenght je 0</value>
+  </data>
+  <data name="CannotSetLengthTo0WhenFixedIsTrue" xml:space="preserve">
+    <value>Nelze nastavit Lenght na 0, když Fixed je True</value>
+  </data>
+  <data name="TagMarkerMustBe1Ch" xml:space="preserve">
+    <value>Značka tagu musí být 1Ch</value>
+  </data>
+  <data name="ExtendedSizeTagsAreNotSupported" xml:space="preserve">
+    <value>Tagy rozšířené délky nesjou podporovány</value>
+  </data>
+  <data name="BytesCannotBe0" xml:space="preserve">
+    <value>Bytes nesmí být 0</value>
+  </data>
+  <data name="LenCannotBe0WhenFixedIsTrue" xml:space="preserve">
+    <value>Lan nesmí být 0, když Fixed je True</value>
+  </data>
+  <data name="CannotBeNegative" xml:space="preserve">
+    <value>{0} nemůže být záporné</value>
+  </data>
+  <data name="Item0ContainsNonGraphicCharacter" xml:space="preserve">
+    <value>Položka {0} obsahuje negrafický znak</value>
+  </data>
+  <data name="String0CanotBeStoredWithoutViolatingLengthAndOrFixedConstraint" xml:space="preserve">
+    <value>Řetězec "{0}" nelze uloži bez porušení omezení délky a/nebo fixní délky</value>
+  </data>
+  <data name="Item0ContainsNonGraphicNonSpaceCharacter" xml:space="preserve">
+    <value>Položka {0} obsahuje negrafický, nemezerový znak</value>
+  </data>
+  <data name="Item0ContainsNonGraphicNonSpaceNonCrNonLfCharacter" xml:space="preserve">
+    <value>Položka {0} obsahuje negrafický, nemezerový, ne-cr, ne-lf znak</value>
+  </data>
+  <data name="InvalidBitmapNumberOfBitsInBitmapMustBeMultiplicationOf460" xml:space="preserve">
+    <value>Neplatná bitmapa. Počet bitů bitmapy musí být náuspobek 460</value>
+  </data>
+  <data name="BitmapWidthMustBe460px" xml:space="preserve">
+    <value>Šířka bitmapy musí být 460px</value>
+  </data>
+  <data name="BitmapViolatesLenghtConstraintImageSizeMustBe4600Px" xml:space="preserve">
+    <value>Bitmapa porušuje omezení délky. Velikost obrázku musí být 460×{0}px</value>
+  </data>
+  <data name="UnknownBaseTypeOfEnum" xml:space="preserve">
+    <value>Neznámý rodičovský typ výčtu</value>
+  </data>
+  <data name="LengthOfDataStoredUnderThisTagIsDifferentFrom8WhichIsNecessaryForDatatypeCCYYMMDD" xml:space="preserve">
+    <value>Délka dat uložených v tomto tagu je jiná než 8, což je nutné pro datový typ CCYYMMDD</value>
+  </data>
+  <data name="LengthOfDataStoredUnderThisTagIsDifferentThen11WhichIsNecessaryForDatatypeHHMMSSHHMM" xml:space="preserve">
+    <value>Délka dat uložených v tomot tagu je jiná než 11, což je nutné pro datový typ HHMMSS_HHMM</value>
+  </data>
+  <data name="StoredTimeDoesNotContainValidCharacterOnTimeZoneOffsetSignPosition" xml:space="preserve">
+    <value>Uložený čas neobsahuje platný znak na pozici znaménka offsetu časového pásma</value>
+  </data>
+  <data name="WhenFixedIsTrueLenCannotBe0" xml:space="preserve">
+    <value>Když Fixed je True Len nemůže být 0</value>
+  </data>
+  <data name="LenghtConstraintViolation" xml:space="preserve">
+    <value>Porušení omezení délky.</value>
+  </data>
+  <data name="Item0ContainsNonAlphaCharacter" xml:space="preserve">
+    <value>Položka {0} obsahuje nepísmenný znak</value>
+  </data>
+  <data name="EnumTypeOfItemsPassedToStringEnumValueMustBeSameAsThatInTheTypeParameter" xml:space="preserve">
+    <value>EnumType položek předaných do StringEnum_Value musí být stejný jako ten v patametrue Typ</value>
+  </data>
+  <data name="ThisEnumerationDoesNotAllowValuesThatAreNotMemberOfIt" xml:space="preserve">
+    <value>Tento výčet nepodporuje hodnoty, které nejsou jeho členy.</value>
+  </data>
+  <data name="StoredValueHasInvalidLenght" xml:space="preserve">
+    <value>Uložená hodnota má neplatnou délku</value>
+  </data>
+  <data name="SerializedValueHasNotLength2Bytes" xml:space="preserve">
+    <value>Serializovaná hodnota nemá délku 2 byty.</value>
+  </data>
+  <data name="StoredItemLenghtMustBe0" xml:space="preserve">
+    <value>Délka uložené položky musí být {0}</value>
+  </data>
+  <data name="TimeMustBeNonNegativeAndLessThen1Day" xml:space="preserve">
+    <value>Čas musí být nezáporný a kratší než 1 den</value>
+  </data>
+  <data name="SubjectReferenceNumberMustBeMemberOfEitherSubjectReferenceNumbersSubjectMatterNumbersOrEconomySubjectDetail" xml:space="preserve">
+    <value>SubjectReferenceNumber musí být členem SubjectReferenceNumbers, SubjectMatterNumbers nebo EconomySubjectDetail</value>
+  </data>
+  <data name="LenghtOfSubjectNameMustFitInto64" xml:space="preserve">
+    <value>Délka SubjectName se musí vejít do 64</value>
+  </data>
+  <data name="SubjectNameCanContainOnlyGraphicCharactersExceptAnd" xml:space="preserve">
+    <value>SubjectName smí obsahovat jen grafické znaky mimo :, ? a *</value>
+  </data>
+  <data name="LenghtOfSubjectReferenceMustFitInto64" xml:space="preserve">
+    <value>Délka SubjectReference su musí vejít do 64</value>
+  </data>
+  <data name="CanContainOnlyGraphicCharactersExceptAnd" xml:space="preserve">
+    <value>{0} smí obsahovat jen grafické znaky mimo :, ? a *</value>
+  </data>
+  <data name="LenghtOf0MustFitInto1" xml:space="preserve">
+    <value>Délka {0} se musí vejít do {1}</value>
+  </data>
+  <data name="MustContainExactly1Parts" xml:space="preserve">
+    <value>{0} musí obsahovat přesně {1} položek</value>
+  </data>
+  <data name="LengthOfSerialized0IsNotWithinRange12Bytes" xml:space="preserve">
+    <value>Délka serializovaného {0} není v rozmezí {1}÷{2} bytů</value>
+  </data>
+  <data name="LenghtOfSerialized0DiffersFrom1Bytes" xml:space="preserve">
+    <value>Délka serializovaného {0} se liší od {1} bytů</value>
+  </data>
+  <data name="LenghtOfSerializedNameExceeds0Bytes" xml:space="preserve">
+    <value>Délka serializovaného jména přesahuje {0} bytů</value>
+  </data>
+  <data name="OnlyGraphicCharactersAreAllowedIn0" xml:space="preserve">
+    <value>Jen grafické znaky jsou povoleny v {0}</value>
+  </data>
+  <data name="CannotContainCharactersAnd" xml:space="preserve">
+    <value>{0} nesmí obsahovat znaky *, /, ? a :</value>
+  </data>
+  <data name="MustBeStringWithLengthFrom1To2Characters" xml:space="preserve">
+    <value>{0} musí být řetězec délky od {1} do {2} znaků</value>
+  </data>
+  <data name="TheLenghtOf0ExceedsLimit" xml:space="preserve">
+    <value>Délka {0} přesahuje limit</value>
+  </data>
+  <data name="TextMustBeEncodeableByASCII" xml:space="preserve">
+    <value>Text {0} musí být zakódovatelný v ASCII</value>
+  </data>
+  <data name="CannotBeNullOrEmpty" xml:space="preserve">
+    <value>{0} nesmí být null ani prázdná</value>
+  </data>
+  <data name="CannotRemoveLastItemFrom0" xml:space="preserve">
+    <value>Nemohu odebrat poslední položku z {0}</value>
+  </data>
+  <data name="CannotBeCleared" xml:space="preserve">
+    <value>{0} nemůže být bymazána</value>
+  </data>
+  <data name="CanConsistOnlyOfGraphicCharacters" xml:space="preserve">
+    <value>{0} smí obsahovat jen grafické znaky</value>
+  </data>
+  <data name="ComponentCannotBeAnEmptyString" xml:space="preserve">
+    <value>Komponenta {0} nesmí být prázdný řetězec</value>
+  </data>
+  <data name="ComponentMustBeEncodeableByASCII" xml:space="preserve">
+    <value>Komponenta {0} musí být zakódovatelná v ASCII</value>
+  </data>
+  <data name="LengthOfODEAndIPRTogetherWithSeparatorsMustWitInto61" xml:space="preserve">
+    <value>Délka ODE a IPR dohromady s oddělovači se musí vejít do 61</value>
+  </data>
+  <data name="HasToManyDigits" xml:space="preserve">
+    <value>{0} má moc číslic</value>
+  </data>
+  <data name="TypeIsSpecifiedNeitherViaPropertyNorInValue" xml:space="preserve">
+    <value>Typ není určen ani vlastností ani hodnotou</value>
+  </data>
+  <data name="MustBeFromRange12Or3IfUnknown" xml:space="preserve">
+    <value>{0} musí být z rozsahu {1}÷{2} nebo {3} pokud je neznámý</value>
+  </data>
+  <data name="MustBeLessThenOrEqualTo1" xml:space="preserve">
+    <value>{0} musí být menší nebo rovno {1}</value>
+  </data>
+  <data name="CannotConvertString0To1" xml:space="preserve">
+    <value>Nemohu pževést řetězec "{0}" na {1}</value>
+  </data>
+  <data name="MustBePositiveAndLessThan1H0MmSs" xml:space="preserve">
+    <value>{0} musí být kladná a menčí než {1:h(0):mm:ss}</value>
+  </data>
+  <data name="MustBeInWholeMinutes" xml:space="preserve">
+    <value>{0} musí být v celých minutách</value>
+  </data>
+  <data name="MustBeWithinRange01" xml:space="preserve">
+    <value>{2} musí být z rozsahu {0}÷{1}</value>
+  </data>
+  <data name="CannotBeInterpretedAsMemberOf1" xml:space="preserve">
+    <value>{0} nemůže být interpretován jako člen {1}</value>
+  </data>
+  <data name="CannotBeInterpretedAs1" xml:space="preserve">
+    <value>{0} nemůže být interpretováno jako {1}</value>
+  </data>
+  <data name="NumberOfComponentsOf0MustBeFrom1To2" xml:space="preserve">
+    <value>Počet komponente {0} musí být od {1} do {2}</value>
+  </data>
+  <data name="MustBeMemberOfEnumeration1" xml:space="preserve">
+    <value>{0} musí být členem výčtu {1}</value>
+  </data>
+  <data name="CanContainOnlyASCIIEncodableGraphicCharactersAndSpaces" xml:space="preserve">
+    <value>{0} může obsahovat jen grafické znaky kódovatelné v ACSCII a mezery</value>
+  </data>
+  <data name="CannotBeConvertedTo1" xml:space="preserve">
+    <value>'{0}' nemůže být konvertováno na {1}</value>
+  </data>
+  <data name="CannotBeChanged" xml:space="preserve">
+    <value>{0} nelze změnit</value>
+  </data>
+  <data name="CannotBeSetToFalse" xml:space="preserve">
+    <value>{0} nelze nastavit na False</value>
+  </data>
+  <data name="ValueOfIncompatibleTypeIsBeingSet" xml:space="preserve">
+    <value>Nastavování hodnoty nekompatibilního typu</value>
+  </data>
+  <data name="EachGroupMustHaveAtLeast0Tags" xml:space="preserve">
+    <value>Každá skupina musí mít alespoň {0} tagů</value>
+  </data>
+  <data name="MustContainAtLeast1Items" xml:space="preserve">
+    <value>{0} musí obsahovat alespoň {1} položek</value>
+  </data>
+  <data name="Only124And8BytesIntegersCanBeReadVia0" xml:space="preserve">
+    <value>Jen 1-, 2-, 4- a 8-bytové integery mohou být čteny pomocí {0}</value>
+  </data>
+  <data name="Number0CannotBeStoredIn1Bytes" xml:space="preserve">
+    <value>Číslo {0} nelze uložit v {1} bytech</value>
+  </data>
+  <data name="CannotBe1When2Is3" xml:space="preserve">
+    <value>{0} nemůže být {1}, když {2} je {3}</value>
+  </data>
+  <data name="ISO6391CodeMustContainExactly2LowercaseLatinLetters" xml:space="preserve">
+    <value>Kód ISO 693-1 musí obsahovat pžesně 2 písmena malé latinské abecedy.</value>
+  </data>
+  <data name="ISO6392CodeMustContainExactly3LowercaseLatinLetters" xml:space="preserve">
+    <value>Kód ISO 639-2 musí obsahobat přesně 3 píspena malé latinské abecedy.</value>
+  </data>
+  <data name="CannotBeNullOrAnEmptyString" xml:space="preserve">
+    <value>{0} nesmí být null nebo prázdný řetězec</value>
+  </data>
+  <data name="ISO6392DuplicateCodeMustContainExactly3LowercaseLatinLetters" xml:space="preserve">
+    <value>Duplicitní kód ISO 639-2 musí obsahovat přesně 3 malá latinská písmena. </value>
+  </data>
+  <data name="CodeIsNotValidISO639LanguageCode" xml:space="preserve">
+    <value>Kód není platným kódem jakzyka ISO 639</value>
+  </data>
+  <data name="CannotChangeStateFrom0To1" xml:space="preserve">
+    <value>Nemohu změnit stav z {0} na {1}</value>
+  </data>
+  <data name="This0CannotBeConvertedTo1BecauseItDoesnTContain1" xml:space="preserve">
+    <value>Tento {0} nemůže být převeden na {1} protože neobsahuje {1}.</value>
+  </data>
+  <data name="VersionComponentMustBeGreaterThanOrEqualToZero" xml:space="preserve">
+    <value>Komponenta verze musí být vetší než nebo rovna nule</value>
+  </data>
+  <data name="StreamMustSupportReadingAndSeeking" xml:space="preserve">
+    <value>Proud musí podporovat čtení a změnu pozice</value>
+  </data>
+  <data name="SizeOfConstrainedStreamMustFitIntoBaseStream" xml:space="preserve">
+    <value>Velikost omezeného proudu se musí vejít do rodičovského proudu.</value>
+  </data>
+  <data name="SupportsNeitherWritingNorSeeking" xml:space="preserve">
+    <value>{0} nepodporuje ani zápis ani změnu polohy</value>
+  </data>
+  <data name="DoesnTSupportWriting" xml:space="preserve">
+    <value>{0} nepodporuje zápis</value>
+  </data>
+  <data name="TheEnumerationHasNotStartedYetOrHasAlreadyFinished" xml:space="preserve">
+    <value>Enumerace ještě nezačala nebo již skončila.</value>
+  </data>
+  <data name="Property0HasAlreadyBeenSetAndItCannotBeChanged" xml:space="preserve">
+    <value>Vlastnost {0} již byla nastavena a nemůže již být změněna</value>
+  </data>
+  <data name="PathCannotBeBasedOnNullString" xml:space="preserve">
+    <value>Cestu nelze založit na nullovém řetězci</value>
+  </data>
+  <data name="PathCannotBeBasedOnAnEmptyStringOrStringContainingOnlyWhitespaces" xml:space="preserve">
+    <value>Cestu nezle založit na prázdném řetezci nebo řetězci skládajícím se jen z bílých znaků</value>
+  </data>
+  <data name="PathStringContainsInvalidCharacter0" xml:space="preserve">
+    <value>řetězec cesty obsahuje nepletný znak '{0}'</value>
+  </data>
+  <data name="ShouldBeGreaterThanZero" xml:space="preserve">
+    <value>{0} by mělo být vyšší než nula</value>
+  </data>
+  <data name="ThePathSDepthIsNotEnoughToRemove0Levels" xml:space="preserve">
+    <value>Hloubka cesty není dostatečná pro odstranění {0} úrovní</value>
+  </data>
+  <data name="SourceFileOrDirectoryNotFound" xml:space="preserve">
+    <value>Zdrojový soubor nebo složka neexiustují</value>
+  </data>
+  <data name="MustBePositive" xml:space="preserve">
+    <value>{0} musí být kladné</value>
+  </data>
+  <data name="MustBeWithinRange12" xml:space="preserve">
+    <value>{0} musí být z rozsahu &lt;{1}; {2})</value>
+  </data>
+  <data name="MustContainAtLeastOneItem" xml:space="preserve">
+    <value>{0} musí obsahovat alespoň jednu položku.</value>
+  </data>
+  <data name="ThereIsNotEnoughtResults" xml:space="preserve">
+    <value>Nedostatek výsledků.</value>
+  </data>
+  <data name="NoConditionWasTrue" xml:space="preserve">
+    <value>Žádná podmínka nebyla True.</value>
+  </data>
+  <data name="NumberOfBitIn0MustBeLessThat1" xml:space="preserve">
+    <value>Počet bitů v {0} musí být nižší než {1}</value>
+  </data>
+  <data name="WasInfinity" xml:space="preserve">
+    <value>{0} bylo nekonečno</value>
+  </data>
+  <data name="WasNaN" xml:space="preserve">
+    <value>{0} bylo NaN</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInInnerFormatSpecificationAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetezci. Neočekávaný konec formátovacího řetězce ve specifikaci vnitřního formátu na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringDMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntaktická cyhab ve formátovacím řetezci. 'D' musí být následováno '(' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringMustBeFollowedWithDOrDAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řezezci. '[' musí být následováno 'd' nebo 'D' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormastStringExpectedAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. ']' očekáváno na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringHMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. 'H' musí být následováno '(' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringMMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. 'M' musí být následováno '(' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringSMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. 'S' musí být následováno '(' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringLMustBeFollowedWithAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. 'L' musí být následováno '(' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringTMustBeFollowedByAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. 'T' musí být následováno '(' na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInQuotedStringAt0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetežce v uvozovkovaném řetězci na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSide0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetežce v levé straně podmínky na pozici {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSide0At1" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak ve formátovacím řetězce (levá strana podmínky) {0} na pozici {1}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValue0" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetězce vlevé straně podmínky - absolutní hodnota na pozic {0}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacterInFormatStringConditionLeftSideAbsoluteValue0At1" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak ve formátovacím řetezci (podmínka levé strany - basolutní hodnota) {0} na pozici {1}.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionLeftSideAbsoluteValueAt0Expected1" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetezce v levé straně podmínky - absolutní hodnota na pozici {0}. Očekáváno '{1}'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacter0InConditionLeftSideAbsoluteValueAt1Expected2" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znka '{0}' v levé straně podmínky - absolutní hodnota na pozici {1}. Očekáváno '{2}'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedComparisonOperator" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetezce v podmínce na pozici {0}. Očekáván operátor porovnání.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedCharacter0InConditionAt1ExpectedComparisonOperator" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak '{0}' v podmínce na pozici {1}. Očekáván operátor porovnání.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberExpected" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetězce v podmínce na pozici {0}. Očkáváno číslo.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberExpected" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak '{0}' v podmínce na pozici {1}. Očekáváno číslo.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0ExpectedNumberOr" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetězce v posmínce na pozici {0}. Očekáváno číslo nebo ')'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1ExpectedNumberOr" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak '{0}' v podmínce na pozici {1}. Očekávano číslo nebo ')'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Nečekávaný konec formátovacího řetězce v podmínce na pozici {0}. Očekáváno číslo, '.' nebo ':'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znka '{0} v podmínce na pozici {1}. Očekáváno číslo, '.' nebo ':'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected_" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetězce v podmíce na pozici {0}. Očekáváno číslo nebo ':'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected_" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak '{0}' v podmíce na pozici {1}. Očekáváno číslo nebo ':'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFormatStringInConditionAt0NumberOrExpected__" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec fromátovacího řetězce v podmínce na pozici {0}. Očekáváno číslo nebo '.'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnextectedCharacter0InConditionAt1NumberOrExpected__" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný znak '{0}! v podmínce na pozici {1}. Očkáváno číslo nebo '.'.</value>
+  </data>
+  <data name="SyntaxErrorInFormatStringUnexpectedEndOfFomatStringAt0ExpectedForCondition" xml:space="preserve">
+    <value>Syntaktická chyba ve formátovacím řetězci. Neočekávaný konec formátovacího řetezce na pozici {0}. Očekáváno ')' pro podmínku.</value>
+  </data>
+  <data name="UnsupportedTypeForComparison0" xml:space="preserve">
+    <value>Nepodporovaný typ porovnání ({0}).</value>
+  </data>
+  <data name="ValueOfSomeTypeWasPassedWhereItIsNotAcceptable" xml:space="preserve">
+    <value>Hodnota určitého typu byla přadána tam, kde nebyla akceptována.</value>
+  </data>
+  <data name="OnlyValuesOfType0AreAcceptable" xml:space="preserve">
+    <value>Jen hodnoty typu {0} jsou akceprovatelné.</value>
+  </data>
+  <data name="ValueOfType0IsNotAcceptable" xml:space="preserve">
+    <value>Hodnota typu {0} je nekaceptovatelná.</value>
+  </data>
+  <data name="ValueOfUnexpectedType0Expected1" xml:space="preserve">
+    <value>Hosnota neočekávaného typu {0}. Očekáváno {1}.</value>
+  </data>
+  <data name="UnknownUnderlyingType0" xml:space="preserve">
+    <value>Neznámý základní typ {0}</value>
+  </data>
+  <data name="MustBeEnumeration" xml:space="preserve">
+    <value>{0} musí být výčet</value>
+  </data>
+  <data name="Constant0DoesNotExistInType1" xml:space="preserve">
+    <value>Konstanta {0} neexistuje v typu {1}</value>
+  </data>
+  <data name="EnumerationDoesNotAllowNegativeValues" xml:space="preserve">
+    <value>Výčet neumožňuje záporné hodnoty</value>
+  </data>
+  <data name="EncodingWithSameCodepageIsNotInList" xml:space="preserve">
+    <value>Kódování se stajnou znakovou stránkou není v seznamu</value>
+  </data>
+  <data name="CannotBeNull" xml:space="preserve">
+    <value>{0} nemůže být null</value>
+  </data>
+  <data name="GivenValueIsNotKnownSystemSound" xml:space="preserve">
+    <value>Daná hodnota není známý systémový zvuk</value>
+  </data>
+  <data name="OnlySoundsWithKnownLocationCanBeConverted" xml:space="preserve">
+    <value>Jen zvuky se známým umístěním lze převést</value>
+  </data>
+  <data name="OnlySoundsOfTypeSystemSoundPlayerAndSoundPlayerWrapperAreSupported" xml:space="preserve">
+    <value>Jen zvoky typu SystemSOundPlayer a SoundPlayerWrapper jsou podporovány</value>
+  </data>
+  <data name="SystemSoundPlayerWrapperCanBeConvertedOnlyWhenItProvidesSoundLocation" xml:space="preserve">
+    <value>SystemSoundPlayerWrapper může být konvertován jen, když poskytuje umístění zvuku.</value>
+  </data>
+  <data name="CannotConvertGiven0To1BecauseItDoesNotRepresentKnown2" xml:space="preserve">
+    <value>Nemohu konvertovat daný {0} na {1} protože nereprezentuje známý {2}.</value>
+  </data>
+  <data name="Type0IsNotSupportedAsValueOfStatusedControlProperty" xml:space="preserve">
+    <value>Typ {0} není podporován jako hodnota vlastnosti StatusedControl.</value>
+  </data>
+  <data name="TextCannotBeChangedViaTheTextProperty" xml:space="preserve">
+    <value>Text nelze změnit pomocí vlastnosti Text.</value>
+  </data>
+  <data name="CannotBeSet" xml:space="preserve">
+    <value>{0} nelze nastavit.</value>
+  </data>
+  <data name="LinkLabelInternalExceptionLinkForItemNotFound" xml:space="preserve">
+    <value>Vnitřní chyba LinkLabelu: Odkaz pro položku nenalezen</value>
+  </data>
+  <data name="CannotLocate0In1" xml:space="preserve">
+    <value>Nemohu najít {0} v {1}</value>
+  </data>
+  <data name="LinkLabelInternalErrorItemFoundInItemsButNotFoundInLinks" xml:space="preserve">
+    <value>Vnitřní chyba LinkLabelu: Položka nalezena v Items ale nenalazena v Links.</value>
+  </data>
+  <data name="NotFoundIn1" xml:space="preserve">
+    <value>{0} nenalezena v {1}</value>
+  </data>
+  <data name="ErrorWhileDeserializing0" xml:space="preserve">
+    <value>Chyba při deserializace {0}</value>
+  </data>
+  <data name="ValueCanBeConverterNeitherTo0NorTo1" xml:space="preserve">
+    <value>Hodnota nemůže být převedena ani na {0} ani na {1}</value>
+  </data>
+  <data name="Type0IsNotSupported" xml:space="preserve">
+    <value>Typ {0} není podporován</value>
+  </data>
+  <data name="MustBe1" xml:space="preserve">
+    <value>{0} musí být {1}</value>
+  </data>
+  <data name="AllTypesIn0MustInheritFrom0" xml:space="preserve">
+    <value>Všechny typy v {0} musí dědit od {0}</value>
+  </data>
+  <data name="CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstance" xml:space="preserve">
+    <value>Nemohu vytvořit instanci typu {0}. {1} byla vyhozena při získávání nové instance:</value>
+  </data>
+  <data name="ValueOfType0CannotBeConvertedTo1" xml:space="preserve">
+    <value>Hodnota typu {0} nemůže být konvertována na {1}.</value>
+  </data>
+  <data name="MustBeOneOf1Or2Values" xml:space="preserve">
+    <value>{0} musí být jedna z hodnot {1} nebo {2}</value>
+  </data>
+  <data name="ConversionTo0Failed" xml:space="preserve">
+    <value>Konverze na {0} selhala</value>
+  </data>
+  <data name="PropertyIsReadOnly" xml:space="preserve">
+    <value>Vlastnost je jen ke čtení</value>
+  </data>
+  <data name="ThePreviousPropertyOfIFDBeingSetAsFollowingMustBeNull" xml:space="preserve">
+    <value>Vlastrnst Previous IFD nastavovaného jako následující musí být null</value>
+  </data>
+  <data name="AttemptToCreateCyclicLinkedListOfIFDs" xml:space="preserve">
+    <value>Pokus vytvořt cyklický spojový seznam IFD</value>
+  </data>
+  <data name="FollowingIFDCannotBeSubIFD" xml:space="preserve">
+    <value>Následující IFD nemůže být podIFD</value>
+  </data>
+  <data name="FollowingIFDMustBeMemberOfSameExifOrBeMemberOfNoExifAsCurrentIFD" xml:space="preserve">
+    <value>Následující IFD musí být členem stejného Exif nebo nabýt členem žádného Exif jako aktuální IFD.</value>
+  </data>
+  <data name="GivenIFDIsAlreadyInUse" xml:space="preserve">
+    <value>Dané IFD je již použito</value>
+  </data>
+  <data name="CannotSetValueOfTheExifPropertyToOtherInstanceThenIsValueOfExifPropertyOfPreviousIFD" xml:space="preserve">
+    <value>Nemohu nastavit hodnotu vlastnosti Exif na jinou instance než je hodnota vlastnsti Exif předchozího IFD.</value>
+  </data>
+  <data name="IFDPassedToTheIFD0PropertyMustEitherHaveNoExifAsociatedOrMustHaveAssociatedCurrrentInstance" xml:space="preserve">
+    <value>IFD předané do vlastnsti IFD0 buďto nesmí mít žádný asociovaný Exif nebo musí mýt stejný Exif jako je aktuální instance.</value>
+  </data>
+  <data name="IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet" xml:space="preserve">
+    <value>IFD předané do vlastnosti IFD0 nesmí mýt nastavenu vlastnost Previous.</value>
+  </data>
+  <data name="TypeOfIFDFollowingAfterIFD0MustBeIFDMain" xml:space="preserve">
+    <value>Typ IFD následujícího po IFD0 musí být IFDMain</value>
+  </data>
+  <data name="CanNeverContainItemWithKeyOfType1" xml:space="preserve">
+    <value>{0} nesmí nikdy obsahovat položku s klíčem typu {1}</value>
+  </data>
+  <data name="GivenKeyIsAlreadyPresentInTheDictionary" xml:space="preserve">
+    <value>Daný klíč je již přítomen ve slovníku</value>
+  </data>
+  <data name="CollectionIsReadOnly" xml:space="preserve">
+    <value>Kolekce je jen pro čtení</value>
+  </data>
+  <data name="ValueWasNotFound" xml:space="preserve">
+    <value>Hodnota nenalezena</value>
+  </data>
+  <data name="SubIFDKeyMustBeValidUInt16Value" xml:space="preserve">
+    <value>Klíč podIFD musí být platná hodnota typu UInt16</value>
+  </data>
+  <data name="ExifRecordKeyMustBeValidUInt16Value" xml:space="preserve">
+    <value>Klíč záznamu Exif musí být platná hodnota typu UInt16</value>
+  </data>
+  <data name="ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD" xml:space="preserve">
+    <value>Exif podIFD, které je přidáváno/kterým je nahrazováno, musí být null nebo stajný jako Exif rodičovského IFD</value>
+  </data>
+  <data name="ParentIFDOfSubIFDBeingAddedReplacedMustMeNull" xml:space="preserve">
+    <value>ParentIFD nastavovaného/nahrazovavšího podIFD musí být null.</value>
+  </data>
+  <data name="IfParentIFDAlreadyContainsRecordThatIsAboutToBecomeParentRecordOfSubIFDItMustOfTypeOneElementOfTypeUInt32" xml:space="preserve">
+    <value>Když rodičovské IFD již obsahuje záznam, ktarý se stávaá rodičem podIFD, musí být typ záznamu jedna položka typu UInt32</value>
+  </data>
+  <data name="MustBeWithinRangeOfValuesOfType1" xml:space="preserve">
+    <value>{0} musí být v rozsahu položek typu {1}</value>
+  </data>
+  <data name="SubIFD" xml:space="preserve">
+    <value>PodIFD</value>
+  </data>
+  <data name="YouShouldNotReplaceRecordsWhichServesAsPointersToSubIFDsIfYouDoSoReplacementRecordMustBeOfTypeUInt16WithOneElementFixedLength" xml:space="preserve">
+    <value>Neměli byste nahrazovat záznamy, které slouží jako ukazatela na podIFD. Pokud tak čníte, nahrazující záznam musí být typu UInt16 s jedním elementem, fixní délka.</value>
+  </data>
+  <data name="CannotRemoveRecordWhichPoitsToSubIFDRemoveSubIFDFirst" xml:space="preserve">
+    <value>Nemohu odstranit záznam ukazující na podIFD. Nejprve odstraňte podIFD.</value>
+  </data>
+  <data name="The0PropertyHaveAlreadyBeenInitialized" xml:space="preserve">
+    <value>Vlastnost {0} již byla inicializována.</value>
+  </data>
+  <data name="TheTagsPropertyHaveNotBeenInitializedUseTheSetTagsMethodToInitializeIt" xml:space="preserve">
+    <value>Vlastnost Tags nebyla inicializována. Použijte SetTags k jají inicializaci.</value>
+  </data>
+  <data name="RootElementOf0MustBe1" xml:space="preserve">
+    <value>Kořenový element {0} musí být {1}.</value>
+  </data>
+  <data name="MustRepresentXMLElement1" xml:space="preserve">
+    <value>{0} musí reprezentovat XML element {1}</value>
+  </data>
+  <data name="UnknownISO2022EncodingType0" xml:space="preserve">
+    <value>Neznámý typ kódování ISO-2022 {0}</value>
+  </data>
+  <data name="ErrorWhileParsing0Found1Expected2AtPosition3" xml:space="preserve">
+    <value>Chyba při parsování {0}. Nalezeno '{1}', očekáváno {2} na pozici {3}.</value>
+  </data>
+  <data name="EscapeSequenceStringIsInInvalidFormat" xml:space="preserve">
+    <value>řetězec escape sekvence je v neplatném formátu.</value>
+  </data>
+  <data name="GivenStreamDoesNotSupportReading" xml:space="preserve">
+    <value>Daný proud nepodporuje čtení</value>
+  </data>
+  <data name="Key0CanHoldOnlyIFDOfType1" xml:space="preserve">
+    <value>Klíč {0} může obsahovat jen IFD typu {1}</value>
+  </data>
+  <data name="ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength" xml:space="preserve">
+    <value>Pro nekomprimovanou miniaturu musí StripOffsets a StripByteCounts mít stejnou délku</value>
+  </data>
+  <data name="ThisStreamDoesNotSupportSeeking" xml:space="preserve">
+    <value>Tento proud nepodporuje změnu pozice.</value>
+  </data>
+  <data name="ThisStreamDoesNotSupportWriting" xml:space="preserve">
+    <value>Tento proud nepodporuje zápis.</value>
+  </data>
+  <data name="AttemptToSeekAfterEndOfStream" xml:space="preserve">
+    <value>Pokus nastavit pozici za konec proudu.</value>
+  </data>
+  <data name="When0Is1Then2MustBeSet" xml:space="preserve">
+    <value>Když {0} je {1}, {2} musí být nastaveno</value>
+  </data>
+  <data name="ThumbnailDataAreInvalid" xml:space="preserve">
+    <value>Data miniatury jsou neplatná</value>
+  </data>
+  <data name="IsNotMemberOf1" xml:space="preserve">
+    <value>{0} není členem {1}</value>
+  </data>
+  <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
+    <value>{0} nemůže být nastavena na {1} když {2} je {3}</value>
+  </data>
+  <data name="StreamRepresentingExifMetadataItemMustSupportSeekingAndReading" xml:space="preserve">
+    <value>Proud reprezentující položku Exif metadat musí podporovat změnu polohy a čtení. </value>
+  </data>
+  <data name="ValueOfThe0PropertyCannotBeChangedAfterItWasSet" xml:space="preserve">
+    <value>Hodnota vlastnosti {0} nemůže být změněka, po té co byla nstavena.</value>
+  </data>
+  <data name="ExifMapGeneratorCannotBeAttachedToMultipleReaders" xml:space="preserve">
+    <value>ExifMapGenerator nemůže pýs spojen s více čiteči</value>
+  </data>
+  <data name="BaseStreamOfOverflowStreamMustBeAbleToReadWriteAndSeek" xml:space="preserve">
+    <value>BaseStram OverflowStreamu musí umět číst, zapisova  a měnit polohu.</value>
+  </data>
+  <data name="WasGreaterThanLegnthOf2" xml:space="preserve">
+    <value>{0} + {1} bylo větší než délka {2}.</value>
+  </data>
+  <data name="UnsupportedSourceType" xml:space="preserve">
+    <value>Nepodporovaný typ zdroje</value>
+  </data>
+  <data name="UnsupportedTargetType" xml:space="preserve">
+    <value>Nepodporovaný typ cíle</value>
+  </data>
+  <data name="ThisConverterCanConvertOnlyFrom0" xml:space="preserve">
+    <value>Tento převodník může převádět jan z {0}.</value>
+  </data>
+  <data name="ThisConverterCanConvertOnlyTo0" xml:space="preserve">
+    <value>Tento převodník může převádět jen do {0}.</value>
+  </data>
+  <data name="ThisConverterCanConvertBackOnlyFrom0" xml:space="preserve">
+    <value>Tento převodník může převádět zpet jen z {0}.</value>
+  </data>
+  <data name="ThisConverterCanConvertBackOnlyTo0" xml:space="preserve">
+    <value>Tento přavaděč může převádět zpět jen do {0}.</value>
+  </data>
+  <data name="ThereAreNotEnoughtItemsIn0" xml:space="preserve">
+    <value>V {0} není dostatečný počet položek</value>
+  </data>
+  <data name="MustBeMemberOf0CollectionOf2" xml:space="preserve">
+    <value>{0} musí být člen {1} kolekce {2}</value>
+  </data>
+  <data name="UnsupportedTypeOfMemberInfoOfNamedArgumentOfAttribute" xml:space="preserve">
+    <value>Nepodporovaný typ MemberInfo pojmenovaného argumentu atributu</value>
+  </data>
+  <data name="WhenStageIsGetCustomAttributeDateOrGetCustomAttributesCustomAttribuetDataMustBeNullAndArgumentIndexMustBe1" xml:space="preserve">
+    <value>Když Stage je GetCustomAttributeData nebo GetCustomAttributes, CustomAttributeData musí být null a ArgumentIndex musí být -1</value>
+  </data>
+  <data name="WhenStageIsGetConstructorArgumentsGetNamedArgumentsInvokeConstructorGetConstructorArgumentValueSetFieldSetPropertyInvokeMethodOrGetNamedArgumentValueCustomAttributeDataCannotBeNull" xml:space="preserve">
+    <value>Když Stage je GetConstructorArguments, GetNamedArguments, InvokeConstructor, GetConstructorArgumentValue, SetField, SetProperty, InvokeMethod nebo GetNamedArgumentValue, CustomAttributeData nesmí být null.</value>
+  </data>
+  <data name="WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttributeDateConstructorArguments" xml:space="preserve">
+    <value>Když Stage je GetConstructorArgumentValue, ArgumentIndex musí být z rozsahu CustomAttributeDate.ConstructorArguments</value>
+  </data>
+  <data name="WhenStageIsGetConstructorArgumentValueArgumentIndexMustBeWithinRangeOfCustomAttributeDateNamedArguments" xml:space="preserve">
+    <value>Když Stage je GetConstructorArgumentValue, ArgumentIndex musí být z rozsahu CustomAttributeDate.NamedArguments</value>
+  </data>
+  <data name="AttributeCannotDeriveFromAttributeWhenWarningKindIsNoAttributeAttribute" xml:space="preserve">
+    <value>Atribut nesmí dědit ot Attribute, když WarningKind je NoAttributeAttribute</value>
+  </data>
 </root>

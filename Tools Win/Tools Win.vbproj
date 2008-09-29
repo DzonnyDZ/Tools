@@ -175,12 +175,14 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ControlsWin.cs.resx" />
     <EmbeddedResource Include="Resources\ControlsWin.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>ControlsWin.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.ControlsWin.resources</LogicalName>
     </EmbeddedResource>
+    <EmbeddedResource Include="Resources\ExceptionsWin.cs.resx" />
     <EmbeddedResource Include="Resources\ExceptionsWin.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>ResXFileCodeGenerator</Generator>
