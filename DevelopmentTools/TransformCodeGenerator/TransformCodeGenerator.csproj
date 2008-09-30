@@ -72,6 +72,8 @@
     <OutputPath>..\..\bin\Nightly\</OutputPath>
     <DefineConstants>TRACE;DEBUG;Nightly</DefineConstants>
     <DocumentationFile>..\..\bin\Nightly\TransformCodeGenerator.XML</DocumentationFile>
+    <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -193,7 +195,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>regasm "$(TargetPath)" /unregister</PreBuildEvent>
-    <PostBuildEvent>regasm "$(TargetPath)" /codebase</PostBuildEvent>
+    <PreBuildEvent>
+    </PreBuildEvent>
+    <PostBuildEvent>REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
+"$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"</PostBuildEvent>
   </PropertyGroup>
 </Project>

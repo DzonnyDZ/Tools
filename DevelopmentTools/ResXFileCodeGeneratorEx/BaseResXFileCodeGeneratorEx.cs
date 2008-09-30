@@ -160,11 +160,29 @@ namespace DMKSoftware.CodeGenerators
                     uint pItemId;
                     object propertyValue;
                     IVsBrowseObject vsBrowseObject = Marshal.GetObjectForIUnknown(siteInterfacePointer) as IVsBrowseObject;
+
+                    //Added by Ðonny:
+                    //Support for <LogicalName>
+                    vsBrowseObject.GetProjectItem(out vsHierarchy, out pItemId);
+                    IVsBuildPropertyStorage buildPropertyStorage = vsHierarchy as IVsBuildPropertyStorage;
+                    if(buildPropertyStorage != null) {
+                        string LogicalName=null;
+                        try {
+                            buildPropertyStorage.GetItemAttribute(pItemId, "LogicalName", out LogicalName);
+                        } catch { }
+                        if(LogicalName!=null){
+                            if(LogicalName.EndsWith(".resources"))
+                                return LogicalName.Substring(0,LogicalName.Length-".resources".Length);
+                            else return LogicalName;
+                        }
+                    }
+
+
                     Marshal.Release(siteInterfacePointer);
                     if (null == vsBrowseObject)
                         return resourcesNamespace;
 
-                    vsBrowseObject.GetProjectItem(out vsHierarchy, out pItemId);
+                    
                     if (null == vsHierarchy)
                         return resourcesNamespace;
 
