@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<wrappers xmlns="http://dzonny.cz/xml/SpecializedWrapperDefinition" stage="Nightly" transformer="SpecializedWrappers.xslt">
+<?transformer SpecializedWrappers.xslt?>
+<wrappers xmlns="http://dzonny.cz/xml/SpecializedWrapperDefinition" stage="Nightly">
     <wrapper Collection="BitArray" CollectionNamespace="System.Collections" Item="Boolean" ItemNamespace="System" RW="true">
         <add>
             <![CDATA[

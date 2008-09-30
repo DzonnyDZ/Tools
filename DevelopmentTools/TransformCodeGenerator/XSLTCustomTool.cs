@@ -1,8 +1,7 @@
-/*
+/* © Ðonny 2008, based on
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
- * I've foundthis great tool dunno where on the Internet and I hope I'm not violating any rights when I'v included it as development tool in ÐTools and tweaked it a little.      
- */
+  */
 namespace Tools.GeneratorsT {
     using System;
     using System.IO;
@@ -13,53 +12,57 @@ namespace Tools.GeneratorsT {
     using System.Xml.Xsl;
 
     /// <summary>
-    /// This is a transform code generator. It performs XSL transform as custom tool in Visual Studio.
+    /// This is a XSLT custom tool for Visual Studio. It performs XSL transform as custom tool in Visual Studio.
     /// </summary>
-    /// <seealso cref="XsltCustomTool"/>
-    [Guid("07834038-5EA7-4d0d-8194-B8E91DC75638")]
-    [CustomTool("TransformCodeGenerator", "Transform Code Generator")]
-    public class TransformCodeGenerator:CustomToolBase {
+    /// <remarks>Unlike <see cref="TransformCodeGenerator"/> this tool should be attached to XSLT file, not to XML file.</remarks>
+    /// <seealso cref="TransformCodeGenerator"/>
+    [Guid("E07C1989-52DD-494d-994B-29A708C42771")]
+    [CustomTool("XsltCustomTool", "XSLT custom tool")]
+    public class XsltCustomTool:CustomToolBase {
 
         /// <summary>
         /// CTor
         /// </summary>
-        public TransformCodeGenerator() { }
+        public XsltCustomTool() { }
 
         /// <summary>
         /// Performs code generation
         /// </summary>
-        /// <param name="inputFileName">Name of file to convert</param>
-        /// <param name="inputFileContent">Content of file to convert</param>
+        /// <param name="inputFileName">Name of XSLT template file</param>
+        /// <param name="inputFileContent">Content of XSLT template file</param>
         /// <returns>File converted</returns>
         public override string DoGenerateCode(string inputFileName, string inputFileContent) {
 
-            string transformerFileName = Tools.ResourcesT.TransforCodeGeneratorResources.NOTFOUND;
+            string XmlFileName = Tools.ResourcesT.TransforCodeGeneratorResources.NOTFOUND;
             StringWriter outputWriter = new StringWriter();
             try {
 
                 FileInfo inputFileInfo = new FileInfo(inputFileName);
 
-                // get the source document
-                XmlDocument sourceDocument = new XmlDocument();
-                sourceDocument.LoadXml(inputFileContent);
+                // get the XML document for XSLT file
+                XmlDocument XsltDocument = new XmlDocument();
+                XsltDocument.LoadXml(inputFileContent);
 
-                // get the filename of the transformer
-                var transformerPIs = sourceDocument.SelectNodes("/processing-instruction('transformer')");
-                if(transformerPIs.Count > 0) transformerFileName = transformerPIs[0].Value;
+                // get the filename of xml file
+                var inputPIs = XsltDocument.SelectNodes("/processing-instruction('input')");
+                if(inputPIs.Count > 0) XmlFileName = inputPIs[0].Value;
 
-                if(!File.Exists(transformerFileName)) {
+                if(!File.Exists(XmlFileName)) {
                     // try in the same dir as the file
-                    transformerFileName = Path.Combine(inputFileInfo.DirectoryName, transformerFileName);
+                    XmlFileName = Path.Combine(inputFileInfo.DirectoryName, XmlFileName);
 
-                    if(!File.Exists(transformerFileName)) {
+                    if(!File.Exists(XmlFileName)) {
                         // try in the dir where this dll lives
                         FileInfo assemblyFileInfo = new FileInfo(Assembly.GetExecutingAssembly().Location);
-                        transformerFileName = Path.Combine(assemblyFileInfo.DirectoryName, transformerFileName);
+                        XmlFileName = Path.Combine(assemblyFileInfo.DirectoryName, XmlFileName);
                         }
                     }
 
                 // get the xslt document
-                XPathDocument transformerDoc = new XPathDocument(transformerFileName);
+                XPathDocument transformerDoc = new XPathDocument(inputFileContent);
+                // get input document
+                XmlDocument inputDocument = new XmlDocument();
+                inputDocument.Load(XmlFileName);
 
                 // create the transform
                 XslCompiledTransform xslTransform = new XslCompiledTransform();
@@ -81,26 +84,26 @@ namespace Tools.GeneratorsT {
                 args.AddParam("classname", String.Empty, fi.Name.Substring(0, fi.Name.LastIndexOf(".")));
 
                 // do the transform
-                xslTransform.Transform(sourceDocument, args, outputWriter);
+                xslTransform.Transform(inputDocument, args, outputWriter);
 
                 } catch(Exception ex) {
-                    string bCommentStart;
-                    string bCommentEnd;
-                    string lCommentStart;
-                    if(this.GetDefaultExtension().ToLower() == ".vb") {
-                        bCommentStart = "'";
-                        bCommentEnd = "'";
-                        lCommentStart = "'";
+                string bCommentStart;
+                string bCommentEnd;
+                string lCommentStart;
+                if(this.GetDefaultExtension().ToLower() == ".vb") {
+                    bCommentStart = "'";
+                    bCommentEnd = "'";
+                    lCommentStart = "'";
                     } else {
-                        bCommentStart = "/*";
-                        bCommentEnd = "*/";
-                        lCommentStart = "";
+                    bCommentStart = "/*";
+                    bCommentEnd = "*/";
+                    lCommentStart = "";
                     }
                 outputWriter.WriteLine(bCommentStart);
-                outputWriter.WriteLine(lCommentStart+"\t" + Tools.ResourcesT.TransforCodeGeneratorResources.ERRORUnableToGenerateOutputForTemplate);
-                outputWriter.WriteLine(lCommentStart + "\t'{0}'", inputFileName);
+                outputWriter.WriteLine(lCommentStart + "\t" + Tools.ResourcesT.TransforCodeGeneratorResources.ERRORUnableToGenerateOutputForTemplate);
+                outputWriter.WriteLine(lCommentStart + "\t'{0}'", XmlFileName);
                 outputWriter.WriteLine(lCommentStart + "\t" + Tools.ResourcesT.TransforCodeGeneratorResources.UsingTransformer);
-                outputWriter.WriteLine(lCommentStart + "\t'{0}'", transformerFileName);
+                outputWriter.WriteLine(lCommentStart + "\t'{0}'", inputFileName);
                 outputWriter.WriteLine(lCommentStart + "");
                 outputWriter.WriteLine(lCommentStart + ex.ToString());
                 outputWriter.WriteLine(bCommentEnd);
@@ -111,5 +114,4 @@ namespace Tools.GeneratorsT {
             }
 
         }
-
     }

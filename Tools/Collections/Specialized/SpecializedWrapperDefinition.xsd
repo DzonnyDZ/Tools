@@ -213,11 +213,6 @@
                     </xs:restriction>
                 </xs:simpleType>
             </xs:attribute>
-            <xs:attribute name="transformer" type="xs:anyURI" use="required" fixed="SpecializedWrappers.xslt">
-                <xs:annotation>
-                    <xs:documentation>This is for VS custom tools. Indicates XSLT file to use.</xs:documentation>
-                </xs:annotation>
-            </xs:attribute>
         </xs:complexType>
     </xs:element>
 </xs:schema>

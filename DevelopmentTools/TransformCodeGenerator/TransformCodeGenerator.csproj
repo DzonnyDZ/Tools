@@ -138,6 +138,7 @@
     <Compile Include="AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="XSLTCustomTool.cs" />
     <Compile Include="Resources\TransforCodeGeneratorResources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -147,6 +148,7 @@
     <Compile Include="TransformCodeGenerator.cs">
       <SubType>Code</SubType>
     </Compile>
+    <None Include="ReadMe.txt" />
     <Content Include="Template.xslt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -191,9 +193,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PreBuildEvent>
-    </PreBuildEvent>
-    <PostBuildEvent>
-    </PostBuildEvent>
+    <PreBuildEvent>regasm "$(TargetPath)" /unregister</PreBuildEvent>
+    <PostBuildEvent>regasm "$(TargetPath)" /codebase</PostBuildEvent>
   </PropertyGroup>
 </Project>
