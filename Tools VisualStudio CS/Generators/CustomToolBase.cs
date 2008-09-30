@@ -120,6 +120,7 @@ namespace Tools.GeneratorsT {
 
         }
 
+
         /// <summary>
         /// Performs content conversion
         /// </summary>
@@ -128,6 +129,7 @@ namespace Tools.GeneratorsT {
         /// <returns>File converted</returns>
         public abstract string DoGenerateCode(string inputFileName, string inputFileContent);
 
+        
     }
 }
 #endif

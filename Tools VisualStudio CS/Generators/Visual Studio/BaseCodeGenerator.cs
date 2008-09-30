@@ -5,6 +5,7 @@ namespace Tools.GeneratorsT {
     using System.Diagnostics;
     using System.IO;
     using System.Runtime.InteropServices;
+    using Microsoft.VisualStudio.Shell.Interop;
 
     /// <summary>
     /// A managed wrapper for VS's concept of an <see cref="IVsSingleFileGenerator"/> which is
@@ -41,7 +42,7 @@ namespace Tools.GeneratorsT {
         /// interface to the VS shell object we use to tell our
         /// progress while we are generating.
         /// </summary>
-        internal IVsGeneratorProgress CodeGeneratorProgress {
+        protected internal IVsGeneratorProgress CodeGeneratorProgress {
             get {
                 return codeGeneratorProgress;
             }
@@ -73,7 +74,7 @@ namespace Tools.GeneratorsT {
         protected virtual void GeneratorErrorCallback(bool warning, int level, string message, int line, int column) {
             IVsGeneratorProgress progress = CodeGeneratorProgress;
             if(progress != null) {
-                progress.GeneratorError(warning, level, message, line, column);
+                progress.GeneratorError(warning?1:0, (uint)level, message,(uint) line,(uint) column);
             }
         }
 
@@ -92,7 +93,7 @@ namespace Tools.GeneratorsT {
           out IntPtr rgbOutputFileContents,
           out int pcbOutput,
           IVsGeneratorProgress pGenerateProgress) {
-
+            //_codeGeneratorProgress = pGenerateProgress;
             if(bstrInputFileContents == null) {
                 throw new ArgumentNullException(bstrInputFileContents);
             }
@@ -112,6 +113,15 @@ namespace Tools.GeneratorsT {
                 Marshal.Copy(bytes, 0, rgbOutputFileContents, pcbOutput);
             }
         }
+
+        ///// <summary>Allows reporting progress of the generator</summary>
+        //public IVsGeneratorProgress CodeGeneratorProgress {
+        //    get {
+        //        return this._codeGeneratorProgress;
+        //        }
+        //    }
+        ///// <summary>Cobtains value of the <see cref="CodeGeneratorProgress"/> property</summary>
+        //private IVsGeneratorProgress _codeGeneratorProgress;
 
         /// <summary>
         /// method to return a byte-array given a Stream

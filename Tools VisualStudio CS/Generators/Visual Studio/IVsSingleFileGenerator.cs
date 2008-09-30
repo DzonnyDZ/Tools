@@ -2,6 +2,7 @@
 namespace Tools.GeneratorsT {
     using System;
     using System.Runtime.InteropServices;
+    using Microsoft.VisualStudio.Shell.Interop;
     /// <summary>Transforms a single input file into a single output file that can be compiled or added to a project. Any COM component that implements the IVsSingleFileGenerator is a custom tool.</summary>
     /// <remarks>
     /// <para>Any custom tool that is a COM component must implement the IVsSingleFileGenerator interface.</para>
