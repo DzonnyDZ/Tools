@@ -10,7 +10,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "DevelopmentTools", "Develop
 	ProjectSection(SolutionItems) = preProject
 		DevelopmentTools\read.me.txt = DevelopmentTools\read.me.txt
 		DevelopmentTools\Robocopy.exe = DevelopmentTools\Robocopy.exe
-		DevelopmentTools\Đ.vsmacros = DevelopmentTools\Đ.vsmacros
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Used doc", "Used doc", "{677A518E-909C-414F-AC5E-528AB32023AF}"
@@ -80,6 +79,16 @@ EndProject
 Project("{F184B08F-C81C-45F6-A57F-5ABD9991F28F}") = "Metanol2", "Projects\Metanol2\Metanol2.vbproj", "{DC459772-7889-47B1-9471-7F9ABA3C3FC4}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ResXFileCodeGeneratorEx", "DevelopmentTools\ResXFileCodeGeneratorEx\ResXFileCodeGeneratorEx.csproj", "{A8636D77-B876-4E6A-863D-8C924E40955C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Macros", "Macros", "{BBF0D4DA-D798-4E9C-8FB3-1D71F5935659}"
+	ProjectSection(SolutionItems) = preProject
+		DevelopmentTools\Macros\EnvironmentEvents.VB = DevelopmentTools\Macros\EnvironmentEvents.VB
+		DevelopmentTools\Macros\InteractionHelpers.VB = DevelopmentTools\Macros\InteractionHelpers.VB
+		DevelopmentTools\Macros\Properties.VB = DevelopmentTools\Macros\Properties.VB
+		DevelopmentTools\Macros\Utilities.VB = DevelopmentTools\Macros\Utilities.VB
+		DevelopmentTools\Macros\XMLDoc.VB = DevelopmentTools\Macros\XMLDoc.VB
+		DevelopmentTools\Macros\Đ.vsmproj = DevelopmentTools\Macros\Đ.vsmproj
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(TeamFoundationVersionControl) = preSolution
@@ -393,6 +402,7 @@ Global
 		{231E88A0-FFBB-4F4B-803E-2B24D4A37CEC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{268E716E-5BF5-4CF3-86D8-904A6BBAB6AC} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{A8636D77-B876-4E6A-863D-8C924E40955C} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
+		{BBF0D4DA-D798-4E9C-8FB3-1D71F5935659} = {FEA4635F-E0AE-4562-A292-1B6ABCF4444F}
 		{88FEE481-A97F-4DD6-B206-5B33F777AD4D} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{DC459772-7889-47B1-9471-7F9ABA3C3FC4} = {507B60F2-1D3A-4DC4-9ACB-7A565BA0EF8A}
 		{97FEC59D-58AC-41BA-84B4-2FF3187CB0DE} = {982F36B7-A3E5-4782-96B0-9979A95610F1}

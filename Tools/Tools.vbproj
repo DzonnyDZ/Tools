@@ -662,7 +662,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>DerivedControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.DerivedControls.resources</LogicalName>
       <SubType>Designer</SubType>
@@ -673,7 +673,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>Dialogs.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.Dialogs.resources</LogicalName>
       <SubType>Designer</SubType>
@@ -684,7 +684,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
       <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
       <LogicalName>Tools.DrawingT.MetadataT.IptcT.IptcResources.resources</LogicalName>
       <SubType>Designer</SubType>
@@ -708,7 +708,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>Components.Designer.vb</LastGenOutput>
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
       <SubType>Designer</SubType>
@@ -723,7 +723,7 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
       <SubType>Designer</SubType>
       <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
@@ -757,7 +757,7 @@
     <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentTextBox.bmp" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
       <SubType>Designer</SubType>

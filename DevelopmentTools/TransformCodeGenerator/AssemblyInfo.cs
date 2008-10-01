@@ -59,9 +59,6 @@ using System.Resources;
 //   (*) Delay Signing is an advanced option - see the Microsoft .NET Framework
 //       documentation for more information on this.
 //
-[assembly: AssemblyDelaySign(false)]
-[assembly: AssemblyKeyFile("")]
-[assembly: AssemblyKeyName("")]
 [assembly: ComVisible(true)]
 
 [assembly: NeutralResourcesLanguageAttribute("en")]
