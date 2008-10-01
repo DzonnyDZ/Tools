@@ -63,6 +63,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SharedFiles", "SharedFiles"
 	ProjectSection(SolutionItems) = preProject
 		SharedFiles\AssemblyStage.cs = SharedFiles\AssemblyStage.cs
 		SharedFiles\AssemblyStage.vb = SharedFiles\AssemblyStage.vb
+		SharedFiles\Tools.snk = SharedFiles\Tools.snk
 		SharedFiles\Version.cs = SharedFiles\Version.cs
 		SharedFiles\Version.vb = SharedFiles\Version.vb
 	EndProjectSection

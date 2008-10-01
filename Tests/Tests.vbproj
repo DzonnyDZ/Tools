@@ -28,6 +28,8 @@
     </UpgradeBackupLocation>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionInfer>On</OptionInfer>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -545,6 +547,9 @@
     <None Include="Resources\warning.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
     <None Include="Resources\infoBubble.bmp" />
     <None Include="app.mda.config" />
     <None Include="Tree.xsd" />
