@@ -123,7 +123,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionsVsCs.resx</DependentUpon>
     </Compile>
-    <Compile Include="Resources\Helpers.cs" />
     <Compile Include="Resources\ResourcesVsCs.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -140,14 +139,18 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Resources\ExceptionsVsCs.cs.resx" />
+    <EmbeddedResource Include="Resources\ExceptionsVsCs.cs.resx">
+      <DependentUpon>ExceptionsVsCs.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ExceptionsVsCs.resx">
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>ExceptionsVsCs.Designer.cs</LastGenOutput>
       <CustomToolNamespace>Tools.ResourcesT</CustomToolNamespace>
       <LogicalName>Tools.ResourcesT.ExceptionsVsCs.resources</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\ResourcesVsCs.cs.resx" />
+    <EmbeddedResource Include="Resources\ResourcesVsCs.cs.resx">
+      <DependentUpon>ResourcesVsCs.resx</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Resources\ResourcesVsCs.resx">
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>ResourcesVsCs.Designer.cs</LastGenOutput>

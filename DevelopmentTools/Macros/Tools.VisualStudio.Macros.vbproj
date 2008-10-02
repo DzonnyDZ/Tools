@@ -42,22 +42,55 @@
     <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-    <Reference Include="EnvDTE80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="EnvDTE, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="EnvDTE80, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
     <Reference Include="EnvDTE90, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies\EnvDTE90.dll</HintPath>
+      <Private>True</Private>
     </Reference>
-    <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Xml" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data.Linq" />
-    <Reference Include="Microsoft.Build.Engine" />
-    <Reference Include="Microsoft.VisualStudio.OLE.Interop" />
-    <Reference Include="Microsoft.VisualStudio.Shell" />
-    <Reference Include="Microsoft.VisualStudio.Shell.Interop" />
-    <Reference Include="microsoft.visualstudio.shell.interop.8.0" />
+    <Reference Include="System.Core">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Windows.Forms">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System.Data.Linq">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.Build.Engine">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="microsoft.visualstudio.shell.interop.8.0">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="microsoft.msxml.dll">
+      <Private>True</Private>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.MSXML\8.0.0.0__b03f5f7f11d50a3a\microsoft.msxml.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.VisualStudio.ProjectAggregator">
+      <Private>true</Private>
+      <HintPath>C:\Windows\assembly\GAC_MSIL\Microsoft.VisualStudio.ProjectAggregator\8.0.0.0__b03f5f7f11d50a3a\Microsoft.VisualStudio.ProjectAggregator.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -72,10 +105,14 @@
   <ItemGroup>
     <Compile Include="..\..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
+      <CustomToolNamespace>ccccccc</CustomToolNamespace>
     </Compile>
     <None Include="EnvironmentEvents.VB" />
     <Compile Include="fake helper.vb" />
-    <Compile Include="InteractionHelpers.VB" />
+    <Compile Include="InteractionHelpers.VB">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ItemProperties.VB" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -92,7 +129,6 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Properties.VB">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Utilities.VB" />
     <Compile Include="XMLDoc.VB" />
@@ -118,10 +154,10 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
-    <None Include="Tools.VisualStudio.Macros.BIN" />
-    <None Include="Tools.VisualStudio.Macros.vsmproj" />
-    <None Include="Tools.VisualStudio.Macros.vsmprojex" />
-    <None Include="Tools.VisualStudio.Macros.vsmprojey" />
+    <None Include="Macros.BIN" />
+    <None Include="Macros.vsmproj" />
+    <None Include="Macros.vsmprojex" />
+    <None Include="Macros.vsmprojey" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="!ReadMe.txt" />

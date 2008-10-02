@@ -498,10 +498,10 @@
     <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
       <SubType>
       </SubType>
+      <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xslt" />
-    <None Include="Drawing\Metadata\Exif\ExifTags.xsx">
-      <DependentUpon>ExifTags.xsd</DependentUpon>
+    <None Include="Drawing\Metadata\Exif\ExifTags.xslt">
+      <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xsd">
       <SubType>
@@ -552,26 +552,36 @@
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
-    <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd" />
+    <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
+      <DependentUpon>SpecializedWrappers.xml</DependentUpon>
+    </None>
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
       <SubType>
       </SubType>
-    </None>
-    <None Include="Drawing\Metadata\IPTC\IPTCTags.xsx">
-      <DependentUpon>IPTCTags.xsd</DependentUpon>
+      <DependentUpon>IPTCTags.xml</DependentUpon>
     </None>
     <None Include="Globalization\ISOLanguages.xslt" />
-    <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt" />
+    <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt">
+      <DependentUpon>IPTCTags.xml</DependentUpon>
+    </None>
     <Content Include="Collections\Specialized\SpecializedWrappers.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
       <CustomToolNamespace>CollectionsT.SpecializedT</CustomToolNamespace>
     </Content>
-    <Content Include="Collections\Specialized\SpecializedWrappers.xslt" />
+    <Content Include="Collections\Specialized\SpecializedWrappers.xslt">
+      <DependentUpon>SpecializedWrappers.xml</DependentUpon>
+    </Content>
     <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
-    <None Include="Drawing\Metadata\Exif\ExifTags.css" />
-    <None Include="Drawing\Metadata\Exif\ExifTags.display.xslt" />
-    <None Include="Drawing\Metadata\Exif\ExifTags.html" />
+    <None Include="Drawing\Metadata\Exif\ExifTags.css">
+      <DependentUpon>ExifTags.html</DependentUpon>
+    </None>
+    <None Include="Drawing\Metadata\Exif\ExifTags.display.xslt">
+      <DependentUpon>ExifTags.html</DependentUpon>
+    </None>
+    <None Include="Drawing\Metadata\Exif\ExifTags.html">
+      <DependentUpon>ExifTags.xml</DependentUpon>
+    </None>
     <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
@@ -659,6 +669,7 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
       <DependentUpon>DerivedControls.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
@@ -670,6 +681,7 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.cs.resx">
       <DependentUpon>Dialogs.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.resx">
       <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
@@ -681,6 +693,7 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
       <DependentUpon>IPTCResources.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
       <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
@@ -705,6 +718,7 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
       <DependentUpon>Components.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
@@ -716,10 +730,12 @@
     <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.cs.resx">
       <DependentUpon>CompositeControls.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.cs.resx">
       <DependentUpon>Exceptions.resx</DependentUpon>
       <SubType>Designer</SubType>
+      <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
