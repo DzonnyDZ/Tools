@@ -148,6 +148,7 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="CodeDom\Xml2CodeDom.vb" />
     <Compile Include="Collections\Generic\CollectionTools.vb" />
     <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />
     <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
@@ -552,6 +553,9 @@
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
+    <EmbeddedResource Include="CodeDom\CodeDom.xsd">
+      <LogicalName>Tools.CodeDomT.CodeDom.xsd</LogicalName>
+    </EmbeddedResource>
     <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
     </None>

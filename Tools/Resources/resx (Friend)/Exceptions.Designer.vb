@@ -59,7 +59,7 @@ Namespace ResourcesT
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
                     Try 
                         If Object.ReferenceEquals(_resourceManager, Nothing) Then
-                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.Exceptions", GetType(Exceptions).Assembly))
+                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.ResourcesT.Exceptions.Exceptions", GetType(Exceptions).Assembly))
                         End If
                     Finally
                         Global.System.Threading.Monitor.Exit(InternalSyncObject)

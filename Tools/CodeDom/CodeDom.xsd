@@ -1,0 +1,1117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="CodeDom"
+    targetNamespace="http://dzonny.cz/xml/schemas/CodeDom"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/schemas/CodeDom"
+    xmlns:cd="http://dzonny.cz/xml/schemas/CodeDom"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
+    <!--Simple elements-->
+    <xs:element name="CompileUnit" type="CompileUnit"/>
+    <xs:element name="Namespace" type="Namespace"/>
+    <xs:element name="AttributeDeclaration" type="AttributeDeclaration"/>
+    <xs:element name="AssemblyReference" type="xs:string"/>
+    <xs:element name="Directive" type="Directive" abstract="true"/>
+    <xs:element name="ChecksumPragma" type="ChecksumPragma"/>
+    <xs:element name="RegionDirective" type="RegionDirective"/>
+    <xs:element name="NamespaceImport" type="NamespaceImport"/>
+    <xs:element name="CommentStatement" type="CommentStatement"/>
+    <xs:element name="TypeDeclaration" type="TypeDeclaration"/>
+    <xs:element name="AttributeArgument" type="AttributeArgument"/>
+    <xs:element name="TypeReference" type="TypeReference"/>
+    <xs:element name="TypeMember" type="TypeMember" abstract="true"/>
+    <xs:element name="TypeParameter" type="TypeParameter"/>
+    <xs:element name="MemberEvent" type="MemberEvent"/>
+    <xs:element name="MemberField" type="MemberField"/>
+    <xs:element name="MemberMethod" type="MemberMethod"/>
+    <xs:element name="ParameterDeclarationExpression" type="ParameterDeclarationExpression"/>
+    <xs:element name="Statement" type="Statement" abstract="true"/>
+    <xs:element name="MemberProperty" type="MemberProperty"/>
+    <xs:element name="Expression" type="Expression" abstract="true"/>
+    <xs:element name="SnippetTypeMember" type="SnippetTypeMember"/>
+    <xs:element name="Constructor" type="Constructor"/>
+    <xs:element name="EntryPointMethod" type="EntryPointMethod"/>
+    <xs:element name="TypeConstructor" type="TypeConstructor"/>
+    <xs:element name="LinePragma" type="LinePragma"/>
+    <xs:element name="Comment" type="Comment"/>
+    <xs:element name="SnippetCompileUnit" type="SnippetCompileUnit"/>
+    <xs:element name="AssignStatement" type="AssignStatement"/>
+    <xs:element name="AttachEventStatement" type="AttachEventStatement"/>
+    <xs:element name="ConditionStatement" type="ConditionStatement"/>
+    <xs:element name="ExpressionStatement" type="ExpressionStatement"/>
+    <xs:element name="GotoStatement" type="GotoStatement"/>
+    <xs:element name="IterationStatement" type="IterationStatement"/>
+    <xs:element name ="LabeledStatement" type="LabeledStatement"/>
+    <xs:element name="MethodReturnStatement" type="MethodReturnStatement"/>
+    <xs:element name="RemoveEventStatement" type="RemoveEventStatement"/>
+    <xs:element name="SnippetStatement" type="SnippetStatement"/>
+    <xs:element name="ThrowExceptionStatement" type="ThrowExceptionStatement"/>
+    <xs:element name="TryCatchFinallyStatement" type="TryCatchFinallyStatement"/>
+    <xs:element name="VariableDeclarationStatement" type="VariableDeclarationStatement"/>
+    <xs:element name="ArgumentReferenceExpression" type="ArgumentReferenceExpression"/>
+    <xs:element name="ArrayCreateExpression" type="ArrayCreateExpression"/>
+    <xs:element name="ArrayIndexerExpression" type="ArrayIndexerExpression"/>
+    <xs:element name="BaseReferenceExpression" type="BaseReferenceExpression"/>
+    <xs:element name="BinaryOperatorExpression" type="BinaryOperatorExpression"/>
+    <xs:element name="CastExpression" type="CastExpression"/>
+    <xs:element name="DefaultValueExpression" type="DefaultValueExpression"/>
+    <xs:element name="DelegateCreateExpression" type="DelegateCreateExpression"/>
+    <xs:element name="DelegateInvokeExpression" type="DelegateInvokeExpression"/>
+    <xs:element name="DirectionExpression" type="DirectionExpression"/>
+    <xs:element name="EventReferenceExpression" type="EventReferenceExpression"/>
+    <xs:element name="FieldReferenceExpression" type="FieldReferenceExpression"/>
+    <xs:element name="IndexerExpression" type="IndexerExpression"/>
+    <xs:element name="MethodInvokeExpression" type="MethodInvokeExpression"/>
+    <xs:element name="MethodReferenceExpression" type="MethodReferenceExpression"/>
+    <xs:element name="ObjectCreateExpression" type="ObjectCreateExpression"/>
+    <xs:element name="PrimitiveExpression" type="PrimitiveExpression"/>
+    <xs:element name="PropertyReferenceExpression" type="PropertyReferenceExpression"/>
+    <xs:element name="PropertySetValueReferenceExpression" type="PropertySetValueReferenceExpression"/>
+    <xs:element name="SnippetExpression" type="SnippetExpression"/>
+    <xs:element name="ThisReferenceExpression" type="ThisReferenceExpression"/>
+    <xs:element name="TypeOfExpression" type="TypeOfExpression"/>
+    <xs:element name="TypeReferenceExpression" type="TypeReferenceExpression"/>
+    <xs:element name="VariableReferenceExpression" type="VariableReferenceExpression"/>
+    <xs:element name="CatchClause" type="CatchClause"/>
+    
+    <!--Other elements-->
+    <xs:element name="UserData">
+        <xs:complexType>
+            <xs:sequence minOccurs="1" maxOccurs="1">
+                <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="key-value-pair"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+    <!--Collection types-->
+    <xs:complexType name="Namespaces">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="Namespace" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AttributeDeclarations">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="AttributeDeclaration"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AssemblyReferences">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="AssemblyReference" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Directives">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="Directive" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="NamespaceImports">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="NamespaceImport" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CommentStatements">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="CommentStatement" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TypeDeclarations">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="TypeDeclaration" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="AttributeArguments">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="AttributeArgument" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TypeReferences">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="TypeReference" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TypeMembers">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element ref="TypeMember" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TypeParameters">
+        <xs:sequence maxOccurs="1" minOccurs="1">
+            <xs:element ref="TypeParameter" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="ParameterDeclarationExpressions">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="ParameterDeclarationExpression" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Statements">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="Statement" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Expressions">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="Expression" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CatchClauses">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="CatchClause" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+        
+    <!--Block types-->
+    <xs:complexType name="CodeObject" abstract="true">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element ref="UserData" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="CompileUnit">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="StartDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
+                    <xs:element name="ReferencedAssemblies" minOccurs="0" maxOccurs="1" type="AssemblyReferences"/>
+                    <xs:element name="AssemblyCustomAttributes" minOccurs="0" maxOccurs="1" type="AttributeDeclarations"/>
+                    <xs:element name="Namespaces" minOccurs="0" maxOccurs="1" type="Namespaces"/>
+                    <xs:element name="EndDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SnippetCompileUnit">
+        <xs:complexContent>
+            <xs:extension base="CompileUnit">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="LinePragma" type="LinePragma" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Namespace">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Imports" minOccurs="0" maxOccurs="1" type="NamespaceImports"/>
+                    <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements"/>
+                    <xs:element name="Types" minOccurs="0" maxOccurs="1" type="TypeDeclarations"/>
+                </xs:sequence>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypeDeclaration">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TypeParameters" type="TypeParameters" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="BaseTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Members" type="TypeMembers" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="TypeAttributes" type="TypeAttributes" use="optional"/>
+                <xs:attribute name="IsClass" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="IsEnum" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="IsInterface" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="IsPartial" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="IsStruct" type="xs:boolean" use="optional" default="false"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypeMember" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="CustomAttributes" minOccurs="0" maxOccurs="1" type="AttributeDeclarations"/>
+                    <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements"/>
+                    <xs:element name="StartDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
+                    <xs:element name="LinePragma" minOccurs="0" maxOccurs="1" type="LinePragma"/>
+                    <xs:element name="EndDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
+                </xs:sequence>
+                <xs:attribute name="Attributes" type="MemberAttributes" use="optional"/>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent> </xs:complexType>
+    <xs:complexType name="MemberMethod">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TypeParemeters" type="TypeParameters" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ReturnTypeCustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MemberProperty">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="GetStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="SetStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="HasGet" type="xs:boolean" use="optional"/>
+                <xs:attribute name="HasSet" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SnippetTypeMember">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Constructor">
+        <xs:complexContent>
+            <xs:extension base="MemberMethod">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="BaseConstructorArgs" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ChainedConstructorArgs" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="EntryPointMethod">
+        <xs:complexContent>
+            <xs:extension base="MemberMethod"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypeConstructor">
+        <xs:complexContent>
+            <xs:extension base="MemberMethod"/>
+        </xs:complexContent>
+    </xs:complexType>
+        
+    <!--Line-level types-->
+    <xs:complexType name="AttributeDeclaration">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:choice minOccurs="1" maxOccurs="1">
+                <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+            </xs:choice>
+            <xs:element name="Arguments" type="AttributeArguments" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TypeReference">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="ArrayElementType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="unbounded"/>
+                </xs:sequence>
+                <xs:attribute name="BaseType" type="xs:string" use="required"/>
+                <xs:attribute name="ArrayRank" type="xs:integer" use="optional" default="0"/>
+                <xs:attribute name="Options" use="optional" type="TypeReferenceOptions"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Directive" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="CodeObject"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ChecksumPragma">
+        <xs:complexContent>
+            <xs:extension base="Directive">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="ChecksumData" minOccurs="1" maxOccurs="1" type="xs:base64Binary"/>
+                </xs:sequence>
+                <xs:attribute name="FileName" use="required" type="xs:string"/>
+                <xs:attribute name="ChecksumAlgorithmId" use="required" type="Guid"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RegionDirective">
+        <xs:complexContent>
+            <xs:extension base="Directive">
+                <xs:attribute name="RegionText" type="xs:string" use="required"/>
+                <xs:attribute name="RegionMode" type="RegionMode" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="NamespaceImport">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="LinePragma" minOccurs="0" maxOccurs="1" type="LinePragma"/>
+                </xs:sequence>
+                <xs:attribute name="Namespace" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LinePragma">
+        <xs:attribute name="FileName" type="xs:string" use="required"/>
+        <xs:attribute name="LineNumber" type="xs:integer" use="required"/>
+    </xs:complexType>
+    <xs:complexType name="TypeParameter">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Constraints" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="CustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="HasConstructorConstraint" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MemberEvent">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element minOccurs="1" maxOccurs="1" name="Type" type="TypeReference"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ImplementationTypes" type="TypeReferences"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PrivateImplementationType" type="TypeReference"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MemberField">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="InitExpression" type="Expression" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypeDelegate">
+        <xs:complexContent>
+            <xs:extension base="TypeDeclaration">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                 </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+       
+    <!--Epression types-->
+    <xs:complexType name="Expression" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="CodeObject"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ParameterDeclarationExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="CustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Direction" type="FieldDirections" use="optional"/>
+                <xs:attribute name="Name" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ArgumentReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:attribute name="ParameterName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ArrayCreateExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="CreateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="SizeExpression" type="Expression" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Initializers" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Size" type="xs:integer" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ArrayIndexerExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Indices" type="Expressions" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BaseReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="BinaryOperatorExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Left" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Right" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Operator" type="BinaryOperatorType" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CastExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TargetType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="DefaultValueExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="DelegateCreateExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="DelegateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TagretObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="MethodName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="DelegateInvokeExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="DirectionExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Expression"  type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Direction" type="FieldDirection"/>
+            </xs:extension>                    
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="EventReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="EventName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="FieldReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="FieldName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IndexerExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TergetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Indices" type="Expressions" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MethodInvokeExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Method" type="MethodReferenceExpression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MethodReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TypeArguments" type="AssemblyReferences" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="MethodName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ObjectCreateExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="CreateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PrimitiveExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:element name="String" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Char" type="Char" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Byte" type="Byte" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="SByte" type="SByte" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Int16" type="Int16" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="UInt16" type="UInt16" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Int32" type="Int32" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="UInt32" type="UInt32" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Int64" type="Int64" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="UInt64" type="UInt64" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Decimal" type="Decimal" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Single" type="xs:float" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Double" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="DateTime" type="DateTime" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Null" minOccurs="1" maxOccurs="1" type="Null"/>
+                    <xs:element name="Boolean" minOccurs="1" maxOccurs="1" type="xs:boolean"/>
+                </xs:choice>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PropertyReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="PropertyName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="PropertySetValueReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SnippetExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Value" type="xs:string"/>                    
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ThisReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression"/>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypeOfExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TypeReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="VariableReferenceExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1"/>
+                <xs:attribute name="VariableName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <!--Statement types-->
+    <xs:complexType name="Statement" abstract="true">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="LinePragma" type="LinePragma" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="StartDirectives" type="Directives" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="EndDirectives" type="Directives" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CommentStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Comment" type="Comment" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AssignStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Left" minOccurs="1" maxOccurs="1" type="Expression"/>
+                    <xs:element name="Right" minOccurs="1" maxOccurs="1" type="Expression"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AttachEventStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Event" type="EventReferenceExpression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Listener" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>                  
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ConditionStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Condition" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TrueStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="FalseStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ExpressionStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="GotoStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:attribute name="Label" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IterationStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="InitStatement" type="Statement" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="IncrementStatement" type="Statement" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TestExpression" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="LabeledStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Statement" type="Statement" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Label" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MethodReturnStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Expression" type="Expression" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="RemoveEventStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Event" type="EventReferenceExpression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Listener" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SnippetStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="ThrowExceptionStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="ToThrow" type="Expression" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TryCatchFinallyStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TryStatements" type="Statements" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="CatchClauses" type="CatchClauses" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="FinallyStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CatchClause">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element name="CatchExceptionType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="LocalName" use="optional" type="xs:string"/>
+    </xs:complexType>
+    <xs:complexType name="VariableDeclarationStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Type" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="InitExpression" type="Expression" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Name" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    
+    <!--Sub-statement elements-->
+    <xs:complexType name="Comment">
+        <xs:complexContent>
+            <xs:extension base="CodeObject">
+                <xs:choice minOccurs="1" maxOccurs="1">
+                    <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TextXml" minOccurs="1" maxOccurs="1">
+                        <xs:complexType>
+                            <xs:sequence minOccurs="1" maxOccurs="1">
+                                <xs:any minOccurs="1" maxOccurs="unbounded" processContents="skip"/>
+                            </xs:sequence>
+                        </xs:complexType>
+                    </xs:element>
+                </xs:choice>
+                <xs:attribute name="DocComment" type="xs:boolean" use="optional" default="false"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="AttributeArgument">
+        <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element name="Value" type="Expression" minOccurs="1" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="Name" type="xs:string" use="optional"/>
+    </xs:complexType>
+    
+    <!--Other types-->
+    <xs:complexType name="key-value-pair">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="key" type="xs:string"/>
+            </xs:extension>
+        </xs:simpleContent>
+    </xs:complexType>
+    <xs:simpleType name="Guid">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[0-9]{32}"/>
+            <xs:pattern value="[0-9]{8}([0-9]{4}){3}[0-9]{8}"/>
+            <xs:pattern value="\([0-9]{8}([0-9]{4}){3}[0-9]{8}\)"/>
+            <xs:pattern value="\{[0-9]{8}([0-9]{4}){3}[0-9]{8}\}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!--Enums-->
+    <xs:simpleType name="TypeReferenceOptions">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="GlobalReference">
+                <xs:annotation>
+                    <xs:documentation>1</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GenericTypeParameter">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="RegionMode">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="None">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Start">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="End">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="MemberAttribute">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Abstract">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Final">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Static">
+                <xs:annotation>
+                    <xs:appinfo>3</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Override">
+                <xs:annotation>
+                    <xs:appinfo>4</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Const">
+                <xs:annotation>
+                    <xs:appinfo>5</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        
+            <xs:enumeration value="Assembly">
+                <xs:annotation>
+                    <xs:appinfo>0x1000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FamilyAndAssembly">
+                <xs:annotation>
+                    <xs:documentation>0x2000</xs:documentation>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Family">
+                <xs:annotation>
+                    <xs:appinfo>0x3000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="FamilyOrAseembly">
+                <xs:annotation>
+                    <xs:appinfo>0x4000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Private">
+                <xs:annotation>
+                    <xs:appinfo>0x5000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Public">
+                <xs:annotation>
+                    <xs:appinfo>0x6000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        
+            <xs:enumeration value="New">
+                <xs:annotation>
+                    <xs:appinfo>0x10</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        
+            <xs:enumeration value="Overloaed">
+                <xs:annotation>
+                    <xs:appinfo>0x100</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TypeAttribute">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Abstract"><xs:annotation><xs:appinfo>0x80</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="AnsiClass"><xs:annotation><xs:appinfo>0</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="AutoClass"><xs:annotation><xs:appinfo>0x20000</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="AutoLayout"><xs:annotation><xs:appinfo>0</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="BeforeFieldInit"><xs:annotation><xs:appinfo>0x100000</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Class"><xs:annotation><xs:appinfo>0</xs:appinfo></xs:annotation></xs:enumeration>
+            <!--<xs:enumeration value="ClassSemanticsMask"><xs:annotation><xs:appinfo>0x20</xs:appinfo></xs:annotation></xs:enumeration>-->
+            <xs:enumeration value="CustomFormatClass"><xs:annotation><xs:appinfo>0x30000</xs:appinfo></xs:annotation></xs:enumeration>
+            <!--<xs:enumeration value="CustomFormatMask"><xs:annotation><xs:appinfo>0xC00000</xs:appinfo></xs:annotation></xs:enumeration>-->
+            <xs:enumeration value="ExplicitLayout"><xs:annotation><xs:appinfo>0x10</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="HasSecurity"><xs:annotation><xs:appinfo>0x40000</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Import"><xs:annotation><xs:appinfo>0x1000</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Interface"><xs:annotation><xs:appinfo>0x20</xs:appinfo></xs:annotation></xs:enumeration>
+            <!--<xs:enumeration value="LayoutMask"><xs:annotation><xs:appinfo>0x18</xs:appinfo></xs:annotation></xs:enumeration>-->
+            <xs:enumeration value="NestedAssembly"><xs:annotation><xs:appinfo>5</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NestedFamANDAssem"><xs:annotation><xs:appinfo>6</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NestedFamily"><xs:annotation><xs:appinfo>4</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NestedFamORAssem"><xs:annotation><xs:appinfo>7</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NestedPrivate"><xs:annotation><xs:appinfo>3</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NestedPublic"><xs:annotation><xs:appinfo>2</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NotPublic"><xs:annotation><xs:appinfo>0</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Public"><xs:annotation><xs:appinfo>1</xs:appinfo></xs:annotation></xs:enumeration>
+            <!--<xs:enumeration value="ReservedMask"><xs:annotation><xs:appinfo>0x40800</xs:appinfo></xs:annotation></xs:enumeration>-->
+            <xs:enumeration value="RTSpecialName"><xs:annotation><xs:appinfo>0x800</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Sealed"><xs:annotation><xs:appinfo>0x100</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="SequentialLayout"><xs:annotation><xs:appinfo>8</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Serializable"><xs:annotation><xs:appinfo>0x2000</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="SpecialName"><xs:annotation><xs:appinfo>0x400</xs:appinfo></xs:annotation></xs:enumeration>
+            <!--<xs:enumeration value="StringFormatMask"><xs:annotation><xs:appinfo>0x30000</xs:appinfo></xs:annotation></xs:enumeration>-->
+            <xs:enumeration value="UnicodeClass"><xs:annotation><xs:appinfo>0x10000</xs:appinfo></xs:annotation></xs:enumeration>
+            <!--<xs:enumeration value="VisibilityMask"><xs:annotation><xs:appinfo>7</xs:appinfo></xs:annotation></xs:enumeration>-->
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="FieldDirection">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="In">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Out">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Ref">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="BinaryOperatorType">
+        <xs:restriction base="xs:string">
+            <xs:enumeration value="Add"><xs:annotation><xs:appinfo>0</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Assign"><xs:annotation><xs:appinfo>5</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="BitwiseAnd"><xs:annotation><xs:appinfo>10</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="BitwiseOr"><xs:annotation><xs:appinfo>9</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="BooleanAnd"><xs:annotation><xs:appinfo>12</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="BooleanOr"><xs:annotation><xs:appinfo>11</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Divide"><xs:annotation><xs:appinfo>3</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="GreaterThan"><xs:annotation><xs:appinfo>15</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="GreaterThanOrEqual"><xs:annotation><xs:appinfo>0x10</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="IdentityEquality"><xs:annotation><xs:appinfo>7</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="IdentityInequality"><xs:annotation><xs:appinfo>6</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="LessThan"><xs:annotation><xs:appinfo>13</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="LessThanOrEqual"><xs:annotation><xs:appinfo>14</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Modulus"><xs:annotation><xs:appinfo>4</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Multiply"><xs:annotation><xs:appinfo>2</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Subtract"><xs:annotation><xs:appinfo>1</xs:appinfo></xs:annotation></xs:enumeration>
+            <xs:enumeration value="ValueEquality"><xs:annotation><xs:appinfo>8</xs:appinfo></xs:annotation></xs:enumeration>
+        </xs:restriction>
+    </xs:simpleType>
+    
+    <!--Lists-->
+    <xs:simpleType name="MemberAttributes">
+        <xs:list itemType="MemberAttribute"/>
+    </xs:simpleType>
+    <xs:simpleType name="TypeAttributes">
+        <xs:list itemType="TypeAttribute"/>
+    </xs:simpleType>
+    <xs:simpleType name="FieldDirections">
+        <xs:list itemType="FieldDirection"/>
+    </xs:simpleType>
+    
+    <!--.NET types-->
+    <xs:simpleType name="Char">
+        <xs:restriction base="xs:string">
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Byte">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="255"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="SByte">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="-128"/>
+            <xs:maxInclusive value="127"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Int16">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="-32768"/>
+            <xs:maxInclusive value="32767"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UInt16">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="65535"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Int32">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="-2147483648"/>
+            <xs:maxInclusive value="2147483647"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UInt32">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="4294967295"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Int64">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="-9223372036854775808"/>
+            <xs:maxInclusive value="9223372036854775807"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="UInt64">
+        <xs:restriction base="xs:integer">
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="18446744073709551615"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="Decimal">
+        <xs:restriction base="xs:decimal">
+            <xs:minInclusive value="-79228162514264337593543950335"/>
+            <xs:maxInclusive value="79228162514264337593543950335"/>
+            <xs:fractionDigits value="28"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="DateTime">
+        <xs:restriction base="xs:dateTime">
+            <xs:minInclusive value="0001-01-01T00:00:00Z"/>
+            <xs:maxInclusive value="9999-12-31T23:59:59.9999999Z"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="Null">
+        <xs:sequence minOccurs="0" maxOccurs="0"/>
+    </xs:complexType>
+</xs:schema>
