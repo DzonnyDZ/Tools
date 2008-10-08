@@ -1074,4 +1074,31 @@
   <data name="ImageDataDoesNotContainEnoghBytes" xml:space="preserve">
     <value>Image data does not contain enogh bytes</value>
   </data>
+  <data name="NamespacePrefix0IsNotDefined" xml:space="preserve">
+    <value>Namespace prefix {0} is not defined</value>
+  </data>
+  <data name="XMLAttributeHasNoParentElement" xml:space="preserve">
+    <value>XML attribute has no parent element.</value>
+  </data>
+  <data name="RootElementMustBe0Or1" xml:space="preserve">
+    <value>Root element must be &lt;{0}&gt; or &lt;{1}&gt;</value>
+  </data>
+  <data name="RootElementMustBe0" xml:space="preserve">
+    <value>Root element must be &lt;{0}&gt;.</value>
+  </data>
+  <data name="DoesNotRepresentSupportedExpression" xml:space="preserve">
+    <value>{0} does not represent supported expression.</value>
+  </data>
+  <data name="UnsupportedCodeDomObject0" xml:space="preserve">
+    <value>Unsupported CodeDom object {0}</value>
+  </data>
+  <data name="ObjectOfType0CannotBeSerializedAsPrimitiveObject" xml:space="preserve">
+    <value>Object of type {0} cannot be serialized as primitive object.</value>
+  </data>
+  <data name="IsNotSupportedTypeOfXMLSerializedCodeDOMObject" xml:space="preserve">
+    <value>{0} is not supported type of XML-serialized CodeDOM object.</value>
+  </data>
+  <data name="ValueOfType0CannotBeDeserializedStandAloneBecauseIts" xml:space="preserve">
+    <value>Value of type {0} cannot be deserialized stand-alone, because its object representation does not inherit from CodeObject.</value>
+  </data>
 </root>

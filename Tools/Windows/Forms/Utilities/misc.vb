@@ -14,7 +14,7 @@ Namespace WindowsT.FormsT.UtilitiesT
         Hidden
     End Enum
     ''' <summary>Miscaleneous small Windows Forms realetd tools</summary>
-    Public Module Misc
+    Public Module WinFormsExtensions
         'ASAP:Mark, wiki, forum members
         ''' <summary>Applyes <see cref="UtilitiesT.ControlState"/> on given <see cref="Control"/> or gets its state</summary>
         ''' <param name="Control">Control to get or set value for</param>

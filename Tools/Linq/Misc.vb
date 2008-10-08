@@ -1,10 +1,10 @@
 ﻿Imports System.Linq, System.Runtime.CompilerServices
 Imports Tools.DataStructuresT.GenericT
 
-Namespace Linq
+Namespace LinqT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Contains miscaleneous LINQ extensions</summary>
-    Module Misc
+    Module LinqExtensions
         ''' <summary>Adds all items from given collection to given dictionary</summary>
         ''' <param name="Target">Collection which is target of adding</param>
         ''' <param name="Collection">Items to be added</param>

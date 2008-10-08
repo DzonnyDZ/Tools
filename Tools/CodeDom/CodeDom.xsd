@@ -1,4 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
+<?transformer XmlNames.xslt?>
 <xs:schema id="CodeDom"
     targetNamespace="http://dzonny.cz/xml/schemas/CodeDom"
     elementFormDefault="qualified"
@@ -11,68 +12,70 @@
     <xs:element name="Namespace" type="Namespace"/>
     <xs:element name="AttributeDeclaration" type="AttributeDeclaration"/>
     <xs:element name="AssemblyReference" type="xs:string"/>
+    
     <xs:element name="Directive" type="Directive" abstract="true"/>
-    <xs:element name="ChecksumPragma" type="ChecksumPragma"/>
-    <xs:element name="RegionDirective" type="RegionDirective"/>
+    <xs:element name="ChecksumPragma" type="ChecksumPragma" substitutionGroup="Directive"/>
+    <xs:element name="RegionDirective" type="RegionDirective" substitutionGroup="Directive"/>
     <xs:element name="NamespaceImport" type="NamespaceImport"/>
-    <xs:element name="CommentStatement" type="CommentStatement"/>
+    <xs:element name="CommentStatement" type="CommentStatement" substitutionGroup="Statement"/>
     <xs:element name="TypeDeclaration" type="TypeDeclaration"/>
     <xs:element name="AttributeArgument" type="AttributeArgument"/>
     <xs:element name="TypeReference" type="TypeReference"/>
     <xs:element name="TypeMember" type="TypeMember" abstract="true"/>
     <xs:element name="TypeParameter" type="TypeParameter"/>
-    <xs:element name="MemberEvent" type="MemberEvent"/>
-    <xs:element name="MemberField" type="MemberField"/>
-    <xs:element name="MemberMethod" type="MemberMethod"/>
+    <xs:element name="MemberEvent" type="MemberEvent" substitutionGroup="TypeMember"/>
+    <xs:element name="MemberField" type="MemberField" substitutionGroup="TypeMember"/>
+    <xs:element name="MemberMethod" type="MemberMethod" substitutionGroup="TypeMember"/>
     <xs:element name="ParameterDeclarationExpression" type="ParameterDeclarationExpression"/>
     <xs:element name="Statement" type="Statement" abstract="true"/>
-    <xs:element name="MemberProperty" type="MemberProperty"/>
+    <xs:element name="MemberProperty" type="MemberProperty" substitutionGroup="TypeMember"/>
     <xs:element name="Expression" type="Expression" abstract="true"/>
-    <xs:element name="SnippetTypeMember" type="SnippetTypeMember"/>
-    <xs:element name="Constructor" type="Constructor"/>
-    <xs:element name="EntryPointMethod" type="EntryPointMethod"/>
-    <xs:element name="TypeConstructor" type="TypeConstructor"/>
+    <xs:element name="SnippetTypeMember" type="SnippetTypeMember" substitutionGroup="TypeMember"/>
+    <xs:element name="Constructor" type="Constructor" substitutionGroup="MemberMethod"/>
+    <xs:element name="EntryPointMethod" type="EntryPointMethod" substitutionGroup="MemberMethod"/>
+    <xs:element name="TypeConstructor" type="TypeConstructor" substitutionGroup="MemberMethod"/>
     <xs:element name="LinePragma" type="LinePragma"/>
     <xs:element name="Comment" type="Comment"/>
-    <xs:element name="SnippetCompileUnit" type="SnippetCompileUnit"/>
-    <xs:element name="AssignStatement" type="AssignStatement"/>
-    <xs:element name="AttachEventStatement" type="AttachEventStatement"/>
-    <xs:element name="ConditionStatement" type="ConditionStatement"/>
-    <xs:element name="ExpressionStatement" type="ExpressionStatement"/>
-    <xs:element name="GotoStatement" type="GotoStatement"/>
-    <xs:element name="IterationStatement" type="IterationStatement"/>
-    <xs:element name ="LabeledStatement" type="LabeledStatement"/>
-    <xs:element name="MethodReturnStatement" type="MethodReturnStatement"/>
-    <xs:element name="RemoveEventStatement" type="RemoveEventStatement"/>
-    <xs:element name="SnippetStatement" type="SnippetStatement"/>
-    <xs:element name="ThrowExceptionStatement" type="ThrowExceptionStatement"/>
-    <xs:element name="TryCatchFinallyStatement" type="TryCatchFinallyStatement"/>
-    <xs:element name="VariableDeclarationStatement" type="VariableDeclarationStatement"/>
-    <xs:element name="ArgumentReferenceExpression" type="ArgumentReferenceExpression"/>
-    <xs:element name="ArrayCreateExpression" type="ArrayCreateExpression"/>
-    <xs:element name="ArrayIndexerExpression" type="ArrayIndexerExpression"/>
-    <xs:element name="BaseReferenceExpression" type="BaseReferenceExpression"/>
-    <xs:element name="BinaryOperatorExpression" type="BinaryOperatorExpression"/>
-    <xs:element name="CastExpression" type="CastExpression"/>
-    <xs:element name="DefaultValueExpression" type="DefaultValueExpression"/>
-    <xs:element name="DelegateCreateExpression" type="DelegateCreateExpression"/>
-    <xs:element name="DelegateInvokeExpression" type="DelegateInvokeExpression"/>
-    <xs:element name="DirectionExpression" type="DirectionExpression"/>
-    <xs:element name="EventReferenceExpression" type="EventReferenceExpression"/>
-    <xs:element name="FieldReferenceExpression" type="FieldReferenceExpression"/>
-    <xs:element name="IndexerExpression" type="IndexerExpression"/>
-    <xs:element name="MethodInvokeExpression" type="MethodInvokeExpression"/>
-    <xs:element name="MethodReferenceExpression" type="MethodReferenceExpression"/>
-    <xs:element name="ObjectCreateExpression" type="ObjectCreateExpression"/>
-    <xs:element name="PrimitiveExpression" type="PrimitiveExpression"/>
-    <xs:element name="PropertyReferenceExpression" type="PropertyReferenceExpression"/>
-    <xs:element name="PropertySetValueReferenceExpression" type="PropertySetValueReferenceExpression"/>
-    <xs:element name="SnippetExpression" type="SnippetExpression"/>
-    <xs:element name="ThisReferenceExpression" type="ThisReferenceExpression"/>
-    <xs:element name="TypeOfExpression" type="TypeOfExpression"/>
-    <xs:element name="TypeReferenceExpression" type="TypeReferenceExpression"/>
-    <xs:element name="VariableReferenceExpression" type="VariableReferenceExpression"/>
+    <xs:element name="SnippetCompileUnit" type="SnippetCompileUnit" substitutionGroup="CompileUnit"/>
+    <xs:element name="AssignStatement" type="AssignStatement" substitutionGroup="Statement"/>
+    <xs:element name="AttachEventStatement" type="AttachEventStatement" substitutionGroup="Statement"/>
+    <xs:element name="ConditionStatement" type="ConditionStatement" substitutionGroup="Statement"/>
+    <xs:element name="ExpressionStatement" type="ExpressionStatement" substitutionGroup="Statement"/>
+    <xs:element name="GotoStatement" type="GotoStatement" substitutionGroup="Statement"/>
+    <xs:element name="IterationStatement" type="IterationStatement" substitutionGroup="Statement"/>
+    <xs:element name ="LabeledStatement" type="LabeledStatement" substitutionGroup="Statement"/>
+    <xs:element name="MethodReturnStatement" type="MethodReturnStatement" substitutionGroup="Statement"/>
+    <xs:element name="RemoveEventStatement" type="RemoveEventStatement" substitutionGroup="Statement"/>
+    <xs:element name="SnippetStatement" type="SnippetStatement" substitutionGroup="Statement"/>
+    <xs:element name="ThrowExceptionStatement" type="ThrowExceptionStatement" substitutionGroup="Statement"/>
+    <xs:element name="TryCatchFinallyStatement" type="TryCatchFinallyStatement" substitutionGroup="Statement"/>
+    <xs:element name="VariableDeclarationStatement" type="VariableDeclarationStatement" substitutionGroup="Statement"/>
+    <xs:element name="ArgumentReferenceExpression" type="ArgumentReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="ArrayCreateExpression" type="ArrayCreateExpression" substitutionGroup="Expression"/>
+    <xs:element name="ArrayIndexerExpression" type="ArrayIndexerExpression" substitutionGroup="Expression"/>
+    <xs:element name="BaseReferenceExpression" type="BaseReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="BinaryOperatorExpression" type="BinaryOperatorExpression" substitutionGroup="Expression"/>
+    <xs:element name="CastExpression" type="CastExpression" substitutionGroup="Expression"/>
+    <xs:element name="DefaultValueExpression" type="DefaultValueExpression" substitutionGroup="Expression"/>
+    <xs:element name="DelegateCreateExpression" type="DelegateCreateExpression" substitutionGroup="Expression"/>
+    <xs:element name="DelegateInvokeExpression" type="DelegateInvokeExpression" substitutionGroup="Expression"/>
+    <xs:element name="DirectionExpression" type="DirectionExpression" substitutionGroup="Expression"/>
+    <xs:element name="EventReferenceExpression" type="EventReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="FieldReferenceExpression" type="FieldReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="IndexerExpression" type="IndexerExpression" substitutionGroup="Expression"/>
+    <xs:element name="MethodInvokeExpression" type="MethodInvokeExpression" substitutionGroup="Expression"/>
+    <xs:element name="MethodReferenceExpression" type="MethodReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="ObjectCreateExpression" type="ObjectCreateExpression" substitutionGroup="Expression"/>
+    <xs:element name="PrimitiveExpression" type="PrimitiveExpression" substitutionGroup="Expression"/>
+    <xs:element name="PropertyReferenceExpression" type="PropertyReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="PropertySetValueReferenceExpression" type="PropertySetValueReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="SnippetExpression" type="SnippetExpression" substitutionGroup="Expression"/>
+    <xs:element name="ThisReferenceExpression" type="ThisReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="TypeOfExpression" type="TypeOfExpression" substitutionGroup="Expression"/>
+    <xs:element name="TypeReferenceExpression" type="TypeReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="VariableReferenceExpression" type="VariableReferenceExpression" substitutionGroup="Expression"/>
     <xs:element name="CatchClause" type="CatchClause"/>
+    <xs:element name="TypeDelegate" type="TypeDelegate"/>
     
     <!--Other elements-->
     <xs:element name="UserData">
@@ -197,7 +200,7 @@
                     <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements"/>
                     <xs:element name="Types" minOccurs="0" maxOccurs="1" type="TypeDeclarations"/>
                 </xs:sequence>
-                <xs:attribute name="Name" type="xs:string" use="required"/>
+                <xs:attribute name="Name" type="xs:string" use="optional" default=""/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
@@ -238,13 +241,13 @@
                 <xs:sequence minOccurs="1" maxOccurs="1">
                     <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="TypeParemeters" type="TypeParameters" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="TypeParameters" type="TypeParameters" minOccurs="0" maxOccurs="unbounded"/>
                     <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="ReturnTypeCustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
                     <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-            </xs:extension>
+            </xs:extension>                 
         </xs:complexContent>
     </xs:complexType>
     <xs:complexType name="MemberProperty">
@@ -298,7 +301,7 @@
         <xs:sequence minOccurs="1" maxOccurs="1">
             <xs:choice minOccurs="1" maxOccurs="1">
                 <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"/>
-                <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="AttributeType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
             </xs:choice>
             <xs:element name="Arguments" type="AttributeArguments" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
@@ -308,10 +311,10 @@
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
                     <xs:element name="ArrayElementType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
-                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="BaseType" type="xs:string" use="required"/>
-                <xs:attribute name="ArrayRank" type="xs:integer" use="optional" default="0"/>
+                <xs:attribute name="BaseType" type="xs:string" use="optional"/>
+                <xs:attribute name="ArrayRank" type="xs:integer" use="optional"/>
                 <xs:attribute name="Options" use="optional" type="TypeReferenceOptions"/>
             </xs:extension>
         </xs:complexContent>
@@ -335,7 +338,7 @@
     <xs:complexType name="RegionDirective">
         <xs:complexContent>
             <xs:extension base="Directive">
-                <xs:attribute name="RegionText" type="xs:string" use="required"/>
+                <xs:attribute name="RegionText" type="xs:string" use="optional"/>
                 <xs:attribute name="RegionMode" type="RegionMode" use="required"/>
             </xs:extension>
         </xs:complexContent>
@@ -485,7 +488,7 @@
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
                     <xs:element name="DelegateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="TagretObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
                 <xs:attribute name="MethodName" type="xs:string" use="required"/>
             </xs:extension>
@@ -556,7 +559,7 @@
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
                     <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
-                    <xs:element name="TypeArguments" type="AssemblyReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
                 <xs:attribute name="MethodName" type="xs:string" use="required"/>
             </xs:extension>
@@ -793,7 +796,7 @@
         <xs:sequence minOccurs="1" maxOccurs="1">
             <xs:element name="CatchExceptionType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
             <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
-        </xs:sequence>
+        </xs:sequence>                     
         <xs:attribute name="LocalName" use="optional" type="xs:string"/>
     </xs:complexType>
     <xs:complexType name="VariableDeclarationStatement">
@@ -949,7 +952,7 @@
                 </xs:annotation>
             </xs:enumeration>
         
-            <xs:enumeration value="Overloaed">
+            <xs:enumeration value="Overloaded">
                 <xs:annotation>
                     <xs:appinfo>0x100</xs:appinfo>
                 </xs:annotation>
@@ -957,6 +960,9 @@
         </xs:restriction>
     </xs:simpleType>
     <xs:simpleType name="TypeAttribute">
+        <xs:annotation>
+            <xs:appinfo><?EnumName System.Reflection.TypeAttributes?></xs:appinfo>
+        </xs:annotation>
         <xs:restriction base="xs:string">
             <xs:enumeration value="Abstract"><xs:annotation><xs:appinfo>0x80</xs:appinfo></xs:annotation></xs:enumeration>
             <xs:enumeration value="AnsiClass"><xs:annotation><xs:appinfo>0</xs:appinfo></xs:annotation></xs:enumeration>

@@ -279,10 +279,10 @@ Namespace WindowsT.FormsT
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
         Public Property StatusState() As ControlState
             Get
-                Return Misc.ControlState(stmStatus)
+                Return WinFormsExtensions.ControlState(stmStatus)
             End Get
             Set(ByVal value As ControlState)
-                Misc.ControlState(stmStatus) = value
+                WinFormsExtensions.ControlState(stmStatus) = value
             End Set
         End Property
         ''' <summary><see cref="StatusMarker"/> present on this control</summary>
@@ -320,10 +320,10 @@ Namespace WindowsT.FormsT
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property ThesaurusButtonState() As ControlState
             Get
-                Return Misc.ControlState(cmdThesaurus)
+                Return WinFormsExtensions.ControlState(cmdThesaurus)
             End Get
             Set(ByVal value As ControlState)
-                Misc.ControlState(cmdThesaurus) = value
+                WinFormsExtensions.ControlState(cmdThesaurus) = value
             End Set
         End Property
         ''' <summary>Gets or sets state of merge button</summary>
@@ -332,10 +332,10 @@ Namespace WindowsT.FormsT
         <DefaultValue(GetType(ControlState), "Enabled")> _
         Public Property MergeButtonState() As ControlState
             Get
-                Return Misc.ControlState(cmdMerge)
+                Return WinFormsExtensions.ControlState(cmdMerge)
             End Get
             Set(ByVal value As ControlState)
-                Misc.ControlState(cmdMerge) = value
+                WinFormsExtensions.ControlState(cmdMerge) = value
             End Set
         End Property
         ''' <summary>Gets or sets value indicating if merge button is checked (orange) or not (gray)</summary>

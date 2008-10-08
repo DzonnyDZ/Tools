@@ -105,18 +105,19 @@ namespace DMKSoftware.CodeGenerators
                 }
             }
 
-            string resourceNamespace = this.GetResourcesNamespace();
+            string resourceNamespace = this.GetResourcesNamespace(false);
+            string logicalName = this.GetResourcesNamespace(true);//Logical name added by Ðonny
             string inputFileNameWithoutExtension = Path.GetFileNameWithoutExtension(inputFileName);
             
             List<Tools.ResourceErrorData> unmatchableResources = new List<Tools.ResourceErrorData>();
             if (resourceNamespace != null)
                 codeCompileUnit = Tools.StronglyTypedResourceBuilderEx.Create(this.GetType(),
 					nodeDictionary, inputFileNameWithoutExtension, base.FileNameSpace, resourceNamespace,
-                    this.CodeProvider, GenerateInternalClass, unmatchableResources);
+                    this.CodeProvider, GenerateInternalClass, unmatchableResources,logicalName);//Logical name added by Ðonny
             else
                 codeCompileUnit = Tools.StronglyTypedResourceBuilderEx.Create(this.GetType(),
 					nodeDictionary, inputFileNameWithoutExtension, base.FileNameSpace, this.CodeProvider,
-                    GenerateInternalClass, unmatchableResources);
+                    GenerateInternalClass, unmatchableResources, logicalName);//Logical name added by Ðonny
             
             if (base.CodeGeneratorProgress != null)
             {
@@ -145,7 +146,7 @@ namespace DMKSoftware.CodeGenerators
             return base.StreamToBytes(streamWriter.BaseStream);
         }
 
-        protected string GetResourcesNamespace()
+        protected string GetResourcesNamespace(bool forLogicalName)//forLogicalName added by Ðonny
         {
             string resourcesNamespace = null;
 
@@ -161,22 +162,23 @@ namespace DMKSoftware.CodeGenerators
                     object propertyValue;
                     IVsBrowseObject vsBrowseObject = Marshal.GetObjectForIUnknown(siteInterfacePointer) as IVsBrowseObject;
 
+                    vsBrowseObject.GetProjectItem(out vsHierarchy, out pItemId);
                     //Added by Ðonny:
                     //Support for <LogicalName>
-                    vsBrowseObject.GetProjectItem(out vsHierarchy, out pItemId);
-                    IVsBuildPropertyStorage buildPropertyStorage = vsHierarchy as IVsBuildPropertyStorage;
-                    if(buildPropertyStorage != null) {
-                        string LogicalName=null;
-                        try {
-                            buildPropertyStorage.GetItemAttribute(pItemId, "LogicalName", out LogicalName);
-                        } catch { }
-                        if(LogicalName!=null){
-                            if(LogicalName.EndsWith(".resources"))
-                                return LogicalName.Substring(0,LogicalName.Length-".resources".Length);
-                            else return LogicalName;
+                    if(forLogicalName) {
+                        IVsBuildPropertyStorage buildPropertyStorage = vsHierarchy as IVsBuildPropertyStorage;
+                        if(buildPropertyStorage != null) {
+                            string LogicalName = null;
+                            try {
+                                buildPropertyStorage.GetItemAttribute(pItemId, "LogicalName", out LogicalName);
+                                } catch { }
+                            if(LogicalName != null) {
+                                if(LogicalName.EndsWith(".resources"))
+                                    return LogicalName.Substring(0, LogicalName.Length - ".resources".Length);
+                                else return LogicalName;
+                                }
+                            }
                         }
-                    }
-
 
                     Marshal.Release(siteInterfacePointer);
                     if (null == vsBrowseObject)

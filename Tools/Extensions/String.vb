@@ -64,8 +64,30 @@ Namespace ExtensionsT
         ''' <param name="Limit">Optional. Maximum number of substrings into which the input string should be split. The default, –1, indicates that the input string should be split at every occurrence of the Delimiter string.</param>
         ''' <returns>String array. If Expression is a zero-length string (""), Split returns a single-element array containing a zero-length string. If Delimiter is a zero-length string, or if it does not appear anywhere in Expression, Split returns a single-element array containing the entire Expression string.</returns>
         ''' <seelaso cref="String.Split"/><seelaso cref="Microsoft.VisualBasic.Split"/>
+        ''' <remarks>This function internally calls <see cref="Microsoft.VisualBasic.Split"/></remarks>
         <Extension()> Public Function Split(ByVal Expression As String, ByVal Delimiter As String, Optional ByVal Limit As Integer = -1) As String()
             Return Microsoft.VisualBasic.Split(Expression, Delimiter, Limit, CompareMethod.Binary)
+        End Function
+        ''' <summary>Splits given string by whitespaces</summary>
+        ''' <param name="str">String to split</param>
+        ''' <returns>Array of non-whitespace blocks in <paramref name="str"/>. In case <paramref name="str"/> is null, returns null.</returns>
+        <Extension()> Public Function WhiteSpaceSplit(ByVal str As String) As String()
+            If str Is Nothing Then Return Nothing
+            If str.Length = 0 Then Return New String() {}
+            str &= " "c
+            Dim ret As New List(Of String)
+            Dim LastPos As Integer = 0
+            Dim InWhite As Boolean = True
+            For i = 0 To str.Length - 1
+                If str(i).IsWhiteSpace AndAlso Not InWhite Then
+                    ret.Add(str.Substring(LastPos, i - LastPos))
+                    InWhite = True
+                ElseIf Not str(i).IsWhiteSpace() AndAlso InWhite Then
+                    LastPos = i
+                    InWhite = False
+                End If
+            Next
+            Return ret.ToArray
         End Function
     End Module
 End Namespace

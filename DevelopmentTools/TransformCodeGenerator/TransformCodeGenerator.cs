@@ -16,7 +16,7 @@ namespace Tools.GeneratorsT {
     /// This is a transform code generator. It performs XSL transform as custom tool in Visual Studio.
     /// </summary>
     /// <seealso cref="XsltCustomTool"/>
-    [Guid("07834038-5EA7-4d0d-8194-B8E91DC75638")]
+    [Guid("2F8B768B-DBEA-407d-9A43-416BE87FA6A5")]
     [CustomTool("TransformCodeGenerator", "Transform Code Generator")]
     public class TransformCodeGenerator:CustomToolBase {
 

@@ -1,6 +1,6 @@
 ﻿'Extracted
 Imports System.Windows.Forms, Tools.WindowsT, System.ComponentModel, System.Linq
-Imports Tools.WindowsT.FormsT.UtilitiesT.Misc, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
+Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions, Tools.CollectionsT.SpecializedT, Tools.CollectionsT.GenericT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 '#If Config <= Nightly Then 'Set in project file
 'Stage:Nightly

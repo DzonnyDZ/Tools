@@ -90,7 +90,13 @@
     <Config>4</Config>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="CppCodeProvider, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>C:\Program Files\Microsoft Visual Studio 9.0\Common7\IDE\PublicAssemblies\CppCodeProvider.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.JScript" />
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
+    <Reference Include="Microsoft.VisualC.VSCodeProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -111,6 +117,7 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="VJSharpCodeProvider" />
   </ItemGroup>
   <ItemGroup>
     <Import Include="Microsoft.VisualBasic" />
@@ -129,6 +136,12 @@
     </Compile>
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
+    </Compile>
+    <Compile Include="CodeDom\Xml2CodeDom.Designer.vb">
+      <DependentUpon>Xml2CodeDom.vb</DependentUpon>
+    </Compile>
+    <Compile Include="CodeDom\Xml2CodeDom.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Collections\Generic\ReadOnlyListAdapter.Designer.vb">
       <DependentUpon>ReadOnlyListAdapter.vb</DependentUpon>
@@ -379,6 +392,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="CodeDom\Xml2CodeDom.resx">
+      <DependentUpon>Xml2CodeDom.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Collections\Generic\ReadOnlyListAdapter.resx">
       <SubType>Designer</SubType>
       <DependentUpon>ReadOnlyListAdapter.vb</DependentUpon>
@@ -573,6 +589,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <None Include="CodeDom\CodeDom test.xml" />
     <Content Include="Tree.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

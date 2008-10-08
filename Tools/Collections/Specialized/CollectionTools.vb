@@ -79,7 +79,7 @@ Namespace CollectionsT.SpecializedT
         ''' <remarks>Using this method requires all controls following control being replaced to be removed from collection and reinserted back.
         ''' <para>Raplacing control in collection does not necesarily mean that control will be visualy placed at the same postition in parent control. It is not true for any controls without layout model, such as <see cref="Windows.Forms.Form"/> or <see cref="Windows.Forms.Panel"/> and for for example <see cref="Windows.Forms.TableLayoutPanel"/>. It is true for <see cref="Windows.Forms.FlowLayoutPanel"/>.</para></remarks>
         ''' <seealso cref="Insert"/>
-        ''' <seealso cref="WindowsT.FormsT.UtilitiesT.Misc.ReplaceControl"/>
+        ''' <seealso cref="WindowsT.FormsT.UtilitiesT.WinFormsExtensions.ReplaceControl"/>
         <Extension()> Sub Replace(ByVal Collection As Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
             If index < 0 OrElse index >= Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection)

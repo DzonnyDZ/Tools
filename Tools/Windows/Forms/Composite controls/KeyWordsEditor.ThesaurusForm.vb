@@ -1,7 +1,7 @@
 'Extracted
 Imports Tools.CollectionsT.GenericT, System.Windows.Forms, System.Linq
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox
-Imports Tools.WindowsT.FormsT.UtilitiesT.Misc
+Imports Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions
 Namespace WindowsT.FormsT
     '#If Config <= Alpha Then Set in Tools.vbproj
     'Stage: Alpha

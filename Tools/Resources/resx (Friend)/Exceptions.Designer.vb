@@ -21,7 +21,7 @@ Namespace ResourcesT
     '''<summary>
     '''A strongly-typed resource class, for looking up localized strings, formatting them, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.1.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.2.5.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
     Friend Class Exceptions
@@ -59,7 +59,7 @@ Namespace ResourcesT
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
                     Try 
                         If Object.ReferenceEquals(_resourceManager, Nothing) Then
-                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.ResourcesT.Exceptions.Exceptions", GetType(Exceptions).Assembly))
+                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.ResourcesT.Exceptions", GetType(Exceptions).Assembly))
                         End If
                     Finally
                         Global.System.Threading.Monitor.Exit(InternalSyncObject)
@@ -744,6 +744,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} does not represent supported expression.'.
+        '''</summary>
+        Friend Shared ReadOnly Property DoesNotRepresentSupportedExpression() As String
+            Get
+                Return ResourceManager.GetString("DoesNotRepresentSupportedExpression", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} doesn&apos;t support writing'.
         '''</summary>
         Friend Shared ReadOnly Property DoesnTSupportWriting() As String
@@ -1129,6 +1138,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property IsNotMemberOf1() As String
             Get
                 Return ResourceManager.GetString("IsNotMemberOf1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to '{0} is not supported type of XML-serialized CodeDOM object.'.
+        '''</summary>
+        Friend Shared ReadOnly Property IsNotSupportedTypeOfXMLSerializedCodeDOMObject() As String
+            Get
+                Return ResourceManager.GetString("IsNotSupportedTypeOfXMLSerializedCodeDOMObject", _resourceCulture)
             End Get
         End Property
         
@@ -1585,6 +1603,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Namespace prefix {0} is not defined'.
+        '''</summary>
+        Friend Shared ReadOnly Property NamespacePrefix0IsNotDefined() As String
+            Get
+                Return ResourceManager.GetString("NamespacePrefix0IsNotDefined", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'No condition was true.'.
         '''</summary>
         Friend Shared ReadOnly Property NoConditionWasTrue() As String
@@ -1653,6 +1680,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property NumberOfItemsOf0DiffersFrom1() As String
             Get
                 Return ResourceManager.GetString("NumberOfItemsOf0DiffersFrom1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Object of type {0} cannot be serialized as primitive object.'.
+        '''</summary>
+        Friend Shared ReadOnly Property ObjectOfType0CannotBeSerializedAsPrimitiveObject() As String
+            Get
+                Return ResourceManager.GetString("ObjectOfType0CannotBeSerializedAsPrimitiveObject", _resourceCulture)
             End Get
         End Property
         
@@ -1851,6 +1887,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ResultCannotBeNone() As String
             Get
                 Return ResourceManager.GetString("ResultCannotBeNone", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Root element must be &lt;{0}&gt;.'.
+        '''</summary>
+        Friend Shared ReadOnly Property RootElementMustBe0() As String
+            Get
+                Return ResourceManager.GetString("RootElementMustBe0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Root element must be &lt;{0}&gt; or &lt;{1}&gt;'.
+        '''</summary>
+        Friend Shared ReadOnly Property RootElementMustBe0Or1() As String
+            Get
+                Return ResourceManager.GetString("RootElementMustBe0Or1", _resourceCulture)
             End Get
         End Property
         
@@ -2725,6 +2779,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unsupported CodeDom object {0}'.
+        '''</summary>
+        Friend Shared ReadOnly Property UnsupportedCodeDomObject0() As String
+            Get
+                Return ResourceManager.GetString("UnsupportedCodeDomObject0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unsupported source type'.
         '''</summary>
         Friend Shared ReadOnly Property UnsupportedSourceType() As String
@@ -2829,6 +2892,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ValueOfType0CannotBeConvertedTo1() As String
             Get
                 Return ResourceManager.GetString("ValueOfType0CannotBeConvertedTo1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Value of type {0} cannot be deserialized stand-alone, because its object representation does not inherit from CodeObject.'.
+        '''</summary>
+        Friend Shared ReadOnly Property ValueOfType0CannotBeDeserializedStandAloneBecauseIts() As String
+            Get
+                Return ResourceManager.GetString("ValueOfType0CannotBeDeserializedStandAloneBecauseIts", _resourceCulture)
             End Get
         End Property
         
@@ -2969,6 +3041,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property WriterIsNotInitializedOrIsFinished() As String
             Get
                 Return ResourceManager.GetString("WriterIsNotInitializedOrIsFinished", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'XML attribute has no parent element.'.
+        '''</summary>
+        Friend Shared ReadOnly Property XMLAttributeHasNoParentElement() As String
+            Get
+                Return ResourceManager.GetString("XMLAttributeHasNoParentElement", _resourceCulture)
             End Get
         End Property
         
@@ -3619,6 +3700,15 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to '{0} does not represent supported expression.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function DoesNotRepresentSupportedExpressionFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, DoesNotRepresentSupportedExpression, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to '{0} doesn&apos;t support writing'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -3976,6 +4066,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function IsNotMemberOf1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, IsNotMemberOf1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} is not supported type of XML-serialized CodeDOM object.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function IsNotSupportedTypeOfXMLSerializedCodeDOMObjectFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, IsNotSupportedTypeOfXMLSerializedCodeDOMObject, arg0)
         End Function
         
         '''<summary>
@@ -4441,6 +4540,15 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Namespace prefix {0} is not defined'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function NamespacePrefix0IsNotDefinedFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, NamespacePrefix0IsNotDefined, arg0)
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the NoConditionWasTrue property value.
         '''</summary>
         '''<returns>The NoConditionWasTrue property value.</returns>
@@ -4513,6 +4621,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function NumberOfItemsOf0DiffersFrom1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, NumberOfItemsOf0DiffersFrom1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Object of type {0} cannot be serialized as primitive object.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function ObjectOfType0CannotBeSerializedAsPrimitiveObjectFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ObjectOfType0CannotBeSerializedAsPrimitiveObject, arg0)
         End Function
         
         '''<summary>
@@ -4695,6 +4812,25 @@ Namespace ResourcesT
         '''<returns>The ResultCannotBeNone property value.</returns>
         Friend Shared Function ResultCannotBeNoneFormat() As String
             Return ResultCannotBeNone
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Root element must be &lt;{0}&gt;.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function RootElementMustBe0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, RootElementMustBe0, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Root element must be &lt;{0}&gt; or &lt;{1}&gt;'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function RootElementMustBe0Or1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, RootElementMustBe0Or1, arg0, arg1)
         End Function
         
         '''<summary>
@@ -5528,6 +5664,15 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Unsupported CodeDom object {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function UnsupportedCodeDomObject0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnsupportedCodeDomObject0, arg0)
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the UnsupportedSourceType property value.
         '''</summary>
         '''<returns>The UnsupportedSourceType property value.</returns>
@@ -5627,6 +5772,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function ValueOfType0CannotBeConvertedTo1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, ValueOfType0CannotBeConvertedTo1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Value of type {0} cannot be deserialized stand-alone, because its object representation does not inherit from CodeObject.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function ValueOfType0CannotBeDeserializedStandAloneBecauseItsFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, ValueOfType0CannotBeDeserializedStandAloneBecauseIts, arg0)
         End Function
         
         '''<summary>
@@ -5760,6 +5914,14 @@ Namespace ResourcesT
         '''<returns>The WriterIsNotInitializedOrIsFinished property value.</returns>
         Friend Shared Function WriterIsNotInitializedOrIsFinishedFormat() As String
             Return WriterIsNotInitializedOrIsFinished
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the XMLAttributeHasNoParentElement property value.
+        '''</summary>
+        '''<returns>The XMLAttributeHasNoParentElement property value.</returns>
+        Friend Shared Function XMLAttributeHasNoParentElementFormat() As String
+            Return XMLAttributeHasNoParentElement
         End Function
         
         '''<summary>

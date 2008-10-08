@@ -2,6 +2,9 @@
 <tree xmlns="http://dzonny.cz/xml/ĐTools/Tests/Tree">
     <node name="Metanol" image="Assembly" tag="Tools.Tests.Projects.Metanol.Test" />
     <node name="Tools" image="Assembly">
+        <node name="CodeDomT" image="Namespace">
+            <node name="Xml2CodeDom" image="Class" tag="Tools.Tests.CodeDomT.frmXml2CodeDom.Test"/>
+        </node>
         <node name="CollectionsT" image="Namespace">
             <node name="GenericT" image="Namespace">
                 <node name="ReadOnlyListAdapter" image="Class" tag="Tools.Tests.CollectionsT.GenericT.frmReadOnlyListAdapter.Test" />

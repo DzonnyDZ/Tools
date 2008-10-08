@@ -90,10 +90,11 @@ namespace DMKSoftware.CodeGenerators.Tools
         /// <param name="codeProvider">A <see cref="T:System.CodeDom.Compiler.CodeDomProvider"></see>  class that provides the language in which the class will be generated.</param>
         /// <param name="resourceList">An <see cref="T:System.Collections.IDictionary"></see> collection where each dictionary entry key/value pair is the name of a resource and the value of the resource.</param>
         /// <exception cref="T:System.ArgumentNullException">resourceList, basename, or codeProvider is null.</exception>
+        /// <param name="logicalName">Name of resource stream in assembly</param>
         public static CodeCompileUnit Create(Type callerType, IDictionary resourceList, string baseName, string generatedCodeNamespace,
-            CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable)
-        {
-            return Create(callerType, resourceList, baseName, generatedCodeNamespace, null, codeProvider, internalClass, unmatchable);
+            CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
+        { //logicalName added by Ðonny
+            return Create(callerType, resourceList, baseName, generatedCodeNamespace, null, codeProvider, internalClass, unmatchable, logicalName);
         }
 
         /// <summary>Generates a class file that contains strongly-typed properties that match the resources in the specified .resx file.</summary>
@@ -106,10 +107,11 @@ namespace DMKSoftware.CodeGenerators.Tools
         /// <param name="generatedCodeNamespace">The namespace of the class to be generated.</param>
         /// <param name="resxFile">The name of a .resx file used as input.</param>
         /// <exception cref="T:System.ArgumentNullException">basename or codeProvider is null.</exception>
+        /// <param name="logicalName">Name of resource stream in assembly</param>
         public static CodeCompileUnit Create(Type callerType, string resxFile, string baseName, string generatedCodeNamespace,
-            CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable)
-        {
-            return Create(callerType, resxFile, baseName, generatedCodeNamespace, null, codeProvider, internalClass, unmatchable);
+            CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
+        {//logicalName added by Ðonny
+            return Create(callerType, resxFile, baseName, generatedCodeNamespace, null, codeProvider, internalClass, unmatchable, logicalName);
         }
 
         /// <summary>Generates a class file that contains strongly-typed properties that match the resources referenced in the specified collection.</summary>
@@ -125,8 +127,8 @@ namespace DMKSoftware.CodeGenerators.Tools
         /// <exception cref="T:System.ArgumentNullException">resourceList, basename, or codeProvider is null.</exception>
         public static CodeCompileUnit Create(Type callerType, IDictionary resourceList, string baseName,
             string generatedCodeNamespace, string resourcesNamespace, CodeDomProvider codeProvider,
-            bool internalClass, List<ResourceErrorData> unmatchable)
-        {
+            bool internalClass, List<ResourceErrorData> unmatchable,string logicalName)
+        {//logicalName added by Ðonny
             if (null == resourceList)
                 throw new ArgumentNullException("resourceList");
             
@@ -161,7 +163,7 @@ namespace DMKSoftware.CodeGenerators.Tools
             }
 
             return InternalCreate(callerType, resourceDataDictionary, baseName, generatedCodeNamespace,
-                resourcesNamespace, codeProvider, internalClass, unmatchable);
+                resourcesNamespace, codeProvider, internalClass, unmatchable, logicalName); //logicalName added by Ðonny
         }
 
         /// <summary>Generates a class file that contains strongly-typed properties that match the resources in the specified .resx file.</summary>
@@ -175,9 +177,10 @@ namespace DMKSoftware.CodeGenerators.Tools
         /// <param name="generatedCodeNamespace">The namespace of the class to be generated.</param>
         /// <param name="resxFile">The name of a .resx file used as input.</param>
         /// <exception cref="T:System.ArgumentNullException">basename or codeProvider is null.</exception>
+        /// <param name="logicalName">Name of resource stream in assembly</param>
 		public static CodeCompileUnit Create(Type callerType, string resxFile, string baseName, string generatedCodeNamespace,
-            string resourcesNamespace, CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable)
-        {
+            string resourcesNamespace, CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
+        {   //logicalName added by Ðonny
             if (null == resxFile)
                 throw new ArgumentNullException("resxFile");
             
@@ -202,7 +205,7 @@ namespace DMKSoftware.CodeGenerators.Tools
             }
 
             return InternalCreate(callerType, resourceDataDictionary, baseName, generatedCodeNamespace, resourcesNamespace,
-                codeProvider, internalClass, unmatchable);
+                codeProvider, internalClass, unmatchable, logicalName);
         }
 
         private static bool DefineResourceFetchingProperty(string propertyName, string resourceName,
@@ -382,8 +385,8 @@ namespace DMKSoftware.CodeGenerators.Tools
         }
 
         private static void EmitBasicClassMembers(Type callerType, CodeTypeDeclaration resourceClass, string nameSpace, string baseName,
-            string resourcesNamespace, bool internalClass, bool useStatic, bool supportsTryCatch)
-        {
+            string resourcesNamespace, bool internalClass, bool useStatic, bool supportsTryCatch, string logicalName)
+        {    //logicalName added by Ðonny
 			// Full class name generation
             string fullClassName;
             if (resourcesNamespace != null)
@@ -516,7 +519,7 @@ namespace DMKSoftware.CodeGenerators.Tools
 			CodePropertyReferenceExpression assemblyPropertyReference = new CodePropertyReferenceExpression(new CodeTypeOfExpression(new CodeTypeReference(resourceClass.Name)),
 				"Assembly");
 			CodeObjectCreateExpression resourceManagerCreateExpression = new CodeObjectCreateExpression(resourceManagerTypeReference,
-				new CodePrimitiveExpression(fullClassName), assemblyPropertyReference);
+                new CodePrimitiveExpression(logicalName), assemblyPropertyReference); //logicalName changed by Ðonny
 
 			CodeMethodReferenceExpression interlockedExchangeMethodReference = new CodeMethodReferenceExpression(new CodeTypeReferenceExpression(interlockedCodeTypeReference),
 				"Exchange");
@@ -566,8 +569,8 @@ namespace DMKSoftware.CodeGenerators.Tools
 
         private static CodeCompileUnit InternalCreate(Type callerType, Dictionary<string, ResourceData> resourceList,
             string baseName, string generatedCodeNamespace, string resourcesNamespace,
-            CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable)
-        {
+            CodeDomProvider codeProvider, bool internalClass, List<ResourceErrorData> unmatchable, string logicalName)
+        { //logicalName added by Ðonny
             if (null == baseName)
                 throw new ArgumentNullException("baseName");
             
@@ -629,7 +632,7 @@ namespace DMKSoftware.CodeGenerators.Tools
             bool useStatic = internalClass || codeProvider.Supports(GeneratorSupport.PublicStaticMembers);
             bool supportsTryCatch = codeProvider.Supports(GeneratorSupport.TryCatchStatements);
             EmitBasicClassMembers(callerType, codeTypeDeclaration, generatedCodeNamespace, baseName,
-                resourcesNamespace, internalClass, useStatic, supportsTryCatch);
+                resourcesNamespace, internalClass, useStatic, supportsTryCatch, logicalName);  //logicalName added by Ðonny
 
 			SortedList<string, ResourceData> formatMethods = new SortedList<string, ResourceData>(validResources.Count,
 				StringComparer.InvariantCultureIgnoreCase);

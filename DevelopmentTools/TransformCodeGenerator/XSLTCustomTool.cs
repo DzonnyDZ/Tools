@@ -16,7 +16,7 @@ namespace Tools.GeneratorsT {
     /// </summary>
     /// <remarks>Unlike <see cref="TransformCodeGenerator"/> this tool should be attached to XSLT file, not to XML file.</remarks>
     /// <seealso cref="TransformCodeGenerator"/>
-    [Guid("E07C1989-52DD-494d-994B-29A708C42771")]
+    [Guid("D6CC6AA7-6B02-4e5c-98EA-847725A020D1")]
     [CustomTool("XsltCustomTool", "XSLT custom tool")]
     public class XsltCustomTool:CustomToolBase {
 

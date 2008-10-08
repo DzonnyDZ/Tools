@@ -5,7 +5,7 @@ Namespace WindowsT.FormsT.UtilitiesT
     ''' <para>This class contains values that when used for <see cref="CategoryAttribute"/> are recognized by the .NET Framework and localized to current language.</para>
     ''' <para>You can pass these constans either directly into <see cref="CategoryAttribute"/> or you can use <see cref="ComponentModelT.KnownCategoryAttribute"/>'s overloaded CTor that have better intellisense support.</para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 1, GetType(Tools.WindowsT.FormsT.UtilitiesT.Misc), LastChange:="05/14/2007")> _
+    <Author("Đonny", "dzonny.dz@gmail.com"), Version(2, 1, GetType(Tools.WindowsT.FormsT.UtilitiesT.WinFormsExtensions), LastChange:="05/14/2007")> _
     <Obsolete("Members of this class were changed. They are no longer constant, so they cannot be used for CategoryAttribute. If you want to use this class use LCategoryAttribute, but you'd better using KnownCategoryAttribute")> _
     Public Class CategoryAttributeValues
         ''' <summary>Private in order not to pe possible to create instance or inherit from this class</summary>

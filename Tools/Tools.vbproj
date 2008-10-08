@@ -148,6 +148,11 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="CodeDom\CodeDom.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeDom.xsd</DependentUpon>
+    </Compile>
     <Compile Include="CodeDom\Xml2CodeDom.vb" />
     <Compile Include="Collections\Generic\CollectionTools.vb" />
     <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />
@@ -555,6 +560,9 @@
     </None>
     <EmbeddedResource Include="CodeDom\CodeDom.xsd">
       <LogicalName>Tools.CodeDomT.CodeDom.xsd</LogicalName>
+      <Generator>TransformCodeGenerator</Generator>
+      <CustomToolNamespace>CodeDomT</CustomToolNamespace>
+      <LastGenOutput>CodeDom.vb</LastGenOutput>
     </EmbeddedResource>
     <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
@@ -568,6 +576,7 @@
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt">
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </None>
+    <Content Include="CodeDom\XmlNames.xslt" />
     <Content Include="Collections\Specialized\SpecializedWrappers.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>

@@ -1,0 +1,348 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<CompileUnit xmlns="http://dzonny.cz/xml/schemas/CodeDom" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <UserData>
+        <item key="test key">test value</item>
+    </UserData>
+    <StartDirectives >
+        <RegionDirective RegionText="Test of XMLCodeDom" RegionMode="Start"/>
+    </StartDirectives >
+    <ReferencedAssemblies>
+        <AssemblyReference>mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</AssemblyReference>
+        <AssemblyReference>System, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</AssemblyReference>
+    </ReferencedAssemblies>
+    <AssemblyCustomAttributes> 
+        <AttributeDeclaration>
+            <AttributeType BaseType="System.CLSCompliantAttribute"/>
+            <Arguments>
+                <AttributeArgument>
+                    <Value xsi:type="PrimitiveExpression">
+                        <Boolean>false</Boolean>
+                    </Value>
+                </AttributeArgument>
+            </Arguments>
+        </AttributeDeclaration>
+    </AssemblyCustomAttributes>
+    <Namespaces>
+        <Namespace Name="">
+            <Imports>
+                <NamespaceImport Namespace="System"/>
+                <NamespaceImport Namespace="System.Collections.Generic"/>
+            </Imports>
+            <Comments>
+                <CommentStatement>
+                    <Comment>
+                        <Text>This is no-name namespace</Text>
+                    </Comment>
+                </CommentStatement>
+            </Comments>
+            <Types>
+                <TypeDeclaration xsi:type="TypeDelegate" Name="TestDelegate"/>
+            </Types>
+        </Namespace>
+        <Namespace Name="Tools.Tests.CodeDomT">
+            <Types>
+                <TypeDeclaration xsi:type ="TypeDelegate" Name="AnotherTestDelegate">
+                    <Comments>
+                        <CommentStatement>
+                            <Comment DocComment="true">
+                                <TextXml xmlns:i="http://dzonny.cz/xml/schemas/intellisense">
+                                    <i:summary>This is delegate which tages <i:see cref="T:System.Boolean"/> and array of <i:see cref="T:System.Int16"/> and returns <i:see cref="System.Single"/>.</i:summary>
+                                    <i:param name="Arg1"><i:see cref="T:System.Boolean"/></i:param>
+                                    <i:param name="Arg2"><i:see cref="T:System.Int16[]"/></i:param>
+                                    <i:returns><i:see cref="T:System.Single"/></i:returns>
+                                </TextXml>
+                            </Comment>
+                        </CommentStatement>
+                    </Comments>
+                    <Parameters>
+                        <ParameterDeclarationExpression Name="Arg1">
+                            <Type BaseType="Boolean"/>
+                        </ParameterDeclarationExpression>
+                        <ParameterDeclarationExpression Name="Arg2">
+                            <Type ArrayRank="1">
+                                <ArrayElementType BaseType="Int16"/>
+                            </Type>
+                        </ParameterDeclarationExpression>
+                    </Parameters>
+                    <ReturnType BaseType="Single"/>
+                </TypeDeclaration>
+                <TypeDeclaration Name="MyClass" TypeAttributes="Public Serializable">
+                    <BaseTypes>
+                        <TypeReference BaseType="System.Object"/>
+                    </BaseTypes>
+                    <Members>
+                        <MemberField Name="PrivateField" Attributes="Private">
+                            <Type BaseType="TimeSpan"/>
+                            <InitExpression xsi:type="ObjectCreateExpression">
+                                <CreateType BaseType="TimeSpan"/>
+                                <Parameters>
+                                    <PrimitiveExpression>
+                                        <Int32>10</Int32>
+                                    </PrimitiveExpression>
+                                    <PrimitiveExpression>
+                                        <Int32>15</Int32>
+                                    </PrimitiveExpression>
+                                    <CastExpression>
+                                        <Expression xsi:type="PrimitiveExpression">
+                                            <Int16>0</Int16>
+                                        </Expression>
+                                        <TargetType BaseType="Int32"/>
+                                    </CastExpression>
+                                </Parameters>
+                            </InitExpression>
+                        </MemberField>
+                        <Constructor Name=".ctor" Attributes="Private Overloaded">
+                            <ChainedConstructorArgs>
+                                <PrimitiveExpression>
+                                    <Null/>
+                                </PrimitiveExpression>
+                            </ChainedConstructorArgs>
+                        </Constructor>
+                        <Constructor Name=".ctor" Attributes="Public Overloaded">
+                            <Parameters>
+                                <ParameterDeclarationExpression Name="arg" Direction="In">
+                                    <Type BaseType="System.TimeSpan"/>
+                                </ParameterDeclarationExpression>
+                            </Parameters>
+                            <Statements>
+                                <AssignStatement>
+                                    <Left xsi:type="FieldReferenceExpression" FieldName="PrivateField">
+                                        <TargetObject xsi:type="ThisReferenceExpression"/>
+                                    </Left>
+                                    <Right xsi:type="ArgumentReferenceExpression" ParameterName="arg"/>
+                                </AssignStatement>
+                                <MethodReturnStatement/>
+                            </Statements>
+                        </Constructor>
+                        <MemberEvent Name="SomeEvent" Attributes="Public">
+                            <LinePragma FileName="CodeDom test.xml" LineNumber="117"/>
+                            <Type BaseType="EventHandler"/>
+                        </MemberEvent>
+                        <MemberProperty HasGet="true" HasSet="true" Name="SetGet">
+                            <Type BaseType="TimeSpan"/>
+                            <GetStatements>
+                                <MethodReturnStatement>
+                                    <Expression xsi:type="FieldReferenceExpression" FieldName="PrivateField">
+                                        <TargetObject xsi:type="ThisReferenceExpression"/>
+                                    </Expression>
+                                </MethodReturnStatement>
+                            </GetStatements>
+                            <SetStatements>
+                                <AssignStatement>
+                                    <Left xsi:type="FieldReferenceExpression" FieldName="PrivateField">
+                                        <TargetObject xsi:type="ThisReferenceExpression"/>
+                                    </Left>
+                                    <Right xsi:type="PropertySetValueReferenceExpression"/>
+                                </AssignStatement>
+                            </SetStatements>
+                        </MemberProperty>
+                        <!--<SnippetTypeMember Name="Coll">
+                            <Text>Private Coll As New List(Of String)</Text>
+                        </SnippetTypeMember>-->
+                        <MemberField Name="Coll" Attributes="Private Static">
+                            <Type BaseType="List`1">
+                                <TypeArguments>
+                                    <TypeReference BaseType="String"/>
+                                </TypeArguments>
+                            </Type>
+                            <InitExpression xsi:type="ObjectCreateExpression">
+                                <CreateType BaseType="List`1">
+                                    <TypeArguments>
+                                        <TypeReference BaseType="String"/>
+                                    </TypeArguments>
+                                </CreateType>
+                            </InitExpression>
+                        </MemberField>
+                        <MemberMethod Name="Add">
+                            <Parameters>
+                                <ParameterDeclarationExpression Name="Item">
+                                    <Type BaseType="String"/>
+                                </ParameterDeclarationExpression>
+                            </Parameters>
+                            <Statements>
+                                <ExpressionStatement>
+                                    <Expression xsi:type="MethodInvokeExpression">
+                                        <Method MethodName="Add">
+                                            <TargetObject xsi:type="FieldReferenceExpression" FieldName="Coll">
+                                                <TargetObject xsi:type="ThisReferenceExpression"/>
+                                            </TargetObject>
+                                        </Method>
+                                        <Parameters>
+                                            <BinaryOperatorExpression Operator="Add">
+                                                <Left xsi:type="ArgumentReferenceExpression" ParameterName="Item"/>
+                                                <Right xsi:type="PrimitiveExpression">
+                                                    <String><![CDATA[ added]]></String>
+                                                </Right>
+                                            </BinaryOperatorExpression>
+                                        </Parameters>
+                                    </Expression>
+                                </ExpressionStatement>
+                            </Statements>
+                        </MemberMethod>
+                    </Members>
+                </TypeDeclaration>
+                <TypeDeclaration Name="IGenericType" IsInterface="true">
+                    <TypeParameters>
+                        <TypeParameter Name="T1" HasConstructorConstraint="true">
+                            <Constraints>
+                                <TypeReference BaseType="System.CodeDom.CodeObject"/>
+                            </Constraints>
+                        </TypeParameter>
+                    </TypeParameters>
+                    <BaseTypes>
+                        <TypeReference BaseType="IDisposable"/>
+                    </BaseTypes>
+                    <Members>
+                        <MemberField Name="Disposed">
+                            <Type BaseType="Boolean"/>
+                            <InitExpression xsi:type="PrimitiveExpression">
+                                <Boolean>0</Boolean>
+                            </InitExpression>
+                        </MemberField>
+                        <MemberMethod Name="Dispose">
+                            <ImplementationTypes>
+                                <TypeReference BaseType="IDisposable"/>
+                            </ImplementationTypes>
+                            <Statements>
+                                <ConditionStatement>
+                                    <Condition xsi:type="BinaryOperatorExpression" Operator="ValueEquality">
+                                        <Left xsi:type="FieldReferenceExpression" FieldName="Disposed">
+                                            <TargetObject xsi:type="ThisReferenceExpression"/>
+                                        </Left>
+                                        <Right xsi:type="PrimitiveExpression">
+                                            <Boolean>true</Boolean>
+                                        </Right>
+                                    </Condition>
+                                    <TrueStatements>
+                                        <ThrowExceptionStatement>
+                                            <ToThrow xsi:type="ObjectCreateExpression">
+                                                <CreateType BaseType="ObjectDisposedException"/>
+                                                <Parameters>
+                                                    <CastExpression>
+                                                        <Expression xsi:type="ArrayCreateExpression">
+                                                            <CreateType BaseType="Char"/>
+                                                            <Initializers>
+                                                                <PrimitiveExpression>
+                                                                    <Char>O</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>b</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>j</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>e</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>c</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>t</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve"> </Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>w</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>a</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>s</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char xmlns:xml="http://www.w3.org/XML/1998/namespace" xml:space="preserve"> </Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>d</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>i</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>s</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>p</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>o</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>s</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>e</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>d</Char>
+                                                                </PrimitiveExpression>
+                                                                <PrimitiveExpression>
+                                                                    <Char>.</Char>
+                                                                </PrimitiveExpression>
+                                                            </Initializers>
+                                                        </Expression>
+                                                        <TargetType BaseType="String"/>
+                                                    </CastExpression>
+                                                </Parameters>
+                                            </ToThrow>
+                                        </ThrowExceptionStatement>
+                                    </TrueStatements>
+                                    <FalseStatements>
+                                        <AssignStatement>
+                                            <Left xsi:type="FieldReferenceExpression" FieldName="Disposed">
+                                                <TargetObject xsi:type="ThisReferenceExpression"/>
+                                            </Left>
+                                            <Right xsi:type="PrimitiveExpression">
+                                                <Boolean>true</Boolean>
+                                            </Right>
+                                        </AssignStatement>
+                                    </FalseStatements>
+                                </ConditionStatement>
+                            </Statements>
+                        </MemberMethod>
+                    </Members>
+                </TypeDeclaration>
+                <TypeDeclaration Name="Main">
+                    <Members>
+                        <EntryPointMethod Name="Main">
+                            <Statements>
+                                <ExpressionStatement>
+                                    <Expression xsi:type="MethodInvokeExpression">
+                                        <Method MethodName="WriteLine">
+                                            <TargetObject xsi:type="TypeReferenceExpression">
+                                                <Type BaseType="Console"/>
+                                            </TargetObject>
+                                        </Method>
+                                        <Parameters>
+                                            <PrimitiveExpression>
+                                                <String>Hello world!</String>
+                                            </PrimitiveExpression>
+                                        </Parameters>
+                                    </Expression>
+                                </ExpressionStatement>
+                                <ExpressionStatement>
+                                    <Expression xsi:type="MethodInvokeExpression">
+                                        <Method MethodName="ReadKey">
+                                            <TargetObject xsi:type="TypeReferenceExpression">
+                                                <Type BaseType="Console"/>
+                                            </TargetObject>
+                                        </Method>
+                                    </Expression>
+                                </ExpressionStatement>
+                            </Statements>
+                        </EntryPointMethod>
+                    </Members>
+                </TypeDeclaration>
+            </Types>    
+        </Namespace>
+    </Namespaces>
+    <EndDirectives>
+        <Directive xsi:type="RegionDirective" RegionText="Test of XMLCodeDom" RegionMode="End"/>
+        <ChecksumPragma FileName="CodeDom test.xml" ChecksumAlgorithmId="00000000000000000000000000000000">
+            <ChecksumData>ghugAxdm</ChecksumData>
+        </ChecksumPragma>
+    </EndDirectives>
+</CompileUnit>
