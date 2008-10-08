@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30729</ProductVersion>
+    <ProductVersion>9.0.21022</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -563,6 +563,7 @@
       <Generator>TransformCodeGenerator</Generator>
       <CustomToolNamespace>CodeDomT</CustomToolNamespace>
       <LastGenOutput>CodeDom.vb</LastGenOutput>
+      <DependentUpon>Xml2CodeDom.vb</DependentUpon>
     </EmbeddedResource>
     <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
@@ -576,7 +577,12 @@
     <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt">
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </None>
-    <Content Include="CodeDom\XmlNames.xslt" />
+    <Content Include="CodeDom\AddDoc.xslt">
+      <DependentUpon>CodeDom.xsd</DependentUpon>
+    </Content>
+    <Content Include="CodeDom\XmlNames.xslt">
+      <DependentUpon>CodeDom.xsd</DependentUpon>
+    </Content>
     <Content Include="Collections\Specialized\SpecializedWrappers.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
