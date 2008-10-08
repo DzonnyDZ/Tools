@@ -1,1354 +1,1294 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <?transformer XmlNames.xslt?>
-<xs:schema id="CodeDom" targetNamespace="http://dzonny.cz/xml/schemas/CodeDom" elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://dzonny.cz/xml/schemas/CodeDom" xmlns:cd="http://dzonny.cz/xml/schemas/CodeDom" xmlns:h="http://www.w3.org/1999/xhtml">
+<xs:schema id="CodeDom"
+    targetNamespace="http://dzonny.cz/xml/schemas/CodeDom"
+    elementFormDefault="qualified"
+    xmlns="http://dzonny.cz/xml/schemas/CodeDom"
+    xmlns:cd="http://dzonny.cz/xml/schemas/CodeDom"
+    xmlns:xs="http://www.w3.org/2001/XMLSchema"
+>
     <!--Simple elements-->
-    <xs:element name="CompileUnit" type="CompileUnit" />
-    <xs:element name="Namespace" type="Namespace" />
-    <xs:element name="AttributeDeclaration" type="AttributeDeclaration" />
-    <xs:element name="AssemblyReference" type="xs:string" />
-    <xs:element name="Directive" type="Directive" abstract="true" />
-    <xs:element name="ChecksumPragma" type="ChecksumPragma" substitutionGroup="Directive" />
-    <xs:element name="RegionDirective" type="RegionDirective" substitutionGroup="Directive" />
-    <xs:element name="NamespaceImport" type="NamespaceImport" />
-    <xs:element name="CommentStatement" type="CommentStatement" substitutionGroup="Statement" />
-    <xs:element name="TypeDeclaration" type="TypeDeclaration" />
-    <xs:element name="AttributeArgument" type="AttributeArgument" />
-    <xs:element name="TypeReference" type="TypeReference" />
-    <xs:element name="TypeMember" type="TypeMember" abstract="true" />
-    <xs:element name="TypeParameter" type="TypeParameter" />
-    <xs:element name="MemberEvent" type="MemberEvent" substitutionGroup="TypeMember" />
-    <xs:element name="MemberField" type="MemberField" substitutionGroup="TypeMember" />
-    <xs:element name="MemberMethod" type="MemberMethod" substitutionGroup="TypeMember" />
-    <xs:element name="ParameterDeclarationExpression" type="ParameterDeclarationExpression" />
-    <xs:element name="Statement" type="Statement" abstract="true" />
-    <xs:element name="MemberProperty" type="MemberProperty" substitutionGroup="TypeMember" />
-    <xs:element name="Expression" type="Expression" abstract="true" />
-    <xs:element name="SnippetTypeMember" type="SnippetTypeMember" substitutionGroup="TypeMember" />
-    <xs:element name="Constructor" type="Constructor" substitutionGroup="MemberMethod" />
-    <xs:element name="EntryPointMethod" type="EntryPointMethod" substitutionGroup="MemberMethod" />
-    <xs:element name="TypeConstructor" type="TypeConstructor" substitutionGroup="MemberMethod" />
-    <xs:element name="LinePragma" type="LinePragma" />
-    <xs:element name="Comment" type="Comment" />
-    <xs:element name="SnippetCompileUnit" type="SnippetCompileUnit" substitutionGroup="CompileUnit" />
-    <xs:element name="AssignStatement" type="AssignStatement" substitutionGroup="Statement" />
-    <xs:element name="AttachEventStatement" type="AttachEventStatement" substitutionGroup="Statement" />
-    <xs:element name="ConditionStatement" type="ConditionStatement" substitutionGroup="Statement" />
-    <xs:element name="ExpressionStatement" type="ExpressionStatement" substitutionGroup="Statement" />
-    <xs:element name="GotoStatement" type="GotoStatement" substitutionGroup="Statement" />
-    <xs:element name="IterationStatement" type="IterationStatement" substitutionGroup="Statement" />
-    <xs:element name="LabeledStatement" type="LabeledStatement" substitutionGroup="Statement" />
-    <xs:element name="MethodReturnStatement" type="MethodReturnStatement" substitutionGroup="Statement" />
-    <xs:element name="RemoveEventStatement" type="RemoveEventStatement" substitutionGroup="Statement" />
-    <xs:element name="SnippetStatement" type="SnippetStatement" substitutionGroup="Statement" />
-    <xs:element name="ThrowExceptionStatement" type="ThrowExceptionStatement" substitutionGroup="Statement" />
-    <xs:element name="TryCatchFinallyStatement" type="TryCatchFinallyStatement" substitutionGroup="Statement" />
-    <xs:element name="VariableDeclarationStatement" type="VariableDeclarationStatement" substitutionGroup="Statement" />
-    <xs:element name="ArgumentReferenceExpression" type="ArgumentReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="ArrayCreateExpression" type="ArrayCreateExpression" substitutionGroup="Expression" />
-    <xs:element name="ArrayIndexerExpression" type="ArrayIndexerExpression" substitutionGroup="Expression" />
-    <xs:element name="BaseReferenceExpression" type="BaseReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="BinaryOperatorExpression" type="BinaryOperatorExpression" substitutionGroup="Expression" />
-    <xs:element name="CastExpression" type="CastExpression" substitutionGroup="Expression" />
-    <xs:element name="DefaultValueExpression" type="DefaultValueExpression" substitutionGroup="Expression" />
-    <xs:element name="DelegateCreateExpression" type="DelegateCreateExpression" substitutionGroup="Expression" />
-    <xs:element name="DelegateInvokeExpression" type="DelegateInvokeExpression" substitutionGroup="Expression" />
-    <xs:element name="DirectionExpression" type="DirectionExpression" substitutionGroup="Expression" />
-    <xs:element name="EventReferenceExpression" type="EventReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="FieldReferenceExpression" type="FieldReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="IndexerExpression" type="IndexerExpression" substitutionGroup="Expression" />
-    <xs:element name="MethodInvokeExpression" type="MethodInvokeExpression" substitutionGroup="Expression" />
-    <xs:element name="MethodReferenceExpression" type="MethodReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="ObjectCreateExpression" type="ObjectCreateExpression" substitutionGroup="Expression" />
-    <xs:element name="PrimitiveExpression" type="PrimitiveExpression" substitutionGroup="Expression" />
-    <xs:element name="PropertyReferenceExpression" type="PropertyReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="PropertySetValueReferenceExpression" type="PropertySetValueReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="SnippetExpression" type="SnippetExpression" substitutionGroup="Expression" />
-    <xs:element name="ThisReferenceExpression" type="ThisReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="TypeOfExpression" type="TypeOfExpression" substitutionGroup="Expression" />
-    <xs:element name="TypeReferenceExpression" type="TypeReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="VariableReferenceExpression" type="VariableReferenceExpression" substitutionGroup="Expression" />
-    <xs:element name="CatchClause" type="CatchClause" />
-    <xs:element name="TypeDelegate" type="TypeDelegate" />
-    
+    <xs:element name="CompileUnit" type="CompileUnit"/>
+    <xs:element name="Namespace" type="Namespace"/>
+    <xs:element name="AttributeDeclaration" type="AttributeDeclaration"/>
+    <xs:element name="AssemblyReference" type="xs:string"/>
+
+    <xs:element name="Directive" type="Directive" abstract="true"/>
+    <xs:element name="ChecksumPragma" type="ChecksumPragma" substitutionGroup="Directive"/>
+    <xs:element name="RegionDirective" type="RegionDirective" substitutionGroup="Directive"/>
+    <xs:element name="NamespaceImport" type="NamespaceImport"/>
+    <xs:element name="CommentStatement" type="CommentStatement" substitutionGroup="Statement"/>
+    <xs:element name="TypeDeclaration" type="TypeDeclaration"/>
+    <xs:element name="AttributeArgument" type="AttributeArgument"/>
+    <xs:element name="TypeReference" type="TypeReference"/>
+    <xs:element name="TypeMember" type="TypeMember" abstract="true"/>
+    <xs:element name="TypeParameter" type="TypeParameter"/>
+    <xs:element name="MemberEvent" type="MemberEvent" substitutionGroup="TypeMember"/>
+    <xs:element name="MemberField" type="MemberField" substitutionGroup="TypeMember"/>
+    <xs:element name="MemberMethod" type="MemberMethod" substitutionGroup="TypeMember"/>
+    <xs:element name="ParameterDeclarationExpression" type="ParameterDeclarationExpression"/>
+    <xs:element name="Statement" type="Statement" abstract="true"/>
+    <xs:element name="MemberProperty" type="MemberProperty" substitutionGroup="TypeMember"/>
+    <xs:element name="Expression" type="Expression" abstract="true"/>
+    <xs:element name="SnippetTypeMember" type="SnippetTypeMember" substitutionGroup="TypeMember"/>
+    <xs:element name="Constructor" type="Constructor" substitutionGroup="MemberMethod"/>
+    <xs:element name="EntryPointMethod" type="EntryPointMethod" substitutionGroup="MemberMethod"/>
+    <xs:element name="TypeConstructor" type="TypeConstructor" substitutionGroup="MemberMethod"/>
+    <xs:element name="LinePragma" type="LinePragma"/>
+    <xs:element name="Comment" type="Comment"/>
+    <xs:element name="SnippetCompileUnit" type="SnippetCompileUnit" substitutionGroup="CompileUnit"/>
+    <xs:element name="AssignStatement" type="AssignStatement" substitutionGroup="Statement"/>
+    <xs:element name="AttachEventStatement" type="AttachEventStatement" substitutionGroup="Statement"/>
+    <xs:element name="ConditionStatement" type="ConditionStatement" substitutionGroup="Statement"/>
+    <xs:element name="ExpressionStatement" type="ExpressionStatement" substitutionGroup="Statement"/>
+    <xs:element name="GotoStatement" type="GotoStatement" substitutionGroup="Statement"/>
+    <xs:element name="IterationStatement" type="IterationStatement" substitutionGroup="Statement"/>
+    <xs:element name ="LabeledStatement" type="LabeledStatement" substitutionGroup="Statement"/>
+    <xs:element name="MethodReturnStatement" type="MethodReturnStatement" substitutionGroup="Statement"/>
+    <xs:element name="RemoveEventStatement" type="RemoveEventStatement" substitutionGroup="Statement"/>
+    <xs:element name="SnippetStatement" type="SnippetStatement" substitutionGroup="Statement"/>
+    <xs:element name="ThrowExceptionStatement" type="ThrowExceptionStatement" substitutionGroup="Statement"/>
+    <xs:element name="TryCatchFinallyStatement" type="TryCatchFinallyStatement" substitutionGroup="Statement"/>
+    <xs:element name="VariableDeclarationStatement" type="VariableDeclarationStatement" substitutionGroup="Statement"/>
+    <xs:element name="ArgumentReferenceExpression" type="ArgumentReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="ArrayCreateExpression" type="ArrayCreateExpression" substitutionGroup="Expression"/>
+    <xs:element name="ArrayIndexerExpression" type="ArrayIndexerExpression" substitutionGroup="Expression"/>
+    <xs:element name="BaseReferenceExpression" type="BaseReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="BinaryOperatorExpression" type="BinaryOperatorExpression" substitutionGroup="Expression"/>
+    <xs:element name="CastExpression" type="CastExpression" substitutionGroup="Expression"/>
+    <xs:element name="DefaultValueExpression" type="DefaultValueExpression" substitutionGroup="Expression"/>
+    <xs:element name="DelegateCreateExpression" type="DelegateCreateExpression" substitutionGroup="Expression"/>
+    <xs:element name="DelegateInvokeExpression" type="DelegateInvokeExpression" substitutionGroup="Expression"/>
+    <xs:element name="DirectionExpression" type="DirectionExpression" substitutionGroup="Expression"/>
+    <xs:element name="EventReferenceExpression" type="EventReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="FieldReferenceExpression" type="FieldReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="IndexerExpression" type="IndexerExpression" substitutionGroup="Expression"/>
+    <xs:element name="MethodInvokeExpression" type="MethodInvokeExpression" substitutionGroup="Expression"/>
+    <xs:element name="MethodReferenceExpression" type="MethodReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="ObjectCreateExpression" type="ObjectCreateExpression" substitutionGroup="Expression"/>
+    <xs:element name="PrimitiveExpression" type="PrimitiveExpression" substitutionGroup="Expression"/>
+    <xs:element name="PropertyReferenceExpression" type="PropertyReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="PropertySetValueReferenceExpression" type="PropertySetValueReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="SnippetExpression" type="SnippetExpression" substitutionGroup="Expression"/>
+    <xs:element name="ThisReferenceExpression" type="ThisReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="TypeOfExpression" type="TypeOfExpression" substitutionGroup="Expression"/>
+    <xs:element name="TypeReferenceExpression" type="TypeReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="VariableReferenceExpression" type="VariableReferenceExpression" substitutionGroup="Expression"/>
+    <xs:element name="CatchClause" type="CatchClause"/>
+    <xs:element name="TypeDelegate" type="TypeDelegate"/>
+
     <!--Other elements-->
     <xs:element name="UserData">
-        <xs:annotation>
-            <xs:documentation>
-                <summary xmlns="">Stores  the user-definable data for the current object.</summary>
-                <seelaso cref="P:System.CodeDom.CodeObject.UserData" xmlns="" />
-        </xs:documentation>
-        </xs:annotation>
         <xs:complexType>
             <xs:sequence minOccurs="1" maxOccurs="1">
-                <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="key-value-pair" />
+                <xs:element name="item" minOccurs="0" maxOccurs="unbounded" type="key-value-pair"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
 
     <!--Collection types-->
-    <xs:complexType name="Namespaces"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeNamespace" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeNamespaceCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="Namespaces">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="Namespace" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="Namespace" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="AttributeDeclarations"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeAttributeDeclaration" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeAttributeDeclarationCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="AttributeDeclarations">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="AttributeDeclaration" />
+            <xs:element ref="AttributeDeclaration"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="AssemblyReferences">
-        <xs:annotation>
-            <xs:documentation>
-                <summary xmlns="">Represents collection of Assembly References</summary>
-            </xs:documentation>
-        </xs:annotation>
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="AssemblyReference" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="AssemblyReference" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="Directives"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeDirective" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeDirectiveCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="Directives">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="Directive" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="Directive" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="NamespaceImports"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeNamespaceImport" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeNamespaceImportCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="NamespaceImports">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="NamespaceImport" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="NamespaceImport" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="CommentStatements"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeCommentStatement" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeCommentStatementCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="CommentStatements">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="CommentStatement" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="CommentStatement" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TypeDeclarations"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeTypeDeclaration" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeDeclarationCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="TypeDeclarations">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="TypeDeclaration" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="TypeDeclaration" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="AttributeArguments"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeAttributeArgument" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeAttributeArgumentCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="AttributeArguments">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="AttributeArgument" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="AttributeArgument" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TypeReferences"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeTypeReference" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeReferenceCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="TypeReferences">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="TypeReference" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="TypeReference" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TypeMembers"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeTypeMember" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeMemberCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="TypeMembers">
         <xs:sequence maxOccurs="1" minOccurs="1">
-            <xs:element ref="TypeMember" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="TypeMember" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TypeParameters"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeTypeParameter" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeParameterCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="TypeParameters">
         <xs:sequence maxOccurs="1" minOccurs="1">
-            <xs:element ref="TypeParameter" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="TypeParameter" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="ParameterDeclarationExpressions"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeParameterDeclarationExpression" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeParameterDeclarationExpressionCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="ParameterDeclarationExpressions">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="ParameterDeclarationExpression" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="ParameterDeclarationExpression" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="Statements"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeStatement" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeStatementCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="Statements">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="Statement" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="Statement" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="Expressions"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeExpression" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeExpressionCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="Expressions">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="Expression" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="Expression" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="CatchClauses"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a collection of <see cref="T:System.CodeDom.CodeCatchClause" /> objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeCatchClauseCollection" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:complexType name="CatchClauses">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="CatchClause" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element ref="CatchClause" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-        
+
     <!--Block types-->
-    <xs:complexType name="CodeObject" abstract="true"><xs:annotation><xs:documentation><summary xmlns="">
-                    Provides a common base class for most Code Document Object Model (CodeDOM) objects.
-                </summary><seelaso cref="T:System.CodeDom.CodeObject" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="CodeObject" abstract="true">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element ref="UserData" minOccurs="0" maxOccurs="1" />
+            <xs:element ref="UserData" minOccurs="0" maxOccurs="1"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="CompileUnit"><xs:annotation><xs:documentation><summary xmlns="">
-                    Provides a container for a CodeDOM program graph.
-                </summary><seelaso cref="T:System.CodeDom.CodeCompileUnit" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="CompileUnit">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="StartDirectives" minOccurs="0" maxOccurs="1" type="Directives" />
-                    <xs:element name="ReferencedAssemblies" minOccurs="0" maxOccurs="1" type="AssemblyReferences" />
-                    <xs:element name="AssemblyCustomAttributes" minOccurs="0" maxOccurs="1" type="AttributeDeclarations" />
-                    <xs:element name="Namespaces" minOccurs="0" maxOccurs="1" type="Namespaces" />
-                    <xs:element name="EndDirectives" minOccurs="0" maxOccurs="1" type="Directives" />
+                    <xs:element name="StartDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
+                    <xs:element name="ReferencedAssemblies" minOccurs="0" maxOccurs="1" type="AssemblyReferences"/>
+                    <xs:element name="AssemblyCustomAttributes" minOccurs="0" maxOccurs="1" type="AttributeDeclarations"/>
+                    <xs:element name="Namespaces" minOccurs="0" maxOccurs="1" type="Namespaces"/>
+                    <xs:element name="EndDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="SnippetCompileUnit"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a literal code fragment that can be compiled.
-                </summary><seelaso cref="T:System.CodeDom.CodeSnippetCompileUnit" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="SnippetCompileUnit">
         <xs:complexContent>
             <xs:extension base="CompileUnit">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="LinePragma" type="LinePragma" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="LinePragma" type="LinePragma" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="Namespace"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a namespace declaration.
-                </summary><seelaso cref="T:System.CodeDom.CodeNamespace" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="Namespace">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Imports" minOccurs="0" maxOccurs="1" type="NamespaceImports" />
-                    <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements" />
-                    <xs:element name="Types" minOccurs="0" maxOccurs="1" type="TypeDeclarations" />
+                    <xs:element name="Imports" minOccurs="0" maxOccurs="1" type="NamespaceImports"/>
+                    <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements"/>
+                    <xs:element name="Types" minOccurs="0" maxOccurs="1" type="TypeDeclarations"/>
                 </xs:sequence>
-                <xs:attribute name="Name" type="xs:string" use="optional" default="" />
+                <xs:attribute name="Name" type="xs:string" use="optional" default=""/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TypeDeclaration"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a type declaration for a class, structure, interface, or enumeration.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeDeclaration" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeDeclaration">
         <xs:complexContent>
             <xs:extension base="TypeMember">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TypeParameters" type="TypeParameters" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="BaseTypes" type="TypeReferences" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="Members" type="TypeMembers" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="TypeParameters" type="TypeParameters" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="BaseTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Members" type="TypeMembers" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="TypeAttributes" type="TypeAttributes" use="optional" />
-                <xs:attribute name="IsClass" type="xs:boolean" use="optional" default="true" />
-                <xs:attribute name="IsEnum" type="xs:boolean" use="optional" default="false" />
-                <xs:attribute name="IsInterface" type="xs:boolean" use="optional" default="false" />
-                <xs:attribute name="IsPartial" type="xs:boolean" use="optional" default="false" />
-                <xs:attribute name="IsStruct" type="xs:boolean" use="optional" default="false" />
+                <xs:attribute name="TypeAttributes" type="TypeAttributes" use="optional"/>
+                <xs:attribute name="IsClass" type="xs:boolean" use="optional" default="true"/>
+                <xs:attribute name="IsEnum" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="IsInterface" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="IsPartial" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="IsStruct" type="xs:boolean" use="optional" default="false"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TypeMember" abstract="true"><xs:annotation><xs:documentation><summary xmlns="">
-                    Provides a base class for a member of a type. Type members include fields, methods, properties, constructors and nested types.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeMember" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeMember" abstract="true">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="CustomAttributes" minOccurs="0" maxOccurs="1" type="AttributeDeclarations" />
-                    <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements" />
-                    <xs:element name="StartDirectives" minOccurs="0" maxOccurs="1" type="Directives" />
-                    <xs:element name="LinePragma" minOccurs="0" maxOccurs="1" type="LinePragma" />
-                    <xs:element name="EndDirectives" minOccurs="0" maxOccurs="1" type="Directives" />
+                    <xs:element name="CustomAttributes" minOccurs="0" maxOccurs="1" type="AttributeDeclarations"/>
+                    <xs:element name="Comments" minOccurs="0" maxOccurs="1" type="CommentStatements"/>
+                    <xs:element name="StartDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
+                    <xs:element name="LinePragma" minOccurs="0" maxOccurs="1" type="LinePragma"/>
+                    <xs:element name="EndDirectives" minOccurs="0" maxOccurs="1" type="Directives"/>
                 </xs:sequence>
-                <xs:attribute name="Attributes" type="MemberAttributes" use="optional" />
-                <xs:attribute name="Name" type="xs:string" use="required" />
-            </xs:extension>
-        </xs:complexContent> </xs:complexType>
-    <xs:complexType name="MemberMethod"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a declaration for a method of a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeMemberMethod" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="TypeMember">
-                <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="TypeParameters" type="TypeParameters" minOccurs="0" maxOccurs="unbounded" />
-                    <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="ReturnTypeCustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1" />
-                </xs:sequence>
-            </xs:extension>                 
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="MemberProperty"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a declaration for a property of a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeMemberProperty" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="TypeMember">
-                <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="GetStatements" type="Statements" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="SetStatements" type="Statements" minOccurs="0" maxOccurs="1" />
-                </xs:sequence>
-                <xs:attribute name="HasGet" type="xs:boolean" use="optional" />
-                <xs:attribute name="HasSet" type="xs:boolean" use="optional" />
+                <xs:attribute name="Attributes" type="MemberAttributes" use="optional"/>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="SnippetTypeMember"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a member of a type using a literal code fragment.
-                </summary><seelaso cref="T:System.CodeDom.CodeSnippetTypeMember" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="MemberMethod">
         <xs:complexContent>
             <xs:extension base="TypeMember">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TypeParameters" type="TypeParameters" minOccurs="0" maxOccurs="unbounded"/>
+                    <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ReturnTypeCustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="Constructor"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a declaration for an instance constructor of a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeConstructor" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="MemberProperty">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="ImplementationTypes" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="PrivateImplementationType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="GetStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="SetStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="HasGet" type="xs:boolean" use="optional"/>
+                <xs:attribute name="HasSet" type="xs:boolean" use="optional"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="SnippetTypeMember">
+        <xs:complexContent>
+            <xs:extension base="TypeMember">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="Constructor">
         <xs:complexContent>
             <xs:extension base="MemberMethod">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="BaseConstructorArgs" type="Expressions" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="ChainedConstructorArgs" type="Expressions" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="BaseConstructorArgs" type="Expressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ChainedConstructorArgs" type="Expressions" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="EntryPointMethod"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents the entry point method of an executable.
-                </summary><seelaso cref="T:System.CodeDom.CodeEntryPointMethod" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="EntryPointMethod">
         <xs:complexContent>
-            <xs:extension base="MemberMethod" />
+            <xs:extension base="MemberMethod"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TypeConstructor"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a static constructor for a class.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeConstructor" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeConstructor">
         <xs:complexContent>
-            <xs:extension base="MemberMethod" />
+            <xs:extension base="MemberMethod"/>
         </xs:complexContent>
     </xs:complexType>
-        
+
     <!--Line-level types-->
-    <xs:complexType name="AttributeDeclaration"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an attribute declaration.
-                </summary><seelaso cref="T:System.CodeDom.CodeAttributeDeclaration" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="AttributeDeclaration">
         <xs:sequence minOccurs="1" maxOccurs="1">
             <xs:choice minOccurs="1" maxOccurs="1">
-                <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1" />
-                <xs:element name="AttributeType" type="TypeReference" minOccurs="1" maxOccurs="1" />
+                <xs:element name="Name" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                <xs:element name="AttributeType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
             </xs:choice>
-            <xs:element name="Arguments" type="AttributeArguments" minOccurs="0" maxOccurs="unbounded" />
+            <xs:element name="Arguments" type="AttributeArguments" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="TypeReference"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeReference" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeReference">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="ArrayElementType" type="TypeReference" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="ArrayElementType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="BaseType" type="xs:string" use="optional" />
-                <xs:attribute name="ArrayRank" type="xs:integer" use="optional" />
-                <xs:attribute name="Options" use="optional" type="TypeReferenceOptions" />
+                <xs:attribute name="BaseType" type="xs:string" use="optional"/>
+                <xs:attribute name="ArrayRank" type="xs:integer" use="optional"/>
+                <xs:attribute name="Options" use="optional" type="TypeReferenceOptions"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="Directive" abstract="true"><xs:annotation><xs:documentation><summary xmlns="">
-                    Serves as the base class for code directive classes.
-                </summary><seelaso cref="T:System.CodeDom.CodeDirective" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="Directive" abstract="true">
         <xs:complexContent>
-            <xs:extension base="CodeObject" />
+            <xs:extension base="CodeObject"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ChecksumPragma"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a code checksum pragma code entity.  
-                </summary><seelaso cref="T:System.CodeDom.CodeChecksumPragma" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ChecksumPragma">
         <xs:complexContent>
             <xs:extension base="Directive">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="ChecksumData" minOccurs="1" maxOccurs="1" type="xs:base64Binary" />
+                    <xs:element name="ChecksumData" minOccurs="1" maxOccurs="1" type="xs:base64Binary"/>
                 </xs:sequence>
-                <xs:attribute name="FileName" use="required" type="xs:string" />
-                <xs:attribute name="ChecksumAlgorithmId" use="required" type="Guid" />
+                <xs:attribute name="FileName" use="required" type="xs:string"/>
+                <xs:attribute name="ChecksumAlgorithmId" use="required" type="Guid"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="RegionDirective"><xs:annotation><xs:documentation><summary xmlns="">
-                    Specifies the name and mode for a code region.
-                </summary><seelaso cref="T:System.CodeDom.CodeRegionDirective" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="RegionDirective">
         <xs:complexContent>
             <xs:extension base="Directive">
-                <xs:attribute name="RegionText" type="xs:string" use="optional" />
-                <xs:attribute name="RegionMode" type="RegionMode" use="required" />
+                <xs:attribute name="RegionText" type="xs:string" use="optional"/>
+                <xs:attribute name="RegionMode" type="RegionMode" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="NamespaceImport"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a namespace import directive that indicates a namespace to use.
-                </summary><seelaso cref="T:System.CodeDom.CodeNamespaceImport" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="NamespaceImport">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="LinePragma" minOccurs="0" maxOccurs="1" type="LinePragma" />
+                    <xs:element name="LinePragma" minOccurs="0" maxOccurs="1" type="LinePragma"/>
                 </xs:sequence>
-                <xs:attribute name="Namespace" type="xs:string" use="required" />
+                <xs:attribute name="Namespace" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="LinePragma"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a specific location within a specific file.
-                </summary><seelaso cref="T:System.CodeDom.CodeLinePragma" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:attribute name="FileName" type="xs:string" use="required" />
-        <xs:attribute name="LineNumber" type="xs:integer" use="required" />
+    <xs:complexType name="LinePragma">
+        <xs:attribute name="FileName" type="xs:string" use="required"/>
+        <xs:attribute name="LineNumber" type="xs:integer" use="required"/>
     </xs:complexType>
-    <xs:complexType name="TypeParameter"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a type parameter of a generic type or method.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeParameter" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeParameter">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Constraints" type="TypeReferences" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="CustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Constraints" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="CustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="HasConstructorConstraint" type="xs:boolean" use="optional" default="false" />
-                <xs:attribute name="Name" type="xs:string" use="required" />
+                <xs:attribute name="HasConstructorConstraint" type="xs:boolean" use="optional" default="false"/>
+                <xs:attribute name="Name" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="MemberEvent"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a declaration for an event of a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeMemberEvent" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="MemberEvent">
         <xs:complexContent>
             <xs:extension base="TypeMember">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element minOccurs="1" maxOccurs="1" name="Type" type="TypeReference" />
-                    <xs:element minOccurs="0" maxOccurs="1" name="ImplementationTypes" type="TypeReferences" />
-                    <xs:element minOccurs="0" maxOccurs="1" name="PrivateImplementationType" type="TypeReference" />
+                    <xs:element minOccurs="1" maxOccurs="1" name="Type" type="TypeReference"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="ImplementationTypes" type="TypeReferences"/>
+                    <xs:element minOccurs="0" maxOccurs="1" name="PrivateImplementationType" type="TypeReference"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="MemberField"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a declaration for a field of a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeMemberField" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="MemberField">
         <xs:complexContent>
             <xs:extension base="TypeMember">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="InitExpression" type="Expression" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="InitExpression" type="Expression" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TypeDelegate"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a delegate declaration.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeDelegate" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeDelegate">
         <xs:complexContent>
             <xs:extension base="TypeDeclaration">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1" />
-                 </xs:sequence>
+                    <xs:element name="Parameters" type="ParameterDeclarationExpressions" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="ReturnType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-       
+
     <!--Epression types-->
-    <xs:complexType name="Expression" abstract="true"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a code expression. This is a base class for other code expression objects that is never instantiated.
-                </summary><seelaso cref="T:System.CodeDom.CodeExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="Expression" abstract="true">
         <xs:complexContent>
-            <xs:extension base="CodeObject" />
+            <xs:extension base="CodeObject"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ParameterDeclarationExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a parameter declaration for a method, property, or constructor.
-                </summary><seelaso cref="T:System.CodeDom.CodeParameterDeclarationExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ParameterDeclarationExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="CustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="CustomAttributes" type="AttributeDeclarations" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="Direction" type="FieldDirections" use="optional" />
-                <xs:attribute name="Name" type="xs:string" use="optional" />
+                <xs:attribute name="Direction" type="FieldDirections" use="optional"/>
+                <xs:attribute name="Name" type="xs:string" use="optional"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ArgumentReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to the value of an argument passed to a method.
-                </summary><seelaso cref="T:System.CodeDom.CodeArgumentReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ArgumentReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
-                <xs:attribute name="ParameterName" type="xs:string" use="required" />
+                <xs:attribute name="ParameterName" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ArrayCreateExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression that creates an array.
-                </summary><seelaso cref="T:System.CodeDom.CodeArrayCreateExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ArrayCreateExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="CreateType" type="TypeReference" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="SizeExpression" type="Expression" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="Initializers" type="Expressions" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="CreateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="SizeExpression" type="Expression" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="Initializers" type="Expressions" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="Size" type="xs:integer" use="optional" />
+                <xs:attribute name="Size" type="xs:integer" use="optional"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ArrayIndexerExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to an index of an array.
-                </summary><seelaso cref="T:System.CodeDom.CodeArrayIndexerExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ArrayIndexerExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Indices" type="Expressions" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Indices" type="Expressions" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="BaseReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to the base class.
-                </summary><seelaso cref="T:System.CodeDom.CodeBaseReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="BaseReferenceExpression">
         <xs:complexContent>
-            <xs:extension base="Expression" />
+            <xs:extension base="Expression"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="BinaryOperatorExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression that consists of a binary operation between two expressions.
-                </summary><seelaso cref="T:System.CodeDom.CodeBinaryOperatorExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="BinaryOperatorExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Left" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Right" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Left" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Right" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="Operator" type="BinaryOperatorType" use="required" />
+                <xs:attribute name="Operator" type="BinaryOperatorType" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="CastExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression cast to a data type or interface.
-                </summary><seelaso cref="T:System.CodeDom.CodeCastExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="CastExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="TargetType" type="TypeReference" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TargetType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="DefaultValueExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to a default value.
-                </summary><seelaso cref="T:System.CodeDom.CodeDefaultValueExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="DefaultValueExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="DelegateCreateExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression that creates a delegate.
-                </summary><seelaso cref="T:System.CodeDom.CodeDelegateCreateExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="DelegateCreateExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="DelegateType" type="TypeReference" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="DelegateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="MethodName" type="xs:string" use="required" />
+                <xs:attribute name="MethodName" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="DelegateInvokeExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression that raises an event.
-                </summary><seelaso cref="T:System.CodeDom.CodeDelegateInvokeExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="DelegateInvokeExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="DirectionExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression used as a method invoke parameter along with a reference direction indicator.
-                </summary><seelaso cref="T:System.CodeDom.CodeDirectionExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="DirectionExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Expression"  type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="Direction" type="FieldDirection" />
-            </xs:extension>                    
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="EventReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to an event.
-                </summary><seelaso cref="T:System.CodeDom.CodeEventReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="Expression">
-                <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
-                </xs:sequence>
-                <xs:attribute name="EventName" type="xs:string" use="required" />
+                <xs:attribute name="Direction" type="FieldDirection"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="FieldReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to a field.
-                </summary><seelaso cref="T:System.CodeDom.CodeFieldReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="EventReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="FieldName" type="xs:string" use="required" />
+                <xs:attribute name="EventName" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="IndexerExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to an indexer property of an object.
-                </summary><seelaso cref="T:System.CodeDom.CodeIndexerExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="FieldReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TergetObject" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Indices" type="Expressions" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="FieldName" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="IndexerExpression">
+        <xs:complexContent>
+            <xs:extension base="Expression">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Indices" type="Expressions" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="MethodInvokeExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression that invokes a method.
-                </summary><seelaso cref="T:System.CodeDom.CodeMethodInvokeExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="MethodInvokeExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Method" type="MethodReferenceExpression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Method" type="MethodReferenceExpression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="MethodReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to a method.
-                </summary><seelaso cref="T:System.CodeDom.CodeMethodReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="MethodReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TypeArguments" type="TypeReferences" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="MethodName" type="xs:string" use="required" />
+                <xs:attribute name="MethodName" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ObjectCreateExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an expression that creates a new instance of a type.
-                </summary><seelaso cref="T:System.CodeDom.CodeObjectCreateExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ObjectCreateExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="CreateType" type="TypeReference" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="CreateType" type="TypeReference" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Parameters" type="Expressions" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="PrimitiveExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a primitive data type value.
-                </summary><seelaso cref="T:System.CodeDom.CodePrimitiveExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="PrimitiveExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:choice minOccurs="1" maxOccurs="1">
-                    <xs:element name="String" type="xs:string" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Char" type="Char" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Byte" type="Byte" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="SByte" type="SByte" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Int16" type="Int16" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="UInt16" type="UInt16" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Int32" type="Int32" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="UInt32" type="UInt32" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Int64" type="Int64" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="UInt64" type="UInt64" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Decimal" type="Decimal" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Single" type="xs:float" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Double" type="xs:double" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="DateTime" type="DateTime" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Null" minOccurs="1" maxOccurs="1" type="Null" />
-                    <xs:element name="Boolean" minOccurs="1" maxOccurs="1" type="xs:boolean" />
+                    <xs:element name="String" type="xs:string" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Char" type="Char" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Byte" type="Byte" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="SByte" type="SByte" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Int16" type="Int16" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="UInt16" type="UInt16" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Int32" type="Int32" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="UInt32" type="UInt32" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Int64" type="Int64" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="UInt64" type="UInt64" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Decimal" type="Decimal" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Single" type="xs:float" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Double" type="xs:double" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="DateTime" type="DateTime" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Null" minOccurs="1" maxOccurs="1" type="Null"/>
+                    <xs:element name="Boolean" minOccurs="1" maxOccurs="1" type="xs:boolean"/>
                 </xs:choice>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="PropertyReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to the value of a property.
-                </summary><seelaso cref="T:System.CodeDom.CodePropertyReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="PropertyReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="TargetObject" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="PropertyName" type="xs:string" use="required" />
+                <xs:attribute name="PropertyName" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="PropertySetValueReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents the value argument of a property set method call within a property set method.
-                </summary><seelaso cref="T:System.CodeDom.CodePropertySetValueReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="PropertySetValueReferenceExpression">
         <xs:complexContent>
-            <xs:extension base="Expression" />
+            <xs:extension base="Expression"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="SnippetExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a literal expression.
-                </summary><seelaso cref="T:System.CodeDom.CodeSnippetExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="SnippetExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Value" type="xs:string" />                    
+                    <xs:element name="Value" type="xs:string"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ThisReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to the current local class instance.
-                </summary><seelaso cref="T:System.CodeDom.CodeThisReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ThisReferenceExpression">
         <xs:complexContent>
-            <xs:extension base="Expression" />
+            <xs:extension base="Expression"/>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TypeOfExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a typeof expression, an expression that returns a <see cref="T:System.Type" /> for a specified type name.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeOfExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeOfExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TypeReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to a data type.
-                </summary><seelaso cref="T:System.CodeDom.CodeTypeReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TypeReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Type" type="TypeReference" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="VariableReferenceExpression"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a reference to a local variable.
-                </summary><seelaso cref="T:System.CodeDom.CodeVariableReferenceExpression" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="VariableReferenceExpression">
         <xs:complexContent>
             <xs:extension base="Expression">
-                <xs:sequence minOccurs="1" maxOccurs="1" />
-                <xs:attribute name="VariableName" type="xs:string" use="required" />
+                <xs:sequence minOccurs="1" maxOccurs="1"/>
+                <xs:attribute name="VariableName" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
     <!--Statement types-->
-    <xs:complexType name="Statement" abstract="true"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents the abstract base class from which all code statements derive.
-                </summary><seelaso cref="T:System.CodeDom.CodeStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="Statement" abstract="true">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="LinePragma" type="LinePragma" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="StartDirectives" type="Directives" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="EndDirectives" type="Directives" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="LinePragma" type="LinePragma" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="StartDirectives" type="Directives" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="EndDirectives" type="Directives" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="CommentStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a statement consisting of a single comment.
-                </summary><seelaso cref="T:System.CodeDom.CodeCommentStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="CommentStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Comment" type="Comment" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Comment" type="Comment" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="AssignStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a simple assignment statement.
-                </summary><seelaso cref="T:System.CodeDom.CodeAssignStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="AssignStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Left" minOccurs="1" maxOccurs="1" type="Expression" />
-                    <xs:element name="Right" minOccurs="1" maxOccurs="1" type="Expression" />
+                    <xs:element name="Left" minOccurs="1" maxOccurs="1" type="Expression"/>
+                    <xs:element name="Right" minOccurs="1" maxOccurs="1" type="Expression"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="AttachEventStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a statement that attaches an event-handler delegate to an event.
-                </summary><seelaso cref="T:System.CodeDom.CodeAttachEventStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="AttachEventStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Event" type="EventReferenceExpression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Listener" type="Expression" minOccurs="1" maxOccurs="1" />
-                </xs:sequence>                  
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="ConditionStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a conditional branch statement, typically represented as an if statement.
-                </summary><seelaso cref="T:System.CodeDom.CodeConditionStatement" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="Statement">
-                <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Condition" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="TrueStatements" type="Statements" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="FalseStatements" type="Statements" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Event" type="EventReferenceExpression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Listener" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ExpressionStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a statement that consists of a single expression.
-                </summary><seelaso cref="T:System.CodeDom.CodeExpressionStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ConditionStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Condition" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="TrueStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="FalseStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="GotoStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a goto statement.
-                </summary><seelaso cref="T:System.CodeDom.CodeGotoStatement" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:complexContent>
-            <xs:extension base="Statement">
-                <xs:attribute name="Label" type="xs:string" use="required" />
-            </xs:extension>
-        </xs:complexContent>
-    </xs:complexType>
-    <xs:complexType name="IterationStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a for statement, or a loop through a block of statements, using a test expression as a condition for continuing to loop.
-                </summary><seelaso cref="T:System.CodeDom.CodeIterationStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ExpressionStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="InitStatement" type="Statement" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="IncrementStatement" type="Statement" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="TestExpression" type="Expression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Expression" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="LabeledStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a labeled statement or a stand-alone label.
-                </summary><seelaso cref="T:System.CodeDom.CodeLabeledStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="GotoStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
-                <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Statement" type="Statement" minOccurs="0" maxOccurs="1" />
-                </xs:sequence>
-                <xs:attribute name="Label" type="xs:string" use="required" />
+                <xs:attribute name="Label" type="xs:string" use="required"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="MethodReturnStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a return value statement.
-                </summary><seelaso cref="T:System.CodeDom.CodeMethodReturnStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="IterationStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Expression" type="Expression" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="InitStatement" type="Statement" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="IncrementStatement" type="Statement" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="TestExpression" type="Expression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="RemoveEventStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a statement that removes an event handler.
-                </summary><seelaso cref="T:System.CodeDom.CodeRemoveEventStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="LabeledStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Event" type="EventReferenceExpression" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="Listener" type="Expression" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Statement" type="Statement" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+                <xs:attribute name="Label" type="xs:string" use="required"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="MethodReturnStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="Expression" type="Expression" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="SnippetStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a statement using a literal code fragment.
-                </summary><seelaso cref="T:System.CodeDom.CodeSnippetStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="RemoveEventStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Event" type="EventReferenceExpression" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="Listener" type="Expression" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="ThrowExceptionStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a statement that throws an exception.
-                </summary><seelaso cref="T:System.CodeDom.CodeThrowExceptionStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="SnippetStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="ToThrow" type="Expression" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Value" type="xs:string" minOccurs="1" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="TryCatchFinallyStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a try block with any number of catch clauses and, optionally, a finally block.
-                </summary><seelaso cref="T:System.CodeDom.CodeTryCatchFinallyStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="ThrowExceptionStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="TryStatements" type="Statements" minOccurs="1" maxOccurs="1" />
-                    <xs:element name="CatchClauses" type="CatchClauses" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="FinallyStatements" type="Statements" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="ToThrow" type="Expression" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="CatchClause"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a catch exception block of a try/catch statement.
-                </summary><seelaso cref="T:System.CodeDom.CodeCatchClause" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="TryCatchFinallyStatement">
+        <xs:complexContent>
+            <xs:extension base="Statement">
+                <xs:sequence minOccurs="1" maxOccurs="1">
+                    <xs:element name="TryStatements" type="Statements" minOccurs="1" maxOccurs="1"/>
+                    <xs:element name="CatchClauses" type="CatchClauses" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="FinallyStatements" type="Statements" minOccurs="0" maxOccurs="1"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="CatchClause">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element name="CatchExceptionType" type="TypeReference" minOccurs="0" maxOccurs="1" />
-            <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1" />
-        </xs:sequence>                     
-        <xs:attribute name="LocalName" use="optional" type="xs:string" />
+            <xs:element name="CatchExceptionType" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+            <xs:element name="Statements" type="Statements" minOccurs="0" maxOccurs="1"/>
+        </xs:sequence>
+        <xs:attribute name="LocalName" use="optional" type="xs:string"/>
     </xs:complexType>
-    <xs:complexType name="VariableDeclarationStatement"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a variable declaration.
-                </summary><seelaso cref="T:System.CodeDom.CodeVariableDeclarationStatement" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="VariableDeclarationStatement">
         <xs:complexContent>
             <xs:extension base="Statement">
                 <xs:sequence minOccurs="1" maxOccurs="1">
-                    <xs:element name="Type" type="TypeReference" minOccurs="0" maxOccurs="1" />
-                    <xs:element name="InitExpression" type="Expression" minOccurs="0" maxOccurs="1" />
+                    <xs:element name="Type" type="TypeReference" minOccurs="0" maxOccurs="1"/>
+                    <xs:element name="InitExpression" type="Expression" minOccurs="0" maxOccurs="1"/>
                 </xs:sequence>
-                <xs:attribute name="Name" type="xs:string" />
+                <xs:attribute name="Name" type="xs:string"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    
+
     <!--Sub-statement elements-->
-    <xs:complexType name="Comment"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents a comment.
-                </summary><seelaso cref="T:System.CodeDom.CodeComment" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="Comment">
         <xs:complexContent>
             <xs:extension base="CodeObject">
                 <xs:choice minOccurs="1" maxOccurs="1">
-                    <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1" />
+                    <xs:element name="Text" type="xs:string" minOccurs="1" maxOccurs="1"/>
                     <xs:element name="TextXml" minOccurs="1" maxOccurs="1">
                         <xs:complexType>
                             <xs:sequence minOccurs="1" maxOccurs="1">
-                                <xs:any minOccurs="1" maxOccurs="unbounded" processContents="skip" />
+                                <xs:any minOccurs="1" maxOccurs="unbounded" processContents="skip"/>
                             </xs:sequence>
                         </xs:complexType>
                     </xs:element>
                 </xs:choice>
-                <xs:attribute name="DocComment" type="xs:boolean" use="optional" default="false" />
+                <xs:attribute name="DocComment" type="xs:boolean" use="optional" default="false"/>
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="AttributeArgument"><xs:annotation><xs:documentation><summary xmlns="">
-                    Represents an argument used in a metadata attribute declaration.
-                </summary><seelaso cref="T:System.CodeDom.CodeAttributeArgument" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:complexType name="AttributeArgument">
         <xs:sequence minOccurs="1" maxOccurs="1">
-            <xs:element name="Value" type="Expression" minOccurs="1" maxOccurs="1" />
+            <xs:element name="Value" type="Expression" minOccurs="1" maxOccurs="1"/>
         </xs:sequence>
-        <xs:attribute name="Name" type="xs:string" use="optional" />
+        <xs:attribute name="Name" type="xs:string" use="optional"/>
     </xs:complexType>
-    
+
     <!--Other types-->
     <xs:complexType name="key-value-pair">
         <xs:simpleContent>
             <xs:extension base="xs:string">
-                <xs:attribute name="key" type="xs:string" />
+                <xs:attribute name="key" type="xs:string"/>
             </xs:extension>
         </xs:simpleContent>
     </xs:complexType>
     <xs:simpleType name="Guid">
         <xs:restriction base="xs:string">
-            <xs:pattern value="[0-9]{32}" />
-            <xs:pattern value="[0-9]{8}([0-9]{4}){3}[0-9]{8}" />
-            <xs:pattern value="\([0-9]{8}([0-9]{4}){3}[0-9]{8}\)" />
-            <xs:pattern value="\{[0-9]{8}([0-9]{4}){3}[0-9]{8}\}" />
+            <xs:pattern value="[0-9]{32}"/>
+            <xs:pattern value="[0-9]{8}([0-9]{4}){3}[0-9]{8}"/>
+            <xs:pattern value="\([0-9]{8}([0-9]{4}){3}[0-9]{8}\)"/>
+            <xs:pattern value="\{[0-9]{8}([0-9]{4}){3}[0-9]{8}\}"/>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <!--Enums-->
-    <xs:simpleType name="TypeReferenceOptions"><xs:annotation><xs:documentation><summary xmlns="">
-                    Specifies how the code type reference is to be resolved.
-                </summary><seealso cref="T:System.CodeDom.CodeTypeReferenceOptions" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="TypeReferenceOptions">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="GlobalReference"><xs:annotation><xs:documentation><summary xmlns="">
-                    Resolve the type from the root namespace.
-                </summary><seealso cref="F:System.CodeDom.CodeTypeReferenceOptions.GlobalReference" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="GlobalReference">
+                <xs:annotation>
+                    <xs:documentation>1</xs:documentation>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="GenericTypeParameter"><xs:annotation><xs:documentation><summary xmlns="">
-                    Resolve the type from the type parameter.
-                </summary><seealso cref="F:System.CodeDom.CodeTypeReferenceOptions.GenericTypeParameter" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="GenericTypeParameter">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="RegionMode"><xs:annotation><xs:documentation><summary xmlns="">
-                    Specifies the start or end of a code region.
-                </summary><seealso cref="T:System.CodeDom.CodeRegionMode" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="RegionMode">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="None"><xs:annotation><xs:documentation><summary xmlns="">
-                    Not used.
-                </summary><seealso cref="F:System.CodeDom.CodeRegionMode.None" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="None">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Start"><xs:annotation><xs:documentation><summary xmlns="">
-                    Start of the region.
-                </summary><seealso cref="F:System.CodeDom.CodeRegionMode.Start" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Start">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="End"><xs:annotation><xs:documentation><summary xmlns="">
-                    End of the region.
-                </summary><seealso cref="F:System.CodeDom.CodeRegionMode.End" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="End">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="MemberAttribute"><xs:annotation><xs:documentation><summary xmlns="">
-                    Defines member attribute identifiers for class members.
-                </summary><seealso cref="T:System.CodeDom.MemberAttributes" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="MemberAttribute">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="Abstract"><xs:annotation><xs:documentation><summary xmlns="">
-                    An abstract member.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Abstract" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Abstract">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Final"><xs:annotation><xs:documentation><summary xmlns="">
-                    A member that cannot be overridden in a derived class.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Final" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Final">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Static"><xs:annotation><xs:documentation><summary xmlns="">
-                    A static member. In Visual Basic, this is equivalent to the Shared keyword.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Static" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Static">
+                <xs:annotation>
+                    <xs:appinfo>3</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Override"><xs:annotation><xs:documentation><summary xmlns="">
-                    A member that overrides a base class member.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Override" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Override">
+                <xs:annotation>
+                    <xs:appinfo>4</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Const"><xs:annotation><xs:documentation><summary xmlns="">
-                    A constant member.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Const" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Const">
+                <xs:annotation>
+                    <xs:appinfo>5</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-        
-            <xs:enumeration value="Assembly"><xs:annotation><xs:documentation><summary xmlns="">
-                    A member that is accessible to any class within the same assembly.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Assembly" xmlns="" /></xs:documentation></xs:annotation>
-                
+
+            <xs:enumeration value="Assembly">
+                <xs:annotation>
+                    <xs:appinfo>0x1000</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="FamilyAndAssembly"><xs:annotation><xs:documentation><summary xmlns="">
-                    A member that is accessible within its class, and derived classes in the same assembly.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.FamilyAndAssembly" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="FamilyAndAssembly">
+                <xs:annotation>
+                    <xs:documentation>0x2000</xs:documentation>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Family"><xs:annotation><xs:documentation><summary xmlns="">
-                    A member that is accessible within the family of its class and derived classes.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Family" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Family">
+                <xs:annotation>
+                    <xs:appinfo>0x3000</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="FamilyOrAssembly"><xs:annotation><xs:documentation><summary xmlns="">
-                    A member that is accessible within its class, its derived classes in any assembly, and any class in the same assembly.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.FamilyOrAssembly" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="FamilyOrAssembly">
+                <xs:annotation>
+                    <xs:appinfo>0x4000</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Private"><xs:annotation><xs:documentation><summary xmlns="">
-                    A private member.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Private" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Private">
+                <xs:annotation>
+                    <xs:appinfo>0x5000</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Public"><xs:annotation><xs:documentation><summary xmlns="">
-                    A public member.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Public" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Public">
+                <xs:annotation>
+                    <xs:appinfo>0x6000</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-        
-            <xs:enumeration value="New"><xs:annotation><xs:documentation><summary xmlns="">
-                    A new member.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.New" xmlns="" /></xs:documentation></xs:annotation>
-                
+
+            <xs:enumeration value="New">
+                <xs:annotation>
+                    <xs:appinfo>0x10</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-        
-            <xs:enumeration value="Overloaded"><xs:annotation><xs:documentation><summary xmlns="">
-                    An overloaded member. Some languages, such as Visual Basic, require overloaded members to be explicitly indicated.
-                </summary><seealso cref="F:System.CodeDom.MemberAttributes.Overloaded" xmlns="" /></xs:documentation></xs:annotation>
-                
+
+            <xs:enumeration value="Overloaded">
+                <xs:annotation>
+                    <xs:appinfo>0x100</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="TypeAttribute"><xs:annotation><xs:documentation><summary xmlns="">Specifies type attributes.</summary><seealso cref="T:System.Reflection.TypeAttributes" xmlns="" /></xs:documentation></xs:annotation>
-        
+    <xs:simpleType name="TypeAttribute">
+        <xs:annotation>
+            <xs:appinfo>
+                <?EnumName System.Reflection.TypeAttributes?>
+            </xs:appinfo>
+        </xs:annotation>
         <xs:restriction base="xs:string">
-            <xs:enumeration value="Abstract"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the type is abstract.</summary><seealso cref="F:System.Reflection.TypeAttributes.Abstract" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="AnsiClass"><xs:annotation><xs:documentation><summary xmlns="">LPTSTR is interpreted as ANSI.</summary><seealso cref="F:System.Reflection.TypeAttributes.AnsiClass" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="AutoClass"><xs:annotation><xs:documentation><summary xmlns="">LPTSTR is interpreted automatically.</summary><seealso cref="F:System.Reflection.TypeAttributes.AutoClass" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="AutoLayout"><xs:annotation><xs:documentation><summary xmlns="">Specifies that class fields are automatically laid out by the common language runtime.</summary><seealso cref="F:System.Reflection.TypeAttributes.AutoLayout" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="BeforeFieldInit"><xs:annotation><xs:documentation><summary xmlns="">Specifies that calling static methods of the type does not force the system to initialize the type.</summary><seealso cref="F:System.Reflection.TypeAttributes.BeforeFieldInit" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Class"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the type is a class.</summary><seealso cref="F:System.Reflection.TypeAttributes.Class" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Abstract">
+                <xs:annotation>
+                    <xs:appinfo>0x80</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AnsiClass">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AutoClass">
+                <xs:annotation>
+                    <xs:appinfo>0x20000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="AutoLayout">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BeforeFieldInit">
+                <xs:annotation>
+                    <xs:appinfo>0x100000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Class">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
             <!--<xs:enumeration value="ClassSemanticsMask"><xs:annotation><xs:appinfo>0x20</xs:appinfo></xs:annotation></xs:enumeration>-->
-            <xs:enumeration value="CustomFormatClass"><xs:annotation><xs:documentation><summary xmlns="">LPSTR is interpreted by some implementation-specific means, which includes the possibility of throwing a <see cref="T:System.NotSupportedException" />.</summary><seealso cref="F:System.Reflection.TypeAttributes.CustomFormatClass" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="CustomFormatClass">
+                <xs:annotation>
+                    <xs:appinfo>0x30000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
             <!--<xs:enumeration value="CustomFormatMask"><xs:annotation><xs:appinfo>0xC00000</xs:appinfo></xs:annotation></xs:enumeration>-->
-            <xs:enumeration value="ExplicitLayout"><xs:annotation><xs:documentation><summary xmlns="">Specifies that class fields are laid out at the specified offsets.</summary><seealso cref="F:System.Reflection.TypeAttributes.ExplicitLayout" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="HasSecurity"><xs:annotation><xs:documentation><summary xmlns="">Type has security associate with it.</summary><seealso cref="F:System.Reflection.TypeAttributes.HasSecurity" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Import"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class or interface is imported from another module.</summary><seealso cref="F:System.Reflection.TypeAttributes.Import" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Interface"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the type is an interface.</summary><seealso cref="F:System.Reflection.TypeAttributes.Interface" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="ExplicitLayout">
+                <xs:annotation>
+                    <xs:appinfo>0x10</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="HasSecurity">
+                <xs:annotation>
+                    <xs:appinfo>0x40000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Import">
+                <xs:annotation>
+                    <xs:appinfo>0x1000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Interface">
+                <xs:annotation>
+                    <xs:appinfo>0x20</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
             <!--<xs:enumeration value="LayoutMask"><xs:annotation><xs:appinfo>0x18</xs:appinfo></xs:annotation></xs:enumeration>-->
-            <xs:enumeration value="NestedAssembly"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is nested with assembly visibility, and is thus accessible only by methods within its assembly.</summary><seealso cref="F:System.Reflection.TypeAttributes.NestedAssembly" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="NestedFamANDAssem"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is nested with assembly and family visibility, and is thus accessible only by methods lying in the intersection of its family and assembly.</summary><seealso cref="F:System.Reflection.TypeAttributes.NestedFamANDAssem" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="NestedFamily"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is nested with family visibility, and is thus accessible only by methods within its own type and any subtypes.</summary><seealso cref="F:System.Reflection.TypeAttributes.NestedFamily" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="NestedFamORAssem"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is nested with family or assembly visibility, and is thus accessible only by methods lying in the union of its family and assembly.</summary><seealso cref="F:System.Reflection.TypeAttributes.NestedFamORAssem" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="NestedPrivate"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is nested with private visibility.</summary><seealso cref="F:System.Reflection.TypeAttributes.NestedPrivate" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="NestedPublic"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is nested with public visibility.</summary><seealso cref="F:System.Reflection.TypeAttributes.NestedPublic" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="NotPublic"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is not public.</summary><seealso cref="F:System.Reflection.TypeAttributes.NotPublic" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Public"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is public.</summary><seealso cref="F:System.Reflection.TypeAttributes.Public" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="NestedAssembly">
+                <xs:annotation>
+                    <xs:appinfo>5</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NestedFamANDAssem">
+                <xs:annotation>
+                    <xs:appinfo>6</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NestedFamily">
+                <xs:annotation>
+                    <xs:appinfo>4</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NestedFamORAssem">
+                <xs:annotation>
+                    <xs:appinfo>7</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NestedPrivate">
+                <xs:annotation>
+                    <xs:appinfo>3</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NestedPublic">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="NotPublic">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Public">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
             <!--<xs:enumeration value="ReservedMask"><xs:annotation><xs:appinfo>0x40800</xs:appinfo></xs:annotation></xs:enumeration>-->
-            <xs:enumeration value="RTSpecialName"><xs:annotation><xs:documentation><summary xmlns="">Runtime should check name encoding.</summary><seealso cref="F:System.Reflection.TypeAttributes.RTSpecialName" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Sealed"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is concrete and cannot be extended.</summary><seealso cref="F:System.Reflection.TypeAttributes.Sealed" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="SequentialLayout"><xs:annotation><xs:documentation><summary xmlns="">Specifies that class fields are laid out sequentially, in the order that the fields were emitted to the metadata.</summary><seealso cref="F:System.Reflection.TypeAttributes.SequentialLayout" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Serializable"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class can be serialized.</summary><seealso cref="F:System.Reflection.TypeAttributes.Serializable" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="SpecialName"><xs:annotation><xs:documentation><summary xmlns="">Specifies that the class is special in a way denoted by the name.</summary><seealso cref="F:System.Reflection.TypeAttributes.SpecialName" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="RTSpecialName">
+                <xs:annotation>
+                    <xs:appinfo>0x800</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Sealed">
+                <xs:annotation>
+                    <xs:appinfo>0x100</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SequentialLayout">
+                <xs:annotation>
+                    <xs:appinfo>8</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Serializable">
+                <xs:annotation>
+                    <xs:appinfo>0x2000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="SpecialName">
+                <xs:annotation>
+                    <xs:appinfo>0x400</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
             <!--<xs:enumeration value="StringFormatMask"><xs:annotation><xs:appinfo>0x30000</xs:appinfo></xs:annotation></xs:enumeration>-->
-            <xs:enumeration value="UnicodeClass"><xs:annotation><xs:documentation><summary xmlns="">LPTSTR is interpreted as UNICODE.</summary><seealso cref="F:System.Reflection.TypeAttributes.UnicodeClass" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="UnicodeClass">
+                <xs:annotation>
+                    <xs:appinfo>0x10000</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
             <!--<xs:enumeration value="VisibilityMask"><xs:annotation><xs:appinfo>7</xs:appinfo></xs:annotation></xs:enumeration>-->
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="FieldDirection"><xs:annotation><xs:documentation><summary xmlns="">
-                    Defines identifiers used to indicate the direction of parameter and argument declarations.
-                </summary><seealso cref="T:System.CodeDom.FieldDirection" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="FieldDirection">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="In"><xs:annotation><xs:documentation><summary xmlns="">
-                    An incoming field.
-                </summary><seealso cref="F:System.CodeDom.FieldDirection.In" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="In">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Out"><xs:annotation><xs:documentation><summary xmlns="">
-                    An outgoing field.
-                </summary><seealso cref="F:System.CodeDom.FieldDirection.Out" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Out">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
-            <xs:enumeration value="Ref"><xs:annotation><xs:documentation><summary xmlns="">
-                    A field by reference.
-                </summary><seealso cref="F:System.CodeDom.FieldDirection.Ref" xmlns="" /></xs:documentation></xs:annotation>
-                
+            <xs:enumeration value="Ref">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
             </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="BinaryOperatorType"><xs:annotation><xs:documentation><summary xmlns="">
-                    Defines identifiers for supported binary operators.
-                </summary><seealso cref="T:System.CodeDom.CodeBinaryOperatorType" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="BinaryOperatorType">
         <xs:restriction base="xs:string">
-            <xs:enumeration value="Add"><xs:annotation><xs:documentation><summary xmlns="">
-                    Addition operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.Add" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Assign"><xs:annotation><xs:documentation><summary xmlns="">
-                    Assignment operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.Assign" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="BitwiseAnd"><xs:annotation><xs:documentation><summary xmlns="">
-                    Bitwise and operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.BitwiseAnd" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="BitwiseOr"><xs:annotation><xs:documentation><summary xmlns="">
-                    Bitwise or operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.BitwiseOr" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="BooleanAnd"><xs:annotation><xs:documentation><summary xmlns="">
-                    Boolean and operator. This represents a short circuiting operator. A short circuiting operator will evaluate only as many expressions as necessary before returning a correct value.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.BooleanAnd" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="BooleanOr"><xs:annotation><xs:documentation><summary xmlns="">
-                    Boolean or operator. This represents a short circuiting operator. A short circuiting operator will evaluate only as many expressions as necessary before returning a correct value.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.BooleanOr" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Divide"><xs:annotation><xs:documentation><summary xmlns="">
-                    Division operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.Divide" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="GreaterThan"><xs:annotation><xs:documentation><summary xmlns="">
-                    Greater than operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.GreaterThan" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="GreaterThanOrEqual"><xs:annotation><xs:documentation><summary xmlns="">
-                    Greater than or equal operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.GreaterThanOrEqual" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="IdentityEquality"><xs:annotation><xs:documentation><summary xmlns="">
-                    Identity equal operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.IdentityEquality" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="IdentityInequality"><xs:annotation><xs:documentation><summary xmlns="">
-                    Identity not equal operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.IdentityInequality" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="LessThan"><xs:annotation><xs:documentation><summary xmlns="">
-                    Less than operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.LessThan" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="LessThanOrEqual"><xs:annotation><xs:documentation><summary xmlns="">
-                    Less than or equal operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.LessThanOrEqual" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Modulus"><xs:annotation><xs:documentation><summary xmlns="">
-                    Modulus operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.Modulus" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Multiply"><xs:annotation><xs:documentation><summary xmlns="">
-                    Multiplication operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.Multiply" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="Subtract"><xs:annotation><xs:documentation><summary xmlns="">
-                    Subtraction operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.Subtract" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
-            <xs:enumeration value="ValueEquality"><xs:annotation><xs:documentation><summary xmlns="">
-                    Value equal operator.
-                </summary><seealso cref="F:System.CodeDom.CodeBinaryOperatorType.ValueEquality" xmlns="" /></xs:documentation></xs:annotation></xs:enumeration>
+            <xs:enumeration value="Add">
+                <xs:annotation>
+                    <xs:appinfo>0</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Assign">
+                <xs:annotation>
+                    <xs:appinfo>5</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BitwiseAnd">
+                <xs:annotation>
+                    <xs:appinfo>10</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BitwiseOr">
+                <xs:annotation>
+                    <xs:appinfo>9</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BooleanAnd">
+                <xs:annotation>
+                    <xs:appinfo>12</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="BooleanOr">
+                <xs:annotation>
+                    <xs:appinfo>11</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Divide">
+                <xs:annotation>
+                    <xs:appinfo>3</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GreaterThan">
+                <xs:annotation>
+                    <xs:appinfo>15</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="GreaterThanOrEqual">
+                <xs:annotation>
+                    <xs:appinfo>0x10</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IdentityEquality">
+                <xs:annotation>
+                    <xs:appinfo>7</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="IdentityInequality">
+                <xs:annotation>
+                    <xs:appinfo>6</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LessThan">
+                <xs:annotation>
+                    <xs:appinfo>13</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="LessThanOrEqual">
+                <xs:annotation>
+                    <xs:appinfo>14</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Modulus">
+                <xs:annotation>
+                    <xs:appinfo>4</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Multiply">
+                <xs:annotation>
+                    <xs:appinfo>2</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="Subtract">
+                <xs:annotation>
+                    <xs:appinfo>1</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
+            <xs:enumeration value="ValueEquality">
+                <xs:annotation>
+                    <xs:appinfo>8</xs:appinfo>
+                </xs:annotation>
+            </xs:enumeration>
         </xs:restriction>
     </xs:simpleType>
-    
+
     <!--Lists-->
-    <xs:simpleType name="MemberAttributes"><xs:annotation><xs:documentation><summary xmlns="">
-                    Defines member attribute identifiers for class members.
-                </summary><seealso cref="T:System.CodeDom.MemberAttributes" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:list itemType="MemberAttribute" />
+    <xs:simpleType name="MemberAttributes">
+        <xs:list itemType="MemberAttribute"/>
     </xs:simpleType>
-    <xs:simpleType name="TypeAttributes"><xs:annotation><xs:documentation><summary xmlns="">Specifies type attributes.</summary><seealso cref="T:System.Reflection.TypeAttributes" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:list itemType="TypeAttribute" />
+    <xs:simpleType name="TypeAttributes">
+        <xs:list itemType="TypeAttribute"/>
     </xs:simpleType>
-    <xs:simpleType name="FieldDirections"><xs:annotation><xs:documentation><summary xmlns="">
-                    Defines identifiers used to indicate the direction of parameter and argument declarations.
-                </summary><seealso cref="T:System.CodeDom.FieldDirection" xmlns="" /></xs:documentation></xs:annotation>
-        <xs:list itemType="FieldDirection" />
+    <xs:simpleType name="FieldDirections">
+        <xs:list itemType="FieldDirection"/>
     </xs:simpleType>
-    
+
     <!--.NET types-->
-    <xs:simpleType name="Char"><xs:annotation><xs:documentation><summary xmlns="">Represents a Unicode character.</summary><seelaso cref="T:System.Char" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="Char">
         <xs:restriction base="xs:string">
-            <xs:minLength value="1" />
-            <xs:maxLength value="1" />
+            <xs:minLength value="1"/>
+            <xs:maxLength value="1"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Byte"><xs:annotation><xs:documentation><summary xmlns="">Represents an 8-bit unsigned integer.</summary><seelaso cref="T:System.Byte" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="Byte">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="255" />
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="255"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="SByte"><xs:annotation><xs:documentation><summary xmlns="">Represents an 8-bit signed integer.</summary><seelaso cref="T:System.SByte" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="SByte">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="-128" />
-            <xs:maxInclusive value="127" />
+            <xs:minInclusive value="-128"/>
+            <xs:maxInclusive value="127"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Int16"><xs:annotation><xs:documentation><summary xmlns="">Represents a 16-bit signed integer.</summary><seelaso cref="T:System.Int16" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="Int16">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="-32768" />
-            <xs:maxInclusive value="32767" />
+            <xs:minInclusive value="-32768"/>
+            <xs:maxInclusive value="32767"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="UInt16"><xs:annotation><xs:documentation><summary xmlns="">Represents a 16-bit unsigned integer.</summary><seelaso cref="T:System.UInt16" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="UInt16">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="65535" />
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="65535"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Int32"><xs:annotation><xs:documentation><summary xmlns="">Represents a 32-bit signed integer.</summary><seelaso cref="T:System.Int32" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="Int32">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="-2147483648" />
-            <xs:maxInclusive value="2147483647" />
+            <xs:minInclusive value="-2147483648"/>
+            <xs:maxInclusive value="2147483647"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="UInt32"><xs:annotation><xs:documentation><summary xmlns="">Represents a 32-bit unsigned integer.</summary><seelaso cref="T:System.UInt32" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="UInt32">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="4294967295" />
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="4294967295"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Int64"><xs:annotation><xs:documentation><summary xmlns="">Represents a 64-bit signed integer.</summary><seelaso cref="T:System.Int64" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="Int64">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="-9223372036854775808" />
-            <xs:maxInclusive value="9223372036854775807" />
+            <xs:minInclusive value="-9223372036854775808"/>
+            <xs:maxInclusive value="9223372036854775807"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="UInt64"><xs:annotation><xs:documentation><summary xmlns="">Represents a 64-bit unsigned integer.</summary><seelaso cref="T:System.UInt64" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="UInt64">
         <xs:restriction base="xs:integer">
-            <xs:minInclusive value="0" />
-            <xs:maxInclusive value="18446744073709551615" />
+            <xs:minInclusive value="0"/>
+            <xs:maxInclusive value="18446744073709551615"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="Decimal"><xs:annotation><xs:documentation><summary xmlns="">Represents a decimal number.</summary><seelaso cref="T:System.Decimal" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="Decimal">
         <xs:restriction base="xs:decimal">
-            <xs:minInclusive value="-79228162514264337593543950335" />
-            <xs:maxInclusive value="79228162514264337593543950335" />
-            <xs:fractionDigits value="28" />
+            <xs:minInclusive value="-79228162514264337593543950335"/>
+            <xs:maxInclusive value="79228162514264337593543950335"/>
+            <xs:fractionDigits value="28"/>
         </xs:restriction>
     </xs:simpleType>
-    <xs:simpleType name="DateTime"><xs:annotation><xs:documentation><summary xmlns="">Represents an instant in time, typically expressed as a date and time of day.</summary><seelaso cref="T:System.DateTime" xmlns="" /></xs:documentation></xs:annotation>
+    <xs:simpleType name="DateTime">
         <xs:restriction base="xs:dateTime">
-            <xs:minInclusive value="0001-01-01T00:00:00Z" />
-            <xs:maxInclusive value="9999-12-31T23:59:59.9999999Z" />
+            <xs:minInclusive value="0001-01-01T00:00:00Z"/>
+            <xs:maxInclusive value="9999-12-31T23:59:59.9999999Z"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="Null">
-        <xs:annotation>
-            <xs:documentation>
-                <summary xmlns="">Represents null-reference</summary>
-            </xs:documentation>
-        </xs:annotation>
-        <xs:sequence minOccurs="0" maxOccurs="0" />
+        <xs:sequence minOccurs="0" maxOccurs="0"/>
     </xs:complexType>
 </xs:schema>
