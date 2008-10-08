@@ -288,7 +288,7 @@ Namespace DrawingT.DrawingIOt
                             Control.BackColor = Color.Transparent
                         Next
                     Catch ex As Exception
-                        Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                        Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
                     End Try
                 ElseIf TypeOf e.Node.Tag Is ex.IfdMain AndAlso e.Node.Text Like "*thumbnail*" Then
                     Try
@@ -299,7 +299,7 @@ Namespace DrawingT.DrawingIOt
                             Control.BackColor = Color.Transparent
                         Next
                     Catch ex As Exception
-                        Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                        Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
                     End Try
                 End If
             End If

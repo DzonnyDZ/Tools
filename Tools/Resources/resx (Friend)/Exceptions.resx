@@ -1101,4 +1101,7 @@
   <data name="ValueOfType0CannotBeDeserializedStandAloneBecauseIts" xml:space="preserve">
     <value>Value of type {0} cannot be deserialized stand-alone, because its object representation does not inherit from CodeObject.</value>
   </data>
+  <data name="Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace" xml:space="preserve">
+    <value>Namespace {0} has no prefix associated and it is not default namespace.</value>
+  </data>
 </root>

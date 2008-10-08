@@ -105,7 +105,7 @@ Public Class frmMain
             Try
                 spath = fbdGoTo.SelectedPath
             Catch ex As Exception
-                MBox.Error(ex, My.Resources.Error_)
+                MBox.[Error_XT](ex, My.Resources.Error_)
                 Exit Sub
             End Try
             LoadFolder(spath)
@@ -149,7 +149,7 @@ Public Class frmMain
                     )) _
                 Order By sf.IsDirectory Descending, sf.FileName Ascending
         Catch ex As Exception
-            MBox.Error(ex, My.Resources.Error_)
+            MBox.[Error_XT](ex, My.Resources.Error_)
             Exit Sub
         End Try
         CurrentFolder = Path
@@ -211,7 +211,7 @@ Public Class frmMain
         If Large IsNot Nothing Then Large.Close()
         Try : My.Settings.Save()
         Catch ex As Exception
-            MBox.Error(ex)
+            MBox.[Error_X](ex)
         End Try
     End Sub
 
@@ -597,7 +597,7 @@ Public Class frmMain
     End Sub
 
     Private Sub cmdErrInfo_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdErrInfo.Click
-        MBox.Error(sender.Tag)
+        MBox.[Error_X](sender.Tag)
     End Sub
 
     Private Sub llbLarge_LinkClicked(ByVal sender As System.Object, ByVal e As System.Windows.Forms.LinkLabelLinkClickedEventArgs) Handles llbLarge.LinkClicked
@@ -744,7 +744,7 @@ Public Class frmMain
         Catch ex As Exception
             Dim msg$ = ex.Message
             If i > 0 Then msg &= vbCrLf & My.Resources.SomeChangedSomeNot
-            Select Case MBox.Modal(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, MBox.MessageBoxIcons.Error)
+            Select Case MBox.Modal_PTBI(msg, My.Resources.Error_, MButton.Buttons.OK Or MButton.Buttons.Cancel, MBox.MessageBoxIcons.Error)
                 Case Windows.Forms.DialogResult.OK : Return False
                 Case Else
                     ShowIPTCValues((From item In SelectedMetadata Select item.IPTC), Prp)
@@ -778,7 +778,7 @@ Public Class frmMain
     Public Function OnBeforeFolderChange() As Boolean
         StoreActiveConrol()
         If Not Me.Changed Then Return True
-        Select Case MBox.Modal(My.Resources.UnsavedChanges, My.Resources.SaveChanges_dlgTitle, MBox.MessageBoxOptions.AlignLeft, MBox.GetIconDelegate.Invoke(MBox.MessageBoxIcons.Question), _
+        Select Case MBox.Modal_PTOIB(My.Resources.UnsavedChanges, My.Resources.SaveChanges_dlgTitle, MBox.MessageBoxOptions.AlignLeft, MBox.GetIconDelegate.Invoke(MBox.MessageBoxIcons.Question), _
                 New MButton(My.Resources.Save_cmd, Nothing, Windows.Forms.DialogResult.OK, My.Resources.Save_access), _
                 New MButton(My.Resources.DontSave_cmd, Nothing, Windows.Forms.DialogResult.No, My.Resources.DontSave_access), _
                 MButton.Cancel)

@@ -83,6 +83,84 @@ Namespace XmlT.LinqT
                 End Select
             Next
         End Sub
+        ''' <summary>Gets string representing given <see cref="XName"/> in XML document in context of given <see cref="XElement"/></summary>
+        ''' <param name="Name">Name to be represented</param>
+        ''' <param name="Context">Element providing informations about namespace prefixes</param>
+        ''' <returns>String representation of <paramref name="Name"/> in form "prefix:local-name" or "local-name" (when it is associated with default namespace and default namespace has no prefix associated)</returns>
+        ''' <exception cref="ArgumentNullException">Namespace of <paramref name="Name"/> is not defined in context of <paramref name="Context"/></exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Context"/> or <paramref name="Name"/> is null</exception>
+        <Extension()> _
+        Public Function CollapseInContext(ByVal Name As XName, ByVal Context As XElement) As String
+            If Name Is Nothing Then Throw New ArgumentNullException("Name")
+            If Context Is Nothing Then Throw New ArgumentNullException("Context")
+            Dim prefix = Context.GetNamespacePrefix(Name.Namespace)
+            If prefix Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace.f(Name.Namespace.NamespaceName))
+            If prefix = "" Then Return Name.LocalName Else Return "{0}:{1}".f(prefix, Name.LocalName)
+        End Function
+        ''' <summary>Gets string representing given <see cref="XName"/> in XML document in context of given <see cref="XElement"/></summary>
+        ''' <param name="Name">Name to be represented</param>
+        ''' <param name="Context">Element providing informations about namespace prefixes</param>
+        ''' <returns>String representation of <paramref name="Name"/> in form "prefix:local-name" or "local-name" (when it is associated with default namespace and default namespace has no prefix associated)</returns>
+        ''' <exception cref="ArgumentNullException">Namespace of <paramref name="Name"/> is not defined in context of <paramref name="Context"/></exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Context"/> or <paramref name="Name"/> is null</exception>
+        <Extension()> _
+        Public Function CollapseName(ByVal Context As XElement, ByVal Name As XName) As String
+            Return Name.CollapseInContext(Context)
+        End Function
+        ''' <summary>Gets prefix of given namespace for given element. Makes it easy to disnguish if namespace is default or undefined.</summary>
+        ''' <param name="Element">Eleemnt defining scope of validity of prefix</param>
+        ''' <param name="ns">Namespace to get prefix of</param>
+        ''' <returns>Prefix of namespace <paramref name="ns"/> valid at level of <paramref name="Element"/>. <see cref="String.Empty"/> if <paramref name="ns"/> is default namespace and has no prefix associated. Null when <paramref name="ns"/> is undefined al level of <paramref name="Element"/> or higher.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Element"/> or <paramref name="ns"/> is null</exception>
+        <Extension()> _
+        Public Function GetNamespacePrefix(ByVal Element As XElement, ByVal ns As XNamespace) As String
+            If Element Is Nothing Then Throw New ArgumentNullException("Element")
+            If ns Is Nothing Then Throw New ArgumentNullException("ns")
+            Dim prefix = Element.GetPrefixOfNamespace(ns)
+            If prefix IsNot Nothing Then Return prefix
+            If Element.FindDefaultNamespace = ns Then Return "" Else Return Nothing
+        End Function
+        ''' <summary>Gets default namespace valid at level of given <see cref="XElement"/> even in sutuation when <see cref="XElement.GetDefaultNamespace"/> fails.</summary>
+        ''' <param name="Element">Element to get default namespace for</param>
+        ''' <returns>Default namespace for <paramref name="Element"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Element"/> is null</exception>
+        ''' <remarks>
+        ''' This function calls <paramref name="Element"/>.<see cref="XElement.GetDefaultNamespace">GetDefaultNamespace</see>.
+        ''' When it returns <see cref="XNamespace.None"/> it searches document tree from <paramref name="Element"/> upwards to root and:
+        ''' <list type="bullet">
+        ''' <item>When xmlns attribute with value of empty string is found, returns <see cref="XNamespace.None"/>.</item>
+        ''' <item>When element with name belonging to namespace for which <see cref="XElement.GetPrefixOfNamespace"/> does not return prefix is found, that namespace is returned.</item>
+        ''' <item>If no such condition is fullfiled and root is reached, <see cref="XNamespace.None"/> is returned.</item>
+        ''' </list>
+        ''' </remarks>
+        <Extension()> _
+        Public Function FindDefaultNamespace(ByVal Element As XElement) As XNamespace
+            If Element Is Nothing Then Throw New ArgumentNullException("Element")
+            Dim ns = Element.GetDefaultNamespace
+            If ns <> XNamespace.None Then Return ns
+            Dim CurrEl = Element
+            Do
+                If CurrEl.Attribute("xmlns") IsNot Nothing AndAlso CurrEl.@xmlns = "" Then Return XNamespace.None
+                Dim prefix = CurrEl.GetPrefixOfNamespace(CurrEl.Name.Namespace)
+                If prefix = "" Then Return CurrEl.Name.Namespace
+                CurrEl = CurrEl.Parent
+            Loop While CurrEl IsNot Nothing
+            Return XNamespace.None
+        End Function
+        ''' <summary>For attribute which's value is expanded XML name in format "{namespace-uri}local-name" collapses this name to format "prefix:local-name" (or "local-name" when namespace is default namespace and has no prefix associated).</summary>
+        ''' <param name="attr">Attribute to collapse value of</param>
+        ''' <exception cref="System.Xml.XmlException">Value of attribute <paramref name="attr"/> is neither valied expanded name in format "<c>{namespace-uri}local-name</c>" neither valid local name</exception>
+        ''' <exception cref="ArgumentException"><paramref name="attr"/> attribute has no parent element.</exception>
+        ''' <remarks>When <paramref name="attr"/> is null, its value is null or its value is an empty string this method exits without doing anything.</remarks>
+        <Extension()> _
+        Public Sub CollapseExtendedName(ByVal attr As XAttribute)
+            If attr Is Nothing Then Return
+            If attr.Value Is Nothing Then Return
+            If attr.Value = "" Then Return
+            If attr.Parent Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.XMLAttributeHasNoParentElement)
+            Dim name As XName = XName.Get(attr.Value)
+            attr.Value = name.CollapseInContext(attr.Parent)
+        End Sub
     End Module
 End Namespace
 #End If

@@ -1,4 +1,6 @@
-﻿Imports System.Xml.Linq, Tools.CodeDomT, System.CodeDom
+﻿Imports System.Xml.Linq, Tools.CodeDomT, System.CodeDom, System.Xml.Schema.Extensions
+Imports MBox = Tools.WindowsT.IndependentT.MessageBox
+Imports System.Linq, Tools.LinqT
 Namespace CodeDomT
     ''' <summary>Contains tests for <see cref="Tools.CodeDomT.Xml2CodeDom"/></summary>
     Public Class frmXml2CodeDom
@@ -93,11 +95,12 @@ Namespace CodeDomT
                 MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
                 Exit Sub
             End Try
-            'Dim sb As New System.Text.StringBuilder
-            'Dim w = System.Xml.XmlWriter.Create(sb)
-            'Xml.WriteTo(w)
-            'w.Flush()
+            Dim schemaSet As New Xml.Schema.XmlSchemaSet
+            schemaSet.Add(Xml2CodeDom.GetXmlSchema())
+            Dim b As New System.Text.StringBuilder
+            Xml.Validate(schemaSet, Function(s As Object, ea As Xml.Schema.ValidationEventArgs) b.AppendLine(ea.Exception.Message))
             Target.Text = Xml.ToString
+            If b.Length <> 0 Then MsgBox(b.ToString, MsgBoxStyle.Exclamation, "Generated XML is invalid")
         End Sub
 
         Private Sub tvwCodeDom_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvwCodeDom.AfterSelect
@@ -151,5 +154,58 @@ Namespace CodeDomT
             cmsLanguages.Show(sender, 0, sender.ClientSize.Height)
         End Sub
 
+        Private Sub tmiBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiBrowse.Click
+            If ofdDll.ShowDialog = Windows.Forms.DialogResult.OK Then
+                Dim asm As Reflection.Assembly
+                Try
+                    asm = Reflection.Assembly.LoadFile(ofdDll.FileName)
+                Catch ex As Exception
+                    MBox.[Error_X](ex)
+                    Exit Sub
+                End Try
+                Dim Types As IEnumerable(Of Type)
+                Try
+                    Types = From type In asm.GetTypes Where GetType(Compiler.CodeDomProvider).IsAssignableFrom(type)
+                Catch ex As Reflection.ReflectionTypeLoadException
+                    Dim msg As New System.Text.StringBuilder
+                    msg.AppendLine(ex.Message)
+                    For Each tlex In ex.LoaderExceptions
+                        msg.AppendLine(tlex.Message)
+                    Next
+                    MBox.Show(msg.ToString, ex.GetType.Name, Windows.MessageBoxButton.OK, Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons.Error)
+                    Exit Sub
+                End Try
+                If Types.IsEmpty Then
+                    MBox.ModalF_PTIa("Assembly {0} contains no type deriving from CodeDomProvider", "No CodeDomProvider found", Tools.WindowsT.IndependentT.MessageBox.MessageBoxIcons.Error, IO.Path.GetFileName(ofdDll.FileName))
+                    Exit Sub
+                End If
+                Dim CodeType As Type
+                If Types.Count > 1 Then
+                    Dim mTemplate As New MBox.FakeBox(Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton.Buttons.OK Or Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel)
+                    mTemplate.Prompt = String.Format("Assembly {0} contains more than one CodeDomProvider. Select one of them, please.", IO.Path.GetFileName(ofdDll.FileName))
+                    mTemplate.Title = "Select an assembly"
+                    mTemplate.ComboBox = New MBox.MessageBoxComboBox("FullName", (From type In Types Select CObj(type)).ToArray)
+                    mTemplate.ComboBox.SelectedIndex = 0
+                    If MBox.ShowTemplate(mTemplate, Me) = Windows.Forms.DialogResult.OK Then
+                        CodeType = mTemplate.ComboBox.SelectedItem
+                    Else
+                        Exit Sub
+                    End If
+                Else
+                    CodeType = Types.First
+                End If
+                Dim tmi As New ToolStripMenuItem(CodeType.FullName)
+                Try
+                    tmi.Tag = Activator.CreateInstance(CodeType)
+                Catch ex As Exception
+                    MBox.[Error_X](ex)
+                    Exit Sub
+                End Try
+                cmsLanguages.Items.Insert(cmsLanguages.Items.IndexOf(tssLangSep2), tmi)
+                tssLangSep1.Visible = True
+                AddHandler tmi.Click, AddressOf tmiLanguage_Click
+                tmi.PerformClick()
+            End If
+        End Sub
     End Class
 End Namespace

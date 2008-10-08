@@ -60,6 +60,7 @@
             </xsl:choose>
         </xs:complexType>
     </xsl:template>
+   
     <!--Enum types-->
     <xsl:template match="xs:simpleType[@name][xs:restriction[@base='xs:string']/xs:enumeration or xs:list]">
         <xs:simpleType>
@@ -111,6 +112,7 @@
             <xsl:apply-templates select="./node()[local-name()!='annotation']"/>
         </xs:simpleType>    
     </xsl:template>
+    
     <!--.NET types-->
     <xsl:template match="xs:simpleType[@name][./preceding-sibling::comment()[.='.NET types']]">
         <xs:simpleType>
@@ -127,7 +129,7 @@
         </xs:simpleType>
     </xsl:template>
     
-    <!--Enum mmebers-->
+    <!--Enum mebers-->
     <xsl:template match="xs:simpleType[@name]/xs:restriction[@base='xs:string']/xs:enumeration">
         <xs:enumeration>
             <xsl:apply-templates select="@*"/>
@@ -185,5 +187,70 @@
             </xs:annotation>
             <xsl:apply-templates select="./node()[local-name()!='annotation']"/>
         </xs:enumeration>
+    </xsl:template>
+
+    <!--See-->
+    <xsl:template match="see[not(node())]">
+        <see>
+            <xsl:apply-templates select="@*"/>
+            <xsl:variable name="text">
+                <xsl:call-template name="last-substring-after">
+                    <xsl:with-param name="text" select="substring-after(@cref,':')"/>
+                    <xsl:with-param name="after" select="'.'"/>
+                </xsl:call-template>
+            </xsl:variable>
+            <xsl:value-of select="normalize-space($text)"/>
+        </see>
+    </xsl:template>
+    <xsl:template name="last-substring-after">
+        <xsl:param name="text"/>
+        <xsl:param name="after"/>
+        <xsl:choose>
+            <xsl:when test="contains($text,$after)">
+                <xsl:call-template name="last-substring-after">
+                    <xsl:with-param name="text" select="substring-after($text,$after)"/>
+                    <xsl:with-param name="after" select="$after"/>
+                </xsl:call-template>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="$text"/>
+            </xsl:otherwise>
+        </xsl:choose>
+    </xsl:template>
+    
+    <!--Properties-->
+    <xsl:template match="xs:complexType[@name and substring(@name,string-length(@name))!='s']//xs:element[@type][not(xs:annotation)] | xs:complexType[@name and substring(@name,string-length(@name))!='s']//xs:attribute[@type][not(xs:annotation)]">
+        <xsl:variable name="TypeName" select="string(./ancestor::xs:complexType[@name]/@name)"/>
+        <xsl:variable name="PropertyName" select="string(@name)"/>
+        <xsl:variable name="PropertyType" select="string(@type)"/>
+        <xsl:variable name="testA"><xsl:choose >
+            <xsl:when test="$System/doc/members/member[@name=concat('P:System.CodeDom.',$TypeName,'.',$PropertyName)]">
+                <xsl:value-of select="concat('P:System.CodeDom.',$TypeName,'.',$PropertyName)"/>
+            </xsl:when>
+            <xsl:otherwise>
+                <xsl:value-of select="concat('P:System.CodeDom.Code',$TypeName,'.',$PropertyName)"/>
+            </xsl:otherwise>
+        </xsl:choose></xsl:variable>
+        <xsl:variable name="test" select="normalize-space($testA)"/>
+        <xsl:element name="{name()}">
+            <xsl:apply-templates select="@*"/>
+            <xsl:choose>
+                <xsl:when test="./ancestor::xs:complexType[@name]/@name='PrimitiveExpression'">
+                </xsl:when>
+                <xsl:otherwise>
+                    <xs:annotation>
+                        <xs:documentation>
+                            <xsl:variable name="Summary" select="$System/doc/members/member[@name=$test]/summary"/>
+                            <xsl:apply-templates select="$Summary"/>
+                            <xsl:if test="not($Summary)">
+                                <xsl:message>Cannot found documentation for property <xsl:value-of select="$TypeName"/>.<xsl:value-of select="$PropertyName"/>.</xsl:message>
+                            </xsl:if>
+                            <seealso xmlns="" cref="{$test}"/>
+                        </xs:documentation>
+                    </xs:annotation>
+                    <xsl:apply-templates select="node()"/>
+                </xsl:otherwise>
+            </xsl:choose>
+        </xsl:element>
     </xsl:template>
 </xsl:stylesheet>

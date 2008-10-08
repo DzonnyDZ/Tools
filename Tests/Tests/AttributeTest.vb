@@ -20,7 +20,7 @@ Namespace TestsT
                     Dim asm = Reflection.Assembly.LoadFrom(ofd.FileName)
                     Dim ConsoleWindow As New Tools.WindowsT.NativeT.Win32Window(ConsoleT.GetHandle)
                     'Chose mode
-                    Select Case MBox.ModalEx("Chose output details mode, please.", "AttributeTest", _
+                    Select Case MBox.ModalEx_PTEIOWMHS("Chose output details mode, please.", "AttributeTest", _
                             Items:=DirectCast(New Object() { _
                                 New MBox.MessageBoxButton("Full info", DialogResult.OK), _
                                 New MBox.MessageBoxButton("No statistic", DialogResult.Cancel), _

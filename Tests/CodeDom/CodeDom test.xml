@@ -136,9 +136,6 @@
                                 </AssignStatement>
                             </SetStatements>
                         </MemberProperty>
-                        <!--<SnippetTypeMember Name="Coll">
-                            <Text>Private Coll As New List(Of String)</Text>
-                        </SnippetTypeMember>-->
                         <MemberField Name="Coll" Attributes="Private Static">
                             <Type BaseType="List`1">
                                 <TypeArguments>

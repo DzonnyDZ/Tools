@@ -1603,6 +1603,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Namespace {0} has no prefix associated and it is not default namespace.'.
+        '''</summary>
+        Friend Shared ReadOnly Property Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace() As String
+            Get
+                Return ResourceManager.GetString("Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Namespace prefix {0} is not defined'.
         '''</summary>
         Friend Shared ReadOnly Property NamespacePrefix0IsNotDefined() As String
@@ -4537,6 +4546,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function MustRepresentXMLElement1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, MustRepresentXMLElement1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Namespace {0} has no prefix associated and it is not default namespace.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespaceFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace, arg0)
         End Function
         
         '''<summary>

@@ -1288,6 +1288,7 @@ Namespace CodeDomT
                         <%= If(.self Is Nothing OrElse .LinePragma Is Nothing, Nothing, SerializeLinePragma(.LinePragma, Names.LinePragma)) %>
                         <%= If(.self Is Nothing, Nothing, <Value><%= New XCData(.Value) %></Value>) %>
                     </>
+                Xml.Attribute(xsiType).CollapseExtendedName()
                 Return Xml
             End With
         End Function
@@ -1371,11 +1372,12 @@ Namespace CodeDomT
             If ElementName Is Nothing Then ElementName = Names.ChecksumPragma
             Dim Xml = _
                 <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.ChecksumPragma, Names.ChecksumPragma, Nothing) %>
-                    FileName=<%= ChecksumPragma.FileName %> ChecksumAlghoritmId=<%= ChecksumPragma.ChecksumAlgorithmId.ToString %>
+                    FileName=<%= ChecksumPragma.FileName %> ChecksumAlgorithmId=<%= ChecksumPragma.ChecksumAlgorithmId.ToString %>
                     >
                     <%= SerializeDirectiveCommon(ChecksumPragma) %>
                     <ChecksumData><%= Convert.ToBase64String(ChecksumPragma.ChecksumData) %></ChecksumData>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1389,10 +1391,11 @@ Namespace CodeDomT
             If ElementName Is Nothing Then ElementName = Names.RegionDirective
             Dim Xml = _
                 <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.RegionDirective, Names.RegionDirective, Nothing) %>
-                    RegionText=<%= RegionDirective.RegionText %> RegionMode=<%= RegionDirective.RegionMode.GetValue %>
+                    RegionText=<%= RegionDirective.RegionText %> RegionMode=<%= RegionDirective.RegionMode.GetName %>
                     >
                     <%= SerializeDirectiveCommon(RegionDirective) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1425,6 +1428,7 @@ Namespace CodeDomT
                     <%= SerializeStatementCommon(CommentStatement) %>
                     <%= SerializeComment(CommentStatement.Comment, <Comment/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
         ''' <summary>Serializes common properties of <see cref="CodeStatement"/></summary>
@@ -1467,6 +1471,7 @@ Namespace CodeDomT
                         <%= If(.self IsNot Nothing, SerializeCollection(<Parameters/>, .Parameters.AsTypeSafe, AddressOf SerializeParameterDeclarationExpression), Nothing) %>
                         <%= If(.self IsNot Nothing, SerializeTypeReference(.ReturnType, <ReturnType/>.Name), Nothing) %>
                     </>
+                Xml.Attribute(xsiType).CollapseExtendedName()
                 Return Xml
             End With
         End Function
@@ -1584,6 +1589,7 @@ Namespace CodeDomT
                     <%= SerializeCollection(<ImplementationTypes/>, MemberEvent.ImplementationTypes.AsTypeSafe, AddressOf SerializeTypeReference) %>
                     <%= SerializeTypeReference(MemberEvent.PrivateImplementationType, <PrivateImplementationType/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1601,6 +1607,7 @@ Namespace CodeDomT
                     <%= SerializeTypeReference(MemberField.Type, <Type/>.Name) %>
                     <%= SerializeExpression(MemberField.InitExpression, <InitExpression/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1629,6 +1636,7 @@ Namespace CodeDomT
                     <%= If(TypeOf MemberMethod Is CodeConstructor, SerializeCollection(<BaseConstructorArgs/>, DirectCast(MemberMethod, CodeConstructor).BaseConstructorArgs.AsTypeSafe, AddressOf SerializeExpression), Nothing) %>
                     <%= If(TypeOf MemberMethod Is CodeConstructor, SerializeCollection(<ChainedConstructorArgs/>, DirectCast(MemberMethod, CodeConstructor).ChainedConstructorArgs.AsTypeSafe, AddressOf SerializeExpression), Nothing) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1646,6 +1654,7 @@ Namespace CodeDomT
                     <%= SerializeCollection(<CustomAttributes/>, ParameterDeclarationExpression.CustomAttributes.AsTypeSafe, AddressOf SerializeAttributeDeclaration) %>
                     <%= SerializeTypeReference(ParameterDeclarationExpression.Type, <Type/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
         ''' <summary>Serializes comon properties fo <see cref="CodeExpression"/> to <see cref="XElement"/></summary>
@@ -1701,6 +1710,7 @@ Namespace CodeDomT
                     <%= SerializeCollection(<GetStatements/>, MemberProperty.GetStatements.AsTypeSafe, AddressOf SerializeStatement) %>
                     <%= SerializeCollection(<SetStatements/>, MemberProperty.SetStatements.AsTypeSafe, AddressOf SerializeStatement) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1754,6 +1764,7 @@ Namespace CodeDomT
                     <%= SerializeTypeMemberCommon(SnippetTypeMember) %>
                     <%= New XCData(SnippetTypeMember.Text) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1856,6 +1867,7 @@ NonXml:         Xml = _
                     <%= SerializeExpression(AssignStatement.Left, <Left/>.Name) %>
                     <%= SerializeExpression(AssignStatement.Right, <Right/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1873,6 +1885,7 @@ NonXml:         Xml = _
                     <%= SerializeEventReferenceExpression(AttachEventStatement.Event, <Event/>.Name) %>
                     <%= SerializeExpression(AttachEventStatement.Listener, <Listener/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1891,6 +1904,7 @@ NonXml:         Xml = _
                  <%= SerializeCollection(<TrueStatements/>, ConditionStatement.TrueStatements.AsTypeSafe, AddressOf SerializeStatement) %>
                  <%= SerializeCollection(<FalseStatements/>, ConditionStatement.FalseStatements.AsTypeSafe, AddressOf SerializeStatement) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1907,6 +1921,7 @@ NonXml:         Xml = _
                  <%= SerializeStatementCommon(ExpressionStatement) %>
                  <%= SerializeExpression(ExpressionStatement.Expression, <Expression/>.Name) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1922,6 +1937,7 @@ NonXml:         Xml = _
     <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.GotoStatement, Names.GotoStatement, Nothing) %> Label=<%= GotoStatement.Label %>>
         <%= SerializeStatementCommon(GotoStatement) %>
     </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1941,6 +1957,7 @@ NonXml:         Xml = _
                  <%= SerializeExpression(IterationStatement.TestExpression, <TestExpression/>.Name) %>
                  <%= SerializeCollection(<Statements/>, IterationStatement.Statements.AsTypeSafe, AddressOf SerializeStatement) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1957,6 +1974,7 @@ NonXml:         Xml = _
                     <%= SerializeStatementCommon(LabeledStatement) %>
                     <%= SerializeStatement(LabeledStatement.Statement, <Statement/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1973,6 +1991,7 @@ NonXml:         Xml = _
                     <%= SerializeStatementCommon(MethodReturnStatement) %>
                     <%= SerializeExpression(MethodReturnStatement.Expression, <Expression/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -1990,6 +2009,7 @@ NonXml:         Xml = _
                     <%= SerializeEventReferenceExpression(RemoveEventStatement.Event, <Event/>.Name) %>
                     <%= SerializeExpression(RemoveEventStatement.Listener, <Listener/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2006,6 +2026,7 @@ NonXml:         Xml = _
                     <%= SerializeStatementCommon(SnippetStatement) %>
                     <Value><%= New XCData(SnippetStatement.Value) %></Value>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2022,6 +2043,7 @@ NonXml:         Xml = _
                    <%= SerializeStatementCommon(ThrowExceptionStatement) %>
                    <%= SerializeExpression(ThrowExceptionStatement.ToThrow, <ToThrow/>.Name) %>
                </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2040,6 +2062,7 @@ NonXml:         Xml = _
                   <%= SerializeCollection(<CatchClauses/>, TryCatchFinallyStatement.CatchClauses.AsTypeSafe, AddressOf SerializeCatchClause) %>
                   <%= SerializeCollection(<FinallyStatements/>, TryCatchFinallyStatement.FinallyStatements.AsTypeSafe, AddressOf SerializeStatement) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2059,6 +2082,7 @@ NonXml:         Xml = _
                   <%= SerializeTypeReference(VariableDeclarationStatement.Type, <Type/>.Name) %>
                   <%= SerializeExpression(VariableDeclarationStatement.InitExpression, <InitExpression/>.Name) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2075,6 +2099,7 @@ NonXml:         Xml = _
                     ParameterName=<%= ArgumentReferenceExpression.ParameterName %>>
                     <%= SerializeExpressionCommon(ArgumentReferenceExpression) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2094,6 +2119,7 @@ NonXml:         Xml = _
                     <%= SerializeExpression(ArrayCreateExpression.SizeExpression, <SizeExpression/>.Name) %>
                     <%= SerializeCollection(<Initializers/>, ArrayCreateExpression.Initializers.AsTypeSafe, AddressOf SerializeExpression) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2111,6 +2137,7 @@ NonXml:         Xml = _
                     <%= SerializeExpression(ArrayIndexerExpression.TargetObject, <TargetObject/>.Name) %>
                     <%= SerializeCollection(<Indices/>, ArrayIndexerExpression.Indices.AsTypeSafe, AddressOf SerializeExpression) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2126,6 +2153,7 @@ NonXml:         Xml = _
                 <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.BaseReferenceExpression, Names.BaseReferenceExpression, Nothing) %>>
                     <%= SerializeExpressionCommon(BaseReferenceExpression) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2145,6 +2173,7 @@ NonXml:         Xml = _
                    <%= SerializeExpression(BinaryOperatorExpression.Left, <Left/>.Name) %>
                    <%= SerializeExpression(BinaryOperatorExpression.Right, <Right/>.Name) %>
                </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2162,6 +2191,7 @@ NonXml:         Xml = _
                    <%= SerializeExpression(CastExpression.Expression, <Expression/>.Name) %>
                    <%= SerializeTypeReference(CastExpression.TargetType, <TargetType/>.Name) %>
                </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2178,6 +2208,7 @@ NonXml:         Xml = _
                   <%= SerializeExpressionCommon(DefaultValueExpression) %>
                   <%= SerializeTypeReference(DefaultValueExpression.Type, <Type/>.Name) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2197,6 +2228,7 @@ NonXml:         Xml = _
                   <%= SerializeTypeReference(DelegateCreateExpression.DelegateType, <DelegateType/>.Name) %>
                   <%= SerializeExpression(DelegateCreateExpression.TargetObject, <TargetObject/>.Name) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2214,6 +2246,7 @@ NonXml:         Xml = _
                   <%= SerializeExpression(DelegateInvokeExpression.TargetObject, <TargetObject/>.Name) %>
                   <%= SerializeCollection(<Parameters/>, DelegateInvokeExpression.Parameters.AsTypeSafe, AddressOf SerializeExpression) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2232,6 +2265,7 @@ NonXml:         Xml = _
                   <%= SerializeExpressionCommon(DirectionExpression) %>
                   <%= SerializeExpression(DirectionExpression.Expression, <Expression/>.Name) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2250,6 +2284,7 @@ NonXml:         Xml = _
                   <%= SerializeExpressionCommon(EventReferenceExpression) %>
                   <%= SerializeExpression(EventReferenceExpression.TargetObject, <TargetObject/>.Name) %>
               </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2268,6 +2303,7 @@ NonXml:         Xml = _
                  <%= SerializeExpressionCommon(FieldReferenceExpression) %>
                  <%= SerializeExpression(FieldReferenceExpression.TargetObject, <TargetObject/>.Name) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2285,6 +2321,7 @@ NonXml:         Xml = _
                  <%= SerializeExpression(IndexerExpression.TargetObject, <TargetObject/>.Name) %>
                  <%= SerializeCollection(<Indices/>, IndexerExpression.Indices.AsTypeSafe, AddressOf SerializeExpression) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2302,6 +2339,7 @@ NonXml:         Xml = _
                  <%= SerializeMethodReferenceExpression(MethodInvokeExpression.Method, <Method/>.Name) %>
                  <%= SerializeCollection(<Parameters/>, MethodInvokeExpression.Parameters.AsTypeSafe, AddressOf SerializeExpression) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2321,6 +2359,7 @@ NonXml:         Xml = _
                  <%= SerializeExpression(MethodReferenceExpression.TargetObject, <TargetObject/>.Name) %>
                  <%= SerializeCollection(<TypeArguments/>, MethodReferenceExpression.TypeArguments.AsTypeSafe, AddressOf SerializeTypeReference) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2338,6 +2377,7 @@ NonXml:         Xml = _
                  <%= SerializeTypeReference(ObjectCreateExpression.CreateType, <CreateType/>.Name) %>
                  <%= SerializeCollection(<Parameters/>, ObjectCreateExpression.Parameters.AsTypeSafe, AddressOf SerializeExpression) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2349,12 +2389,13 @@ NonXml:         Xml = _
         ''' <exception cref="NotSupportedException"><paramref name="PrimitiveExpression"/>.<see cref="CodePrimitiveExpression.Value">Value</see> is neither of supported primitive type nor <see cref="[Enum]"/>.</exception>
         Private Function SerializePrimitiveExpression(ByVal [PrimitiveExpression] As CodePrimitiveExpression, Optional ByVal ElementName As XName = Nothing) As XElement
             If PrimitiveExpression Is Nothing Then Return Nothing
-            If ElementName Is Nothing Then ElementName = Names.ObjectCreateExpression
+            If ElementName Is Nothing Then ElementName = Names.PrimitiveExpression
             Dim Xml = _
-             <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.ObjectCreateExpression, Names.ObjectCreateExpression, Nothing) %>>
+             <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.PrimitiveExpression, Names.PrimitiveExpression, Nothing) %>>
                  <%= SerializeExpressionCommon(PrimitiveExpression) %>
                  <%= SerializePrimitiveObject(PrimitiveExpression.Value) %>
              </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
         ''' <summary>Serializes primitive object into <see cref="XElement"/></summary>
@@ -2398,6 +2439,7 @@ NonXml:         Xml = _
                 <%= SerializeExpressionCommon(PropertyReferenceExpression) %>
                 <%= SerializeExpression(PropertyReferenceExpression.TargetObject, <TargetObject/>.Name) %>
             </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2413,6 +2455,7 @@ NonXml:         Xml = _
             <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.PropertySetValueReferenceExpression, Names.PropertySetValueReferenceExpression, Nothing) %>>
                 <%= SerializeExpressionCommon(PropertySetValueReferenceExpression) %>
             </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2429,6 +2472,7 @@ NonXml:         Xml = _
                 <%= SerializeExpressionCommon(SnippetExpression) %>
                 <Value><%= New XCData(SnippetExpression.Value) %></Value>
             </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2444,6 +2488,7 @@ NonXml:         Xml = _
             <<%= ElementName %> xsi:type=<%= If(ElementName <> Names.ThisReferenceExpression, Names.ThisReferenceExpression, Nothing) %>>
                 <%= SerializeExpressionCommon(ThisReferenceExpression) %>
             </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2460,6 +2505,7 @@ NonXml:         Xml = _
                     <%= SerializeExpressionCommon(TypeOfExpression) %>
                     <%= SerializeTypeReference(TypeOfExpression.Type, <Type/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2476,6 +2522,7 @@ NonXml:         Xml = _
                     <%= SerializeExpressionCommon(TypeReferenceExpression) %>
                     <%= SerializeTypeReference(TypeReferenceExpression.Type, <Type/>.Name) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 
@@ -2493,6 +2540,7 @@ NonXml:         Xml = _
                     >
                     <%= SerializeExpressionCommon(VariableReferenceExpression) %>
                 </>
+            Xml.Attribute(xsiType).CollapseExtendedName()
             Return Xml
         End Function
 

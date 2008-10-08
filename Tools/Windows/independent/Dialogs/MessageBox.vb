@@ -18,6 +18,25 @@ Namespace WindowsT.IndependentT
     ''' The aim of such behavior is to provide dynamic message box which can be changed as it is displayd.
     ''' However it is up to derived class which changes it will track and interpret as changes of dialog.
     ''' <para>After message box is closed, it can be shown again (so called re-cycling; see <see cref="messagebox.Recycle"/>).</para>
+    ''' <para>
+    ''' In order to prevent confusing multiple overloads, names of Modal_*, ModalF_*, ModelEx_* and Error_* functions are suffixed with abberivations of accepted parameters. The <see cref="MessageBox.Show"/> method stays overloaded.
+    ''' Meaning of abberivations are following:
+    ''' <list type="table">
+    ''' <listheader><term>Abbr.</term><description>Meaning</description></listheader>
+    ''' <item><term>a</term><description>args - Formatting string arguments</description></item>
+    ''' <item><term>B</term><description>Buttons - Either <see cref="MessageBox.MessageBoxButton"/> objects or or-ed values of <see cref="MessageBox.MessageBoxButton.Buttons"/></description></item>
+    ''' <item><term>E</term><description>Items - assorted items to be shown on message box such as buttons, checkboxes, comboboxes etc.</description></item>
+    ''' <item><term>H</term><description>ShowHandler - delegate to be called when message box is shown</description></item>
+    ''' <item><term>I</term><description>Icon - Either <see cref="Drawing.Icon"/>, <see cref="Drawing.Image"/> or <see cref="MessageBox.MessageBoxIcons"/> defining picture to be shown on message box</description></item>
+    ''' <item><term>M</term><description>Timer - Defines count-down time for self-closing message box</description></item>
+    ''' <item><term>O</term><description>Options - A <see cref="MessageBox.MessageBoxOptions"/> value</description></item>
+    ''' <item><term>P</term><description>Prompt - Main text to be shown to user</description></item>
+    ''' <item><term>S</term><description>Sound - Sound to be played when message box is shown</description></item>
+    ''' <item><term>T</term><description>Title - Text of message box header (title bar)</description></item>
+    ''' <item><term>W</term><description>Owner - Owner of messagebox - the window to which the message box will be modal</description></item>
+    ''' <item><term>X</term><description>Exception - Exception message box will show information about</description></item>
+    ''' </list>
+    ''' </para>
     ''' </remarks>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
@@ -1343,7 +1362,7 @@ Namespace WindowsT.IndependentT
                 Set(ByVal value As Object)
                     Dim old = SelectedItem
                     _SelectedItem = value
-                    If Not old.Equals(value) Then
+                    If (old Is Nothing Xor value Is Nothing) OrElse (old IsNot Nothing AndAlso Not old.Equals(value)) Then
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "SelectedItem")
                         OnSelectedItemChanged(e)
                     End If
@@ -3001,45 +3020,45 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <summary>Displays modal message box with given prompt</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$) As DialogResult
-            Return Modal(Prompt, CType(Nothing, String))
+        Public Shared Function Modal_P(ByVal Prompt$) As DialogResult
+            Return Modal_PT(Prompt, CType(Nothing, String))
         End Function
         ''' <summary>Displays modal message box with given prompt and title</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$) As DialogResult
-            Return Modal(Prompt, Title, MessageBoxButton.Buttons.OK)
+        Public Shared Function Modal_PT(ByVal Prompt$, ByVal Title$) As DialogResult
+            Return Modal_PTB(Prompt, Title, MessageBoxButton.Buttons.OK)
         End Function
         ''' <summary>Displays modal message box with formated prompt</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal ParamArray arguments As Object()) As DialogResult
-            Return Modal(Prompt, CType(Nothing, String), arguments)
+        Public Shared Function ModalF_Pa(ByVal Prompt$, ByVal ParamArray arguments As Object()) As DialogResult
+            Return Modal_PTWBIO(Prompt, CType(Nothing, String), arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt and given title</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Title">Message box title</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, MessageBoxButton.Buttons.OK, arguments)
+        Public Shared Function ModalF_PTa(ByVal Prompt$, ByVal Title$, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTBa(Prompt, Title, MessageBoxButton.Buttons.OK, arguments)
         End Function
         ''' <summary>Displays modal message box with given promt, title and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons) As DialogResult
-            Return Modal(Prompt, Title, Buttons, MessageBoxIcons.None)
+        Public Shared Function Modal_PTB(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons) As DialogResult
+            Return Modal_PTBI(Prompt, Title, Buttons, MessageBoxIcons.None)
         End Function
         ''' <summary>Displays modal message box with given prompt and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Buttons As MessageBoxButton.Buttons) As DialogResult
-            Return Modal(Prompt, CType(Nothing, String), Buttons)
+        Public Shared Function Modal_PB(ByVal Prompt$, ByVal Buttons As MessageBoxButton.Buttons) As DialogResult
+            Return Modal_PTB(Prompt, CType(Nothing, String), Buttons)
         End Function
         ''' <summary>Displays modal message box with formate prompt, given title an buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3047,16 +3066,16 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Buttons, MessageBoxIcons.None, arguments)
+        Public Shared Function ModalF_PTBa(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTBIa(Prompt, Title, Buttons, MessageBoxIcons.None, arguments)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and icon</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons) As DialogResult
-            Return Modal(Prompt, Title, MessageBoxButton.Buttons.OK, Icon)
+        Public Shared Function Modal_PTI(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons) As DialogResult
+            Return Modal_PTBI(Prompt, Title, MessageBoxButton.Buttons.OK, Icon)
         End Function
         ''' <summary>Displays modal message with given prompt, title, buttons and icon</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3064,8 +3083,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons) As DialogResult
-            Return Modal(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon)
+        Public Shared Function Modal_PTBI(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons) As DialogResult
+            Return Modal_PTOBIS(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title and icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3073,8 +3092,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Title">Message box title</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/>. Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, MessageBoxButton.Buttons.OK, Icon, arguments)
+        Public Shared Function ModalF_PTIa(ByVal Prompt$, ByVal Title$, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTBIa(Prompt, Title, MessageBoxButton.Buttons.OK, Icon, arguments)
         End Function
         ''' <summary>Displays modal message with formated prompt, given title, buttons and icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3083,8 +3102,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/> Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon, arguments)
+        Public Shared Function ModalF_PTBIa(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBIa(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon, arguments)
         End Function
         ''' <summary>Displays modal message box with given prompt, tile and options. Optinally also buttons and icon.</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3093,9 +3112,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <param name="Sound">Sound to be played when message box is shown. If null, it is chosen automatically.</param>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.None, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
+        Public Shared Function Modal_PTOBIS(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.None, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
             If Sound Is Nothing Then Sound = GetAssociatedSound(Icon)
-            Return Modal(Prompt, Title, Options, GetIconDelegate.Invoke(Icon), Buttons, Sound)
+            Return Modal_PTOIBS(Prompt, Title, Options, GetIconDelegate.Invoke(Icon), Buttons, Sound)
         End Function
         ''' <summary>Gets sound associated with given icon</summary>
         ''' <param name="Icon">Icon to get sound for</param>
@@ -3123,8 +3142,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Options, MessageBoxButton.Buttons.OK, arguments)
+        Public Shared Function ModalF_PTOa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBa(Prompt, Title, Options, MessageBoxButton.Buttons.OK, arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options and buttons</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3133,8 +3152,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Options, Buttons, MessageBoxIcons.None, arguments)
+        Public Shared Function ModalF_PTOBa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBIa(Prompt, Title, Options, Buttons, MessageBoxIcons.None, arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options and predefined icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3143,8 +3162,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/> Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Options, MessageBoxButton.Buttons.OK, Icon, arguments)
+        Public Shared Function ModalF_PTOIa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBIa(Prompt, Title, Options, MessageBoxButton.Buttons.OK, Icon, arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options, buttons and predefined icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3154,8 +3173,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Options, GetIconDelegate.Invoke(Icon), Buttons, GetAssociatedSound(Icon), arguments)
+        Public Shared Function ModalF_PTOBIa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As MessageBoxIcons, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBISa(Prompt, Title, Options, Buttons, GetIconDelegate.Invoke(Icon), GetAssociatedSound(Icon), arguments)
         End Function
 #Region "Custom Icon"
         ''' <summary>Displays modal message with given prompt, title, buttons and custom icon</summary>
@@ -3164,8 +3183,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image) As DialogResult
-            Return Modal(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon)
+        Public Shared Function Modal_PTBI(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image) As DialogResult
+            Return Modal_PTMBIOW(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title and custom icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3173,8 +3192,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Title">Message box title</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, MessageBoxButton.Buttons.OK, Icon, arguments)
+        Public Shared Function ModalF_PTIa(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTBIa(Prompt, Title, MessageBoxButton.Buttons.OK, Icon, arguments)
         End Function
         ''' <summary>Displays modal message with formated prompt, given title, buttons and custom  icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3183,8 +3202,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon, arguments)
+        Public Shared Function ModalF_PTBIa(ByVal Prompt$, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBIa(Prompt, Title, MessageBoxOptions.AlignLeft, Buttons, Icon, arguments)
         End Function
         ''' <summary>Displays modal message box with given prompt, tile and options and custom icon. Optinally also buttons.</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3193,7 +3212,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <param name="Sound">Sound to be played when message box is shown</param>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
+        Public Shared Function Modal_PTOIBS(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Sound As MediaT.Sound = Nothing) As DialogResult
             Dim box As New FakeBox With {.Prompt = Prompt, .Title = Title, .Options = Options, .Icon = Icon, .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
@@ -3206,8 +3225,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Options, MessageBoxButton.Buttons.OK, Icon, arguments)
+        Public Shared Function ModalF_PTOIa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBIa(Prompt, Title, Options, MessageBoxButton.Buttons.OK, Icon, arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options and custom icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3216,8 +3235,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"></paramref> can be null. Some icons are associated with sound (<see cref="GetAssociatedSound"/>).</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"></paramref> using the <see cref="String.Format"></see> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal Sound As MediaT.Sound, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt, Title, Options, MessageBoxButtons.OK, Icon, Sound, arguments)
+        Public Shared Function ModalF_PTOISa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal Sound As MediaT.Sound, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOa(Prompt, Title, Options, MessageBoxButtons.OK, Icon, Sound, arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options, buttons and custom icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3227,8 +3246,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
-            Return ModalF(Prompt$, Title$, Options, Buttons, Icon, DirectCast(Nothing, MediaT.Sound), arguments)
+        Public Shared Function ModalF_PTOBIa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
+            Return ModalF_PTOBISa(Prompt$, Title$, Options, Buttons, Icon, DirectCast(Nothing, MediaT.Sound), arguments)
         End Function
         ''' <summary>Displays modal message box with formated prompt, given title, options, buttons and custom icon</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3239,7 +3258,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Sound">Sound to be played when message box is shown</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal Sound As MediaT.Sound, ByVal ParamArray arguments As Object()) As DialogResult
+        Public Shared Function ModalF_PTOBISa(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal Sound As MediaT.Sound, ByVal ParamArray arguments As Object()) As DialogResult
             Dim box As New FakeBox With {.Prompt = String.Format(Prompt, arguments), .Title = Title, .Options = Options, .Icon = Icon, .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
@@ -3250,8 +3269,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Title">Message box title</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Icon As Image) As DialogResult
-            Return Modal(Prompt, Title, MessageBoxButton.Buttons.OK, Icon)
+        Public Shared Function Modal_PTI(ByVal Prompt$, ByVal Title$, ByVal Icon As Image) As DialogResult
+            Return Modal_PTBI(Prompt, Title, MessageBoxButton.Buttons.OK, Icon)
         End Function
 #End Region
         ''' <summary>Displays modal message box with given prompt, title, custom icon and custom buttons</summary>
@@ -3261,8 +3280,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal ParamArray Buttons As MessageBoxButton()) As DialogResult
-            Return Modal(Prompt, Title, MessageBoxOptions.AlignLeft, Icon, Buttons)
+        Public Shared Function Modal_PTIB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal ParamArray Buttons As MessageBoxButton()) As DialogResult
+            Return Modal_PTOIB(Prompt, Title, MessageBoxOptions.AlignLeft, Icon, Buttons)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, options, custom icon and custom buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3272,7 +3291,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal ParamArray Buttons As MessageBoxButton()) As DialogResult
+        Public Shared Function Modal_PTOIB(ByVal Prompt$, ByVal Title$, ByVal Options As MessageBoxOptions, ByVal Icon As Image, ByVal ParamArray Buttons As MessageBoxButton()) As DialogResult
             Dim box As New FakeBox With {.Prompt = Prompt, .Title = Title, .Options = Options, .Icon = Icon}
             box.SetButtons(Buttons)
             Return ShowTemplate(box)
@@ -3285,7 +3304,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
+        Public Shared Function Modal_PTWBIO(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
             Dim box As New FakeBox With { _
                 .Prompt = Prompt, .title = Title, _
                 .Options = Options, .icon = Icon}
@@ -3300,8 +3319,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
-            Return Modal(String.Format(Prompt, arguments), Title, Owner, Buttons, Icon)
+        Public Shared Function ModalF_PTWBIa(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, ByVal Buttons As MessageBoxButton.Buttons, ByVal Icon As Image, ByVal ParamArray arguments As Object()) As DialogResult
+            Return Modal_PTWBIO(String.Format(Prompt, arguments), Title, Owner, Buttons, Icon)
         End Function
         ''' <summary>Dsiplays modal message box with formated prompt, given title and owner</summary>
         ''' <param name="Prompt">Format string for promt to be shown to user</param>
@@ -3309,8 +3328,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="arguments">Formating arguments for prompt. Arguments are placed in place of placeholders in <paramref name="Prompt"/> using the <see cref="String.Format"/> function.</param>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function ModalF(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, ByVal ParamArray arguments As Object()) As DialogResult
-            ModalF(Prompt, Title, Owner, MessageBoxButton.Buttons.OK, CType(Nothing, Image), arguments)
+        Public Shared Function ModalF_PTWa(ByVal Prompt$, ByVal Title$, ByVal Owner As IWin32Window, ByVal ParamArray arguments As Object()) As DialogResult
+            ModalF_PTWBIa(Prompt, Title, Owner, MessageBoxButton.Buttons.OK, CType(Nothing, Image), arguments)
         End Function
         ''' <summary>Displays autoclosing modal message box</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3321,7 +3340,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Timer As TimeSpan, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+        Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As TimeSpan, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
             Dim box As New FakeBox With { _
                 .Prompt = Prompt, .title = Title, _
                 .Options = Options, .icon = Icon, .Timer = Timer}
@@ -3337,8 +3356,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Options">Options that controls messagebox layout and behaviour</param>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function Modal(ByVal Prompt$, ByVal Title$, ByVal Timer As Integer, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
-            Return Modal(Prompt, Title, TimeSpan.FromSeconds(Timer), Buttons, Icon, Options, Owner)
+        Public Shared Function Modal_PTMBIOW(ByVal Prompt$, ByVal Title$, ByVal Timer As Integer, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing) As DialogResult
+            Return Modal_PTMBIOW(Prompt, Title, TimeSpan.FromSeconds(Timer), Buttons, Icon, Options, Owner)
         End Function
 #End Region
 #Region "ModalEx"
@@ -3353,7 +3372,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <param name="Sound">Sound to be played whne message box is shown.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
+        Public Shared Function ModalEx_PTEIOWMHS(ByVal Prompt$, ByVal Title$, ByVal Items As IEnumerable(Of Object), Optional ByVal Icon As Image = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Timer As Integer = 0, Optional ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs) = Nothing, Optional ByVal Sound As MediaT.Sound = Nothing) As MessageBox
             Dim box As New FakeBox With {.Options = Options, .Prompt = Prompt, .Title = Title, .Timer = TimeSpan.FromSeconds(Timer), .PlayOnShow = Sound}
             box.Buttons.Clear()
             box.Buttons.AddRange(Items.OfType(Of MessageBoxButton))
@@ -3379,9 +3398,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
+        Public Shared Function ModalEx_PTIOWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Options As MessageBoxOptions, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],[Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, Options, Owner, Timer, ShownHandler)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, Options, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner, timer, show ahndler and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3392,9 +3411,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
+        Public Shared Function ModalEx_PTIWMHE(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                   [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner, timer, show ahndler and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3406,10 +3425,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Timer">Time (in seconds) after which the message box will close automatically</param>
         ''' <param name="ShownHandler">Delegate that will handle the <see cref="Shown"/> event of message box</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
+        Public Shared Function ModalEx_PTIWMHB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal Timer As Integer, ByVal ShownHandler As EventHandler(Of MessageBox, EventArgs), ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, Timer, ShownHandler)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon, owner and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3418,9 +3437,9 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Items As Object()) As MessageBox
+        Public Shared Function ModalEx_PTIWS(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title, icon and owner and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3430,19 +3449,19 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Icon">Icon that will be shown on messagebox. Default preffered size is 64×64 px (can be changed in derived class). <paramref name="Icon"/> can be null.</param>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
+        Public Shared Function ModalEx_PTIWB(ByVal Prompt$, ByVal Title$, ByVal Icon As Image, ByVal Owner As IWin32Window, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Icon, MessageBoxOptions.AlignLeft, Owner, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and items</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
         ''' <param name="Title">Message box title</param>
         ''' <param name="Items">Items to be shown in message box. Place items of type <see cref="MessageBoxButton"/>, <see cref="MessageBoxCheckBox"/>, <see cref="MessageBoxRadioButton"/> and <see cref="String"/> here. <see cref="String"/> items are placed inside <see cref="ComboBox"/>. Items of other types are ignored.</param>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal ParamArray Items As Object()) As MessageBox
+        Public Shared Function ModalEx_PTS(ByVal Prompt$, ByVal Title$, ByVal ParamArray Items As Object()) As MessageBox
             '              Prompt, Title, Items,                                    [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, DirectCast(Items, IEnumerable(Of Object)), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
         End Function
         ''' <summary>Displays modal message box with given prompt, title and buttons</summary>
         ''' <param name="Prompt">Prompt to be shown</param>
@@ -3450,10 +3469,10 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Custom buttons. Each button should have different <see cref="MessageBoxButton.Result"/>, so you can distinguish which button was clicked.</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Buttons"/> is null</exception>
         ''' <returns>Instance of message box. The instance is alredy closed when this function returns.</returns>
-        Public Shared Function ModalEx(ByVal Prompt$, ByVal Title$, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
+        Public Shared Function ModalEx_PTB(ByVal Prompt$, ByVal Title$, ByVal ParamArray Buttons As MessageBoxButton()) As MessageBox
             If Buttons Is Nothing Then Throw New ArgumentNullException("Buttons")
             '              Prompt, Title, Items,                          [Icon], [Options],                 [Owner], [Timer], [ShownHandler]
-            Return ModalEx(Prompt, Title, New Wrapper(Of Object)(Buttons), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
+            Return ModalEx_PTEIOWMHS(Prompt, Title, New Wrapper(Of Object)(Buttons), Nothing, MessageBoxOptions.AlignLeft, Nothing, 0, Nothing)
         End Function
 #End Region
 #Region "Error"
@@ -3461,15 +3480,15 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <returns>Indicates button clicked by user</returns>
         ''' <remarks>Title will contain <see cref="Type.Name"/> of exception</remarks>
-        Public Shared Function [Error](ByVal ex As Exception) As DialogResult
-            Return Modal(ex.Message, ex.GetType.Name, MessageBoxIcons.Error)
+        Public Shared Function [Error_X](ByVal ex As Exception) As DialogResult
+            Return Modal_PTI(ex.Message, ex.GetType.Name, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/> and custom title</summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <param name="Title">Message box title</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Title$) As DialogResult
-            Return Modal(ex.Message, Title, MessageBoxIcons.Error)
+        Public Shared Function [Error_XT](ByVal ex As Exception, ByVal Title$) As DialogResult
+            Return Modal_PTI(ex.Message, Title, MessageBoxIcons.Error)
         End Function
 
         ''' <summary>Displays modal message box with information about <see cref="Exception"/> with given title and owner</summary>
@@ -3477,34 +3496,16 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Title">Message box title</param>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Title$, ByVal Owner As IWin32Window) As DialogResult
-            Return Modal(ex.Message, Title, Owner, MessageBoxIcons.Error)
+        Public Shared Function [Error_XTW](ByVal ex As Exception, ByVal Title$, ByVal Owner As IWin32Window) As DialogResult
+            Return Modal_PTWBIO(ex.Message, Title, Owner, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
-            Return Modal(ex.Message, ex.GetType.Name, Buttons, Buttons, MessageBoxIcons.Error)
-        End Function
-        ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
-        ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
-        ''' <param name="Title">Message box title</param>
-        ''' <param name="Buttons">Defines which buttons will be available to user</param>
-        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
-        ''' <returns>Indicates button clicked by user</returns>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
-            Return Modal(ex.Message, Title, MessageBoxIcons.Error)
-        End Function
-        ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
-        ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
-        ''' <param name="Buttons">Defines which buttons will be available to user</param>
-        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
-        ''' <returns>Indicates button clicked by user</returns>
-        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As IWin32Window, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
-            Return ModalF(ex.Message, ex.GetType.Name, Owner, Buttons, MessageBoxIcons.Error)
+        Public Shared Function [Error_XBI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
+            Return Modal_PTOBIS(ex.Message, ex.GetType.Name, Buttons, Buttons, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
@@ -3512,9 +3513,27 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <param name="Buttons">Defines which buttons will be available to user</param>
         ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
         ''' <returns>Indicates button clicked by user</returns>
+        Public Shared Function [Error_XTBI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
+            Return Modal_PTI(ex.Message, Title, MessageBoxIcons.Error)
+        End Function
+        ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
+        ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
+        ''' <param name="Buttons">Defines which buttons will be available to user</param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As IWin32Window, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
-            Return ModalF(ex.Message, Title, Owner, Buttons, MessageBoxIcons.Error)
+        Public Shared Function [Error_XBWI](ByVal ex As Exception, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As IWin32Window, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
+            Return ModalF_PTWa(ex.Message, ex.GetType.Name, Owner, Buttons, MessageBoxIcons.Error)
+        End Function
+        ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
+        ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
+        ''' <param name="Title">Message box title</param>
+        ''' <param name="Buttons">Defines which buttons will be available to user</param>
+        ''' <param name="Icon">Defines one of predefined icons to show to user. Actual image is obtained via <see cref="GetIconDelegate"/></param>
+        ''' <returns>Indicates button clicked by user</returns>
+        ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
+        Public Shared Function [Error_XTBWI](ByVal ex As Exception, ByVal Title$, ByVal Buttons As MessageBoxButton.Buttons, ByVal Owner As IWin32Window, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error) As DialogResult
+            Return ModalF_PTWa(ex.Message, Title, Owner, Buttons, MessageBoxIcons.Error)
         End Function
         ''' <summary>Displays modal message box with information about <see cref="Exception"/></summary>
         ''' <param name="ex">Exception to show <see cref="Exception.Message"/> of</param>
@@ -3524,8 +3543,8 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
         ''' <returns>Indicates button clicked by user</returns>
         ''' <param name="Owner">The window message box window will be modal to (can be null)</param>
         ''' <param name="Prompt">Prompt to be shown</param>
-        Public Shared Function [Error](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
-            Return ModalF(Prompt & vbCrLf & ex.Message, Title, Owner, Buttons, Icon, Options)
+        Public Shared Function [Error_XPTIBWO](ByVal ex As Exception, ByVal Prompt$, ByVal Title$, Optional ByVal Icon As MessageBoxIcons = MessageBoxIcons.Error, Optional ByVal Buttons As MessageBoxButton.Buttons = MessageBoxButton.Buttons.OK, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal Options As MessageBoxOptions = MessageBoxOptions.AlignLeft) As DialogResult
+            Return ModalF_PTWa(Prompt & vbCrLf & ex.Message, Title, Owner, Buttons, Icon, Options)
         End Function
 #End Region
 #End Region

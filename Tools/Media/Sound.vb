@@ -236,7 +236,7 @@ Namespace MediaT
                     Try
                         val = New SoundPlayer(ofd.FileName)
                     Catch ex As Exception
-                        WindowsT.IndependentT.MessageBox.Error(ex)
+                        WindowsT.IndependentT.MessageBox.[Error_X](ex)
                         Result = False
                         Exit Sub
                     End Try

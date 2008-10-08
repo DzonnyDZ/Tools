@@ -265,7 +265,7 @@ Namespace WindowsT.FormsT
 Retry:          Try
                     doc.Save(sfdSave.FileName)
                 Catch ex As Exception
-                    If MBox.Error(ex, My.Resources.Error_, IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
+                    If MBox.[Error_XTBI](ex, My.Resources.Error_, IndependentT.MessageBox.MessageBoxButton.Buttons.Retry Or IndependentT.MessageBox.MessageBoxButton.Buttons.Cancel) = Windows.Forms.DialogResult.Retry AndAlso sfdSave.ShowDialog = Windows.Forms.DialogResult.OK Then GoTo Retry
                 End Try
             End If
         End Sub
@@ -276,7 +276,7 @@ Retry:          Try
                 Try
                     Data = KeyWordsEditor.ParseFromXml(Xml.Linq.XDocument.Load(ofdLoad.FileName))
                 Catch ex As Exception
-                    MBox.Error(ex, My.Resources.Error_)
+                    MBox.[Error_XT](ex, My.Resources.Error_)
                     Exit Sub
                 End Try
                 If Me.For.AutoCompleteStable IsNot Nothing Then

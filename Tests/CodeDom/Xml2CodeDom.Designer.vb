@@ -51,6 +51,10 @@
             Me.tmiCPPVS = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiJSP = New System.Windows.Forms.ToolStripMenuItem
             Me.tmiJS = New System.Windows.Forms.ToolStripMenuItem
+            Me.tmiBrowse = New System.Windows.Forms.ToolStripMenuItem
+            Me.tssLangSep2 = New System.Windows.Forms.ToolStripSeparator
+            Me.tssLangSep1 = New System.Windows.Forms.ToolStripSeparator
+            Me.ofdDll = New System.Windows.Forms.OpenFileDialog
             Me.tmpMain.SuspendLayout()
             Me.fraLeft.SuspendLayout()
             Me.fraCenter.SuspendLayout()
@@ -284,61 +288,85 @@
             '
             Me.ofdOpen.DefaultExt = "xml"
             Me.ofdOpen.Filter = "XML Files (*.xml)|*.xml|HolX files (*.HolX)|*.HolX|All files (*.*)|*.*"
+            Me.ofdOpen.Title = "Open XML file"
             '
             'cmsLanguages
             '
-            Me.cmsLanguages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiVB, Me.tmiCS, Me.tmiCPP, Me.tmiJSP, Me.tmiJS})
+            Me.cmsLanguages.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiVB, Me.tmiCS, Me.tmiCPP, Me.tmiJSP, Me.tmiJS, Me.tssLangSep1, Me.tssLangSep2, Me.tmiBrowse})
             Me.cmsLanguages.Name = "cmsLanguages"
-            Me.cmsLanguages.Size = New System.Drawing.Size(136, 114)
+            Me.cmsLanguages.Size = New System.Drawing.Size(153, 170)
             '
             'tmiVB
             '
             Me.tmiVB.Name = "tmiVB"
-            Me.tmiVB.Size = New System.Drawing.Size(135, 22)
+            Me.tmiVB.Size = New System.Drawing.Size(128, 22)
             Me.tmiVB.Text = "Visual Basic"
             '
             'tmiCS
             '
             Me.tmiCS.Name = "tmiCS"
-            Me.tmiCS.Size = New System.Drawing.Size(135, 22)
+            Me.tmiCS.Size = New System.Drawing.Size(128, 22)
             Me.tmiCS.Text = "C#"
             '
             'tmiCPP
             '
             Me.tmiCPP.DropDownItems.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiCPPStandard, Me.tmiCPP7, Me.tmiCPPVS})
             Me.tmiCPP.Name = "tmiCPP"
-            Me.tmiCPP.Size = New System.Drawing.Size(135, 22)
+            Me.tmiCPP.Size = New System.Drawing.Size(128, 22)
             Me.tmiCPP.Text = "C++"
             '
             'tmiCPPStandard
             '
             Me.tmiCPPStandard.Name = "tmiCPPStandard"
-            Me.tmiCPPStandard.Size = New System.Drawing.Size(152, 22)
+            Me.tmiCPPStandard.Size = New System.Drawing.Size(134, 22)
             Me.tmiCPPStandard.Text = "Standard"
             '
             'tmiCPP7
             '
             Me.tmiCPP7.Name = "tmiCPP7"
-            Me.tmiCPP7.Size = New System.Drawing.Size(152, 22)
+            Me.tmiCPP7.Size = New System.Drawing.Size(134, 22)
             Me.tmiCPP7.Text = "7"
             '
             'tmiCPPVS
             '
             Me.tmiCPPVS.Name = "tmiCPPVS"
-            Me.tmiCPPVS.Size = New System.Drawing.Size(152, 22)
+            Me.tmiCPPVS.Size = New System.Drawing.Size(134, 22)
             Me.tmiCPPVS.Text = "Visual Studio"
             '
             'tmiJSP
             '
             Me.tmiJSP.Name = "tmiJSP"
-            Me.tmiJSP.Size = New System.Drawing.Size(135, 22)
+            Me.tmiJSP.Size = New System.Drawing.Size(128, 22)
             Me.tmiJSP.Text = "J#"
             '
             'tmiJS
             '
             Me.tmiJS.Name = "tmiJS"
-            Me.tmiJS.Size = New System.Drawing.Size(135, 22)
+            Me.tmiJS.Size = New System.Drawing.Size(128, 22)
             Me.tmiJS.Text = "Java Script"
+            '
+            'tmiBrowse
+            '
+            Me.tmiBrowse.Name = "tmiBrowse"
+            Me.tmiBrowse.Size = New System.Drawing.Size(152, 22)
+            Me.tmiBrowse.Text = "Browse ..."
+            '
+            'tssLangSep2
+            '
+            Me.tssLangSep2.Name = "tssLangSep2"
+            Me.tssLangSep2.Size = New System.Drawing.Size(125, 6)
+            '
+            'tssLangSep1
+            '
+            Me.tssLangSep1.Name = "tssLangSep1"
+            Me.tssLangSep1.Size = New System.Drawing.Size(125, 6)
+            Me.tssLangSep1.Visible = False
+            '
+            'ofdDll
+            '
+            Me.ofdDll.DefaultExt = "dll"
+            Me.ofdDll.Filter = "Assemblies (*.dll, *.exe)|*.dll;*.exe"
+            Me.ofdDll.Title = "Select an assembly"
             '
             'frmXml2CodeDom
             '
@@ -390,5 +418,9 @@
         Friend WithEvents tmiCPPStandard As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents tmiCPP7 As System.Windows.Forms.ToolStripMenuItem
         Friend WithEvents tmiCPPVS As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents tssLangSep1 As System.Windows.Forms.ToolStripSeparator
+        Friend WithEvents tssLangSep2 As System.Windows.Forms.ToolStripSeparator
+        Friend WithEvents tmiBrowse As System.Windows.Forms.ToolStripMenuItem
+        Friend WithEvents ofdDll As System.Windows.Forms.OpenFileDialog
     End Class
 End Namespace

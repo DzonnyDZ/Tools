@@ -38,7 +38,7 @@ Namespace IOt
                 Try
                     Link = ShellLink.CreateLink(ofdSelectFile.FileName, sfdSaveLink.FileName)
                 Catch ex As Exception
-                    Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                    Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
                 End Try
             End If
         End Sub
@@ -48,7 +48,7 @@ Namespace IOt
                 Try
                     Link = New ShellLink(ofdOpenLink.FileName)
                 Catch ex As Exception
-                    Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                    Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
                 End Try
             End If
         End Sub
@@ -57,7 +57,7 @@ Namespace IOt
             Try
                 Link.Save()
             Catch ex As Exception
-                Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
             End Try
         End Sub
 
@@ -66,19 +66,19 @@ Namespace IOt
                 Try
                     Link.SaveAs(sfdSaveLink.FileName)
                 Catch ex As Exception
-                    Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                    Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
                 End Try
             End If
         End Sub
 
- 
+
         Private Sub cmdOpenByPath_Click(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdOpenByPath.Click
             Dim result = InputBox("Etner path", "Open link")
             If result = "" Then Return
             Try
                 Link = New ShellLink(result)
             Catch ex As Exception
-                Tools.WindowsT.IndependentT.MessageBox.Error(ex)
+                Tools.WindowsT.IndependentT.MessageBox.[Error_X](ex)
             End Try
         End Sub
     End Class

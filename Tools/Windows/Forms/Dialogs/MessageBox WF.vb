@@ -396,16 +396,16 @@ Namespace WindowsT.FormsT
                 Try
                     cmbCombo.SelectedItem = sender.SelectedItem
                 Finally
-                    sender.SelectedItem = cmbCombo.SelectedItem
-                    sender.SelectedIndex = cmbCombo.SelectedIndex
+                    MessageBox.ComboBox.SelectedItem = cmbCombo.SelectedItem
+                    MessageBox.ComboBox.SelectedIndex = cmbCombo.SelectedIndex
                 End Try
             End If
         End Sub
         Private Sub cmbCombo_SelectedIndexChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.SelectedIndexChanged
-            If MessageBox.CheckBoxes Is Nothing Then Exit Sub
+            If MessageBox.ComboBox Is Nothing Then Exit Sub
             If MessageBox.ComboBox.SelectedIndex <> sender.SelectedIndex OrElse (sender.SelectedItem Is Nothing Xor MessageBox.ComboBox.SelectedItem Is Nothing) OrElse (sender.SelectedItem IsNot Nothing AndAlso Not sender.SelectedItem.Equals(MessageBox.ComboBox.SelectedItem)) Then
-                sender.SelectedIndex = cmbCombo.SelectedIndex
-                sender.SelectedItem = cmbCombo.SelectedItem
+                MessageBox.ComboBox.SelectedItem = cmbCombo.SelectedItem
+                MessageBox.ComboBox.SelectedIndex = cmbCombo.SelectedIndex
             End If
         End Sub
         Private Sub cmbCombo_TextChanged(ByVal sender As ComboBox, ByVal e As System.EventArgs) Handles cmbCombo.TextChanged
