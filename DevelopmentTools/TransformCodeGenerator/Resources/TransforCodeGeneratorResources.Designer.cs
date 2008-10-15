@@ -39,7 +39,7 @@ namespace Tools.ResourcesT {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Tools.Generators.Resources.TransforCodeGeneratorResources", typeof(TransforCodeGeneratorResources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Tools.GeneratorsT.Resources.TransforCodeGeneratorResources", typeof(TransforCodeGeneratorResources).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

@@ -291,6 +291,12 @@
     <Compile Include="Projects\Projects.vb" />
     <Compile Include="Special\TypeTools.vb" />
     <Compile Include="Tests\AttributeTest.vb" />
+    <Compile Include="VisualStudio\Generators\frmCustomToolBase.Designer.vb">
+      <DependentUpon>frmCustomToolBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="VisualStudio\Generators\frmCustomToolBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Forms\MessageBox.Designer.vb">
       <DependentUpon>MessageBox.vb</DependentUpon>
     </Compile>
@@ -473,6 +479,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="VisualStudio\Generators\frmCustomToolBase.resx">
+      <DependentUpon>frmCustomToolBase.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\MessageBox.resx">
       <DependentUpon>MessageBox.vb</DependentUpon>
     </EmbeddedResource>
@@ -578,6 +587,10 @@
     <ProjectReference Include="..\Tools Visual Studio\Tools Visual Studio.vbproj">
       <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
       <Name>Tools Visual Studio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools VisualStudio CS\Tools VisualStudio CS.csproj">
+      <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
+      <Name>Tools VisualStudio CS</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools Win\Tools Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>

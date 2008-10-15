@@ -152,6 +152,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <Compile Include="Registry\RegistryT.vb" />
     <Compile Include="Resources\ControlsWin.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

@@ -108,6 +108,24 @@ namespace Tools.ResourcesT {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'CustomToolClass must have {0} applied.'.
+        /// </summary>
+        internal static string CustomToolClassMustHave0Applied {
+            get {
+                return ResourceManager.GetString("CustomToolClassMustHave0Applied", _resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Custom tool must inherit from CustomTollBase.'.
+        /// </summary>
+        internal static string CustomToolMustInheritFromCustomToolBase {
+            get {
+                return ResourceManager.GetString("CustomToolMustInheritFromCustomToolBase", _resourceCulture);
+            }
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to '**** ERROR: vsProj.References.Add() throws exception: '.
         /// </summary>
         internal static string ERRORVsProjReferencesAddThrowsException {
@@ -132,6 +150,15 @@ namespace Tools.ResourcesT {
         internal static string GetServiceTypeofProjectReturnNull {
             get {
                 return ResourceManager.GetString("GetServiceTypeofProjectReturnNull", _resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Guid cannot be empty.'.
+        /// </summary>
+        internal static string GuidCannotBeEmpty {
+            get {
+                return ResourceManager.GetString("GuidCannotBeEmpty", _resourceCulture);
             }
         }
         
@@ -217,6 +244,23 @@ namespace Tools.ResourcesT {
         }
         
         /// <summary>
+        /// Formats a localized string similar to 'CustomToolClass must have {0} applied.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal static string CustomToolClassMustHave0AppliedFormat(object arg0) {
+            return string.Format(_resourceCulture, CustomToolClassMustHave0Applied, arg0);
+        }
+        
+        /// <summary>
+        /// The stub formatting method returning the CustomToolMustInheritFromCustomToolBase property value.
+        /// </summary>
+        /// <returns>The CustomToolMustInheritFromCustomToolBase property value.</returns>
+        internal static string CustomToolMustInheritFromCustomToolBaseFormat() {
+            return CustomToolMustInheritFromCustomToolBase;
+        }
+        
+        /// <summary>
         /// The stub formatting method returning the ERRORVsProjReferencesAddThrowsException property value.
         /// </summary>
         /// <returns>The ERRORVsProjReferencesAddThrowsException property value.</returns>
@@ -238,6 +282,14 @@ namespace Tools.ResourcesT {
         /// <returns>The GetServiceTypeofProjectReturnNull property value.</returns>
         internal static string GetServiceTypeofProjectReturnNullFormat() {
             return GetServiceTypeofProjectReturnNull;
+        }
+        
+        /// <summary>
+        /// The stub formatting method returning the GuidCannotBeEmpty property value.
+        /// </summary>
+        /// <returns>The GuidCannotBeEmpty property value.</returns>
+        internal static string GuidCannotBeEmptyFormat() {
+            return GuidCannotBeEmpty;
         }
         
         /// <summary>

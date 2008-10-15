@@ -1,8 +1,3 @@
-/*
- * Copyright (C) 2006 Chris Stefano
- *       cnjs@mweb.co.za
- * I've foundthis great tool dunno where on the Internet and I hope I'm not violating any rights when I'v included it as development tool in ÐTools and tweaked it a little.      
- */
 namespace Tools.GeneratorsT {
     using System;
     using System.IO;
@@ -11,19 +6,22 @@ namespace Tools.GeneratorsT {
     using System.Xml;
     using System.Xml.XPath;
     using System.Xml.Xsl;
+    using System.Xml.Linq;
 
     /// <summary>
-    /// This is a transform code generator. It performs XSL transform as custom tool in Visual Studio.
+    /// This is a Code DOM transform code generator. It performs XSL transform as custom tool in Visual Studio and interprets result of the transformation as XML-serialized CodeDOM
     /// </summary>
-    /// <seealso cref="XsltCustomTool"/>
-    [Guid("2F8B768B-DBEA-407d-9A43-416BE87FA6A5")]
-    [CustomTool("TransformCodeGenerator", "Transform Code Generator")]
-    public class TransformCodeGenerator:CustomToolBase {
+    /// <seealso cref="Tools.CodeDomT.Xml2CodeDom"/>
+    /// <seealso cref="CodeDomXsltCustomTool"/>
+    /// <see cref="CodeDOMGenerator"/>
+    [Guid("3BB200B4-37B4-48d8-B611-A033EED4E647")]
+    [CustomTool("CodeDomTransformCodeGenerator", "Code DOM Transform Code Generator")]
+    public class CodeDomTransformCodeGenerator:CustomToolBase {
 
         /// <summary>
         /// CTor
         /// </summary>
-        public TransformCodeGenerator() { }
+        public CodeDomTransformCodeGenerator() { }
 
         /// <summary>
         /// Performs code generation
@@ -83,6 +81,11 @@ namespace Tools.GeneratorsT {
                 // do the transform
                 xslTransform.Transform(sourceDocument, args, outputWriter);
 
+                XDocument result = XDocument.Parse(outputWriter.ToString());
+                Tools.CodeDomT.Xml2CodeDom x2d = new Tools.CodeDomT.Xml2CodeDom();
+                outputWriter = new StringWriter();
+                base.CodeProvider.GenerateCodeFromCompileUnit(x2d.Xml2CompileUnit(result), outputWriter, new System.CodeDom.Compiler.CodeGeneratorOptions());
+
                 } catch(Exception ex) {
                 string bCommentStart;
                 string bCommentEnd;
@@ -107,7 +110,6 @@ namespace Tools.GeneratorsT {
                 }
 
             return outputWriter.ToString();
-
             }
 
 
@@ -115,7 +117,7 @@ namespace Tools.GeneratorsT {
         /// <param name="t">Type to be registered</param>
         [ComRegisterFunction]
         private static void ComRegister(Type t) {
-            if(t.Equals(typeof(TransformCodeGenerator))) {
+            if(t.Equals(typeof(CodeDomTransformCodeGenerator))) {
                 RegisterCustomTool(t, true);
                 Console.WriteLine("Custom tool {0} registered.", t.FullName);
                 }
@@ -124,7 +126,7 @@ namespace Tools.GeneratorsT {
         /// <param name="t">Type to be un-registered</param>
         [ComUnregisterFunction]
         private static void ComUnRegister(Type t) {
-            if(t.Equals(typeof(TransformCodeGenerator))) {
+            if(t.Equals(typeof(CodeDomTransformCodeGenerator))) {
                 RegisterCustomTool(t, false);
                 Console.WriteLine("Custom tool {0} un-registered.", t.FullName);
                 }

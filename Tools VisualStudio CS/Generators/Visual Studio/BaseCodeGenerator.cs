@@ -87,11 +87,11 @@ namespace Tools.GeneratorsT {
         /// <param name="rgbOutputFileContents">byte-array of output file contents</param>
         /// <param name="pcbOutput">count of bytes in the output byte-array</param>
         /// <param name="pGenerateProgress">interface to send progress updates to the shell</param>
-        public void Generate(string wszInputFilePath,
+        public int Generate(string wszInputFilePath,
           string bstrInputFileContents,
           string wszDefaultNamespace,
-          out IntPtr rgbOutputFileContents,
-          out int pcbOutput,
+          IntPtr[] rgbOutputFileContents,
+          out uint pcbOutput,
           IVsGeneratorProgress pGenerateProgress) {
             //_codeGeneratorProgress = pGenerateProgress;
             if(bstrInputFileContents == null) {
@@ -105,13 +105,14 @@ namespace Tools.GeneratorsT {
             byte[] bytes = GenerateCode(wszInputFilePath, bstrInputFileContents);
 
             if(bytes == null) {
-                rgbOutputFileContents = IntPtr.Zero;
+                rgbOutputFileContents[0] = IntPtr.Zero;
                 pcbOutput = 0;
             } else {
-                pcbOutput = bytes.Length;
-                rgbOutputFileContents = Marshal.AllocCoTaskMem(pcbOutput);
-                Marshal.Copy(bytes, 0, rgbOutputFileContents, pcbOutput);
+                pcbOutput =(uint)bytes.Length;
+                rgbOutputFileContents[0] = Marshal.AllocCoTaskMem((int)pcbOutput);
+                Marshal.Copy(bytes, 0, rgbOutputFileContents[0],(int) pcbOutput);
             }
+            return Microsoft.VisualStudio.VSConstants.S_OK;
         }
 
         ///// <summary>Allows reporting progress of the generator</summary>
@@ -141,6 +142,14 @@ namespace Tools.GeneratorsT {
             stream.Position = position;
 
             return bytes;
+        }
+
+        /// <summary>Retrieves the file extension that is given to the output file name. </summary>
+        /// <param name="pbstrDefaultExtension">[out, retval] Returns the file extension that is to be given to the output file name. The returned extension must include a leading period.</param>
+        /// <remarks><see cref="Microsoft.VisualStudio.VSConstants.S_OK"/></remarks>
+        int IVsSingleFileGenerator.DefaultExtension(out string pbstrDefaultExtension) {
+            pbstrDefaultExtension = GetDefaultExtension();
+            return Microsoft.VisualStudio.VSConstants.S_OK;
         }
     }
 }

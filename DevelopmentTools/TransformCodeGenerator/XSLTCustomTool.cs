@@ -113,5 +113,23 @@ namespace Tools.GeneratorsT {
 
             }
 
+        /// <summary>Called when assembly is registeered with COM</summary>
+        /// <param name="t">Type to be registered</param>
+        [ComRegisterFunction]
+        private static void ComRegister(Type t) {
+            if(t.Equals(typeof(XsltCustomTool))) {
+                RegisterCustomTool(t, true);
+                Console.WriteLine("Custom tool {0} registered.", t.FullName);
+                }
+            }
+        /// <summary>Called when assembly is un-registeered with COM</summary>
+        /// <param name="t">Type to be un-registered</param>
+        [ComUnregisterFunction]
+        private static void ComUnRegister(Type t) {
+            if(t.Equals(typeof(XsltCustomTool))) {
+                RegisterCustomTool(t, false);
+                Console.WriteLine("Custom tool {0} un-registered.", t.FullName);
+                }
+            }
         }
     }

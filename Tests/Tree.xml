@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <tree xmlns="http://dzonny.cz/xml/ĐTools/Tests/Tree">
-    <node name="Metanol" image="Assembly" tag="Tools.Tests.Projects.Metanol.Test" />
+    <!--<node name="Metanol" image="Assembly" tag="Tools.Tests.Projects.Metanol.Test" />-->
     <node name="Tools" image="Assembly">
         <node name="CodeDomT" image="Namespace">
             <node name="Xml2CodeDom" image="Class" tag="Tools.Tests.CodeDomT.frmXml2CodeDom.Test"/>
@@ -96,6 +96,11 @@
         <node name="DiagnosticsT" image="Namespace">
             <node name="ImageVisualizer" image="Class" tag="Tools.Tests.DiagnosticsT.frmImageVisualizer.Test" />
         </node>
+    </node>
+    <node name="Tools.VisualStudio.CS" image="Assembly">
+            <node name="GeneratorsT" image="Namespace">
+                <node name="CustomToolBase" image="Class" tag="Tools.Tests.GeneratorsT.frmCustomToolBase.Test"/>
+            </node>
     </node>
     <node name="Tools Win" image="Assembly">
         <node name="ConsoleT" image="Class">

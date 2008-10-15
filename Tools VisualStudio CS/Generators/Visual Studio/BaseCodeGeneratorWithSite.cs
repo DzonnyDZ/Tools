@@ -10,6 +10,7 @@ namespace Tools.GeneratorsT {
     using EnvDTE;
     using VSLangProj;
     using Microsoft.VisualStudio.Designer.Interfaces;
+    using Microsoft.VisualStudio.OLE.Interop;
 
     /// <summary>
     ///     This class exists to be cocreated a in a preprocessor build step.
@@ -137,14 +138,15 @@ namespace Tools.GeneratorsT {
         /// </summary>
         /// <param name="riid">interface to get</param>
         /// <param name="ppvSite">array in which to stuff return value</param>
-        public virtual void GetSite(ref Guid riid, object[] ppvSite) {
+        /// <exception cref="COMException"><see cref="Site"/> is null -or- cannot get interface from <paramref name="riid"/>.</exception>
+        public virtual void GetSite(ref Guid riid, out IntPtr ppvSite) {
 
-            if(ppvSite == null) {
+            /*if(ppvSite == IntPtr.Zero) {
                 throw new ArgumentNullException("ppvSite");
             }
             if(ppvSite.Length < 1) {
                 throw new ArgumentException(String.Format(Tools.ResourcesT.ExceptionsVsCs.ArrayMustHaveAtLeast1Member, "ppvSite"), "ppvSite");
-            }
+            }*/
 
             if(site == null) {
                 throw new COMException(Tools.ResourcesT.ExceptionsVsCs.ObjectIsNotSited, E_FAIL);
@@ -158,7 +160,7 @@ namespace Tools.GeneratorsT {
                 throw new COMException(Tools.ResourcesT.ExceptionsVsCs.SiteDoesNotSupportRequestedInterface, E_NOINTERFACE);
             }
 
-            ppvSite[0] = Marshal.GetObjectForIUnknown(intPointer);
+            ppvSite=intPointer;
         }
 
         /// <summary>
@@ -258,7 +260,6 @@ namespace Tools.GeneratorsT {
               System.Environment.Version.ToString())));
             codeNamespace.Comments.Add(new CodeCommentStatement(string.Empty));
         }
-
     }
 }
 #endif

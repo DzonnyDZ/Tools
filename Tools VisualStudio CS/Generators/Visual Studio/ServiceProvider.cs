@@ -4,12 +4,13 @@ namespace Tools.GeneratorsT {
     using System;
     using System.Diagnostics;
     using System.Runtime.InteropServices;
+ 
 
     /// <summary>
     ///     This wraps the <see cref="IOleServiceProvider"/> interface and provides an easy COM+ way to get at
     ///     services.
     /// </summary>
-    public class ServiceProvider:IServiceProvider, IObjectWithSite {
+    public class ServiceProvider:IServiceProvider, Microsoft.VisualStudio.OLE.Interop.IObjectWithSite {
         /// <summary>GUID of IUnknown</summary>
         private static Guid IID_IUnknown = new Guid("{00000000-0000-0000-C000-000000000046}");
         /// <summary>The <see cref="IOleServiceProvider"/> interface used.</summary>
@@ -102,8 +103,8 @@ namespace Tools.GeneratorsT {
             if(guid.Equals(typeof(IOleServiceProvider).GUID)) {
                 return serviceProvider;
             }
-            if(guid.Equals(typeof(IObjectWithSite).GUID)) {
-                return (IObjectWithSite)this;
+            if(guid.Equals(typeof(Microsoft.VisualStudio.OLE.Interop.IObjectWithSite).GUID)) {
+                return (Microsoft.VisualStudio.OLE.Interop.IObjectWithSite)this;
             }
 
             IntPtr pUnk;
@@ -128,8 +129,9 @@ namespace Tools.GeneratorsT {
         ///     Outparam that will contain the site object.
         /// </param>
         /// <seealso cref='IObjectWithSite'/>
-        void IObjectWithSite.GetSite(ref Guid riid, object[] ppvSite) {
-            ppvSite[0] = GetService(riid);
+        void Microsoft.VisualStudio.OLE.Interop.IObjectWithSite.GetSite(ref Guid riid, out IntPtr ppvSite) {
+            ppvSite = Marshal.GetIUnknownForObject(GetService(riid));
+            Marshal.GetIUnknownForObject(GetService(riid));
         }
 
         /// <summary>
@@ -140,7 +142,7 @@ namespace Tools.GeneratorsT {
         ///     used if it also implements IOleServiceProvider.
         /// </param>
         /// <seealso cref='IObjectWithSite'/>
-        void IObjectWithSite.SetSite(object pUnkSite) {
+        void Microsoft.VisualStudio.OLE.Interop.IObjectWithSite.SetSite(object pUnkSite) {
             if(pUnkSite is IOleServiceProvider) {
                 serviceProvider = (IOleServiceProvider)pUnkSite;
             }

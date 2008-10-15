@@ -21,7 +21,7 @@ Namespace ResourcesT
     '''<summary>
     '''A strongly-typed resource class, for looking up localized strings, formatting them, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.1.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.2.5.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
     Public Class ExceptionsWin
@@ -59,7 +59,7 @@ Namespace ResourcesT
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
                     Try 
                         If Object.ReferenceEquals(_resourceManager, Nothing) Then
-                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.ResourcesT.ExceptionsWin.ExceptionsWin", GetType(ExceptionsWin).Assembly))
+                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.ResourcesT.ExceptionsWin", GetType(ExceptionsWin).Assembly))
                         End If
                     Finally
                         Global.System.Threading.Monitor.Exit(InternalSyncObject)
@@ -125,6 +125,15 @@ Namespace ResourcesT
         Public Shared ReadOnly Property IsInvalidKeyKeysMustBeWithinRangeFrom0To255() As String
             Get
                 Return ResourceManager.GetString("IsInvalidKeyKeysMustBeWithinRangeFrom0To255", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to '{0} is unknown registry base key'.
+        '''</summary>
+        Public Shared ReadOnly Property IsUnknownRegistryBaseKey() As String
+            Get
+                Return ResourceManager.GetString("IsUnknownRegistryBaseKey", _resourceCulture)
             End Get
         End Property
         
@@ -233,6 +242,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function IsInvalidKeyKeysMustBeWithinRangeFrom0To255Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, IsInvalidKeyKeysMustBeWithinRangeFrom0To255, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} is unknown registry base key'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Shared Function IsUnknownRegistryBaseKeyFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, IsUnknownRegistryBaseKey, arg0)
         End Function
         
         '''<summary>

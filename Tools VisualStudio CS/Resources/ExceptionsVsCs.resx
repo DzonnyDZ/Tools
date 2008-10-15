@@ -153,4 +153,13 @@
   <data name="Class0DoesNotProvideA1Attribute" xml:space="preserve">
     <value>Class '{0}' does not provide a '{1}' attribute.</value>
   </data>
+  <data name="CustomToolClassMustHave0Applied" xml:space="preserve">
+    <value>CustomToolClass must have {0} applied.</value>
+  </data>
+  <data name="CustomToolMustInheritFromCustomToolBase" xml:space="preserve">
+    <value>Custom tool must inherit from CustomTollBase.</value>
+  </data>
+  <data name="GuidCannotBeEmpty" xml:space="preserve">
+    <value>Guid cannot be empty.</value>
+  </data>
 </root>

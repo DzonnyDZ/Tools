@@ -10,14 +10,28 @@ namespace Tools.GeneratorsT {
     /// <summary>
     /// Marks class as cutom tool
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]
+    [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class CustomToolAttribute:Attribute {
-
         /// <summary>Contains value of the <see cref="Name"/> property</summary>
         protected string _name;
-
         /// <summary>Contains vaklue of the <see cref="Description"/> property</summary>
         protected string _description;
+        /// <summary>Contains value of the <see cref="GeneratesDesignTimeSource"/> property</summary>
+        private bool generatesDesignTimeSource= true;
+        /// <summary>Gets or sets value indicating if custom tool generates design time source</summary>
+        /// <value>Default value is <c>true</c></value>
+        public bool GeneratesDesignTimeSource {
+            get { return generatesDesignTimeSource; }
+            set { generatesDesignTimeSource = value; }
+        }
+        /// <summary>Contains value of the <see cref="GeneratesDesignTimeSharedSource"/> property</summary>
+        private bool generatesDesignTimeSharedSource = false;
+        /// <summary>Gets or sets value indicating if custom tool generates design time shared source</summary>
+        /// <value>Default value is <c>false</c></value>
+        public bool GeneratesDesignTimeSharedSource {
+            get { return generatesDesignTimeSharedSource; }
+            set { generatesDesignTimeSharedSource = value; }
+            }
 
         /// <summary>
         /// CTor
