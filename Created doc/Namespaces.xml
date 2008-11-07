@@ -231,7 +231,7 @@
             <remarks>Unlike namespace <see cref="N:Tools.Tests"/>, which contains tests of classes created in the tools project, this namespace contains general- purpose test.</remarks>
         </member>
         <member name="N:Tools.DevicesT">
-            <summary>Contains classes fro working with hardware devices such as keyboard</summary>
+            <summary>Contains classes for working with hardware devices such as keyboard</summary>
         </member>
         <member name="N:Tools.VisualStudioT">
             <summary>Contains classes specific to Microsft Visual Studio sach as Visual Studio enhancements, custom tools, visualizers etc.</summary>

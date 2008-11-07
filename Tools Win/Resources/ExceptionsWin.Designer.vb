@@ -111,6 +111,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Hook is already registered for this instance.'.
+        '''</summary>
+        Public Shared ReadOnly Property HookIsAlreadyRegisteredForThisInstance() As String
+            Get
+                Return ResourceManager.GetString("HookIsAlreadyRegisteredForThisInstance", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Hook is not registered for this instance'.
+        '''</summary>
+        Public Shared ReadOnly Property HookIsNotRegisteredForThisInstance() As String
+            Get
+                Return ResourceManager.GetString("HookIsNotRegisteredForThisInstance", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Hotkey must include a modifier key.'.
         '''</summary>
         Public Shared ReadOnly Property HotkeyMustIncludeAModifierKey() As String
@@ -225,6 +243,22 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function File0DoesNotExistFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, File0DoesNotExist, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the HookIsAlreadyRegisteredForThisInstance property value.
+        '''</summary>
+        '''<returns>The HookIsAlreadyRegisteredForThisInstance property value.</returns>
+        Public Shared Function HookIsAlreadyRegisteredForThisInstanceFormat() As String
+            Return HookIsAlreadyRegisteredForThisInstance
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the HookIsNotRegisteredForThisInstance property value.
+        '''</summary>
+        '''<returns>The HookIsNotRegisteredForThisInstance property value.</returns>
+        Public Shared Function HookIsNotRegisteredForThisInstanceFormat() As String
+            Return HookIsNotRegisteredForThisInstance
         End Function
         
         '''<summary>

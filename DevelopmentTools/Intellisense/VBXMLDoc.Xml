@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!--This file redefines Visual Basic XML comments intellisense-->
-<!--Copy this file to c:\Documents and Settings\<user>\Application Data\Microsoft\VisualStudio\9.0\-->
+<!--Copy this file to c:\Documents and Settings\<user>\Application Data\Microsoft\VisualStudio\9.0\ (in XP)-->
+<!--c:\Users\<user>\AppData\Local\Microsoft\VisualStudio\9.0\ (in Vista)-->
 <XMLDocCommentSchema>
     <CodeElement type="Module">
         <Template>

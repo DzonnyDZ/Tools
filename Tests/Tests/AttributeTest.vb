@@ -184,7 +184,7 @@ Namespace TestsT
             Return tstr
         End Function
         Private Sub Test_ObjectReached(ByVal sender As Tools.TestsT.AttributeTest, ByVal [Object] As System.Reflection.ICustomAttributeProvider)
-            If (DevicesT.Keyboard.KeyStatus(Keys.Escape) And Windows.Input.KeyStates.Down) = Windows.Input.KeyStates.Down Then _
+            If (Tools.DevicesT.Keyboard.KeyStatus(Keys.Escape) And Windows.Input.KeyStates.Down) = Windows.Input.KeyStates.Down Then _
                 Throw New OperationCanceledException(oc.ToString())
             If Not verbose Then Exit Sub
             Console.ForegroundColor = ConsoleColor.White

@@ -129,11 +129,13 @@
     <Compile Include="API\GUI.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Hooks.vb" />
     <Compile Include="API\Messages.vb" />
     <Compile Include="API\Misc.vb" />
     <Compile Include="API\Public.vb" />
     <Compile Include="COM\ShellLinkNative.vb" />
     <Compile Include="Console\ConsoleT.vb" />
+    <Compile Include="Devices\LowLevelKeyboardHook.vb" />
     <Compile Include="IO\FileSystemTools.vb" />
     <Compile Include="Devices\Keyboard.vb" />
     <Compile Include="IO\ShellLink.vb" />
