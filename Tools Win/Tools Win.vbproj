@@ -135,6 +135,9 @@
     <Compile Include="API\Public.vb" />
     <Compile Include="COM\ShellLinkNative.vb" />
     <Compile Include="Console\ConsoleT.vb" />
+    <Compile Include="Devices\LowLevelMouseHook.vb" />
+    <Compile Include="Devices\Mouse.vb" />
+    <Compile Include="Devices\Win32Hook.vb" />
     <Compile Include="Devices\LowLevelKeyboardHook.vb" />
     <Compile Include="IO\FileSystemTools.vb" />
     <Compile Include="Devices\Keyboard.vb" />

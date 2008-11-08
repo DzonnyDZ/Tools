@@ -107,7 +107,8 @@
             <node name="AllocateConsole" image="Method Shortcut" tag="Tools.Tests.TestsT.AttributeTest.Test"/>
         </node>
         <node name="DevicesT" image="Namespace">
-            <node name="LowLevelKeyboardHook" image="Class" tag="Tools.Tests.DevicesT.frmLowLevelKeyboardHook.Test"/> 
+            <node name="LowLevelKeyboardHook" image="Class" tag="Tools.Tests.DevicesT.frmLowLevelKeyboardHook.Test"/>
+            <node name="LowLevelMouseHook" image="Class" tag="Tools.Tests.DevicesT.frmLowLevelMouseHook.Test"/>
         </node>
         <node name="WindowsT" image="Namespace">
             <node name="FormsT" image="Namespace">

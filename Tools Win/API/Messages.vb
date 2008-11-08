@@ -1236,6 +1236,19 @@ Namespace API.Messages
         ''' <description>If an application processes this message, it should return zero. </description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms645617.aspx</seealso></remarks>
         WM_MOUSEWHEEL = &H20A
+        ''' <summary><para>The WM_MOUSEHWHEEL message is sent to the focus window when the mouse's horizontal scroll wheel is tilted or rotated. The DefWindowProc function propagates the message to the window's parent. There should be no internal forwarding of the message, since DefWindowProc propagates it up the parent chain until it finds a window that processes it.</para>
+        ''' <para>A window receives this message through its WindowProc function.</para></summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>The high-order word indicates the distance the wheel is rotated, expressed in multiples or divisions of WHEEL_DELTA, which is 120. A positive value indicates that the wheel was rotated to the right; a negative value indicates that the wheel was rotated to the left. The low-order word indicates whether various virtual keys are down. This parameter can be one or more of the <see cref="wParam.WM_LBUTTONDBLCLK"/> values (but <see cref="wParam.WM_LBUTTONDBLCLK"/> are <see cref="Integer">Integers</see> while low-order word is <see cref="Short"/>).</description></item>
+        ''' <item><term>lParam</term>
+        ''' <description><para>The low-order word specifies the x-coordinate of the pointer, relative to the upper-left corner of the screen.</para>
+        ''' <para>The high-order word specifies the y-coordinate of the pointer, relative to the upper-left corner of the screen.</para></description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list>
+        ''' <para>This message is new in Windows Vista</para></remarks>
+        WM_MOUSEHWHEEL = &H20E
         ''' <summary>The WM_MOVE message is sent after a window has been moved.
         ''' A window receives this message through its WindowProc function. </summary>
         ''' <remarks><list type="table">

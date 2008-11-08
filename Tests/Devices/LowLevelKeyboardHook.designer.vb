@@ -10,6 +10,8 @@ Namespace DevicesT
             Me.lstMessages = New System.Windows.Forms.ListBox
             Me.cmdClear = New System.Windows.Forms.Button
             Me.cmdUnregister = New System.Windows.Forms.Button
+            Me.chkSuppress = New System.Windows.Forms.CheckBox
+            Me.chkHandled = New System.Windows.Forms.CheckBox
             Me.tlpMain.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -21,13 +23,16 @@ Namespace DevicesT
             Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
             Me.tlpMain.Controls.Add(Me.cmdRegister, 0, 0)
             Me.tlpMain.Controls.Add(Me.cmdRegisterAsync, 1, 0)
-            Me.tlpMain.Controls.Add(Me.lstMessages, 0, 1)
-            Me.tlpMain.Controls.Add(Me.cmdClear, 0, 2)
+            Me.tlpMain.Controls.Add(Me.lstMessages, 0, 2)
+            Me.tlpMain.Controls.Add(Me.cmdClear, 0, 3)
             Me.tlpMain.Controls.Add(Me.cmdUnregister, 2, 0)
+            Me.tlpMain.Controls.Add(Me.chkSuppress, 0, 1)
+            Me.tlpMain.Controls.Add(Me.chkHandled, 2, 1)
             Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
             Me.tlpMain.Location = New System.Drawing.Point(0, 0)
             Me.tlpMain.Name = "tlpMain"
-            Me.tlpMain.RowCount = 3
+            Me.tlpMain.RowCount = 4
+            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
@@ -64,9 +69,9 @@ Namespace DevicesT
             Me.lstMessages.Dock = System.Windows.Forms.DockStyle.Fill
             Me.lstMessages.FormattingEnabled = True
             Me.lstMessages.IntegralHeight = False
-            Me.lstMessages.Location = New System.Drawing.Point(3, 32)
+            Me.lstMessages.Location = New System.Drawing.Point(3, 55)
             Me.lstMessages.Name = "lstMessages"
-            Me.lstMessages.Size = New System.Drawing.Size(322, 289)
+            Me.lstMessages.Size = New System.Drawing.Size(322, 266)
             Me.lstMessages.TabIndex = 2
             '
             'cmdClear
@@ -87,12 +92,35 @@ Namespace DevicesT
             Me.cmdUnregister.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmdUnregister.AutoSize = True
             Me.cmdUnregister.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdUnregister.Enabled = False
             Me.cmdUnregister.Location = New System.Drawing.Point(240, 3)
             Me.cmdUnregister.Name = "cmdUnregister"
             Me.cmdUnregister.Size = New System.Drawing.Size(65, 23)
             Me.cmdUnregister.TabIndex = 4
             Me.cmdUnregister.Text = "Unregister"
             Me.cmdUnregister.UseVisualStyleBackColor = True
+            '
+            'chkSuppress
+            '
+            Me.chkSuppress.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.chkSuppress.AutoSize = True
+            Me.chkSuppress.Location = New System.Drawing.Point(19, 32)
+            Me.chkSuppress.Name = "chkSuppress"
+            Me.chkSuppress.Size = New System.Drawing.Size(70, 17)
+            Me.chkSuppress.TabIndex = 5
+            Me.chkSuppress.Text = "Suppress"
+            Me.chkSuppress.UseVisualStyleBackColor = True
+            '
+            'chkHandled
+            '
+            Me.chkHandled.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.chkHandled.AutoSize = True
+            Me.chkHandled.Location = New System.Drawing.Point(240, 32)
+            Me.chkHandled.Name = "chkHandled"
+            Me.chkHandled.Size = New System.Drawing.Size(66, 17)
+            Me.chkHandled.TabIndex = 6
+            Me.chkHandled.Text = "Handled"
+            Me.chkHandled.UseVisualStyleBackColor = True
             '
             'frmLowLevelKeyboardHook
             '
@@ -114,5 +142,7 @@ Namespace DevicesT
         Friend WithEvents lstMessages As System.Windows.Forms.ListBox
         Friend WithEvents cmdClear As System.Windows.Forms.Button
         Friend WithEvents cmdUnregister As System.Windows.Forms.Button
+        Friend WithEvents chkSuppress As System.Windows.Forms.CheckBox
+        Friend WithEvents chkHandled As System.Windows.Forms.CheckBox
     End Class
 End Namespace
