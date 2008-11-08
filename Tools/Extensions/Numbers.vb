@@ -5,7 +5,7 @@ Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with numbers of basic data types</summary>
     <Author("Đonny", "dzonny.dz@gmail.com", "http://dzonny.cz")> _
     <Version(1, 0, GetType(Numbers), LastChange:="6/20/2008"), FirstVersion(2008, 6, 20)> _
-    Module Numbers
+ Public Module Numbers
         ''' <summary>Returns a value indicating whether the specified number evaluates to not a number (<see cref="System.Single.NaN" />).</summary>
         ''' <param name="n">A single-precision floating-point number.</param>
         ''' <returns>true if f evaluates to not a number (<see cref="System.Single.NaN" />); otherwise, false.</returns>
@@ -118,25 +118,25 @@ Namespace ExtensionsT
         ''' <summary>Gets low (least significant) word (2 bytes) from <see cref="Integer"/> value</summary>
         ''' <param name="n">Value to get word from</param>
         ''' <returns>Least significant word of <paramref name="n"/></returns>
-        <Extension()> Function Low(ByVal n As Integer) As Byte
+        <Extension(), CLSCompliant(False)> Function Low(ByVal n As Integer) As UShort
             Return n.BitwiseSame.Low
         End Function
         ''' <summary>Gets high (most significant) word (2 bytes) from <see cref="Integer"/> value</summary>
         ''' <param name="n">Value to get word from</param>
         ''' <returns>Most significant word of <paramref name="n"/></returns>
-        <Extension()> Function High(ByVal n As Integer) As Byte
+        <Extension(), CLSCompliant(False)> Function High(ByVal n As Integer) As UShort
             Return n.BitwiseSame.High
         End Function
         ''' <summary>Gets low (least significant) dword (4 bytes) from <see cref="Long"/> value</summary>
         ''' <param name="n">Value to get dword from</param>
         ''' <returns>Least significant dword of <paramref name="n"/></returns>
-        <Extension()> Function Low(ByVal n As Long) As Byte
+        <Extension(), CLSCompliant(False)> Function Low(ByVal n As Long) As UInteger
             Return n.BitwiseSame.Low
         End Function
         ''' <summary>Gets high (most significant) dword (4 bytes) from <see cref="Long"/> value</summary>
         ''' <param name="n">Value to get dword from</param>
         ''' <returns>Most significant dword of <paramref name="n"/></returns>
-        <Extension()> Function High(ByVal n As Long) As Byte
+        <Extension(), CLSCompliant(False)> Function High(ByVal n As Long) As UInteger
             Return n.BitwiseSame.High
         End Function
 #End Region

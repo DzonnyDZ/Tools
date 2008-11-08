@@ -147,4 +147,7 @@
   <data name="Handle_c" xml:space="preserve">
     <value>Handle</value>
   </data>
+  <data name="ApplicationCommand_d" xml:space="preserve">
+    <value>Raised when an application comand is received by form</value>
+  </data>
 </root>

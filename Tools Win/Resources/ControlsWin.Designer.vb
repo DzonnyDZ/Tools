@@ -21,7 +21,7 @@ Namespace WindowsT.FormsT
     '''<summary>
     '''A strongly-typed resource class, for looking up localized strings, formatting them, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.1.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.2.5.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
     Public Class ControlsWin
@@ -59,7 +59,7 @@ Namespace WindowsT.FormsT
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
                     Try 
                         If Object.ReferenceEquals(_resourceManager, Nothing) Then
-                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.WindowsT.FormsT.ControlsWin.ControlsWin", GetType(ControlsWin).Assembly))
+                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.WindowsT.FormsT.ControlsWin", GetType(ControlsWin).Assembly))
                         End If
                     Finally
                         Global.System.Threading.Monitor.Exit(InternalSyncObject)
@@ -81,6 +81,15 @@ Namespace WindowsT.FormsT
             Set
                 _resourceCulture = value
             End Set
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Raised when an application comand is received by form'.
+        '''</summary>
+        Public Shared ReadOnly Property ApplicationCommand_d() As String
+            Get
+                Return ResourceManager.GetString("ApplicationCommand_d", _resourceCulture)
+            End Get
         End Property
         
         '''<summary>
@@ -172,6 +181,14 @@ Namespace WindowsT.FormsT
                 Return ResourceManager.GetString("WindowStateChanged_d", _resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''The stub formatting method returning the ApplicationCommand_d property value.
+        '''</summary>
+        '''<returns>The ApplicationCommand_d property value.</returns>
+        Public Shared Function ApplicationCommand_dFormat() As String
+            Return ApplicationCommand_d
+        End Function
         
         '''<summary>
         '''The stub formatting method returning the Children_d property value.

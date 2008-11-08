@@ -22,11 +22,19 @@ Namespace API.Hooks
         ''' <returns>If <paramref name="nCode"/> is less than zero, the hook procedure must return the value returned by <see cref="CallNextHookEx"/>.
         ''' <para>If <paramref name="nCode"/> is greater than or equal to zero, and the hook procedure did not process the message, it is highly recommended that you call <see cref="CallNextHookEx"/> and return the value it returns; otherwise, other applications that have installed this hooks will not receive hook notifications and may behave incorrectly as a result. If the hook procedure processed the message, it may return a nonzero value to prevent the system from passing the message to the rest of the hook chain or the target window procedure. </para></returns>
         Public Delegate Function HookProc(ByVal nCode%, ByVal wParam As IntPtr, ByVal lParam As IntPtr) As IntPtr
-        ''' <summary>Hook codes used by low level keyboard hooks</summary>
+        ''' <summary>Hook codes used by low level keyboard and mouse hooks</summary>
         Public Enum LowLevelKeyboardProcHookCode As Integer
             ''' <summary>The wParam and lParam parameters contain information about a keyboard message.</summary>
             ACTION = 0
         End Enum
+        ''' <summary>Hook codes used by keyboard hook</summary>
+        Public Enum KeyboardProcHookCode
+            ''' <summary>The wParam and lParam parameters contain information about a keystroke message.</summary>
+            HC_ACTION = LowLevelKeyboardProcHookCode.ACTION
+            ''' <summary>The wParam and lParam parameters contain information about a keystroke message, and the keystroke message has not been removed from the message queue. (An application called the PeekMessage function, specifying the PM_NOREMOVE flag.)</summary>
+            HC_NOREMOVE = 3
+        End Enum
+
 
         ''' <summary>Windows hooks IDs</summary>
         Public Enum WindowsHook As Integer
@@ -112,6 +120,7 @@ Namespace API.Hooks
             LLKHF_UP = &H80
         End Enum
         ''' <summary>Contains information about a low-level keyboard input event. </summary>
+        <StructLayout(LayoutKind.Sequential)> _
         Public Structure MSLLHOOKSTRUCT
             ''' <summary>Specifies a POINT structure that contains the x- and y-coordinates of the cursor, in screen coordinates. </summary>
             Public pt As POINTAPI

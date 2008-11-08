@@ -8,7 +8,10 @@ Namespace API.Hooks
 
     ''' <summary>Base class for classes used to handle Win32 hooks</summary>
     ''' <remarks>It is highly recomended not to install multiple hooks of same type in one application and to keep hook-handling code as quick as possible. You can significantly slow down user typing experience.
-    ''' <para>This class uses Win32 API function SetWindowsHookEx().</para></remarks>
+    ''' <para>This class uses Win32 API function SetWindowsHookEx().</para>
+    ''' <para>.NET framework basically does not support global hooks to be installed. Mouse and keyboard low-level hooks implemented in <see cref="DevicesT.LowLevelMouseHook"/> and <see cref="DevicesT.LowLevelKeyboardHook"/> are the only exception.
+    ''' In case you'll implement hook for example for WH_KEYBOARD, you will receive callbacks only as long as your application will be foreground one. The only workaround to this limitation is to have callback function in unmanaged DLL.</para>
+    ''' <para>For more informations see <a href="http://msdn.microsoft.com/en-us/library/ms644990(VS.85).aspx">SetWindowsHookEx Function</a><a href="http://www.codeproject.com/KB/cs/globalhook.aspx?df=90&amp;fid=57596&amp;mpp=25&amp;noise=3&amp;sort=Position&amp;view=Quick&amp;fr=26">Processing Global Mouse and Keyboard Hooks in C#</a> and <a href="http://support.microsoft.com/default.aspx?scid=kb;en-us;318804">How to set a Windows hook in Visual C# .NET</a>.</para></remarks>
     <DefaultBindingProperty("KeyEvent"), EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public MustInherit Class Win32Hook
         Implements IDisposable
@@ -44,12 +47,33 @@ Namespace API.Hooks
         Private Sub RegisterHookInternal(ByVal IsAsync As Boolean)
             If IsDisposed Then Throw New ObjectDisposedException(Me.GetType.Name)
             If Me.HookHandle <> IntPtr.Zero Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.HookIsAlreadyRegisteredForThisInstance)
-            Dim NextHook = API.Hooks.SetWindowsHookEx(HandledHookType, dHookProcInternal, 0, 0) ' API.GetModuleHandle(GetType(LowLevelKeyboardHook).Module.FullyQualifiedName), 0)
+            Dim NextHook = API.Hooks.SetWindowsHookEx(HandledHookType, dHookProcInternal, GetModuleHandle, 0) ' API.GetModuleHandle(GetType(LowLevelKeyboardHook).Module.FullyQualifiedName), 0)
             If NextHook = IntPtr.Zero Then Throw New API.Win32APIException
             Me._HookHandle = NextHook
             _IsAsync = IsAsync
             'If Not IsAsync Then HookThread = Nothing : HookCallback = Nothing : dUnregisterHookInternalAsync = Nothing
         End Sub
+        ''' <summary>If implemented in derived class gets module handle pased to hMod parameter of SetWindowsHookEx Win32 API function</summary>
+        ''' <returns>This implementation returns <see cref="IntPtr.Zero"/></returns>
+        ''' <remarks>For some types of hooks it may be necesary to return correct module ID from this method, while another kinds works with <see cref="IntPtr.Zero"/></remarks>
+        ''' <seelaso cref="GetModuleHandleFromType"/>
+        Protected Overridable Function GetModuleHandle() As IntPtr
+            Return IntPtr.Zero
+        End Function
+        ''' <summary>Gets module handle for given type</summary>
+        ''' <param name="Type">Type to get handle of mudule for</param>
+        ''' <returns>Handle to mudule in which type <paramref name="Type"/> is defined.</returns>
+        ''' <remarks>You can use this function as return value of <see cref="GetModuleHandle"/></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        ''' <exception cref="API.Win32APIException">Error while obtaining module handle.</exception>
+        ''' <seealso cref="GetModuleHandle"/>
+        Protected Shared Function GetModuleHandleFromType(ByVal Type As Type) As IntPtr
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            Dim ret = API.Common.GetModuleHandle(Type.Module.FullyQualifiedName)
+            If ret = IntPtr.Zero Then Throw New Win32APIException
+            Return ret
+        End Function
+        ''' <summary>Delegate to <see cref="HookProcInternal"/></summary>
         Private dHookProcInternal As API.Hooks.HookProc = AddressOf HookProcInternal
         ''' <summary>If overriden in derived class gets type of hook represented by derived class</summary>
         ''' <returns>One of values accepted for SetWindowsHookEx idHook parameter</returns>
@@ -146,8 +170,8 @@ Namespace API.Hooks
 
         ''' <summary>Contains value of the <see cref="IsAsync"/> property</summary>
         Private _IsAsync As Boolean
-        ''' <summary>Gets value indicating if the <see cref="KeyEvent"/> event occures on different thread than hook was registered.</summary>
-        ''' <returns>True when <see cref="KeyEvent"/> and <see cref="OnKeyEvent"/> are called on different thread that hook was registered.</returns>
+        ''' <summary>Gets value indicating if hook events occur on different thread than hook was registered.</summary>
+        ''' <returns>True when <see cref="HookProc"/> is called on different thread that hook was registered.</returns>
         ''' <remarks>Has no meaning when <see cref="Registered"/> is false</remarks>
         Public ReadOnly Property IsAsync() As Boolean
             Get

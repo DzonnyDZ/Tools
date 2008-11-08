@@ -12,7 +12,7 @@ Namespace DevicesT
             InitializeComponent()
             ' Add any initialization after the InitializeComponent() call.
             Me.Icon = Tools.ResourcesT.ToolsIcon
-            Threading.Thread.CurrentThread.Name = "MainThread"
+            If Threading.Thread.CurrentThread.Name Is Nothing Then Threading.Thread.CurrentThread.Name = "MainThread"
             AddHandler DirectCast(Hook, LowLevelKeyboardHook).KeyEvent, AddressOf Hook_KeyEvent
         End Sub
         ''' <summary>Shows test form</summary>

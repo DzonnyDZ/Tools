@@ -9,7 +9,8 @@ Namespace DevicesT
     ''' <summary>Allows handling system-wide low-level mouse hooks</summary>
     ''' <remarks>It is highly recomended not to install multiple hooks of same type in one application and to keep hook-handling code as quick as possible. You can significantly slow down user typing experience.
     ''' <para>This class uses Win32 API function SetWindowsHookEx(WH_MOUSE_LL).</para></remarks>
-    <DefaultBindingProperty("KeyEvent")> _
+    ''' <seealso cref="LowLevelKeyboardHook"/>
+    <DefaultEvent("ButtonEvent")> _
     Public Class LowLevelMouseHook
         Inherits API.Hooks.Win32Hook
 #Region "CTors"
@@ -126,6 +127,12 @@ Namespace DevicesT
                 Return HookType.LowLevelMouse
             End Get
         End Property
+        ''' <summary>Gets module handle pased to hMod parameter of SetWindowsHookEx Win32 API function</summary>
+        ''' <returns>This implementation uses <see cref="GetModuleHandleFromType"/></returns>
+        ''' <seelaso cref="GetModuleHandleFromType"/>
+        Protected Overrides Function GetModuleHandle() As System.IntPtr
+            Return GetModuleHandleFromType(GetType(LowLevelMouseHook))
+        End Function
     End Class
     ''' <summary>Base class for low-level mouse event arguments</summary>
     ''' <remarks>This class is not intended to be derived</remarks>
