@@ -846,6 +846,18 @@ Namespace API.Messages
         ''' <description>If an application processes this message, it should return zero.</description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms646347.aspx</seealso></remarks>
         WM_INITMENUPOPUP = &H117
+        ''' <summary>The WM_INPUT message is sent to the window that is getting raw input. </summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Input code. This parameter can be one of the <see cref="wParam.WM_INPUT"/> values. </description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Handle to the RAWINPUT structure that contains the raw input from the device. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero. </description></item>
+        ''' </list><para>To get the wParam value, use the GET_RAWINPUT_CODE_WPARAM macro.</para>
+        ''' <para>Note that lParam has the handle to the RAWINPUT structure, not a pointer to it. To get the raw data, use the handle in the call to GetRawInputData.</para>
+        ''' <para>Raw input is available only when the application calls RegisterRawInputDevices with valid device specifications</para></remarks>
+        WM_INPUT = &HFF
         ''' <summary>The WM_INPUTLANGCHANGE message is sent to the topmost affected window after an application's input language has been changed. You should make any application-specific settings and pass the message to the DefWindowProc function, which passes the message to all first-level child windows. These child windows can pass the message to DefWindowProc to have it pass the message to their child windows, and so on.
         ''' A window receives this message through its WindowProc function. </summary>
         ''' <remarks><list type="table">
@@ -3232,6 +3244,13 @@ Namespace API.Messages
             ''' <summary>The user clicked an authorable Yes button.</summary>
             IDYES = 6
         End Enum
+        ''' <summary>Values used for wParam of the <see cref="WindowMessages.WM_INPUT"/> message</summary>
+        Public Enum WM_INPUT
+            ''' <summary>Input occurred while the application was in the foreground. The application must call DefWindowProc so the system can perform cleanup.</summary>
+            RIM_INPUT = 0
+            ''' <summary>Input occurred while the application was not in the foreground. The application must call DefWindowProc so the system can perform the cleanup.</summary>
+            RIM_INPUTSINK = 1
+        End Enum
     End Namespace
     Namespace lParam
         ''' <summary>Bit-masks used by <see cref="WindowMessages.WM_CHAR"/>, <see cref="WindowMessages.WM_DEADCHAR"/>, <see cref="WindowMessages.WM_IME_CHAR"/>, <see cref="WindowMessages.WM_IME_KEYDOWN"/>, <see cref="WindowMessages.WM_IME_KEYUP"/>, <see cref="WindowMessages.WM_KEYDOWN"/>, <see cref="WindowMessages.WM_KEYUP"/>, <see cref="WindowMessages.WM_SYSCHAR"/>, <see cref="WindowMessages.WM_SYSDEADCHAR"/>, <see cref="WindowMessages.WM_SYSKEYDOWN"/>, <see cref="WindowMessages.WM_SYSKEYUP"/> message for lParam</summary>
@@ -3385,7 +3404,7 @@ Namespace API.Messages
         End Enum
         ''' <summary>Application commands retrieved from lParam of <see cref="WindowMessages.WM_APPCOMMAND"/> by <see cref="GET_APPCOMMAND_LPARAM"/></summary>
         <CLSCompliant(False)> _
-        Public Enum WM_APPCOMMANDCommands
+        Public Enum WM_APPCOMMANDCommands As UShort
             ''' <summary>Toggle the bass boost on and off.</summary>
             APPCOMMAND_BASS_BOOST = 20
             ''' <summary>Decrease the bass.</summary>
@@ -3504,7 +3523,7 @@ Namespace API.Messages
             ''' <param name="lParam">Specifies the value to be converted. </param>
             ''' <returns>The return value is the bits of the high-order word representing the application command.</returns>
             <CLSCompliant(False)> _
-            Public Function GET_APPCOMMAND_LPARAM(ByVal lParam As Integer) As UShort
+            Public Function GET_APPCOMMAND_LPARAM(ByVal lParam As Integer) As WM_APPCOMMANDCommands
                 Return lParam.High And Not WM_APPCOMMANDDevices.FAPPCOMMAND_MASK
             End Function
             ''' <summary>retrieves the input device type from the specified LPARAM value</summary>
@@ -3517,7 +3536,7 @@ Namespace API.Messages
             ''' <summary>Retrieves the state of certain virtual keys from the specified LPARAM value.</summary>
             ''' <param name="lParam">Specifies the value to be converted. </param>
             ''' <returns>The return value is the low-order word representing the virtual key state.</returns>
-            Public Function GET_KEYSTATE_LPARAM(ByVal lParam As Integer) As Integer
+            Public Function GET_KEYSTATE_LPARAM(ByVal lParam As Integer) As WM_APPCOMMANDKeyStates
                 Return lParam And &HFFFF
             End Function
         End Module

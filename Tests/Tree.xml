@@ -109,6 +109,7 @@
         <node name="DevicesT" image="Namespace">
             <node name="LowLevelKeyboardHook" image="Class" tag="Tools.Tests.DevicesT.frmLowLevelKeyboardHook.Test"/>
             <node name="LowLevelMouseHook" image="Class" tag="Tools.Tests.DevicesT.frmLowLevelMouseHook.Test"/>
+            <node name="RawInput" image="Namespace" tag="Tools.Tests.DevicesT.RawInputT.frmRawInput.Test"/>
         </node>
         <node name="WindowsT" image="Namespace">
             <node name="FormsT" image="Namespace">

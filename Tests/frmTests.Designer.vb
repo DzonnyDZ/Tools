@@ -26,6 +26,7 @@ Partial Class frmTests
         Me.imlImages = New System.Windows.Forms.ImageList(Me.components)
         Me.cmdExport = New System.Windows.Forms.Button
         Me.flpBottom = New System.Windows.Forms.FlowLayoutPanel
+        Me.cmdInfo = New System.Windows.Forms.Button
         Me.sfdXml = New System.Windows.Forms.SaveFileDialog
         Me.flpBottom.SuspendLayout()
         Me.SuspendLayout()
@@ -202,7 +203,7 @@ Partial Class frmTests
         '
         'cmdExport
         '
-        Me.cmdExport.Anchor = System.Windows.Forms.AnchorStyles.Right
+        Me.cmdExport.Anchor = System.Windows.Forms.AnchorStyles.None
         Me.cmdExport.AutoSize = True
         Me.cmdExport.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.cmdExport.Location = New System.Drawing.Point(333, 0)
@@ -218,6 +219,7 @@ Partial Class frmTests
         Me.flpBottom.AutoSize = True
         Me.flpBottom.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
         Me.flpBottom.Controls.Add(Me.cmdExport)
+        Me.flpBottom.Controls.Add(Me.cmdInfo)
         Me.flpBottom.Dock = System.Windows.Forms.DockStyle.Bottom
         Me.flpBottom.FlowDirection = System.Windows.Forms.FlowDirection.RightToLeft
         Me.flpBottom.Location = New System.Drawing.Point(0, 226)
@@ -225,6 +227,19 @@ Partial Class frmTests
         Me.flpBottom.Name = "flpBottom"
         Me.flpBottom.Size = New System.Drawing.Size(401, 23)
         Me.flpBottom.TabIndex = 2
+        '
+        'cmdInfo
+        '
+        Me.cmdInfo.Anchor = System.Windows.Forms.AnchorStyles.None
+        Me.cmdInfo.AutoSize = True
+        Me.cmdInfo.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+        Me.cmdInfo.Location = New System.Drawing.Point(252, 0)
+        Me.cmdInfo.Margin = New System.Windows.Forms.Padding(0)
+        Me.cmdInfo.Name = "cmdInfo"
+        Me.cmdInfo.Size = New System.Drawing.Size(81, 23)
+        Me.cmdInfo.TabIndex = 2
+        Me.cmdInfo.Text = "Assembly info"
+        Me.cmdInfo.UseVisualStyleBackColor = True
         '
         'sfdXml
         '
@@ -252,5 +267,6 @@ Partial Class frmTests
     Friend WithEvents cmdExport As System.Windows.Forms.Button
     Friend WithEvents flpBottom As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents sfdXml As System.Windows.Forms.SaveFileDialog
+    Friend WithEvents cmdInfo As System.Windows.Forms.Button
 
 End Class

@@ -84,6 +84,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} cannot be an empty string'.
+        '''</summary>
+        Public Shared ReadOnly Property CannotBeAnEmptyString() As String
+            Get
+                Return ResourceManager.GetString("CannotBeAnEmptyString", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot create link from file {0}.'.
         '''</summary>
         Public Shared ReadOnly Property CannotCreateLinkFromFile0() As String
@@ -138,6 +147,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Invalid format specifier'.
+        '''</summary>
+        Public Shared ReadOnly Property InvalidFormatSpecifier() As String
+            Get
+                Return ResourceManager.GetString("InvalidFormatSpecifier", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} is invalid key. Keys must be within range from 0 to 255.'.
         '''</summary>
         Public Shared ReadOnly Property IsInvalidKeyKeysMustBeWithinRangeFrom0To255() As String
@@ -170,6 +188,33 @@ Namespace ResourcesT
         Public Shared ReadOnly Property Path0DoesNotExist() As String
             Get
                 Return ResourceManager.GetString("Path0DoesNotExist", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Raw device name has invalid format. It should consist of 4 parte separated by #.'.
+        '''</summary>
+        Public Shared ReadOnly Property RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte() As String
+            Get
+                Return ResourceManager.GetString("RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Raw device name has unexpected format. It must start with &quot;{0}&quot;.'.
+        '''</summary>
+        Public Shared ReadOnly Property RawDeviceNameHasUnexpectedFormatItMustStartWith0() As String
+            Get
+                Return ResourceManager.GetString("RawDeviceNameHasUnexpectedFormatItMustStartWith0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'The calass guid part of device name is in invalid format. See InnerException for details.'.
+        '''</summary>
+        Public Shared ReadOnly Property TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException() As String
+            Get
+                Return ResourceManager.GetString("TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException", _resourceCulture)
             End Get
         End Property
         
@@ -210,6 +255,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unknown raw input device type {0}'.
+        '''</summary>
+        Public Shared ReadOnly Property UnknownRawInputDeviceType0() As String
+            Get
+                Return ResourceManager.GetString("UnknownRawInputDeviceType0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unsupported {0} value.'.
         '''</summary>
         Public Shared ReadOnly Property Unsupported0Value() As String
@@ -217,6 +271,24 @@ Namespace ResourcesT
                 Return ResourceManager.GetString("Unsupported0Value", _resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'When {0} is {1} then type of this instance must be {2}'.
+        '''</summary>
+        Public Shared ReadOnly Property When0Is1ThenTypeOfThisInstanceMustBe2() As String
+            Get
+                Return ResourceManager.GetString("When0Is1ThenTypeOfThisInstanceMustBe2", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} cannot be an empty string'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Shared Function CannotBeAnEmptyStringFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, CannotBeAnEmptyString, arg0)
+        End Function
         
         '''<summary>
         '''Formats a localized string similar to 'Cannot create link from file {0}.'.
@@ -270,6 +342,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the InvalidFormatSpecifier property value.
+        '''</summary>
+        '''<returns>The InvalidFormatSpecifier property value.</returns>
+        Public Shared Function InvalidFormatSpecifierFormat() As String
+            Return InvalidFormatSpecifier
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to '{0} is invalid key. Keys must be within range from 0 to 255.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -302,6 +382,31 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function Path0DoesNotExistFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, Path0DoesNotExist, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte property value.
+        '''</summary>
+        '''<returns>The RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte property value.</returns>
+        Public Shared Function RawDeviceNameHasInvalidFormatItShouldConsistOf4ParteFormat() As String
+            Return RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Raw device name has unexpected format. It must start with &quot;{0}&quot;.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Shared Function RawDeviceNameHasUnexpectedFormatItMustStartWith0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, RawDeviceNameHasUnexpectedFormatItMustStartWith0, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException property value.
+        '''</summary>
+        '''<returns>The TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException property value.</returns>
+        Public Shared Function TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerExceptionFormat() As String
+            Return TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException
         End Function
         
         '''<summary>
@@ -340,12 +445,32 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Unknown raw input device type {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Shared Function UnknownRawInputDeviceType0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnknownRawInputDeviceType0, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Unsupported {0} value.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function Unsupported0ValueFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, Unsupported0Value, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'When {0} is {1} then type of this instance must be {2}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<param name="arg2">An object (2) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Public Shared Function When0Is1ThenTypeOfThisInstanceMustBe2Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object) As String
+            Return String.Format(_resourceCulture, When0Is1ThenTypeOfThisInstanceMustBe2, arg0, arg1, arg2)
         End Function
     End Class
 End Namespace

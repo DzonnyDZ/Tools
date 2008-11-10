@@ -9,7 +9,7 @@
     <OutputType>WinExe</OutputType>
     <StartupObject>Tools.Tests.My.MyApplication</StartupObject>
     <RootNamespace>Tools.Tests</RootNamespace>
-    <AssemblyName>Tests</AssemblyName>
+    <AssemblyName>Tools.Tests</AssemblyName>
     <MyType>WindowsForms</MyType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -37,7 +37,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Nightly\</OutputPath>
-    <DocumentationFile>Tests.xml</DocumentationFile>
+    <DocumentationFile>Tools.Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
     <Config>1</Config>
@@ -48,7 +48,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>Tests.xml</DocumentationFile>
+    <DocumentationFile>Tools.Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
     <Config>5</Config>
@@ -58,7 +58,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Alpha\</OutputPath>
-    <DocumentationFile>Tests.xml</DocumentationFile>
+    <DocumentationFile>Tools.Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -70,7 +70,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Beta\</OutputPath>
-    <DocumentationFile>Tests.xml</DocumentationFile>
+    <DocumentationFile>Tools.Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -82,7 +82,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\RC\</OutputPath>
-    <DocumentationFile>Tests.xml</DocumentationFile>
+    <DocumentationFile>Tools.Tests.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -188,6 +188,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Devices\LowLevelMouseHook.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Devices\RawInput.Designer.vb">
+      <DependentUpon>RawInput.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Devices\RawInput.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Diagnostics\ImageVisualizer.Designer.vb">
@@ -434,6 +440,9 @@
     <EmbeddedResource Include="Devices\LowLevelKeyboardHook.resx">
       <DependentUpon>LowLevelKeyboardHook.vb</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Devices\RawInput.resx">
+      <DependentUpon>RawInput.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Diagnostics\ImageVisualizer.resx">
       <DependentUpon>ImageVisualizer.vb</DependentUpon>

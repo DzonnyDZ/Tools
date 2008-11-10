@@ -53,7 +53,7 @@ Namespace WindowsT.NativeT
                 Else
                     MsgBox("You must select parent!")
                 End If
-            Catch ex As API.Win32APIException
+            Catch ex As Tools.API.Win32APIException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
             End Try
         End Sub
@@ -109,7 +109,7 @@ Namespace WindowsT.NativeT
             Try
                 lstWindowList.Items.AddRange(Win32Window.TopLevelWindows.OfType(Of Object).ToArray)
                 'lstWindowList.DisplayMember = "Text"
-            Catch ex As API.Win32APIException
+            Catch ex As Tools.API.Win32APIException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
             End Try
         End Sub
@@ -119,7 +119,7 @@ Namespace WindowsT.NativeT
             Try
                 lstWindowList.Items.AddRange(DirectCast(prgProperties.SelectedObject, Win32Window).Children.OfType(Of Object).ToArray)
                 'lstWindowList.DisplayMember = "Text"
-            Catch ex As API.Win32APIException
+            Catch ex As Tools.API.Win32APIException
                 MsgBox(ex.Message, MsgBoxStyle.Critical, ex.GetType.Name)
             End Try
         End Sub
@@ -140,7 +140,7 @@ Namespace WindowsT.NativeT
                 If OldWndProcs.ContainsKey(.Handle) Then
                     MsgBox("Wnd proc of this window has already been replaced.", MsgBoxStyle.Information, "Wnd proc")
                 Else
-                    Dim OldProc As API.Messages.WndProc = Nothing
+                    Dim OldProc As Tools.API.Messages.WndProc = Nothing
                     Dim OldWndProcPtr As IntPtr = 0
                     Try
                         OldProc = .WndProc
@@ -148,7 +148,7 @@ Namespace WindowsT.NativeT
                     Catch ex As Exception
                         If MsgBox(String.Format("Error backing current wnd proc up:{0}{1}{0}{0}Continue anyway", vbCrLf, ex.Message), MsgBoxStyle.Critical Or MsgBoxStyle.YesNo, ex.GetType.Name) <> MsgBoxResult.Yes Then Exit Sub
                     End Try
-                    OldWndProcs.Add(.Handle, New KeyValuePair(Of IntPtr, API.Messages.WndProc)(OldWndProcPtr, OldProc))
+                    OldWndProcs.Add(.Handle, New KeyValuePair(Of IntPtr, Tools.API.Messages.WndProc)(OldWndProcPtr, OldProc))
                     Try
                         .WndProc = ReplacementWndProcDelegate
                     Catch ex As Exception
@@ -174,13 +174,13 @@ Namespace WindowsT.NativeT
             End With
         End Sub
 
-        Private OldWndProcs As New Dictionary(Of Integer, KeyValuePair(Of IntPtr, API.Messages.WndProc))
+        Private OldWndProcs As New Dictionary(Of Integer, KeyValuePair(Of IntPtr, Tools.API.Messages.WndProc))
 
         Private CurrentWndProcs As New List(Of Integer)
 
-        Private ReplacementWndProcDelegate As API.Messages.WndProc = AddressOf ReplacementWndProc
+        Private ReplacementWndProcDelegate As Tools.API.Messages.WndProc = AddressOf ReplacementWndProc
 
-        Private Function ReplacementWndProc(ByVal hwnd As Integer, ByVal msg As API.Messages.WindowMessages, ByVal wparam As Integer, ByVal lparam As Integer) As Integer
+        Private Function ReplacementWndProc(ByVal hwnd As Integer, ByVal msg As Tools.API.Messages.WindowMessages, ByVal wparam As Integer, ByVal lparam As Integer) As Integer
             Dim ret = If( _
                OldWndProcs.ContainsKey(hwnd), _
                OldWndProcs(hwnd).Value, _

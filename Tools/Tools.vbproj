@@ -187,6 +187,7 @@
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="ComponentModel\SuppresHandledEventArgs.vb" />
     <Compile Include="ComponentModel\TypeConverter.vb" />
+    <Compile Include="ComponentModel\ValuesFromRangeAreValidAttribute.vb" />
     <Compile Include="DataStructures\Generic\Graph.vb" />
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />

@@ -95,4 +95,8 @@ Friend Class frmTests
                </node>
     End Function
 
+    
+    Private Sub cmdInfo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdInfo.Click
+        MsgBox(Me.GetType.Assembly.FullName)
+    End Sub
 End Class

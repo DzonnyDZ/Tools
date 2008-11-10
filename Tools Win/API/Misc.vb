@@ -103,6 +103,12 @@ Namespace API
         ''' <returns>If the function succeeds, the return value is a handle to the specified module.
         ''' <para>If the function fails, the return value is NULL.</para></returns>
         Public Declare Auto Function GetModuleHandle Lib "kernel32.dll" (ByVal lpModuleName$) As IntPtr
+
+        ''' <summary>Contains some of error codes returned by Win32 API functions</summary>
+        Public Enum Errors
+            ''' <summary>Target buffer has not enough space for all items that are about to be placed in it</summary>
+            ERROR_INSUFFICIENT_BUFFER = 122
+        End Enum
     End Module
 End Namespace
 

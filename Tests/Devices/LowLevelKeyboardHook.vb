@@ -4,7 +4,7 @@ Namespace DevicesT
     ''' <summary>Tests <see cref="LowLevelKeyboardHook"/></summary>
     Friend Class frmLowLevelKeyboardHook : Inherits Form
         ''' <summary>Hook class instance</summary>
-        Protected WithEvents Hook As API.Hooks.Win32Hook = New LowLevelKeyboardHook
+        Protected WithEvents Hook As Tools.API.Hooks.Win32Hook = New LowLevelKeyboardHook
 
         ''' <summary>CTor</summary>
         Public Sub New()

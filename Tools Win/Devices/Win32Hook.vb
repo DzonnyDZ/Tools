@@ -187,7 +187,7 @@ Namespace API.Hooks
         ''' <exception cref="InvalidOperationException">Hook was already registered for this instance (<see cref="Registered"/> is true)</exception>
         ''' <exception cref="API.Win32APIException">An error ocured while obtaining the hook.</exception>
         ''' <exception cref="ObjectDisposedException"><see cref="IsDisposed"/> is true</exception>
-        ''' <remarks>When hok is registered as asynchronous the <see cref="KeyEvent"/> event and <see cref="OnKeyEvent"/> methods are called in special thread. U can use this approach to handle the event in your form and use <see cref="Control.Invoke"/> to run event-handling code. The code then does not block keyboard hook which immediately returns.</remarks>
+        ''' <remarks>When hok is registered as asynchronous the <see cref="HookProc"/> function is called in special thread. You can use this approach to handle the event in your form and use <see cref="Control.Invoke"/> to run event-handling code. The code then does not block keyboard hook which immediately returns.</remarks>
         Public Sub RegisterAsyncHook()
             If IsDisposed Then Throw New ObjectDisposedException(Me.GetType.Name)
             If Me.HookHandle <> IntPtr.Zero Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.HookIsAlreadyRegisteredForThisInstance)

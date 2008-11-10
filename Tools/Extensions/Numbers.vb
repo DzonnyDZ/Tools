@@ -212,6 +212,7 @@ Namespace ExtensionsT
         ''' <summary>Gets signed number with same hexadecimal value as given unsigned number</summary>
         ''' <param name="n">Number to convert</param>
         ''' <remarks>Number that has binary same value if <paramref name="n"/> but is signed</remarks>
+        <CLSCompliant(False)> _
         <Extension()> Function BitwiseSame(ByVal n As UInteger) As Integer
             Return If(n > Integer.MaxValue, CLng(n) - UInteger.MaxValue - 1, n)
         End Function
