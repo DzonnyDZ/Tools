@@ -15,6 +15,20 @@ Namespace DevicesT.RawInputT
         Public Sub New()
             InitializeComponent()
             Me.Icon = Tools.ResourcesT.ToolsIcon
+
+            For Each value As UsagePages In [Enum].GetValues(GetType(UsagePages))
+                Dim Node As TreeNode = tvwHid.Nodes.Add(value.GetName)
+                Node.Tag = value
+                Dim Usages = value.GetUsages
+                For Each Usage As [Enum] In Usages
+                    Dim SubNode As TreeNode = Node.Nodes.Add(Usage.GetName)
+                    Dim UsageType As UsageTypes = RawInputExtensions.GetUsageType(Usage)
+                    Dim UsageTypeStr$
+                    If UsageType = 0 Then UsageTypeStr = "" Else UsageTypeStr = String.Format(" {0:F}", UsageType)
+                    SubNode.Text &= UsageTypeStr
+                    SubNode.Tag = UsageType
+                Next
+            Next
         End Sub
 
 

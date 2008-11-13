@@ -5,6 +5,7 @@ Imports Tools.ComponentModelT
 
 #If Config <= Nightly Then 'Stage: Nighlty
 Namespace DevicesT.RawInputT
+#Region "Device enumeration"
     ''' <summary>Re</summary>
     Public Class InputDevice
         Implements IEquatable(Of InputDevice)
@@ -91,10 +92,11 @@ Namespace DevicesT.RawInputT
             If ret < 0 Then Throw New API.Win32APIException
             Dim Struct As API.RawInput.RID_DEVICE_INFO
             Struct.cbSize = API.RID_DEVICE_INFO.Size
+            Dim SIzeToAllocate = Math.Max(CInt(Size), API.RawInput.RID_DEVICE_INFO.Size)
             Dim pData As IntPtr = Marshal.AllocHGlobal(Math.Max(CInt(Size), API.RawInput.RID_DEVICE_INFO.Size))
             Marshal.StructureToPtr(Struct, pData, False)
             Try
-                ret = API.RawInput.GetRawInputDeviceInfo(DeviceHandle, API.RawInput.DeviceInfoTypes.RIDI_DEVICEINFO, pData, API.RawInput.RID_DEVICE_INFO.Size)
+                ret = API.RawInput.GetRawInputDeviceInfo(DeviceHandle, API.RawInput.DeviceInfoTypes.RIDI_DEVICEINFO, pData, SIzeToAllocate)
                 If ret < 0 Then Throw New API.Win32APIException
                 Struct = Marshal.PtrToStructure(pData, GetType(API.RawInput.RID_DEVICE_INFO))
                 Try
@@ -440,7 +442,24 @@ Namespace DevicesT.RawInputT
         Public Function GetDeviceDescription() As String
             Return GetDeviceName.GetDeviceDescription
         End Function
+        ''' <summary>If overriden in derived class gets top-level collection Usage Page for the device. </summary>
+        ''' <returns>Top-level collection Usage Page for the device.</returns>
+        Public MustOverride ReadOnly Property UsagePage() As UsagePages
+        ''' <summary>If overriden in derived class gets top-level collection Usage for the device. </summary>
+        ''' <returns>Top-level collection Usage for the device.</returns>
+        Public MustOverride ReadOnly Property Usage() As Integer
+        ''' <summary>Gets value of the <see cref="Usage"/> property as value of appropriate enumeration according to <see cref="UsagePage"/></summary>
+        ''' <seelaso cref="GetUsagesEnumeration"/>
+        ''' <returns>Value of <see cref="Usage"/> in type returned by <see cref="GetUsagesEnumeration"/> for <see cref="Usage"/>; nothing if thara is no such enumeration.</returns>
+        Public ReadOnly Property EnumeratedUsage() As [Enum]
+            Get
+                Dim UsageEnumeration = UsagePage.GetUsagesEnumeration
+                If UsageEnumeration Is Nothing Then Return Nothing
+                Return TypeTools.GetEnumValue(UsageEnumeration, Usage)
+            End Get
+        End Property
     End Class
+
     ''' <summary>Provides information about mouse device</summary>
     Public NotInheritable Class MouseInfo
         Inherits DeviceInfo
@@ -481,7 +500,22 @@ Namespace DevicesT.RawInputT
                 Return Info.fHasHorizontalWheel
             End Get
         End Property
+        ''' <summary>Gets top-level collection Usage Page for the device. </summary>
+        ''' <returns><see cref="UsagePages.GenericDesktopControls"/></returns>
+        Public Overrides ReadOnly Property UsagePage() As UsagePages
+            Get
+                Return UsagePages.GenericDesktopControls
+            End Get
+        End Property
+        ''' <summary>Gets top-level collection Usage for the device. </summary>
+        ''' <returns><see cref="Usages_GenericDesktopControls.Mouse"/></returns>
+        Public Overrides ReadOnly Property Usage() As Integer
+            Get
+                Return Usages_GenericDesktopControls.Mouse
+            End Get
+        End Property
     End Class
+
     ''' <summary>Provides information about keyboard device</summary>
     Public NotInheritable Class KeyboardInfo
         Inherits DeviceInfo
@@ -534,7 +568,22 @@ Namespace DevicesT.RawInputT
                 Return Info.dwNumberOfKeysTotal
             End Get
         End Property
+        ''' <summary>Gets top-level collection Usage Page for the device. </summary>
+        ''' <returns><see cref="UsagePages.GenericDesktopControls"/></returns>
+        Public Overrides ReadOnly Property UsagePage() As UsagePages
+            Get
+                Return UsagePages.GenericDesktopControls
+            End Get
+        End Property
+        ''' <summary>Gets top-level collection Usage for the device. </summary>
+        ''' <returns><see cref="Usages_GenericDesktopControls.Keyboard"/></returns>
+        Public Overrides ReadOnly Property Usage() As Integer
+            Get
+                Return Usages_GenericDesktopControls.Keyboard
+            End Get
+        End Property
     End Class
+
     ''' <summary>Provides information about HID device</summary>
     Public NotInheritable Class HidInfo
         Inherits DeviceInfo
@@ -568,14 +617,14 @@ Namespace DevicesT.RawInputT
         End Property
         ''' <summary>Gets top-level collection Usage Page for the device. </summary>
         ''' <returns>Top-level collection Usage Page for the device.</returns>
-        Public ReadOnly Property UsagePage() As Integer
+        Public Overrides ReadOnly Property UsagePage() As UsagePages
             Get
                 Return Info.usUsagePage
             End Get
         End Property
         ''' <summary>Gets top-level collection Usage for the device. </summary>
         ''' <returns>Top-level collection Usage for the device.</returns>
-        Public ReadOnly Property Usage%()
+        Public Overrides ReadOnly Property Usage() As Integer
             Get
                 Return Info.usUsage
             End Get
@@ -606,7 +655,9 @@ Namespace DevicesT.RawInputT
             MyBase.New(message, innerException)
         End Sub
     End Class
-
+#End Region
+   
+#Region "Usages"
     ''' <summary>Contains extension methods used by raw input</summary>
     Public Module RawInputExtensions
         ''' <summary>Gets enumeration that lists defined usages for given usage page</summary>
@@ -657,9 +708,20 @@ Namespace DevicesT.RawInputT
         <Extension()> Public Function GetUsages(ByVal UsagePage As UsagePages, Optional ByVal AddUnspecifiedMembers As Boolean = False) As [Enum]()
             Dim EnumType = UsagePage.GetUsagesEnumeration
             If EnumType Is Nothing Then Return New [Enum]() {}
-            Dim ret = ValuesFromRangeAreValidAttribute.GetAllValues(EnumType)
-            If ret Is Nothing Then Return New [Enum]() {}
-            Return ret
+            If AddUnspecifiedMembers Then
+                Dim ret = ValuesFromRangeAreValidAttribute.GetAllValues(EnumType)
+                If ret Is Nothing Then Return New [Enum]() {}
+                Return ret
+            Else
+                Dim Values = [Enum].GetValues(EnumType)
+                Dim i% = 0
+                Dim ret(Values.Length - 1) As [Enum]
+                For Each value As [Enum] In Values
+                    ret(i) = value
+                    i += 1
+                Next
+                Return ret
+            End If
         End Function
         ''' <summary>For member of any enumeration gets its usage type</summary>
         ''' <param name="Usage">Enumeration member representing usage to get usage type for</param>
@@ -866,7 +928,6 @@ Namespace DevicesT.RawInputT
 #End Region
 
     End Module
-#Region "Usages"
     ''' <summary>Defines HID usage pages</summary>
     ''' <remarks>Values that are not defined in this enumeration and are not within range <see cref="UsagePages.VendorDefinedMin"/> ÷ <see cref="UsagePages.VendorDefinedMax"/> are reserved
     ''' <para>For more information see <a href="http://www.usb.org/developers/devclass_docs/Hut1_12.pdf">HID Usage Tables</a></para></remarks>
@@ -1008,7 +1069,7 @@ Namespace DevicesT.RawInputT
         ''' <summary>Gets usage types applied by this attribute</summary>
         Public ReadOnly Property UsageType() As UsageTypes
             Get
-                Return UsageType
+                Return _UsageType
             End Get
         End Property
     End Class
@@ -2091,19 +2152,19 @@ Namespace DevicesT.RawInputT
         NoButtonPressed = 0
         ''' <summary>Button 1 (primary/trigger)</summary>
         <UsageType(UsageTypes.Selector Or UsageTypes.OnOffControl Or UsageTypes.MomentaryControl Or UsageTypes.OneShotControl)> _
-        Button1
+        Button1 = 1
         ''' <summary>Button 2 (secondary)</summary>
         <UsageType(UsageTypes.Selector Or UsageTypes.OnOffControl Or UsageTypes.MomentaryControl Or UsageTypes.OneShotControl)> _
-        Button2
+        Button2 = 2
         ''' <summary>Button 3 (tertiary)</summary>
         <UsageType(UsageTypes.Selector Or UsageTypes.OnOffControl Or UsageTypes.MomentaryControl Or UsageTypes.OneShotControl)> _
-        Button3
+        Button3 = 3
         ''' <summary>Button 4</summary>
         <UsageType(UsageTypes.Selector Or UsageTypes.OnOffControl Or UsageTypes.MomentaryControl Or UsageTypes.OneShotControl)> _
-        Button4
+        Button4 = 4
         ''' <summary>Button 65535</summary>
         <UsageType(UsageTypes.Selector Or UsageTypes.OnOffControl Or UsageTypes.MomentaryControl Or UsageTypes.OneShotControl)> _
-        Button65535
+        Button65535 = 65535
     End Enum
     ''' <summary>Contains HID usage code s for <see cref="UsagePages.Ordinal"/> page</summary>
     ''' <remarks>For this enumeration all values between <see cref="Usages_Ordinal.Instance1"/> and <see cref="Usages_Ordinal.Instance65535"/> can be used.
@@ -4540,7 +4601,7 @@ Namespace DevicesT.RawInputT
         ''' <summary>Coin Door Test</summary>
         <UsageType(UsageTypes.OneShotControl)> CoinDoorTest = &H39
         ''' <summary>Coin Door Lockout</summary>
-        <UsageType(UsageTypes.OneShotControl )> CoinDoorLockout = &H40
+        <UsageType(UsageTypes.OneShotControl)> CoinDoorLockout = &H40
         ''' <summary>Watchdog Timeout</summary>
         <UsageType(UsageTypes.DynamicValue)> WatchdogTimeout = &H41
         ''' <summary>Watchdog Action</summary>
@@ -4567,6 +4628,1162 @@ Namespace DevicesT.RawInputT
         <UsageType(UsageTypes.OneShotControl)> PinPadOutput = &H4C
         ''' <summary>Pin Pad Command</summary>
         <UsageType(UsageTypes.DynamicValue)> PinPadCommand = &H4D
+    End Enum
+#End Region
+
+#Region "Event provider"
+    ''' <summary>Implemets <see cref="API.Messages.WindowMessages.WM_INPUT"/> message</summary>
+    Public Class WM_INPUTMessage : Inherits API.Messages.WindowMessage
+#Region "CTors"
+        ''' <summary>CTor from all parameters but result and message type</summary>
+        ''' <param name="hWnd">Target window handle</param>
+        ''' <param name="lParam">lParam</param>
+        ''' <param name="wParam">wParam</param>
+        Public Sub New(ByVal hWnd As IntPtr, ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam%)
+            MyBase.New(hWnd, API.Messages.WindowMessages.WM_INPUT, wParam, lParam)
+        End Sub
+        ''' <summary>CTor from all the parameters by messge type</summary>
+        ''' <param name="hWnd">Target window handle</param>
+        ''' <param name="lParam">lParam</param>
+        ''' <param name="wParam">wParam</param>
+        ''' <param name="ReturnValue">Return code</param>
+        Public Sub New(ByVal hWnd As IntPtr, ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam%, ByVal ReturnValue%)
+            MyBase.New(hWnd, API.Messages.WindowMessages.WM_INPUT, wParam, lParam, ReturnValue)
+        End Sub
+
+        ''' <summary>CTor from all parameters but result</summary>
+        ''' <param name="hWnd">Target window handle</param>
+        ''' <param name="lParam">lParam</param>
+        ''' <param name="wParam">wParam</param>
+        ''' <param name="Message">Message code</param>
+        ''' <exception cref="ArgumentException"><paramref name="Message"/> does not represent <see cref="API.Messages.WindowMessages.WM_INPUT"/></exception>
+        Public Sub New(ByVal hWnd As IntPtr, ByVal Message As API.Messages.WindowMessages, ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam%)
+            MyBase.New(hWnd, CheckMessage(Message), wParam, lParam)
+        End Sub
+        ''' <summary>CTor from <see cref="Windows.Forms.Message"/></summary>
+        ''' <param name="Message">A <see cref="Windows.Forms.Message"/></param>
+        Public Sub New(ByVal Message As Message)
+            MyBase.New(CheckMessage(Message))
+        End Sub
+        ''' <summary>Copy CTor - clones given instance</summary>
+        ''' <param name="Message">Instance to clone</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Message"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Message"/> does not represent <see cref="API.Messages.WindowMessages.WM_INPUT"/></exception>
+        Public Sub New(ByVal Message As API.Messages.WindowMessage)
+            MyBase.New(CheckMessage(Message))
+        End Sub
+        ''' <summary>CTor from all the parameters</summary>
+        ''' <param name="hWnd">Target window handle</param>
+        ''' <param name="lParam">lParam</param>
+        ''' <param name="wParam">wParam</param>
+        ''' <param name="Message">Message code</param>
+        ''' <param name="ReturnValue">Return code</param>
+        ''' <exception cref="ArgumentException"><paramref name="Message"/> does not represent <see cref="API.Messages.WindowMessages.WM_INPUT"/></exception>
+        Public Sub New(ByVal hWnd As IntPtr, ByVal Message As API.Messages.WindowMessages, ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam%, ByVal ReturnValue%)
+            MyBase.New(hWnd, CheckMessage(Message), wParam, lParam, ReturnValue)
+        End Sub
+        ''' <summary>Check whether given message is <see cref="API.Messages.WindowMessages.WM_INPUT"/></summary>
+        ''' <param name="Message">Message to check</param>  <returns><paramref name="Message"/></returns>
+        ''' <exception cref="ArgumentException"><paramref name="Message"/> does not represent <see cref="API.Messages.WindowMessages.WM_INPUT"/></exception>
+        Private Shared Function CheckMessage(ByVal Message As API.Messages.WindowMessages) As API.Messages.WindowMessages
+            If Message <> API.Messages.WindowMessages.WM_INPUT Then Throw New ArgumentException("{0} must be {1}".f("Message", "WM_INPUT"), "Message")
+            Return Message
+        End Function
+        ''' <summary>Check whether given message is <see cref="API.Messages.WindowMessages.WM_INPUT"/></summary>
+        ''' <param name="Message">Message to check</param>  <returns><paramref name="Message"/></returns>
+        ''' <exception cref="ArgumentException"><paramref name="Message"/> does not represent <see cref="API.Messages.WindowMessages.WM_INPUT"/></exception>
+        Private Shared Function CheckMessage(ByVal Message As API.Messages.WindowMessage) As API.Messages.WindowMessage
+            If Message.Message <> API.Messages.WindowMessages.WM_INPUT Then Throw New ArgumentException("{0} must be {1}".f("Message", "WM_INPUT"), "Message")
+            Return Message
+        End Function
+        ''' <summary>Check whether given message is <see cref="API.Messages.WindowMessages.WM_INPUT"/></summary>
+        ''' <param name="Message">Message to check</param>  <returns><paramref name="Message"/></returns>
+        ''' <exception cref="ArgumentException"><paramref name="Message"/> does not represent <see cref="API.Messages.WindowMessages.WM_INPUT"/></exception>
+        Private Shared Function CheckMessage(ByVal Message As Message) As Message
+            If Message.Msg <> API.Messages.WindowMessages.WM_INPUT Then Throw New ArgumentException("{0} must be {1}".f("Message", "WM_INPUT"), "Message")
+            Return Message
+        End Function
+#End Region
+        ''' <summary>Gets wParam</summary>
+        ''' <returns>Input code</returns>
+        Shadows ReadOnly Property wParam() As API.Messages.wParam.WM_INPUT
+            Get
+                Return MyBase.wParam
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Provides events caused by raw devices</summary>
+    ''' <remarks>This class requires to be instantiated with impementation of  either <see cref="API.Messages.IWindowsMessagesProviderRef"/> or <see cref="API.Messages.IWindowsMessagesProviderVal"/>.
+    ''' These interfaces can be easily implemented by class deived from <see cref="Control"/> (or <see cref="Form"/>) and raised from its <see cref="Control.WndProc"/>.
+    ''' <para>Note events are provided untill you register for them using <see cref="RawInputEventProvider.Register"/>.</para></remarks>
+    Public Class RawInputEventProvider
+        Inherits Component
+        ''' <summary>Gtes owner of thsi instance</summary>
+        ''' <remarks>Instance of window that was passed to CTor</remarks>
+        Public ReadOnly Property Owner() As IWin32Window
+            Get
+                Return _Owner
+            End Get
+        End Property
+#Region "CTors"
+        ''' <summary>Dictionary of owners providing events for windows</summary>
+        Private Shared Owners As New Dictionary(Of IntPtr, RawInputEventProvider)
+        ''' <summary>Used to synchronize access to <see cref="Owners"/></summary>
+        Private Shared OwnersSync As New Object
+        ''' <summary>Registers owner and event provider</summary>
+        ''' <param name="Owner">Owner to register</param>
+        ''' <param name="Inst">Instance to register for <paramref name="Owner"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Inst"/> is null or <paramref name="Owner"/> is <see cref="IntPtr.Zero"/></exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="Owner"/> has already <see cref="RawInputEventProvider"/> attached.</exception>
+        ''' <threadsafety>This member is thread-safe</threadsafety>
+        Private Shared Sub RegisterOwner(ByVal Owner As IntPtr, ByVal Inst As RawInputEventProvider)
+            If Owner = IntPtr.Zero Then Throw New ArgumentNullException("Owner")
+            If Inst Is Nothing Then Throw New ArgumentNullException("Inst")
+            SyncLock OwnersSync
+                If Owners.ContainsKey(Owner) Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.GivenOwnerHasAlreadyAttachedRawInputEventProvider)
+                Owners.Add(Owner, Inst)
+            End SyncLock
+        End Sub
+        ''' <summary>Unregisteres owner</summary>
+        ''' <param name="Owner">Owner to unregister</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Owner"/> is <see cref="IntPtr.Zero"/></exception>
+        ''' <remarks>If owner is not registered then does nothing</remarks>
+        ''' <threadsafety>This member is thread-safe</threadsafety>
+        Private Shared Sub UnregisterOwner(ByVal Owner As IntPtr)
+            If Owner = IntPtr.Zero Then Throw New ArgumentNullException("Owner")
+            SyncLock OwnersSync
+                If Owners.ContainsKey(Owner) Then Owners.Remove(Owner)
+            End SyncLock
+        End Sub
+        ''' <summary>Gets value indicationg if given <see cref="IWin32Window"/> is already <see cref="RawInputEventProvider"/> attached.</summary>
+        ''' <param name="Owner"><see cref="IWin32Window"/> to get information for</param>
+        ''' <returns>True if <paramref name="Owner"/> has already attached <see cref="RawInputEventProvider"/>; false otherwise.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Owner"/> is null</exception>
+        ''' <threadsafety>This member is thread-safe</threadsafety>
+        Public Shared Function IsOwnerRegistered(ByVal Owner As IWin32Window) As Boolean
+            SyncLock OwnersSync
+                Return Owners.ContainsKey(Owner.Handle)
+            End SyncLock
+        End Function
+        ''' <summary>Gets <see cref="RawInputEventProvider"/> attached to given <see cref="IWin32Window"/></summary>
+        ''' <param name="Owner"><see cref="IWin32Window"/> to get <see cref="RawInputEventProvider"/> for</param>
+        ''' <returns><see cref="RawInputEventProvider"/> attached to <paramref name="Owner"/> or null when <paramref name="Owner"/> has no <see cref="RawInputEventProvider"/> attached.</returns>
+        ''' <threadsafety>This member is thread-safe</threadsafety>
+        ''' <exception cref="ArgumentNullException"><paramref name="Owner"/> is null</exception>
+        Public Shared Function GetOwnedProvider(ByVal Owner As IWin32Window) As RawInputEventProvider
+            SyncLock OwnersSync
+                If Owners.ContainsKey(Owner.Handle) Then Return Owners(Owner.Handle) Else Return Nothing
+            End SyncLock
+        End Function
+
+        ''' <summary>Contains value of the <see cref="Owner"/> property</summary>
+        Private ReadOnly _Owner As IWin32Window
+        ''' <summary>CTor from provide with event with argument passed by reference</summary>
+        ''' <param name="Provider">Provides <see cref="API.Messages.IWindowsMessagesProviderRef.WndProc"/> event</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Provider"/> is null</exception>
+        ''' <exception cref="InvalidOperationException">There is already <see cref="RawInputEventProvider"/> attached to <paramref name="Provider"/> with same <see cref="IWin32Window.Handle"/>. You can locate the provider using <see cref="GetOwnedProvider"/>.</exception>
+        ''' <remarks><paramref name="Provider"/> must always raise the <see cref="API.Messages.IWindowsMessagesProviderVal.WndProc"/> with sender parameter set to <paramref name="Provider"/> and sender.<see cref="Message.hWnd">hWnd</see> set to <paramref name="Provider"/>.<see cref="IWin32Window.Handle">Handle</see> otherwaise <see cref="InvalidOperationException"/> will be thrown by event handler.</remarks>
+        Public Sub New(ByVal Provider As API.Messages.IWindowsMessagesProviderRef)
+            If Provider Is Nothing Then Throw New ArgumentNullException("Provider")
+            _Owner = Provider
+            AddHandler Provider.WndProc, AddressOf WndProc
+            Try
+                RegisterOwner(Owner.Handle, Me)
+            Catch ex As InvalidOperationException
+                RemoveHandler Provider.WndProc, AddressOf WndProc
+                Throw
+            End Try
+        End Sub
+        ''' <summary>CTor from provider with event with argument passed by value</summary>
+        ''' <param name="Provider">Provides <see cref="API.Messages.IWindowsMessagesProviderVal.WndProc"/> event</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Provider"/> is null</exception>
+        ''' <exception cref="InvalidOperationException">There is already <see cref="RawInputEventProvider"/> attached to <paramref name="Provider"/> with same <see cref="IWin32Window.Handle"/>. You can locate the provider using <see cref="GetOwnedProvider"/>.</exception>
+        ''' <remarks><paramref name="Provider"/> must always raise the <see cref="API.Messages.IWindowsMessagesProviderVal.WndProc"/> with sender parameter set to <paramref name="Provider"/> and sender.<see cref="API.Messages.WindowMessage.hWnd">hWnd</see> set to <paramref name="Provider"/>.<see cref="IWin32Window.Handle">Handle</see> otherwaise <see cref="InvalidOperationException"/> will be thrown by event handler.</remarks>
+        Public Sub New(ByVal Provider As API.Messages.IWindowsMessagesProviderVal(Of API.Messages.WindowMessage))
+            If Provider Is Nothing Then Throw New ArgumentNullException("Provider")
+            _Owner = Provider
+            AddHandler Provider.WndProc, AddressOf WndProc
+            Try
+                RegisterOwner(Owner.Handle, Me)
+            Catch ex As InvalidOperationException
+                RemoveHandler Provider.WndProc, AddressOf WndProc
+                Throw
+            End Try
+        End Sub
+        ''' <summary>CTor from provider with event with argument of type <see cref="WM_INPUTMessage"/></summary>
+        ''' <param name="Provider">Provides <see cref="API.Messages.IWindowsMessagesProviderVal(Of WM_INPUTMessage).WndProc"/> event</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Provider"/> is null</exception>
+        ''' <exception cref="InvalidOperationException">There is already <see cref="RawInputEventProvider"/> attached to <paramref name="Provider"/> with same <see cref="IWin32Window.Handle"/>. You can locate the provider using <see cref="GetOwnedProvider"/>.</exception>
+        ''' <remarks><paramref name="Provider"/> must always raise the <see cref="API.Messages.IWindowsMessagesProviderVal(Of WM_INPUTMessage).WndProc"/> with sender parameter set to <paramref name="Provider"/> and sender.<see cref="WM_INPUTMessage.hWnd">hWnd</see> set to <paramref name="Provider"/>.<see cref="IWin32Window.Handle">Handle</see> otherwaise <see cref="InvalidOperationException"/> will be thrown by event handler.</remarks>
+        Public Sub New(ByVal Provider As API.Messages.IWindowsMessagesProviderVal(Of WM_INPUTMessage))
+            If Provider Is Nothing Then Throw New ArgumentNullException("Provider")
+            _Owner = Provider
+            AddHandler Provider.WndProc, AddressOf WndProc
+            Try
+                RegisterOwner(Owner.Handle, Me)
+            Catch ex As InvalidOperationException
+                RemoveHandler Provider.WndProc, AddressOf WndProc
+                Throw
+            End Try
+        End Sub
+#End Region
+#Region "Internal handler wrapers"
+        ''' <summary>Handles <see cref="Owner"/>.<see cref="API.Messages.IWindowsMessagesProviderVal(Of WM_INPUTMessage).WndProc">WndProc</see></summary>
+        ''' <param name="sender">Source of the event</param>
+        ''' <param name="e">Message</param>
+        ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="WM_INPUTMessage.hWnd">hWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        Private Sub WndProc(ByVal sender As Object, ByVal e As WM_INPUTMessage)
+            If sender IsNot _Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
+            e.ReturnValue = OnWM_INPUT(e.wParam, e.lParam)
+        End Sub
+        ''' <summary>Handles <see cref="Owner"/>.<see cref="API.Messages.IWindowsMessagesProviderRef.WndProc">WndProc</see></summary>
+        ''' <param name="sender">Source of the event</param>
+        ''' <param name="msg">Message</param>
+        ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="Message.HWnd">HWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        Private Sub WndProc(ByVal sender As Object, ByRef msg As Message)
+            If sender IsNot _Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
+            Dim ret = WndProc(msg.HWnd, msg.Msg, msg.WParam, msg.LParam)
+            If ret.HasValue Then msg.Result = ret
+        End Sub
+        ''' <summary>Handles <see cref="Owner"/>.<see cref="API.Messages.IWindowsMessagesProviderVal.WndProc">WndProc</see></summary>
+        ''' <param name="sender">Source of the event</param>
+        ''' <param name="e">Message</param>
+        ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="API.Messages.WindowMessage.hWnd">hWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        Private Sub WndProc(ByVal sender As Object, ByVal e As API.Messages.WindowMessage)
+            If sender IsNot _Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
+            Dim ret = WndProc(e.hWnd, e.Message, e.wParam, e.lParam)
+            If ret.HasValue Then e.ReturnValue = ret
+        End Sub
+        ''' <summary>Called when <see cref="Owner"/> raises <see cref="API.Messages.IWindowsMessagesProviderVal.WndProc"/> or <see cref="API.Messages.IWindowsMessagesProviderRef.WndProc"/></summary>
+        ''' <param name="hWnd">Handle of message target window</param>
+        ''' <param name="wParam">Message wParam</param>
+        ''' <param name="lParam">Message lParam</param>
+        ''' <param name="Message">Message code</param>
+        ''' <returns>Message return value</returns>
+        ''' <exception cref="InvalidOperationException"><paramref name="hWnd"/> is not <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        Private Function WndProc(ByVal hWnd As IntPtr, ByVal Message As API.Messages.WindowMessages, ByVal wParam%, ByVal lParam%) As Integer?
+            If hWnd <> _Owner.Handle Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.MessageTargetWindowHandleMustBeSameAsHandleOfWindow)
+            If Message = API.Messages.WindowMessages.WM_INPUT Then Return OnWM_INPUT(wParam, lParam)
+            Return Nothing
+        End Function
+#End Region
+#Region "Processing"
+        ''' <summary>Handle the <see cref="API.Messages.WindowMessages.WM_INPUT"/> message</summary>
+        ''' <param name="wParam">Input code.</param>
+        ''' <param name="lParam">Handle to the <see cref="API.RawInput.RAWINPUT"/> structure that contains the raw input from the device. </param>
+        ''' <returns>Return value for the event, 0.</returns>
+        ''' <remarks>You are unlikly to override this method, because it means that you have to completely replace parsing event data from <paramref name="lParam"/>.
+        ''' This method, and internal methods it calls, does all the work that leads from windows message to event. This method calls all the On_... methods.</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Overridable Function OnWM_INPUT(ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam As IntPtr) As Integer
+            If HasListeners AndAlso (wParam = API.Messages.wParam.WM_INPUT.RIM_INPUT OrElse wParam = API.Messages.wParam.WM_INPUT.RIM_INPUTSINK) Then
+                Dim RawData As Tools.API.RawInput.RAWINPUT
+                Try
+                    RawData = GetRAWINPUT(lParam)
+                Catch ex As API.Win32APIException
+                    OnError(New ExceptionEventArgs(Of API.Win32APIException)(ex))
+                    Return 0
+                End Try
+                Select Case RawData.header.dwType
+                    Case API.DeviceTypes.RIM_TYPEHID
+                        Dim e As New RawHidEventArgs(RawData.hid, RawData.header.hDevice)
+                        OnInput(e)
+                        OnHidEvent(e)
+                    Case API.DeviceTypes.RIM_TYPEKEYBOARD
+                        Dim e = New RawKeyboardEventArgs(RawData.keyboard, RawData.header.hDevice)
+                        OnInput(e)
+                        OnKeyboardEvent(e)
+                        If e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYDOWN OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYDOWN Then _
+                            OnKeyDown(e)
+                        If e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYUP OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYUP Then _
+                            OnKeyUp(e)
+                    Case API.DeviceTypes.RIM_TYPEMOUSE
+                        Dim e = New RawMouseEventArgs(RawData.mouse, RawData.header.hDevice)
+                        OnInput(e)
+                        OnMouseEvent(e)
+                        If (e.Buttons And RawMouseButtonStates.LeftDown) OrElse (e.Buttons And RawMouseButtonStates.MiddleDown) OrElse (e.Buttons And RawMouseButtonStates.RightDown) OrElse (e.Buttons And RawMouseButtonStates.X1Down) OrElse (e.Buttons And RawMouseButtonStates.X2Down) Then
+                            OnMouseDown(e)
+                        End If
+                        If (e.Buttons And RawMouseButtonStates.LeftUp) OrElse (e.Buttons And RawMouseButtonStates.MiddleUp) OrElse (e.Buttons And RawMouseButtonStates.RightUp) OrElse (e.Buttons And RawMouseButtonStates.X1Up) OrElse (e.Buttons And RawMouseButtonStates.X2Up) Then
+                            OnMouseUp(e)
+                        End If
+                        If e.Buttons And RawMouseButtonStates.Wheel Then OnMouseWheel(e)
+                End Select
+            End If
+            Return 0
+        End Function
+        ''' <summary>Gets <see cref="API.RawInput.RAWINPUT"/> from handle</summary>
+        ''' <param name="hRawInput">Handle of <see cref="API.RawInput.RAWINPUT"/> for <see cref="API.RawInput.GetRawInputData"/></param>
+        ''' <exception cref="API.Win32APIException">Error while obtaining raw input data</exception>
+        Private Shared Function GetRAWINPUT(ByVal hRawInput As IntPtr) As API.RawInput.RAWINPUT
+            Dim Size% = 0
+            Dim ret = API.RawInput.GetRawInputData(hRawInput, API.GetRawInputDataCommand.RID_INPUT, IntPtr.Zero, Size, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)))
+            If ret = -1 Then Throw New API.Win32APIException
+            Dim SizeToAllocate = Math.Max(Size, Marshal.SizeOf(GetType(API.RawInput.RAWINPUT)))
+            Dim pData As IntPtr = Marshal.AllocHGlobal(SizeToAllocate)
+            Try
+                ret = API.RawInput.GetRawInputData(hRawInput, API.GetRawInputDataCommand.RID_INPUT, pData, SizeToAllocate, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)))
+                If ret = -1 Then Throw New API.Win32APIException
+                Dim Header As API.RawInput.RAWINPUTHEADER = Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUTHEADER)) 'RAWINPUT starts with RAWINPUTHEADER, so we can do this
+                Select Case Header.dwType
+                    Case API.DeviceTypes.RIM_TYPEHID
+                        Dim raw As API.RawInput.RAWINPUT = Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUT))
+                        ReDim raw.hid.bRawData(raw.hid.dwCount * raw.hid.dwSizeHid - 1)
+                        Marshal.Copy(pData, raw.hid.bRawData, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)) + 8, raw.hid.dwCount * raw.hid.dwSizeHid)
+                        Return raw
+                    Case Else 'No additional processing is needed
+                        Return Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUT))
+                End Select
+            Finally
+                Marshal.FreeHGlobal(pData)
+            End Try
+        End Function
+#End Region
+
+#Region "Events"
+        ''' <summary>Raises the <see cref="[Error]"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnError(ByVal e As ExceptionEventArgs(Of API.Win32APIException))
+            RaiseEvent Error(Me, e)
+        End Sub
+        ''' <summary>Raised when <see cref="OnWM_INPUT"/> fails to proces the message.</summary>
+        ''' <remarks>This event can be never raised when there are no handlers registered for other events.</remarks>
+        Public Event [Error] As EventHandler(Of ExceptionEventArgs(Of API.Win32APIException))
+
+        ''' <summary>Gtes value indicating if there are any listeners for raw-input-related events</summary>
+        ''' <returns>True if there is reason to process <see cref="API.Messages.WindowMessages.WM_INPUT"/> message</returns>
+        Protected ReadOnly Property HasListeners() As Boolean
+            Get
+                Return InputHandler IsNot Nothing OrElse MouseEventHandler IsNot Nothing OrElse KeyboardEventHandler IsNot Nothing _
+                    OrElse MouseDownHandler IsNot Nothing OrElse MouseUpHandler IsNot Nothing OrElse MouseWheelHandler IsNot Nothing _
+                    OrElse KeyDownHandler IsNot Nothing OrElse KeyUpHandler IsNot Nothing
+            End Get
+        End Property
+#Region "Input"
+        ''' <summary>Raises the <see cref="Input"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnInput(ByVal e As RawInputEventArgs)
+            RaiseEvent Input(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="Input"/> event</summary>
+        Private InputHandler As EventHandler(Of RawInputEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an event</summary>
+        ''' <remarks>This event is raised whenever the <see cref="API.Messages.WindowMessages.WM_INPUT"/> is received and successfully processed, there are more event-specific events you'll probably handle rather than this one. This event is raised as first of the events raised by his class for single <see cref="API.Messages.WindowMessages.WM_INPUT"/> message.</remarks>
+        Public Custom Event Input As EventHandler(Of RawInputEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawInputEventArgs))
+                InputHandler = [Delegate].Combine(InputHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawInputEventArgs))
+                InputHandler = [Delegate].Remove(InputHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawInputEventArgs)
+                If InputHandler IsNot Nothing Then InputHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "Mouse"
+        ''' <summary>Raises the <see cref="MouseEvent"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMouseEvent(ByVal e As RawMouseEventArgs)
+            RaiseEvent MouseEvent(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MouseEvent"/> event</summary>
+        Private MouseEventHandler As EventHandler(Of RawMouseEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an event for mouse.</summary>
+        Public Custom Event MouseEvent As EventHandler(Of RawMouseEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseEventHandler = [Delegate].Combine(MouseEventHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseEventHandler = [Delegate].Remove(MouseEventHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawMouseEventArgs)
+                If MouseEventHandler IsNot Nothing Then MouseEventHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "MouseDown"
+        ''' <summary>Raises the <see cref="MouseDown"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMouseDown(ByVal e As RawMouseEventArgs)
+            RaiseEvent MouseDown(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MouseDown"/> event</summary>
+        Private MouseDownHandler As EventHandler(Of RawMouseEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an mouse event with at leas one down transition state flags set.</summary>
+        ''' <remarks>It is possible that for several physical user mouse button presses is raised only one event, but with more than one down transition state flags set.
+        ''' It is also possible that one <see cref="API.Messages.WindowMessages.WM_INPUT"/> message causes both - <see cref="MouseDown"/> and <see cref="MouseUp"/> events. In such case <see cref="MouseDown"/> is always raised before <see cref="MouseUp"/>. Both those events are raised after <see cref="MouseEvent"/>.</remarks>
+        ''' <seealso cref="RawMouseEventArgs.Buttons"/>
+        Public Custom Event MouseDown As EventHandler(Of RawMouseEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseDownHandler = [Delegate].Combine(MouseDownHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseDownHandler = [Delegate].Remove(MouseDownHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawMouseEventArgs)
+                If MouseDownHandler IsNot Nothing Then MouseDownHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "MouseUp"
+        ''' <summary>Raises the <see cref="MouseUp"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMouseUp(ByVal e As RawMouseEventArgs)
+            RaiseEvent MouseUp(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MouseUp"/> event</summary>
+        Private MouseUpHandler As EventHandler(Of RawMouseEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an mouse event with at leas one up transition state flags set.</summary>
+        ''' <remarks>It is possible that for several physical user mouse button releases is raised only one event, but with more than one up transition state flags set.
+        ''' It is also possible that one <see cref="API.Messages.WindowMessages.WM_INPUT"/> message causes both - <see cref="MouseDown"/> and <see cref="MouseUp"/> events. In such case <see cref="MouseDown"/> is always raised before <see cref="MouseUp"/>. Both those events are raised after <see cref="MouseEvent"/>.</remarks>
+        ''' <seealso cref="RawMouseEventArgs.Buttons"/>
+        Public Custom Event MouseUp As EventHandler(Of RawMouseEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseUpHandler = [Delegate].Combine(MouseUpHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseUpHandler = [Delegate].Remove(MouseUpHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawMouseEventArgs)
+                If MouseUpHandler IsNot Nothing Then MouseUpHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "MouseWheel"
+        ''' <summary>Raises the <see cref="MouseWheel"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMouseWheel(ByVal e As RawMouseEventArgs)
+            RaiseEvent MouseWheel(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MouseWheel"/> event</summary>
+        Private MouseWheelHandler As EventHandler(Of RawMouseEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an mouse event with the <see cref="RawMouseButtonStates.Wheel"/> flag set.</summary>
+        ''' <remarks>It is possible that this event is generated by the same <see cref="API.Messages.WindowMessages.WM_INPUT"/> as <see cref="MouseDown"/> or <see cref="MouseUp"/> event. In such case this event is raised after those down and up events.</remarks>
+        ''' <seealso cref="RawMouseEventArgs.Buttons"/><seelaso cref="RawMouseEventArgs.Wheel"/>
+        Public Custom Event MouseWheel As EventHandler(Of RawMouseEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseWheelHandler = [Delegate].Combine(MouseWheelHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseWheelHandler = [Delegate].Remove(MouseWheelHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawMouseEventArgs)
+                If MouseWheelHandler IsNot Nothing Then MouseWheelHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "Keyboard"
+        ''' <summary>Raises the <see cref="KeyboardEvent"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnKeyboardEvent(ByVal e As RawKeyboardEventArgs)
+            RaiseEvent KeyboardEvent(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="KeyboardEvent"/> event</summary>
+        Private KeyboardEventHandler As EventHandler(Of RawKeyboardEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an event for keyboard.</summary>
+        Public Custom Event KeyboardEvent As EventHandler(Of RawKeyboardEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawKeyboardEventArgs))
+                KeyboardEventHandler = [Delegate].Combine(KeyboardEventHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawKeyboardEventArgs))
+                KeyboardEventHandler = [Delegate].Remove(KeyboardEventHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawKeyboardEventArgs)
+                If KeyboardEventHandler IsNot Nothing Then KeyboardEventHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "KeyDown"
+        ''' <summary>Raises the <see cref="KeyDown"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnKeyDown(ByVal e As RawKeyboardEventArgs)
+            RaiseEvent KeyDown(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="KeyDown"/> event</summary>
+        Private KeyDownHandler As EventHandler(Of RawKeyboardEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an event for keyboard with <see cref="RawKeyboardEventArgs.AssociatedMessage"/> set to <see cref="API.Messages.WindowMessages.WM_KEYDOWN"/> or <see cref="API.Messages.WindowMessages.WM_SYSKEYDOWN"/>.</summary>
+        Public Custom Event KeyDown As EventHandler(Of RawKeyboardEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawKeyboardEventArgs))
+                KeyDownHandler = [Delegate].Combine(KeyDownHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawKeyboardEventArgs))
+                KeyDownHandler = [Delegate].Remove(KeyDownHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawKeyboardEventArgs)
+                If KeyDownHandler IsNot Nothing Then KeyDownHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "KeyUp"
+        ''' <summary>Raises the <see cref="KeyDown"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnKeyUp(ByVal e As RawKeyboardEventArgs)
+            RaiseEvent KeyUp(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="KeyDown"/> event</summary>
+        Private KeyUpHandler As EventHandler(Of RawKeyboardEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an event for keyboard with <see cref="RawKeyboardEventArgs.AssociatedMessage"/> set to <see cref="API.Messages.WindowMessages.WM_KEYUP"/> or <see cref="API.Messages.WindowMessages.WM_SYSKEYUP"/>.</summary>
+        Public Custom Event KeyUp As EventHandler(Of RawKeyboardEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawKeyboardEventArgs))
+                KeyUpHandler = [Delegate].Combine(KeyUpHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawKeyboardEventArgs))
+                KeyUpHandler = [Delegate].Remove(KeyUpHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawKeyboardEventArgs)
+                If KeyUpHandler IsNot Nothing Then KeyUpHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "HID"
+        ''' <summary>Raises the <see cref="HidEvent"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnHidEvent(ByVal e As RawHidEventArgs)
+            RaiseEvent HidEvent(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="KeyboardEvent"/> event</summary>
+        Private HidEventHandler As EventHandler(Of RawHidEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an event for HID (Human Interface Device; other than keyboard or mouse).</summary>
+        Public Custom Event HidEvent As EventHandler(Of RawHidEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawHidEventArgs))
+                HidEventHandler = [Delegate].Combine(HidEventHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawHidEventArgs))
+                HidEventHandler = [Delegate].Remove(HidEventHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawHidEventArgs)
+                If HidEventHandler IsNot Nothing Then HidEventHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#End Region
+#Region "Disposing"
+        ''' <summary>Indicates if object was already disposed</summary>
+        Private Shadows disposed As Boolean
+        ''' <summary>Releases all resources used by the <see cref="RawInputEventProvider" />.</summary>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            MyBase.Dispose(disposing)
+            UnregisterOwner(Me.Owner.Handle)
+            disposed = True
+            'TODO: Unregistere events
+        End Sub
+        ''' <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="RawInputEventProvider" /> is reclaimed by garbage collection.</summary>
+        Protected Overrides Sub Finalize()
+            MyBase.Finalize()
+            UnregisterOwner(Me.Owner.Handle)
+            disposed = True
+            'TODO: Unregister events
+        End Sub
+#End Region
+
+#Region "Registration"
+        'TODO: Validate before registration
+#Region "Register"
+        Public Sub Register(ByVal UsagePage As UsagePages, ByVal Usage As Integer)
+
+        End Sub
+        Public Sub Register(ByVal UsagePage As UsagePages)
+
+        End Sub
+        Public Sub Register(ByVal UsagePage As UsagePages, ByVal Usage As Integer, ByVal BackgroundMode As BackgroundEvents)
+
+        End Sub
+        Public Sub Register(ByVal UsagePage As UsagePages, ByVal BackgroundMode As BackgroundEvents)
+
+        End Sub
+        Public Sub Register(ByVal Device As RawInputDeviceRegistration)
+
+        End Sub
+        Public Sub Register(ByVal ParamArray Devices As RawInputDeviceRegistration())
+
+        End Sub
+        Public Sub Register(ByVal Devices As IEnumerable(Of RawInputDeviceRegistration))
+
+        End Sub
+        Public Sub Register()
+
+        End Sub
+#End Region
+#Region "Unregister"
+        Public Sub UnRegister(ByVal UsagePage As UsagePages, ByVal Usage As Integer)
+
+        End Sub
+        Public Sub UnRegister(ByVal UsagePage As UsagePages)
+
+        End Sub
+
+        Public Sub UnRegister(ByVal Device As RawInputDeviceRegistration)
+
+        End Sub
+        Public Sub UnRegister(ByVal ParamArray Devices As RawInputDeviceRegistration())
+
+        End Sub
+        Public Sub UnRegister(ByVal Devices As IEnumerable(Of RawInputDeviceRegistration))
+
+        End Sub
+        Public Sub Unregister()
+
+        End Sub
+#End Region
+        Public Function GetRegisteredDevices() As RawInputDeviceRegistration()
+
+        End Function
+#End Region
+    End Class
+#Region "Event args"
+
+    ''' <summary>Base class for classes holding event arguments of raw input events</summary>
+    ''' <remarks>This class is not intended to be derived from by 3rd party.</remarks>
+    Public MustInherit Class RawInputEventArgs
+        Inherits EventArgs
+        ''' <summary>Type of device that caused the event. Also determines type of this instance.</summary>
+        Public ReadOnly Property DeviceType() As DeviceType
+            Get
+                Return _DeviceType
+            End Get
+        End Property
+        ''' <summary>Contains value of the <see cref="DeviceType"/> property</summary>
+        Private ReadOnly _DeviceType As DeviceType
+        ''' <summary>Handle to device that cause this event</summary>
+        Private hDevice As IntPtr
+        ''' <summary>CTor</summary>
+        ''' <param name="Type">Type of device that cause the event</param>
+        ''' <param name="hDevice">Handle to device that caused this event</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="DeviceType"/></exception>
+        Friend Sub New(ByVal Type As DeviceType, ByVal hDevice As IntPtr)
+            If Not Type.IsDefined Then Throw New InvalidEnumArgumentException("Type", Type, Type.GetType)
+            _DeviceType = Type
+            Me.hDevice = hDevice
+        End Sub
+        ''' <summary>Gets device that caused the event</summary>
+        ''' <returns>Device that caused the event; or null when device is unknown.</returns>
+        Public ReadOnly Property Device() As InputDevice
+            Get
+                If hDevice = IntPtr.Zero Then Return Nothing
+                Static iDevice As InputDevice = New InputDevice(hDevice)
+                Return iDevice
+            End Get
+        End Property
+    End Class
+
+    ''' <summary>Keyboard event arguments for raw input</summary>
+    Public Class RawKeyboardEventArgs
+        Inherits RawInputEventArgs
+        ''' <summary>CTor</summary>
+        ''' <param name="raw">Data from the <see cref="API.RawInput.GetRawInputData"/> call</param>
+        ''' <param name="hDevice">Handle to device that caused this event</param>
+        Friend Sub New(ByVal raw As API.RawInput.RAWKEYBOARD, ByVal hDevice As IntPtr)
+            MyBase.New(RawInputT.DeviceType.Keyboard, hDevice)
+            Me.raw = raw
+        End Sub
+        ''' <summary>Data from the <see cref="API.RawInput.GetRawInputData"/> call</summary>
+        Private ReadOnly raw As API.RawInput.RAWKEYBOARD
+        ''' <summary>Gets translated key code for this event</summary>
+        ''' <returns>Key code. Keycodes are never OR-ed with combining key <see cref="Keys.Shift"/>, <see cref="Keys.Control"/> and <see cref="Keys.Alt"/>.</returns>
+        Public ReadOnly Property KeyCode() As Keys
+            Get
+                Return raw.VKey
+            End Get
+        End Property
+        ''' <summary>Value returned by <see cref="ScanCode"/> when there was an keyboard overrurn</summary>
+        Public Const OverrunMakeCode% = API.RawInput.KEYBOARD_OVERRUN_MAKE_CODE
+        ''' <summary>Gets hardware scan code</summary>
+        ''' <returns>Hardware scan code. In case of keyboard overrun returns <see cref="OverrunMakeCode"/></returns>
+        Public ReadOnly Property ScanCode() As Integer
+            Get
+                Return raw.MakeCode
+            End Get
+        End Property
+        ''' <summary>Gets code of windows message for <see cref="API.Messages.WindowMessages.WM_INPUT"/> message that caused the event to be raised.</summary>
+        ''' <returns>Windows mesage code such as <see cref="API.Messages.WindowMessages.WM_KEYDOWN"/> or <see cref="API.Messages.WindowMessages.WM_KEYUP"/> that can be used to determine keyboard event.</returns>
+        Public ReadOnly Property AssociatedMessage() As API.Messages.WindowMessages
+            Get
+                Return raw.Message
+            End Get
+        End Property
+        ''' <summary>Gets flags for scan code</summary>
+        ''' <returns>Flags for scan code</returns>
+        Public ReadOnly Property Flags() As KeyboardFlags
+            Get
+                Return raw.Flags
+            End Get
+        End Property
+        ''' <summary>Gets extra hardware info assciated with this event</summary>
+        ''' <returns>Extra hardware info associated with this event. It's OEM-specific.</returns>
+        ''' <remarks>This property is not CLS-compliant. If you are unable to consume it from your language, use <see cref="GetExtraInfo"/> instead.</remarks>
+        <CLSCompliant(False)> _
+        Public ReadOnly Property ExtraInfo() As ULong
+            Get
+                Return raw.ExtraInformation
+            End Get
+        End Property
+        ''' <summary>CLS-compliant alternative of <see cref="ExtraInfo"/> CLS-incompliant property.</summary>
+        ''' <returns>Bitwise same value as <see cref="ExtraInfo"/> but as CLS-compliant type <see cref="Long"/></returns>
+        Public Function GetExtraInfo() As Long
+            Return ExtraInfo.BitwiseSame
+        End Function
+        ''' <summary>Definnes possible flags for the <see cref="Flags"/> property</summary>
+        <Flags()> _
+        Public Enum KeyboardFlags
+            ''' <summary>Make</summary>
+            Make = API.RawInput.RAWKEYBOARDFlags.RI_KEY_MAKE
+            ''' <summary>Break</summary>
+            Break = API.RawInput.RAWKEYBOARDFlags.RI_KEY_BREAK
+            ''' <summary>E0</summary>
+            E0 = Make = API.RawInput.RAWKEYBOARDFlags.RI_KEY_E0
+            ''' <summary>E1</summary>
+            E1 = API.RawInput.RAWKEYBOARDFlags.RI_KEY_E1
+            ''' <summary>Set led</summary>
+            SetLed = API.RawInput.RAWKEYBOARDFlags.RI_KEY_TERMSRV_SET_LED
+            ''' <summary>Terminal server shadow</summary>
+            TerminalServerShadow = API.RawInput.RAWKEYBOARDFlags.RI_KEY_TERMSRV_SHADOW
+        End Enum
+    End Class
+
+    ''' <summary>Mouse event arguments for raw input</summary>
+    Public Class RawMouseEventArgs
+        Inherits RawInputEventArgs
+        ''' <summary>Raw mouse data obtained form <see cref="API.RawInput.GetRawInputData"/> call</summary>
+        Private ReadOnly raw As API.RawInput.RAWMOUSE
+        ''' <summary>CTor</summary>
+        ''' <param name="raw">Raw mouse data obtained form <see cref="API.RawInput.GetRawInputData"/> call</param>
+        ''' <param name="hDevice">Handle to device that caused this event</param>
+        Friend Sub New(ByVal raw As API.RawInput.RAWMOUSE, ByVal hDevice As IntPtr)
+            MyBase.New(RawInputT.DeviceType.Mouse, hDevice)
+            Me.raw = raw
+        End Sub
+        ''' <summary>Gets raw button data</summary>
+        ''' <returns>OEM-specific raw button data</returns>
+        ''' <remarks>This property is not CLS-compliant. If you are unable to consume it from your language, use <see cref="GetRawButtonData"/> instead.</remarks>
+        <CLSCompliant(False)> _
+        Public ReadOnly Property RawButtonData() As ULong
+            Get
+                Return raw.ulRawButtons
+            End Get
+        End Property
+        ''' <summary>CLS-compliant alternative of <see cref="RawButtonData"/> CLS-incompliant property.</summary>
+        ''' <returns>Bitwise same value as <see cref="RawButtonData"/> but as CLS-compliant type <see cref="Long"/></returns>
+        Public Function GetRawButtonData() As Long
+            Return RawButtonData.BitwiseSame
+        End Function
+
+        ''' <summary>Gets extra hardware info assciated with this event</summary>
+        ''' <returns>Extra hardware info associated with this event. It's OEM-specific.</returns>
+        ''' <remarks>This property is not CLS-compliant. If you are unable to consume it from your language, use <see cref="GetExtraInfo"/> instead.</remarks>
+        <CLSCompliant(False)> _
+        Public ReadOnly Property ExtraInfo() As ULong
+            Get
+                Return raw.ulExtraInformation
+            End Get
+        End Property
+        ''' <summary>CLS-compliant alternative of <see cref="ExtraInfo"/> CLS-incompliant property.</summary>
+        ''' <returns>Bitwise same value as <see cref="ExtraInfo"/> but as CLS-compliant type <see cref="Long"/></returns>
+        Public Function GetExtraInfo() As Long
+            Return ExtraInfo.BitwiseSame
+        End Function
+        ''' <summary>Gets the X coordinate of mouse pointer</summary>
+        ''' <returns>Mouse pointer X coordibate. Wheather relative or absolute is determined by the <see cref="XYAbsolute"/> property.</returns>
+        ''' <seelaso cref="XYAbsolute"/><seelaso cref="VirtualDesktop"/>
+        Public ReadOnly Property X() As Long
+            Get
+                Return raw.lLastX
+            End Get
+        End Property
+        ''' <summary>Gets the Y coordinate of mouse pointer</summary>
+        ''' <returns>Mouse pointer Y coordibate. Wheather relative or absolute is determined by the <see cref="XYAbsolute"/> property.</returns>
+        ''' <seelaso cref="XYAbsolute"/><seelaso cref="VirtualDesktop"/>
+        Public ReadOnly Property Y() As Long
+            Get
+                Return raw.lLastY
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if mouse coordinates are absoulte or relative</summary>
+        ''' <returns>True when mouse coordinates are absoulte; false if they are relative</returns>
+        ''' <seelaso cref="X"/><seelaso cref="Y"/>
+        Public ReadOnly Property XYAbsolute() As Boolean
+            Get
+                Return raw.usFlags And API.RAWMOUSEFlags.MOUSE_MOVE_ABSOLUTE
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if mouse attributes has changed</summary>
+        ''' <returns>True when mouse attributes has changed and aplication should query them again.</returns>
+        Public ReadOnly Property MouseAttributesChanged() As Boolean
+            Get
+                Return raw.usFlags And API.RAWMOUSEFlags.MOUSE_ATTRIBUTES_CHANGED
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if mouse coordinates are maped to virtual desktop (in multi-monitor environment)</summary>
+        ''' <returns>True if mouse coordinates are mapped to virtual desktop; false otherwise</returns>
+        ''' <seelaso cref="X"/><seelaso cref="Y"/>
+        Public ReadOnly Property VirtualDesktop() As Boolean
+            Get
+                Return raw.usFlags And API.RAWMOUSEFlags.MOUSE_VIRTUAL_DESKTOP
+            End Get
+        End Property
+        ''' <summary>Gets buttons transition states</summary>
+        ''' <returns>Buttons transition states</returns>
+        Public ReadOnly Property Buttons() As RawMouseButtonStates
+            Get
+                Return raw.usButtonFlags
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if wheel event occured</summary>
+        ''' <returns>True when the <see cref="RawMouseButtonStates.Wheel"/> flag of <see cref="Buttons"/> is set; false otherwise</returns>
+        ''' <seelaso cref="Buttons"/><seelaso cref="WheelData"/>
+        Public ReadOnly Property Wheel() As Boolean
+            Get
+                Return Buttons And RawMouseButtonStates.Wheel
+            End Get
+        End Property
+        ''' <summary>When the <see cref="RawMouseButtonStates.Wheel"/> flag of <see cref="Buttons"/> is set, gets wheel data.</summary>
+        ''' <returns>Wheel data when the <see cref="RawMouseButtonStates.Wheel"/> flag of <see cref="Buttons"/> is set; otherwise 0.</returns>
+        ''' <seelaso cref="Wheel"/>
+        Public ReadOnly Property WheelData() As Short
+            Get
+                Return If(Buttons And RawMouseButtonStates.Wheel, raw.usButtonData, 0US).BitwiseSame
+            End Get
+        End Property
+    End Class
+    ''' <summary>Defines transition states of mouse buttons</summary>
+    <Flags()> _
+    Public Enum RawMouseButtonStates
+        ''' <summary>Left button was pressed</summary>
+        LeftDown = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_LEFT_BUTTON_DOWN
+        ''' <summary>Left button was released</summary>
+        LeftUp = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_LEFT_BUTTON_UP
+        ''' <summary>Right button was pressed</summary>
+        RightDown = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_RIGHT_BUTTON_DOWN
+        ''' <summary>Right button was released</summary>
+        RightUp = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_RIGHT_BUTTON_UP
+        ''' <summary>Middle button was pressed</summary>
+        MiddleDown = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_MIDDLE_BUTTON_DOWN
+        ''' <summary>Middlebutton was released</summary>
+        MiddleUp = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_MIDDLE_BUTTON_UP
+        ''' <summary>The X1 button was pressed</summary>
+        X1Down = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_BUTTON_4_DOWN
+        ''' <summary>The X1 button was released</summary>
+        X1Up = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_BUTTON_4_UP
+        ''' <summary>The X2 button was pressed</summary>
+        X2Down = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_BUTTON_5_DOWN
+        ''' <summary>The X2 button was released</summary>
+        X2Up = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_BUTTON_5_UP
+        ''' <summary>Wheel event ocured. <see cref="RawMouseEventArgs.WheelData"/> contains event data.</summary>
+        Wheel = API.RawInput.RAWMOUSEButtonFlags.RI_MOUSE_WHEEL
+    End Enum
+
+    ''' <summary>HID event arguments for raw input</summary>
+    Public Class RawHidEventArgs
+        Inherits RawInputEventArgs
+        ''' <summary>Contains raw data from <see cref="API.RawInput.GetRawInputData"/> call</summary>
+        Private raw As API.RawInput.RAWHID
+        ''' <summary>CTor</summary>
+        ''' <param name="raw">raw data from <see cref="API.RawInput.GetRawInputData"/> call</param>
+        ''' <param name="hDevice">Handle to device that caused this event</param>
+        Friend Sub New(ByVal raw As API.RawInput.RAWHID, ByVal hDevice As IntPtr)
+            MyBase.New(RawInputT.DeviceType.Hid, hDevice)
+            Me.raw = raw
+        End Sub
+        ''' <summary>Gets raw data from input device</summary>
+        ''' <returns>Raw data from input device</returns>
+        ''' <remarks>You can change items of this array. Do not do this! Or data for other consumers of this event and all events raised for same <see cref="API.Messages.WindowMessages.WM_INPUT"/> message can be currupted.</remarks>
+        Public ReadOnly Property RawData() As Byte()
+            Get
+                Return raw.bRawData
+            End Get
+        End Property
+        ''' <summary>Gest size of one block in <see cref="RawData"/></summary>
+        ''' <returns>Size of one block in raw data</returns>
+        Public ReadOnly Property RawItemSize() As Integer
+            Get
+                Return raw.dwSizeHid
+            End Get
+        End Property
+        ''' <summary>Gets count of blocks in <see cref="RawData"/></summary>
+        ''' <returns>Count of blocks in <see cref="RawData"/>. <see cref="RawItemsCount"/> * <see cref="RawItemSize"/> equals to <see cref="RawData"/>.<see cref="Byte().Length">Length</see></returns>
+        Public ReadOnly Property RawItemsCount() As Integer
+            Get
+                Return raw.dwCount
+            End Get
+        End Property
+        ''' <summary>Gets splitter <see cref="RawData"/> into blocks</summary>
+        ''' <returns>Utilizes <see cref="RawItemsCount"/> and <see cref="RawItemSize"/> to get array of arrays of bytes, each sub-aray representing one block of raw data.</returns>
+        Public Function GetRawBlocks() As Byte()()
+            Dim ret(RawItemsCount - 1)() As Byte
+            For i As Integer = 0 To RawItemsCount - 1
+                ReDim ret(i)(RawItemSize - 1)
+                Array.ConstrainedCopy(RawData, i * RawItemSize, ret(i), 0, RawItemSize)
+            Next
+            Return ret
+        End Function
+    End Class
+#End Region
+
+    ''' <summary>Specifies device registration</summary>
+    Public Class RawInputDeviceRegistration
+        ''' <summary>CTor from unmanaged data</summary>
+        ''' <param name="device">Unmanaged structure</param>
+        Friend Sub New(ByVal device As API.RawInput.RAWINPUTDEVICE)
+            Flags = device.dwFlags
+            _Usage = device.usUsage
+            _UsagePage = device.usUsagePage
+            If device.hwndTarget <> IntPtr.Zero Then
+                Try
+                    _Window = Control.FromHandle(device.hwndTarget)
+                Catch : End Try
+                If _Window Is Nothing Then _Window = New WindowsT.NativeT.Win32Window(device.hwndTarget)
+            End If
+        End Sub
+        ''' <summary>Converts this instance to <see cref="API.RawInput.RAWINPUTDEVICE"/> with additional properties set</summary>
+        ''' <param name="Target">Sets <see cref="Window"/> property</param>
+        ''' <param name="Unregister">Sets <see cref="Remove"/> property</param>
+        ''' <returns><see cref="API.RawInput.RAWINPUTDEVICE"/> initialized by this instance</returns>
+        Friend Function ToRAWINPUTDEVICE(Optional ByVal Target As IWin32Window = Nothing, Optional ByVal Unregister As Boolean = False) As API.RawInput.RAWINPUTDEVICE
+            Me.Window = Target
+            Me.Remove = Unregister
+            Return New API.RawInput.RAWINPUTDEVICE() With {.usUsage = Me.Usage, .usUsagePage = Me.UsagePage, .dwFlags = Me.Flags, .hwndTarget = If(Window IsNot Nothing, Window.Handle, IntPtr.Zero)}
+        End Function
+
+        ''' <summary>Default CTor</summary>
+        Public Sub New()
+        End Sub
+        ''' <summary>CTor from usage page and usage</summary>
+        ''' <param name="Usage">Top level collection Usage page for the raw input device. </param>
+        ''' <param name="UsagePage">Top level collection Usage for the raw input device. </param>
+        Public Sub New(ByVal UsagePage As UsagePages, ByVal Usage As Integer)
+            Me.UsagePage = UsagePage
+            Me.Usage = Usage
+        End Sub
+        ''' <summary>CTor from usgae page</summary>
+        ''' <param name="UsagePage">Top level collection Usage for the raw input device.</param>
+        ''' <remarks>This CTor initializes <see cref="WholePage"/> to true.</remarks>
+        Public Sub New(ByVal UsagePage As UsagePages)
+            Me.UsagePage = UsagePage
+            Me.WholePage = True
+        End Sub
+        ''' <summary>CTor from usage page, usage and background mode</summary>
+        ''' <param name="Usage">Top level collection Usage page for the raw input device. </param>
+        ''' <param name="UsagePage">Top level collection Usage for the raw input device. </param>
+        ''' <param name="Bakkground">Indicates if and when events will be received as well when windows events are regsitered for is not foreground</param>
+        Public Sub New(ByVal UsagePage As UsagePages, ByVal Usage As Integer, ByVal Bakkground As BackgroundEvents)
+            Me.UsagePage = UsagePage
+            Me.Usage = Usage
+        End Sub
+        ''' <summary>CTor from usgae page and background mode</summary>
+        ''' <param name="UsagePage">Top level collection Usage for the raw input device.</param>
+        ''' <remarks>This CTor initializes <see cref="WholePage"/> to true.</remarks>
+        ''' <param name="Bakkground">Indicates if and when events will be received as well when windows events are regsitered for is not foreground</param>
+        Public Sub New(ByVal UsagePage As UsagePages, ByVal Bakkground As BackgroundEvents)
+            Me.UsagePage = UsagePage
+            Me.WholePage = True
+        End Sub
+        ''' <summary>Gets <see cref="RawInputDeviceRegistration"/> for keyboard</summary>
+        ''' <returns>New instance of <see cref="RawInputDeviceRegistration"/> initialized to the keyboard device <see cref="UsagePage"/> <see cref="UsagePages.GenericDesktopControls"/> and <see cref="Usage"/> <see cref="Usages_GenericDesktopControls.Keyboard"/>).</returns>
+        ''' <remarks>Each call to this property returns new instance</remarks>
+        Public Shared ReadOnly Property Keyboard() As RawInputDeviceRegistration
+            Get
+                Return New RawInputDeviceRegistration(UsagePages.GenericDesktopControls, Usages_GenericDesktopControls.Keyboard)
+            End Get
+        End Property
+        ''' <summary>Gets <see cref="RawInputDeviceRegistration"/> for mouse</summary>
+        ''' <returns>New instance of <see cref="RawInputDeviceRegistration"/> initialized to the mouse device <see cref="UsagePage"/> <see cref="UsagePages.GenericDesktopControls"/> and <see cref="Usage"/> <see cref="Usages_GenericDesktopControls.Mouse"/>).</returns>
+        ''' <remarks>Each call to this property returns new instance</remarks>
+        Public Shared ReadOnly Property Mouse() As RawInputDeviceRegistration
+            Get
+                Return New RawInputDeviceRegistration(UsagePages.GenericDesktopControls, Usages_GenericDesktopControls.Mouse)
+            End Get
+        End Property
+        ''' <summary>Registration flags</summary>
+        Private Flags As API.RawInput.RAWINPUTDEVICEFlags
+        ''' <summary>Contains value of the <see cref="Usage"/> property</summary>
+        Private _Usage As Integer
+        ''' <summary>Gets or sets top level collection Usage for the raw input device.</summary>
+        ''' <returns>Top level collection Usage the raw input device events are or will be registered for.</returns>
+        ''' <value>Top level collection Usage for the raw input device to register events of. Setting this property to non-zero sets <see cref="WholePage"/> to false.</value>
+        Public Property Usage() As Integer
+            Get
+                Return _Usage
+            End Get
+            Set(ByVal value As Integer)
+                _Usage = value
+                If value <> 0 AndAlso WholePage Then WholePage = False
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="UsagePage"/> property</summary>
+        Private _UsagePage As UsagePages
+        ''' <summary>Gets or sets top level collection Usage page for the raw input device. </summary>
+        ''' <returns>Top level collection Usage page the raw input device events are or will be registered for. </returns>
+        ''' <value>Top level collection Usage page for the raw input device to registere events of. </value>
+        Public Property UsagePage() As UsagePages
+            Get
+                Return _UsagePage
+            End Get
+            Set(ByVal value As UsagePages)
+                _UsagePage = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicating that all devices from specified <see cref="UsagePage"/> will be registered</summary>
+        ''' <returns>Value indicationg if whole page is or will be registered</returns>
+        ''' <value>Setting this property to true sets <see cref="Usage"/> to zero and <see cref="Exclude"/> to false.</value>
+        ''' <remarks>When registering more items at once, specific usages from whole usage page registered can be excluded by adding another <see cref="RawInputDeviceRegistration"/>(s) to collection with same <see cref="UsagePage"/> specified and specifying <see cref="Usage"/> to exlude.</remarks>
+        Public Property WholePage() As Boolean
+            Get
+                Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_PAGEONLY)
+            End Get
+            Set(ByVal value As Boolean)
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_PAGEONLY, value)
+                If value Then Usage = 0
+            End Set
+        End Property
+        ''' <summary>Gets value indication if this insatance specifies exlusion from registered devices collection</summary>
+        ''' <returns>True if this instance specifies exlusion; false otherwise</returns>
+        ''' <value>Settting this value to true sets <see cref="WholePage"/> to false</value>
+        ''' <remarks>Exclusion instances can be used only in collection with another instances that specifies <see cref="WholePage"/> and are used to exclude specific devices from whole <see cref="UsagePage"/> registered.</remarks>
+        Public Property Exclude() As Boolean
+            Get
+                Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXCLUDE)
+            End Get
+            Set(ByVal value As Boolean)
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXCLUDE, value)
+                If value = True Then WholePage = False
+            End Set
+        End Property
+        ''' <summary>Gets value indicating if the remove flag was set on original raw input Win32 RAWINPUTDEVICE structure</summary>
+        ''' <returns>True if the flag was set</returns>
+        ''' <remarks>This property is provided only for obserwing flag from original unmanaged structure. It is read-only and is not read by registration/unregistration process (but it sets it).</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Property Remove() As Boolean
+            Get
+                Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_REMOVE)
+            End Get
+            Friend Set(ByVal value As Boolean)
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_REMOVE, value)
+            End Set
+        End Property
+        ''' <summary>Gets value of given flag from <see cref="Flags"/></summary>
+        ''' <param name="Flag">Flag to get value of</param>
+        ''' <returns>True if flag <paramref name="Flag"/>is set, false if it is not</returns>
+        Private Function GetFlag(ByVal Flag As API.RawInput.RAWINPUTDEVICEFlags) As Boolean
+            Return Flags And Flag
+        End Function
+        ''' <summary>Sets or erases given flag in <see cref="Flags"/></summary>
+        ''' <param name="Flag">Flag to set or erase</param>
+        ''' <param name="Value">True to set the flag, flase to erase it</param>
+        Private Sub SetFlag(ByVal Flag As API.RawInput.RAWINPUTDEVICEFlags, ByVal Value As Boolean)
+            If Value Then Flags = Flag Or Flag Else Flags = Flags And Not Flag
+        End Sub
+
+        ''' <summary>Contains value of the <see cref="Window"/> property</summary>
+        Private _Window As IWin32Window
+        ''' <summary>Gets window events was registered for</summary>
+        ''' <returns>Window events was registered for; by defualt this propert returns null.</returns>
+        ''' <remarks>This property cannot be set by user and is intended onyl for observing of value returned from unmanaged code. It is not read by registration/unregistration process (but it sets it).</remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Property Window() As IWin32Window
+            Get
+                Return _Window
+            End Get
+            Friend Set(ByVal value As IWin32Window)
+                _Window = value
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicationg if this registration disbles so-called legacy message for whole application from device this instance registers.</summary>
+        ''' <returns>True when legacy messages are/will be disabled</returns>
+        ''' <value>True to deisable legacy messages; false not to disable legacy messages.</value>
+        ''' <remarks>This property has no meaning when <see cref="Exclude"/> is true, device being registered is neither mouse nor keyboard or when this instance will be used for unregistration.
+        ''' <paramref>Setting this property to ture effectivelly stops raising standard events raised by controls and forms for specified device.</paramref>
+        ''' <para>Setting this proprty to false, sets <see cref="ApplicationKeys"/> to false</para></remarks>
+        Public Property DisableLegacyMessages() As Boolean
+            Get
+                Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOLEGACY)
+            End Get
+            Set(ByVal value As Boolean)
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOLEGACY, value)
+                If Not value Then ApplicationKeys = False
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicationg if and when this registration will have efect even when window it is registered for is not active</summary>
+        ''' <returns>Background events receive mode. This property may return <see cref="BackgroundEvents.Background"/> Or <see cref="RawInputT.BackgroundEvents.BackgroundWhenNotHandled"/> when this instance was initialized from unmanaged data.</returns>
+        ''' <value>Background events receive mode to register for. Value being set must be member of <see cref="RawInputT.BackgroundEvents"/> enumeration.</value>
+        ''' <remarks><see cref="BackgroundEvents.BackgroundWhenNotHandled"/> works only on Vista and later.</remarks>
+        Public Property BackgroundEvents() As BackgroundEvents
+            Get
+                Return Flags And (BackgroundEvents.Background Or RawInputT.BackgroundEvents.BackgroundWhenNotHandled)
+            End Get
+            Set(ByVal value As BackgroundEvents)
+                Select Case value
+                    Case RawInputT.BackgroundEvents.Background
+                        SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_INPUTSINK, True)
+                        SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXINPUTSINK, False)
+                    Case RawInputT.BackgroundEvents.BackgroundWhenNotHandled
+                        SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_INPUTSINK, False)
+                        SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXINPUTSINK, True)
+                    Case RawInputT.BackgroundEvents.ForegroundOnly
+                        SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_INPUTSINK, False)
+                        SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXINPUTSINK, False)
+                    Case Else : Throw New InvalidEnumArgumentException("value", value, value.GetType)
+                End Select
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicating if mouse is captured</summary>
+        ''' <returns>True when mouse is captured - click ouside of active windows does not activate the other window; false otherwise</returns>
+        ''' <value>True to prevent mouse click to another window from activating it; false to allow it</value>
+        Public Property CaptureMouse() As Boolean
+            Get
+                Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_CAPTUREMOUSE)
+            End Get
+            Set(ByVal value As Boolean)
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_CAPTUREMOUSE, value)
+            End Set
+        End Property
+        ''' <summary>Gets value indicating if application command keys avents are handled</summary>
+        ''' <returns>True when application command keys events are generated.</returns>
+        ''' <value>True to generate events for application command keys.</value>
+        ''' <remarks>This property works only for XP SP1 and later.
+        ''' <para>This property is meningful onyl fr keyboard devices.</para>
+        ''' <para>This property cannot be set to true when <see cref="DisableLegacyMessages"/> is false. This property can return true even when <see cref="DisableLegacyMessages"/> si false in case this insatnce was created from unmanaged data.</para></remarks>
+        Public Property ApplicationKeys() As Boolean
+            Get
+                Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_APPKEYS)
+            End Get
+            Set(ByVal value As Boolean)
+                If value AndAlso Not DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.ExceptionsWin.CannotBeSetTo1When2Is3.f("ApplicationKeys", "true", "DisableLegacyMessages", "false"))
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_APPKEYS, value)
+            End Set
+        End Property
+        ''' <summary>gets or sets value indicating if application-defined keyboard device hotkeys are handled</summary>
+        ''' <returns>True if application-defined keyboard device hotkeys are handled; false when thay are not</returns>
+        ''' <value>False to disable handling of application-defined keyboard device hokey. Default value of this poperty is true.</value>
+        ''' <remarks>System hotkeys such as ALT+TAB and CTRL+ALT+DEL are still handled.</remarks>
+        <DefaultValue(True)> _
+        Public Property HotKeys() As Boolean
+            Get
+                Return Not GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOHOTKEYS)
+            End Get
+            Set(ByVal value As Boolean)
+                SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOHOTKEYS, Not value)
+            End Set
+        End Property
+    End Class
+    ''' <summary>Possible modes of catching raw input events related to whether window is in foreground or not</summary>
+    Public Enum BackgroundEvents
+        ''' <summary>Events are received only when window is active</summary>
+        ForegroundOnly = 0
+        ''' <summary>Events are received not depending on if window is active</summary>
+        Background = API.RAWINPUTDEVICEFlags.RIDEV_INPUTSINK
+        ''' <summary>Events are received when window is active. When window is not active, events are received only when tehy are not received by another active window (system-wide). This value works only in Vista and later.</summary>
+        BackgroundWhenNotHandled = API.RAWINPUTDEVICEFlags.RIDEV_EXINPUTSINK
     End Enum
 #End Region
 End Namespace

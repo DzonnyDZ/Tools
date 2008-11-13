@@ -93,6 +93,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} cannot be set to {1} when {2} is {3}'.
+        '''</summary>
+        Public Shared ReadOnly Property CannotBeSetTo1When2Is3() As String
+            Get
+                Return ResourceManager.GetString("CannotBeSetTo1When2Is3", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot create link from file {0}.'.
         '''</summary>
         Public Shared ReadOnly Property CannotCreateLinkFromFile0() As String
@@ -116,6 +125,15 @@ Namespace ResourcesT
         Public Shared ReadOnly Property File0DoesNotExist() As String
             Get
                 Return ResourceManager.GetString("File0DoesNotExist", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Given owner has already attached RawInputEventProvider'.
+        '''</summary>
+        Public Shared ReadOnly Property GivenOwnerHasAlreadyAttachedRawInputEventProvider() As String
+            Get
+                Return ResourceManager.GetString("GivenOwnerHasAlreadyAttachedRawInputEventProvider", _resourceCulture)
             End Get
         End Property
         
@@ -183,6 +201,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Message target window handle must be same as handle of window this instance was created for'.
+        '''</summary>
+        Public Shared ReadOnly Property MessageTargetWindowHandleMustBeSameAsHandleOfWindow() As String
+            Get
+                Return ResourceManager.GetString("MessageTargetWindowHandleMustBeSameAsHandleOfWindow", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Path {0} does not exist.'.
         '''</summary>
         Public Shared ReadOnly Property Path0DoesNotExist() As String
@@ -206,6 +233,15 @@ Namespace ResourcesT
         Public Shared ReadOnly Property RawDeviceNameHasUnexpectedFormatItMustStartWith0() As String
             Get
                 Return ResourceManager.GetString("RawDeviceNameHasUnexpectedFormatItMustStartWith0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Source of window message evnt must be same as owner ow this instance'.
+        '''</summary>
+        Public Shared ReadOnly Property SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance() As String
+            Get
+                Return ResourceManager.GetString("SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance", _resourceCulture)
             End Get
         End Property
         
@@ -291,6 +327,19 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to '{0} cannot be set to {1} when {2} is {3}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<param name="arg2">An object (2) to format.</param>
+        '''<param name="arg3">An object (3) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1025:ReplaceRepetitiveArgumentsWithParamsArray")>  _
+        Public Shared Function CannotBeSetTo1When2Is3Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object, ByVal arg3 As Object) As String
+            Return String.Format(_resourceCulture, CannotBeSetTo1When2Is3, arg0, arg1, arg2, arg3)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Cannot create link from file {0}.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -315,6 +364,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function File0DoesNotExistFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, File0DoesNotExist, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the GivenOwnerHasAlreadyAttachedRawInputEventProvider property value.
+        '''</summary>
+        '''<returns>The GivenOwnerHasAlreadyAttachedRawInputEventProvider property value.</returns>
+        Public Shared Function GivenOwnerHasAlreadyAttachedRawInputEventProviderFormat() As String
+            Return GivenOwnerHasAlreadyAttachedRawInputEventProvider
         End Function
         
         '''<summary>
@@ -376,6 +433,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the MessageTargetWindowHandleMustBeSameAsHandleOfWindow property value.
+        '''</summary>
+        '''<returns>The MessageTargetWindowHandleMustBeSameAsHandleOfWindow property value.</returns>
+        Public Shared Function MessageTargetWindowHandleMustBeSameAsHandleOfWindowFormat() As String
+            Return MessageTargetWindowHandleMustBeSameAsHandleOfWindow
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Path {0} does not exist.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -399,6 +464,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function RawDeviceNameHasUnexpectedFormatItMustStartWith0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, RawDeviceNameHasUnexpectedFormatItMustStartWith0, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance property value.
+        '''</summary>
+        '''<returns>The SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance property value.</returns>
+        Public Shared Function SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstanceFormat() As String
+            Return SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance
         End Function
         
         '''<summary>

@@ -23,7 +23,7 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Me.slpMain = New System.Windows.Forms.SplitContainer
+            Me.splEnumeration = New System.Windows.Forms.SplitContainer
             Me.TableLayoutPanel1 = New System.Windows.Forms.TableLayoutPanel
             Me.cmdGetRawInputDeviceList = New System.Windows.Forms.Button
             Me.lstDevices = New System.Windows.Forms.ListBox
@@ -32,37 +32,42 @@
             Me.lblDeviceName = New System.Windows.Forms.Label
             Me.SplitContainer1 = New System.Windows.Forms.SplitContainer
             Me.prgDeviceInfo = New System.Windows.Forms.PropertyGrid
-            Me.prgName = New System.Windows.Forms.PropertyGrid
             Me.lblDeviceInfoI = New System.Windows.Forms.Label
+            Me.prgName = New System.Windows.Forms.PropertyGrid
             Me.lblRawDeviceNameI = New System.Windows.Forms.Label
             Me.lblDeviceDescriptionI = New System.Windows.Forms.Label
             Me.lblDeviceDescription = New System.Windows.Forms.Label
-            Me.slpMain.Panel1.SuspendLayout()
-            Me.slpMain.Panel2.SuspendLayout()
-            Me.slpMain.SuspendLayout()
+            Me.splMain = New System.Windows.Forms.SplitContainer
+            Me.tvwHid = New System.Windows.Forms.TreeView
+            Me.splEnumeration.Panel1.SuspendLayout()
+            Me.splEnumeration.Panel2.SuspendLayout()
+            Me.splEnumeration.SuspendLayout()
             Me.TableLayoutPanel1.SuspendLayout()
             Me.tlpProperties.SuspendLayout()
             Me.SplitContainer1.Panel1.SuspendLayout()
             Me.SplitContainer1.Panel2.SuspendLayout()
             Me.SplitContainer1.SuspendLayout()
+            Me.splMain.Panel1.SuspendLayout()
+            Me.splMain.Panel2.SuspendLayout()
+            Me.splMain.SuspendLayout()
             Me.SuspendLayout()
             '
-            'slpMain
+            'splEnumeration
             '
-            Me.slpMain.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.slpMain.Location = New System.Drawing.Point(0, 0)
-            Me.slpMain.Name = "slpMain"
+            Me.splEnumeration.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splEnumeration.Location = New System.Drawing.Point(0, 0)
+            Me.splEnumeration.Name = "splEnumeration"
             '
-            'slpMain.Panel1
+            'splEnumeration.Panel1
             '
-            Me.slpMain.Panel1.Controls.Add(Me.TableLayoutPanel1)
+            Me.splEnumeration.Panel1.Controls.Add(Me.TableLayoutPanel1)
             '
-            'slpMain.Panel2
+            'splEnumeration.Panel2
             '
-            Me.slpMain.Panel2.Controls.Add(Me.tlpProperties)
-            Me.slpMain.Size = New System.Drawing.Size(567, 536)
-            Me.slpMain.SplitterDistance = 188
-            Me.slpMain.TabIndex = 0
+            Me.splEnumeration.Panel2.Controls.Add(Me.tlpProperties)
+            Me.splEnumeration.Size = New System.Drawing.Size(519, 536)
+            Me.splEnumeration.SplitterDistance = 172
+            Me.splEnumeration.TabIndex = 0
             '
             'TableLayoutPanel1
             '
@@ -76,7 +81,7 @@
             Me.TableLayoutPanel1.RowCount = 2
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.TableLayoutPanel1.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.TableLayoutPanel1.Size = New System.Drawing.Size(188, 536)
+            Me.TableLayoutPanel1.Size = New System.Drawing.Size(172, 536)
             Me.TableLayoutPanel1.TabIndex = 0
             '
             'cmdGetRawInputDeviceList
@@ -84,7 +89,7 @@
             Me.cmdGetRawInputDeviceList.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmdGetRawInputDeviceList.AutoSize = True
             Me.cmdGetRawInputDeviceList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdGetRawInputDeviceList.Location = New System.Drawing.Point(29, 3)
+            Me.cmdGetRawInputDeviceList.Location = New System.Drawing.Point(21, 3)
             Me.cmdGetRawInputDeviceList.Name = "cmdGetRawInputDeviceList"
             Me.cmdGetRawInputDeviceList.Size = New System.Drawing.Size(130, 23)
             Me.cmdGetRawInputDeviceList.TabIndex = 0
@@ -98,7 +103,7 @@
             Me.lstDevices.IntegralHeight = False
             Me.lstDevices.Location = New System.Drawing.Point(3, 32)
             Me.lstDevices.Name = "lstDevices"
-            Me.lstDevices.Size = New System.Drawing.Size(182, 501)
+            Me.lstDevices.Size = New System.Drawing.Size(166, 501)
             Me.lstDevices.TabIndex = 1
             '
             'tlpProperties
@@ -118,7 +123,7 @@
             Me.tlpProperties.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpProperties.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpProperties.Size = New System.Drawing.Size(375, 536)
+            Me.tlpProperties.Size = New System.Drawing.Size(343, 536)
             Me.tlpProperties.TabIndex = 1
             '
             'lblDeviceNameI
@@ -157,7 +162,7 @@
             '
             Me.SplitContainer1.Panel2.Controls.Add(Me.prgName)
             Me.SplitContainer1.Panel2.Controls.Add(Me.lblRawDeviceNameI)
-            Me.SplitContainer1.Size = New System.Drawing.Size(369, 504)
+            Me.SplitContainer1.Size = New System.Drawing.Size(337, 504)
             Me.SplitContainer1.SplitterDistance = 252
             Me.SplitContainer1.TabIndex = 3
             '
@@ -166,16 +171,8 @@
             Me.prgDeviceInfo.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgDeviceInfo.Location = New System.Drawing.Point(0, 13)
             Me.prgDeviceInfo.Name = "prgDeviceInfo"
-            Me.prgDeviceInfo.Size = New System.Drawing.Size(369, 239)
+            Me.prgDeviceInfo.Size = New System.Drawing.Size(337, 239)
             Me.prgDeviceInfo.TabIndex = 4
-            '
-            'prgName
-            '
-            Me.prgName.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.prgName.Location = New System.Drawing.Point(0, 13)
-            Me.prgName.Name = "prgName"
-            Me.prgName.Size = New System.Drawing.Size(369, 235)
-            Me.prgName.TabIndex = 4
             '
             'lblDeviceInfoI
             '
@@ -186,6 +183,14 @@
             Me.lblDeviceInfoI.Size = New System.Drawing.Size(61, 13)
             Me.lblDeviceInfoI.TabIndex = 5
             Me.lblDeviceInfoI.Text = "Device info"
+            '
+            'prgName
+            '
+            Me.prgName.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgName.Location = New System.Drawing.Point(0, 13)
+            Me.prgName.Name = "prgName"
+            Me.prgName.Size = New System.Drawing.Size(337, 235)
+            Me.prgName.TabIndex = 4
             '
             'lblRawDeviceNameI
             '
@@ -214,17 +219,43 @@
             Me.lblDeviceDescription.Size = New System.Drawing.Size(0, 13)
             Me.lblDeviceDescription.TabIndex = 5
             '
+            'splMain
+            '
+            Me.splMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splMain.Location = New System.Drawing.Point(0, 0)
+            Me.splMain.Name = "splMain"
+            '
+            'splMain.Panel1
+            '
+            Me.splMain.Panel1.Controls.Add(Me.splEnumeration)
+            '
+            'splMain.Panel2
+            '
+            Me.splMain.Panel2.Controls.Add(Me.tvwHid)
+            Me.splMain.Size = New System.Drawing.Size(952, 536)
+            Me.splMain.SplitterDistance = 519
+            Me.splMain.TabIndex = 1
+            '
+            'tvwHid
+            '
+            Me.tvwHid.CheckBoxes = True
+            Me.tvwHid.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tvwHid.Location = New System.Drawing.Point(0, 0)
+            Me.tvwHid.Name = "tvwHid"
+            Me.tvwHid.Size = New System.Drawing.Size(429, 536)
+            Me.tvwHid.TabIndex = 0
+            '
             'frmRawInput
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(567, 536)
-            Me.Controls.Add(Me.slpMain)
+            Me.ClientSize = New System.Drawing.Size(952, 536)
+            Me.Controls.Add(Me.splMain)
             Me.Name = "frmRawInput"
             Me.Text = "Testing Tools.DevicesT.RawInputT"
-            Me.slpMain.Panel1.ResumeLayout(False)
-            Me.slpMain.Panel2.ResumeLayout(False)
-            Me.slpMain.ResumeLayout(False)
+            Me.splEnumeration.Panel1.ResumeLayout(False)
+            Me.splEnumeration.Panel2.ResumeLayout(False)
+            Me.splEnumeration.ResumeLayout(False)
             Me.TableLayoutPanel1.ResumeLayout(False)
             Me.TableLayoutPanel1.PerformLayout()
             Me.tlpProperties.ResumeLayout(False)
@@ -234,10 +265,13 @@
             Me.SplitContainer1.Panel2.ResumeLayout(False)
             Me.SplitContainer1.Panel2.PerformLayout()
             Me.SplitContainer1.ResumeLayout(False)
+            Me.splMain.Panel1.ResumeLayout(False)
+            Me.splMain.Panel2.ResumeLayout(False)
+            Me.splMain.ResumeLayout(False)
             Me.ResumeLayout(False)
 
         End Sub
-        Friend WithEvents slpMain As System.Windows.Forms.SplitContainer
+        Friend WithEvents splEnumeration As System.Windows.Forms.SplitContainer
         Friend WithEvents TableLayoutPanel1 As System.Windows.Forms.TableLayoutPanel
         Friend WithEvents cmdGetRawInputDeviceList As System.Windows.Forms.Button
         Friend WithEvents lstDevices As System.Windows.Forms.ListBox
@@ -251,5 +285,7 @@
         Friend WithEvents lblRawDeviceNameI As System.Windows.Forms.Label
         Friend WithEvents lblDeviceDescriptionI As System.Windows.Forms.Label
         Friend WithEvents lblDeviceDescription As System.Windows.Forms.Label
+        Friend WithEvents splMain As System.Windows.Forms.SplitContainer
+        Friend WithEvents tvwHid As System.Windows.Forms.TreeView
     End Class
 End Namespace

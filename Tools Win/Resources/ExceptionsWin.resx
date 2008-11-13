@@ -183,4 +183,16 @@
   <data name="InvalidFormatSpecifier" xml:space="preserve">
     <value>Invalid format specifier</value>
   </data>
+  <data name="SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance" xml:space="preserve">
+    <value>Source of window message evnt must be same as owner ow this instance</value>
+  </data>
+  <data name="MessageTargetWindowHandleMustBeSameAsHandleOfWindow" xml:space="preserve">
+    <value>Message target window handle must be same as handle of window this instance was created for</value>
+  </data>
+  <data name="GivenOwnerHasAlreadyAttachedRawInputEventProvider" xml:space="preserve">
+    <value>Given owner has already attached RawInputEventProvider</value>
+  </data>
+  <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
+    <value>{0} cannot be set to {1} when {2} is {3}</value>
+  </data>
 </root>

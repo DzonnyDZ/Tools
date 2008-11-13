@@ -1,8 +1,10 @@
 ﻿Imports System.Runtime.InteropServices
+Imports System.Runtime.CompilerServices
 
 Namespace API
     ''' <summary>Contains API declarations related to Raw Input</summary>
     Friend Module RawInput
+#Region "Enumeration"
         ''' <summary>contains information about a raw input device.</summary>
         <StructLayout(LayoutKind.Sequential)> _
         Public Structure RAWINPUTDEVICELIST
@@ -161,7 +163,8 @@ Namespace API
             ''' <summary>Size of this structure</summary>
             Public Const Size% = 32
         End Structure
-
+#End Region
+#Region "Registration"
         ''' <summary>defines information for the raw input devices</summary>
         <StructLayout(LayoutKind.Sequential)> _
         Public Structure RAWINPUTDEVICE
@@ -215,5 +218,215 @@ Namespace API
         ''' <para>If a <see cref="RAWINPUTDEVICE"/> structure has the <see cref="RAWINPUTDEVICEFlags.RIDEV_REMOVE"/> flag set and the <see cref="RAWINPUTDEVICE.hwndTarget"/> parameter is not set to NULL, then parameter validation will fail.</para></remarks>
         Public Declare Auto Function RegisterRawInputDevices Lib "User32.dll" (ByVal pRawInputDevice As RAWINPUTDEVICE(), ByVal uiNumDevices As UInteger, ByVal cbSize As UInteger) As Boolean
 
+#End Region
+#Region "Handling"
+        ''' <summary>contains the raw input from a device. </summary>
+        <StructLayout(LayoutKind.Explicit)> _
+        Public Structure RAWINPUT
+            ''' <summary>A <see cref="RAWINPUTHEADER"/> structure for the raw input data. </summary>
+            <FieldOffset(0)> Public header As RAWINPUTHEADER
+            ''' <summary>If the data comes from a mouse, this is the <see cref="RAWMOUSE"/> structure for the raw input data. </summary>
+            <FieldOffset(RAWINPUTHEADER.Size)> Public mouse As RAWMOUSE
+            ''' <summary>If the data comes from a keyboard, this is the <see cref="RAWKEYBOARD"/> structure for the raw input data. </summary>
+            <FieldOffset(RAWINPUTHEADER.Size)> Public keyboard As RAWKEYBOARD
+            ''' <summary>If the data comes from an Human Interface Device (HID), this is the <see cref="RAWHID"/> structure for the raw input data. </summary>
+            <FieldOffset(RAWINPUTHEADER.Size)> Public hid As RAWHID
+        End Structure
+        ''' <summary>contains information about the state of the mouse. </summary>
+        <StructLayout(LayoutKind.Explicit)> _
+        Public Structure RAWMOUSE
+            ''' <summary>Mouse state. This member can be any reasonable combination of <see cref="RAWMOUSEFlags"/>. </summary>
+            <FieldOffset(0)> Public usFlags As RAWMOUSEFlags
+            ''' <summary>Reserved</summary>
+            <FieldOffset(2)> Public ulButtons As ULong
+            ''' <summary>Transition state of the mouse buttons. This member can be one or more of the <see cref="RAWMOUSEButtonFlags"/> values. </summary>
+            <FieldOffset(2)> Public usButtonFlags As RAWMOUSEButtonFlags
+            ''' <summary>If <see cref="usButtonFlags"/> is <see cref="RAWMOUSEButtonFlags.RI_MOUSE_WHEEL"/>, this member is a signed value that specifies the wheel delta. </summary>
+            <FieldOffset(4)> Public usButtonData As UShort
+            ''' <summary>Raw state of the mouse buttons. </summary>
+            <FieldOffset(10)> Public ulRawButtons As ULong
+            ''' <summary>Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of <see cref="usFlags"/>. </summary>
+            <FieldOffset(18)> Public lLastX As Long
+            ''' <summary>Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of <see cref="usFlags"/>. </summary>
+            <FieldOffset(26)> Public lLastY As Long
+            ''' <summary>Device-specific additional information for the event. </summary>
+            <FieldOffset(34)> Public ulExtraInformation As ULong
+        End Structure
+        ''' <summary>Values for <see cref="RAWMOUSE.usFlags"/></summary>
+        <Flags()> _
+        Public Enum RAWMOUSEFlags As UShort
+            ''' <summary>Mouse attributes changed; application needs to query the mouse attributes.</summary>
+            MOUSE_ATTRIBUTES_CHANGED = 4
+            ''' <summary>Mouse movement data is relative to the last mouse position.</summary>
+            MOUSE_MOVE_RELATIVE = 0
+            ''' <summary>Mouse movement data is based on absolute position.</summary>
+            MOUSE_MOVE_ABSOLUTE = 1
+            ''' <summary>Mouse coordinates are mapped to the virtual desktop (for a multiple monitor system).</summary>
+            MOUSE_VIRTUAL_DESKTOP = 2
+        End Enum
+        ''' <summary>Values for <see cref="RAWMOUSE.usButtonFlags"/></summary>
+        <Flags()> _
+        Public Enum RAWMOUSEButtonFlags As UShort
+            ''' <summary>Left button changed to down.</summary>
+            RI_MOUSE_LEFT_BUTTON_DOWN = 1
+            ''' <summary>Left button changed to up.</summary>
+            RI_MOUSE_LEFT_BUTTON_UP = 2
+            ''' <summary>Middle button changed to down.</summary>
+            RI_MOUSE_MIDDLE_BUTTON_DOWN = &H10
+            ''' <summary>Middle button changed to up.</summary>
+            RI_MOUSE_MIDDLE_BUTTON_UP = &H20
+            ''' <summary>Right button changed to down.</summary>
+            RI_MOUSE_RIGHT_BUTTON_DOWN = 4
+            ''' <summary>Right button changed to up.</summary>
+            RI_MOUSE_RIGHT_BUTTON_UP = 8
+            ''' <summary><see cref="RI_MOUSE_LEFT_BUTTON_DOWN"/></summary>
+            RI_MOUSE_BUTTON_1_DOWN
+            ''' <summary><see cref="RI_MOUSE_LEFT_BUTTON_UP"/></summary>
+            RI_MOUSE_BUTTON_1_UP
+            ''' <summary><see cref="RI_MOUSE_RIGHT_BUTTON_DOWN"/></summary>
+            RI_MOUSE_BUTTON_2_DOWN
+            ''' <summary><see cref="RI_MOUSE_RIGHT_BUTTON_UP"/></summary>
+            RI_MOUSE_BUTTON_2_UP
+            ''' <summary><see cref="RI_MOUSE_MIDDLE_BUTTON_DOWN"/></summary>
+            RI_MOUSE_BUTTON_3_DOWN
+            ''' <summary><see cref="RI_MOUSE_MIDDLE_BUTTON_UP"/></summary>
+            RI_MOUSE_BUTTON_3_UP
+            ''' <summary>XBUTTON1 changed to down.</summary>
+            RI_MOUSE_BUTTON_4_DOWN = &H40
+            ''' <summary>XBUTTON1 changed to up.</summary>
+            RI_MOUSE_BUTTON_4_UP = &H80
+            ''' <summary>XBUTTON2 changed to down.</summary>
+            RI_MOUSE_BUTTON_5_DOWN = &H100
+            ''' <summary>XBUTTON2 changed to up.</summary>
+            RI_MOUSE_BUTTON_5_UP = &H200
+            ''' <summary>Raw input comes from a mouse wheel. The wheel delta is stored in <see cref="RAWMOUSE.usButtonData"/>.</summary>
+            RI_MOUSE_WHEEL = &H400
+        End Enum
+
+        ''' <summary>The make scan code for keyboard overrun</summary>
+        Public Const KEYBOARD_OVERRUN_MAKE_CODE As UShort = &HFF
+
+        ''' <summary>contains information about the state of the keyboard. </summary>
+        <StructLayout(LayoutKind.Sequential)> _
+        Public Structure RAWKEYBOARD
+            ''' <summary>Scan code from the key depression. The scan code for keyboard overrun is <see cref="KEYBOARD_OVERRUN_MAKE_CODE"/>. </summary>
+            Public MakeCode As UShort
+            ''' <summary>Flags for scan code information. It can be one or more of the <see cref="RAWKEYBOARDFlags"/>.</summary>
+            Public Flags As RAWKEYBOARDFlags
+            ''' <summary>Reserved; must be zero. </summary>
+            Public Reserved As UShort
+            ''' <summary>Microsoft Windows message compatible virtual-key code. For more information, see Virtual-Key Codes. </summary>
+            Public VKey As UShort
+            ''' <summary>Corresponding window message, for example <see cref="Messages.WindowMessages.WM_KEYDOWN"/>, <see cref="Messages.WindowMessages.WM_SYSKEYDOWN"/>, and so forth. </summary>
+            Public Message As Messages.WindowMessages
+            ''' <summary></summary>
+            Public ExtraInformation As ULong
+        End Structure
+        ''' <summary>Values of <see cref="RAWKEYBOARD.Flags"/></summary>
+        <Flags()> _
+        Public Enum RAWKEYBOARDFlags As UShort
+            ''' <summary>Make code</summary>
+            RI_KEY_MAKE = 0
+            ''' <summary>Break code</summary>
+            RI_KEY_BREAK = 1
+            ''' <summary>E0</summary>
+            RI_KEY_E0 = 2
+            ''' <summary>E1</summary>
+            RI_KEY_E1 = 4
+            ''' <summary>Set led</summary>
+            RI_KEY_TERMSRV_SET_LED = 8
+            ''' <summary>Termibal server shadow</summary>
+            RI_KEY_TERMSRV_SHADOW = &H10
+        End Enum
+        ''' <summary>describes the format of the raw input from a Human Interface Device (HID). </summary>
+        <StructLayout(LayoutKind.Explicit)> _
+        Public Structure RAWHID
+            ''' <summary>Size, in bytes, of each HID input in <see cref="bRawData"/>. </summary>
+            Public dwSizeHid As Integer
+            ''' <summary>Number of HID inputs in <see cref="bRawData"/>.</summary>
+            Public dwCount As Integer
+            ''' <summary>Raw input data as an array of bytes. </summary>
+            ''' <remarks>This field is not marshalled automatically</remarks>
+            <MarshalAs(UnmanagedType.ByValArray, SizeConst:=0)> _
+            Public bRawData As Byte()
+        End Structure
+
+        ''' <summary>contains the header information that is part of the raw input data. </summary>
+        <StructLayout(LayoutKind.Sequential, Size:=RAWINPUTHEADER.Size)> _
+        Public Structure RAWINPUTHEADER
+            ''' <summary>Type of raw input. It can be one of the following values.</summary>
+            Public dwType As DeviceTypes
+            ''' <summary>Size, in bytes, of the entire input packet of data. This includes <see cref="RAWINPUT"/> plus possible extra input reports in the <see cref="RAWHID"/> variable length array. </summary>
+            Public dwSize As Integer
+            ''' <summary>Handle to the device generating the raw input data. </summary>
+            Public hDevice As IntPtr
+            ''' <summary>Value passed in the wParam parameter of the <see cref="API.Messages.WindowMessages.WM_INPUT"/> message. </summary>
+            Public wParam As API.Messages.wParam.WM_INPUT
+            ''' <summary>Size of this structure</summary>
+            Public Const Size% = 16
+        End Structure
+
+        ''' <summary>gets the input code from <paramref name="wParam"/> in <see cref="API.Messages.WindowMessages.WM_INPUT"/>.</summary>
+        ''' <param name="wParam">Input code.</param>
+        ''' <returns>The return value is the input code for the raw input data.</returns>
+        <Extension()> _
+        Public Function GET_RAWINPUT_CODE_WPARAM(ByVal wParam As API.Messages.wParam.WM_INPUT) As API.Messages.wParam.WM_INPUT
+            Return wParam And &HFF
+        End Function
+        ''' <summary>gets the raw input from the specified device.</summary>
+        ''' <param name="hRawInput">[in] Handle to the <see cref="RAWINPUT"/> structure. This comes from the lParam in <see cref="API.Messages.WindowMessages.WM_INPUT"/>. </param>
+        ''' <param name="uiCommnad">[in] Command flag. This parameter can be one of the <see cref="GetRawInputDataCommand"/> values. </param>
+        ''' <param name="pData">[out] Pointer to the data that comes from the <see cref="RAWINPUT"/> structure. This depends on the value of <paramref name="uiCommand"/>. If <paramref name="pData"/> is NULL, the required size of the buffer is returned in <paramref name="pcbSize"/>. </param>
+        ''' <param name="pcbSize">[in, out] Pointer to a variable that specifies the size, in bytes, of the data in <paramref name="pData"/>. </param>
+        ''' <param name="cbSizeHeader">[in] Size, in bytes, of <see cref="RAWINPUTHEADER"/>. </param>
+        ''' <returns><para>If <paramref name="pData"/> is NULL and the function is successful, the return value is 0. If <paramref name="pData"/> is not NULL and the function is successful, the return value is the number of bytes copied into <paramref name="pData"/>.</para>
+        ''' <para>If there is an error, the return value is (UINT)-1.</para></returns>
+        ''' <remarks><see cref="GetRawInputData"/> gets the raw input one <see cref="RAWINPUT"/> structure at a time. In contrast, GetRawInputBuffer gets an array of <see cref="RAWINPUT"/> structures.</remarks>
+        Public Declare Function GetRawInputData Lib "user32.dll" ( _
+            ByVal hRawInput As IntPtr, _
+            ByVal uiCommnad As GetRawInputDataCommand, _
+            ByVal pData As IntPtr, _
+            ByRef pcbSize As UInteger, _
+            ByVal cbSizeHeader As UInteger) _
+            As Integer
+
+
+        '''' <summary>does a buffered read of the raw input data.</summary>
+        '''' <param name="pData">[out] Pointer to a buffer of <see cref="RAWINPUT"/> structures that contain the raw input data. If NULL, the minimum required buffer, in bytes, is returned in *<paramref name="pcbSize"/>. </param>
+        '''' <param name="pcbSize">[in, out] Pointer to a variable that specifies the size, in bytes, of a <see cref="RAWINPUT"/> structure. </param>
+        '''' <param name="cbSizeHeader">[in] Size, in bytes, of <see cref="RAWINPUTHEADER"/>. </param>
+        '''' <returns><para>If <paramref name="pData"/> is NULL and the function is successful, the return value is zero. If <paramref name="pData"/> is not NULL and the function is successful, the return value is the number of <see cref="RAWINPUT"/> structures written to <paramref name="pData"/>.</para>
+        '''' <para>If an error occurs, the return value is (UINT)-1.</para></returns>
+        '''' <remarks><para>Using <see cref="GetRawInputBuffer"/>, the raw input data is buffered in the array of <see cref="RAWINPUT"/> structures. For an unbuffered read, use the GetMessage function to read in the raw input data.</para>
+        '''' <para>The <see cref="NEXTRAWINPUTBLOCK"/> macro allows an application to traverse an array of <see cref="RAWINPUT"/> structures.</para></remarks>
+        'Public Declare Function GetRawInputBuffer Lib "user32.dll" (ByVal pData As IntPtr, ByRef pcbSize As UInteger, ByVal cbSizeHeader As UInteger) As Integer
+
+        ''' <summary>Commands for <see cref="GetRawInputData"/> function</summary>
+        Public Enum GetRawInputDataCommand As UInteger
+            ''' <summary>Get the raw data from the <see cref="RAWINPUT"/> structure.</summary>
+            RID_INPUT = &H10000003
+            ''' <summary>Get the header information from the <see cref="RAWINPUT"/> structure.</summary>
+            RID_HEADER = &H10000005
+        End Enum
+        '        ''' <summary>gets the location of the next structure in an array of <see cref="RAWINPUT"/> structures. </summary>
+        '        ''' <param name="pRawInput">Pointer to a structure in an array of <see cref="RAWINPUT"/> structures. </param>
+        '        ''' <returns>The return value is a pointer to the next structure in the array of <see cref="RAWINPUT"/> structures.</returns>
+        '        ''' <remarks>This macro is called repeatedly to traverse an array of <see cref="RAWINPUT"/> structures.</remarks>
+        '        Public Function NEXTRAWINPUTBLOCK(ByVal pRawInput As IntPtr) As IntPtr
+        '            '((PRAWINPUT)RAWINPUT_ALIGN((ULONG_PTR)((PBYTE)(ptr) + (ptr)->header.dwSize)))
+        '            Dim thisHeader As RAWINPUTHEADER = Marshal.PtrToStructure(pRawInput, GetType(RAWINPUTHEADER))
+        '            Return RAWINPUT_ALIGN(pRawInput.ToInt64 + thisHeader.dwSize)
+        '        End Function
+        '        ''' <summary>Implements the <see cref="RAWINPUT_ALIGN"/> macro</summary>
+        '        ''' <param name="x">Pointer to alin after addition</param>
+        '        ''' <returns>Aligned pointer</returns>
+        '        Public Function RAWINPUT_ALIGN(ByVal x As IntPtr) As IntPtr
+        '            If IntPtr.Size = 4 Then '32
+        '                Return (CInt(x.ToInt32) + Marshal.SizeOf(GetType(Integer)) - 1) And Not CInt(Marshal.SizeOf(GetType(Integer)) - 1)
+        '            Else '64
+        '                Return (CLng(x.ToInt64) + Marshal.SizeOf(GetType(Long)) - 1) And Not CLng(Marshal.SizeOf(GetType(Long)) - 1)
+        '            End If
+        '        End Function
+#End Region
     End Module
 End Namespace
