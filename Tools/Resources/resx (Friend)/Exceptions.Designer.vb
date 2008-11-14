@@ -1378,6 +1378,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'ListWithEvents does not support searching'.
+        '''</summary>
+        Friend Shared ReadOnly Property ListWithEventsDoesNotSupportSearching() As String
+            Get
+                Return ResourceManager.GetString("ListWithEventsDoesNotSupportSearching", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'ListWithEvents does not support sorting'.
+        '''</summary>
+        Friend Shared ReadOnly Property ListWithEventsDoesNotSupportSorting() As String
+            Get
+                Return ResourceManager.GetString("ListWithEventsDoesNotSupportSorting", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'MessageBox cannot be re-cycled when it is shown.'.
         '''</summary>
         Friend Shared ReadOnly Property MessageBoxCannotBeReCycledWhenItIsShown() As String
@@ -4299,6 +4317,22 @@ Namespace ResourcesT
         '''<returns>The ListIsLocked property value.</returns>
         Friend Shared Function ListIsLockedFormat() As String
             Return ListIsLocked
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ListWithEventsDoesNotSupportSearching property value.
+        '''</summary>
+        '''<returns>The ListWithEventsDoesNotSupportSearching property value.</returns>
+        Friend Shared Function ListWithEventsDoesNotSupportSearchingFormat() As String
+            Return ListWithEventsDoesNotSupportSearching
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ListWithEventsDoesNotSupportSorting property value.
+        '''</summary>
+        '''<returns>The ListWithEventsDoesNotSupportSorting property value.</returns>
+        Friend Shared Function ListWithEventsDoesNotSupportSortingFormat() As String
+            Return ListWithEventsDoesNotSupportSorting
         End Function
         
         '''<summary>

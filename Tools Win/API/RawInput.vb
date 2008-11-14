@@ -218,6 +218,13 @@ Namespace API
         ''' <para>If a <see cref="RAWINPUTDEVICE"/> structure has the <see cref="RAWINPUTDEVICEFlags.RIDEV_REMOVE"/> flag set and the <see cref="RAWINPUTDEVICE.hwndTarget"/> parameter is not set to NULL, then parameter validation will fail.</para></remarks>
         Public Declare Auto Function RegisterRawInputDevices Lib "User32.dll" (ByVal pRawInputDevice As RAWINPUTDEVICE(), ByVal uiNumDevices As UInteger, ByVal cbSize As UInteger) As Boolean
 
+        ''' <summary>gets the information about the raw input devices for the current application.</summary>
+        ''' <param name="pRawInputDevices">[out] Pointer to an array of <see cref="RAWINPUTDEVICE"/> structures for the application.</param>
+        ''' <param name="puiNumDevices">[in, out] Number of <see cref="RAWINPUTDEVICE"/> structures in * <paramref name="pRawInputDevices"/>. </param>
+        ''' <param name="cbSize">[in] Size, in bytes, of a <see cref="RAWINPUTDEVICE"/> structure. </param>
+        ''' <returns><para>If successful, the function returns a non-negative number that is the number of <see cref="RAWINPUTDEVICE"/> structures written to the buffer.</para>
+        ''' <para>If the <paramref name="pRawInputDevices"/> buffer is too small or NULL, the function sets the last error as <see cref="api.Common.Errors.ERROR_INSUFFICIENT_BUFFER"/>, returns -1, and sets <paramref name="puiNumDevices"/> to the required number of devices. If the function fails for any other reason, it returns -1.</para></returns>
+        Public Declare Function GetRegisteredRawInputDevices Lib "user32.dll" (ByVal pRawInputDevices As IntPtr, ByRef puiNumDevices As UInteger, ByVal cbSize As UInteger) As Integer
 #End Region
 #Region "Handling"
         ''' <summary>contains the raw input from a device. </summary>
@@ -339,7 +346,7 @@ Namespace API
             RI_KEY_TERMSRV_SHADOW = &H10
         End Enum
         ''' <summary>describes the format of the raw input from a Human Interface Device (HID). </summary>
-        <StructLayout(LayoutKind.Explicit)> _
+        <StructLayout(LayoutKind.Sequential)> _
         Public Structure RAWHID
             ''' <summary>Size, in bytes, of each HID input in <see cref="bRawData"/>. </summary>
             Public dwSizeHid As Integer

@@ -4721,11 +4721,20 @@ Namespace DevicesT.RawInputT
         Inherits Component
         ''' <summary>Gtes owner of thsi instance</summary>
         ''' <remarks>Instance of window that was passed to CTor</remarks>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
         Public ReadOnly Property Owner() As IWin32Window
             Get
+                If disposed Then Throw New ObjectDisposedException("RawInputEventProvider")
+                If _Owner.Handle <> OwnerHandle Then
+                    Me.Dispose()
+                    Throw New InvalidOperationException(ResourcesT.ExceptionsWin.OwherHandleHasChanged)
+                End If
                 Return _Owner
             End Get
         End Property
+        ''' <summary>Contains copy of <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> to detect changes</summary>
+        Private ReadOnly OwnerHandle As IntPtr
 #Region "CTors"
         ''' <summary>Dictionary of owners providing events for windows</summary>
         Private Shared Owners As New Dictionary(Of IntPtr, RawInputEventProvider)
@@ -4787,6 +4796,7 @@ Namespace DevicesT.RawInputT
         Public Sub New(ByVal Provider As API.Messages.IWindowsMessagesProviderRef)
             If Provider Is Nothing Then Throw New ArgumentNullException("Provider")
             _Owner = Provider
+            OwnerHandle = Provider.Handle
             AddHandler Provider.WndProc, AddressOf WndProc
             Try
                 RegisterOwner(Owner.Handle, Me)
@@ -4803,6 +4813,7 @@ Namespace DevicesT.RawInputT
         Public Sub New(ByVal Provider As API.Messages.IWindowsMessagesProviderVal(Of API.Messages.WindowMessage))
             If Provider Is Nothing Then Throw New ArgumentNullException("Provider")
             _Owner = Provider
+            OwnerHandle = Provider.Handle
             AddHandler Provider.WndProc, AddressOf WndProc
             Try
                 RegisterOwner(Owner.Handle, Me)
@@ -4819,6 +4830,7 @@ Namespace DevicesT.RawInputT
         Public Sub New(ByVal Provider As API.Messages.IWindowsMessagesProviderVal(Of WM_INPUTMessage))
             If Provider Is Nothing Then Throw New ArgumentNullException("Provider")
             _Owner = Provider
+            OwnerHandle = Provider.Handle
             AddHandler Provider.WndProc, AddressOf WndProc
             Try
                 RegisterOwner(Owner.Handle, Me)
@@ -4833,16 +4845,18 @@ Namespace DevicesT.RawInputT
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Message</param>
         ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="WM_INPUTMessage.hWnd">hWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Private Sub WndProc(ByVal sender As Object, ByVal e As WM_INPUTMessage)
-            If sender IsNot _Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
+            If sender IsNot Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
             e.ReturnValue = OnWM_INPUT(e.wParam, e.lParam)
         End Sub
         ''' <summary>Handles <see cref="Owner"/>.<see cref="API.Messages.IWindowsMessagesProviderRef.WndProc">WndProc</see></summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="msg">Message</param>
         ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="Message.HWnd">HWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Private Sub WndProc(ByVal sender As Object, ByRef msg As Message)
-            If sender IsNot _Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
+            If sender IsNot Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
             Dim ret = WndProc(msg.HWnd, msg.Msg, msg.WParam, msg.LParam)
             If ret.HasValue Then msg.Result = ret
         End Sub
@@ -4850,8 +4864,9 @@ Namespace DevicesT.RawInputT
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Message</param>
         ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="API.Messages.WindowMessage.hWnd">hWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Private Sub WndProc(ByVal sender As Object, ByVal e As API.Messages.WindowMessage)
-            If sender IsNot _Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
+            If sender IsNot Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
             Dim ret = WndProc(e.hWnd, e.Message, e.wParam, e.lParam)
             If ret.HasValue Then e.ReturnValue = ret
         End Sub
@@ -4862,8 +4877,9 @@ Namespace DevicesT.RawInputT
         ''' <param name="Message">Message code</param>
         ''' <returns>Message return value</returns>
         ''' <exception cref="InvalidOperationException"><paramref name="hWnd"/> is not <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Private Function WndProc(ByVal hWnd As IntPtr, ByVal Message As API.Messages.WindowMessages, ByVal wParam%, ByVal lParam%) As Integer?
-            If hWnd <> _Owner.Handle Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.MessageTargetWindowHandleMustBeSameAsHandleOfWindow)
+            If hWnd <> Owner.Handle Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.MessageTargetWindowHandleMustBeSameAsHandleOfWindow)
             If Message = API.Messages.WindowMessages.WM_INPUT Then Return OnWM_INPUT(wParam, lParam)
             Return Nothing
         End Function
@@ -5175,70 +5191,255 @@ Namespace DevicesT.RawInputT
         ''' <summary>Releases all resources used by the <see cref="RawInputEventProvider" />.</summary>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             MyBase.Dispose(disposing)
-            UnregisterOwner(Me.Owner.Handle)
+            PerformFInalization()
+        End Sub
+        ''' <summary>Performs <see cref="Dispose"/> or <see cref="Finalize"/></summary>
+        Private Sub PerformFinalization()
+            If disposed Then Exit Sub
+            Try
+                UnregisterOwner(Me.Owner.Handle)
+            Catch ex As ObjectDisposedException
+                UnregisterOwner(Me.OwnerHandle)
+            End Try
+            Try : UnregisterAll()
+            Catch : End Try
             disposed = True
-            'TODO: Unregistere events
         End Sub
         ''' <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="RawInputEventProvider" /> is reclaimed by garbage collection.</summary>
         Protected Overrides Sub Finalize()
             MyBase.Finalize()
-            UnregisterOwner(Me.Owner.Handle)
-            disposed = True
-            'TODO: Unregister events
+            PerformFInalization
         End Sub
 #End Region
 
 #Region "Registration"
-        'TODO: Validate before registration
 #Region "Register"
+        ''' <summary>Registers events from raw input device identified by usage page and usage</summary>
+        ''' <param name="UsagePage">Top level collection Usage page for the raw input device</param>
+        ''' <param name="Usage">Top level collection Usage for the raw input device</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal UsagePage As UsagePages, ByVal Usage As Integer)
-
+            Register(New RawInputDeviceRegistration(UsagePage, Usage))
         End Sub
+        ''' <summary>Registers events from all raw input devices from given usage page</summary>
+        ''' <param name="UsagePage">Top level collection Usage page for the raw input device</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal UsagePage As UsagePages)
-
+            Register(New RawInputDeviceRegistration(UsagePage))
         End Sub
+        ''' <summary>Registers events from raw input device identified by usage page and usage with giwen background mode</summary>
+        ''' <param name="UsagePage">Top level collection Usage page for the raw input device</param>
+        ''' <param name="Usage">Top level collection Usage for the raw input device</param>
+        ''' <param name="BackgroundMode">Defines if and when events are caught when window ins not active</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="BackgroundMode"/> is not member of <see cref="RawInputT.BackgroundEvents"/></exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal UsagePage As UsagePages, ByVal Usage As Integer, ByVal BackgroundMode As BackgroundEvents)
-
+            Register(New RawInputDeviceRegistration(UsagePage, Usage, BackgroundMode))
         End Sub
+        ''' <summary>Registers events from all raw input devices from given usage page with giwen background mode</summary>
+        ''' <param name="UsagePage">Top level collection Usage page for the raw input device</param>
+        ''' <param name="BackgroundMode">Defines if and when events are caught when window is not active</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="BackgroundMode"/> is not member of <see cref="RawInputT.BackgroundEvents"/></exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal UsagePage As UsagePages, ByVal BackgroundMode As BackgroundEvents)
-
+            Register(New RawInputDeviceRegistration(UsagePage, BackgroundMode))
         End Sub
+        ''' <summary>Registers events from single raw input devices (or group of raw input device identified by single instance of the <see cref="RawInputDeviceRegistration"/> class)</summary>
+        ''' <param name="Device">Device (or group) to register events from</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ArgumentException">
+        ''' <paramref name="Device"/>.<see cref="RawInputDeviceRegistration.Exclude">Exclude</see> is true. -or-
+        ''' <paramref name="Device"/>.<see cref="RawInputDeviceRegistration.DisableLegacyMessages">DisableLegacyMessages</see> is true but the device is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <paramref name="Device"/>.<see cref="RawInputDeviceRegistration.ApplicationKeys">ApplicationKeys</see> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages">DisableLegacyMessages</see> is false.
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal Device As RawInputDeviceRegistration)
-
+            Register(New RawInputDeviceRegistration() {Device})
         End Sub
+        ''' <summary>Registers events from collection of devices</summary>
+        ''' <param name="Devices">Devices or groups of devices to registere events from. Can contain members with <see cref="RawInputDeviceRegistration.Exclude"/> set to true.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Devices"/> is null</exception>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ArgumentException">
+        ''' Only one device is being (un)registered and it has <see cref="RawInputDeviceRegistration.Exclude"/> set to true. -or-
+        ''' Device with <see cref="RawInputDeviceRegistration.Exclude"/> is being (un)registered, but device with <see cref="RawInputDeviceRegistration.WholePage"/> set to true and same <see cref="RawInputDeviceRegistration.UsagePage"/> is not included in collection. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.Exclude"/> true and <see cref="RawInputDeviceRegistration.Usage"/> is nonzero. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> true and it is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <see cref="RawInputDeviceRegistration.ApplicationKeys"/> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> is false for any device.
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal ParamArray Devices As RawInputDeviceRegistration())
-
+            If Devices Is Nothing Then Throw New ArgumentException("Devices")
+            RegisterInternal(Devices, False)
         End Sub
+        ''' <summary>Registers events from collection of devices</summary>
+        ''' <param name="Devices">Devices or groups of devices to registere events from. Can contain members with <see cref="RawInputDeviceRegistration.Exclude"/> set to true.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Devices"/> is null</exception>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ArgumentException">
+        ''' Only one device is being (un)registered and it has <see cref="RawInputDeviceRegistration.Exclude"/> set to true. -or-
+        ''' Device with <see cref="RawInputDeviceRegistration.Exclude"/> is being (un)registered, but device with <see cref="RawInputDeviceRegistration.WholePage"/> set to true and same <see cref="RawInputDeviceRegistration.UsagePage"/> is not included in collection. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.Exclude"/> true and <see cref="RawInputDeviceRegistration.Usage"/> is nonzero. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> true and it is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <see cref="RawInputDeviceRegistration.ApplicationKeys"/> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> is false for any device.
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub Register(ByVal Devices As IEnumerable(Of RawInputDeviceRegistration))
-
-        End Sub
-        Public Sub Register()
-
+            If Devices Is Nothing Then Throw New ArgumentException("Devices")
+            Register(New List(Of RawInputDeviceRegistration)(Devices).ToArray)
         End Sub
 #End Region
+        ''' <summary>Performs device events regitration and unregistration</summary>
+        ''' <param name="Devices">Devices to register/unregister</param>
+        ''' <param name="Unregister">True to perform unregistration</param>
+        ''' <param name="NoChecks">Do not perform any device-related checks (use only from <see cref="UnregisterAll"/>)</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Devices"/> is null</exception>
+        ''' <exception cref="ArgumentException">
+        ''' Only one device is being (un)registered and it has <see cref="RawInputDeviceRegistration.Exclude"/> set to true. -or-
+        ''' Device with <see cref="RawInputDeviceRegistration.Exclude"/> is being (un)registered, but device with <see cref="RawInputDeviceRegistration.WholePage"/> set to true and same <see cref="RawInputDeviceRegistration.UsagePage"/> is not included in collection. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.Exclude"/> true and <see cref="RawInputDeviceRegistration.Usage"/> is nonzero. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> true and it is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <see cref="RawInputDeviceRegistration.ApplicationKeys"/> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> is false for any device.
+        ''' <para><see cref="ArgumentException"/> is not thrown when <paramref name="NoChecks"/> is true.</para>
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
+        Private Sub RegisterInternal(ByVal Devices() As RawInputDeviceRegistration, ByVal Unregister As Boolean, Optional ByVal NoChecks As Boolean = False)
+            'Verify
+            If disposed Then Throw New ObjectDisposedException("RaInputEventProvider")
+            If Devices Is Nothing Then Throw New ArgumentNullException("Devices")
+            If Devices.Length = 0 Then Exit Sub
+            If Not NoChecks Then
+                If Devices.Length = 1 AndAlso Devices(0).Exclude = True Then Throw New ArgumentException(ResourcesT.ExceptionsWin.WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude)
+                Dim groups As New List(Of UsagePages)
+                For Each Device In Devices
+                    If Device.WholePage Then groups.Add(Device.UsagePage)
+                Next
+                For Each Device In Devices
+                    If Device.Exclude AndAlso Not groups.Contains(Device.UsagePage) Then _
+                        Throw New ArgumentException(ResourcesT.ExceptionsWin.DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered)
+                    If Device.WholePage AndAlso Device.Usage <> 0 Then Throw New ArgumentException(ResourcesT.ExceptionsWin.DeviceWithExcludeSetToTrueMustHaveUsageSetToZero)
+                    If Device.DisableLegacyMessages AndAlso Device.UsagePage <> UsagePages.GenericDesktopControls OrElse (Not Device.WholePage AndAlso Device.Usage <> Usages_GenericDesktopControls.Keyboard AndAlso Device.Usage <> Usages_GenericDesktopControls.Mouse) Then _
+                        Throw New ArgumentException(ResourcesT.ExceptionsWin.LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice)
+                    If Device.ApplicationKeys AndAlso Not Device.DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.ExceptionsWin.When0Is12MustBe3.f("ApplicationKeys", "true", "DisableLegacyMessages", "true"))
+                Next
+            End If
+            'Write values
+            Dim DevicesStruct = (From device In Devices Select device.ToRAWINPUTDEVICE(Me.Owner, Unregister)).ToArray
+            'Do
+            Dim ret = API.RawInput.RegisterRawInputDevices(DevicesStruct, DevicesStruct.Length, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTDEVICE)))
+            If Not ret Then Throw New API.Win32APIException
+        End Sub
 #Region "Unregister"
+        ''' <summary>Unregisters events from raw input device identified by usage page and usage</summary>
+        ''' <param name="UsagePage">Top level collection Usage page for the raw input device</param>
+        ''' <param name="Usage">Top level collection Usage for the raw input device</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub UnRegister(ByVal UsagePage As UsagePages, ByVal Usage As Integer)
-
+            UnRegister(New RawInputDeviceRegistration(UsagePage, Usage))
         End Sub
+        ''' <summary>Unregisters events from all raw input devices from given usage page</summary>
+        ''' <param name="UsagePage">Top level collection Usage page for the raw input device</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub UnRegister(ByVal UsagePage As UsagePages)
-
+            UnRegister(New RawInputDeviceRegistration(UsagePage))
         End Sub
-
+        ''' <summary>Unregisters events from single raw input devices (or group of raw input device identified by single instance of the <see cref="RawInputDeviceRegistration"/> class)</summary>
+        ''' <param name="Device">Device (or group) to unregister events from</param>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ArgumentException">
+        ''' <paramref name="Device"/>.<see cref="RawInputDeviceRegistration.Exclude">Exclude</see> is true. -or-
+        ''' <paramref name="Device"/>.<see cref="RawInputDeviceRegistration.DisableLegacyMessages">DisableLegacyMessages</see> is true but the device is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <paramref name="Device"/>.<see cref="RawInputDeviceRegistration.ApplicationKeys">ApplicationKeys</see> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages">DisableLegacyMessages</see> is false.
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub UnRegister(ByVal Device As RawInputDeviceRegistration)
-
+            UnRegister(New RawInputDeviceRegistration() {Device})
         End Sub
+        ''' <summary>Unregisters events from collection of devices</summary>
+        ''' <param name="Devices">Devices or groups of devices to unregister events from. Can contain members with <see cref="RawInputDeviceRegistration.Exclude"/> set to true.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Devices"/> is null</exception>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ArgumentException">
+        ''' Only one device is being (un)registered and it has <see cref="RawInputDeviceRegistration.Exclude"/> set to true. -or-
+        ''' Device with <see cref="RawInputDeviceRegistration.Exclude"/> is being (un)registered, but device with <see cref="RawInputDeviceRegistration.WholePage"/> set to true and same <see cref="RawInputDeviceRegistration.UsagePage"/> is not included in collection. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.Exclude"/> true and <see cref="RawInputDeviceRegistration.Usage"/> is nonzero. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> true and it is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <see cref="RawInputDeviceRegistration.ApplicationKeys"/> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> is false for any device.
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub UnRegister(ByVal ParamArray Devices As RawInputDeviceRegistration())
-
+            If Devices Is Nothing Then Throw New ArgumentException("Devices")
+            RegisterInternal(Devices, True)
         End Sub
+        ''' <summary>Unregisters events from collection of devices</summary>
+        ''' <param name="Devices">Devices or groups of devices to unregister events from. Can contain members with <see cref="RawInputDeviceRegistration.Exclude"/> set to true.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Devices"/> is null</exception>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ArgumentException">
+        ''' Only one device is being (un)registered and it has <see cref="RawInputDeviceRegistration.Exclude"/> set to true. -or-
+        ''' Device with <see cref="RawInputDeviceRegistration.Exclude"/> is being (un)registered, but device with <see cref="RawInputDeviceRegistration.WholePage"/> set to true and same <see cref="RawInputDeviceRegistration.UsagePage"/> is not included in collection. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.Exclude"/> true and <see cref="RawInputDeviceRegistration.Usage"/> is nonzero. -or-
+        ''' Device has <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> true and it is not from <see cref="UsagePages.GenericDesktopControls"/> usage page or it is from that usage page but has <see cref="RawInputDeviceRegistration.WholePage"/> false and <see cref="RawInputDeviceRegistration.Usage"/> is neither <see cref="Usages_GenericDesktopControls.Keyboard"/> nor <see cref="Usages_GenericDesktopControls.Mouse"/>. -or-
+        ''' <see cref="RawInputDeviceRegistration.ApplicationKeys"/> is true but <see cref="RawInputDeviceRegistration.DisableLegacyMessages"/> is false for any device.
+        ''' </exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         Public Sub UnRegister(ByVal Devices As IEnumerable(Of RawInputDeviceRegistration))
-
+            If Devices Is Nothing Then Throw New ArgumentException("Devices")
+            UnRegister(New List(Of RawInputDeviceRegistration)(Devices).ToArray)
         End Sub
-        Public Sub Unregister()
-
+        ''' <summary>Unregisters events from all devices currently registered with <see cref="Owner"/>.</summary>
+        ''' <exception cref="API.Win32APIException">An error occured while registering devices</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
+        Public Sub UnregisterAll()
+            RegisterInternal(GetRegisteredDevices(False), True, True)
         End Sub
 #End Region
-        Public Function GetRegisteredDevices() As RawInputDeviceRegistration()
-
+        ''' <summary>Gets registered raw-input devices</summary>
+        ''' <param name="AllWinows">True to get all devices registered for this application, false to get only devices registered for <see cref="Owner"/></param>
+        ''' <returns>Array of devices registered either for application or owner</returns>
+        ''' <remarks>This function returns actual state of registration event for devices that weren't registrered using <see cref="RawInputEventProvider"/> class.</remarks>
+        ''' <exception cref="API.Win32APIException">An arror occured while obtaining device list from system.</exception>
+        ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
+        Public Function GetRegisteredDevices(ByVal AllWinows As Boolean) As RawInputDeviceRegistration()
+            If disposed Then Throw New ObjectDisposedException("RawInputEventProvider")
+            Dim NumDev As UInteger = 0
+            Dim DevSize = Marshal.SizeOf(GetType(API.RawInput.RAWINPUTDEVICE))
+            Dim ret = API.RawInput.GetRegisteredRawInputDevices(IntPtr.Zero, NumDev, DevSize)
+            Dim pData = Marshal.AllocHGlobal(New IntPtr(CLng(NumDev * DevSize)))
+            Try
+                ret = API.RawInput.GetRegisteredRawInputDevices(pData, NumDev, DevSize)
+                If ret = -1 Then Throw New API.Win32APIException
+                Dim Devices(NumDev - 1) As RawInputDeviceRegistration
+                For i = 0 To NumDev - 1
+                    Devices(i) = New RawInputDeviceRegistration(DirectCast(Marshal.PtrToStructure(New IntPtr(pData.ToInt64 + i * DevSize), GetType(API.RawInput.RAWINPUTDEVICE)), API.RawInput.RAWINPUTDEVICE))
+                Next
+                If AllWinows Then Return Devices _
+                Else Return (From Device In Devices Select Device Where Device.Window.Handle = Me.Owner.Handle).ToArray
+            Finally
+                Marshal.FreeHGlobal(pData)
+            End Try
         End Function
 #End Region
     End Class
@@ -5575,18 +5776,22 @@ Namespace DevicesT.RawInputT
         ''' <summary>CTor from usage page, usage and background mode</summary>
         ''' <param name="Usage">Top level collection Usage page for the raw input device. </param>
         ''' <param name="UsagePage">Top level collection Usage for the raw input device. </param>
-        ''' <param name="Bakkground">Indicates if and when events will be received as well when windows events are regsitered for is not foreground</param>
-        Public Sub New(ByVal UsagePage As UsagePages, ByVal Usage As Integer, ByVal Bakkground As BackgroundEvents)
+        ''' <param name="Background">Indicates if and when events will be received as well when windows events are regsitered for is not foreground</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Background"/> is not member of <see cref="RawInputT.BackgroundEvents"/></exception>
+        Public Sub New(ByVal UsagePage As UsagePages, ByVal Usage As Integer, ByVal Background As BackgroundEvents)
             Me.UsagePage = UsagePage
             Me.Usage = Usage
+            Me.BackgroundEvents = Background
         End Sub
         ''' <summary>CTor from usgae page and background mode</summary>
         ''' <param name="UsagePage">Top level collection Usage for the raw input device.</param>
         ''' <remarks>This CTor initializes <see cref="WholePage"/> to true.</remarks>
-        ''' <param name="Bakkground">Indicates if and when events will be received as well when windows events are regsitered for is not foreground</param>
-        Public Sub New(ByVal UsagePage As UsagePages, ByVal Bakkground As BackgroundEvents)
+        ''' <param name="Background">Indicates if and when events will be received as well when windows events are regsitered for is not foreground</param>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Background"/> is not member of <see cref="RawInputT.BackgroundEvents"/></exception>
+        Public Sub New(ByVal UsagePage As UsagePages, ByVal Background As BackgroundEvents)
             Me.UsagePage = UsagePage
             Me.WholePage = True
+            Me.BackgroundEvents = Background
         End Sub
         ''' <summary>Gets <see cref="RawInputDeviceRegistration"/> for keyboard</summary>
         ''' <returns>New instance of <see cref="RawInputDeviceRegistration"/> initialized to the keyboard device <see cref="UsagePage"/> <see cref="UsagePages.GenericDesktopControls"/> and <see cref="Usage"/> <see cref="Usages_GenericDesktopControls.Keyboard"/>).</returns>
@@ -5717,6 +5922,7 @@ Namespace DevicesT.RawInputT
         ''' <returns>Background events receive mode. This property may return <see cref="BackgroundEvents.Background"/> Or <see cref="RawInputT.BackgroundEvents.BackgroundWhenNotHandled"/> when this instance was initialized from unmanaged data.</returns>
         ''' <value>Background events receive mode to register for. Value being set must be member of <see cref="RawInputT.BackgroundEvents"/> enumeration.</value>
         ''' <remarks><see cref="BackgroundEvents.BackgroundWhenNotHandled"/> works only on Vista and later.</remarks>
+        ''' <exception cref="InvalidEnumArgumentException">Value being set is not member of <see cref="RawInputT.BackgroundEvents"/></exception>
         Public Property BackgroundEvents() As BackgroundEvents
             Get
                 Return Flags And (BackgroundEvents.Background Or RawInputT.BackgroundEvents.BackgroundWhenNotHandled)

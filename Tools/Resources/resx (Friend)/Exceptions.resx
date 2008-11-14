@@ -1104,4 +1104,10 @@
   <data name="Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace" xml:space="preserve">
     <value>Namespace {0} has no prefix associated and it is not default namespace.</value>
   </data>
+  <data name="ListWithEventsDoesNotSupportSorting" xml:space="preserve">
+    <value>ListWithEvents does not support sorting</value>
+  </data>
+  <data name="ListWithEventsDoesNotSupportSearching" xml:space="preserve">
+    <value>ListWithEvents does not support searching</value>
+  </data>
 </root>

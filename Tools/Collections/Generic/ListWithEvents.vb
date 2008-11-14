@@ -8,6 +8,7 @@ Namespace CollectionsT.GenericT
     ''' </para><para>
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
+    ''' <para>Implementation fo <see cref="IBindingList"/> is only basic. It supports neither sorting or searching. <see cref="IBindingList.AddNew"/> is supported when <typeparamref name="T"/> has default constructor and does not block creating of new instances in other way.</para>
     ''' </remarks>
     ''' <seelaso cref="DictionaryWithEvents(Of TKey, TValue)"/>
     <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 2, GetType(ListWithEvents(Of )), LastChange:="05/13/2008")> _
@@ -20,6 +21,7 @@ Namespace CollectionsT.GenericT
         Implements IList(Of T)
         Implements IList
         Implements IReportsChange
+        Implements IBindingList
         ''' <summary>CTor</summary>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
@@ -999,6 +1001,17 @@ Namespace CollectionsT.GenericT
         ''' <filterpriority>1</filterpriority>
         Protected Sub OnCollectionChanged(ByVal e As EventArgs, ByVal Action As CollectionChangeAction, ByVal OldValue As T, ByVal NewValue As T, ByVal index As Integer)
             OnCollectionChanged(New ListChangedEventArgs(Me, e, Action, index, OldValue, NewValue))
+            Dim Action2 As System.ComponentModel.ListChangedType
+            Select Case Action
+                Case CollectionChangeAction.Add : Action2 = ListChangedType.ItemAdded
+                Case CollectionChangeAction.Clear : Action2 = ListChangedType.Reset
+                Case CollectionChangeAction.ItemChange : Action2 = ListChangedType.ItemChanged
+                Case CollectionChangeAction.Other : Action2 = ListChangedType.Reset
+                Case CollectionChangeAction.Remove : Action2 = ListChangedType.ItemDeleted
+                Case CollectionChangeAction.Replace : Action2 = ListChangedType.ItemChanged
+            End Select
+            Dim e2 As New System.ComponentModel.ListChangedEventArgs(Action2, index)
+            OnListChanged(e2)
         End Sub
 
         ''' <summary>Specialized <see cref="CollectionChangeEventArgs(Of T)"/> for <see cref="ListWithEvents(Of T)"/></summary>
@@ -1071,6 +1084,162 @@ Namespace CollectionsT.GenericT
                 End Get
             End Property
         End Class
+#Region "IBindingList"
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <param name="property">ignored</param>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        Private Sub AddIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) Implements System.ComponentModel.IBindingList.AddIndex
+            Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
+        End Sub
+
+        ''' <summary>Adds a new item to the list.</summary>
+        ''' <returns>The item added to the list.</returns>
+        ''' <exception cref="T:System.NotSupportedException"><see cref="P:System.ComponentModel.IBindingList.AllowNew" /> is false. </exception>
+        ''' <remarks>Use type-safe <see cref="AddNew"/> instead
+        ''' <para>Note for inheritors: In order ot override this member override <see cref="AddNew"/>.</para></remarks>
+        ''' <seelaso cref="AddNew"/>
+        Private Function IBindingList_AddNew() As Object Implements System.ComponentModel.IBindingList.AddNew
+            Return AddNew()
+        End Function
+        ''' <summary>Adds a new item to the list.</summary>
+        ''' <returns>The item added to the list.</returns>
+        ''' <exception cref="T:System.NotSupportedException"><see cref="P:System.ComponentModel.IBindingList.AllowNew" /> is false. </exception>
+        ''' <exception cref="System.ArgumentException"><typeparamref name="T"/> is not a RuntimeType. -or- <typeparamref name="T"/> is an open generic type (that is, the <see cref="System.Type.ContainsGenericParameters" /> property returns true).</exception>
+        ''' <exception cref="System.NotSupportedException"><typeparamref name="T"/> cannot be a <see cref="System.Reflection.Emit.TypeBuilder" />.  -or- Creation of <see cref="System.TypedReference" />, <see cref="System.ArgIterator" />, <see cref="System.Void" />, and <see cref="System.RuntimeArgumentHandle" /> types, or arrays of those types, is not supported.</exception>
+        ''' <exception cref="System.Reflection.TargetInvocationException">The constructor of <typeparamref name="T"/> being called throws an exception.</exception>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to call defualt constructor of <typeparamref name="T"/>.</exception>
+        ''' <exception cref="System.MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
+        ''' <exception cref="System.Runtime.InteropServices.InvalidComObjectException">The COM type was not obtained through Overload:<see cref="System.Type.GetTypeFromProgID" /> or Overload:<see cref="System.Type.GetTypeFromCLSID" />.</exception>
+        ''' <exception cref="System.MissingMethodException">No matching public constructor was found.</exception>
+        ''' <exception cref="System.Runtime.InteropServices.COMException"><typeparamref name="T"/> is a COM object but the class identifier used to obtain the type is invalid, or the identified class is not registered.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
+        ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
+        ''' <seelaso cref="CreateInstance"/>
+        ''' <remarks>This member implements <see cref="IBindingList.AddNew"/></remarks>
+        Public Overridable Function AddNew() As T
+            If CanAddNew Then
+                Dim NewItem As T = GetType(T).CreateInstance
+                Me.Add(NewItem)
+                Return NewItem
+            Else
+                Throw New NotSupportedException("Type {0} does not support instance creation.")
+            End If
+        End Function
+
+
+        ''' <summary>Gets whether you can update items in the list.</summary>
+        ''' <returns>true</returns>
+        Private ReadOnly Property AllowEdit() As Boolean Implements System.ComponentModel.IBindingList.AllowEdit
+            Get
+                Return True
+            End Get
+        End Property
+
+        ''' <summary>Gets whether you can add items to the list using <see cref="M:System.ComponentModel.IBindingList.AddNew" />.</summary>
+        ''' <returns>true if you can add items to the list using <see cref="M:System.ComponentModel.IBindingList.AddNew" />; otherwise, false.
+        ''' This impúlementation returns ture when type <typeparamref name="T"/> has default constructor that can be used for automatic instance creation</returns>
+        ''' <seelaso cref="CanAutomaticallyCreateInstance"/>
+        ''' <remarks>This member implements <see cref="IBindingList.AllowNew"/></remarks>
+        Public Overridable ReadOnly Property CanAddNew() As Boolean Implements System.ComponentModel.IBindingList.AllowNew
+            Get
+                GetType(T).CanAutomaticallyCreateInstance()
+            End Get
+        End Property
+
+        ''' <summary>Gets whether you can remove items from the list, using <see cref="M:System.Collections.IList.Remove(System.Object)" /> or <see cref="M:System.Collections.IList.RemoveAt(System.Int32)" />.</summary>
+        ''' <returns>true</returns>
+        Private ReadOnly Property AllowRemove() As Boolean Implements System.ComponentModel.IBindingList.AllowRemove
+            Get
+                Return True
+            End Get
+        End Property
+
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        ''' <param name="direction">Ignored</param><param name="property">Ignored</param>
+        Private Sub ApplySort(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal direction As System.ComponentModel.ListSortDirection) Implements System.ComponentModel.IBindingList.ApplySort
+            Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
+        End Sub
+
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <returns>This function never returns value</returns>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        ''' <param name="key">Ignored</param><param name="property">Ignored</param>
+        Private Function Find(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal key As Object) As Integer Implements System.ComponentModel.IBindingList.Find
+            Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
+        End Function
+
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <returns>This property never returns value</returns>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        Private ReadOnly Property IsSorted() As Boolean Implements System.ComponentModel.IBindingList.IsSorted
+            Get
+                Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
+            End Get
+        End Property
+
+        ''' <summary>Occurs when the list changes or an item in the list changes.</summary>
+        Private Event ListChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ListChangedEventArgs) Implements System.ComponentModel.IBindingList.ListChanged
+        ''' <summary>Raises the <see cref="ListChanged"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Private Sub OnListChanged(ByVal e As System.ComponentModel.ListChangedEventArgs)
+            RaiseEvent ListChanged(Me, e)
+        End Sub
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <param name="property">ignored</param>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        Private Sub RemoveIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) Implements System.ComponentModel.IBindingList.RemoveIndex
+            Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
+        End Sub
+
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        Private Sub RemoveSort() Implements System.ComponentModel.IBindingList.RemoveSort
+            Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
+        End Sub
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <returns>This property never returns value</returns>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        Private ReadOnly Property SortDirection() As System.ComponentModel.ListSortDirection Implements System.ComponentModel.IBindingList.SortDirection
+            Get
+                Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
+            End Get
+        End Property
+
+        ''' <summary>Throws <see cref="NotSupportedException"/></summary>
+        ''' <returns>This property never returns value</returns>
+        ''' <exception cref="T:System.NotSupportedException">always</exception>
+        Private ReadOnly Property SortProperty() As System.ComponentModel.PropertyDescriptor Implements System.ComponentModel.IBindingList.SortProperty
+            Get
+                Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
+            End Get
+        End Property
+
+        ''' <summary>Gets whether a <see cref="E:System.ComponentModel.IBindingList.ListChanged" /> event is raised when the list changes or an item in the list changes.</summary>
+        ''' <returns>true</returns>
+        Private ReadOnly Property SupportsChangeNotification() As Boolean Implements System.ComponentModel.IBindingList.SupportsChangeNotification
+            Get
+                Return True
+            End Get
+        End Property
+
+        ''' <summary>Gets whether the list supports searching using the <see cref="M:System.ComponentModel.IBindingList.Find(System.ComponentModel.PropertyDescriptor,System.Object)" /> method.</summary>
+        ''' <returns>false</returns>
+        Private ReadOnly Property SupportsSearching() As Boolean Implements System.ComponentModel.IBindingList.SupportsSearching
+            Get
+                Return False
+            End Get
+        End Property
+
+        ''' <summary>Gets whether the list supports sorting.</summary>
+        ''' <returns>false</returns>
+        Private ReadOnly Property SupportsSorting() As Boolean Implements System.ComponentModel.IBindingList.SupportsSorting
+            Get
+                Return False
+            End Get
+        End Property
+#End Region
     End Class
     ''' <summary>Describes acction on collection</summary>
     Public Enum CollectionChangeAction

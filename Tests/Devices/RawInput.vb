@@ -2,10 +2,16 @@
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox
 Imports System.Linq, Tools.LinqT, Tools.DevicesT.RawInputT
 Imports System.Runtime.InteropServices
+Imports Tools.CollectionsT.GenericT
 
 Namespace DevicesT.RawInputT
     ''' <summary>Contains tests for <see cref="Tools.DevicesT.RawInputT"/></summary>
     Public Class frmRawInput
+        Implements API.Messages.IWindowsMessagesProviderRef
+        ''' <summary>Provides raw-input device events</summary>
+        Private WithEvents provider As New RawInputEventProvider(Me)
+        ''' <summary>List of registered devices / devices to register</summary>
+        Private RegistrationList As New ListWithEvents(Of RawInputDeviceRegistration)
         ''' <summary>Performs test</summary>
         Public Shared Sub Test()
             Dim inst As New frmRawInput
@@ -26,9 +32,10 @@ Namespace DevicesT.RawInputT
                     Dim UsageTypeStr$
                     If UsageType = 0 Then UsageTypeStr = "" Else UsageTypeStr = String.Format(" {0:F}", UsageType)
                     SubNode.Text &= UsageTypeStr
-                    SubNode.Tag = UsageType
+                    SubNode.Tag = Usage
                 Next
             Next
+            dgwRegistration.DataSource = RegistrationList
         End Sub
 
 
@@ -63,7 +70,10 @@ Namespace DevicesT.RawInputT
                     End Try
                     'Info
                     Try
-                        prgDeviceInfo.SelectedObject = .GetDeviceInfo()
+                        Dim di = .GetDeviceInfo()
+                        nudUsage.Value = di.Usage
+                        nudUsagePage.Value = di.UsagePage
+                        prgDeviceInfo.SelectedObject = di
                     Catch ex As Exception
                         prgDeviceInfo.SelectedObject = ex
                         MBox.Error_XT(ex, "GetDeviceInfo")
@@ -84,6 +94,61 @@ Namespace DevicesT.RawInputT
                     End Try
                 End With
             End If
+        End Sub
+
+        Private Sub tvwHid_AfterSelect(ByVal sender As System.Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvwHid.AfterSelect
+            If TypeOf e.Node.Tag Is [Enum] AndAlso Not TypeOf e.Node.Tag Is UsagePages Then
+                nudUsagePage.Value = e.Node.Parent.Tag
+                nudUsage.Value = e.Node.Tag
+            End If
+        End Sub
+
+        Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
+            RaiseEvent WndProcEvent(Me, m)
+            MyBase.WndProc(m)
+        End Sub
+
+        Private Event WndProcEvent(ByVal sender As Object, ByRef msg As System.Windows.Forms.Message) Implements API.Messages.IWindowsMessagesProviderRef.WndProc
+
+        Private Sub cmdClear_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClear.Click
+            RegistrationList.Clear()
+        End Sub
+
+        Private Sub cmdAdd_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdAdd.Click
+            RegistrationList.Add(New RawInputDeviceRegistration(CType(nudUsagePage.Value, UsagePages), CInt(nudUsage.Value)))
+        End Sub
+
+        Private Sub cmdLoadRegistered_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdLoadRegistered.Click
+            RegistrationList.Clear()
+            Try
+                RegistrationList.AddRange(provider.GetRegisteredDevices(If(MsgBox("Get all devices?", MsgBoxStyle.Question Or MsgBoxStyle.YesNo, "Get registered devices") = MsgBoxResult.Yes, True, False)))
+            Catch ex As Exception
+                MBox.Error_X(ex)
+            End Try
+        End Sub
+
+        Private Sub cmdRegister_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdRegister.Click
+            Try
+                provider.Register(RegistrationList)
+            Catch ex As Exception
+                MBox.Error_X(ex)
+            End Try
+        End Sub
+
+        Private Sub cmdUnregister_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUnregister.Click
+            Try
+                provider.UnRegister(RegistrationList)
+            Catch ex As Exception
+                MBox.Error_X(ex)
+            End Try
+        End Sub
+
+        Private Sub cmdUnregisterAll_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdUnregisterAll.Click
+            Try
+                provider.UnregisterAll()
+            Catch ex As Exception
+                MBox.Error_X(ex)
+            End Try
         End Sub
     End Class
 End Namespace

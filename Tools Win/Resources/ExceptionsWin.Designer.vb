@@ -111,6 +111,24 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Devices can be excluded only from usage pages being registered in same batch.'.
+        '''</summary>
+        Public Shared ReadOnly Property DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered() As String
+            Get
+                Return ResourceManager.GetString("DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Device with Exclude set to true must have Usage set to zero.'.
+        '''</summary>
+        Public Shared ReadOnly Property DeviceWithExcludeSetToTrueMustHaveUsageSetToZero() As String
+            Get
+                Return ResourceManager.GetString("DeviceWithExcludeSetToTrueMustHaveUsageSetToZero", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'File {0} already exists.'.
         '''</summary>
         Public Shared ReadOnly Property File0AlreadyExists() As String
@@ -192,6 +210,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Legacy messages can be disabled only for keyboard and mouse device, or when whole generic desktop controls usage page is being registered.'.
+        '''</summary>
+        Public Shared ReadOnly Property LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice() As String
+            Get
+                Return ResourceManager.GetString("LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Menu item doesn&apos;t exist'.
         '''</summary>
         Public Shared ReadOnly Property MenuItemDoesnTExist() As String
@@ -206,6 +233,15 @@ Namespace ResourcesT
         Public Shared ReadOnly Property MessageTargetWindowHandleMustBeSameAsHandleOfWindow() As String
             Get
                 Return ResourceManager.GetString("MessageTargetWindowHandleMustBeSameAsHandleOfWindow", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Owher handle has changed.'.
+        '''</summary>
+        Public Shared ReadOnly Property OwherHandleHasChanged() As String
+            Get
+                Return ResourceManager.GetString("OwherHandleHasChanged", _resourceCulture)
             End Get
         End Property
         
@@ -309,11 +345,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'When {0} is {1}, {2} must be {3}.'.
+        '''</summary>
+        Public Shared ReadOnly Property When0Is12MustBe3() As String
+            Get
+                Return ResourceManager.GetString("When0Is12MustBe3", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'When {0} is {1} then type of this instance must be {2}'.
         '''</summary>
         Public Shared ReadOnly Property When0Is1ThenTypeOfThisInstanceMustBe2() As String
             Get
                 Return ResourceManager.GetString("When0Is1ThenTypeOfThisInstanceMustBe2", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'When only one device is being (un)registered, it cannot have Exclude set to true.'.
+        '''</summary>
+        Public Shared ReadOnly Property WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude() As String
+            Get
+                Return ResourceManager.GetString("WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude", _resourceCulture)
             End Get
         End Property
         
@@ -346,6 +400,22 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function CannotCreateLinkFromFile0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, CannotCreateLinkFromFile0, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered property value.
+        '''</summary>
+        '''<returns>The DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered property value.</returns>
+        Public Shared Function DevicesCanBeExcludedOnlyFromUsagePagesBeingRegisteredFormat() As String
+            Return DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the DeviceWithExcludeSetToTrueMustHaveUsageSetToZero property value.
+        '''</summary>
+        '''<returns>The DeviceWithExcludeSetToTrueMustHaveUsageSetToZero property value.</returns>
+        Public Shared Function DeviceWithExcludeSetToTrueMustHaveUsageSetToZeroFormat() As String
+            Return DeviceWithExcludeSetToTrueMustHaveUsageSetToZero
         End Function
         
         '''<summary>
@@ -425,6 +495,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice property value.
+        '''</summary>
+        '''<returns>The LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice property value.</returns>
+        Public Shared Function LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDeviceFormat() As String
+            Return LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the MenuItemDoesnTExist property value.
         '''</summary>
         '''<returns>The MenuItemDoesnTExist property value.</returns>
@@ -438,6 +516,14 @@ Namespace ResourcesT
         '''<returns>The MessageTargetWindowHandleMustBeSameAsHandleOfWindow property value.</returns>
         Public Shared Function MessageTargetWindowHandleMustBeSameAsHandleOfWindowFormat() As String
             Return MessageTargetWindowHandleMustBeSameAsHandleOfWindow
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the OwherHandleHasChanged property value.
+        '''</summary>
+        '''<returns>The OwherHandleHasChanged property value.</returns>
+        Public Shared Function OwherHandleHasChangedFormat() As String
+            Return OwherHandleHasChanged
         End Function
         
         '''<summary>
@@ -536,6 +622,19 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'When {0} is {1}, {2} must be {3}.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<param name="arg2">An object (2) to format.</param>
+        '''<param name="arg3">An object (3) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1025:ReplaceRepetitiveArgumentsWithParamsArray")>  _
+        Public Shared Function When0Is12MustBe3Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object, ByVal arg3 As Object) As String
+            Return String.Format(_resourceCulture, When0Is12MustBe3, arg0, arg1, arg2, arg3)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'When {0} is {1} then type of this instance must be {2}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -544,6 +643,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function When0Is1ThenTypeOfThisInstanceMustBe2Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object) As String
             Return String.Format(_resourceCulture, When0Is1ThenTypeOfThisInstanceMustBe2, arg0, arg1, arg2)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude property value.
+        '''</summary>
+        '''<returns>The WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude property value.</returns>
+        Public Shared Function WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExcludeFormat() As String
+            Return WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude
         End Function
     End Class
 End Namespace

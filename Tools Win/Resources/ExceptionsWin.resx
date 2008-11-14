@@ -195,4 +195,22 @@
   <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
     <value>{0} cannot be set to {1} when {2} is {3}</value>
   </data>
+  <data name="WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude" xml:space="preserve">
+    <value>When only one device is being (un)registered, it cannot have Exclude set to true.</value>
+  </data>
+  <data name="DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered" xml:space="preserve">
+    <value>Devices can be excluded only from usage pages being registered in same batch.</value>
+  </data>
+  <data name="DeviceWithExcludeSetToTrueMustHaveUsageSetToZero" xml:space="preserve">
+    <value>Device with Exclude set to true must have Usage set to zero.</value>
+  </data>
+  <data name="LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice" xml:space="preserve">
+    <value>Legacy messages can be disabled only for keyboard and mouse device, or when whole generic desktop controls usage page is being registered.</value>
+  </data>
+  <data name="When0Is12MustBe3" xml:space="preserve">
+    <value>When {0} is {1}, {2} must be {3}.</value>
+  </data>
+  <data name="OwherHandleHasChanged" xml:space="preserve">
+    <value>Owher handle has changed.</value>
+  </data>
 </root>

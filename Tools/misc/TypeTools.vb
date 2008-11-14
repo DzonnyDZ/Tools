@@ -318,5 +318,22 @@ Public Module TypeTools
         If Type.IsValueType Then Return True
         If Type.HasDefaultCTor Then Return True
     End Function
+    ''' <summary>Creates an instance of the specified type using that type's default constructor.</summary>
+    ''' <param name="type">The type of object to create.</param>
+    ''' <returns>A reference to the newly created object.</returns>
+    ''' <exception cref="System.ArgumentNullException"><paramref name="type"/> is null.</exception>
+    ''' <exception cref="System.ArgumentException"><paramref name="type"/> is not a RuntimeType. -or- <paramref name="type"/> is an open generic type (that is, the <see cref="System.Type.ContainsGenericParameters" /> property returns true).</exception>
+    ''' <exception cref="System.NotSupportedException"><paramref name="type"/> cannot be a <see cref="System.Reflection.Emit.TypeBuilder" />.  -or- Creation of <see cref="System.TypedReference" />, <see cref="System.ArgIterator" />, <see cref="System.Void" />, and <see cref="System.RuntimeArgumentHandle" /> types, or arrays of those types, is not supported.</exception>
+    ''' <exception cref="System.Reflection.TargetInvocationException">The constructor being called throws an exception.</exception>
+    ''' <exception cref="System.MethodAccessException">The caller does not have permission to call this constructor.</exception>
+    ''' <exception cref="System.MemberAccessException">Cannot create an instance of an abstract class, or this member was invoked with a late-binding mechanism.</exception>
+    ''' <exception cref="System.Runtime.InteropServices.InvalidComObjectException">The COM type was not obtained through Overload:<see cref="System.Type.GetTypeFromProgID" /> or Overload:<see cref="System.Type.GetTypeFromCLSID" />.</exception>
+    ''' <exception cref="System.MissingMethodException">No matching public constructor was found.</exception>
+    ''' <exception cref="System.Runtime.InteropServices.COMException"><paramref name="type"/> is a COM object but the class identifier used to obtain the type is invalid, or the identified class is not registered.</exception>
+    ''' <exception cref="System.TypeLoadException"><paramref name="type"/> is not a valid type.</exception>
+    ''' <seelaso cref="Activator.CreateInstance"/>
+    <Extension()> Function CreateInstance(ByVal type As Type) As Object
+        Return Activator.CreateInstance(type)
+    End Function
 End Module
 #End If
