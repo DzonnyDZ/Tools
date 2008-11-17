@@ -23,6 +23,8 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
             Me.splEnumeration = New System.Windows.Forms.SplitContainer
             Me.tlpList = New System.Windows.Forms.TableLayoutPanel
             Me.cmdGetRawInputDeviceList = New System.Windows.Forms.Button
@@ -38,8 +40,15 @@
             Me.lblDeviceDescriptionI = New System.Windows.Forms.Label
             Me.lblDeviceDescription = New System.Windows.Forms.Label
             Me.splMain = New System.Windows.Forms.SplitContainer
-            Me.tvwHid = New System.Windows.Forms.TreeView
             Me.splRegistration = New System.Windows.Forms.SplitContainer
+            Me.splRegistrationTop = New System.Windows.Forms.SplitContainer
+            Me.tvwHid = New System.Windows.Forms.TreeView
+            Me.fraEventLog = New System.Windows.Forms.GroupBox
+            Me.splEventLog = New System.Windows.Forms.SplitContainer
+            Me.tlpEventLog = New System.Windows.Forms.TableLayoutPanel
+            Me.dgwEvents = New System.Windows.Forms.DataGridView
+            Me.cmdClearEventLog = New System.Windows.Forms.Button
+            Me.prgEvent = New System.Windows.Forms.PropertyGrid
             Me.tlpRegistration = New System.Windows.Forms.TableLayoutPanel
             Me.dgwRegistration = New System.Windows.Forms.DataGridView
             Me.lblUsagePage = New System.Windows.Forms.Label
@@ -56,7 +65,7 @@
             Me.txcUsagePage = New System.Windows.Forms.DataGridViewTextBoxColumn
             Me.txcUsage = New System.Windows.Forms.DataGridViewTextBoxColumn
             Me.chcApplicationKeys = New System.Windows.Forms.DataGridViewCheckBoxColumn
-            Me.cmcBackgroundEvents = New System.Windows.Forms.DataGridViewComboBoxColumn
+            Me.txcBackgroundEvents = New System.Windows.Forms.DataGridViewTextBoxColumn
             Me.chcCaptureMouse = New System.Windows.Forms.DataGridViewCheckBoxColumn
             Me.chcDisableLegacyEvents = New System.Windows.Forms.DataGridViewCheckBoxColumn
             Me.chcExclude = New System.Windows.Forms.DataGridViewCheckBoxColumn
@@ -78,6 +87,15 @@
             Me.splRegistration.Panel1.SuspendLayout()
             Me.splRegistration.Panel2.SuspendLayout()
             Me.splRegistration.SuspendLayout()
+            Me.splRegistrationTop.Panel1.SuspendLayout()
+            Me.splRegistrationTop.Panel2.SuspendLayout()
+            Me.splRegistrationTop.SuspendLayout()
+            Me.fraEventLog.SuspendLayout()
+            Me.splEventLog.Panel1.SuspendLayout()
+            Me.splEventLog.Panel2.SuspendLayout()
+            Me.splEventLog.SuspendLayout()
+            Me.tlpEventLog.SuspendLayout()
+            CType(Me.dgwEvents, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tlpRegistration.SuspendLayout()
             CType(Me.dgwRegistration, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.nudUsagePage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -98,8 +116,8 @@
             'splEnumeration.Panel2
             '
             Me.splEnumeration.Panel2.Controls.Add(Me.tlpProperties)
-            Me.splEnumeration.Size = New System.Drawing.Size(519, 536)
-            Me.splEnumeration.SplitterDistance = 172
+            Me.splEnumeration.Size = New System.Drawing.Size(410, 536)
+            Me.splEnumeration.SplitterDistance = 135
             Me.splEnumeration.TabIndex = 0
             '
             'tlpList
@@ -114,7 +132,7 @@
             Me.tlpList.RowCount = 2
             Me.tlpList.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpList.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpList.Size = New System.Drawing.Size(172, 536)
+            Me.tlpList.Size = New System.Drawing.Size(135, 536)
             Me.tlpList.TabIndex = 0
             '
             'cmdGetRawInputDeviceList
@@ -122,11 +140,11 @@
             Me.cmdGetRawInputDeviceList.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmdGetRawInputDeviceList.AutoSize = True
             Me.cmdGetRawInputDeviceList.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdGetRawInputDeviceList.Location = New System.Drawing.Point(21, 3)
+            Me.cmdGetRawInputDeviceList.Location = New System.Drawing.Point(3, 3)
             Me.cmdGetRawInputDeviceList.Name = "cmdGetRawInputDeviceList"
-            Me.cmdGetRawInputDeviceList.Size = New System.Drawing.Size(130, 23)
+            Me.cmdGetRawInputDeviceList.Size = New System.Drawing.Size(129, 23)
             Me.cmdGetRawInputDeviceList.TabIndex = 0
-            Me.cmdGetRawInputDeviceList.Text = "GetRawInputDeviceList"
+            Me.cmdGetRawInputDeviceList.Text = "&GetRawInputDeviceList"
             Me.cmdGetRawInputDeviceList.UseVisualStyleBackColor = True
             '
             'lstDevices
@@ -136,7 +154,7 @@
             Me.lstDevices.IntegralHeight = False
             Me.lstDevices.Location = New System.Drawing.Point(3, 32)
             Me.lstDevices.Name = "lstDevices"
-            Me.lstDevices.Size = New System.Drawing.Size(166, 501)
+            Me.lstDevices.Size = New System.Drawing.Size(129, 501)
             Me.lstDevices.TabIndex = 1
             '
             'tlpProperties
@@ -156,7 +174,7 @@
             Me.tlpProperties.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpProperties.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpProperties.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpProperties.Size = New System.Drawing.Size(343, 536)
+            Me.tlpProperties.Size = New System.Drawing.Size(271, 536)
             Me.tlpProperties.TabIndex = 1
             '
             'lblDeviceNameI
@@ -195,7 +213,7 @@
             '
             Me.SplitContainer1.Panel2.Controls.Add(Me.prgName)
             Me.SplitContainer1.Panel2.Controls.Add(Me.lblRawDeviceNameI)
-            Me.SplitContainer1.Size = New System.Drawing.Size(337, 504)
+            Me.SplitContainer1.Size = New System.Drawing.Size(265, 504)
             Me.SplitContainer1.SplitterDistance = 252
             Me.SplitContainer1.TabIndex = 3
             '
@@ -204,7 +222,7 @@
             Me.prgDeviceInfo.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgDeviceInfo.Location = New System.Drawing.Point(0, 13)
             Me.prgDeviceInfo.Name = "prgDeviceInfo"
-            Me.prgDeviceInfo.Size = New System.Drawing.Size(337, 239)
+            Me.prgDeviceInfo.Size = New System.Drawing.Size(265, 239)
             Me.prgDeviceInfo.TabIndex = 4
             '
             'lblDeviceInfoI
@@ -222,7 +240,7 @@
             Me.prgName.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgName.Location = New System.Drawing.Point(0, 13)
             Me.prgName.Name = "prgName"
-            Me.prgName.Size = New System.Drawing.Size(337, 235)
+            Me.prgName.Size = New System.Drawing.Size(265, 235)
             Me.prgName.TabIndex = 4
             '
             'lblRawDeviceNameI
@@ -265,17 +283,9 @@
             'splMain.Panel2
             '
             Me.splMain.Panel2.Controls.Add(Me.splRegistration)
-            Me.splMain.Size = New System.Drawing.Size(952, 536)
-            Me.splMain.SplitterDistance = 519
+            Me.splMain.Size = New System.Drawing.Size(1161, 536)
+            Me.splMain.SplitterDistance = 410
             Me.splMain.TabIndex = 1
-            '
-            'tvwHid
-            '
-            Me.tvwHid.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tvwHid.Location = New System.Drawing.Point(0, 0)
-            Me.tvwHid.Name = "tvwHid"
-            Me.tvwHid.Size = New System.Drawing.Size(429, 258)
-            Me.tvwHid.TabIndex = 0
             '
             'splRegistration
             '
@@ -286,14 +296,122 @@
             '
             'splRegistration.Panel1
             '
-            Me.splRegistration.Panel1.Controls.Add(Me.tvwHid)
+            Me.splRegistration.Panel1.Controls.Add(Me.splRegistrationTop)
             '
             'splRegistration.Panel2
             '
             Me.splRegistration.Panel2.Controls.Add(Me.tlpRegistration)
-            Me.splRegistration.Size = New System.Drawing.Size(429, 536)
+            Me.splRegistration.Size = New System.Drawing.Size(747, 536)
             Me.splRegistration.SplitterDistance = 258
             Me.splRegistration.TabIndex = 1
+            '
+            'splRegistrationTop
+            '
+            Me.splRegistrationTop.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splRegistrationTop.Location = New System.Drawing.Point(0, 0)
+            Me.splRegistrationTop.Name = "splRegistrationTop"
+            '
+            'splRegistrationTop.Panel1
+            '
+            Me.splRegistrationTop.Panel1.Controls.Add(Me.tvwHid)
+            '
+            'splRegistrationTop.Panel2
+            '
+            Me.splRegistrationTop.Panel2.Controls.Add(Me.fraEventLog)
+            Me.splRegistrationTop.Size = New System.Drawing.Size(747, 258)
+            Me.splRegistrationTop.SplitterDistance = 211
+            Me.splRegistrationTop.TabIndex = 2
+            '
+            'tvwHid
+            '
+            Me.tvwHid.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tvwHid.Location = New System.Drawing.Point(0, 0)
+            Me.tvwHid.Name = "tvwHid"
+            Me.tvwHid.Size = New System.Drawing.Size(211, 258)
+            Me.tvwHid.TabIndex = 0
+            '
+            'fraEventLog
+            '
+            Me.fraEventLog.Controls.Add(Me.splEventLog)
+            Me.fraEventLog.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.fraEventLog.Location = New System.Drawing.Point(0, 0)
+            Me.fraEventLog.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraEventLog.Name = "fraEventLog"
+            Me.fraEventLog.Size = New System.Drawing.Size(532, 258)
+            Me.fraEventLog.TabIndex = 1
+            Me.fraEventLog.TabStop = False
+            Me.fraEventLog.Text = "Events"
+            '
+            'splEventLog
+            '
+            Me.splEventLog.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splEventLog.Location = New System.Drawing.Point(3, 16)
+            Me.splEventLog.Name = "splEventLog"
+            '
+            'splEventLog.Panel1
+            '
+            Me.splEventLog.Panel1.Controls.Add(Me.tlpEventLog)
+            '
+            'splEventLog.Panel2
+            '
+            Me.splEventLog.Panel2.Controls.Add(Me.prgEvent)
+            Me.splEventLog.Size = New System.Drawing.Size(526, 239)
+            Me.splEventLog.SplitterDistance = 259
+            Me.splEventLog.TabIndex = 2
+            '
+            'tlpEventLog
+            '
+            Me.tlpEventLog.ColumnCount = 1
+            Me.tlpEventLog.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpEventLog.Controls.Add(Me.dgwEvents, 0, 0)
+            Me.tlpEventLog.Controls.Add(Me.cmdClearEventLog, 0, 1)
+            Me.tlpEventLog.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.tlpEventLog.Location = New System.Drawing.Point(0, 0)
+            Me.tlpEventLog.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpEventLog.Name = "tlpEventLog"
+            Me.tlpEventLog.RowCount = 2
+            Me.tlpEventLog.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpEventLog.RowStyles.Add(New System.Windows.Forms.RowStyle)
+            Me.tlpEventLog.Size = New System.Drawing.Size(259, 239)
+            Me.tlpEventLog.TabIndex = 1
+            '
+            'dgwEvents
+            '
+            Me.dgwEvents.AllowUserToAddRows = False
+            Me.dgwEvents.AllowUserToDeleteRows = False
+            Me.dgwEvents.BackgroundColor = System.Drawing.SystemColors.Window
+            Me.dgwEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.dgwEvents.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.dgwEvents.Location = New System.Drawing.Point(0, 0)
+            Me.dgwEvents.Margin = New System.Windows.Forms.Padding(0)
+            Me.dgwEvents.MultiSelect = False
+            Me.dgwEvents.Name = "dgwEvents"
+            Me.dgwEvents.ReadOnly = True
+            Me.dgwEvents.RowHeadersVisible = False
+            Me.dgwEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
+            Me.dgwEvents.Size = New System.Drawing.Size(259, 216)
+            Me.dgwEvents.TabIndex = 0
+            '
+            'cmdClearEventLog
+            '
+            Me.cmdClearEventLog.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdClearEventLog.AutoSize = True
+            Me.cmdClearEventLog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdClearEventLog.Location = New System.Drawing.Point(109, 216)
+            Me.cmdClearEventLog.Margin = New System.Windows.Forms.Padding(0)
+            Me.cmdClearEventLog.Name = "cmdClearEventLog"
+            Me.cmdClearEventLog.Size = New System.Drawing.Size(41, 23)
+            Me.cmdClearEventLog.TabIndex = 1
+            Me.cmdClearEventLog.Text = "Clear"
+            Me.cmdClearEventLog.UseVisualStyleBackColor = True
+            '
+            'prgEvent
+            '
+            Me.prgEvent.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgEvent.Location = New System.Drawing.Point(0, 0)
+            Me.prgEvent.Name = "prgEvent"
+            Me.prgEvent.Size = New System.Drawing.Size(263, 239)
+            Me.prgEvent.TabIndex = 2
             '
             'tlpRegistration
             '
@@ -318,19 +436,19 @@
             Me.tlpRegistration.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpRegistration.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpRegistration.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpRegistration.Size = New System.Drawing.Size(429, 274)
+            Me.tlpRegistration.Size = New System.Drawing.Size(747, 274)
             Me.tlpRegistration.TabIndex = 0
             '
             'dgwRegistration
             '
             Me.dgwRegistration.BackgroundColor = System.Drawing.SystemColors.Window
             Me.dgwRegistration.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
-            Me.dgwRegistration.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.txcUsagePage, Me.txcUsage, Me.chcApplicationKeys, Me.cmcBackgroundEvents, Me.chcCaptureMouse, Me.chcDisableLegacyEvents, Me.chcExclude, Me.chcHotKeys, Me.chcRemove, Me.chcWholePage, Me.txcWindow})
+            Me.dgwRegistration.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.txcUsagePage, Me.txcUsage, Me.chcApplicationKeys, Me.txcBackgroundEvents, Me.chcCaptureMouse, Me.chcDisableLegacyEvents, Me.chcExclude, Me.chcHotKeys, Me.chcRemove, Me.chcWholePage, Me.txcWindow})
             Me.tlpRegistration.SetColumnSpan(Me.dgwRegistration, 5)
             Me.dgwRegistration.Dock = System.Windows.Forms.DockStyle.Fill
             Me.dgwRegistration.Location = New System.Drawing.Point(3, 32)
             Me.dgwRegistration.Name = "dgwRegistration"
-            Me.dgwRegistration.Size = New System.Drawing.Size(423, 216)
+            Me.dgwRegistration.Size = New System.Drawing.Size(741, 216)
             Me.dgwRegistration.TabIndex = 0
             '
             'lblUsagePage
@@ -349,14 +467,14 @@
             Me.nudUsagePage.Location = New System.Drawing.Point(69, 4)
             Me.nudUsagePage.Maximum = New Decimal(New Integer() {65535, 0, 0, 0})
             Me.nudUsagePage.Name = "nudUsagePage"
-            Me.nudUsagePage.Size = New System.Drawing.Size(132, 20)
+            Me.nudUsagePage.Size = New System.Drawing.Size(291, 20)
             Me.nudUsagePage.TabIndex = 2
             '
             'lblUsage
             '
             Me.lblUsage.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.lblUsage.AutoSize = True
-            Me.lblUsage.Location = New System.Drawing.Point(207, 8)
+            Me.lblUsage.Location = New System.Drawing.Point(366, 8)
             Me.lblUsage.Name = "lblUsage"
             Me.lblUsage.Size = New System.Drawing.Size(38, 13)
             Me.lblUsage.TabIndex = 3
@@ -365,10 +483,10 @@
             'nudUsage
             '
             Me.nudUsage.Anchor = CType((System.Windows.Forms.AnchorStyles.Left Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
-            Me.nudUsage.Location = New System.Drawing.Point(251, 4)
+            Me.nudUsage.Location = New System.Drawing.Point(410, 4)
             Me.nudUsage.Maximum = New Decimal(New Integer() {65535, 0, 0, 0})
             Me.nudUsage.Name = "nudUsage"
-            Me.nudUsage.Size = New System.Drawing.Size(132, 20)
+            Me.nudUsage.Size = New System.Drawing.Size(291, 20)
             Me.nudUsage.TabIndex = 4
             '
             'cmdAdd
@@ -376,7 +494,7 @@
             Me.cmdAdd.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.cmdAdd.AutoSize = True
             Me.cmdAdd.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdAdd.Location = New System.Drawing.Point(389, 3)
+            Me.cmdAdd.Location = New System.Drawing.Point(707, 3)
             Me.cmdAdd.Name = "cmdAdd"
             Me.cmdAdd.Size = New System.Drawing.Size(36, 23)
             Me.cmdAdd.TabIndex = 5
@@ -394,7 +512,7 @@
             Me.flpRegistrationButtons.Controls.Add(Me.cmdLoadRegistered)
             Me.flpRegistrationButtons.Controls.Add(Me.cmdUnregisterAll)
             Me.flpRegistrationButtons.Controls.Add(Me.cmdClear)
-            Me.flpRegistrationButtons.Location = New System.Drawing.Point(49, 251)
+            Me.flpRegistrationButtons.Location = New System.Drawing.Point(208, 251)
             Me.flpRegistrationButtons.Margin = New System.Windows.Forms.Padding(0)
             Me.flpRegistrationButtons.Name = "flpRegistrationButtons"
             Me.flpRegistrationButtons.Size = New System.Drawing.Size(330, 23)
@@ -410,7 +528,7 @@
             Me.cmdRegister.Name = "cmdRegister"
             Me.cmdRegister.Size = New System.Drawing.Size(56, 23)
             Me.cmdRegister.TabIndex = 0
-            Me.cmdRegister.Text = "Regsiter"
+            Me.cmdRegister.Text = "&Register"
             Me.cmdRegister.UseVisualStyleBackColor = True
             '
             'cmdUnregister
@@ -423,7 +541,7 @@
             Me.cmdUnregister.Name = "cmdUnregister"
             Me.cmdUnregister.Size = New System.Drawing.Size(65, 23)
             Me.cmdUnregister.TabIndex = 1
-            Me.cmdUnregister.Text = "Unregister"
+            Me.cmdUnregister.Text = "&Unregister"
             Me.cmdUnregister.UseVisualStyleBackColor = True
             '
             'cmdLoadRegistered
@@ -436,7 +554,7 @@
             Me.cmdLoadRegistered.Name = "cmdLoadRegistered"
             Me.cmdLoadRegistered.Size = New System.Drawing.Size(90, 23)
             Me.cmdLoadRegistered.TabIndex = 2
-            Me.cmdLoadRegistered.Text = "Load registered"
+            Me.cmdLoadRegistered.Text = "&Load registered"
             Me.cmdLoadRegistered.UseVisualStyleBackColor = True
             '
             'cmdUnregisterAll
@@ -449,7 +567,7 @@
             Me.cmdUnregisterAll.Name = "cmdUnregisterAll"
             Me.cmdUnregisterAll.Size = New System.Drawing.Size(78, 23)
             Me.cmdUnregisterAll.TabIndex = 3
-            Me.cmdUnregisterAll.Text = "Unregister all"
+            Me.cmdUnregisterAll.Text = "Unregister &all"
             Me.cmdUnregisterAll.UseVisualStyleBackColor = True
             '
             'cmdClear
@@ -462,12 +580,15 @@
             Me.cmdClear.Name = "cmdClear"
             Me.cmdClear.Size = New System.Drawing.Size(41, 23)
             Me.cmdClear.TabIndex = 4
-            Me.cmdClear.Text = "Clear"
+            Me.cmdClear.Text = "&Clear"
             Me.cmdClear.UseVisualStyleBackColor = True
             '
             'txcUsagePage
             '
             Me.txcUsagePage.DataPropertyName = "UsagePage"
+            DataGridViewCellStyle1.Format = "d"
+            DataGridViewCellStyle1.NullValue = Nothing
+            Me.txcUsagePage.DefaultCellStyle = DataGridViewCellStyle1
             Me.txcUsagePage.HeaderText = "Usage page"
             Me.txcUsagePage.Name = "txcUsagePage"
             Me.txcUsagePage.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
@@ -486,14 +607,16 @@
             Me.chcApplicationKeys.Name = "chcApplicationKeys"
             Me.chcApplicationKeys.Width = 50
             '
-            'cmcBackgroundEvents
+            'txcBackgroundEvents
             '
-            Me.cmcBackgroundEvents.DataPropertyName = "BackgroundEvents"
-            Me.cmcBackgroundEvents.FlatStyle = System.Windows.Forms.FlatStyle.Flat
-            Me.cmcBackgroundEvents.HeaderText = "BgEvents"
-            Me.cmcBackgroundEvents.Items.AddRange(New Object() {"Background", "BackgroundWhenNotHandled", "ForegroundOnly"})
-            Me.cmcBackgroundEvents.Name = "cmcBackgroundEvents"
-            Me.cmcBackgroundEvents.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.txcBackgroundEvents.DataPropertyName = "BackgroundEvents"
+            DataGridViewCellStyle2.Format = "G"
+            DataGridViewCellStyle2.NullValue = Nothing
+            Me.txcBackgroundEvents.DefaultCellStyle = DataGridViewCellStyle2
+            Me.txcBackgroundEvents.HeaderText = "BgEvents"
+            Me.txcBackgroundEvents.Name = "txcBackgroundEvents"
+            Me.txcBackgroundEvents.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.txcBackgroundEvents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
             '
             'chcCaptureMouse
             '
@@ -548,7 +671,7 @@
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(952, 536)
+            Me.ClientSize = New System.Drawing.Size(1161, 536)
             Me.Controls.Add(Me.splMain)
             Me.Name = "frmRawInput"
             Me.Text = "Testing Tools.DevicesT.RawInputT"
@@ -570,6 +693,16 @@
             Me.splRegistration.Panel1.ResumeLayout(False)
             Me.splRegistration.Panel2.ResumeLayout(False)
             Me.splRegistration.ResumeLayout(False)
+            Me.splRegistrationTop.Panel1.ResumeLayout(False)
+            Me.splRegistrationTop.Panel2.ResumeLayout(False)
+            Me.splRegistrationTop.ResumeLayout(False)
+            Me.fraEventLog.ResumeLayout(False)
+            Me.splEventLog.Panel1.ResumeLayout(False)
+            Me.splEventLog.Panel2.ResumeLayout(False)
+            Me.splEventLog.ResumeLayout(False)
+            Me.tlpEventLog.ResumeLayout(False)
+            Me.tlpEventLog.PerformLayout()
+            CType(Me.dgwEvents, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tlpRegistration.ResumeLayout(False)
             Me.tlpRegistration.PerformLayout()
             CType(Me.dgwRegistration, System.ComponentModel.ISupportInitialize).EndInit()
@@ -610,10 +743,17 @@
         Friend WithEvents cmdLoadRegistered As System.Windows.Forms.Button
         Friend WithEvents cmdUnregisterAll As System.Windows.Forms.Button
         Friend WithEvents cmdClear As System.Windows.Forms.Button
+        Friend WithEvents splRegistrationTop As System.Windows.Forms.SplitContainer
+        Friend WithEvents fraEventLog As System.Windows.Forms.GroupBox
+        Friend WithEvents dgwEvents As System.Windows.Forms.DataGridView
+        Friend WithEvents tlpEventLog As System.Windows.Forms.TableLayoutPanel
+        Friend WithEvents cmdClearEventLog As System.Windows.Forms.Button
+        Friend WithEvents splEventLog As System.Windows.Forms.SplitContainer
+        Friend WithEvents prgEvent As System.Windows.Forms.PropertyGrid
         Friend WithEvents txcUsagePage As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents txcUsage As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents chcApplicationKeys As System.Windows.Forms.DataGridViewCheckBoxColumn
-        Friend WithEvents cmcBackgroundEvents As System.Windows.Forms.DataGridViewComboBoxColumn
+        Friend WithEvents txcBackgroundEvents As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents chcCaptureMouse As System.Windows.Forms.DataGridViewCheckBoxColumn
         Friend WithEvents chcDisableLegacyEvents As System.Windows.Forms.DataGridViewCheckBoxColumn
         Friend WithEvents chcExclude As System.Windows.Forms.DataGridViewCheckBoxColumn

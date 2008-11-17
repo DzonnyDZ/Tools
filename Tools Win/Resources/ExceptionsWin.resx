@@ -213,4 +213,7 @@
   <data name="OwherHandleHasChanged" xml:space="preserve">
     <value>Owher handle has changed.</value>
   </data>
+  <data name="CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling" xml:space="preserve">
+    <value>Cannot convert RAWINPUT_Marshalling to RAWINPUT_NonMarshalling when it contains HID data</value>
+  </data>
 </root>

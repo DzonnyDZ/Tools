@@ -4887,14 +4887,14 @@ Namespace DevicesT.RawInputT
 #Region "Processing"
         ''' <summary>Handle the <see cref="API.Messages.WindowMessages.WM_INPUT"/> message</summary>
         ''' <param name="wParam">Input code.</param>
-        ''' <param name="lParam">Handle to the <see cref="API.RawInput.RAWINPUT"/> structure that contains the raw input from the device. </param>
+        ''' <param name="lParam">Handle to the <see cref="API.RawInput.RAWINPUT_Marshalling"/> structure that contains the raw input from the device. </param>
         ''' <returns>Return value for the event, 0.</returns>
         ''' <remarks>You are unlikly to override this method, because it means that you have to completely replace parsing event data from <paramref name="lParam"/>.
         ''' This method, and internal methods it calls, does all the work that leads from windows message to event. This method calls all the On_... methods.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Function OnWM_INPUT(ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam As IntPtr) As Integer
             If HasListeners AndAlso (wParam = API.Messages.wParam.WM_INPUT.RIM_INPUT OrElse wParam = API.Messages.wParam.WM_INPUT.RIM_INPUTSINK) Then
-                Dim RawData As Tools.API.RawInput.RAWINPUT
+                Dim RawData As Tools.API.RawInput.RAWINPUT_NonMarshalling
                 Try
                     RawData = GetRAWINPUT(lParam)
                 Catch ex As API.Win32APIException
@@ -4929,14 +4929,14 @@ Namespace DevicesT.RawInputT
             End If
             Return 0
         End Function
-        ''' <summary>Gets <see cref="API.RawInput.RAWINPUT"/> from handle</summary>
-        ''' <param name="hRawInput">Handle of <see cref="API.RawInput.RAWINPUT"/> for <see cref="API.RawInput.GetRawInputData"/></param>
+        ''' <summary>Gets <see cref="API.RawInput.RAWINPUT_NonMarshalling"/> from handle</summary>
+        ''' <param name="hRawInput">Handle of <see cref="API.RawInput.RAWINPUT_Marshalling"/> for <see cref="API.RawInput.GetRawInputData"/></param>
         ''' <exception cref="API.Win32APIException">Error while obtaining raw input data</exception>
-        Private Shared Function GetRAWINPUT(ByVal hRawInput As IntPtr) As API.RawInput.RAWINPUT
+        Private Shared Function GetRAWINPUT(ByVal hRawInput As IntPtr) As API.RawInput.RAWINPUT_NonMarshalling
             Dim Size% = 0
             Dim ret = API.RawInput.GetRawInputData(hRawInput, API.GetRawInputDataCommand.RID_INPUT, IntPtr.Zero, Size, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)))
             If ret = -1 Then Throw New API.Win32APIException
-            Dim SizeToAllocate = Math.Max(Size, Marshal.SizeOf(GetType(API.RawInput.RAWINPUT)))
+            Dim SizeToAllocate = Math.Max(Size, Marshal.SizeOf(GetType(API.RawInput.RAWINPUT_Marshalling)))
             Dim pData As IntPtr = Marshal.AllocHGlobal(SizeToAllocate)
             Try
                 ret = API.RawInput.GetRawInputData(hRawInput, API.GetRawInputDataCommand.RID_INPUT, pData, SizeToAllocate, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)))
@@ -4944,12 +4944,16 @@ Namespace DevicesT.RawInputT
                 Dim Header As API.RawInput.RAWINPUTHEADER = Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUTHEADER)) 'RAWINPUT starts with RAWINPUTHEADER, so we can do this
                 Select Case Header.dwType
                     Case API.DeviceTypes.RIM_TYPEHID
-                        Dim raw As API.RawInput.RAWINPUT = Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUT))
-                        ReDim raw.hid.bRawData(raw.hid.dwCount * raw.hid.dwSizeHid - 1)
-                        Marshal.Copy(pData, raw.hid.bRawData, Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)) + 8, raw.hid.dwCount * raw.hid.dwSizeHid)
-                        Return raw
+                        Dim raw As API.RawInput.RAWINPUT_Marshalling = Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUT_Marshalling))
+                        Dim raw2 As API.RAWINPUT_NonMarshalling
+                        raw2.header = raw.header
+                        raw2.hid.dwCount = raw.hid.dwCount
+                        raw.hid.dwSizeHid = raw.hid.dwSizeHid
+                        ReDim raw2.hid.bRawData(raw.hid.dwCount * raw.hid.dwSizeHid - 1)
+                        Marshal.Copy(pData.ToInt64 + Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)) + Marshal.SizeOf(GetType(API.RawInput.RAWHID_Marshalling)), raw2.hid.bRawData, 0, raw.hid.dwCount * raw.hid.dwSizeHid)
+                        Return raw2
                     Case Else 'No additional processing is needed
-                        Return Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUT))
+                        Return DirectCast(Marshal.PtrToStructure(pData, GetType(API.RawInput.RAWINPUT_Marshalling)), API.RawInput.RAWINPUT_Marshalling)
                 End Select
             Finally
                 Marshal.FreeHGlobal(pData)
@@ -5195,14 +5199,22 @@ Namespace DevicesT.RawInputT
         End Sub
         ''' <summary>Performs <see cref="Dispose"/> or <see cref="Finalize"/></summary>
         Private Sub PerformFinalization()
-            If disposed Then Exit Sub
+            Static disposing As Boolean = False
+            If disposed OrElse disposing Then Exit Sub
+            disposing = True
             Try
-                UnregisterOwner(Me.Owner.Handle)
-            Catch ex As ObjectDisposedException
-                UnregisterOwner(Me.OwnerHandle)
+                Dim OwnerHandle As IntPtr
+                Try
+                    OwnerHandle = Owner.Handle
+                Catch ex As Exception When TypeOf ex Is InvalidOperationException OrElse TypeOf ex Is ObjectDisposedException
+                    OwnerHandle = Me.OwnerHandle
+                End Try
+                UnregisterOwner(OwnerHandle)
+                Try : UnregisterAll()
+                Catch : End Try
+            Finally
+                disposing = False
             End Try
-            Try : UnregisterAll()
-            Catch : End Try
             disposed = True
         End Sub
         ''' <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="RawInputEventProvider" /> is reclaimed by garbage collection.</summary>
@@ -5331,7 +5343,7 @@ Namespace DevicesT.RawInputT
                     If Device.Exclude AndAlso Not groups.Contains(Device.UsagePage) Then _
                         Throw New ArgumentException(ResourcesT.ExceptionsWin.DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered)
                     If Device.WholePage AndAlso Device.Usage <> 0 Then Throw New ArgumentException(ResourcesT.ExceptionsWin.DeviceWithExcludeSetToTrueMustHaveUsageSetToZero)
-                    If Device.DisableLegacyMessages AndAlso Device.UsagePage <> UsagePages.GenericDesktopControls OrElse (Not Device.WholePage AndAlso Device.Usage <> Usages_GenericDesktopControls.Keyboard AndAlso Device.Usage <> Usages_GenericDesktopControls.Mouse) Then _
+                    If Device.DisableLegacyMessages AndAlso (Device.UsagePage <> UsagePages.GenericDesktopControls OrElse (Not Device.WholePage AndAlso Device.Usage <> Usages_GenericDesktopControls.Keyboard AndAlso Device.Usage <> Usages_GenericDesktopControls.Mouse)) Then _
                         Throw New ArgumentException(ResourcesT.ExceptionsWin.LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice)
                     If Device.ApplicationKeys AndAlso Not Device.DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.ExceptionsWin.When0Is12MustBe3.f("ApplicationKeys", "true", "DisableLegacyMessages", "true"))
                 Next
@@ -5427,6 +5439,7 @@ Namespace DevicesT.RawInputT
             Dim NumDev As UInteger = 0
             Dim DevSize = Marshal.SizeOf(GetType(API.RawInput.RAWINPUTDEVICE))
             Dim ret = API.RawInput.GetRegisteredRawInputDevices(IntPtr.Zero, NumDev, DevSize)
+            If NumDev = 0 Then Return New RawInputDeviceRegistration() {}
             Dim pData = Marshal.AllocHGlobal(New IntPtr(CLng(NumDev * DevSize)))
             Try
                 ret = API.RawInput.GetRegisteredRawInputDevices(pData, NumDev, DevSize)
@@ -5688,11 +5701,11 @@ Namespace DevicesT.RawInputT
     Public Class RawHidEventArgs
         Inherits RawInputEventArgs
         ''' <summary>Contains raw data from <see cref="API.RawInput.GetRawInputData"/> call</summary>
-        Private raw As API.RawInput.RAWHID
+        Private raw As API.RawInput.RAWHID_NonMarshalling
         ''' <summary>CTor</summary>
         ''' <param name="raw">raw data from <see cref="API.RawInput.GetRawInputData"/> call</param>
         ''' <param name="hDevice">Handle to device that caused this event</param>
-        Friend Sub New(ByVal raw As API.RawInput.RAWHID, ByVal hDevice As IntPtr)
+        Friend Sub New(ByVal raw As API.RawInput.RAWHID_NonMarshalling, ByVal hDevice As IntPtr)
             MyBase.New(RawInputT.DeviceType.Hid, hDevice)
             Me.raw = raw
         End Sub
@@ -5732,7 +5745,7 @@ Namespace DevicesT.RawInputT
 #End Region
 
     ''' <summary>Specifies device registration</summary>
-    Public Class RawInputDeviceRegistration
+    Public Class RawInputDeviceRegistration : Implements IReportsChange
         ''' <summary>CTor from unmanaged data</summary>
         ''' <param name="device">Unmanaged structure</param>
         Friend Sub New(ByVal device As API.RawInput.RAWINPUTDEVICE)
@@ -5821,8 +5834,10 @@ Namespace DevicesT.RawInputT
                 Return _Usage
             End Get
             Set(ByVal value As Integer)
+                Dim old = Usage
                 _Usage = value
                 If value <> 0 AndAlso WholePage Then WholePage = False
+                If old <> Usage Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Integer)(old, value, "Usage"))
             End Set
         End Property
         ''' <summary>Contains value of the <see cref="UsagePage"/> property</summary>
@@ -5835,7 +5850,9 @@ Namespace DevicesT.RawInputT
                 Return _UsagePage
             End Get
             Set(ByVal value As UsagePages)
+                Dim old = UsagePage
                 _UsagePage = value
+                If old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of UsagePages)(old, value, "UsagePage"))
             End Set
         End Property
         ''' <summary>Gets or sets value indicating that all devices from specified <see cref="UsagePage"/> will be registered</summary>
@@ -5847,8 +5864,10 @@ Namespace DevicesT.RawInputT
                 Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_PAGEONLY)
             End Get
             Set(ByVal value As Boolean)
+                Dim Old = value
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_PAGEONLY, value)
                 If value Then Usage = 0
+                If Old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(Old, value, "WholePage"))
             End Set
         End Property
         ''' <summary>Gets value indication if this insatance specifies exlusion from registered devices collection</summary>
@@ -5860,8 +5879,10 @@ Namespace DevicesT.RawInputT
                 Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXCLUDE)
             End Get
             Set(ByVal value As Boolean)
+                Dim Old = Exclude
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXCLUDE, value)
                 If value = True Then WholePage = False
+                If Old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(Old, value, "Exclude"))
             End Set
         End Property
         ''' <summary>Gets value indicating if the remove flag was set on original raw input Win32 RAWINPUTDEVICE structure</summary>
@@ -5873,7 +5894,9 @@ Namespace DevicesT.RawInputT
                 Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_REMOVE)
             End Get
             Friend Set(ByVal value As Boolean)
+                Dim old = Remove
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_REMOVE, value)
+                If old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "Remove"))
             End Set
         End Property
         ''' <summary>Gets value of given flag from <see cref="Flags"/></summary>
@@ -5900,7 +5923,9 @@ Namespace DevicesT.RawInputT
                 Return _Window
             End Get
             Friend Set(ByVal value As IWin32Window)
+                Dim old = Window
                 _Window = value
+                If old IsNot value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of IWin32Window)(old, value, "Window"))
             End Set
         End Property
         ''' <summary>Gets or sets value indicationg if this registration disbles so-called legacy message for whole application from device this instance registers.</summary>
@@ -5914,8 +5939,10 @@ Namespace DevicesT.RawInputT
                 Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOLEGACY)
             End Get
             Set(ByVal value As Boolean)
+                Dim old = DisableLegacyMessages
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOLEGACY, value)
                 If Not value Then ApplicationKeys = False
+                If old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "DisableLegacyMessages"))
             End Set
         End Property
         ''' <summary>Gets or sets value indicationg if and when this registration will have efect even when window it is registered for is not active</summary>
@@ -5928,6 +5955,7 @@ Namespace DevicesT.RawInputT
                 Return Flags And (BackgroundEvents.Background Or RawInputT.BackgroundEvents.BackgroundWhenNotHandled)
             End Get
             Set(ByVal value As BackgroundEvents)
+                Dim old = BackgroundEvents
                 Select Case value
                     Case RawInputT.BackgroundEvents.Background
                         SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_INPUTSINK, True)
@@ -5940,6 +5968,7 @@ Namespace DevicesT.RawInputT
                         SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_EXINPUTSINK, False)
                     Case Else : Throw New InvalidEnumArgumentException("value", value, value.GetType)
                 End Select
+                If old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of BackgroundEvents)(old, value, "BackgroundEvents"))
             End Set
         End Property
         ''' <summary>Gets or sets value indicating if mouse is captured</summary>
@@ -5950,7 +5979,9 @@ Namespace DevicesT.RawInputT
                 Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_CAPTUREMOUSE)
             End Get
             Set(ByVal value As Boolean)
+                Dim old = CaptureMouse
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_CAPTUREMOUSE, value)
+                If old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "CaptureMouse"))
             End Set
         End Property
         ''' <summary>Gets value indicating if application command keys avents are handled</summary>
@@ -5964,8 +5995,10 @@ Namespace DevicesT.RawInputT
                 Return GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_APPKEYS)
             End Get
             Set(ByVal value As Boolean)
+                Dim Old = ApplicationKeys
                 If value AndAlso Not DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.ExceptionsWin.CannotBeSetTo1When2Is3.f("ApplicationKeys", "true", "DisableLegacyMessages", "false"))
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_APPKEYS, value)
+                If Old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(Old, value, "ApplicationKeys"))
             End Set
         End Property
         ''' <summary>gets or sets value indicating if application-defined keyboard device hotkeys are handled</summary>
@@ -5978,9 +6011,21 @@ Namespace DevicesT.RawInputT
                 Return Not GetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOHOTKEYS)
             End Get
             Set(ByVal value As Boolean)
+                Dim old = HotKeys
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_NOHOTKEYS, Not value)
+                If old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(old, value, "HotKeys"))
             End Set
         End Property
+
+        ''' <summary>Raised when value of member changes</summary>
+        ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> class)</remarks>
+        Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
+        ''' <summary>Raises the <see cref="Changed"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnChanged(ByVal e As IReportsChange.ValueChangedEventArgsBase)
+            RaiseEvent Changed(Me, e)
+        End Sub
     End Class
     ''' <summary>Possible modes of catching raw input events related to whether window is in foreground or not</summary>
     Public Enum BackgroundEvents

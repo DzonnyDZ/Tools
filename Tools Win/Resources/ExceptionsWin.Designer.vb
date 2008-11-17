@@ -102,6 +102,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Cannot convert RAWINPUT_Marshalling to RAWINPUT_NonMarshalling when it contains HID data'.
+        '''</summary>
+        Public Shared ReadOnly Property CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling() As String
+            Get
+                Return ResourceManager.GetString("CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot create link from file {0}.'.
         '''</summary>
         Public Shared ReadOnly Property CannotCreateLinkFromFile0() As String
@@ -391,6 +400,14 @@ Namespace ResourcesT
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1025:ReplaceRepetitiveArgumentsWithParamsArray")>  _
         Public Shared Function CannotBeSetTo1When2Is3Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object, ByVal arg3 As Object) As String
             Return String.Format(_resourceCulture, CannotBeSetTo1When2Is3, arg0, arg1, arg2, arg3)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling property value.
+        '''</summary>
+        '''<returns>The CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling property value.</returns>
+        Public Shared Function CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshallingFormat() As String
+            Return CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling
         End Function
         
         '''<summary>

@@ -851,7 +851,7 @@ Namespace API.Messages
         ''' <item><term>wParam</term>
         ''' <description>Input code. This parameter can be one of the <see cref="wParam.WM_INPUT"/> values. </description></item>
         ''' <item><term>lParam</term>
-        ''' <description>Handle to the <see cref="API.RawInput.RAWINPUT"/> structure that contains the raw input from the device. </description></item>
+        ''' <description>Handle to the <see cref="API.RawInput.RAWINPUT_Marshalling"/> structure that contains the raw input from the device. </description></item>
         ''' <item><term>Return value</term>
         ''' <description>If an application processes this message, it should return zero. </description></item>
         ''' </list><para>To get the wParam value, use the GET_RAWINPUT_CODE_WPARAM macro.</para>

@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.Runtime.CompilerServices
+Imports System.ComponentModel
 
 Namespace API
     ''' <summary>Contains API declarations related to Raw Input</summary>
@@ -167,7 +168,7 @@ Namespace API
 #Region "Registration"
         ''' <summary>defines information for the raw input devices</summary>
         <StructLayout(LayoutKind.Sequential)> _
-        Public Structure RAWINPUTDEVICE
+        Public Structure RAWINPUTDEVICE 'ASAP: MSDN
             ''' <summary>Top level collection Usage page for the raw input device. </summary>
             ''' <seelaso cref="DevicesT.RawInputT.UsagePages"/>
             <MarshalAs(UnmanagedType.U2)> _
@@ -216,7 +217,7 @@ Namespace API
         ''' <returns>TRUE if the function succeeds; otherwise, FALSE.</returns>
         ''' <remarks><para>To receive <see cref="API.Messages.WindowMessages.WM_INPUT"/> messages, an application must first register the raw input devices using <see cref="RegisterRawInputDevices"/>. By default, an application does not receive raw input.</para>
         ''' <para>If a <see cref="RAWINPUTDEVICE"/> structure has the <see cref="RAWINPUTDEVICEFlags.RIDEV_REMOVE"/> flag set and the <see cref="RAWINPUTDEVICE.hwndTarget"/> parameter is not set to NULL, then parameter validation will fail.</para></remarks>
-        Public Declare Auto Function RegisterRawInputDevices Lib "User32.dll" (ByVal pRawInputDevice As RAWINPUTDEVICE(), ByVal uiNumDevices As UInteger, ByVal cbSize As UInteger) As Boolean
+        Public Declare Auto Function RegisterRawInputDevices Lib "User32.dll" (ByVal pRawInputDevice As RAWINPUTDEVICE(), ByVal uiNumDevices As UInteger, ByVal cbSize As UInteger) As Boolean 'ASAP: MSDN
 
         ''' <summary>gets the information about the raw input devices for the current application.</summary>
         ''' <param name="pRawInputDevices">[out] Pointer to an array of <see cref="RAWINPUTDEVICE"/> structures for the application.</param>
@@ -224,24 +225,53 @@ Namespace API
         ''' <param name="cbSize">[in] Size, in bytes, of a <see cref="RAWINPUTDEVICE"/> structure. </param>
         ''' <returns><para>If successful, the function returns a non-negative number that is the number of <see cref="RAWINPUTDEVICE"/> structures written to the buffer.</para>
         ''' <para>If the <paramref name="pRawInputDevices"/> buffer is too small or NULL, the function sets the last error as <see cref="api.Common.Errors.ERROR_INSUFFICIENT_BUFFER"/>, returns -1, and sets <paramref name="puiNumDevices"/> to the required number of devices. If the function fails for any other reason, it returns -1.</para></returns>
-        Public Declare Function GetRegisteredRawInputDevices Lib "user32.dll" (ByVal pRawInputDevices As IntPtr, ByRef puiNumDevices As UInteger, ByVal cbSize As UInteger) As Integer
+        Public Declare Function GetRegisteredRawInputDevices Lib "user32.dll" (ByVal pRawInputDevices As IntPtr, ByRef puiNumDevices As UInteger, ByVal cbSize As UInteger) As Integer 'ASAP: MSDN
 #End Region
 #Region "Handling"
         ''' <summary>contains the raw input from a device. </summary>
+        ''' <remarks>Use this structure for marshalling, but remember that is does not contain the <see cref="RAWHID_NonMarshalling.bRawData"/> member</remarks>
         <StructLayout(LayoutKind.Explicit)> _
-        Public Structure RAWINPUT
+        Public Structure RAWINPUT_Marshalling   'ASAP: MSDN
             ''' <summary>A <see cref="RAWINPUTHEADER"/> structure for the raw input data. </summary>
             <FieldOffset(0)> Public header As RAWINPUTHEADER
             ''' <summary>If the data comes from a mouse, this is the <see cref="RAWMOUSE"/> structure for the raw input data. </summary>
             <FieldOffset(RAWINPUTHEADER.Size)> Public mouse As RAWMOUSE
             ''' <summary>If the data comes from a keyboard, this is the <see cref="RAWKEYBOARD"/> structure for the raw input data. </summary>
             <FieldOffset(RAWINPUTHEADER.Size)> Public keyboard As RAWKEYBOARD
-            ''' <summary>If the data comes from an Human Interface Device (HID), this is the <see cref="RAWHID"/> structure for the raw input data. </summary>
-            <FieldOffset(RAWINPUTHEADER.Size)> Public hid As RAWHID
+            ''' <summary>If the data comes from an Human Interface Device (HID), this is the <see cref="RAWINPUT_Marshalling"/> structure for the raw input data. </summary>
+            <FieldOffset(RAWINPUTHEADER.Size)> Public hid As RAWHID_Marshalling
+        End Structure
+        ''' <summary>contains the raw input from a device. </summary>
+        ''' <remarks>Do not use this structure for marshalling</remarks>
+        Public Structure RAWINPUT_NonMarshalling
+            ''' <summary>A <see cref="RAWINPUTHEADER"/> structure for the raw input data. </summary>
+            Public header As RAWINPUTHEADER
+            ''' <summary>If the data comes from a mouse, this is the <see cref="RAWMOUSE"/> structure for the raw input data. </summary>
+            Public mouse As RAWMOUSE
+            ''' <summary>If the data comes from a keyboard, this is the <see cref="RAWKEYBOARD"/> structure for the raw input data. </summary>
+            Public keyboard As RAWKEYBOARD
+            ''' <summary>If the data comes from an Human Interface Device (HID), this is the <see cref="RAWINPUT_NonMarshalling"/> structure for the raw input data. </summary>
+            Public hid As RAWHID_NonMarshalling
+            ''' <summary>Converts <see cref="RAWINPUT_Marshalling"/> structure to <see cref="RAWINPUT_NonMarshalling"/> structure</summary>
+            ''' <param name="a">A <see cref="RAWINPUT_Marshalling"/> structure</param>
+            ''' <returns><see cref="RAWINPUT_NonMarshalling"/> structure</returns>
+            ''' <exception cref="InvalidEnumArgumentException"><paramref name="a"/>.<see cref="RAWINPUT_Marshalling.header">header</see>.<see cref="RAWINPUTHEADER.dwType">dwType</see> is not member of <see cref="DeviceTypes"/></exception>
+            ''' <exception cref="NotSupportedException"><paramref name="a"/>.<see cref="RAWINPUT_Marshalling.header">header</see>.<see cref="RAWINPUTHEADER.dwType">dwType</see> is <see cref="DeviceTypes.RIM_TYPEHID"/></exception>
+            Public Shared Narrowing Operator CType(ByVal a As RAWINPUT_Marshalling) As RAWINPUT_NonMarshalling
+                Dim ret As New RAWINPUT_NonMarshalling
+                ret.header = a.header
+                Select Case ret.header.dwType
+                    Case DeviceTypes.RIM_TYPEHID : Throw New NotSupportedException(ResourcesT.ExceptionsWin.CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling)
+                    Case DeviceTypes.RIM_TYPEKEYBOARD : ret.keyboard = a.keyboard
+                    Case DeviceTypes.RIM_TYPEMOUSE : ret.mouse = a.mouse
+                    Case Else : Throw New InvalidEnumArgumentException("a.header.dwType", a.header.dwType, a.header.dwType.GetType)
+                End Select
+                Return ret
+            End Operator
         End Structure
         ''' <summary>contains information about the state of the mouse. </summary>
         <StructLayout(LayoutKind.Explicit)> _
-        Public Structure RAWMOUSE
+        Public Structure RAWMOUSE             'ASAP: MSDN
             ''' <summary>Mouse state. This member can be any reasonable combination of <see cref="RAWMOUSEFlags"/>. </summary>
             <FieldOffset(0)> Public usFlags As RAWMOUSEFlags
             ''' <summary>Reserved</summary>
@@ -315,7 +345,7 @@ Namespace API
 
         ''' <summary>contains information about the state of the keyboard. </summary>
         <StructLayout(LayoutKind.Sequential)> _
-        Public Structure RAWKEYBOARD
+        Public Structure RAWKEYBOARD     'ASAP: MSDN
             ''' <summary>Scan code from the key depression. The scan code for keyboard overrun is <see cref="KEYBOARD_OVERRUN_MAKE_CODE"/>. </summary>
             Public MakeCode As UShort
             ''' <summary>Flags for scan code information. It can be one or more of the <see cref="RAWKEYBOARDFlags"/>.</summary>
@@ -346,24 +376,51 @@ Namespace API
             RI_KEY_TERMSRV_SHADOW = &H10
         End Enum
         ''' <summary>describes the format of the raw input from a Human Interface Device (HID). </summary>
+        ''' <remarks>Use this declaration of RAWHID structure for marshalling, but rememebre that it is missing <see cref="RAWHID_NonMarshalling.bRawData"/> member.</remarks>
         <StructLayout(LayoutKind.Sequential)> _
-        Public Structure RAWHID
+        Public Structure RAWHID_Marshalling
+            'ASAP: MSDN
+            'For marshalling purposes this structure cannot be declared identically as it is declarred in C++ at this page. This is because of dynamic-lenght arrays are not supported for marshalling as fields in structures. And event if there would be a way how to marshall dynamic-lenght arrays inside structures, the way in which this structure is used makes marshalling more difficult than usual. RAWHID structure is usually used as field inside RAWINPUT structure. This field is overlapped with another fields (of type RAWMOUSE and RAWKEYBOARD). Marshalling does not support overlapping of reference-type and value-type fields. All fields in both other structures are value-type, but bRawData is array - refernce type in .NET. So, this structure must be, for marshalling purposes, declared without bRawData and this field must be marshalled manually.  For example of manual marshalling from unmanaged to managed code see GetRawInputData function.
+            'The marshalling declaration is:
+            '<StructLayout(LayoutKind.Sequential)> _
+            'Public Structure RAWHID_Marshalling
+            '   Public dwSizeHid As Integer
+            '   Public dwCount As Integer
+            'End Structure
+            'The non-marshalling declaration is:
+            'Public Structure RAWHID_NonMarshalling
+            '   Public dwSizeHid As Integer
+            '   Public dwCount As Integer
+            '   Public bRawData As Byte()
+            'End Structure
+            'But it is usefull only when you want to keep RAWHID structure in managed memory in the same form as it is kept in unmanaged memory.
+            ''' <summary>Size, in bytes, of each HID input in <see cref="RAWHID_NonMarshalling.bRawData"/>. </summary>
+            Public dwSizeHid As Integer
+            ''' <summary>Number of HID inputs in <see cref="RAWHID_NonMarshalling.bRawData"/>.</summary>
+            Public dwCount As Integer
+            '''' <summary>Raw input data as an array of bytes. </summary>
+            '''' <remarks>This field is not marshalled automatically</remarks>
+            '<MarshalAs(UnmanagedType.ByValArray, SizeConst:=0)> _
+            'Public bRawData As Byte()
+        End Structure
+        ''' <summary>describes the format of the raw input from a Human Interface Device (HID). </summary>
+        ''' <remarks>Do not use this structure for marshalling</remarks>
+        Public Structure RAWHID_NonMarshalling
             ''' <summary>Size, in bytes, of each HID input in <see cref="bRawData"/>. </summary>
             Public dwSizeHid As Integer
             ''' <summary>Number of HID inputs in <see cref="bRawData"/>.</summary>
             Public dwCount As Integer
             ''' <summary>Raw input data as an array of bytes. </summary>
             ''' <remarks>This field is not marshalled automatically</remarks>
-            <MarshalAs(UnmanagedType.ByValArray, SizeConst:=0)> _
             Public bRawData As Byte()
         End Structure
 
         ''' <summary>contains the header information that is part of the raw input data. </summary>
         <StructLayout(LayoutKind.Sequential, Size:=RAWINPUTHEADER.Size)> _
-        Public Structure RAWINPUTHEADER
+        Public Structure RAWINPUTHEADER   'ASAP: MSDN
             ''' <summary>Type of raw input. It can be one of the following values.</summary>
             Public dwType As DeviceTypes
-            ''' <summary>Size, in bytes, of the entire input packet of data. This includes <see cref="RAWINPUT"/> plus possible extra input reports in the <see cref="RAWHID"/> variable length array. </summary>
+            ''' <summary>Size, in bytes, of the entire input packet of data. This includes <see cref="RAWINPUT"/> plus possible extra input reports in the <see cref="RAWHID_NonMarshalling"/> variable length array. </summary>
             Public dwSize As Integer
             ''' <summary>Handle to the device generating the raw input data. </summary>
             Public hDevice As IntPtr
@@ -395,7 +452,7 @@ Namespace API
             ByVal pData As IntPtr, _
             ByRef pcbSize As UInteger, _
             ByVal cbSizeHeader As UInteger) _
-            As Integer
+            As Integer     'ASAP: MSDN
 
 
         '''' <summary>does a buffered read of the raw input data.</summary>

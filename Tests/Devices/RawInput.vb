@@ -12,6 +12,8 @@ Namespace DevicesT.RawInputT
         Private WithEvents provider As New RawInputEventProvider(Me)
         ''' <summary>List of registered devices / devices to register</summary>
         Private RegistrationList As New ListWithEvents(Of RawInputDeviceRegistration)
+        ''' <summary>Raw logged input events</summary>
+        Private EventList As New ListWithEvents(Of RawInputEventArgs)
         ''' <summary>Performs test</summary>
         Public Shared Sub Test()
             Dim inst As New frmRawInput
@@ -36,6 +38,7 @@ Namespace DevicesT.RawInputT
                 Next
             Next
             dgwRegistration.DataSource = RegistrationList
+            dgwEvents.DataSource = EventList
         End Sub
 
 
@@ -149,6 +152,22 @@ Namespace DevicesT.RawInputT
             Catch ex As Exception
                 MBox.Error_X(ex)
             End Try
+        End Sub
+
+        Private Sub provider_Input(ByVal sender As Object, ByVal e As RawInputEventArgs) Handles provider.Input
+            EventList.Add(e)
+        End Sub
+
+        Private Sub cmdClearEventLog_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearEventLog.Click
+            EventList.Clear()
+        End Sub
+
+        Private Sub dgwEvents_SelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles dgwEvents.SelectionChanged
+            If dgwEvents.SelectedRows.Count = 0 Then
+                prgEvent.SelectedObject = Nothing
+            Else
+                prgEvent.SelectedObject = dgwEvents.SelectedRows(0).DataBoundItem
+            End If
         End Sub
     End Class
 End Namespace
