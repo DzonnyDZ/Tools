@@ -155,6 +155,9 @@ Namespace DevicesT.RawInputT
         End Sub
 
         Private Sub provider_Input(ByVal sender As Object, ByVal e As RawInputEventArgs) Handles provider.Input
+            If TypeOf e Is RawKeyboardEventArgs AndAlso Not chkKeyboard.Checked Then Exit Sub
+            If TypeOf e Is RawMouseEventArgs AndAlso Not chkMouse.Checked Then Exit Sub
+            If TypeOf e Is RawHidEventArgs AndAlso Not chkHID.Checked Then Exit Sub
             EventList.Add(e)
         End Sub
 
@@ -168,6 +171,12 @@ Namespace DevicesT.RawInputT
             Else
                 prgEvent.SelectedObject = dgwEvents.SelectedRows(0).DataBoundItem
             End If
+        End Sub
+
+        Private Sub dgwEvents_RowsAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dgwEvents.RowsAdded
+            For i As Integer = e.RowIndex To e.RowIndex + e.RowCount - 1
+                dgwEvents.Rows(i).Cells(txcEvent.Index).Value = DirectCast(dgwEvents.Rows(i).DataBoundItem, RawInputEventArgs).ToString
+            Next
         End Sub
     End Class
 End Namespace

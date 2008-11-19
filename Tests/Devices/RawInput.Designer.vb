@@ -23,8 +23,8 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
-            Dim DataGridViewCellStyle1 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
-            Dim DataGridViewCellStyle2 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+            Dim DataGridViewCellStyle3 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
+            Dim DataGridViewCellStyle4 As System.Windows.Forms.DataGridViewCellStyle = New System.Windows.Forms.DataGridViewCellStyle
             Me.splEnumeration = New System.Windows.Forms.SplitContainer
             Me.tlpList = New System.Windows.Forms.TableLayoutPanel
             Me.cmdGetRawInputDeviceList = New System.Windows.Forms.Button
@@ -47,21 +47,17 @@
             Me.splEventLog = New System.Windows.Forms.SplitContainer
             Me.tlpEventLog = New System.Windows.Forms.TableLayoutPanel
             Me.dgwEvents = New System.Windows.Forms.DataGridView
+            Me.txcEvent = New System.Windows.Forms.DataGridViewTextBoxColumn
+            Me.txcEventDeviceType = New System.Windows.Forms.DataGridViewTextBoxColumn
+            Me.txcEventDevice = New System.Windows.Forms.DataGridViewTextBoxColumn
             Me.cmdClearEventLog = New System.Windows.Forms.Button
+            Me.flpEventChecks = New System.Windows.Forms.FlowLayoutPanel
+            Me.chkKeyboard = New System.Windows.Forms.CheckBox
+            Me.chkMouse = New System.Windows.Forms.CheckBox
+            Me.chkHID = New System.Windows.Forms.CheckBox
             Me.prgEvent = New System.Windows.Forms.PropertyGrid
             Me.tlpRegistration = New System.Windows.Forms.TableLayoutPanel
             Me.dgwRegistration = New System.Windows.Forms.DataGridView
-            Me.lblUsagePage = New System.Windows.Forms.Label
-            Me.nudUsagePage = New System.Windows.Forms.NumericUpDown
-            Me.lblUsage = New System.Windows.Forms.Label
-            Me.nudUsage = New System.Windows.Forms.NumericUpDown
-            Me.cmdAdd = New System.Windows.Forms.Button
-            Me.flpRegistrationButtons = New System.Windows.Forms.FlowLayoutPanel
-            Me.cmdRegister = New System.Windows.Forms.Button
-            Me.cmdUnregister = New System.Windows.Forms.Button
-            Me.cmdLoadRegistered = New System.Windows.Forms.Button
-            Me.cmdUnregisterAll = New System.Windows.Forms.Button
-            Me.cmdClear = New System.Windows.Forms.Button
             Me.txcUsagePage = New System.Windows.Forms.DataGridViewTextBoxColumn
             Me.txcUsage = New System.Windows.Forms.DataGridViewTextBoxColumn
             Me.chcApplicationKeys = New System.Windows.Forms.DataGridViewCheckBoxColumn
@@ -73,6 +69,17 @@
             Me.chcRemove = New System.Windows.Forms.DataGridViewCheckBoxColumn
             Me.chcWholePage = New System.Windows.Forms.DataGridViewCheckBoxColumn
             Me.txcWindow = New System.Windows.Forms.DataGridViewTextBoxColumn
+            Me.lblUsagePage = New System.Windows.Forms.Label
+            Me.nudUsagePage = New System.Windows.Forms.NumericUpDown
+            Me.lblUsage = New System.Windows.Forms.Label
+            Me.nudUsage = New System.Windows.Forms.NumericUpDown
+            Me.cmdAdd = New System.Windows.Forms.Button
+            Me.flpRegistrationButtons = New System.Windows.Forms.FlowLayoutPanel
+            Me.cmdRegister = New System.Windows.Forms.Button
+            Me.cmdUnregister = New System.Windows.Forms.Button
+            Me.cmdLoadRegistered = New System.Windows.Forms.Button
+            Me.cmdUnregisterAll = New System.Windows.Forms.Button
+            Me.cmdClear = New System.Windows.Forms.Button
             Me.splEnumeration.Panel1.SuspendLayout()
             Me.splEnumeration.Panel2.SuspendLayout()
             Me.splEnumeration.SuspendLayout()
@@ -96,6 +103,7 @@
             Me.splEventLog.SuspendLayout()
             Me.tlpEventLog.SuspendLayout()
             CType(Me.dgwEvents, System.ComponentModel.ISupportInitialize).BeginInit()
+            Me.flpEventChecks.SuspendLayout()
             Me.tlpRegistration.SuspendLayout()
             CType(Me.dgwRegistration, System.ComponentModel.ISupportInitialize).BeginInit()
             CType(Me.nudUsagePage, System.ComponentModel.ISupportInitialize).BeginInit()
@@ -364,13 +372,15 @@
             Me.tlpEventLog.ColumnCount = 1
             Me.tlpEventLog.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpEventLog.Controls.Add(Me.dgwEvents, 0, 0)
-            Me.tlpEventLog.Controls.Add(Me.cmdClearEventLog, 0, 1)
+            Me.tlpEventLog.Controls.Add(Me.cmdClearEventLog, 0, 2)
+            Me.tlpEventLog.Controls.Add(Me.flpEventChecks, 0, 1)
             Me.tlpEventLog.Dock = System.Windows.Forms.DockStyle.Fill
             Me.tlpEventLog.Location = New System.Drawing.Point(0, 0)
             Me.tlpEventLog.Margin = New System.Windows.Forms.Padding(0)
             Me.tlpEventLog.Name = "tlpEventLog"
-            Me.tlpEventLog.RowCount = 2
+            Me.tlpEventLog.RowCount = 3
             Me.tlpEventLog.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
+            Me.tlpEventLog.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpEventLog.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpEventLog.Size = New System.Drawing.Size(259, 239)
             Me.tlpEventLog.TabIndex = 1
@@ -381,6 +391,7 @@
             Me.dgwEvents.AllowUserToDeleteRows = False
             Me.dgwEvents.BackgroundColor = System.Drawing.SystemColors.Window
             Me.dgwEvents.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize
+            Me.dgwEvents.Columns.AddRange(New System.Windows.Forms.DataGridViewColumn() {Me.txcEvent, Me.txcEventDeviceType, Me.txcEventDevice})
             Me.dgwEvents.Dock = System.Windows.Forms.DockStyle.Fill
             Me.dgwEvents.Location = New System.Drawing.Point(0, 0)
             Me.dgwEvents.Margin = New System.Windows.Forms.Padding(0)
@@ -389,8 +400,28 @@
             Me.dgwEvents.ReadOnly = True
             Me.dgwEvents.RowHeadersVisible = False
             Me.dgwEvents.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect
-            Me.dgwEvents.Size = New System.Drawing.Size(259, 216)
+            Me.dgwEvents.Size = New System.Drawing.Size(259, 193)
             Me.dgwEvents.TabIndex = 0
+            '
+            'txcEvent
+            '
+            Me.txcEvent.HeaderText = "Name"
+            Me.txcEvent.Name = "txcEvent"
+            Me.txcEvent.ReadOnly = True
+            '
+            'txcEventDeviceType
+            '
+            Me.txcEventDeviceType.DataPropertyName = "DeviceType"
+            Me.txcEventDeviceType.HeaderText = "DeviceType"
+            Me.txcEventDeviceType.Name = "txcEventDeviceType"
+            Me.txcEventDeviceType.ReadOnly = True
+            '
+            'txcEventDevice
+            '
+            Me.txcEventDevice.DataPropertyName = "Device"
+            Me.txcEventDevice.HeaderText = "Device"
+            Me.txcEventDevice.Name = "txcEventDevice"
+            Me.txcEventDevice.ReadOnly = True
             '
             'cmdClearEventLog
             '
@@ -404,6 +435,59 @@
             Me.cmdClearEventLog.TabIndex = 1
             Me.cmdClearEventLog.Text = "Clear"
             Me.cmdClearEventLog.UseVisualStyleBackColor = True
+            '
+            'flpEventChecks
+            '
+            Me.flpEventChecks.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.flpEventChecks.AutoSize = True
+            Me.flpEventChecks.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.flpEventChecks.Controls.Add(Me.chkKeyboard)
+            Me.flpEventChecks.Controls.Add(Me.chkMouse)
+            Me.flpEventChecks.Controls.Add(Me.chkHID)
+            Me.flpEventChecks.Location = New System.Drawing.Point(33, 193)
+            Me.flpEventChecks.Margin = New System.Windows.Forms.Padding(0)
+            Me.flpEventChecks.Name = "flpEventChecks"
+            Me.flpEventChecks.Size = New System.Drawing.Size(192, 23)
+            Me.flpEventChecks.TabIndex = 2
+            '
+            'chkKeyboard
+            '
+            Me.chkKeyboard.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.chkKeyboard.AutoSize = True
+            Me.chkKeyboard.Checked = True
+            Me.chkKeyboard.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.chkKeyboard.Location = New System.Drawing.Point(3, 3)
+            Me.chkKeyboard.Name = "chkKeyboard"
+            Me.chkKeyboard.Size = New System.Drawing.Size(71, 17)
+            Me.chkKeyboard.TabIndex = 0
+            Me.chkKeyboard.Text = "Keyboard"
+            Me.chkKeyboard.UseVisualStyleBackColor = True
+            '
+            'chkMouse
+            '
+            Me.chkMouse.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.chkMouse.AutoSize = True
+            Me.chkMouse.Checked = True
+            Me.chkMouse.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.chkMouse.Location = New System.Drawing.Point(80, 3)
+            Me.chkMouse.Name = "chkMouse"
+            Me.chkMouse.Size = New System.Drawing.Size(58, 17)
+            Me.chkMouse.TabIndex = 1
+            Me.chkMouse.Text = "Mouse"
+            Me.chkMouse.UseVisualStyleBackColor = True
+            '
+            'chkHID
+            '
+            Me.chkHID.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.chkHID.AutoSize = True
+            Me.chkHID.Checked = True
+            Me.chkHID.CheckState = System.Windows.Forms.CheckState.Checked
+            Me.chkHID.Location = New System.Drawing.Point(144, 3)
+            Me.chkHID.Name = "chkHID"
+            Me.chkHID.Size = New System.Drawing.Size(45, 17)
+            Me.chkHID.TabIndex = 2
+            Me.chkHID.Text = "HID"
+            Me.chkHID.UseVisualStyleBackColor = True
             '
             'prgEvent
             '
@@ -450,6 +534,90 @@
             Me.dgwRegistration.Name = "dgwRegistration"
             Me.dgwRegistration.Size = New System.Drawing.Size(741, 216)
             Me.dgwRegistration.TabIndex = 0
+            '
+            'txcUsagePage
+            '
+            Me.txcUsagePage.DataPropertyName = "UsagePage"
+            DataGridViewCellStyle3.Format = "d"
+            DataGridViewCellStyle3.NullValue = Nothing
+            Me.txcUsagePage.DefaultCellStyle = DataGridViewCellStyle3
+            Me.txcUsagePage.HeaderText = "Usage page"
+            Me.txcUsagePage.Name = "txcUsagePage"
+            Me.txcUsagePage.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+            '
+            'txcUsage
+            '
+            Me.txcUsage.DataPropertyName = "Usage"
+            Me.txcUsage.HeaderText = "Usage"
+            Me.txcUsage.Name = "txcUsage"
+            Me.txcUsage.Width = 50
+            '
+            'chcApplicationKeys
+            '
+            Me.chcApplicationKeys.DataPropertyName = "ApplicationKeys"
+            Me.chcApplicationKeys.HeaderText = "AppKeys"
+            Me.chcApplicationKeys.Name = "chcApplicationKeys"
+            Me.chcApplicationKeys.Width = 50
+            '
+            'txcBackgroundEvents
+            '
+            Me.txcBackgroundEvents.DataPropertyName = "BackgroundEvents"
+            DataGridViewCellStyle4.Format = "G"
+            DataGridViewCellStyle4.NullValue = Nothing
+            Me.txcBackgroundEvents.DefaultCellStyle = DataGridViewCellStyle4
+            Me.txcBackgroundEvents.HeaderText = "BgEvents"
+            Me.txcBackgroundEvents.Name = "txcBackgroundEvents"
+            Me.txcBackgroundEvents.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
+            Me.txcBackgroundEvents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
+            '
+            'chcCaptureMouse
+            '
+            Me.chcCaptureMouse.DataPropertyName = "CaptureMouse"
+            Me.chcCaptureMouse.HeaderText = "CaptMouse"
+            Me.chcCaptureMouse.Name = "chcCaptureMouse"
+            Me.chcCaptureMouse.Width = 50
+            '
+            'chcDisableLegacyEvents
+            '
+            Me.chcDisableLegacyEvents.DataPropertyName = "DisableLegacy"
+            Me.chcDisableLegacyEvents.HeaderText = "NoLegacy"
+            Me.chcDisableLegacyEvents.Name = "chcDisableLegacyEvents"
+            Me.chcDisableLegacyEvents.Width = 50
+            '
+            'chcExclude
+            '
+            Me.chcExclude.DataPropertyName = "Exclude"
+            Me.chcExclude.HeaderText = "Exclude"
+            Me.chcExclude.Name = "chcExclude"
+            Me.chcExclude.Width = 50
+            '
+            'chcHotKeys
+            '
+            Me.chcHotKeys.DataPropertyName = "HotKeys"
+            Me.chcHotKeys.HeaderText = "HotKeys"
+            Me.chcHotKeys.Name = "chcHotKeys"
+            Me.chcHotKeys.Width = 50
+            '
+            'chcRemove
+            '
+            Me.chcRemove.DataPropertyName = "Remove"
+            Me.chcRemove.HeaderText = "Remove"
+            Me.chcRemove.Name = "chcRemove"
+            Me.chcRemove.ReadOnly = True
+            Me.chcRemove.Width = 50
+            '
+            'chcWholePage
+            '
+            Me.chcWholePage.DataPropertyName = "WholePage"
+            Me.chcWholePage.HeaderText = "Whole"
+            Me.chcWholePage.Name = "chcWholePage"
+            Me.chcWholePage.Width = 50
+            '
+            'txcWindow
+            '
+            Me.txcWindow.DataPropertyName = "Window"
+            Me.txcWindow.HeaderText = "Window"
+            Me.txcWindow.Name = "txcWindow"
             '
             'lblUsagePage
             '
@@ -583,90 +751,6 @@
             Me.cmdClear.Text = "&Clear"
             Me.cmdClear.UseVisualStyleBackColor = True
             '
-            'txcUsagePage
-            '
-            Me.txcUsagePage.DataPropertyName = "UsagePage"
-            DataGridViewCellStyle1.Format = "d"
-            DataGridViewCellStyle1.NullValue = Nothing
-            Me.txcUsagePage.DefaultCellStyle = DataGridViewCellStyle1
-            Me.txcUsagePage.HeaderText = "Usage page"
-            Me.txcUsagePage.Name = "txcUsagePage"
-            Me.txcUsagePage.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-            '
-            'txcUsage
-            '
-            Me.txcUsage.DataPropertyName = "Usage"
-            Me.txcUsage.HeaderText = "Usage"
-            Me.txcUsage.Name = "txcUsage"
-            Me.txcUsage.Width = 50
-            '
-            'chcApplicationKeys
-            '
-            Me.chcApplicationKeys.DataPropertyName = "ApplicationKeys"
-            Me.chcApplicationKeys.HeaderText = "AppKeys"
-            Me.chcApplicationKeys.Name = "chcApplicationKeys"
-            Me.chcApplicationKeys.Width = 50
-            '
-            'txcBackgroundEvents
-            '
-            Me.txcBackgroundEvents.DataPropertyName = "BackgroundEvents"
-            DataGridViewCellStyle2.Format = "G"
-            DataGridViewCellStyle2.NullValue = Nothing
-            Me.txcBackgroundEvents.DefaultCellStyle = DataGridViewCellStyle2
-            Me.txcBackgroundEvents.HeaderText = "BgEvents"
-            Me.txcBackgroundEvents.Name = "txcBackgroundEvents"
-            Me.txcBackgroundEvents.Resizable = System.Windows.Forms.DataGridViewTriState.[True]
-            Me.txcBackgroundEvents.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable
-            '
-            'chcCaptureMouse
-            '
-            Me.chcCaptureMouse.DataPropertyName = "CaptureMouse"
-            Me.chcCaptureMouse.HeaderText = "CaptMouse"
-            Me.chcCaptureMouse.Name = "chcCaptureMouse"
-            Me.chcCaptureMouse.Width = 50
-            '
-            'chcDisableLegacyEvents
-            '
-            Me.chcDisableLegacyEvents.DataPropertyName = "DisableLegacy"
-            Me.chcDisableLegacyEvents.HeaderText = "NoLegacy"
-            Me.chcDisableLegacyEvents.Name = "chcDisableLegacyEvents"
-            Me.chcDisableLegacyEvents.Width = 50
-            '
-            'chcExclude
-            '
-            Me.chcExclude.DataPropertyName = "Exclude"
-            Me.chcExclude.HeaderText = "Exclude"
-            Me.chcExclude.Name = "chcExclude"
-            Me.chcExclude.Width = 50
-            '
-            'chcHotKeys
-            '
-            Me.chcHotKeys.DataPropertyName = "HotKeys"
-            Me.chcHotKeys.HeaderText = "HotKeys"
-            Me.chcHotKeys.Name = "chcHotKeys"
-            Me.chcHotKeys.Width = 50
-            '
-            'chcRemove
-            '
-            Me.chcRemove.DataPropertyName = "Remove"
-            Me.chcRemove.HeaderText = "Remove"
-            Me.chcRemove.Name = "chcRemove"
-            Me.chcRemove.ReadOnly = True
-            Me.chcRemove.Width = 50
-            '
-            'chcWholePage
-            '
-            Me.chcWholePage.DataPropertyName = "WholePage"
-            Me.chcWholePage.HeaderText = "Whole"
-            Me.chcWholePage.Name = "chcWholePage"
-            Me.chcWholePage.Width = 50
-            '
-            'txcWindow
-            '
-            Me.txcWindow.DataPropertyName = "Window"
-            Me.txcWindow.HeaderText = "Window"
-            Me.txcWindow.Name = "txcWindow"
-            '
             'frmRawInput
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
@@ -703,6 +787,8 @@
             Me.tlpEventLog.ResumeLayout(False)
             Me.tlpEventLog.PerformLayout()
             CType(Me.dgwEvents, System.ComponentModel.ISupportInitialize).EndInit()
+            Me.flpEventChecks.ResumeLayout(False)
+            Me.flpEventChecks.PerformLayout()
             Me.tlpRegistration.ResumeLayout(False)
             Me.tlpRegistration.PerformLayout()
             CType(Me.dgwRegistration, System.ComponentModel.ISupportInitialize).EndInit()
@@ -761,5 +847,12 @@
         Friend WithEvents chcRemove As System.Windows.Forms.DataGridViewCheckBoxColumn
         Friend WithEvents chcWholePage As System.Windows.Forms.DataGridViewCheckBoxColumn
         Friend WithEvents txcWindow As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents flpEventChecks As System.Windows.Forms.FlowLayoutPanel
+        Friend WithEvents chkKeyboard As System.Windows.Forms.CheckBox
+        Friend WithEvents chkMouse As System.Windows.Forms.CheckBox
+        Friend WithEvents chkHID As System.Windows.Forms.CheckBox
+        Friend WithEvents txcEvent As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents txcEventDeviceType As System.Windows.Forms.DataGridViewTextBoxColumn
+        Friend WithEvents txcEventDevice As System.Windows.Forms.DataGridViewTextBoxColumn
     End Class
 End Namespace

@@ -4904,27 +4904,37 @@ Namespace DevicesT.RawInputT
                 Select Case RawData.header.dwType
                     Case API.DeviceTypes.RIM_TYPEHID
                         Dim e As New RawHidEventArgs(RawData.hid, RawData.header.hDevice)
+                        e.EventName = "HID"
                         OnInput(e)
                         OnHidEvent(e)
                     Case API.DeviceTypes.RIM_TYPEKEYBOARD
                         Dim e = New RawKeyboardEventArgs(RawData.keyboard, RawData.header.hDevice)
+                        Dim down = e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYDOWN OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYDOWN
+                        Dim up = e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYUP OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYUP
+                        If down Then : e.EventName = "KeyDown"
+                        ElseIf up Then : e.EventName = "KeyUp"
+                        End If
                         OnInput(e)
                         OnKeyboardEvent(e)
-                        If e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYDOWN OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYDOWN Then _
-                            OnKeyDown(e)
-                        If e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYUP OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYUP Then _
-                            OnKeyUp(e)
+                        If down Then : OnKeyDown(e)
+                        ElseIf up Then : OnKeyUp(e)
+                        End If
                     Case API.DeviceTypes.RIM_TYPEMOUSE
                         Dim e = New RawMouseEventArgs(RawData.mouse, RawData.header.hDevice)
+                        Dim down = (e.Buttons And RawMouseButtonStates.LeftDown) OrElse (e.Buttons And RawMouseButtonStates.MiddleDown) OrElse (e.Buttons And RawMouseButtonStates.RightDown) OrElse (e.Buttons And RawMouseButtonStates.X1Down) OrElse (e.Buttons And RawMouseButtonStates.X2Down)
+                        Dim up = (e.Buttons And RawMouseButtonStates.LeftUp) OrElse (e.Buttons And RawMouseButtonStates.MiddleUp) OrElse (e.Buttons And RawMouseButtonStates.RightUp) OrElse (e.Buttons And RawMouseButtonStates.X1Up) OrElse (e.Buttons And RawMouseButtonStates.X2Up)
+                        Dim wheel = e.Buttons And RawMouseButtonStates.Wheel
+                        e.EventName = ""
+                        If down Then e.EventName = "MouseDown"
+                        If up Then e.EventName &= If(e.EventName = "", "", ", ") & "MouseUp"
+                        If wheel Then e.EventName &= If(e.EventName = "", "", ", ") & "MouseWheel"
                         OnInput(e)
                         OnMouseEvent(e)
-                        If (e.Buttons And RawMouseButtonStates.LeftDown) OrElse (e.Buttons And RawMouseButtonStates.MiddleDown) OrElse (e.Buttons And RawMouseButtonStates.RightDown) OrElse (e.Buttons And RawMouseButtonStates.X1Down) OrElse (e.Buttons And RawMouseButtonStates.X2Down) Then
-                            OnMouseDown(e)
-                        End If
-                        If (e.Buttons And RawMouseButtonStates.LeftUp) OrElse (e.Buttons And RawMouseButtonStates.MiddleUp) OrElse (e.Buttons And RawMouseButtonStates.RightUp) OrElse (e.Buttons And RawMouseButtonStates.X1Up) OrElse (e.Buttons And RawMouseButtonStates.X2Up) Then
-                            OnMouseUp(e)
-                        End If
-                        If e.Buttons And RawMouseButtonStates.Wheel Then OnMouseWheel(e)
+                        'TODO: Mouse move?
+                        'TODO: Buttons does not work - Wheel/Up/Down events are not reported
+                        If down Then OnMouseDown(e)
+                        If up Then OnMouseUp(e)
+                        If wheel Then OnMouseWheel(e)
                 End Select
             End If
             Return 0
@@ -5468,6 +5478,28 @@ Namespace DevicesT.RawInputT
                 Return _DeviceType
             End Get
         End Property
+        ''' <summary>CContains value of the <see cref="EventName"/> property</summary>
+        Private _EventName$
+        ''' <summary>Gets or sets name of event associated with this instance</summary>
+        ''' <value>Name of event associated with this instance. This property is used only for <see cref="ToString"/> purposes.</value>
+        ''' <returns>Name of event associated with this instance</returns>
+        ''' <seelaso cref="ToString"/>
+        Protected Friend Property EventName$()
+            Get
+                Return _EventName
+            End Get
+            Set(ByVal value$)
+                _EventName = value
+            End Set
+        End Property
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="RawInputEventArgs" />.</summary>
+        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="RawInputEventArgs" />.</returns>
+        ''' <remarks>When set, returns value of the <see cref="EventName"/> property, otherwise calls<see cref="EventArgs.ToString">base-class method</see>.</remarks>
+        ''' <seelaso cref="EventName"/>
+        Public Overrides Function ToString() As String
+            If EventName <> "" Then Return EventName
+            Return MyBase.ToString()
+        End Function
         ''' <summary>Contains value of the <see cref="DeviceType"/> property</summary>
         Private ReadOnly _DeviceType As DeviceType
         ''' <summary>Handle to device that cause this event</summary>
