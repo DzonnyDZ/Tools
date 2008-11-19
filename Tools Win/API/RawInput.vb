@@ -275,19 +275,19 @@ Namespace API
             ''' <summary>Mouse state. This member can be any reasonable combination of <see cref="RAWMOUSEFlags"/>. </summary>
             <FieldOffset(0)> Public usFlags As RAWMOUSEFlags
             ''' <summary>Reserved</summary>
-            <FieldOffset(2)> Public ulButtons As ULong
+            <FieldOffset(2)> Public ulButtons As UInteger
             ''' <summary>Transition state of the mouse buttons. This member can be one or more of the <see cref="RAWMOUSEButtonFlags"/> values. </summary>
-            <FieldOffset(2)> Public usButtonFlags As RAWMOUSEButtonFlags
+            <FieldOffset(4)> Public usButtonFlags As RAWMOUSEButtonFlags
             ''' <summary>If <see cref="usButtonFlags"/> is <see cref="RAWMOUSEButtonFlags.RI_MOUSE_WHEEL"/>, this member is a signed value that specifies the wheel delta. </summary>
-            <FieldOffset(4)> Public usButtonData As UShort
+            <FieldOffset(2)> Public usButtonData As UShort
             ''' <summary>Raw state of the mouse buttons. </summary>
-            <FieldOffset(10)> Public ulRawButtons As ULong
+            <FieldOffset(6)> Public ulRawButtons As UInteger
             ''' <summary>Motion in the X direction. This is signed relative motion or absolute motion, depending on the value of <see cref="usFlags"/>. </summary>
-            <FieldOffset(18)> Public lLastX As Long
+            <FieldOffset(10)> Public lLastX As Integer
             ''' <summary>Motion in the Y direction. This is signed relative motion or absolute motion, depending on the value of <see cref="usFlags"/>. </summary>
-            <FieldOffset(26)> Public lLastY As Long
+            <FieldOffset(14)> Public lLastY As Integer
             ''' <summary>Device-specific additional information for the event. </summary>
-            <FieldOffset(34)> Public ulExtraInformation As ULong
+            <FieldOffset(18)> Public ulExtraInformation As UInteger
         End Structure
         ''' <summary>Values for <see cref="RAWMOUSE.usFlags"/></summary>
         <Flags()> _
@@ -356,8 +356,8 @@ Namespace API
             Public VKey As UShort
             ''' <summary>Corresponding window message, for example <see cref="Messages.WindowMessages.WM_KEYDOWN"/>, <see cref="Messages.WindowMessages.WM_SYSKEYDOWN"/>, and so forth. </summary>
             Public Message As Messages.WindowMessages
-            ''' <summary></summary>
-            Public ExtraInformation As ULong
+            ''' <summary>Device-specific additional information for the event. </summary>
+            Public ExtraInformation As UInteger
         End Structure
         ''' <summary>Values of <see cref="RAWKEYBOARD.Flags"/></summary>
         <Flags()> _

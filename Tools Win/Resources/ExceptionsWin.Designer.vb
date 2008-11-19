@@ -246,6 +246,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'or'.
+        '''</summary>
+        Public Shared ReadOnly Property Or_() As String
+            Get
+                Return ResourceManager.GetString("Or_", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Owher handle has changed.'.
         '''</summary>
         Public Shared ReadOnly Property OwherHandleHasChanged() As String
@@ -533,6 +542,14 @@ Namespace ResourcesT
         '''<returns>The MessageTargetWindowHandleMustBeSameAsHandleOfWindow property value.</returns>
         Public Shared Function MessageTargetWindowHandleMustBeSameAsHandleOfWindowFormat() As String
             Return MessageTargetWindowHandleMustBeSameAsHandleOfWindow
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the Or_ property value.
+        '''</summary>
+        '''<returns>The Or_ property value.</returns>
+        Public Shared Function Or_Format() As String
+            Return Or_
         End Function
         
         '''<summary>

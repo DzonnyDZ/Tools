@@ -216,4 +216,7 @@
   <data name="CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling" xml:space="preserve">
     <value>Cannot convert RAWINPUT_Marshalling to RAWINPUT_NonMarshalling when it contains HID data</value>
   </data>
+  <data name="Or_" xml:space="preserve">
+    <value>or</value>
+  </data>
 </root>

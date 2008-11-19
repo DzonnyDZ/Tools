@@ -158,9 +158,16 @@ Namespace DevicesT.RawInputT
         Public Shared Function Parse(ByVal Name$) As RawDeviceName
             '\\??\ACPI#PNP0303#3&13c0b0c5&0#{884b96c3-56ef-11d1-bc8c-00a0c91405dd}
             If Name Is Nothing Then Throw New ArgumentNullException("Name")
-            Const RawDeviceNameStart$ = "\\?\"
-            If Not Name.StartsWith(RawDeviceNameStart$) Then Throw New FormatException(ResourcesT.ExceptionsWin.RawDeviceNameHasUnexpectedFormatItMustStartWith0.f(RawDeviceNameStart$))
-            Dim Parts = Name.Substring(RawDeviceNameStart$.Length).Split("#"c)
+            Const RawDeviceNameStartVista$ = "\\?\"
+            Const RawDeviceNameStartXP$ = "\??\"
+            Dim Parts As String()
+            If Name.StartsWith(RawDeviceNameStartVista) Then
+                Parts = Name.Substring(RawDeviceNameStartVista$.Length).Split("#"c)
+            ElseIf Name.StartsWith(RawDeviceNameStartXP) Then
+                Parts = Name.Substring(RawDeviceNameStartXP$.Length).Split("#"c)
+            Else
+                Throw New FormatException(ResourcesT.ExceptionsWin.RawDeviceNameHasUnexpectedFormatItMustStartWith0.f(RawDeviceNameStartVista & " " & ResourcesT.ExceptionsWin.Or_ & " " & RawDeviceNameStartXP))
+            End If
             If Parts.Length <> 4 Then Throw New FormatException(ResourcesT.ExceptionsWin.RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte)
             Dim ClassGuid As Guid
             Try
@@ -4928,10 +4935,9 @@ Namespace DevicesT.RawInputT
                         If down Then e.EventName = "MouseDown"
                         If up Then e.EventName &= If(e.EventName = "", "", ", ") & "MouseUp"
                         If wheel Then e.EventName &= If(e.EventName = "", "", ", ") & "MouseWheel"
+                        'TODO: MouseMove
                         OnInput(e)
                         OnMouseEvent(e)
-                        'TODO: Mouse move?
-                        'TODO: Buttons does not work - Wheel/Up/Down events are not reported
                         If down Then OnMouseDown(e)
                         If up Then OnMouseUp(e)
                         If wheel Then OnMouseWheel(e)
