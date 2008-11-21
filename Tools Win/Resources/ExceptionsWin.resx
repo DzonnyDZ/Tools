@@ -219,4 +219,10 @@
   <data name="Or_" xml:space="preserve">
     <value>or</value>
   </data>
+  <data name="AdditionalEventsHaveBeenAlreadyCalled" xml:space="preserve">
+    <value>Additional events have been already called.</value>
+  </data>
+  <data name="LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize" xml:space="preserve">
+    <value>Lenght of Original.RawItemsCount must be 1 and Original.RawItemSize must be 2 or 3.</value>
+  </data>
 </root>

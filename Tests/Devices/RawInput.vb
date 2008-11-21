@@ -2,11 +2,13 @@
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox
 Imports System.Linq, Tools.LinqT, Tools.DevicesT.RawInputT
 Imports System.Runtime.InteropServices
-Imports Tools.CollectionsT.GenericT
+Imports Tools.CollectionsT.GenericT, Tools.ExtensionsT
+Imports Microsoft.Win32.SafeHandles
 
 Namespace DevicesT.RawInputT
     ''' <summary>Contains tests for <see cref="Tools.DevicesT.RawInputT"/></summary>
     Public Class frmRawInput
+        Inherits Tools.WindowsT.FormsT.ExtendedForm
         Implements API.Messages.IWindowsMessagesProviderRef
         ''' <summary>Provides raw-input device events</summary>
         Private WithEvents provider As New RawInputEventProvider(Me)
@@ -14,6 +16,10 @@ Namespace DevicesT.RawInputT
         Private RegistrationList As New ListWithEvents(Of RawInputDeviceRegistration)
         ''' <summary>Raw logged input events</summary>
         Private EventList As New ListWithEvents(Of RawInputEventArgs)
+        ''' <summary>Control keyboard hook</summary>
+        Private WithEvents kbdHook As New Tools.DevicesT.LowLevelKeyboardHook(True)
+        ''' <summary>Control mouse hook</summary>
+        Private WithEvents mosHook As New Tools.DevicesT.LowLevelMouseHook(True)
         ''' <summary>Performs test</summary>
         Public Shared Sub Test()
             Dim inst As New frmRawInput
@@ -39,6 +45,7 @@ Namespace DevicesT.RawInputT
             Next
             dgwRegistration.DataSource = RegistrationList
             dgwEvents.DataSource = EventList
+            provider.RaiseMediaCenterRemoteEvents = True
         End Sub
 
 
@@ -62,6 +69,7 @@ Namespace DevicesT.RawInputT
                 prgDeviceInfo.SelectedObject = Nothing
                 prgName.SelectedObject = Nothing
                 lblDeviceDescription.Text = ""
+                prgDevCap.SelectedObject = Nothing
             Else
                 With DirectCast(lstDevices.SelectedItem, InputDevice)
                     'Name
@@ -95,6 +103,13 @@ Namespace DevicesT.RawInputT
                         lblDeviceDescription.Text = ""
                         MBox.Error_XT(ex, "GetDeviceInfo")
                     End Try
+                    'Capabilities
+                    Try
+                        prgDevCap.SelectedObject = .GetCapabilities
+                    Catch ex As Exception
+                        prgDevCap.SelectedObject = ex
+                        MBox.Error_XT(ex, "GetCapabilities")
+                    End Try
                 End With
             End If
         End Sub
@@ -106,11 +121,24 @@ Namespace DevicesT.RawInputT
             End If
         End Sub
 
+        ''' <summary>Processes Windows messages.</summary>
+        ''' <param name="m">The Windows <see cref="Message"/> to process. </param>
+        ''' <remarks>Note for inheritors: Always call base class's method <see cref="WndProc"/> unless you should block certain base class's functionality</remarks>
         Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
             RaiseEvent WndProcEvent(Me, m)
             MyBase.WndProc(m)
         End Sub
+        ''' <summary />
+        ''' <param name="e">An <see cref="T:System.EventArgs" /> that contains the event data. </param>
+        Protected Overrides Sub OnHandleDestroyed(ByVal e As System.EventArgs)
+            MyBase.OnHandleDestroyed(e)
+            provider.Dispose()
+        End Sub
 
+        ''' <summary>Raised when window message processing is required</summary>
+        ''' <remarks>Caller must pass <paramref name="msg"/>.<see cref="Message.Result">Result</see> as result of message (unless it does own processing of the message and passes own result).
+        ''' <para>When this event is raised from <see cref="Control.WndProc"/> than just raising it is enough (unless event rais method is implemented in non-standard way), because it if passed by reference.</para>
+        ''' <para>Calle may require to <paramref name="sender"/> be caller and <paramref name="e"/>.<see cref="Message.HWnd">hWnd</see> to be <see cref="Handle"/>.</para></remarks>
         Private Event WndProcEvent(ByVal sender As Object, ByRef msg As System.Windows.Forms.Message) Implements API.Messages.IWindowsMessagesProviderRef.WndProc
 
         Private Sub cmdClear_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClear.Click
@@ -163,20 +191,106 @@ Namespace DevicesT.RawInputT
 
         Private Sub cmdClearEventLog_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearEventLog.Click
             EventList.Clear()
+            If cmdWhich.Text = "←" Then prgEvent.SelectedObject = Nothing
         End Sub
 
-        Private Sub dgwEvents_SelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles dgwEvents.SelectionChanged
-            If dgwEvents.SelectedRows.Count = 0 Then
-                prgEvent.SelectedObject = Nothing
-            Else
-                prgEvent.SelectedObject = dgwEvents.SelectedRows(0).DataBoundItem
+        Private Sub dgwEvents_SelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+            Handles dgwEvents.SelectionChanged, dgwEvents.Enter
+            If dgwEvents.Focused Then
+                If dgwEvents.SelectedRows.Count = 0 Then
+                    prgEvent.SelectedObject = Nothing
+                Else
+                    prgEvent.SelectedObject = dgwEvents.SelectedRows(0).DataBoundItem
+                End If
+                cmdWhich.Text = "←"
             End If
         End Sub
 
         Private Sub dgwEvents_RowsAdded(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DataGridViewRowsAddedEventArgs) Handles dgwEvents.RowsAdded
             For i As Integer = e.RowIndex To e.RowIndex + e.RowCount - 1
                 dgwEvents.Rows(i).Cells(txcEvent.Index).Value = DirectCast(dgwEvents.Rows(i).DataBoundItem, RawInputEventArgs).ToString
+                dgwEvents.Rows(i).Cells(txcTime.Index).Value = Now
             Next
+            If chkEvAutoScroll.Checked AndAlso dgwEvents.FirstDisplayedScrollingRowIndex + dgwEvents.DisplayedRowCount(False) < dgwEvents.Rows.Count Then _
+                dgwEvents.FirstDisplayedScrollingRowIndex = dgwEvents.Rows.Count - 1
         End Sub
+
+        Private Sub cmdMediaCenterRemote_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdMediaCenterRemote.Click
+            RegistrationList.Clear()
+            RegistrationList.AddRange(RawInputDeviceRegistration.MediaCenterRemote.SetBackgroundEvents(BackgroundEvents.Background))
+        End Sub
+
+        Private Sub chkMediaCenter_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkMediaCenter.CheckedChanged
+            provider.RaiseMediaCenterRemoteEvents = chkMediaCenter.Checked
+        End Sub
+
+        Private Sub chkHex_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles chkHex.CheckedChanged
+            nudUsage.Hexadecimal = chkHex.Checked
+            nudUsagePage.Hexadecimal = chkHex.Checked
+        End Sub
+#Region "Non raw"
+        Private Sub cmdClearNonRaw_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdClearNonRaw.Click
+            dgwNonRawEventLog.Rows.Clear()
+            If cmdWhich.Text = "→" Then prgEvent.SelectedObject = Nothing
+        End Sub
+
+        Private Sub frmRawInput_ApplicationCommand(ByVal sender As Object, ByVal e As Tools.WindowsT.FormsT.ApplicationCommandEventArgs) Handles Me.ApplicationCommand
+            If chkNonRawApp.Checked Then AddEventLog(e, "AppCommand", "{0} from {1}".f(e.Command, e.Device))
+        End Sub
+
+        Private Sub AddEventLog(ByVal e As EventArgs, ByVal Name$, ByVal Details$)
+            dgwNonRawEventLog.Rows(dgwNonRawEventLog.Rows.Add(Now, Name, Details)).Tag = e
+            If chkNonRawApp.Checked AndAlso dgwNonRawEventLog.FirstDisplayedScrollingRowIndex + dgwNonRawEventLog.DisplayedRowCount(False) < dgwNonRawEventLog.Rows.Count Then _
+                dgwNonRawEventLog.FirstDisplayedScrollingRowIndex = dgwNonRawEventLog.Rows.Count - 1
+        End Sub
+
+        Private Sub kbdHook_KeyEvent(ByVal sender As Tools.DevicesT.LowLevelKeyboardHook, ByVal e As Tools.DevicesT.LowLevelKeyEventArgs) Handles kbdHook.KeyEvent
+            If chkNonRawKyeboard.Checked Then AddEventLog(e, e.Action.ToString, e.Key.ToString)
+        End Sub
+
+        Private Sub mosHook_ButtonEvent(ByVal sender As Tools.DevicesT.LowLevelMouseHook, ByVal e As Tools.DevicesT.LowLevelMouseButtonEventArgs) Handles mosHook.ButtonEvent
+            If chkNonRawMouse.Checked Then AddEventLog(e, If(e.MouseUp, "MouseUp", "MouseDown"), e.Button.ToString)
+        End Sub
+
+        Private Sub mosHook_MouseMove(ByVal sender As Tools.DevicesT.LowLevelMouseHook, ByVal e As Tools.DevicesT.LowLevelMouseEventArgs) Handles mosHook.MouseMove
+            If chkNonRawMouse.Checked Then AddEventLog(e, "MouseMove", e.Location.ToString)
+        End Sub
+
+        Private Sub mosHook_Wheel(ByVal sender As Tools.DevicesT.LowLevelMouseHook, ByVal e As Tools.DevicesT.LowLevelMouseWheelEventArgs) Handles mosHook.Wheel
+            If chkNonRawMouse.Checked Then AddEventLog(e, "MouseWheel", e.Delta)
+        End Sub
+        Private Sub dgwNonRawEventLog_SelectionChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) _
+            Handles dgwNonRawEventLog.SelectionChanged, dgwNonRawEventLog.Enter
+            If dgwNonRawEventLog.Focused Then
+                If dgwNonRawEventLog.SelectedRows.Count > 0 Then
+                    prgEvent.SelectedObject = dgwNonRawEventLog.SelectedRows(0).Tag
+                Else
+                    prgEvent.SelectedObject = Nothing
+                End If
+                cmdWhich.Text = "→"
+            End If
+        End Sub
+#End Region
+
+       
+        Private Sub cmdWhich_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdWhich.Click
+            If cmdWhich.Text = "←" Then
+                If dgwNonRawEventLog.SelectedRows.Count > 0 Then
+                    prgEvent.SelectedObject = dgwNonRawEventLog.SelectedRows(0).Tag
+                Else
+                    prgEvent.SelectedObject = Nothing
+                End If
+                cmdWhich.Text = "→"
+            Else
+                If dgwEvents.SelectedRows.Count = 0 Then
+                    prgEvent.SelectedObject = Nothing
+                Else
+                    prgEvent.SelectedObject = dgwEvents.SelectedRows(0).DataBoundItem
+                End If
+                cmdWhich.Text = "←"
+            End If
+        End Sub
+
+        
     End Class
 End Namespace

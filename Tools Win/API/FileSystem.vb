@@ -1,5 +1,6 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.ComponentModel
+Imports Microsoft.Win32.SafeHandles
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace API
@@ -45,6 +46,185 @@ Namespace API
             ByRef psfi As SHFILEINFO, _
             ByVal cbFileInfo As UInt32, _
             ByVal uFlags As FileInformationFlags) As IntPtr
+        ''' <summary>Creates or opens a file or I/O device. The most commonly used I/O devices are as follows: file, file stream, directory, physical disk, volume, console buffer, tape drive, communications resource, mailslot, and pipe. The function returns a handle that can be used to access the file or device for various types of I/O depending on the file or device and the flags and attributes specified.</summary>
+        ''' <param name="lpFileName">The name of the file or device to be created or opened. </param>
+        ''' <param name="dwDesiredAccess">The requested access to the file or device, which can be summarized as read, write, both or neither (zero).
+        ''' <para>If this parameter is zero, the application can query certain metadata such as file, directory, or device attributes without accessing that file or device, even if <see cref="GenericFileAccess.GENERIC_READ"/> access would have been denied.</para>
+        ''' <para>You cannot request an access mode that conflicts with the sharing mode that is specified by the <paramref name="dwShareMode"/> parameter in an open request that already has an open handle.</para></param>
+        ''' <param name="dwShareMode">The requested sharing mode of the file or device, which can be read, write, both, delete, all of these, or none (refer to the following table). Access requests to attributes or extended attributes are not affected by this flag.
+        ''' <para>If this parameter is zero and <see cref="CreateFile"/> succeeds, the file or device cannot be shared and cannot be opened again until the handle to the file or device is closed. For more information, see the Remarks section.</para>
+        ''' <para>You cannot request a sharing mode that conflicts with the access mode that is specified in an existing request that has an open handle.</para>
+        ''' <para>To enable a process to share a file or device while another process has the file or device open, use a compatible combination of one or more of the <see cref="ShareModes"/> values.</para></param>
+        ''' <param name="lpSecurityAttributes"><para>A pointer to a <see cref="SECURITY_ATTRIBUTES"/> structure that contains two separate but related data members: an optional security descriptor, and a Boolean value that determines whether the returned handle can be inherited by child processes.</para>
+        ''' <para>This parameter can be NULL.</para>
+        ''' <para>If this parameter is NULL, the handle returned by CreateFile cannot be inherited by any child processes the application may create and the file or device associated with the returned handle gets a default security descriptor.</para></param>
+        ''' <param name="dwCreationDisposition"> <para>An action to take on a file or device that exists or does not exist.</para>
+        ''' <para>For devices other than files, this parameter is usually set to <see cref="FileCreateDisposition.OPEN_EXISTING"/>.</para></param>
+        ''' <param name="dwFlagsAndAttributes"><para>The file or device attributes and flags, <see cref="FileFlagsAndAttributes.FILE_ATTRIBUTE_NORMAL"/> being the most common default value for files.</para>
+        ''' <para>This parameter can include any combination of the available file attributes (FILE_ATTRIBUTE_*). All other file attributes override <see cref="FileFlagsAndAttributes.FILE_ATTRIBUTE_NORMAL"/>.</para>
+        ''' <para>This parameter can also contain combinations of flags (FILE_FLAG_*) for control of file or device caching behavior, access modes, and other special-purpose flags. These combine with any FILE_ATTRIBUTE_* values.</para>
+        ''' <para>This parameter can also contain Security Quality of Service information by specifying the SECURITY_SQOS_PRESENT flag. Additional SQOS-related flags information is presented in the table following the attributes and flags tables.</para></param>
+        ''' <param name="hTemplateFile"> <para>A valid handle to a template file with the GENERIC_READ access right. The template file supplies file attributes and extended attributes for the file that is being created.</para>
+        ''' <para>This parameter can be NULL.</para>
+        ''' <para>When opening an existing file, CreateFile ignores this parameter.</para>
+        ''' <para>When opening a new encrypted file, the file inherits the discretionary access control list from its parent directory. For additional information, see File Encryption</para></param>
+        ''' <returns><para>If the function succeeds, the return value is an open handle to the specified file, device, named pipe, or mail slot.</para>
+        ''' <para>If the function fails, the return value is <see cref="Common.Errors.INVALID_HANDLE_VALUE"/>.</para></returns>
+        Public Declare Auto Function CreateFile Lib "kernel32.dll" ( _
+                ByVal lpFileName As String, _
+                ByVal dwDesiredAccess As GenericFileAccess, _
+                ByVal dwShareMode As ShareModes, _
+                ByVal lpSecurityAttributes As IntPtr, _
+                Optional ByVal dwCreationDisposition As FileCreateDisposition = FileCreateDisposition.OPEN_EXISTING, _
+                Optional ByVal dwFlagsAndAttributes As FileFlagsAndAttributes = FileFlagsAndAttributes.FILE_ATTRIBUTE_NORMAL, _
+                Optional ByVal hTemplateFile As Int32 = NULL _
+                ) As SafeFileHandle
+        ''' <summary>Generic file access modes</summary>
+        <Flags()> _
+        Public Enum GenericFileAccess As Integer
+            ''' <summary>Read, write, and execute access</summary>
+            GENERIC_ALL = &H10000000
+            ''' <summary>	Read access</summary>
+            GENERIC_READ = &H80000000
+            ''' <summary>	Write access</summary>
+            GENERIC_WRITE = &H40000000
+            ''' <summary>	Execute access</summary>
+            GENERIC_EXECUTE = &H20000000
+            ''' <summary>No access. Allows query some metadata.</summary>
+            None = 0
+        End Enum
+        <Flags()> _
+        Public Enum ShareModes As Integer
+            ''' <summary><para>Enables subsequent open operations on a file or device to request delete access.</para>
+            ''' <para>Otherwise, other processes cannot open the file or device if they request delete access.</para>
+            ''' <para>If this flag is not specified, but the file or device has been opened for delete access, the function fails.</para>
+            ''' <para>Note  Delete access allows both delete and rename operations.</para></summary>
+            FILE_SHARE_DELETE = &H4
+            ''' <summary><para>Enables subsequent open operations on a file or device to request read access.</para>
+            ''' <para>Otherwise, other processes cannot open the file or device if they request read access.</para>
+            ''' <para>If this flag is not specified, but the file or device has been opened for read access, the function fails.</para></summary>
+            FILE_SHARE_READ = &H1
+            ''' <summary><para>Enables subsequent open operations on a file or device to request write access.</para>
+            ''' <para>Otherwise, other processes cannot open the file or device if they request write access.</para>
+            ''' <para>If this flag is not specified, but the file or device has been opened for write access or has a file mapping with write access, the function fails.</para></summary>
+            FILE_SHARE_WRITE = &H2
+            ''' <summary>Prevents other processes from opening a file or device if they request delete, read, or write access.</summary>
+            None = 0
+
+        End Enum
+        ''' <summary>contains the security descriptor for an object and specifies whether the handle retrieved by specifying this structure is inheritable.</summary>
+        <StructLayout(LayoutKind.Sequential)> _
+        Public Structure SECURITY_ATTRIBUTES
+            ''' <summary>The size, in bytes, of this structure. Set this value to the size of the <see cref="SECURITY_ATTRIBUTES"/> structure.</summary>
+            Public nLength As Int32
+            ''' <summary>A pointer to a security descriptor for the object that controls the sharing of it. If NULL is specified for this member, the object is assigned the default security descriptor of the calling process. This is not the same as granting access to everyone by assigning a NULL discretionary access control list (DACL). The default security descriptor is based on the default DACL of the access token belonging to the calling process. By default, the default DACL in the access token of a process allows access only to the user represented by the access token. If other users must access the object, you can either create a security descriptor with the appropriate access, or add ACEs to the DACL that grants access to a group of users.</summary>
+            Public lpSecurityDescriptor As Int32
+            ''' <summary>A Boolean value that specifies whether the returned handle is inherited when a new process is created. If this member is TRUE, the new process inherits the handle.</summary>
+            <MarshalAs(UnmanagedType.I4)> Public bInheritHandle As Boolean
+        End Structure
+
+        ''' <summary>Actions to take on a file or device that exists or does not exist. </summary>
+        Public Enum FileCreateDisposition As Integer
+            ''' <summary><para>Creates a new file, always.</para>
+            ''' <para>If the specified file exists and is writable, the function overwrites the file, the function succeeds, and last-error code is set to <see cref="Common.Errors.ERROR_ALREADY_EXISTS"/> (183).</para>
+            ''' <para>If the specified file does not exist and is a valid path, a new file is created, the function succeeds, and the last-error code is set to zero.</para></summary>
+            CREATE_ALWAYS = 2
+            ''' <summary><para>Creates a new file, only if it does not already exist.</para>
+            ''' <para>If the specified file exists, the function fails and the last-error code is set to <see cref="Common.Errors.ERROR_FILE_EXISTS"/> (80).</para>
+            ''' <para>If the specified file does not exist and is a valid path to a writable location, a new file is created.</para></summary>
+            CREATE_NEW = 1
+            ''' <summary><para>Opens a file, always.</para>
+            ''' <para>If the specified file exists, the function succeeds and the last-error code is set to <see cref="Common.Errors.ERROR_ALREADY_EXISTS"/> (183).</para>
+            ''' <para>If the specified file does not exist and is a valid path to a writable location, the function creates a file and the last-error code is set to zero.</para></summary>
+            OPEN_ALWAYS = 4
+            ''' <summary><para>Opens a file or device, only if it exists.</para>
+            ''' <para>If the specified file or device does not exist, the function fails and the last-error code is set to <see cref="Common.Errors.ERROR_FILE_NOT_FOUND"/> (2).</para></summary>
+            OPEN_EXISTING = 3
+            ''' <summary><para>Opens a file and truncates it so that its size is zero bytes, only if it exists.</para>
+            ''' <para>If the specified file does not exist, the function fails and the last-error code is set to <see cref="Common.Errors.ERROR_FILE_NOT_FOUND"/> (2).</para>
+            ''' <para>The calling process must open the file with the <see cref="GenericFileAccess.GENERIC_WRITE"/> bit set as part of the dwDesiredAccess parameter.</para></summary>
+            TRUNCATE_EXISTING = 5
+        End Enum
+
+        ''' <summary>Values for the dwFlagsAndAttributes parameter of the <see cref="CreateFile"/> function</summary>
+        <Flags()> _
+        Public Enum FileFlagsAndAttributes
+            ''' <summary>The file should be archived. Applications use this attribute to mark files for backup or removal.</summary>
+            FILE_ATTRIBUTE_ARCHIVE = 32
+            ''' <summary><para>The file or directory is encrypted. For a file, this means that all data in the file is encrypted. For a directory, this means that encryption is the default for newly created files and subdirectories. For more information, see File Encryption.</para>
+            ''' <para>This flag has no effect if <see cref="FILE_ATTRIBUTE_SYSTEM"/> is also specified.</para></summary>
+            FILE_ATTRIBUTE_ENCRYPTED = 16384
+            ''' <summary>The file is hidden. Do not include it in an ordinary directory listing.</summary>
+            FILE_ATTRIBUTE_HIDDEN = 2
+            ''' <summary>The file does not have other attributes set. This attribute is valid only if used alone.</summary>
+            FILE_ATTRIBUTE_NORMAL = 128
+            ''' <summary>The data of a file is not immediately available. This attribute indicates that file data is physically moved to offline storage. This attribute is used by Remote Storage, the hierarchical storage management software. Applications should not arbitrarily change this attribute.</summary>
+            FILE_ATTRIBUTE_OFFLINE = 4096
+            ''' <summary>The file is read only. Applications can read the file, but cannot write to or delete it.</summary>
+            FILE_ATTRIBUTE_READONLY = 1
+            ''' <summary>The file is part of or used exclusively by an operating system.</summary>
+            FILE_ATTRIBUTE_SYSTEM = 4
+            ''' <summary>The file is being used for temporary storage.</summary>
+            FILE_ATTRIBUTE_TEMPORARY = 256
+            ''' <summary><para>The file is being opened or created for a backup or restore operation. The system ensures that the calling process overrides file security checks when the process has SE_BACKUP_NAME and SE_RESTORE_NAME privileges. For more information, see Changing Privileges in a Token.</para>
+            ''' <para>You must set this flag to obtain a handle to a directory. A directory handle can be passed to some functions instead of a file handle. For more information, see the Remarks section.</para></summary>
+            FILE_FLAG_BACKUP_SEMANTICS = &H2000000
+            ''' <summary><para>The file is to be deleted immediately after all of its handles are closed, which includes the specified handle and any other open or duplicated handles.</para>
+            ''' <para>If there are existing open handles to a file, the call fails unless they were all opened with the <see cref="ShareModes.FILE_SHARE_DELETE"/> share mode.</para>
+            ''' <para>Subsequent open requests for the file fail, unless the <see cref="ShareModes.FILE_SHARE_DELETE"/> share mode is specified.</para></summary>
+            FILE_FLAG_DELETE_ON_CLOSE = &H4000000
+            ''' <summary><para>The file or device is being opened with no system caching for data reads and writes. This flag does not affect hard disk caching or memory mapped files.</para>
+            ''' <para>There are strict requirements for successfully working with files opened with CreateFile using the FILE_FLAG_NO_BUFFERING flag, for details see File Buffering.</para></summary>
+            FILE_FLAG_NO_BUFFERING = &H20000000
+            ''' <summary>The file data is requested, but it should continue to be located in remote storage. It should not be transported back to local storage. This flag is for use by remote storage systems.</summary>
+            FILE_FLAG_OPEN_NO_RECALL = &H100000
+            ''' <summary><para>Normal reparse point processing will not occur; CreateFile will attempt to open the reparse point. When a file is opened, a file handle is returned, whether or not the filter that controls the reparse point is operational.</para>
+            ''' <para>This flag cannot be used with the <see cref="FileCreateDisposition.CREATE_ALWAYS"/> flag.</para>
+            ''' <para>If the file is not a reparse point, then this flag is ignored.</para>
+            ''' <para>For more information, see the Remarks section.</para></summary>
+            FILE_FLAG_OPEN_REPARSE_POINT = &H200000
+            ''' <summary><para>The file or device is being opened or created for asynchronous I/O.</para>
+            ''' <para>When subsequent I/O operations are completed on this handle, the event specified in the OVERLAPPED structure will be set to the signaled state.</para>
+            ''' <para>If this flag is specified, the file can be used for simultaneous read and write operations.</para>
+            ''' <para>If this flag is not specified, then I/O operations are serialized, even if the calls to the read and write functions specify an OVERLAPPED structure.</para></summary>
+            FILE_FLAG_OVERLAPPED = &H40000000
+            ''' <summary>Access will occur according to POSIX rules. This includes allowing multiple files with names, differing only in case, for file systems that support that naming. Use care when using this option, because files created with this flag may not be accessible by applications that are written for MS-DOS or 16-bit Windows.</summary>
+            FILE_FLAG_POSIX_SEMANTICS = &H100000
+            ''' <summary><para>Access is intended to be random. The system can use this as a hint to optimize file caching.</para>
+            ''' <para>This flag has no effect if the file system does not support cached I/O and <see cref="FILE_FLAG_NO_BUFFERING"/>.</para></summary>
+            FILE_FLAG_RANDOM_ACCESS = &H10000000
+            ''' <summary><para>Access is intended to be sequential from beginning to end. The system can use this as a hint to optimize file caching.</para>
+            ''' <para>This flag should not be used if read-behind (that is, backwards scans) will be used.</para>
+            ''' <para>This flag has no effect if the file system does not support cached I/O and <see cref="FILE_FLAG_NO_BUFFERING"/>.</para></summary>
+            FILE_FLAG_SEQUENTIAL_SCAN = &H8000000
+            ''' <summary>Write operations will not go through any intermediate cache, they will go directly to disk.</summary>
+            FILE_FLAG_WRITE_THROUGH = &H80000000
+            ''' <summary>Impersonates a client at the Anonymous impersonation level.</summary>
+            SECURITY_ANONYMOUS = SECURITY_IMPERSONATION_LEVEL.SecurityAnonymous << 16
+            ''' <summary>The security tracking mode is dynamic. If this flag is not specified, the security tracking mode is static.</summary>
+            SECURITY_CONTEXT_TRACKING = &H40000
+            ''' <summary>Impersonates a client at the Delegation impersonation level.</summary>
+            SECURITY_DELEGATION = SECURITY_IMPERSONATION_LEVEL.SecurityDelegation << 16
+            ''' <summary><para>Only the enabled aspects of the client's security context are available to the server. If you do not specify this flag, all aspects of the client's security context are available.</para>
+            ''' <para>This allows the client to limit the groups and privileges that a server can use while impersonating the client.</para></summary>
+            SECURITY_EFFECTIVE_ONLY = &H80000
+            ''' <summary>Impersonates a client at the Identification impersonation level.</summary>
+            SECURITY_IDENTIFICATION = SECURITY_IMPERSONATION_LEVEL.SecurityIdentification << 16
+            ''' <summary>Impersonate a client at the impersonation level. This is the default behavior if no other flags are specified along with the SECURITY_SQOS_PRESENT flag.</summary>
+            SECURITY_IMPERSONATION = SECURITY_IMPERSONATION_LEVEL.SecurityImpersonation << 16
+        End Enum
+        ''' <summary>contains values that specify security impersonation levels. Security impersonation levels govern the degree to which a server process can act on behalf of a client process.</summary>
+        Public Enum SECURITY_IMPERSONATION_LEVEL As Integer
+            ''' <summary>The server process cannot obtain identification information about the client, and it cannot impersonate the client. It is defined with no value given, and thus, by ANSI C rules, defaults to a value of zero.</summary>
+            SecurityAnonymous
+            ''' <summary>The server process can obtain information about the client, such as security identifiers and privileges, but it cannot impersonate the client. This is useful for servers that export their own objects, for example, database products that export tables and views. Using the retrieved client-security information, the server can make access-validation decisions without being able to use other services that are using the client's security context.</summary>
+            SecurityIdentification
+            ''' <summary>The server process can impersonate the client's security context on its local system. The server cannot impersonate the client on remote systems.</summary>
+            SecurityImpersonation
+            ''' <summary>The server process can impersonate the client's security context on remote systems. </summary>
+            SecurityDelegation
+        End Enum
+
 #End Region
 #Region "Enumerations"
         ''' <summary>The flags that specify the file information to retrieve. USed by <see cref="SHGetFileInfo"/>.</summary>

@@ -129,16 +129,19 @@
     <Compile Include="API\GUI.vb">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="API\Hid.vb" />
     <Compile Include="API\Hooks.vb" />
     <Compile Include="API\Messages.vb" />
     <Compile Include="API\Misc.vb" />
     <Compile Include="API\Public.vb" />
-    <Compile Include="API\RawInput.vb" />
+    <Compile Include="API\RawInput API.vb" />
     <Compile Include="COM\ShellLinkNative.vb" />
     <Compile Include="Console\ConsoleT.vb" />
     <Compile Include="Devices\LowLevelMouseHook.vb" />
     <Compile Include="Devices\Mouse.vb" />
-    <Compile Include="Devices\RawInput.vb" />
+    <Compile Include="Devices\RawInput.vb">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Devices\Win32Hook.vb" />
     <Compile Include="Devices\LowLevelKeyboardHook.vb" />
     <Compile Include="IO\FileSystemTools.vb" />

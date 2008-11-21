@@ -2,6 +2,7 @@
 Imports System.Runtime.InteropServices
 Imports System.Runtime.CompilerServices
 Imports Tools.ComponentModelT
+Imports Microsoft.Win32.SafeHandles
 
 #If Config <= Nightly Then 'Stage: Nighlty
 Namespace DevicesT.RawInputT
@@ -76,6 +77,77 @@ Namespace DevicesT.RawInputT
             Else : Return ""
             End If
         End Function
+        ''' <summary>Gets handle of file representation of this device</summary>
+        ''' <returns>Safe handle to file opened using <see cref="GetDeviceNameString"/></returns>
+        ''' <remarks>It's goog idea to close the file when it is no longer used.</remarks>
+        ''' <exception cref="IO.IOException">File-access error while openning the device file</exception>
+        ''' <exception cref="API.Win32APIException">Another error ocured while opening the device file</exception>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Function GetDeviceFileHandle() As SafeFileHandle
+            Dim ret = API.FileSystem.CreateFile(GetDeviceNameString, API.GenericFileAccess.None, API.ShareModes.FILE_SHARE_READ Or API.ShareModes.FILE_SHARE_WRITE, IntPtr.Zero)
+            If ret.IsInvalid Then Throw API.Win32APIException.GetLastWin32Exception(Of IO.IOException)()
+            Return ret
+        End Function
+        ''' <summary>Gets information about capabilities of the device</summary>
+        ''' <exception cref="IO.IOException">Error while openning device handle</exception>
+        ''' <exception cref="API.Win32APIException">Error while obtaining device capabilities. Typically you cannot get capabilities for some keyboard and mouses; but from some you can.</exception>
+        Public Function GetCapabilities() As DeviceCapabilities
+            Using hDevice = GetDeviceFileHandle()
+                Dim pPData As IntPtr = IntPtr.Zero
+                If Not API.Hid.HidD_GetPreparsedData(hDevice, pPData) Then Throw New API.Win32APIException
+                Try
+                    Dim Caps As New API.Hid.HIDP_CAPS
+                    If API.Hid.HidP_GetCaps(pPData, Caps) <> API.HidErrorCode.HIDP_STATUS_SUCCESS Then Throw New API.Win32APIException
+                    Dim InBCaps = GetButtonCaps(API.HIDP_REPORT_TYPE.HidP_Input, Caps.NumberInputButtonCaps, pPData)
+                    Dim OutBCaps = GetButtonCaps(API.HIDP_REPORT_TYPE.HidP_Output, Caps.NumberOutputButtonCaps, pPData)
+                    Dim FeatBCaps = GetButtonCaps(API.HIDP_REPORT_TYPE.HidP_Feature, Caps.NumberFeatureButtonCaps, pPData)
+                    Dim InVCaps = GetvalueCaps(API.HIDP_REPORT_TYPE.HidP_Input, Caps.NumberInputValueCaps, pPData)
+                    Dim OutVCaps = GetvalueCaps(API.HIDP_REPORT_TYPE.HidP_Output, Caps.NumberOutputValueCaps, pPData)
+                    Dim FeatVCaps = GetvalueCaps(API.HIDP_REPORT_TYPE.HidP_Feature, Caps.NumberFeatureValueCaps, pPData)
+                    Return New DeviceCapabilities(Caps, InBCaps, OutBCaps, FeatBCaps, InVCaps, OutVCaps, FeatVCaps)
+                Finally
+                    API.Hid.HidD_FreePreparsedData(pPData)
+                End Try
+            End Using
+        End Function
+        ''' <summary>Calls <see cref="API.Hid.HidP_GetButtonCaps"/> and returns its result as array of <see cref="API.Hid.HIDP_BUTTON_CAPS"/></summary>
+        ''' <param name="Type">Specifies a <see cref="API.Hid.HIDP_REPORT_TYPE"/> enumerator value that identifies the report type.</param>
+        ''' <param name="Len">Expected number of <see cref="API.Hid.HIDP_BUTTON_CAPS"/> to be obtained</param>
+        ''' <param name="pPData">Pointer to a top-level collection's preparsed data.</param>
+        ''' <exception cref="API.Win32APIException">An error ocured while obtaining data</exception>
+        Private Shared Function GetButtonCaps(ByVal Type As API.Hid.HIDP_REPORT_TYPE, ByVal Len As Integer, ByVal pPData As IntPtr) As API.Hid.HIDP_BUTTON_CAPS()
+            If Len = 0 Then Return New API.Hid.HIDP_BUTTON_CAPS() {}
+            Dim pCaps As IntPtr = Marshal.AllocHGlobal(Marshal.SizeOf(GetType(API.Hid.HIDP_BUTTON_CAPS)) * Len)
+            Try
+                If API.Hid.HidP_GetButtonCaps(Type, pCaps, Len, pPData) <> API.HidErrorCode.HIDP_STATUS_SUCCESS Then Throw New API.Win32APIException
+                Dim ret(Len - 1) As API.Hid.HIDP_BUTTON_CAPS
+                For i As Integer = 0 To Len - 1
+                    ret(i) = Marshal.PtrToStructure(CType(pCaps.ToInt64 + Marshal.SizeOf(GetType(API.Hid.HIDP_BUTTON_CAPS)) * i, IntPtr), GetType(API.Hid.HIDP_BUTTON_CAPS))
+                Next
+                Return ret
+            Finally
+                Marshal.FreeHGlobal(pCaps)
+            End Try
+        End Function
+        ''' <summary>Calls <see cref="API.Hid.HidP_GetvalueCaps"/> and returns its result as array of <see cref="API.Hid.HIDP_value_CAPS"/></summary>
+        ''' <param name="Type">Specifies a <see cref="API.Hid.HIDP_REPORT_TYPE"/> enumerator value that identifies the report type.</param>
+        ''' <param name="Len">Expected number of <see cref="API.Hid.HIDP_value_CAPS"/> to be obtained</param>
+        ''' <param name="pPData">Pointer to a top-level collection's preparsed data.</param>
+        ''' <exception cref="API.Win32APIException">An error ocured while obtaining data</exception>
+        Private Shared Function GetvalueCaps(ByVal Type As API.Hid.HIDP_REPORT_TYPE, ByVal Len As Integer, ByVal pPData As IntPtr) As API.Hid.HIDP_VALUE_CAPS()
+            If Len = 0 Then Return New API.Hid.HIDP_VALUE_CAPS() {}
+            Dim pCaps As IntPtr = Marshal.AllocHGlobal(Marshal.SizeOf(GetType(API.Hid.HIDP_VALUE_CAPS)) * Len)
+            Try
+                If API.Hid.HidP_GetValueCaps(Type, pCaps, Len, pPData) <> API.HidErrorCode.HIDP_STATUS_SUCCESS Then Throw New API.Win32APIException
+                Dim ret(Len - 1) As API.Hid.HIDP_VALUE_CAPS
+                For i As Integer = 0 To Len - 1
+                    ret(i) = Marshal.PtrToStructure(CType(pCaps.ToInt64 + Marshal.SizeOf(GetType(API.Hid.HIDP_VALUE_CAPS)) * i, IntPtr), GetType(API.Hid.HIDP_VALUE_CAPS))
+                Next
+                Return ret
+            Finally
+                Marshal.FreeHGlobal(pCaps)
+            End Try
+        End Function
         ''' <summary>Gets parsed device name. Parsed device name provides more information about the device.</summary>
         ''' <exception cref="Win32Exception">Error while obtaining device name</exception>
         ''' <exception cref="FormatException">Device name obtained from <see cref="GetDeviceNameString"/> has unexpected format and cannot be parsed.</exception>
@@ -145,6 +217,484 @@ Namespace DevicesT.RawInputT
         End Operator
 #End Region
     End Class
+#Region "Capability classes"
+    ''' <summary>Specified capabilities of raw input HID device</summary>
+    Public Class DeviceCapabilities
+        ''' <summary>CTor</summary>
+        ''' <param name="Capabilities">Contains general capability information</param>
+        ''' <param name="InputButtonCapabilities">Capabilities of all the buttons in top-level collection for input report</param>
+        ''' <param name="OutputButtonCapabilities">Capabilities of all the buttons in top-level collection for output report</param>
+        ''' <param name="FeatureButtonCapabilities">Capabilities of all the buttons in top-level collection for features report</param>
+        ''' <param name="InputValueCapabilities">Capabilities of all the control values in top-level collection for input report</param>
+        ''' <param name="OutputValueCapabilities">Capabilities of all the control values in top-level collection for output report</param>
+        ''' <param name="FeatureValueCapabilities">Capabilities of all the control values in top-level collection for features report</param>
+        ''' <remarks>Capabilities parameters can be null, thay are converted to empty arrays.</remarks>
+        Friend Sub New(ByVal Capabilities As API.Hid.HIDP_CAPS, _
+                        ByVal InputButtonCapabilities As API.Hid.HIDP_BUTTON_CAPS(), ByVal OutputButtonCapabilities As API.Hid.HIDP_BUTTON_CAPS(), ByVal FeatureButtonCapabilities As API.Hid.HIDP_BUTTON_CAPS(), _
+                        ByVal InputValueCapabilities As API.Hid.HIDP_VALUE_CAPS(), ByVal OutputValueCapabilities As API.Hid.HIDP_VALUE_CAPS(), ByVal FeatureValueCapabilities As API.Hid.HIDP_VALUE_CAPS())
+            If InputButtonCapabilities Is Nothing Then InputButtonCapabilities = New API.Hid.HIDP_BUTTON_CAPS() {}
+            If OutputButtonCapabilities Is Nothing Then InputButtonCapabilities = New API.Hid.HIDP_BUTTON_CAPS() {}
+            If FeatureButtonCapabilities Is Nothing Then InputButtonCapabilities = New API.Hid.HIDP_BUTTON_CAPS() {}
+            If InputValueCapabilities Is Nothing Then InputValueCapabilities = New API.Hid.HIDP_VALUE_CAPS() {}
+            If OutputValueCapabilities Is Nothing Then InputValueCapabilities = New API.Hid.HIDP_VALUE_CAPS() {}
+            If FeatureValueCapabilities Is Nothing Then InputValueCapabilities = New API.Hid.HIDP_VALUE_CAPS() {}
+            Me.Capabilities = Capabilities
+            Me.InputButtonCapabilities = (From Button In InputButtonCapabilities Select New ButtonCapabilities(Button)).ToArray
+            Me.OutputButtonCapabilities = (From Button In OutputButtonCapabilities Select New ButtonCapabilities(Button)).ToArray
+            Me.FeatureButtonCapabilities = (From Button In FeatureButtonCapabilities Select New ButtonCapabilities(Button)).ToArray
+            Me.InputValueCapabilities = (From Value In InputValueCapabilities Select New ValueCapabilities(Value)).ToArray
+            Me.OutputValueCapabilities = (From Value In OutputValueCapabilities Select New ValueCapabilities(Value)).ToArray
+            Me.FeatureValueCapabilities = (From Value In FeatureValueCapabilities Select New ValueCapabilities(Value)).ToArray
+        End Sub
+        ''' <summary>The <see cref="API.Hid.HIDP_CAPS"/> structure this instance was initlaized with</summary>
+        Private ReadOnly Capabilities As API.Hid.HIDP_CAPS
+        ''' <summary>Contains value of the <see cref="ButtonsInput"/> property</summary>
+        Private ReadOnly InputButtonCapabilities As ButtonCapabilities()
+        ''' <summary>Contains value of the <see cref="ButtonsOutput"/> property</summary>
+        Private ReadOnly OutputButtonCapabilities As ButtonCapabilities()
+        ''' <summary>Contains value of the <see cref="ButtonsFeature"/> property</summary>
+        Private ReadOnly FeatureButtonCapabilities As ButtonCapabilities()
+        ''' <summary>Contains value of the <see cref="ValuesInput"/> property</summary>
+        Private ReadOnly InputValueCapabilities As ValueCapabilities()
+        ''' <summary>Contains value of the <see cref="ValuesOutput"/> property</summary>
+        Private ReadOnly OutputValueCapabilities As ValueCapabilities()
+        ''' <summary>Contains value of the <see cref="ValuesFeature"/> property</summary>
+        Private ReadOnly FeatureValueCapabilities As ValueCapabilities()
+#Region "Capabilities"
+        ''' <summary>Gets array describing capabilities of al the buttons in top-level collection for input HID report</summary>
+        Public ReadOnly Property ButtonsInput() As ButtonCapabilities()
+            Get
+                Return InputButtonCapabilities
+            End Get
+        End Property
+        ''' <summary>Gets array describing capabilities of al the buttons in top-level collection for output HID report</summary>
+        Public ReadOnly Property ButtonsOutput() As ButtonCapabilities()
+            Get
+                Return OutputButtonCapabilities
+            End Get
+        End Property
+        ''' <summary>Gets array describing capabilities of al the buttons in top-level collection for feture HID report</summary>
+        Public ReadOnly Property ButtonsFeature() As ButtonCapabilities()
+            Get
+                Return FeatureButtonCapabilities
+            End Get
+        End Property
+        ''' <summary>Gets array describing capabilities of al the control values in top-level collection for input HID report</summary>
+        Public ReadOnly Property ValuesInput() As ValueCapabilities()
+            Get
+                Return InputValueCapabilities
+            End Get
+        End Property
+        ''' <summary>Gets array describing capabilities of al the control values in top-level collection for output HID report</summary>
+        Public ReadOnly Property ValuesOutput() As ValueCapabilities()
+            Get
+                Return OutputValueCapabilities
+            End Get
+        End Property
+        ''' <summary>Gets array describing capabilities of al the control values in top-level collection for features HID report</summary>
+        Public ReadOnly Property ValuesFeature() As ValueCapabilities()
+            Get
+                Return FeatureValueCapabilities
+            End Get
+        End Property
+#End Region
+        ''' <summary>Specifies a top-level collection's usage ID.</summary>
+        Public ReadOnly Property Usage() As Integer
+            Get
+                Return Capabilities.Usage
+            End Get
+        End Property
+        ''' <summary>Specifies the top-level collection's usage page.</summary>
+        Public ReadOnly Property UsagePage() As UsagePages
+            Get
+                Return Capabilities.UsagePage
+            End Get
+        End Property
+        ''' <summary>Specifies the maximum length, in bytes, of all the feature reports (including the report ID, if report IDs are used, which is prepended to the report data).</summary>
+        Public ReadOnly Property FeatureReportMaxLength%()
+            Get
+                Return Capabilities.FeatureReportByteLength
+            End Get
+        End Property
+        ''' <summary>Specifies the maximum size, in bytes, of all the input reports (including the report ID, if report IDs are used, which is prepended to the report data).</summary>
+        Public ReadOnly Property InputReportMaxLenght%()
+            Get
+                Return Capabilities.InputReportByteLength
+            End Get
+        End Property
+        ''' <summary>Specifies the maximum size, in bytes, of all the output reports (including the report ID, if report IDs are used, which is prepended to the report data).</summary>
+        Public ReadOnly Property OutputReportMaxLength%()
+            Get
+                Return Capabilities.OutputReportByteLength
+            End Get
+        End Property
+    End Class
+    ''' <summary>Base class for <see cref="ButtonCapabilities"/> and <see cref="ValueCapabilities"/></summary>
+    <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    Public MustInherit Class DeviceCapabilitiesBase
+        ''' <summary>When overriden in derived class gets the data fields (one or two bytes) associated with an input, output, or feature main item.</summary>
+        Public MustOverride ReadOnly Property BitField() As Short
+        ''' <summary>When overriden in derived class specifies, if TRUE, that the button usage or usage range provides absolute data. Otherwise, if <see cref="IsAbsolute"/> is FALSE, the button data is the change in state from the previous value.</summary>
+        Public MustOverride ReadOnly Property IsAbsolute() As Boolean
+        ''' <summary>When overriden in derived class indicates, if TRUE, that a button has a set of aliased usages. Otherwise, if <see cref="IsAlias"/> is FALSE, the button has only one usage.</summary>
+        Public MustOverride ReadOnly Property IsAlias() As Boolean
+        ''' <summary>When overriden in derived class specifies, if TRUE, that the usage or usage range has a set of designators. Otherwise, if <see cref="IsDesignatorRange"/> is FALSE, the usage or usage range has zero or one designator.</summary>
+        Public MustOverride ReadOnly Property IsDesignatorRange() As Boolean
+        ''' <summary>When overriden in derived class specifies, if TRUE, that the structure describes a usage range. Otherwise, if <see cref="IsRange"/> is FALSE, the structure describes a single usage.</summary>
+        Public MustOverride ReadOnly Property IsRange() As Boolean
+        ''' <summary>When overriden in derived class specifies, if TRUE, that the usage or usage range has a set of string descriptors. Otherwise, if <see cref="IsStringRange"/> is FALSE, the usage or usage range has zero or one string descriptor.</summary>
+        Public MustOverride ReadOnly Property IsStringRange() As Boolean
+        ''' <summary>When overriden in derived class specifies the index of the link collection in a top-level collection's link collection array that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, the usage or usage range is contained in the top-level collection.</summary>
+        Public MustOverride ReadOnly Property LinkCollection() As Short
+        ''' <summary>When overriden in derived class specifies the usage page of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsagePage"/> specifies the usage page of the top-level collection.</summary>
+        Public MustOverride ReadOnly Property LinkUsagePage() As UsagePages
+        ''' <summary>When overriden in derived class specifies the usage of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsage"/> specifies the usage of the top-level collection.</summary>
+        Public MustOverride ReadOnly Property LinkUsage() As Integer
+        ''' <summary>When overriden in derived class specifies the usage page for a usage or usage range.</summary>
+        Public MustOverride ReadOnly Property UsagePage() As UsagePages
+#Region "Range / NotRange"
+        ''' <summary>When overriden in derived class indicates the inclusive lower bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
+        Public MustOverride ReadOnly Property DataIndexMin() As Short
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
+        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        Public MustOverride ReadOnly Property DataIndexMax() As Short
+        ''' <summary>When overriden in derived class indicates the inclusive lower bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive upper bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
+        Public MustOverride ReadOnly Property DesignatorIndexMin() As Short
+        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive lower bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
+        Public MustOverride ReadOnly Property DesignatorIndexMax() As Short
+        ''' <summary>When overriden in derived class indicates the inclusive lower bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive upper bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
+        Public MustOverride ReadOnly Property StringIndexMin() As Short
+        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive lower bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
+        Public MustOverride ReadOnly Property StringIndexMax() As Short
+        ''' <summary>When overriden in derived class indicates the inclusive lower bound of usage range whose inclusive upper bound is specified by <see cref="UsageMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
+        Public MustOverride ReadOnly Property UsageMin() As Integer
+        ''' <summary>When overriden in derived class indicates the inclusive upper bound of a usage range whose inclusive lower bound is indicated by <see cref="UsageMin"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
+        Public MustOverride ReadOnly Property UsageMax() As Integer
+#End Region
+    End Class
+    ''' <summary>Holds information about button capabilities</summary>
+    <TypeConverter(GetType(ExpandableObjectConverter))> _
+    Public Class ButtonCapabilities : Inherits DeviceCapabilitiesBase
+        ''' <summary>Contains unmanaged capability data obtained from API call</summary>
+        Private Capabilities As API.Hid.HIDP_BUTTON_CAPS
+        ''' <summary>CTor</summary>
+        ''' <param name="Capabilities">Capability data obtained from API all</param>
+        Friend Sub New(ByVal Capabilities As API.Hid.HIDP_BUTTON_CAPS)
+            Me.Capabilities = Capabilities
+        End Sub
+        ''' <summary>Gets the data fields (one or two bytes) associated with an input, output, or feature main item.</summary>
+        Public Overrides ReadOnly Property BitField() As Short
+            Get
+                Return Capabilities.BitField
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the button usage or usage range provides absolute data. Otherwise, if <see cref="IsAbsolute"/> is FALSE, the button data is the change in state from the previous value.</summary>
+        Public Overrides ReadOnly Property IsAbsolute() As Boolean
+            Get
+                Return Capabilities.IsAbsolute
+            End Get
+        End Property
+        ''' <summary>Indicates, if TRUE, that a button has a set of aliased usages. Otherwise, if <see cref="IsAlias"/> is FALSE, the button has only one usage.</summary>
+        Public Overrides ReadOnly Property IsAlias() As Boolean
+            Get
+                Return Capabilities.IsAlias
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the usage or usage range has a set of designators. Otherwise, if <see cref="IsDesignatorRange"/> is FALSE, the usage or usage range has zero or one designator.</summary>
+        Public Overrides ReadOnly Property IsDesignatorRange() As Boolean
+            Get
+                Return Capabilities.IsDesignatorRange
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the structure describes a usage range. Otherwise, if <see cref="IsRange"/> is FALSE, the structure describes a single usage.</summary>
+        Public Overrides ReadOnly Property IsRange() As Boolean
+            Get
+                Return Capabilities.IsRange
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the usage or usage range has a set of string descriptors. Otherwise, if <see cref="IsStringRange"/> is FALSE, the usage or usage range has zero or one string descriptor.</summary>
+        Public Overrides ReadOnly Property IsStringRange() As Boolean
+            Get
+                Return Capabilities.IsStringRange
+            End Get
+        End Property
+        ''' <summary>Specifies the index of the link collection in a top-level collection's link collection array that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, the usage or usage range is contained in the top-level collection.</summary>
+        Public Overrides ReadOnly Property LinkCollection() As Short
+            Get
+                Return Capabilities.LinkCollection
+            End Get
+        End Property
+        ''' <summary>Specifies the usage page of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsagePage"/> specifies the usage page of the top-level collection.</summary>
+        Public Overrides ReadOnly Property LinkUsagePage() As UsagePages
+            Get
+                Return Capabilities.LinkUsagePage
+            End Get
+        End Property
+        ''' <summary>Specifies the usage of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsage"/> specifies the usage of the top-level collection.</summary>
+        Public Overrides ReadOnly Property LinkUsage() As Integer
+            Get
+                Return Capabilities.LinkUsage
+            End Get
+        End Property
+        ''' <summary>Specifies the usage page for a usage or usage range.</summary>
+        Public Overrides ReadOnly Property UsagePage() As UsagePages
+            Get
+                Return Capabilities.UsagePage
+            End Get
+        End Property
+#Region "Range / NotRange"
+        ''' <summary>Indicates the inclusive lower bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
+        Public Overrides ReadOnly Property DataIndexMin() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DataIndexMin, Capabilities.NotRange.DataIndex)
+            End Get
+        End Property
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
+        ''' <summary>Indicates the inclusive upper bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        Public Overrides ReadOnly Property DataIndexMax() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DataIndexMax, Capabilities.NotRange.DataIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive lower bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive upper bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
+        Public Overrides ReadOnly Property DesignatorIndexMin() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DesignatorMin, Capabilities.NotRange.DesignatorIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive upper bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive lower bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
+        Public Overrides ReadOnly Property DesignatorIndexMax() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DesignatorMax, Capabilities.NotRange.DesignatorIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive lower bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive upper bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
+        Public Overrides ReadOnly Property StringIndexMin() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.StringMin, Capabilities.NotRange.StringIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive upper bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive lower bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
+        Public Overrides ReadOnly Property StringIndexMax() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.StringMax, Capabilities.NotRange.StringIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive lower bound of usage range whose inclusive upper bound is specified by <see cref="UsageMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
+        Public Overrides ReadOnly Property UsageMin() As Integer
+            Get
+                Return If(IsRange, Capabilities.Range.UsageMin, Capabilities.NotRange.Usage)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive upper bound of a usage range whose inclusive lower bound is indicated by <see cref="UsageMin"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
+        Public Overrides ReadOnly Property UsageMax() As Integer
+            Get
+                Return If(IsRange, Capabilities.Range.UsageMax, Capabilities.NotRange.Usage)
+            End Get
+        End Property
+#End Region
+    End Class
+    ''' <summary>Holds information about value control capabilities</summary>
+    <TypeConverter(GetType(ExpandableObjectConverter))> _
+    Public Class ValueCapabilities : Inherits DeviceCapabilitiesBase
+        ''' <summary>Contains unmanaged capability data obtained from API call</summary>
+        Private Capabilities As API.Hid.HIDP_VALUE_CAPS
+        ''' <summary>CTor</summary>
+        ''' <param name="Capabilities">Capability data obtained from API all</param>
+        Friend Sub New(ByVal Capabilities As API.Hid.HIDP_VALUE_CAPS)
+            Me.Capabilities = Capabilities
+        End Sub
+        ''' <summary>Gets the data fields (one or two bytes) associated with an input, output, or feature main item.</summary>
+        Public Overrides ReadOnly Property BitField() As Short
+            Get
+                Return Capabilities.BitField
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the button usage or usage range provides absolute data. Otherwise, if <see cref="IsAbsolute"/> is FALSE, the button data is the change in state from the previous value.</summary>
+        Public Overrides ReadOnly Property IsAbsolute() As Boolean
+            Get
+                Return Capabilities.IsAbsolute
+            End Get
+        End Property
+        ''' <summary>Indicates, if TRUE, that a button has a set of aliased usages. Otherwise, if <see cref="IsAlias"/> is FALSE, the button has only one usage.</summary>
+        Public Overrides ReadOnly Property IsAlias() As Boolean
+            Get
+                Return Capabilities.IsAlias
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the usage or usage range has a set of designators. Otherwise, if <see cref="IsDesignatorRange"/> is FALSE, the usage or usage range has zero or one designator.</summary>
+        Public Overrides ReadOnly Property IsDesignatorRange() As Boolean
+            Get
+                Return Capabilities.IsDesignatorRange
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the structure describes a usage range. Otherwise, if <see cref="IsRange"/> is FALSE, the structure describes a single usage.</summary>
+        Public Overrides ReadOnly Property IsRange() As Boolean
+            Get
+                Return Capabilities.IsRange
+            End Get
+        End Property
+        ''' <summary>Specifies, if TRUE, that the usage or usage range has a set of string descriptors. Otherwise, if <see cref="IsStringRange"/> is FALSE, the usage or usage range has zero or one string descriptor.</summary>
+        Public Overrides ReadOnly Property IsStringRange() As Boolean
+            Get
+                Return Capabilities.IsStringRange
+            End Get
+        End Property
+        ''' <summary>Specifies the index of the link collection in a top-level collection's link collection array that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, the usage or usage range is contained in the top-level collection.</summary>
+        Public Overrides ReadOnly Property LinkCollection() As Short
+            Get
+                Return Capabilities.LinkCollection
+            End Get
+        End Property
+        ''' <summary>Specifies the usage page of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsagePage"/> specifies the usage page of the top-level collection.</summary>
+        Public Overrides ReadOnly Property LinkUsagePage() As UsagePages
+            Get
+                Return Capabilities.LinkUsagePage
+            End Get
+        End Property
+        ''' <summary>Specifies the usage of the link collection that contains the usage or usage range. If <see cref="LinkCollection"/> is zero, <see cref="LinkUsage"/> specifies the usage of the top-level collection.</summary>
+        Public Overrides ReadOnly Property LinkUsage() As Integer
+            Get
+                Return Capabilities.LinkUsage
+            End Get
+        End Property
+        ''' <summary>Specifies the usage page for a usage or usage range.</summary>
+        Public Overrides ReadOnly Property UsagePage() As UsagePages
+            Get
+                Return Capabilities.UsagePage
+            End Get
+        End Property
+#Region "Range / NotRange"
+        ''' <summary>Indicates the inclusive lower bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
+        Public Overrides ReadOnly Property DataIndexMin() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DataIndexMin, Capabilities.NotRange.DataIndex)
+            End Get
+        End Property
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DataIndexMin"/> equals to <see cref="DataIndexMax"/></remarks>
+        ''' <summary>Indicates the inclusive upper bound of a sequential range of data indices that correspond, one-to-one and in the same order, to the usages specified by the usage range <see cref="UsageMin"/> to <see cref="UsageMax"/>.</summary>
+        Public Overrides ReadOnly Property DataIndexMax() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DataIndexMax, Capabilities.NotRange.DataIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive lower bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive upper bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
+        Public Overrides ReadOnly Property DesignatorIndexMin() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DesignatorMin, Capabilities.NotRange.DesignatorIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive upper bound of a range of designators (specified by designator minimum and designator maximum items) whose inclusive lower bound is indicated by <see cref="DesignatorIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="DesignatorIndexMin"/> equals to <see cref="DesignatorIndexMax"/></remarks>
+        Public Overrides ReadOnly Property DesignatorIndexMax() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.DesignatorMax, Capabilities.NotRange.DesignatorIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive lower bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive upper bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
+        Public Overrides ReadOnly Property StringIndexMin() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.StringMin, Capabilities.NotRange.StringIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive upper bound of a range of string descriptors (specified by string minimum and string maximum items) whose inclusive lower bound is indicated by <see cref="StringIndexMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="StringIndexMin"/> equals to <see cref="StringIndexMax"/></remarks>
+        Public Overrides ReadOnly Property StringIndexMax() As Short
+            Get
+                Return If(IsRange, Capabilities.Range.StringMax, Capabilities.NotRange.StringIndex)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive lower bound of usage range whose inclusive upper bound is specified by <see cref="UsageMax"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
+        Public Overrides ReadOnly Property UsageMin() As Integer
+            Get
+                Return If(IsRange, Capabilities.Range.UsageMin, Capabilities.NotRange.Usage)
+            End Get
+        End Property
+        ''' <summary>Indicates the inclusive upper bound of a usage range whose inclusive lower bound is indicated by <see cref="UsageMin"/>.</summary>
+        ''' <remarks>When <see cref="IsRange"/> is false <see cref="UsageMin"/> equals to <see cref="UsageMax"/></remarks>
+        Public Overrides ReadOnly Property UsageMax() As Integer
+            Get
+                Return If(IsRange, Capabilities.Range.UsageMax, Capabilities.NotRange.Usage)
+            End Get
+        End Property
+#End Region
+#Region "Additional"
+        ''' <summary>Specifies, if TRUE, that the usage supports a NULL value, which indicates that the data is not valid and should be ignored. Otherwise, if <see cref="HasNull"/> is FALSE, the usage does not have a NULL value.</summary>
+        Public ReadOnly Property HasNull() As Boolean
+            Get
+                Return Capabilities.HasNull
+            End Get
+        End Property
+        ''' <summary>Specifies the size, in bits, of a usage's data field in a report. If <see cref="ReportCount"/> is greater than one, each usage has a separate data field of this size.</summary>
+        Public ReadOnly Property UsageDataFieldBitSize() As Int16
+            Get
+                Return Capabilities.BitSize
+            End Get
+        End Property
+        ''' <summary>Specifies the number of usages that this structure describes.</summary>
+
+        Public ReadOnly Property ReportCount() As Int16
+            Get
+                Return Capabilities.ReportCount
+            End Get
+        End Property
+        ''' <summary>Specifies the usage's exponent, as described by the USB HID standard.</summary>
+        Public ReadOnly Property UnitsExponent() As Long
+            Get
+                Return Capabilities.UnitsExp
+            End Get
+        End Property
+        ''' <summary>Specifies the usage's units, as described by the USB HID Standard.</summary>
+        Public ReadOnly Property Units() As Long
+            Get
+                Return Capabilities.Units
+            End Get
+        End Property
+        ''' <summary>Specifies a usage's signed lower bound.</summary>
+        Public ReadOnly Property LogicalValueMinimum%()
+            Get
+                Return Capabilities.LogicalMin
+            End Get
+        End Property
+        ''' <summary>Specifies a usage's signed upper bound.</summary>
+        Public ReadOnly Property LogicalValueMaximum%()
+            Get
+                Return Capabilities.LogicalMax
+            End Get
+        End Property
+        ''' <summary>Specifies a usage's signed lower bound after scaling is applied to the logical minimum value.</summary>
+        Public ReadOnly Property PhysicalValueMinimum%()
+            Get
+                Return Capabilities.PhysicalMin
+            End Get
+        End Property
+        ''' <summary>Specifies a usage's signed upper bound after scaling is applied to the logical maximum value.</summary>
+        Public ReadOnly Property PhysicalValueMaximum%()
+            Get
+                Return Capabilities.PhysicalMax
+            End Get
+        End Property
+#End Region
+    End Class
+#End Region
 
     ''' <summary>Parses raw device name obtained by <see cref="InputDevice.GetDeviceName"/> and performs operation with it</summary>
     Public Class RawDeviceName
@@ -465,6 +1015,13 @@ Namespace DevicesT.RawInputT
                 Return TypeTools.GetEnumValue(UsageEnumeration, Usage)
             End Get
         End Property
+        ''' <summary>Gets information about capabilities of the device</summary>
+        ''' <exception cref="IO.IOException">Error while openning device handle</exception>
+        ''' <exception cref="API.Win32APIException">Error while obtaining device capabilities. Typically you cannot get capabilities for some keyboard and mouses; but from some you can.</exception>
+        ''' <seelaso cref="InputDevice.GetCapabilities"/>
+        Public Function GetCapabilities() As DeviceCapabilities
+            Return Me.GetDevice.GetCapabilities
+        End Function
     End Class
 
     ''' <summary>Provides information about mouse device</summary>
@@ -663,7 +1220,7 @@ Namespace DevicesT.RawInputT
         End Sub
     End Class
 #End Region
-   
+
 #Region "Usages"
     ''' <summary>Contains extension methods used by raw input</summary>
     Public Module RawInputExtensions
@@ -933,7 +1490,19 @@ Namespace DevicesT.RawInputT
             Return GetUsageType(DirectCast(Usage, [Enum]))
         End Function
 #End Region
-
+        ''' <summary>Sets <see cref="RawInputDeviceRegistration.BackgroundEvents"/> for all items in given collection</summary>
+        ''' <param name="Collection">Collection to set value of items from</param>
+        ''' <param name="Value">New value for <see cref="RawInputDeviceRegistration.BackgroundEvents"/>property of items in <paramref name="Collection"/></param>
+        ''' <typeparam name="T">Actual type of <paramref name="Collection"/>. It must be reference type.</typeparam>
+        ''' <returns><paramref name="Collection"/></returns>
+        ''' <remarks>When <paramref name="Collection"/> is null does noting and returns null.</remarks>
+        <Extension()> Public Function SetBackgroundEvents(Of T As {IEnumerable(Of RawInputDeviceRegistration), Class})(ByVal Collection As T, ByVal Value As BackgroundEvents) As T
+            If Collection Is Nothing Then Return Nothing
+            For Each item In Collection
+                item.BackgroundEvents = Value
+            Next
+            Return Collection
+        End Function
     End Module
     ''' <summary>Defines HID usage pages</summary>
     ''' <remarks>Values that are not defined in this enumeration and are not within range <see cref="UsagePages.VendorDefinedMin"/> ÷ <see cref="UsagePages.VendorDefinedMax"/> are reserved
@@ -4731,13 +5300,20 @@ Namespace DevicesT.RawInputT
         ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
         ''' <exception cref="ObjectDisposedException">The object was disposed</exception>
         Public ReadOnly Property Owner() As IWin32Window
-            Get
+            <DebuggerStepThrough()> Get
                 If disposed Then Throw New ObjectDisposedException("RawInputEventProvider")
                 If _Owner.Handle <> OwnerHandle Then
                     Me.Dispose()
                     Throw New InvalidOperationException(ResourcesT.ExceptionsWin.OwherHandleHasChanged)
                 End If
                 Return _Owner
+            End Get
+        End Property
+        ''' <summary>Gets value indicating if owner handle has changed</summary>
+        ''' <returns>True if <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> differs from its original value</returns>
+        Friend ReadOnly Property OwnerHandleChanged() As Boolean
+            Get
+                Return _Owner.Handle <> OwnerHandle
             End Get
         End Property
         ''' <summary>Contains copy of <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> to detect changes</summary>
@@ -4853,7 +5429,8 @@ Namespace DevicesT.RawInputT
         ''' <param name="e">Message</param>
         ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="WM_INPUTMessage.hWnd">hWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
-        Private Sub WndProc(ByVal sender As Object, ByVal e As WM_INPUTMessage)
+        <DebuggerStepThrough()> Private Sub WndProc(ByVal sender As Object, ByVal e As WM_INPUTMessage)
+            If Me.disposed Then Exit Sub
             If sender IsNot Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
             e.ReturnValue = OnWM_INPUT(e.wParam, e.lParam)
         End Sub
@@ -4862,7 +5439,8 @@ Namespace DevicesT.RawInputT
         ''' <param name="msg">Message</param>
         ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="Message.HWnd">HWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
-        Private Sub WndProc(ByVal sender As Object, ByRef msg As Message)
+        <DebuggerStepThrough()> Private Sub WndProc(ByVal sender As Object, ByRef msg As Message)
+            If Me.disposed Then Exit Sub
             If sender IsNot Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
             Dim ret = WndProc(msg.HWnd, msg.Msg, msg.WParam, msg.LParam)
             If ret.HasValue Then msg.Result = ret
@@ -4872,7 +5450,8 @@ Namespace DevicesT.RawInputT
         ''' <param name="e">Message</param>
         ''' <exception cref="InvalidOperationException"><paramref name="sender"/> is not <see cref="Owner"/> or <paramref name="msg"/>.<see cref="API.Messages.WindowMessage.hWnd">hWnd</see> isnot <see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Owner"/>.<see cref="IWin32Window.Handle">Handle</see> has changed. In this situaltion <see cref="RawInputEventProvider"/> automatically disposes.</exception>
-        Private Sub WndProc(ByVal sender As Object, ByVal e As API.Messages.WindowMessage)
+        <DebuggerStepThrough()> Private Sub WndProc(ByVal sender As Object, ByVal e As API.Messages.WindowMessage)
+            If Me.disposed Then Exit Sub
             If sender IsNot Owner Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance)
             Dim ret = WndProc(e.hWnd, e.Message, e.wParam, e.lParam)
             If ret.HasValue Then e.ReturnValue = ret
@@ -4892,12 +5471,28 @@ Namespace DevicesT.RawInputT
         End Function
 #End Region
 #Region "Processing"
+        ''' <summary>Contains value of the <see cref="RaiseMediaCenterRemoteEvents"/> property</summary>
+        Private _RaiseMediaCenterRemoteEvents As Boolean
+        ''' <summary>Gets or sets value indicating if Windows Media Center infrared remote events are raised</summary>
+        ''' <returns>True if Windows Media Center infrared remote events can be rised; false if they cannot</returns>
+        ''' <value>True to enable Windows Media Center infrared remote related events; false to disable them. Default value is false.</value>
+        ''' <remarks>In order the events to be raised, you mast register for defvices returned by <see cref="RawInputDeviceRegistration.MediaCenterRemote"/>.</remarks>
+        <DefaultValue(False)> _
+        Public Property RaiseMediaCenterRemoteEvents() As Boolean
+            Get
+                Return _RaiseMediaCenterRemoteEvents
+            End Get
+            Set(ByVal value As Boolean)
+                _RaiseMediaCenterRemoteEvents = True
+            End Set
+        End Property
         ''' <summary>Handle the <see cref="API.Messages.WindowMessages.WM_INPUT"/> message</summary>
         ''' <param name="wParam">Input code.</param>
         ''' <param name="lParam">Handle to the <see cref="API.RawInput.RAWINPUT_Marshalling"/> structure that contains the raw input from the device. </param>
         ''' <returns>Return value for the event, 0.</returns>
-        ''' <remarks>You are unlikly to override this method, because it means that you have to completely replace parsing event data from <paramref name="lParam"/>.
-        ''' This method, and internal methods it calls, does all the work that leads from windows message to event. This method calls all the On_... methods.</remarks>
+        ''' <remarks>You are unlikely to override this method, because it means that you have to completely replace parsing event data from <paramref name="lParam"/>.
+        ''' This method, and internal methods it calls, does all the work that leads from windows message to event. This method calls all the On_... methods.
+        ''' If you want customize HID events processing, override the <see cref="HidAdditionalProcessing"/> function.</remarks>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Overridable Function OnWM_INPUT(ByVal wParam As API.Messages.wParam.WM_INPUT, ByVal lParam As IntPtr) As Integer
             If HasListeners AndAlso (wParam = API.Messages.wParam.WM_INPUT.RIM_INPUT OrElse wParam = API.Messages.wParam.WM_INPUT.RIM_INPUTSINK) Then
@@ -4909,12 +5504,18 @@ Namespace DevicesT.RawInputT
                     Return 0
                 End Try
                 Select Case RawData.header.dwType
-                    Case API.DeviceTypes.RIM_TYPEHID
-                        Dim e As New RawHidEventArgs(RawData.hid, RawData.header.hDevice)
+                    Case API.DeviceTypes.RIM_TYPEHID 'HID (other devices)
+                        Dim e As RawHidEventArgs = New RawHidEventArgs(RawData.hid, RawData.header.hDevice)
                         e.EventName = "HID"
+                        If AdditionalProcessingNeeded Then 'Additional processing is allowed
+                            Dim OldE = e
+                            e = HidAdditionalProcessing(e, e.Device.GetDeviceInfo)
+                            If e Is Nothing Then e = OldE
+                        End If
                         OnInput(e)
                         OnHidEvent(e)
-                    Case API.DeviceTypes.RIM_TYPEKEYBOARD
+                        e.RaiseAdditionalEvents()
+                    Case API.DeviceTypes.RIM_TYPEKEYBOARD 'Keyboard
                         Dim e = New RawKeyboardEventArgs(RawData.keyboard, RawData.header.hDevice)
                         Dim down = e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYDOWN OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYDOWN
                         Dim up = e.AssociatedMessage = API.Messages.WindowMessages.WM_KEYUP OrElse e.AssociatedMessage = API.Messages.WindowMessages.WM_SYSKEYUP
@@ -4926,7 +5527,7 @@ Namespace DevicesT.RawInputT
                         If down Then : OnKeyDown(e)
                         ElseIf up Then : OnKeyUp(e)
                         End If
-                    Case API.DeviceTypes.RIM_TYPEMOUSE
+                    Case API.DeviceTypes.RIM_TYPEMOUSE 'Mouse
                         Dim e = New RawMouseEventArgs(RawData.mouse, RawData.header.hDevice)
                         Dim down = (e.Buttons And RawMouseButtonStates.LeftDown) OrElse (e.Buttons And RawMouseButtonStates.MiddleDown) OrElse (e.Buttons And RawMouseButtonStates.RightDown) OrElse (e.Buttons And RawMouseButtonStates.X1Down) OrElse (e.Buttons And RawMouseButtonStates.X2Down)
                         Dim up = (e.Buttons And RawMouseButtonStates.LeftUp) OrElse (e.Buttons And RawMouseButtonStates.MiddleUp) OrElse (e.Buttons And RawMouseButtonStates.RightUp) OrElse (e.Buttons And RawMouseButtonStates.X1Up) OrElse (e.Buttons And RawMouseButtonStates.X2Up)
@@ -4935,16 +5536,28 @@ Namespace DevicesT.RawInputT
                         If down Then e.EventName = "MouseDown"
                         If up Then e.EventName &= If(e.EventName = "", "", ", ") & "MouseUp"
                         If wheel Then e.EventName &= If(e.EventName = "", "", ", ") & "MouseWheel"
-                        'TODO: MouseMove
                         OnInput(e)
                         OnMouseEvent(e)
                         If down Then OnMouseDown(e)
                         If up Then OnMouseUp(e)
                         If wheel Then OnMouseWheel(e)
+                        Static LastXYAbsolute As New Point(Integer.MinValue, Integer.MinValue)
+                        If (e.XYAbsolute AndAlso (e.X <> LastXYAbsolute.X OrElse e.Y <> LastXYAbsolute.Y)) OrElse (Not e.XYAbsolute AndAlso (e.X <> 0 OrElse e.Y <> 0)) Then
+                            OnMouseMove(e)
+                        End If
+                        If e.XYAbsolute Then LastXYAbsolute = New Point(e.X, e.Y)
                 End Select
             End If
             Return 0
         End Function
+        ''' <summary>Gets value indicating wheather additional processing should be run for HID-generated events. Ignored for mice and keyboards.</summary>
+        ''' <returns>True when <see cref="OnWM_INPUT"/> should call <see cref="HidAdditionalProcessing"/> in order to obtain <see cref="RawHidEventArgs"/></returns>
+        ''' <remarks>This implementation returns same value as <see cref="RaiseMediaCenterRemoteEvents"/>.</remarks>
+        Protected Overridable ReadOnly Property AdditionalProcessingNeeded() As Boolean
+            Get
+                Return RaiseMediaCenterRemoteEvents
+            End Get
+        End Property
         ''' <summary>Gets <see cref="API.RawInput.RAWINPUT_NonMarshalling"/> from handle</summary>
         ''' <param name="hRawInput">Handle of <see cref="API.RawInput.RAWINPUT_Marshalling"/> for <see cref="API.RawInput.GetRawInputData"/></param>
         ''' <exception cref="API.Win32APIException">Error while obtaining raw input data</exception>
@@ -4964,7 +5577,7 @@ Namespace DevicesT.RawInputT
                         Dim raw2 As API.RAWINPUT_NonMarshalling
                         raw2.header = raw.header
                         raw2.hid.dwCount = raw.hid.dwCount
-                        raw.hid.dwSizeHid = raw.hid.dwSizeHid
+                        raw2.hid.dwSizeHid = raw.hid.dwSizeHid
                         ReDim raw2.hid.bRawData(raw.hid.dwCount * raw.hid.dwSizeHid - 1)
                         Marshal.Copy(pData.ToInt64 + Marshal.SizeOf(GetType(API.RawInput.RAWINPUTHEADER)) + Marshal.SizeOf(GetType(API.RawInput.RAWHID_Marshalling)), raw2.hid.bRawData, 0, raw.hid.dwCount * raw.hid.dwSizeHid)
                         Return raw2
@@ -4974,6 +5587,52 @@ Namespace DevicesT.RawInputT
             Finally
                 Marshal.FreeHGlobal(pData)
             End Try
+        End Function
+        ''' <summary>Performs additional processing for HID events in order to obtain more information than just raw input</summary>
+        ''' <param name="e">Contains raw event arguments</param>
+        ''' <param name="Device">Information about device, source of this event</param>
+        ''' <returns>New instance of class derived from <see cref="RawHidEventArgs"/> when additional information is available for <paramref name="e"/>; <paramref name="e"/> or null when no additional information are available.</returns>
+        ''' <remarks>Override this method in order to provide additional HID informations.
+        ''' <para>Do not raise events from this method. Instead utilize <see cref="RawHidEventArgs.AdditionalEvents"/> property. It ensures that events are raied in correct order from most generic to most specific.</para>
+        ''' <para>Do not throw exceptions, it cannot be handled.</para>
+        ''' <para>This implementation currently deals only with Windows Media Center Infrared Remote.</para>
+        ''' <para>This function is never called wne <see cref="HasListeners"/> returns false, so, if you are addin custom events, you should override <see cref="HasListeners"/> as well.</para></remarks>
+        Protected Overridable Function HidAdditionalProcessing(ByVal e As RawHidEventArgs, ByVal Device As DeviceInfo) As RawHidEventArgs
+            HidAdditionalProcessing = e
+            Select Case Device.UsagePage
+                Case UsagePages.Consumer
+                    Select Case CType(Device.Usage, Usages_Consumer)
+                        Case Usages_Consumer.ConsumerControl 'Media Center remote
+                            If RaiseMediaCenterRemoteEvents Then HidAdditionalProcessing = ParseMediaCenterRemote(e, Device)
+                        Case Usages_Consumer.NumericKeyPad   'Media Center remote
+                            If RaiseMediaCenterRemoteEvents Then HidAdditionalProcessing = ParseMediaCenterRemote(e, Device)
+                    End Select
+                Case RawInputDeviceRegistration.MediaCenterRemoteUsagePage
+                    Select Case Device.Usage
+                        Case RawInputDeviceRegistration.MediaCenterRemoteUsage   'Media Center remote
+                            If RaiseMediaCenterRemoteEvents Then HidAdditionalProcessing = ParseMediaCenterRemote(e, Device)
+                    End Select
+            End Select
+        End Function
+        ''' <summary>Parses Windows Media Center Infrared Remote event arguments</summary>
+        ''' <param name="e">Raw event arguments</param>
+        ''' <param name="Device">Device information</param>
+        ''' <returns>Media-Center-Remote-appropriate event arguments or <paramref name="e"/> when parsing was unsuccessfull (unrecognized event)</returns>
+        Private Function ParseMediaCenterRemote(ByVal e As RawHidEventArgs, ByVal Device As DeviceInfo) As RawHidEventArgs
+            ParseMediaCenterRemote = e
+            If e.RawItemsCount = 1 AndAlso (e.RawItemSize = 2 OrElse e.RawItemSize = 3) Then
+                e = New MediaCenterRemoteEventArgs(e)
+                ParseMediaCenterRemote = e
+                Select Case DirectCast(e, MediaCenterRemoteEventArgs).KeyCode
+                    Case MediaCenterRemoteKey.CommandKey, MediaCenterRemoteKey.ExtendedKey
+                        e.AdditionalEvents.Add(AddressOf OnMediaCenterRemoteButtonUp)
+                        e.EventName = String.Format("MC ButtonUp {0}", DirectCast(e, MediaCenterRemoteEventArgs).KeyCode)
+                    Case 0 : e.EventName = "MediaCenter unknown"
+                    Case Else
+                        e.AdditionalEvents.Add(AddressOf OnMediaCenterRemoteButtonDown)
+                        e.EventName = String.Format("MC ButtonDown {0}", DirectCast(e, MediaCenterRemoteEventArgs).KeyCode)
+                End Select
+            End If
         End Function
 #End Region
 
@@ -4990,11 +5649,14 @@ Namespace DevicesT.RawInputT
 
         ''' <summary>Gtes value indicating if there are any listeners for raw-input-related events</summary>
         ''' <returns>True if there is reason to process <see cref="API.Messages.WindowMessages.WM_INPUT"/> message</returns>
-        Protected ReadOnly Property HasListeners() As Boolean
+        ''' <remarks>Note for inheritors: When overriding this property always return your value OR-ed with base-clas call.
+        ''' <para>Do determine if event has some listeners attached you must have access to event invocation list. For example in Visual Basic this means that you cannot use compiler-provided simple event implementation, but you have to provide your own implementation for Add, Remove and Raise methods utilizing Custom Events.</para></remarks>
+        Protected Overridable ReadOnly Property HasListeners() As Boolean
             Get
                 Return InputHandler IsNot Nothing OrElse MouseEventHandler IsNot Nothing OrElse KeyboardEventHandler IsNot Nothing _
-                    OrElse MouseDownHandler IsNot Nothing OrElse MouseUpHandler IsNot Nothing OrElse MouseWheelHandler IsNot Nothing _
-                    OrElse KeyDownHandler IsNot Nothing OrElse KeyUpHandler IsNot Nothing
+                    OrElse MouseDownHandler IsNot Nothing OrElse MouseUpHandler IsNot Nothing OrElse MouseWheelHandler IsNot Nothing OrElse MouseMoveHandler IsNot Nothing _
+                    OrElse KeyDownHandler IsNot Nothing OrElse KeyUpHandler IsNot Nothing _
+                    OrElse MediaCenterRemoteButtonDownHandler IsNot Nothing OrElse MediaCenterRemoteButtonUpHandler IsNot Nothing
             End Get
         End Property
 #Region "Input"
@@ -5102,7 +5764,7 @@ Namespace DevicesT.RawInputT
         ''' <summary>Invocation list for the <see cref="MouseWheel"/> event</summary>
         Private MouseWheelHandler As EventHandler(Of RawMouseEventArgs)
         ''' <summary>Raised when the raw input device this instance was registered for generates an mouse event with the <see cref="RawMouseButtonStates.Wheel"/> flag set.</summary>
-        ''' <remarks>It is possible that this event is generated by the same <see cref="API.Messages.WindowMessages.WM_INPUT"/> as <see cref="MouseDown"/> or <see cref="MouseUp"/> event. In such case this event is raised after those down and up events.</remarks>
+        ''' <remarks>It is possible that this event is generated by the same <see cref="API.Messages.WindowMessages.WM_INPUT"/> as <see cref="MouseDown"/> or <see cref="MouseUp"/> event. In such case this event is raised after those down and up events but before possible <see cref="MouseMove"/> event.</remarks>
         ''' <seealso cref="RawMouseEventArgs.Buttons"/><seelaso cref="RawMouseEventArgs.Wheel"/>
         Public Custom Event MouseWheel As EventHandler(Of RawMouseEventArgs)
             AddHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
@@ -5113,6 +5775,30 @@ Namespace DevicesT.RawInputT
             End RemoveHandler
             RaiseEvent(ByVal sender As Object, ByVal e As RawMouseEventArgs)
                 If MouseWheelHandler IsNot Nothing Then MouseWheelHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "MouseMove"
+        ''' <summary>Raises the <see cref="MouseMove"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMouseMove(ByVal e As RawMouseEventArgs)
+            RaiseEvent MouseMove(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MouseMove"/> event</summary>
+        Private MouseMoveHandler As EventHandler(Of RawMouseEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates an mouse event indicating that mouse was moved.</summary>
+        ''' <remarks><para>This event is raise either if <paramref name="e"/>.<see cref="RawMouseEventArgs.XYAbsolute">XYAbsolute</see> is false and either of <see cref="RawMouseEventArgs.X"/>, <see cref="RawMouseEventArgs.Y"/> is non-zero; or <see cref="RawMouseEventArgs.XYAbsolute"/> is true and there is a diference from last absolute-positioned event. This measuring is done for all devices together.</para>
+        ''' It is possible that this event is generated by the same <see cref="API.Messages.WindowMessages.WM_INPUT"/> as <see cref="MouseDown"/>, <see cref="MouseUp"/> or <see cref="MouseWheel"/> event. In such case this event is raised after those down, up and wheel events.</remarks>
+        Public Custom Event MouseMove As EventHandler(Of RawMouseEventArgs)
+            AddHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseMoveHandler = [Delegate].Combine(MouseMoveHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of RawMouseEventArgs))
+                MouseMoveHandler = [Delegate].Remove(MouseMoveHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As RawMouseEventArgs)
+                If MouseMoveHandler IsNot Nothing Then MouseMoveHandler.Invoke(sender, e)
             End RaiseEvent
         End Event
 #End Region
@@ -5183,6 +5869,7 @@ Namespace DevicesT.RawInputT
         End Event
 #End Region
 #Region "HID"
+#Region "HidEvent"
         ''' <summary>Raises the <see cref="HidEvent"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
@@ -5204,6 +5891,56 @@ Namespace DevicesT.RawInputT
             End RaiseEvent
         End Event
 #End Region
+#Region "Windos Media Center remote"
+#Region "MediaCenterRemoteButtonDown"
+        ''' <summary>Raises the <see cref="MediaCenterRemoteButtonDown"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMediaCenterRemoteButtonDown(ByVal e As MediaCenterRemoteEventArgs)
+            RaiseEvent MediaCenterRemoteButtonDown(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MediaCenterRemoteButtonDown"/> event</summary>
+        Private MediaCenterRemoteButtonDownHandler As EventHandler(Of MediaCenterRemoteEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates a Windows Media Center infrared remote event - button was presed</summary>
+        ''' <remarks>This event is raised only when <see cref="RaiseMediaCenterRemoteEvents"/> is true</remarks>
+        Public Custom Event MediaCenterRemoteButtonDown As EventHandler(Of MediaCenterRemoteEventArgs)
+            AddHandler(ByVal value As EventHandler(Of MediaCenterRemoteEventArgs))
+                MediaCenterRemoteButtonDownHandler = [Delegate].Combine(MediaCenterRemoteButtonDownHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of MediaCenterRemoteEventArgs))
+                MediaCenterRemoteButtonDownHandler = [Delegate].Remove(MediaCenterRemoteButtonDownHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As MediaCenterRemoteEventArgs)
+                If MediaCenterRemoteButtonDownHandler IsNot Nothing Then MediaCenterRemoteButtonDownHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#Region "MediaCenterRemoteButtonUp"
+        ''' <summary>Raises the <see cref="MediaCenterRemoteButtonUp"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        ''' <remarks>Note for inheritors: Always call base-class method in order the event to be raised.</remarks>
+        Protected Overridable Sub OnMediaCenterRemoteButtonUp(ByVal e As MediaCenterRemoteEventArgs)
+            RaiseEvent MediaCenterRemoteButtonUp(Me, e)
+        End Sub
+        ''' <summary>Invocation list for the <see cref="MediaCenterRemoteButtonUp"/> event</summary>
+        Private MediaCenterRemoteButtonUpHandler As EventHandler(Of MediaCenterRemoteEventArgs)
+        ''' <summary>Raised when the raw input device this instance was registered for generates a Windows Media Center infrared remote event - button was released</summary>
+        ''' <remarks>This event is raised only when <see cref="RaiseMediaCenterRemoteEvents"/> is true.
+        ''' <para><see cref="MediaCenterRemoteEventArgs.KeyCode"/> returns only <see cref="MediaCenterRemoteKey.CommandKey"/> or <see cref="MediaCenterRemoteKey.ExtendedKey"/>. For button up event, you cannot determine the button which was released. Only way to determine this is remember button which was previously pressed.</para></remarks>
+        Public Custom Event MediaCenterRemoteButtonUp As EventHandler(Of MediaCenterRemoteEventArgs)
+            AddHandler(ByVal value As EventHandler(Of MediaCenterRemoteEventArgs))
+                MediaCenterRemoteButtonUpHandler = [Delegate].Combine(MediaCenterRemoteButtonUpHandler, value)
+            End AddHandler
+            RemoveHandler(ByVal value As EventHandler(Of MediaCenterRemoteEventArgs))
+                MediaCenterRemoteButtonUpHandler = [Delegate].Remove(MediaCenterRemoteButtonUpHandler, value)
+            End RemoveHandler
+            RaiseEvent(ByVal sender As Object, ByVal e As MediaCenterRemoteEventArgs)
+                If MediaCenterRemoteButtonUpHandler IsNot Nothing Then MediaCenterRemoteButtonUpHandler.Invoke(sender, e)
+            End RaiseEvent
+        End Event
+#End Region
+#End Region
+#End Region
 #End Region
 #Region "Disposing"
         ''' <summary>Indicates if object was already disposed</summary>
@@ -5211,9 +5948,10 @@ Namespace DevicesT.RawInputT
         ''' <summary>Releases all resources used by the <see cref="RawInputEventProvider" />.</summary>
         Protected Overrides Sub Dispose(ByVal disposing As Boolean)
             MyBase.Dispose(disposing)
-            PerformFInalization()
+            PerformFinalization()
         End Sub
         ''' <summary>Performs <see cref="Dispose"/> or <see cref="Finalize"/></summary>
+        <DebuggerStepThrough()> _
         Private Sub PerformFinalization()
             Static disposing As Boolean = False
             If disposed OrElse disposing Then Exit Sub
@@ -5236,7 +5974,7 @@ Namespace DevicesT.RawInputT
         ''' <summary>Releases unmanaged resources and performs other cleanup operations before the <see cref="RawInputEventProvider" /> is reclaimed by garbage collection.</summary>
         Protected Overrides Sub Finalize()
             MyBase.Finalize()
-            PerformFInalization
+            PerformFinalization()
         End Sub
 #End Region
 
@@ -5747,6 +6485,12 @@ Namespace DevicesT.RawInputT
             MyBase.New(RawInputT.DeviceType.Hid, hDevice)
             Me.raw = raw
         End Sub
+        ''' <summary>Copy CTor - initializes new instance of <see cref="RawHidEventArgs"/> from given instance</summary>
+        ''' <param name="Other">Instance to initialize new instance from</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Other"/> is null</exception>
+        Protected Sub New(ByVal Other As RawHidEventArgs)
+            Me.New(Other.ThrowIfNull("Other").raw, Other.Device.DeviceHandle)
+        End Sub
         ''' <summary>Gets raw data from input device</summary>
         ''' <returns>Raw data from input device</returns>
         ''' <remarks>You can change items of this array. Do not do this! Or data for other consumers of this event and all events raised for same <see cref="API.Messages.WindowMessages.WM_INPUT"/> message can be currupted.</remarks>
@@ -5779,7 +6523,133 @@ Namespace DevicesT.RawInputT
             Next
             Return ret
         End Function
+        ''' <summary>Contains value of the <see cref="AdditionalEvents"/> property</summary>
+        Private _AdditionalEvents As New List(Of Action(Of RawHidEventArgs))
+        ''' <summary>List of delegates of procedures to be called in order to raise additional events for this event args</summary>
+        ''' <returns>Delegates to be called for this event args; null when delegates have been already called.</returns>
+        ''' <remarks>When overriding <see cref="RawInputEventProvider.HidAdditionalProcessing"/>, do not raise events from there. Instead of it create the On... procedures and pass delegates to them to this property. Delegates will be called in order in which they are in the list after preceding generic events are raised. This ensures consistent event order. Most generic first and most concrete last.</remarks>
+        Protected Friend ReadOnly Property AdditionalEvents() As List(Of Action(Of RawHidEventArgs))
+            Get
+                Return _AdditionalEvents
+            End Get
+        End Property
+        ''' <summary>Calls all the delegates in <see cref="AdditionalEvents"/>, then clears the list</summary>
+        ''' <exception cref="InvalidOleVariantTypeException"><see cref="AdditionalEvents"/> is null</exception>
+        Friend Sub RaiseAdditionalEvents()
+            If AdditionalEvents Is Nothing Then Throw New InvalidOperationException(ResourcesT.ExceptionsWin.AdditionalEventsHaveBeenAlreadyCalled)
+            For Each [Delegate] In AdditionalEvents
+                [Delegate].Invoke(Me)
+            Next
+            AdditionalEvents.Clear()
+            _AdditionalEvents = Nothing
+        End Sub
     End Class
+
+    ''' <summary>Argument of HID device caused by Windows Media Center infrared remote</summary>
+    Public Class MediaCenterRemoteEventArgs
+        Inherits RawHidEventArgs
+        ''' <summary>Contains value of the <see cref="KeyCode"/> property</summary>
+        Private ReadOnly _KeyCode As MediaCenterRemoteKey
+        ''' <summary>CTor</summary>
+        ''' <param name="Original">Original raw HID event argument</param>
+        ''' <exception cref="ArgumentException"><paramref name="Original"/>.<see cref="RawHidEventArgs.RawItemsCount">RawItemsCount</see> is not 1 or <paramref name="Original"/>.<see cref="RawHidEventArgs.RawItemSize">RawItemSize</see> is neither 2 nor 3</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Original"/> is null</exception>
+        ''' <remarks>Before calling this constructor, ensure that events come from Media Center Remote. This constructor performs no validation (except for that documented in exceptions). It only converts <paramref name="Original"/>.<see cref="RawHidEventArgs.GetRawBlocks">GetRawBlocks</see>[0] to <see cref="MediaCenterRemoteKey"/> value (in way described in documentation of <see cref="MediaCenterRemoteKey"/> enumeration).</remarks>
+        Public Sub New(ByVal Original As RawHidEventArgs)
+            MyBase.New(Original)
+            If (Original.RawItemSize <> 2 AndAlso Original.RawItemSize <> 3) OrElse Original.RawItemsCount <> 1 Then Throw New ArgumentException(ResourcesT.ExceptionsWin.LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize)
+            With Original.GetRawBlocks(0)
+                _KeyCode = CInt(.self(0)) Or CInt(.self(1)) << 8 Or If(.Length = 3, CInt(.self(2)) << 16, 0)
+            End With
+        End Sub
+        ''' <summary>Gets code of button that was pressed</summary>
+        ''' <returns>Code of presed button</returns>
+        ''' <remarks>For key up event retrns only <see cref="MediaCenterRemoteKey.CommandKey"/> or <see cref="MediaCenterRemoteKey.ExtendedKey"/>.</remarks>
+        Public ReadOnly Property KeyCode() As MediaCenterRemoteKey
+            Get
+                Return _KeyCode
+            End Get
+        End Property
+    End Class
+    ''' <summary>Contains keycodes used by Windows Media Center infrared remote</summary>
+    ''' <remarks>Enumeration values mimics raw data comming from Media Center remote HID device. The data come as array of 2 or bytes. Bytes are composed into single integer value this ways: Byte 0 is the least significant (the lowest order) byte in integer value, byte 1 is 2nd least significant, byte 2 is 3rd least significant byte of integer.
+    ''' <para>This enumeration does not provide values for buttons ←, ↑, →, ↓, OK, Enter, Clear, *, # and 0-9 because they are provided by HID in different way. You can consume those buttons using keyboard events.</para></remarks>
+    Public Enum MediaCenterRemoteKey As Integer
+        ''' <summary>Indicates extended key. Extended keys are such keys that do not cause the <see cref="API.Messages.WindowMessages.WM_APPCOMMAND"/> message. This value can be used as mask to detect extended keys and it's also used for key-up event.</summary>
+        ExtendedKey = &H3
+        ''' <summary>Indicates comand key. Command keys are such keys that cause the <see cref="API.Messages.WindowMessages.WM_APPCOMMAND"/> message. This value can be used as mask to detect command keys and it's also used for key-up event.</summary>
+        CommandKey = &H2
+        ''' <summary>The DVD menu button. Causes DVD menu (title/chapre selection to be show.)</summary>
+        DvdMenu = &H2403
+        ''' <summary>Record button. Immediately starts recording.</summary>
+        Record = &HB202
+        ''' <summary>Play button. Starts/resumes playing current title. Does not pause pleying.</summary>
+        Play = &HB002
+        ''' <summary>Stop button. Stops playing.</summary>
+        [Stop] = &HB702
+        ''' <summary>Rewind (RWD) button. Causes title to be played in reversed direction. Multiple preses increase play speed.</summary>
+        Rewind = &HB402
+        ''' <summary>Forward (FWD) or fast forward (FFWD) button. Causes title to be played in increased speed in normal direction. Multiple presses increase speed.</summary>
+        Forward = &HB302
+        ''' <summary>Previous track/skip back button. Skips to start of curent track/title or to previous track/title.</summary>
+        PreviousTrack = &HB602
+        ''' <summary>Pause button. Pauses playing of current title. Repeated pressing does not cause play to resume.</summary>
+        Pause = &HB102
+        ''' <summary>Next track/skip forward button. Skips to next track/title.</summary>
+        NextTrack = &HB502
+        ''' <summary>Recorded TV button. Navigates to TV recorder section of application.</summary>
+        RecordedTV = &H4803
+        ''' <summary>TV Guide / EPG button. Show television program / guide / EPG.</summary>
+        Guide = &H8D02
+        ''' <summary>Live TV / TV jump button. Starts showig television (digital/analog/cable/sattelite etc.).</summary>
+        TV = &H2503
+        ''' <summary>Volume up button. Increases volume.</summary>
+        VolumeUp = &HE902
+        ''' <summary>Volume down button. Decreases volume.</summary>
+        VolumeDown = &HEA02
+        ''' <summary>Back button. Navigates backward in history.</summary>
+        Back = &H22402
+        ''' <summary>Mute button. Toggle all sounds on/off.</summary>
+        Mute = &HE202
+        ''' <summary>More / info button. Show information an/or gives access to tasks (i.e. context menu)</summary>
+        More = &H20902
+        ''' <summary>Channel up button. Increases number of currently played TV/radio channel.</summary>
+        ChannelUp = &H9C02
+        ''' <summary>Channel down button. Decreases number of currently played TV/radio channel.</summary>
+        ChannelDown = &H9D02
+        ''' <summary>eHome button. Usually the green one with Windows logo. Starts the Media Center application or gows to title page. Documentation states thet this button is not intended to be used by applications.</summary>
+        eHome = &HD03
+        ''' <summary>Red button. Used while browsing teletext or can be used as software button.</summary>
+        Red = &H5B03
+        ''' <summary>Green button. Used while browsing teletext or can be used as software button.</summary>
+        Green = &H5C03
+        ''' <summary>Yellow button. Used while browsing teletext or can be used as software button.</summary>
+        Yellow = &H5D03
+        ''' <summary>Blue button. Used while browsing teletext or can be used as software button.</summary>
+        Blue = &H5E03
+        ''' <summary>Teletext button. Shows teletext.</summary>
+        Teletext = &H5A03
+        ''' <summary>Standby button. Causes user-dependent action defined for standby button pressing to be taken. Note: Some remotes does not provide event for this button thought they have it.</summary>
+        Standby = &H8203
+        ''' <summary>Vendor-specific button 1</summary>
+        OEM1 = &H8003
+        ''' <summary>Vendor-specific button 2</summary>
+        OEM2 = &H8103
+        ''' <summary>My TV button. Navigates to My TV folder.</summary>
+        MyTV = &H4603
+        ''' <summary>My Videos button. Navigates to My Videos folder.</summary>
+        MyVideos = &H4A3
+        ''' <summary>My Pictures button. Navigates to My Pictures folder.</summary>
+        MyPictures = &H4903
+        ''' <summary>My Music button. Navigates to My Music folder.</summary>
+        MyMusic = &H4703
+        ''' <summary>DVD angle button. Changes viewing angle.</summary>
+        DvdAngle = &H4B03
+        ''' <summary>DVD audio button. Changes audio language.</summary>
+        DvdAudio = &H4C03
+        ''' <summary>DVD subtitles button. Changes subtitles languages and toggles subtitles on/off.</summary>
+        DvdSubtitle = &H4D03
+    End Enum
 #End Region
 
     ''' <summary>Specifies device registration</summary>
@@ -5844,6 +6714,7 @@ Namespace DevicesT.RawInputT
             Me.WholePage = True
             Me.BackgroundEvents = Background
         End Sub
+#Region "Shared"
         ''' <summary>Gets <see cref="RawInputDeviceRegistration"/> for keyboard</summary>
         ''' <returns>New instance of <see cref="RawInputDeviceRegistration"/> initialized to the keyboard device <see cref="UsagePage"/> <see cref="UsagePages.GenericDesktopControls"/> and <see cref="Usage"/> <see cref="Usages_GenericDesktopControls.Keyboard"/>).</returns>
         ''' <remarks>Each call to this property returns new instance</remarks>
@@ -5860,6 +6731,31 @@ Namespace DevicesT.RawInputT
                 Return New RawInputDeviceRegistration(UsagePages.GenericDesktopControls, Usages_GenericDesktopControls.Mouse)
             End Get
         End Property
+        ''' <summary>Gets array of <see cref="RawInputDeviceRegistration">RawInputDeviceRegistrations</see> initialized with usages (and usage pages) used by Windows Media Center infrared remote</summary>
+        ''' <returns>Each call to this property returns new array containing new instances of <see cref="RawInputDeviceRegistration"/>, so it is safe to change values in the array. Only <see cref="RawInputDeviceRegistration.UsagePage"/> and <see cref="RawInputDeviceRegistration.Usage"/> properties are initialized; all other have default values.</returns>
+        ''' <remarks>If you want to change value of the <see cref="RawInputDeviceRegistration.BackgroundEvents"/> for entire array, you can use the <see cref="RawInputExtensions.SetBackgroundEvents"/> extension function.
+        ''' <para>Returned array contains following entries (in form (usage page, usage)):
+        ''' (<see cref="MediaCenterRemoteUsagePage"/>, <see cref="MediaCenterRemoteUsage"/>), (<see cref="UsagePages.Consumer"/>, <see cref="Usages_Consumer.ConsumerControl"/>), (<see cref="UsagePages.Consumer"/>, <see cref="Usages_Consumer.NumericKeyPad"/>).
+        ''' </para>
+        ''' <para>This set of registrations does not give you access to buttons Up, Left, Right, Down, OK, Enter, Clear, *, # and 0-9. Use keyboard events to utilize these buttons. (Note: The buttons can be usually obtained via raw keyboard as well as via raw HID, but rwa HID interpretation is difficult.</para>
+        ''' <example>
+        ''' Folowing code demonstrates possible way of obtaining array of devices for registration for Media Center remote events and setting that events are to be fired even when window is not active at one line oc fode:
+        ''' <code language="vb">Imports <see cref="Tools.DevicesT.RawInputT">Tools.DevicesT.RawInputT</see>
+        ''' Dim mcr = <see cref="RawInputDeviceRegistration.MediaCenterRemote">RawInputDeviceRegistration.MediaCenterRemote</see>.<see cref="RawInputExtensions.SetBackgroundEvents">SetBackgroundEvents</see>(<see cref="BackgroundEvents.Background">BackgroundEvents.Background</see>)</code>
+        ''' </example></remarks>
+        Public Shared ReadOnly Property MediaCenterRemote() As RawInputDeviceRegistration()
+            Get
+                Return New RawInputDeviceRegistration() { _
+                    New RawInputDeviceRegistration(MediaCenterRemoteUsagePage, MediaCenterRemoteUsage), _
+                    New RawInputDeviceRegistration(UsagePages.Consumer, Usages_Consumer.ConsumerControl), _
+                    New RawInputDeviceRegistration(UsagePages.Consumer, Usages_Consumer.NumericKeyPad)}
+            End Get
+        End Property
+        ''' <summary>Additional non-standard usage page used by Windows Media Center infrared remote</summary>
+        Public Const MediaCenterRemoteUsagePage As UsagePages = &HFFBC
+        ''' <summary>Additional non-standard usage inside <see cref="MediaCenterRemoteUsagePage"/> usage page used by Windows Media Center infrared remote</summary>
+        Public Const MediaCenterRemoteUsage As Integer = &H88
+#End Region
         ''' <summary>Registration flags</summary>
         Private Flags As API.RawInput.RAWINPUTDEVICEFlags
         ''' <summary>Contains value of the <see cref="Usage"/> property</summary>

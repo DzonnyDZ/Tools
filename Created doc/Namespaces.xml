@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<doc xmlns="http://dzonny.cz/xml/schemas/intellisense">
+<doc xmlns="http://dzonny.cz/xml/schemas/intellisense" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+     xsi:noNamespaceSchemaLocation="../DevelopmentTools/Intellisense/intellisense.xsd">
     <members>
         <member name="N:">
             <summary>ĐTools project root unnamed namespace</summary>
@@ -194,13 +195,25 @@
             <seealso cref="N:System.Diagnostics"/>
         </member>
         <member name="N:Tools.API">
-            <summary>Contains PInvoke (usually Win32 API) relates stuff</summary>
+            <summary>Contains PInvoke (usually Win32 API) relates declarations (mainly modules containing declarations of external functions, structures and enumerations; most of them are declared friend)</summary>
+        </member>
+        <member name="N:Tools.API.Messages">
+            <summary>Contains publicly wisible declarations related to Windows window messages. Contains declarations of window messages constants and related wParam, lParam and return value constants.</summary>
+        </member>
+        <member name="N:Tools.API.Messages.wParam">
+            <summary>Contains declarations of constants used as values of wParam of windows messages.</summary>
+        </member>
+        <member name="N:Tools.API.Messages.lParam">
+            <summary>Contains declarations of constants used as values of lParam of windows messages.</summary>
+        </member>
+        <member name="N:Tools.API.Messages.ReturnValues">
+            <summary>Contains declarations of constants used as return values of windows messages.</summary>
         </member>
         <member name="N:Tools.WindowsT.NativeT">
             <summary>Contains tools for manipulating native (unmanaged) Win32 windows via PInvoke</summary>
         </member>
         <member name="N:Tools.COM">
-            <sumary>Contains declaration of COM-related classes, strucrures and enumerations</sumary>
+            <summary>Contains declaration of COM-related classes, strucrures and enumerations</summary>
         </member>
         <member name="N:Tools.COM.ShellLink">
             <summary>Contains COM declarations related to the <see cref="T:Tools.COM.ShellLink.ShellLink"/> class. Those declarations servers as code-behind for implementation of the <see cref="T:Tools.IOt.ShellLink"/> class, a tool for manipulating *.LNK files.</summary>
@@ -242,6 +255,9 @@
                 Classes in this namespace are not provided as assembly. You can download source code from /DevelopmentTools/Macros and load file Tools.VisualStudio.Macros.vsmproj to Microsft Visual Studio Macros IDE to utilize the functionality implemented in this namespace.
                 <para>The Tools.VisualStudio.Macros.dll assemnly is not publicly available and is not intended to be used as compiled assembly.</para>
             </remarks>
+        </member>
+        <member name="N:Tools.DevicesT.RawInputT">
+            <summary>Contains classes allowing consumption of raw input events from keyboard, mouse and other HID devices.</summary>
         </member>
     </members>    
 </doc>

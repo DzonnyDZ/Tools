@@ -38,6 +38,16 @@ Namespace ExtensionsT
         Public Function [DoThrow](Of T As Exception)(ByVal ex As T) As T
             Throw ex
         End Function
+        ''' <summary>Throws an <see cref="ArgumentNullException"/> if given object is null</summary>
+        ''' <param name="arg">Object to be tested</param>
+        ''' <param name="ArgumentName">Optional. Name of argument for exception. If null "arg" is supplied.</param>
+        ''' <typeparam name="T">Type of object. Must be reference type.</typeparam>
+        ''' <exception cref="ArgumentException"><paramref name="arg"/> is null</exception>
+        <Extension()> _
+        Public Function ThrowIfNull(Of T As Class)(ByVal arg As T, Optional ByVal ArgumentName$ = Nothing) As T
+            If arg Is Nothing Then Throw New ArgumentNullException(If(ArgumentName, "arg"))
+            Return arg
+        End Function
     End Module
 End Namespace
 #End If

@@ -1,3 +1,5 @@
+Imports System.Runtime.InteropServices
+
 Namespace API
     ''' <summary>Generic exception caused by Win32 API</summary>
     Public Class Win32APIException : Inherits System.ComponentModel.Win32Exception
@@ -10,6 +12,20 @@ Namespace API
         Public Sub New()
             MyBase.new()
         End Sub
+        ''' <summary>Gets exception for error caused by last Win32 API call</summary>
+        ''' <returns>Exception obtained via <see cref="Marshal.GetExceptionForHR"/>(<see cref="Marshal.GetHRForLastWin32Error"/>)</returns>
+        Public Shared Function GetLastWin32Exception() As Exception
+            Dim Code = Marshal.GetHRForLastWin32Error
+            Return Marshal.GetExceptionForHR(Code)
+        End Function
+        ''' <summary>Gets exception for error caused by last Win32 API call</summary>
+        ''' <typeparam name="T">Type of exception to be returned</typeparam>
+        ''' <returns>Obtains exception using non-generic <see cref="M:Tools.API.Win32APIException.GetLastWin32Exception"/> function.
+        ''' It the exception returned is <typeparamref name="T"/> or derives from <typeparamref name="T"/> returns it; otherwise returns new instance of <see cref="Win32APIException"/>.</returns>
+        Public Shared Function GetLastWin32Exception(Of T As Exception)() As Exception
+            Dim Ex = GetLastWin32Exception()
+            If Not TypeOf Ex Is T Then Return New Win32APIException Else Return Ex
+        End Function
     End Class
 
 
@@ -29,7 +45,9 @@ Namespace API
         ''' <returns>The return value is the calling thread's last-error code.
         ''' <para>The Return Value section of the documentation for each function that sets the last-error code notes the conditions under which the function sets the last-error code. Most functions that set the thread's last-error code set it when they fail. However, some functions also set the last-error code when they succeed. If the function is not documented to set the last-error code, the value returned by this function is simply the most recent last-error code to have been set; some functions set the last-error code to 0 on success and others do not.</para>
         ''' <para>Windows Me/98/95:  Functions that are actually implemented in 16-bit code do not set the last-error code. You should ignore the last-error code when you call these functions. They include window management functions, GDI functions, and Multimedia functions. For functions that do set the last-error code, you should not rely on GetLastError returning the same value as it does under other versions of Windows.</para></returns>
-        ''' <remarks>Visual Basic:  Applications should call <see cref="ErrObject.LastDllError"/> of <see cref="err"/> instead of <see cref="GetLastError"/>.</remarks>
+        ''' <remarks>Visual Basic:  Applications should call <see cref="ErrObject.LastDllError"/> of <see cref="err"/> instead of <see cref="GetLastError"/>.
+        ''' <para>Use <see cref="Marshal.GetLastWin32Error"/> instead.</para></remarks>
+        <Obsolete("Use Marshal.GetLastWin32Error  instead")> _
         Public Declare Function GetLastError Lib "kernel32" () As Integer
         ''' <summary>Formats a message string. The function requires a message definition as input. The message definition can come from a buffer passed into the function. It can come from a message table resource in an already-loaded module. Or the caller can ask the function to search the system's message table resource(s) for the message definition. The function finds the message definition in a message table resource based on a message identifier and a language identifier. The function copies the formatted message text to an output buffer, processing any embedded insert sequences if requested.</summary>
         ''' <param name="dwFlags">The formatting options, and how to interpret the lpSource parameter. The low-order byte of dwFlags specifies how the function handles line breaks in the output buffer. The low-order byte can also specify the maximum width of a formatted output line. This parameter can be one or more of enumerated values. If the low-order byte is a nonzero value other than FORMAT_MESSAGE_MAX_WIDTH_MASK, it specifies the maximum number of characters in an output line. The function ignores regular line breaks in the message definition text. The function never splits a string delimited by white space across a line break. The function stores hard-coded line breaks in the message definition text into the output buffer. Hard-coded line breaks are coded with the %n escape sequence.</param>
@@ -76,7 +94,7 @@ Namespace API
         ''' <summary>Gets inforemation about error in last API call</summary>
         ''' <returns>Description of error</returns>
         Public Function LastDllErrorInfo() As String
-            Return LastDllErrorInfo(GetLastError)
+            Return LastDllErrorInfo(Marshal.GetLastWin32Error)
         End Function
         ''' <summary>Gets information about error with specified number</summary>
         ''' <param name="ErrN">Number of error</param>
@@ -108,7 +126,17 @@ Namespace API
         Public Enum Errors
             ''' <summary>Target buffer has not enough space for all items that are about to be placed in it</summary>
             ERROR_INSUFFICIENT_BUFFER = 122
+            ''' <summary>Invalid handle. Returned when handle is expected to be returned but no hande was created.</summary>
+            INVALID_HANDLE_VALUE = -1
+            ''' <summary>File already exists</summary>
+            ERROR_ALREADY_EXISTS = 183I
+            ''' <summary>File not found</summary>
+            ERROR_FILE_NOT_FOUND = 2I
+            ''' <summary>File exists</summary>
+            ERROR_FILE_EXISTS = 80I
         End Enum
+
+
     End Module
 End Namespace
 

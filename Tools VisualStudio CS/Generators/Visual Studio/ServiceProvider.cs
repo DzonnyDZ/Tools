@@ -128,7 +128,7 @@ namespace Tools.GeneratorsT {
         /// <param name='ppvSite'>
         ///     Outparam that will contain the site object.
         /// </param>
-        /// <seealso cref='IObjectWithSite'/>
+        /// <seealso cref='Microsoft.VisualStudio.OLE.Interop.IObjectWithSite'/>
         void Microsoft.VisualStudio.OLE.Interop.IObjectWithSite.GetSite(ref Guid riid, out IntPtr ppvSite) {
             ppvSite = Marshal.GetIUnknownForObject(GetService(riid));
             Marshal.GetIUnknownForObject(GetService(riid));
@@ -141,7 +141,7 @@ namespace Tools.GeneratorsT {
         ///     The site we will use.  This site will only be
         ///     used if it also implements IOleServiceProvider.
         /// </param>
-        /// <seealso cref='IObjectWithSite'/>
+        /// <seealso cref='Microsoft.VisualStudio.OLE.Interop.IObjectWithSite'/>
         void Microsoft.VisualStudio.OLE.Interop.IObjectWithSite.SetSite(object pUnkSite) {
             if(pUnkSite is IOleServiceProvider) {
                 serviceProvider = (IOleServiceProvider)pUnkSite;

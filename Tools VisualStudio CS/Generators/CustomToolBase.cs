@@ -70,9 +70,9 @@ namespace Tools.GeneratorsT {
         /// <exception cref="System.MemberAccessException"><paramref name="ToolClass"/> is abstract</exception>
         /// <exception cref="System.MissingMethodException">Public default CTor of type <paramref name="TollClass"/> wa not found</exception>
         /// <exception cref="System.TypeLoadException"><paramref name="ToolClass"/> is not valid type</exception>
-        /// <remarks>This method should be called by <see cref="ComRegisterFunctionAttribute"/> and <see cref="ComUnRegisterFunctionAttribute"/> methods of actual custom tool implementation.</remarks>
+        /// <remarks>This method should be called by <see cref="ComRegisterFunctionAttribute"/> and <see cref="ComUnregisterFunctionAttribute"/> methods of actual custom tool implementation.</remarks>
         /// <example>
-        /// Following example shows how to use the <see cref="RegisterCustomTool"/> method with com registration.
+        /// Following example shows how to use the <see cref="RegisterCustomTool(System.Type,bool)"/> method with com registration.
         /// <code language="cs"><![CDATA[
         /// [Guid("6071A00A-F725-4b59-86E5-B677CC089158")]
         /// [CustomTool("MyCustomTool", "My custom tool")]
@@ -236,8 +236,8 @@ namespace Tools.GeneratorsT {
 
         #region Custom tool definition
         /// <summary>When overriden in derived class, gets array of <see cref="Guid">Guids</see> identifying programming languages this custom tool should be registered for.</summary>
-        /// <returns>Guids of languages under HKLM\Software\Microsoft\VisualStudio\&lt;version>\Generators <see cref="RegisterCustomTool"/> will register/unregister this tool for. This implementation returns <see cref="CSharpCategoryGuid"/> and <see cref="VBCategoryGuid"/>.</returns>
-        /// <seealso cref="RegisterCustomTool"/>
+        /// <returns>Guids of languages under HKLM\Software\Microsoft\VisualStudio\&lt;version>\Generators <see cref="RegisterCustomTool(System.Type,bool)"/> will register/unregister this tool for. This implementation returns <see cref="CSharpCategoryGuid"/> and <see cref="VBCategoryGuid"/>.</returns>
+        /// <seealso cref="RegisterCustomTool(System.Type,bool)"/>
         /// <seealso cref="GetVisualStudioVersions"/>
         /// <seealso cref="CSharpCategoryGuid"/>
         /// <seealso cref="VBCategoryGuid"/>
@@ -249,9 +249,9 @@ namespace Tools.GeneratorsT {
             return new Guid[] { CSharpCategoryGuid, VBCategoryGuid };
         }
         /// <summary>When overriden in derived class, gets array of srings identifying versions of Visual Studio this custom tool will be registered for</summary>
-        /// <returns>String representing versions of Visual Stuido and keys under HKLM\Software\Microsoft\VisualStudio <see cref="RegisterCustomTool"/> will register/unregister this tool for. This implementation returns "8.0" and "9.0".</returns>
-        /// <seealso cref="RegisterCustomTool"/>
-        /// <seealso cref="GetLanguages"/>
+        /// <returns>String representing versions of Visual Stuido and keys under HKLM\Software\Microsoft\VisualStudio <see cref="RegisterCustomTool(System.Type,bool)"/> will register/unregister this tool for. This implementation returns "8.0" and "9.0".</returns>
+        /// <seealso cref="RegisterCustomTool(System.Type,bool)"/>
+        /// <seealso cref="GetLanguages()"/>
         public virtual string[] GetVisualStudioVersions() {
             return new string[] { "8.0", "9.0" };
         }
@@ -265,7 +265,7 @@ namespace Tools.GeneratorsT {
         /// <exception cref="ArgumentException"><paramref name="version"/> is too long (so total lenght of registry key name exceds 255 characters)</exception>
         /// <exception cref="System.Security.SecurityException">The user has not permission required for Software\Microsoft\VisualStudio\&lt;version>\Generators registry key</exception>
         /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
-        /// <exception cref="IO.Exception">A system error occurred, for example the current key has been deleted.</exception>
+        /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
         public static VisualStudioCustomToolLanguage[] GetLanguages(string version){
             if(version == null) throw new ArgumentNullException("version");
             string kName=string.Format("Software\\Microsoft\\VisualStudio\\{0}\\Generators",version);
@@ -296,7 +296,7 @@ public sealed class VisualStudioCustomToolLanguage {
     /// <returns>Array of objects representing custom tools registered for programming language represented by current instance.</returns>
     /// <exception cref="System.Security.SecurityException">The user has not permission required for Software\Microsoft\VisualStudio\&lt;version>\Generators\&lt;laguage> registry key</exception>
     /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
-    /// <exception cref="IO.Exception">A system error occurred, for example the current key has been deleted.</exception>
+    /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
     /// <exception cref="InvalidOperationException">Registry operation erro caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
     public VisualStudioCustomToolRegistration[] GetCustomTools() {
         try {
@@ -319,7 +319,7 @@ public sealed class VisualStudioCustomToolLanguage {
     /// <remarks>Name is obtained from registry key ..\..\InstalledProducts (relative to <see cref="KeyPath"/>) as name of the sub-key with CLSID corresponding  to <see cref="Guid"/></remarks>
     /// <exception cref="System.Security.SecurityException">The user has not permission required for used registry key</exception>
     /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
-    /// <exception cref="IO.Exception">A system error occurred, for example the current key has been deleted.</exception>
+    /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
     /// <exception cref="InvalidOperationException">Registry operation error caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
     public string Name {
         get {
@@ -377,7 +377,7 @@ public sealed class VisualStudioCustomToolRegistration {
     /// <returns>Value of default value of key this custom tool is represented by</returns>
     /// <exception cref="System.Security.SecurityException">The user has not permission required for used registry key</exception>
     /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
-    /// <exception cref="IO.Exception">A system error occurred, for example the current key has been deleted.</exception>
+    /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
     /// <exception cref="InvalidOperationException">Registry operation error caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
     public string Description {
         get {
@@ -393,7 +393,7 @@ public sealed class VisualStudioCustomToolRegistration {
     /// <returns><see cref="System.Guid"/> constructed form value of value CLSID of key <see cref="KeyPath"/></returns>
     /// <exception cref="System.Security.SecurityException">The user has not permission required for used registry key</exception>
     /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
-    /// <exception cref="IO.Exception">A system error occurred, for example the current key has been deleted.</exception>
+    /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
     /// <exception cref="InvalidOperationException">Registry operation error caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
     public Guid ClsId {
         get {
@@ -409,10 +409,10 @@ public sealed class VisualStudioCustomToolRegistration {
         }
    }
     /// <summary>Attempts to create instance of class registered for this custom tool</summary>
-    /// <returns>Instance of class representing the custom tool. The instance typically implements <see cref="IVsSingleFileGenerator"/> COM interface, but it is possible that the actual interface implemented by the object is not exactly the same as <see cref="IVsSingleFileGenerator"/>. It may for example implement its own version of the interface which is equivalent of <see cref="IVsSingleFileGenerator"/> at COM-level, but not at .NET-level.</returns>
+    /// <returns>Instance of class representing the custom tool. The instance typically implements <see cref="Microsoft.VisualStudio.Shell.Interop.IVsSingleFileGenerator"/> COM interface, but it is possible that the actual interface implemented by the object is not exactly the same as <see cref="Microsoft.VisualStudio.Shell.Interop.IVsSingleFileGenerator"/>. It may for example implement its own version of the interface which is equivalent of <see cref="Microsoft.VisualStudio.Shell.Interop.IVsSingleFileGenerator"/> at COM-level, but not at .NET-level.</returns>
     /// <exception cref="System.Security.SecurityException">The user has not permission required for used registry key</exception>
     /// <exception cref="System.UnauthorizedAccessException">The user does not have the necessary registry rights.</exception>
-    /// <exception cref="IO.Exception">A system error occurred, for example the current key has been deleted.</exception>
+    /// <exception cref="System.IO.IOException">A system error occurred, for example the current key has been deleted.</exception>
     /// <exception cref="InvalidOperationException">Registry operation error caused by invalid registry key name ocured. (This is caused by <see cref="ArgumentException"/> thrown by registry operation. See <see cref="Exception.InnerException"/>.)</exception>
     /// <exception cref="TypeLoadException">An exception was thrown by <see cref="Type.GetTypeFromCLSID(System.Guid,System.Boolean)"/> (with <paramref name="throwOnError"/> set to true). See <see cref="Exception.InnerException"/> for details.</exception>
     /// <exception cref="System.Reflection.TargetInvocationException">The constructor of custom tool class being called throws an exception. See <see cref="Exception.InnerException"/> for details.</exception>
