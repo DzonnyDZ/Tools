@@ -131,6 +131,7 @@
     <Compile Include="Properties.VB">
     </Compile>
     <Compile Include="Utilities.VB" />
+    <Compile Include="VisualBasic.vb" />
     <Compile Include="XMLDoc.VB" />
   </ItemGroup>
   <ItemGroup>
@@ -162,6 +163,10 @@
       <CustomToolNamespace>My</CustomToolNamespace>
       <LastGenOutput>Settings.Designer.vb</LastGenOutput>
     </None>
+    <None Include="VisualBasic.BIN" />
+    <None Include="VisualBasic.vsmproj" />
+    <None Include="VisualBasic.vsmprojex" />
+    <None Include="VisualBasic.vsmprojey" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="!ReadMe.txt" />

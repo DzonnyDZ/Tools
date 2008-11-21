@@ -24,7 +24,7 @@ Namespace API
 
         ''' <summary>contains information about a top-level collection's capability.</summary>
         <StructLayout(LayoutKind.Sequential)> _
-        Public Structure HIDP_CAPS    'ASAP:MSDN
+        Public Structure HIDP_CAPS
             ''' <summary>Specifies a top-level collection's usage ID.</summary>
             Public Usage As Int16
             ''' <summary>Specifies the top-level collection's usage page.</summary>
@@ -66,7 +66,7 @@ Namespace API
 
         ''' <summary>contains information that describes the capability of a set of HID control values (either a single usage or a usage range).</summary>
         <StructLayout(LayoutKind.Explicit, Pack:=1)> _
-        Public Structure HIDP_VALUE_CAPS 'ASAP:MSDN
+        Public Structure HIDP_VALUE_CAPS
             ''' <summary>Specifies the usage page of the usage or usage range.</summary>
             ''' <seelaso cref="DevicesT.RawInputT.UsagePages"/>
             <FieldOffset(0)> Public UsagePage As Int16
@@ -160,7 +160,7 @@ Namespace API
         End Structure
         ''' <summary>contains information about the capability of a HID control button usage (or a set of buttons associated with a usage range).</summary>
         <StructLayout(LayoutKind.Explicit, Pack:=1)> _
-        Public Structure HIDP_BUTTON_CAPS  'ASAP:MSDN
+        Public Structure HIDP_BUTTON_CAPS
             ''' <summary>Specifies the usage page for a usage or usage range.</summary>
             ''' <seelaso cref="DevicesT.RawInputT.UsagePages"/> 
             <FieldOffset(0)> Public UsagePage As Int16
@@ -255,7 +255,6 @@ Namespace API
         '    As Boolean
         'End Function
 
-        'ASAP: MSDN
         ''' <summary>releases the resources that the HID class driver allocated to hold a top-level collection's preparsed data.</summary>
         ''' <param name="PreparsedData">Pointer to the buffer, returned by <see cref="HidD_GetPreparsedData"/>, that is freed.</param>
         ''' <returns>TRUE if it succeeds. Otherwise, it returns FALSE if the buffer was not a preparsed data buffer.</returns>
@@ -296,7 +295,6 @@ Namespace API
         '    As Boolean
         'End Function
 
-        'ASAP: MSDN
         ''' <summary>returns a top-level collection's preparsed data.</summary>
         ''' <param name="HidDeviceObject">Specifies an open handle to a top-level collection.</param>
         ''' <param name="PreparsedData">Pointer to the address of a routine-allocated buffer that contains a collection's preparsed data in a _HIDP_PREPARSED_DATA structure.</param>
@@ -374,7 +372,7 @@ Namespace API
              ByVal ValueCaps As IntPtr, _
             ByRef ValueCapsLength As Int16, _
             ByVal PreparsedData As IntPtr) _
-            As HidErrorCode            'ASAP:MSDN
+            As HidErrorCode
         ''' <summary>returns a button capability array that describes all the HID control buttons in a top-level collection for a specified type of HID report.</summary>
         ''' <param name="ReportType">Specifies a <see cref="HIDP_REPORT_TYPE"/> enumerator value that identifies the report type.</param>
         ''' <param name="ButtonCaps">Pointer to a caller-allocated buffer that the routine uses to return a button capability array for the specified report type.</param>
@@ -386,6 +384,6 @@ Namespace API
              ByVal ButtonCaps As IntPtr, _
             ByRef ButtonCapsLength As Int16, _
             ByVal PreparsedData As IntPtr) _
-            As HidErrorCode   'ASAP:MSDN
+            As HidErrorCode
     End Module
 End Namespace
