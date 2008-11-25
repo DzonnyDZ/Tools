@@ -153,10 +153,10 @@ Partial Public Class DayViewRow
     ''' <summary>Nastane po té co je nahrazen prvek v kolekci <see cref="Records"/> jiným</summary>
     ''' <param name="sender">Zdroj události</param>
     ''' <param name="e">Parametry události</param>
-    Public Event RecordChanged(ByVal sender As DayViewRow, ByVal e As ListWithEvents(Of DayViewItem).OldNewItemEvetArgs)
-    Private Sub _Records_ItemChanged(ByVal sender As Tools.CollectionsT.GenericT.ListWithEvents(Of DayViewItem), ByVal e As Tools.CollectionsT.GenericT.ListWithEvents(Of DayViewItem).OldNewItemEvetArgs) Handles _Records.ItemChanged
+    Public Event RecordChanged(ByVal sender As DayViewRow, ByVal e As ListWithEvents(Of DayViewItem).OldNewItemEventArgs)
+    Private Sub _Records_ItemChanged(ByVal sender As Tools.CollectionsT.GenericT.ListWithEvents(Of DayViewItem), ByVal e As Tools.CollectionsT.GenericT.ListWithEvents(Of DayViewItem).OldNewItemEventArgs) Handles _Records.ItemChanged
         RaiseEvent RecordChanged(Me, e)
-        RaiseEvent Changed(Me, New ItemOperationEventArgs(Of ListWithEvents(Of DayViewItem).OldNewItemEvetArgs)(ItemOperationEventArgsBase.Operations.ItemChanged, e))
+        RaiseEvent Changed(Me, New ItemOperationEventArgs(Of ListWithEvents(Of DayViewItem).OldNewItemEventArgs)(ItemOperationEventArgsBase.Operations.ItemChanged, e))
     End Sub
     ''' <summary>Nastane po té co je zmìnìna nìkterá vlastnost prvku v kolekci <see cref="Records"/></summary>
     ''' <param name="sender">Zdroj události</param>

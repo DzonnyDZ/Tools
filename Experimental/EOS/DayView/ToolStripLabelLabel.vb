@@ -3,6 +3,7 @@ Imports Tools.WindowsT.FormsT.UtilitiesT
 Imports System.Drawing.Design
 Imports System.Windows.Forms
 Imports System.Drawing
+Imports Tools.ComponentModelT
 
 
 ''' <summary><see cref="ToolStripLabel"/> postavený na <see cref="Label">Labelu</see></summary>
@@ -80,7 +81,7 @@ Public Class ToolStripLabelLabel
     ''' <summary>Gets or sets the alignment of text in the label.</summary>
     ''' <returns>One of the <see cref="T:System.Drawing.ContentAlignment"></see> values. The default is <see cref="F:System.Drawing.ContentAlignment.TopLeft"></see>.</returns>
     ''' <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="T:System.Drawing.ContentAlignment"></see> values. </exception>
-    <Category(CategoryAttributeValues.Appearance), DefaultValue(1), SRDescription("LabelTextAlignDescr"), Localizable(True)> _
+    <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), DefaultValue(1), SRDescription("LabelTextAlignDescr"), Localizable(True)> _
         Public Overloads Property TextAlign() As System.Drawing.ContentAlignment
         Get
             Return Label.TextAlign
@@ -93,7 +94,7 @@ Public Class ToolStripLabelLabel
     '''' <summary>Gets or sets a value indicating whether the control is automatically resized to display its entire contents.</summary>
     '''' <returns>true if the control adjusts its width to closely fit its contents; otherwise, false. The default is false.</returns>
     '<DefaultValue(True)> _
-    '<SRDescription("LabelAutoSizeDescr"), Category(CategoryAttributeValues.Layout)> _
+    '<SRDescription("LabelAutoSizeDescr"), KnownCategory(KnownCategoryAttribute.KnownCategories.Layout)> _
     '<RefreshProperties(RefreshProperties.All), Localizable(True)> _
     'Public Overloads Property AutoSize() As Boolean
     '    Get
@@ -115,7 +116,7 @@ Public Class ToolStripLabelLabel
 #Region "Label"
     ''' <summary>Gets or sets a value indicating whether the ellipsis character (...) appears at the right edge of the <see cref="T:System.Windows.Forms.Label"></see>, denoting that the <see cref="T:System.Windows.Forms.Label"></see> text extends beyond the specified length of the <see cref="T:System.Windows.Forms.Label"></see>.</summary>
     ''' <returns>true if the additional label text is to be indicated by an ellipsis; otherwise, false. The default is false.</returns>
-    <SRDescription("LabelAutoEllipsisDescr"), Category(CategoryAttributeValues.Behavior), DefaultValue(False)> _
+    <SRDescription("LabelAutoEllipsisDescr"), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior), DefaultValue(False)> _
     Public Property AutoEllipsis() As Boolean
         Get
             Return Label.AutoEllipsis
@@ -127,7 +128,7 @@ Public Class ToolStripLabelLabel
     ''' <summary>Gets or sets the border style for the control.</summary>
     ''' <returns>One of the <see cref="T:System.Windows.Forms.BorderStyle"></see> values. The default is BorderStyle.None.</returns>
     ''' <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="T:System.Windows.Forms.BorderStyle"></see> values. </exception>
-    <SRDescription("LabelBorderDescr"), DefaultValue(0), Category(CategoryAttributeValues.Appearance)> _
+    <SRDescription("LabelBorderDescr"), DefaultValue(0), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
     Public Property BorderStyle() As BorderStyle
         Get
             Return Label.BorderStyle
@@ -139,7 +140,7 @@ Public Class ToolStripLabelLabel
     ''' <summary>Gets or sets the flat style appearance of the label control.</summary>
     ''' <returns>One of the <see cref="T:System.Windows.Forms.FlatStyle"></see> values. The default value is Standard.</returns>
     ''' <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="T:System.Windows.Forms.FlatStyle"></see> values. </exception>
-    <Category(CategoryAttributeValues.Appearance), DefaultValue(2), SRDescription("ButtonFlatStyleDescr")> _
+    <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), DefaultValue(2), SRDescription("ButtonFlatStyleDescr")> _
     Public Property FlatStyle() As FlatStyle
         Get
             Return Label.FlatStyle
@@ -150,7 +151,7 @@ Public Class ToolStripLabelLabel
     End Property
     ''' <summary>Gets or sets the image that is displayed on a <see cref="T:System.Windows.Forms.Label"></see>.</summary>
     ''' <returns>An <see cref="T:System.Drawing.Image"></see> displayed on the <see cref="T:System.Windows.Forms.Label"></see>. The default is null.</returns>
-    <Category(CategoryAttributeValues.Appearance), SRDescription("ButtonImageDescr"), Localizable(True)> _
+    <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), SRDescription("ButtonImageDescr"), Localizable(True)> _
         Public Property LabelImage() As Image
         Get
             Return Label.Image
@@ -162,7 +163,7 @@ Public Class ToolStripLabelLabel
     ''' <summary>Gets or sets the alignment of an image that is displayed in the control.</summary>
     ''' <returns>One of the <see cref="T:System.Drawing.ContentAlignment"></see> values. The default is ContentAlignment.MiddleCenter.</returns>
     ''' <exception cref="T:System.ComponentModel.InvalidEnumArgumentException">The value assigned is not one of the <see cref="T:System.Drawing.ContentAlignment"></see> values. </exception>
-    <Localizable(True), SRDescription("ButtonImageAlignDescr"), Category(CategoryAttributeValues.Appearance), DefaultValue(&H20)> _
+    <Localizable(True), SRDescription("ButtonImageAlignDescr"), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), DefaultValue(&H20)> _
     Public Property LabelImageAlign() As ContentAlignment
         Get
             Return Label.ImageAlign
@@ -174,7 +175,7 @@ Public Class ToolStripLabelLabel
     ''' <summary>Gets or sets the index value of the image displayed on the <see cref="T:System.Windows.Forms.Label"></see>.</summary>
     ''' <returns>A zero-based index that represents the position in the <see cref="T:System.Windows.Forms.ImageList"></see> control (assigned to the <see cref="P:System.Windows.Forms.Label.ImageList"></see> property) where the image is located. The default is -1.</returns>
     ''' <exception cref="T:System.ArgumentOutOfRangeException">The value assigned is less than the lower bounds of the <see cref="P:System.Windows.Forms.Label.ImageIndex"></see> property. </exception>
-    <SRDescription("ButtonImageIndexDescr"), Editor("System.Windows.Forms.Design.ImageIndexEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(UITypeEditor)), DefaultValue(-1), Category(CategoryAttributeValues.Appearance), RefreshProperties(RefreshProperties.Repaint), Localizable(True), TypeConverter(GetType(ImageIndexConverter))> _
+    <SRDescription("ButtonImageIndexDescr"), Editor("System.Windows.Forms.Design.ImageIndexEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(UITypeEditor)), DefaultValue(-1), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance), RefreshProperties(RefreshProperties.Repaint), Localizable(True), TypeConverter(GetType(ImageIndexConverter))> _
     Public Property LabelImageIndex() As Integer
         Get
             Return Label.ImageIndex
@@ -185,7 +186,7 @@ Public Class ToolStripLabelLabel
     End Property
     ''' <summary>Gets or sets the key accessor for the image in the <see cref="P:System.Windows.Forms.Label.ImageList"></see>.</summary>
     ''' <returns>A string representing the key of the image.</returns>
-    <DefaultValue(""), Editor("System.Windows.Forms.Design.ImageIndexEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(UITypeEditor)), Localizable(True), RefreshProperties(RefreshProperties.Repaint), TypeConverter(GetType(ImageKeyConverter)), SRDescription("ButtonImageIndexDescr"), Category(CategoryAttributeValues.Appearance)> _
+    <DefaultValue(""), Editor("System.Windows.Forms.Design.ImageIndexEditor, System.Design, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a", GetType(UITypeEditor)), Localizable(True), RefreshProperties(RefreshProperties.Repaint), TypeConverter(GetType(ImageKeyConverter)), SRDescription("ButtonImageIndexDescr"), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
     Public Property LabelImageKey() As String
         Get
             Return Label.ImageKey
@@ -203,7 +204,7 @@ Public Class ToolStripLabelLabel
     End Sub
     ''' <summary>Gets or sets a value indicating whether the control interprets an ampersand character (&amp;) in the control's <see cref="P:System.Windows.Forms.Control.Text"></see> property to be an access key prefix character.</summary>
     ''' <returns>true if the label doesn't display the ampersand character and underlines the character after the ampersand in its displayed text and treats the underlined character as an access key; otherwise, false if the ampersand character is displayed in the text of the control. The default is true.</returns>
-    <DefaultValue(True), SRDescription("LabelUseMnemonicDescr"), Category(CategoryAttributeValues.Appearance)> _
+    <DefaultValue(True), SRDescription("LabelUseMnemonicDescr"), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
     Public Property UseMnemonic() As Boolean
         Get
             Return Label.UseMnemonic

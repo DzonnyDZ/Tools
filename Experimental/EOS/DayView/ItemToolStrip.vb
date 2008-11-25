@@ -2,6 +2,7 @@ Imports Tools.CollectionsT.GenericT, Tools, System.ComponentModel
 Imports Tools.WindowsT.FormsT.UtilitiesT
 Imports System.Drawing.Design, System.Drawing
 Imports System.Windows.Forms
+Imports Tools.ComponentModelT
 
 Partial Class DayView
     ''' <summary><see cref="ToolStrip"/> o jediném <see cref="ToolStripLabelLabel"/> sloužící pro zobrazení položky <see cref="DayView"/></summary>
@@ -51,7 +52,7 @@ Partial Class DayView
         ''' <summary>Obsahuje hodnotu vlastnosti <see cref="CanMove"/></summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _CanMove As Boolean = True
         ''' <summary>Urèuje jestli uživatel mùže tuto instanci pøesouvat a mìnit jeí velikost</summary>
-        <DefaultValue("True"), Category(CategoryAttributeValues.Behavior)> _
+        <DefaultValue("True"), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property CanMove() As Boolean
             Get
                 Return _CanMove
@@ -64,7 +65,7 @@ Partial Class DayView
         <EditorBrowsable(EditorBrowsableState.Never)> Private _AcceptsLeftRight As Boolean = False
         ''' <summary>Indikuje jestli položka akceptuje klávesy <see cref="Keys.Left"/> a <see cref="Keys.Right"/></summary>
         <DefaultValue(False)> _
-        <Category(WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property AcceptsLeftRight() As Boolean
             Get
                 Return _AcceptsLeftRight
@@ -77,7 +78,7 @@ Partial Class DayView
         <EditorBrowsable(EditorBrowsableState.Never)> Private _AcceptsTab As Boolean = False
         ''' <summary>Indikuje jestli položka akceptuje klávesu <see cref="Keys.Tab"/></summary>
         <DefaultValue(False)> _
-        <Category(WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property AcceptsTab() As Boolean
             Get
                 Return _AcceptsTab
@@ -142,7 +143,7 @@ Partial Class DayView
         ''' <summary>Gets or sets a value indicating whether the user can give the focus to an item in the System.Windows.Forms.ToolStrip using the TAB key.</summary>
         ''' <returns>true if the user can give the focus to an item in the System.Windows.Forms.ToolStrip using the TAB key; otherwise, false. The default is false.</returns>
         <DefaultValue(True)> _
-        <Category(WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Overloads Property TabStop() As Boolean
             Get
                 Return MyBase.TabStop
@@ -535,7 +536,7 @@ Partial Class DayView
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _FocusNonMouseDown As Boolean = True
         ''' <summary>Indikuje jestli ovládací prvek obdrží focus když je nad ním stlaèena myš</summary>
-        <DefaultValue(True), Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Behavior)> _
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property FocusOnMouseDown() As Boolean
             Get
                 Return _FocusNonMouseDown
@@ -549,7 +550,7 @@ Partial Class DayView
         Private _BorderColor As Color = Color.FromArgb(128, 255, 255, 0)
         ''' <summary>Barva rámeèku pokud má prvek focus</summary>
         ''' <remarks>Nastavte na <see cref="Color.Transparent"/> pokud nechcete vykreslit rámeèek</remarks>
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Appearance)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <DefaultValue(GetType(Color), "128,255,255,0")> _
         Public Property BorderColor() As Color
             Get
@@ -567,7 +568,7 @@ Partial Class DayView
         ''' <summary>Šíøka rámeèku prvku pokud prvek má focus</summary>
         ''' <remarks>Nastavte na 0 pokud nechcete rámeèek</remarks>
         ''' <exception cref="ArgumentOutOfRangeException">Nastavovaná hodnota je menší než 0</exception>
-        <Category(Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues.Appearance)> _
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         <DefaultValue(3I)> _
         Public Property BorderWidth() As Integer
             Get
