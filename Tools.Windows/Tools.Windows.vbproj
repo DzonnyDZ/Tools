@@ -148,6 +148,9 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="..\Tool\Windows\Forms\Utilities\CategoryAttributeValues.vb">
+      <Link>CategoryAttributeValues.vb</Link>
+    </Compile>
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
@@ -266,7 +269,6 @@
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\UserControlExtended.vb">
     </Compile>
-    <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
