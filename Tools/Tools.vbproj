@@ -341,110 +341,11 @@
     <Compile Include="Text\Encoding\ISO2022.vb" Condition="$(Config)&lt;=$(Nightly)" />
     <Compile Include="Text\TextExtensions.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
-      <DependentUpon>HTMLDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\HTMLDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
-      <DependentUpon>ProgressMonitor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>Form</SubType>
-    </Compile>
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
       <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\WPF\AssemblyInfo.vb" />
-    <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
-    <Compile Include="Windows\WPF\Converters\Converters.vb" />
-    <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
-    <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
-      <DependentUpon>ObjectBrowser.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
-      <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.Designer.vb">
-      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.Designer.vb">
-      <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.vb" Condition="$(Config)&lt;=$(Alpha)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb" Condition="$(Config)&lt;=$(Alpha)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\StatusMarker.Designer.vb">
-      <DependentUpon>StatusMarker.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripComboBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
-      <!--Set stage of here, because it uses resources and using #If produces warnings-->
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
-      <!--Set stage of here, because it uses resources and using #If produces warnings-->
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
-      <!--Set stage of here, because it uses resources and using #If produces warnings-->
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\ProgressBarWithText.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\TransparentLabel.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\TransparentTextBox.vb">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\AboutDialog.Designer.vb">
-      <DependentUpon>AboutDialog.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\AboutDialog.vb">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\MessageBox WF.Designer.vb">
-      <DependentUpon>MessageBox WF.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Forms\Dialogs\MessageBox WF.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage of here, because it uses resources and using #If produces warnings-->
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\Forms\Derived controls\UserControlExtended.vb">
-      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
@@ -457,14 +358,6 @@
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.cs.resx">
-      <DependentUpon>LinkLabel.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.resx">
-      <DependentUpon>LinkLabel.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
@@ -484,18 +377,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentLabel.bmp" />
-    <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>EncodingDialog.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.cs.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>EncodingSelector.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>EncodingSelector.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="Drawing\Metadata\Exif\ExifTags.xml">
@@ -535,26 +416,6 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.ProgressBarWithText.bmp" />
-    <EmbeddedResource Include="Windows\Forms\Composite controls\TextBoxWithStatus.resx">
-      <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.cs.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>StatusMarker.vb</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.resx">
-      <SubType>Designer</SubType>
-      <DependentUpon>StatusMarker.vb</DependentUpon>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\SharedFiles\Tools.snk">
@@ -799,50 +660,6 @@
       <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
-      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.cs.resx">
-      <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.cs.resx">
-      <DependentUpon>ObjectBrowser.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
-      <DependentUpon>ObjectBrowser.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.cs.resx">
-      <DependentUpon>AboutDialog.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
-      <DependentUpon>AboutDialog.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.cs.resx">
-      <DependentUpon>EncodingDialog.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\HTMLDialog.resx">
-      <DependentUpon>HTMLDialog.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBox WF.resx">
-      <DependentUpon>MessageBox WF.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.cs.resx">
-      <DependentUpon>ProgressMonitor.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.resx">
-      <DependentUpon>ProgressMonitor.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
       <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -865,10 +682,6 @@
     <Page Include="Themes\Generic.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Windows\WPF\Controls\NumericUpDown.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
     </Page>
   </ItemGroup>
   <ItemGroup>
