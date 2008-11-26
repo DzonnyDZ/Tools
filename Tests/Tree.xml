@@ -28,7 +28,7 @@
             <node name="MetadataT" image="Namespace">
                 <node name="ExifT" image="Namespace Shortcut" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test"/>
                 <node name="IptcT" image="Namespace">
-                    <node name="Iptc" image="Class" tag="Tools.Tests.DrawingT.MetadataT.IptcT.frmIPTC.test" />
+                    <node name="Iptc" image="Class" tag="Tools.Tests.MetadataT.IptcT.frmIPTC.test" />
                 </node>
             </node>
         </node>

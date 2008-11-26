@@ -1,13 +1,13 @@
 ' GENERATED FILE -- DO NOT EDIT
 '
-' Generator: TransformCodeGenerator, Version=1.0.2701.36373, Culture=neutral, PublicKeyToken=null
-' Version: 1.0.2701.36373
+' Generator: TransformCodeGenerator, Version=1.5.0.25116, Culture=neutral, PublicKeyToken=373c02ac923768e6
+' Version: 1.5.0.25116
 '
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 24. září 2008
-' By:DZONNY\Honza
+' Created: 26. listopadu 2008
+' By:BigBook\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
 'Localize: This auto-generated file was skipped during localization!
@@ -16,9 +16,9 @@ Imports Tools.ComponentModelT
 Imports System.XML.Serialization
 Imports Tools.DataStructuresT.GenericT
 Imports Tools.DrawingT.DesignT
-Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes
-Imports Tools.DrawingT.MetadataT.IptcT.Iptc
-Namespace DrawingT.MetadataT.IptcT
+Imports Tools.MetadataT.IptcT.IptcDataTypes
+Imports Tools.MetadataT.IptcT.Iptc
+Namespace MetadataT.IptcT
 #If Congig <= Nightly 'Stage: Nightly
 #Region "Tag Enums"
 		''' <summary>Numbers of IPTC records (groups of tags)</summary>
@@ -3244,7 +3244,7 @@ Namespace DrawingT.MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Type is used to distinguish between different types of objects within the IIM.")> _
-		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.DrawingT.MetadataT.IPTC+NumStr2`1;Tools.DrawingT.MetadataT.IPTC+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
+		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT+NumStr2`1;Tools.MetadataT.IptcT+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
 			Get
 				Try
 					Dim AllValues As List(Of NumStr2(Of ObjectTypes)) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(Num2_Str_Value(DataSetIdentification.ObjectTypeReference))
@@ -3267,7 +3267,7 @@ Namespace DrawingT.MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Attribute defines the nature of the object independent of the Subject.")> _
-		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.DrawingT.MetadataT.IPTC+NumStr3`1;Tools.DrawingT.MetadataT.IPTC+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
+		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.MetadataT.IptcT+NumStr3`1;Tools.MetadataT.IptcT+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
 			Get
 				Try
 					Dim AllValues As List(Of NumStr3(Of ObjectAttributes)) = ConvertNumStrList(Of NumStr3, NumStr3(Of ObjectAttributes))(Num3_Str_Value(DataSetIdentification.ObjectAttributeReference))

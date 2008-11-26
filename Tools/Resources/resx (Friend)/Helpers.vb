@@ -56,12 +56,12 @@
 '        End Sub
 '    End Class
 'End Namespace
-'Namespace DrawingT.MetadataT.IptcT
+'Namespace MetadataT.IptcT
 '    Partial Class IPTCResources
-'        ''' <summary>Initializer - redirects resources to Tools.DrawingT.MetadataT.IPTCResources</summary>
+'        ''' <summary>Initializer - redirects resources to Tools.MetadataT.IptcTResources</summary>
 '        ''' <remarks>This is workaround for <a href="https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765">https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=351765</a></remarks>
 '        Shared Sub New()
-'            resourceMan = New ResourceManager("Tools.DrawingT.MetadataT.IptcT.IptcResources", GetType(IPTCResources).Assembly)
+'            resourceMan = New ResourceManager("Tools.MetadataT.IptcT.IptcResources", GetType(IPTCResources).Assembly)
 '        End Sub
 '    End Class
 'End Namespace

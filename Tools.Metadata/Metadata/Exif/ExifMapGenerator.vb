@@ -1,6 +1,6 @@
 ﻿#If Config <= Nightly Then 'Stage:Nightly
-Imports Kinds = Tools.DrawingT.MetadataT.ExifT.ExifReader.ReaderItemKinds
-Namespace DrawingT.MetadataT.ExifT
+Imports Kinds = Tools.MetadataT.ExifT.ExifReader.ReaderItemKinds
+Namespace MetadataT.ExifT
     ''' <summary>Generates map of Exif metadata in order to get known which areas can be safely overwritten without loss of unknown data (maker notes, unknown sub-ifds etc.)</summary>
     ''' <remarks>This is advanced class to advancedly deal with Exif metadata. You usually do not need to use it directly. Just instruct another class to take advantage of this one.</remarks>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _

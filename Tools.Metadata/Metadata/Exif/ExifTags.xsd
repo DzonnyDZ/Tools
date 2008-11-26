@@ -212,11 +212,11 @@
             <xs:sequence minOccurs="1" maxOccurs="1">
                 <xs:element minOccurs="0" maxOccurs="unbounded" ref="Group"/>
             </xs:sequence>
-            <xs:attribute name="transformer" type="xs:string" use="required">
+            <!--<xs:attribute name="transformer" type="xs:string" use="required">
                 <xs:annotation>
                     <xs:documentation>Addres or name of XSLT file used to generate code from this XML</xs:documentation>
                 </xs:annotation>
-            </xs:attribute>
+            </xs:attribute>-->
             <xs:attribute name="Stage" use="required">
                 <xs:annotation>
                     <xs:documentation>Stage of dicumment used for conditiona compilation</xs:documentation>

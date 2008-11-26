@@ -2,9 +2,10 @@
 <?xml-stylesheet href="ExifTags.css" type="text/css" title="pure css" charset="utf-8" alternate="yes"?>
 <?xml-stylesheet href="ExifTags.display.xslt" type="text/xsl" title="html" charset="utf-8"?>
 <?xml-stylesheet href="ExifTags.xslt" type="text/xsl" title="VB source" charset="utf-8" alternate="yes"?>
+<?transformer ExifTags.xslt?>
 <!--^{[A-Za-z0-9:b']+}:b{:i}:b:z:b{[A-Fa-f0-9]+}:b{[A-Z]+(:bor:b[A-Z]+)*}:b{.+}$-->
 <!--<Tag Name="\2" Tag="\3" Components="\5">\n<summary>\1</summary>\n\4\n</Tag>-->
-<Root xmlns="http://codeplex.com/DTools/ExifTags" transformer="ExifTags.xslt" Stage="Nightly">
+<Root xmlns="http://codeplex.com/DTools/ExifTags" Stage="Nightly">
     <Group Name="Sub IFD pointers" IFD="IFD" ShortName="PointersMain">
         <Tag Name="ExifIFD" Components="1" Tag="8769">
             <summary>Exif IFD Pointer</summary>

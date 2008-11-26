@@ -1,6 +1,6 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT, Tools.ComponentModelT
-Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes
-Namespace DrawingT.MetadataT.IptcT
+Imports Tools.MetadataT.IptcT.IptcDataTypes
+Namespace MetadataT.IptcT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class IPTC
         ''' <summary>Contains value of the <see cref="Encoding"/> property</summary>
@@ -824,8 +824,8 @@ Namespace DrawingT.MetadataT.IptcT
         ''' <param name="Type">Type of enum in value</param>
         ''' <param name="Len">Maximal or fixed lenght of string value after encoding (ignored in Getter)</param>
         ''' <param name="Fixed"><paramref name="Len"/> determines fixed lenght instead of maximal if True (ignored in Getter)</param>
-        ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> (in Setter)</exception>
-        ''' <exception cref="ArrayTypeMismatchException"><see cref="P:Tools.DrawingT.MetadataT.IPTC.StringEnum.EnumType"/> differs from <paramref name="Type"/> (in setter)</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> has no <see cref="RestrictAttribute"/> or it has <see cref="RestrictAttribute"/> with <see cref="RestrictAttribute.Restrict"/> set to true and value is not member of <see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> (in Setter)</exception>
+        ''' <exception cref="ArrayTypeMismatchException"><see cref="P:Tools.MetadataT.IptcT.StringEnum.EnumType"/> differs from <paramref name="Type"/> (in setter)</exception>
         ''' <exception cref="ArgumentException">
         ''' Error while creating generic instance - caused by wrong <paramref name="Type"/> (in Getter) -or-
         ''' Stored value contains invalid character (non-graphic-non-space-non-ASCII) (in getter) -or-
@@ -1061,7 +1061,7 @@ Namespace DrawingT.MetadataT.IptcT
         ''' <param name="MaximalLength">Maximal length (in bytes) allowed for property value (see <see cref="MaximalLength"/></param>
         ''' <param name="Fixed">True when <paramref name="MaximalLength"/> is also  inimal length (in bytes) allowed for property value (and thus the only allowed lenght) (see <see cref="Fixed"/>)</param>
         Public Sub New(ByVal PropertyName$, ByVal MaximalLength%, Optional ByVal Fixed As Boolean = False)
-            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, DrawingT.MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, DrawingT.MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
+            MyBase.New(ResourcesT.Exceptions.LenghtConstraintViolation & " " & String.Format(If(Fixed, MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0MustBe1BytesLong, MetadataT.IptcT.IPTCResources.StringValueOfTheProperty0CanBeMaximally1BytesLong), PropertyName, MaximalLength), "value")
             _PropertyName = PropertyName
             _MaximalLength = MaximalLength
             _Fixed = Fixed

@@ -28,7 +28,7 @@
         <namespaceSummaryItem name="Tools.DrawingT" isDocumented="True" />
         <namespaceSummaryItem name="Tools.DrawingT.DesignT" isDocumented="True" />
         <namespaceSummaryItem name="Tools.DrawingT.IO.JPEG" isDocumented="True" />
-        <namespaceSummaryItem name="Tools.DrawingT.MetadataT" isDocumented="True" />
+        <namespaceSummaryItem name="Tools.MetadataT" isDocumented="True" />
         <namespaceSummaryItem name="Tools.Experimental" isDocumented="True" />
         <namespaceSummaryItem name="Tools.GeneratorsT" isDocumented="True" />
         <namespaceSummaryItem name="Tools.GlobalizationT" isDocumented="True" />

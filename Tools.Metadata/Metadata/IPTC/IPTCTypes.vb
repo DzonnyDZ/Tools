@@ -1,9 +1,9 @@
 ﻿Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT
 Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT, Tools.DrawingT.DesignT
 Imports System.Drawing.Design, System.Windows.Forms, System.Drawing
-Imports Tools.DrawingT.MetadataT.IptcT
-Imports Tools.DrawingT.MetadataT.IptcT.Iptc
-Namespace DrawingT.MetadataT.IptcT.IptcDataTypes
+Imports Tools.MetadataT.IptcT
+Imports Tools.MetadataT.IptcT.Iptc
+Namespace MetadataT.IptcT.IptcDataTypes
 #If Congig <= Nightly Then 'Stage: Nightly
 
     ''' <summary>IPTC Subject Reference (IPTC type <see cref="IPTCTypes.SubjectReference"/>)</summary>
@@ -199,7 +199,7 @@ Namespace DrawingT.MetadataT.IptcT.IptcDataTypes
             Else
                 Bytes(4) = New Byte() {}
             End If
-            If Bytes(0).Length > 32 Or Bytes(0).Length < 1 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LengthOfSerialized0IsNotWithinRange12Bytes, DrawingT.MetadataT.IptcT.IPTCResources.IPR_n, 1, 32))
+            If Bytes(0).Length > 32 Or Bytes(0).Length < 1 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LengthOfSerialized0IsNotWithinRange12Bytes, MetadataT.IptcT.IPTCResources.IPR_n, 1, 32))
             If Bytes(1).Length <> 8 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LenghtOfSerialized0DiffersFrom1Bytes, "SubjectreferenceNumber", 8))
             If Bytes(2).Length > 64 OrElse Bytes(3).Length > 64 OrElse Bytes(4).Length > 64 Then Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.LenghtOfSerializedNameExceeds0Bytes, 64))
             Dim arr(Bytes(0).Length + Bytes(1).Length + Bytes(2).Length + Bytes(3).Length + Bytes(4).Length - 1 + 4) As Byte
@@ -231,12 +231,12 @@ Namespace DrawingT.MetadataT.IptcT.IptcDataTypes
                 Return _IPR
             End Get
             Set(ByVal value As String)
-                If Not Iptc.IsGraphicCharacters(value) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.OnlyGraphicCharactersAreAllowedIn0, DrawingT.MetadataT.IptcT.IPTCResources.IPR_n))
-                If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotContainCharactersAnd, DrawingT.MetadataT.IptcT.IPTCResources.IPR_n))
-                If value = "" OrElse value.Length > 32 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeStringWithLengthFrom1To2Characters, DrawingT.MetadataT.IptcT.IPTCResources.IPR_n, 1, 32))
-                If value.Length > IPRLengthLimit Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TheLenghtOf0ExceedsLimit, DrawingT.MetadataT.IptcT.IPTCResources.IPR_n))
+                If Not Iptc.IsGraphicCharacters(value) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.OnlyGraphicCharactersAreAllowedIn0, MetadataT.IptcT.IPTCResources.IPR_n))
+                If value.Contains("*"c) OrElse value.Contains("/"c) OrElse value.Contains("?"c) OrElse value.Contains(":"c) Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.CannotContainCharactersAnd, MetadataT.IptcT.IPTCResources.IPR_n))
+                If value = "" OrElse value.Length > 32 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.MustBeStringWithLengthFrom1To2Characters, MetadataT.IptcT.IPTCResources.IPR_n, 1, 32))
+                If value.Length > IPRLengthLimit Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TheLenghtOf0ExceedsLimit, MetadataT.IptcT.IPTCResources.IPR_n))
                 For Each ch As Char In value
-                    If AscW(ch) > 127 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TextMustBeEncodeableByASCII, DrawingT.MetadataT.IptcT.IPTCResources.IPR_n))
+                    If AscW(ch) > 127 Then Throw New ArgumentException(String.Format(ResourcesT.Exceptions.TextMustBeEncodeableByASCII, MetadataT.IptcT.IPTCResources.IPR_n))
                 Next ch
                 _IPR = value
             End Set

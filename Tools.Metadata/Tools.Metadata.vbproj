@@ -202,7 +202,7 @@
     <None Include="Metadata\Exif\ExifTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>ExifTags.vb</LastGenOutput>
-      <CustomToolNamespace>DrawingT.MetadataT.ExifT</CustomToolNamespace>
+      <CustomToolNamespace>MetadataT.ExifT</CustomToolNamespace>
     </None>
     <None Include="Metadata\Exif\ExifTags.xsd">
       <SubType>
@@ -237,11 +237,17 @@
     <Content Include="Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
-      <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
+      <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
     </Content>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Metadata\XMP\" />

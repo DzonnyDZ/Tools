@@ -1,6 +1,6 @@
 ﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileTystemTools, Tools.CollectionsT.GenericT
 Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
-Imports Tools.DrawingT.MetadataT.IptcT, Tools.DrawingT.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
+Imports Tools.MetadataT.IptcT, Tools.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
 Imports System.Reflection
 Imports MBox = Tools.WindowsT.IndependentT.MessageBox, MButton = Tools.WindowsT.IndependentT.MessageBox.MessageBoxButton
 Imports Tools.WindowsT.FormsT, Tools, Tools.ReflectionT

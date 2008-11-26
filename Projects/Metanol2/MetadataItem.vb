@@ -1,4 +1,4 @@
-﻿Imports Tools.DrawingT.MetadataT
+﻿Imports Tools.MetadataT
 Imports System.ComponentModel, Tools.DrawingT.ImageTools
 
 ''' <summary>Represents <see cref="ListViewItem"/> which contains metedata for given file</summary>

@@ -74,9 +74,14 @@
         <member name="N:Tools.DrawingT.DrawingIOt.JPEG">
             <summary>Contains tools for working with images in JPEG (JFIF) file format.</summary>
         </member>
-        <member name="N:Tools.DrawingT.MetadataT">
-            <summary>Contains tools for working with image metadata (such as Exif or IPTC/NAA)</summary>
-            <version version="1.5.2">Namespace and all sub-namespaces relocated to newly created assemly Tools.Metadata</version>
+        <member name="N:Tools.MetadataT">
+            <summary>Contains tools for working with (image) metadata (such as Exif or IPTC/NAA)</summary>
+            <version version="1.5.2">
+                <list type="bullet">
+                    <item>Namespace and all sub-namespaces relocated to newly created assemly Tools.Metadata</item>
+                    <item>Renamed from Tools.DrawingT.MetadataT to Tools.MetadataT</item>
+                </list>
+            </version>
         </member>
         <member name="N:Tools.ExtensionsT">
             <summary>Contains asorted extension methods.</summary>
@@ -237,13 +242,13 @@
         <member name="N:Tools.XmlT.LinqT">
             <summary>Provides extensions to <see cref="N:System.Xml.Linq">Linq to Xml technology</see>.</summary>
         </member>
-        <member name="N:Tools.DrawingT.MetadataT.ExifT">
+        <member name="N:Tools.MetadataT.ExifT">
             <summary>Contains classes related to reading and manipulating Exif metadata.</summary>
         </member>
-        <member name="N:Tools.DrawingT.MetadataT.IptcT">
+        <member name="N:Tools.MetadataT.IptcT">
             <summary>Contains classes realetd to reading and manipulating Iptc metadata.</summary>
         </member>
-        <member name="N:Tools.DrawingT.MetadataT.IptcT.IptcDataTypes">
+        <member name="N:Tools.MetadataT.IptcT.IptcDataTypes">
             <summary>Contains classes and structures to represent data types used by IPTC metadata</summary>
         </member>
         <member name="N:Tools.TestsT">

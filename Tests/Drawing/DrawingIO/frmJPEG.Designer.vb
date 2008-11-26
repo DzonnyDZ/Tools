@@ -141,7 +141,7 @@ Namespace DrawingT.DrawingIOt
             Me.lblI.Size = New System.Drawing.Size(503, 26)
             Me.lblI.TabIndex = 2
             Me.lblI.Text = "This from tests Tools.DrawingT.IOt.Jpeg, Tools.IOt.BinaryReader, Tools.IOt.Constr" & _
-                "ainedReadOnlyStream, Tools.MathT.LEBE, Tools.DrawingT.MetadataT.ExifT, Toolos.Dr" & _
+                "ainedReadOnlyStream, Tools.MathT.LEBE, Tools.MetadataT.ExifT, Toolos.Dr" & _
                 "awingT.MetadataT.IptcT"
             Me.lblI.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '

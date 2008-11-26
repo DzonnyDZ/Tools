@@ -1,7 +1,7 @@
-﻿Imports Tools.DrawingT.MetadataT.ExifT.ExifReader, Tools.ExtensionsT.StringExtensions
+﻿Imports Tools.MetadataT.ExifT.ExifReader, Tools.ExtensionsT.StringExtensions
 
 #If Config <= Nightly Then 'Stage:Nightly
-Namespace DrawingT.MetadataT.ExifT
+Namespace MetadataT.ExifT
     ''' <summary>This class provides low-level writer of Exif matadata</summary>
     Friend Class ExifWriter
 #Region "Common"

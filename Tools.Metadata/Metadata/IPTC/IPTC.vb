@@ -1,6 +1,6 @@
 Imports Tools.CollectionsT.GenericT
 Imports Tools.DataStructuresT.GenericT
-Namespace DrawingT.MetadataT.IptcT
+Namespace MetadataT.IptcT
 #If Congig <= Alpha Then 'Stage: Alpha
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     <Version(1, 1, GetType(IPTC), LastChange:="10/03/2007")> _

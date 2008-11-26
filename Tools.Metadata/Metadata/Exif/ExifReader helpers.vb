@@ -1,6 +1,6 @@
 ﻿Imports System.IO
 #If Config <= Nightly Then 'Stage: Nightly
-Namespace DrawingT.MetadataT.ExifT
+Namespace MetadataT.ExifT
     Partial Class ExifReader
         ''' <summary>Arguments of event which occures during Exif metedata reading</summary>
         Public Class ExifEventArgs : Inherits EventArgs

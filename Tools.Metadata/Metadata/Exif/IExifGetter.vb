@@ -1,4 +1,4 @@
-Namespace DrawingT.MetadataT.ExifT
+Namespace MetadataT.ExifT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of Exif data</summary>
     ''' <seealso cref="IExifWriter"/><seealso cref="IptcT.iiptcgetter"/>

@@ -1,12 +1,12 @@
 Imports Tools.CollectionsT.GenericT, System.Globalization.CultureInfo, Tools.DataStructuresT.GenericT
 Imports Tools.VisualBasicT.Interaction, Tools.ComponentModelT, Tools.DrawingT.DesignT
 Imports System.Drawing.Design, System.Windows.Forms, System.Drawing
-Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes
-Namespace DrawingT.MetadataT.IptcT
+Imports Tools.MetadataT.IptcT.IptcDataTypes
+Namespace MetadataT.IptcT
 #If Congig <= Nightly Then 'Stage: Nightly
     Partial Public Class Iptc
         'TODO: Tune IPTC's behavior in PropertyGrid
-    
+
         ''' <summary>Indicates if given string contains only graphic characters and spaces</summary>
         ''' <param name="Str">String to be verified</param>
         ''' <returns>True if string contains only graphic characters and spaces, false otherwise</returns>
@@ -299,9 +299,9 @@ Namespace DrawingT.MetadataT.IptcT
         ByteArray
         ''' <summary>Unique Object Identifier (represented by <see cref="UNO"/>)</summary>
         UNO
-        ''' <summary>Combination of 2-digits number and optional <see cref="String"/> (represented by <see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr2"/>)</summary>
+        ''' <summary>Combination of 2-digits number and optional <see cref="String"/> (represented by <see cref="T:Tools.DrawingT.IPTCt.NumStr2"/>)</summary>
         Num2_Str
-        ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="T:Tools.DrawingT.MetadataT.IPTC.NumStr3"/>)</summary>
+        ''' <summary>Combination of 3-digits number and optional <see cref="String"/> (represented by <see cref="T:Tools.MetadataT.IPTCt.NumStr3"/>)</summary>
         Num3_Str
         ''' <summary>Subject reference (combination of IPR, subject number and description) (represented by <see cref="SubjectReference"/>)</summary>
         SubjectReference

@@ -89,8 +89,8 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:text>Imports System.XML.Serialization&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.DataStructuresT.GenericT&#xD;&#xA;</xsl:text>
         <xsl:text>Imports Tools.DrawingT.DesignT&#xD;&#xA;</xsl:text>
-        <xsl:text>Imports Tools.DrawingT.MetadataT.IptcT.IptcDataTypes&#xD;&#xA;</xsl:text>
-        <xsl:text>Imports Tools.DrawingT.MetadataT.IptcT.Iptc&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.MetadataT.IptcT.IptcDataTypes&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.MetadataT.IptcT.Iptc&#xD;&#xA;</xsl:text>
     </xsl:template>
     
     <!--Main content-creating templates:-->

@@ -1,5 +1,5 @@
 Imports System.IO
-Namespace DrawingT.MetadataT.ExifT
+Namespace MetadataT.ExifT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream of Exif data</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>

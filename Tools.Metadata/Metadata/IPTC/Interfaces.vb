@@ -1,4 +1,4 @@
-Namespace DrawingT.MetadataT.IptcT
+Namespace MetadataT.IptcT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     ''' <seealso cref="iiptcwriter"/><seealso cref="ExifT.iexifgetter"/>

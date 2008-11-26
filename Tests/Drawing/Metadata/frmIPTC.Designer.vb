@@ -1,4 +1,4 @@
-Namespace DrawingT.MetadataT.IptcT
+Namespace MetadataT.IptcT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class frmIPTC
         Inherits System.Windows.Forms.Form
@@ -113,7 +113,7 @@ Namespace DrawingT.MetadataT.IptcT
             Me.ClientSize = New System.Drawing.Size(303, 684)
             Me.Controls.Add(Me.splMain)
             Me.Name = "frmIPTC"
-            Me.Text = "Testing Tools.DrawingT.MetadataT.IPTC"
+            Me.Text = "Testing Tools.MetadataT.IptcT"
             CType(Me.picImage, System.ComponentModel.ISupportInitialize).EndInit()
             Me.splMain.Panel1.ResumeLayout(False)
             Me.splMain.Panel2.ResumeLayout(False)

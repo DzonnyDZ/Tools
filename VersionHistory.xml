@@ -1,7 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <!--TODO: XML schema-->
 <vh:VersionHistory xmlns:vh="TODO:" xmlns="http://www.w3.org/1999/xhtml" xmlns:i="http://dzonny.cz/xml/schemas/intellisense"
-                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="i ../DevelopmentTools/Intellisense/intellisense.xsd">
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://dzonny.cz/xml/schemas/intellisense ../DevelopmentTools/Intellisense/intellisense.xsd">
     <vh:version version="1.5.2">
         <vh:i>
             <i:see cref="T:Tools.InternalT.VersionAttribute"/>, <i:see ctef="T:Tools.InternalT.AuthorAttribute"/> and <i:see ctef="T:Tools.InternalT.FirstVersionAttribute"/> marked as obsoltele. Use XML ocumentation tags instead.
@@ -10,7 +11,8 @@
         <vh:i>Tools.InternalT.FirstVersion renamed to <i:see ctef="T:Tools.InternalT.FirstVersionAttribute"/></vh:i>
         <vh:i><i:see cref="T:Tools.ExtensionsT.DelegateExtensions"/> module: Visubility changed from Private to Public.</vh:i>
         <vh:i>Build state of constants <i:see cref="F:Tools.VisualBasicT.Interaction.Null"/> and <i:see cref="F:Tools.VisualBasicT.Interaction.Nothing"/> changed from Nightly to Release</vh:i>
-        <vh:i>Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <i:see cref="N:Tools.DrawingT.DrawingIOt"/> and <i:see cref="N:Tools.DrawingT.MetadataT"/> relocated to assembly Tools.Metadata; <i:seee cref="N:Tools.WindowsT"/> relocated to assembly Tools.Windows with exception of <i:see. cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/>.</vh:i>
+        <vh:i>Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <i:see cref="N:Tools.DrawingT.DrawingIOt"/> and <i:see cref="N:Tools.DrawingT.MetadataT"/> (<i:see cref="N:Tools.MetadataT"/>) relocated to assembly Tools.Metadata; <i:seee cref="N:Tools.WindowsT"/> relocated to assembly Tools.Windows with exception of <i:see. cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/>.</vh:i>
         <vh:i>A few methods from <see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.</vh:i>
+        <vh:i>Namespace Tools.DrawingT.MetadataT renamed to <i:see cref="N:Tools.MetadataT"/></vh:i>
     </vh:version>
 </vh:VersionHistory>

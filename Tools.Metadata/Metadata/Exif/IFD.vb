@@ -1,11 +1,11 @@
-﻿Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.ExifT.ExifRecord)
-Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.DrawingT.MetadataT.ExifT.SubIfd)
-Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.ExifT.ExifRecord)
-Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.DrawingT.MetadataT.ExifT.SubIfd)
+﻿Imports RecordDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.MetadataT.ExifT.ExifRecord)
+Imports SubIFDDic = Tools.CollectionsT.GenericT.DictionaryWithEvents(Of UShort, Tools.MetadataT.ExifT.SubIfd)
+Imports RecordList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.ExifRecord)
+Imports SubIFDList = Tools.CollectionsT.GenericT.ListWithEvents(Of Tools.MetadataT.ExifT.SubIfd)
 Imports Tools.ComponentModelT, System.Linq
 
 #If Config <= Nightly Then 'Stage: Nightly
-Namespace DrawingT.MetadataT.ExifT
+Namespace MetadataT.ExifT
     ''' <summary>Provides read-write access to Image File Directory of Exif data</summary>
     Public Class Ifd
         Implements IReportsChange
@@ -710,6 +710,8 @@ Namespace DrawingT.MetadataT.ExifT
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _SubIFDs As New SubIFDDic(False, True)
 #End Region
+
+
     End Class
 
 

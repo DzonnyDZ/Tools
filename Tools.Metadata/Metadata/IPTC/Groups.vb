@@ -1,8 +1,8 @@
-﻿Imports Tools.ComponentModelT, Tools.DrawingT.MetadataT.IptcT.IptcDataTypes
+﻿Imports Tools.ComponentModelT, Tools.MetadataT.IptcT.IptcDataTypes
 Imports Tools.DrawingT.DesignT, System.Drawing.Design
 
 #If Config <= Nightly Then 'Stage:Nightly
-Namespace DrawingT.MetadataT.IptcT
+Namespace MetadataT.IptcT
     ''' <summary>Information about group of tags</summary>
     Public Class GroupInfo
         ''' <summary>Contains value of the <see cref="Tags"/> Proeprty</summary>

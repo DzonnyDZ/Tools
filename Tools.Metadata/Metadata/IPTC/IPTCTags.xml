@@ -420,7 +420,7 @@
             <desc>A number identifying the version of the Information Interchange Model, Part II (Record 2:xx), utilised by the provider.</desc>
             <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
         </tag>
-       <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.DrawingT.MetadataT.IPTC+NumStr2`1;Tools.DrawingT.MetadataT.IPTC+ObjectTypes;02;")>'>
+       <tag number="3" name="ObjectTypeReference" human-name="Object Type Reference" type="Num2-Str" mandatory="false" repeatable="false" fixed="false" length="67" enum="ObjectTypes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT+NumStr2`1;Tools.MetadataT.IptcT+ObjectTypes;02;")>'>
             <desc>The Object Type is used to distinguish between different types of objects within the IIM.</desc>
             <remarks>The first part is a number representing a language independent international reference to an Object Type followed by a colon separator. The second part, if used, is a text representation of the Object Type Number (maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>
@@ -430,7 +430,7 @@
             <item value="2" name="Data" desc="Data. Data in this context implies typically non narrative information, usually not eligible for journalistic intervention or modification. It also applies to information routed by the provider from a third party to the user. Examples are sports results, stock prices and agate." human-name="Data"/>
             <item value="3" name="Advisory" desc="Advisory" human-name="Advisory"/>
         </enum>
-        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.DrawingT.MetadataT.IPTC+NumStr3`1;Tools.DrawingT.MetadataT.IPTC+ObjectAttributes;001;")>'>
+        <tag number="4" name="ObjectAttributeReference" human-name="Object Attribute Reference" type="Num3-Str" mandatory="false" fixed="false" repeatable="true" length="68" enum="ObjectAttributes" category="Category" attributes='&lt;DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.MetadataT.IptcT+NumStr3`1;Tools.MetadataT.IptcT+ObjectAttributes;001;")>'>
             <desc>The Object Attribute defines the nature of the object independent of the Subject.</desc>
             <remarks>The first part is a number representing a language independent international reference to an Object Attribute followed by a colon separator. The second part, if used, is a text representation of the Object Attribute Number ( maximum 64 octets) consisting of graphic characters plus spaces either in English, as defined in Appendix G, or in the language of the service as indicated in DataSet 2:135 (&lt;see cref='LanguageIdentifier'/>)</remarks>
         </tag>

@@ -1,4 +1,4 @@
-Imports ex = Tools.DrawingT.MetadataT.ExifT
+Imports ex = Tools.MetadataT.ExifT
 Namespace DrawingT.DrawingIOt
     '#If Config <= Nightly Then Stage co      nditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
@@ -90,12 +90,12 @@ Namespace DrawingT.DrawingIOt
                         Dim ExifSettings As New ex.ExifReaderSettings() With {.ReadThumbnail = True}
                         AddHandler ExifSettings.ReadItem, AddressOf ExifEventHandler
                         AddHandler ExifSettings.ReadError, AddressOf ExifErrorHandler
-                        ExifSettings.ErrorRecovery = Tools.DrawingT.MetadataT.ExifT.ErrorRecoveryModes.Custom
+                        ExifSettings.ErrorRecovery = Tools.MetadataT.ExifT.ErrorRecoveryModes.Custom
                         ExifBuilder = New System.Text.StringBuilder
                         Dim Map As New ex.ExifMapGenerator(ExifSettings)
                         Dim Exif As New ex.ExifReader(jpeg, ExifSettings)
                         'Dim i As Integer = 0
-                        ' For Each IFD As Tools.DrawingT.MetadataT.ExifTIFDReader In Exif.IFDs
+                        ' For Each IFD As Tools.MetadataT.ExifTIFDReader In Exif.IFDs
                         PresentIfd(New ex.IfdMain(Exif.IFDs(0), True), ExifNode, 0)
                         PresentMap(Map, ExifStream)
                         txtEvents.Text = ExifBuilder.ToString
@@ -137,8 +137,8 @@ Namespace DrawingT.DrawingIOt
                                 IPTCNode.Tag = IPTCStream
                                 IPTCNode.Text &= " " & IPTCStream.ToString
                                 'IPTC data
-                                Dim IPTC As New Tools.DrawingT.MetadataT.IptcT.IptcReader(jpeg)
-                                For Each Record As Tools.DrawingT.MetadataT.IptcT.IptcRecord In IPTC.Records
+                                Dim IPTC As New Tools.MetadataT.IptcT.IptcReader(jpeg)
+                                For Each Record As Tools.MetadataT.IptcT.IptcRecord In IPTC.Records
                                     Dim RecordNode As TreeNode = IPTCNode.Nodes.Add(String.Format("{0}{1} size {2}B data {3}", Hex(Record.RecordNumber), Hex(Record.Tag), Record.Size, Record.StringData))
                                     RecordNode.Tag = Record
                                 Next Record
