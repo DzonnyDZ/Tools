@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Tools")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("Contain classes related to embdeded metadata in various types of files")> 
 <Assembly: AssemblyCompany("ĐTools team")> 
 <Assembly: AssemblyProduct("ĐTools")> 
 <Assembly: AssemblyCopyright("Copyright © ĐTools team 2006/7/8")> 

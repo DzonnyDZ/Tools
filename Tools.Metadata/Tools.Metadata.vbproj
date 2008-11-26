@@ -8,7 +8,7 @@
     <ProjectGuid>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tools</RootNamespace>
-    <AssemblyName>Tools</AssemblyName>
+    <AssemblyName>Tools.Metadata</AssemblyName>
     <MyType>Windows</MyType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -36,7 +36,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Nightly\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
     <Config>1</Config>
@@ -47,7 +47,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
     <Config>5</Config>
@@ -57,7 +57,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Alpha\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,7 +69,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Beta\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -81,7 +81,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\RC\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Metadata.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -181,24 +181,11 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
     </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <None Include="My Project\Application.myapp">
@@ -252,10 +239,6 @@
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
       <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
     </Content>
-    <EmbeddedResource Include="My Project\Resources.cs.resx">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
