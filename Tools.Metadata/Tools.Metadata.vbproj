@@ -150,32 +150,32 @@
     </Compile>
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifMapGenerator.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifReader helpers.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifWriter.vb" />
-    <Compile Include="Drawing\Metadata\Exif\IFD.vb" />
-    <Compile Include="Drawing\Metadata\Exif\Rational.vb" />
-    <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifTags.vb">
+    <Compile Include="Metadata\Exif\ExifMapGenerator.vb" />
+    <Compile Include="Metadata\Exif\ExifReader helpers.vb" />
+    <Compile Include="Metadata\Exif\ExifWriter.vb" />
+    <Compile Include="Metadata\Exif\IFD.vb" />
+    <Compile Include="Metadata\Exif\Rational.vb" />
+    <Compile Include="Metadata\Exif\Exif.vb" />
+    <Compile Include="Metadata\Exif\ExifIFDReader.vb" />
+    <Compile Include="Metadata\Exif\ExifReader.vb" />
+    <Compile Include="Metadata\Exif\ExifTags.vb">
       <DependentUpon>ExifTags.xml</DependentUpon>
       <DesignTime>True</DesignTime>
       <AutoGen>True</AutoGen>
     </Compile>
-    <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\Groups.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTC.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTags.vb">
+    <Compile Include="Metadata\Exif\IExifGetter.vb" />
+    <Compile Include="Metadata\IPTC\Groups.vb" />
+    <Compile Include="Metadata\IPTC\IPTC.vb" />
+    <Compile Include="Metadata\IPTC\IPTCReader.vb" />
+    <Compile Include="Metadata\IPTC\Interfaces.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTypes.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTags.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </Compile>
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypedValues.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes helpers.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTypedValues.vb" />
+    <Compile Include="Metadata\IPTC\IPTCTypes helpers.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -199,17 +199,17 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xml">
+    <None Include="Metadata\Exif\ExifTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>ExifTags.vb</LastGenOutput>
       <CustomToolNamespace>DrawingT.MetadataT.ExifT</CustomToolNamespace>
     </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
+    <None Include="Metadata\Exif\ExifTags.xsd">
       <SubType>
       </SubType>
       <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xslt">
+    <None Include="Metadata\Exif\ExifTags.xslt">
       <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
   </ItemGroup>
@@ -217,24 +217,24 @@
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
-    <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
+    <None Include="Metadata\IPTC\IPTCTags.xsd">
       <SubType>
       </SubType>
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt">
+    <None Include="Metadata\IPTC\IPTCTags.xslt">
       <DependentUpon>IPTCTags.xml</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.css">
+    <None Include="Metadata\Exif\ExifTags.css">
       <DependentUpon>ExifTags.html</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.display.xslt">
+    <None Include="Metadata\Exif\ExifTags.display.xslt">
       <DependentUpon>ExifTags.html</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.html">
+    <None Include="Metadata\Exif\ExifTags.html">
       <DependentUpon>ExifTags.xml</DependentUpon>
     </None>
-    <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
+    <Content Include="Metadata\IPTC\IPTCTags.xml">
       <Generator>TransformCodeGenerator</Generator>
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
       <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
@@ -244,7 +244,7 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Drawing\Metadata\XMP\" />
+    <Folder Include="Metadata\XMP\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
