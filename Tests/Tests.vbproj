@@ -604,6 +604,14 @@
     <None Include="Tree.xsd" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tool.Metadata\Tools.Metadata.vbproj">
+      <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
+      <Name>Tools.Metadata</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tool.Windows\Tools.Windows.vbproj">
+      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
+      <Name>Tools.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
       <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
       <Name>Tools IL</Name>
