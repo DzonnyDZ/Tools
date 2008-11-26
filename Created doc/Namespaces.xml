@@ -104,6 +104,10 @@
         </member>
         <member name="N:Tools.InternalT">
             <summary>Contains classes related to the ĐTools project itslef. This includes some attributes.</summary>
+            <remarks>Attributtes <see cref="T:Tools.InternalT.VersionAttribute"/>, <see cref="T:Tools.InternaltT.AuthorAttribute"/> and <see cref="T:Tools.InternalT.FirstVersionAttribute"/> are obsolete and should no longer be used. Use XML documentation tags instead.</remarks>
+            <version version="1.5.2">
+                Attributtes <see cref="T:Tools.InternalT.VersionAttribute"/>, <see cref="T:Tools.InternaltT.AuthorAttribute"/> and <see cref="T:Tools.InternalT.FirstVersionAttribute"/> are obsolete and should no longer be used. Use XML documentation tags instead.
+            </version>
         </member>
         <member name="N:Tools.IOt">
             <summary>The <see cref="N:Tools.IOt"/> namespace contains types that allow reading and writing to files and data streams, and types that provide basic file and directory support.</summary>

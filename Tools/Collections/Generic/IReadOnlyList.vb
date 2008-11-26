@@ -2,7 +2,7 @@
 Namespace CollectionsT.GenericT
     ''' <summary>Strongly typed read-only list that provides all applicable methods available in <see cref="List(Of T)"/></summary>
     ''' <typeparam name="T">Type of items in list</typeparam>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReadOnlyList(Of )), LastChange:="12/20/2006")> _
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IReadOnlyList(Of T) : Inherits IEnumerable(Of T)
         ''' <summary>Copies a range of elements from the <see cref="IReadOnlyList(Of T)"/> to a compatible one-dimensional array, starting at the specified index of the target array.</summary>
         ''' <param name="array">The one-dimensional <see cref="System.Array"/> that is the destination of the elements copied from <see cref="IReadOnlyList(Of T)"/>. The <see cref="System.Array"/> must have zero-based indexing.</param>

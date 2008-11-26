@@ -1,8 +1,7 @@
 ﻿#If Config <= Nightly Then
 ''' <summary>Exception thrown when value of some type is passes where the type is not acceptable</summary>
-<Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-<Version(1, 0, GetType(TypeMismatchException), LastChange:="05/18/2008")> _
-<FirstVersion("05/18/2008")> _
+''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 Public Class TypeMismatchException : Inherits ArgumentException
     ''' <summary>CTor</summary>
     Public Sub New()

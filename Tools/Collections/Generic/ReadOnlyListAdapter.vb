@@ -7,7 +7,8 @@ Namespace CollectionsT.GenericT
     ''' TFrom must inherit from or implement TTo
     ''' </typeparam>
     ''' <remarks>If you doesn't need type conversion than you can use <seealso cref="ReadOnlyListAdapter(Of T)"/></remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ReadOnlyListAdapter(Of ,)), LastChange:="12/20/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("Count = {Count}")> _
     Public Class ReadOnlyListAdapter(Of TFrom As TTo, TTo)
         Implements IReadOnlyList(Of TTo)
@@ -457,7 +458,8 @@ Namespace CollectionsT.GenericT
     ''' <summary>Adapter that adapts <see cref="List(Of T)"/> into <see cref="IReadOnlyList(Of T)"/> in order to prevent changes of adapted list</summary>
     ''' <typeparam name="T">Type of items of list</typeparam>
     ''' <remarks>If you need convert list of values of inherited type to list of values of parent type use <see cref="ReadOnlyListAdapter(Of TFrom, TTo)"/></remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ReadOnlyListAdapter(Of ,)), LastChange:="12/20/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("Count = {Count}")> _
     Public Class ReadOnlyListAdapter(Of T)
         Inherits ReadOnlyListAdapter(Of T, T)

@@ -5,7 +5,7 @@ Imports Tools.ComponentModelT
 'Stage: Nightly
 Namespace WindowsT.FormsT
     ''' <summary>Marks state of data item</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
     <FirstVersion("06/22/2007")> _
     <Drawing.ToolboxBitmap(GetType(StatusMarker), "StatusMarker.bmp")> _
@@ -408,9 +408,8 @@ Namespace WindowsT.FormsT
 #End Region
     End Class
     ''' <summary>Provides common interface for controls that exposes its status</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(StatusMarker), LastChange:="07/22/2007")> _
-    <FirstVersion("07/22/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+   ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IControlWithStatus
         ''' <summary>Current status of control</summary>
         Property Status() As StatusMarker.Statuses

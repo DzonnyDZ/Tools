@@ -5,8 +5,8 @@ Namespace ComponentModelT
     ''' <remarks>Localizable means that value can be loaded from resources or any Public Static (Shared in Visual Basic) property.
     ''' <para>Description can be localized by resource or by static property depending on value of the <see cref="LDescriptionAttribute.ResourceName"/> property.</para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, LastChange:="06/15/2008")> _
-    <FirstVersion("01/21/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class LDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -88,9 +88,9 @@ Namespace ComponentModelT
     ''' <para>Localizable means that value can be loaded from resources or static (shared in VB) properties. Which method of localization is uded depends on <see cref="LDisplayNameAttribute.ResourceName"/> property.</para>
     ''' <para>This attribute can be also used with fields in place of <see cref="FieldDisplayNameAttribute"/></para>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, LastChange:="06/15/2008")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <AttributeUsage(AttributeTargets.Event Or AttributeTargets.Property Or AttributeTargets.Method Or AttributeTargets.Class Or AttributeTargets.Field)> _
-    <FirstVersion("01/21/2007")> _
     Public Class LDisplayNameAttribute : Inherits DisplayNameAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type
@@ -171,8 +171,8 @@ Namespace ComponentModelT
     ''' Localizable means that value can be loaded from resources (any Public Static (Shared in Visual Basic) Property).
     ''' Note that some categories can be localized by .NET Framework itself.
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="06/15/2008")> _
-    <FirstVersion("01/21/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class LCategoryAttribute : Inherits CategoryAttribute
         ''' <summary>Contains value of the <see cref="ResourceName"/> property</summary>
         Private _ResourceName As String
@@ -372,8 +372,8 @@ Namespace ComponentModelT
     ''' Localizable means that value can be loaded from resources (any Public Static (Shared in Visual Basic) Property).
     ''' This attribute can be used in simple cases. In more complicated cases use ShouldSerialize... and Reset... methods. <seealso>http://msdn2.microsoft.com/en-us/library/53b8022e.aspx</seealso>
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="06/15/2008")> _
-    <FirstVersion("01/21/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class LDefaultValueAttribute : Inherits DefaultValueAttribute
         ''' <summary>Contains value of the <see cref="Resource"/> property</summary>
         Private _Resource As Type

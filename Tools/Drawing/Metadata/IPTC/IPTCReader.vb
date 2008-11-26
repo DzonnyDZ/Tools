@@ -2,9 +2,8 @@ Imports System.IO
 Namespace DrawingT.MetadataT.IptcT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides low level access to stream of IPTC data</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IPTCReader), LastChange:="06/25/2007")> _
-    <FirstVersion("04/25/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+  ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class IptcReader
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains IPTC data</param>

@@ -3,7 +3,8 @@
     ''' <summary>Type tha contains value of two distinct types</summary>
     ''' <typeparam name="T1">Type of first value</typeparam>
     ''' <typeparam name="T2">Type of second value</typeparam>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IPair(Of ,)), LastChange:="12/21/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IPair(Of T1, T2) : Inherits ICloneable(Of IPair(Of T1, T2))
         ''' <summary>Value of type <see cref="T1"/></summary>
         Property Value1() As T1
@@ -18,7 +19,8 @@
     ''' <summary>Implements <see cref="IPair(Of T1,T2)"/> as reference type</summary>
     ''' <typeparam name="T1">Type of Value1</typeparam>
     ''' <typeparam name="T2">Type of Value2</typeparam>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(Pair(Of ,)), LastChange:="12/21/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class Pair(Of T1, T2)
         Inherits Cloenable(Of Pair(Of T1, T2))
         Implements IPair(Of T1, T2)
@@ -104,7 +106,8 @@
     End Class
 
     ''' <summary>Limits <see cref="Pair(Of T1, T2)"/> to contain only values of the same type</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(Pair(Of )), LastChange:="12/21/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class Pair(Of T)
         Inherits Pair(Of T, T)
         Implements ICloneable(Of Pair(Of T))

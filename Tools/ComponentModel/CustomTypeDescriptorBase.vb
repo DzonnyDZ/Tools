@@ -1,9 +1,10 @@
 ﻿Imports System.ComponentModel
+#If Config <= Nightly Then
 'ASAP: WiKi, 
 Namespace ComponentModelT
     ''' <summary>Provides abstract base class for custom type descriptors</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(CustomTypeDescriptorAbstractBase))> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class CustomTypeDescriptorAbstractBase : Inherits CustomTypeDescriptor
         ''' <summary>CTor</summary>
         Protected Sub New()
@@ -56,8 +57,8 @@ Namespace ComponentModelT
     ''' <summary>Provides base class for "top-level" custom type descriptors</summary>
     ''' <remarks>All method in this class, if not overriden in derived class, uses <see cref="TypeDescriptor"/> to obtain information about instance.</remarks>
     ''' <typeparam name="T">Type the descriptor is implemented for. Use <see cref="System.Object"/> to create univarsal one.</typeparam>
-    <Author("Đonny", "dzonny.dz@gmail.com", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(CustomTypeDescriptorBase(Of )))> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class CustomTypeDescriptorBase(Of T) : Inherits CustomTypeDescriptorAbstractBase
         ''' <summary>Contains value of the <see cref="Instance"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -152,3 +153,4 @@ Namespace ComponentModelT
         End Function
     End Class
 End Namespace
+#End If

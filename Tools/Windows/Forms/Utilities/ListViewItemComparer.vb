@@ -183,11 +183,11 @@ Namespace WindowsT.FormsT.UtilitiesT
                     strY = ""
                 End If
             End If
-#If Framework >= 3.5 Then
+            '#If Framework >= 3.5 Then
             Dim mul As Integer = If(Descending, -1, 1)
-#Else
-            Dim mul As Integer = Tools.VisualBasicT.iif(Descending, -1, 1)
-#End If
+            '#Else
+            '            Dim mul As Integer = Tools.VisualBasicT.iif(Descending, -1, 1)
+            '#End If
             Select Case SortMode
                 Case SortModes.Numeric
                     If strX = "" Or strY = "" Then Return mul * String.Compare(strX, strY)

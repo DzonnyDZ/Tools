@@ -1,11 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Globalization
-
+#If Config <= RC Then 'Stage: RC
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.Char"/></summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-   <FirstVersion(2008, 5, 1), Version(1, 0, GetType([CharExtensions]))> _
- Public Module [CharExtensions]
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    Public Module [CharExtensions]
         ''' <summary>Converts the specified numeric Unicode character to a double-precision floating point number.</summary>
         ''' <param name="c">A Unicode character.</param>
         ''' <returns>The numeric value of c if that character represents a number; otherwise, -1.0.</returns>
@@ -160,3 +160,4 @@ Namespace ExtensionsT
         End Function
     End Module
 End Namespace
+#End If

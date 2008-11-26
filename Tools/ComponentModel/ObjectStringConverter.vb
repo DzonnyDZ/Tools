@@ -1,8 +1,8 @@
 ﻿#If Config <= Release Then
 Namespace ComponentModelT
     ''' <summary>Allows editing <see cref="Object"/> as <see cref="String"/> in <see cref="System.Windows.Forms.PropertyGrid"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(ObjectStringConverter), LastChange:="05/17/2007")> _
-    <FirstVersion("01/07/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class ObjectStringConverter : Inherits TypeConverter
         ''' <summary>Returns whether this converter can convert an object of the given type to the type of this converter, using the specified context.</summary>
         ''' <param name="context">An <see cref="System.ComponentModel.ITypeDescriptorContext"/> that provides a format context.</param>

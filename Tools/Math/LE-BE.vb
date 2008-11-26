@@ -4,9 +4,8 @@ Partial Class MathT
     ''' <summary>Converts <see cref="Short"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
-    <FirstVersion("04/23/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Overloads Shared Function LEBE(ByVal value As Short) As Short
         Dim B1 As Byte = (value And &HFF00US) >> 8
         Dim B2 As Byte = value And &HFFUS
@@ -15,9 +14,8 @@ Partial Class MathT
     ''' <summary>Converts <see cref="UShort"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
-    <FirstVersion("04/23/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <CLSCompliant(False)> _
         Public Overloads Shared Function LEBE(ByVal value As UShort) As UShort
         Dim B1 As Byte = (value And &HFF00US) >> 8
@@ -27,9 +25,8 @@ Partial Class MathT
     ''' <summary>Converts <see cref="Integer"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
-    <FirstVersion("04/23/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Overloads Shared Function LEBE(ByVal value As Integer) As Integer
         Dim B1 As Byte = (value And &HFF000000I) >> (3 * 8)
         Dim B2 As Byte = (value And &HFF0000I) >> (2 * 8)
@@ -40,9 +37,8 @@ Partial Class MathT
     ''' <summary>Converts <see cref="UInteger"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
-    <FirstVersion("04/23/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <CLSCompliant(False)> _
     Public Overloads Shared Function LEBE(ByVal value As UInteger) As UInteger
         Dim B1 As Byte = (value And &HFF000000UI) >> (3 * 8)
@@ -54,9 +50,8 @@ Partial Class MathT
     ''' <summary>Converts <see cref="Long"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
-    <FirstVersion("04/23/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Overloads Shared Function LEBE(ByVal value As Long) As Long
         Dim B1 As Byte = (value And &HFF00000000000000L) >> (7 * 8)
         Dim B2 As Byte = (value And &HFF000000000000L) >> (6 * 8)
@@ -71,11 +66,10 @@ Partial Class MathT
     ''' <summary>Converts <see cref="ULong"/> from Little Endian to Big Endian or vice versa</summary>
     ''' <param name="value">value to be converted</param>
     ''' <returns><paramref name="value"/> with reversed byte order</returns>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="05/20/2007")> _
-    <FirstVersion("04/23/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <CLSCompliant(False)> _
-    Public Overloads Shared Function LEBE(ByVal value As ULong) As ULong
+   Public Overloads Shared Function LEBE(ByVal value As ULong) As ULong
         Dim B1 As Byte = (value And &HFF00000000000000UL) >> (7 * 8)
         Dim B2 As Byte = (value And &HFF000000000000UL) >> (6 * 8)
         Dim B3 As Byte = (value And &HFF0000000000UL) >> (5 * 8)

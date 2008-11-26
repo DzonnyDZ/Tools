@@ -3,9 +3,8 @@ Imports System.Reflection
 Namespace ResourcesT
     ''' <summary>Wraps internal class of .NET Framework <see cref="T:System.SR"/></summary>
     ''' <remarks>Functionality of this class strongly relays on implementation details of .NET Framework!!!</remarks>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(SystemResources), LastChange:="10/02/2007")> _
-    <FirstVersion("05/14/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public NotInheritable Class SystemResources
         ''' <summary>CTor</summary>
         ''' <remarks>In order not to be possible to create instance</remarks>
@@ -3047,9 +3046,8 @@ Namespace ResourcesT
     End Class
 
     ''' <summary>Exposes functionality of internall (friend) .NET class System.SRDescriptionAttribute - applies <see cref="DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(SRDescriptionAttribute), LastChange:="10/02/2007")> _
-    <FirstVersion("10/02/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+  ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class SRDescriptionAttribute
         Inherits DescriptionAttribute
         ''' <summary>Contains value of the <see cref="ResourceKey"/> property</summary>
@@ -3082,9 +3080,8 @@ Namespace ResourcesT
     End Class
 
     ''' <summary>Exposes functionality of internall (friend) .NET class System.SRCategoryAttribute - applies <see cref="DescriptionAttribute"/> which's value is loaded from internal .NET Framework resource</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(SRDescriptionAttribute), LastChange:="10/02/2007")> _
-    <FirstVersion("10/02/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+  ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class SRCategoryAttribute
         Inherits DescriptionAttribute
         ''' <summary>CTor</summary>

@@ -2,9 +2,8 @@ Imports System.IO
 Namespace DrawingT.MetadataT.ExifT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(ExifIfdReader), LastChange:="07/22/2008")> _
-    <FirstVersion("04/24/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class ExifIfdReader
         ''' <summary>Settings that apply to reading</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _

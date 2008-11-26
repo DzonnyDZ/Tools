@@ -53,9 +53,8 @@ Namespace XmlT.XPathT
     ''' <item><term>Context value</term><description>Same as context object with exception when current step is <see cref="Tools.XmlT.XPathT.XPathObjectNavigator.SpecialStep"/> (then it is value of pseudo-attribute)</description></item>
     ''' </list>
     ''' </remarks>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(XPathObjectNavigator), LastChange:="10/18/2007")> _
-    <FirstVersion("09/17/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+   ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class XPathObjectNavigator : Inherits XPathNavigator : Implements ICloneable(Of XPathNavigator)
 #Region "Steps"
         ''' <summary>Common base for step class. Represents one step (level) in pseudo-XML structure exposed by <see cref="XPathObjectNavigator"/></summary>
@@ -821,7 +820,7 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
                     Return .ToString("h(0):mm:ss" & lll, System.Globalization.CultureInfo.InvariantCulture)
                 End With
                 If TypeOf obj Is Boolean Then
-#If Framework >= 3.5 Then
+                    '#If Framework >= 3.5 Then
                     Return If(DirectCast(obj, Boolean), "true", "false")
 #Else
                     Return Tools.VisualBasicT.iif(DirectCast(obj, Boolean), "true", "false")
@@ -1088,4 +1087,4 @@ CircleLevel:            If CircleLevel < Location.Count - 2 Then '2 because 1 fo
 #End Region
     End Class
 End Namespace
-#End If
+'#End If

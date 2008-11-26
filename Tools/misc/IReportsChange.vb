@@ -1,6 +1,7 @@
 ﻿#If Config <= Release Then
 ''' <summary>Represents data type that reports change of values of its members</summary>
-<Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(IReportsChange), LastChange:="01/03/2007")> _
+''' <author www="http://dzonny.cz">Đonny</author>
+''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 Public Interface IReportsChange
     ''' <summary>Raised when value of member changes</summary>
     ''' <remarks><paramref name="e"/>Should contain additional information that can be used in event-handling code (e.g. use <see cref="ValueChangedEventArgs(Of T)"/> class)</remarks>

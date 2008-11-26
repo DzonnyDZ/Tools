@@ -11,9 +11,9 @@ Namespace WindowsT.FormsT
     'ASAP:Bitmap
     ''' <summary>Control that allows eas and very sophisticated editing of set of keywords</summary>
     ''' <remarks>There is a list of known keywords (which can be adited by user and persisted). Synonyms of keywords can be defined and added automatically in list.</remarks>
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     <ComponentModelT.Prefix("kwe")> _
     <FirstVersion("06/26/2007")> _
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
     <Version(1, 1, GetType(KeyWordsEditor), LastChange:="06/27/2008")> _
     Public Class KeyWordsEditor
         Implements IComparer(Of String)

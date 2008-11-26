@@ -2,8 +2,8 @@ Namespace DrawingT.MetadataT.IptcT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of IPTC data</summary>
     ''' <seealso cref="iiptcwriter"/><seealso cref="ExifT.iexifgetter"/>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIptcGetter), LastChange:="04/24/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Beta"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IIptcGetter
         ''' <summary>Gets stream of IPTC data</summary>
         ''' <returns>Stream of IPTC data</returns>
@@ -17,8 +17,8 @@ Namespace DrawingT.MetadataT.IptcT
 
     ''' <summary>Represents provider that provides method to writed IPTC data into container</summary>
     ''' <seealso cref="IIptcGetter"/><seealso cref="ExifT.iexifwriter"/>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIptcWriter), LastChange:="07/22/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Beta"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IIptcWriter
         ''' <summary>Writes IPTC data into container</summary>
         ''' <param name="IPTCData">Data to be written</param>

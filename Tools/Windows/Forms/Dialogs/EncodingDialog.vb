@@ -313,7 +313,8 @@ Namespace WindowsT.FormsT
     End Class
     'TODO:ToolboxBitmap
     ''' <summary>Dialog that allows user to select encoding</summary>
-    <Author("Ðonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="01/24/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <Prefix("end")> _
     Public Class EncodingDialog : Inherits CommonDialog
         ''' <summary>CTor</summary>
@@ -440,7 +441,7 @@ Namespace WindowsT.FormsT
         ''' <summary>Raised after user clicks OK and dialog allows him co select encoding</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Arguments of event</param>
-        <LDescription(GetType(WindowsT.FormsT.Dialogs),"OKClicked_d")> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "OKClicked_d")> _
         Public Event OKClicked(ByVal sender As EncodingDialog, ByVal e As EncodingCancelEventArgs)
         ''' <summary>Raises the <see cref="OKClicked"/> event</summary>
         ''' <param name="e">Event arguments</param>

@@ -7,7 +7,7 @@ Imports Tools.ComponentModelT
 Namespace WindowsT.FormsT
     'ASAP: Mark
     ''' <summary>Control for browsing .NET assemblies</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     <Version(0, 9, GetType(ObjectBrowser)), FirstVersion(2008, 6, 20)> _
     Public Class ObjectBrowser : Inherits UserControlExtended
         ''' <summary>Contains value of the <see cref="Objects"/> property</summary>

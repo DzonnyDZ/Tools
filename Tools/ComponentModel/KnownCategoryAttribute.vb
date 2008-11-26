@@ -3,9 +3,8 @@ Imports Tools.ResourcesT
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace ComponentModelT
     ''' <summary><see cref="CategoryAttribute"/> which's value is one of known values</summary>
-    <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _
-    <Version(1, 0, GetType(KnownCategoryAttribute), LastChange:="10/02/2007")> _
-    <FirstVersion("10/02/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class KnownCategoryAttribute : Inherits CategoryAttribute
         ''' <summary>Represents shared (static) properties of <see cref="CategoryAttribute"/></summary>
         ''' <remarks>This enumeration represents categories predefined by the .NET framework. <para>Values of <see cref="AnotherCategories"/> and <see cref="KnownCategories"/> are distinct. With exception of <see cref="AnotherCategories.Misc"/> = <see cref="KnownCategories.[Default]"/>.</para></remarks>

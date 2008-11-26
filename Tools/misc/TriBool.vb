@@ -1,6 +1,8 @@
-﻿''' <summary>Represents tri-state "boolean"</summary>
+﻿
 #If Config <= Release Then
-<Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(enmTriBool), LastChange:="12/21/2006")> _
+''' <summary>Represents tri-state "boolean"</summary>
+''' <author www="http://dzonny.cz">Đonny</author>
+''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 <CLSCompliant(False)> _
 Public Enum enmTriBool As SByte
     ''' <summary>False value</summary>

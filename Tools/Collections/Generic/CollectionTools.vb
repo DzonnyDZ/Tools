@@ -2,7 +2,7 @@
 Imports System.Runtime.CompilerServices
 Imports Tools.CollectionsT.GenericT
 
-#If Framework >= 3.5 Then
+'#If Framework >= 3.5 Then
 Namespace CollectionsT.GenericT
     'ASAP: Mark,  Wiki, Forum
     ''' <summary>Extension methods for working with generic collections</summary>
@@ -83,5 +83,5 @@ Namespace CollectionsT.GenericT
         End Sub
     End Module
 End Namespace
-#End If
+'#End If
 #End If

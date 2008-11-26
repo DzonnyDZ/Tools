@@ -2,7 +2,7 @@ Imports System.IO
 Namespace DrawingT.MetadataT.ExifT
 #If Config <= Nightly Then 'Stage: Nightly
     ''' <summary>Provides low level access to stream of Exif data</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     <Version(1, 0, GetType(ExifReader), LastChange:="04/25/2007")> _
     Public Class ExifReader
         ''' <summary>Name of Exif Sub IFD (see <see cref="SubIFD.Desc"/>)</summary>
@@ -11,7 +11,7 @@ Namespace DrawingT.MetadataT.ExifT
         Public Const GPSSubIFDName As String = "GPS Sub IFD"
         ''' <summary>Name of Exif Interoperability Sub IFD (see <see cref="IFDInterop"/>)</summary>
         Public Const ExifInteroperabilityName As String = "Exif Interoperability IFD"
-      
+
 #Region "Ctors"
         ''' <summary>CTor from <see cref="System.IO.Stream"/></summary>
         ''' <param name="Stream"><see cref="System.IO.Stream"/> that contains Exif data</param>

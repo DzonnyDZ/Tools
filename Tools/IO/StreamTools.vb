@@ -4,9 +4,8 @@ Imports System.Runtime.CompilerServices
 #If Config <= Nightly Then
 Namespace IOt
     ''' <summary>Tools related to IO <see cref="System.IO.Stream"/>s</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <FirstVersion("07/22/2007")> _
-    <Version(1, 0, GetType(StreamTools), LastChange:="10/30/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Module StreamTools
         ''' <summary>Replaces given ammount of bytes in <see cref="IO.Stream"/> with another amount of bytes</summary>
         ''' <param name="Stream">Stream to perform operation on. It must support seking, reading and writing</param>

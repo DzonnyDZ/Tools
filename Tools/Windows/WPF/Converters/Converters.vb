@@ -1,10 +1,10 @@
 ﻿Imports System.Windows.Data
 Imports System.Globalization
-
+#If Config <= Alpha Then 'Stage: Aplha
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Implements <see cref="IValueConverter"/> which negates <see cref="Boolean"/> value</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(NotBooleanValueConverter)), FirstVersion(2008, 5, 1)> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class NotBooleanValueConverter
         Inherits StronglyTypedConverter(Of Boolean, Boolean)
         ''' <summary>Converts a value - makes boolean negation of it.</summary>
@@ -26,8 +26,8 @@ Namespace WindowsT.WPF.ConvertersT
     End Class
 
     ''' <summary>Implements <see cref="IValueConverter"/> for converting numeric values to halfs of them</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(HalfConverter)), FirstVersion(2008, 5, 1)> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Friend Class HalfConverter
         Implements IValueConverter
         ''' <summary>Converts a value. </summary>
@@ -119,3 +119,4 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 End Namespace
+#End If

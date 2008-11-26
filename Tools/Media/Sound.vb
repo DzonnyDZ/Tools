@@ -13,8 +13,8 @@ Namespace MediaT
     ''' <remarks>This class does not provide seeking and stoping capabilities. It is intended to be used with short sounds.
     ''' <para>Provided type editor can convert names of system sounds and any URI to instance of <see cref="Sound"/>.</para>
     ''' </remarks>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Sound)), FirstVersion(2008, 6, 21)> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <TypeConverter(GetType(Sound.SoundTypeConverter))> _
     <Editor(GetType(Tools.DrawingT.DesignT.DropDownControlEditor(Of Sound, SoundDropDownList)), GetType(UITypeEditor))> _
     Public MustInherit Class Sound

@@ -1,8 +1,8 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
 Imports Tools.CollectionsT.GenericT, Tools.DataStructuresT.GenericT
-#If Framework >= 3.5 Then
+'#If Framework >= 3.5 Then
 Imports System.Linq
-#End If
+'#End If
 Namespace IOt
     'ASAP: Forum, Wiki, Mark
     ''' <summary>Enumerates through files and folders within specified folder</summary>
@@ -240,7 +240,7 @@ Namespace IOt
                 Return _FoldersListMasks
             End Get
         End Property
-#If Framework >= 3.5 Then
+        '#If Framework >= 3.5 Then
         ''' <summary>Gets or sets array masks used for files</summary>
         ''' <value>Array of masks used for files. Masks are in formet used by Visual Basic Like operator (wildchars * and ?)</value>
         ''' <returns>Array of maks. Getter can change actual instance stored in masks. Avoid using getter unless it is necessary. Inheritors can use <see cref="MaskForFiles"/>.</returns>
@@ -251,12 +251,12 @@ Namespace IOt
                 Masks = arr
                 Return arr
             End Get
-#Else
-        ''' <summary>Gets or sets array masks used for files</summary>
-        ''' <value>Array of masks used for files. Masks are in formet used by Visual Basic Like operator (wildchars * and ?)</value>
-        ''' <exception cref="ArgumentNullException">Value beign set is null</exception>
-        Public WriteOnly Property FilesMasks() As String()
-#End If
+            '#Else
+            '    ''' <summary>Gets or sets array masks used for files</summary>
+            '    ''' <value>Array of masks used for files. Masks are in formet used by Visual Basic Like operator (wildchars * and ?)</value>
+            '    ''' <exception cref="ArgumentNullException">Value beign set is null</exception>
+            'Public WriteOnly Property FilesMasks() As String()
+            '#End If
             Set(ByVal value As String())
                 If value Is Nothing Then Throw New ArgumentNullException("value")
                 Masks = value

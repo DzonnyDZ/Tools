@@ -2,13 +2,12 @@
 Imports System.Runtime.CompilerServices, System.Linq
 Imports Tools.CollectionsT.GenericT
 
-#If Framework >= 3.5 Then
+'#If Framework >= 3.5 Then
 Namespace CollectionsT.SpecializedT
     'ASAP: Mark,  Wiki, Forum
     ''' <summary>Extension methods for working with specialized collections</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(CollectionTools), LastChange:="05/16/2008")> _
-    <FirstVersion("05/16/2008")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Module CollectionTools
         ''' <summary>Gets last <see cref="Windows.Forms.Control"/> in <see cref="Windows.Forms.Control.ControlCollection"/></summary>
         ''' <param name="Collection">Collection to get last item from</param>
@@ -57,7 +56,7 @@ Namespace CollectionsT.SpecializedT
         <Extension()> Sub Insert(ByVal Collection As Windows.Forms.Control.ControlCollection, ByVal index As Integer, ByVal Control As Windows.Forms.Control)
             If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
             If Control Is Nothing Then Throw New ArgumentNullException("Control")
-            If index < 0 OrElse index > Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection) 
+            If index < 0 OrElse index > Collection.Count Then Throw New IndexOutOfRangeException(ResourcesT.Exceptions.IndexWasOutOfRangeOfControlsCollection)
             Dim RemovedControls As New List(Of Windows.Forms.Control)(From ToRemove In Collection.AsTypeSafe Skip index)
             If Collection.Owner IsNot Nothing Then Collection.Owner.SuspendLayout()
             Try
@@ -89,5 +88,5 @@ Namespace CollectionsT.SpecializedT
         End Sub
     End Module
 End Namespace
-#End If
+'#End If
 #End If

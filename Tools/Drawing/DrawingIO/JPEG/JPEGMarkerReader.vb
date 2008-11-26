@@ -2,11 +2,10 @@ Imports System.IO, Tools.IOt
 Namespace DrawingT.DrawingIOt.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represernts marker (block of JPEG file)</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(JPEGMarkerReader), LastChange:="04/24/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
-    <FirstVersion("04/24/2007")> _
-    Public Class JPEGMarkerReader
+       Public Class JPEGMarkerReader
         ''' <summary>Known types of JPEG markers</summary>
         Public Enum Markers As Byte
             ''' <summary>Start Of Image marker</summary>

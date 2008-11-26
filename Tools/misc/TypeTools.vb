@@ -1,8 +1,8 @@
 Imports System.Runtime.CompilerServices, System.Linq
 
 #If Config <= Nightly Then 'Stage:Nightly
-<Author("Ðonny", "dzonny.dz@.gmail.com", "http://dzonny.cz")> _
-<Version(1, 1, GetType(TypeTools))> _
+''' <author www="http://dzonny.cz">Ðonny</author>
+''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 Public Module TypeTools
     ''' <summary>Checks if specified value is member of an enumeration</summary>
     ''' <param name="value">Value to be chcked</param>
@@ -29,12 +29,8 @@ Public Module TypeTools
     ''' <param name="Inherit">When true, look up the hierarchy chain for the inherited custom attribute.</param>
     ''' <returns>First attribute returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
-#If VBC_VER >= 9 Then
     <Extension()> _
-    Public Function GetAttribute(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T
-#Else
-    Public Function GetAttribute(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T
-#End If
+     Public Function GetAttribute(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing OrElse attrs.Length = 0 Then Return Nothing Else Return attrs(0)
     End Function
@@ -43,15 +39,12 @@ Public Module TypeTools
     ''' <param name="Inherit">When true, look up the hierarchy chain for the inherited custom attribute.</param>
     ''' <returns>All attributes returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
-#If VBC_VER >= 9 Then
     <Extension()> _
     Public Function GetAttributes(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T()
-#Else
-    Public Function GetAttributes(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T()
-#End If
+
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing Then Return Nothing
-        Return (From Attr In attrs Select DirectCast(Attr, T)).toarray
+        Return (From Attr In attrs Select DirectCast(Attr, T)).ToArray
     End Function
     ''' <summary>Converts specified value to underlying type of specified enumeration (type-safe)</summary>
     ''' <param name="value"><see cref="IConvertible"/> to be converted using invariant culture</param>

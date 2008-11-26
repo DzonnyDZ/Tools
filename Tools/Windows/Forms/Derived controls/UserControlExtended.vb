@@ -2,9 +2,8 @@
 Namespace WindowsT.FormsT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Provides empty base class for user controls that extends <see cref="UserControl"/> by adding several features.</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "dzonny.cz")> _
-    <Version(1, 0, GetType(UserControlExtended), LastChange:="02/11/2008")> _
-    <FirstVersion("02/11/2008")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class UserControlExtended
         Inherits UserControl
         ''' <summary>CTor</summary>
@@ -46,7 +45,7 @@ Namespace WindowsT.FormsT
         ''' You can change value of this in CTor of derived class in order to change design-time behaviour of your derived control</remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         <DefaultValue(False)> _
-        <LDescription(GetType(WindowsT.FormsT.DerivedControls),"KeyPreviewDefaultValue_d")> _
+        <LDescription(GetType(WindowsT.FormsT.DerivedControls), "KeyPreviewDefaultValue_d")> _
         Protected Property KeyPreviewDefaultValue() As Boolean
             Get
                 Return _KeyPreviewDefaultValue

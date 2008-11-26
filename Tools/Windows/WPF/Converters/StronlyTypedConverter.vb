@@ -1,12 +1,12 @@
 ﻿Imports System.Windows.Data
 Imports System.Globalization
-
+#If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.WPF.ConvertersT
     ''' <summary>Common base for type-safe implementations of <see cref="IValueConverter"/></summary>
     ''' <typeparam name="TSource">Type values are converted from</typeparam>
     ''' <typeparam name="TTarget">Type values are converted to</typeparam>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(StronglyTypedConverter(Of ,))), FirstVersion(2008, 5, 1)> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class StronglyTypedConverter(Of TSource, TTarget)
         Implements IValueConverter
 
@@ -48,3 +48,4 @@ Namespace WindowsT.WPF.ConvertersT
         Public MustOverride Function ConvertBack(ByVal value As TTarget, ByVal parameter As Object, ByVal culture As CultureInfo) As TSource
     End Class
 End Namespace
+#End If

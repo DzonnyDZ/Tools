@@ -4,12 +4,12 @@ Imports Tools.ComponentModelT
 Namespace WindowsT.FormsT
 #If Config <= RC Then 'Stage: RC
     ''' <summary><see cref="System.Windows.Forms.ToolStripComboBox"/> that allows databinding</summary>
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <System.Drawing.ToolboxBitmap(GetType(DataBoundToolStripComboBox), "DataBoundToolStripComboBox.bmp")> _
-    <DefaultBindingProperty("Text")> _
-    <LookupBindingProperties("DataSource", "DisplayMember", "ValueMember", "SelectedValue")> _
-    <ComponentModelT.Prefix("dtc")> _
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(DataBoundToolStripComboBox), LastChange:="05/13/2007")> _
+   <DefaultBindingProperty("Text")> _
+   <LookupBindingProperties("DataSource", "DisplayMember", "ValueMember", "SelectedValue")> _
+   <ComponentModelT.Prefix("dtc")> _
     Public Class DataBoundToolStripComboBox
         Inherits System.Windows.Forms.ToolStripComboBox
         Implements IBindableComponent

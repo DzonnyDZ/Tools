@@ -2,8 +2,8 @@ Namespace DrawingT.MetadataT.ExifT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents provider that provides stream of Exif data</summary>
     ''' <seealso cref="IExifWriter"/><seealso cref="IptcT.iiptcgetter"/>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IExifGetter), LastChange:="04/24/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Beta"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IExifGetter
         ''' <summary>Gets stream of Exif data</summary>
         ''' <returns>Stream of Exif data. Can return null or an empty stream where there are no Exif data.</returns>

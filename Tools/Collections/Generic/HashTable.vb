@@ -583,7 +583,8 @@ Namespace CollectionsT.GenericT
     '    End Class
     ''' <summary>Provides HashTable designed for storing only keys and quickly testing if key is in collection or not</summary>
     ''' <remarks>Internally uses <see cref="Dictionary(Of T, Object)"/>. Can be used as List of unique items.</remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(HashTable(Of )), LastChange:="12/25/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class HashTable(Of T)
         Implements ICollection(Of T)
         ''' <summary><see cref="Dictionary(Of T, Object)"/> internally used by this instance</summary>

@@ -1,14 +1,34 @@
 Imports Tools.InternalT
 Namespace InternalT
 #If Config <= Release Then
-    <Version(1, 0, GetType(VersionAttributeTest), LastChange:="05/15/2007")> _
     Public Class VersionAttributeTest
         Public Shared Sub Test()
-            Dim t As Type = GetType(VersionAttributeTest)
-            Dim vType As Type = GetType(VersionAttribute)
+            Dim cp As New Microsoft.VisualBasic.VBCodeProvider
+            Dim cParams As System.CodeDom.Compiler.CompilerParameters = New CodeDom.Compiler.CompilerParameters()
+            cParams.GenerateExecutable = False
+            cParams.GenerateInMemory = True
+            cParams.IncludeDebugInformation = True
+            Dim vType As Type = Type.GetType("Tools.InternalT.VersionAttribute, Tools")
+            cParams.ReferencedAssemblies.Add(vType.Assembly.Location)
+            Dim compiled = cp.CompileAssemblyFromSource(cParams, New String() { _
+                                            "Namespace Tools.Tests.InternalT" & vbCrLf & _
+                                            "<Tools.InternalT.VersionAttribute(1,0,GetType(ClassWithVersionAttribute), LastChange:=""11/26/2008"")> _" & vbCrLf & _
+                                            "Public Class ClassWithVersionAttribute" & vbCrLf & _
+                                            "End Class" & vbCrLf & _
+                                            "End Namespace"})
+
+            Dim t = compiled.CompiledAssembly.GetType("Tools.Tests.InternalT.ClassWithVersionAttribute")
+
+
             Dim Attrs As Object() = t.GetCustomAttributes(vType, False)
-            Dim attr As VersionAttribute = Attrs(0)
-            MsgBox(attr.LastChange & vbCrLf & attr.LastChangeDate & vbCrLf & attr.Major & "." & attr.Minor & "." & attr.Revision & "." & attr.Build)
+            Dim attr As Attribute = Attrs(0)
+            MsgBox( _
+                vType.GetProperty("LastChange").GetValue(attr, Nothing).ToString & vbCrLf & _
+                vType.GetProperty("LastChangeDate").GetValue(attr, Nothing).ToString & vbCrLf & _
+                vType.GetProperty("Major").GetValue(attr, Nothing).ToString & "." & _
+                vType.GetProperty("Minor").GetValue(attr, Nothing).ToString & "." & _
+                vType.GetProperty("Build").GetValue(attr, Nothing).ToString & "." & _
+                vType.GetProperty("Revision").GetValue(attr, Nothing).ToString)
         End Sub
 
     End Class

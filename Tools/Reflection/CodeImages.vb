@@ -392,7 +392,7 @@ Namespace ReflectionT
         Public Function GetImage(ByVal ObjectType As Objects, ByVal Attributes As MethodAttributes) As Image
             Return GetImage(ObjectType, DirectCast(Attributes, ObjectModifiers))
         End Function
-#If Framework >= 3.5 Then
+        '#If Framework >= 3.5 Then
         ''' <summary>Gets image that graphically represents given type</summary>
         ''' <param name="Type">Type to get image for</param>
         ''' <returns>16×16 image representing type obtained using <see cref="GetImage"/></returns>
@@ -595,7 +595,7 @@ Namespace ReflectionT
             Return GetImage(Type, Overlay)
         End Function
 
-#End If
+        '#End If
     End Module
 End Namespace
 #End If

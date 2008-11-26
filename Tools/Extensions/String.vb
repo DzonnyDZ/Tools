@@ -1,11 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices
 Imports System.Globalization
-
+#If Config <= Nightly Then   'Stage: Nightly
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with <see cref="System.String"/></summary>
-    <Author("functionĐonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
- <FirstVersion(2008, 5, 1), Version(1, 0, GetType([StringExtensions]))> _
- Public Module [StringExtensions]
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    Public Module [StringExtensions]
         ''' <summary>Indicates whether the specified <see cref="System.String" /> object is null or an <see cref="System.String.Empty" /> string.</summary>
         ''' <param name="s">A <see cref="System.String" /> reference.</param>
         ''' <returns>true if the value parameter is null or an empty string (""); otherwise, false.</returns>
@@ -91,3 +91,4 @@ Namespace ExtensionsT
         End Function
     End Module
 End Namespace
+#End If

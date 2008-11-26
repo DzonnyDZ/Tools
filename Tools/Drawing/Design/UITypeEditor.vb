@@ -5,9 +5,8 @@ Imports System.Windows.Forms.Design
 Namespace DrawingT.DesignT
     ''' <summary>Base class for type-safe <see cref="UITypeEditor">UITypeEditors</see></summary>
     ''' <typeparam name="T">Type of value being edited</typeparam>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(UITypeEditor(Of )), LastChange:="06/22/2008")> _
-    <FirstVersion("05/25/2008")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+ ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class UITypeEditor(Of T)
         Inherits UITypeEditor
         ''' <summary>Edits the specified object's value using the editor style indicated by the <see cref="M:System.Drawing.Design.UITypeEditor.GetEditStyle" /> method.</summary>

@@ -3,10 +3,9 @@ Imports System.Text, System.Math, Tools.ExtensionsT, System.Linq
 ''' <summary><see cref="TimeSpan"/> that implements <see cref="IFormattable"/></summary>
 ''' <remarks>This class has plenty of formating possibilities which can be used via <see cref="String.Format"/> or <see cref="TimeSpanFormattable.ToString"/>.</remarks>
 ''' <seealso cref="TimeSpan"/>
-<Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
 <DebuggerDisplay("{ToString}")> _
-<Version(1, 2, GetType(TimeSpanFormattable), LastChange:="05/29/2008")> _
-<FirstVersion("10/15/2007")> _
 Public Structure TimeSpanFormattable
     Implements IComparable(Of TimeSpanFormattable), IEquatable(Of TimeSpanFormattable)
     Implements IFormattable

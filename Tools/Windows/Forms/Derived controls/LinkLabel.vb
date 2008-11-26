@@ -10,12 +10,12 @@ Imports System.Runtime.Serialization
 'Its preceded by comment.
 Namespace WindowsT.FormsT
     ''' <summary><see cref="System.Windows.Forms.LinkLabel"/> with improved design-time behavior</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="05/20/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <ToolboxItemFilter("System.Windows.Forms")> _
     <System.Drawing.ToolboxBitmap(GetType(System.Windows.Forms.LinkLabel))> _
     <DefaultEvent("LinkClicked"), ToolboxItem(True), DefaultProperty("Items")> _
     <Prefix("llb")> _
-    <FirstVersion("01/24/2007")> _
     Public Class LinkLabel : Inherits System.Windows.Forms.LinkLabel
         ''' <summary>Contains value of the <see cref="Items"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -1310,11 +1310,11 @@ Namespace WindowsT.FormsT
                         lblItemInfo.Text = resources.GetString("lblItemInfo.Text")
                     Else
                         pgrProperty.SelectedObjects = (New ArrayList(lstItems.SelectedItems)).ToArray
-#If Framework >= 3.5 Then
+                        '#If Framework >= 3.5 Then
                         Enable(If(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
-#Else
-                        Enable(VisualBasicT.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
-#End If
+                        '#Else
+                        '                        Enable(VisualBasicT.iif(lstItems.SelectedItems.Count > 1, EnableMode.Multi, EnableMode.True))
+                        '#End If
                         If lstItems.SelectedItems.Count = 1 Then
                             lblItemInfo.Text = lstItems.SelectedItems(0).GetType.Name & ": " & lstItems.SelectedItems(0).ToString.Replace(vbCrLf, " ").Replace(vbCr, " ").Replace(vbLf, " ").Replace(vbTab, " ")
                         Else

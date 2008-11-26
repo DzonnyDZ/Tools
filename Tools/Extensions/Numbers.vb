@@ -3,9 +3,9 @@
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace ExtensionsT
     ''' <summary>Contains extension methods for working with numbers of basic data types</summary>
-    <Author("Đonny", "dzonny.dz@gmail.com", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Numbers), LastChange:="6/20/2008"), FirstVersion(2008, 6, 20)> _
- Public Module Numbers
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    Public Module Numbers
         ''' <summary>Returns a value indicating whether the specified number evaluates to not a number (<see cref="System.Single.NaN" />).</summary>
         ''' <param name="n">A single-precision floating-point number.</param>
         ''' <returns>true if f evaluates to not a number (<see cref="System.Single.NaN" />); otherwise, false.</returns>

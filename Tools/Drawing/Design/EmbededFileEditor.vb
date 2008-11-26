@@ -2,8 +2,8 @@ Imports System.ComponentModel, System.Drawing.Design, System.Windows.Forms, Syst
 #If Config <= Nightly Then
 Namespace DrawingT.DesignT
     ''' <summary><see cref="UITypeEditor"/> of <see cref="Byte()"/> capable to save bytes info file and load them from it</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(EmbededFileEditor), LastChange:="07/22/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class EmbededFileEditor
         Inherits UITypeEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>
@@ -31,7 +31,7 @@ Namespace DrawingT.DesignT
                     Dim Embed As New OpenFileDialog
                     Lst.Items.Add(Embed)
                     Embed.Title = ResourcesT.Components.LoadFromFile
-                    Lst.Items.Add(ResourcesT.Components.Clear) 
+                    Lst.Items.Add(ResourcesT.Components.Clear)
                 End If
                 AddHandler Lst.Click, AddressOf Lst_Click
                 Lst.Height = Lst.Items.Count * Lst.ItemHeight + (Lst.Height - Lst.ClientSize.Height)
@@ -80,8 +80,8 @@ Namespace DrawingT.DesignT
 
 
     ''' <summary><see cref="UITypeEditor"/> of <see cref="Byte()"/> capable to save and load image</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(EmbededImageEditor), LastChange:="07/22/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class EmbededImageEditor
         Inherits BitmapEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>

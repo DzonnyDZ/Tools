@@ -38,10 +38,9 @@ Namespace WindowsT.IndependentT
     ''' </list>
     ''' </para>
     ''' </remarks>
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(MessageBox), LastChange:="06/19/2008")> _
-    <FirstVersion("05/26/2008")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
 #Region "Shared"
         ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>

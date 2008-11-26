@@ -6,9 +6,8 @@ Namespace DrawingT.DesignT
     ''' The <see cref="DefaultValueAttribute"/> used can be applyed either on property (preffered) or on type of the property.
     ''' See also <seealso cref="InstanceCreationEditor"/>.
     ''' </remarks>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(NewEditor), LastChange:="05/26/2008")> _
-    <FirstVersion("07/22/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class NewEditor
         Inherits UITypeEditor
         ''' <summary>Gets the editor style used by the <see cref="M:System.Drawing.Design.UITypeEditor.EditValue(System.IServiceProvider,System.Object)"/> method.</summary>

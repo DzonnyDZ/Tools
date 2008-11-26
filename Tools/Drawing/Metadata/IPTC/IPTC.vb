@@ -2,7 +2,7 @@ Imports Tools.CollectionsT.GenericT
 Imports Tools.DataStructuresT.GenericT
 Namespace DrawingT.MetadataT.IptcT
 #If Congig <= Alpha Then 'Stage: Alpha
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     <Version(1, 1, GetType(IPTC), LastChange:="10/03/2007")> _
     <FirstVersion("06/01/2007")> _
     Partial Public Class Iptc
@@ -190,9 +190,9 @@ Namespace DrawingT.MetadataT.IptcT
             Return New System.IO.BinaryReader(str).ReadBytes(pos)
         End Function
 
-       
 
-      
+
+
     End Class
     ''' <summary>Represents common base for <see cref="IPTCGetException"/> and <see cref="IPTCSetException"/></summary>
     Public MustInherit Class IptcException : Inherits Exception

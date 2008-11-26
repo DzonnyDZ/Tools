@@ -2,13 +2,12 @@
 Imports System.Runtime.CompilerServices
 Imports Tools.CollectionsT.GenericT
 
-#If Framework >= 3.5 Then
+'#If Framework >= 3.5 Then
 Namespace CollectionsT
     'ASAP: Mark,  Wiki, Forum
     ''' <summary>Extension methods for working with type-unsafe collections</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(CollectionTools), LastChange:="05/16/2008")> _
-    <FirstVersion("05/16/2008")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+   ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Module CollectionTools
         ''' <summary>Gets last item in collection</summary>
         ''' <param name="Collection">Collection to obtain item from</param>
@@ -42,5 +41,5 @@ Namespace CollectionsT
         End Function
     End Module
 End Namespace
-#End If
+'#End If
 #End If

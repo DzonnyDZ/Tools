@@ -2,8 +2,8 @@ Imports System.Drawing, System.Windows.Forms
 Namespace DrawingT
 #If Config <= Release Then
     ''' <summary>Gives access to aditional system-defined colors</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzony.cz")> _
-    <Version(1, 0, GetType(SystemColorsExtension), LastChange:="05/10/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public NotInheritable Class SystemColorsExtension
         ''' <summary>Color of non visited non hovered hyperlink in web browser</summary>
         Public Shared ReadOnly Property BrowserLink() As Color

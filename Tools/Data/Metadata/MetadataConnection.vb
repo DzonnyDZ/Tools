@@ -58,7 +58,7 @@
 '        ''' <remarks>Database in terms of Metadata data provider is folder name and can be an empty string</remarks>>
 '        Public Overrides ReadOnly Property Database() As String
 '            Get
-'#If Framework >= 3.5 Then
+''#If Framework >= 3.5 Then
 '                Return If(IsOpen, _CurrentDatabase, _InitialDatabase)
 '#Else
 '                Return iif(IsOpen, _CurrentDatabase, _InitialDatabase)

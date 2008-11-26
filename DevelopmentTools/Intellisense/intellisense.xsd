@@ -36,14 +36,67 @@
             <xs:element name="seealso" type="crefblock" minOccurs="1" maxOccurs="1"/>
             <xs:element name="permission" type="crefblock" minOccurs="1" maxOccurs="1"/>
             <xs:element ref="include"/>
+            <xs:element name="version" type="version" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="author" name="author" minOccurs="1" maxOccurs="1"/>
         </xs:choice>
     </xs:group>
-    <xs:complexType name="member">
+
+    <xs:complexType name="overloads">
         <xs:sequence minOccurs="1" maxOccurs="1">
+            <xs:element name='summary' minOccurs='1' maxOccurs='1' type='textblock'/>
+            <xs:element name='remarks' minOccurs='0' maxOccurs='1' type='textblock'/>
+            <xs:element type='textblock' minOccurs='0' maxOccurs='unbounded' name='example'/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="member">
+        <xs:sequence minOccurs="1" maxOccurs="unbounded">
             <xs:group ref="repeateble-items" minOccurs="0" maxOccurs="unbounded"/>
-            <xs:group ref="chose-them-all" minOccurs="0" maxOccurs="1"/>
+            <xs:group ref="single-oc" minOccurs="0" maxOccurs="unbounded"/>
         </xs:sequence>
         <xs:attribute name="name" type="ident"/>
+    </xs:complexType>
+
+    <xs:complexType name="inheritdoc">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:group ref="tbels" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="cref" type="ident" use="optional"/>
+        <xs:attribute name="select" type="xs:string" use="optional"/>
+    </xs:complexType>
+
+    <xs:complexType name="empty"/>
+
+    <xs:complexType name="version" mixed="true">
+        <xs:sequence minOccurs="0" maxOccurs="1">
+            <xs:group ref="tbels" minOccurs="0" maxOccurs="unbounded"/>
+        </xs:sequence>
+        <xs:attribute name="version" use="required">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:pattern value="[0-9]+\.[0-9]+\.[0-9]+(\.[0-9]+)?"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+        <xs:attribute name="stage" use="optional">
+            <xs:simpleType>
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="Nightly"/>
+                    <xs:enumeration value="Alpha"/>
+                    <xs:enumeration value="Beta"/>
+                    <xs:enumeration value="RC"/>
+                    <xs:enumeration value="Release"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:attribute>
+    </xs:complexType>
+
+    <xs:complexType name="author">
+        <xs:simpleContent>
+            <xs:extension base="xs:string">
+                <xs:attribute name="www" type="xs:anyURI" use="optional"/>
+                <xs:attribute name="mail" type="xs:string" use="optional"/>
+            </xs:extension>
+        </xs:simpleContent>
     </xs:complexType>
 
     <xs:complexType name="textblock" mixed="true">
@@ -77,7 +130,7 @@
     <xs:group name="tbels">
         <xs:choice>
             <xs:element name="see" type="crefblock"/>
-            <xs:element name="code" type="textblock"/>
+            <xs:element name="code" type="code"/>
             <xs:element name="c" type="textblock"/>
             <xs:element name="paramref" type="nameblock"/>
             <xs:element name="typeparamref" type="nameblock"/>
@@ -85,8 +138,58 @@
             <xs:element ref="list"/>
             <xs:element name="para" type="textblock"/>
             <xs:element ref="include"/>
+            <xs:element name="note" type="note"/>
         </xs:choice>
     </xs:group>
+
+    <xs:complexType name="note">
+        <xs:complexContent mixed="true">
+            <xs:extension base="textblock">
+                <xs:attribute name="type" use="optional">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration  value="caution"/>
+                            <xs:enumeration  value="inheritnifo"/>
+                            <xs:enumeration  value="implementnotes"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="see" mixed="true">
+        <xs:complexContent>
+            <xs:extension base="textblock">
+                <xs:attribute name="cref" use="optional" type="ident"/>
+                <xs:attribute name="langword" use="optional">
+                    <xs:simpleType>
+                        <xs:union memberTypes="xs:string">
+                            <xs:simpleType>
+                                <xs:restriction base="xs:string">
+                                    <xs:enumeration value="null"/>
+                                    <xs:enumeration value="sealed"/>
+                                    <xs:enumeration value="static"/>
+                                    <xs:enumeration value="abstract"/>
+                                    <xs:enumeration value="virtual"/>
+                                    <xs:enumeration value="true"/>
+                                    <xs:enumeration value="false"/>
+                                </xs:restriction>
+                            </xs:simpleType>
+                        </xs:union>
+                    </xs:simpleType>
+                </xs:attribute>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+
+    <xs:complexType name="code">
+        <xs:complexContent mixed="true">
+            <xs:extension base="textblock">
+                <xs:attribute name="lang" type="xs:string"/>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
 
     <xs:element name="list">
         <xs:complexType>
@@ -129,9 +232,23 @@
         </xs:complexType>
     </xs:element>
 
-    <xs:group name="chose-them-all">
-        <!--Following code was generated by intellisense.xsd.generator.vbs.-->
+    <xs:group name="single-oc">
+        <!--Each of these elements should appear only once-->
         <xs:choice>
+            <xs:element name='summary' minOccurs='1' maxOccurs='1' type='textblock'/>
+            <xs:element name='value' minOccurs='1' maxOccurs='1' type='textblock'/>
+            <xs:element name='returns' minOccurs='1' maxOccurs='1' type='textblock'/>
+            <xs:element name='remarks' minOccurs='1' maxOccurs='1' type='textblock'/>
+            <xs:element name='filterpriority' minOccurs='1' maxOccurs='1' type='xs:nonNegativeInteger'/>
+            <xs:element name='completionlist' type='emptycref' minOccurs='1' maxOccurs='1'/>
+            <xs:element name="exclude" type="empty" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="preliminary" type="empty" minOccurs="1" maxOccurs="1"/>
+            <xs:element name="threadsafety" type="xs:string" minOccurs="1" maxOccurs="1"/>
+            <xs:element type="inheritdoc" name="inheritdoc"  minOccurs="1" maxOccurs="1"/>
+            <xs:element name="overloads" type="overloads" minOccurs="1" maxOccurs="1"/>
+        </xs:choice>
+        <!--Following code was generated by intellisense.xsd.generator.vbs.-->
+        <!--<xs:choice>
             <xs:sequence minOccurs='0' maxOccurs='1'>
                 <xs:element name='summary' minOccurs='1' maxOccurs='1' type='textblock'/>
                 <xs:group ref='repeateble-items' minOccurs='0' maxOccurs='unbounded'/>
@@ -10428,7 +10545,7 @@
                     </xs:sequence>
                 </xs:choice>
             </xs:sequence>
-        </xs:choice>
+        </xs:choice>-->
 
     </xs:group>
 </xs:schema>

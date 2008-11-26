@@ -1,24 +1,24 @@
 ﻿Imports System.Drawing
 Imports System.Runtime.CompilerServices
-
+#If Config <= Alpha Then 'Stage: Alpha
 Namespace DrawingT
     'ASAP: Mark, WiKi, COmment, Forum
     ''' <summary>Contains extension methods for working with images</summary>
     Public Module ImageTools
-#If Framework >= 3.5 Then
+        '#If Framework >= 3.5 Then
         ''' <summary>Gets thumbnail size that best fits into given size</summary>
         ''' <param name="ImgSize">Size of original image</param>
         ''' <param name="ThumbBounds">Size that represents maximal bounds of thumbnail</param>
         ''' <returns>Size that does not exceed <paramref name="ThumbBounds"/> and has same proportions as <paramref name="ImgSize"/></returns>
+        ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+        ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
         <Extension()> _
-        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-        <FirstVersion(2008, 1, 26)> _
-        Public Function ThumbSize(ByVal ImgSize As Size, ByVal ThumbBounds As Size) As Size
-#Else
-        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-        <FirstVersion(2008, 1, 26)> _
-        Public Function ThumbSize(ByVal ImgSize As Size, ByVal ThumbBounds As Size) As Size
-#End If
+             Public Function ThumbSize(ByVal ImgSize As Size, ByVal ThumbBounds As Size) As Size
+            '#Else
+            '        ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+            '        <FirstVersion(2008, 1, 26)> _
+            '        <FirstVersion(2008, 1, 26)> <FirstVersion(2008, 1, 26)> Public Function ThumbSize(ByVal ImgSize As Size, ByVal ThumbBounds As Size) As Size
+            '#End If
             'Dim NewS As Size
             If ImgSize.Width <= ThumbBounds.Width AndAlso ImgSize.Height <= ThumbBounds.Width Then
                 Return ImgSize
@@ -37,33 +37,27 @@ Namespace DrawingT
             'End If
             'Return NewS
         End Function
-#If Framework >= 3.5 Then
+        ''#If Framework >= 3.5 Then
         ''' <summary>Gets size of image that best fits into given size and has same proportins</summary>
         ''' <param name="Image">Original image (only <see cref="Image.Size"/> of this image is used).</param>
         ''' <param name="ThumbBounds">Size that represents maximal bounds of thumbnail</param>
         ''' <returns>Size that does not exceed <paramref name="ThumbBounds"/> and has same proportions as <paramref name="Image"/>.<see cref="Image.Size">Size</see>.</returns>
+        ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+        ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
         <Extension()> _
-        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-        <FirstVersion(2008, 1, 26)> _
         Public Function ThumbSize(ByVal Image As Image, ByVal ThumbBounds As Size) As Size
             Return Image.Size.ThumbSize(ThumbBounds)
         End Function
-#End If
+        '#End If
         ''' <summary>Combines two images by overlaying them</summary>
         ''' <param name="Background">Image to serve as background</param>
         ''' <param name="OverlayImage">Image to draw over <paramref name="Background"/></param>
         ''' <param name="Position">Position of overlay image</param>
         ''' <returns>New instance of <see cref="Image"/> with <paramref name="Background"/> as backround and <paramref name="OverlayImage"/> drawn ovwe it.</returns>
-#If Framework >= 3.5 Then
+        ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+        ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
         <Extension()> _
-        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-        <FirstVersion(2008, 1, 26)> _
-        Public Function Overlay(ByVal Background As Image, ByVal OverlayImage As Image, ByVal Position As ContentAlignment) As Image
-#Else
-        <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-        <FirstVersion(2008, 1, 26)> _
-        Public Function Overlay(ByVal Background As Image, ByVal OverlayImage As Image, ByVal Position As ContentAlignment) As Image
-#End If
+                Public Function Overlay(ByVal Background As Image, ByVal OverlayImage As Image, ByVal Position As ContentAlignment) As Image
             If Background Is Nothing Then Throw New ArgumentNullException("Background")
             Dim ret As New Bitmap(Background.Width, Background.Height)
             Dim g = Graphics.FromImage(ret)
@@ -155,3 +149,4 @@ Namespace DrawingT
         End Function
     End Module
 End Namespace
+#End If

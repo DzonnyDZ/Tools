@@ -2,10 +2,9 @@
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace ExtensionsT
     ''' <summary>Contains <see cref="[Delegate]"/>-related extension functions</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(DelegateExtensions))> _
-    <FirstVersion(2008, 6, 21)> _
-    Module DelegateExtensions
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed. Accessibility changed to public.</version>
+    Public Module DelegateExtensions
 #Region "Function"
         ''' <summary>Wraps given procedure delegate as delegate of function returning always null</summary>
         ''' <param name="d">Delegate to be wrapped</param>

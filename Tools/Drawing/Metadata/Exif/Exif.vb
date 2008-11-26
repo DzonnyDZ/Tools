@@ -8,8 +8,8 @@ Imports Tools.ComponentModelT
 Namespace DrawingT.MetadataT.ExifT
 #If Config <= Nightly Then
     ''' <summary>Provides high-level acces to Exif metadata</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Exif), LastChange:="07/21/2008")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class Exif
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()
@@ -88,8 +88,8 @@ Namespace DrawingT.MetadataT.ExifT
         Public ReadOnly Property SubIFDs() As IEnumerable(Of SubIfd)
             Get
                 Dim ret As IEnumerable(Of SubIfd) = New List(Of SubIfd)
-                Dim Current As IFD = IFD0
-                Dim CurrentStack As New Stack(Of IFD)
+                Dim Current As Ifd = IFD0
+                Dim CurrentStack As New Stack(Of Ifd)
                 While Current IsNot Nothing
                     ret = ret.Union(Current.SubIFDs)
                     If Current.SubIFDs.Count > 0 Then
@@ -112,8 +112,8 @@ Namespace DrawingT.MetadataT.ExifT
         ''' <summary>Gets value indicationg if given <see cref="IFD"/> is used somewhere in this <see cref="Exif"/></summary>
         ''' <param name="IFD">Instance to look for</param>
         ''' <remarks>True if given instance is used somewhere in current instance</remarks>
-        Protected Friend Function ContainsIFD(ByVal IFD As IFD) As Boolean
-            Dim Current As IFD = Me.IFD0
+        Protected Friend Function ContainsIFD(ByVal IFD As Ifd) As Boolean
+            Dim Current As Ifd = Me.IFD0
             While Current IsNot Nothing
                 If Current Is IFD Then Return True
                 Current = Current.Following

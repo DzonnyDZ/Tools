@@ -9,9 +9,8 @@ Namespace WindowsT.NativeT
     'ASAP:  Wiki, Forum
     ''' <summary>Represents native window used in Microsoft Windows</summary>
     ''' <remarks>This class can be used to manipulate windows and controls that originates from non-.NET applications as well as .NET ones. It can be used in 64b environment as well.</remarks>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 1, GetType(Win32Window), LastChange:="05/29/2008")> _
-    <FirstVersion("12/02/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>_
     <DebuggerDisplay("{ToString}")> _
     Public Class Win32Window
         Implements IWin32Window, IDisposable, Windows.Interop.IWin32Window

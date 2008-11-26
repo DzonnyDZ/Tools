@@ -1,8 +1,8 @@
 Namespace DrawingT.MetadataT.ExifT
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Represents unsigned rational number with numerator and denominator as used in Exif</summary>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="04/24/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <CLSCompliant(False)> _
     Public Structure URational
         Implements DataStructuresT.GenericT.IPair(Of UInt16, UInt16)
@@ -188,8 +188,8 @@ Namespace DrawingT.MetadataT.ExifT
     End Structure
 
     ''' <summary>Represents signed rational number with numerator and denominator as used in Exif</summary>
-    <Author("Ðonny", "dzony@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(Math), LastChange:="04/24/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Structure SRational
         Implements DataStructuresT.GenericT.IPair(Of Int16, Int16)
         ''' <summary>Contains value of the <see cref="Numerator"/> property</summary>
@@ -244,11 +244,11 @@ Namespace DrawingT.MetadataT.ExifT
             If Denominator = 0 Then Return Me
             Dim Negative As Boolean = Numerator < 0 Xor Denominator < 0
             Dim GCD As UInt32 = MathT.GCD(System.Math.Abs(Numerator), System.Math.Abs(Denominator))
-#If Framework >= 3.5 Then
+            '#If Framework >= 3.5 Then
             Return New SRational(If(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
-#Else
-            Return New SRational(Tools.VisualBasicT.iif(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
-#End If
+            '#Else
+            '            Return New SRational(Tools.VisualBasicT.iif(Negative, -1, 1) * Numerator / GCD, Denominator / GCD)
+            '#End If
         End Function
 #Region "Operators"
         ''' <summary>Adds two <see cref="SRational"/>s</summary>

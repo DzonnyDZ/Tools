@@ -5,9 +5,8 @@ Imports System.Diagnostics, System.Drawing, Microsoft.VisualStudio.DebuggerVisua
 Namespace DiagnosticsT
     'TODO: ImageVisualizer Testing needed
     ''' <summary>Implements <see cref="DialogDebuggerVisualizer"/> for datatype <see cref="Image"/></summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(0, 0, GetType(ImageVisualizer), LastChange:="07/22/2007")> _
-    <FirstVersion("06/27/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+ ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class ImageVisualizer
         Inherits DialogDebuggerVisualizer
         ''' <summary>Shows visualizer dialog</summary>

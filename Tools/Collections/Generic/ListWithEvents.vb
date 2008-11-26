@@ -11,11 +11,11 @@ Namespace CollectionsT.GenericT
     ''' <para>Implementation fo <see cref="IBindingList"/> is only basic. It supports neither sorting or searching. <see cref="IBindingList.AddNew"/> is supported when <typeparamref name="T"/> has default constructor and does not block creating of new instances in other way.</para>
     ''' </remarks>
     ''' <seelaso cref="DictionaryWithEvents(Of TKey, TValue)"/>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 2, GetType(ListWithEvents(Of )), LastChange:="05/13/2008")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
-    <FirstVersion("01/07/2007")> _
     Public Class ListWithEvents(Of T)
         Implements Runtime.Serialization.ISerializable
         Implements IList(Of T)

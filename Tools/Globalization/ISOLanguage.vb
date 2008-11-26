@@ -3,8 +3,8 @@ Namespace GlobalizationT
 #If Config <= Beta Then 'Stage: Beta
     ''' <summary>Represents language represented by ISO 639 language code and provides list of all defined ISO 639-1 and ISO 639-2 language codes</summary>
     ''' <completionlist cref="ISOLanguage"/>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ISOLanguage), LastChange:="05/28/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Beta"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Partial Public Class ISOLanguage : Implements IEquatable(Of ISOLanguage)
         ''' <summary>Possible "kinds" of languages</summary>
         Public Enum CodeTypes
@@ -59,11 +59,11 @@ Namespace GlobalizationT
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not valid <see cref="CodeTypes"/> value</exception>
         <CLSCompliant(False)> _
         Public Sub New(ByVal ISO2 As String, ByVal English As String, Optional ByVal Native As String = Nothing, Optional ByVal ISO1 As String = Nothing, Optional ByVal Type As CodeTypes = CodeTypes.Spoken, Optional ByVal Scale As UInteger = 0, Optional ByVal Duplicate As String = Nothing)
-#If Framework >= 3.5 Then
+            '#If Framework >= 3.5 Then
             Me.new(ISO1, ISO2, English, If(Native Is Nothing, English, Native), Scale, Type, Duplicate)
-#Else
-            Me.new(ISO1, ISO2, English, Tools.VisualBasicT.Interaction.iif(Native Is Nothing, English, Native), Scale, Type, Duplicate)
-#End If
+            '#Else
+            '            Me.new(ISO1, ISO2, English, Tools.VisualBasicT.Interaction.iif(Native Is Nothing, English, Native), Scale, Type, Duplicate)
+            '#End If
         End Sub
         ''' <summary>Contains value of the <see cref="ISO1"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _

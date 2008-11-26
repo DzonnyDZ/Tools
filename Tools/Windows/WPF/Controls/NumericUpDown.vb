@@ -21,8 +21,8 @@ Namespace WindowsT.WPF.ControlsT
     ''' <para>This is companion class to <see cref="Windows.Forms.NumericUpDown"/>.</para>
     ''' <para>This class is bsed on http://msdn.microsoft.com/en-us/library/ms771573.aspx, converted by http://labs.developerfusion.co.uk/convert/csharp-to-vb.aspx</para>
     ''' </remarks>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <FirstVersion(2008, 5, 1), Version(1, 0, GetType(NumericUpDown), Note:="Based on http://msdn.microsoft.com/en-us/library/ms771573.aspx")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <TemplatePart(Name:=NumericUpDown.PART_EditableTextBox, Type:=GetType(TextBox))> _
     Public Class NumericUpDown
         Inherits Control

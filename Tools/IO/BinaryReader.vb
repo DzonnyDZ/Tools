@@ -1,8 +1,8 @@
 Namespace IOt
 #If Config <= Alpha Then 'Stage:Alpha
     ''' <summary>Extends <see cref="System.IO.BinaryReader"/> to be able to read numeric data in both little-endian and big-endian format</summary>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(BinaryReader), LastChange:="04/23/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class BinaryReader : Inherits System.IO.BinaryReader
         ''' <summary>Possible byte orders</summary>
         Public Enum ByteAlign

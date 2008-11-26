@@ -1,11 +1,11 @@
 ﻿Imports System.ComponentModel
-
-#If Framework >= 3.5 Then
+#If Config <= Nightly Then 'Stage: Nightly
+'#If Framework >= 3.5 Then
 Namespace WindowsT.FormsT
     'ASAP:  Wiki, 
     ''' <summary>Provides common base for implementing Windows screensawers</summary>
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(ScreenSaverBase))> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public MustInherit Class ScreenSaverBase
         ''' <summary>Runs a screensaver</summary>
         ''' <param name="cmd">Application command line arguments (excluding executable name)</param>

@@ -4,8 +4,8 @@ Namespace IOt
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise).</remarks>
     ''' <seelaso cref="M:Tools.IOt.FileTystemTools.GetIcon(Tools.IOt.Path,System.Boolean,System.Boolean)"/>
-    <Version(1, 2, GetType(Path), LastChange:="11/28/2007"), Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <FirstVersion("03/05/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("{Path}")> _
     Public Class Path
         Implements IEnumerable(Of Path), IPathProvider
@@ -421,13 +421,13 @@ Namespace IOt
         ''' <param name="ToAlternative">If set to true the alternative directory separator (/ on Windows) is used instead of primary (\ on Windows)</param>
         ''' <remarks>See also <seealso cref="System.IO.Path.DirectorySeparatorChar"/>, <seealso cref="System.IO.Path.AltDirectorySeparatorChar"/></remarks>
         Public Sub Normalize(Optional ByVal ToAlternative As Boolean = False)
-#If Framework >= 3.5 Then
+            '#If Framework >= 3.5 Then
             Dim Old As Char = If(ToAlternative, System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
             Dim [New] As Char = If(ToAlternative, System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar)
-#Else
-            Dim Old As Char = iif(ToAlternative, System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
-            Dim [New] As Char = iif(ToAlternative, System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar)
-#End If
+            '#Else
+            '            Dim Old As Char = iif(ToAlternative, System.IO.Path.DirectorySeparatorChar, System.IO.Path.AltDirectorySeparatorChar)
+            '            Dim [New] As Char = iif(ToAlternative, System.IO.Path.AltDirectorySeparatorChar, System.IO.Path.DirectorySeparatorChar)
+            '#End If
             Path = Path.Replace(Old, [New])
         End Sub
         ''' <summary>Gets segmnents (directories) of path</summary>

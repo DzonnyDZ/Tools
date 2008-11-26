@@ -6,7 +6,8 @@
     ''' <remarks>
     ''' Although this interface inherits <see cref="IPair(Of T1, T2)"/> be very careful when utilizing this inheritance because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different whnen storing values (it can contain only one value at the sam time). Consider utilizing this ihneritance only in read-only way.
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(IT1orT2(Of ,)), LastChange:="12/21/2006")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IT1orT2(Of T1, T2)
         Inherits IPair(Of T1, T2)
         ''' <summary>Gets or sets value of type <see cref="T1"/></summary>
@@ -70,7 +71,8 @@
     ''' <remarks>
     ''' Although rhis class implements <see cref="IPair(Of T1, T2)"/> through <see cref="IT1orT2(Of T1, T2)"/> be careful when utilizing this implementation because behaviour of <see cref="IT1orT2(Of T1, T2)"/> is different when storing values (it can contain only one value at the sam time). Consider utilizing this inheritance only in read-only way.
     ''' </remarks>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 1, GetType(T1orT2(Of ,)), LastChange:="03/11/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("{ToString}")> _
     Public Class T1orT2(Of T1, T2)
         Inherits Cloenable(Of IT1orT2(Of T1, T2))

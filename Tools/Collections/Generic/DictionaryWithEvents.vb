@@ -11,10 +11,10 @@ Namespace CollectionsT.GenericT
     ''' </para>
     ''' </remarks>
     ''' <seealso cref="ListWithEvents(Of T)"/>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, GetType(DictionaryWithEvents(Of ,)), LastChange:="07/22/2008")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("Count = {Count}")> _
-    <FirstVersion("07/22/2000")> _
-    Public Class DictionaryWithEvents(Of TKey, TValue)
+        Public Class DictionaryWithEvents(Of TKey, TValue)
         Implements IDictionary, IDictionary(Of TKey, TValue)
         Implements IReportsChange
 #Region "CTors"
@@ -1329,7 +1329,7 @@ Namespace CollectionsT.GenericT
 #End Region
 #End Region
 
-        
+
     End Class
     '''' <summary>Describes acction on collection</summary>
     'Public Enum CollectionChangeAction

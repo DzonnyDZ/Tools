@@ -3,11 +3,12 @@
 Imports System.Reflection
 Namespace InternalT
     ''' <summary>Marks person defined by instance of this attribute as author of marked part of code.</summary>
-    ''' <remarks>
+    ''' <remarks><para>This attribute is obsolete. Use XML documentation tag &lt;author> instead.</para>
     ''' Use this attribute to mark yourself as author of code you have written.</remarks>
+    ''' <author>Đonny</author>
+    ''' <version version="1.5.2" stage="Release">Marked as obsolete; use &lt;author> XML Doc tag instead, <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/> removed</version>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=True, Inherited:=False)> _
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 0, GetType(AuthorAttribute), LastChange:="12/20/2006")> _
-    <FirstVersion(2006, 12, 20)> _
+    <Obsolete("Use <author> XML comment instead")> _
     Public Class AuthorAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -57,10 +58,12 @@ Namespace InternalT
     End Class
 
     ''' <summary>Defines a version of component of code</summary>
+    ''' <remarks>This tag is obsolete. Use XML docummentation rag &lt;version> instead</remarks>
+    ''' <version version="1.5.2">Marked as obsolete - use XML doc tag &lt;version> instead, <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/> removed</version>
+    ''' <author>Đonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(1, 1, GetType(VersionAttribute), LastChange:="01/26/2008")> _
-    <FirstVersion("12/20/2006")> _
+        <Obsolete("Use <version> XML tag instead")> _
     Public Class VersionAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="Major"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
@@ -302,8 +305,10 @@ Namespace InternalT
     End Class
 
     ''' <summary>Declares things that are spacific for attributes declared in <see cref="Tools.InternalT"/> namespace</summary>
-    <Author("Đonny", "dzony.dz@gmail.com"), Version(1, 2, GetType(AttributesSpecificDeclarations), LastChange:="01/26/2008")> _
-    <FirstVersion("5/16/2007")> _
+    ''' <remarks>As <see cref="AuthorAttribute"/> and <see cref="VersionAttribute"/> are obsolete, this module is also obsolete</remarks>
+    ''' <author>Đonny</author>
+    ''' <version stage="Release" version="1.5.2">Marked as obsolete, removed <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/></version>
+    <Obsolete("AuthorAttribute and VersionAttribute are obsolete")> _
     Friend Module AttributesSpecificDeclarations 'Original 12/20/2006
         ''' <summary>Defines value for <see cref="AttributeUsageAttribute"/> applyed on <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and realetd attributes.</summary>
         ''' <remarks>DO NOT remove ored constants from this declaration. Add constants only when you really need it. (since version 1.1 there is no need to add constants.</remarks>
@@ -311,11 +316,12 @@ Namespace InternalT
     End Module
 
     ''' <summary>Defines date when item was introduced</summary>
+    ''' <remarks>This attribute is obsolete, use &lt;version> XML doc tag instead.</remarks>
+    ''' <author>Đonny</author>
+    ''' <version stage="Release" version="1.5.2">Marked as obsolete, <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/> removed, renamed to <see cref="FirstVersionAttribute"/> (form FirstVersion).</version>
     <AttributeUsage(AuthorAndVersionAttributesUsage, AllowMultiple:=False, Inherited:=False)> _
-    <Author("Đonny", "dzony@dzonny.cz")> _
-    <Version(2, 0, GetType(FirstVersion), LastChange:="01/26/2008")> _
-    <FirstVersion("05/15/2007")> _
-    Public Class FirstVersion : Inherits Attribute
+    <Obsolete("Use <version> XML doc tag instead")> _
+    Public Class FirstVersionAttribute : Inherits Attribute
         ''' <summary>CTor from date</summary>
         ''' <param name="Date">Date when item was first introduced</param>
         Public Sub New(ByVal [Date] As Date)
@@ -365,6 +371,7 @@ Namespace InternalT
     End Class
 
     ''' <summary>Identifies in which stage of development life-cycle current build was done</summary>
+    ''' <version stage="Release" version="1.5.2">Version documentation added</version>
     <AttributeUsage(AttributeTargets.Assembly, AllowMultiple:=False)> _
     Public Class AssemblyBuildStageAttribute : Inherits Attribute
         ''' <summary>Contains value of the <see cref="State"/> property</summary>
@@ -382,6 +389,8 @@ Namespace InternalT
         End Sub
     End Class
     ''' <summary>Represents possible stages of life-cycle of assembly used by ĐTools project</summary>
+    ''' <version stage="Release" version="1.5.2">Version documentation added</version>
+    ''' <remarks>Note for tools developper: Use name of those constants for values of &lt;vesrsion stage=""/> XML doc attribute.</remarks>
     Public Enum BuildStates
         ''' <summary>Debug build, usually done by developer to debug and test</summary>
         Nightly = 1

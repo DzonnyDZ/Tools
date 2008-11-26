@@ -1,7 +1,7 @@
 ﻿#If Config <= Nightly Then 'Stage: Nightly
-#If Framework >= 3.5 Then
+'#If Framework >= 3.5 Then
 Imports System.Linq
-#End If
+'#End If
 Namespace CollectionsT.GenericT
     'ASAP: Mark wiki forum
     ''' <summary>Performs union operations for <see cref="IEnumerable(Of T)"/>s</summary>
@@ -60,16 +60,16 @@ Namespace CollectionsT.GenericT
         ''' <summary>CTor from any <see cref="IEnumerable(Of IEnumerable(Of T))"/></summary>
         ''' <param name="Enumerables">Enumerables to get enumerators from and union them</param>
         Public Sub New(ByVal Enumerables As IEnumerable(Of IEnumerable(Of T)))
-#If Framework >= 3.5 Then
+            '#If Framework >= 3.5 Then
             Me.New(From Enumerable In Enumerables Select Enumerable.GetEnumerator)
-#Else
-            Dim lst As New List(Of IEnumerator(Of T))
-            For Each Enumerable In Enumerables
-                lst.Add(Enumerable.GetEnumerator)
-            Next Enumerable
-            Me.Enumerators = lst.GetEnumerator
-            Me.Enumerators.MoveNext()
-#End If
+            '#Else
+            '            Dim lst As New List(Of IEnumerator(Of T))
+            '            For Each Enumerable In Enumerables
+            '                lst.Add(Enumerable.GetEnumerator)
+            '            Next Enumerable
+            '            Me.Enumerators = lst.GetEnumerator
+            '            Me.Enumerators.MoveNext()
+            '#End If
         End Sub
 
 

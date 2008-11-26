@@ -6,8 +6,8 @@ Imports Tools.ComponentModelT
 Namespace WindowsT.FormsT
     ''' <summary><see cref="Label"/> which's background *really* transparent</summary>
     ''' <remarks>To make this contro, transparent or semi-transparent se background color to color with alpha chanel</remarks>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentLabel), LastChange:="05/13/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <Prefix("tlb")> _
     <DefaultProperty("Text"), DefaultEvent("Click")> _
     <DefaultBindingProperty("Text")> _

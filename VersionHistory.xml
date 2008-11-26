@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--TODO: XML schema-->
+<vh:VersionHistory xmlns:vh="TODO:" xmlns="http://www.w3.org/1999/xhtml" xmlns:i="http://dzonny.cz/xml/schemas/intellisense"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="i ../DevelopmentTools/Intellisense/intellisense.xsd">
+    <vh:version version="1.5.2">
+        <vh:i>
+            <i:see cref="T:Tools.InternalT.VersionAttribute"/>, <i:see ctef="T:Tools.InternalT.AuthorAttribute"/> and <i:see ctef="T:Tools.InternalT.FirstVersionAttribute"/> marked as obsoltele. Use XML ocumentation tags instead.
+            These atributes were replaced with appropriate XML comments.
+        </vh:i>
+        <vh:i>Tools.InternalT.FirstVersion renamed to <i:see ctef="T:Tools.InternalT.FirstVersionAttribute"/></vh:i>
+        <vh:i><i:see cref="T:Tools.ExtensionsT.DelegateExtensions"/> module: Visubility changed from Private to Public.</vh:i>
+        <vh:i>Build state of constants <i:see cref="F:Tools.VisualBasicT.Interaction.Null"/> and <i:see cref="F:Tools.VisualBasicT.Interaction.Nothing"/> changed from Nightly to Release</vh:i>
+    </vh:version>
+</vh:VersionHistory>

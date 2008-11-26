@@ -2,9 +2,8 @@ Imports Tools.CollectionsT.GenericT, Tools.ComponentModelT
 Namespace DataStructuresT.GenericT
 #If Config <= Nightly Then 'Stage:Nightly
     ''' <summary>Represents tree or sub-tree</summary>
-    <Author("Ðonny", eMail:="dzonny@dzonny.cz", WWW:="http://dzonny.cz")> _
-    <Version(1, 0, GetType(Tree(Of )), LastChange:="06/16/2007")> _
-    <FirstVersion("05/19/2007")> _
+    ''' <author www="http://dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("{ToString}")> _
     Public Class Tree(Of T) : Implements ICloneable(Of Tree(Of T))
 #Region "CTors"

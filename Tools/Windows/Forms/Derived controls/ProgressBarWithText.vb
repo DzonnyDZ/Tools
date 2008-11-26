@@ -6,13 +6,13 @@ Imports Tools.WindowsT.FormsT.UtilitiesT
 #If Config <= Release Then
 Namespace WindowsT.FormsT
     ''' <summary>Implements <see cref="ProgressBar"/> with overlay text</summary>
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DefaultEvent("ValueChanged"), DefaultProperty("Value")> _
-    <DefaultBindingProperty("Value")> _
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(TransparentLabel), LastChange:="05/15/2007")> _
-    <Prefix("pwt")> _
-    <ToolboxBitmap(GetType(ProgressBarWithText), "ProgressBarWithText.bmp")> _
-    Public Class ProgressBarWithText : Inherits ProgressBar
+     <DefaultBindingProperty("Value")> _
+         <Prefix("pwt")> _
+     <ToolboxBitmap(GetType(ProgressBarWithText), "ProgressBarWithText.bmp")> _
+     Public Class ProgressBarWithText : Inherits ProgressBar
         ''' <summary>Contains value of the <see cref="Label"/> properzy</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private WithEvents _tlb As TransparentLabel

@@ -2,18 +2,19 @@
 #If Config <= RC Then 'Stage: RC
 Namespace ComponentModelT
     ''' <summary><see cref="DescriptionAttribute"/> that takes its value from <see cref="System.Configuration.SettingsDescriptionAttribute"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="01/21/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class SettingsInheritDescriptionAttribute : Inherits DescriptionAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name specified in <paramref name="Property"/></param>
         ''' <param name="Property">Name of the property which's <see cref="SettingsDescriptionAttribute"/> initializes this attribute</param>
         ''' <param name="AlternateDescription">Alternative description used in case of failure of getting description form specified property</param>
         Public Sub New(ByVal Settings As Type, ByVal [Property] As String, Optional ByVal AlternateDescription As String = "")
-#If VBC_VER >= 9 Then
+            '#If VBC_VER >= 9 Then
             MyBase.New(If(AlternateDescription = "", [Property], AlternateDescription))
-#Else
-            MyBase.New(iif(AlternateDescription = "", [Property], AlternateDescription))
-#End If
+            '#Else
+            '            MyBase.New(iif(AlternateDescription = "", [Property], AlternateDescription))
+            '#End If
             Me.Settings = Settings
             Me.Property = [Property]
         End Sub
@@ -35,7 +36,8 @@ Namespace ComponentModelT
         End Property
     End Class
     ''' <summary><see cref="DefaultValueAttribute"/> that takes its value from <see cref="System.Configuration.DefaultSettingValueAttribute"/></summary>
-    <Author("Đonny", "dzonny.dz@gmail.com"), Version(1, 0, LastChange:="01/25/2007")> _
+    ''' <author www="http://dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Class SettingsInheritDefaultValueAttribute : Inherits DefaultValueAttribute
         ''' <summary>CTor</summary>
         ''' <param name="Settings">The data type that contains property with name defined in <paramref name="Property"/></param>

@@ -705,11 +705,10 @@ Namespace WindowsT.FormsT
     ''' <item><see cref="iMsg.MessageBoxOptions.AlignJustify"/> is not supported, <see cref="iMsg.MessageBoxOptions.AlignLeft"/> is used instead.</item>
     ''' </list>
     ''' </remarks>
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
+    ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
-    <Author("Đonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(MessageBox), LastChange:="05/26/2008")> _
-    <FirstVersion("05/26/2008")> _
-    Public Class MessageBox
+       Public Class MessageBox
         Inherits iMsg
         ''' <summary>Releases all resources used by the <see cref="T:System.ComponentModel.Component" />.</summary>
         ''' <param name="disposing"> true to release both managed and unmanaged resources; false to release only unmanaged resources.</param>

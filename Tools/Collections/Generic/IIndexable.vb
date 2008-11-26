@@ -3,8 +3,8 @@ Namespace CollectionsT.GenericT
     ''' <summary>Rapresent anything that can be indexed by anything</summary>
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIndexable(Of ,)), LastChange:="04/23/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IIndexable(Of TItem, TIndex)
         Inherits IReadOnlyIndexable(Of TItem, TIndex)
         ''' <summary>Gets or sets value on specified index</summary>
@@ -17,8 +17,8 @@ Namespace CollectionsT.GenericT
     ''' <summary>Rapresent anything that can be indexed by anything for readonly access</summary>
     ''' <typeparam name="TIndex">Data type of indexes</typeparam>
     ''' <typeparam name="TItem">Datatype of items</typeparam>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IReadOnlyIndexable(Of ,)), LastChange:="04/23/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IReadOnlyIndexable(Of TItem, TIndex)
         ''' <summary>Gets value on specified index</summary>
         ''' <param name="index">Index to obtain value</param>
@@ -28,17 +28,17 @@ Namespace CollectionsT.GenericT
     End Interface
     ''' <summary>Represents anythign that can be indexed by <see cref="Long"/></summary>
     ''' <typeparam name="TItem">Data type of items</typeparam>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IIndexablewithrange(Of ,)), LastChange:="04/23/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IIndexableWithRange(Of TItem, TIndex)
-        Inherits IReadOnlyIndexablewithrange(Of TItem, TIndex)
-        Inherits IIndexable(Of TItem, tindex)
+        Inherits IReadOnlyIndexableWithRange(Of TItem, TIndex)
+        Inherits IIndexable(Of TItem, TIndex)
         Inherits IEnumerable(Of TItem)
     End Interface
     ''' <summary>Represents anythign that can be indexed by <see cref="Integer"/> for readonly acces</summary>
     ''' <typeparam name="TItem">Data type of items</typeparam>
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(IReadOnlyIndexablewithrange(Of ,)), LastChange:="04/23/2007")> _
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     Public Interface IReadOnlyIndexableWithRange(Of TItem, TIndex)
         Inherits IReadOnlyIndexable(Of TItem, TIndex)
         Inherits IEnumerable(Of TItem)

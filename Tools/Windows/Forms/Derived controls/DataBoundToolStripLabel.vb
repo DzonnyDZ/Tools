@@ -5,11 +5,11 @@ Namespace WindowsT.FormsT
 #If Config <= RC Then 'Stage:RC
     ''' <summary><see cref="ToolStripLabel"/> that allows databinding</summary>
     ''' <remarks><seealso>http://forums.devx.com/archive/index.php/t-153607.html</seealso></remarks>
+    ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
+    ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <System.Drawing.ToolboxBitmap(GetType(DataBoundToolStripLabel), "DataBoundToolStripLabel.bmp")> _
-    <DefaultBindingProperty("Text")> _
-    <ComponentModelT.Prefix("dtl")> _
-    <Author("Ðonny", "dzonny@dzonny.cz", "http://dzonny.cz")> _
-    <Version(1, 0, GetType(DataBoundToolStripLabel), LastChange:="05/13/2007")> _
+  <DefaultBindingProperty("Text")> _
+  <ComponentModelT.Prefix("dtl")> _
     Public Class DataBoundToolStripLabel : Inherits ToolStripLabel
         Implements IBindableComponent
         ''' <summary>Contains value of the <see cref="BindingContext"/> property</summary>
