@@ -341,16 +341,7 @@
     <Compile Include="Text\Encoding\ISO2022.vb" Condition="$(Config)&lt;=$(Nightly)" />
     <Compile Include="Text\TextExtensions.vb" />
     <Compile Include="VBSpecific\Interaction.vb" />
-    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
-      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
-      <!--Set stage here, because it uses resources and using #If produces warnings-->
-    </Compile>
-    <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues.vb" />
     <Compile Include="ComponentModel\ObjectStringConverter.vb" />
-    <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
-    <Compile Include="Windows\Forms\Utilities\misc.vb" />
     <Compile Include="Xml\XPath\XPathObjectNavigator.vb" />
   </ItemGroup>
   <ItemGroup>
@@ -658,14 +649,6 @@
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
-      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.resx">
-      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
     </EmbeddedResource>
     <None Include="Resources\Zip.png" />
