@@ -3,7 +3,9 @@ Namespace ComponentModelT
     ''' <summary>Inform programmer that he should name instances of class market wiht this attribute with names beginning with prefix</summary>
     ''' <remarks>This is ONLY recomendation. This attribute is here to allow control author to select prefix. Of course users of controls can either use own prefix or use no prefix.</remarks>
     ''' <author www="http://dzonny.cz">Ðonny</author>
-    ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2" stage="Release"><list type="bullet">
+    ''' <item><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</item>
+    ''' <item>Relocated to assembly Tools.Windows</item></list></version>
     <AttributeUsage(AttributeTargets.Class, AllowMultiple:=False, Inherited:=False)> _
         Public Class PrefixAttribute : Inherits Attribute
         ''' <summary>CTor</summary>

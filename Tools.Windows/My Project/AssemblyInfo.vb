@@ -11,7 +11,7 @@ Imports System.Runtime.InteropServices
 ' Review the values of the assembly attributes
 
 <Assembly: AssemblyTitle("Tools")> 
-<Assembly: AssemblyDescription("")> 
+<Assembly: AssemblyDescription("Contains classes related to Windows Forms and WPF")> 
 <Assembly: AssemblyCompany("ĐTools team")> 
 <Assembly: AssemblyProduct("ĐTools")> 
 <Assembly: AssemblyCopyright("Copyright © ĐTools team 2006/7/8")> 

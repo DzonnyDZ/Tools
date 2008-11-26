@@ -10,5 +10,7 @@
         <vh:i>Tools.InternalT.FirstVersion renamed to <i:see ctef="T:Tools.InternalT.FirstVersionAttribute"/></vh:i>
         <vh:i><i:see cref="T:Tools.ExtensionsT.DelegateExtensions"/> module: Visubility changed from Private to Public.</vh:i>
         <vh:i>Build state of constants <i:see cref="F:Tools.VisualBasicT.Interaction.Null"/> and <i:see cref="F:Tools.VisualBasicT.Interaction.Nothing"/> changed from Nightly to Release</vh:i>
+        <vh:i>Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <i:see cref="N:Tools.DrawingT.DrawingIOt"/> and <i:see cref="N:Tools.DrawingT.MetadataT"/> relocated to assembly Tools.Metadata; <i:seee cref="N:Tools.WindowsT"/> relocated to assembly Tools.Windows with exception of <i:see. cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/>.</vh:i>
+        <vh:i>A few methods from <see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.</vh:i>
     </vh:version>
 </vh:VersionHistory>

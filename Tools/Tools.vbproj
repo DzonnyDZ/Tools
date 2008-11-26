@@ -181,8 +181,7 @@
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
-    <Compile Include="ComponentModel\PrefixAttribute.vb" />
-    <Compile Include="ComponentModel\ReadOnlyObject.vb" />
+     <Compile Include="ComponentModel\ReadOnlyObject.vb" />
     <Compile Include="ComponentModel\RestrictAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="ComponentModel\SuppresHandledEventArgs.vb" />
@@ -199,28 +198,7 @@
     <Compile Include="Drawing\Design\UITypeEditor.vb">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
-    <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
     <Compile Include="Drawing\IconOrBitmap.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifMapGenerator.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifReader helpers.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifWriter.vb" />
-    <Compile Include="Drawing\Metadata\Exif\IFD.vb" />
-    <Compile Include="Drawing\Metadata\Exif\Rational.vb" />
-    <Compile Include="Drawing\Metadata\Exif\Exif.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifIFDReader.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifReader.vb" />
-    <Compile Include="Drawing\Metadata\Exif\ExifTags.vb">
-      <DependentUpon>ExifTags.xml</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-    <Compile Include="Drawing\Metadata\Exif\IExifGetter.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\Groups.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTC.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCReader.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\Interfaces.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes.vb" />
     <Compile Include="Extensions\DelegateExtensions.vb" />
     <Compile Include="IO\BinaryWriter.vb" />
     <Compile Include="IO\OverflowStream.vb" />
@@ -228,8 +206,10 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="IO\UnionReadOnlyStream.vb" />
+    <Compile Include="misc.vb" />
     <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
     <Compile Include="Tests\AttributeTest.vb" />
+    <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
     <Compile Include="Xml\Linq\Extensions.vb" />
     <Compile Include="Media\Sound.vb">
       <SubType>UserControl</SubType>
@@ -249,13 +229,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>IPTCResources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTags.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>IPTCTags.xml</DependentUpon>
-    </Compile>
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypedValues.vb" />
-    <Compile Include="Drawing\Metadata\IPTC\IPTCTypes helpers.vb" />
     <Compile Include="Drawing\ImageTools.vb" />
     <Compile Include="Drawing\SystemColorsExtension.vb" />
     <Compile Include="Extensions\Char.vb" />
@@ -370,19 +343,6 @@
     <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentLabel.bmp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xml">
-      <Generator>TransformCodeGenerator</Generator>
-      <LastGenOutput>ExifTags.vb</LastGenOutput>
-      <CustomToolNamespace>DrawingT.MetadataT.ExifT</CustomToolNamespace>
-    </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xsd">
-      <SubType>
-      </SubType>
-      <DependentUpon>ExifTags.xml</DependentUpon>
-    </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.xslt">
-      <DependentUpon>ExifTags.xml</DependentUpon>
-    </None>
     <None Include="Globalization\ISOLanguages.xsd">
       <SubType>
       </SubType>
@@ -422,15 +382,7 @@
     <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
     </None>
-    <None Include="Drawing\Metadata\IPTC\IPTCTags.xsd">
-      <SubType>
-      </SubType>
-      <DependentUpon>IPTCTags.xml</DependentUpon>
-    </None>
     <None Include="Globalization\ISOLanguages.xslt" />
-    <None Include="Drawing\Metadata\IPTC\IPTCTags.xslt">
-      <DependentUpon>IPTCTags.xml</DependentUpon>
-    </None>
     <Content Include="CodeDom\AddDoc.xslt">
       <DependentUpon>CodeDom.xsd</DependentUpon>
     </Content>
@@ -446,20 +398,6 @@
       <DependentUpon>SpecializedWrappers.xml</DependentUpon>
     </Content>
     <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
-    <None Include="Drawing\Metadata\Exif\ExifTags.css">
-      <DependentUpon>ExifTags.html</DependentUpon>
-    </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.display.xslt">
-      <DependentUpon>ExifTags.html</DependentUpon>
-    </None>
-    <None Include="Drawing\Metadata\Exif\ExifTags.html">
-      <DependentUpon>ExifTags.xml</DependentUpon>
-    </None>
-    <Content Include="Drawing\Metadata\IPTC\IPTCTags.xml">
-      <Generator>TransformCodeGenerator</Generator>
-      <LastGenOutput>IPTCTags.vb</LastGenOutput>
-      <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
-    </Content>
     <None Include="Reflection\MemberNumbers.xls" />
     <None Include="Resources\DeleteHS.png" />
     <None Include="Resources\RepeatHS.png" />
@@ -656,19 +594,14 @@
       <DependentUpon>ISO2022.vb</DependentUpon>
       <LogicalName>Tools.TextT.EncodingT.ISO2022Schema.xsd</LogicalName>
     </EmbeddedResource>
-    <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Themes\Generic.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="Drawing\DrawingIO\" />
     <Folder Include="Drawing\Metadata\XMP\" />
+    <Folder Include="XML Schemas\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

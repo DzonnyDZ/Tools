@@ -8,7 +8,7 @@
     <ProjectGuid>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <RootNamespace>Tools</RootNamespace>
-    <AssemblyName>Tools</AssemblyName>
+    <AssemblyName>Tools.Windows</AssemblyName>
     <MyType>Windows</MyType>
     <SccProjectName>SAK</SccProjectName>
     <SccLocalPath>SAK</SccLocalPath>
@@ -36,7 +36,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Nightly\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
     <Config>1</Config>
@@ -47,7 +47,7 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>..\bin\Release\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
     <Config>5</Config>
@@ -57,7 +57,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Alpha\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -69,7 +69,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\Beta\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -81,7 +81,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>..\bin\RC\</OutputPath>
-    <DocumentationFile>Tools.xml</DocumentationFile>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
     <DebugType>full</DebugType>
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -148,19 +148,12 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
-    <Compile Include="..\Tool\Windows\Forms\Utilities\CategoryAttributeValues.vb">
-      <Link>CategoryAttributeValues.vb</Link>
-    </Compile>
+    <Compile Include="Extensions\FormsCollectionsExtensions.vb" />
     <Compile Include="ComponentModel\PrefixAttribute.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
       <DependentUpon>Application.myapp</DependentUpon>
-    </Compile>
-    <Compile Include="My Project\Resources.Designer.vb">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
     <Compile Include="My Project\Settings.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -192,6 +185,7 @@
     <Compile Include="Windows\WPF\Converters\Converters.vb" />
     <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
     <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
       <DependentUpon>ObjectBrowser.vb</DependentUpon>
@@ -253,6 +247,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\TransparentTextBox.vb">
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Dialogs\AboutDialog.Designer.vb">
       <DependentUpon>AboutDialog.vb</DependentUpon>
@@ -268,17 +263,12 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Derived controls\UserControlExtended.vb">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
     <Compile Include="Windows\Forms\Utilities\misc.vb" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="My Project\Resources.resx">
-      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-      <CustomToolNamespace>My.Resources</CustomToolNamespace>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.cs.resx">
       <DependentUpon>LinkLabel.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -339,10 +329,6 @@
     <None Include="..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
-    <EmbeddedResource Include="My Project\Resources.cs.resx">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -401,10 +387,20 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
     <Page Include="Windows\WPF\Controls\NumericUpDown.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
