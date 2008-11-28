@@ -27,7 +27,7 @@ Namespace GUI
             _Steps.Add(CurrentStep)
             _CurrentStepIndex = 0
             PrevButton.Enabled = False
-            GUI.Misc.HandlePaint(Me, tlpMain)
+            'GUI.Misc.HandlePaint(Me, tlpMain)
         End Sub
         ''' <summary>Raises the <see cref="System.Windows.Forms.Form.Shown"/> event.</summary>
         ''' <param name="e">A <see cref="System.EventArgs"/> that contains the event data</param>

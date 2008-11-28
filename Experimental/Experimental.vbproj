@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.30428</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{088CB10C-E5D3-4537-979F-F5BED401DB25}</ProjectGuid>
     <OutputType>Library</OutputType>
@@ -88,6 +88,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Microsoft.DirectX, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
+    <Reference Include="Microsoft.DirectX.DirectInput, Version=1.0.2902.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -190,7 +192,6 @@
     <Compile Include="EOS\EOSTools\GUI\CloseButton.vb">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="EOS\EOSTools\GUI\Misc.vb" />
     <Compile Include="EOS\EOSTools\GUI\NullableDateTimePicker.vb">
       <SubType>Component</SubType>
     </Compile>
@@ -230,6 +231,19 @@
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="eĐit\Tools\Utils.vb" />
+    <Compile Include="Joystick\IChair.vb" />
+    <Compile Include="Joystick\JoyAxe.Designer.vb">
+      <DependentUpon>JoyAxe.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Joystick\JoyAxe.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Joystick\JoyChair.Designer.vb">
+      <DependentUpon>JoyChair.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Joystick\JoyChair.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -267,6 +281,15 @@
     <EmbeddedResource Include="EOS\EOSTools\Login\Old\frmLogin.resx">
       <DependentUpon>frmLogin.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Joystick\JoyAxe.resx">
+      <DependentUpon>JoyAxe.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Joystick\JoyChair.cs-CZ.resx">
+      <DependentUpon>JoyChair.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Joystick\JoyChair.resx">
+      <DependentUpon>JoyChair.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -289,6 +312,10 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
+      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
+      <Name>Tools.Windows</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
@@ -301,6 +328,8 @@
     <None Include="TWAIN\TwainLib.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\error.ico" />
+    <Content Include="Resources\RefreshDocViewHS.png" />
     <Content Include="Web\Pager.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />

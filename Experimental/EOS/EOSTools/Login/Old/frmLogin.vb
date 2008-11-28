@@ -87,7 +87,7 @@ Namespace Login
             InitializeComponent()
 
             ' Add any initialization after the InitializeComponent() call.
-            GUI.Misc.HandlePaint(New Drawing.Size(3, 3), Me)
+            'GUI.Misc.HandlePaint(New Drawing.Size(3, 3), Me)
         End Sub
     End Class
     ''' <summary>Stavy dopòkového tlaèítka na pøihlašovacím formláøi</summary>

@@ -12,7 +12,8 @@
         <vh:i><i:see cref="T:Tools.ExtensionsT.DelegateExtensions"/> module: Visubility changed from Private to Public.</vh:i>
         <vh:i>Build state of constants <i:see cref="F:Tools.VisualBasicT.Interaction.Null"/> and <i:see cref="F:Tools.VisualBasicT.Interaction.Nothing"/> changed from Nightly to Release</vh:i>
         <vh:i>Created new assemblies Tools.Windows (for Windows Forms and WPF) and Tools.Metadata (for (image) metadata). Namespaces <i:see cref="N:Tools.DrawingT.DrawingIOt"/> and <i:see cref="N:Tools.DrawingT.MetadataT"/> (<i:see cref="N:Tools.MetadataT"/>) relocated to assembly Tools.Metadata; <i:seee cref="N:Tools.WindowsT"/> relocated to assembly Tools.Windows with exception of <i:see. cref="T:Tools.WindowsT.FormsT.UtilitiesT.CategoryAttributeValues"/>.</vh:i>
-        <vh:i>A few methods from <see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.</vh:i>
+        <vh:i>A few methods from <i:see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <i:see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.</vh:i>
         <vh:i>Namespace Tools.DrawingT.MetadataT renamed to <i:see cref="N:Tools.MetadataT"/></vh:i>
+        <vh:i>Added namespace <i:see cref="N:Tools.Experimental.DevicesT.JoystickT"/></vh:i>
     </vh:version>
 </vh:VersionHistory>
