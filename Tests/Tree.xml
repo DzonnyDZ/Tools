@@ -137,6 +137,9 @@
                     <node name="AutoSize" image="Properties" tag="Tools.Tests.Framework.SystemF.WindowsF.FormsF.frmAutoSize.Test"/>
                 </node>
             </node>
+            <node image="Class" name="Type">
+                <node name="GetTypeFromCLSID" image="Method" tag="Tools.Tests.Framework.SystemF.frmGetTypeFromCLSID.Test"/>
+            </node>
         </node>
     </node>
 </tree>
