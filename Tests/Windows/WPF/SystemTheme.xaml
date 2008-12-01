@@ -16,7 +16,7 @@
                                     <ImageBrush.ImageSource>
                                         <xxx:Convert>
                                             <xxx:Convert.Value>
-                                                <xxx:SystemButtonBackgroundSource Width="100" Height="100"/>
+                                                <xxx:SystemButtonBackgroundSource Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
                                             </xxx:Convert.Value>
                                         </xxx:Convert>
                                     </ImageBrush.ImageSource>
