@@ -271,5 +271,8 @@
         <member name="N:Tools.DevicesT.RawInputT">
             <summary>Contains classes allowing consumption of raw input events from keyboard, mouse and other HID devices.</summary>
         </member>
+        <member name="N:Tools.WindowsT.InteropT">
+            <summary>Contains classes for WPF - WinForms interoperability</summary>
+        </member>
     </members>    
 </doc>

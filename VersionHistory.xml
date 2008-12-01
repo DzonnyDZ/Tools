@@ -15,5 +15,7 @@
         <vh:i>A few methods from <i:see cref="T:Tools.CollectionsT.SpecializedT.CollectionTools"/> relocated to <i:see cref="T:Tools.CollectionsT.SpecializedT.FormsCollectionsExtensions"/>.</vh:i>
         <vh:i>Namespace Tools.DrawingT.MetadataT renamed to <i:see cref="N:Tools.MetadataT"/></vh:i>
         <vh:i>Added namespace <i:see cref="N:Tools.Experimental.DevicesT.JoystickT"/></vh:i>
+        <vh:i>Added extension method <i:see cref="M:Tools.CollectionsT.SpecializedT.CollectionTools.Import(System.Windows.Forms.ImageList.ImageCollection,System.Windows.Forms.ImageList.ImageCollection)"/>.</vh:i>
+        <vh:i>Added namespace <see cref="N:Tools.WindowsT.InteropT"/>.</vh:i>
     </vh:version>
 </vh:VersionHistory>

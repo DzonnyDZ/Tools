@@ -40,6 +40,23 @@ Namespace CollectionsT.SpecializedT
             If Collection.Count = 0 Then Return Nothing
             Return Collection(Collection.Count - 1)
         End Function
+
+        ''' <summary>Imports items from one <see cref="System.Windows.Forms.ImageList.ImageCollection"/> to another</summary>
+        ''' <param name="Collection">Target collection</param>
+        ''' <param name="Other">Source collection; can be null</param>
+        ''' <remarks>When key exists in both, <paramref name="Collection"/> and <paramref name="Other"/>, it is skipped</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Collection"/> is null</exception>
+        <Extension()> _
+        Public Sub Import(ByVal Collection As System.Windows.Forms.ImageList.ImageCollection, ByVal Other As System.Windows.Forms.ImageList.ImageCollection)
+            If Collection Is Nothing Then Throw New ArgumentNullException("Collection")
+            If Other Is Nothing OrElse Other.Count = 0 Then Return
+            For Each Key As String In Other.Keys
+                If Not Collection.ContainsKey(Key) Then
+                    Collection.Add(Key, Other(Key))
+                End If
+            Next
+        End Sub
+
     End Module
 End Namespace
 '#End If

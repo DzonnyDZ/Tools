@@ -13,6 +13,11 @@ Friend Class frmTests
         For Each nd As TreeNode In tvwMain.Nodes
             nd.Expand()
         Next nd
+        tscUICulture.ComboBox.DisplayMember = "DisplayName"
+        For Each Cult In Globalization.CultureInfo.GetCultures(Globalization.CultureTypes.NeutralCultures)
+            Dim i = tscUICulture.Items.Add(Cult)
+            If Cult.Equals(Threading.Thread.CurrentThread.CurrentUICulture) Then tscUICulture.SelectedIndex = i
+        Next
     End Sub
 
     Private Sub LoadXml()
@@ -44,26 +49,31 @@ Friend Class frmTests
         End If
     End Sub
     Private Sub OpenNode(ByVal NodeTag As String)
-        Dim parts As String() = NodeTag.Split("."c)
-        Dim TypeName As String = ""
-        For i As Integer = 0 To parts.Length - 2
-            If TypeName <> "" Then TypeName &= "."c
-            TypeName &= parts(i)
-        Next i
-        Dim Method As String = parts(parts.Length - 1)
-        Dim T As Type
+        Me.Hide()
         Try
-            T = Type.GetType(TypeName, True, False)
-        Catch ex As Exception
-            MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
-            Exit Sub
-        End Try
-        Try
-            T.InvokeMember(Method, _
-                    BindingFlags.Static Or BindingFlags.Public Or BindingFlags.InvokeMethod, _
-                    Type.DefaultBinder, Nothing, Nothing)
-        Catch ex As Exception
-            MsgBox(BuildException(ex), MsgBoxStyle.Critical, "Error")
+            Dim parts As String() = NodeTag.Split("."c)
+            Dim TypeName As String = ""
+            For i As Integer = 0 To parts.Length - 2
+                If TypeName <> "" Then TypeName &= "."c
+                TypeName &= parts(i)
+            Next i
+            Dim Method As String = parts(parts.Length - 1)
+            Dim T As Type
+            Try
+                T = Type.GetType(TypeName, True, False)
+            Catch ex As Exception
+                MsgBox(ex.Message, MsgBoxStyle.Critical, "Error")
+                Exit Sub
+            End Try
+            Try
+                T.InvokeMember(Method, _
+                        BindingFlags.Static Or BindingFlags.Public Or BindingFlags.InvokeMethod, _
+                        Type.DefaultBinder, Nothing, Nothing)
+            Catch ex As Exception
+                MsgBox(BuildException(ex), MsgBoxStyle.Critical, "Error")
+            End Try
+        Finally
+            Me.Show()
         End Try
     End Sub
     ''' <summary>Contactenates messages from <paramref name="ex"/> and all its <see cref="Exception.InnerException"/>s</summary>
@@ -98,5 +108,10 @@ Friend Class frmTests
     
     Private Sub cmdInfo_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdInfo.Click
         MsgBox(Me.GetType.Assembly.FullName)
+    End Sub
+
+    Private Sub tscUICulture_SelectedIndexChanged(ByVal sender As Object, ByVal e As System.EventArgs) Handles tscUICulture.SelectedIndexChanged
+        Dim c As Globalization.CultureInfo = tscUICulture.SelectedItem
+        If Not Threading.Thread.CurrentThread.CurrentUICulture.Equals(c) Then Threading.Thread.CurrentThread.CurrentUICulture = c
     End Sub
 End Class

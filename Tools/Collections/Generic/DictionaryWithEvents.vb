@@ -147,7 +147,6 @@ Namespace CollectionsT.GenericT
         ''' </para><list>
         ''' <listheader><see cref="Locked"/> set to True blocks following methods and causes <see cref="InvalidOperationException"/> exception to be thrown there:</listheader>
         ''' <item><see cref="Add"/></item>
-        ''' <item><see cref="Insert"/></item>
         ''' <item><see cref="Remove"/></item>
         ''' <item><see cref="Clear"/></item>
         ''' <item><see cref="Item"/> (only setter)</item>
@@ -174,7 +173,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters</param>
         Public Delegate Sub ItemCancelEventHandler(ByVal sender As DictionaryWithEvents(Of TKey, TValue), ByVal e As CancelableKeyValueEventArgs)
-        ''' <summary>Raised before an item is added to the list. Raised by <see cref="Add"/> and <see cref="Insert"/> methods.</summary>
+        ''' <summary>Raised before an item is added to the list. Raised by the <see cref="Add"/> methods</summary>
         ''' <remarks><para>
         ''' This event can be disabled (see <see cref="AllowAddCancelableEventsHandlers"/>.
         ''' This means that <see cref="InvalidOperationException"/> is thrown when adding handler and <see cref="AllowAddCancelableEventsHandlers"/> is False.
@@ -200,7 +199,7 @@ Namespace CollectionsT.GenericT
                 Next Handler
             End RaiseEvent
         End Event
-        ''' <summary>Raised after an item is added to the list. Raised by <see cref="Add"/> and <see cref="Insert"/> methods</summary>
+        ''' <summary>Raised after an item is added to the list. Raised by the <see cref="Add"/> method</summary>
         ''' <param name="sender">The source of the event</param>
         ''' <param name="e">Event parameters</param>
         Public Event Added(ByVal sender As DictionaryWithEvents(Of TKey, TValue), ByVal e As KeyValueEventArgs)

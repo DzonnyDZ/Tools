@@ -98,6 +98,8 @@
     <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Microsoft.VisualC.VSCodeProvider, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="Microsoft.VisualStudio.DebuggerVisualizers, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.OLE.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+    <Reference Include="Microsoft.VisualStudio.Shell.Interop, Version=7.1.40304.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -117,8 +119,17 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
     <Reference Include="VJSharpCodeProvider">
       <Private>True</Private>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -238,6 +249,12 @@
       <DependentUpon>AutoSize.vb</DependentUpon>
     </Compile>
     <Compile Include="Framework\System\Windows\Forms\AutoSize.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Framework\System\Windows\Forms\VisualStyles.Designer.vb">
+      <DependentUpon>VisualStyles.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Framework\System\Windows\Forms\VisualStyles.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="frmTests.vb">
@@ -413,6 +430,12 @@
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Windows\WPF\SystemTheme.xaml.vb">
+      <DependentUpon>SystemTheme.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WPF\Controls\winNumericUpDown.xaml.vb">
+      <DependentUpon>winNumericUpDown.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Xml\XPath\XPathObjectNavigator.Designer.vb">
       <DependentUpon>XPathObjectNavigator.vb</DependentUpon>
     </Compile>
@@ -473,6 +496,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Framework\System\Windows\Forms\AutoSize.resx">
       <DependentUpon>AutoSize.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Framework\System\Windows\Forms\VisualStyles.resx">
+      <DependentUpon>VisualStyles.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmTests.resx">
       <SubType>Designer</SubType>
@@ -646,9 +672,21 @@
     <None Include="CodeDom\CodeDom test.xml">
       <DependentUpon>Xml2CodeDom.vb</DependentUpon>
     </None>
+    <None Include="Resources\PlayHS.png" />
+    <None Include="Resources\PauseHS.png" />
     <Content Include="Tree.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Windows\WPF\SystemTheme.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\WPF\Controls\winNumericUpDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
@@ -660,6 +698,7 @@
   -->
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\app.mda.config" "$(TargetPath).mda.config"
-copy "$(ProjectDir)\app.mda.config" "$(TargetDir)$(TargetName).vshost$(TargetExt).mda.config"</PostBuildEvent>
+copy "$(ProjectDir)\app.mda.config" "$(TargetDir)$(TargetName).vshost$(TargetExt).mda.config"
+"$(SolutionDir)DevelopmentTools\VersionCorrector\bin\Debug\VersionCorrector.exe" "$(TargetPath)" "$(SolutionDir)SharedFiles\Tools.snk"</PostBuildEvent>
   </PropertyGroup>
 </Project>

@@ -181,7 +181,7 @@
     <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
     <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
     <Compile Include="ComponentModel\Localizable attrs.vb" />
-     <Compile Include="ComponentModel\ReadOnlyObject.vb" />
+    <Compile Include="ComponentModel\ReadOnlyObject.vb" />
     <Compile Include="ComponentModel\RestrictAttribute.vb" />
     <Compile Include="ComponentModel\SettingsAttributes.vb" />
     <Compile Include="ComponentModel\SuppresHandledEventArgs.vb" />

@@ -180,6 +180,7 @@
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Windows\Interop\InteropExtensions.vb" />
     <Compile Include="Windows\WPF\AssemblyInfo.vb" />
     <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
     <Compile Include="Windows\WPF\Converters\Converters.vb" />

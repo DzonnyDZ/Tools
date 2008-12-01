@@ -28,7 +28,11 @@ Partial Class frmTests
         Me.flpBottom = New System.Windows.Forms.FlowLayoutPanel
         Me.cmdInfo = New System.Windows.Forms.Button
         Me.sfdXml = New System.Windows.Forms.SaveFileDialog
+        Me.tosMain = New System.Windows.Forms.ToolStrip
+        Me.tslUICulture = New System.Windows.Forms.ToolStripLabel
+        Me.tscUICulture = New System.Windows.Forms.ToolStripComboBox
         Me.flpBottom.SuspendLayout()
+        Me.tosMain.SuspendLayout()
         Me.SuspendLayout()
         '
         'tvwMain
@@ -247,17 +251,43 @@ Partial Class frmTests
         Me.sfdXml.Filter = "xml files (*.xml)|*.xml"
         Me.sfdXml.Title = "Save nodes"
         '
+        'tosMain
+        '
+        Me.tosMain.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden
+        Me.tosMain.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tslUICulture, Me.tscUICulture})
+        Me.tosMain.Location = New System.Drawing.Point(0, 0)
+        Me.tosMain.Name = "tosMain"
+        Me.tosMain.Size = New System.Drawing.Size(401, 25)
+        Me.tosMain.TabIndex = 3
+        Me.tosMain.Text = "ToolStrip1"
+        '
+        'tslUICulture
+        '
+        Me.tslUICulture.Name = "tslUICulture"
+        Me.tslUICulture.Size = New System.Drawing.Size(60, 22)
+        Me.tslUICulture.Text = "UI Culture"
+        '
+        'tscUICulture
+        '
+        Me.tscUICulture.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList
+        Me.tscUICulture.Name = "tscUICulture"
+        Me.tscUICulture.Size = New System.Drawing.Size(121, 25)
+        Me.tscUICulture.Sorted = True
+        '
         'frmTests
         '
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(401, 249)
+        Me.Controls.Add(Me.tosMain)
         Me.Controls.Add(Me.tvwMain)
         Me.Controls.Add(Me.flpBottom)
         Me.Name = "frmTests"
         Me.Text = "Tests for project Tools"
         Me.flpBottom.ResumeLayout(False)
         Me.flpBottom.PerformLayout()
+        Me.tosMain.ResumeLayout(False)
+        Me.tosMain.PerformLayout()
         Me.ResumeLayout(False)
         Me.PerformLayout()
 
@@ -268,5 +298,8 @@ Partial Class frmTests
     Friend WithEvents flpBottom As System.Windows.Forms.FlowLayoutPanel
     Friend WithEvents sfdXml As System.Windows.Forms.SaveFileDialog
     Friend WithEvents cmdInfo As System.Windows.Forms.Button
+    Friend WithEvents tosMain As System.Windows.Forms.ToolStrip
+    Friend WithEvents tslUICulture As System.Windows.Forms.ToolStripLabel
+    Friend WithEvents tscUICulture As System.Windows.Forms.ToolStripComboBox
 
 End Class

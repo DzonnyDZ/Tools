@@ -65,6 +65,26 @@
                 <node name="iif" image="Method" tag="Tools.Tests.VisualBasicT.Interaction.iif" />
             </node>
         </node>
+        <node name="XmlT" image="Namespace">
+            <node name="XPathT" image="Namespace">
+                <node name="XPathObjectNavigator" image="Class" tag="Tools.Tests.XmlT.XPathT.frmXPathObjectNavigator.Test" />
+            </node>
+        </node>
+    </node>
+    <node name="Tools.Metadata" image="Assembly">
+        <node name="Drawing" image="Namespace">
+            <node name="DrawingIOt" image="Namespace">
+                <node name="JPEG" image="Namespace" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test" />
+            </node>
+            <node name="MetadataT" image="Namespace">
+                <node name="ExifT" image="Namespace Shortcut" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test"/>
+                <node name="IptcT" image="Namespace">
+                    <node name="Iptc" image="Class" tag="Tools.Tests.MetadataT.IptcT.frmIPTC.test" />
+                </node>
+            </node>
+        </node>
+    </node>
+    <node name="Tools.Windows" image="Assembly">
         <node name="WindowsT" image="Namespace">
             <node name="FormsT" image="Namespace">
                 <node name="ControlWithStatus" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmControlWithStatus.Test" />
@@ -77,10 +97,11 @@
                 <node name="TransparentLabel" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentLabel.Test" />
                 <node name="TransparentTextBox" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentTextBox.Test" />
             </node>
-        </node>
-        <node name="XmlT" image="Namespace">
-            <node name="XPathT" image="Namespace">
-                <node name="XPathObjectNavigator" image="Class" tag="Tools.Tests.XmlT.XPathT.frmXPathObjectNavigator.Test" />
+            <node name="WPF" image="Namespace">
+                <node name="ControlsT" image="Namespace">
+                    <node name="NumericUpDown" image="Class" tag="Tools.Tests.WindowsT.WPF.ControlsT.winNumericUpdown.Test"/>
+                </node>
+                <node name="SystemTheme" image="Template" tag="Tools.Tests.WindowsT.WPF.winSystemTheme.Test"/>
             </node>
         </node>
     </node>
@@ -135,6 +156,7 @@
             <node name="Windows" image="Namespace">
                 <node name="Forms" image="Namespace">
                     <node name="AutoSize" image="Properties" tag="Tools.Tests.Framework.SystemF.WindowsF.FormsF.frmAutoSize.Test"/>
+                    <node name="VisualStyles" image="Namespace" tag="Tools.Tests.Framework.SystemF.WindowsF.FormsF.VisualStylesF.frmVisualStylesTest.Test"/>
                 </node>
             </node>
             <node image="Class" name="Type">
