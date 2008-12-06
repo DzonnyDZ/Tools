@@ -192,6 +192,13 @@ Public Structure TimeSpanFormattable
     Public Shared Narrowing Operator CType(ByVal s As String) As TimeSpanFormattable
         Return Parse(s)
     End Operator
+    ''' <summary>Converts <see cref="TimeSpanFormattable"/> to <see cref="String"/></summary>
+    ''' <param name="a">A <see cref="TimeSpanFormattable"/></param>
+    ''' <returns><see cref="ToString"/></returns>
+    ''' <version version="1.5.2">Operator introduced</version>
+    Public Shared Widening Operator CType(ByVal a As TimeSpanFormattable) As String
+        Return a.ToString
+    End Operator
     ''' <summary>Returns a new <see cref="TimeSpanFormattable"/> object whose value is the absolute value of the current <see cref="TimeSpanFormattable"/> object.</summary>
     ''' <returns>A new <see cref="TimeSpanFormattable"/> whose value is the absolute value of the current <see cref="TimeSpanFormattable"/> object.</returns>
     ''' <exception cref="System.OverflowException">The value of this instance is <see cref="System.TimeSpan.MinValue"/>.</exception>

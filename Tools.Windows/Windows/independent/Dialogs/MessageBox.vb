@@ -40,6 +40,7 @@ Namespace WindowsT.IndependentT
     ''' </remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2">Fixed: Some static functions throws exception when icon is not set or when default button is used (even implicitly)</version>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
 #Region "Shared"
@@ -2925,7 +2926,7 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
                 Throw New InvalidEnumArgumentException("buttons", buttons, GetType(MessageBoxButtons))
             If Not InEnum(icon) Then _
                 Throw New InvalidEnumArgumentException("icon", icon, GetType(MessageBoxIcon))
-            If InEnum(defaultButton) Then _
+            If Not InEnum(defaultButton) Then _
                 Throw New InvalidEnumArgumentException("defaultButton", defaultButton, GetType(DialogResult))
             Try
                 Dim box As New FakeBox With {.Prompt = text, .Title = caption}
@@ -2936,7 +2937,11 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
                     Case MessageBoxDefaultButton.Button2 : box.DefaultButton = 1
                     Case MessageBoxDefaultButton.Button3 : box.DefaultButton = 2
                 End Select
-                box.Icon = GetIconDelegate.Invoke(icon)
+                Dim gIcon = GetIconDelegate.Invoke(icon)
+                If gIcon Is Nothing Then
+                    box.Icon = Nothing
+                Else : box.Icon = gIcon
+                End If
                 Select Case icon
                     Case MessageBoxIcons.Asterisk : box.PlayOnShow = Media.SystemSounds.Asterisk
                     Case MessageBoxIcons.Hand : box.PlayOnShow = Media.SystemSounds.Hand

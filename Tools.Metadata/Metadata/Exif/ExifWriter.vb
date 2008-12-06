@@ -360,6 +360,8 @@ Namespace MetadataT.ExifT
         ''' <param name="Data">Data to be converted</param>
         ''' <param name="DataType">Type of data</param>
         ''' <returns>Array of items of given type, if <paramref name="Data"/> was of array of <paramref name="DataType"/> or <paramref name="DataType"/>; otherwise null</returns>
+        ''' <version version="1.5.2">Marked as CLS-incompliant</version>
+        <CLSCompliant(False)> _
         Protected Shared Function NormalizeData(ByVal Data As Object, ByVal DataType As ExifDataTypes) As Array
             Select Case DataType
                 Case ExifDataTypes.ASCII

@@ -996,6 +996,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Given object cannot be located.'.
+        '''</summary>
+        Friend Shared ReadOnly Property GivenObjectCannotBeLocated() As String
+            Get
+                Return ResourceManager.GetString("GivenObjectCannotBeLocated", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Given stream does not support reading'.
         '''</summary>
         Friend Shared ReadOnly Property GivenStreamDoesNotSupportReading() As String
@@ -2869,6 +2878,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unable to cast type {0} to type {1}'.
+        '''</summary>
+        Friend Shared ReadOnly Property UnableToCastType0ToType1() As String
+            Get
+                Return ResourceManager.GetString("UnableToCastType0ToType1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unexpected call of {0}'.
         '''</summary>
         Friend Shared ReadOnly Property UnexpectedCallOf0() As String
@@ -4102,6 +4120,14 @@ Namespace ResourcesT
         '''<returns>The GivenMarkerSCodeDoesnTStartWithFFh property value.</returns>
         Friend Shared Function GivenMarkerSCodeDoesnTStartWithFFhFormat() As String
             Return GivenMarkerSCodeDoesnTStartWithFFh
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the GivenObjectCannotBeLocated property value.
+        '''</summary>
+        '''<returns>The GivenObjectCannotBeLocated property value.</returns>
+        Friend Shared Function GivenObjectCannotBeLocatedFormat() As String
+            Return GivenObjectCannotBeLocated
         End Function
         
         '''<summary>
@@ -5912,6 +5938,16 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function Types0And1AreNotCompatibleFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, Types0And1AreNotCompatible, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unable to cast type {0} to type {1}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function UnableToCastType0ToType1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, UnableToCastType0ToType1, arg0, arg1)
         End Function
         
         '''<summary>

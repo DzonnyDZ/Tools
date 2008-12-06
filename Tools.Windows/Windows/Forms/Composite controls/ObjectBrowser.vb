@@ -13,6 +13,7 @@ Namespace WindowsT.FormsT
     ''' <version version="1.5.2">Removed <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/></version>
     ''' <version version="1.5.2">Added property <see cref="ObjectBrowser.SelectedItem"/></version>
     ''' <version version="1.5.2">Added <see cref="DefaultEventAttribute"/>.</version>
+    ''' <version version="1.5.2">Added <see cref="ObjectBrowser.SelectedItem"/> property</version>
     <DefaultEvent("SelectedItemChanged")> _
     Public Class ObjectBrowser : Inherits UserControlExtended
         ''' <summary>Contains value of the <see cref="Objects"/> property</summary>
@@ -668,6 +669,8 @@ Namespace WindowsT.FormsT
         End Property
         ''' <summary>Gets item that is curently selected in object browser</summary>
         ''' <returns>Item curently selected in object browse</returns>
+        ''' <value>Object to select</value>
+        ''' <exception cref="ArgumentException">Value being set cannot be located</exception>
         ''' <version version="1.5.2">Property added</version>
         Public Overridable Property SelectedItem() As Object
             Get
@@ -677,9 +680,76 @@ Namespace WindowsT.FormsT
                 Return Nothing
             End Get
             Set(ByVal value As Object)
-
+                Dim Item = FindItem(tvwObjects.Nodes, value)
+                If Item.HasValue Then
+                    tvwObjects.SelectedNode = Item.Value.Key
+                    tvwObjects.SelectedNode.EnsureVisible()
+                    lvwMembers.SelectedItems.Clear()
+                    If Item.Value.Value IsNot Nothing Then
+                        For Each lItem As ListViewItem In lvwMembers.Items
+                            If lItem.Tag Is Item.Value.Value Then
+                                lItem.Selected = True
+                                Exit For
+                            End If
+                        Next
+                    End If
+                Else
+                    Throw New ArgumentException(ResourcesT.Exceptions.GivenObjectCannotBeLocated)
+                End If
             End Set
         End Property
+        '''' <summary>Finds item</summary>
+        '''' <param name="item">Item (type, method, namespace etc.) to be found</param>
+        '''' <returns>Item location - <see cref="TreeNode"/> and <see cref="ListViewItem"/> (if applicable); null when item was not found.</returns>
+        '''' <remarks><note type="inheritinfo">When overriding this method, override both overloads of it.</note></remarks>
+        'Protected Overridable Function FindItem(ByVal item As Object) As KeyValuePair(Of TreeNode, ListViewItem)?
+        '    For Each Node As TreeNode In tvwObjects.Nodes
+        '        If Node.Tag.Equals(item) Then Return New KeyValuePair(Of TreeNode, ListViewItem)(Node, Nothing)
+        '        Dim IsMemberOf As Boolean
+        '        If TypeOf item Is [Module] Then : IsMemberOf = DirectCast(item, [Module]).IsMemberOf(Node.Tag)
+        '        ElseIf TypeOf item Is NamespaceInfo Then : IsMemberOf = DirectCast(item, NamespaceInfo).IsMemberOf(Node.Tag)
+        '        ElseIf TypeOf item Is MemberInfo Then : IsMemberOf = DirectCast(item, MemberInfo).IsMemberOf(Node.Tag)
+        '        ElseIf TypeOf item Is ParameterInfo Then : IsMemberOf = DirectCast(item, ParameterInfo).IsMemberOf(Node.Tag)
+        '        End If
+        '        If IsMemberOf Then
+        '            Node.Expand()
+        '            Return FindItem(Node, item)
+        '        End If
+        '    Next
+        '    Return Nothing
+        'End Function
+        ''' <summary>Finds item unsder given treenode</summary>
+        ''' <param name="item">Item (type, method, namespace etc.) to be found</param>
+        ''' <param name="Nodes">Nodes to search for item in.</param>
+        ''' <returns>Item location - <see cref="TreeNode"/> and tag of <see cref="ListViewItem"/> (if applicable); null when item was not found.</returns>
+        ''' <remarks>This function is used by setter of <see cref="SelectedItem"/>.</remarks>
+        ''' <version version="1.5.2">Function added</version>
+        Protected Overridable Function FindItem(ByVal Nodes As TreeNodeCollection, ByVal item As Object) As KeyValuePair(Of TreeNode, Object)?
+            For Each Node As TreeNode In Nodes
+                If Node.Tag Is Nothing Then Continue For
+                If Node.Tag.Equals(item) Then Return New KeyValuePair(Of TreeNode, Object)(Node, Nothing)
+                Dim IsMemberOf As Boolean
+                If TypeOf item Is [Module] Then : IsMemberOf = DirectCast(item, [Module]).IsMemberOf(Node.Tag)
+                ElseIf TypeOf item Is NamespaceInfo Then : IsMemberOf = DirectCast(item, NamespaceInfo).IsMemberOf(Node.Tag)
+                ElseIf TypeOf item Is MemberInfo Then : IsMemberOf = DirectCast(item, MemberInfo).IsMemberOf(Node.Tag)
+                ElseIf TypeOf item Is ParameterInfo Then : IsMemberOf = DirectCast(item, ParameterInfo).IsMemberOf(Node.Tag)
+                End If
+                If IsMemberOf Then
+                    For Each obj In GetItems(Node.Tag)
+                        If obj.Equals(item) Then Return New KeyValuePair(Of TreeNode, Object)(Node, obj)
+                    Next
+                    If Node.Nodes.Count = 1 AndAlso Node.Nodes(0).Tag Is Nothing Then
+                        Node.Nodes.Clear()
+                        Dim e As New TreeViewCancelEventArgs(Node, False, TreeViewAction.Unknown)
+                        OnBeforeExpand(e)
+                        If e.Cancel Then Return Nothing
+                    End If
+                    Return FindItem(Node.Nodes, item)
+                End If
+            Next
+            Return Nothing
+        End Function
+
         ''' <summary>Raises the <see cref="SelectedItemChanged"/> event</summary>
         ''' <param name="e">Event arguments</param>        4
         ''' <remarks><note type="inheritnfo">ALways call base class method in order the event to be raised.</note></remarks>

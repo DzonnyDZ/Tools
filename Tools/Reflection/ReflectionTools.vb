@@ -6,6 +6,7 @@ Namespace ReflectionT
     ''' <summary>Various reflection tools</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version stage="Nightly" version="1.5.2">Added overloaded functions <see cref="ReflectionTools.GetOperators"/>.</version>
+    ''' <version version="1.5.2">Added <see cref="ReflectionTools.IsMemberOf"/> overloaded methods.</version>
     Public Module ReflectionTools
         ''' <summary>Gets namespaces in given module</summary>
         ''' <param name="Module">Module to get namespaces in</param>
@@ -422,8 +423,53 @@ Namespace ReflectionT
         ''' <param name="Type">Type to get namespace of</param>
         ''' <returns><see cref="NamespaceInfo"/> constructed from <paramref name="Type"/>.<see cref="Type.[Module]">Module</see> and <paramref name="Type"/>.<see cref="Type.[Namespace]">Namespace</see>.</returns>
         ''' <remarks>Each type has namespace even when name of the namespace is an empty <see cref="String"/>.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        ''' <version version="1.5.2">Added <see cref="ArgumentNullException"/></version>
         <Extension()> Public Function GetNamespace(ByVal Type As Type) As NamespaceInfo
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Return New NamespaceInfo(Type.Module, Type.Namespace)
+        End Function
+        ''' <summary>Gets value indicating if method is global method</summary>
+        ''' <param name="Method">Method to test is it is global</param>
+        ''' <returns>True when <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is null</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Function IsGlobal(ByVal Method As MethodInfo) As Boolean
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            Return Method.DeclaringType Is Nothing
+        End Function
+        ''' <summary>Gets value indicating if field is global field</summary>
+        ''' <param name="Field">Field to test is it is global</param>
+        ''' <returns>True when <paramref name="Field"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is null</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Field"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Function IsGobal(ByVal Field As FieldInfo) As Boolean
+            If Field Is Nothing Then Throw New ArgumentNullException("Field")
+            Return Field.DeclaringType Is Nothing
+        End Function
+        ''' <summary>Gets declaring namespace of global method</summary>
+        ''' <param name="Method">Global method to get namespace of</param>
+        ''' <returns>Namespace <paramref name="Method"/> contains in its name; or null when <paramref name="Method"/> is not global method</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Public Function GetNamespace(ByVal Method As MethodInfo) As NamespaceInfo
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            If Method.DeclaringType IsNot Nothing Then Return Nothing
+            Dim NameParts = Method.Name.Split("."c)
+            If NameParts.Length = 1 Then Return New NamespaceInfo(Method.[Module], "")
+            Return New NamespaceInfo(Method.Module, String.Join("."c, NameParts, 0, NameParts.Length - 2))
+        End Function
+        ''' <summary>Gets declaring namespace of global field</summary>
+        ''' <param name="Field">Global field to get namespace of</param>
+        ''' <returns>Namespace <paramref name="Field"/> contains in its name; or null when <paramref name="Field"/> is not global field</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Field"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Public Function GetNamespace(ByVal Field As FieldInfo) As NamespaceInfo
+            If Field Is Nothing Then Throw New ArgumentNullException("Field")
+            If Field.DeclaringType IsNot Nothing Then Return Nothing
+            Dim NameParts = Field.Name.Split("."c)
+            If NameParts.Length = 1 Then Return New NamespaceInfo(Field.[Module], "")
+            Return New NamespaceInfo(Field.Module, String.Join("."c, NameParts, 0, NameParts.Length - 2))
         End Function
 #Region "Operators"
         ''' <summary>Gets operators of given kind defined by given type</summary>
@@ -491,7 +537,7 @@ Namespace ReflectionT
         ''' <param name="TFrom">Type to cast from</param>
         ''' <param name="TTo">Type to cast to</param>
         ''' <returns>The best operator to be used to cast type <paramref name="TFrom"/> to type <paramref name="TTo"/>, null if no operator was found</returns>
-        ''' <exception cref="AmbiguousMatchException">Operators werefound, but noone is most specific.</exception>
+        ''' <exception cref="AmbiguousMatchException">Operators were found, but no one is most specific.</exception>
         ''' <remarks>Operators are obtained using <see cref="GetCastOperators"/> and then specificity is evaluated.
         ''' <list type="numbered">
         ''' <item>Only operatrs which argument is assignale from <paramref name="TFrom"/> and return type can be assigned to <paramref name="TTo"/> are considered. Required custom modifiers (modreq) of argument and return value must not be present.</item>
@@ -609,9 +655,431 @@ Namespace ReflectionT
             Throw New InvalidOperationException 'SHould not hapen
         End Function
 #End Region
+#Region "IsMemberOf"
+#Region "Type"
+        ''' <summary>Gets value indicating if given <see cref="Type"/> or object it is declared on is member of given <see cref="Assembly"/></summary>
+        ''' <param name="Type"><see cref="Type"/> to observe parent of</param>
+        ''' <param name="Assembly"><see cref="Assembly"/> to test if it is parent of <paramref name="Type"/></param>
+        ''' <returns>True if <paramref name="Assembly"/> is declared inside <paramref name="Type"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> or <paramref name="Assembly"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Type As Type, ByVal Assembly As Assembly) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
+            Return Type.Assembly.Equals(Assembly)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="Type"/> or object it is declared on is member of given <see cref="[Module]"/></summary>
+        ''' <param name="Type"><see cref="Type"/> to observe parent of</param>
+        ''' <param name="Module"><see cref="[Module]"/> to test if it is parent of <paramref name="Type"/></param>
+        ''' <returns>True if <paramref name="Module"/> is declared inside <paramref name="Type"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> or <paramref name="Module"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Type As Type, ByVal [Module] As [Module]) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            Return Type.Module.Equals([Module])
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="Type"/> or object it is declared on is member of given <see cref="Type"/></summary>
+        ''' <param name="Type"><see cref="Type"/> to observe parent of</param>
+        ''' <param name="DeclaringType"><see cref="Type"/> to test if it is parent of <paramref name="Type"/></param>
+        ''' <returns>True if <paramref name="DeclaringType"/> is declared inside <paramref name="Type"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> or <paramref name="DeclaringType"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Type As Type, ByVal DeclaringType As Type) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If DeclaringType Is Nothing Then Throw New ArgumentNullException("DeclaringType")
+            If Type.IsNested Then
+                Return Type.DeclaringType.Equals(DeclaringType) OrElse Type.DeclaringType.IsMemberOf(DeclaringType)
+            ElseIf Type.IsGenericParameter AndAlso Type.DeclaringType IsNot Nothing Then
+                Return Type.DeclaringType.Equals(DeclaringType) OrElse Type.DeclaringType.IsMemberOf(DeclaringType)
+            ElseIf Type.IsGenericParameter AndAlso Type.DeclaringMethod IsNot Nothing Then
+                Return Type.DeclaringMethod.IsMemberOf(DeclaringType)
+            End If
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="Type"/> or object it is declared on is member of given <see cref="NamespaceInfo"/></summary>
+        ''' <param name="Type"><see cref="Type"/> to observe parent of</param>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to test if it is parent of <paramref name="Type"/></param>
+        ''' <returns>True if <paramref name="Namespace"/> is declared inside <paramref name="Type"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> or <paramref name="Namespace"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Type As Type, ByVal [Namespace] As NamespaceInfo) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If Type.IsNested Then Return Type.DeclaringType.IsMemberOf([Namespace])
+            For Each Type In [Namespace].GetTypes
+                If Type.Equals(Type) Then Return True
+            Next
+            Return False
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="Type"/> or object it is declared on is member of given <see cref="MethodInfo"/></summary>
+        ''' <param name="Type"><see cref="Type"/> to observe parent of</param>
+        ''' <param name="Method"><see cref="MethodInfo"/> to test if it is parent of <paramref name="Type"/></param>
+        ''' <returns>True if <paramref name="Method"/> is declared inside <paramref name="Type"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> or <paramref name="Method"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Type As Type, ByVal Method As MethodInfo) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            Return Type.IsGenericParameter AndAlso Type.DeclaringMethod IsNot Nothing AndAlso Type.DeclaringMethod.Equals(Method)
+        End Function
+#End Region
+        ''' <summary>Gets value indicating if given <see cref="NamespaceInfo"/> or object it is declared on is member of given <see cref="NamespaceInfo"/></summary>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to observe parent of</param>
+        ''' <param name="ParentNamespace"><see cref="NamespaceInfo"/> to test if it is parent of <paramref name="Namespace"/></param>
+        ''' <returns>True if <paramref name="ParentNamespace"/> is declared inside <paramref name="Namespace"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Namespace"/> or <paramref name="ParentNamespace"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal [Namespace] As NamespaceInfo, ByVal ParentNamespace As NamespaceInfo) As Boolean
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If ParentNamespace Is Nothing Then Throw New ArgumentNullException("ParentNamespace")
+            For Each ns In ParentNamespace.GetNamespaces
+                If ns.Equals([Namespace]) Then Return True
+            Next
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="[Module]"/> or object it is declared on is member of given <see cref="Assembly"/></summary>
+        ''' <param name="Module"><see cref="[Module]"/> to observe parent of</param>
+        ''' <param name="Assembly"><see cref="Assembly"/> to test if it is parent of <paramref name="Module"/></param>
+        ''' <returns>True if <paramref name="Assembly"/> is declared inside <paramref name="Module"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Module"/> or <paramref name="Assembly"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal [Module] As [Module], ByVal Assembly As Assembly) As Boolean
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
+            Return [Module].Assembly.Equals(Assembly)
+        End Function
+#Region "IsMemberOf"
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="Type"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Type"><see cref="Type"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Type"/> is declared inside <paramref name="Member"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Type"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal Type As Type) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If TypeOf Member Is Type Then Return DirectCast(Member, Type).IsMemberOf(Type)
+            If Member.DeclaringType Is Nothing Then Return False
+            Return Member.DeclaringType.Equals(Type) OrElse Member.DeclaringType.IsMemberOf(Type)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="[Module]"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Module"><see cref="[Module]"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Module"/> is declared inside <paramref name="Member"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Module"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal [Module] As [Module]) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            Return Member.Module.Equals([Module])
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="Assembly"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Assembly"><see cref="Assembly"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Assembly"/> is declared inside <paramref name="Member"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Assembly"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal Assembly As Assembly) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
+            Return Member.Module.IsMemberOf(Assembly)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="NamespaceInfo"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Namespace"/> is declared inside <paramref name="Member"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Namespace"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal [Namespace] As NamespaceInfo) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If TypeOf Member Is Type Then
+                Return DirectCast(Member, Type).IsMemberOf([Namespace])
+            ElseIf Member.DeclaringType Is Nothing AndAlso (TypeOf Member Is MethodInfo OrElse TypeOf Member Is FieldInfo) Then
+                Return If(TypeOf Member Is MethodInfo, DirectCast(Member, MethodInfo).GetNamespace, DirectCast(Member, FieldInfo).GetNamespace).Equals([Namespace])
+            ElseIf Member.DeclaringType Is Nothing Then
+                Return Member.DeclaringType.IsMemberOf([Namespace])
+            End If
+            For Each Type In [Namespace].GetTypes(False)
+                If Member.IsMemberOf(Type) Then Return True
+            Next
+            For Each Method In [Namespace].GetMethods(BindingFlags.NonPublic Or BindingFlags.Public)
+                If Member.IsMemberOf(Method) Then Return True
+            Next
+            Return False
+        End Function
+#End Region
+        ''' <summary>Gets value indicating if given <see cref="NamespaceInfo"/> or object it is declared on is member of given <see cref="[Module]"/></summary>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to observe parent of</param>
+        ''' <param name="Module"><see cref="[Module]"/> to test if it is parent of <paramref name="Namespace"/></param>
+        ''' <returns>True if <paramref name="Module"/> is declared inside <paramref name="Namespace"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Namespace"/> or <paramref name="Module"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal [Namespace] As NamespaceInfo, ByVal [Module] As [Module]) As Boolean
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            Return [Namespace].Module.Equals([Module])
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="NamespaceInfo"/> or object it is declared on is member of given <see cref="Assembly"/></summary>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to observe parent of</param>
+        ''' <param name="Assembly"><see cref="Assembly"/> to test if it is parent of <paramref name="Namespace"/></param>
+        ''' <returns>True if <paramref name="Assembly"/> is declared inside <paramref name="Namespace"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Namespace"/> or <paramref name="Assembly"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal [Namespace] As NamespaceInfo, ByVal Assembly As Assembly) As Boolean
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
+            Return [Namespace].Module.IsMemberOf(Assembly)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MethodInfo"/> or object it is declared on is member of given <see cref="PropertyInfo"/></summary>
+        ''' <param name="Method"><see cref="MethodInfo"/> to observe parent of</param>
+        ''' <param name="Property"><see cref="PropertyInfo"/> to test if it is parent of <paramref name="Method"/></param>
+        ''' <returns>True if <paramref name="Property"/> is declared inside <paramref name="Method"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> or <paramref name="Property"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Method As MethodInfo, ByVal [Property] As PropertyInfo) As Boolean
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            If [Property] Is Nothing Then Throw New ArgumentNullException("Property")
+            For Each acc In [Property].GetAccessors(True)
+                If acc.Equals(Method) Then Return True
+            Next
+            Return False
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MethodInfo"/> or object it is declared on is member of given <see cref="EventInfo"/></summary>
+        ''' <param name="Method"><see cref="MethodInfo"/> to observe parent of</param>
+        ''' <param name="Event"><see cref="EventInfo"/> to test if it is parent of <paramref name="Method"/></param>
+        ''' <returns>True if <paramref name="Event"/> is declared inside <paramref name="Method"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> or <paramref name="Event"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Method As MethodInfo, ByVal [Event] As EventInfo) As Boolean
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            If [Event] Is Nothing Then Throw New ArgumentNullException("Event")
+            For Each acc In [Event].GetAccessors(True)
+                If acc.Equals(Method) Then Return True
+            Next
+            Return False
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="MethodInfo"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Method"><see cref="MethodInfo"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Method"/> is declared inside <paramref name="Member"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Method"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal Method As MethodInfo) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            If Member.DeclaringType Is Nothing Then Return False
+            Return Member.DeclaringType.IsMemberOf(Method)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="PropertyInfo"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Property"><see cref="PropertyInfo"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Property"/> is declared inside <paramref name="Member"/></returns>
+        ''' <remarks>This function is unlikely to return true when <paramref name="Member"/> isnot <see cref="MethodInfo"/> because it is improbable that generic property exists.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="2"/> or <paramref name="6"/> is null</exception>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Never)> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal [Property] As PropertyInfo) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If [Property] Is Nothing Then Throw New ArgumentNullException("Property")
+            If Member.DeclaringType Is Nothing Then Return False
+            If TypeOf Member Is MethodInfo AndAlso DirectCast(Member, MethodInfo).IsMemberOf([Property]) Then Return True
+            Dim dc As Type = If(TypeOf Member Is Type, Member, Member.DeclaringType)
+            If dc Is Nothing Then Return False
+            For Each Method In [Property].GetAccessors(True)
+                If dc.IsMemberOf(Method) Then Return True
+            Next
+            Return False
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="EventInfo"/></summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Event"><see cref="EventInfo"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Event"/> is declared inside <paramref name="Member"/></returns>
+        ''' <remarks>This function is unlikely to return true when <paramref name="Member"/> isnot <see cref="MethodInfo"/> because it is improbable that generic event exists.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="2"/> or <paramref name="6"/> is null</exception>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Never)> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal [Event] As EventInfo) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If [Event] Is Nothing Then Throw New ArgumentNullException("Event")
+            If Member.DeclaringType Is Nothing Then Return False
+            If Member.DeclaringType Is Nothing Then Return False
+            If TypeOf Member Is MethodInfo AndAlso DirectCast(Member, MethodInfo).IsMemberOf([Event]) Then Return True
+            Dim dc As Type = If(TypeOf Member Is Type, Member, Member.DeclaringType)
+            If dc Is Nothing Then Return False
+            Try
+                For Each Method In [Event].GetAccessors(True)
+                    If dc.IsMemberOf(Method) Then Return True
+                Next
+            Catch ex As MethodAccessException
+                For Each Method In [Event].GetAccessors(False)
+                    If dc.IsMemberOf(Method) Then Return True
+                Next
+            End Try
+            Return False
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given <see cref="MethodInfo"/></summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Method"><see cref="MethodInfo"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Method"/> is declared inside <paramref name="Param"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Method"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal Method As MethodInfo) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Param")
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            For Each mParam In Method.GetParameters
+                If mParam.Equals(Param) Then Return True
+            Next
+            Return Param.Equals(Method.ReturnParameter)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given <see cref="Type"/></summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Type"><see cref="Type"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Type"/> is declared inside <paramref name="Param"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Type"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal Type As Type) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Param")
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            Return Param.Member.IsMemberOf(Type)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given <see cref="MemberInfo"/></summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Member"><see cref="MemberInfo"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Member"/> is declared inside <paramref name="Param"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Member"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal Member As MemberInfo) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Param")
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            Return Param.Member.Equals(Member) OrElse Param.Member.IsMemberOf(Member)
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given <see cref="NamespaceInfo"/></summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Namespace"/> is declared inside <paramref name="Param"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Namespace"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal [Namespace] As NamespaceInfo) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Param")
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            Return Param.Member.IsMemberOf([Namespace])
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given <see cref="[Module]"/></summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Module"><see cref="[Module]"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Module"/> is declared inside <paramref name="Param"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Module"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal [Module] As [Module]) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Param")
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            Return Param.Member.IsMemberOf([Module])
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given <see cref="Assembly"/></summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Assembly"><see cref="Assembly"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Assembly"/> is declared inside <paramref name="Param"/></returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Assembly"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal Assembly As Assembly) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Param")
+            If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
+            Return Param.Member.IsMemberOf(Assembly)
+        End Function
+#Region "Generic"
+        ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given CLI object</summary>
+        ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
+        ''' <param name="Parent"><see cref="Object"/> to test if it is parent of <paramref name="Param"/></param>
+        ''' <returns>True if <paramref name="Parent"/> is declared inside <paramref name="Param"/></returns>
+        ''' <remarks>Supported types of <paramref name="Parent"/> are <see cref="Assembly"/>, <see cref="[Module]"/>, <see cref="NamespaceInfo"/>, <see cref="MemberInfo"/>. For any other type, this function returns false.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Param"/> or <paramref name="Parent"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Param As ParameterInfo, ByVal Parent As Object) As Boolean
+            If Param Is Nothing Then Throw New ArgumentNullException("Member")
+            If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
+            If TypeOf Parent Is Assembly Then : Return Param.IsMemberOf(DirectCast(Parent, Assembly))
+            ElseIf TypeOf Parent Is [Module] Then : Return Param.IsMemberOf(DirectCast(Parent, [Module]))
+            ElseIf TypeOf Parent Is NamespaceInfo Then : Return Param.IsMemberOf(DirectCast(Parent, NamespaceInfo))
+            ElseIf TypeOf Parent Is Type Then : Return Param.IsMemberOf(DirectCast(Parent, Type))
+            ElseIf TypeOf Parent Is MemberInfo Then : Return Param.IsMemberOf(DirectCast(Parent, MethodInfo))
+            Else : Return False
+            End If
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given CLI object</summary>
+        ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
+        ''' <param name="Parent"><see cref="Object"/> to test if it is parent of <paramref name="Member"/></param>
+        ''' <returns>True if <paramref name="Parent"/> is declared inside <paramref name="Member"/></returns>
+        ''' <remarks>Supported types of <paramref name="Parent"/> are <see cref="Assembly"/>, <see cref="[Module]"/>, <see cref="NamespaceInfo"/>, <see cref="Type"/>, <see cref="MethodInfo"/>, <see cref="PropertyInfo"/>, <see cref="EventInfo"/>. For any other type, this function returns false.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Parent"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal Member As MemberInfo, ByVal Parent As Object) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
+            If TypeOf Parent Is Assembly Then : Return Member.IsMemberOf(DirectCast(Parent, Assembly))
+            ElseIf TypeOf Parent Is [Module] Then : Return Member.IsMemberOf(DirectCast(Parent, [Module]))
+            ElseIf TypeOf Parent Is NamespaceInfo Then : Return Member.IsMemberOf(DirectCast(Parent, NamespaceInfo))
+            ElseIf TypeOf Parent Is Type Then : Return Member.IsMemberOf(DirectCast(Parent, Type))
+            ElseIf TypeOf Parent Is MethodInfo Then : Return Member.IsMemberOf(DirectCast(Parent, MethodInfo))
+            ElseIf TypeOf Parent Is PropertyInfo Then : Return Member.IsMemberOf(DirectCast(Parent, PropertyInfo))
+            ElseIf TypeOf Parent Is EventInfo Then : Return Member.IsMemberOf(DirectCast(Parent, EventInfo))
+            Else : Return False
+            End If
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="NamespaceInfo"/> or object it is declared on is member of given CLI object</summary>
+        ''' <param name="Namespace"><see cref="NamespaceInfo"/> to observe parent of</param>
+        ''' <param name="Parent"><see cref="Object"/> to test if it is parent of <paramref name="Namespace"/></param>
+        ''' <returns>True if <paramref name="Parent"/> is declared inside <paramref name="Namespace"/></returns>
+        ''' <remarks>Supported types of <paramref name="Parent"/> are <see cref="Assembly"/>, <see cref="[Module]"/>, <see cref="NamespaceInfo"/>. For any other type, this function returns false.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Namespace"/> or <paramref name="Parent"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal [Namespace] As NamespaceInfo, ByVal Parent As Object) As Boolean
+            If [Namespace] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
+            If TypeOf Parent Is Assembly Then : Return [Namespace].IsMemberOf(DirectCast(Parent, Assembly))
+            ElseIf TypeOf Parent Is [Module] Then : Return [Namespace].IsMemberOf(DirectCast(Parent, [Module]))
+            ElseIf TypeOf Parent Is NamespaceInfo Then : Return [Namespace].IsMemberOf(DirectCast(Parent, NamespaceInfo))
+            Else : Return False
+            End If
+        End Function
+        ''' <summary>Gets value indicating if given <see cref="[Module]"/> or object it is declared on is member of given CLI object</summary>
+        ''' <param name="Module"><see cref="[Module]"/> to observe parent of</param>
+        ''' <param name="Parent"><see cref="Object"/> to test if it is parent of <paramref name="Module"/></param>
+        ''' <returns>True if <paramref name="Parent"/> is declared inside <paramref name="Module"/></returns>
+        ''' <remarks>Supported types of <paramref name="Parent"/> are <see cref="Assembly"/>. For any other type, this function returns false.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Module"/> or <paramref name="Parent"/> is null</exception>
+        <Extension()> Public Function IsMemberOf(ByVal [Module] As [Module], ByVal Parent As Object) As Boolean
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Namespace")
+            If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
+            If TypeOf Parent Is Assembly Then : Return [Module].IsMemberOf(DirectCast(Parent, Assembly))
+            Else : Return False
+            End If
+        End Function
+#End Region
+#End Region
+        ''' <summary>Gtes all accessors of given event</summary>
+        ''' <param name="Event">Event to get accessors of</param>
+        ''' <param name="NonPublic">True to get non-public accessors as well as public</param>
+        ''' <returns>Array of all accessors of <paramref name="Event"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Event"/> is null</exception>
+        ''' <exception cref="MethodAccessException"><paramref name="NonPublic"/> is true, event accessor is non-public, and the caller does not have permission to reflect on non-public methods. </exception>
+        ''' <remarks>If <paramref name="Event"/> does not support <see cref="M:System.Reflection.EventInfo.GetOtherMethods(System.Boolean)"/>, <see cref="M:System.Reflection.EventInfo.GetOtherMethods()"/> is used.</remarks>
+        <Extension()> Function GetAccessors(ByVal [Event] As EventInfo, Optional ByVal NonPublic As Boolean = False) As MethodInfo()
+            If [Event] Is Nothing Then Throw New ArgumentNullException("Event")
+            Dim ret As New List(Of MethodInfo)
+            If [Event].GetAddMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetAddMethod(NonPublic))
+            If [Event].GetRemoveMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetRemoveMethod(NonPublic))
+            If [Event].GetRaiseMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetRaiseMethod(NonPublic))
+            Try
+                ret.AddRange([Event].GetOtherMethods(NonPublic))
+            Catch ex As NotImplementedException
+                ret.AddRange([Event].GetOtherMethods())
+            End Try
+            Return ret.ToArray
+        End Function
     End Module
+
     ''' <summary>Represents reflection namespace</summary>
-    Public Class NamespaceInfo
+    ''' <version version="1.5.2" stage="Nightly">Added implementation of <see cref="IEquatable(Of NamespaceInfo)"/></version>
+    Public Class NamespaceInfo : Implements IEquatable(Of NamespaceInfo)
         ''' <summary>Contains value of the <see cref="[Module]"/> property</summary>
         Private ReadOnly _Module As [Module]
         ''' <summary>Contains value of the <see cref="Name"/> property</summary>
@@ -646,19 +1114,49 @@ Namespace ReflectionT
             Me._Module = [Module]
             Me._Name = Name
         End Sub
-        ''' <summary>s located within current namespace</summary>
+#Region "GetMembers"
+        ''' <summary>Gets types located within current namespace</summary>
+        ''' <param name="Nested">True to get nested types (types declared inside types in current namepace)</param>
         ''' <returns>Array of types defined in this namespace</returns>
         ''' <exception cref="System.Reflection.ReflectionTypeLoadException">One or more classes in a module could not be loaded.</exception>
         ''' <exception cref="System.Security.SecurityException">The caller does not have the required permission.</exception>
         Public Function GetTypes(Optional ByVal Nested As Boolean = False) As Type()
             Return (From Type In Me.Module.GetTypes() Where (Nested OrElse Not Type.IsNested) AndAlso Type.Namespace = Me.Name Select Type).ToArray
         End Function
+        ''' <summary>Gets global methods located in current namespace</summary>
+        ''' <returns>Array of global methods defined in current namespace (it is in module <see cref="[Module]"/> with name starting with name of this namespace)</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetMethods() As MethodInfo()
+            Return (From method In Me.Module.GetMethods Where method.GetNamespace.Equals(Me)).ToArray
+        End Function
+        ''' <summary>Gets global methods located in current namespace</summary>
+        ''' <returns>Array of global methods defined in current namespace (it is in module <see cref="[Module]"/> with name starting with name of this namespace)</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetFields() As FieldInfo()
+            Return (From field In Me.Module.GetFields Where field.GetNamespace.Equals(Me)).ToArray
+        End Function
+
+        ''' <summary>Gets global methods located in current namespace</summary>
+        ''' <returns>Array of global methods defined in current namespace (it is in module <see cref="[Module]"/> with name starting with name of this namespace)</returns>
+        ''' <param name="BindingFlags">A bitwise combination of <see cref="System.Reflection.BindingFlags"/> values that limit the search.</param>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetMethods(ByVal BindingFlags As BindingFlags) As MethodInfo()
+            Return (From method In Me.Module.GetMethods(BindingFlags) Where method.GetNamespace.Equals(Me)).ToArray
+        End Function
+        ''' <summary>Gets global methods located in current namespace</summary>
+        ''' <returns>Array of global methods defined in current namespace (it is in module <see cref="[Module]"/> with name starting with name of this namespace)</returns>
+        ''' <param name="BindingFlags">A bitwise combination of <see cref="System.Reflection.BindingFlags"/> values that limit the search.</param>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetFields(ByVal BindingFlags As BindingFlags) As FieldInfo()
+            Return (From field In Me.Module.GetFields(BindingFlags) Where field.GetNamespace.Equals(Me)).ToArray
+        End Function
+#End Region
         ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
         ''' <returns>True if <paramref name="obj"/> is <see cref="NamespaceInfo"/> and its <see cref="[Module]"/> equals to <see cref="[Module]"/> of current <see cref="NamespaceInfo"/> and also <see cref="Name">Names</see> or current <see cref="NamespaceInfo"/> and <paramref name="obj"/> equals.</returns>
         ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />. </param>
         ''' <exception cref="T:System.NullReferenceException">The 
         ''' <paramref name="obj" /> parameter is null.</exception>
-        Public Overrides Function Equals(ByVal obj As Object) As Boolean
+        Public Overloads Overrides Function Equals(ByVal obj As Object) As Boolean
             Return TypeOf obj Is NamespaceInfo AndAlso Me.Module.Equals(DirectCast(obj, NamespaceInfo).Module) AndAlso Me.Name = DirectCast(obj, NamespaceInfo).Name
         End Function
         ''' <summary>Compares two <see cref="NamespaceInfo">NamespaceInfos</see> for equality</summary>
@@ -718,6 +1216,15 @@ Namespace ReflectionT
                 Order By np _
                 Select New NamespaceInfo(Me.Module, If(Me.Name = "", np, Me.Name & "." & np)) _
                 ).ToArray
+        End Function
+
+        ''' <summary>Indicates whether the current object is equal to another object of the same type.</summary>
+        ''' <returns>true if the current object is equal to the 
+        ''' <paramref name="other" /> parameter; otherwise, false.</returns>
+        ''' <param name="other">An object to compare with this object.</param>
+        ''' <version version="1.5.2">Function added</version>
+        Public Overloads Function Equals(ByVal other As NamespaceInfo) As Boolean Implements System.IEquatable(Of NamespaceInfo).Equals
+            Return Me.Equals(CObj(other))
         End Function
     End Class
     ''' <summary>Operators supported by CLI</summary>

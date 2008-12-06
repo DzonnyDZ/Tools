@@ -118,86 +118,46 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="ToolsIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\Resources\ĐTools.ico;System.Drawing.Icon, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
-    <comment>Đ</comment>
+  <data name="Comment" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\commenths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Error_" xml:space="preserve">
-    <value>Error</value>
-    <comment>MessageBox title</comment>
+  <data name="CopyIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\copy.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="ValueChanged_cat" xml:space="preserve">
-    <value>Value Changed</value>
-    <comment>PropertyGrid category</comment>
+  <data name="CutIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\cut.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="OK" xml:space="preserve">
-    <value>OK</value>
+  <data name="Delete" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\deletehs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <assembly alias="mscorlib" name="mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
-  <data name="OK_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>O</value>
+  <data name="NavBack" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\navback.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+  <data name="NavForward" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\navforward.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Cancel_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>C</value>
+  <data name="NewReport" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\newreporths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Yes" xml:space="preserve">
-    <value>Yes</value>
+  <data name="Open" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\openhs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Yes_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>Y</value>
+  <data name="PasteIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\paste.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="No" xml:space="preserve">
-    <value>No</value>
+  <data name="Plus" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\+.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="No_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>N</value>
+  <data name="Repeat" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\repeaths.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Abort" xml:space="preserve">
-    <value>Abort</value>
+  <data name="Save" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\savehs.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Abort_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>A</value>
+  <data name="T" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\t.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="Retry_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>R</value>
-  </data>
-  <data name="Retry" xml:space="preserve">
-    <value>Retry</value>
-  </data>
-  <data name="Ignore" xml:space="preserve">
-    <value>Ignore</value>
-  </data>
-  <data name="Ignore_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>I</value>
-  </data>
-  <data name="Help_access" type="System.Char, mscorlib" xml:space="preserve">
-    <value>H</value>
-  </data>
-  <data name="Help" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="Start0End1" xml:space="preserve">
-    <value>start {0}, end {1}</value>
-  </data>
-  <data name="Paste" xml:space="preserve">
-    <value>Paste</value>
-  </data>
-  <data name="Object0Type1" xml:space="preserve">
-    <value>Object "{0}" type {1}</value>
-  </data>
-  <data name="Property0" xml:space="preserve">
-    <value>Property {0}</value>
-  </data>
-  <data name="Index0" xml:space="preserve">
-    <value>index {0}</value>
-  </data>
-  <data name="Type0" xml:space="preserve">
-    <value>type {0}</value>
-  </data>
-  <data name="play" type="System.Resources.ResXFileRef, System.Windows.Forms">
-    <value>..\resources\images\play.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  <data name="Zip" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\images\zip.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
 </root>

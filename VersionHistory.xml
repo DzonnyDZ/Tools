@@ -25,5 +25,6 @@
         <vh:i>Fixed: Exif <i:see cref="T:Tools.MetadataT.ExifT.SRational"/> and <i:see cref="T:Tools.MetadataT.ExifT.URrational"/> are incorrectly read from image files (2×16 bits instead of 2×32 bits).</vh:i>
         <vh:i><i:see cref="T:Tools.Metadata.ExifT.ExifWriter"/> made public and Exif saving capability added to <i:see cref="T:Tools.Metadata.ExifT.Exif"/>.</vh:i>
         <vh:i>Added <i:see cref="M:Tools.ReflectionT.ReflectionTools.GetOperators"/> overloaed function.</vh:i>
+        <vh:i>Added <i:see cref="M:Tools.TypeTools.DynamiCast(System.Object,System.Type)"/> method</vh:i>
     </vh:version>
 </vh:VersionHistory>

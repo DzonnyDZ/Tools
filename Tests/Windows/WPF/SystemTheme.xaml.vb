@@ -8,7 +8,7 @@ Imports System.Windows.Controls
 
 
 Namespace WindowsT.WPF
-    ''' <summary>Test fro system theme</summary>
+    '''' <summary>Test fro system theme</summary>
     Partial Public Class winSystemTheme
         ''' <summary>CTor</summary>
         Public Sub New()

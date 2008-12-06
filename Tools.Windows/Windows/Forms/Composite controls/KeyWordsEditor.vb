@@ -491,9 +491,9 @@ Namespace WindowsT.FormsT
                 End Try
                 Dim Lines = LinesA.Split(Environment.NewLine)
                 If Lines IsNot Nothing AndAlso Lines.Length > 0 Then
-                    If Lines.Count <= 50 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format(WindowsT.FormsT.CompositeControls.PasteManyLines, Lines.Length), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.Paste) = MsgBoxResult.Yes Then
+                    If Lines.Count <= 50 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format(WindowsT.FormsT.CompositeControls.PasteManyLines, Lines.Length), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.PasteIcon) = MsgBoxResult.Yes Then
                         Dim Max = (From line In Lines Select line.Length).Max
-                        If Max <= 32 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format("Some lines in text in clipboard are up to {0} characters long. Do you want to paste each line as keyword?", Max), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.Paste) = MsgBoxResult.Yes Then
+                        If Max <= 32 OrElse SuppressMessageBoxes OrElse IndependentT.MessageBox.MsgBox(String.Format("Some lines in text in clipboard are up to {0} characters long. Do you want to paste each line as keyword?", Max), MsgBoxStyle.Question Or MsgBoxStyle.YesNo, My.Resources.PasteIcon) = MsgBoxResult.Yes Then
                             Dim Comparer = StringComparer.Create(Globalization.CultureInfo.CurrentCulture, Not CaseSensitive)
                             Dim added As Boolean = False
                             Dim addedLines As New List(Of String)

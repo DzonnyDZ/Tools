@@ -1158,4 +1158,10 @@
   <data name="NoCastOperatorIsMostSpecific" xml:space="preserve">
     <value>No cast operator is most specific</value>
   </data>
+  <data name="GivenObjectCannotBeLocated" xml:space="preserve">
+    <value>Given object cannot be located.</value>
+  </data>
+  <data name="UnableToCastType0ToType1" xml:space="preserve">
+    <value>Unable to cast type {0} to type {1}</value>
+  </data>
 </root>

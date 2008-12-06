@@ -1,510 +1,501 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>9.0.30729</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <RootNamespace>Tools</RootNamespace>
-        <AssemblyName>Tools</AssemblyName>
-        <MyType>Windows</MyType>
-        <SccProjectName>SAK</SccProjectName>
-        <SccLocalPath>SAK</SccLocalPath>
-        <SccAuxPath>SAK</SccAuxPath>
-        <SccProvider>SAK</SccProvider>
-        <Nightly>1</Nightly>
-        <Alpha>2</Alpha>
-        <Beta>3</Beta>
-        <RC>4</RC>
-        <Release>5</Release>
-        <Config>1</Config>
-        <FileUpgradeFlags>
-        </FileUpgradeFlags>
-        <OldToolsVersion>2.0</OldToolsVersion>
-        <UpgradeBackupLocation>
-        </UpgradeBackupLocation>
-        <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-        <OptionInfer>On</OptionInfer>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Nightly\</OutputPath>
-        <DocumentationFile>Tools.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
-        <Config>1</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <DefineDebug>false</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release\</OutputPath>
-        <DocumentationFile>Tools.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
-        <Config>5</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Alpha\</OutputPath>
-        <DocumentationFile>Tools.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 3.5</DefineConstants>
-        <Config>2</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Beta\</OutputPath>
-        <DocumentationFile>Tools.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 3.5</DefineConstants>
-        <Config>3</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\RC\</OutputPath>
-        <DocumentationFile>Tools.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 3.5</DefineConstants>
-        <Config>4</Config>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Accessibility" />
-        <Reference Include="PresentationCore">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="PresentationFramework">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Core">
-            <RequiredTargetFramework>3.5</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="System.Data" />
-        <Reference Include="System.Data.OracleClient" />
-        <Reference Include="System.Deployment" />
-        <Reference Include="System.Design" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.Drawing.Design" />
-        <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
-        <Reference Include="System.Security" />
-        <Reference Include="System.ServiceProcess" />
-        <Reference Include="System.Web" />
-        <Reference Include="System.Web.RegularExpressions" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Xml.Linq">
-            <RequiredTargetFramework>3.5</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="UIAutomationProvider">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="UIAutomationTypes">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsBase">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsFormsIntegration">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Import Include="Microsoft.VisualBasic" />
-        <Import Include="System" />
-        <Import Include="System.Collections" />
-        <Import Include="System.Collections.Generic" />
-        <Import Include="System.ComponentModel" />
-        <Import Include="System.Diagnostics" />
-        <Import Include="Tools.CollectionsT.GenericT" />
-        <Import Include="Tools.CollectionsT.SpecializedT" />
-        <Import Include="Tools.InternalT" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="..\SharedFiles\AssemblyStage.vb">
-            <Link>AssemblyStage.vb</Link>
-        </Compile>
-        <Compile Include="..\SharedFiles\Version.vb">
-            <Link>Version.vb</Link>
-        </Compile>
-        <Compile Include="CodeDom\CodeDom.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>CodeDom.xsd</DependentUpon>
-        </Compile>
-        <Compile Include="CodeDom\Xml2CodeDom.vb" />
-        <Compile Include="Collections\Generic\CollectionTools.vb" />
-        <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />
-        <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
-        <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
-        <Compile Include="Collections\Generic\IIndexable.vb" />
-        <Compile Include="Collections\Specialized\SpecializedWrapper.vb" />
-        <Compile Include="Collections\Generic\TypedArrayEnumerator.vb" />
-        <Compile Include="Collections\Generic\UnionEnumerator.vb" />
-        <Compile Include="Collections\Generic\Wrapper.vb" />
-        <Compile Include="Collections\Generic\HashTable.vb" />
-        <Compile Include="Collections\Generic\IReadOnlyList.vb" />
-        <Compile Include="Collections\Generic\ListWithEvents.vb" />
-        <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
-        <Compile Include="Collections\Specialized\CollectionTools.vb" />
-        <Compile Include="Collections\Specialized\SpecializedWrappers.vb">
-            <DependentUpon>SpecializedWrappers.xml</DependentUpon>
-            <SubType>Code</SubType>
-            <DesignTime>True</DesignTime>
-            <AutoGen>True</AutoGen>
-        </Compile>
-        <Compile Include="Collections\Type-unsafe\CollectionTools.vb" />
-        <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
-        <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
-        <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
-        <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
-        <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
-        <Compile Include="ComponentModel\Localizable attrs.vb" />
-        <Compile Include="ComponentModel\ReadOnlyObject.vb" />
-        <Compile Include="ComponentModel\RestrictAttribute.vb" />
-        <Compile Include="ComponentModel\SettingsAttributes.vb" />
-        <Compile Include="ComponentModel\SuppresHandledEventArgs.vb" />
-        <Compile Include="ComponentModel\TypeConverter.vb" />
-        <Compile Include="ComponentModel\ValuesFromRangeAreValidAttribute.vb" />
-        <Compile Include="DataStructures\Generic\Graph.vb" />
-        <Compile Include="DataStructures\Generic\Pair.vb" />
-        <Compile Include="DataStructures\Generic\T1OrT2.vb" />
-        <Compile Include="DataStructures\Generic\Tree.vb" />
-        <Compile Include="Data\Metadata\MetadataConnection.vb">
-        </Compile>
-        <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
-        <Compile Include="Drawing\Design\NewEditor.vb" />
-        <Compile Include="Drawing\Design\UITypeEditor.vb">
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Drawing\IconOrBitmap.vb" />
-        <Compile Include="Extensions\DelegateExtensions.vb" />
-        <Compile Include="IO\BinaryWriter.vb" />
-        <Compile Include="IO\OverflowStream.vb" />
-        <Compile Include="IO\SyncFSWatcher.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="IO\UnionReadOnlyStream.vb" />
-        <Compile Include="misc.vb" />
-        <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
-        <Compile Include="Tests\AttributeTest.vb" />
-        <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
-        <Compile Include="Xml\Linq\Extensions.vb" />
-        <Compile Include="Media\Sound.vb">
-            <SubType>UserControl</SubType>
-        </Compile>
-       
-        
-        <Compile Include="Drawing\ImageTools.vb" />
-        <Compile Include="Drawing\SystemColorsExtension.vb" />
-        <Compile Include="Extensions\Char.vb" />
-        <Compile Include="Extensions\General.vb" />
-        <Compile Include="Extensions\String.vb" />
-        <Compile Include="Extensions\TypeCode.vb" />
-        <Compile Include="Globalization\ISOLanguage.vb" />
-        <Compile Include="Globalization\ISOLanguages.vb">
-            <DependentUpon>ISOLanguages.xml</DependentUpon>
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-        </Compile>
-        <Compile Include="Internal\Attributes.vb" />
-        <Compile Include="IO\BinaryReader.vb" />
-        <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
-        <Compile Include="IO\FileSystemEnumerator.vb" />
-        <Compile Include="IO\Path.vb" />
-        <Compile Include="IO\StreamTools.vb" />
-        <Compile Include="Linq\EnumerableT.vb" />
-        <Compile Include="Linq\Misc.vb" />
-        <Compile Include="Linq\Specialized.vb" />
-        <Compile Include="Math\LCM GCD.vb" />
-        <Compile Include="Math\Min-Max.vb" />
-        <Compile Include="Math\LE-BE.vb" />
-        <Compile Include="Math\Number.vb" />
-        <Compile Include="misc\CharT.vb" />
-        <Compile Include="misc\Delegates.vb" />
-        <Compile Include="misc\ICloneable%28of T%29.vb" />
-        <Compile Include="misc\IReportsChange.vb" />
-        <Compile Include="misc\Box.vb" />
-        <Compile Include="misc\misc.vb" />
-        <Compile Include="Extensions\Numbers.vb" />
-        <Compile Include="misc\TimeSpanFormattable.vb" />
-        <Compile Include="misc\TriBool.vb" />
-        <Compile Include="misc\TypeMismatchException.vb" />
-        <Compile Include="misc\TypeTools.vb" />
-        <Compile Include="My Project\AssemblyInfo.vb" />
-        <Compile Include="My Project\Application.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Application.myapp</DependentUpon>
-        </Compile>
-        <Compile Include="My Project\Resources.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Resources.resx</DependentUpon>
-        </Compile>
-        <Compile Include="My Project\Settings.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Settings.settings</DependentUpon>
-            <DesignTimeSharedInput>True</DesignTimeSharedInput>
-        </Compile>
-        <Compile Include="Reflection\CodeImages.vb" />
-        <Compile Include="Reflection\ReflectionT.ObjectImages.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>ObjectImages.resx</DependentUpon>
-        </Compile>
-        <Compile Include="Reflection\ReflectionTools.vb" />
-        <Compile Include="Reflection\ISignatureProvider.vb" />
-       
-        <Compile Include="Resources\resx %28Friend%29\Exceptions.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Exceptions.resx</DependentUpon>
-        </Compile>
-        <Compile Include="Resources\resx %28Friend%29\Helpers.vb" />
-       
-        <Compile Include="Resources\Tools\Resources.vb" />
-        
-        <Compile Include="Resources\Tools\SystemResources.vb" />
-        <Compile Include="Text\Encoding\ISO2022.vb" Condition="$(Config)&lt;=$(Nightly)" />
-        <Compile Include="Text\TextExtensions.vb" />
-        <Compile Include="VBSpecific\Interaction.vb" />
-        <Compile Include="ComponentModel\ObjectStringConverter.vb" />
-        <Compile Include="Xml\XPath\XPathObjectNavigator.vb" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="My Project\Resources.resx">
-            <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
-            <LastGenOutput>Resources.Designer.vb</LastGenOutput>
-            <CustomToolNamespace>My.Resources</CustomToolNamespace>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="My Project\Application.myapp">
-            <Generator>MyApplicationCodeGenerator</Generator>
-            <LastGenOutput>Application.Designer.vb</LastGenOutput>
-        </None>
-        <None Include="My Project\Settings.settings">
-            <Generator>SettingsSingleFileGenerator</Generator>
-            <CustomToolNamespace>My</CustomToolNamespace>
-            <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Resources\ĐTools.ico" />
-    </ItemGroup>
- 
-    <ItemGroup>
-        <None Include="Globalization\ISOLanguages.xsd">
-            <SubType>
-            </SubType>
-        </None>
-        <None Include="Globalization\ISOLanguages.xsx">
-            <DependentUpon>ISOLanguages.xsd</DependentUpon>
-        </None>
-    </ItemGroup>
-   
-    <ItemGroup>
-        <None Include="Globalization\ISOLanguages.xml">
-            <Generator>TransformCodeGenerator</Generator>
-            <LastGenOutput>ISOLanguages.vb</LastGenOutput>
-            <CustomToolNamespace>GlobalizationT</CustomToolNamespace>
-        </None>
-    </ItemGroup>
-    
-    <ItemGroup>
-        <None Include="..\SharedFiles\Tools.snk">
-            <Link>Tools.snk</Link>
-        </None>
-        <EmbeddedResource Include="CodeDom\CodeDom.xsd">
-            <LogicalName>Tools.CodeDomT.CodeDom.xsd</LogicalName>
-            <Generator>TransformCodeGenerator</Generator>
-            <CustomToolNamespace>CodeDomT</CustomToolNamespace>
-            <LastGenOutput>CodeDom.vb</LastGenOutput>
-            <DependentUpon>Xml2CodeDom.vb</DependentUpon>
-        </EmbeddedResource>
-        <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
-            <DependentUpon>SpecializedWrappers.xml</DependentUpon>
-        </None>
-        <None Include="Globalization\ISOLanguages.xslt" />
-        <Content Include="CodeDom\AddDoc.xslt">
-            <DependentUpon>CodeDom.xsd</DependentUpon>
-        </Content>
-        <Content Include="CodeDom\XmlNames.xslt">
-            <DependentUpon>CodeDom.xsd</DependentUpon>
-        </Content>
-        <Content Include="Collections\Specialized\SpecializedWrappers.xml">
-            <Generator>TransformCodeGenerator</Generator>
-            <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
-            <CustomToolNamespace>CollectionsT.SpecializedT</CustomToolNamespace>
-        </Content>
-        <Content Include="Collections\Specialized\SpecializedWrappers.xslt">
-            <DependentUpon>SpecializedWrappers.xml</DependentUpon>
-        </Content>
-        <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
-        <None Include="Reflection\MemberNumbers.xls" />
-        <None Include="Resources\DeleteHS.png" />
-        <None Include="Resources\RepeatHS.png" />
-        <None Include="Resources\NewReportHS.png" />
-        <None Include="Resources\+.png" />
-        <None Include="Reflection\Resources\Assembly.png" />
-        <None Include="Reflection\Resources\Class.png" />
-        <None Include="Reflection\Resources\Constant.png" />
-        <None Include="Reflection\Resources\CTor.png" />
-        <None Include="Reflection\Resources\Delegate.png" />
-        <None Include="Reflection\Resources\Enum.png" />
-        <None Include="Reflection\Resources\EnumItem.png" />
-        <None Include="Reflection\Resources\Event.png" />
-        <None Include="Reflection\Resources\Exception.png" />
-        <None Include="Reflection\Resources\Field.png" />
-        <None Include="Reflection\Resources\Friend.png" />
-        <None Include="Reflection\Resources\Getter.png" />
-        <None Include="Reflection\Resources\Interface.png" />
-        <None Include="Reflection\Resources\Library.png" />
-        <None Include="Reflection\Resources\Macro.png" />
-        <None Include="Reflection\Resources\Map.png" />
-        <None Include="Reflection\Resources\MapItem.png" />
-        <None Include="Reflection\Resources\Method.png" />
-        <None Include="Reflection\Resources\MethodOverload.png" />
-        <None Include="Reflection\Resources\Module.png" />
-        <None Include="Reflection\Resources\Namespace.png" />
-        <None Include="Reflection\Resources\NotInheritable.png" />
-        <None Include="Reflection\Resources\Object.png" />
-        <None Include="Reflection\Resources\Operator.png" />
-        <None Include="Reflection\Resources\Private.png" />
-        <None Include="Reflection\Resources\Property.png" />
-        <None Include="Reflection\Resources\Protected.png" />
-        <None Include="Reflection\Resources\Resource.png" />
-        <None Include="Reflection\Resources\Resources.png" />
-        <None Include="Reflection\Resources\Setter.png" />
-        <None Include="Reflection\Resources\Shortcut.png" />
-        <None Include="Reflection\Resources\StandardModule.png" />
-        <None Include="Reflection\Resources\Static.png" />
-        <None Include="Reflection\Resources\Structure.png" />
-        <None Include="Reflection\Resources\Template.png" />
-        <None Include="Reflection\Resources\Type.png" />
-        <None Include="Reflection\Resources\TypeDef.png" />
-        <None Include="Reflection\Resources\Union.png" />
-        <None Include="Reflection\Resources\ValueType.png" />
-        <Content Include="Reflection\Resources\Attribute.png" />
-        <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
-            <DependentUpon>ISO2022.vb</DependentUpon>
-            <LogicalName>Tools.TextT.EncodingT.ISO2022.xml</LogicalName>
-        </EmbeddedResource>
-        <None Include="Resources\Paste.png" />
-        <None Include="Resources\Cut.png" />
-        <None Include="Resources\Copy.png" />
-        <None Include="Resources\Play.png" />
-        <None Include="Reflection\Resources\⋀.png" />
-        <None Include="Reflection\Resources\⋁.png" />
-        <None Include="Reflection\Resources\Error.png" />
-        <None Include="Reflection\Resources\GenericClass.png" />
-        <None Include="Reflection\Resources\GenericInstance.png" />
-        <None Include="Reflection\Resources\GenericInstanceClass.png" />
-        <None Include="Reflection\Resources\GenericInstanceMethod.png" />
-        <None Include="Reflection\Resources\GenericInstanceStructure.png" />
-        <None Include="Reflection\Resources\GenericMethod.png" />
-        <None Include="Reflection\Resources\GenericParameter.png" />
-        <None Include="Reflection\Resources\GenericStructure.png" />
-        <None Include="Reflection\Resources\Question.png" />
-        <None Include="Reflection\Resources\GenericInstanceInterface.png" />
-        <None Include="Reflection\Resources\GenericInterface.png" />
-        <None Include="Reflection\Resources\Generic.png" />
-        <None Include="Reflection\Resources\Attribute_GenericClosed.png" />
-        <None Include="Reflection\Resources\Attribute_GenericOpen.png" />
-        <None Include="Reflection\Resources\Exception_GenericClosed.png" />
-        <None Include="Reflection\Resources\Exception_GenericOpen.png" />
-        <None Include="Reflection\Resources\Delegate_GenericClosed.png" />
-        <None Include="Reflection\Resources\Delegate_GenericOpen.png" />
-        <None Include="Reflection\Resources\empty.png" />
-        <None Include="Reflection\Resources\Extension.png" />
-        <None Include="Reflection\Resources\BackwardReference.png" />
-        <None Include="Reflection\Resources\ForwardReference.png" />
-        <None Include="Resources\CommentHS.png" />
-       
-        
-        <EmbeddedResource Include="My Project\Resources.cs.resx">
-            <DependentUpon>Resources.resx</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Reflection\ObjectImages.resx">
-            <CustomToolNamespace>ReflectionT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>ReflectionT.ObjectImages.Designer.vb</LastGenOutput>
-            <SubType>Designer</SubType>
-            <LogicalName>Tools.ReflectionT.ObjectImages.resources</LogicalName>
-        </EmbeddedResource>
-        <None Include="Resources\NavBack.png" />
-        <None Include="Resources\NavForward.png" />
-       
-        <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.cs.resx">
-            <DependentUpon>Exceptions.resx</DependentUpon>
-            <SubType>Designer</SubType>
-            <Visible>True</Visible>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
-            <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
-            <SubType>Designer</SubType>
-            <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
-        </EmbeddedResource>
-       
-        
-        <None Include="Resources\saveHS.png" />
-        <None Include="Resources\openHS.png" />
-        <None Include="Resources\T.png" />
-        
-        <None Include="Resources\Zip.png" />
-        <EmbeddedResource Include="Text\Encoding\ISO2022.xsd">
-            <DependentUpon>ISO2022.vb</DependentUpon>
-            <LogicalName>Tools.TextT.EncodingT.ISO2022Schema.xsd</LogicalName>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-    </ItemGroup>
-    <ItemGroup>
-        <Folder Include="Drawing\DrawingIO\" />
-        <Folder Include="Drawing\Metadata\XMP\" />
-        <Folder Include="XML Schemas\" />
-    </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{FCF346AC-D1C3-42DB-9026-9144240FB766}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tools</RootNamespace>
+    <AssemblyName>Tools</AssemblyName>
+    <MyType>Windows</MyType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Nightly>1</Nightly>
+    <Alpha>2</Alpha>
+    <Beta>3</Beta>
+    <RC>4</RC>
+    <Release>5</Release>
+    <Config>1</Config>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionInfer>On</OptionInfer>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Nightly\</OutputPath>
+    <DocumentationFile>Tools.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
+    <Config>1</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DocumentationFile>Tools.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
+    <Config>5</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Alpha\</OutputPath>
+    <DocumentationFile>Tools.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 3.5</DefineConstants>
+    <Config>2</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Beta\</OutputPath>
+    <DocumentationFile>Tools.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 3.5</DefineConstants>
+    <Config>3</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\RC\</OutputPath>
+    <DocumentationFile>Tools.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 3.5</DefineConstants>
+    <Config>4</Config>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="Tools.CollectionsT.GenericT" />
+    <Import Include="Tools.CollectionsT.SpecializedT" />
+    <Import Include="Tools.InternalT" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
+    <Compile Include="CodeDom\CodeDom.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CodeDom.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="CodeDom\Xml2CodeDom.vb" />
+    <Compile Include="Collections\Generic\CollectionTools.vb" />
+    <Compile Include="Collections\Generic\DictionaryWithEvents.vb" />
+    <Compile Include="Collections\Generic\FilteredEnumerator.vb" />
+    <Compile Include="Collections\Generic\IBiDirEnumerator.vb" />
+    <Compile Include="Collections\Generic\IIndexable.vb" />
+    <Compile Include="Collections\Specialized\SpecializedWrapper.vb" />
+    <Compile Include="Collections\Generic\TypedArrayEnumerator.vb" />
+    <Compile Include="Collections\Generic\UnionEnumerator.vb" />
+    <Compile Include="Collections\Generic\Wrapper.vb" />
+    <Compile Include="Collections\Generic\HashTable.vb" />
+    <Compile Include="Collections\Generic\IReadOnlyList.vb" />
+    <Compile Include="Collections\Generic\ListWithEvents.vb" />
+    <Compile Include="Collections\Generic\ReadOnlyListAdapter.vb" />
+    <Compile Include="Collections\Specialized\CollectionTools.vb" />
+    <Compile Include="Collections\Specialized\SpecializedWrappers.vb">
+      <DependentUpon>SpecializedWrappers.xml</DependentUpon>
+      <SubType>Code</SubType>
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+    </Compile>
+    <Compile Include="Collections\Type-unsafe\CollectionTools.vb" />
+    <Compile Include="ComponentModel\CancelMessageEventArgs.vb" />
+    <Compile Include="ComponentModel\CustomTypeDescriptorBase.vb" />
+    <Compile Include="ComponentModel\EnumItemDisplayNameAttribute.vb" />
+    <Compile Include="ComponentModel\ExceptionEventArgs.vb" />
+    <Compile Include="ComponentModel\KnownCategoryAttribute.vb" />
+    <Compile Include="ComponentModel\Localizable attrs.vb" />
+    <Compile Include="ComponentModel\ReadOnlyObject.vb" />
+    <Compile Include="ComponentModel\RestrictAttribute.vb" />
+    <Compile Include="ComponentModel\SettingsAttributes.vb" />
+    <Compile Include="ComponentModel\SuppresHandledEventArgs.vb" />
+    <Compile Include="ComponentModel\TypeConverter.vb" />
+    <Compile Include="ComponentModel\ValuesFromRangeAreValidAttribute.vb" />
+    <Compile Include="DataStructures\Generic\Graph.vb" />
+    <Compile Include="DataStructures\Generic\Pair.vb" />
+    <Compile Include="DataStructures\Generic\T1OrT2.vb" />
+    <Compile Include="DataStructures\Generic\Tree.vb" />
+    <Compile Include="Data\Metadata\MetadataConnection.vb">
+    </Compile>
+    <Compile Include="Drawing\Design\EmbededFileEditor.vb" />
+    <Compile Include="Drawing\Design\NewEditor.vb" />
+    <Compile Include="Drawing\Design\UITypeEditor.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Drawing\IconOrBitmap.vb" />
+    <Compile Include="Extensions\DelegateExtensions.vb" />
+    <Compile Include="IO\BinaryWriter.vb" />
+    <Compile Include="IO\OverflowStream.vb" />
+    <Compile Include="IO\SyncFSWatcher.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="IO\UnionReadOnlyStream.vb" />
+    <Compile Include="misc.vb" />
+    <Compile Include="Reflection\VisualBasicSignatureProvider.vb" />
+    <Compile Include="Tests\AttributeTest.vb" />
+    <Compile Include="Windows\Forms\Utilities\CategoryAttributeValues .vb" />
+    <Compile Include="Xml\Linq\Extensions.vb" />
+    <Compile Include="Media\Sound.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Drawing\ImageTools.vb" />
+    <Compile Include="Drawing\SystemColorsExtension.vb" />
+    <Compile Include="Extensions\Char.vb" />
+    <Compile Include="Extensions\General.vb" />
+    <Compile Include="Extensions\String.vb" />
+    <Compile Include="Extensions\TypeCode.vb" />
+    <Compile Include="Globalization\ISOLanguage.vb" />
+    <Compile Include="Globalization\ISOLanguages.vb">
+      <DependentUpon>ISOLanguages.xml</DependentUpon>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <Compile Include="Internal\Attributes.vb" />
+    <Compile Include="IO\BinaryReader.vb" />
+    <Compile Include="IO\ConstrainedReadOnlyStream.vb" />
+    <Compile Include="IO\FileSystemEnumerator.vb" />
+    <Compile Include="IO\Path.vb" />
+    <Compile Include="IO\StreamTools.vb" />
+    <Compile Include="Linq\EnumerableT.vb" />
+    <Compile Include="Linq\Misc.vb" />
+    <Compile Include="Linq\Specialized.vb" />
+    <Compile Include="Math\LCM GCD.vb" />
+    <Compile Include="Math\Min-Max.vb" />
+    <Compile Include="Math\LE-BE.vb" />
+    <Compile Include="Math\Number.vb" />
+    <Compile Include="misc\CharT.vb" />
+    <Compile Include="misc\Delegates.vb" />
+    <Compile Include="misc\ICloneable%28of T%29.vb" />
+    <Compile Include="misc\IReportsChange.vb" />
+    <Compile Include="misc\Box.vb" />
+    <Compile Include="misc\misc.vb" />
+    <Compile Include="Extensions\Numbers.vb" />
+    <Compile Include="misc\TimeSpanFormattable.vb" />
+    <Compile Include="misc\TriBool.vb" />
+    <Compile Include="misc\TypeMismatchException.vb" />
+    <Compile Include="misc\TypeTools.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Reflection\CodeImages.vb" />
+    <Compile Include="Reflection\ReflectionT.ObjectImages.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ObjectImages.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Reflection\ReflectionTools.vb" />
+    <Compile Include="Reflection\ISignatureProvider.vb" />
+    <Compile Include="Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\resx %28Friend%29\Helpers.vb" />
+    <Compile Include="Resources\Tools\Resources.vb" />
+    <Compile Include="Resources\Tools\SystemResources.vb" />
+    <Compile Include="Text\Encoding\ISO2022.vb" Condition="$(Config)&lt;=$(Nightly)" />
+    <Compile Include="Text\TextExtensions.vb" />
+    <Compile Include="VBSpecific\Interaction.vb" />
+    <Compile Include="ComponentModel\ObjectStringConverter.vb" />
+    <Compile Include="Xml\XPath\XPathObjectNavigator.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ĐTools.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Globalization\ISOLanguages.xsd">
+      <SubType>
+      </SubType>
+    </None>
+    <None Include="Globalization\ISOLanguages.xsx">
+      <DependentUpon>ISOLanguages.xsd</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Globalization\ISOLanguages.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>ISOLanguages.vb</LastGenOutput>
+      <CustomToolNamespace>GlobalizationT</CustomToolNamespace>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
+    <EmbeddedResource Include="CodeDom\CodeDom.xsd">
+      <LogicalName>Tools.CodeDomT.CodeDom.xsd</LogicalName>
+      <Generator>TransformCodeGenerator</Generator>
+      <CustomToolNamespace>CodeDomT</CustomToolNamespace>
+      <LastGenOutput>CodeDom.vb</LastGenOutput>
+      <DependentUpon>Xml2CodeDom.vb</DependentUpon>
+    </EmbeddedResource>
+    <None Include="Collections\Specialized\SpecializedWrapperDefinition.xsd">
+      <DependentUpon>SpecializedWrappers.xml</DependentUpon>
+    </None>
+    <None Include="Globalization\ISOLanguages.xslt" />
+    <Content Include="CodeDom\AddDoc.xslt">
+      <DependentUpon>CodeDom.xsd</DependentUpon>
+    </Content>
+    <Content Include="CodeDom\XmlNames.xslt">
+      <DependentUpon>CodeDom.xsd</DependentUpon>
+    </Content>
+    <Content Include="Collections\Specialized\SpecializedWrappers.xml">
+      <Generator>TransformCodeGenerator</Generator>
+      <LastGenOutput>SpecializedWrappers.vb</LastGenOutput>
+      <CustomToolNamespace>CollectionsT.SpecializedT</CustomToolNamespace>
+    </Content>
+    <Content Include="Collections\Specialized\SpecializedWrappers.xslt">
+      <DependentUpon>SpecializedWrappers.xml</DependentUpon>
+    </Content>
+    <Content Include="Data\Metadata\MetaData Query language proposal.xml" />
+    <None Include="Reflection\MemberNumbers.xls" />
+    <None Include="Reflection\Resources\Assembly.png" />
+    <None Include="Reflection\Resources\Class.png" />
+    <None Include="Reflection\Resources\Constant.png" />
+    <None Include="Reflection\Resources\CTor.png" />
+    <None Include="Reflection\Resources\Delegate.png" />
+    <None Include="Reflection\Resources\Enum.png" />
+    <None Include="Reflection\Resources\EnumItem.png" />
+    <None Include="Reflection\Resources\Event.png" />
+    <None Include="Reflection\Resources\Exception.png" />
+    <None Include="Reflection\Resources\Field.png" />
+    <None Include="Reflection\Resources\Friend.png" />
+    <None Include="Reflection\Resources\Getter.png" />
+    <None Include="Reflection\Resources\Interface.png" />
+    <None Include="Reflection\Resources\Library.png" />
+    <None Include="Reflection\Resources\Macro.png" />
+    <None Include="Reflection\Resources\Map.png" />
+    <None Include="Reflection\Resources\MapItem.png" />
+    <None Include="Reflection\Resources\Method.png" />
+    <None Include="Reflection\Resources\MethodOverload.png" />
+    <None Include="Reflection\Resources\Module.png" />
+    <None Include="Reflection\Resources\Namespace.png" />
+    <None Include="Reflection\Resources\NotInheritable.png" />
+    <None Include="Reflection\Resources\Object.png" />
+    <None Include="Reflection\Resources\Operator.png" />
+    <None Include="Reflection\Resources\Private.png" />
+    <None Include="Reflection\Resources\Property.png" />
+    <None Include="Reflection\Resources\Protected.png" />
+    <None Include="Reflection\Resources\Resource.png" />
+    <None Include="Reflection\Resources\Resources.png" />
+    <None Include="Reflection\Resources\Setter.png" />
+    <None Include="Reflection\Resources\Shortcut.png" />
+    <None Include="Reflection\Resources\StandardModule.png" />
+    <None Include="Reflection\Resources\Static.png" />
+    <None Include="Reflection\Resources\Structure.png" />
+    <None Include="Reflection\Resources\Template.png" />
+    <None Include="Reflection\Resources\Type.png" />
+    <None Include="Reflection\Resources\TypeDef.png" />
+    <None Include="Reflection\Resources\Union.png" />
+    <None Include="Reflection\Resources\ValueType.png" />
+    <Content Include="Reflection\Resources\Attribute.png" />
+    <None Include="Resources\Images\play.png" />
+    <EmbeddedResource Include="Text\Encoding\ISO2022.xml">
+      <DependentUpon>ISO2022.vb</DependentUpon>
+      <LogicalName>Tools.TextT.EncodingT.ISO2022.xml</LogicalName>
+    </EmbeddedResource>
+    <None Include="Reflection\Resources\⋀.png" />
+    <None Include="Reflection\Resources\⋁.png" />
+    <None Include="Reflection\Resources\Error.png" />
+    <None Include="Reflection\Resources\GenericClass.png" />
+    <None Include="Reflection\Resources\GenericInstance.png" />
+    <None Include="Reflection\Resources\GenericInstanceClass.png" />
+    <None Include="Reflection\Resources\GenericInstanceMethod.png" />
+    <None Include="Reflection\Resources\GenericInstanceStructure.png" />
+    <None Include="Reflection\Resources\GenericMethod.png" />
+    <None Include="Reflection\Resources\GenericParameter.png" />
+    <None Include="Reflection\Resources\GenericStructure.png" />
+    <None Include="Reflection\Resources\Question.png" />
+    <None Include="Reflection\Resources\GenericInstanceInterface.png" />
+    <None Include="Reflection\Resources\GenericInterface.png" />
+    <None Include="Reflection\Resources\Generic.png" />
+    <None Include="Reflection\Resources\Attribute_GenericClosed.png" />
+    <None Include="Reflection\Resources\Attribute_GenericOpen.png" />
+    <None Include="Reflection\Resources\Exception_GenericClosed.png" />
+    <None Include="Reflection\Resources\Exception_GenericOpen.png" />
+    <None Include="Reflection\Resources\Delegate_GenericClosed.png" />
+    <None Include="Reflection\Resources\Delegate_GenericOpen.png" />
+    <None Include="Reflection\Resources\empty.png" />
+    <None Include="Reflection\Resources\Extension.png" />
+    <None Include="Reflection\Resources\BackwardReference.png" />
+    <None Include="Reflection\Resources\ForwardReference.png" />
+    <EmbeddedResource Include="My Project\Resources.cs.resx">
+      <DependentUpon>Resources.resx</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Reflection\ObjectImages.resx">
+      <CustomToolNamespace>ReflectionT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>ReflectionT.ObjectImages.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+      <LogicalName>Tools.ReflectionT.ObjectImages.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.cs.resx">
+      <DependentUpon>Exceptions.resx</DependentUpon>
+      <SubType>Designer</SubType>
+      <Visible>True</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Exceptions.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Text\Encoding\ISO2022.xsd">
+      <DependentUpon>ISO2022.vb</DependentUpon>
+      <LogicalName>Tools.TextT.EncodingT.ISO2022Schema.xsd</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
+      <DependentUpon>Components.resx</DependentUpon>
+      <SubType>Designer</SubType>
+      <Visible>True</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Components.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Components.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Drawing\DrawingIO\" />
+    <Folder Include="Drawing\Metadata\XMP\" />
+    <Folder Include="XML Schemas\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
-    <PropertyGroup>
-        <PostBuildEvent>
+  <PropertyGroup>
+    <PostBuildEvent>
             "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
             REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
             "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
         </PostBuildEvent>
-        <PreBuildEvent>
-        </PreBuildEvent>
-    </PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

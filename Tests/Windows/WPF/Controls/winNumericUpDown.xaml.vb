@@ -2,7 +2,7 @@
 
 
 Namespace WindowsT.WPF.ControlsT
-    ''' <summary>Tests for <see cref="Tools.WindowsT.WPF.ControlsT.NumericUpDown"/></summary>         
+    '''' <summary>Tests for <see cref="Tools.WindowsT.WPF.ControlsT.NumericUpDown"/></summary>         
     Partial Public Class winNumericUpdown
         ''' <summary>Shows properties of tested <see cref="Tools.WindowsT.WPF.ControlsT.NumericUpDown"/></summary>
         Private WithEvents prgProperties As PropertyGrid

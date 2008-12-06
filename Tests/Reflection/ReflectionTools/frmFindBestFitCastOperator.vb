@@ -17,7 +17,7 @@ Namespace ReflectionT
             Me.Icon = Tools.ResourcesT.ToolsIcon
             Dim MyAsm = GetType(frmFindBestFitCastOperator).Assembly
             For Each assembly In MyAsm.GetReferencedAssemblies
-                obBrowser.Objects.Add(assembly)
+                obBrowser.Objects.Add(Reflection.Assembly.Load(assembly))
             Next
         End Sub
 
@@ -53,7 +53,7 @@ Namespace ReflectionT
                 If TFrom Is Nothing Then TFrom = Type.GetType(txtFrom.Text)
                 If TTo Is Nothing Then TTo = Type.GetType(txtTo.Text)
                 Dim op = FindBestFitCastOperator(TFrom, TTo)
-                obBrowser.SelectedItem = op
+                If op Is Nothing Then MBox.Show("Not found") Else obBrowser.SelectedItem = op
             Catch ex As Exception
                 MBox.Error_X(ex)
             End Try

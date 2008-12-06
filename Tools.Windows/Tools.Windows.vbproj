@@ -1,536 +1,570 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="3.5">
-    <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-        <ProductVersion>9.0.30729</ProductVersion>
-        <SchemaVersion>2.0</SchemaVersion>
-        <ProjectGuid>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</ProjectGuid>
-        <OutputType>Library</OutputType>
-        <RootNamespace>Tools</RootNamespace>
-        <AssemblyName>Tools.Windows</AssemblyName>
-        <MyType>Windows</MyType>
-        <SccProjectName>SAK</SccProjectName>
-        <SccLocalPath>SAK</SccLocalPath>
-        <SccAuxPath>SAK</SccAuxPath>
-        <SccProvider>SAK</SccProvider>
-        <Nightly>1</Nightly>
-        <Alpha>2</Alpha>
-        <Beta>3</Beta>
-        <RC>4</RC>
-        <Release>5</Release>
-        <Config>1</Config>
-        <FileUpgradeFlags>
-        </FileUpgradeFlags>
-        <OldToolsVersion>2.0</OldToolsVersion>
-        <UpgradeBackupLocation>
-        </UpgradeBackupLocation>
-        <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
-        <OptionInfer>On</OptionInfer>
-        <SignAssembly>true</SignAssembly>
-        <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Nightly\</OutputPath>
-        <DocumentationFile>Tools.Windows.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
-        <Config>1</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <DefineDebug>false</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <Optimize>true</Optimize>
-        <OutputPath>..\bin\Release\</OutputPath>
-        <DocumentationFile>Tools.Windows.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
-        <Config>5</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Alpha\</OutputPath>
-        <DocumentationFile>Tools.Windows.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 3.5</DefineConstants>
-        <Config>2</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\Beta\</OutputPath>
-        <DocumentationFile>Tools.Windows.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 3.5</DefineConstants>
-        <Config>3</Config>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DefineDebug>true</DefineDebug>
-        <DefineTrace>true</DefineTrace>
-        <OutputPath>..\bin\RC\</OutputPath>
-        <DocumentationFile>Tools.Windows.xml</DocumentationFile>
-        <NoWarn>41999,42016</NoWarn>
-        <DebugType>full</DebugType>
-        <PlatformTarget>AnyCPU</PlatformTarget>
-        <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 3.5</DefineConstants>
-        <Config>4</Config>
-    </PropertyGroup>
-    <ItemGroup>
-        <Reference Include="Accessibility" />
-        <Reference Include="PresentationCore">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="PresentationFramework">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="System" />
-        <Reference Include="System.Configuration" />
-        <Reference Include="System.Core">
-            <RequiredTargetFramework>3.5</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="System.Data" />
-        <Reference Include="System.Data.OracleClient" />
-        <Reference Include="System.Deployment" />
-        <Reference Include="System.Design" />
-        <Reference Include="System.Drawing" />
-        <Reference Include="System.Drawing.Design" />
-        <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
-        <Reference Include="System.Security" />
-        <Reference Include="System.ServiceProcess" />
-        <Reference Include="System.Web" />
-        <Reference Include="System.Web.RegularExpressions" />
-        <Reference Include="System.Windows.Forms" />
-        <Reference Include="System.Xml" />
-        <Reference Include="System.Xml.Linq">
-            <RequiredTargetFramework>3.5</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="UIAutomationProvider">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="UIAutomationTypes">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsBase">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-        <Reference Include="WindowsFormsIntegration">
-            <RequiredTargetFramework>3.0</RequiredTargetFramework>
-        </Reference>
-    </ItemGroup>
-    <ItemGroup>
-        <Import Include="Microsoft.VisualBasic" />
-        <Import Include="System" />
-        <Import Include="System.Collections" />
-        <Import Include="System.Collections.Generic" />
-        <Import Include="System.ComponentModel" />
-        <Import Include="System.Diagnostics" />
-        <Import Include="Tools.CollectionsT.GenericT" />
-        <Import Include="Tools.CollectionsT.SpecializedT" />
-        <Import Include="Tools.InternalT" />
-    </ItemGroup>
-    <ItemGroup>
-        <Compile Include="..\SharedFiles\AssemblyStage.vb">
-            <Link>AssemblyStage.vb</Link>
-        </Compile>
-        <Compile Include="..\SharedFiles\Version.vb">
-            <Link>Version.vb</Link>
-        </Compile>
-        <Compile Include="Extensions\FormsCollectionsExtensions.vb" />
-        <Compile Include="ComponentModel\PrefixAttribute.vb" />
-        <Compile Include="My Project\AssemblyInfo.vb" />
-        <Compile Include="My Project\Application.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Application.myapp</DependentUpon>
-        </Compile>
-        <Compile Include="My Project\Settings.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DependentUpon>Settings.settings</DependentUpon>
-            <DesignTimeSharedInput>True</DesignTimeSharedInput>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
-            <DependentUpon>HTMLDialog.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\HTMLDialog.vb">
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
-            <DependentUpon>ProgressMonitor.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb" Condition="$(Config)&lt;=$(Nightly)">
-            <!--Set stage here, because it uses resources and using #If produces warnings-->
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\VisualStyles\VisualStyleObject.vb" />
-        <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
-            <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
-            <!--Set stage here, because it uses resources and using #If produces warnings-->
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Interop\InteropExtensions.vb" />
-        <Compile Include="Windows\WPF\AssemblyInfo.vb" />
-        <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
-        <Compile Include="Windows\WPF\Converters\Converters.vb" />
-        <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
-        <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
-            <DependentUpon>ObjectBrowser.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb" Condition="$(Config)&lt;=$(Nightly)">
-            <!--Set stage here, because it uses resources and using #If produces warnings-->
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
-            <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
-            <!--Set stage here, because it uses resources and using #If produces warnings-->
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.Designer.vb">
-            <DependentUpon>KeyWordsEditor.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.Designer.vb">
-            <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.vb" Condition="$(Config)&lt;=$(Alpha)">
-            <!--Set stage here, because it uses resources and using #If produces warnings-->
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb" Condition="$(Config)&lt;=$(Alpha)">
-            <!--Set stage here, because it uses resources and using #If produces warnings-->
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\StatusMarker.Designer.vb">
-            <DependentUpon>StatusMarker.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" Condition="$(Config)&lt;=$(Nightly)">
-            <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripComboBox.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripLabel.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
-            <!--Set stage of here, because it uses resources and using #If produces warnings-->
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
-            <!--Set stage of here, because it uses resources and using #If produces warnings-->
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
-            <!--Set stage of here, because it uses resources and using #If produces warnings-->
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\ProgressBarWithText.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\TransparentLabel.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\TransparentTextBox.vb">
-            <SubType>Component</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\AboutDialog.Designer.vb">
-            <DependentUpon>AboutDialog.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\AboutDialog.vb">
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\MessageBox WF.Designer.vb">
-            <DependentUpon>MessageBox WF.vb</DependentUpon>
-        </Compile>
-        <Compile Include="Windows\Forms\Dialogs\MessageBox WF.vb" Condition="$(Config)&lt;=$(Nightly)">
-            <!--Set stage of here, because it uses resources and using #If produces warnings-->
-            <SubType>Form</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Derived controls\UserControlExtended.vb">
-            <SubType>UserControl</SubType>
-        </Compile>
-        <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
-        <Compile Include="Windows\Forms\Utilities\misc.vb" />
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.cs.resx">
-            <DependentUpon>LinkLabel.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.resx">
-            <DependentUpon>LinkLabel.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="My Project\Application.myapp">
-            <Generator>MyApplicationCodeGenerator</Generator>
-            <LastGenOutput>Application.Designer.vb</LastGenOutput>
-        </None>
-        <None Include="My Project\Settings.settings">
-            <Generator>SettingsSingleFileGenerator</Generator>
-            <CustomToolNamespace>My</CustomToolNamespace>
-            <LastGenOutput>Settings.Designer.vb</LastGenOutput>
-        </None>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>EncodingDialog.vb</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.cs.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>EncodingSelector.vb</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>EncodingSelector.vb</DependentUpon>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\TextBoxWithStatus.resx">
-            <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>KeyWordsEditor.vb</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.cs.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>StatusMarker.vb</DependentUpon>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.resx">
-            <SubType>Designer</SubType>
-            <DependentUpon>StatusMarker.vb</DependentUpon>
-        </EmbeddedResource>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="..\SharedFiles\Tools.snk">
-            <Link>Tools.snk</Link>
-        </None>
-        <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="0==1">
-            <Link>Resources\Exceptions.resx</Link>
-            <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
-            <DependentUpon>KeyWordsEditor.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.cs.resx">
-            <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.cs.resx">
-            <DependentUpon>ObjectBrowser.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
-            <DependentUpon>ObjectBrowser.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.cs.resx">
-            <DependentUpon>AboutDialog.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
-            <DependentUpon>AboutDialog.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.cs.resx">
-            <DependentUpon>EncodingDialog.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\HTMLDialog.resx">
-            <DependentUpon>HTMLDialog.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBox WF.resx">
-            <DependentUpon>MessageBox WF.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.cs.resx">
-            <DependentUpon>ProgressMonitor.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.resx">
-            <DependentUpon>ProgressMonitor.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
-            <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.resx">
-            <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
-    </ItemGroup>
-    <ItemGroup>
-        <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
-    </ItemGroup>
-    <ItemGroup>
-        <Page Include="Themes\Generic.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-        <Page Include="Windows\WPF\Controls\NumericUpDown.xaml">
-            <Generator>MSBuild:Compile</Generator>
-            <SubType>Designer</SubType>
-        </Page>
-    </ItemGroup>
-    <ItemGroup>
-        <ProjectReference Include="..\Tools\Tools.vbproj">
-            <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
-            <Name>Tools</Name>
-        </ProjectReference>
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Resources\ReadMe.txt" />
-    </ItemGroup>
-    <ItemGroup>
-        <None Include="Resources\Icons\Asterisk.ico" />
-        <None Include="Resources\Icons\Error.ico" />
-        <None Include="Resources\Icons\Exclamation.ico" />
-        <None Include="Resources\Icons\Hand.ico" />
-        <None Include="Resources\Icons\Information.ico" />
-        <None Include="Resources\Icons\OK.ico" />
-        <None Include="Resources\Icons\Question.ico" />
-        <None Include="Resources\Icons\SecurityError.ico" />
-        <None Include="Resources\Icons\SecurityInformation.ico" />
-        <None Include="Resources\Icons\SecurityOK.ico" />
-        <None Include="Resources\Icons\SecurityQuestion.ico" />
-        <None Include="Resources\Icons\SecurityWarning.ico" />
-        <None Include="Resources\Icons\Stop.ico" />
-        <None Include="Resources\Icons\Warning.ico" /> 
-        <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.ProgressBarWithText.bmp" />
-                         <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.Encoding.bmp" />
-        <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentLabel.bmp" />
-        <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.DataBoundToolStripComboBox.bmp" />
-        <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.DataBoundToolStripLabel.bmp" />
- <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.MessageBox.bmp" />
- <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.StatusMarker.bmp" />
-        <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentTextBox.bmp" />
-       <EmbeddedResource Include="Resources\Tools\Icons.resx">
-            <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-            <Generator>ResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>ResourcesT.Icons.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.ResourcesT.Icons.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>  
-         <Compile Include="Resources\Tools\ResourcesT.Icons.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Icons.resx</DependentUpon>
-        </Compile>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>9.0.30729</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tools</RootNamespace>
+    <AssemblyName>Tools.Windows</AssemblyName>
+    <MyType>Windows</MyType>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
+    <Nightly>1</Nightly>
+    <Alpha>2</Alpha>
+    <Beta>3</Beta>
+    <RC>4</RC>
+    <Release>5</Release>
+    <Config>1</Config>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>2.0</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <OptionInfer>On</OptionInfer>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Nightly|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Nightly\</OutputPath>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Nightly, Framework = 3.5</DefineConstants>
+    <Config>1</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <DefineDebug>false</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <Optimize>true</Optimize>
+    <OutputPath>..\bin\Release\</OutputPath>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Release, Framework = 3.5</DefineConstants>
+    <Config>5</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Alpha|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Alpha\</OutputPath>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Alpha, Framework = 3.5</DefineConstants>
+    <Config>2</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Beta|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\Beta\</OutputPath>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=Beta, Framework = 3.5</DefineConstants>
+    <Config>3</Config>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'RC|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DefineDebug>true</DefineDebug>
+    <DefineTrace>true</DefineTrace>
+    <OutputPath>..\bin\RC\</OutputPath>
+    <DocumentationFile>Tools.Windows.xml</DocumentationFile>
+    <NoWarn>41999,42016</NoWarn>
+    <DebugType>full</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DefineConstants>Nightly=1, Alpha=2, Beta=3, RC=4, Release=5, Config=RC, Framework = 3.5</DefineConstants>
+    <Config>4</Config>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Accessibility" />
+    <Reference Include="PresentationCore">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="PresentationFramework">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Data" />
+    <Reference Include="System.Data.OracleClient" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Design" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Drawing.Design" />
+    <Reference Include="System.Runtime.Serialization.Formatters.Soap" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Web.RegularExpressions" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationProvider">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="UIAutomationTypes">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsBase">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="WindowsFormsIntegration">
+      <RequiredTargetFramework>3.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Import Include="Microsoft.VisualBasic" />
+    <Import Include="System" />
+    <Import Include="System.Collections" />
+    <Import Include="System.Collections.Generic" />
+    <Import Include="System.ComponentModel" />
+    <Import Include="System.Diagnostics" />
+    <Import Include="Tools.CollectionsT.GenericT" />
+    <Import Include="Tools.CollectionsT.SpecializedT" />
+    <Import Include="Tools.InternalT" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\SharedFiles\AssemblyStage.vb">
+      <Link>AssemblyStage.vb</Link>
+    </Compile>
+    <Compile Include="..\SharedFiles\Version.vb">
+      <Link>Version.vb</Link>
+    </Compile>
+    <Compile Include="Extensions\FormsCollectionsExtensions.vb" />
+    <Compile Include="ComponentModel\PrefixAttribute.vb" />
+    <Compile Include="My Project\AssemblyInfo.vb" />
+    <Compile Include="My Project\Application.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Application.myapp</DependentUpon>
+    </Compile>
+    <Compile Include="My Project\Settings.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\HTMLDialog.Designer.vb">
+      <DependentUpon>HTMLDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\HTMLDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.Designer.vb">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\ProgressMonitor.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\VisualStyles\VisualStyleObject.vb" />
+    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.Designer.vb">
+      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Interop\InteropExtensions.vb" />
+    <Compile Include="Windows\WPF\AssemblyInfo.vb" />
+    <Compile Include="Windows\WPF\Controls\NumericUpDown.vb" />
+    <Compile Include="Windows\WPF\Converters\Converters.vb" />
+    <Compile Include="Windows\WPF\Converters\StronlyTypedConverter.vb" />
+    <Compile Include="Windows\Independent\Dialogs\MessageBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.Designer.vb">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\ObjectBrowser.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.Designer.vb">
+      <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\TextBoxWithStatus.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.Designer.vb">
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.Designer.vb">
+      <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.vb" Condition="$(Config)&lt;=$(Alpha)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\KeyWordsEditor.vb" Condition="$(Config)&lt;=$(Alpha)">
+      <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\StatusMarker.Designer.vb">
+      <DependentUpon>StatusMarker.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\StatusMarker.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage of EncodingSelector here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripComboBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\DataBoundToolStripLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\EncodingDialog.vb" Condition="$(Config)&lt;=$(Beta)">
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Composite controls\EncodingSelector.vb" Condition="$(Config)&lt;=$(Beta)">
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\LinkLabel.vb" Condition="$(Config)&lt;=$(Release)">
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\ProgressBarWithText.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\TransparentLabel.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\TransparentTextBox.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\AboutDialog.Designer.vb">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\AboutDialog.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\MessageBox WF.Designer.vb">
+      <DependentUpon>MessageBox WF.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\MessageBox WF.vb" Condition="$(Config)&lt;=$(Nightly)">
+      <!--Set stage of here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Derived controls\UserControlExtended.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Utilities\ListViewItemComparer.vb" />
+    <Compile Include="Windows\Forms\Utilities\misc.vb" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.cs.resx">
+      <DependentUpon>LinkLabel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Derived controls\LinkLabel.resx">
+      <DependentUpon>LinkLabel.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="My Project\Application.myapp">
+      <Generator>MyApplicationCodeGenerator</Generator>
+      <LastGenOutput>Application.Designer.vb</LastGenOutput>
+    </None>
+    <None Include="My Project\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <CustomToolNamespace>My</CustomToolNamespace>
+      <LastGenOutput>Settings.Designer.vb</LastGenOutput>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingDialog.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingSelector.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\EncodingSelector.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>EncodingSelector.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\TextBoxWithStatus.resx">
+      <DependentUpon>TextBoxWithStatus.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.cs.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StatusMarker.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\StatusMarker.resx">
+      <SubType>Designer</SubType>
+      <DependentUpon>StatusMarker.vb</DependentUpon>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\SharedFiles\Tools.snk">
+      <Link>Tools.snk</Link>
+    </None>
+    <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="0==1">
+      <Link>Resources\Exceptions.resx</Link>
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
+      <DependentUpon>KeyWordsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.ThesaurusForm.cs.resx">
+      <DependentUpon>KeyWordsEditor.ThesaurusForm.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.cs.resx">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Composite controls\ObjectBrowser.resx">
+      <DependentUpon>ObjectBrowser.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.cs.resx">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\AboutDialog.resx">
+      <DependentUpon>AboutDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\EncodingDialog.cs.resx">
+      <DependentUpon>EncodingDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\HTMLDialog.resx">
+      <DependentUpon>HTMLDialog.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\MessageBox WF.resx">
+      <DependentUpon>MessageBox WF.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.cs.resx">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\ProgressMonitor.resx">
+      <DependentUpon>ProgressMonitor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.cs.resx">
+      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Independent\Dialogs\MessageBoxOptionsEditor.resx">
+      <DependentUpon>MessageBoxOptionsEditor.vb</DependentUpon>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="XML Schemas\WindowsT.FormsT.KeyWordsEditor.xsd" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Page Include="Themes\Generic.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\WPF\Controls\NumericUpDown.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Tools\Tools.vbproj">
+      <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
+      <Name>Tools</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\ReadMe.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Icons\Asterisk.ico" />
+    <None Include="Resources\Icons\Error.ico" />
+    <None Include="Resources\Icons\Exclamation.ico" />
+    <None Include="Resources\Icons\Hand.ico" />
+    <None Include="Resources\Icons\Information.ico" />
+    <None Include="Resources\Icons\OK.ico" />
+    <None Include="Resources\Icons\Question.ico" />
+    <None Include="Resources\Icons\SecurityError.ico" />
+    <None Include="Resources\Icons\SecurityInformation.ico" />
+    <None Include="Resources\Icons\SecurityOK.ico" />
+    <None Include="Resources\Icons\SecurityQuestion.ico" />
+    <None Include="Resources\Icons\SecurityWarning.ico" />
+    <None Include="Resources\Icons\Stop.ico" />
+    <None Include="Resources\Icons\Warning.ico" />
+    <EmbeddedResource Include="My Project\Resources.resx">
+      <CustomToolNamespace>My.Resources</CustomToolNamespace>
+      <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.ProgressBarWithText.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.Encoding.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentLabel.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.DataBoundToolStripComboBox.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.DataBoundToolStripLabel.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.MessageBox.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.StatusMarker.bmp" />
+    <EmbeddedResource Include="Resources\Embedded\WindowsT.FormsT.TransparentTextBox.bmp" />
+    <EmbeddedResource Include="Resources\Tools\Icons.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>ResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>ResourcesT.Icons.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.Icons.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="My Project\Resources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\Tools\ResourcesT.Icons.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Icons.resx</DependentUpon>
+    </Compile>
     <Compile Include="Resources\resx %28Friend%29\DerivedControls.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>DerivedControls.resx</DependentUpon>
-        </Compile>
-        <Compile Include="Resources\resx %28Friend%29\Dialogs.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Dialogs.resx</DependentUpon>
-        </Compile> 
-              <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>Components.resx</DependentUpon>
-        </Compile>
-           <Compile Include="Resources\resx %28Friend%29\WindowsT.FormsT.CompositeControls.Designer.vb">
-            <AutoGen>True</AutoGen>
-            <DesignTime>True</DesignTime>
-            <DependentUpon>CompositeControls.resx</DependentUpon>
-        </Compile>
-            <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
-            <DependentUpon>DerivedControls.resx</DependentUpon>
-            <SubType>Designer</SubType>
-            <Visible>True</Visible>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
-            <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>DerivedControls.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.WindowsT.FormsT.DerivedControls.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.cs.resx">
-            <DependentUpon>Dialogs.resx</DependentUpon>
-            <SubType>Designer</SubType>
-            <Visible>True</Visible>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.resx">
-            <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>Dialogs.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.WindowsT.FormsT.Dialogs.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-             <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
-            <DependentUpon>Components.resx</DependentUpon>
-            <SubType>Designer</SubType>
-            <Visible>True</Visible>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\Components.resx">
-            <CustomToolNamespace>ResourcesT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>Components.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-        <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.cs.resx">
-            <DependentUpon>CompositeControls.resx</DependentUpon>
-            <SubType>Designer</SubType>
-            <Visible>True</Visible>
-        </EmbeddedResource>
-        
-           <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.resx">
-            <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
-            <Generator>InternalResXFileCodeGeneratorEx</Generator>
-            <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
-            <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
-            <SubType>Designer</SubType>
-        </EmbeddedResource>
-    </ItemGroup>
-    <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
-    <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DerivedControls.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\resx %28Friend%29\Dialogs.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Dialogs.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Resources\resx %28Friend%29\WindowsT.FormsT.CompositeControls.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CompositeControls.resx</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
+      <DependentUpon>DerivedControls.resx</DependentUpon>
+      <SubType>Designer</SubType>
+      <Visible>True</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.resx">
+      <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>DerivedControls.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.DerivedControls.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.cs.resx">
+      <DependentUpon>Dialogs.resx</DependentUpon>
+      <SubType>Designer</SubType>
+      <Visible>True</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\Dialogs.resx">
+      <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Dialogs.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.Dialogs.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.cs.resx">
+      <DependentUpon>CompositeControls.resx</DependentUpon>
+      <SubType>Designer</SubType>
+      <Visible>True</Visible>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CompositeControls.resx">
+      <CustomToolNamespace>WindowsT.FormsT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\+.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Zip.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\CommentHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Copy.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Cut.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\DeleteHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\NavBack.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\NavForward.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\NewReportHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\openHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\Paste.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\RepeatHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\saveHS.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Images\T.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
   <Target Name="AfterBuild">
   </Target>
   -->
-    <PropertyGroup>
-        <PostBuildEvent>
+  <PropertyGroup>
+    <PostBuildEvent>
             "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
             REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
             "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
         </PostBuildEvent>
-        <PreBuildEvent>
-        </PreBuildEvent>
-    </PropertyGroup>
+    <PreBuildEvent>
+    </PreBuildEvent>
+  </PropertyGroup>
 </Project>

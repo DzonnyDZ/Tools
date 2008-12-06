@@ -51,7 +51,10 @@
             <node name="Max" image="Method Overload" tag="Tools.Tests.MathT.Max" />
         </node>
         <node name="ReflectionT" image="Namespace">
-            <node name="ReflectionTools" image="Module" tag="Tools.Tests.WindowsT.FormsT.frmObjectBrowser.Test" />
+            <node name="ReflectionTools" image="Module Shortcut" tag="Tools.Tests.WindowsT.FormsT.frmObjectBrowser.Test" />
+            <node name="ReflectionTols" image="Module">
+                <node name="FindBestFitCastOperator" image="Method" tag="Tools.Tests.ReflectionT.frmFindBestFitCastOperator.Test"/>
+            </node>
         </node>
         <node name="ResourcesT" image="Namespace">
             <node name="SystemResources" image="Class Sealed (NotInheritable)" tag="Tools.Tests.ResourcesT.frmSystemResources.Test" />

@@ -92,34 +92,6 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property Comment() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Comment", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property CopyIcon() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("CopyIcon", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property CutIcon() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("CutIcon", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property Delete() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Delete", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
         '''<summary>
         '''  Looks up a localized string similar to Error.
         '''</summary>
@@ -170,27 +142,6 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property NavBack() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("NavBack", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property NavForward() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("NavForward", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property NewReport() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("NewReport", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
         '''<summary>
         '''  Looks up a localized string similar to No.
         '''</summary>
@@ -232,13 +183,6 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property Open() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Open", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
         '''<summary>
         '''  Looks up a localized string similar to Paste.
         '''</summary>
@@ -248,23 +192,9 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property PasteIcon() As System.Drawing.Bitmap
+        Friend ReadOnly Property play() As System.Drawing.Bitmap
             Get
-                Dim obj As Object = ResourceManager.GetObject("PasteIcon", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property Play() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Play", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property Plus() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Plus", resourceCulture)
+                Dim obj As Object = ResourceManager.GetObject("play", resourceCulture)
                 Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
@@ -275,13 +205,6 @@ Namespace My.Resources
         Friend ReadOnly Property Property0() As String
             Get
                 Return ResourceManager.GetString("Property0", resourceCulture)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property Repeat() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Repeat", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -301,26 +224,12 @@ Namespace My.Resources
             End Get
         End Property
         
-        Friend ReadOnly Property Save() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Save", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
-            End Get
-        End Property
-        
         '''<summary>
         '''  Looks up a localized string similar to start {0}, end {1}.
         '''</summary>
         Friend ReadOnly Property Start0End1() As String
             Get
                 Return ResourceManager.GetString("Start0End1", resourceCulture)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property T() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("T", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
         
@@ -362,13 +271,6 @@ Namespace My.Resources
             Get
                 Dim obj As Object = ResourceManager.GetObject("Yes_access", resourceCulture)
                 Return CType(obj,Char)
-            End Get
-        End Property
-        
-        Friend ReadOnly Property Zip() As System.Drawing.Bitmap
-            Get
-                Dim obj As Object = ResourceManager.GetObject("Zip", resourceCulture)
-                Return CType(obj,System.Drawing.Bitmap)
             End Get
         End Property
     End Module
