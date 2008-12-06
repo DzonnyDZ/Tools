@@ -2,7 +2,7 @@
 <!--TODO: XML schema-->
 <vh:VersionHistory xmlns:vh="TODO:" xmlns="http://www.w3.org/1999/xhtml" xmlns:i="http://dzonny.cz/xml/schemas/intellisense"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-                   xsi:schemaLocation="http://dzonny.cz/xml/schemas/intellisense ../DevelopmentTools/Intellisense/intellisense.xsd">
+                   xsi:schemaLocation="http://dzonny.cz/xml/schemas/intellisense DevelopmentTools/Intellisense/intellisense.xsd">
     <vh:version version="1.5.2">
         <vh:i>
             <i:see cref="T:Tools.InternalT.VersionAttribute"/>, <i:see ctef="T:Tools.InternalT.AuthorAttribute"/> and <i:see ctef="T:Tools.InternalT.FirstVersionAttribute"/> marked as obsoltele. Use XML ocumentation tags instead.
@@ -16,6 +16,14 @@
         <vh:i>Namespace Tools.DrawingT.MetadataT renamed to <i:see cref="N:Tools.MetadataT"/></vh:i>
         <vh:i>Added namespace <i:see cref="N:Tools.Experimental.DevicesT.JoystickT"/></vh:i>
         <vh:i>Added extension method <i:see cref="M:Tools.CollectionsT.SpecializedT.CollectionTools.Import(System.Windows.Forms.ImageList.ImageCollection,System.Windows.Forms.ImageList.ImageCollection)"/>.</vh:i>
-        <vh:i>Added namespace <see cref="N:Tools.WindowsT.InteropT"/>.</vh:i>
+        <vh:i>Added namespace <i:see cref="N:Tools.WindowsT.InteropT"/>.</vh:i>
+        <vh:i>Fixed: <i:see cref="M:Tools.TypeTools.CanAutomaticallyCreateInstance(System.Type)"/> always returns null.</vh:i>
+        <vh:i>Added namespace <i:see cref="N:Tools.WindowsT.FormsT.VisualStylesT"/>.</vh:i>
+        <vh:i><i:see cref="T:Tools.MetadataT.ExifT.URational"/> and <i:see cref="T:Tools.MetadataT.ExifT.SRational"/> now have Parse and TryParse methods, implement <i:see cref="T:System.IFormatable"/> and has <i:see cref="T:System.ComponentModel.TypeConverterAttribute"/>.</vh:i>
+        <vh:i>Added several <i:see cref="T:System.ComponentModel.BrowsableAttribute"/>(false) and <i:see cref="System.ComponentMode.TypeConverterAttribute"/>(<i:see cref="System.ComponentModel.ExpandableObjectConverter"/>)  for <i:see cref="Tools.MetadataT.ExifT.Ifd"/>'s properties and derived classes' properties.</vh:i>
+        <vh:i><i:see cref="T:Tools.CollectionsT.GenericT.DictionaryWithEvents`2"/> implements <i:see cref="IEnumerable`1"/>[<i:typeparamref name="TValue"/>].</vh:i>
+        <vh:i>Fixed: Exif <i:see cref="T:Tools.MetadataT.ExifT.SRational"/> and <i:see cref="T:Tools.MetadataT.ExifT.URrational"/> are incorrectly read from image files (2×16 bits instead of 2×32 bits).</vh:i>
+        <vh:i><i:see cref="T:Tools.Metadata.ExifT.ExifWriter"/> made public and Exif saving capability added to <i:see cref="T:Tools.Metadata.ExifT.Exif"/>.</vh:i>
+        <vh:i>Added <i:see cref="M:Tools.ReflectionT.ReflectionTools.GetOperators"/> overloaed function.</vh:i>
     </vh:version>
 </vh:VersionHistory>

@@ -274,5 +274,10 @@
         <member name="N:Tools.WindowsT.InteropT">
             <summary>Contains classes for WPF - WinForms interoperability</summary>
         </member>
+        <member name="N:Tools.WindowsT.FormsT.VisualStylesT">
+            <summary>Contains classes for rendering Windows Forms controls with and without visual styles</summary>
+            <version stage="Nightly" version="1.5.2">Namespace introduced</version>
+            <author www="http://dzony.cz">Đonny</author>
+        </member>
     </members>    
 </doc>

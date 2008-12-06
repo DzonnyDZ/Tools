@@ -1,60 +1,38 @@
 ﻿<Window x:Class="WindowsT.WPF.winSystemTheme"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      Title="Testing system theme" Height="300" Width="300"
+      Title="Testing system theme" Height="300" Width="527"
         xmlns:xxx="clr-namespace:Tools.Tests.WindowsT.WPF"
+        xmlns:wf="clr-namespace:System.Windows.Forms;assembly=System.Windows.Forms"
         >
 
-    <Window.Resources>
-        <Style TargetType="Button">
+    <!--<Window.Resources>
+        <Style TargetType="Label">
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="PaddingBorder">
-                            <Border.Background>
-                                <ImageBrush>
-                                    <ImageBrush.ImageSource>
-                                        <xxx:Convert>
-                                            <xxx:Convert.Value>
-                                                <xxx:SystemButtonBackgroundSource Width="{TemplateBinding Width}" Height="{TemplateBinding Height}"/>
-                                            </xxx:Convert.Value>
-                                        </xxx:Convert>
-                                    </ImageBrush.ImageSource>
-                                </ImageBrush>
-                            </Border.Background>
-                            <Border x:Name="Border" BorderThickness="1" BorderBrush="Black" CornerRadius="5" Background="#E0E0F0">
-                                <Border x:Name="Transform">
-                                    <ContentPresenter x:Name="Content"    
-                                          Margin="2" 
-                                          HorizontalAlignment="Center" 
-                                          VerticalAlignment="Center" 
-                                          RecognizesAccessKey="True" 
-                                        />
-                                </Border>
-                            </Border>
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="true">
-                                <Setter TargetName="PaddingBorder" Property="Padding" Value="2" />
-                                <Setter TargetName="Border" Property="Background" Value="#F0F0F8" />
-                            </Trigger>
-                            <Trigger Property="IsPressed" Value="true">
-                                <Setter TargetName="Transform" Property="RenderTransform">
-                                    <Setter.Value>
-                                        <TranslateTransform X="1" Y="1" />
-                                    </Setter.Value>
-                                </Setter>
-                            </Trigger>
-                        </ControlTemplate.Triggers>
+                    <ControlTemplate TargetType="Label">
+                        <Border >
+                            <xxx:SystemButtonBorder>
+                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            </xxx:SystemButtonBorder>
+                             </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
-    </Window.Resources>
+    </Window.Resources>-->
     <Grid>
-        <Button Width="120" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="8">
-            <TextBlock>Hover over me!</TextBlock>
-        </Button>
-
+        <Grid.RowDefinitions>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition />
+            <ColumnDefinition />
+        </Grid.ColumnDefinitions>
+        <Label Grid.Row="0" Grid.Column="0" Margin="10,10,10,10" Name="Label1" >
+            <TextBlock>Ahoj:-)</TextBlock></Label>
+        <WindowsFormsHost Grid.Row="0" Grid.Column="1" Margin="10,10,10,10" Name="WindowsFormsHost1" >
+            <wf:Button Text="Ahoj:-)" Dock="Fill"/>
+        </WindowsFormsHost>
     </Grid>
 </Window>

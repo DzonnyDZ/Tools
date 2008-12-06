@@ -40,10 +40,10 @@ Partial Class frmTests
         Me.tvwMain.Dock = System.Windows.Forms.DockStyle.Fill
         Me.tvwMain.ImageIndex = 0
         Me.tvwMain.ImageList = Me.imlImages
-        Me.tvwMain.Location = New System.Drawing.Point(0, 0)
+        Me.tvwMain.Location = New System.Drawing.Point(0, 25)
         Me.tvwMain.Name = "tvwMain"
         Me.tvwMain.SelectedImageIndex = 0
-        Me.tvwMain.Size = New System.Drawing.Size(401, 226)
+        Me.tvwMain.Size = New System.Drawing.Size(401, 201)
         Me.tvwMain.TabIndex = 0
         '
         'imlImages
@@ -279,8 +279,8 @@ Partial Class frmTests
         Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
         Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
         Me.ClientSize = New System.Drawing.Size(401, 249)
-        Me.Controls.Add(Me.tosMain)
         Me.Controls.Add(Me.tvwMain)
+        Me.Controls.Add(Me.tosMain)
         Me.Controls.Add(Me.flpBottom)
         Me.Name = "frmTests"
         Me.Text = "Tests for project Tools"

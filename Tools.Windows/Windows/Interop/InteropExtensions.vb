@@ -14,7 +14,16 @@ Namespace WindowsT.InteropT
         <Extension()> _
        Public Function ToBitmapSource(ByVal Image As Drawing.Bitmap) As BitmapSource
             If Image Is Nothing Then Return Nothing
-            Return Interop.Imaging.CreateBitmapSourceFromHBitmap(Image.GetHbitmap, IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions())
+            'Return Interop.Imaging.CreateBitmapSourceFromHBitmap(Image.GetHbitmap, IntPtr.Zero, Int32Rect.Empty, System.Windows.Media.Imaging.BitmapSizeOptions.FromEmptyOptions())  'TODO: This may lead to memory leak
+            Dim str As New IO.MemoryStream
+            Static bmp As Drawing.Imaging.ImageFormat = Drawing.Imaging.ImageFormat.Png
+            Image.Save(str, bmp)
+            Dim ret As New BitmapImage
+            ret.BeginInit()
+            ret.StreamSource = str
+            ret.EndInit()
+            Return ret
+
         End Function
         ''' <summary>Converts <see cref="Drawing.Icon"/> to WPF <see cref="BitmapSource"/></summary>
         ''' <param name="Icon">An <see cref="Drawing.Icon"/></param>
@@ -23,6 +32,7 @@ Namespace WindowsT.InteropT
         <Extension()> _
         Public Function ToBitmapSource(ByVal Icon As Drawing.Icon) As BitmapSource
             If Icon Is Nothing Then Return Nothing
+            'TODO: This may lead to memory leak
             Return Interop.Imaging.CreateBitmapSourceFromHIcon(Icon.Handle, Int32Rect.Empty, Media.Imaging.BitmapSizeOptions.FromEmptyOptions())
         End Function
         ''' <summary>Converts <see cref="BitmapSource"/> to <see cref="Drawing.Bitmap"/></summary>

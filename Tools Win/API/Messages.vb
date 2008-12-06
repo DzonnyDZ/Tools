@@ -2091,6 +2091,16 @@ Namespace API.Messages
         ''' <description>An application should return zero if it processes this message. </description></item>
         ''' </list><seealso>http://msdn2.microsoft.com/en-us/library/ms644902.aspx</seealso></remarks>
         WM_TIMER = &H113
+        ''' <summary>The WM_THEMECHANGED message is broadcast to every window following a theme change event. Examples of theme change events are the activation of a theme, the deactivation of a theme, or a transition from one theme to another.</summary>
+        ''' <remarks><list type="table">
+        ''' <item><term>wParam</term>
+        ''' <description>Reserved. </description></item>
+        ''' <item><term>lParam</term>
+        ''' <description>Reserved. </description></item>
+        ''' <item><term>Return value</term>
+        ''' <description>If an application processes this message, it should return zero.</description></item>
+        ''' </list><seealso>http://msdn.microsoft.com/en-us/library/ms632650.aspx</seealso></remarks>
+        WM_THEMECHANGE = &H31A
         ''' <summary>An application sends a WM_UNDO message to an edit control to undo the last operation. When this message is sent to an edit control, the previously deleted text is restored or the previously added text is deleted.</summary>
         ''' <remarks><list type="table">
         ''' <item><term>wParam</term>

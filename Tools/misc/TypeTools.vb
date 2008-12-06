@@ -1,4 +1,6 @@
 Imports System.Runtime.CompilerServices, System.Linq
+Imports Tools.ReflectionT
+Imports System.Reflection
 
 #If Config <= Nightly Then 'Stage:Nightly
 ''' <author www="http://dzonny.cz">Ðonny</author>
@@ -281,10 +283,11 @@ Public Module TypeTools
     ''' <returns><see cref="Reflection.ConstructorInfo"/> refresenting default CTor of type <paramref name="Type"/>. Null if there is no default (parameter-less) CTor</returns>
     ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
     ''' <seealso cref="HasDefaultCTor"/>
+    ''' <version stage="Nightly" version="1.5.2">Fixed: Always returns null due to <paramref name="Attributes"/> being and-ed with <see cref="Reflection.BindingFlags.Instance"/> instead of or-ed</version>
     <Extension()> _
     Public Function GetDefaltCTor(ByVal Type As Type, Optional ByVal Attributes As Reflection.BindingFlags = Reflection.BindingFlags.Public) As Reflection.ConstructorInfo
         If Type Is Nothing Then Throw New ArgumentException("Type")
-        Return Type.GetConstructor(Attributes And Reflection.BindingFlags.Instance, Nothing, Type.EmptyTypes, Nothing)
+        Return Type.GetConstructor(Attributes Or Reflection.BindingFlags.Instance, Nothing, Type.EmptyTypes, Nothing)
     End Function
     ''' <summary>Gets value indicationg if given <see cref="Type"/> has default constructor</summary>
     ''' <param name="Type"><see cref="Type"/> to check</param>
@@ -328,5 +331,257 @@ Public Module TypeTools
     <Extension()> Function CreateInstance(ByVal type As Type) As Object
         Return Activator.CreateInstance(type)
     End Function
+    'TODO: Uncomment and implement dynamic cast
+    '<Extension()> _
+    'Public Function DynamicCast(Of T)(ByVal obj As Object) As T
+    '    Return DynamicCast(obj, GetType(T))
+    'End Function
+    '<Extension()> _
+    'Public Function DynamicCast(ByVal obj As Object, ByVal Type As Type) As Object
+    '    If obj Is Nothing Then Return Nothing
+    '    If Type Is Nothing Then Throw New ArgumentNullException("Type")
+    '    Dim ObjType = obj.GetType
+    '    If Type.IsAssignableFrom(ObjType) Then Return obj
+    '    Dim SourceImplicit = ObjType.GetOperators(Operators.Implicit)
+    '    Dim SourceExplicit = ObjType.GetOperators(Operators.Explicit)
+    '    Dim TargetImplicit = Type.GetOperators(Operators.Implicit)
+    '    Dim TargetExplicit = Type.GetOperators(Operators.Explicit)
+    '    Dim PossibleOperators = (From op In SourceImplicit.Union(SourceImplicit).Union(TargetImplicit).Union(TargetExplicit) _
+    '                            Where op.GetParameters()(0).ParameterType.IsAssignableFrom(ObjType) _
+    '                                  AndAlso Type.IsAssignableFrom(op.ReturnType) _
+    '                            Select op).ToArray
+    '    If PossibleOperators.Length = 1 Then
+    '        Return PossibleOperators(0).Invoke(Nothing, New Object() {obj})
+    '    ElseIf PossibleOperators.Count > 1 Then
+    '        Dim ArgType = ObjType
+    '        While ArgType IsNot Nothing AndAlso Not ArgType.Equals(GetType(Object))
+    '            Dim LevelOperators = (From op In PossibleOperators Where op.GetParameters()(0).ParameterType.Equals(ObjType) Select op).ToArray
+    '            If LevelOperators.Length = 1 Then
+    '                Return LevelOperators(0).Invoke(Nothing, New Object() {obj})
+    '            ElseIf LevelOperators.Length > 1 Then
+
+    '            End If
+    '            ArgType = ArgType.BaseType
+    '        End While
+    '    End If
+    '    'Enum
+    '    If TypeOf obj Is [Enum] Then
+    '        If Type.Equals(GetType(String)) Then Return obj.ToString
+    '        Return DynamicCast(DirectCast(obj, [Enum]).GetValue, Type)
+    '    ElseIf Type.IsEnum Then
+    '        If TypeOf obj Is String AndAlso [Enum].GetNames(Type).Contains(obj) Then Return [Enum].Parse(Type, obj)
+    '        Dim value As IConvertible = DynamicCast(obj, [Enum].GetUnderlyingType(Type))
+    '        Return GetEnumValue(Type, value)
+    '    End If
+    '    'Built-in types
+    '    If TypeOf obj Is Byte Then
+    '        With DirectCast(obj, Byte)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is SByte Then
+    '        With DirectCast(obj, SByte)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is Short Then
+    '        With DirectCast(obj, Short)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is UShort Then
+    '        With DirectCast(obj, UShort)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is Integer Then
+    '        With DirectCast(obj, Integer)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is UInteger Then
+    '        With DirectCast(DirectCast(obj, UInteger), IConvertible)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is Long Then
+    '        With DirectCast(DirectCast(obj, Long), IConvertible)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is ULong Then
+    '        With DirectCast(DirectCast(obj, ULong), IConvertible)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is Double Then
+    '        With DirectCast(obj, Double)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is Char Then
+    '        With DirectCast(obj, Char)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return .self
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(AscW(.self))
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is Boolean Then
+    '        With DirectCast(obj, Boolean)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return ChrW(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return CStr(.self)
+    '            End If
+    '        End With
+    '    ElseIf TypeOf obj Is String Then
+    '        With DirectCast(obj, String)
+    '            If Type.IsAssignableFrom(GetType(Byte)) Then : Return CByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(SByte)) Then : Return CSByte(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Short)) Then : Return CShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UShort)) Then : Return CUShort(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Integer)) Then : Return CInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(UInteger)) Then : Return CUInt(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Long)) Then : Return CLng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(ULong)) Then : Return CULng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Single)) Then : Return CSng(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Double)) Then : Return CDbl(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Char)) Then : Return CChar(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(Boolean)) Then : Return CBool(.self)
+    '            ElseIf Type.IsAssignableFrom(GetType(String)) Then : Return .self
+    '            End If
+    '        End With
+    '    End If
+    'End Function
+    
 End Module
+
+
 #End If

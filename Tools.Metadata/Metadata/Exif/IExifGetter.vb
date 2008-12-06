@@ -16,6 +16,8 @@ Namespace MetadataT.ExifT
     End Interface
     ''' <summary>Represents provider that provides stream of Exif data for reading and writing</summary>
     ''' <seealso cref="IExifGetter"/><seealso cref="IptcT.iiptcwriter"/>
+    ''' <author www="htp://dzonny.cz">Ðonny</author>
+    ''' <version stage="Beta" version="1.5.2">Added <see cref="M:Tools.MetadataT.ExifT.IExifWriter.ExifEmbded(System.IO.Stream)"/> overload</version>
     Public Interface IExifWriter
         ''' <summary>Gets stream of Exif data</summary>
         ''' <returns>Stream of Exif data which supports reading as well as writing. Return value can be null or zero-lenght stream if there is currently no Exif data.
@@ -36,6 +38,10 @@ Namespace MetadataT.ExifT
         ''' <summary>Replaces whole Exif data with given aray of bytes</summary>
         ''' <param name="ExifData">New Exif data to be embdeded in this instance. <paramref name="ExifData"/> contains full Exif data block including TIFF header. If <paramref name="ExifData"/> is null all Exif data shall be erased.</param>
         Sub ExifEmbded(ByVal ExifData As Byte())
+        ''' <summary>Replaces whole Exif data with content of given stream.</summary>
+        ''' <param name="ExifData">Contains exif data. Stream must be on its initial position. This methods does not seek. Mus support reading. Contains full Exif data including TIFF header. If null Exif data should be erased.</param>
+        ''' <version version="1.5.2">This overload added</version>
+        Sub ExifEmbded(ByVal ExifData As IO.Stream)
     End Interface
 #End If
 End Namespace

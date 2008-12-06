@@ -49,6 +49,7 @@ Namespace WindowsT.FormsT
             Me.obTest.Dock = System.Windows.Forms.DockStyle.Fill
             Me.obTest.Location = New System.Drawing.Point(0, 0)
             Me.obTest.Name = "obTest"
+            Me.obTest.ShowFlatNamespaces = True
             Me.obTest.Size = New System.Drawing.Size(675, 428)
             Me.obTest.TabIndex = 0
             '

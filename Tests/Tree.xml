@@ -76,11 +76,12 @@
             <node name="DrawingIOt" image="Namespace">
                 <node name="JPEG" image="Namespace" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test" />
             </node>
-            <node name="MetadataT" image="Namespace">
-                <node name="ExifT" image="Namespace Shortcut" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test"/>
-                <node name="IptcT" image="Namespace">
-                    <node name="Iptc" image="Class" tag="Tools.Tests.MetadataT.IptcT.frmIPTC.test" />
-                </node>
+        </node>
+        <node name="MetadataT" image="Namespace">
+            <node name="ExifT" image="Namespace Shortcut" tag="Tools.Tests.DrawingT.DrawingIOt.frmJPEG.test"/>
+            <node name="ExifT" image="Namespace" tag="Tools.Tests.MetadataT.frmExif.Test"/>
+            <node name="IptcT" image="Namespace">
+                <node name="Iptc" image="Class" tag="Tools.Tests.MetadataT.IptcT.frmIPTC.test" />
             </node>
         </node>
     </node>
@@ -96,6 +97,11 @@
                 <node name="ProgressBarWithText" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmProgressBarWithText.Test" />
                 <node name="TransparentLabel" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentLabel.Test" />
                 <node name="TransparentTextBox" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentTextBox.Test" />
+                <node name="VisualStylesT" image="Namespace">
+                    <node name="VisualStyleSafeObject" image="Class">
+                        <node name="SafeButonRenderer" image="Class" tag="Tools.Tests.WindowsT.FormsT.VisualStylesT.frmSafeButtonRenderer.Test"/>
+                    </node>
+                </node>
             </node>
             <node name="WPF" image="Namespace">
                 <node name="ControlsT" image="Namespace">

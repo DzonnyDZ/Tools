@@ -3,10 +3,11 @@ Namespace DrawingT.DrawingIOt.JPEG
 #If Config <= Alpha Then 'Stage: Alpha
     ''' <summary>Provides tools realted to reading from JPEG graphic file format on low level</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-  ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2" stage="Alpha"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2">Added implementation of <see cref="MetadataT.ExifT.IExifWriter"/></version>
     Public Class JPEGReader
         Implements MetadataT.ExifT.IExifGetter, MetadataT.IptcT.IIptcGetter
-        Implements MetadataT.IptcT.IIptcWriter
+        Implements MetadataT.IptcT.IIptcWriter, MetadataT.ExifT.IExifWriter
         Implements IDisposable
         ''' <summary>Stream of opened file</summary>
         Protected ReadOnly Stream As System.IO.Stream
@@ -18,7 +19,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         End Property
         ''' <summary>CTor from file</summary>
         ''' <param name="Path">Path to file to read from</param>
-        ''' <param name="Write">Opens file for writing as well as for reading if true. This is necessary for <see cref="IPTCEmbed"/> to work</param>
+        ''' <param name="Write">Opens file for writing as well as for reading if true. This is necessary for <see cref="IPTCEmbed"/>, <see cref="GetWritableExifStream"/> and <see cref="ExifEmbded"/> to work</param>
         ''' <exception cref="System.IO.DirectoryNotFoundException">The specified <paramref name="path"/> is invalid, such as being on an unmapped drive.</exception>
         ''' <exception cref="System.ArgumentNullException"><paramref name="path"/> is null.</exception>
         ''' <exception cref="System.UnauthorizedAccessException">The access requested (readonly) is not permitted by the operating system for the specified path.</exception>
@@ -117,53 +118,7 @@ Namespace DrawingT.DrawingIOt.JPEG
         ''' <para>Stream supports reading and seeking</para>
         ''' </remarks>
         Public Function GetExifStream() As System.IO.Stream Implements MetadataT.ExifT.IExifGetter.GetExifStream
-            Const Exif$ = "Exif"
-            Const NormalOffset% = 6
-            Const FujiFilmFineFix2800ZoomOffset% = 10
-            If _ExifMarkerIndex = -1 Then
-                Return Nothing
-            ElseIf _ExifMarkerIndex >= 0 Then
-                Dim Offset = If(SupportFujiFilmFineFix2800ZoomInEffect, FujiFilmFineFix2800ZoomOffset, NormalOffset)
-                Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, Offset, Me.Markers(ExifMarkerIndex).Data.Length - Offset)
-            End If
-            Dim i As Integer = 0
-            For Each m As JPEGMarkerReader In Me.Markers
-                If m.MarkerCode = JPEGMarkerReader.Markers.APP1 Then
-                    m.Data.Position = 0
-                    Dim Bytes(If(SupportFujiFilmFineFix2800Zoom, 9, 6)) As Byte
-                    If m.Data.Read(Bytes, 0, 6) = 6 AndAlso System.Text.Encoding.ASCII.GetString(Bytes, 0, 4) = Exif AndAlso Bytes(4) = 0 AndAlso Bytes(5) = 0 Then
-                        _ExifMarkerIndex = i
-                        _SupportFujiFilmFineFix2800ZoomInEffect = False
-                        Return New ConstrainedReadOnlyStream(m.Data, NormalOffset, m.Data.Length - NormalOffset)
-                    ElseIf SupportFujiFilmFineFix2800Zoom AndAlso m.Data.Read(Bytes, 6, 4) = 4 AndAlso Bytes(0) = &HFF AndAlso Bytes(1) = &HE1 _
-                           AndAlso m.Length - 4 = (CUShort(Bytes(2)) << 8 Or CUShort(Bytes(3))) _
-                           AndAlso System.Text.Encoding.ASCII.GetString(Bytes, 4, 4) = Exif AndAlso Bytes(8) = 0 AndAlso Bytes(9) = 0 Then
-                        'This format have been seen in image from FujiFilm FinePix 2800 zoom
-                        'I consider it non-standard and stupid and there fore it is supported only on special request
-                        'The format is: APP1 marker starts with FFE1 (as usual) then 2-bytes lenght folloes (as usual)
-                        '               Then FFE1 is repeated and size of Exif stream + size itself follows (it is m.Length - 4)
-
-                        'Dim b1 = SupportFujiFilmFineFix2800Zoom
-                        'Dim b2 = m.Data.Read(Bytes, 6, 4) = 4
-                        'Dim b3 = Bytes(0) = &HFF
-                        'Dim b4 = Bytes(1) = &HE1
-                        'Dim b5 = m.Length - 4 = (CUShort(Bytes(2)) << 8 Or CUShort(Bytes(3)))
-                        'Dim b6 = System.Text.Encoding.ASCII.GetString(Bytes, 4, 4) = Exif
-                        'Dim b7 = Bytes(8) = 0
-                        'Dim b8 = Bytes(9) = 0
-                        'Dim b = b1 AndAlso b2 AndAlso b3 AndAlso b4 AndAlso b5 AndAlso b6 AndAlso b7 AndAlso b8
-                        'If b Then
-                        _ExifMarkerIndex = i
-                        _SupportFujiFilmFineFix2800ZoomInEffect = True
-                        Return New ConstrainedReadOnlyStream(m.Data, FujiFilmFineFix2800ZoomOffset, m.Data.Length - FujiFilmFineFix2800ZoomOffset)
-                        'End If
-                    End If
-                End If
-                i += 1
-            Next m
-            _SupportFujiFilmFineFix2800ZoomInEffect = False
-            _ExifMarkerIndex = -1
-            Return Nothing
+            Return GetExifStream(False)
         End Function
         ''' <summary>Contains value of the <see cref="SupportFujiFilmFineFix2800Zoom"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _SupportFujiFilmFineFix2800Zoom As Boolean = False
@@ -458,6 +413,94 @@ Namespace DrawingT.DrawingIOt.JPEG
         End Sub
 #End Region
 
+        ''' <summary>Gets value indicating if there is any Exif data currently embdeded in this instance.</summary>
+        ''' <returns>True if thie instance contains Exif data and <see cref="GetWritableExifStream"/> returns valid stream of Exif data, false where there is no Exif data, so it is safe to use <see cref="ExifEmbded"/> without possible data loss of unknown Exif content.</returns>
+        Public ReadOnly Property ContainsExif() As Boolean Implements MetadataT.ExifT.IExifWriter.ContainsExif
+            Get
+                Return ExifMarkerIndex >= 0
+            End Get
+        End Property
+
+        Public Sub ExifEmbded(ByVal ExifData() As Byte) Implements MetadataT.ExifT.IExifWriter.ExifEmbded
+
+        End Sub
+
+        Public Sub ExifEmbded(ByVal ExifData As System.IO.Stream) Implements MetadataT.ExifT.IExifWriter.ExifEmbded
+
+        End Sub
+
+        Private Function GetExifStream(ByVal Writeble As Boolean) As IO.Stream
+            Const Exif$ = "Exif"
+            Const NormalOffset% = 6
+            Const FujiFilmFineFix2800ZoomOffset% = 10
+            If _ExifMarkerIndex = -1 Then
+                Return Nothing
+            ElseIf _ExifMarkerIndex >= 0 Then
+                Dim Offset = If(SupportFujiFilmFineFix2800ZoomInEffect, FujiFilmFineFix2800ZoomOffset, NormalOffset)
+                If Writeble Then
+                    With DirectCast(Me.Markers(ExifMarkerIndex).Data, ConstrainedReadOnlyStream)
+                        'TODO: Does it work? Implement streams more transparently
+                        Return New OverflowStream(.BaseStream, .TranslatePosition(0), .TranslatePosition(0) + Offset, Me.Markers(ExifMarkerIndex).Data.Length - Offset)
+                    End With
+                Else
+                    Return New ConstrainedReadOnlyStream(Me.Markers(ExifMarkerIndex).Data, Offset, Me.Markers(ExifMarkerIndex).Data.Length - Offset)
+                End If
+            End If
+            Dim i As Integer = 0
+            For Each m As JPEGMarkerReader In Me.Markers
+                If m.MarkerCode = JPEGMarkerReader.Markers.APP1 Then
+                    m.Data.Position = 0
+                    Dim Bytes(If(SupportFujiFilmFineFix2800Zoom, 9, 6)) As Byte
+                    If m.Data.Read(Bytes, 0, 6) = 6 AndAlso System.Text.Encoding.ASCII.GetString(Bytes, 0, 4) = Exif AndAlso Bytes(4) = 0 AndAlso Bytes(5) = 0 Then
+                        _ExifMarkerIndex = i
+                        _SupportFujiFilmFineFix2800ZoomInEffect = False
+                        Return New ConstrainedReadOnlyStream(m.Data, NormalOffset, m.Data.Length - NormalOffset)
+                    ElseIf SupportFujiFilmFineFix2800Zoom AndAlso m.Data.Read(Bytes, 6, 4) = 4 AndAlso Bytes(0) = &HFF AndAlso Bytes(1) = &HE1 _
+                           AndAlso m.Length - 4 = (CUShort(Bytes(2)) << 8 Or CUShort(Bytes(3))) _
+                           AndAlso System.Text.Encoding.ASCII.GetString(Bytes, 4, 4) = Exif AndAlso Bytes(8) = 0 AndAlso Bytes(9) = 0 Then
+                        'This format have been seen in image from FujiFilm FinePix 2800 zoom
+                        'I consider it non-standard and stupid and there fore it is supported only on special request
+                        'The format is: APP1 marker starts with FFE1 (as usual) then 2-bytes lenght folloes (as usual)
+                        '               Then FFE1 is repeated and size of Exif stream + size itself follows (it is m.Length - 4)
+
+                        'Dim b1 = SupportFujiFilmFineFix2800Zoom
+                        'Dim b2 = m.Data.Read(Bytes, 6, 4) = 4
+                        'Dim b3 = Bytes(0) = &HFF
+                        'Dim b4 = Bytes(1) = &HE1
+                        'Dim b5 = m.Length - 4 = (CUShort(Bytes(2)) << 8 Or CUShort(Bytes(3)))
+                        'Dim b6 = System.Text.Encoding.ASCII.GetString(Bytes, 4, 4) = Exif
+                        'Dim b7 = Bytes(8) = 0
+                        'Dim b8 = Bytes(9) = 0
+                        'Dim b = b1 AndAlso b2 AndAlso b3 AndAlso b4 AndAlso b5 AndAlso b6 AndAlso b7 AndAlso b8
+                        'If b Then
+                        _ExifMarkerIndex = i
+                        _SupportFujiFilmFineFix2800ZoomInEffect = True
+                        Return New ConstrainedReadOnlyStream(m.Data, FujiFilmFineFix2800ZoomOffset, m.Data.Length - FujiFilmFineFix2800ZoomOffset)
+                        'End If
+                    End If
+                End If
+                i += 1
+            Next m
+            _SupportFujiFilmFineFix2800ZoomInEffect = False
+            _ExifMarkerIndex = -1
+            Return Nothing
+        End Function
+
+        ''' <summary>Gets stream of Exif data</summary>
+        ''' <returns>Stream of Exif data which supports reading as well as writing. Return value can be null or zero-lenght stream if there is currently no Exif data.
+        ''' <para>If this function returns null, caller shall use <see cref="ExifEmbded"/> instead.</para></returns>
+        ''' <remarks>
+        ''' <para>If class implements <see cref="MetadataT.ExifT.IExifGetter"/> as well as <see cref="MetadataT.ExifT.IExifWriter"/> the <see cref="MetadataT.ExifT.IExifGetter.GetExifStream"/> and <see cref="GetWritableExifStream"/> functions can be (but have not to be) implemented by same function.
+        ''' Note: You can find it better to implement both methods separatelly, because stream returned by <see cref="MetadataT.ExifT.IExifGetter.GetExifStream"/> can have simplier implementation.</para>
+        ''' <para>Stream content must start with TIFF header.</para>
+        ''' <para>If there is no exif data in file stream can have zero lenght.</para>
+        ''' <para>Stream must support reading, writing and seeking.</para>
+        ''' <para>Stream must support changes of its lenght - both growing and shrinking. Namely when stream is returned as constrained stream which represents part of another stream it must properly handle situation when new Exif data are shorter or longer than original.
+        ''' The tools library provides class <see cref="IOt.OverflowStream"/> which implements stream that operates over another base stream and supports changes of lenght.</para>
+        ''' </remarks>
+        Public Function GetWritableExifStream() As System.IO.Stream Implements MetadataT.ExifT.IExifWriter.GetWritableExifStream
+            Return GetExifStream(True)
+        End Function
     End Class
 
     ''' <summary>Represents Photoshop 8BIM segment</summary>

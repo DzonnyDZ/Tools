@@ -30,6 +30,7 @@ Namespace MetadataT.ExifT
         ''' <param name="Source">Stream which contains the metadata</param>
         ''' <returns>Map of read metadata</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Source"/> is null</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="Source"/> is not zero-lenght and does not support seeking and reeding.</exception>
         Public Shared Function CreateMap(ByVal Source As IO.Stream) As ExifMapGenerator
             If Source Is Nothing Then Throw New ArgumentNullException("Source")
             Dim settings As New ExifReaderSettings()
@@ -42,6 +43,7 @@ Namespace MetadataT.ExifT
         ''' <param name="Source">Source of exif data</param>
         ''' <exception cref="ArgumentNullException"><paramref name="Source"/> is null</exception>
         ''' <returns>Map of read metadata</returns>
+        ''' <exception cref="InvalidOperationException">Stream obtained from <paramref name="Source"/> is not zero-lenght and does not support seeking and reeding.</exception>
         Public Shared Function CreateMap(ByVal Source As IExifGetter) As ExifMapGenerator
             If Source Is Nothing Then Throw New ArgumentNullException("Source")
             Return CreateMap(Source.GetExifStream)

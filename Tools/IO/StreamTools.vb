@@ -121,6 +121,79 @@ Namespace IOt
         Public Sub InsertInto(ByVal Stream As IO.Stream, ByVal Position As Integer, ByVal BytesToReplace As Integer, ByVal Data As Byte(), Optional ByVal Chunk As Integer = 1024)
             Stream.InsertInto(Position, BytesToReplace, Data, 0, Data.Length, Chunk)
         End Sub
+
+        ''' <summary>Writes content of <see cref="Stream"/> to <see cref="Stream"/></summary>
+        ''' <param name="Target">Target to write content of <paramref name="Source"/> to</param>
+        ''' <param name="Source">Contains data to write to <paramref name="Target"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <exception cref="IOException">An IO error occurs</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="Source"/> does not support reading or <paramref name="Target"/> does not suport writing.</exception>
+        ''' <exception cref="ObjectDisposedException"><paramref name="Source"/> or <paramref name="Target"/> was cloased</exception>
+        <Extension()> _
+        Public Sub Write(ByVal Target As IO.Stream, ByVal Source As IO.Stream)
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            If Source Is Nothing Then Throw New ArgumentNullException("Source")
+            Dim buff(1023) As Byte
+            Dim noRead = Source.Read(buff, 0, buff.Length)
+            While noRead > 0
+                Target.Write(buff, 0, noRead)
+                noRead = Source.Read(buff, 0, buff.Length)
+            End While
+        End Sub
+        ''' <summary>Writes content of <see cref="Stream"/> to <see cref="Stream"/></summary>
+        ''' <param name="Target">Target to write content of <paramref name="Source"/> to</param>
+        ''' <param name="Source">Contains data to write to <paramref name="Target"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <exception cref="IOException">An IO error occurs</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="Source"/> does not support reading or <paramref name="Target"/> does not suport writing.</exception>
+        ''' <exception cref="ObjectDisposedException"><paramref name="Source"/> or <paramref name="Target"/> was cloased</exception>
+        <Extension()> _
+       Public Sub Write(ByVal Target As BinaryWriter, ByVal Source As IO.Stream)
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            If Source Is Nothing Then Throw New ArgumentNullException("Source")
+            Dim buff(1023) As Byte
+            Dim noRead = Source.Read(buff, 0, buff.Length)
+            While noRead > 0
+                Target.Write(buff, 0, noRead)
+                noRead = Source.Read(buff, 0, buff.Length)
+            End While
+        End Sub
+        ''' <summary>Writes content of <see cref="Stream"/> to <see cref="Stream"/></summary>
+        ''' <param name="Target">Target to write content of <paramref name="Source"/> to</param>
+        ''' <param name="Source">Contains data to write to <paramref name="Target"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <exception cref="IOException">An IO error occurs</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="Source"/> does not support reading or <paramref name="Target"/> does not suport writing.</exception>
+        ''' <exception cref="ObjectDisposedException"><paramref name="Source"/> or <paramref name="Target"/> was cloased</exception>
+        <Extension()> _
+       Public Sub Write(ByVal Target As BinaryWriter, ByVal Source As BinaryReader)
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            If Source Is Nothing Then Throw New ArgumentNullException("Source")
+            Dim buff(1023) As Byte
+            Dim noRead = Source.Read(buff, 0, buff.Length)
+            While noRead > 0
+                Target.Write(buff, 0, noRead)
+                noRead = Source.Read(buff, 0, buff.Length)
+            End While
+        End Sub
+        ''' <summary>Writes content of <see cref="Stream"/> to <see cref="Stream"/></summary>
+        ''' <param name="Target">Target to write content of <paramref name="Source"/> to</param>
+        ''' <param name="Source">Contains data to write to <paramref name="Target"/></param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <exception cref="IOException">An IO error occurs</exception>
+        ''' <exception cref="NotSupportedException"><paramref name="Source"/> does not support reading or <paramref name="Target"/> does not suport writing.</exception>
+        ''' <exception cref="ObjectDisposedException"><paramref name="Source"/> or <paramref name="Target"/> was cloased</exception>
+        <Extension()> _
+       Public Sub Write(ByVal Target As Stream, ByVal Source As BinaryReader)
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            If Source Is Nothing Then Throw New ArgumentNullException("Source")
+            Dim buff(1023) As Byte
+            Dim noRead = Source.Read(buff, 0, buff.Length)
+            While noRead > 0
+                Target.Write(buff, 0, noRead)
+                noRead = Source.Read(buff, 0, buff.Length)
+            End While
+        End Sub
     End Module
 End Namespace
 #End If

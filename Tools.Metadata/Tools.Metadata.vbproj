@@ -148,6 +148,12 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <Link>Resources\Exceptions.Designer.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </None>
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGMarkerReader.vb" />
     <Compile Include="Drawing\DrawingIO\JPEG\JPEGReader.vb" />
     <Compile Include="Metadata\Exif\ExifMapGenerator.vb" />
@@ -239,6 +245,7 @@
       <LastGenOutput>IPTCTags.vb</LastGenOutput>
       <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
     </Content>
+    <None Include="Resources\ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
@@ -250,8 +257,37 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="1==0">
+      <Link>Resources\Exceptions.resx</Link>
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Metadata\XMP\" />
   </ItemGroup>
+    <ItemGroup>
+        <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
+            <AutoGen>True</AutoGen>
+            <DesignTime>True</DesignTime>
+            <DependentUpon>IPTCResources.resx</DependentUpon>
+        </Compile>
+        
+               <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.cs.resx">
+            <DependentUpon>IPTCResources.resx</DependentUpon>
+            <SubType>Designer</SubType>
+            <Visible>True</Visible>
+        </EmbeddedResource>
+        <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
+            <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
+            <Generator>InternalResXFileCodeGeneratorEx</Generator>
+            <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
+            <LogicalName>Tools.DrawingT.MetadataT.IptcT.IptcResources.resources</LogicalName>
+            <SubType>Designer</SubType>
+        </EmbeddedResource>
+        
+    </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

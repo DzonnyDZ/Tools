@@ -7,15 +7,17 @@ Imports Tools.ComponentModelT, System.Linq
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace MetadataT.ExifT
     ''' <summary>Provides read-write access to Image File Directory of Exif data</summary>
+    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2">Added implementation of <see cref="ICloneable(Of T)"/>.</version>
     Public Class Ifd
-        Implements IReportsChange
+        Implements IReportsChange, ICloneable(Of Ifd)
 #Region "CTors"
         ''' <summary>Contains value of the <see cref="OriginalOffset"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _OriginalOffset As UInteger
         ''' <summary>Gtes original offset of the IFD</summary>
         ''' <returns>Original offset of IFD in Exif block. 0 if this instance was not constructed from <see cref="ExifIFDReader"/>.</returns>
         ''' <remarks>As this property is not wery important it has no CLS-compliant alternative.</remarks>
-        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public ReadOnly Property OriginalOffset() As UInteger
             Get
                 Return _OriginalOffset
@@ -494,10 +496,12 @@ Namespace MetadataT.ExifT
 #End Region
         ''' <summary>Contains value of the <see cref="Exif"/> property</summary>
         Private _Exif As Exif
-        ''' <summary>Gets instance of <see cref="Exif"/> this IPTC behaves as instance of</summary>
+        ''' <summary>Gets instance of <see cref="Exif"/> this IFD behaves as instance of</summary>
         ''' <value>Setting this property changes <see cref="Exif"/> property of all subsequent IFDs in <see cref="Following"/> linked-list and of all subIFDs in <see cref="SubIFDs"/>.</value>
         ''' <returns>Instance of the <see cref="MetadataT.ExifT.Exif"/> class this instance is associated with; or null if this instance is not associated with instance of <see cref="Exif"/>.</returns>
         ''' <exception cref="ArgumentException">Internal only: Value being set differs from value of the <see cref="Exif"/> property of <see cref="Previous"/> IFD (when <see cref="Previous"/> is non-null)</exception>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public Property Exif() As Exif
             Get
                 Return _Exif
@@ -523,7 +527,7 @@ Namespace MetadataT.ExifT
         Private _Records As New RecordDic(False, True)
         ''' <summary>Records in this Image File Directory</summary>
         ''' <remarks>Record cannot be removed from or replaced in the collection when it points to subIFD. The <see cref="OperationCanceledException"/> is thrown in case of attempt to do so.</remarks>
-        <CLSCompliant(False)> _
+        <CLSCompliant(False), Browsable(False)> _
         Public ReadOnly Property Records() As RecordDic
             Get
                 Return _Records
@@ -536,7 +540,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
         ''' <exception cref="OperationCanceledException">In setter: Such record alerady exists and points to subIFD.</exception>
         ''' <seelaso cref="Records"/>
-        <CLSCompliant(False)> _
+        <CLSCompliant(False), Browsable(False)> _
         Default Public Overridable Property Record(ByVal Type As ExifTagFormat) As ExifRecord
             Get
                 If Type Is Nothing Then Throw New ArgumentNullException("Type")
@@ -578,7 +582,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="KeyNotFoundException">In getter: <paramref name="key"/> is not member of <see cref="GetRecordKeys"/></exception>
         ''' <exception cref="OperationCanceledException">In setter: Record with given <paramref name="key"/> already exists and points to subIFD.</exception>
         ''' <seelaso cref="GetRecordKeys"/><seelaso cref="Records"/>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Default Public Property Record(ByVal key As Integer) As ExifRecord
             Get
                 If key < UShort.MinValue OrElse key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.ExifRecordKeyMustBeValidUInt16Value)
@@ -609,6 +613,8 @@ Namespace MetadataT.ExifT
         ''' <para>This property is not initialized automatically when instance of <see cref="IFD"/> is created directly. Code that wants to utilize linked lists of IFDs must initialize this property itself - such as <see cref="MetadataT.ExifT.Exif"/> does.</para></remarks>
         ''' <exception cref="ArgumentException">Value being set have current instance as one of its <see cref="Following"/> IFDs =or= Value being set has non-null value of the <see cref="Previous"/> property. =or= Value being set has non-null <see cref="Exif"/> property which is different of <see cref="Exif"/> of this instance (including situation when <see cref="Exif"/> property of this instance is null and <see cref="Exif"/> property of value being set is non-null). =or= <see cref="Exif"/> is not null and value being set is already used as IFD at another position in <see cref="Exif"/>.</exception>
         ''' <exception cref="TypeMismatchException">Value being set is of type <see cref="SubIFD"/> -or- <see cref="Exif"/> is not null and this instance if <see cref="Exif">Exif</see>.<see cref="MetadataT.ExifT.Exif.IFD0">IFD0</see> and value being set is not of type <see cref="IFDMain"/>.</exception>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public Property Following() As Ifd
             Get
                 Return _Following
@@ -655,6 +661,8 @@ Namespace MetadataT.ExifT
         ''' <returns><see cref="IFD"/> which precedes current IFD; null when this IFD is first in linked-list of IFDs</returns>
         ''' <value>Set accessor of this property is not publicly accessible, so it cannot be set diretly. This property is set when instance is passed to <see cref="Following"/> property (and unset when it is removed from there).</value>
         ''' <remarks>Internal note: Value being set of this property is nohow checked. You should always ensure that <see cref="Following"/> of previous IFD is same as <see cref="Previous"/> of following IFD.</remarks>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public Property Previous() As Ifd
             Get
                 Return _Previous
@@ -672,7 +680,7 @@ Namespace MetadataT.ExifT
         ''' Its <see cref="SubIFD.Exif"/>, <see cref="SubIFD.ParentIFD"/> and <see cref="SubIFD.ParentRecord"/> is set to appropriate values. If this instance contains record which will become parent record of subIFD being added it must be of type <see cref="ExifDataTypes.UInt16"/>. If there is no record with given number, such record is created. If any constraint is violated <see cref="OperationCanceledException"/> is thrown.
         ''' <para>When item is removed its <see cref="SubIFD.Exif"/>, <see cref="SubIFD.ParentIFD"/> are set to null.</para></remarks>
         ''' <seelaso cref="OnSubIFDAddedAlways"/>, <seelaso cref="OnSubIFDAddingAlways"/>, <seelaso cref="OnSubIFDRemovedAlways"/>
-        <CLSCompliant(False)> _
+        <CLSCompliant(False), Browsable(False)> _
         Public ReadOnly Property SubIFDs() As SubIFDDic
             <DebuggerStepThroughAttribute()> Get
                 Return _SubIFDs
@@ -684,7 +692,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="KeyNotFoundException">In getter: <paramref name="Key"/> does not exist (is not present in <see cref="GetSubIFDsKeys"/>)</exception>
         ''' <remarks>You can set value for key which is not present in <see cref="GetSubIFDsKeys"/>. If the key is present, record with this number must be of type <see cref="ExifDataTypes.UInt32"/></remarks>
         ''' <seelaso cref="SubIFDs"/><seelaso cref="GetSubIFDsKeys"/>
-        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced), Browsable(False)> _
         Public Property SubIFD(ByVal Key As Integer) As SubIfd
             Get
                 If Key < UShort.MinValue OrElse Key > UShort.MaxValue Then Throw New ArgumentOutOfRangeException("Key", ResourcesT.Exceptions.SubIFDKeyMustBeValidUInt16Value)
@@ -711,12 +719,63 @@ Namespace MetadataT.ExifT
         Private _SubIFDs As New SubIFDDic(False, True)
 #End Region
 
+#Region "Clone"
+        ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+        ''' <returns>A new object that is a copy of this instance.</returns>
+        ''' <remarks>Use type-safe <see cref="Clone"/> instead.</remarks>
+        ''' <version version="1.5.2">Method added</version>
+        <Obsolete("Use type-safe Clone instead")> _
+        Private Function ICloneable_Clone() As Object Implements System.ICloneable.Clone
+            Return Clone()
+        End Function
 
+        ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+        ''' <returns>A new object that is a copy of this instance</returns>
+        ''' <remarks>This clones current IFD and all its subIFDs. Resulting subIFD is not bound to <see cref="Exif"/> and has no <see cref="Previous"/> and <see cref="Following"/>.</remarks>
+        ''' <version version="1.5.2">Method added</version>
+        Public Overridable Function Clone() As Ifd Implements ICloneable(Of Ifd).Clone
+            Dim ret As New Ifd
+            CopyRecords(Me, ret)
+            CopySubIfds(Me, ret)
+            Return ret
+        End Function
+        ''' <summary>Copies all records from one <see cref="Ifd"/> to another</summary>
+        ''' <param name="Source">Source IFD</param>
+        ''' <param name="Target">Target IFD</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <version version="1.5.2">Method added</version>
+        Protected Shared Sub CopyRecords(ByVal Source As Ifd, ByVal Target As Ifd)
+            If Source Is Nothing Then Throw New ArgumentNullException("Source")
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            For Each iRecord In Source.Records
+                Target.Records.Add(iRecord.Key, iRecord.Value)
+            Next
+        End Sub
+        ''' <summary>Copies all subIFDs from one <see cref="Ifd"/> to another. Copies IFDs following any subIFD and subIFDs of subIFDs. Uses the <see cref="Clone"/> method.</summary>
+        ''' <param name="Source">Source IFD</param>
+        ''' <param name="Target">Target IFD</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <version version="1.5.2">Method added</version>
+        Protected Shared Sub CopySubIfds(ByVal Source As Ifd, ByVal Target As Ifd)
+            For Each iSubIfd In Source.SubIFDs
+                Target.SubIFDs.Add(iSubIfd.Key, iSubIfd.Value.Clone)
+                Dim sFollowing As Ifd = iSubIfd.Value.Following
+                Dim tFolowing As Ifd = Target
+                While sFollowing IsNot Nothing
+                    tFolowing.Following = sFollowing.Clone
+                    tFolowing = tFolowing.Following
+                    sFollowing = sFollowing.Following
+                End While
+            Next
+        End Sub
+#End Region
     End Class
 
 
 #Region "IFD classes"
     ''' <summary>Exif main and thumbnail IFD</summary>
+    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added for <see cref="IfdMain.ExifSubIFD"/> and <see cref="IfdMain.GPSSubIFD"/>.</version>
     Partial Class IfdMain : Inherits Ifd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
@@ -789,12 +848,19 @@ Namespace MetadataT.ExifT
             End If
             If Reader.Settings.ReadThumbnail AndAlso HasThumbnail Then
                 If Not Reader.Settings.OnItem(Me, ExifReader.ReaderItemKinds.Thumbnail, True) Then 'Event
-                    Dim ths = GetThumbnailRawStream(Reader.ExifReader, Reader.Settings)
-                    ReDim _ThumbnailData(ths.Length - 1)
-                    Dim pos As Integer = 0
-                    While pos < _ThumbnailData.Length
-                        pos += ths.Read(_ThumbnailData, pos, _ThumbnailData.Length - pos)
-                    End While
+                    Dim ths As IO.Stream = Nothing
+                    Try
+                        ths = GetThumbnailRawStream(Reader.ExifReader, Reader.Settings)
+                    Catch ex As IO.InvalidDataException
+                        Reader.Settings.OnError(ex)
+                    End Try
+                    If ths IsNot Nothing Then
+                        ReDim _ThumbnailData(ths.Length - 1)
+                        Dim pos As Integer = 0
+                        While pos < _ThumbnailData.Length
+                            pos += ths.Read(_ThumbnailData, pos, _ThumbnailData.Length - pos)
+                        End While
+                    End If
                 End If
             End If
             ByteOrder = Reader.ExifReader.ByteOrder
@@ -823,6 +889,8 @@ Namespace MetadataT.ExifT
         ''' <summary>Gets or sets Exif IFD nested within this IFD</summary>
         ''' <returns>Exif IFD nested in this IFD or null</returns>
         ''' <value>You can set or replace Exif SubIFD by setting this property. By setting it to null you can remove it.</value>
+        ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added</version>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Property ExifSubIFD() As IfdExif
             Get
                 If Me.SubIFDs.ContainsKey(Tags.ExifIFD) Then _
@@ -841,6 +909,8 @@ Namespace MetadataT.ExifT
         ''' <summary>Gets or sets GPS IFD nested within this IFD</summary>
         ''' <returns>GPS IFD nested in this IFD or null</returns>
         ''' <value>You can set or replace GPS SubIFD by setting this property. By setting it to null you can remove it.</value>
+        ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added</version>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Property GPSSubIFD() As IfdGps
             Get
                 If Me.SubIFDs.ContainsKey(Tags.GPSIFD) Then _
@@ -863,6 +933,8 @@ Namespace MetadataT.ExifT
         ''' In such case thumbnail can be obtained using either <see cref="GetThumbnailRawStream"/> or <see cref="GetThumbnail"/>, but you must have acces to original <see cref="ExifReader"/> which was source for this instance.</remarks>
         ''' <seealso cref="ThumbnailData"/><seealso cref="Thumbnail"/>
         ''' <seelso cref="GetThumbnail"/><seealso cref="GetThumbnailRawStream"/>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public ReadOnly Property HasThumbnail() As Boolean
             Get
                 If Me.Compression.HasValue Then
@@ -883,6 +955,8 @@ Namespace MetadataT.ExifT
         ''' <summary>Gets thumbnail data as array of bytes</summary>
         ''' <returns>Image data of thumbnail embdeded in this IFD or null when thumbnail is not present or have not been parsed out.</returns>
         ''' <seealso cref="Thumbnail"/><seealso cref="GetThumbnailRawStream"/>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public ReadOnly Property ThumbnailData() As Byte()
             Get
                 Return _ThumbnailData
@@ -904,14 +978,17 @@ Namespace MetadataT.ExifT
         ''' <returns>Stream to read image data. Format of image data depends on <see cref="Compression"/> and if <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> also depends on <see cref="PhotometricInterpretation"/>. Returns null if <see cref="HasThumbnail"/> is false.</returns>
         ''' <exception cref="InvalidOperationException"><see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and lengths of <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> differs.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+        ''' <exception cref="IO.InvalidDataException">Thumbnail size and offsets are specified in such way that thumbnail data are located otside of Exif stream.</exception>
         ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
         ''' <seelaso cref="GetThumbnail"/><seealso cref="ThumbnailData"/>
+        ''' <version version="1.5.2"><see cref="IO.InvalidDataException"/> added</version>
         Private Function GetThumbnailRawStream(ByVal Reader As ExifReader, ByVal Context As ExifReader.ExifReaderContext) As IO.Stream
             If Context Is Nothing Then Throw New ArgumentException("Context")
             If Not Me.HasThumbnail Then Return Nothing
             If Reader Is Nothing Then Throw New ArgumentNullException("Reader")
             Select Case Compression
                 Case CompressionValues.JPEG
+                    If Me.JPEGInterchangeFormat + Me.JPEGInterchangeFormatLength > Reader.Stream.Length Then Throw New IO.InvalidDataException(ResourcesT.Exceptions.JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream)
                     Dim ret As New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.JPEGInterchangeFormat, Me.JPEGInterchangeFormatLength) _
                         With {.Position = 0}
                     Context.OnItem(Me, ExifReader.ReaderItemKinds.JpegThumbnail, , ret, , Me.JPEGInterchangeFormat, Me.JPEGInterchangeFormatLength) 'Event
@@ -920,6 +997,7 @@ Namespace MetadataT.ExifT
                     If Me.StripOffsets.Length <> Me.StripByteCounts.Length Then Throw New InvalidOperationException(ResourcesT.Exceptions.ForUncompressedThumbnailStripOffsetsAndStripByteCountsMustHaveSameLength)
                     Dim Streams As New List(Of IO.Stream)
                     For i = 0 To Me.StripOffsets.Length - 1
+                        If Me.StripOffsets(i) + Me.StripByteCounts(i) > Reader.Stream.Length Then Throw New IO.InvalidDataException(ResourcesT.Exceptions.TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream)
                         Dim SubStream As New IOt.ConstrainedReadOnlyStream(Reader.Stream, Me.StripOffsets(i), Me.StripByteCounts(i))
                         Context.OnItem(Me, ExifReader.ReaderItemKinds.TiffThumbnailPart, , SubStream, , Me.StripOffsets(i), Me.StripByteCounts(i)) 'Event
                         Streams.Add(SubStream)
@@ -930,13 +1008,16 @@ Namespace MetadataT.ExifT
             End Select
             Return Nothing
         End Function
+
         ''' <summary>Gets stream that contains raw thumbnail data</summary>
         ''' <param name="Reader">Original reader that was used to retrieve all exif information from image. The reader must contain exactly same data this IFD was constructed from otherwise corrupted thumbnail image may be returned.</param>
         ''' <returns>Stream to read image data. Format of image data depends on <see cref="Compression"/> and if <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> also depends on <see cref="PhotometricInterpretation"/>. Returns null if <see cref="HasThumbnail"/> is false.</returns>
         ''' <exception cref="InvalidOperationException"><see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and lengths of <see cref="StripOffsets"/> and <see cref="StripByteCounts"/> differs.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+        ''' <exception cref="IO.InvalidDataException">Thumbnail size and offsets are specified in such way that thumbnail data are located otside of Exif stream.</exception>
         ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
         ''' <seelaso cref="GetThumbnail"/><seealso cref="ThumbnailData"/>
+        ''' <version version="1.5.2"><see cref="IO.InvalidDataException"/> added</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Function GetThumbnailRawStream(ByVal Reader As ExifReader) As IO.Stream
             Return GetThumbnailRawStream(Reader, New ExifReader.ExifReaderContext(Reader, New ExifReaderSettings))
@@ -947,8 +1028,10 @@ Namespace MetadataT.ExifT
         ''' -or- <see cref="Compression"/> is <see cref="CompressionValues.uncompressed"/> and <see cref="PhotometricInterpretation"/> is not set or is not member of <see cref="PhotometricInterpretationValues"/> -or- 
         ''' Image data are invalid.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Reader"/> is null.</exception>
+        ''' <exception cref="IO.InvalidDataException">Thumbnail size and offsets are specified in such way that thumbnail data are located otside of Exif stream.</exception>
         ''' <remarks>In order tu succsefully retrieve image thumbnail data the <paramref name="Reader"/>.<see cref="ExifReader.Stream"/> must be the same strem this IFD was constructed from and must not be closed.</remarks>
         ''' <seelaso cref="GetThumbnailRawStream"/><seealso cref="Thumbnail"/>
+        ''' <version version="1.5.2"><see cref="IO.InvalidDataException"/> added</version>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Function GetThumbnail(ByVal Reader As ExifReader) As Drawing.Bitmap
             Dim ImageData = GetThumbnailRawStream(Reader)
@@ -1006,9 +1089,82 @@ Namespace MetadataT.ExifT
                 Case Else : Throw New InvalidOperationException(String.Format(ResourcesT.Exceptions.IsNotMemberOf1, "Compression", "CompressionValues"), New InvalidEnumArgumentException("Compression", Compression, GetType(CompressionValues)))
             End Select
         End Function
+        ''' <summary>Changes thumbnail in this IFD. Do not use with IFD0.</summary>
+        ''' <param name="Image">Image to use as thumbnail</param>
+        ''' <param name="ImageFormat">Format of thumbnail</param>
+        ''' <remarks><para>Setting thumbnail on IFD causes all records and subIFDs to be removed and replaced. Do not use this method with 1ss IFD (IFD0) of image or you will loose all the Exif data in <see cref="ExifSubIFD"/>.</para>
+        ''' <para>This method is not CLS-compliant, but there is CLS-compliant overload.</para></remarks>
+        <CLSCompliant(False)> _
+        Public Sub SetThumbnail(ByVal Image As Drawing.Image, ByVal ImageFormat As CompressionValues)
+            If Image Is Nothing Then Throw New ArgumentNullException("Image")
+            Select Case ImageFormat
+                Case CompressionValues.JPEG
+                    Me.Records.Clear()
+                    Me.SubIFDs.Clear()
+                    Dim JpegDataStream As New IO.MemoryStream
+                    Image.Save(JpegDataStream, Drawing.Imaging.ImageFormat.Jpeg)
+                    JpegDataStream.Position = 0
+                    Me.JPEGInterchangeFormat = 0
+                    Me.JPEGInterchangeFormatLength = JpegDataStream.Length
+                    Dim JData = JpegDataStream.GetBuffer
+                    If JData.Length <> JpegDataStream.Length Then
+                        Dim JData2(JpegDataStream.Length - 1) As Byte
+                        Array.ConstrainedCopy(JData, 0, JData2, 0, JData2.Length)
+                        JData = JData2
+                    End If
+                    Me._ThumbnailData = JData
+                    _ThumbnailChanged = True
+                Case CompressionValues.uncompressed
+                    Dim ms As New IO.MemoryStream
+                    Image.Save(ms, Drawing.Imaging.ImageFormat.Tiff)
+                    ms.Position = 0
+                    Dim ThumbNailExif = Exif.Load(ms)
+                    Me.Records.Clear()
+                    Me._ThumbnailData = Nothing
+                    For Each rec In ThumbNailExif.IFD0.Records
+                        Me.Records.Add(rec.Key, rec.Value)
+                    Next
+                    Me._ThumbnailData = ThumbNailExif.IFD0.ThumbnailData
+                    Me.SubIFDs.Clear()
+                    For Each ESubIfd In ThumbNailExif.IFD0.SubIFDs
+                        Me.SubIFDs.Add(ESubIfd.Key, ESubIfd.Value.Clone)
+                    Next
+                    _ThumbnailChanged = True
+                Case Else : Throw New InvalidEnumArgumentException("ImageFormat", ImageFormat, ImageFormat.GetType)
+            End Select
+        End Sub
+        ''' <summary>Contains value of the <see cref="ThumbnailChanged"/></summary>
+        Private _ThumbnailChanged As Boolean
+        ''' <summary>Gets value indicating if thumbnail was changed</summary>
+        ''' <returns>True when thumbnail was changed using <see cref="SetThumbnail"/></returns>
+        Public ReadOnly Property ThumbnailChanged() As Boolean 'TODO: Handle during save
+            Get
+                Return _ThumbnailChanged
+            End Get
+        End Property
+        ''' <summary>Changes thumbnail in this IFD. Do not use with IFD0. (CLS-compliant overload)</summary>
+        ''' <param name="Image">Image to use as thumbnail</param>
+        ''' <param name="UseJpegFormat">True to use <see cref="CompressionValues.JPEG"/>, false to use <see cref="CompressionValues.uncompressed"/></param>
+        ''' <remarks><para>Setting thumbnail on IFD causes all records and subIFDs to be removed and replaced. Do not use this method with 1ss IFD (IFD0) of image or you will loose all the Exif data in <see cref="ExifSubIFD"/>.</para></remarks>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Sub SetThumbnail(ByVal Image As Drawing.Image, ByVal UseJpegFormat As Boolean)
+            SetThumbnail(Image, If(UseJpegFormat, CompressionValues.JPEG, CompressionValues.uncompressed))
+        End Sub
 #End Region
+        ''' <summary>Creates a new object that is a copy of the current instance.</summary>
+        ''' <returns>A new object that is a copy of this instance</returns>
+        ''' <remarks>This clones current IFD and all its subIFDs. Resulting subIFD is not bound to <see cref="Exif"/> and has no <see cref="Previous"/> and <see cref="Following"/>. <see cref="ThumbnailData"/> is cloned as well and <see cref="ThumbnailChanged"/> is set to true.</remarks>
+        ''' <version version="1.5.2">Method added</version>
+        Public Overrides Function Clone() As Ifd
+            Dim ret As IfdMain = MyBase.Clone()
+            ret._ThumbnailData = Me._ThumbnailData
+            ret._ThumbnailChanged = True
+            Return ret
+        End Function
     End Class
     ''' <summary>Exif Sub IFD</summary>
+    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
+    ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added for <see cref="IfdExif.InteropSubIFD"/>.</version>
     Partial Class IfdExif : Inherits SubIfd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
@@ -1060,6 +1216,8 @@ Namespace MetadataT.ExifT
         ''' <summary>Gets or sets interoperability IFD nested within this IFD</summary>
         ''' <returns>Interoperability IFD nested in this ExifSubIFD or null</returns>
         ''' <value>You can set or replace interoperability SubIFD by setting this property. By setting it to null you can remove it.</value>
+        ''' <version version="1.5.2"><see cref="TypeConverterAttribute"/>(<see cref="System.ComponentModel.ExpandableObjectConverter"/>) added</version>
+        <TypeConverter(GetType(ExpandableObjectConverter))> _
         Public Property InteropSubIFD() As IfdInterop
             Get
                 If Me.SubIFDs.ContainsKey(Tags.InteroperabilityIFD) Then _
@@ -1155,6 +1313,7 @@ Namespace MetadataT.ExifT
         End Property
     End Class
     ''' <summary>Represents any Exif Sub-IFD (an IFD embdeded somewhere in IFD block and pointed by some tag from another IFD)</summary>
+    ''' <version stage="Nightly" version="1.5.2">Several <see cref="BrowsableAttribute"/>(false) added for properties that should not be shown in property grid</version>
     Public Class SubIfd : Inherits Ifd
         ''' <summary>CTor - empty IFD</summary>
         Public Sub New()
@@ -1174,6 +1333,8 @@ Namespace MetadataT.ExifT
         ''' <returns>IFD this subIFD is nested within or null when this subIFD have not been associated with parent IFD yet.</returns>
         ''' <value>Setter of this property is not bublicly accessible. Value of this property is set when subIFD is associted with parent IFD.</value>
         ''' <seelaso cref="ParentRecord"/>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public Property ParentIFD() As Ifd
             <DebuggerStepThrough()> Get
                 Return _ParentIFD
@@ -1194,7 +1355,7 @@ Namespace MetadataT.ExifT
         ''' <remarks>This property is of type which is not CLS-compliant. Function <see cref="getParentRecord"/> returns value of this property in CLS-compliant type.
         ''' <para>When some Exif tag is referenced as parent record of some subIFD its value is meaningless - actually it is address of start of subIFD in Exif stream which can change after saving. Although you can change value of such tag, it has no effect. Value of this the tag is automatically computed when Exif is about to be saved.</para></remarks>
         ''' <seelaso cref="getParentRecord"/><seelaso cref="ParentIFD"/>
-        <CLSCompliant(False)> _
+        <CLSCompliant(False), Browsable(False)> _
         Public Property ParentRecord() As UShort
             <DebuggerStepThrough()> Get
                 Return _ParentRecord
@@ -1216,6 +1377,8 @@ Namespace MetadataT.ExifT
         ''' <summary>Descriptive name of this Sub IFD</summary>
         ''' <returns>Usually contain an empty string for non starndard Sub IFDs and comon English name for standard Sub IFDs. For non-standard Sub IFDs only when library have some ideda what can this Sub IFD mean this Sub IFD is captioned somehow</returns>
         ''' <remarks>Currently there are no Non Standard Sub IFDs that have any caption, Captions of standard Sub IFDs are public constants declared in <see cref="ExifReader"/></remarks>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>(false) added</version>
+        <Browsable(False)> _
         Public Property Desc() As String
             Get
                 Return _Desc

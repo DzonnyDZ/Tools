@@ -1,0 +1,2 @@
+﻿Note that some files from Tools project are linked here as links. But those files are actually build only into the Tools project.
+Here are only for convenience (to use resource refactor). In vbproj file, there is condition 0==1 on the files.

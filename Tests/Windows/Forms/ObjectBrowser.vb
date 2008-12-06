@@ -35,7 +35,7 @@ Namespace WindowsT.FormsT
             cmbAccess.Items.AddRange(New Object() {ObjectModifiers.Public, ObjectModifiers.Friend, ObjectModifiers.Protected, ObjectModifiers.ProtectedFriend, ObjectModifiers.FriendProtected, ObjectModifiers.Private, ObjectModifiers.None})
             cmbType.SelectedIndex = 0
             cmbAccess.SelectedIndex = 0
-            AddHandler ReflectionT.ImageRequested, AddressOf CodeImages_ImageRequested
+            AddHandler CodeImages.ImageRequested, AddressOf CodeImages_ImageRequested
         End Sub
 
         Private Sub cmdShow_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdShow.Click
@@ -52,7 +52,7 @@ Namespace WindowsT.FormsT
         End Sub
         ''' <summary>Kye of last image caught by <see cref="CodeImages_ImageRequested"/></summary>
         Private LastCode As String
-        ''' <summary>handles the <see cref="ReflectionT.ImageRequested"/> event</summary>
+        ''' <summary>handles the <see cref="CodeImages.ImageRequested"/> event</summary>
         ''' <param name="Image">Image to be returned</param>
         ''' <param name="ObjectType">Type of object for image</param>
         ''' <param name="Modifiers">Object modifiers for  image</param>

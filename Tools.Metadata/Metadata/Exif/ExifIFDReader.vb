@@ -182,6 +182,7 @@ Namespace MetadataT.ExifT
     End Class
 
     ''' <summary>Represents read-only directory entry of Exif data</summary>
+    ''' <version version="1.5.2" stage="Nightly">Updated to use 2×32 bit <see cref="SRational"/> and <see cref="URational"/> instead of 2×16 bits ones.</version>
     Public Class DirectoryEntry
         ''' <summary>Contains value of the <see cref="Tag"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Tag As UShort
@@ -261,6 +262,7 @@ Namespace MetadataT.ExifT
         ''' <param name="Components">Number of components to be read</param>
         ''' <returns>Data read from buffer. If <paramref name="Components"/> is 1 scalar of specified type is returned, <see cref="Array"/> otherwise with exceptions: 1 component of type <see cref="ExifDataTypes.ASCII"/> resuts to <see cref="Char"/>, more components results to <see cref="String"/>; <see cref="ExifDataTypes.NA"/> always results to <see cref="Array"/> of <see cref="Byte"/>s</returns>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/></exception>
+        ''' <version version="1.5.2">Updated to use 2×32 bits <see cref="SRational"/> and <see cref="URational"/> instead fo 2×16 bits.</version>
         Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAlign, ByVal Context As ExifReader.ExifReaderContext) As Object
             Dim Str As New MemoryStream(Buffer, False)
             Str.Position = 0
@@ -296,11 +298,11 @@ Namespace MetadataT.ExifT
                     End If
                 Case ExifDataTypes.URational
                     If Components = 1 Then
-                        Return New URational(r.ReadUInt16, r.ReadUInt16)
+                        Return New URational(r.ReadUInt32, r.ReadUInt32)
                     Else
                         Dim ret(Components - 1) As URational
                         For i As Integer = 1 To Components
-                            ret(i - 1) = New URational(r.ReadUInt16, r.ReadUInt16)
+                            ret(i - 1) = New URational(r.ReadUInt32, r.ReadUInt32)
                         Next i
                         Return ret
                     End If
@@ -338,11 +340,11 @@ Namespace MetadataT.ExifT
                     End If
                 Case ExifDataTypes.SRational
                     If Components = 1 Then
-                        Return New SRational(r.ReadInt16, r.ReadInt16)
+                        Return New SRational(r.ReadInt32, r.ReadInt32)
                     Else
                         Dim ret(Components - 1) As SRational
                         For i As Integer = 1 To Components
-                            ret(i - 1) = New SRational(r.ReadInt16, r.ReadInt16)
+                            ret(i - 1) = New SRational(r.ReadInt32, r.ReadInt32)
                         Next i
                         Return ret
                     End If

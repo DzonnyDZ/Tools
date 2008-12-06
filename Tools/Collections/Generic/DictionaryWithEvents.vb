@@ -13,9 +13,10 @@ Namespace CollectionsT.GenericT
     ''' <seealso cref="ListWithEvents(Of T)"/>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2"><see cref="IEnumerable(Of T)"/>[<typeparamref name="TValue"/>] implemented</version>
     <DebuggerDisplay("Count = {Count}")> _
         Public Class DictionaryWithEvents(Of TKey, TValue)
-        Implements IDictionary, IDictionary(Of TKey, TValue)
+        Implements IDictionary, IDictionary(Of TKey, TValue), IEnumerable(Of TValue)
         Implements IReportsChange
 #Region "CTors"
         ''' <summary>CTor</summary>
@@ -1329,6 +1330,12 @@ Namespace CollectionsT.GenericT
 #End Region
 
 
+        ''' <summary>Returns an <see cref="IEnumerator(Of TValue)" /> to enumerate values in dictionary</summary>
+        ''' <returns>An <see cref="IEnumerator(Of TValue)" /> object for the <see cref="DictionaryWithEvents" /> object.</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetValuesEnumerator() As System.Collections.Generic.IEnumerator(Of TValue) Implements System.Collections.Generic.IEnumerable(Of TValue).GetEnumerator
+            Return Me.Values.GetEnumerator
+        End Function
     End Class
     '''' <summary>Describes acction on collection</summary>
     'Public Enum CollectionChangeAction

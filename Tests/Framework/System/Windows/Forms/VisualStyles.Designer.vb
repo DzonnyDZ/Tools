@@ -31,6 +31,7 @@
             Me.cmdPlay = New System.Windows.Forms.Button
             Me.cmdPause = New System.Windows.Forms.Button
             Me.nudSpeed = New System.Windows.Forms.NumericUpDown
+            Me.panDrawEx = New System.Windows.Forms.Panel
             Me.flpDrwBg = New System.Windows.Forms.FlowLayoutPanel
             Me.panBg16 = New System.Windows.Forms.Panel
             Me.panBg32 = New System.Windows.Forms.Panel
@@ -45,7 +46,6 @@
             Me.lblState = New System.Windows.Forms.Label
             Me.txtError = New System.Windows.Forms.TextBox
             Me.tmrPlay = New System.Windows.Forms.Timer(Me.components)
-            Me.panDrawEx = New System.Windows.Forms.Panel
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -141,6 +141,14 @@
             Me.nudSpeed.TabIndex = 2
             Me.nudSpeed.Value = New Decimal(New Integer() {2, 0, 0, 0})
             '
+            'panDrawEx
+            '
+            Me.panDrawEx.Dock = System.Windows.Forms.DockStyle.Top
+            Me.panDrawEx.Location = New System.Drawing.Point(0, 83)
+            Me.panDrawEx.Name = "panDrawEx"
+            Me.panDrawEx.Size = New System.Drawing.Size(409, 132)
+            Me.panDrawEx.TabIndex = 0
+            '
             'flpDrwBg
             '
             Me.flpDrwBg.AutoSize = True
@@ -208,14 +216,14 @@
             Me.lblClassNameI.AutoSize = True
             Me.lblClassNameI.Location = New System.Drawing.Point(3, 0)
             Me.lblClassNameI.Name = "lblClassNameI"
-            Me.lblClassNameI.Size = New System.Drawing.Size(65, 13)
+            Me.lblClassNameI.Size = New System.Drawing.Size(61, 13)
             Me.lblClassNameI.TabIndex = 0
-            Me.lblClassNameI.Text = "CLass name"
+            Me.lblClassNameI.Text = "Class name"
             '
             'lblClassName
             '
             Me.lblClassName.AutoSize = True
-            Me.lblClassName.Location = New System.Drawing.Point(74, 0)
+            Me.lblClassName.Location = New System.Drawing.Point(70, 0)
             Me.lblClassName.Name = "lblClassName"
             Me.lblClassName.Size = New System.Drawing.Size(0, 13)
             Me.lblClassName.TabIndex = 1
@@ -223,7 +231,7 @@
             'lblPartI
             '
             Me.lblPartI.AutoSize = True
-            Me.lblPartI.Location = New System.Drawing.Point(80, 0)
+            Me.lblPartI.Location = New System.Drawing.Point(76, 0)
             Me.lblPartI.Name = "lblPartI"
             Me.lblPartI.Size = New System.Drawing.Size(26, 13)
             Me.lblPartI.TabIndex = 2
@@ -232,7 +240,7 @@
             'lblPart
             '
             Me.lblPart.AutoSize = True
-            Me.lblPart.Location = New System.Drawing.Point(112, 0)
+            Me.lblPart.Location = New System.Drawing.Point(108, 0)
             Me.lblPart.Name = "lblPart"
             Me.lblPart.Size = New System.Drawing.Size(0, 13)
             Me.lblPart.TabIndex = 3
@@ -240,7 +248,7 @@
             'lblStateI
             '
             Me.lblStateI.AutoSize = True
-            Me.lblStateI.Location = New System.Drawing.Point(118, 0)
+            Me.lblStateI.Location = New System.Drawing.Point(114, 0)
             Me.lblStateI.Name = "lblStateI"
             Me.lblStateI.Size = New System.Drawing.Size(32, 13)
             Me.lblStateI.TabIndex = 4
@@ -249,7 +257,7 @@
             'lblState
             '
             Me.lblState.AutoSize = True
-            Me.lblState.Location = New System.Drawing.Point(156, 0)
+            Me.lblState.Location = New System.Drawing.Point(152, 0)
             Me.lblState.Name = "lblState"
             Me.lblState.Size = New System.Drawing.Size(0, 13)
             Me.lblState.TabIndex = 5
@@ -271,14 +279,6 @@
             'tmrPlay
             '
             Me.tmrPlay.Interval = 2000
-            '
-            'panDrawEx
-            '
-            Me.panDrawEx.Dock = System.Windows.Forms.DockStyle.Top
-            Me.panDrawEx.Location = New System.Drawing.Point(0, 83)
-            Me.panDrawEx.Name = "panDrawEx"
-            Me.panDrawEx.Size = New System.Drawing.Size(409, 132)
-            Me.panDrawEx.TabIndex = 0
             '
             'frmVisualStylesTest
             '

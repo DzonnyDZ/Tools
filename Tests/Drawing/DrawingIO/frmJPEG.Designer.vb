@@ -39,6 +39,8 @@ Namespace DrawingT.DrawingIOt
             Me.flpTop = New System.Windows.Forms.FlowLayoutPanel
             Me.nudSize = New System.Windows.Forms.NumericUpDown
             Me.chkFujiFilmFinePix2800Zoom = New System.Windows.Forms.CheckBox
+            Me.cmdExportExif = New System.Windows.Forms.Button
+            Me.cmdExportExifWithRewrite = New System.Windows.Forms.Button
             Me.sfdSave = New System.Windows.Forms.SaveFileDialog
             Me.splSplit = New System.Windows.Forms.SplitContainer
             Me.tvwResults = New System.Windows.Forms.TreeView
@@ -86,6 +88,20 @@ Namespace DrawingT.DrawingIOt
             Me.chkASCII = New System.Windows.Forms.CheckBox
             Me.tapEvents = New System.Windows.Forms.TabPage
             Me.txtEvents = New System.Windows.Forms.TextBox
+            Me.tapExif = New System.Windows.Forms.TabPage
+            Me.splExifBig = New System.Windows.Forms.SplitContainer
+            Me.splExifLeft = New System.Windows.Forms.SplitContainer
+            Me.fraMain = New System.Windows.Forms.GroupBox
+            Me.prgMain = New System.Windows.Forms.PropertyGrid
+            Me.fraThumbnail = New System.Windows.Forms.GroupBox
+            Me.prgThumbnail = New System.Windows.Forms.PropertyGrid
+            Me.splExifRight = New System.Windows.Forms.SplitContainer
+            Me.fraExif = New System.Windows.Forms.GroupBox
+            Me.prgExif = New System.Windows.Forms.PropertyGrid
+            Me.fraGps = New System.Windows.Forms.GroupBox
+            Me.prgGps = New System.Windows.Forms.PropertyGrid
+            Me.sfdExif = New System.Windows.Forms.SaveFileDialog
+            Me.cmdExportExifSave = New System.Windows.Forms.Button
             Me.cmsContext.SuspendLayout()
             Me.tlpI.SuspendLayout()
             Me.flpTop.SuspendLayout()
@@ -99,6 +115,20 @@ Namespace DrawingT.DrawingIOt
             Me.tlpMap.SuspendLayout()
             CType(Me.dgwMap, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.tapEvents.SuspendLayout()
+            Me.tapExif.SuspendLayout()
+            Me.splExifBig.Panel1.SuspendLayout()
+            Me.splExifBig.Panel2.SuspendLayout()
+            Me.splExifBig.SuspendLayout()
+            Me.splExifLeft.Panel1.SuspendLayout()
+            Me.splExifLeft.Panel2.SuspendLayout()
+            Me.splExifLeft.SuspendLayout()
+            Me.fraMain.SuspendLayout()
+            Me.fraThumbnail.SuspendLayout()
+            Me.splExifRight.Panel1.SuspendLayout()
+            Me.splExifRight.Panel2.SuspendLayout()
+            Me.splExifRight.SuspendLayout()
+            Me.fraExif.SuspendLayout()
+            Me.fraGps.SuspendLayout()
             Me.SuspendLayout()
             '
             'cmdParse
@@ -117,32 +147,33 @@ Namespace DrawingT.DrawingIOt
             '
             'ofdOpen
             '
-            Me.ofdOpen.Filter = "JPEG (*.jpg,*.jpeg,*.jfif)|*.jpg;*.jpeg;*.jfif"
+            Me.ofdOpen.DefaultExt = "jpg"
+            Me.ofdOpen.Filter = "JPEG (*.jpg,*.jpeg,*.jfif)|*.jpg;*.jpeg;*.jfif|Exif (*.exif)|*.exif"
             Me.ofdOpen.Title = "Parse JPEG"
             '
             'cmsContext
             '
             Me.cmsContext.Items.AddRange(New System.Windows.Forms.ToolStripItem() {Me.tmiExport})
             Me.cmsContext.Name = "cmsContext"
-            Me.cmsContext.Size = New System.Drawing.Size(152, 26)
+            Me.cmsContext.Size = New System.Drawing.Size(153, 26)
             '
             'tmiExport
             '
             Me.tmiExport.Name = "tmiExport"
-            Me.tmiExport.Size = New System.Drawing.Size(151, 22)
+            Me.tmiExport.Size = New System.Drawing.Size(152, 22)
             Me.tmiExport.Text = "Export to file ..."
             '
             'lblI
             '
             Me.lblI.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.lblI.AutoSize = True
-            Me.lblI.Location = New System.Drawing.Point(22, 0)
+            Me.lblI.Location = New System.Drawing.Point(57, 0)
             Me.lblI.Name = "lblI"
-            Me.lblI.Size = New System.Drawing.Size(503, 26)
+            Me.lblI.Size = New System.Drawing.Size(599, 26)
             Me.lblI.TabIndex = 2
             Me.lblI.Text = "This from tests Tools.DrawingT.IOt.Jpeg, Tools.IOt.BinaryReader, Tools.IOt.Constr" & _
-                "ainedReadOnlyStream, Tools.MathT.LEBE, Tools.MetadataT.ExifT, Toolos.Dr" & _
-                "awingT.MetadataT.IptcT"
+                "ainedReadOnlyStream, Tools.MathT.LEBE, Tools.MetadataT.ExifT, Toolos.DrawingT.Me" & _
+                "tadataT.IptcT"
             Me.lblI.TextAlign = System.Drawing.ContentAlignment.MiddleCenter
             '
             'tlpI
@@ -153,13 +184,13 @@ Namespace DrawingT.DrawingIOt
             Me.tlpI.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpI.Controls.Add(Me.lblI, 0, 0)
             Me.tlpI.Dock = System.Windows.Forms.DockStyle.Bottom
-            Me.tlpI.Location = New System.Drawing.Point(0, 412)
+            Me.tlpI.Location = New System.Drawing.Point(0, 494)
             Me.tlpI.Margin = New System.Windows.Forms.Padding(0)
             Me.tlpI.Name = "tlpI"
             Me.tlpI.RowCount = 1
             Me.tlpI.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
             Me.tlpI.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 26.0!))
-            Me.tlpI.Size = New System.Drawing.Size(547, 26)
+            Me.tlpI.Size = New System.Drawing.Size(713, 26)
             Me.tlpI.TabIndex = 3
             '
             'flpTop
@@ -169,11 +200,14 @@ Namespace DrawingT.DrawingIOt
             Me.flpTop.Controls.Add(Me.cmdParse)
             Me.flpTop.Controls.Add(Me.nudSize)
             Me.flpTop.Controls.Add(Me.chkFujiFilmFinePix2800Zoom)
+            Me.flpTop.Controls.Add(Me.cmdExportExif)
+            Me.flpTop.Controls.Add(Me.cmdExportExifWithRewrite)
+            Me.flpTop.Controls.Add(Me.cmdExportExifSave)
             Me.flpTop.Dock = System.Windows.Forms.DockStyle.Top
             Me.flpTop.Location = New System.Drawing.Point(0, 0)
             Me.flpTop.Margin = New System.Windows.Forms.Padding(0)
             Me.flpTop.Name = "flpTop"
-            Me.flpTop.Size = New System.Drawing.Size(547, 26)
+            Me.flpTop.Size = New System.Drawing.Size(713, 29)
             Me.flpTop.TabIndex = 3
             '
             'nudSize
@@ -197,6 +231,30 @@ Namespace DrawingT.DrawingIOt
                     "e-4)")
             Me.chkFujiFilmFinePix2800Zoom.UseVisualStyleBackColor = True
             '
+            'cmdExportExif
+            '
+            Me.cmdExportExif.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdExportExif.AutoSize = True
+            Me.cmdExportExif.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdExportExif.Location = New System.Drawing.Point(278, 3)
+            Me.cmdExportExif.Name = "cmdExportExif"
+            Me.cmdExportExif.Size = New System.Drawing.Size(79, 23)
+            Me.cmdExportExif.TabIndex = 3
+            Me.cmdExportExif.Text = "&Export Exif ..."
+            Me.cmdExportExif.UseVisualStyleBackColor = True
+            '
+            'cmdExportExifWithRewrite
+            '
+            Me.cmdExportExifWithRewrite.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdExportExifWithRewrite.AutoSize = True
+            Me.cmdExportExifWithRewrite.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdExportExifWithRewrite.Location = New System.Drawing.Point(363, 3)
+            Me.cmdExportExifWithRewrite.Name = "cmdExportExifWithRewrite"
+            Me.cmdExportExifWithRewrite.Size = New System.Drawing.Size(112, 23)
+            Me.cmdExportExifWithRewrite.TabIndex = 3
+            Me.cmdExportExifWithRewrite.Text = "Export Exif &update..."
+            Me.cmdExportExifWithRewrite.UseVisualStyleBackColor = True
+            '
             'splSplit
             '
             Me.splSplit.Dock = System.Windows.Forms.DockStyle.Fill
@@ -212,8 +270,8 @@ Namespace DrawingT.DrawingIOt
             Me.splSplit.Panel2.Controls.Add(Me.prgProperty)
             Me.splSplit.Panel2.Controls.Add(Me.lblToString)
             Me.splSplit.Panel2.Controls.Add(Me.lblType)
-            Me.splSplit.Size = New System.Drawing.Size(533, 354)
-            Me.splSplit.SplitterDistance = 270
+            Me.splSplit.Size = New System.Drawing.Size(699, 433)
+            Me.splSplit.SplitterDistance = 354
             Me.splSplit.TabIndex = 4
             '
             'tvwResults
@@ -222,7 +280,7 @@ Namespace DrawingT.DrawingIOt
             Me.tvwResults.Dock = System.Windows.Forms.DockStyle.Fill
             Me.tvwResults.Location = New System.Drawing.Point(0, 0)
             Me.tvwResults.Name = "tvwResults"
-            Me.tvwResults.Size = New System.Drawing.Size(270, 354)
+            Me.tvwResults.Size = New System.Drawing.Size(354, 433)
             Me.tvwResults.TabIndex = 1
             '
             'prgProperty
@@ -230,7 +288,7 @@ Namespace DrawingT.DrawingIOt
             Me.prgProperty.Dock = System.Windows.Forms.DockStyle.Fill
             Me.prgProperty.Location = New System.Drawing.Point(0, 26)
             Me.prgProperty.Name = "prgProperty"
-            Me.prgProperty.Size = New System.Drawing.Size(259, 328)
+            Me.prgProperty.Size = New System.Drawing.Size(341, 407)
             Me.prgProperty.TabIndex = 0
             '
             'lblToString
@@ -238,7 +296,7 @@ Namespace DrawingT.DrawingIOt
             Me.lblToString.Dock = System.Windows.Forms.DockStyle.Top
             Me.lblToString.Location = New System.Drawing.Point(0, 13)
             Me.lblToString.Name = "lblToString"
-            Me.lblToString.Size = New System.Drawing.Size(259, 13)
+            Me.lblToString.Size = New System.Drawing.Size(341, 13)
             Me.lblToString.TabIndex = 2
             Me.lblToString.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
@@ -248,7 +306,7 @@ Namespace DrawingT.DrawingIOt
             Me.lblType.Font = New System.Drawing.Font("Microsoft Sans Serif", 8.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(238, Byte))
             Me.lblType.Location = New System.Drawing.Point(0, 0)
             Me.lblType.Name = "lblType"
-            Me.lblType.Size = New System.Drawing.Size(259, 13)
+            Me.lblType.Size = New System.Drawing.Size(341, 13)
             Me.lblType.TabIndex = 1
             Me.lblType.TextAlign = System.Drawing.ContentAlignment.TopCenter
             '
@@ -257,11 +315,12 @@ Namespace DrawingT.DrawingIOt
             Me.tabTabs.Controls.Add(Me.tapTree)
             Me.tabTabs.Controls.Add(Me.tapMap)
             Me.tabTabs.Controls.Add(Me.tapEvents)
+            Me.tabTabs.Controls.Add(Me.tapExif)
             Me.tabTabs.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tabTabs.Location = New System.Drawing.Point(0, 26)
+            Me.tabTabs.Location = New System.Drawing.Point(0, 29)
             Me.tabTabs.Name = "tabTabs"
             Me.tabTabs.SelectedIndex = 0
-            Me.tabTabs.Size = New System.Drawing.Size(547, 386)
+            Me.tabTabs.Size = New System.Drawing.Size(713, 465)
             Me.tabTabs.TabIndex = 5
             '
             'tapTree
@@ -270,7 +329,7 @@ Namespace DrawingT.DrawingIOt
             Me.tapTree.Location = New System.Drawing.Point(4, 22)
             Me.tapTree.Name = "tapTree"
             Me.tapTree.Padding = New System.Windows.Forms.Padding(3)
-            Me.tapTree.Size = New System.Drawing.Size(539, 360)
+            Me.tapTree.Size = New System.Drawing.Size(705, 439)
             Me.tapTree.TabIndex = 0
             Me.tapTree.Text = "Tree"
             Me.tapTree.UseVisualStyleBackColor = True
@@ -281,7 +340,7 @@ Namespace DrawingT.DrawingIOt
             Me.tapMap.Location = New System.Drawing.Point(4, 22)
             Me.tapMap.Name = "tapMap"
             Me.tapMap.Padding = New System.Windows.Forms.Padding(3)
-            Me.tapMap.Size = New System.Drawing.Size(539, 360)
+            Me.tapMap.Size = New System.Drawing.Size(705, 439)
             Me.tapMap.TabIndex = 1
             Me.tapMap.Text = "Exif map"
             Me.tapMap.UseVisualStyleBackColor = True
@@ -329,7 +388,7 @@ Namespace DrawingT.DrawingIOt
             Me.tlpMap.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpMap.RowStyles.Add(New System.Windows.Forms.RowStyle)
             Me.tlpMap.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpMap.Size = New System.Drawing.Size(533, 354)
+            Me.tlpMap.Size = New System.Drawing.Size(699, 433)
             Me.tlpMap.TabIndex = 0
             '
             'dgwMap
@@ -392,7 +451,7 @@ Namespace DrawingT.DrawingIOt
             Me.dgwMap.ShowCellErrors = False
             Me.dgwMap.ShowEditingIcon = False
             Me.dgwMap.ShowRowErrors = False
-            Me.dgwMap.Size = New System.Drawing.Size(390, 354)
+            Me.dgwMap.Size = New System.Drawing.Size(556, 436)
             Me.dgwMap.TabIndex = 4
             Me.dgwMap.VirtualMode = True
             '
@@ -562,7 +621,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_BOM.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.lblMap_BOM.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_BOM.Location = New System.Drawing.Point(393, 13)
+            Me.lblMap_BOM.Location = New System.Drawing.Point(559, 13)
             Me.lblMap_BOM.Name = "lblMap_BOM"
             Me.lblMap_BOM.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_BOM.TabIndex = 1
@@ -573,7 +632,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_IFD0Offset.BackColor = System.Drawing.Color.Cyan
             Me.lblMap_IFD0Offset.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_IFD0Offset.Location = New System.Drawing.Point(393, 39)
+            Me.lblMap_IFD0Offset.Location = New System.Drawing.Point(559, 39)
             Me.lblMap_IFD0Offset.Name = "lblMap_IFD0Offset"
             Me.lblMap_IFD0Offset.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_IFD0Offset.TabIndex = 1
@@ -584,7 +643,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_IFDNumberOfEntries.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
             Me.lblMap_IFDNumberOfEntries.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_IFDNumberOfEntries.Location = New System.Drawing.Point(393, 52)
+            Me.lblMap_IFDNumberOfEntries.Location = New System.Drawing.Point(559, 52)
             Me.lblMap_IFDNumberOfEntries.Name = "lblMap_IFDNumberOfEntries"
             Me.lblMap_IFDNumberOfEntries.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_IFDNumberOfEntries.TabIndex = 1
@@ -595,7 +654,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_TagNumber.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer), CType(CType(192, Byte), Integer))
             Me.lblMap_TagNumber.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_TagNumber.Location = New System.Drawing.Point(393, 65)
+            Me.lblMap_TagNumber.Location = New System.Drawing.Point(559, 65)
             Me.lblMap_TagNumber.Name = "lblMap_TagNumber"
             Me.lblMap_TagNumber.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_TagNumber.TabIndex = 1
@@ -606,7 +665,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_TagDataType.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(128, Byte), Integer))
             Me.lblMap_TagDataType.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_TagDataType.Location = New System.Drawing.Point(393, 78)
+            Me.lblMap_TagDataType.Location = New System.Drawing.Point(559, 78)
             Me.lblMap_TagDataType.Name = "lblMap_TagDataType"
             Me.lblMap_TagDataType.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_TagDataType.TabIndex = 1
@@ -617,7 +676,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_TagNumberOfComponents.BackColor = System.Drawing.Color.Red
             Me.lblMap_TagNumberOfComponents.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_TagNumberOfComponents.Location = New System.Drawing.Point(393, 91)
+            Me.lblMap_TagNumberOfComponents.Location = New System.Drawing.Point(559, 91)
             Me.lblMap_TagNumberOfComponents.Name = "lblMap_TagNumberOfComponents"
             Me.lblMap_TagNumberOfComponents.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_TagNumberOfComponents.TabIndex = 1
@@ -628,7 +687,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_TagDataOrOffset.BackColor = System.Drawing.Color.FromArgb(CType(CType(255, Byte), Integer), CType(CType(128, Byte), Integer), CType(CType(0, Byte), Integer))
             Me.lblMap_TagDataOrOffset.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_TagDataOrOffset.Location = New System.Drawing.Point(393, 104)
+            Me.lblMap_TagDataOrOffset.Location = New System.Drawing.Point(559, 104)
             Me.lblMap_TagDataOrOffset.Name = "lblMap_TagDataOrOffset"
             Me.lblMap_TagDataOrOffset.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_TagDataOrOffset.TabIndex = 1
@@ -639,7 +698,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_ExternalTagData.BackColor = System.Drawing.Color.Silver
             Me.lblMap_ExternalTagData.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_ExternalTagData.Location = New System.Drawing.Point(393, 117)
+            Me.lblMap_ExternalTagData.Location = New System.Drawing.Point(559, 117)
             Me.lblMap_ExternalTagData.Name = "lblMap_ExternalTagData"
             Me.lblMap_ExternalTagData.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_ExternalTagData.TabIndex = 1
@@ -650,7 +709,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_NextIFDOffset.BackColor = System.Drawing.Color.Yellow
             Me.lblMap_NextIFDOffset.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_NextIFDOffset.Location = New System.Drawing.Point(393, 130)
+            Me.lblMap_NextIFDOffset.Location = New System.Drawing.Point(559, 130)
             Me.lblMap_NextIFDOffset.Name = "lblMap_NextIFDOffset"
             Me.lblMap_NextIFDOffset.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_NextIFDOffset.TabIndex = 1
@@ -661,7 +720,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_JPEGThumbnail.BackColor = System.Drawing.Color.Fuchsia
             Me.lblMap_JPEGThumbnail.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_JPEGThumbnail.Location = New System.Drawing.Point(393, 143)
+            Me.lblMap_JPEGThumbnail.Location = New System.Drawing.Point(559, 143)
             Me.lblMap_JPEGThumbnail.Name = "lblMap_JPEGThumbnail"
             Me.lblMap_JPEGThumbnail.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_JPEGThumbnail.TabIndex = 1
@@ -672,7 +731,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_TIFFThumbnailPart.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(0, Byte), Integer), CType(CType(192, Byte), Integer))
             Me.lblMap_TIFFThumbnailPart.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_TIFFThumbnailPart.Location = New System.Drawing.Point(393, 156)
+            Me.lblMap_TIFFThumbnailPart.Location = New System.Drawing.Point(559, 156)
             Me.lblMap_TIFFThumbnailPart.Name = "lblMap_TIFFThumbnailPart"
             Me.lblMap_TIFFThumbnailPart.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_TIFFThumbnailPart.TabIndex = 1
@@ -683,7 +742,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_SubIFDNumberOfEntries.BackColor = System.Drawing.Color.FromArgb(CType(CType(192, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(192, Byte), Integer))
             Me.lblMap_SubIFDNumberOfEntries.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_SubIFDNumberOfEntries.Location = New System.Drawing.Point(393, 169)
+            Me.lblMap_SubIFDNumberOfEntries.Location = New System.Drawing.Point(559, 169)
             Me.lblMap_SubIFDNumberOfEntries.Name = "lblMap_SubIFDNumberOfEntries"
             Me.lblMap_SubIFDNumberOfEntries.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_SubIFDNumberOfEntries.TabIndex = 1
@@ -694,7 +753,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_NextSubIFDOffset.Anchor = System.Windows.Forms.AnchorStyles.None
             Me.lblMap_NextSubIFDOffset.BackColor = System.Drawing.Color.Lime
-            Me.lblMap_NextSubIFDOffset.Location = New System.Drawing.Point(393, 182)
+            Me.lblMap_NextSubIFDOffset.Location = New System.Drawing.Point(559, 182)
             Me.lblMap_NextSubIFDOffset.Name = "lblMap_NextSubIFDOffset"
             Me.lblMap_NextSubIFDOffset.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_NextSubIFDOffset.TabIndex = 1
@@ -705,7 +764,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_BomTest.BackColor = System.Drawing.Color.FromArgb(CType(CType(128, Byte), Integer), CType(CType(255, Byte), Integer), CType(CType(255, Byte), Integer))
             Me.lblMap_BomTest.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_BomTest.Location = New System.Drawing.Point(393, 26)
+            Me.lblMap_BomTest.Location = New System.Drawing.Point(559, 26)
             Me.lblMap_BomTest.Name = "lblMap_BomTest"
             Me.lblMap_BomTest.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_BomTest.TabIndex = 2
@@ -716,7 +775,7 @@ Namespace DrawingT.DrawingIOt
             '
             Me.lblMap_Unknown.BackColor = System.Drawing.Color.FromArgb(CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer), CType(CType(224, Byte), Integer))
             Me.lblMap_Unknown.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.lblMap_Unknown.Location = New System.Drawing.Point(393, 0)
+            Me.lblMap_Unknown.Location = New System.Drawing.Point(559, 0)
             Me.lblMap_Unknown.Name = "lblMap_Unknown"
             Me.lblMap_Unknown.Size = New System.Drawing.Size(137, 13)
             Me.lblMap_Unknown.TabIndex = 3
@@ -726,7 +785,7 @@ Namespace DrawingT.DrawingIOt
             'chkASCII
             '
             Me.chkASCII.AutoSize = True
-            Me.chkASCII.Location = New System.Drawing.Point(393, 198)
+            Me.chkASCII.Location = New System.Drawing.Point(559, 198)
             Me.chkASCII.Name = "chkASCII"
             Me.chkASCII.Size = New System.Drawing.Size(53, 17)
             Me.chkASCII.TabIndex = 5
@@ -739,7 +798,7 @@ Namespace DrawingT.DrawingIOt
             Me.tapEvents.Location = New System.Drawing.Point(4, 22)
             Me.tapEvents.Name = "tapEvents"
             Me.tapEvents.Padding = New System.Windows.Forms.Padding(3)
-            Me.tapEvents.Size = New System.Drawing.Size(539, 360)
+            Me.tapEvents.Size = New System.Drawing.Size(705, 439)
             Me.tapEvents.TabIndex = 2
             Me.tapEvents.Text = "Events"
             Me.tapEvents.UseVisualStyleBackColor = True
@@ -752,15 +811,175 @@ Namespace DrawingT.DrawingIOt
             Me.txtEvents.Name = "txtEvents"
             Me.txtEvents.ReadOnly = True
             Me.txtEvents.ScrollBars = System.Windows.Forms.ScrollBars.Both
-            Me.txtEvents.Size = New System.Drawing.Size(533, 354)
+            Me.txtEvents.Size = New System.Drawing.Size(699, 433)
             Me.txtEvents.TabIndex = 1
             Me.txtEvents.WordWrap = False
+            '
+            'tapExif
+            '
+            Me.tapExif.Controls.Add(Me.splExifBig)
+            Me.tapExif.Location = New System.Drawing.Point(4, 22)
+            Me.tapExif.Name = "tapExif"
+            Me.tapExif.Padding = New System.Windows.Forms.Padding(3)
+            Me.tapExif.Size = New System.Drawing.Size(705, 439)
+            Me.tapExif.TabIndex = 3
+            Me.tapExif.Text = "Exif"
+            Me.tapExif.UseVisualStyleBackColor = True
+            '
+            'splExifBig
+            '
+            Me.splExifBig.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splExifBig.Location = New System.Drawing.Point(3, 3)
+            Me.splExifBig.Name = "splExifBig"
+            '
+            'splExifBig.Panel1
+            '
+            Me.splExifBig.Panel1.Controls.Add(Me.splExifLeft)
+            '
+            'splExifBig.Panel2
+            '
+            Me.splExifBig.Panel2.Controls.Add(Me.splExifRight)
+            Me.splExifBig.Size = New System.Drawing.Size(699, 433)
+            Me.splExifBig.SplitterDistance = 304
+            Me.splExifBig.TabIndex = 0
+            '
+            'splExifLeft
+            '
+            Me.splExifLeft.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splExifLeft.Location = New System.Drawing.Point(0, 0)
+            Me.splExifLeft.Name = "splExifLeft"
+            '
+            'splExifLeft.Panel1
+            '
+            Me.splExifLeft.Panel1.Controls.Add(Me.fraMain)
+            '
+            'splExifLeft.Panel2
+            '
+            Me.splExifLeft.Panel2.Controls.Add(Me.fraThumbnail)
+            Me.splExifLeft.Size = New System.Drawing.Size(304, 433)
+            Me.splExifLeft.SplitterDistance = 141
+            Me.splExifLeft.TabIndex = 0
+            '
+            'fraMain
+            '
+            Me.fraMain.Controls.Add(Me.prgMain)
+            Me.fraMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.fraMain.Location = New System.Drawing.Point(0, 0)
+            Me.fraMain.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraMain.Name = "fraMain"
+            Me.fraMain.Size = New System.Drawing.Size(141, 433)
+            Me.fraMain.TabIndex = 0
+            Me.fraMain.TabStop = False
+            Me.fraMain.Text = "Main"
+            '
+            'prgMain
+            '
+            Me.prgMain.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgMain.Location = New System.Drawing.Point(3, 16)
+            Me.prgMain.Name = "prgMain"
+            Me.prgMain.Size = New System.Drawing.Size(135, 414)
+            Me.prgMain.TabIndex = 0
+            '
+            'fraThumbnail
+            '
+            Me.fraThumbnail.Controls.Add(Me.prgThumbnail)
+            Me.fraThumbnail.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.fraThumbnail.Location = New System.Drawing.Point(0, 0)
+            Me.fraThumbnail.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraThumbnail.Name = "fraThumbnail"
+            Me.fraThumbnail.Size = New System.Drawing.Size(159, 433)
+            Me.fraThumbnail.TabIndex = 1
+            Me.fraThumbnail.TabStop = False
+            Me.fraThumbnail.Text = "Thumbnail"
+            '
+            'prgThumbnail
+            '
+            Me.prgThumbnail.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgThumbnail.Location = New System.Drawing.Point(3, 16)
+            Me.prgThumbnail.Name = "prgThumbnail"
+            Me.prgThumbnail.Size = New System.Drawing.Size(153, 414)
+            Me.prgThumbnail.TabIndex = 0
+            '
+            'splExifRight
+            '
+            Me.splExifRight.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.splExifRight.Location = New System.Drawing.Point(0, 0)
+            Me.splExifRight.Name = "splExifRight"
+            '
+            'splExifRight.Panel1
+            '
+            Me.splExifRight.Panel1.Controls.Add(Me.fraExif)
+            '
+            'splExifRight.Panel2
+            '
+            Me.splExifRight.Panel2.Controls.Add(Me.fraGps)
+            Me.splExifRight.Size = New System.Drawing.Size(391, 433)
+            Me.splExifRight.SplitterDistance = 173
+            Me.splExifRight.TabIndex = 0
+            '
+            'fraExif
+            '
+            Me.fraExif.Controls.Add(Me.prgExif)
+            Me.fraExif.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.fraExif.Location = New System.Drawing.Point(0, 0)
+            Me.fraExif.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraExif.Name = "fraExif"
+            Me.fraExif.Size = New System.Drawing.Size(173, 433)
+            Me.fraExif.TabIndex = 1
+            Me.fraExif.TabStop = False
+            Me.fraExif.Text = "Exif"
+            '
+            'prgExif
+            '
+            Me.prgExif.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgExif.Location = New System.Drawing.Point(3, 16)
+            Me.prgExif.Name = "prgExif"
+            Me.prgExif.Size = New System.Drawing.Size(167, 414)
+            Me.prgExif.TabIndex = 0
+            '
+            'fraGps
+            '
+            Me.fraGps.Controls.Add(Me.prgGps)
+            Me.fraGps.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.fraGps.Location = New System.Drawing.Point(0, 0)
+            Me.fraGps.Margin = New System.Windows.Forms.Padding(0)
+            Me.fraGps.Name = "fraGps"
+            Me.fraGps.Size = New System.Drawing.Size(214, 433)
+            Me.fraGps.TabIndex = 1
+            Me.fraGps.TabStop = False
+            Me.fraGps.Text = "Gps"
+            '
+            'prgGps
+            '
+            Me.prgGps.Dock = System.Windows.Forms.DockStyle.Fill
+            Me.prgGps.Location = New System.Drawing.Point(3, 16)
+            Me.prgGps.Name = "prgGps"
+            Me.prgGps.Size = New System.Drawing.Size(208, 414)
+            Me.prgGps.TabIndex = 0
+            '
+            'sfdExif
+            '
+            Me.sfdExif.DefaultExt = "exif"
+            Me.sfdExif.Filter = "Exif (*.exif)|*.exif"
+            Me.sfdExif.Title = "Export Exif data"
+            '
+            'Button1
+            '
+            Me.cmdExportExifSave.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.cmdExportExifSave.AutoSize = True
+            Me.cmdExportExifSave.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdExportExifSave.Location = New System.Drawing.Point(481, 3)
+            Me.cmdExportExifSave.Name = "Button1"
+            Me.cmdExportExifSave.Size = New System.Drawing.Size(102, 23)
+            Me.cmdExportExifSave.TabIndex = 4
+            Me.cmdExportExifSave.Text = "Export Exif &save..."
+            Me.cmdExportExifSave.UseVisualStyleBackColor = True
             '
             'frmJPEG
             '
             Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
-            Me.ClientSize = New System.Drawing.Size(547, 438)
+            Me.ClientSize = New System.Drawing.Size(713, 520)
             Me.Controls.Add(Me.tabTabs)
             Me.Controls.Add(Me.flpTop)
             Me.Controls.Add(Me.tlpI)
@@ -783,6 +1002,20 @@ Namespace DrawingT.DrawingIOt
             CType(Me.dgwMap, System.ComponentModel.ISupportInitialize).EndInit()
             Me.tapEvents.ResumeLayout(False)
             Me.tapEvents.PerformLayout()
+            Me.tapExif.ResumeLayout(False)
+            Me.splExifBig.Panel1.ResumeLayout(False)
+            Me.splExifBig.Panel2.ResumeLayout(False)
+            Me.splExifBig.ResumeLayout(False)
+            Me.splExifLeft.Panel1.ResumeLayout(False)
+            Me.splExifLeft.Panel2.ResumeLayout(False)
+            Me.splExifLeft.ResumeLayout(False)
+            Me.fraMain.ResumeLayout(False)
+            Me.fraThumbnail.ResumeLayout(False)
+            Me.splExifRight.Panel1.ResumeLayout(False)
+            Me.splExifRight.Panel2.ResumeLayout(False)
+            Me.splExifRight.ResumeLayout(False)
+            Me.fraExif.ResumeLayout(False)
+            Me.fraGps.ResumeLayout(False)
             Me.ResumeLayout(False)
             Me.PerformLayout()
 
@@ -843,5 +1076,21 @@ Namespace DrawingT.DrawingIOt
         Friend WithEvents txcE As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents txcF As System.Windows.Forms.DataGridViewTextBoxColumn
         Friend WithEvents chkASCII As System.Windows.Forms.CheckBox
+        Friend WithEvents tapExif As System.Windows.Forms.TabPage
+        Friend WithEvents splExifBig As System.Windows.Forms.SplitContainer
+        Friend WithEvents splExifLeft As System.Windows.Forms.SplitContainer
+        Friend WithEvents fraMain As System.Windows.Forms.GroupBox
+        Friend WithEvents prgMain As System.Windows.Forms.PropertyGrid
+        Friend WithEvents fraThumbnail As System.Windows.Forms.GroupBox
+        Friend WithEvents prgThumbnail As System.Windows.Forms.PropertyGrid
+        Friend WithEvents splExifRight As System.Windows.Forms.SplitContainer
+        Friend WithEvents fraExif As System.Windows.Forms.GroupBox
+        Friend WithEvents prgExif As System.Windows.Forms.PropertyGrid
+        Friend WithEvents fraGps As System.Windows.Forms.GroupBox
+        Friend WithEvents prgGps As System.Windows.Forms.PropertyGrid
+        Friend WithEvents cmdExportExif As System.Windows.Forms.Button
+        Friend WithEvents sfdExif As System.Windows.Forms.SaveFileDialog
+        Friend WithEvents cmdExportExifWithRewrite As System.Windows.Forms.Button
+        Friend WithEvents cmdExportExifSave As System.Windows.Forms.Button
     End Class
 End Namespace

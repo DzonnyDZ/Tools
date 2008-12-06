@@ -22,6 +22,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="Stream"/> is not zero-lenght or null and does not support seeking and reeding.</exception>
         Public Sub New(ByVal Stream As System.IO.Stream)
             Me.New(Stream, New ExifReaderSettings)
         End Sub
@@ -35,6 +36,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidOperationException">Stream obtained from <paramref name="Container"/> is not zero-lenght or null and does not support seeking and reeding.</exception>
         Public Sub New(ByVal Container As IExifGetter)
             Me.new(Container, New ExifReaderSettings)
         End Sub
@@ -47,6 +49,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidOperationException"><paramref name="Stream"/> is not zero-lenght or null and does not support seeking and reeding.</exception>
         Public Sub New(ByVal Stream As IO.Stream, ByVal Settings As ExifReaderSettings)
             _Stream = Stream
             Me.Settings = New ExifReaderContext(Me, Settings)
@@ -63,6 +66,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidOperationException">Stream obtained from <paramref name="Container"/> is not zero-lenght or null and does not support seeking and reeding.</exception>
         Public Sub New(ByVal Container As IExifGetter, ByVal Settings As ExifReaderSettings)
             If Container Is Nothing Then Throw New ArgumentNullException("Container")
             _Stream = Container.GetExifStream
@@ -81,7 +85,9 @@ Namespace MetadataT.ExifT
         ''' <exception cref="System.ObjectDisposedException">The source stream is closed.</exception>
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the stream is reached unexpectedly.</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Stream"/> does not support seeking and reading.</exception>
         Private Sub Parse()
+            If Not Stream.CanSeek OrElse Not Stream.CanRead Then Throw New InvalidOperationException(ResourcesT.Exceptions.StreamDoesNotSupportSeekingOrReading)
             Stream.Position = 0
             Dim Reader As New Tools.IOt.BinaryReader(Stream, Tools.IOt.BinaryReader.ByteAlign.BigEndian)
             If Settings.OnItem(Me, ReaderItemKinds.Exif, True, Stream, , 0, Stream.Length) Then Exit Sub 'Event

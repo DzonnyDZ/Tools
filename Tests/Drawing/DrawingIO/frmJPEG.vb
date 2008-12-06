@@ -1,10 +1,12 @@
-Imports ex = Tools.MetadataT.ExifT
+Imports ex = Tools.MetadataT.ExifT, Tools.IOt.StreamTools
 Namespace DrawingT.DrawingIOt
     '#If Config <= Nightly Then Stage co      nditional compilation of this file is set in Tests.vbproj
     ''' <summary>Tests <see cref="Tools.DrawingT.DrawingIOt.JPEG"/></summary>
     Public Class frmJPEG
         ''' <summary>Collors form Exif map</summary>
         Private Colors As New Dictionary(Of ex.ExifReader.ReaderItemKinds, Color)
+        ''' <summary>Path of last parsed file</summary>
+        Private LastPath$
         ''' <summary>CTor</summary>
         Public Sub New()
 
@@ -30,11 +32,21 @@ Namespace DrawingT.DrawingIOt
             Colors.Add(ex.ExifReader.ReaderItemKinds.SubIfdNumberOfEntries, lblMap_SubIFDNumberOfEntries.BackColor)
             Colors.Add(ex.ExifReader.ReaderItemKinds.NextSubIfdOffset, lblMap_NextSubIFDOffset.BackColor)
 
+            fpgInterop.Owner = Me
+            Dim fraInterop As GroupBox = New GroupBox With {.Dock = DockStyle.Fill, .Text = "Interop"}
+            fpgInterop.Controls.Add(fraInterop)
+            fpgInterop.prgPrg.Parent = fraInterop
+            fpgInterop.Width = prgExif.Width
+            fpgInterop.Text = ""
+            fpgInterop.Icon = Nothing
+            fpgInterop.ShowIcon = False
+            fpgInterop.ShowInTaskbar = False
+            fpgInterop.ControlBox = False
         End Sub
         ''' <summary>Runs test</summary>
         Public Shared Sub test()
             Dim frm As New frmJPEG
-            frm.Show()
+            frm.ShowDialog()
         End Sub
 
         Dim Map As ex.ExifReader.ReaderItemKinds()
@@ -42,15 +54,72 @@ Namespace DrawingT.DrawingIOt
         Dim LastJpeg As Tools.DrawingT.DrawingIOt.JPEG.JPEGReader
         Dim ExifBuilder As System.Text.StringBuilder
 
+        Private WithEvents fpgInterop As New FloatingPropertyGrid
+        Private _ParsedExif As Tools.MetadataT.ExifT.Exif
+        Private Property ParsedExif() As Tools.MetadataT.ExifT.Exif
+            Get
+                Return _ParsedExif
+            End Get
+            Set(ByVal value As Tools.MetadataT.ExifT.Exif)
+                _ParsedExif = value
+                prgMain.SelectedObject = Nothing
+                prgGps.SelectedObject = Nothing
+                prgExif.SelectedObject = Nothing
+                prgThumbnail.SelectedObject = Nothing
+                fpgInterop.prgPrg.SelectedObject = Nothing
+                fpgInterop.Hide()
+                If value IsNot Nothing Then
+                    prgMain.SelectedObject = value.IFD0
+                    prgThumbnail.SelectedObject = value.ThumbnailIFD
+                    If value.IFD0 IsNot Nothing Then
+                        prgExif.SelectedObject = value.IFD0.ExifSubIFD
+                        If value.IFD0.ExifSubIFD IsNot Nothing Then fpgInterop.prgPrg.SelectedObject = value.IFD0.ExifSubIFD.InteropSubIFD
+                        prgGps.SelectedObject = value.IFD0.GPSSubIFD
+                    End If
+                End If
+            End Set
+        End Property
+        Private Sub DealWithExifData(ByVal ExifStream As IO.Stream, ByVal ExifNode As TreeNode)
+            'Exif IFDs
+            Dim ExifSettings As New ex.ExifReaderSettings() With {.ReadThumbnail = True}
+            AddHandler ExifSettings.ReadItem, AddressOf ExifEventHandler
+            AddHandler ExifSettings.ReadError, AddressOf ExifErrorHandler
+            ExifSettings.ErrorRecovery = Tools.MetadataT.ExifT.ErrorRecoveryModes.Custom
+            ExifBuilder = New System.Text.StringBuilder
+            Dim Map As New ex.ExifMapGenerator(ExifSettings)
+            Dim Exif As New ex.ExifReader(ExifStream, ExifSettings)
+            'Dim i As Integer = 0
+            ' For Each IFD As Tools.MetadataT.ExifTIFDReader In Exif.IFDs
+            PresentIfd(New ex.IfdMain(Exif.IFDs(0), True), ExifNode, 0)
+            PresentMap(Map, ExifStream)
+            txtEvents.Text = ExifBuilder.ToString
+            ParsedExif = New Tools.MetadataT.ExifT.Exif(Exif)
+            'i += 1
+            'Next IFD
+        End Sub
+        ''' <summary>When <see cref="ofdOpen"/>.<see cref="OpenFileDialog.FilterIndex">FilterIndex</see> is 2 keeps last Exif file to be disposed</summary>
+        Private ExifStreamX As IO.Stream
         Private Sub cmdParse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdParse.Click
             If ofdOpen.ShowDialog = System.Windows.Forms.DialogResult.OK Then
                 Map = Nothing
                 dgwMap.Rows.Clear()
+                LastPath = ofdOpen.FileName
+                Me.Text = String.Format("Testing Tools.DrawingT.DrawingIOt.JPEG: {0}", IO.Path.GetFileName(ofdOpen.FileName))
                 If LastJpeg IsNot Nothing Then LastJpeg.Dispose()
+                If ExifStreamX IsNot Nothing Then ExifStreamX.Dispose()
+                ExifStreamX = Nothing
                 LastJpeg = Nothing
                 LastExifData = Nothing
                 Try
                     tvwResults.Nodes.Clear()
+                    If ofdOpen.FilterIndex = 2 Then  'Only Exif
+                        ExifStreamX = IO.File.Open(ofdOpen.FileName, IO.FileMode.Open, IO.FileAccess.Read)
+                        Dim ExifNode As TreeNode = tvwResults.Nodes.Add(String.Format("Exif size {0}B", ExifStreamX.Length))
+                        ExifNode.Tag = ExifStreamX
+                        ExifNode.Text &= " " & ExifStreamX.ToString
+                        DealWithExifData(ExifStreamX, ExifNode)
+                        Exit Sub
+                    End If
                     'JPEG file
                     Dim jpeg As Tools.DrawingT.DrawingIOt.JPEG.JPEGReader
                     Try
@@ -86,21 +155,7 @@ Namespace DrawingT.DrawingIOt
                         ExifNode.Tag = ExifStream
                         ExifNode.Text &= " " & ExifStream.ToString
                         If jpeg.SupportFujiFilmFineFix2800ZoomInEffect Then ExifNode.Text &= " FujiFilm FinePix 2800 zoom"
-                        'Exif IFDs
-                        Dim ExifSettings As New ex.ExifReaderSettings() With {.ReadThumbnail = True}
-                        AddHandler ExifSettings.ReadItem, AddressOf ExifEventHandler
-                        AddHandler ExifSettings.ReadError, AddressOf ExifErrorHandler
-                        ExifSettings.ErrorRecovery = Tools.MetadataT.ExifT.ErrorRecoveryModes.Custom
-                        ExifBuilder = New System.Text.StringBuilder
-                        Dim Map As New ex.ExifMapGenerator(ExifSettings)
-                        Dim Exif As New ex.ExifReader(jpeg, ExifSettings)
-                        'Dim i As Integer = 0
-                        ' For Each IFD As Tools.MetadataT.ExifTIFDReader In Exif.IFDs
-                        PresentIfd(New ex.IfdMain(Exif.IFDs(0), True), ExifNode, 0)
-                        PresentMap(Map, ExifStream)
-                        txtEvents.Text = ExifBuilder.ToString
-                        'i += 1
-                        'Next IFD
+                        DealWithExifData(jpeg.GetExifStream, ExifNode)
                     End If
                     'PhotoShop block
                     Dim PhotoShopStream As System.IO.Stream = jpeg.GetPhotoShopStream
@@ -156,6 +211,7 @@ Namespace DrawingT.DrawingIOt
         End Sub
         Private Sub ExifErrorHandler(ByVal sender As ex.ExifReader, ByVal e As Tools.ComponentModelT.RecoveryExceptionEventArgs)
             ExifBuilder.AppendLine(String.Format("{0}: {1}", e.Exception.GetType.Name, e.Exception.Message))
+            e.Recover = True
         End Sub
         ''' <summary>Presents IFD to tree</summary>
         ''' <param name="IFD">IFD to be presented</param>
@@ -352,6 +408,94 @@ Namespace DrawingT.DrawingIOt
             Dim b = LastExifData(pos)
             Dim val = If(chkASCII.Checked, Chr(b), b.ToString("X2"))
             e.Value = val
+        End Sub
+
+        Private Sub tabTabs_Selected(ByVal sender As Object, ByVal e As System.Windows.Forms.TabControlEventArgs) Handles tabTabs.Selected
+            fpgInterop.Visible = tabTabs.SelectedTab Is tapExif AndAlso fpgInterop.prgPrg.SelectedObject IsNot Nothing
+        End Sub
+
+        Private Sub frmJPEG_Move(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Move, prgExif.Move, tapExif.Move, tabTabs.Move, fpgInterop.Move, Me.Resize, fpgInterop.VisibleChanged, fpgInterop.Shown
+            fpgInterop.Left = Me.Left + Me.Width
+            If fraExif.Parent IsNot Nothing Then _
+                fpgInterop.Top = fraExif.Parent.PointToScreen(New Point(0, 0)).Y
+        End Sub
+
+        Private Sub prgExif_Resize(ByVal sender As Object, ByVal e As System.EventArgs) Handles prgExif.Resize, fpgInterop.Resize, fpgInterop.VisibleChanged, fpgInterop.Shown
+            If fraExif.Parent IsNot Nothing Then _
+                fpgInterop.Height = fraExif.Parent.Height
+        End Sub
+
+
+       
+        Private Sub cmdExportExif_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExportExif.Click
+            If LastPath Is Nothing Then
+                MsgBox("Open file first")
+                Exit Sub
+            End If
+            If sfdExif.ShowDialog <> Windows.Forms.DialogResult.OK Then Exit Sub
+            Try
+                Using jrd As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(LastPath)
+                    Dim es = jrd.GetExifStream
+                    If es IsNot Nothing Then
+                        Using f = IO.File.Open(sfdExif.FileName, IO.FileMode.Create, IO.FileAccess.Write)
+                            f.Write(es)
+                        End Using
+                    Else
+                        MsgBox("File does not contain Exif data", MsgBoxStyle.Exclamation, "Export Exif data")
+                    End If
+                End Using
+            Catch ex As Exception
+                Tools.WindowsT.IndependentT.MessageBox.Error_X(ex)
+            End Try
+        End Sub
+
+        Private Sub cmdExportExifWithRewrite_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExportExifWithRewrite.Click
+            If LastPath Is Nothing Then
+                MsgBox("Open file first")
+                Exit Sub
+            End If
+            If sfdExif.ShowDialog <> Windows.Forms.DialogResult.OK Then Exit Sub
+            Try
+                Using jrd As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(LastPath)
+                    Dim es = jrd.GetExifStream
+                    If es IsNot Nothing Then
+                        Using f = IO.File.Open(sfdExif.FileName, IO.FileMode.Create, IO.FileAccess.ReadWrite)
+                            f.Write(es)
+                            f.Flush()
+                            f.Position = 0
+                            Dim NewExif = Tools.MetadataT.ExifT.Exif.LoadForUpdating(f)
+                            NewExif.Update(f)
+                        End Using
+                    Else
+                        MsgBox("File does not contain Exif data", MsgBoxStyle.Exclamation, "Export Exif data")
+                    End If
+                End Using
+            Catch ex As Exception
+                Tools.WindowsT.IndependentT.MessageBox.Error_X(ex)
+            End Try
+        End Sub
+
+        Private Sub cmdExportExifSave_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdExportExifSave.Click
+            If LastPath Is Nothing Then
+                MsgBox("Open file first")
+                Exit Sub
+            End If
+            If sfdExif.ShowDialog <> Windows.Forms.DialogResult.OK Then Exit Sub
+            Try
+                Using jrd As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(LastPath)
+                    Dim es = jrd.GetExifStream
+                    If es IsNot Nothing Then
+                        Using f = IO.File.Open(sfdExif.FileName, IO.FileMode.Create, IO.FileAccess.ReadWrite)
+                            Dim exf = Tools.MetadataT.ExifT.Exif.Load(es)
+                            exf.Save(f)
+                        End Using
+                    Else
+                        MsgBox("File does not contain Exif data", MsgBoxStyle.Exclamation, "Export Exif data")
+                    End If
+                End Using
+            Catch ex As Exception
+                Tools.WindowsT.IndependentT.MessageBox.Error_X(ex)
+            End Try
         End Sub
     End Class
 End Namespace

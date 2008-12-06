@@ -8,7 +8,12 @@ Namespace WindowsT.FormsT
     'ASAP: Mark
     ''' <summary>Control for browsing .NET assemblies</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
-    <Version(0, 9, GetType(ObjectBrowser)), FirstVersion(2008, 6, 20)> _
+    ''' <version stage="Nightly" version="1.5.2">Fixed: Uncatchable <see cref="ArgumentNullException"/> in tvwObjects_BeforeSelect on show of object.</version>
+    ''' <version version="1.5.2">Fixed: Resources-related errors</version>
+    ''' <version version="1.5.2">Removed <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/></version>
+    ''' <version version="1.5.2">Added property <see cref="ObjectBrowser.SelectedItem"/></version>
+    ''' <version version="1.5.2">Added <see cref="DefaultEventAttribute"/>.</version>
+    <DefaultEvent("SelectedItemChanged")> _
     Public Class ObjectBrowser : Inherits UserControlExtended
         ''' <summary>Contains value of the <see cref="Objects"/> property</summary>
         ''' <remarks>Can be any object</remarks>
@@ -146,7 +151,7 @@ Namespace WindowsT.FormsT
         ''' <returns>Value indicating if protected members are shown</returns>
         <DefaultValue(True)> _
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
-        <lDescription(GetType(CompositeControls), "ShowProtectedMembers_d")> _
+        <LDescription(GetType(CompositeControls), "ShowProtectedMembers_d")> _
         Public Property ShowProtectedMembers() As Boolean
             Get
                 Return _ShowProtectedMembers
@@ -645,11 +650,15 @@ Namespace WindowsT.FormsT
         ''' <param name="Control">Control the item is member of (can be either <see cref="TreeView"/> or <see cref="ListView"/>).</param>
         ''' <param name="Item">Item itself (can be <see cref="TreeNode"/> or <see cref="ListViewItem"/>)</param>
         ''' <param name="ItemTag">Tag of item - selected object</param>
+        ''' <remarks>Cals <see cref="M:Tools.WindowsT.FormsT.ObjectBrowser.OnSelectedItemChanged(System.EventArgs)"/> overload.
+        ''' <note type="inherinfo">Always call <see cref="M:Tools.WindowsT.FormsT.ObjectBrowser.OnSelectedItemChanged(System.EventArgs)"/> or <see cref="SelectedItemChanged"/> will not be raised.</note></remarks>
+        ''' <version version="1.5.2">Added call to <see cref="M:Tools.WindowsT.FormsT.ObjectBrowser.OnSelectedItemChanged(System.EventArgs)"/></version>
         Protected Overridable Sub OnSelectedItemChanged(ByVal Control As Control, ByVal Item As Object, ByVal ItemTag As Object)
             prgProperties.SelectedObject = New ReadOnlyObject(ItemTag)
             lblObjType.Text = ItemTag.GetType.Name
+            OnSelectedItemChanged(EventArgs.Empty)
         End Sub
-        ''' <summary>Contains value oft teh <see cref="CurrentSelectedItem"/> property</summary>
+        ''' <summary>Contains value oft the <see cref="CurrentSelectedItem"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _CurrentSelectedItem As Object
         ''' <summary>Contains item that is currently selected</summary>
         Protected ReadOnly Property CurrentSelectedItem() As Object
@@ -657,6 +666,32 @@ Namespace WindowsT.FormsT
                 Return _CurrentSelectedItem
             End Get
         End Property
+        ''' <summary>Gets item that is curently selected in object browser</summary>
+        ''' <returns>Item curently selected in object browse</returns>
+        ''' <version version="1.5.2">Property added</version>
+        Public Overridable Property SelectedItem() As Object
+            Get
+                If TypeOf CurrentSelectedItem Is TreeNode Then : Return DirectCast(CurrentSelectedItem, TreeNode).Tag
+                ElseIf TypeOf CurrentSelectedItem Is ListViewItem Then : Return DirectCast(CurrentSelectedItem, ListView).Tag
+                End If
+                Return Nothing
+            End Get
+            Set(ByVal value As Object)
+
+            End Set
+        End Property
+        ''' <summary>Raises the <see cref="SelectedItemChanged"/> event</summary>
+        ''' <param name="e">Event arguments</param>        4
+        ''' <remarks><note type="inheritnfo">ALways call base class method in order the event to be raised.</note></remarks>
+        ''' <version version="1.5.2">Method added</version>
+        Protected Overridable Sub OnSelectedItemChanged(ByVal e As EventArgs)
+            RaiseEvent SelectedItemChanged(Me, e)
+        End Sub
+        ''' <summary>Raised when value of the <see cref="SelectedItem"/> property changes</summary>
+        ''' <version version="1.5.2">Event added</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        <Description("Raised when value of the SelectedItem property changes")> _
+        Public Event SelectedItemChanged As EventHandler  'LOCALIZE:Descriptin
         ''' <summary>Called after selected item changes or list-control changes. Reduse unnecesary calls of <see cref="OnSelectedItemChanged"/></summary>
         ''' <param name="Control">Control the item is member of (can be either <see cref="TreeView"/> or <see cref="ListView"/>).</param>
         ''' <param name="Item">Item itself (can be <see cref="TreeNode"/> or <see cref="ListViewItem"/>)</param>
@@ -951,8 +986,6 @@ Namespace WindowsT.FormsT
             OnSelectedItemChangedInternal(sender, sender.SelectedItems(0), sender.SelectedItems(0).Tag)
         End Sub
 
-
-
         Private Sub tvwObjects_Enter(ByVal sender As TreeView, ByVal e As System.EventArgs) Handles tvwObjects.Enter
             If Initializing Then Exit Sub
             If sender.SelectedNode Is Nothing Then Exit Sub
@@ -1144,12 +1177,18 @@ Namespace WindowsT.FormsT
         End Structure
         ''' <summary>Raised after forward navigation ocured</summary>
         ''' <param name="e"><see cref="EventArgs.Empty"/></param>
+        ''' <version version="1.5.2">Added <see cref="KnownCategoryAttribute"/> and <see cref="LDescriptionAttribute"/></version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        <Description("Raised after forward navigation ocured")> _
         Public Event NavigateForward As EventHandler
         ''' <summary>raised after backward navigation ocured</summary>
         ''' <param name="e"><see cref="EventArgs.Empty"/></param>
+        ''' <version version="1.5.2">Added <see cref="KnownCategoryAttribute"/> and <see cref="LDescriptionAttribute"/></version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
+        <Description("Raised after backward navigation ocured")> _
         Public Event NavigateBackward As EventHandler
         Private Sub tvwObjects_BeforeSelect(ByVal sender As TreeView, ByVal e As System.Windows.Forms.TreeViewCancelEventArgs) Handles tvwObjects.BeforeSelect
-            If sender.SelectedNode IsNot Nothing Then Exit Sub
+            If sender.SelectedNode Is Nothing Then Exit Sub
             If Not Navigating Then
                 ForwardStack.Clear()
                 BackwardStack.Push(sender.SelectedNode) 'TODO: Ask for detailed node tracking info

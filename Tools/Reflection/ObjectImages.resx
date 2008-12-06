@@ -378,4 +378,7 @@
     <value>resources\forwardreference.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
     <comment>Image for forward reference</comment>
   </data>
+  <data name="String1" xml:space="preserve">
+    <value />
+  </data>
 </root>

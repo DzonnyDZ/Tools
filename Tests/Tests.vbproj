@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{79B67251-D837-4367-B571-AB806C2C7C74}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -205,7 +205,6 @@
       <DependentUpon>RawInput.vb</DependentUpon>
     </Compile>
     <Compile Include="Devices\RawInput.vb">
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Diagnostics\ImageVisualizer.Designer.vb">
       <DependentUpon>ImageVisualizer.vb</DependentUpon>
@@ -220,10 +219,16 @@
     <Compile Include="Drawing\DrawingIO\frmJPEG.vb">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Drawing\Metadata\frmIPTC.Designer.vb">
+    <Compile Include="Metadata\frmExif.Designer.vb">
+      <DependentUpon>frmExif.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\frmExif.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Metadata\frmIPTC.Designer.vb">
       <DependentUpon>frmIPTC.vb</DependentUpon>
     </Compile>
-    <Compile Include="Drawing\Metadata\frmIPTC.vb" Condition="$(Config)&lt;=$(Nightly)">
+    <Compile Include="Metadata\frmIPTC.vb" Condition="$(Config)&lt;=$(Nightly)">
       <!--Set stage here, because it uses resources and using #If produces warnings-->
       <SubType>Form</SubType>
     </Compile>
@@ -329,6 +334,12 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Projects\Projects.vb" />
+    <Compile Include="Reflection\ReflectionTools\frmFindBestFitCastOperator.Designer.vb">
+      <DependentUpon>frmFindBestFitCastOperator.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Reflection\ReflectionTools\frmFindBestFitCastOperator.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Special\TypeTools.vb" />
     <Compile Include="Tests\AttributeTest.vb" />
     <Compile Include="VisualStudio\Generators\frmCustomToolBase.Designer.vb">
@@ -382,7 +393,6 @@
     </Compile>
     <Compile Include="Windows\Forms\ExtendedForm.vb" Condition="$(Config)&lt;=$(RC)">
       <!--Set stage here, because it uses resources and using #If produces warnings-->
-      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\ProgressBarWithText.Designer.vb">
       <DependentUpon>ProgressBarWithText.vb</DependentUpon>
@@ -414,6 +424,12 @@
       <DependentUpon>LinkLabel.vb</DependentUpon>
     </Compile>
     <Compile Include="Windows\Forms\LinkLabel.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\VisualStyles\VisualStyleSafeObject\frmSafeButtonRenderer.Designer.vb">
+      <DependentUpon>frmSafeButtonRenderer.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\VisualStyles\VisualStyleSafeObject\frmSafeButtonRenderer.vb">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Native\TestForm.Designer.vb">
@@ -480,7 +496,10 @@
     <EmbeddedResource Include="Drawing\DrawingIO\frmJPEG.resx">
       <DependentUpon>frmJPEG.vb</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Drawing\Metadata\frmIPTC.resx">
+    <EmbeddedResource Include="Metadata\frmExif.resx">
+      <DependentUpon>frmExif.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Metadata\frmIPTC.resx">
       <DependentUpon>frmIPTC.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FloatingPropertyGrid.resx">
@@ -538,6 +557,9 @@
       <CustomToolNamespace>My.Resources</CustomToolNamespace>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Reflection\ReflectionTools\frmFindBestFitCastOperator.resx">
+      <DependentUpon>frmFindBestFitCastOperator.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="VisualStudio\Generators\frmCustomToolBase.resx">
       <DependentUpon>frmCustomToolBase.vb</DependentUpon>
     </EmbeddedResource>
@@ -587,6 +609,9 @@
     <EmbeddedResource Include="Windows\Forms\LinkLabel.resx">
       <SubType>Designer</SubType>
       <DependentUpon>LinkLabel.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\VisualStyles\VisualStyleSafeObject\frmSafeButtonRenderer.resx">
+      <DependentUpon>frmSafeButtonRenderer.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Native\TestForm.resx">
       <DependentUpon>TestForm.vb</DependentUpon>
@@ -674,6 +699,8 @@
     </None>
     <None Include="Resources\PlayHS.png" />
     <None Include="Resources\PauseHS.png" />
+    <None Include="Resources\openHS.png" />
+    <None Include="Resources\saveHS.png" />
     <Content Include="Tree.xml">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
