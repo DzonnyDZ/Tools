@@ -1110,4 +1110,52 @@
   <data name="ListWithEventsDoesNotSupportSearching" xml:space="preserve">
     <value>ListWithEvents does not support searching</value>
   </data>
+  <data name="InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject" xml:space="preserve">
+    <value>InternalObject must be either UxThemeObject or NonThemedVisualStyleObject</value>
+  </data>
+  <data name="RendererMustRender0" xml:space="preserve">
+    <value>Renderer must render {0}</value>
+  </data>
+  <data name="ValueCannotBeEmptyString" xml:space="preserve">
+    <value>Value cannot be empty string</value>
+  </data>
+  <data name="CannotConvertNegativeValuesToUnsignedRational" xml:space="preserve">
+    <value>Cannot convert negative values to unsigned rational</value>
+  </data>
+  <data name="Value0CannotBeInterperetedAsRationalToManySlashes" xml:space="preserve">
+    <value>Value {0} cannot be interpereted as rational - to many slashes</value>
+  </data>
+  <data name="IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent" xml:space="preserve">
+    <value>IFD being saved is invalid: Pointer to SubIFD must have one component.</value>
+  </data>
+  <data name="ThisInstanceWasNotCreatedForUpdating" xml:space="preserve">
+    <value>This instance was not created for updating</value>
+  </data>
+  <data name="StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom" xml:space="preserve">
+    <value>Stream cannot be updated bycause it has different length from stream this instance was created from.</value>
+  </data>
+  <data name="TargetCannotBeUpdatedBecauseItContainsNoExifData" xml:space="preserve">
+    <value>Target cannot be updated, because it contains no Exif data.</value>
+  </data>
+  <data name="StreamCannotBeUpdatedBecauseItsContentDiffersFromContent" xml:space="preserve">
+    <value>Stream cannot be updated because its content differs from content of stream this instance was created from.</value>
+  </data>
+  <data name="CannotSaveExifDataBecauseOfInvalidContent" xml:space="preserve">
+    <value>Cannot save Exif data because of invalid content.</value>
+  </data>
+  <data name="StreamDoesNotSupportSeekingOrReading" xml:space="preserve">
+    <value>Stream does not support seeking or reading</value>
+  </data>
+  <data name="JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream" xml:space="preserve">
+    <value>JPEG thumbnail size is specified to be outside of Exif stream</value>
+  </data>
+  <data name="TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream" xml:space="preserve">
+    <value>Tiff thumbnail size is specified to be outside of Exif stream.</value>
+  </data>
+  <data name="Types0And1AreNotCompatible" xml:space="preserve">
+    <value>Types {0} and {1} are not compatible</value>
+  </data>
+  <data name="NoCastOperatorIsMostSpecific" xml:space="preserve">
+    <value>No cast operator is most specific</value>
+  </data>
 </root>

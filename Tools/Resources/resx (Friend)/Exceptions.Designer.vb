@@ -472,6 +472,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Cannot convert negative values to unsigned rational'.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotConvertNegativeValuesToUnsignedRational() As String
+            Get
+                Return ResourceManager.GetString("CannotConvertNegativeValuesToUnsignedRational", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot convert string &quot;{0}&quot; to {1}'.
         '''</summary>
         Friend Shared ReadOnly Property CannotConvertString0To1() As String
@@ -558,6 +567,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2() As String
             Get
                 Return ResourceManager.GetString("CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Cannot save Exif data because of invalid content.'.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotSaveExifDataBecauseOfInvalidContent() As String
+            Get
+                Return ResourceManager.GetString("CannotSaveExifDataBecauseOfInvalidContent", _resourceCulture)
             End Get
         End Property
         
@@ -1014,6 +1032,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'IFD being saved is invalid: Pointer to SubIFD must have one component.'.
+        '''</summary>
+        Friend Shared ReadOnly Property IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent() As String
+            Get
+                Return ResourceManager.GetString("IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'IFD passed to the IFD0 property cannot have the Previous property set.'.
         '''</summary>
         Friend Shared ReadOnly Property IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet() As String
@@ -1075,6 +1102,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property IndexWasOutOfRangeOfControlsCollection() As String
             Get
                 Return ResourceManager.GetString("IndexWasOutOfRangeOfControlsCollection", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'InternalObject must be either UxThemeObject or NonThemedVisualStyleObject'.
+        '''</summary>
+        Friend Shared ReadOnly Property InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject() As String
+            Get
+                Return ResourceManager.GetString("InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject", _resourceCulture)
             End Get
         End Property
         
@@ -1228,6 +1264,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property JPEGFileDoesnTStartWithCorrectSOIMarker() As String
             Get
                 Return ResourceManager.GetString("JPEGFileDoesnTStartWithCorrectSOIMarker", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'JPEG thumbnail size is specified to be outside of Exif stream'.
+        '''</summary>
+        Friend Shared ReadOnly Property JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream() As String
+            Get
+                Return ResourceManager.GetString("JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream", _resourceCulture)
             End Get
         End Property
         
@@ -1639,6 +1684,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'No cast operator is most specific'.
+        '''</summary>
+        Friend Shared ReadOnly Property NoCastOperatorIsMostSpecific() As String
+            Get
+                Return ResourceManager.GetString("NoCastOperatorIsMostSpecific", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'No condition was true.'.
         '''</summary>
         Friend Shared ReadOnly Property NoConditionWasTrue() As String
@@ -1900,6 +1954,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Renderer must render {0}'.
+        '''</summary>
+        Friend Shared ReadOnly Property RendererMustRender0() As String
+            Get
+                Return ResourceManager.GetString("RendererMustRender0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Reported length of 8BIM segment doesn&apos;f fit into base stream'.
         '''</summary>
         Friend Shared ReadOnly Property ReportedLengthOf8BIMSegmentDoesnFFitIntoBaseStream() As String
@@ -2013,6 +2076,33 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property StoredValueHasInvalidLenght() As String
             Get
                 Return ResourceManager.GetString("StoredValueHasInvalidLenght", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Stream cannot be updated because its content differs from content of stream this instance was created from.'.
+        '''</summary>
+        Friend Shared ReadOnly Property StreamCannotBeUpdatedBecauseItsContentDiffersFromContent() As String
+            Get
+                Return ResourceManager.GetString("StreamCannotBeUpdatedBecauseItsContentDiffersFromContent", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Stream cannot be updated bycause it has different length from stream this instance was created from.'.
+        '''</summary>
+        Friend Shared ReadOnly Property StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom() As String
+            Get
+                Return ResourceManager.GetString("StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Stream does not support seeking or reading'.
+        '''</summary>
+        Friend Shared ReadOnly Property StreamDoesNotSupportSeekingOrReading() As String
+            Get
+                Return ResourceManager.GetString("StreamDoesNotSupportSeekingOrReading", _resourceCulture)
             End Get
         End Property
         
@@ -2425,6 +2515,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Target cannot be updated, because it contains no Exif data.'.
+        '''</summary>
+        Friend Shared ReadOnly Property TargetCannotBeUpdatedBecauseItContainsNoExifData() As String
+            Get
+                Return ResourceManager.GetString("TargetCannotBeUpdatedBecauseItContainsNoExifData", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Text cannot be changed via the Text property'.
         '''</summary>
         Friend Shared ReadOnly Property TextCannotBeChangedViaTheTextProperty() As String
@@ -2634,6 +2733,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'This instance was not created for updating'.
+        '''</summary>
+        Friend Shared ReadOnly Property ThisInstanceWasNotCreatedForUpdating() As String
+            Get
+                Return ResourceManager.GetString("ThisInstanceWasNotCreatedForUpdating", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'This stream does not support seeking.'.
         '''</summary>
         Friend Shared ReadOnly Property ThisStreamDoesNotSupportSeeking() As String
@@ -2676,6 +2784,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ThumbnailDataAreInvalid() As String
             Get
                 Return ResourceManager.GetString("ThumbnailDataAreInvalid", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Tiff thumbnail size is specified to be outside of Exif stream.'.
+        '''</summary>
+        Friend Shared ReadOnly Property TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream() As String
+            Get
+                Return ResourceManager.GetString("TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream", _resourceCulture)
             End Get
         End Property
         
@@ -2739,6 +2856,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property TypeOfIFDFollowingAfterIFD0MustBeIFDMain() As String
             Get
                 Return ResourceManager.GetString("TypeOfIFDFollowingAfterIFD0MustBeIFDMain", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Types {0} and {1} are not compatible'.
+        '''</summary>
+        Friend Shared ReadOnly Property Types0And1AreNotCompatible() As String
+            Get
+                Return ResourceManager.GetString("Types0And1AreNotCompatible", _resourceCulture)
             End Get
         End Property
         
@@ -2851,11 +2977,29 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Value {0} cannot be interpereted as rational - to many slashes'.
+        '''</summary>
+        Friend Shared ReadOnly Property Value0CannotBeInterperetedAsRationalToManySlashes() As String
+            Get
+                Return ResourceManager.GetString("Value0CannotBeInterperetedAsRationalToManySlashes", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Value can be converter neither to {0} nor to {1}'.
         '''</summary>
         Friend Shared ReadOnly Property ValueCanBeConverterNeitherTo0NorTo1() As String
             Get
                 Return ResourceManager.GetString("ValueCanBeConverterNeitherTo0NorTo1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Value cannot be empty string'.
+        '''</summary>
+        Friend Shared ReadOnly Property ValueCannotBeEmptyString() As String
+            Get
+                Return ResourceManager.GetString("ValueCannotBeEmptyString", _resourceCulture)
             End Get
         End Property
         
@@ -3473,6 +3617,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the CannotConvertNegativeValuesToUnsignedRational property value.
+        '''</summary>
+        '''<returns>The CannotConvertNegativeValuesToUnsignedRational property value.</returns>
+        Friend Shared Function CannotConvertNegativeValuesToUnsignedRationalFormat() As String
+            Return CannotConvertNegativeValuesToUnsignedRational
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Cannot convert string &quot;{0}&quot; to {1}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -3559,6 +3711,14 @@ Namespace ResourcesT
         '''<returns>The CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2 property value.</returns>
         Friend Shared Function CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2Format() As String
             Return CannotReturnValueForThisInstanceOfT1orT2BecauseItContainsNeitherValue1NorValue2
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the CannotSaveExifDataBecauseOfInvalidContent property value.
+        '''</summary>
+        '''<returns>The CannotSaveExifDataBecauseOfInvalidContent property value.</returns>
+        Friend Shared Function CannotSaveExifDataBecauseOfInvalidContentFormat() As String
+            Return CannotSaveExifDataBecauseOfInvalidContent
         End Function
         
         '''<summary>
@@ -3978,6 +4138,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent property value.
+        '''</summary>
+        '''<returns>The IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent property value.</returns>
+        Friend Shared Function IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponentFormat() As String
+            Return IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet property value.
         '''</summary>
         '''<returns>The IFDPassedToTheIFD0PropertyCannotHaveThePreviousPropertySet property value.</returns>
@@ -4031,6 +4199,14 @@ Namespace ResourcesT
         '''<returns>The IndexWasOutOfRangeOfControlsCollection property value.</returns>
         Friend Shared Function IndexWasOutOfRangeOfControlsCollectionFormat() As String
             Return IndexWasOutOfRangeOfControlsCollection
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject property value.
+        '''</summary>
+        '''<returns>The InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject property value.</returns>
+        Friend Shared Function InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObjectFormat() As String
+            Return InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject
         End Function
         
         '''<summary>
@@ -4178,6 +4354,14 @@ Namespace ResourcesT
         '''<returns>The JPEGFileDoesnTStartWithCorrectSOIMarker property value.</returns>
         Friend Shared Function JPEGFileDoesnTStartWithCorrectSOIMarkerFormat() As String
             Return JPEGFileDoesnTStartWithCorrectSOIMarker
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream property value.
+        '''</summary>
+        '''<returns>The JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream property value.</returns>
+        Friend Shared Function JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStreamFormat() As String
+            Return JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream
         End Function
         
         '''<summary>
@@ -4601,6 +4785,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the NoCastOperatorIsMostSpecific property value.
+        '''</summary>
+        '''<returns>The NoCastOperatorIsMostSpecific property value.</returns>
+        Friend Shared Function NoCastOperatorIsMostSpecificFormat() As String
+            Return NoCastOperatorIsMostSpecific
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the NoConditionWasTrue property value.
         '''</summary>
         '''<returns>The NoConditionWasTrue property value.</returns>
@@ -4851,6 +5043,15 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Renderer must render {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function RendererMustRender0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, RendererMustRender0, arg0)
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the ReportedLengthOf8BIMSegmentDoesnFFitIntoBaseStream property value.
         '''</summary>
         '''<returns>The ReportedLengthOf8BIMSegmentDoesnFFitIntoBaseStream property value.</returns>
@@ -4959,6 +5160,30 @@ Namespace ResourcesT
         '''<returns>The StoredValueHasInvalidLenght property value.</returns>
         Friend Shared Function StoredValueHasInvalidLenghtFormat() As String
             Return StoredValueHasInvalidLenght
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the StreamCannotBeUpdatedBecauseItsContentDiffersFromContent property value.
+        '''</summary>
+        '''<returns>The StreamCannotBeUpdatedBecauseItsContentDiffersFromContent property value.</returns>
+        Friend Shared Function StreamCannotBeUpdatedBecauseItsContentDiffersFromContentFormat() As String
+            Return StreamCannotBeUpdatedBecauseItsContentDiffersFromContent
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom property value.
+        '''</summary>
+        '''<returns>The StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom property value.</returns>
+        Friend Shared Function StreamCannotBeUpdatedBycauseItHasDifferentLengthFromFormat() As String
+            Return StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the StreamDoesNotSupportSeekingOrReading property value.
+        '''</summary>
+        '''<returns>The StreamDoesNotSupportSeekingOrReading property value.</returns>
+        Friend Shared Function StreamDoesNotSupportSeekingOrReadingFormat() As String
+            Return StreamDoesNotSupportSeekingOrReading
         End Function
         
         '''<summary>
@@ -5356,6 +5581,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the TargetCannotBeUpdatedBecauseItContainsNoExifData property value.
+        '''</summary>
+        '''<returns>The TargetCannotBeUpdatedBecauseItContainsNoExifData property value.</returns>
+        Friend Shared Function TargetCannotBeUpdatedBecauseItContainsNoExifDataFormat() As String
+            Return TargetCannotBeUpdatedBecauseItContainsNoExifData
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the TextCannotBeChangedViaTheTextProperty property value.
         '''</summary>
         '''<returns>The TextCannotBeChangedViaTheTextProperty property value.</returns>
@@ -5554,6 +5787,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the ThisInstanceWasNotCreatedForUpdating property value.
+        '''</summary>
+        '''<returns>The ThisInstanceWasNotCreatedForUpdating property value.</returns>
+        Friend Shared Function ThisInstanceWasNotCreatedForUpdatingFormat() As String
+            Return ThisInstanceWasNotCreatedForUpdating
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the ThisStreamDoesNotSupportSeeking property value.
         '''</summary>
         '''<returns>The ThisStreamDoesNotSupportSeeking property value.</returns>
@@ -5593,6 +5834,14 @@ Namespace ResourcesT
         '''<returns>The ThumbnailDataAreInvalid property value.</returns>
         Friend Shared Function ThumbnailDataAreInvalidFormat() As String
             Return ThumbnailDataAreInvalid
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream property value.
+        '''</summary>
+        '''<returns>The TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream property value.</returns>
+        Friend Shared Function TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStreamFormat() As String
+            Return TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream
         End Function
         
         '''<summary>
@@ -5653,6 +5902,16 @@ Namespace ResourcesT
         '''<returns>The TypeOfIFDFollowingAfterIFD0MustBeIFDMain property value.</returns>
         Friend Shared Function TypeOfIFDFollowingAfterIFD0MustBeIFDMainFormat() As String
             Return TypeOfIFDFollowingAfterIFD0MustBeIFDMain
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Types {0} and {1} are not compatible'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function Types0And1AreNotCompatibleFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, Types0And1AreNotCompatible, arg0, arg1)
         End Function
         
         '''<summary>
@@ -5758,6 +6017,15 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''Formats a localized string similar to 'Value {0} cannot be interpereted as rational - to many slashes'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function Value0CannotBeInterperetedAsRationalToManySlashesFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, Value0CannotBeInterperetedAsRationalToManySlashes, arg0)
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Value can be converter neither to {0} nor to {1}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -5765,6 +6033,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function ValueCanBeConverterNeitherTo0NorTo1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, ValueCanBeConverterNeitherTo0NorTo1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ValueCannotBeEmptyString property value.
+        '''</summary>
+        '''<returns>The ValueCannotBeEmptyString property value.</returns>
+        Friend Shared Function ValueCannotBeEmptyStringFormat() As String
+            Return ValueCannotBeEmptyString
         End Function
         
         '''<summary>

@@ -163,7 +163,7 @@
     <value>Cesta (řetězcová reprezentace URI) cíle odkazu</value>
   </data>
   <data name="AutoText_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli text automaticky zobrazuje hodnotu ukazatele průběhu</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli text automaticky zobrazuje hodnotu ukazatele průběhu</value>
   </data>
   <data name="AutoTextFormat_d" xml:space="preserve">
     <value>Formátovací řetězec použitý ke zformátování hodnoty, pokud je automaticky zobrazena jako text ovládacího prvku.</value>
@@ -181,10 +181,10 @@
     <value>Získá nebo nastaví zarovnání texto v popisku.</value>
   </data>
   <data name="AutoSize_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli velikost ovládacího prvku je automaticky přizpůsobena tak, aby zobrazil všechen svůj obsah.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli velikost ovládacího prvku je automaticky přizpůsobena tak, aby zobrazil všechen svůj obsah.</value>
   </data>
   <data name="KeyPreview_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli formulář bude dostávat události klávesnice pžed tím, než budou předány ovládacímu prvku, který má zaměření.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli formulář bude dostávat události klávesnice pžed tím, než budou předány ovládacímu prvku, který má zaměření.</value>
   </data>
   <data name="KeyPreviewDefaultValue_d" xml:space="preserve">
     <value>Obsahuje výchozí hodnotu vlastnosti KeyPreview.</value>

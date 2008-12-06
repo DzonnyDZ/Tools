@@ -248,58 +248,58 @@
     <value>Získá nebo nastaví hodnotu určující jestli jsou zobrazeny zděděné členy.</value>
   </data>
   <data name="ShowFlatNamespaces_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli jsou jmenné prostory zobrazeny ploše (true) nebo strukturovaně (false).</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli jsou jmenné prostory zobrazeny ploše (true) nebo strukturovaně (false).</value>
   </data>
   <data name="ShowNestedTypes_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli vnořené typy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli vnořené typy jsou zobrazeny.</value>
   </data>
   <data name="ShowPrivateMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli prvátní členy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli prvátní členy jsou zobrazeny.</value>
   </data>
   <data name="ShowInternalMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli interní členy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli interní členy jsou zobrazeny.</value>
   </data>
   <data name="ShowProtectedMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli chráněné členy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli chráněné členy jsou zobrazeny.</value>
   </data>
   <data name="ShowInstanceMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli instanční členy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli instanční členy jsou zobrazeny.</value>
   </data>
   <data name="ShowStaticMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli statické členy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli statické členy jsou zobrazeny.</value>
   </data>
   <data name="ShowSpecialMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli speciální členy (části vlastností a událostí) jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli speciální členy (části vlastností a událostí) jsou zobrazeny.</value>
   </data>
   <data name="ShowGlobalMembers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli globální člany (části vlastností a událostí) jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli globální člany (části vlastností a událostí) jsou zobrazeny.</value>
   </data>
   <data name="ShowProperties_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli vlastnosti jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli vlastnosti jsou zobrazeny.</value>
   </data>
   <data name="ShowEvents_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli události jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli události jsou zobrazeny.</value>
   </data>
   <data name="ShowMethods_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli metody jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli metody jsou zobrazeny.</value>
   </data>
   <data name="ShowFields_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli proměnné jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli proměnné jsou zobrazeny.</value>
   </data>
   <data name="ShowCTors_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli konstruktory jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli konstruktory jsou zobrazeny.</value>
   </data>
   <data name="ShowInitializers_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli inicializátory jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli inicializátory jsou zobrazeny.</value>
   </data>
   <data name="ShowGenericArguments_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli generické argumenty (typové parametry) jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli generické argumenty (typové parametry) jsou zobrazeny.</value>
   </data>
   <data name="ShowReferences_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli reference jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli reference jsou zobrazeny.</value>
   </data>
   <data name="ShowBaseTypes_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli rodičovské typy jsou zobrazeny.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli rodičovské typy jsou zobrazeny.</value>
   </data>
   <data name="PleaseWait" xml:space="preserve">
     <value>Prosím, čekejte...</value>
@@ -308,10 +308,10 @@
     <value>Vyvolána po té vlastnost určující, které člyny jsou zobrazeny v ListViewu byla změněna.</value>
   </data>
   <data name="ShowShowMenu_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli menu Zobrazit je zobrazeno.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli menu Zobrazit je zobrazeno.</value>
   </data>
   <data name="ShowToolbar_d" xml:space="preserve">
-    <value>Získá nebo nastaví hodnotu určujísí, jestli palenl nástrojů je zobrazen.</value>
+    <value>Získá nebo nastaví hodnotu určující, jestli palenl nástrojů je zobrazen.</value>
   </data>
   <data name="Objects_d" xml:space="preserve">
     <value>Seznam sestavní nebo jakýchkoliv jiných objektů zobrazených jako objekty nejvyšší úrovně stromového seznamu</value>
