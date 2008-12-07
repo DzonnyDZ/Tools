@@ -1,0 +1,6 @@
+﻿<Window x:Class="WindowsT.WPF.DialogsT.MessageBoxWindow" 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Width="auto" Height="auto"
+             xmlns:local="clr-namespace:Tools.WindowsT.WPF.DialogsT">
+        <local:MessageBoxImplementationControl x:Name="MsgBoxControl" Width="auto" Height="auto"/>
+</Window>

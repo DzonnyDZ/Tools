@@ -19,7 +19,6 @@ Namespace WindowsT.FormsT
             Me.lblPlhTop = New System.Windows.Forms.Label
             Me.picPicture = New System.Windows.Forms.PictureBox
             Me.lblPrompt = New System.Windows.Forms.Label
-            Me.CheckPlh1 = New System.Windows.Forms.CheckBox
             Me.cmbCombo = New System.Windows.Forms.ComboBox
             Me.flpRadio = New System.Windows.Forms.FlowLayoutPanel
             Me.RadioPlh1 = New System.Windows.Forms.RadioButton
@@ -29,9 +28,10 @@ Namespace WindowsT.FormsT
             Me.ButtonPlh1 = New System.Windows.Forms.Button
             Me.buttonPlh2 = New System.Windows.Forms.Button
             Me.lblPlhBottom = New System.Windows.Forms.Label
+            Me.flpChecks = New System.Windows.Forms.FlowLayoutPanel
+            Me.CheckPlh1 = New System.Windows.Forms.CheckBox
             Me.totToolTip = New System.Windows.Forms.ToolTip(Me.components)
             Me.tmrCountDown = New System.Windows.Forms.Timer(Me.components)
-            Me.flpChecks = New System.Windows.Forms.FlowLayoutPanel
             Me.tlpMain.SuspendLayout()
             CType(Me.picPicture, System.ComponentModel.ISupportInitialize).BeginInit()
             Me.flpRadio.SuspendLayout()
@@ -98,17 +98,6 @@ Namespace WindowsT.FormsT
             Me.lblPrompt.TabIndex = 1
             Me.lblPrompt.Text = "Prom&pt"
             Me.lblPrompt.UseMnemonic = False
-            '
-            'CheckPlh1
-            '
-            Me.CheckPlh1.AutoSize = True
-            Me.CheckPlh1.Location = New System.Drawing.Point(3, 3)
-            Me.CheckPlh1.Name = "CheckPlh1"
-            Me.CheckPlh1.Size = New System.Drawing.Size(82, 17)
-            Me.CheckPlh1.TabIndex = 2
-            Me.CheckPlh1.Text = "CheckBox1"
-            Me.CheckPlh1.UseMnemonic = False
-            Me.CheckPlh1.UseVisualStyleBackColor = True
             '
             'cmbCombo
             '
@@ -217,10 +206,6 @@ Namespace WindowsT.FormsT
             Me.lblPlhBottom.TabIndex = 7
             Me.lblPlhBottom.Text = "Bottom Placeholder"
             '
-            'tmrCountDown
-            '
-            Me.tmrCountDown.Interval = 1000
-            '
             'flpChecks
             '
             Me.flpChecks.Anchor = System.Windows.Forms.AnchorStyles.None
@@ -231,8 +216,23 @@ Namespace WindowsT.FormsT
             Me.flpChecks.Location = New System.Drawing.Point(129, 83)
             Me.flpChecks.Margin = New System.Windows.Forms.Padding(0)
             Me.flpChecks.Name = "flpChecks"
-            Me.flpChecks.Size = New System.Drawing.Size(88, 23)
+            Me.flpChecks.Size = New System.Drawing.Size(87, 23)
             Me.flpChecks.TabIndex = 8
+            '
+            'CheckPlh1
+            '
+            Me.CheckPlh1.AutoSize = True
+            Me.CheckPlh1.Location = New System.Drawing.Point(3, 3)
+            Me.CheckPlh1.Name = "CheckPlh1"
+            Me.CheckPlh1.Size = New System.Drawing.Size(81, 17)
+            Me.CheckPlh1.TabIndex = 2
+            Me.CheckPlh1.Text = "CheckBox1"
+            Me.CheckPlh1.UseMnemonic = False
+            Me.CheckPlh1.UseVisualStyleBackColor = True
+            '
+            'tmrCountDown
+            '
+            Me.tmrCountDown.Interval = 1000
             '
             'MessageBoxForm
             '
@@ -242,7 +242,7 @@ Namespace WindowsT.FormsT
             Me.AutoSize = True
             Me.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.CancelButton = Me.buttonPlh2
-            Me.ClientSize = New System.Drawing.Size(346, 200)
+            Me.ClientSize = New System.Drawing.Size(346, 211)
             Me.Controls.Add(Me.tlpMain)
             Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
             Me.MaximizeBox = False

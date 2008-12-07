@@ -205,6 +205,7 @@
       <DependentUpon>RawInput.vb</DependentUpon>
     </Compile>
     <Compile Include="Devices\RawInput.vb">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Diagnostics\ImageVisualizer.Designer.vb">
       <DependentUpon>ImageVisualizer.vb</DependentUpon>
@@ -393,6 +394,7 @@
     </Compile>
     <Compile Include="Windows\Forms\ExtendedForm.vb" Condition="$(Config)&lt;=$(RC)">
       <!--Set stage here, because it uses resources and using #If produces warnings-->
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Windows\Forms\ProgressBarWithText.Designer.vb">
       <DependentUpon>ProgressBarWithText.vb</DependentUpon>
@@ -726,6 +728,6 @@
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)\app.mda.config" "$(TargetPath).mda.config"
 copy "$(ProjectDir)\app.mda.config" "$(TargetDir)$(TargetName).vshost$(TargetExt).mda.config"
-"$(SolutionDir)DevelopmentTools\VersionCorrector\bin\Debug\VersionCorrector.exe" "$(TargetPath)" "$(SolutionDir)SharedFiles\Tools.snk"</PostBuildEvent>
+"$(SolutionDir)DevelopmentTools\VersionCorrector\bin\Debug\VersionCorrector.exe" "$(TargetDir)*.dllexe" "$(SolutionDir)SharedFiles\Tools.snk"</PostBuildEvent>
   </PropertyGroup>
 </Project>

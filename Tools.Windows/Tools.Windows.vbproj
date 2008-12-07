@@ -401,6 +401,14 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Page Include="Windows\WPF\Dialogs\MessageBox WPF.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Windows\WPF\Dialogs\MessageBoxWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Tools\Tools.vbproj">
@@ -470,6 +478,12 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CompositeControls.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\WPF\Dialogs\MessageBox WPF.vb">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\WPF\Dialogs\MessageBoxWindow.xaml.vb">
+      <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
       <DependentUpon>DerivedControls.resx</DependentUpon>
@@ -559,11 +573,12 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>
-            "$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
-            REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
-            "$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
-        </PostBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)DevelopmentTools\CommentsMerge\bin\Debug\CommentsMerge.exe" "$(TargetDir)$(TargetName).xml" "$(SolutionDir)Created doc\Namespaces.xml" "$(TargetDir)$(TargetName).xml"
+"$(SolutionDir)DevelopmentTools\VersionCorrector\bin\Debug\VersionCorrector.exe" "$(TargetPath)" "$(SolutionDir)SharedFiles\Tools.snk"
+"$(SolutionDir)DevelopmentTools\VersionCorrector\bin\Debug\VersionCorrector.exe" "$(ProjectDir)obj\$(ConfigurationName)\$(TargetFileName)" "$(SolutionDir)SharedFiles\Tools.snk"
+REM Needs Windows Server 2003 Resource Kit Tools http://www.microsoft.com/downloads/details.aspx?FamilyID=9d467a69-57ff-4ae7-96ee-b18c4790cffd&amp;DisplayLang=en
+"$(SolutionDir)Latest.bat" "$(TargetDir)." "$(SolutionDir)bin\Latest"
+</PostBuildEvent>
     <PreBuildEvent>
     </PreBuildEvent>
   </PropertyGroup>

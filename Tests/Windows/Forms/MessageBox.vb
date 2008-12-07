@@ -1,10 +1,11 @@
 ﻿'#If Config <= Nightly Then 'Set in project file
 Imports Tools.WindowsT, Tools.WindowsT.FormsT
+Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Namespace WindowsT.FormsT
     ''' <summary>Tests for <see cref="MessageBox"/></summary>
     Public Class frmMessageBox
         ''' <summary><see cref="MessageBox"/> being tested</summary>
-        Private WithEvents Box As MessageBox
+        Private WithEvents Box As iMsg
 
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
@@ -33,8 +34,13 @@ Namespace WindowsT.FormsT
 
         Private Sub cmdCreate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCreate.Click
             txtLog.Clear()
-            Log("Creating")
-            Box = New MessageBox
+            If optWinForms.Checked Then
+                Log("Creating WF")
+                Box = New MessageBox
+            Else
+                Log("Creating WPF")
+                Box = New Tools.WindowsT.WPF.DialogsT.MessageBox
+            End If
             prgGrid.SelectedObject = Box
             ApplyState()
         End Sub
@@ -110,6 +116,11 @@ Namespace WindowsT.FormsT
         ''' <seealso cref="String.Format"/>
         Private Sub Log(ByVal Text$, ByVal ParamArray Params As Object())
             Log(String.Format(Text, Params))
+        End Sub
+
+        Private Sub cmdCreate_EnabledChanged(ByVal sender As Button, ByVal e As System.EventArgs) Handles cmdCreate.EnabledChanged
+            optWinForms.Enabled = sender.Enabled
+            optWPF.Enabled = sender.Enabled
         End Sub
     End Class
 End Namespace

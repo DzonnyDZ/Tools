@@ -15,6 +15,7 @@ Namespace WindowsT.FormsT
     ''' </list>
     ''' Violating these rules can lead to uncatchable <see cref="InvalidOperationException"/> being thrown when event occurs.
     ''' </remarks>
+    ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public Class MessageBoxForm : Inherits Form
         ''' <summary>Form overrides dispose to clean up the component list.</summary>
@@ -286,7 +287,7 @@ Namespace WindowsT.FormsT
         ''' <param name="Chk">A <see cref="iMsg.MessageBoxCheckBox"/> to create <see cref="CheckBox"/> from</param>
         ''' <returns><see cref="CheckBox"/> initiated by <paramref name="Chk"/></returns>
         Private Function CreateCheckBox(ByVal Chk As MessageBox.MessageBoxCheckBox) As CheckBox
-            Dim ret As New CheckBox With {.Text = Chk.Text, .Tag = Chk, .CheckState = Chk.State, .ThreeState = Chk.ThreeState, .Enabled = Chk.Enabled, .Anchor = AnchorStyles.None}
+            Dim ret As New CheckBox With {.Text = Chk.Text, .Tag = Chk, .CheckState = Chk.State, .ThreeState = Chk.ThreeState, .Enabled = Chk.Enabled, .Anchor = AnchorStyles.None, .AutoSize = True}
             If Chk.ToolTip <> "" Then totToolTip.SetToolTip(ret, Chk.ToolTip)
             Chk.Control = ret
             AddHandler ret.CheckStateChanged, AddressOf__CheckBox_CheckStateChanged
@@ -707,6 +708,7 @@ Namespace WindowsT.FormsT
     ''' </remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
        Public Class MessageBox
         Inherits iMsg

@@ -33,6 +33,8 @@ Namespace WindowsT.FormsT
             Me.cmdDestroy = New System.Windows.Forms.Button
             Me.prgGrid = New System.Windows.Forms.PropertyGrid
             Me.txtLog = New System.Windows.Forms.TextBox
+            Me.optWinForms = New System.Windows.Forms.RadioButton
+            Me.optWPF = New System.Windows.Forms.RadioButton
             Me.flpCommands.SuspendLayout()
             Me.SuspendLayout()
             '
@@ -41,6 +43,8 @@ Namespace WindowsT.FormsT
             Me.flpCommands.AutoSize = True
             Me.flpCommands.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.flpCommands.Controls.Add(Me.cmdCreate)
+            Me.flpCommands.Controls.Add(Me.optWinForms)
+            Me.flpCommands.Controls.Add(Me.optWPF)
             Me.flpCommands.Controls.Add(Me.cmdShowDialog)
             Me.flpCommands.Controls.Add(Me.cmdShow)
             Me.flpCommands.Controls.Add(Me.cmdShowFloating)
@@ -70,7 +74,7 @@ Namespace WindowsT.FormsT
             Me.cmdShowDialog.AutoSize = True
             Me.cmdShowDialog.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdShowDialog.Enabled = False
-            Me.cmdShowDialog.Location = New System.Drawing.Point(100, 3)
+            Me.cmdShowDialog.Location = New System.Drawing.Point(203, 3)
             Me.cmdShowDialog.Name = "cmdShowDialog"
             Me.cmdShowDialog.Size = New System.Drawing.Size(75, 23)
             Me.cmdShowDialog.TabIndex = 1
@@ -83,7 +87,7 @@ Namespace WindowsT.FormsT
             Me.cmdShow.AutoSize = True
             Me.cmdShow.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdShow.Enabled = False
-            Me.cmdShow.Location = New System.Drawing.Point(181, 3)
+            Me.cmdShow.Location = New System.Drawing.Point(3, 32)
             Me.cmdShow.Name = "cmdShow"
             Me.cmdShow.Size = New System.Drawing.Size(44, 23)
             Me.cmdShow.TabIndex = 2
@@ -96,7 +100,7 @@ Namespace WindowsT.FormsT
             Me.cmdShowFloating.AutoSize = True
             Me.cmdShowFloating.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdShowFloating.Enabled = False
-            Me.cmdShowFloating.Location = New System.Drawing.Point(3, 32)
+            Me.cmdShowFloating.Location = New System.Drawing.Point(53, 32)
             Me.cmdShowFloating.Name = "cmdShowFloating"
             Me.cmdShowFloating.Size = New System.Drawing.Size(81, 23)
             Me.cmdShowFloating.TabIndex = 3
@@ -109,7 +113,7 @@ Namespace WindowsT.FormsT
             Me.cmdClose.AutoSize = True
             Me.cmdClose.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdClose.Enabled = False
-            Me.cmdClose.Location = New System.Drawing.Point(90, 32)
+            Me.cmdClose.Location = New System.Drawing.Point(140, 32)
             Me.cmdClose.Name = "cmdClose"
             Me.cmdClose.Size = New System.Drawing.Size(43, 23)
             Me.cmdClose.TabIndex = 4
@@ -122,7 +126,7 @@ Namespace WindowsT.FormsT
             Me.cmdDestroy.AutoSize = True
             Me.cmdDestroy.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
             Me.cmdDestroy.Enabled = False
-            Me.cmdDestroy.Location = New System.Drawing.Point(139, 32)
+            Me.cmdDestroy.Location = New System.Drawing.Point(189, 32)
             Me.cmdDestroy.Name = "cmdDestroy"
             Me.cmdDestroy.Size = New System.Drawing.Size(53, 23)
             Me.cmdDestroy.TabIndex = 5
@@ -148,6 +152,30 @@ Namespace WindowsT.FormsT
             Me.txtLog.Size = New System.Drawing.Size(294, 139)
             Me.txtLog.TabIndex = 6
             Me.txtLog.WordWrap = False
+            '
+            'optWinForms
+            '
+            Me.optWinForms.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.optWinForms.AutoSize = True
+            Me.optWinForms.Checked = True
+            Me.optWinForms.Location = New System.Drawing.Point(100, 6)
+            Me.optWinForms.Name = "optWinForms"
+            Me.optWinForms.Size = New System.Drawing.Size(42, 17)
+            Me.optWinForms.TabIndex = 6
+            Me.optWinForms.TabStop = True
+            Me.optWinForms.Text = "WF"
+            Me.optWinForms.UseVisualStyleBackColor = True
+            '
+            'optWPF
+            '
+            Me.optWPF.Anchor = System.Windows.Forms.AnchorStyles.None
+            Me.optWPF.AutoSize = True
+            Me.optWPF.Location = New System.Drawing.Point(148, 6)
+            Me.optWPF.Name = "optWPF"
+            Me.optWPF.Size = New System.Drawing.Size(49, 17)
+            Me.optWPF.TabIndex = 7
+            Me.optWPF.Text = "WPF"
+            Me.optWPF.UseVisualStyleBackColor = True
             '
             'frmMessageBox
             '
@@ -176,6 +204,8 @@ Namespace WindowsT.FormsT
         Friend WithEvents cmdDestroy As System.Windows.Forms.Button
         Friend WithEvents prgGrid As System.Windows.Forms.PropertyGrid
         Friend WithEvents txtLog As System.Windows.Forms.TextBox
+        Friend WithEvents optWinForms As System.Windows.Forms.RadioButton
+        Friend WithEvents optWPF As System.Windows.Forms.RadioButton
     End Class
 
 End Namespace

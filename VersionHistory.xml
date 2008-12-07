@@ -26,5 +26,7 @@
         <vh:i><i:see cref="T:Tools.Metadata.ExifT.ExifWriter"/> made public and Exif saving capability added to <i:see cref="T:Tools.Metadata.ExifT.Exif"/>.</vh:i>
         <vh:i>Added <i:see cref="M:Tools.ReflectionT.ReflectionTools.GetOperators"/> overloaed function.</vh:i>
         <vh:i>Added <i:see cref="M:Tools.TypeTools.DynamiCast(System.Object,System.Type)"/> method</vh:i>
+        <vh:i><i:see cref="T:Tools.WindowsT.FormsT.ObjectBrowser"/> now has <i:see cref="P:Tools.WindowsT.FormsT.ObjectBrowser.SelectedItem"/> property</vh:i>
+        <vh:i>Fixed: Check box on <i:see cref="T:Tools.WindowsT.FormsT.MessageBox"/> does not autosize.</vh:i>
     </vh:version>
 </vh:VersionHistory>
