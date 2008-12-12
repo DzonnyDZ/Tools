@@ -401,7 +401,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Windows\WPF\Dialogs\MessageBox WPF.xaml">
+    <Page Include="Windows\WPF\Dialogs\MessageBoxImplementationControl.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -479,6 +479,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompositeControls.resx</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Interop\DependencyPropertyChangedEventArgsEventArgs.vb" />
     <Compile Include="Windows\WPF\Dialogs\MessageBox WPF.vb">
       <SubType>Component</SubType>
     </Compile>

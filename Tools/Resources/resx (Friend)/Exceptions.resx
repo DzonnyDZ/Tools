@@ -1164,4 +1164,7 @@
   <data name="UnableToCastType0ToType1" xml:space="preserve">
     <value>Unable to cast type {0} to type {1}</value>
   </data>
+  <data name="MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe" xml:space="preserve">
+    <value>MessageBox must own this instance in order this instance to be associated with it.</value>
+  </data>
 </root>
