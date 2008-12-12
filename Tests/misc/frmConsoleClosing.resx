@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -117,37 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="CloseBoxEnabled_d" xml:space="preserve">
-    <value>Získá nebo nastaví stav zavíracího tlačítka ('X') aktuálního formuláře. Nemůže být změněna, když CLoseBox je false.</value>
-  </data>
-  <data name="CloseBox_d" xml:space="preserve">
-    <value>Určuje jestli formulář má zavírací tlačítko v pravém horním rohu ve svém záhlací. Poznámka: Tlačítko X nezmizí, jen je zašeděno (na Vistě dokonce ani to). Takže raději použijte CloseBoxEnabled.</value>
-  </data>
-  <data name="WindowStateChanged_d" xml:space="preserve">
-    <value>Vyvolána po té, co se změní vlastnost WIndowState</value>
-  </data>
-  <data name="NoWindow" xml:space="preserve">
-    <value>&lt;žádné okno&gt;</value>
-  </data>
-  <data name="LowLevel_c" xml:space="preserve">
-    <value>Nízkoúrovňové</value>
-  </data>
-  <data name="WindowProperties_c" xml:space="preserve">
-    <value>Vlastnosti okna</value>
-  </data>
-  <data name="Relationship_c" xml:space="preserve">
-    <value>Vztahy</value>
-  </data>
-  <data name="Children_d" xml:space="preserve">
-    <value>Získá všechny děti aktuálního okna</value>
-  </data>
-  <data name="SizeAndPosition_c" xml:space="preserve">
-    <value>Velikost a pozice</value>
-  </data>
-  <data name="Handle_c" xml:space="preserve">
-    <value>Handle</value>
-  </data>
-  <data name="ApplicationCommand_d" xml:space="preserve">
-    <value>Vyvolána, když formulář přijme aplikační příkaz</value>
-  </data>
 </root>

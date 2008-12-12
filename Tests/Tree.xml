@@ -138,6 +138,7 @@
     <node name="Tools Win" image="Assembly">
         <node name="ConsoleT" image="Class">
             <node name="AllocateConsole" image="Method Shortcut" tag="Tools.Tests.TestsT.AttributeTest.Test"/>
+            <node name="Closing" image="Event" tag="Tools.Tests.frmConsoleClosing.Test"/>
         </node>
         <node name="DevicesT" image="Namespace">
             <node name="LowLevelKeyboardHook" image="Class" tag="Tools.Tests.DevicesT.frmLowLevelKeyboardHook.Test"/>

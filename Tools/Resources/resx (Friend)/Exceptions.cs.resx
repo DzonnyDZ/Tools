@@ -1074,4 +1074,94 @@
   <data name="ImageDataDoesNotContainEnoghBytes" xml:space="preserve">
     <value>Obrazová data neobsahují dostatečný počet bytů</value>
   </data>
+  <data name="NamespacePrefix0IsNotDefined" xml:space="preserve">
+    <value>Prefix jmenného prostoru {0} není definován</value>
+  </data>
+  <data name="XMLAttributeHasNoParentElement" xml:space="preserve">
+    <value>XML atribut nemá rodičovské element.</value>
+  </data>
+  <data name="RootElementMustBe0Or1" xml:space="preserve">
+    <value>Kořenový element musí být &lt;{0}&gt; nebo &lt;{1}&gt;</value>
+  </data>
+  <data name="RootElementMustBe0" xml:space="preserve">
+    <value>Kořenový element musí být &lt;{0}&gt;.</value>
+  </data>
+  <data name="DoesNotRepresentSupportedExpression" xml:space="preserve">
+    <value>{0} nereprezentuje podporovaný výraz.</value>
+  </data>
+  <data name="UnsupportedCodeDomObject0" xml:space="preserve">
+    <value>Nepodporovaný objekt CodeDOM {0}</value>
+  </data>
+  <data name="ObjectOfType0CannotBeSerializedAsPrimitiveObject" xml:space="preserve">
+    <value>Objekt typu {0} nemůže být serializován jako primitivní objekt.</value>
+  </data>
+  <data name="IsNotSupportedTypeOfXMLSerializedCodeDOMObject" xml:space="preserve">
+    <value>{0} není podporovaným typem XML-serializovaného CodeDOM objektu.</value>
+  </data>
+  <data name="ValueOfType0CannotBeDeserializedStandAloneBecauseIts" xml:space="preserve">
+    <value>Hodnota typu {0} nemůže být deserializována samostatně, protože její objektová reprezentace nedědí od CodeObject.</value>
+  </data>
+  <data name="Namespace0HasNoPrefixAssociatedAndItIsNotDefaultNamespace" xml:space="preserve">
+    <value>Jmnný prostor {0} nemá žádný asociovaný prefix a není výchozím jmenným prostorem.</value>
+  </data>
+  <data name="ListWithEventsDoesNotSupportSorting" xml:space="preserve">
+    <value>ListWithEvents nepodporuje řazení</value>
+  </data>
+  <data name="ListWithEventsDoesNotSupportSearching" xml:space="preserve">
+    <value>ListWithEvents nepodporuje vyhledávání</value>
+  </data>
+  <data name="InternalObjectMustBeEitherUxThemeObjectOrNonThemedVisualStyleObject" xml:space="preserve">
+    <value>InternalObject musí být buď UxThemeObject nebo NonThemedVisualStyleObject</value>
+  </data>
+  <data name="RendererMustRender0" xml:space="preserve">
+    <value>Renderer musí renderovat {0}</value>
+  </data>
+  <data name="ValueCannotBeEmptyString" xml:space="preserve">
+    <value>Hodnota nemůže být prázdný řčetězec</value>
+  </data>
+  <data name="CannotConvertNegativeValuesToUnsignedRational" xml:space="preserve">
+    <value>Nemuho převést záporné hodnoty na neznaménkový zlomek</value>
+  </data>
+  <data name="Value0CannotBeInterperetedAsRationalToManySlashes" xml:space="preserve">
+    <value>Hodnota {0} nemůže být interpretována jako zlomek - příliš mnoho lomítek</value>
+  </data>
+  <data name="IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent" xml:space="preserve">
+    <value>Ukládané IFD je neplatné: Ukazatel na SubIFD musí mít jednu komponentu.</value>
+  </data>
+  <data name="ThisInstanceWasNotCreatedForUpdating" xml:space="preserve">
+    <value>Tato instance nebyla stvořena pro aktualizování</value>
+  </data>
+  <data name="StreamCannotBeUpdatedBycauseItHasDifferentLengthFrom" xml:space="preserve">
+    <value>Proud nelze aktualizovat, protože má odlišnou délku od produ, z něhož byla tato instance vytvořena.</value>
+  </data>
+  <data name="TargetCannotBeUpdatedBecauseItContainsNoExifData" xml:space="preserve">
+    <value>Cíl nemůže být aktualizován, protože neobsahuje žádná Exif data.</value>
+  </data>
+  <data name="StreamCannotBeUpdatedBecauseItsContentDiffersFromContent" xml:space="preserve">
+    <value>Proud nemůže být aktualizován, protože jeho obsah se liší od obsahu proudu, z něhož byla tato instance vytvořena.</value>
+  </data>
+  <data name="CannotSaveExifDataBecauseOfInvalidContent" xml:space="preserve">
+    <value>Nemuhu uložit Exif data z důvodu neplatného obsahu.</value>
+  </data>
+  <data name="StreamDoesNotSupportSeekingOrReading" xml:space="preserve">
+    <value>Proud nepodporuje změnu pozice nebo čtení</value>
+  </data>
+  <data name="JPEGThumbnailSizeIsSpecifiedToBeOutsideOfExifStream" xml:space="preserve">
+    <value>Velikost JPEG miniatury je specifikována tak, že je mimo proud Exif</value>
+  </data>
+  <data name="TiffThumbnailSizeIsSpecifiedToBeOutsideOfExifStream" xml:space="preserve">
+    <value>Velikost TIFF miniatury je specifikována tak, že je mimo proud Exif.</value>
+  </data>
+  <data name="Types0And1AreNotCompatible" xml:space="preserve">
+    <value>Typy {0} a {1} nejsou kompatibilní</value>
+  </data>
+  <data name="NoCastOperatorIsMostSpecific" xml:space="preserve">
+    <value>Žádný přetypovávací operátor není nejspecifištější</value>
+  </data>
+  <data name="GivenObjectCannotBeLocated" xml:space="preserve">
+    <value>Namohu nalézt daný objekt</value>
+  </data>
+  <data name="UnableToCastType0ToType1" xml:space="preserve">
+    <value>Nemohu přetypovat typ {0} na typ {1}</value>
+  </data>
 </root>

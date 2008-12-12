@@ -4,8 +4,8 @@ Namespace API.Messages
     ''' <summary>The WindowProc function is an application-defined function that processes messages sent to a window. The WNDPROC type defines a pointer to this callback function. WindowProc is a placeholder for the application-defined function name.</summary>
     ''' <param name="hWnd">Handle to the window.</param>
     ''' <param name="msg">Specifies the message.</param>
-    ''' <param name="wParam">Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter.</param>
-    ''' <param name="lParam">Specifies additional message information. The contents of this parameter depend on the value of the uMsg parameter.</param>
+    ''' <param name="wParam">Specifies additional message information. The contents of this parameter depend on the value of the <paramref name="uMsg"/> parameter.</param>
+    ''' <param name="lParam">Specifies additional message information. The contents of this parameter depend on the value of the <paramref name="uMsg"/> parameter.</param>
     ''' <returns>The return value is the result of the message processing and depends on the message sent.</returns>
     Public Delegate Function WndProc(ByVal hWnd As IntPtr, ByVal msg As Messages.WindowMessages, ByVal wParam As Integer, ByVal lParam As Integer) As Integer
     ''' <summary>Window messages</summary>

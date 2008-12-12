@@ -153,4 +153,79 @@
   <data name="IsInvalidKeyKeysMustBeWithinRangeFrom0To255" xml:space="preserve">
     <value>{0} je neplatný klíč. Klíč musí být z rozsahu do 0 do 255.</value>
   </data>
+  <data name="IsUnknownRegistryBaseKey" xml:space="preserve">
+    <value>{0} je neznámý základní klíč registrů</value>
+  </data>
+  <data name="HookIsAlreadyRegisteredForThisInstance" xml:space="preserve">
+    <value>Hák již byl pro tuto instanci registrován.</value>
+  </data>
+  <data name="HookIsNotRegisteredForThisInstance" xml:space="preserve">
+    <value>Hák nbyl pro tt instanci registrován</value>
+  </data>
+  <data name="When0Is1ThenTypeOfThisInstanceMustBe2" xml:space="preserve">
+    <value>Když {0} je {1} tak typ této instance musí být {2}</value>
+  </data>
+  <data name="UnknownRawInputDeviceType0" xml:space="preserve">
+    <value>Neznámý typ nzkoúrovňového zařízení {0}</value>
+  </data>
+  <data name="RawDeviceNameHasUnexpectedFormatItMustStartWith0" xml:space="preserve">
+    <value>Název nízkoúrovňového zařízení má neočekávaný formát. Musí začínat "{0}".</value>
+  </data>
+  <data name="RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte" xml:space="preserve">
+    <value>Název nízkoúrovňového zařízení má neplatný formát. Měl by obsahovat 4 části oddělené #.</value>
+  </data>
+  <data name="TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException" xml:space="preserve">
+    <value>ˇčást jména zařízení reprezentující guid třídy má neplatný formát. Vizte InnerException pro podrobnosti.</value>
+  </data>
+  <data name="CannotBeAnEmptyString" xml:space="preserve">
+    <value>{0} nemůže být prázdný řetězec</value>
+  </data>
+  <data name="InvalidFormatSpecifier" xml:space="preserve">
+    <value>Neplatný specifikátor formátu</value>
+  </data>
+  <data name="SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance" xml:space="preserve">
+    <value>Zdroj události okenní zprávy musí být stejný jako majitel této instance</value>
+  </data>
+  <data name="MessageTargetWindowHandleMustBeSameAsHandleOfWindow" xml:space="preserve">
+    <value>Handle cílového okna zprávy musí být stejný jako handle, pronějž byla tato instance vytvořena</value>
+  </data>
+  <data name="GivenOwnerHasAlreadyAttachedRawInputEventProvider" xml:space="preserve">
+    <value>Zadaný majitel již má připojen RawInputEventProvider</value>
+  </data>
+  <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
+    <value>{0} nemůže být nastaveno na {1} když {2} je {3}</value>
+  </data>
+  <data name="WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude" xml:space="preserve">
+    <value>Pokud je jen jedno zařízení (od)regsitrováváno, nemůže mít nastaveno Exclude na true.</value>
+  </data>
+  <data name="DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered" xml:space="preserve">
+    <value>Zařízení mohou být vyňata jen ze stránek užití regitrovaných ve stejné dávce.</value>
+  </data>
+  <data name="DeviceWithExcludeSetToTrueMustHaveUsageSetToZero" xml:space="preserve">
+    <value>Zařízení s Exclude nastaveným na true musí mít Usage nastaveno na 0.</value>
+  </data>
+  <data name="LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice" xml:space="preserve">
+    <value>Původní zprávy mohou být zakázány jen pro zařízení myši a klávesnice, nebo když je celá stránka užití obecných desktopových ovladačů registrována.</value>
+  </data>
+  <data name="When0Is12MustBe3" xml:space="preserve">
+    <value>Když {0} je {1}, {2} musí být {3}.</value>
+  </data>
+  <data name="OwherHandleHasChanged" xml:space="preserve">
+    <value>Handle majitele se změnil.</value>
+  </data>
+  <data name="CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling" xml:space="preserve">
+    <value>Nelze konvertovat RAWINPUT_Marshalling to RAWINPUT_NonMarshalling, když obsahuje HID data</value>
+  </data>
+  <data name="Or_" xml:space="preserve">
+    <value>nebo</value>
+  </data>
+  <data name="AdditionalEventsHaveBeenAlreadyCalled" xml:space="preserve">
+    <value>Doplňující události již byly zavolány.</value>
+  </data>
+  <data name="LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize" xml:space="preserve">
+    <value>Délka Original.RawItemsCOunt musí být 1 a délka Original.RawItemSize 2 nebo 3.</value>
+  </data>
+  <data name="CurrentApplicationHasNoConsoleAllocateConsoleFirst" xml:space="preserve">
+    <value>Aktuální aplikace nemá žádnou konzoli. Nejprve alokujte konzoli.</value>
+  </data>
 </root>
