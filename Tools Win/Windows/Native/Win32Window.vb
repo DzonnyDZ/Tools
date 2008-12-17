@@ -638,6 +638,90 @@ Namespace WindowsT.NativeT
         End Property
 #End Region
     End Class
+    ''' <summary>Subclasses any native Win32 widow by replacing its window procedure</summary>
+    ''' <remarks>You can derive your class from this class and override <see cref="SubclassedNativeWindow.NewWndProc"/> to subclas any win</remarks>
+    ''' <version stage="Nightly" version="1.5.2">Class introduced</version>
+    Public Class SubclassedNativeWindow
+        Inherits Win32Window
+        ''' <summary>CTor</summary>
+        ''' <param name="Handle">Handle of native window</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Handle"/> is <see cref="IntPtr.Zero"/></exception>
+        ''' <exception cref="API.Win32APIException">Unable to replace window procedure</exception>
+        Public Sub New(ByVal Handle As IntPtr)
+            MyBase.New(Handle)
+            If Handle = IntPtr.Zero Then Throw New ArgumentNullException("Handle")
+            _OldWndProc = MyBase.WndProcPointer
+            MyBase.WndProc = AddressOfWndProc
+        End Sub
+        ''' <summary>CTor</summary>
+        ''' <param name="Window">Handle to subclass</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Window"/> is null -or- <paramref name="Window"/>.<see cref="IWin32Window.Handle">Handle</see> is zero</exception>
+        ''' <exception cref="API.Win32APIException">Unable to replace window procedure</exception>
+        Public Sub New(ByVal Window As IWin32Window)
+            Me.New(Window.Handle)
+        End Sub
+        ''' <summary>Keeps delegate to <see cref="NewWndProc"/></summary>
+        ''' <remarks>Keeping delegate in field prevents if from being garbage-collected. Delegate passed to unmanaged code must be kept alive in such way.</remarks>
+        Private AddressOfWndProc As API.Messages.WndProc = AddressOf NewWndProc
+        ''' <summary>Contains value of the <see cref="OldWndProc"/> property</summary>
+        Private ReadOnly _OldWndProc As IntPtr
+        ''' <summary>Gets pointer to original window procedure</summary>
+        ''' <returns>Original window procedure of window being sublcassed prior ts replecement by <see cref="NewWndProc"/></returns>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected ReadOnly Property OldWndProc() As IntPtr
+            Get
+                Return _OldWndProc
+            End Get
+        End Property
+        ''' <summary>Gets wnd proc of current window. Used for so-called window sub-classing.</summary>
+        ''' <remarks>Value of this proeprty cannot be changed</remarks>
+        ''' <exception cref="API.Win32APIException">Error obtaining curent window procedure</exception>
+        ''' <returns>Current window procedure of window being subclassed. It's usually <see cref="NewWndProc"/>, unless window was subclassed again.</returns>
+        ''' <exception cref="NotSupportedException">Value is being set</exception>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public NotOverridable Overrides Property WndProc() As API.Messages.WndProc
+            Get
+                Return MyBase.WndProc
+            End Get
+            Set(ByVal value As API.Messages.WndProc)
+                Throw New NotSupportedException("WndProc cannot be set on SubclassedNativeWindow")
+            End Set
+        End Property
+        ''' <summary>Gets pointer wnd proc of current window. Used for so-called window sub-classing.</summary>
+        ''' <remarks>Value of this proeprty cannot be changed</remarks>
+        ''' <exception cref="API.Win32APIException">Error obtaining curent window procedure</exception>
+        ''' <returns>Pointer current window procedure of window being subclassed. It's usually <see cref="NewWndProc"/>, unless window was subclassed again.</returns>
+        ''' <exception cref="NotSupportedException">Value is being set</exception>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public NotOverridable Overrides Property WndProcPointer() As System.IntPtr
+            Get
+                Return MyBase.WndProcPointer
+            End Get
+            Set(ByVal value As System.IntPtr)
+                Throw New NotSupportedException("WndProc cannot be set on SubclassedNativeWindow")
+            End Set
+        End Property
+        ''' <summary>Procedure that replaces old window procedure of window being subclassed</summary>
+        ''' <param name="hWnd">Handle to the window.</param>
+        ''' <param name="msg">Specifies the message.</param>
+        ''' <param name="wParam">Specifies additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.</param>
+        ''' <param name="lParam">Specifies additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.</param>
+        ''' <returns>The return value is the result of the message processing and depends on the message sent.</returns>
+        ''' <remarks><note type="inheritinfo">Call base class method, if you do not provide custom handling of message being send. This implementation calls original window procedure defined by window being subclassed.</note></remarks>
+        Protected Overridable Function NewWndProc%(ByVal hwnd As IntPtr, ByVal msg As API.Messages.WindowMessages, ByVal wParam%, ByVal lParam%)
+            Return API.GUI.CallWindowProc(OldWndProc, hwnd, msg, wParam, lParam)
+        End Function
+        ''' <summary>True when <see cref="Dispose"/> was already called</summary>
+        Private Disposed As Boolean
+        ''' <summary>Sets <see cref="Handle"/> to zero</summary>
+        ''' <remarks>This code added by Visual Basic to correctly implement the disposable pattern.</remarks>
+        Protected Overrides Sub Dispose(ByVal disposing As Boolean)
+            If Not Disposed Then MyBase.WndProcPointer = OldWndProc
+            AddressOfWndProc = Nothing
+            Disposed = True
+            MyBase.Dispose(disposing)
+        End Sub
+    End Class
 End Namespace
 #End If
 

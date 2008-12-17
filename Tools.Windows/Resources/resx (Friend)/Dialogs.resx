@@ -150,4 +150,10 @@
   <data name="OKClicked_d" xml:space="preserve">
     <value>Raised after user clicks OK and dialogs allows him to select encoding</value>
   </data>
+  <data name="ValueIndicatingBidirectionlFlowDirection" xml:space="preserve">
+    <value>Value indicating bidirectionl flow direction</value>
+  </data>
+  <data name="TextAlignmentOfPrompt" xml:space="preserve">
+    <value>Text alignment of prompt</value>
+  </data>
 </root>

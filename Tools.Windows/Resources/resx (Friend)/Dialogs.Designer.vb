@@ -21,7 +21,7 @@ Namespace WindowsT.FormsT
     '''<summary>
     '''A strongly-typed resource class, for looking up localized strings, formatting them, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.1.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.2.5.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
     Friend Class Dialogs
@@ -59,7 +59,7 @@ Namespace WindowsT.FormsT
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
                     Try 
                         If Object.ReferenceEquals(_resourceManager, Nothing) Then
-                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.Dialogs", GetType(Dialogs).Assembly))
+                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.WindowsT.FormsT.Dialogs", GetType(Dialogs).Assembly))
                         End If
                     Finally
                         Global.System.Threading.Monitor.Exit(InternalSyncObject)
@@ -183,6 +183,24 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Text alignment of prompt'.
+        '''</summary>
+        Friend Shared ReadOnly Property TextAlignmentOfPrompt() As String
+            Get
+                Return ResourceManager.GetString("TextAlignmentOfPrompt", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Value indicating bidirectionl flow direction'.
+        '''</summary>
+        Friend Shared ReadOnly Property ValueIndicatingBidirectionlFlowDirection() As String
+            Get
+                Return ResourceManager.GetString("ValueIndicatingBidirectionlFlowDirection", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Formats a localized string similar to 'About {0}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -269,6 +287,22 @@ Namespace WindowsT.FormsT
         '''<returns>The Text_dv property value.</returns>
         Friend Shared Function Text_dvFormat() As String
             Return Text_dv
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the TextAlignmentOfPrompt property value.
+        '''</summary>
+        '''<returns>The TextAlignmentOfPrompt property value.</returns>
+        Friend Shared Function TextAlignmentOfPromptFormat() As String
+            Return TextAlignmentOfPrompt
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ValueIndicatingBidirectionlFlowDirection property value.
+        '''</summary>
+        '''<returns>The ValueIndicatingBidirectionlFlowDirection property value.</returns>
+        Friend Shared Function ValueIndicatingBidirectionlFlowDirectionFormat() As String
+            Return ValueIndicatingBidirectionlFlowDirection
         End Function
     End Class
 End Namespace

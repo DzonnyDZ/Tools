@@ -1,6 +1,8 @@
 ﻿'#If Config <= Nightly Then 'Set in project file
-Imports Tools.WindowsT, Tools.WindowsT.FormsT
+Imports Tools.WindowsT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
+Imports fMsg = Tools.WindowsT.FormsT.MessageBox
+Imports wMsg = Tools.WindowsT.WPF.DialogsT.MessageBox
 Namespace WindowsT.FormsT
     ''' <summary>Tests for <see cref="MessageBox"/></summary>
     Public Class frmMessageBox
@@ -10,6 +12,12 @@ Namespace WindowsT.FormsT
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
             Dim frm As New frmMessageBox
+            frm.ShowDialog()
+        End Sub
+        ''' <summary>Show test form with prechecked WPF option</summary>
+        Public Shared Sub TestWPF()
+            Dim frm As New frmMessageBox
+            frm.optWPF.Checked = True
             frm.ShowDialog()
         End Sub
         ''' <summary>CTor</summary>
@@ -22,7 +30,7 @@ Namespace WindowsT.FormsT
             Me.Icon = Tools.ResourcesT.ToolsIcon
 
         End Sub
-        ''' <summary>Enables/disables buttons according to <see cref="MessageBox.State"/> of <see cref="Box"/></summary>
+        ''' <summary>Enables/disables buttons according to <see cref="iMsg.State"/> of <see cref="Box"/></summary>
         Private Sub ApplyState()
             cmdCreate.Enabled = Box Is Nothing
             cmdShow.Enabled = Box IsNot Nothing AndAlso (Box.State = IndependentT.MessageBox.States.Created Or Box.State = IndependentT.MessageBox.States.Closed)
@@ -36,10 +44,10 @@ Namespace WindowsT.FormsT
             txtLog.Clear()
             If optWinForms.Checked Then
                 Log("Creating WF")
-                Box = New MessageBox
+                Box = New fMsg
             Else
                 Log("Creating WPF")
-                Box = New Tools.WindowsT.WPF.DialogsT.MessageBox
+                Box = New wMsg
             End If
             prgGrid.SelectedObject = Box
             ApplyState()
@@ -77,29 +85,33 @@ Namespace WindowsT.FormsT
             ApplyState()
         End Sub
 #Region "Events"
-        Private Sub Box_Closed(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Closed
+        Private Sub Box_Closed(ByVal sender As iMsg, ByVal e As System.EventArgs) Handles Box.Closed
             Log("Closed {0}", sender.DialogResult)
             ApplyState()
         End Sub
 
-        Private Sub Box_Recycled(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Recycled
+        Private Sub Box_Recycled(ByVal sender As iMsg, ByVal e As System.EventArgs) Handles Box.Recycled
             Log("Reycled")
             ApplyState()
         End Sub
         ''' <summary>Floating visual tree and property grid for obserwong message box</summary>
         Private WithEvents FloatingTree As ContentTree
-        Private Sub Box_Shown(ByVal sender As MessageBox, ByVal e As System.EventArgs) Handles Box.Shown
+        Private Sub Box_Shown(ByVal sender As iMsg, ByVal e As System.EventArgs) Handles Box.Shown
             Log("Shown")
             ApplyState()
-            If FloatingTree IsNot Nothing Then
-                Dim NewTree As New ContentTree
-                NewTree.DesktopBounds = FloatingTree.DesktopBounds
-                NewTree.StartPosition = FormStartPosition.Manual
-                FloatingTree = NewTree
-            Else : FloatingTree = New ContentTree
+            If TypeOf sender Is fMsg Then
+                If FloatingTree IsNot Nothing Then
+                    Dim NewTree As New ContentTree
+                    NewTree.DesktopBounds = FloatingTree.DesktopBounds
+                    NewTree.StartPosition = FormStartPosition.Manual
+                    FloatingTree = NewTree
+                Else : FloatingTree = New ContentTree
+                End If
+                With DirectCast(sender, fMsg)
+                    FloatingTree.Root = .Form
+                    FloatingTree.Show(.Form)
+                End With
             End If
-            FloatingTree.Root = sender.Form
-            FloatingTree.Show(sender.Form)
         End Sub
 #End Region
         ''' <summary>Logs messagebox action</summary>

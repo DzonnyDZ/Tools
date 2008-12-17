@@ -334,6 +334,9 @@
     <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="0==1">
       <Link>Resources\Exceptions.resx</Link>
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Windows\Forms\Composite controls\KeyWordsEditor.cs.resx">
       <DependentUpon>KeyWordsEditor.vb</DependentUpon>
@@ -454,6 +457,12 @@
       <LogicalName>Tools.ResourcesT.Icons.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <Link>Resources\Exceptions.Designer.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </None>
     <Compile Include="My Project\Resources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -480,12 +489,14 @@
       <DependentUpon>CompositeControls.resx</DependentUpon>
     </Compile>
     <Compile Include="Windows\Interop\DependencyPropertyChangedEventArgsEventArgs.vb" />
+    <Compile Include="Windows\Interop\InteropConverters.vb" />
     <Compile Include="Windows\WPF\Dialogs\MessageBox WPF.vb">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\WPF\Dialogs\MessageBoxWindow.xaml.vb">
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WPF\Markup\GenericExtension.vb" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
       <DependentUpon>DerivedControls.resx</DependentUpon>
       <SubType>Designer</SubType>

@@ -123,6 +123,12 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <None Include="..\Tools\Resources\resx %28Friend%29\Exceptions.Designer.vb">
+      <Link>Resources\Exceptions.Designer.vb</Link>
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Exceptions.resx</DependentUpon>
+    </None>
     <Compile Include="API\Console.vb" />
     <Compile Include="API\Devices.vb" />
     <Compile Include="API\FileSystem.vb" />
@@ -183,6 +189,13 @@
     <Compile Include="Windows\Native\Win32Window.vb" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="..\Tools\Resources\resx %28Friend%29\Exceptions.resx" Condition="0==1">
+      <Link>Resources\Exceptions.resx</Link>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>Exceptions.Designer.vb</LastGenOutput>
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <LogicalName>Tools.ResourcesT.Exceptions.resources</LogicalName>
+    </EmbeddedResource>
     <EmbeddedResource Include="My Project\Resources.resx">
       <Generator>VbMyResourcesResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.vb</LastGenOutput>
@@ -227,6 +240,9 @@
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\ReadMe.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

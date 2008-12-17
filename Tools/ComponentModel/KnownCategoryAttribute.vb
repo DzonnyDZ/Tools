@@ -109,6 +109,7 @@ Namespace ComponentModelT
         ''' <returns>String representing localized name of given category</returns>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="KnownCategory"/> is neither one of <see cref="KnownCategories"/> nor <see cref="AnotherCategories"/> values</exception>
         ''' <remarks><see cref="KnownCategories"/> are localized by .NET framework itself, <see cref="AnotherCategories"/> are localized by ÐTools. Availability of localized string depends on availability of such string in localizaion source.</remarks>
+        ''' <version version="1.5.2">Fixed: Categories <see cref="AnotherCategories.Configurations"/>, <see cref="AnotherCategories.Position"/>, <see cref="AnotherCategories.[Private]"/>, <see cref="AnotherCategories.PropertyChanged"/>, <see cref="AnotherCategories.Scale"/> and <see cref="AnotherCategories.Text"/> are not recognized and leads to <see cref="InvalidEnumArgumentException"/>.</version>
         Public Shared Function CategoryText(ByVal KnownCategory As AnotherCategories) As String
             If KnownCategory <> AnotherCategories.Misc AndAlso [Enum].IsDefined(GetType(KnownCategories), CByte(KnownCategory)) Then Return CategoryText(CType(KnownCategory, KnownCategories))
             Select Case KnownCategory
@@ -121,6 +122,12 @@ Namespace ComponentModelT
                 Case AnotherCategories.Items : Return Components.Items_cat
                 Case AnotherCategories.List : Return Components.List_cat
                 Case AnotherCategories.Misc : Return ResourcesT.Components.Misc_cat
+                Case AnotherCategories.Configurations : Return ResourcesT.Components.Config_cat
+                Case AnotherCategories.Position : Return ResourcesT.Components.Position_cat
+                Case AnotherCategories.Private : Return ResourcesT.Components.Private_cat
+                Case AnotherCategories.PropertyChanged : Return ResourcesT.Components.PropertyChanged_cat
+                Case AnotherCategories.Scale : Return ResourcesT.Components.Scale_cat
+                Case AnotherCategories.Text : Return ResourcesT.Components.Text_cat
             End Select
             Throw New InvalidEnumArgumentException(String.Format(ResourcesT.Exceptions.MustBeOneOf1Or2Values, "KnownCategory", "KnownCategories", "AnotherCategories"))
         End Function

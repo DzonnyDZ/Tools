@@ -470,6 +470,9 @@
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="ComponentModel\EnumDefaultValueAttribute.vb" />
+    <Compile Include="ComponentModel\MultipleException.vb">
+    </Compile>
     <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

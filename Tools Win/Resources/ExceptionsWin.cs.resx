@@ -117,35 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Path0DoesNotExist" xml:space="preserve">
-    <value>Cesta {0} neexistuje.</value>
-  </data>
-  <data name="File0DoesNotExist" xml:space="preserve">
-    <value>Soubor {0} neexistuje.</value>
-  </data>
   <data name="CannotCreateLinkFromFile0" xml:space="preserve">
     <value>Nemohu vytvořit zástupce ze souboru {0}.</value>
   </data>
-  <data name="Unsupported0Value" xml:space="preserve">
-    <value>Nepodporovaná {0} hodnota.</value>
-  </data>
   <data name="HotkeyMustIncludeAModifierKey" xml:space="preserve">
     <value>Horká klávesa musí obsahovat modifikátor.</value>
-  </data>
-  <data name="TheFile0CannotBeFound" xml:space="preserve">
-    <value>Soubor {0} nelze nalézt.</value>
-  </data>
-  <data name="ThereWasAnErrorSavingFile0" xml:space="preserve">
-    <value>Při ukládání souboru {0} došlo k chybě.</value>
-  </data>
-  <data name="File0AlreadyExists" xml:space="preserve">
-    <value>Soubor {0} již existuje.</value>
-  </data>
-  <data name="ThereIsAlreadyDirectoryNamed0" xml:space="preserve">
-    <value>Již existuje složka s názvem {0}.</value>
-  </data>
-  <data name="MenuItemDoesnTExist" xml:space="preserve">
-    <value>Položka menu neexistuje</value>
   </data>
   <data name="UnableToObtainHandleToSystemMenu" xml:space="preserve">
     <value>Nemohu získaz handle systémového menu.</value>
@@ -153,17 +129,11 @@
   <data name="IsInvalidKeyKeysMustBeWithinRangeFrom0To255" xml:space="preserve">
     <value>{0} je neplatný klíč. Klíč musí být z rozsahu do 0 do 255.</value>
   </data>
-  <data name="IsUnknownRegistryBaseKey" xml:space="preserve">
-    <value>{0} je neznámý základní klíč registrů</value>
-  </data>
   <data name="HookIsAlreadyRegisteredForThisInstance" xml:space="preserve">
     <value>Hák již byl pro tuto instanci registrován.</value>
   </data>
   <data name="HookIsNotRegisteredForThisInstance" xml:space="preserve">
     <value>Hák nbyl pro tt instanci registrován</value>
-  </data>
-  <data name="When0Is1ThenTypeOfThisInstanceMustBe2" xml:space="preserve">
-    <value>Když {0} je {1} tak typ této instance musí být {2}</value>
   </data>
   <data name="UnknownRawInputDeviceType0" xml:space="preserve">
     <value>Neznámý typ nzkoúrovňového zařízení {0}</value>
@@ -177,12 +147,6 @@
   <data name="TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException" xml:space="preserve">
     <value>ˇčást jména zařízení reprezentující guid třídy má neplatný formát. Vizte InnerException pro podrobnosti.</value>
   </data>
-  <data name="CannotBeAnEmptyString" xml:space="preserve">
-    <value>{0} nemůže být prázdný řetězec</value>
-  </data>
-  <data name="InvalidFormatSpecifier" xml:space="preserve">
-    <value>Neplatný specifikátor formátu</value>
-  </data>
   <data name="SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance" xml:space="preserve">
     <value>Zdroj události okenní zprávy musí být stejný jako majitel této instance</value>
   </data>
@@ -191,9 +155,6 @@
   </data>
   <data name="GivenOwnerHasAlreadyAttachedRawInputEventProvider" xml:space="preserve">
     <value>Zadaný majitel již má připojen RawInputEventProvider</value>
-  </data>
-  <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
-    <value>{0} nemůže být nastaveno na {1} když {2} je {3}</value>
   </data>
   <data name="WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude" xml:space="preserve">
     <value>Pokud je jen jedno zařízení (od)regsitrováváno, nemůže mít nastaveno Exclude na true.</value>
@@ -207,25 +168,13 @@
   <data name="LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice" xml:space="preserve">
     <value>Původní zprávy mohou být zakázány jen pro zařízení myši a klávesnice, nebo když je celá stránka užití obecných desktopových ovladačů registrována.</value>
   </data>
-  <data name="When0Is12MustBe3" xml:space="preserve">
-    <value>Když {0} je {1}, {2} musí být {3}.</value>
-  </data>
-  <data name="OwherHandleHasChanged" xml:space="preserve">
-    <value>Handle majitele se změnil.</value>
-  </data>
   <data name="CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling" xml:space="preserve">
     <value>Nelze konvertovat RAWINPUT_Marshalling to RAWINPUT_NonMarshalling, když obsahuje HID data</value>
-  </data>
-  <data name="Or_" xml:space="preserve">
-    <value>nebo</value>
   </data>
   <data name="AdditionalEventsHaveBeenAlreadyCalled" xml:space="preserve">
     <value>Doplňující události již byly zavolány.</value>
   </data>
   <data name="LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize" xml:space="preserve">
     <value>Délka Original.RawItemsCOunt musí být 1 a délka Original.RawItemSize 2 nebo 3.</value>
-  </data>
-  <data name="CurrentApplicationHasNoConsoleAllocateConsoleFirst" xml:space="preserve">
-    <value>Aktuální aplikace nemá žádnou konzoli. Nejprve alokujte konzoli.</value>
   </data>
 </root>

@@ -28,5 +28,15 @@
         <vh:i>Added <i:see cref="M:Tools.TypeTools.DynamiCast(System.Object,System.Type)"/> method</vh:i>
         <vh:i><i:see cref="T:Tools.WindowsT.FormsT.ObjectBrowser"/> now has <i:see cref="P:Tools.WindowsT.FormsT.ObjectBrowser.SelectedItem"/> property</vh:i>
         <vh:i>Fixed: Check box on <i:see cref="T:Tools.WindowsT.FormsT.MessageBox"/> does not autosize.</vh:i>
+        <vh:i><i:see cref="T:Tools.IReportsChange.ValueChangedEventArgsBase"/> now derives <i:see crtef="T:System.ComponentModel.PropertyChangedEventArgs"/></vh:i>
+        <vh:i>Null and <i:see cref="T:System.Nullable`1"/> support in <i:see cref="T:Tools.WindowsT.WPF.ConvertersT.StronglyTypedConverter`2"/>.</vh:i>
+        <vh:i>New attribute class <i:see cref="T:Tools.ComponentModel.EnumDefaultValueAttribute"/> for better working with defualt values of enumerated types.</vh:i>
+        <vh:i>New <i:see cref="T:Tools.ComponentModelT.MultipleException"/> class for throwing multiple exceptions at once.</vh:i>
+        <vh:i>Several new converters for WPF.</vh:i>
+        <vh:i>A way to create instance of generic type in XAML: <i:see cref="T:Tools.WindowsT.WPF.MarkupT.GenericExtension"/>.</vh:i>
+        <vh:i>Minor enhancements in <i:see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/>.</vh:i>
+        <vh:i>Common base class for all <i:see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/> - <i:see cref="T:Tools.CollectionsT.GenericT.ListWithEventsBase"/>.</vh:i>
+        <vh:i>Minor enhancements in <i:see cref="T:Tools.WindowsT.IndependentT.MessageBox"/>.</vh:i>
+        <vh:i><i:see cref="T:Tools.CollectionsT.GenericT.ICollectionNotifyItem"/> and <i:see cref="T:Tools.CollectionsT.GenericT.ICollectionCancelItem"/> interfaces introduced.</vh:i>
     </vh:version>
 </vh:VersionHistory>

@@ -1,6 +1,122 @@
-﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT
+﻿Imports System.ComponentModel.Design.Serialization, Tools.ComponentModelT, Tools.VisualBasicT, Tools.ExtensionsT
 #If Config <= Release Then
 Namespace CollectionsT.GenericT
+    ''' <summary>Common non-generic base class for all instance of <see cref="ListWithEvents(Of T)"/></summary>
+    ''' <remarks>This class is not intended to be inherited by anything else than <see cref="ListWithEvents(Of T)"/></remarks>
+    ''' <version version="1.5.2">Class introduced</version>
+    <EditorBrowsable(EditorBrowsableState.Advanced), Serializable()> _
+    Public MustInherit Class ListWithEventsBase
+        Implements IList, IReportsChange, IBindingList, IEnumerable
+        ''' <summary>CTor</summary>
+        Friend Sub New()
+        End Sub
+        ''' <summary>Custom property wher owner of the list can be stored to provide bi-directional reference</summary>
+        ''' <remarks>Change of this property is reported through <see cref="IReportsChange.Changed"/>.</remarks>
+        MustOverride Property Owner() As Object
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Sub CopyTo1(ByVal array As System.Array, ByVal index As Integer) Implements System.Collections.ICollection.CopyTo
+        Public MustOverride ReadOnly Property Count() As Integer Implements System.Collections.ICollection.Count
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride ReadOnly Property IsSynchronized() As Boolean Implements System.Collections.ICollection.IsSynchronized
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride ReadOnly Property SyncRoot() As Object Implements System.Collections.ICollection.SyncRoot
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Function Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
+        Public MustOverride Sub Clear() Implements System.Collections.IList.Clear
+        Public MustOverride Function Contains(ByVal value As Object) As Boolean Implements System.Collections.IList.Contains
+        Public MustOverride Function IndexOf(ByVal value As Object) As Integer Implements System.Collections.IList.IndexOf
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Sub Insert(ByVal index As Integer, ByVal value As Object) Implements System.Collections.IList.Insert
+        Public MustOverride ReadOnly Property IsFixedSize() As Boolean Implements System.Collections.IList.IsFixedSize
+        Public MustOverride ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.IList.IsReadOnly
+        <EditorBrowsable(EditorBrowsableState.Never)> Public MustOverride Property Item1(ByVal index As Integer) As Object Implements System.Collections.IList.Item
+        <EditorBrowsable(EditorBrowsableState.Advanced)> Public MustOverride Sub Remove(ByVal value As Object) Implements System.Collections.IList.Remove
+        Public MustOverride Sub RemoveAt(ByVal index As Integer) Implements System.Collections.IList.RemoveAt
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride Sub AddIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) Implements System.ComponentModel.IBindingList.AddIndex
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride Function IBindingList_AddNew() As Object Implements System.ComponentModel.IBindingList.AddNew
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property AllowEdit() As Boolean Implements System.ComponentModel.IBindingList.AllowEdit
+        Public MustOverride ReadOnly Property CanAddNew() As Boolean Implements System.ComponentModel.IBindingList.AllowNew
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property AllowRemove() As Boolean Implements System.ComponentModel.IBindingList.AllowRemove
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride Sub ApplySort(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal direction As System.ComponentModel.ListSortDirection) Implements System.ComponentModel.IBindingList.ApplySort
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride Function Find(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal key As Object) As Integer Implements System.ComponentModel.IBindingList.Find
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property IsSorted() As Boolean Implements System.ComponentModel.IBindingList.IsSorted
+        ''' <summary>Occurs when the list changes or an item in the list changes.</summary>
+        Public Event ListChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ListChangedEventArgs) Implements System.ComponentModel.IBindingList.ListChanged
+        ''' <summary>Raises the <see cref="ListChanged"/> event</summary>
+        ''' <param name="e">event arguments</param>
+        Protected Overridable Sub OnListChanged(ByVal e As System.ComponentModel.ListChangedEventArgs)
+            RaiseEvent ListChanged(Me, e)
+        End Sub
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride Sub RemoveIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) Implements System.ComponentModel.IBindingList.RemoveIndex
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride Sub RemoveSort() Implements System.ComponentModel.IBindingList.RemoveSort
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property SortDirection() As System.ComponentModel.ListSortDirection Implements System.ComponentModel.IBindingList.SortDirection
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property SortProperty() As System.ComponentModel.PropertyDescriptor Implements System.ComponentModel.IBindingList.SortProperty
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property SupportsChangeNotification() As Boolean Implements System.ComponentModel.IBindingList.SupportsChangeNotification
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property SupportsSearching() As Boolean Implements System.ComponentModel.IBindingList.SupportsSearching
+        <EditorBrowsable(EditorBrowsableState.Never)> Protected MustOverride ReadOnly Property SupportsSorting() As Boolean Implements System.ComponentModel.IBindingList.SupportsSorting
+        ''' <summary>Raised when value of member changes</summary>
+        ''' <param name="sender">The source of the event</param>
+        ''' <param name="e">Event information.
+        ''' As of this implementation type of <paramref name="e"/> is always one of following types: <see cref="ListWithEvents.ItemIndexEventArgs"/> (<see cref="ListWithEvents.Added"/>), <see cref="ListWithEvents.ItemsEventArgs"/> (<see cref="ListWithEvents.Cleared"/>), <see cref="ListWithEvents.ItemIndexEventArgs"/> (<see cref="ListWithEvents.Removed"/>), <see cref="ListWithEvents.OldNewItemEventArgs"/> (<see cref="ListWithEvents.ItemChanged"/>), <see cref="ListWithEvents.ItemValueChangedEventArgs"/> (<see cref="ListWithEvents.ItemValueChanged"/>).</param>
+        ''' <remarks>Raised after <see cref="ListWithEvents.Added"/>, <see cref="ListWithEvents.Removed"/>, <see cref="ListWithEvents.Cleared"/>, <see cref="ListWithEvents.ItemChanged"/> and <see cref="ListWithEvents.ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
+        Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
+        ''' <summary>Raises the <see cref="Changed"/> event</summary>
+        ''' <param name="e">Event parameters</param>
+        ''' <remarks>Called after <see cref="ListWithEvents.Added"/>, <see cref="ListWithEvents.Removed"/>, <see cref="ListWithEvents.Cleared"/>, <see cref="ListWithEvents.ItemChanged"/> and <see cref="ListWithEvents.ItemValueChanged"/> events with the same argument <paramref name="e"/>.
+        ''' You should call one of overloaded <see cref="ListWithEvents.OnCollectionChanged"/> methods after calling this.</remarks>
+        Protected Overridable Sub OnChanged(ByVal e As EventArgs)
+            RaiseEvent Changed(Me, e)
+        End Sub
+#Region "ListWithEvents-specific"
+        ''' <summary>Copies all elements of this collection to new <see cref="Array"/></summary>
+        Public MustOverride Function ToArray1() As Array
+        ''' <summary>Determines <see cref="ListWithEvents.CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="ListWithEvents.Adding"/> and <see cref="ListWithEvents.ItemChanging"/> events</summary>
+        Public MustOverride ReadOnly Property AddingReadOnly() As Boolean
+        ''' <summary>Gets value indicating if an <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</summary>
+        Public MustOverride ReadOnly Property CancelError() As Boolean
+        ''' <summary>Determines if it is allowed to add handlers for events that supports cancellation</summary>
+        ''' <exception cref="InvalidOperationException">Trying to set value to True when it if False</exception>
+        ''' <remarks>
+        ''' Value can be changed only from True (default) to False
+        ''' <list>
+        ''' <listheader>Those are events:</listheader>
+        ''' <item><see cref="ListWithEvents.Adding"/></item>
+        ''' <item><see cref="ListWithEvents.Removing"/></item>
+        ''' <item><see cref="ListWithEvents.Clearing"/></item>
+        ''' <item><see cref="ListWithEvents.ItemChanging"/></item>
+        ''' </list>
+        ''' </remarks>
+        Public MustOverride Property AllowAddCancelableEventsHandlers() As Boolean
+        ''' <summary>Gets or sets value indicating if items implementing <see cref="ICollectionCancelItem"/> are allowed to cancel itselves being added/removed to/from the list.</summary>
+        ''' <returns>True if item are allowed to cancel itselves being added/removed; false when they are not</returns>
+        ''' <value>False to prevent items from cancel itselves being added/removed; true to allow it. Default value is true.</value>
+        ''' <exception cref="InvalidOperationException">Value is being changed and <see cref="IsAllowItemCancelLocked"/> is true</exception>
+        ''' <remarks>When setting this property to false, consider calling <see cref="LockAllowItemCancel"/>, otherwise item can change value of this property and perform cancellation.</remarks>
+        ''' <seelaso cref="IsAllowItemCancelLocked"/><seelaso cref="LockAllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
+        Public MustOverride Property AllowItemCancel() As Boolean
+        ''' <summary>Gets value indicationg if value of the <see cref="AllowItemCancel"/> can be changed</summary>
+        ''' <returns>True when value of the <see cref="AllowItemCancel"/> cannot be changed; false if it can.</returns>
+        ''' <remarks>Value of this property can be set to true by calling <see cref="LockAllowItemCancel"/></remarks>
+        ''' <seelaso cref="LockAllowItemCancel"/><seelaso cref="AllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
+        Public MustOverride ReadOnly Property IsAllowItemCancelLocked() As Boolean
+          ''' <summary>Sets <see cref="IsAllowItemCancelLocked"/>, so <see cref="AllowItemCancel"/> can no longer be changed.</summary>
+        ''' <seelaso cref="IsAllowItemCancelLocked"/><seelaso cref="AllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
+        Public MustOverride Sub LockAllowItemCancel()
+       ''' <summary>Determines if the <see cref="ListWithEvents(Of T)"/> isn locked (being locked prevents if from being edited)</summary>
+        ''' <remarks><para>
+        ''' <see cref="ListWithEvents(Of T)"/> is usually locked while some events' handlers are being invoked.
+        ''' </para><list>
+        ''' <listheader><see cref="Locked"/> set to True blocks following methods and causes <see cref="InvalidOperationException"/> exception to be thrown there:</listheader>
+        ''' <item><see cref="ListWithEvents.Add"/></item>
+        ''' <item><see cref="ListWithEvents.Insert"/></item>
+        ''' <item><see cref="ListWithEvents.Remove"/></item>
+        ''' <item><see cref="RemoveAt"/></item>
+        ''' <item><see cref="Clear"/></item>
+        ''' <item><see cref="ListWithEvents.Item"/> (only setter)</item>
+        ''' </list></remarks>
+        Public MustOverride ReadOnly Property Locked() As Boolean
+            ''' <summary>Sets the <see cref="Locked"/> to True</summary>
+        Protected MustOverride Sub Lock()
+           ''' <summary>Sets the <see cref="Locked"/> to False</summary>
+        Protected MustOverride Sub Unlock()
+#End Region
+    End Class
     ''' <summary>List that provides events when changed</summary>
     ''' <typeparam name="T">Type of items to be stored in the list</typeparam>
     ''' <remarks><para>
@@ -9,19 +125,20 @@ Namespace CollectionsT.GenericT
     ''' Implementation of interface <see cref="IList"/> is provided only in orer this class to be compatible with <see cref="System.ComponentModel.Design.CollectionEditor"/>.
     ''' </para>
     ''' <para>Implementation fo <see cref="IBindingList"/> is only basic. It supports neither sorting or searching. <see cref="IBindingList.AddNew"/> is supported when <typeparamref name="T"/> has default constructor and does not block creating of new instances in other way.</para>
+    ''' <para>This class utilizes when item implements <see cref="ICollectionNotifyItem"/> or <see cref="ICollectionCancelItem"/>.</para>
     ''' </remarks>
     ''' <seelaso cref="DictionaryWithEvents(Of TKey, TValue)"/>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Release"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2">Added support for <see cref="ICollectionNotifyItem"/> and <see cref="ICollectionCancelItem"/></version>
+    ''' <version version="1.5.2">Base class <see cref="ListWithEventsBase"/> introduced</version>
     <DesignerSerializer(GetType(CollectionCodeDomSerializer), GetType(CodeDomSerializer))> _
     <DebuggerDisplay("Count = {Count}")> _
     <Serializable()> _
     Public Class ListWithEvents(Of T)
+        Inherits ListWithEventsBase
         Implements Runtime.Serialization.ISerializable
         Implements IList(Of T)
-        Implements IList
-        Implements IReportsChange
-        Implements IBindingList
         ''' <summary>CTor</summary>
         ''' <param name="AddingReadOnly">Value of <see cref="AddingReadOnly"/> property that determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</param>
         ''' <param name="CancelError">Value of <see cref="CancelError"/> that determines if and <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</param>
@@ -33,6 +150,10 @@ Namespace CollectionsT.GenericT
         ''' <summary>Copies all elements of this collection to new <see cref="Array"/></summary>
         Public Function ToArray() As T()
             Return InternalList.ToArray
+        End Function
+        ''' <summary>Copies all elements of this collection to new <see cref="Array"/> (type-unsafe)</summary>
+        <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use Type-Safe ToArray instead")> Public Overrides Function ToArray1() As System.Array
+            Return ToArray()
         End Function
         ''' <summary>CTor - initializes from another <see cref="IEnumerable(Of T)"/></summary>
         ''' <param name="collection"><see cref="IEnumerable(Of T)"/> to initialize new instance of <see cref="ListWithEvents(Of T)"/> with</param>
@@ -56,13 +177,29 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Internal list that is used for soring values</summary>
         Private List As List(Of T)
-
+        ''' <summary>Contains value of the <see cref="Owner"/> property</summary>
+        Private _Owner As Object
+        ''' <summary>Custom property wher owner of the list can be stored to provide bi-directional reference</summary>
+        ''' <remarks>Change of this property is reported through <see cref="IReportsChange.Changed"/>.
+        ''' <para>This property is here for convenience, <see cref="ListWithEvents(Of T)"/> does not utilize it.</para></remarks>
+        Public NotOverridable Overrides Property Owner() As Object
+            Get
+                Return _Owner
+            End Get
+            Set(ByVal value As Object)
+                Dim changed = value IsNot Owner
+                Dim old = Owner
+                _Owner = value
+                If changed Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Object)(old, value, "Owner"))
+            End Set
+        End Property
+#Region "Locks and allows"
         ''' <summary>Contains value of the <see cref="AddingReadOnly"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private ReadOnly _AddingReadOnly As Boolean = False
         ''' <summary>Determines <see cref="CancelableItemEventArgs.[ReadOnly]"/> property value for the <see cref="Adding"/> and <see cref="ItemChanging"/> events</summary>
         <Browsable(False)> _
-        Public ReadOnly Property AddingReadOnly() As Boolean
+        Public NotOverridable Overrides ReadOnly Property AddingReadOnly() As Boolean
             <DebuggerStepThrough()> Get
                 Return _AddingReadOnly
             End Get
@@ -73,7 +210,7 @@ Namespace CollectionsT.GenericT
         Private ReadOnly _CancelError As Boolean = False
         ''' <summary>Gets value indicating if an <see cref="OperationCanceledException"/> is thrown when item operation is canceled in event handler.</summary>
         <Browsable(False)> _
-        Public ReadOnly Property CancelError() As Boolean
+        Public NotOverridable Overrides ReadOnly Property CancelError() As Boolean
             <DebuggerStepThrough()> Get
                 Return _CancelError
             End Get
@@ -94,7 +231,7 @@ Namespace CollectionsT.GenericT
         ''' </list>
         ''' </remarks>
         <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
-        Public Property AllowAddCancelableEventsHandlers() As Boolean
+     Public NotOverridable Overrides Property AllowAddCancelableEventsHandlers() As Boolean
             <DebuggerStepThrough()> Get
                 Return _AllowAddCancelableEventsHandlers
             End Get
@@ -106,6 +243,43 @@ Namespace CollectionsT.GenericT
                 End If
             End Set
         End Property
+        ''' <summary>Contains value of the <see cref="AllowItemCancel"/> property</summary>
+        Private _AllowItemCancel As Boolean
+        ''' <summary>Gets or sets value indicating if items implementing <see cref="ICollectionCancelItem"/> are allowed to cancel itselves being added/removed to/from the list.</summary>
+        ''' <returns>True if item are allowed to cancel itselves being added/removed; false when they are not</returns>
+        ''' <value>False to prevent items from cancel itselves being added/removed; true to allow it. Default value is true.</value>
+        ''' <exception cref="InvalidOperationException">Value is being changed and <see cref="IsAllowItemCancelLocked"/> is true</exception>
+        ''' <remarks>When setting this property to false, consider calling <see cref="LockAllowItemCancel"/>, otherwise item can change value of this property and perform cancellation.</remarks>
+        ''' <seelaso cref="IsAllowItemCancelLocked"/><seelaso cref="LockAllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
+        ''' <version version="1.5.2">Property introduced</version>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+         Public NotOverridable Overrides Property AllowItemCancel() As Boolean
+            Get
+                Return _AllowItemCancel
+            End Get
+            Set(ByVal value As Boolean)
+                If value <> AllowItemCancel AndAlso IsAllowItemCancelLocked Then Throw New InvalidOperationException(ResourcesT.Exceptions.CannotChangeValueOfThe0PropertyWhen1IsTrue.f("AllowItemCancel", "IsAllowItemCancelLocked"))
+                _AllowItemCancel = value
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="IsAllowItemCancelLocked"/> property</summary>
+        Private _LockAllowItemCancel As Boolean
+        ''' <summary>Gets value indicationg if value of the <see cref="AllowItemCancel"/> can be changed</summary>
+        ''' <returns>True when value of the <see cref="AllowItemCancel"/> cannot be changed; false if it can.</returns>
+        ''' <remarks>Value of this property can be set to true by calling <see cref="LockAllowItemCancel"/></remarks>
+        ''' <seelaso cref="LockAllowItemCancel"/><seelaso cref="AllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public NotOverridable Overrides ReadOnly Property IsAllowItemCancelLocked() As Boolean
+            Get
+                Return _LockAllowItemCancel
+            End Get
+        End Property
+        ''' <summary>Sets <see cref="IsAllowItemCancelLocked"/>, so <see cref="AllowItemCancel"/> can no longer be changed.</summary>
+        ''' <seelaso cref="IsAllowItemCancelLocked"/><seelaso cref="AllowItemCancel"/><seelaso cref="ICollectionCancelItem"/>
+        ''' <version version="1.5.2">Method introduced</version>
+        Public NotOverridable Overrides Sub LockAllowItemCancel()
+            _LockAllowItemCancel = True
+        End Sub
         ''' <summary>Contains value of the <see cref="Locked"/></summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _Locked As Boolean = False
@@ -122,19 +296,20 @@ Namespace CollectionsT.GenericT
         ''' <item><see cref="Item"/> (only setter)</item>
         ''' </list></remarks>
         <Browsable(False)> _
-        Public ReadOnly Property Locked() As Boolean
+        Public NotOverridable Overrides ReadOnly Property Locked() As Boolean
             <DebuggerStepThrough()> Get
                 Return _Locked
             End Get
         End Property
         ''' <summary>Sets the <see cref="Locked"/> to True</summary>
-        Protected Sub Lock()
+        Protected NotOverridable Overrides Sub Lock()
             _Locked = True
         End Sub
         ''' <summary>Sets the <see cref="Locked"/> to False</summary>
-        Protected Sub Unlock()
+        Protected NotOverridable Overrides Sub Unlock()
             _Locked = False
         End Sub
+#End Region
 #Region "Add"
         ''' <summary>List of <see cref="ItemCancelEventHandler"/> delegates to be invoked when the <see cref="Adding"/> event is raised</summary>
         Private AddingEventHandlerList As New List(Of ItemCancelEventHandler)
@@ -178,8 +353,8 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
-        Public Overridable Sub Add(ByVal item As T) Implements System.Collections.Generic.ICollection(Of T).Add
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true.</exception>
+        Public Overridable Overloads Sub Add(ByVal item As T) Implements System.Collections.Generic.ICollection(Of T).Add
             If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelableItemIndexEventArgs(item, List.Count, AddingReadOnly)
             OnAdding(e)
@@ -198,7 +373,7 @@ Namespace CollectionsT.GenericT
         ''' </remarks>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true.</exception>
         Public Overridable Sub AddRange(ByVal Items As IEnumerable(Of T))
             If Items Is Nothing Then Exit Sub
             Dim StartAdd As Integer = Me.Count
@@ -207,8 +382,15 @@ Namespace CollectionsT.GenericT
                     Add(itm)
                 Next itm
             Catch
-                If Me.Count > StartAdd Then _
-                    InternalList.RemoveRange(StartAdd, Me.Count - StartAdd + 1)
+                If Me.Count > StartAdd Then
+                    Dim old = _AllowItemCancel
+                    _AllowItemCancel = False
+                    Try
+                        InternalList.RemoveRange(StartAdd, Me.Count - StartAdd + 1)
+                    Finally
+                        _AllowItemCancel = old
+                    End Try
+                End If
                 Throw
             End Try
         End Sub
@@ -219,9 +401,9 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true.</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnAdding"/> before adding an item to the list and <see cref="OnAdded"/> after adding item to the list, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
-        Public Overridable Sub Insert(ByVal index As Integer, ByVal item As T) Implements System.Collections.Generic.IList(Of T).Insert
+        Public Overridable Overloads Sub Insert(ByVal index As Integer, ByVal item As T) Implements System.Collections.Generic.IList(Of T).Insert
             If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelableItemIndexEventArgs(item, index, AddingReadOnly)
             OnAdding(e)
@@ -235,18 +417,31 @@ Namespace CollectionsT.GenericT
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnAdding"/> in order the event to be raised</remarks>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event -or- Any <see cref="Exception"/> can be thrown by <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true</exception>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionCancelItem"/></version>
         Protected Overridable Sub OnAdding(ByVal e As CancelableItemIndexEventArgs)
+            If AllowItemCancel AndAlso TypeOf e.Item Is ICollectionCancelItem Then DirectCast(e.Item, ICollectionCancelItem).OnAdding(Me, e.NewIndex, False)
             RaiseEvent Adding(Me, e)
             If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, "Adding was canceled in event handler"))
+            If e.Changed AndAlso Not e.Cancel AndAlso AllowItemCancel AndAlso TypeOf e.Item Is ICollectionCancelItem Then DirectCast(e.Item, ICollectionCancelItem).OnAdding(Me, e.NewIndex, False)
         End Sub
         ''' <summary>Raises <see cref="Added"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnAdded"/> in order the event to be raised</remarks>
+        ''' <exception cref="MultipleException">Multiple exceptions were thrown by event handlers being called. All handler are always invoked, even when exception occurs.</exception>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionNotifyItem"/> and <see cref="MultipleException"/>.</version>
         Protected Overridable Sub OnAdded(ByVal e As ItemIndexEventArgs)
+            Dim exceptions As New List(Of Exception)
+            On Error GoTo erh
+            If TypeOf e.Item Is ICollectionNotifyItem Then DirectCast(e.Item, ICollectionNotifyItem).OnAdded(Me, e.Index)
             RaiseEvent Added(Me, e)
             OnChanged(e)
             OnCollectionChanged(e, CollectionChangeAction.Add, Nothing, e.Item, e.Index)
+            If exceptions.Count > 0 Then Throw MultipleException.GetException(exceptions)
+            Exit Sub
+erh:
+            exceptions.Add(Err.GetException)
+            Resume Next
         End Sub
 #End Region
 #Region "Clear"
@@ -291,8 +486,8 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnClearing"/> before clearing of the list and <see cref="OnCleared"/> after clearing of the list,, do not forgot to check <see cref="CancelEventArgs.Cancel"/></remarks>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
-        Public Overridable Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear, System.Collections.IList.Clear
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event -or- Any exception can be thrown by <see cref="ICollectionCancelItem.OnClearing"/> when <see cref="AllowItemCancel"/> is true.</exception>
+        Public Overrides Sub Clear() Implements System.Collections.Generic.ICollection(Of T).Clear ', System.Collections.IList.Clear
             If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelMessageEventArgs
             OnClearing(e)
@@ -307,24 +502,42 @@ Namespace CollectionsT.GenericT
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnClearing"/> in order the event to be raised</remarks>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Clearing"/> event -or- Any exception may be thrown by <see cref="ICollectionCancelItem.OnClearing"/> when <see cref="AllowItemCancel"/> is true</exception>
         Protected Overridable Sub OnClearing(ByVal e As CancelMessageEventArgs)
+            If AllowItemCancel Then
+                For Each itm In Me
+                    If TypeOf itm Is ICollectionCancelItem Then DirectCast(itm, ICollectionCancelItem).OnClearing(Me)
+                Next
+            End If
             RaiseEvent Clearing(Me, e)
             If e.Cancel AndAlso Me.CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, ResourcesT.Exceptions.ClearingWasCanceledInEventhendler))
         End Sub
         ''' <summary>Raises <see cref="Cleared"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnCleared"/> in order the event to be raised</remarks>
+        ''' <exception cref="MultipleException">Multiple exceptions were thrown by event handlers being invoked. All handlers are always invoked, even hen excption occurs.</exception>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionNotifyItem"/> and <see cref="MultipleException"/>.</version>
         Protected Overridable Sub OnCleared(ByVal e As ItemsEventArgs)
+            Dim exceptions As New List(Of Exception)
+            On Error GoTo erh
+            For Each itm In e.Items
+                If TypeOf itm Is ICollectionNotifyItem Then DirectCast(itm, ICollectionNotifyItem).OnRemoved(Me)
+            Next
             RaiseEvent Cleared(Me, e)
             OnChanged(e)
             OnCollectionChanged(e, CollectionChangeAction.Clear, Nothing, Nothing, -1)
+            On Error GoTo 0
+            If exceptions.Count > 0 Then Throw MultipleException.GetException(exceptions)
+            Exit Sub
+erh:
+            exceptions.Add(Err.GetException())
+            Resume Next
         End Sub
 #End Region
         ''' <summary>Determines whether the <see cref="ListWithEvents(Of T)"/> contains a specific value.</summary>
         ''' <param name="item">The object to locate in the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <returns>true if item is found in the <see cref="ListWithEvents(Of T)"/>; otherwise, false.</returns>
-        Public Overridable Function Contains(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Contains
+        Public Overridable Overloads Function Contains(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Contains
             Return List.Contains(item)
         End Function
         ''' <summary>Copies the elements of the <see cref="ListWithEvents(Of T)"/> to an <see cref="System.Array"/>, starting at a particular <see cref="System.Array"/> index.</summary>
@@ -338,7 +551,7 @@ Namespace CollectionsT.GenericT
         End Sub
         ''' <summary>Gets the number of elements contained in the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <returns>The number of elements contained in the <see cref="ListWithEvents(Of T)"/>.</returns>
-        Public Overridable ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of T).Count, System.Collections.ICollection.Count
+        Public Overrides ReadOnly Property Count() As Integer Implements System.Collections.Generic.ICollection(Of T).Count ', System.Collections.ICollection.Count
             Get
                 Return List.Count
             End Get
@@ -346,7 +559,7 @@ Namespace CollectionsT.GenericT
         ''' <summary>Gets a value indicating whether the <see cref="ListWithEvents(Of T)"/> is read-only (always false).</summary>
         ''' <returns>Always false because <see cref="ListWithEvents(Of T)"/> is not read-only</returns>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.Generic.ICollection(Of T).IsReadOnly, System.Collections.IList.IsReadOnly
+        Public NotOverridable Overrides ReadOnly Property IsReadOnly() As Boolean Implements System.Collections.Generic.ICollection(Of T).IsReadOnly ', System.Collections.IList.IsReadOnly
             Get
                 Return False
             End Get
@@ -397,29 +610,42 @@ Namespace CollectionsT.GenericT
         ''' </para><para>
         ''' Do not change content of list in this method!
         ''' </para><para>
-        ''' </para></remarks>
+        ''' </para>
+        ''' <para><paramref name="e"/><see cref="CancelableItemIndexEventArgs.[ReadOnly]">ReadOnly</see> hould be always true; otherwise unpredictable results may occur.</para></remarks>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event -or- Any <see cref="Exception"/> can be thrown by <see cref="ICollectionCancelItem.OnRemoving"/> when <see cref="AllowItemCancel"/> is true</exception>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionCancelItem"/></version>
         Protected Overridable Sub OnRemoving(ByVal e As CancelableItemIndexEventArgs)
+            If AllowItemCancel AndAlso TypeOf e.Item Is ICollectionCancelItem Then DirectCast(e.Item, ICollectionCancelItem).OnRemoving(Me, e.NewIndex)
             RaiseEvent Removing(Me, e)
             If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, ResourcesT.Exceptions.RemovingWasCenceledInEventHandler))
         End Sub
         ''' <summary>Raises <see cref="Removed"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnRemoved"/> in order the event to be raised</remarks>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionNotifyItem"/> and <see cref="MultipleException"/>.</version>
+        ''' <exception cref="MultipleException">Multiple exceprions were thrown by ebent handlers being called. All event handlers are called wven when exception is thrown.</exception>
         Protected Overridable Sub OnRemoved(ByVal e As ItemIndexEventArgs)
+            Dim exceptions As New List(Of Exception)
+            On Error GoTo erh
+            If TypeOf e.Item Is ICollectionNotifyItem Then DirectCast(e.Item, ICollectionNotifyItem).OnRemoved(Me)
             RaiseEvent Removed(Me, e)
             OnChanged(e)
             OnCollectionChanged(e, CollectionChangeAction.Remove, e.Item, Nothing, e.Index)
+            If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
+            Exit Sub
+erh:
+            exceptions.Add(Err.GetException)
+            Resume Next
         End Sub
         ''' <summary>Removes the first occurrence of a specific object from the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to remove from the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <returns>true if item was successfully removed from the <see cref="ListWithEvents(Of T)"/>; otherwise, false. This method also returns false if item is not found in the original <see cref="ListWithEvents(Of T)"/>.</returns>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnRemoving"/> when <see cref="AllowItemCancel"/> is true.</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
-        Public Overridable Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
+        Public Overridable Overloads Function Remove(ByVal item As T) As Boolean Implements System.Collections.Generic.ICollection(Of T).Remove
             If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             If Contains(item) Then
                 Dim e As New CancelableItemIndexEventArgs(item, IndexOf(item), True)
@@ -449,9 +675,9 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnRemoving"/> when <see cref="AllowItemCancel"/> is true.</exception>
         ''' <remarks>Note for inheritors: Call <see cref="OnRemoving"/> before removing item and <see cref="OnRemoved"/> after removing item, do not forgot to check <see cref="CancelableItemIndexEventArgs.Cancel"/></remarks>
-        Public Overridable Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt, System.Collections.IList.RemoveAt
+        Public Overrides Sub RemoveAt(ByVal index As Integer) Implements System.Collections.Generic.IList(Of T).RemoveAt
             If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
             Dim e As New CancelableItemIndexEventArgs(Me(index), index, True)
             If index >= 0 AndAlso index < Count Then
@@ -478,7 +704,7 @@ Namespace CollectionsT.GenericT
         ''' <param name="Match">Predicate to match. If this predicate returns true, item is removed</param>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true.</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Removing"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnRemoving"/> when <see cref="AllowItemCancel"/> is true.</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Match"/> is null</exception>
         ''' <remarks>If any exception is thrown in <seealso cref="RemoveAt"/> or event handler no item is removed (collection stays unchanged)</remarks>
         Public Overridable Sub RemoveAll(ByVal Match As Predicate(Of T))
@@ -520,13 +746,13 @@ Namespace CollectionsT.GenericT
         ''' <summary>Returns an enumerator that iterates through a collection.</summary>
         ''' <returns>An <see cref="System.Collections.IEnumerator"/> object that can be used to iterate through the collection.</returns>
         <EditorBrowsable(EditorBrowsableState.Never), Obsolete("Use type-safe GetEnumerator instead")> _
-        Public Function GetEnumerator1() As System.Collections.IEnumerator Implements System.Collections.IEnumerable.GetEnumerator
+        Public NotOverridable Overrides Function GetEnumerator1() As System.Collections.IEnumerator 'Implements System.Collections.IEnumerable.GetEnumerator
             Return List.GetEnumerator
         End Function
         ''' <summary>Determines the index of a specific item in the <see cref="ListWithEvents(Of T)"/>.</summary>
         ''' <param name="item">The object to locate in the <see cref="ListWithEvents(Of T)"/>.</param>
         ''' <returns>The index of item if found in the list; otherwise, -1.</returns>
-        Public Overridable Function IndexOf(ByVal item As T) As Integer Implements System.Collections.Generic.IList(Of T).IndexOf
+        Public Overridable Overloads Function IndexOf(ByVal item As T) As Integer Implements System.Collections.Generic.IList(Of T).IndexOf
             Return List.IndexOf(item)
         End Function
 #Region "Item"
@@ -574,18 +800,33 @@ Namespace CollectionsT.GenericT
         ''' Do not change the content of the list in this method!
         ''' </para></remarks>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event -or-  Any exception may be throw by <see cref="ICollectionCancelItem.OnRemoving"/> or <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true</exception>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionCancelItem"/>.</version>
         Protected Overridable Sub OnItemChanging(ByVal e As CancelableItemIndexEventArgs)
+            If AllowItemCancel AndAlso TypeOf Me(e.NewIndex) Is ICollectionCancelItem Then DirectCast(Me(e.NewIndex), ICollectionCancelItem).OnRemoving(Me(e.NewIndex), e.NewIndex)
+            If AllowItemCancel AndAlso TypeOf e.Item Is ICollectionCancelItem Then DirectCast(e.Item, ICollectionCancelItem).OnAdding(Me, e.NewIndex, True)
             RaiseEvent ItemChanging(Me, e)
             If e.Cancel AndAlso CancelError Then Throw New OperationCanceledException(IfNull(e.CancelMessage, ResourcesT.Exceptions.ChangingWasCanceledInEventhandler))
+            If e.Changed AndAlso Not e.Cancel AndAlso AllowItemCancel AndAlso TypeOf Me(e.NewIndex) Is ICollectionCancelItem Then DirectCast(Me(e.NewIndex), ICollectionCancelItem).OnRemoving(Me(e.NewIndex), e.NewIndex)
         End Sub
         ''' <summary>Raises <see cref="ItemChanged"/> event</summary>
         ''' <param name="e">Event arguments</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemChanged"/> in order the event to be raised.</remarks>
+        ''' <version version="1.5.2">Added support for <see cref="ICollectionNotifyItem"/> and <see cref="MultipleException"/></version>
+        ''' <exception cref="MultipleException">Multiple exceprions were thrown by delegate being called. All delegates are called even when exception is thrown.</exception>
         Protected Overridable Sub OnItemChanged(ByVal e As OldNewItemEventArgs)
+            Dim exceptions As New List(Of Exception)
+            On Error GoTo erh
+            If TypeOf e.OldItem Is ICollectionNotifyItem Then DirectCast(e.OldItem, ICollectionNotifyItem).OnRemoved(Me)
+            If TypeOf e.Item Is ICollectionNotifyItem Then DirectCast(e.Item, ICollectionNotifyItem).OnAdded(Me, e.Index)
             RaiseEvent ItemChanged(Me, e)
             OnChanged(e)
             OnCollectionChanged(e, CollectionChangeAction.Replace, e.OldItem, e.Item, e.Index)
+            If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
+            Exit Sub
+erh:
+            exceptions.Add(Err.GetException)
+            Resume Next
         End Sub
         ''' <summary>Gets or sets the element at the specified index.</summary>
         ''' <param name="index">The zero-based index of the element to get or set.</param>
@@ -593,12 +834,14 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.ArgumentOutOfRangeException">index is not a valid index in the <see cref="ListWithEvents(Of T)"/>.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True (in setter)</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="ItemChanging"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnAdding"/> or <see cref="ICollectionCancelItem.OnRemoving"/> when <see cref="AllowItemCancel"/> is true.</exception>
+        ''' <version version="1.5.2">When <typeparamref name="T"> is not value type and value being set is (in rerms of reference) same as current value at <paramref name="index"/>, no change is done, no events are raised.</typeparamref></version>
         Default Public Overridable Property Item(ByVal index As Integer) As T Implements System.Collections.Generic.IList(Of T).Item
             Get
                 Return List(index)
             End Get
             Set(ByVal value As T)
+                If index >= 0 AndAlso index < Me.Count AndAlso Not GetType(T).IsValueType AndAlso DirectCast(value, Object) Is DirectCast(Me(index), Object) Then Exit Property
                 If Locked Then Throw New InvalidOperationException(ResourcesT.Exceptions.ListIsLocked)
                 Dim e As New CancelableItemIndexEventArgs(value, index, AddingReadOnly)
                 If index >= 0 AndAlso index < List.Count Then
@@ -633,6 +876,7 @@ Namespace CollectionsT.GenericT
                 Return New ReadOnlyListAdapter(Of T)(List)
             End Get
         End Property
+#Region "ItemHandlers"
         ''' <summary>Adds handler to item at specified index if the item is <see cref="IReportsChange"/></summary>
         ''' <param name="Index">Index of item to try add handler</param>
         ''' <remarks>Call after item is added</remarks>
@@ -667,16 +911,27 @@ Namespace CollectionsT.GenericT
         ''' <param name="sender">Original source of the event</param>
         ''' <param name="e">Original event parameters</param>
         ''' <remarks>Note for inheritors: Always call base class method <see cref="OnItemValueChanged"/> in order the event to be raised</remarks>
+        ''' <exception cref="MultipleException">Multiple exceptions were thrown by handler being invoked. All handler are invoked even when exception is thrown.</exception>
+        ''' <version version="1.5.2">Added support for <see cref="MultipleException"/></version>
         Protected Overridable Sub OnItemValueChanged(ByVal sender As IReportsChange, ByVal e As EventArgs)
+            Dim exceptions As New List(Of Exception)
+            On Error GoTo erh
             Dim e2 As New ItemValueChangedEventArgs(sender, e)
             RaiseEvent ItemValueChanged(Me, e2)
             OnChanged(e2)
             OnCollectionChanged(e2, CollectionChangeAction.ItemChange, sender, sender, IndexOf(DirectCast(sender, T)))
+            On Error GoTo 0
+            If exceptions.Count <> 0 Then Throw MultipleException.GetException(exceptions)
+            Exit Sub
+erh:
+            exceptions.Add(Err.GetException)
+            Resume Next
         End Sub
         ''' <summary>Raised when any of items that is of type <see cref="IReportsChange"/> raises <see cref="IReportsChange.Changed"/> event</summary>
         ''' <param name="sender">Source of the event</param>
         ''' <param name="e">Event params (contains original source (item) and original arguments</param>
         Public Event ItemValueChanged(ByVal sender As ListWithEvents(Of T), ByVal e As ItemValueChangedEventArgs)
+#End Region
 
 #Region "EventArgs"
         ''' <summary>Parameter of cancelable item events</summary>
@@ -694,17 +949,30 @@ Namespace CollectionsT.GenericT
             End Sub
             ''' <summary>Item associated with current event</summary>
             ''' <exception cref="system.Data.ReadOnlyException">Using setter when <see cref="[ReadOnly]"/> is True</exception>
+            ''' <version version="1.5.2">When <typeparamref name="T"/> is not value type and value being set is same (in rerm of references) as current value, no change is done, no exception is thrown (even if <see cref="[ReadOnly]"/> is true).</version>
             Public Property Item() As T
                 Get
                     Return _Item
                 End Get
                 Set(ByVal value As T)
+                    If Not GetType(T).IsValueType AndAlso DirectCast(value, Object) Is DirectCast(Item, Object) Then Exit Property
                     If Not [ReadOnly] Then
                         _Item = value
+                        _Changed = True
                     Else
                         Throw New System.Data.ReadOnlyException(ResourcesT.Exceptions.CannotChangeItemPropertyWhenReadOnlyIsTrue)
                     End If
                 End Set
+            End Property
+            ''' <summary>Contains value of the <see cref="Changed"/> property</summary>
+            Private _Changed As Boolean
+            ''' <summary>Gets value indicationg if <see cref="Item"/> was changed (set to another value)</summary>
+            ''' <returns>True whan <see cref="Item"/> was changed (set to another value)</returns>
+            ''' <version version="1.5.2">Property added</version>
+            Public ReadOnly Property Changed() As Boolean
+                Get
+                    Return _Changed
+                End Get
             End Property
             ''' <summary>Indicates if this instance's property <see cref="Item"/> is read-only or not</summary>
             Public ReadOnly Property [ReadOnly]() As Boolean
@@ -807,7 +1075,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.InvalidCastException">The type of the source <see cref="System.Collections.ICollection"/> cannot be cast automatically to the type of the destination array.</exception>
         ''' <remarks>Do not use, use type-safe <see cref="CopyTo"/> instead. Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe CopyTo instead"), EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Sub CopyTo1(ByVal array As System.Array, ByVal index As Integer) Implements System.Collections.ICollection.CopyTo
+        Public NotOverridable Overrides Sub CopyTo1(ByVal array As System.Array, ByVal index As Integer) 'Implements System.Collections.ICollection.CopyTo
             CType(List, IList).CopyTo(array, index)
         End Sub
 
@@ -816,7 +1084,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Although this is part of IList this is part of neither IList(Of T)  nor List(Of T)")> _
         <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
-        Public ReadOnly Property IsSynchronized() As Boolean Implements System.Collections.ICollection.IsSynchronized
+        Public NotOverridable Overrides ReadOnly Property IsSynchronized() As Boolean 'Implements System.Collections.ICollection.IsSynchronized
             Get
                 Return CType(List, IList).IsSynchronized
             End Get
@@ -826,7 +1094,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Although this is part of IList this is part of neither IList(Of T)  nor List(Of T)")> _
         <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
-        Public ReadOnly Property SyncRoot() As Object Implements System.Collections.ICollection.SyncRoot
+        Public NotOverridable Overrides ReadOnly Property SyncRoot() As Object 'Implements System.Collections.ICollection.SyncRoot
             Get
                 Return Me
             End Get
@@ -839,7 +1107,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe overload instead")> _
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Function Add(ByVal value As Object) As Integer Implements System.Collections.IList.Add
+        Public NotOverridable Overrides Function Add(ByVal value As Object) As Integer 'Implements System.Collections.IList.Add
             Add(CType(value, T))
             Return List.Count - 1
         End Function
@@ -850,7 +1118,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe overload instead")> _
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Function Contains(ByVal value As Object) As Boolean Implements System.Collections.IList.Contains
+        Public NotOverridable Overrides Function Contains(ByVal value As Object) As Boolean 'Implements System.Collections.IList.Contains
             Try
                 Return Contains(CType(value, T))
             Catch ex As Exception
@@ -862,7 +1130,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe overload instead")> _
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Function IndexOf(ByVal value As Object) As Integer Implements System.Collections.IList.IndexOf
+        Public NotOverridable Overrides Function IndexOf(ByVal value As Object) As Integer
             Try
                 Return IndexOf(CType(value, T))
             Catch ex As Exception
@@ -878,14 +1146,14 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe overload instead")> _
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Sub Insert(ByVal index As Integer, ByVal value As Object) Implements System.Collections.IList.Insert
+        Public NotOverridable Overrides Sub Insert(ByVal index As Integer, ByVal value As Object)
             Insert(index, CType(value, T))
         End Sub
         ''' <summary>Gets a value indicating whether the <see cref="System.Collections.IList"/> has a fixed size.</summary>
         ''' <returns>Always False</returns>
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <EditorBrowsable(EditorBrowsableState.Never), Browsable(False)> _
-        Public ReadOnly Property IsFixedSize() As Boolean Implements System.Collections.IList.IsFixedSize
+        Public NotOverridable Overrides ReadOnly Property IsFixedSize() As Boolean
             Get
                 Return False
             End Get
@@ -896,7 +1164,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe overload instead"), EditorBrowsable(EditorBrowsableState.Never)> _
-        Public Sub Remove(ByVal value As Object) Implements System.Collections.IList.Remove
+        Public NotOverridable Overrides Sub Remove(ByVal value As Object) 'Implements System.Collections.IList.Remove
             Try
                 Remove(CType(value, T))
             Catch : End Try
@@ -910,7 +1178,7 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Provided for compatibility with <see cref="System.ComponentModel.Design.CollectionEditor"/></remarks>
         <Obsolete("Use type-safe Item property instead"), EditorBrowsable(EditorBrowsableState.Never)> _
         <Browsable(False)> _
-        Public Overloads Property Item1(ByVal index As Integer) As Object Implements System.Collections.IList.Item
+        Public NotOverridable Overloads Overrides Property Item1(ByVal index As Integer) As Object
             Get
                 Return Item(index)
             End Get
@@ -962,19 +1230,8 @@ Namespace CollectionsT.GenericT
         ''' <summary>Name used for serialization of the <see cref="InternalList"/> property</summary>
         Protected Const ItemsName$ = "Items"
 #End Region
-        ''' <summary>Raised when value of member changes</summary>
-        ''' <param name="sender">The source of the event</param>
-        ''' <param name="e">Event information.
-        ''' As of this implementation type of <paramref name="e"/> is always one of following types: <see cref="ItemIndexEventArgs"/> (<see cref="Added"/>), <see cref="ItemsEventArgs"/> (<see cref="Cleared"/>), <see cref="ItemIndexEventArgs"/> (<see cref="Removed"/>), <see cref="OldNewItemEventArgs"/> (<see cref="ItemChanged"/>), <see cref="ItemValueChangedEventArgs"/> (<see cref="ItemValueChanged"/>).</param>
-        ''' <remarks>Raised after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/></remarks>
-        Public Event Changed(ByVal sender As IReportsChange, ByVal e As EventArgs) Implements IReportsChange.Changed
-        ''' <summary>Raises the <see cref="Changed"/> event</summary>
-        ''' <param name="e">Event parameters</param>
-        ''' <remarks>Called after <see cref="Added"/>, <see cref="Removed"/>, <see cref="Cleared"/>, <see cref="ItemChanged"/> and <see cref="ItemValueChanged"/> events with the same argument <paramref name="e"/>.
-        ''' You should call one of overloaded <see cref="OnCollectionChanged"/> methods after calling this.</remarks>
-        Protected Overridable Sub OnChanged(ByVal e As EventArgs)
-            RaiseEvent Changed(Me, e)
-        End Sub
+
+
         ''' <summary>Raised when this <see cref="ListWithEvents(Of T)"/> collection changes.</summary>
         ''' <param name="sender">Source ot the event</param>
         ''' <param name="e">Event arguments. The <paramref name="e"/>.<see cref="ListChangedEventArgs.ChangeEventArgs">ChangedEventArgs</see> contains event argument of the <see cref="Changed"/> event raised immediatelly prior this event.
@@ -1088,7 +1345,9 @@ Namespace CollectionsT.GenericT
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <param name="property">ignored</param>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
-        Private Sub AddIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) Implements System.ComponentModel.IBindingList.AddIndex
+        ''' <version version="1.5.2">Access changed to protected, <see cref="EditorBrowsableAttribute"/> added</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides Sub AddIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) 'Implements System.ComponentModel.IBindingList.AddIndex
             Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
         End Sub
 
@@ -1098,7 +1357,8 @@ Namespace CollectionsT.GenericT
         ''' <remarks>Use type-safe <see cref="AddNew"/> instead
         ''' <para>Note for inheritors: In order ot override this member override <see cref="AddNew"/>.</para></remarks>
         ''' <seelaso cref="AddNew"/>
-        Private Function IBindingList_AddNew() As Object Implements System.ComponentModel.IBindingList.AddNew
+        ''' <version version="1.5.2">Access changed to protected</version>
+        Protected NotOverridable Overrides Function IBindingList_AddNew() As Object 'Implements System.ComponentModel.IBindingList.AddNew
             Return AddNew()
         End Function
         ''' <summary>Adds a new item to the list.</summary>
@@ -1114,7 +1374,7 @@ Namespace CollectionsT.GenericT
         ''' <exception cref="System.Runtime.InteropServices.COMException"><typeparamref name="T"/> is a COM object but the class identifier used to obtain the type is invalid, or the identified class is not registered.</exception>
         ''' <exception cref="InvalidOperationException"><see cref="Locked"/> is True</exception>
         ''' <exception cref="OperationCanceledException">Operation is canceled in eventhandler and <see cref="CancelError"/> is true</exception>
-        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event</exception>
+        ''' <exception cref="Exception">Any <see cref="Exception"/> can be thrown by event handler of the <see cref="Adding"/> event -or- Any excption may be thrown by <see cref="ICollectionCancelItem.OnAdding"/> when <see cref="AllowItemCancel"/> is true.</exception>
         ''' <seelaso cref="CreateInstance"/>
         ''' <remarks>This member implements <see cref="IBindingList.AddNew"/></remarks>
         Public Overridable Function AddNew() As T
@@ -1130,7 +1390,9 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Gets whether you can update items in the list.</summary>
         ''' <returns>true</returns>
-        Private ReadOnly Property AllowEdit() As Boolean Implements System.ComponentModel.IBindingList.AllowEdit
+        ''' <version version="1.5.2">Access changed form private to protected, <see cref="EditorBrowsableAttribute"/> added</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property AllowEdit() As Boolean 'Implements System.ComponentModel.IBindingList.AllowEdit
             Get
                 Return True
             End Get
@@ -1141,7 +1403,7 @@ Namespace CollectionsT.GenericT
         ''' This impúlementation returns ture when type <typeparamref name="T"/> has default constructor that can be used for automatic instance creation</returns>
         ''' <seelaso cref="CanAutomaticallyCreateInstance"/>
         ''' <remarks>This member implements <see cref="IBindingList.AllowNew"/></remarks>
-        Public Overridable ReadOnly Property CanAddNew() As Boolean Implements System.ComponentModel.IBindingList.AllowNew
+        Public Overrides ReadOnly Property CanAddNew() As Boolean 'Implements System.ComponentModel.IBindingList.AllowNew
             Get
                 GetType(T).CanAutomaticallyCreateInstance()
             End Get
@@ -1149,7 +1411,9 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Gets whether you can remove items from the list, using <see cref="M:System.Collections.IList.Remove(System.Object)" /> or <see cref="M:System.Collections.IList.RemoveAt(System.Int32)" />.</summary>
         ''' <returns>true</returns>
-        Private ReadOnly Property AllowRemove() As Boolean Implements System.ComponentModel.IBindingList.AllowRemove
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property AllowRemove() As Boolean 'Implements System.ComponentModel.IBindingList.AllowRemove
             Get
                 Return True
             End Get
@@ -1158,7 +1422,9 @@ Namespace CollectionsT.GenericT
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
         ''' <param name="direction">Ignored</param><param name="property">Ignored</param>
-        Private Sub ApplySort(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal direction As System.ComponentModel.ListSortDirection) Implements System.ComponentModel.IBindingList.ApplySort
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides Sub ApplySort(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal direction As System.ComponentModel.ListSortDirection) 'Implements System.ComponentModel.IBindingList.ApplySort
             Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
         End Sub
 
@@ -1166,42 +1432,52 @@ Namespace CollectionsT.GenericT
         ''' <returns>This function never returns value</returns>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
         ''' <param name="key">Ignored</param><param name="property">Ignored</param>
-        Private Function Find(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal key As Object) As Integer Implements System.ComponentModel.IBindingList.Find
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides Function Find(ByVal [property] As System.ComponentModel.PropertyDescriptor, ByVal key As Object) As Integer ' Implements System.ComponentModel.IBindingList.Find
             Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
         End Function
 
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <returns>This property never returns value</returns>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
-        Private ReadOnly Property IsSorted() As Boolean Implements System.ComponentModel.IBindingList.IsSorted
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property IsSorted() As Boolean ' Implements System.ComponentModel.IBindingList.IsSorted
             Get
                 Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
             End Get
         End Property
 
-        ''' <summary>Occurs when the list changes or an item in the list changes.</summary>
-        Private Event ListChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ListChangedEventArgs) Implements System.ComponentModel.IBindingList.ListChanged
-        ''' <summary>Raises the <see cref="ListChanged"/> event</summary>
-        ''' <param name="e">Event arguments</param>
-        Private Sub OnListChanged(ByVal e As System.ComponentModel.ListChangedEventArgs)
-            RaiseEvent ListChanged(Me, e)
-        End Sub
+        '''' <summary>Occurs when the list changes or an item in the list changes.</summary>
+        'Private Event ListChanged(ByVal sender As Object, ByVal e As System.ComponentModel.ListChangedEventArgs) Implements System.ComponentModel.IBindingList.ListChanged
+        '''' <summary>Raises the <see cref="ListChanged"/> event</summary>
+        '''' <param name="e">Event arguments</param>
+        'Private Sub OnListChanged(ByVal e As System.ComponentModel.ListChangedEventArgs)
+        '    RaiseEvent ListChanged(Me, e)
+        'End Sub
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <param name="property">ignored</param>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
-        Private Sub RemoveIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) Implements System.ComponentModel.IBindingList.RemoveIndex
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides Sub RemoveIndex(ByVal [property] As System.ComponentModel.PropertyDescriptor) 'Implements System.ComponentModel.IBindingList.RemoveIndex
             Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSearching)
         End Sub
 
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
-        Private Sub RemoveSort() Implements System.ComponentModel.IBindingList.RemoveSort
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides Sub RemoveSort() 'Implements System.ComponentModel.IBindingList.RemoveSort
             Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
         End Sub
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <returns>This property never returns value</returns>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
-        Private ReadOnly Property SortDirection() As System.ComponentModel.ListSortDirection Implements System.ComponentModel.IBindingList.SortDirection
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property SortDirection() As System.ComponentModel.ListSortDirection 'Implements System.ComponentModel.IBindingList.SortDirection
             Get
                 Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
             End Get
@@ -1210,7 +1486,9 @@ Namespace CollectionsT.GenericT
         ''' <summary>Throws <see cref="NotSupportedException"/></summary>
         ''' <returns>This property never returns value</returns>
         ''' <exception cref="T:System.NotSupportedException">always</exception>
-        Private ReadOnly Property SortProperty() As System.ComponentModel.PropertyDescriptor Implements System.ComponentModel.IBindingList.SortProperty
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property SortProperty() As System.ComponentModel.PropertyDescriptor 'Implements System.ComponentModel.IBindingList.SortProperty
             Get
                 Throw New NotSupportedException(ResourcesT.Exceptions.ListWithEventsDoesNotSupportSorting)
             End Get
@@ -1218,7 +1496,9 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Gets whether a <see cref="E:System.ComponentModel.IBindingList.ListChanged" /> event is raised when the list changes or an item in the list changes.</summary>
         ''' <returns>true</returns>
-        Private ReadOnly Property SupportsChangeNotification() As Boolean Implements System.ComponentModel.IBindingList.SupportsChangeNotification
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property SupportsChangeNotification() As Boolean 'Implements System.ComponentModel.IBindingList.SupportsChangeNotification
             Get
                 Return True
             End Get
@@ -1226,7 +1506,9 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Gets whether the list supports searching using the <see cref="M:System.ComponentModel.IBindingList.Find(System.ComponentModel.PropertyDescriptor,System.Object)" /> method.</summary>
         ''' <returns>false</returns>
-        Private ReadOnly Property SupportsSearching() As Boolean Implements System.ComponentModel.IBindingList.SupportsSearching
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property SupportsSearching() As Boolean 'Implements System.ComponentModel.IBindingList.SupportsSearching
             Get
                 Return False
             End Get
@@ -1234,7 +1516,9 @@ Namespace CollectionsT.GenericT
 
         ''' <summary>Gets whether the list supports sorting.</summary>
         ''' <returns>false</returns>
-        Private ReadOnly Property SupportsSorting() As Boolean Implements System.ComponentModel.IBindingList.SupportsSorting
+        ''' <version version="1.5.2">Access changed from private to protected. <see cref="EditorBrowsableAttribute"/> added.</version>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Protected NotOverridable Overrides ReadOnly Property SupportsSorting() As Boolean 'Implements System.ComponentModel.IBindingList.SupportsSorting
             Get
                 Return False
             End Get
@@ -1341,9 +1625,55 @@ Namespace CollectionsT.GenericT
         ''' <summary>Collection which was changed</summary>
         Public ReadOnly Property Collection() As ICollection(Of TItem)
             Get
-                Return MyBase.element
+                Return MyBase.Element
             End Get
         End Property
     End Class
+
+    ''' <summary>Interface of collection item notified when added to collection</summary>
+    ''' <remarks>Only few collections, such as <see cref="ListWithEvents(Of T)"/> supports this interface</remarks>
+    ''' <seelaso cref="ICollectionCancelItem"/>
+    ''' <version version="1.5.2" stage="Release">Interface introduced</version>
+    Public Interface ICollectionNotifyItem
+        ''' <summary>Called after item is added to collection</summary>
+        ''' <param name="Collection">Collection item was added into</param>
+        ''' <param name="index">Index at which the item was added. Note: Index may change later without notice (i.e. when collection gets sorted). Ic collection does not support indexing value is null.</param>
+        Sub OnAdded(ByVal Collection As ICollection, ByVal index? As Integer)
+        ''' <summary>Called after item is removed from collection (or after collection was cleared)</summary>
+        ''' <param name="Collection">Collection item was removed from</param>
+        Sub OnRemoved(ByVal Collection As ICollection)
+        ''' <summary>If supported by collection item gets all the collections item is in</summary>
+        ''' <returns>All the collections item is placed in; null when not supported by item class.</returns>
+        ''' <remarks>You should not suport this property whan your item is value type (structure).
+        ''' <para>If item is placed multiple times in the same collection, this property should contain this collection multiple times.</para></remarks>
+        ReadOnly Property Collections() As IEnumerable(Of ICollection)
+    End Interface
+    ''' <summary>Interface of collection item notified before and after added to collection</summary>
+    ''' <remarks>Only few collections, such as <see cref="ListWithEvents(Of T)"/> supports this interface</remarks>
+    ''' <version version="1.5.2" stage="Release">Interface introduced</version>
+    Public Interface ICollectionCancelItem
+        Inherits ICollectionNotifyItem
+        ''' <summary>Called before item is placed into collection</summary>
+        ''' <param name="Collection">Collection item is aboutto be placed into</param>
+        ''' <param name="index">Index item is being to be placed onto; null when collection does not support indexing.</param>
+        ''' <remarks>To cancel adding, throw exception. Collection does not call this method when it does not allow cancellation of adding.
+        ''' <para>Call to <see cref="OnAdding"/> does not necesarilly mena that <see cref="OnAdded"/> will be called, because event can be canceled.</para></remarks>
+        ''' <param name="Replace">True when item at index <paramref name="index"/> will be replaced by this instance; false if this instance will be inserted at <paramref name="index"/> and all subsequent items will be moved to nex index.</param>
+        ''' <exception cref="Exception">Any axception may be thrown to cancel the operation. Exception is passed by collection to caller.</exception>
+        Sub OnAdding(ByVal Collection As ICollection, ByVal index? As Integer, ByVal Replace As Boolean)
+        ''' <summary>Called before item is removed from collection</summary>
+        ''' <param name="Collection">Collection item is about to be removed from</param>
+        ''' <param name="index">Index item is currently placed on; null when collection does not support indexing.</param>
+        ''' <remarks>To cancel removing, throw exception. Collection does not call this method when it does not allow cancellation of removing.
+        ''' <para>Call to <see cref="OnRemoving"/> does not necesarilly mena that <see cref="OnRemoved"/> will be called, because event can be canceled.</para></remarks>
+        ''' <exception cref="Exception">Any axception may be thrown to cancel the operation. Exception is passed by collection to caller.</exception>
+        Sub OnRemoving(ByVal Collection As ICollection, ByVal index? As Integer)
+        ''' <summary>Called before all items are removed from collection by clearing it</summary>
+        ''' <param name="Collection">Collection item is about to be removed from</param>
+        ''' <remarks>To cancel clearing, throw exception. Collection does not call this method when it does not allow cancellation of clearing.</remarks>
+        ''' <exception cref="Exception">Any axception may be thrown to cancel the operation. Exception is passed by collection to caller.</exception>
+        Sub OnClearing(ByVal Collection As ICollection)
+    End Interface
+
 End Namespace
 #End If

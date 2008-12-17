@@ -812,5 +812,14 @@ Namespace WindowsT.FormsT
             MyBase.RecycleInternal()
             Form = Nothing
         End Sub
+
+        ''' <summary>Gets text which contains Accesskey marker (&amp;)</summary>
+        ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
+        ''' <param name="AccessKey">Char representing accesskey (if char is not in <paramref name="Text"/> no accesskey marker should be inserted)</param>
+        ''' <returns><paramref name="Text"/> with accesskey denoted in it by &amp;.</returns>
+        ''' <version version="1.5.2">Function added</version>
+        Protected Overloads Overrides Function GetTextWithAccessKey(ByVal Text As String, ByVal AccessKey As Char) As String
+            Return GetTextWithAccessKey(Text, AccessKey, "&"c)
+        End Function
     End Class
 End Namespace

@@ -117,35 +117,11 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Path0DoesNotExist" xml:space="preserve">
-    <value>Path {0} does not exist.</value>
-  </data>
-  <data name="File0DoesNotExist" xml:space="preserve">
-    <value>File {0} does not exist.</value>
-  </data>
   <data name="CannotCreateLinkFromFile0" xml:space="preserve">
     <value>Cannot create link from file {0}.</value>
   </data>
-  <data name="Unsupported0Value" xml:space="preserve">
-    <value>Unsupported {0} value.</value>
-  </data>
   <data name="HotkeyMustIncludeAModifierKey" xml:space="preserve">
     <value>Hotkey must include a modifier key.</value>
-  </data>
-  <data name="TheFile0CannotBeFound" xml:space="preserve">
-    <value>The file {0} cannot be found.</value>
-  </data>
-  <data name="ThereWasAnErrorSavingFile0" xml:space="preserve">
-    <value>There was an error saving file {0}.</value>
-  </data>
-  <data name="File0AlreadyExists" xml:space="preserve">
-    <value>File {0} already exists.</value>
-  </data>
-  <data name="ThereIsAlreadyDirectoryNamed0" xml:space="preserve">
-    <value>There is already directory named {0}.</value>
-  </data>
-  <data name="MenuItemDoesnTExist" xml:space="preserve">
-    <value>Menu item doesn't exist</value>
   </data>
   <data name="UnableToObtainHandleToSystemMenu" xml:space="preserve">
     <value>Unable to obtain handle to system menu.</value>
@@ -162,9 +138,6 @@
   <data name="HookIsNotRegisteredForThisInstance" xml:space="preserve">
     <value>Hook is not registered for this instance</value>
   </data>
-  <data name="When0Is1ThenTypeOfThisInstanceMustBe2" xml:space="preserve">
-    <value>When {0} is {1} then type of this instance must be {2}</value>
-  </data>
   <data name="UnknownRawInputDeviceType0" xml:space="preserve">
     <value>Unknown raw input device type {0}</value>
   </data>
@@ -177,12 +150,6 @@
   <data name="TheCalassGuidPartOfDeviceNameIsInInvalidFormatSeeInnerException" xml:space="preserve">
     <value>The calass guid part of device name is in invalid format. See InnerException for details.</value>
   </data>
-  <data name="CannotBeAnEmptyString" xml:space="preserve">
-    <value>{0} cannot be an empty string</value>
-  </data>
-  <data name="InvalidFormatSpecifier" xml:space="preserve">
-    <value>Invalid format specifier</value>
-  </data>
   <data name="SourceOfWindowMessageEvntMustBeSameAsOwnerOwThisInstance" xml:space="preserve">
     <value>Source of window message evnt must be same as owner ow this instance</value>
   </data>
@@ -191,9 +158,6 @@
   </data>
   <data name="GivenOwnerHasAlreadyAttachedRawInputEventProvider" xml:space="preserve">
     <value>Given owner has already attached RawInputEventProvider</value>
-  </data>
-  <data name="CannotBeSetTo1When2Is3" xml:space="preserve">
-    <value>{0} cannot be set to {1} when {2} is {3}</value>
   </data>
   <data name="WhenOnlyOneDeviceIsBeingUnRegisteredItCannotHaveExclude" xml:space="preserve">
     <value>When only one device is being (un)registered, it cannot have Exclude set to true.</value>
@@ -207,25 +171,16 @@
   <data name="LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice" xml:space="preserve">
     <value>Legacy messages can be disabled only for keyboard and mouse device, or when whole generic desktop controls usage page is being registered.</value>
   </data>
-  <data name="When0Is12MustBe3" xml:space="preserve">
-    <value>When {0} is {1}, {2} must be {3}.</value>
-  </data>
   <data name="OwherHandleHasChanged" xml:space="preserve">
     <value>Owher handle has changed.</value>
   </data>
   <data name="CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling" xml:space="preserve">
     <value>Cannot convert RAWINPUT_Marshalling to RAWINPUT_NonMarshalling when it contains HID data</value>
   </data>
-  <data name="Or_" xml:space="preserve">
-    <value>or</value>
-  </data>
   <data name="AdditionalEventsHaveBeenAlreadyCalled" xml:space="preserve">
     <value>Additional events have been already called.</value>
   </data>
   <data name="LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize" xml:space="preserve">
     <value>Lenght of Original.RawItemsCount must be 1 and Original.RawItemSize must be 2 or 3.</value>
-  </data>
-  <data name="CurrentApplicationHasNoConsoleAllocateConsoleFirst" xml:space="preserve">
-    <value>Current application has no console. Allocate console first.</value>
   </data>
 </root>

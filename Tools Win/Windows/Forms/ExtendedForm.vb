@@ -32,14 +32,14 @@ Namespace WindowsT.FormsT
         Private Shared Property SystemMenuItemEnabled(ByVal WindowHandle As Int32, ByVal MenuItem As API.SystemMenuItems) As SystemMenuState
             Get
                 Dim Prev As enmPreviousMenuItemStatus = EnableMenuItem(GetSystemMenu(WindowHandle, 0), MenuItem, enmEnableMenuItemStatus.MF_BYCOMMAND Or enmEnableMenuItemStatus.MF_ENABLED)
-                If Prev = enmPreviousMenuItemStatus.DoesNotExist Then Throw New ArgumentException(ResourcesT.ExceptionsWin.MenuItemDoesnTExist, "MenuItem")
+                If Prev = enmPreviousMenuItemStatus.DoesNotExist Then Throw New ArgumentException(ResourcesT.Exceptions.MenuItemDoesnTExist, "MenuItem")
                 SystemMenuItemEnabled = Prev
                 SystemMenuItemEnabled(WindowHandle, MenuItem) = Prev
             End Get
             Set(ByVal value As SystemMenuState)
                 Select Case EnableMenuItem(GetSystemMenu(WindowHandle, 0), MenuItem, enmEnableMenuItemStatus.MF_BYCOMMAND Or value)
                     Case enmPreviousMenuItemStatus.DoesNotExist
-                        Throw New ArgumentException(ResourcesT.ExceptionsWin.MenuItemDoesnTExist, "MenuItem")
+                        Throw New ArgumentException(ResourcesT.Exceptions.MenuItemDoesnTExist, "MenuItem")
                     Case Else
                 End Select
             End Set

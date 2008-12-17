@@ -11,20 +11,35 @@ Public Interface IReportsChange
     ''' <param name="e">Event information</param>
     Delegate Sub ChangedEventHandler(ByVal sender As IReportsChange, ByVal e As EventArgs)
     ''' <summary>Represents common base for all <see cref="ValueChangedEventArgs"/> generic's instances</summary>
-    MustInherit Class ValueChangedEventArgsBase : Inherits EventArgs
-        ''' <summary>Name of changed value</summary>
+    ''' <version version="1.5.2">Derives <see cref="PropertyChangedEventArgs"/> instead of <see cref="EventArgs"/></version>
+    MustInherit Class ValueChangedEventArgsBase : Inherits PropertyChangedEventArgs
+        ''' <summary>Gets name of changed value</summary>
+        ''' <returns>Name of changed value</returns>
+        ''' <remarks>This property replaces the <see cref="PropertyName"/> property</remarks>
+        ''' <version version="1.5.2">This property stores its value in <see cref="PropertyChangedEventArgs.PropertyName"/>.</version>
         Public Overridable ReadOnly Property ValueName() As String
             <DebuggerStepThrough()> Get
-                Return _ValueName
+                Return MyBase.PropertyName
             End Get
         End Property
-        ''' <summary>Contains value of the<see cref="ValueName"/> property</summary>
+        ''' <summary>Gets the name of the property that changed.</summary>
+        ''' <returns>The name of the property that changed.</returns>
+        ''' <remarks>This property cannot be overriden, but you can override the <see cref="ValueName"/> property, this property gets value from.</remarks>
+        ''' <version version="1.5.2">Property added</version>
         <EditorBrowsable(EditorBrowsableState.Never)> _
-        Private _ValueName As String
+        Public NotOverridable Overrides ReadOnly Property PropertyName() As String
+            Get
+                Return ValueName
+            End Get
+        End Property
+        '''' <summary>Contains value of the<see cref="ValueName"/> property</summary>
+        '<EditorBrowsable(EditorBrowsableState.Never)> _
+        'Private _ValueName As String
         ''' <summary>CTor</summary>
         ''' <param name="ValueName">Value of the <see cref="ValueName"/> property</param>
         Public Sub New(ByVal ValueName As String)
-            _ValueName = ValueName
+            MyBase.New(ValueName)
+            '_ValueName = ValueName
         End Sub
     End Class
 

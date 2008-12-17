@@ -69,7 +69,7 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "MessageBox Definition fields"
         ''' <summary>Contaions value of the <see cref="Buttons"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Buttons As New ListWithEvents(Of MessageBoxButton)(False, True)
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Buttons As New ListWithEvents(Of MessageBoxButton)(False, True) With {.Owner = Me}
         ''' <summary>Contaions value of the <see cref="DefaultButton"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _DefaultButton As Integer = 0
         ''' <summary>Contaions value of the <see cref="CloseResponse"/> property</summary>
@@ -83,11 +83,11 @@ Namespace WindowsT.IndependentT
         ''' <summary>Contaions value of the <see cref="Options"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Options As MessageBoxOptions
         ''' <summary>Contaions value of the <see cref="CheckBoxes"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _CheckBoxes As New ListWithEvents(Of MessageBoxCheckBox)(False, True)
+        <EditorBrowsable(EditorBrowsableState.Never)> Private _CheckBoxes As New ListWithEvents(Of MessageBoxCheckBox)(False, True) With {.Owner = Me}
         ''' <summary>Contaions value of the <see cref="ComboBox"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ComboBox As MessageBoxComboBox
         ''' <summary>Contaions value of the <see cref="Radios"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Radios As New ListWithEvents(Of MessageBoxRadioButton)(False, True)
+        <EditorBrowsable(EditorBrowsableState.Never)> Private ReadOnly _Radios As New ListWithEvents(Of MessageBoxRadioButton)(False, True) With {.Owner = Me}
         ''' <summary>Contaions value of the <see cref="TopControl"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _TopControl As Object
         ''' <summary>Contaions value of the <see cref="MidControl"/> property</summary>
@@ -442,7 +442,9 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "CTors"
         ''' <summary>Adds event handlers to collections</summary>
-        Private Sub AddHandlers()
+        ''' <version version="1.5.2">Access changed from private to protected, made virtual</version>
+        ''' <remarks>In derived class override this method to attach cancelable handlers - later it is impossible. Do not forget to call base-class method. Note: This method is called by CTor.</remarks>
+        Protected Overridable Sub AddHandlers()
             AddHandler Buttons.CollectionChanged, AddressOf OnButtonsChanged
             AddHandler Radios.CollectionChanged, AddressOf OnRadiosChanged
             AddHandler CheckBoxes.CollectionChanged, AddressOf OnCheckBoxesChanged
@@ -636,8 +638,10 @@ Namespace WindowsT.IndependentT
 #End Region
 #Region "Control classes"
         ''' <summary>Common base for predefined message box controls</summary>
+        ''' <version version="1.5.2">Added implementation of the <see cref="INotifyPropertyChanged"/> interface. No changes needed in derived classes when they call <see cref="MessageBoxControl.OnChanged"/> with <see cref="IReportsChange.ValueChangedEventArgsBase"/> or <see cref="PropertyChangedEventArgs"/>.</version>
+        ''' <version version="1.5.2">Added implementation of <see cref="CollectionsT.GenericT.ICollectionCancelItem"/></version>
         <DefaultProperty("Text"), DefaultEvent("Changed")> _
-        Public MustInherit Class MessageBoxControl : Implements IReportsChange
+        Public MustInherit Class MessageBoxControl : Implements IReportsChange, INotifyPropertyChanged, CollectionsT.GenericT.ICollectionCancelItem
             ''' <summary>Contains value of the <see cref="Text"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Text As String
             ''' <summary>Contains value of the <see cref="ToolTip"/> property</summary>
@@ -732,11 +736,20 @@ Namespace WindowsT.IndependentT
             ''' <param name="e">Event information</param>
             ''' <remarks><paramref name="e"/>Additionla information - is <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></remarks>
             Public Event Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Implements IReportsChange.Changed
-            ''' <summary>Raises the <see cref="Changed"/> event</summary>
+            ''' <summary>Raises the <see cref="Changed"/> event (and <see cref="PropertyChanged"/> when <paramref name="e"/> is <see cref="PropertyChangedEventArgs"/>)</summary>
             ''' <param name="e">Event parameters - should be <see cref="IReportsChange.ValueChangedEventArgs(Of T)"/> or <see cref="CollectionChangeEventArgs(Of T)"/></param>
+            ''' <version version="1.5.2">Added raising of <see cref="PropertyChanged"/></version>
             Protected Overridable Sub OnChanged(ByVal e As EventArgs)
                 RaiseEvent Changed(Me, e)
+                If TypeOf e Is PropertyChangedEventArgs Then OnPropertyChanged(e)
             End Sub
+            ''' <summary>Raises the <see cref="PropertyChanged"/> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <version version="1.5.2">Method added</version>
+            Protected Overridable Sub OnPropertyChanged(ByVal e As PropertyChangedEventArgs)
+                RaiseEvent PropertyChanged(Me, e)
+            End Sub
+
             ''' <summary>Contains value of the <see cref="Control"/> property</summary>
             <EditorBrowsable(EditorBrowsableState.Never)> Private _Control As Object
             ''' <summary>Gets or sets physical control that currently implements this control</summary>
@@ -753,6 +766,99 @@ Namespace WindowsT.IndependentT
                     _Control = value
                 End Set
             End Property
+
+            ''' <summary>Occurs when a property value changes.</summary>
+            ''' <version version="1.5.2">Event introduced</version>
+            Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
+#Region "ICollectionCancelItem"
+            ''' <summary>Called before item is placed into collection</summary>
+            ''' <param name="Collection">Collection item is aboutto be placed into</param>
+            ''' <param name="index">Index item is being to be placed onto; null when collection does not support indexing.</param>
+            ''' <param name="Replace">True when item at index <paramref name="index"/> will be replaced by this instance; false if this instance will be inserted at <paramref name="index"/> and all subsequent items will be moved to nex index.</param>
+            ''' <exception cref="InvalidOperationException">This control was already added to collection owned by <see cref="MessageBox"/> and now attempt to add it to another such collection is done.</exception>
+            Private Sub OnBeingAddedToCollection(ByVal Collection As System.Collections.ICollection, ByVal index As Integer?, ByVal Replace As Boolean) Implements CollectionsT.GenericT.ICollectionCancelItem.OnAdding
+                If _Collection IsNot Nothing AndAlso TypeOf Collection Is ListWithEventsBase AndAlso TypeOf DirectCast(Collection, ListWithEventsBase).Owner Is MessageBox Then Throw New InvalidOperationException(ResourcesT.Exceptions.ThisControlIsAlreadyUsedByMessageBoxItCannotBeUsedTwice)
+            End Sub
+            ''' <summary>Called before all items are removed from collection by clearing it</summary>
+            ''' <param name="Collection">Collection item is about to be removed from</param>
+            Private Sub OnCollectionClearing(ByVal Collection As System.Collections.ICollection) Implements CollectionsT.GenericT.ICollectionCancelItem.OnClearing
+            End Sub
+            ''' <summary>Called before item is removed from collection</summary>
+            ''' <param name="Collection">Collection item is about to be removed from</param>
+            ''' <param name="index">Index item is currently placed on; null when collection does not support indexing.</param>
+            Private Sub OnBeingRemovedFromCollection(ByVal Collection As System.Collections.ICollection, ByVal index As Integer?) Implements CollectionsT.GenericT.ICollectionCancelItem.OnRemoving
+            End Sub
+            ''' <summary>Contains value of the <see cref="Collections"/> property</summary>
+            Private _Collections As New List(Of ICollection)
+            ''' <summary>If supported by collection item gets all the collections item is in</summary>
+            ''' <returns>All the collections item is placed in; null when not supported by item class.</returns>
+            ''' <remarks><para>If item is placed multiple times in the same collection, this property contains this collection multiple times.</para></remarks>
+            Private ReadOnly Property CollectionsThisControlIsIn() As System.Collections.Generic.IEnumerable(Of System.Collections.ICollection) Implements CollectionsT.GenericT.ICollectionNotifyItem.Collections
+                Get
+                    Return _Collections
+                End Get
+            End Property
+            ''' <summary>Collection which's owner owns this control</summary>
+            Private WithEvents _Collection As ListWithEventsBase
+            ''' <summary>Gets collection which's owner owns this control</summary>
+            ''' <returns>Collection which's <see cref="ListWithEventsBase.Owner"/> owns this control</returns>
+            ''' <version version="1.5.2">Property added</version>
+            Protected Property Collection() As ListWithEventsBase
+                Get
+                    Return _Collection
+                End Get
+                Private Set(ByVal value As ListWithEventsBase)
+                    _Collection = value
+                End Set
+            End Property
+
+            ''' <summary>Gets messagebox this control is owned by</summary>
+            ''' <returns><see cref="IndependentT.MessageBox"/> this control is owned by; or null</returns>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+            Public ReadOnly Property OwnerMessageBox() As MessageBox
+                Get
+                    If Collection Is Nothing Then Return Nothing Else Return Collection.Owner
+                End Get
+            End Property
+
+            ''' <summary>Called after item is added to collection</summary>
+            ''' <param name="Collection">Collection item was added into</param>
+            ''' <param name="index">Index at which the item was added. Note: Index may change later without notice (i.e. when collection gets sorted). Ic collection does not support indexing value is null.</param>
+            ''' <version version="1.5.2">Method added</version>
+            Protected Overridable Sub OnAddedToCollection(ByVal Collection As System.Collections.ICollection, ByVal index As Integer?) Implements CollectionsT.GenericT.ICollectionNotifyItem.OnAdded
+                _Collections.Add(Collection)
+                If TypeOf Collection Is ListWithEventsBase AndAlso TypeOf DirectCast(Collection, ListWithEventsBase).Owner Is MessageBox Then _
+                    Me.Collection = Collection
+            End Sub
+
+            ''' <summary>Called after item is removed from collection (or after collection was cleared)</summary>
+            ''' <param name="Collection">Collection item was removed from</param>
+            ''' <version version="1.5.2">Method added</version>
+            Protected Overridable Sub OnRemovedFromCollection(ByVal Collection As System.Collections.ICollection) Implements CollectionsT.GenericT.ICollectionNotifyItem.OnRemoved
+                _Collections.Remove(Collection)
+                If Me.Collection Is Collection Then Me.Collection = Nothing
+            End Sub
+#End Region
+
+            Private Sub Collection_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles _Collection.Changed
+                If TypeOf e Is IReportsChange.ValueChangedEventArgs(Of Object) AndAlso DirectCast(e, IReportsChange.ValueChangedEventArgs(Of Object)).ValueName = "Owner" Then
+                    With DirectCast(e, IReportsChange.ValueChangedEventArgs(Of Object))
+                        If Not TypeOf .NewValue Is MessageBox Then Collection = Nothing _
+                        Else OnOwnerChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBox)(.OldValue, .NewValue, "OwnerMessageBox"))
+                    End With
+                End If
+            End Sub
+            ''' <summary>Raises the <see cref="OwnerChanged"/> event, calse <see cref="OnChanged"/></summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <version version="1.5.2">Method added</version>
+            Protected Overridable Sub OnOwnerChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox))
+                RaiseEvent OwnerChanged(Me, e)
+                OnChanged(e)
+            End Sub
+            ''' <summary>Raised when value of the <see cref="OwnerMessageBox"/> property changes</summary>
+            ''' <version version="1.5.2">Event added</version>
+            Public Event OwnerChanged As EventHandler(Of IReportsChange.ValueChangedEventArgs(Of MessageBox))
         End Class
         ''' <summary>Represents button for <see cref="MessageBox"/></summary>
         ''' <completionlist cref="MessageBoxButton"/>
@@ -1192,6 +1298,68 @@ Namespace WindowsT.IndependentT
             Private Sub MessageBoxButton_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles Me.Changed
                 If Not IsConstructing Then HasChanged = True
             End Sub
+#Region "IsDefault / IsCancel"
+            ''' <summary>Gets value indication if this button is default of message box</summary>
+            ''' <returns>True if this button is default; false if it is not</returns>
+            ''' <remarks>This poperty returns correct value only when button is stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>. Then its cange is reported via <see cref="INotifyPropertyChanged"/>.
+            ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore defualt button at all or determine it from <see cref="MessageBox.DefaultButton"/>.</para></remarks>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False)> _
+            Public ReadOnly Property IsDefault() As Boolean
+                Get
+                    Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.Buttons.IndexOf(Me) = OwnerMessageBox.DefaultButton
+                End Get
+            End Property
+            ''' <summary>Gets value if this button should be considered cance button</summary>
+            ''' <returns>True if this button should be treated as cancel button; false it should not.</returns>
+            ''' <remarks>This poperty returns correct value only when button is stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>. Then its cange is reported via <see cref="INotifyPropertyChanged"/>.
+            ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore defualt button at all or determine it from <see cref="MessageBox.CloseResponse"/>.</para></remarks>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False)> _
+            Public ReadOnly Property IsCancel() As Boolean
+                Get
+                    Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.CloseResponse = Me.Result AndAlso OwnerMessageBox.Buttons.FirstOrDefault(Function(a) a.Result = Me.Result) Is Me
+                End Get
+            End Property
+            ''' <summary>Raises the <see cref="OwnerChanged"/> event, calse <see cref="OnChanged"/></summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <version version="1.5.2">Method added</version>
+            Protected Overrides Sub OnOwnerChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox))
+                If e.OldValue IsNot Nothing Then
+                    RemoveHandler e.OldValue.DefaultButtonChanged, AddressOf OwnerMessageBox_DefaultButtonChanged
+                    RemoveHandler e.OldValue.CloseResponseChanged, AddressOf OwnerMessageBox_CloseResponseChanged
+                End If
+                If e.NewValue IsNot Nothing Then
+                    AddHandler e.NewValue.DefaultButtonChanged, AddressOf OwnerMessageBox_DefaultButtonChanged
+                    AddHandler e.NewValue.CloseResponseChanged, AddressOf OwnerMessageBox_CloseResponseChanged
+                End If
+                MyBase.OnOwnerChanged(e)
+                OnPropertyChanged(New PropertyChangedEventArgs("IsDefault"))
+                OnPropertyChanged(New PropertyChangedEventArgs("IsCancel"))
+            End Sub
+            ''' <summary>Handles change of <see cref="OwnerMessageBox"/>.<see cref="MessageBox.DefaultButton">DefaultButton</see></summary>
+            ''' <param name="sender"><see cref="OwnerMessageBox"/></param>
+            ''' <param name="e">Event arguments</param>
+            Private Sub OwnerMessageBox_DefaultButtonChanged(ByVal sender As MessageBox, ByVal e As EventArgs)
+                OnPropertyChanged(New PropertyChangedEventArgs("IsDefault"))
+            End Sub
+            ''' <summary>Handles change of <see cref="OwnerMessageBox"/>.<see cref="MessageBox.DefaultButton">DefaultButton</see></summary>
+            ''' <param name="sender"><see cref="OwnerMessageBox"/></param>
+            ''' <param name="e">Event arguments</param>
+            Private Sub OwnerMessageBox_CloseResponseChanged(ByVal sender As MessageBox, ByVal e As EventArgs)
+                OnPropertyChanged(New PropertyChangedEventArgs("IsCancel"))
+            End Sub
+#End Region
+            ''' <summary>Gets text of button with platform-specific accesskey indication</summary>
+            ''' <returns>If <see cref="OwnerMessageBox"/> is not set returns <see cref="Text"/>; if it is set uses <see cref="GetTextWithAccessKey"/>.</returns>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False)> _
+            Public Overridable ReadOnly Property TextIncludingAccessKey() As String
+                Get
+                    If OwnerMessageBox Is Nothing Then Return Text
+                    Return OwnerMessageBox.GetTextWithAccessKey(Me.Text, Me.AccessKey)
+                End Get
+            End Property
         End Class
         ''' <summary>Value of the <see cref="MessageBoxButton.Result"/> property for predefined <see cref="Help">Help</see> button</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
@@ -1812,15 +1980,15 @@ Namespace WindowsT.IndependentT
         ''' <remarks>Count down timer ticks each second once. First the event is raised immediatelly after the dialog is shown or count-down is resumed</remarks>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(ResourcesT.Components), "CountDown_d")> _
-        Public Event CountDown As EventHandler(Of MessageBox, EventArgs)
+        Public Event CountDown As EventHandler(Of IndependentT.MessageBox, EventArgs)
         ''' <summary>Raised after dialog is shown</summary>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(ResourcesT.Components), "Shown_d")> _
-        Public Event Shown As EventHandler(Of MessageBox, EventArgs)
+        Public Event Shown As EventHandler(Of IndependentT.MessageBox, EventArgs)
         ''' <summary>Raised after dialog is closed</summary>
         <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         <LDescription(GetType(ResourcesT.Components), "Closed_d")> _
-        Public Event Closed As EventHandler(Of MessageBox, EventArgs)
+        Public Event Closed As EventHandler(Of IndependentT.MessageBox, EventArgs)
 #End Region
 #Region "Recycle"
         ''' <summary>Switches <see cref="MessageBox"/> from <see cref="States.Closed"/> to <see cref="States.Created"/> <see cref="State"/></summary>
@@ -1900,6 +2068,13 @@ Namespace WindowsT.IndependentT
         ''' <seelaso cref="DisplayTemplate"/>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public NotInheritable Class FakeBox : Inherits MessageBox
+            ''' <summary>Gets text which contains Accesskey marker (like &amp; in WinForms or _ in WPF)</summary>
+            ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
+            ''' <param name="AccessKey">Char representing accesskey (if char is not in <paramref name="Text"/> no accesskey marker should be inserted)</param>
+            ''' <returns><paramref name="Text"/></returns>
+            Protected Overrides Function GetTextWithAccessKey(ByVal Text As String, ByVal AccessKey As Char) As String
+                Return Text
+            End Function
             ''' <summary>If overriden in derived class closes the message box with given response</summary>
             ''' <param name="Response">Response returned by the <see cref="Show"/> function</param>
             ''' <exception cref="NotImplementedException">Always</exception>
@@ -3567,6 +3742,28 @@ Public Shared Function ShowWPF(ByVal messageBoxText As String) As Windows.Messag
             Me.Buttons.Clear()
             Me.Buttons.AddRange(MessageBoxButton.GetButtons(Buttons))
         End Sub
+        ''' <summary>When overriden in derived class gets text which contains Accesskey marker (like &amp; in WinForms or _ in WPF)</summary>
+        ''' <param name="Text">Text (if it contains character used as accesskey markers they must be escaped)</param>
+        ''' <param name="AccessKey">Char representing accesskey (if char is not in <paramref name="Text"/> no accesskey marker should be inserted)</param>
+        ''' <returns><paramref name="Text"/> with accesskey denoted in it; or <paramref name="Text"/> if platfrom derived class implements messagebox for does not indicate accesskey in text.</returns>
+        ''' <version version="1.5.2">Function added</version>
+        Protected MustOverride Function GetTextWithAccessKey(ByVal Text$, ByVal AccessKey As Char) As String
+
+        ''' <summary>Creates accesskey text by prepending given char before accesskey character</summary>
+        ''' <param name="Text">Text of control</param>
+        ''' <param name="AccessKey">Accesskey to prepend char in front of</param>
+        ''' <param name="PrependChar">Char to be prepended</param>
+        ''' <returns><paramref name="Text"/> with first occurence of <paramref name="AccessKey"/> replaced with <paramref name="PrependChar"/> and <paramref name="AccessKey"/>.</returns>
+        ''' <remarks><paramref name="AccessKey"/> is escaped by duplication</remarks>
+        ''' <version version="1.5.2">Function added</version>
+        Protected Shared Function GetTextWithAccessKey(ByVal Text As String, ByVal AccessKey As Char, ByVal PrependChar As Char) As String
+            If Text = "" Then Return Text
+            Text = Text.Replace(PrependChar, PrependChar & PrependChar)
+            If Text.Contains(AccessKey) Then
+                Text = Text.Substring(0, Text.IndexOf(AccessKey)) & PrependChar & Text.Substring(Text.IndexOf(AccessKey))
+            End If
+            Return Text
+        End Function
 #End Region
 #Region "Modal sync"
         ''' <summary>Displays modal messagebox in sync with given control</summary>

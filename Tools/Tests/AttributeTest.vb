@@ -65,6 +65,7 @@ Namespace TestsT
         ''' <param name="list"><see cref="List(Of T)"/> to be searched through</param>
         ''' <param name="Obj">Item to be sought</param>
         ''' <returns>True if <paramref name="list"/> cointains <paramref name="Obj"/></returns>
+        <DebuggerStepThrough()> _
         Private Function SafeContains(Of T)(ByVal list As List(Of T), ByVal Obj As T) As Boolean
             For Each item In list
                 Try

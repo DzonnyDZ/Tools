@@ -112,7 +112,7 @@
                 </node>
                 <node name="SystemTheme" image="Template" tag="Tools.Tests.WindowsT.WPF.winSystemTheme.Test"/>
                 <node name="DialogsT" image="Namespace">
-                    <node name="MessageBox" image="Class Shortcut" tag="Tools.Tests.WindowsT.FormsT.frmMessageBox.Test"/>
+                    <node name="MessageBox" image="Class Shortcut" tag="Tools.Tests.WindowsT.FormsT.frmMessageBox.TestWPF"/>
                 </node>
             </node>
         </node>

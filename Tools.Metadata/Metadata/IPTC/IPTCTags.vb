@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 26. listopadu 2008
+' Created: 17. prosince 2008
 ' By:BigBook\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -3244,7 +3244,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Type is used to distinguish between different types of objects within the IIM.")> _
-		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT+NumStr2`1;Tools.MetadataT.IptcT+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
+		<Category("Category")> <FieldDisplayName("Object Type Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectTypes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr2`1;Tools.MetadataT.IptcT.Iptc+ObjectTypes;02;")> Public Overridable Property ObjectTypeReference As NumStr2(Of ObjectTypes)
 			Get
 				Try
 					Dim AllValues As List(Of NumStr2(Of ObjectTypes)) = ConvertNumStrList(Of NumStr2, NumStr2(Of ObjectTypes))(Num2_Str_Value(DataSetIdentification.ObjectTypeReference))
@@ -3267,7 +3267,7 @@ Namespace MetadataT.IptcT
 		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid.</exception>
 		''' <exception cref="IPTCSetException">Invalid value pased to property or other serialization error occured</exception>
 		<Description("The Object Attribute defines the nature of the object independent of the Subject.")> _
-		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.MetadataT.IptcT+NumStr3`1;Tools.MetadataT.IptcT+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
+		<Category("Category")> <FieldDisplayName("Object Attribute Reference")> <CLSCompliant(False)><DefaultValue(GetType(NumStr2(Of ObjectAttributes)), "Tools.MetadataT.IptcT.IptcDataTypes.NumStr3`1;Tools.MetadataT.IptcT.Iptc+ObjectAttributes;001;")> Public Overridable Property ObjectAttributeReference As NumStr3(Of ObjectAttributes)()
 			Get
 				Try
 					Dim AllValues As List(Of NumStr3(Of ObjectAttributes)) = ConvertNumStrList(Of NumStr3, NumStr3(Of ObjectAttributes))(Num3_Str_Value(DataSetIdentification.ObjectAttributeReference))

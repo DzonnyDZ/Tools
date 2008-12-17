@@ -716,7 +716,7 @@ Namespace DevicesT.RawInputT
             ElseIf Name.StartsWith(RawDeviceNameStartXP) Then
                 Parts = Name.Substring(RawDeviceNameStartXP$.Length).Split("#"c)
             Else
-                Throw New FormatException(ResourcesT.ExceptionsWin.RawDeviceNameHasUnexpectedFormatItMustStartWith0.f(RawDeviceNameStartVista & " " & ResourcesT.ExceptionsWin.Or_ & " " & RawDeviceNameStartXP))
+                Throw New FormatException(ResourcesT.ExceptionsWin.RawDeviceNameHasUnexpectedFormatItMustStartWith0.f(RawDeviceNameStartVista & " " & ResourcesT.Exceptions.Or_ & " " & RawDeviceNameStartXP))
             End If
             If Parts.Length <> 4 Then Throw New FormatException(ResourcesT.ExceptionsWin.RawDeviceNameHasInvalidFormatItShouldConsistOf4Parte)
             Dim ClassGuid As Guid
@@ -761,9 +761,9 @@ Namespace DevicesT.RawInputT
             If ClassCode Is Nothing Then Throw New ArgumentNullException("ClassCode")
             If SubClassCode Is Nothing Then Throw New ArgumentNullException("SubClassCode")
             If ProtocolCode Is Nothing Then Throw New ArgumentNullException("ProtocolCode")
-            If ClassCode = "" Then Throw New ArgumentException(ResourcesT.ExceptionsWin.CannotBeAnEmptyString.f("ClassCode"), "ClassCode")
-            If SubClassCode = "" Then Throw New ArgumentException(ResourcesT.ExceptionsWin.CannotBeAnEmptyString.f("SubClassCode"), "SubClassCode")
-            If ProtocolCode = "" Then Throw New ArgumentException(ResourcesT.ExceptionsWin.CannotBeAnEmptyString.f("ProtocolCode"), "ProtocolCode")
+            If ClassCode = "" Then Throw New ArgumentException(ResourcesT.Exceptions.CannotBeAnEmptyString.f("ClassCode"), "ClassCode")
+            If SubClassCode = "" Then Throw New ArgumentException(ResourcesT.Exceptions.CannotBeAnEmptyString.f("SubClassCode"), "SubClassCode")
+            If ProtocolCode = "" Then Throw New ArgumentException(ResourcesT.Exceptions.CannotBeAnEmptyString.f("ProtocolCode"), "ProtocolCode")
             _ClassCode = ClassCode
             _SubClassCode = SubClassCode
             _ProtocolCode = ProtocolCode
@@ -892,7 +892,7 @@ Namespace DevicesT.RawInputT
             ElseIf format = "R" OrElse format = "r" Then
                 Return String.Format(Globalization.CultureInfo.InvariantCulture, "{0}\{1}\{2}", ClassCode, SubClassCode, ProtocolCode)
             Else
-                Throw New FormatException(ResourcesT.ExceptionsWin.InvalidFormatSpecifier)
+                Throw New FormatException(ResourcesT.Exceptions.InvalidFormatSpecifier)
             End If
         End Function
 
@@ -932,9 +932,9 @@ Namespace DevicesT.RawInputT
             If Not DeviceType.IsDefined Then Throw New InvalidEnumArgumentException("DeviceType")
             If DeviceHandle = IntPtr.Zero Then Throw New ArgumentNullException("DeviceHandle")
             Select Case DeviceType
-                Case RawInputT.DeviceType.Hid : If Not TypeOf Me Is HidInfo Then Throw New TypeMismatchException(Me, GetType(HidInfo), ResourcesT.ExceptionsWin.When0Is1ThenTypeOfThisInstanceMustBe2.f("DeviceType", DeviceType, GetType(HidInfo).Name))
-                Case RawInputT.DeviceType.Mouse : If Not TypeOf Me Is MouseInfo Then Throw New TypeMismatchException(Me, GetType(MouseInfo), ResourcesT.ExceptionsWin.When0Is1ThenTypeOfThisInstanceMustBe2.f("DeviceType", DeviceType, GetType(MouseInfo).Name))
-                Case RawInputT.DeviceType.Keyboard : If Not TypeOf Me Is KeyboardInfo Then Throw New TypeMismatchException(Me, GetType(KeyboardInfo), ResourcesT.ExceptionsWin.When0Is1ThenTypeOfThisInstanceMustBe2.f("DeviceType", DeviceType, GetType(KeyboardInfo).Name))
+                Case RawInputT.DeviceType.Hid : If Not TypeOf Me Is HidInfo Then Throw New TypeMismatchException(Me, GetType(HidInfo), ResourcesT.Exceptions.When0Is1ThenTypeOfThisInstanceMustBe2.f("DeviceType", DeviceType, GetType(HidInfo).Name))
+                Case RawInputT.DeviceType.Mouse : If Not TypeOf Me Is MouseInfo Then Throw New TypeMismatchException(Me, GetType(MouseInfo), ResourcesT.Exceptions.When0Is1ThenTypeOfThisInstanceMustBe2.f("DeviceType", DeviceType, GetType(MouseInfo).Name))
+                Case RawInputT.DeviceType.Keyboard : If Not TypeOf Me Is KeyboardInfo Then Throw New TypeMismatchException(Me, GetType(KeyboardInfo), ResourcesT.Exceptions.When0Is1ThenTypeOfThisInstanceMustBe2.f("DeviceType", DeviceType, GetType(KeyboardInfo).Name))
             End Select
             Me._DeviceType = DeviceType
             _DeviceHandle = DeviceHandle
@@ -6099,7 +6099,7 @@ Namespace DevicesT.RawInputT
                     If Device.WholePage AndAlso Device.Usage <> 0 Then Throw New ArgumentException(ResourcesT.ExceptionsWin.DeviceWithExcludeSetToTrueMustHaveUsageSetToZero)
                     If Device.DisableLegacyMessages AndAlso (Device.UsagePage <> UsagePages.GenericDesktopControls OrElse (Not Device.WholePage AndAlso Device.Usage <> Usages_GenericDesktopControls.Keyboard AndAlso Device.Usage <> Usages_GenericDesktopControls.Mouse)) Then _
                         Throw New ArgumentException(ResourcesT.ExceptionsWin.LegacyMessagesCanBeDisabledOnlyForKeyboardAndMouseDevice)
-                    If Device.ApplicationKeys AndAlso Not Device.DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.ExceptionsWin.When0Is12MustBe3.f("ApplicationKeys", "true", "DisableLegacyMessages", "true"))
+                    If Device.ApplicationKeys AndAlso Not Device.DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.Exceptions.When0Is12MustBe3.f("ApplicationKeys", "true", "DisableLegacyMessages", "true"))
                 Next
             End If
             'Write values
@@ -6930,7 +6930,7 @@ Namespace DevicesT.RawInputT
             End Get
             Set(ByVal value As Boolean)
                 Dim Old = ApplicationKeys
-                If value AndAlso Not DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.ExceptionsWin.CannotBeSetTo1When2Is3.f("ApplicationKeys", "true", "DisableLegacyMessages", "false"))
+                If value AndAlso Not DisableLegacyMessages Then Throw New ArgumentException(ResourcesT.Exceptions.CannotBeSetTo1When2Is3.f("ApplicationKeys", "true", "DisableLegacyMessages", "false"))
                 SetFlag(API.RAWINPUTDEVICEFlags.RIDEV_APPKEYS, value)
                 If Old <> value Then OnChanged(New IReportsChange.ValueChangedEventArgs(Of Boolean)(Old, value, "ApplicationKeys"))
             End Set

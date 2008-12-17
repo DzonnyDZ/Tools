@@ -93,24 +93,6 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to '{0} cannot be an empty string'.
-        '''</summary>
-        Public Shared ReadOnly Property CannotBeAnEmptyString() As String
-            Get
-                Return ResourceManager.GetString("CannotBeAnEmptyString", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to '{0} cannot be set to {1} when {2} is {3}'.
-        '''</summary>
-        Public Shared ReadOnly Property CannotBeSetTo1When2Is3() As String
-            Get
-                Return ResourceManager.GetString("CannotBeSetTo1When2Is3", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''Looks up a localized string similar to 'Cannot convert RAWINPUT_Marshalling to RAWINPUT_NonMarshalling when it contains HID data'.
         '''</summary>
         Public Shared ReadOnly Property CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling() As String
@@ -129,15 +111,6 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Current application has no console. Allocate console first.'.
-        '''</summary>
-        Public Shared ReadOnly Property CurrentApplicationHasNoConsoleAllocateConsoleFirst() As String
-            Get
-                Return ResourceManager.GetString("CurrentApplicationHasNoConsoleAllocateConsoleFirst", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''Looks up a localized string similar to 'Devices can be excluded only from usage pages being registered in same batch.'.
         '''</summary>
         Public Shared ReadOnly Property DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered() As String
@@ -152,24 +125,6 @@ Namespace ResourcesT
         Public Shared ReadOnly Property DeviceWithExcludeSetToTrueMustHaveUsageSetToZero() As String
             Get
                 Return ResourceManager.GetString("DeviceWithExcludeSetToTrueMustHaveUsageSetToZero", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'File {0} already exists.'.
-        '''</summary>
-        Public Shared ReadOnly Property File0AlreadyExists() As String
-            Get
-                Return ResourceManager.GetString("File0AlreadyExists", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'File {0} does not exist.'.
-        '''</summary>
-        Public Shared ReadOnly Property File0DoesNotExist() As String
-            Get
-                Return ResourceManager.GetString("File0DoesNotExist", _resourceCulture)
             End Get
         End Property
         
@@ -210,15 +165,6 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Invalid format specifier'.
-        '''</summary>
-        Public Shared ReadOnly Property InvalidFormatSpecifier() As String
-            Get
-                Return ResourceManager.GetString("InvalidFormatSpecifier", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''Looks up a localized string similar to '{0} is invalid key. Keys must be within range from 0 to 255.'.
         '''</summary>
         Public Shared ReadOnly Property IsInvalidKeyKeysMustBeWithinRangeFrom0To255() As String
@@ -255,15 +201,6 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Menu item doesn&apos;t exist'.
-        '''</summary>
-        Public Shared ReadOnly Property MenuItemDoesnTExist() As String
-            Get
-                Return ResourceManager.GetString("MenuItemDoesnTExist", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''Looks up a localized string similar to 'Message target window handle must be same as handle of window this instance was created for'.
         '''</summary>
         Public Shared ReadOnly Property MessageTargetWindowHandleMustBeSameAsHandleOfWindow() As String
@@ -273,29 +210,11 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'or'.
-        '''</summary>
-        Public Shared ReadOnly Property Or_() As String
-            Get
-                Return ResourceManager.GetString("Or_", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''Looks up a localized string similar to 'Owher handle has changed.'.
         '''</summary>
         Public Shared ReadOnly Property OwherHandleHasChanged() As String
             Get
                 Return ResourceManager.GetString("OwherHandleHasChanged", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'Path {0} does not exist.'.
-        '''</summary>
-        Public Shared ReadOnly Property Path0DoesNotExist() As String
-            Get
-                Return ResourceManager.GetString("Path0DoesNotExist", _resourceCulture)
             End Get
         End Property
         
@@ -336,33 +255,6 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'The file {0} cannot be found.'.
-        '''</summary>
-        Public Shared ReadOnly Property TheFile0CannotBeFound() As String
-            Get
-                Return ResourceManager.GetString("TheFile0CannotBeFound", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'There is already directory named {0}.'.
-        '''</summary>
-        Public Shared ReadOnly Property ThereIsAlreadyDirectoryNamed0() As String
-            Get
-                Return ResourceManager.GetString("ThereIsAlreadyDirectoryNamed0", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'There was an error saving file {0}.'.
-        '''</summary>
-        Public Shared ReadOnly Property ThereWasAnErrorSavingFile0() As String
-            Get
-                Return ResourceManager.GetString("ThereWasAnErrorSavingFile0", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
         '''Looks up a localized string similar to 'Unable to obtain handle to system menu.'.
         '''</summary>
         Public Shared ReadOnly Property UnableToObtainHandleToSystemMenu() As String
@@ -377,33 +269,6 @@ Namespace ResourcesT
         Public Shared ReadOnly Property UnknownRawInputDeviceType0() As String
             Get
                 Return ResourceManager.GetString("UnknownRawInputDeviceType0", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'Unsupported {0} value.'.
-        '''</summary>
-        Public Shared ReadOnly Property Unsupported0Value() As String
-            Get
-                Return ResourceManager.GetString("Unsupported0Value", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'When {0} is {1}, {2} must be {3}.'.
-        '''</summary>
-        Public Shared ReadOnly Property When0Is12MustBe3() As String
-            Get
-                Return ResourceManager.GetString("When0Is12MustBe3", _resourceCulture)
-            End Get
-        End Property
-        
-        '''<summary>
-        '''Looks up a localized string similar to 'When {0} is {1} then type of this instance must be {2}'.
-        '''</summary>
-        Public Shared ReadOnly Property When0Is1ThenTypeOfThisInstanceMustBe2() As String
-            Get
-                Return ResourceManager.GetString("When0Is1ThenTypeOfThisInstanceMustBe2", _resourceCulture)
             End Get
         End Property
         
@@ -425,28 +290,6 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''Formats a localized string similar to '{0} cannot be an empty string'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function CannotBeAnEmptyStringFormat(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, CannotBeAnEmptyString, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to '{0} cannot be set to {1} when {2} is {3}'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<param name="arg1">An object (1) to format.</param>
-        '''<param name="arg2">An object (2) to format.</param>
-        '''<param name="arg3">An object (3) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1025:ReplaceRepetitiveArgumentsWithParamsArray")>  _
-        Public Shared Function CannotBeSetTo1When2Is3Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object, ByVal arg3 As Object) As String
-            Return String.Format(_resourceCulture, CannotBeSetTo1When2Is3, arg0, arg1, arg2, arg3)
-        End Function
-        
-        '''<summary>
         '''The stub formatting method returning the CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling property value.
         '''</summary>
         '''<returns>The CannotConvertRAWINPUTMarshallingToRAWINPUTNonMarshalling property value.</returns>
@@ -464,14 +307,6 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''The stub formatting method returning the CurrentApplicationHasNoConsoleAllocateConsoleFirst property value.
-        '''</summary>
-        '''<returns>The CurrentApplicationHasNoConsoleAllocateConsoleFirst property value.</returns>
-        Public Shared Function CurrentApplicationHasNoConsoleAllocateConsoleFirstFormat() As String
-            Return CurrentApplicationHasNoConsoleAllocateConsoleFirst
-        End Function
-        
-        '''<summary>
         '''The stub formatting method returning the DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered property value.
         '''</summary>
         '''<returns>The DevicesCanBeExcludedOnlyFromUsagePagesBeingRegistered property value.</returns>
@@ -485,24 +320,6 @@ Namespace ResourcesT
         '''<returns>The DeviceWithExcludeSetToTrueMustHaveUsageSetToZero property value.</returns>
         Public Shared Function DeviceWithExcludeSetToTrueMustHaveUsageSetToZeroFormat() As String
             Return DeviceWithExcludeSetToTrueMustHaveUsageSetToZero
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'File {0} already exists.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function File0AlreadyExistsFormat(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, File0AlreadyExists, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'File {0} does not exist.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function File0DoesNotExistFormat(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, File0DoesNotExist, arg0)
         End Function
         
         '''<summary>
@@ -535,14 +352,6 @@ Namespace ResourcesT
         '''<returns>The HotkeyMustIncludeAModifierKey property value.</returns>
         Public Shared Function HotkeyMustIncludeAModifierKeyFormat() As String
             Return HotkeyMustIncludeAModifierKey
-        End Function
-        
-        '''<summary>
-        '''The stub formatting method returning the InvalidFormatSpecifier property value.
-        '''</summary>
-        '''<returns>The InvalidFormatSpecifier property value.</returns>
-        Public Shared Function InvalidFormatSpecifierFormat() As String
-            Return InvalidFormatSpecifier
         End Function
         
         '''<summary>
@@ -580,14 +389,6 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''The stub formatting method returning the MenuItemDoesnTExist property value.
-        '''</summary>
-        '''<returns>The MenuItemDoesnTExist property value.</returns>
-        Public Shared Function MenuItemDoesnTExistFormat() As String
-            Return MenuItemDoesnTExist
-        End Function
-        
-        '''<summary>
         '''The stub formatting method returning the MessageTargetWindowHandleMustBeSameAsHandleOfWindow property value.
         '''</summary>
         '''<returns>The MessageTargetWindowHandleMustBeSameAsHandleOfWindow property value.</returns>
@@ -596,28 +397,11 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''The stub formatting method returning the Or_ property value.
-        '''</summary>
-        '''<returns>The Or_ property value.</returns>
-        Public Shared Function Or_Format() As String
-            Return Or_
-        End Function
-        
-        '''<summary>
         '''The stub formatting method returning the OwherHandleHasChanged property value.
         '''</summary>
         '''<returns>The OwherHandleHasChanged property value.</returns>
         Public Shared Function OwherHandleHasChangedFormat() As String
             Return OwherHandleHasChanged
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'Path {0} does not exist.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function Path0DoesNotExistFormat(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, Path0DoesNotExist, arg0)
         End Function
         
         '''<summary>
@@ -654,33 +438,6 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''Formats a localized string similar to 'The file {0} cannot be found.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function TheFile0CannotBeFoundFormat(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, TheFile0CannotBeFound, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'There is already directory named {0}.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function ThereIsAlreadyDirectoryNamed0Format(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, ThereIsAlreadyDirectoryNamed0, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'There was an error saving file {0}.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function ThereWasAnErrorSavingFile0Format(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, ThereWasAnErrorSavingFile0, arg0)
-        End Function
-        
-        '''<summary>
         '''The stub formatting method returning the UnableToObtainHandleToSystemMenu property value.
         '''</summary>
         '''<returns>The UnableToObtainHandleToSystemMenu property value.</returns>
@@ -695,39 +452,6 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Public Shared Function UnknownRawInputDeviceType0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnknownRawInputDeviceType0, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'Unsupported {0} value.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function Unsupported0ValueFormat(ByVal arg0 As Object) As String
-            Return String.Format(_resourceCulture, Unsupported0Value, arg0)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'When {0} is {1}, {2} must be {3}.'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<param name="arg1">An object (1) to format.</param>
-        '''<param name="arg2">An object (2) to format.</param>
-        '''<param name="arg3">An object (3) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1025:ReplaceRepetitiveArgumentsWithParamsArray")>  _
-        Public Shared Function When0Is12MustBe3Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object, ByVal arg3 As Object) As String
-            Return String.Format(_resourceCulture, When0Is12MustBe3, arg0, arg1, arg2, arg3)
-        End Function
-        
-        '''<summary>
-        '''Formats a localized string similar to 'When {0} is {1} then type of this instance must be {2}'.
-        '''</summary>
-        '''<param name="arg0">An object (0) to format.</param>
-        '''<param name="arg1">An object (1) to format.</param>
-        '''<param name="arg2">An object (2) to format.</param>
-        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
-        Public Shared Function When0Is1ThenTypeOfThisInstanceMustBe2Format(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object) As String
-            Return String.Format(_resourceCulture, When0Is1ThenTypeOfThisInstanceMustBe2, arg0, arg1, arg2)
         End Function
         
         '''<summary>
