@@ -156,4 +156,10 @@
   <data name="TextAlignmentOfPrompt" xml:space="preserve">
     <value>Text alignment of prompt</value>
   </data>
+  <data name="WindowChanged_d" xml:space="preserve">
+    <value>Raised when value of the Window property changes</value>
+  </data>
+  <data name="PropertyChanged_d" xml:space="preserve">
+    <value>Occurs when a property value changes.</value>
+  </data>
 </root>

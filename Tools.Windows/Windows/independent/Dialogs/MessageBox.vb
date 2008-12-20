@@ -773,6 +773,8 @@ Namespace WindowsT.IndependentT
 
             ''' <summary>Occurs when a property value changes.</summary>
             ''' <version version="1.5.2">Event introduced</version>
+            <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
+            <LDescription(GetType(WindowsT.FormsT.Dialogs), "PropertyChanged_d")> _
             Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
 #Region "ICollectionCancelItem"
             ''' <summary>Called before item is placed into collection</summary>

@@ -1,4 +1,4 @@
-﻿Imports System.Windows, Tools.WindowsT.InteropT, System.Linq
+﻿Imports System.Windows, Tools.WindowsT.InteropT, System.Linq, Tools.WindowsT.WPF.WpfExtensions
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Imports Tools.WindowsT.WPF.ConvertersT, Tools.WindowsT.IndependentT
 Imports Tools.ComponentModelT, Tools.ExtensionsT
@@ -7,6 +7,9 @@ Imports System.Windows.Input
 #If Config <= Nightly Then  'Stage: Nightly
 Namespace WindowsT.WPF.DialogsT
     ''' <summary>Control that implements WPF <see cref="MessageBox"/></summary>
+    ''' <remarks>This control is not intended to be used separately, to be placed on yopur window. This control implements WPF <see cref="MessageBox"/> and can be styled/templated.
+    ''' Teplate parts are panels for additional controls that can be placed on message box and are optional. When not pressent additional control will not be visible! But use of additional controls is rare.
+    ''' <para>This control is disposable. When it disposes it should not be used. It disposes automatically wehn message box window closes.</para></remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_TopControlPlaceholder, Type:=GetType(Controls.Panel))> _
@@ -14,8 +17,12 @@ Namespace WindowsT.WPF.DialogsT
     <TemplatePart(Name:=MessageBoxImplementationControl.PART_BottomControlPlaceholder, Type:=GetType(Controls.Panel))> _
     Public Class MessageBoxImplementationControl
         Inherits Windows.Controls.Control
+        Implements IDisposable
+        ''' <summary>Identifies placeholder panel for additional control on top of message box window</summary>
         Protected Friend Const PART_TopControlPlaceholder As String = "PART_TopControlPlaceholder"
+        ''' <summary>Identifies placeholder panel for additional control on bottom of message box window above buttons</summary>
         Protected Friend Const PART_MiddleControlPlaceholder As String = "PART_MiddleControlPlaceholder"
+        ''' <summary>Identifies placeholder panel for additional control on bottom of message box window below buttons</summary>
         Protected Friend Const PART_BottomControlPlaceholder As String = "PART_BottomControlPlaceholder"
         ''' <summary>Contains value of the <see cref="MessageBox"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents _MessageBox As MessageBox
@@ -31,7 +38,9 @@ Namespace WindowsT.WPF.DialogsT
             Protected Friend Set(ByVal value As MessageBox)
                 If value Is Nothing Then Throw New ArgumentNullException("value")
                 If value.Control IsNot Me Then Throw New ArgumentException(ResourcesT.Exceptions.MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe)
+                If _MessageBox IsNot Nothing AndAlso _MessageBox.Window IsNot Nothing Then RemoveHandler _MessageBox.Window.Closed, AddressOf Window_Closed
                 _MessageBox = value
+                If value IsNot Nothing AndAlso value.Window IsNot Nothing Then AddHandler value.Window.Closed, AddressOf Window_Closed
                 Me.DataContext = value
             End Set
         End Property
@@ -41,6 +50,7 @@ Namespace WindowsT.WPF.DialogsT
             FlowDirectionProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(AddressOf OnFlowDirectionChanged))
             InitializeCommands()
         End Sub
+#Region "FlowDirection"
         ''' <summary>Callback called when the <see cref="FlowDirection"/> property is changed</summary>
         Private Shared Sub OnFlowDirectionChanged(ByVal d As DependencyObject, ByVal e As DependencyPropertyChangedEventArgs)
             DirectCast(d, MessageBoxImplementationControl).OnFlowDirectionChanged(e)
@@ -52,7 +62,8 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
         ''' <summary>Raised when the value of the <see cref="FlowDirection"/> property changes</summary>
         Public Event FlowDirectionChanged As EventHandler(Of InteropT.DependencyPropertyChangedEventArgsEventArgs)
-
+#End Region
+#Region "Title"
         ''' <summary>Gets or sets string indicating title of window this control is laced on</summary>
         ''' <returns>Current title</returns>
         ''' <value>Title to be set to window</value>
@@ -82,7 +93,7 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
         ''' <summary>Raised when value of the <see cref="Title"/> property changes</summary>
         Public Event TitleChanged As EventHandler(Of InteropT.DependencyPropertyChangedEventArgsEventArgs)
-
+#End Region
 #Region "Commands"
         ''' <summary>Gets command to be executed when button is clicked.</summary>
         ''' <returns>Command to be execued when button is clicked</returns>
@@ -135,6 +146,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns>Bottom additional control, first child of <see cref="PART_BottomControlPlaceholder"/>-named item</returns>
         ''' <value>Removes all children from <see cref="PART_BottomControlPlaceholder"/>-named item and places value there.</value>
         ''' <remarks>Override this property when your class does not use <see cref="PART_BottomControlPlaceholder"/> of type <see cref="Controls.Panel"/></remarks>
+        ''' <exception cref="ObjectDisposedException">Value is being set and <see cref="IsDisposed"/> is true.</exception>
         Protected Overridable Property BottomControl() As UIElement
             Get
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_BottomControlPlaceholder, Me), Controls.Panel)
@@ -142,6 +154,8 @@ Namespace WindowsT.WPF.DialogsT
                 If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
             End Get
             Set(ByVal value As UIElement)
+                If IsDisposed Then Throw New ObjectDisposedException(Me.GetType.Name)
+                If value Is BottomControl Then Exit Property
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_BottomControlPlaceholder, Me), Controls.Panel)
                 If Placeholder Is Nothing Then Exit Property
                 Placeholder.Children.Clear()
@@ -152,6 +166,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns>Bottom additional control, first child of <see cref="PART_TopControlPlaceholder"/>-named item</returns>
         ''' <value>Removes all children from <see cref="PART_TopControlPlaceholder"/>-named item and places value there.</value>
         ''' <remarks>Override this property when your class does not use <see cref="PART_TopControlPlaceholder"/> of type <see cref="Controls.Panel"/></remarks>
+        ''' <exception cref="ObjectDisposedException">Value is being set and <see cref="IsDisposed"/> is true.</exception>
         Protected Overridable Property TopControl() As UIElement
             Get
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_TopControlPlaceholder, Me), Controls.Panel)
@@ -159,6 +174,8 @@ Namespace WindowsT.WPF.DialogsT
                 If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
             End Get
             Set(ByVal value As UIElement)
+                If IsDisposed Then Throw New ObjectDisposedException(Me.GetType.Name)
+                If value Is TopControl Then Exit Property
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_TopControlPlaceholder, Me), Controls.Panel)
                 If Placeholder Is Nothing Then Exit Property
                 Placeholder.Children.Clear()
@@ -169,6 +186,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <returns>Bottom additional control, first child of <see cref="PART_MiddleControlPlaceholder"/>-named item</returns>
         ''' <value>Removes all children from <see cref="PART_MiddleControlPlaceholder"/>-named item and places value there.</value>
         ''' <remarks>Override this property when your class does not use <see cref="PART_MiddleControlPlaceholder"/> of type <see cref="Controls.Panel"/></remarks>
+        ''' <exception cref="ObjectDisposedException">Value is being set and <see cref="IsDisposed"/> is true.</exception>
         Protected Overridable Property MidControl() As UIElement
             Get
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_MiddleControlPlaceholder, Me), Controls.Panel)
@@ -176,13 +194,14 @@ Namespace WindowsT.WPF.DialogsT
                 If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
             End Get
             Set(ByVal value As UIElement)
+                If IsDisposed Then Throw New ObjectDisposedException(Me.GetType.Name)
+                If value Is MidControl Then Exit Property
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_MiddleControlPlaceholder, Me), Controls.Panel)
                 If Placeholder Is Nothing Then Exit Property
                 Placeholder.Children.Clear()
                 If value IsNot Nothing Then Placeholder.Children.Add(value)
             End Set
         End Property
-
 
         Private Sub MessageBox_BottomControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.BottomControlChanged
             BottomControl = MessageBox.BottomControlControl
@@ -194,6 +213,65 @@ Namespace WindowsT.WPF.DialogsT
 
         Private Sub MessageBox_TopControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.TopControlChanged
             TopControl = MessageBox.TopControlControl
+        End Sub
+        Private Sub Window_Closed(ByVal sender As Object, ByVal e As EventArgs)
+            OnWindowClosed()
+        End Sub
+        ''' <summary>Called wnem message box windows closes</summary>
+        Protected Overridable Sub OnWindowClosed()
+            Dispose()
+        End Sub
+        Private Sub MessageBox_WindowChanged(ByVal sender As Object, ByVal e As IReportsChange.ValueChangedEventArgs(Of System.Windows.Window)) Handles _MessageBox.WindowChanged
+            OnWindowChanged(e)
+        End Sub
+        ''' <summary>Called when window associated with <see cref="MessageBox"/> changes</summary>
+        Protected Overridable Sub OnWindowChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Window))
+            If e.OldValue IsNot Nothing Then RemoveHandler e.OldValue.Closed, AddressOf Window_Closed
+            If IsDisposed Then Exit Sub
+            If e.NewValue IsNot Nothing Then AddHandler e.NewValue.Closed, AddressOf Window_Closed
+        End Sub
+#End Region
+#Region "IDisposable Support"
+        ''' <summary>To detect redundant calls</summary>
+        Private _IsDisposed As Boolean = False
+        ''' <summary>Gets value indicationg if this control was disposed</summary>
+        ''' <returns>True if this control was already disposed</returns>
+        Public ReadOnly Property IsDisposed() As Boolean
+            Get
+                Return _IsDisposed
+            End Get
+        End Property
+        ''' <summary>Implements <see cref="IDisposable.Dispose"/></summary>
+        ''' <param name="disposing">True when disposing</param>
+        Protected Overridable Sub Dispose(ByVal disposing As Boolean)
+            If Not Me.IsDisposed Then
+                If disposing Then
+                    TopControl = Nothing
+                    MidControl = Nothing
+                    BottomControl = Nothing
+                    If MessageBox IsNot Nothing AndAlso MessageBox.Window IsNot Nothing Then RemoveHandler MessageBox.Window.Closed, AddressOf Window_Closed
+                    MessageBox = Nothing
+                End If
+            End If
+            Dim WasDisposed As Boolean = _IsDisposed
+            Me._IsDisposed = True
+            If Not WasDisposed Then RaiseEvent Disposed(Me, EventArgs.Empty)
+        End Sub
+
+        ''' <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        ''' <filterpriority>2</filterpriority>
+        Public Sub Dispose() Implements IDisposable.Dispose
+            Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
+        ''' <summary>Raised when this control is disposed</summary>
+        <Browsable(False)> _
+        Public Event Disposed As EventHandler
+        ''' <summary>Allows an <see cref="T:System.Object" /> to attempt to free resources and perform other cleanup operations before the <see cref="T:System.Object" /> is reclaimed by garbage collection.</summary>
+        ''' <remarks>This method cannot be overridn, override <see cref="Dispose"/> instead.</remarks>
+        Protected NotOverridable Overrides Sub Finalize()
+            MyBase.Finalize()
+            Dispose(True)
         End Sub
 #End Region
     End Class
@@ -209,6 +287,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <param name="Response">Response to close window with</param>
         Public Overloads Overrides Sub Close(ByVal Response As System.Windows.Forms.DialogResult)
             Window.Close()
+            Control.Dispose()
         End Sub
         ''' <summary>Contains value of the <see cref="Window"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents _Window As Window
@@ -221,9 +300,23 @@ Namespace WindowsT.WPF.DialogsT
                 Return _Window
             End Get
             Protected Set(ByVal value As Window)
+                Dim old = _Window
                 _Window = value
+                If old IsNot value Then OnWindowClosed(New IReportsChange.ValueChangedEventArgs(Of Window)(old, value, "Window"))
             End Set
         End Property
+        ''' <summary>Raiese the <see cref="WindowChanged"/> event</summary>
+        ''' <param name="e">Event arguments</param>
+        Protected Overridable Sub OnWindowClosed(ByVal e As IReportsChange.ValueChangedEventArgs(Of Window))
+            RaiseEvent WindowChanged(Me, e)
+            OnChanged(e)
+            OnPropertyChanged(e)
+        End Sub
+        ''' <summary>Raised when value of the <see cref="Window"/> property changes</summary>
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "WindowChanged_d")> _
+        Public Event WindowChanged As EventHandler(Of IReportsChange.ValueChangedEventArgs(Of Window))
+
         ''' <summary>Gets or sets value of the <see cref="Control"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _Control As MessageBoxImplementationControl
         ''' <summary>Gets or sets control implementing message box user interface</summary>
@@ -402,6 +495,8 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
 
         ''' <summary>Occurs when a property value changes.</summary>
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
+        <LDescription(GetType(WindowsT.FormsT.Dialogs), "PropertyChanged_d")> _
         Public Event PropertyChanged As PropertyChangedEventHandler Implements System.ComponentModel.INotifyPropertyChanged.PropertyChanged
 
         Private Sub Window_Closed(ByVal sender As Object, ByVal e As System.EventArgs) Handles _Window.Closed
@@ -471,7 +566,5 @@ Namespace WindowsT.WPF.DialogsT
 #End Region
 
     End Class
-  
-
 End Namespace
 #End If

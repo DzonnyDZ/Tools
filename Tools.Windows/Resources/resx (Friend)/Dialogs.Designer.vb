@@ -138,6 +138,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Occurs when a property value changes.'.
+        '''</summary>
+        Friend Shared ReadOnly Property PropertyChanged_d() As String
+            Get
+                Return ResourceManager.GetString("PropertyChanged_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Defines if user can select encoding that can be used only with problems on given PreviewString on PreviewBytes'.
         '''</summary>
         Friend Shared ReadOnly Property RequireCorrect_d() As String
@@ -201,6 +210,15 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Raised when value of the Window property changes'.
+        '''</summary>
+        Friend Shared ReadOnly Property WindowChanged_d() As String
+            Get
+                Return ResourceManager.GetString("WindowChanged_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Formats a localized string similar to 'About {0}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -247,6 +265,14 @@ Namespace WindowsT.FormsT
         '''<returns>The PreviewString_d property value.</returns>
         Friend Shared Function PreviewString_dFormat() As String
             Return PreviewString_d
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the PropertyChanged_d property value.
+        '''</summary>
+        '''<returns>The PropertyChanged_d property value.</returns>
+        Friend Shared Function PropertyChanged_dFormat() As String
+            Return PropertyChanged_d
         End Function
         
         '''<summary>
@@ -303,6 +329,14 @@ Namespace WindowsT.FormsT
         '''<returns>The ValueIndicatingBidirectionlFlowDirection property value.</returns>
         Friend Shared Function ValueIndicatingBidirectionlFlowDirectionFormat() As String
             Return ValueIndicatingBidirectionlFlowDirection
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the WindowChanged_d property value.
+        '''</summary>
+        '''<returns>The WindowChanged_d property value.</returns>
+        Friend Shared Function WindowChanged_dFormat() As String
+            Return WindowChanged_d
         End Function
     End Class
 End Namespace

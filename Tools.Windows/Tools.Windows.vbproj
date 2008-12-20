@@ -496,6 +496,8 @@
     <Compile Include="Windows\WPF\Dialogs\MessageBoxWindow.xaml.vb">
       <DependentUpon>MessageBoxWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Windows\WPF\WPFExtensions.vb">
+    </Compile>
     <Compile Include="Windows\WPF\Markup\GenericExtension.vb" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\DerivedControls.cs.resx">
       <DependentUpon>DerivedControls.resx</DependentUpon>
