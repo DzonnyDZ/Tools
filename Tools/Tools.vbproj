@@ -470,6 +470,7 @@
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="ComponentModel\CancelItemEventArgs.vb" />
     <Compile Include="ComponentModel\EnumDefaultValueAttribute.vb" />
     <Compile Include="ComponentModel\MultipleException.vb">
     </Compile>

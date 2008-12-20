@@ -43,6 +43,9 @@ Namespace WindowsT.IndependentT
     ''' <version version="1.5.2">Fixed: Some static functions throws exception when icon is not set or when default button is used (even implicitly)</version>
     <DefaultProperty("Prompt"), DefaultEvent("Closed")> _
     Public MustInherit Class MessageBox : Inherits Component : Implements IReportsChange
+        ''' <summary>Recomended format for displaying timer.</summary>
+        ''' <remarks>This format is recognized by <see cref="TimeSpanFormattable"/>.</remarks>
+        Public Const TimerFormat$ = "((h>0)h(0):mm:ss|(m>0)m:ss|s)"
 #Region "Shared"
         ''' <summary>Contains value of the <see cref="DefaultImplementation"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private Shared _DefaultImplementation As Type = GetType(FormsT.MessageBox)
@@ -258,6 +261,7 @@ Namespace WindowsT.IndependentT
                 If old <> value Then OnTitleChanged(New IReportsChange.ValueChangedEventArgs(Of String)(old, value, "Title"))
             End Set
         End Property
+
         ''' <summary>Gets or sets icon image to display on the message box</summary>
         ''' <remarks>Expected image size is 64×64px. Image is resized proportionaly to fit this size. This may be changed by derived class.</remarks>
         <DefaultValue(GetType(Drawing.Image), Nothing)> _
@@ -808,7 +812,9 @@ Namespace WindowsT.IndependentT
                     Return _Collection
                 End Get
                 Private Set(ByVal value As ListWithEventsBase)
+                    Dim OldOwner = OwnerMessageBox
                     _Collection = value
+                    OnOwnerChanged(New IReportsChange.ValueChangedEventArgs(Of MessageBox)(OldOwner, If(value Is Nothing, Nothing, value.Owner), "OwnerMessageBox"))
                 End Set
             End Property
 
@@ -849,7 +855,7 @@ Namespace WindowsT.IndependentT
                     End With
                 End If
             End Sub
-            ''' <summary>Raises the <see cref="OwnerChanged"/> event, calse <see cref="OnChanged"/></summary>
+            ''' <summary>Raises the <see cref="OwnerChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event arguments</param>
             ''' <version version="1.5.2">Method added</version>
             Protected Overridable Sub OnOwnerChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox))
@@ -933,11 +939,19 @@ Namespace WindowsT.IndependentT
                         Dim old = AccessKey
                         _AccessKey = value
                         Dim e As New IReportsChange.ValueChangedEventArgs(Of Char)(old, value, "AccessKey")
-                        RaiseEvent AccessKeyChanged(Me, e)
-                        OnChanged(e)
+                        OnAccessKeyChanged(e)
                     End If
                 End Set
             End Property
+            ''' <summary>Raises the <see cref="AccessKeyChanged"/> event</summary>
+            ''' <param name="e">Event arguments</param>
+            ''' <version version="1.5.2">Method added</version>
+            Protected Overridable Sub OnAccessKeyChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of Char))
+                RaiseEvent AccessKeyChanged(Me, e)
+                OnChanged(e)
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKey"))
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKeyAndTimer"))
+            End Sub
             ''' <summary>Gets value indicating if any property of this instance have been changed since its construction</summary>
             ''' <remarks>Changing this property does not cause the <see cref="Changed"/> event to be raised</remarks>
             Friend Property HasChanged() As Boolean
@@ -1298,11 +1312,12 @@ Namespace WindowsT.IndependentT
             Private Sub MessageBoxButton_Changed(ByVal sender As IReportsChange, ByVal e As System.EventArgs) Handles Me.Changed
                 If Not IsConstructing Then HasChanged = True
             End Sub
-#Region "IsDefault / IsCancel"
+#Region "IsDefault / IsCancel / IsTimer"
             ''' <summary>Gets value indication if this button is default of message box</summary>
             ''' <returns>True if this button is default; false if it is not</returns>
-            ''' <remarks>This poperty returns correct value only when button is stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>. Then its cange is reported via <see cref="INotifyPropertyChanged"/>.
+            ''' <remarks>This poperty returns correct value only when button is stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>. Then its change is reported via <see cref="INotifyPropertyChanged"/>.
             ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore defualt button at all or determine it from <see cref="MessageBox.DefaultButton"/>.</para></remarks>
+            ''' <seelaso cref="DefaultButton"/>
             ''' <version version="1.5.2">Property added</version>
             <Browsable(False)> _
             Public ReadOnly Property IsDefault() As Boolean
@@ -1310,10 +1325,11 @@ Namespace WindowsT.IndependentT
                     Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.Buttons.IndexOf(Me) = OwnerMessageBox.DefaultButton
                 End Get
             End Property
-            ''' <summary>Gets value if this button should be considered cance button</summary>
+            ''' <summary>Gets value indicating if this button should be considered cancel button</summary>
             ''' <returns>True if this button should be treated as cancel button; false it should not.</returns>
             ''' <remarks>This poperty returns correct value only when button is stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>. Then its cange is reported via <see cref="INotifyPropertyChanged"/>.
             ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore defualt button at all or determine it from <see cref="MessageBox.CloseResponse"/>.</para></remarks>
+            ''' <seelaso cref="MessageBox.CloseResponse"/>
             ''' <version version="1.5.2">Property added</version>
             <Browsable(False)> _
             Public ReadOnly Property IsCancel() As Boolean
@@ -1321,21 +1337,40 @@ Namespace WindowsT.IndependentT
                     Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.CloseResponse = Me.Result AndAlso OwnerMessageBox.Buttons.FirstOrDefault(Function(a) a.Result = Me.Result) Is Me
                 End Get
             End Property
-            ''' <summary>Raises the <see cref="OwnerChanged"/> event, calse <see cref="OnChanged"/></summary>
+            ''' <summary>Gets value indicating if this button is timer button</summary>
+            ''' <returns>True if this button is selected fro timer; false otherwise</returns>
+            ''' <remarks>This property returns correct value only when button is stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>. Then its change is reported via <see cref="INotifyPropertyChanged"/>.
+            ''' <para>Individual <see cref="MessageBox"/> implementation may, or may not utilize this property. It can ignore timer button at all or determine it from <see cref="TimeButton"/>.</para></remarks>
+            ''' <seelaso cref="TimeButton"/>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False)> _
+            Public ReadOnly Property IsTime() As Boolean
+                Get
+                    Return OwnerMessageBox IsNot Nothing AndAlso OwnerMessageBox.TimeButton = OwnerMessageBox.Buttons.IndexOf(Me)
+                End Get
+            End Property
+            ''' <summary>Raises the <see cref="OwnerChanged"/> event, calls <see cref="OnChanged"/></summary>
             ''' <param name="e">Event arguments</param>
             ''' <version version="1.5.2">Method added</version>
             Protected Overrides Sub OnOwnerChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of MessageBox))
                 If e.OldValue IsNot Nothing Then
                     RemoveHandler e.OldValue.DefaultButtonChanged, AddressOf OwnerMessageBox_DefaultButtonChanged
                     RemoveHandler e.OldValue.CloseResponseChanged, AddressOf OwnerMessageBox_CloseResponseChanged
+                    RemoveHandler e.OldValue.TimeButtonChanged, AddressOf OwnerMessageBox_TimeButtonChanged
+                    RemoveHandler e.OldValue.CountDown, AddressOf OwnerMessageBox_CountDown
                 End If
                 If e.NewValue IsNot Nothing Then
                     AddHandler e.NewValue.DefaultButtonChanged, AddressOf OwnerMessageBox_DefaultButtonChanged
                     AddHandler e.NewValue.CloseResponseChanged, AddressOf OwnerMessageBox_CloseResponseChanged
+                    AddHandler e.NewValue.TimeButtonChanged, AddressOf OwnerMessageBox_TimeButtonChanged
+                    AddHandler e.NewValue.CountDown, AddressOf OwnerMessageBox_CountDown
                 End If
                 MyBase.OnOwnerChanged(e)
                 OnPropertyChanged(New PropertyChangedEventArgs("IsDefault"))
                 OnPropertyChanged(New PropertyChangedEventArgs("IsCancel"))
+                OnPropertyChanged(New PropertyChangedEventArgs("IsTime"))
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingTimer"))
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKeyAndTimer"))
             End Sub
             ''' <summary>Handles change of <see cref="OwnerMessageBox"/>.<see cref="MessageBox.DefaultButton">DefaultButton</see></summary>
             ''' <param name="sender"><see cref="OwnerMessageBox"/></param>
@@ -1349,15 +1384,59 @@ Namespace WindowsT.IndependentT
             Private Sub OwnerMessageBox_CloseResponseChanged(ByVal sender As MessageBox, ByVal e As EventArgs)
                 OnPropertyChanged(New PropertyChangedEventArgs("IsCancel"))
             End Sub
+            ''' <summary>Handles change of <see cref="OwnerMessageBox"/>.<see cref="MessageBox.TimeButton">TimeButton</see></summary>
+            ''' <param name="sender"><see cref="OwnerMessageBox"/></param>
+            ''' <param name="e">Event arguments</param>
+            Private Sub OwnerMessageBox_TimeButtonChanged(ByVal sender As MessageBox, ByVal e As EventArgs)
+                OnPropertyChanged(New PropertyChangedEventArgs("IsTime"))
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingTimer"))
+            End Sub
 #End Region
+            Protected Overrides Sub OnTextChanged(ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
+                MyBase.OnTextChanged(e)
+                If IsTime AndAlso OwnerMessageBox.IsCountDown Then OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingTimer"))
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKey"))
+                OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKeyAndTimer"))
+            End Sub
             ''' <summary>Gets text of button with platform-specific accesskey indication</summary>
             ''' <returns>If <see cref="OwnerMessageBox"/> is not set returns <see cref="Text"/>; if it is set uses <see cref="GetTextWithAccessKey"/>.</returns>
+            ''' <remarks>Change of this property is notified via <see cref="INotifyPropertyChanged"/>.</remarks>
             ''' <version version="1.5.2">Property added</version>
             <Browsable(False)> _
             Public Overridable ReadOnly Property TextIncludingAccessKey() As String
                 Get
                     If OwnerMessageBox Is Nothing Then Return Text
                     Return OwnerMessageBox.GetTextWithAccessKey(Me.Text, Me.AccessKey)
+                End Get
+            End Property
+            ''' <summary>Handles the <see cref="OwnerMessageBox"/>.<see cref="CountDown">CountDown</see> event</summary>
+            ''' <param name="sender"><see cref="OwnerMessageBox"/></param>
+            ''' <param name="e">Event arguments</param>
+            Private Sub OwnerMessageBox_CountDown(ByVal sender As MessageBox, ByVal e As EventArgs)
+                If IsTime Then OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingTimer"))
+                If IsTime Then OnPropertyChanged(New PropertyChangedEventArgs("TextIncludingAccessKeyAndTimer"))
+            End Sub
+            ''' <summary>Gets text of button with with possible time text</summary>
+            ''' <returns>If <see cref="OwnerMessageBox"/> is not set or countdown timer is not enabled or this button is not time button returns <see cref="Text"/>; otherwise returns <see cref="Text"/> appedned by <see cref="TimerFormat"/>-formatted <see cref="OwnerMessageBox"/>.<see cref="CurrentTimer">CurrentTimer</see> enclosed in braces (()).</returns>
+            ''' <remarks>Change of this property is notified via <see cref="INotifyPropertyChanged"/>. In order this to work correctly button must be stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>.</remarks>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False)> _
+            Public Overridable ReadOnly Property TextIncludingTimer() As String
+                Get
+                    If Not IsTime AndAlso OwnerMessageBox.IsCountDown Then Return Text
+                    Return Text & " (" & OwnerMessageBox.CurrentTimer.ToString(TimerFormat) & ")"
+                End Get
+            End Property
+            ''' <summary>Gets text of button with possible time text and platform-specific accesskey indication</summary>
+            ''' <returns>If <see cref="OwnerMessageBox"/> is not set return <see cref="Text"/>; if this button is not time button or owning messagebox is not counting douw, returns <see cref="TextIncludingAccessKey"/>; otherwise returns <see cref="TextIncludingAccessKey"/>  appedned by <see cref="TimerFormat"/>-formatted <see cref="OwnerMessageBox"/>.<see cref="CurrentTimer">CurrentTimer</see> enclosed in braces (()).</returns>
+            ''' <remarks>Change of this property is notofied via <see cref="INotifyPropertyChanged"/>. In order this to work correctly button must be stored in <see cref="ListWithEvents(Of T)"/> with <see cref="ListWithEvents.Owner"/> set to <see cref="MessageBox"/>.</remarks>
+            ''' <version version="1.5.2">Property added</version>
+            <Browsable(False)> _
+            Public Overridable ReadOnly Property TextIncludingAccessKeyAndTimer$()
+                Get
+                    If OwnerMessageBox Is Nothing Then Return Text
+                    If Not IsTime OrElse Not OwnerMessageBox.IsCountDown Then Return TextIncludingAccessKey
+                    Return OwnerMessageBox.GetTextWithAccessKey(Me.Text, Me.AccessKey) & " (" & OwnerMessageBox.CurrentTimer.ToString(TimerFormat) & ")"
                 End Get
             End Property
         End Class
@@ -1898,6 +1977,7 @@ Namespace WindowsT.IndependentT
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ClosedByTimer As Boolean
         ''' <summary>Gets value indicationg if the message box was closed automatically after the time specified in <see cref="Timer"/> elapsed</summary>
         ''' <returns>True if the message box was closed due to time elapsed, false otherwise</returns>
+        ''' <version version="1.5.2">Fixed: Value of this property is incorrect in handle of the <see cref="Closed"/> event</version>
         <Browsable(False)> _
         Public ReadOnly Property ClosedByTimer() As Boolean
             <DebuggerStepThrough()> Get
@@ -1912,6 +1992,7 @@ Namespace WindowsT.IndependentT
             If Not Me.IsCountDown Then Exit Sub
             CurrentTimer -= TimeSpan.FromSeconds(1)
             If CurrentTimer <= TimeSpan.Zero Then
+                _ClosedByTimer = True
                 Select Case Me.TimeButton
                     Case 0 To Me.Buttons.Count - 1
                         Me.Close(Me.Buttons(Me.TimeButton).Result)
@@ -1920,7 +2001,6 @@ Namespace WindowsT.IndependentT
                     Case Else : Me.Close()
                 End Select
                 CountDownTimer.Enabled = False
-                _ClosedByTimer = True
             End If
         End Sub
         ''' <summary>Gets value indicationg if counting down is curently in progress</summary>

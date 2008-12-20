@@ -21,7 +21,7 @@ Namespace WindowsT.FormsT
     '''<summary>
     '''A strongly-typed resource class, for looking up localized strings, formatting them, etc.
     '''</summary>
-    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.1.0.0"),  _
+    <Global.System.CodeDom.Compiler.GeneratedCodeAttribute("DMKSoftware.CodeGenerators.Tools.StronglyTypedResourceBuilderEx", "2.2.5.0"),  _
      Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
      Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Naming", "CA1724:TypeNamesShouldNotMatchNamespaces")>  _
     Friend Class CompositeControls
@@ -59,7 +59,7 @@ Namespace WindowsT.FormsT
                     Global.System.Threading.Monitor.Enter(InternalSyncObject)
                     Try 
                         If Object.ReferenceEquals(_resourceManager, Nothing) Then
-                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.CompositeControls", GetType(CompositeControls).Assembly))
+                            Global.System.Threading.Interlocked.Exchange(_resourceManager, New Global.System.Resources.ResourceManager("Tools.WindowsT.FormsT.CompositeControls", GetType(CompositeControls).Assembly))
                         End If
                     Finally
                         Global.System.Threading.Monitor.Exit(InternalSyncObject)
@@ -246,6 +246,33 @@ Namespace WindowsT.FormsT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Raised when value of any properties indicating which parts of UI to show changes.'.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayChanged_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayChanged_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Indicates if description pane is shown'.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayDescription_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayDescription_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Indicates if member list is shown'.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayMemberList_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayMemberList_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Gets or sets text of ColumnHeader which displays DisplayName of encoding. Applicable only when Style is ListView'.
         '''</summary>
         Friend Shared ReadOnly Property DisplayNameColumnHeaderText_d() As String
@@ -260,6 +287,15 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property DisplayNameColumnHeaderWidth_d() As String
             Get
                 Return ResourceManager.GetString("DisplayNameColumnHeaderWidth_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Indicates if property grid is shown'.
+        '''</summary>
+        Friend Shared ReadOnly Property DisplayProperties_d() As String
+            Get
+                Return ResourceManager.GetString("DisplayProperties_d", _resourceCulture)
             End Get
         End Property
         
@@ -297,6 +333,15 @@ Namespace WindowsT.FormsT
         Friend Shared ReadOnly Property ItemDoubleClick_d() As String
             Get
                 Return ResourceManager.GetString("ItemDoubleClick_d", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Raised when item is about to be displayed to user. Operation can be cancelled.'.
+        '''</summary>
+        Friend Shared ReadOnly Property ItemFiltering_d() As String
+            Get
+                Return ResourceManager.GetString("ItemFiltering_d", _resourceCulture)
             End Get
         End Property
         
@@ -931,6 +976,30 @@ Namespace WindowsT.FormsT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the DisplayChanged_d property value.
+        '''</summary>
+        '''<returns>The DisplayChanged_d property value.</returns>
+        Friend Shared Function DisplayChanged_dFormat() As String
+            Return DisplayChanged_d
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the DisplayDescription_d property value.
+        '''</summary>
+        '''<returns>The DisplayDescription_d property value.</returns>
+        Friend Shared Function DisplayDescription_dFormat() As String
+            Return DisplayDescription_d
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the DisplayMemberList_d property value.
+        '''</summary>
+        '''<returns>The DisplayMemberList_d property value.</returns>
+        Friend Shared Function DisplayMemberList_dFormat() As String
+            Return DisplayMemberList_d
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the DisplayNameColumnHeaderText_d property value.
         '''</summary>
         '''<returns>The DisplayNameColumnHeaderText_d property value.</returns>
@@ -944,6 +1013,14 @@ Namespace WindowsT.FormsT
         '''<returns>The DisplayNameColumnHeaderWidth_d property value.</returns>
         Friend Shared Function DisplayNameColumnHeaderWidth_dFormat() As String
             Return DisplayNameColumnHeaderWidth_d
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the DisplayProperties_d property value.
+        '''</summary>
+        '''<returns>The DisplayProperties_d property value.</returns>
+        Friend Shared Function DisplayProperties_dFormat() As String
+            Return DisplayProperties_d
         End Function
         
         '''<summary>
@@ -980,6 +1057,14 @@ Namespace WindowsT.FormsT
         '''<returns>The ItemDoubleClick_d property value.</returns>
         Friend Shared Function ItemDoubleClick_dFormat() As String
             Return ItemDoubleClick_d
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ItemFiltering_d property value.
+        '''</summary>
+        '''<returns>The ItemFiltering_d property value.</returns>
+        Friend Shared Function ItemFiltering_dFormat() As String
+            Return ItemFiltering_d
         End Function
         
         '''<summary>

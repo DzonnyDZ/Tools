@@ -90,7 +90,8 @@ Namespace WindowsT.FormsT
                 Me.Text = MessageBox.Title
             End If
             'Top control
-            tlpMain.ReplaceControl(lblPlhTop, MessageBox.TopControlControl)
+            TopControl = MessageBox.TopControlControl
+            If TopControl IsNot Nothing Then tlpMain.ReplaceControl(lblPlhTop, TopControl)
             'Icon
             If MessageBox.Icon Is Nothing Then
                 picPicture.Visible = False
@@ -110,7 +111,8 @@ Namespace WindowsT.FormsT
             If MessageBox.Radios.Count <= 0 Then flpRadio.Visible = False _
             Else flpRadio.Controls.AddRange((From Radio In MessageBox.Radios Select CreateRadio(Radio)).ToArray)
             'Mic control
-            tlpMain.ReplaceControl(lblPlhMid, MessageBox.MidControlControl)
+            MidControl = MessageBox.MidControlControl
+            If MidControl IsNot Nothing Then tlpMain.ReplaceControl(lblPlhMid, MidControl)
             'Buttons
             flpButtons.Controls.Clear()
             If MessageBox.Buttons.Count <= 0 Then
@@ -127,7 +129,9 @@ Namespace WindowsT.FormsT
                 Me.CancelButton = CancelButton
             End If
             'Bottom control
-            tlpMain.ReplaceControl(lblPlhBottom, MessageBox.BottomControlControl)
+            BottomControl = MessageBox.BottomControlControl
+            If BottomControl IsNot Nothing Then tlpMain.ReplaceControl(lblPlhBottom, BottomControl)
+            'Handlers
             AttachMessageBoxHandlers()
             AttachComboBoxHandlers(MessageBox.ComboBox)
             For Each CheckBox In MessageBox.CheckBoxes
@@ -232,8 +236,8 @@ Namespace WindowsT.FormsT
         Private Sub AttachMessageBoxHandlers(Optional ByVal attach As Boolean = True)
             If attach Then
                 AddHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_BottomControlChanged
-                AddHandler MessageBox.MidControlChanged, AddressOf__MessageBox_TopControlChanged
-                AddHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_MidControlChanged
+                AddHandler MessageBox.TopControlChanged, AddressOf__MessageBox_TopControlChanged
+                AddHandler MessageBox.MidControlChanged, AddressOf__MessageBox_MidControlChanged
                 AddHandler MessageBox.CloseResponseChanged, AddressOf__MessageBox_CloseResponseChanged
                 AddHandler MessageBox.ComboBoxChanged, AddressOf__MessageBox_ComboBoxChanged
                 AddHandler MessageBox.CountDown, AddressOf__MessageBox_CountDown
@@ -246,9 +250,9 @@ Namespace WindowsT.FormsT
                 AddHandler MessageBox.IconChanged, AddressOf__MessageBox_IconChanged
                 AddHandler MessageBox.OptionsChanged, AddressOf__MessageBox_OptionsChanged
             Else
-                RemoveHandler MessageBox.TopControlChanged, AddressOf__MessageBox_BottomControlChanged
-                RemoveHandler MessageBox.MidControlChanged, AddressOf__MessageBox_TopControlChanged
-                RemoveHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_MidControlChanged
+                RemoveHandler MessageBox.BottomControlChanged, AddressOf__MessageBox_BottomControlChanged
+                RemoveHandler MessageBox.TopControlChanged, AddressOf__MessageBox_TopControlChanged
+                RemoveHandler MessageBox.MidControlChanged, AddressOf__MessageBox_MidControlChanged
                 RemoveHandler MessageBox.CloseResponseChanged, AddressOf__MessageBox_CloseResponseChanged
                 RemoveHandler MessageBox.ComboBoxChanged, AddressOf__MessageBox_ComboBoxChanged
                 RemoveHandler MessageBox.CountDown, AddressOf__MessageBox_CountDown
@@ -443,12 +447,15 @@ Namespace WindowsT.FormsT
 #Region "MessageBox"
         Private Sub MessageBox_BottomControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
             tlpMain.ReplaceControl(If(BottomControl, lblPlhBottom), If(MessageBox.BottomControlControl, lblPlhBottom))
+            BottomControl = MessageBox.BottomControlControl
         End Sub
         Private Sub MessageBox_MidControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
             tlpMain.ReplaceControl(If(MidControl, lblPlhMid), If(MessageBox.MidControlControl, lblPlhMid))
+            MidControl = MessageBox.MidControlControl
         End Sub
         Private Sub MessageBox_TopControlChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object))
-            tlpMain.ReplaceControl(If(MidControl, lblPlhTop), If(MessageBox.TopControlControl, lblPlhTop))
+            tlpMain.ReplaceControl(If(TopControl, lblPlhTop), If(MessageBox.TopControlControl, lblPlhTop))
+            TopControl = MessageBox.TopControlControl
         End Sub
         Private Sub MessageBox_PromptChanged(ByVal sender As MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of String))
             lblPrompt.Text = sender.Prompt
@@ -675,16 +682,27 @@ Namespace WindowsT.FormsT
         ''' <summary>When true <see cref="MessageBoxForm_FormClosing"/> allows form to be closed on whatever reason without any action (use for programatic closes)</summary>
         Private AllowClose As Boolean = False
         Private Sub MessageBoxForm_FormClosing(ByVal sender As Object, ByVal e As System.Windows.Forms.FormClosingEventArgs) Handles Me.FormClosing
-            If AllowClose Then Exit Sub
-            Select Case e.CloseReason
-                Case CloseReason.UserClosing, CloseReason.None
-                    If Not MessageBox.AllowClose Then e.Cancel = True : Exit Sub
-                    Me.DialogResult = MessageBox.CloseResponse
-                    MessageBox.DialogResult = MessageBox.CloseResponse
-                    MessageBox.ClickedButton = Nothing
-                Case Else : e.Cancel = True : Exit Sub
-            End Select
-            If Not e.Cancel Then AllowClose = True : MyBase.Close()
+            Try
+                If AllowClose Then Exit Sub
+                Select Case e.CloseReason
+                    Case CloseReason.UserClosing, CloseReason.None
+                        If Not MessageBox.AllowClose Then e.Cancel = True : Exit Sub
+                        Me.DialogResult = MessageBox.CloseResponse
+                        MessageBox.DialogResult = MessageBox.CloseResponse
+                        MessageBox.ClickedButton = Nothing
+                    Case Else : e.Cancel = True : Exit Sub
+                End Select
+                If Not e.Cancel Then
+                    AllowClose = True
+                    MyBase.Close()
+                End If
+            Finally
+                If Not e.Cancel Then 'Prevents controls from being disposed
+                    If Me.TopControl IsNot Nothing Then tlpMain.ReplaceControl(Me.TopControl, lblPlhTop)
+                    If Me.MidControl IsNot Nothing Then tlpMain.ReplaceControl(Me.MidControl, lblPlhMid)
+                    If Me.BottomControl IsNot Nothing Then tlpMain.ReplaceControl(Me.BottomControl, lblPlhBottom)
+                End If
+            End Try
         End Sub
 
         Private Sub MessageBoxForm_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
@@ -709,6 +727,9 @@ Namespace WindowsT.FormsT
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Fixed: Check box has not enough size.</version>
+    ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) derived from <see cref="Windows.UIElement"/> are not shown.</version>
+    ''' <version version="1.5.2">Fixed: Custom controls (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) get disposed when message box is closed.</version>
+    ''' <version version="1.5.2">Fixed: Whrn custom control (<see cref="iMsg.TopControl"/>, <see cref="iMsg.MidControl"/>, <see cref="iMsg.BottomControl"/>) is replaced wne message box is shown, the change does not take effect.</version>
     <System.Drawing.ToolboxBitmap(GetType(EncodingSelector), "MessageBox.bmp")> _
        Public Class MessageBox
         Inherits iMsg
@@ -763,6 +784,7 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="Control"/> which represents <see cref="TopControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="TopControl"/>
+        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="Windows.UIElement"/> returns null.</version>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Friend ReadOnly Property TopControlControl() As Control
             Get
@@ -773,6 +795,7 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="Control"/> which represents <see cref="MidControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="BottomControlControl"/>
         ''' <seealso cref="MidControl"/>
+        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="Windows.UIElement"/> returns null.</version>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Friend ReadOnly Property MidControlControl() As Control
             Get
@@ -783,6 +806,7 @@ Namespace WindowsT.FormsT
         ''' <returns><see cref="Control"/> which represents <see cref="BottomControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="MidControlControl"/>
         ''' <seealso cref="BottomControl"/>
+        ''' <version version="1.5.2">Fixed: First call for <see cref="TopControl"/> being <see cref="Windows.UIElement"/> returns null.</version>
         <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Protected Friend ReadOnly Property BottomControlControl() As Control
             Get
@@ -792,15 +816,18 @@ Namespace WindowsT.FormsT
         ''' <summary>Gets control from object</summary>
         ''' <param name="Control">Object that represents a control. It can be <see cref="Control"/>, <see cref="Windows.UIElement"/></param>
         ''' <returns><see cref="Control"/> which represents <paramref name="Control"/>. For same <paramref name="Control"/> returns same <see cref="Control"/>. Returns null if <paramref name="Control"/> is null or it is of unsupported type.</returns>
+        ''' <version version="1.5.2">Fixed: First call for <paramref name="Control"/> being <see cref="Windows.UIElement"/> returns null.</version>
         Protected Overridable Function GetControl(ByVal Control As Object) As Control
             If Control Is Nothing Then Return Nothing
             If TypeOf Control Is Control Then Return Control
             If TypeOf Control Is Windows.UIElement Then
-                Static WPFHosts As New Dictionary(Of Windows.FrameworkElement, Windows.Forms.Integration.ElementHost)
+                Static WPFHosts As Dictionary(Of Windows.FrameworkElement, Windows.Forms.Integration.ElementHost)
+                If WPFHosts Is Nothing Then WPFHosts = New Dictionary(Of Windows.FrameworkElement, Windows.Forms.Integration.ElementHost)
                 If WPFHosts.ContainsKey(Control) Then Return WPFHosts(Control)
                 Dim WPFHost As New Integration.ElementHost With {.Dock = DockStyle.Fill}
                 WPFHost.HostContainer.Children.Add(Control)
                 WPFHosts.Add(Control, WPFHost)
+                Return WPFHost
             End If
             Return Nothing
         End Function

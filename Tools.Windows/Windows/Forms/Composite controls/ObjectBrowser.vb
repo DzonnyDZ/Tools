@@ -465,6 +465,105 @@ Namespace WindowsT.FormsT
             Next
         End Sub
 #End Region
+#Region "Display"
+        ''' <summary>Contains value of the <see cref="DisplayMemberList"/> property</summary>
+        Private _DisplayMemberList As Boolean = True
+        ''' <summary>Contains value of the <see cref="DisplayProperties"/> property</summary>
+        Private _DisplayProperties As Boolean = True
+        ''' <summary>Contains value of the <see cref="DisplayDescription"/> property</summary>
+        Private _DisplayDescription As Boolean = True
+        ''' <summary>Gets or sets value indicationg if member list is shown</summary>
+        ''' <returns>True if member list is show, false when it is hidden</returns>
+        ''' <value>True to show member list; alse to hide it</value>
+        ''' <version stage="1.5.2">Property added</version>
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        <LDescription(GetType(WindowsT.FormsT.CompositeControls), "DisplayMemberList_d")> _
+        Public Property DisplayMemberList() As Boolean
+            Get
+                Return _DisplayMemberList
+            End Get
+            Set(ByVal value As Boolean)
+                Dim Old As Boolean = DisplayMemberList
+                _DisplayMemberList = value
+                If Old <> value Then OnDisplayChanged()
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicationg if property grid is shown</summary>
+        ''' <returns>True if property grid is show, false when it is hidden</returns>
+        ''' <value>True to show ptoperty grid; alse to hide it</value>
+        ''' <version stage="1.5.2">Property added</version>
+        <LDescription(GetType(WindowsT.FormsT.CompositeControls), "DisplayProperties_d")> _
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        Public Property DisplayProperties() As Boolean
+            Get
+                Return _DisplayProperties
+            End Get
+            Set(ByVal value As Boolean)
+                Dim Old As Boolean = DisplayProperties
+                _DisplayProperties = value
+                If Old <> value Then OnDisplayChanged()
+            End Set
+        End Property
+        ''' <summary>Gets or sets value indicationg if description pane is shown</summary>
+        ''' <returns>True if description pane is show, false when it is hidden</returns>
+        ''' <value>True to show decription pane; alse to hide it</value>
+        ''' <version stage="1.5.2">Property added</version>
+        <LDescription(GetType(WindowsT.FormsT.CompositeControls), "DisplayDescription_d")> _
+        <DefaultValue(True), KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
+        Public Property DisplayDescription() As Boolean
+            Get
+                Return _DisplayDescription
+            End Get
+            Set(ByVal value As Boolean)
+                Dim Old As Boolean = DisplayDescription
+                _DisplayDescription = value
+                If Old <> value Then OnDisplayChanged()
+            End Set
+        End Property
+        ''' <summary>Called when any of display properties changes</summary>
+        ''' <remarks>Dsiplay properties are <see cref="DisplayMemberList"/>, <see cref="DisplayProperties"/> and <see cref="DisplayDescription"/></remarks>
+        ''' <version version="1.5.2">Method added</version>
+        Protected Overridable Sub OnDisplayChanged()
+            'Reset:
+            'splMain diwedis from to left and right part
+            splMain.Panel2Collapsed = False
+            splMain.IsSplitterFixed = False
+            splMain.SplitterDistance = 0.4 * splMain.ClientSize.Width
+            'splRight divider right part to top and bottom
+            splRight.Panel1Collapsed = False
+            splRight.Panel2Collapsed = False
+            splRight.IsSplitterFixed = False
+            splRight.SplitterDistance = 0.75 * splRight.ClientSize.Height
+            'splTopRight divides right part to left and right
+            splTopRight.Panel1Collapsed = False
+            splTopRight.Panel2Collapsed = False
+            splRight.IsSplitterFixed = False
+            splTopRight.SplitterDistance = 0.5 * splTopRight.ClientSize.Width
+            'Do something
+            If Not DisplayDescription AndAlso Not DisplayMemberList AndAlso Not DisplayProperties Then
+                splMain.Panel2Collapsed = True
+                splMain.IsSplitterFixed = True
+            ElseIf Not DisplayMemberList AndAlso Not DisplayProperties Then
+                splRight.Panel1Collapsed = True
+                splRight.IsSplitterFixed = True
+            ElseIf Not DisplayDescription Then
+                splRight.Panel2Collapsed = True
+                splRight.IsSplitterFixed = True
+            End If
+            If DisplayMemberList Xor DisplayProperties Then
+                splTopRight.Panel1Collapsed = Not DisplayMemberList
+                splTopRight.Panel2Collapsed = Not DisplayProperties
+                splTopRight.IsSplitterFixed = True
+            End If
+            RaiseEvent DisplayChanged(Me, EventArgs.Empty)
+        End Sub
+        ''' <summary>Raised when any of display properties changes</summary>
+        ''' <remarks>Dsiplay properties are <see cref="DisplayMemberList"/>, <see cref="DisplayProperties"/> and <see cref="DisplayDescription"/></remarks>
+        ''' <version version="1.5.2">Event added</version>
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged)> _
+        <LDescription(GetType(WindowsT.FormsT.CompositeControls), "DisplayChanged_d")> _
+        Public Event DisplayChanged As EventHandler
+#End Region
         ''' <summary>Contains value of the <see cref="ShowShowMenu"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> Private _ShowShowMenu As Boolean = True
         ''' <summary>Gets or sets value indicating if the Show menu is shown</summary>
@@ -672,6 +771,7 @@ Namespace WindowsT.FormsT
         ''' <value>Object to select</value>
         ''' <exception cref="ArgumentException">Value being set cannot be located</exception>
         ''' <version version="1.5.2">Property added</version>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
         Public Overridable Property SelectedItem() As Object
             Get
                 If TypeOf CurrentSelectedItem Is TreeNode Then : Return DirectCast(CurrentSelectedItem, TreeNode).Tag
@@ -838,10 +938,11 @@ Namespace WindowsT.FormsT
                 OnBeforeExpand(e)
             End If
         End Sub
-        ''' <summary>en node which contain only one sub-node with empty <see cref="TreeNode.Tag">Tag</see> is about to be expanded.</summary>
+        ''' <summary>Called when node which contain only one sub-node with empty <see cref="TreeNode.Tag">Tag</see> is about to be expanded.</summary>
         ''' <param name="e">Arguments of <see cref="TreeView.BeforeExpand"/> event</param>
         ''' <remarks><para>The empty sub-node is removed from current node before this method is called.</para>
-        ''' <para>The default implementation calls <see cref="GetChildren"/> and passes it's result to <see cref="GetNode"/> to obtain <see cref="TreeNode"/> which is added to node being expanded</para></remarks>
+        ''' <para>The default implementation calls <see cref="GetChildren"/> and passes it's result to <see cref="GetNode"/> (if <see cref="FilterItem"/> succeeds for it) to obtain <see cref="TreeNode"/> which is added to node being expanded</para></remarks>
+        ''' <version version="1.5.2">Added filtering of items by calling <see cref="FilterItem"/>.</version>
         Protected Overridable Sub OnBeforeExpand(ByVal e As System.Windows.Forms.TreeViewCancelEventArgs)
             Dim Children As IEnumerable(Of Object)
             Try
@@ -852,6 +953,7 @@ Namespace WindowsT.FormsT
             End Try
             If Children IsNot Nothing Then
                 For Each Child In Children
+                    If Not FilterItem(Child) Then Continue For
                     Try
                         e.Node.Nodes.Add(GetNode(Child))
                     Catch ex As Exception
@@ -860,6 +962,22 @@ Namespace WindowsT.FormsT
                 Next Child
             End If
         End Sub
+        ''' <summary>Filters item obtained from <see cref="GetChildren"/></summary>
+        ''' <param name="item">Item to filter</param>
+        ''' <returns>True to add the item to tree; false to skip it</returns>
+        ''' <remarks>This implementation performs filtering by raising the <see cref="ItemFiltering"/> event</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        Protected Overridable Function FilterItem(ByVal item As Object) As Boolean
+            Dim e As New CancelItemEventArgs(Of Object)(item)
+            RaiseEvent ItemFiltering(Me, e)
+            Return Not e.Cancel
+        End Function
+        ''' <summary>Raised when item is about to be displayed to user. You can cancel the item.</summary>
+        ''' <version version="1.5.2">Event introduced</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Data)> _
+        <LDescription(GetType(WindowsT.FormsT.CompositeControls), "ItemFiltering_d")> _
+        Public Event ItemFiltering As EventHandler(Of CancelItemEventArgs(Of Object))
+
         ''' <summary>Code for node representing all the base types</summary>
         Private Const kpBaseTypes$ = "Base types"
         ''' <summary>Code for node representing all the references</summary>

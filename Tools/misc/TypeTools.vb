@@ -627,7 +627,51 @@ Public Module TypeTools
         If TypeOf obj Is Decimal AndAlso Type.Equals(GetType(Boolean)) Then Return CBool(DirectCast(obj, Decimal))
         Throw New InvalidCastException(ResourcesT.Exceptions.UnableToCastType0ToType1.f(ObjType.FullName, Type.FullName))
     End Function
-    
+    ''' <summary>Gets value indicating if given type is generic type definition from which another given type was created</summary>
+    ''' <param name="Parent">Generic type definition to test if <paramref name="Child"/> is created from</param>
+    ''' <param name="Child">Generic type to test if it is created from <paramref name="Parent"/></param>
+    ''' <returns>True if <paramref name="Parent"/> <see cref="Type.IsGenericTypeDefinition">is generic type definition</see>, <paramref name="Child"/> <see cref="Type.IsGenericType">is generic type</see> and <paramref name="Child"/> is created from <paramref name="Parent"/>; false otherwise.</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="Child"/> or <paramref name="Parent"/> is null.</exception>
+    ''' <seelaso cref="IsGenericCreatedFrom"/>
+    ''' <version version="1.5.2">Function added</version>
+    <Extension()> Public Function IsGenericParentOf(ByVal Parent As Type, ByVal Child As Type) As Boolean
+        If Child Is Nothing Then Throw New ArgumentNullException("Child")
+        If Parent Is Nothing Then Throw New ArgumentNullException("Parent")
+        If Not Parent.IsGenericTypeDefinition Then Return False
+        If Not Child.IsGenericType Then Return False
+        Return Child.GetGenericTypeDefinition.Equals(Parent)
+    End Function
+    ''' <summary>Gets value indicating if given type is generic type created from another type being generic type definition</summary>
+    ''' <param name="Parent">Generic type definition to test if <paramref name="Child"/> is created from</param>
+    ''' <param name="Child">Generic type to test if it is created from <paramref name="Parent"/></param>
+    ''' <returns>True if <paramref name="Parent"/> <see cref="Type.IsGenericTypeDefinition">is generic type definition</see>, <paramref name="Child"/> <see cref="Type.IsGenericType">is generic type</see> and <paramref name="Child"/> is created from <paramref name="Parent"/>; false otherwise.</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="Child"/> or <paramref name="Parent"/> is null.</exception>
+    ''' <seelaso cref="IsGenericParentOf"/>
+    ''' <version version="1.5.2">Function added</version>
+    <Extension()> Public Function IsGenericCreatedFrom(ByVal Child As Type, ByVal Parent As Type) As Boolean
+        Return Parent.IsGenericParentOf(Child)
+    End Function
+    ''' <summary>Gets value indicating if given type is <see cref="Nullable(Of T)"/> and if another given type is its generic argument</summary>
+    ''' <param name="NullableType">Type to be tested if its is <see cref="Nullable(Of T)"/>[<paramref name="InnerType"/>]</param>
+    ''' <param name="InnerType">Type to be generic argument of <paramref name="NullableType"/></param>
+    ''' <returns>True when <paramref name="NullableType"/> <see cref="IsGenericCreatedFrom">is generic type created from</see> <see cref="Nullable(Of T)"/> and <paramref name="InnerType"/> is its generic argument; false otherwise</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="NullableType"/> or <paramref name="InnerType"/> is null</exception>
+    ''' <version version="1.5.2">Function added</version>
+    <Extension()> Public Function IsNullableOf(ByVal NullableType As Type, ByVal InnerType As Type) As Boolean
+        If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
+        If InnerType Is Nothing Then Throw New ArgumentNullException("InnerType")
+        Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of ))) AndAlso NullableType.GetGenericArguments()(0).Equals(InnerType)
+    End Function
+    ''' <summary>Gets value indicating if given type is nullable</summary>
+    ''' <param name="NullableType">Type to test</param>
+    ''' <returns>True if <paramref name="NullableType"/> <see cref="IsGenericCreatedFrom">is generic type created from</see> <see cref="Nullable(Of T)"/>; false otherwise</returns>
+    ''' <remarks>Returns false when generict type definition <see cref="Nullable(Of T)"/> is passed</remarks>
+    ''' <exception cref="ArgumentNullException"><paramref name="NullableType"/> is null</exception>
+    ''' <version version="1.5.2">Function added</version>
+    <Extension()> Public Function IsNullable(ByVal NullableType As Type) As Boolean
+        If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
+        Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of )))
+    End Function
 End Module
 
 

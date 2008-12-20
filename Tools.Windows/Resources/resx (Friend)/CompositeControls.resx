@@ -358,4 +358,19 @@
   <data name="ShortcutsEnabled_d" xml:space="preserve">
     <value>Indicates if keyboard shortcuts for clipboard manipulation are enabled</value>
   </data>
+  <data name="DisplayMemberList_d" xml:space="preserve">
+    <value>Indicates if member list is shown</value>
+  </data>
+  <data name="DisplayProperties_d" xml:space="preserve">
+    <value>Indicates if property grid is shown</value>
+  </data>
+  <data name="DisplayDescription_d" xml:space="preserve">
+    <value>Indicates if description pane is shown</value>
+  </data>
+  <data name="DisplayChanged_d" xml:space="preserve">
+    <value>Raised when value of any properties indicating which parts of UI to show changes.</value>
+  </data>
+  <data name="ItemFiltering_d" xml:space="preserve">
+    <value>Raised when item is about to be displayed to user. Operation can be cancelled.</value>
+  </data>
 </root>

@@ -9,10 +9,16 @@ Namespace WindowsT.WPF.DialogsT
     ''' <summary>Control that implements WPF <see cref="MessageBox"/></summary>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     <EditorBrowsable(EditorBrowsableState.Advanced)> _
+    <TemplatePart(Name:=MessageBoxImplementationControl.PART_TopControlPlaceholder, Type:=GetType(Controls.Panel))> _
+    <TemplatePart(Name:=MessageBoxImplementationControl.PART_MiddleControlPlaceholder, Type:=GetType(Controls.Panel))> _
+    <TemplatePart(Name:=MessageBoxImplementationControl.PART_BottomControlPlaceholder, Type:=GetType(Controls.Panel))> _
     Public Class MessageBoxImplementationControl
         Inherits Windows.Controls.Control
+        Protected Friend Const PART_TopControlPlaceholder As String = "PART_TopControlPlaceholder"
+        Protected Friend Const PART_MiddleControlPlaceholder As String = "PART_MiddleControlPlaceholder"
+        Protected Friend Const PART_BottomControlPlaceholder As String = "PART_BottomControlPlaceholder"
         ''' <summary>Contains value of the <see cref="MessageBox"/> property</summary>
-        <EditorBrowsable(EditorBrowsableState.Never)> Private _MessageBox As MessageBox
+        <EditorBrowsable(EditorBrowsableState.Never)> Private WithEvents _MessageBox As MessageBox
         ''' <summary>Gest or sets instance of <see cref="WindowsT.WPF.DialogsT.MessageBox"/> this instance is user interface for</summary>
         ''' <returns>Instance of <see cref="WindowsT.WPF.DialogsT.MessageBox"/> this instance is user interface for</returns>
         ''' <value>Set value to associate <see cref="MessageBoxImplementationControl"/> and <see cref="WindowsT.WPF.DialogsT.MessageBox"/></value>
@@ -113,6 +119,83 @@ Namespace WindowsT.WPF.DialogsT
             End If
         End Sub
 #End Region
+#Region "Additional controls"
+        ''' <summary>Is invoked whenever application code or internal processes call <see cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.                </summary>
+        Public Overrides Sub OnApplyTemplate()
+            MyBase.OnApplyTemplate()
+            SetCustomControls()
+        End Sub
+        ''' <summary>Sets custom controls</summary>
+        Private Sub SetCustomControls()
+            BottomControl = MessageBox.BottomControlControl
+            TopControl = MessageBox.TopControlControl
+            MidControl = MessageBox.MidControlControl
+        End Sub
+        ''' <summary>Gets or sets bottom additional control</summary>
+        ''' <returns>Bottom additional control, first child of <see cref="PART_BottomControlPlaceholder"/>-named item</returns>
+        ''' <value>Removes all children from <see cref="PART_BottomControlPlaceholder"/>-named item and places value there.</value>
+        ''' <remarks>Override this property when your class does not use <see cref="PART_BottomControlPlaceholder"/> of type <see cref="Controls.Panel"/></remarks>
+        Protected Overridable Property BottomControl() As UIElement
+            Get
+                Dim Placeholder = TryCast(Me.Template.FindName(PART_BottomControlPlaceholder, Me), Controls.Panel)
+                If Placeholder Is Nothing Then Return Nothing
+                If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
+            End Get
+            Set(ByVal value As UIElement)
+                Dim Placeholder = TryCast(Me.Template.FindName(PART_BottomControlPlaceholder, Me), Controls.Panel)
+                If Placeholder Is Nothing Then Exit Property
+                Placeholder.Children.Clear()
+                If value IsNot Nothing Then Placeholder.Children.Add(value)
+            End Set
+        End Property
+        ''' <summary>Gets or sets top additional control</summary>
+        ''' <returns>Bottom additional control, first child of <see cref="PART_TopControlPlaceholder"/>-named item</returns>
+        ''' <value>Removes all children from <see cref="PART_TopControlPlaceholder"/>-named item and places value there.</value>
+        ''' <remarks>Override this property when your class does not use <see cref="PART_TopControlPlaceholder"/> of type <see cref="Controls.Panel"/></remarks>
+        Protected Overridable Property TopControl() As UIElement
+            Get
+                Dim Placeholder = TryCast(Me.Template.FindName(PART_TopControlPlaceholder, Me), Controls.Panel)
+                If Placeholder Is Nothing Then Return Nothing
+                If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
+            End Get
+            Set(ByVal value As UIElement)
+                Dim Placeholder = TryCast(Me.Template.FindName(PART_TopControlPlaceholder, Me), Controls.Panel)
+                If Placeholder Is Nothing Then Exit Property
+                Placeholder.Children.Clear()
+                If value IsNot Nothing Then Placeholder.Children.Add(value)
+            End Set
+        End Property
+        ''' <summary>Gets or sets middle additional control</summary>
+        ''' <returns>Bottom additional control, first child of <see cref="PART_MiddleControlPlaceholder"/>-named item</returns>
+        ''' <value>Removes all children from <see cref="PART_MiddleControlPlaceholder"/>-named item and places value there.</value>
+        ''' <remarks>Override this property when your class does not use <see cref="PART_MiddleControlPlaceholder"/> of type <see cref="Controls.Panel"/></remarks>
+        Protected Overridable Property MidControl() As UIElement
+            Get
+                Dim Placeholder = TryCast(Me.Template.FindName(PART_MiddleControlPlaceholder, Me), Controls.Panel)
+                If Placeholder Is Nothing Then Return Nothing
+                If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
+            End Get
+            Set(ByVal value As UIElement)
+                Dim Placeholder = TryCast(Me.Template.FindName(PART_MiddleControlPlaceholder, Me), Controls.Panel)
+                If Placeholder Is Nothing Then Exit Property
+                Placeholder.Children.Clear()
+                If value IsNot Nothing Then Placeholder.Children.Add(value)
+            End Set
+        End Property
+
+
+        Private Sub MessageBox_BottomControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.BottomControlChanged
+            BottomControl = MessageBox.BottomControlControl
+        End Sub
+
+        Private Sub MessageBox_MidControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.MidControlChanged
+            MidControl = MessageBox.TopControlControl
+        End Sub
+
+        Private Sub MessageBox_TopControlChanged(ByVal sender As IndependentT.MessageBox, ByVal e As IReportsChange.ValueChangedEventArgs(Of Object)) Handles _MessageBox.TopControlChanged
+            TopControl = MessageBox.TopControlControl
+        End Sub
+#End Region
     End Class
     ''' <summary>Implements <see cref="iMsg"/> for Windows Presentation Foundation</summary>
     ''' <remarks>Message box user interface is implemented by <see cref="MessageBoxImplementationControl"/>. To change style or template of message box, use that control.</remarks>
@@ -120,7 +203,7 @@ Namespace WindowsT.WPF.DialogsT
     Public Class MessageBox : Inherits iMsg
         Implements INotifyPropertyChanged
         ''' <summary>Format of title with timer</summary>
-        Private Const TitleFormatWithTimer As String = "{0} {1:((h>0)h:mm:ss|(m>0)m:ss|s)}"
+        Private Const TitleFormatWithTimer As String = "{0} {1:" & TimerFormat & "}"
 
         ''' <summary>Closes message box with <see cref="CloseResponse"/></summary>
         ''' <param name="Response">Response to close window with</param>
@@ -172,6 +255,7 @@ Namespace WindowsT.WPF.DialogsT
             If Modal Then
                 Window.ShowDialog()
             Else
+                Forms.Integration.ElementHost.EnableModelessKeyboardInterop(Window)
                 Window.Show()
             End If
         End Sub
@@ -335,7 +419,57 @@ Namespace WindowsT.WPF.DialogsT
         Protected Overrides Function GetTextWithAccessKey(ByVal Text As String, ByVal AccessKey As Char) As String
             Return GetTextWithAccessKey(Text, AccessKey, "_"c)
         End Function
-        
+
+#Region "Additional controls"
+        ''' <summary>gets <see cref="UIelement"/> representation of <see cref="TopControl"/> if possible</summary>
+        ''' <returns><see cref="UIelement"/> which represents <see cref="TopControl"/> if possible, null otherwise</returns>
+        ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>
+        ''' <seealso cref="TopControl"/>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Friend ReadOnly Property TopControlControl() As UIElement
+            Get
+                Return GetControl(Me.TopControl)
+            End Get
+        End Property
+        ''' <summary>Gets <see cref="UIelement"/> representation of <see cref="MidControl"/> if possible</summary>
+        ''' <returns><see cref="UIelement"/> which represents <see cref="MidControl"/> if possible, null otherwise</returns>
+        ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="BottomControlControl"/>
+        ''' <seealso cref="MidControl"/>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Friend ReadOnly Property MidControlControl() As UIElement
+            Get
+                Return GetControl(Me.MidControl)
+            End Get
+        End Property
+        ''' <summary>Gets <see cref="UIelement"/> representation of <see cref="BottomControl"/> if possible</summary>
+        ''' <returns><see cref="UIelement"/> which represents <see cref="BottomControl"/> if possible, null otherwise</returns>
+        ''' <seealso cref="GetControl"/><seealso cref="TopControlControl"/><seealso cref="MidControlControl"/>
+        ''' <seealso cref="BottomControl"/>
+        <DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden), Browsable(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Protected Friend ReadOnly Property BottomControlControl() As UIElement
+            Get
+                Return GetControl(Me.BottomControl)
+            End Get
+        End Property
+        ''' <summary>Gets control from object</summary>
+        ''' <param name="Control">Object that represents a control. It can be <see cref="System.Windows.Forms.Control"/>, <see cref="Windows.UIElement"/></param>
+        ''' <returns><see cref="UIelement"/> which represents <paramref name="Control"/>. For same <paramref name="Control"/> returns same <see cref="Control"/>. Returns null if <paramref name="Control"/> is null or it is of unsupported type.</returns>
+        Protected Overridable Function GetControl(ByVal Control As Object) As UIElement
+            If Control Is Nothing Then Return Nothing
+            If TypeOf Control Is UIElement Then Return Control
+            If TypeOf Control Is Forms.Control Then
+                Static WFHosts As Dictionary(Of Forms.Control, Forms.Integration.WindowsFormsHost)
+                If WFHosts Is Nothing Then WFHosts = New Dictionary(Of Forms.Control, Forms.Integration.WindowsFormsHost)
+                If WFHosts.ContainsKey(Control) Then Return WFHosts(Control)
+                Dim WFHost As New Forms.Integration.WindowsFormsHost
+                WFHost.Child = Control
+                WFHosts.Add(Control, WFHost)
+                Return WFHost
+            End If
+            Return Nothing
+        End Function
+#End Region
+
     End Class
   
 

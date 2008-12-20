@@ -1,4 +1,5 @@
-﻿
+﻿Imports Tools.ComponentModelT
+
 #If Stage <= Nightly Then 'Stage: Nightly
 Imports System
 Imports System.Windows
@@ -23,10 +24,13 @@ Namespace WindowsT.WPF.ControlsT
     ''' </remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Đonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2">Documentation improved</version>
     <TemplatePart(Name:=NumericUpDown.PART_EditableTextBox, Type:=GetType(TextBox))> _
     Public Class NumericUpDown
         Inherits Control
+        ''' <summary>Name of text box part</summary>
         Friend Const PART_EditableTextBox As String = "PART_EditableTextBox"
+        ''' <summary>Initializer</summary>
         Shared Sub New()
             InitializeCommands()
 
@@ -36,7 +40,7 @@ Namespace WindowsT.WPF.ControlsT
             DefaultStyleKeyProperty.OverrideMetadata(GetType(NumericUpDown), New FrameworkPropertyMetadata(GetType(NumericUpDown)))
         End Sub
         '</SnippetStaticCtorOfCustomClassCommonTasks>
-
+        ''' <summary>CTor</summary>
         Public Sub New()
             MyBase.New()
             updateValueString()
@@ -44,6 +48,11 @@ Namespace WindowsT.WPF.ControlsT
 
 #Region "Properties"
 #Region "Value"
+        ''' <summary>Gets or sets value of thei <see cref="NumericUpDown"/></summary>
+        ''' <returns>Value of this <see cref="NumericUpDown"/></returns>
+        ''' <value>Sets value of this <see cref="NumericUpDown"/></value>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Appearance)> _
         Public Property Value() As Decimal
             Get
                 Return CDec(GetValue(ValueProperty))
@@ -54,10 +63,12 @@ Namespace WindowsT.WPF.ControlsT
         End Property
 
         ''' <summary>
-        ''' Identifies the Value dependency property.
+        ''' Identifies the <see cref="Value"/> dependency property.
         ''' </summary>
         Public Shared ReadOnly ValueProperty As DependencyProperty = DependencyProperty.Register("Value", GetType(Decimal), GetType(NumericUpDown), New FrameworkPropertyMetadata(DefaultValue, New PropertyChangedCallback(AddressOf OnValueChanged), New CoerceValueCallback(AddressOf CoerceValue)))
-
+        ''' <summary>Handles change of the <see cref="Value"/> property</summary>
+        ''' <param name="obj">Source of the event</param>
+        ''' <param name="args">event erguments</param>
         Private Shared Sub OnValueChanged(ByVal obj As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
             Dim control As NumericUpDown = DirectCast(obj, NumericUpDown)
 
@@ -85,7 +96,9 @@ Namespace WindowsT.WPF.ControlsT
         Protected Overridable Sub OnValueChanged(ByVal args As RoutedPropertyChangedEventArgs(Of Decimal))
             [RaiseEvent](args)
         End Sub
-
+        ''' <summary>Coerces the value for specific control</summary>
+        ''' <param name="element">Control to coerce value for. Must be <see cref="NumericUpDown"/>.</param>
+        ''' <param name="value">New value. Must be <see cref="Decimal"/></param>
         Private Overloads Shared Function CoerceValue(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim newValue As Decimal = CDec(value)
             Dim control As NumericUpDown = DirectCast(element, NumericUpDown)
@@ -102,6 +115,11 @@ Namespace WindowsT.WPF.ControlsT
         End Function
 #End Region
 #Region "Minimum"
+        ''' <summary>Gets or sets minimum allowed value of <see cref="Value"/>.</summary>
+        ''' <returns>Minimum allved value of <see cref="Value"/>.</returns>
+        ''' <value>Minimum alloved value of <see cref="Value"/></value>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property Minimum() As Decimal
             Get
                 Return CDec(GetValue(MinimumProperty))
@@ -110,13 +128,18 @@ Namespace WindowsT.WPF.ControlsT
                 SetValue(MinimumProperty, value)
             End Set
         End Property
-
+        ''' <summary>Identifies the <see cref="Minimum"/> property</summary>
         Public Shared ReadOnly MinimumProperty As DependencyProperty = DependencyProperty.Register("Minimum", GetType(Decimal), GetType(NumericUpDown), New FrameworkPropertyMetadata(DefaultMinValue, New PropertyChangedCallback(AddressOf OnMinimumChanged), New CoerceValueCallback(AddressOf CoerceMinimum)))
-
+        ''' <summary>Handles change of the <see cref="Minimum"/> property</summary>
+        ''' <param name="element">Source of event</param>
+        ''' <param name="args">Event arguments</param>
         Private Shared Sub OnMinimumChanged(ByVal element As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
             element.CoerceValue(MaximumProperty)
             element.CoerceValue(ValueProperty)
         End Sub
+        ''' <summary>Coerces value of the <see cref="Minimum"/> property</summary>
+        ''' <param name="element">Element to coerce value for. Must be <see cref="NumericUpDown"/>.</param>
+        ''' <param name="value">Value to be coerced. Must be <see cref="Decimal"/></param>
         Private Shared Function CoerceMinimum(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim minimum As Decimal = CDec(value)
             Dim control As NumericUpDown = DirectCast(element, NumericUpDown)
@@ -124,6 +147,11 @@ Namespace WindowsT.WPF.ControlsT
         End Function
 #End Region
 #Region "Maximum"
+        ''' <summary>Gets or sets maximum allowed value of <see cref="Value"/>.</summary>
+        ''' <returns>Maximum allved value of <see cref="Value"/>.</returns>
+        ''' <value>Maximum alloved value of <see cref="Value"/></value>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property Maximum() As Decimal
             Get
                 Return CDec(GetValue(MaximumProperty))
@@ -132,13 +160,17 @@ Namespace WindowsT.WPF.ControlsT
                 SetValue(MaximumProperty, value)
             End Set
         End Property
-
+        ''' <summary>Identifies the <see cref="Maximum"/> property</summary>
         Public Shared ReadOnly MaximumProperty As DependencyProperty = DependencyProperty.Register("Maximum", GetType(Decimal), GetType(NumericUpDown), New FrameworkPropertyMetadata(DefaultMaxValue, New PropertyChangedCallback(AddressOf OnMaximumChanged), New CoerceValueCallback(AddressOf CoerceMaximum)))
-
+        ''' <summary>Handles change of the <see cref="Maximum"/> property</summary>
+        ''' <param name="element">Source of event</param>
+        ''' <param name="args">Event arguments</param>
         Private Shared Sub OnMaximumChanged(ByVal element As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
             element.CoerceValue(ValueProperty)
         End Sub
-
+        ''' <summary>Coerces value of the <see cref="Maximum"/> property</summary>
+        ''' <param name="element">Element to coerce value for. Must be <see cref="NumericUpDown"/>.</param>
+        ''' <param name="value">Value to be coerced. Must be <see cref="Decimal"/></param>
         Private Shared Function CoerceMaximum(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim control As NumericUpDown = DirectCast(element, NumericUpDown)
             Dim newMaximum As Decimal = CDec(value)
@@ -146,6 +178,11 @@ Namespace WindowsT.WPF.ControlsT
         End Function
 #End Region
 #Region "Change"
+        ''' <summary>Gets or sets value indicating step value changes when user increnets/decrements the value</summary>
+        ''' <returns>Value of incerement/decrement step</returns>
+        ''' <value>Value of increment/decrement step</value>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property Change() As Decimal
             Get
                 Return CDec(GetValue(ChangeProperty))
@@ -154,18 +191,24 @@ Namespace WindowsT.WPF.ControlsT
                 SetValue(ChangeProperty, value)
             End Set
         End Property
-
+        ''' <summary>Identifies the <see cref="Change"/> dependency property</summary>
         Public Shared ReadOnly ChangeProperty As DependencyProperty = DependencyProperty.Register("Change", GetType(Decimal), GetType(NumericUpDown), New FrameworkPropertyMetadata(DefaultChange, New PropertyChangedCallback(AddressOf OnChangeChanged), New CoerceValueCallback(AddressOf CoerceChange)), New ValidateValueCallback(AddressOf ValidateChange))
-
+        ''' <summary>Valudates value of the <see cref="Change"/> property</summary>
+        ''' <param name="value">New value of the <see cref="Change"/> property. Must be <see cref="Decimal"/></param>
+        ''' <returns>True if <paramref name="value"/> is greater than zero; false otherwise</returns>
         Private Shared Function ValidateChange(ByVal value As Object) As Boolean
             Dim change As Decimal = CDec(value)
             Return change > 0
         End Function
-
+        ''' <summary>Reacts on change of the <see cref="Change"/> property</summary>
+        ''' <param name="args">Event erguments</param><param name="element">Source of the event</param>
+        ''' <remarks>This implementation does nothing.</remarks>
         Private Shared Sub OnChangeChanged(ByVal element As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
-
         End Sub
-
+        ''' <summary>Corces value of the <see cref="Change"/> property</summary>
+        ''' <param name="element">Element to corece value for. Must be <see cref="NumericUpDown"/>.</param>
+        ''' <param name="value">Proposed value of the <see cref="Change"/> property</param>
+        ''' <returns>Coerced value (<see cref="Decimal"/>)</returns>
         Private Shared Function CoerceChange(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim newChange As Decimal = CDec(value)
             Dim control As NumericUpDown = DirectCast(element, NumericUpDown)
@@ -181,23 +224,28 @@ Namespace WindowsT.WPF.ControlsT
 
             Return coercedNewChange
         End Function
-
+        ''' <summary>Gets smallest  value by decimal places</summary>
+        ''' <param name="decimalPlaces">Number of decimal places</param>
+        ''' <returns>Smallest value for given <paramref name="decimalPlaces"/>.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="decimalPlaces"/> is less than zero</exception>
         Private Shared Function smallestForDecimalPlaces(ByVal decimalPlaces As Integer) As Decimal
             If decimalPlaces < 0 Then
                 Throw New ArgumentException("decimalPlaces")
             End If
-
             Dim d As Decimal = 1
             For i As Integer = 0 To decimalPlaces - 1
-
                 d /= 10
             Next
-
             Return d
         End Function
 
 #End Region
 #Region "DecimalPlaces"
+        ''' <summary>Gets or sets value indication decimal place precision of number</summary>
+        ''' <remarks>Drecimal-places pecision of number</remarks>
+        ''' <value>Number of decimal places to be entered</value>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategoryAttribute(KnownCategoryAttribute.KnownCategories.Appearance)> _
         Public Property DecimalPlaces() As Integer
             Get
                 Return CInt(GetValue(DecimalPlacesProperty))
@@ -206,9 +254,11 @@ Namespace WindowsT.WPF.ControlsT
                 SetValue(DecimalPlacesProperty, value)
             End Set
         End Property
-
+        ''' <summary>Identifies the <see cref="DecimalPlaces"/> property</summary>
         Public Shared ReadOnly DecimalPlacesProperty As DependencyProperty = DependencyProperty.Register("DecimalPlaces", GetType(Integer), GetType(NumericUpDown), New FrameworkPropertyMetadata(DefaultDecimalPlaces, New PropertyChangedCallback(AddressOf OnDecimalPlacesChanged)), New ValidateValueCallback(AddressOf ValidateDecimalPlaces))
-
+        ''' <summary>Handles change of value of <see cref="DecimalPlaces"/> property</summary>
+        ''' <param name="element">Element must be <see cref="NumericUpDown"/>.</param>
+        ''' <param name="args">Event arguments</param>
         Private Shared Sub OnDecimalPlacesChanged(ByVal element As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
             Dim control As NumericUpDown = DirectCast(element, NumericUpDown)
             control.CoerceValue(ChangeProperty)
@@ -217,7 +267,9 @@ Namespace WindowsT.WPF.ControlsT
             control.CoerceValue(ValueProperty)
             control.updateValueString()
         End Sub
-
+        ''' <summary>Validates value of the <see cref="DecimalPlaces"/> property</summary>
+        ''' <param name="value">Number of decimapl places. Must be <see cref="Integer"/></param>
+        ''' <returns>True when <paramref name="value"/> is greater than or equal to zero; false otherwise</returns>
         Private Shared Function ValidateDecimalPlaces(ByVal value As Object) As Boolean
             Dim decimalPlaces As Integer = CInt(value)
             Return decimalPlaces >= 0
@@ -226,6 +278,12 @@ Namespace WindowsT.WPF.ControlsT
 #End Region
 
 #Region "ValueString"
+        ''' <summary>Gets or sets value as string</summary>
+        ''' <returns><see cref="Value"/> as <see cref="String"/> in apropriate, culture-specific format</returns>
+        ''' <value>Sets <see cref="Value"/> by its string representation if appropriate, culture-specific format</value>
+        ''' <version version="1.5.2"><see cref="BrowsableAttribute"/>, <see cref="DesignerSerializationVisibilityAttribute"/> and <see cref="EditorBrowsableAttribute"/> applied</version>
+        <Browsable(False), DesignerSerializationVisibility(DesignerSerializationVisibility.Hidden)> _
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Property ValueString() As String
             Get
                 Return DirectCast(GetValue(ValueStringProperty), String)
@@ -234,19 +292,24 @@ Namespace WindowsT.WPF.ControlsT
                 SetValue(ValueStringProperty, value)
             End Set
         End Property
-
+        ''' <summary>Indentifies the <see cref="ValueString"/> property</summary>
         Public Shared ReadOnly ValueStringProperty As DependencyProperty = DependencyProperty.RegisterAttached("ValueString", GetType(String), GetType(NumericUpDown), New PropertyMetadata(DefaultValue.ToString(CultureInfo.InvariantCulture), New PropertyChangedCallback(AddressOf OnValueStringChanged), New CoerceValueCallback(AddressOf CoerceValueString)), New ValidateValueCallback(AddressOf ValidateValueString))
 
         'public static readonly DependencyProperty ValueStringProperty = ValueStringPropertyKey.DependencyProperty;
-
+        ''' <summary>Updates value of the <see cref="ValueString"/> property whan <see cref="Value"/> changes</summary>
         Private Sub updateValueString()
             Dim newValueString As String = ValueToString(Me.Value)
             Me.SetValue(ValueStringProperty, newValueString)
         End Sub
+        ''' <summary>Converts value to string</summary>
+        ''' <param name="value">Value to be converted</param>
+        ''' <returns>String representation of <paramref name="value"/> reflecting <see cref="DecimalPlaces"/>.</returns>
         Protected Overridable Function ValueToString(ByVal value As Decimal) As String
-            Return value.ToString(String.Format("f{0}", Me.DecimalPlaces, CultureInfo.InvariantCulture))
+            Return value.ToString(String.Format("f{0}", Me.DecimalPlaces, CultureInfo.CurrentCulture))
         End Function
-
+        ''' <summary>Nahdles c´hange of the <see cref="ValueString"/> property</summary>
+        ''' <param name="obj">Event source. Must be <see cref="NumericUpDown"/></param>
+        ''' <param name="args">Event arguments</param>
         Private Shared Sub OnValueStringChanged(ByVal obj As DependencyObject, ByVal args As DependencyPropertyChangedEventArgs)
             Dim control As NumericUpDown = DirectCast(obj, NumericUpDown)
 
@@ -273,7 +336,10 @@ Namespace WindowsT.WPF.ControlsT
         Protected Overridable Sub OnValueStringChanged(ByVal args As RoutedPropertyChangedEventArgs(Of String))
             [RaiseEvent](args)
         End Sub
-
+        ''' <summary>Coerces value of the <see cref="ValueString"/> property</summary>
+        ''' <param name="element">Element to coerce value for. Must be <see cref="NumericUpDown"/></param>
+        ''' <param name="value">Proposed value of the <see cref="ValueString"/> property. Must be <see cref="String"/>.</param>
+        ''' <returns>Coerced value</returns>
         Private Shared Function CoerceValueString(ByVal element As DependencyObject, ByVal value As Object) As Object
             Dim newStrValue As String = DirectCast(value, String)
             Dim control As NumericUpDown = DirectCast(element, NumericUpDown)
@@ -282,6 +348,9 @@ Namespace WindowsT.WPF.ControlsT
             Dim newStr As String = control.ValueToString(newDecimal)
             Return newStr
         End Function
+        ''' <summary>Validates value of the <see cref="ValueString"/> property</summary>
+        ''' <param name="value">Value to be validated. Should be <see cref="String"/>.</param>
+        ''' <returns>True if <paramref name="value"/> is string and it is parseable as number</returns>
         Private Shared Function ValidateValueString(ByVal value As Object) As Boolean
             Dim str As String = TryCast(value, String)
             If str Is Nothing Then
@@ -292,7 +361,11 @@ Namespace WindowsT.WPF.ControlsT
             Return CanParse
         End Function
 #End Region
-
+        ''' <summary>Gets or sets value indicating if text-box is editable</summary>
+        ''' <returns>True if text-box is editable, false otherwise</returns>
+        ''' <value>True to make text-box editable; false to disallow editing</value>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Behavior)> _
         Public Property IsEditable() As Boolean
             Get
                 Return CBool(GetValue(IsEditableProperty))
@@ -303,6 +376,7 @@ Namespace WindowsT.WPF.ControlsT
         End Property
 
         ' Using a DependencyProperty as the backing store for IsEditable.  This enables animation, styling, binding, etc...
+        ''' <summary>Identifies the <see cref="IsEditable"/>dependency proeperty</summary>
         Public Shared ReadOnly IsEditableProperty As DependencyProperty = DependencyProperty.Register("IsEditable", GetType(Boolean), GetType(NumericUpDown), New UIPropertyMetadata(True))
 
 
@@ -322,6 +396,8 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>
         ''' Occurs when the Value property changes.
         ''' </summary>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.KnownCategories.Action)> _
         Public Custom Event ValueChanged As RoutedPropertyChangedEventHandler(Of Decimal)
             AddHandler(ByVal value As RoutedPropertyChangedEventHandler(Of Decimal))
                 [AddHandler](ValueChangedEvent, value)
@@ -336,6 +412,8 @@ Namespace WindowsT.WPF.ControlsT
         ''' <summary>
         ''' Occurs when the ValueString property changes.
         ''' </summary>
+        ''' <version version="1.5.2"><see cref="KnownCategoryAttribute"/> and <see cref="EditorBrowsableAttribute"/> applied</version>
+        <KnownCategory(KnownCategoryAttribute.AnotherCategories.PropertyChanged), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Custom Event ValueStringChanged As RoutedPropertyChangedEventHandler(Of String)
             AddHandler(ByVal value As RoutedPropertyChangedEventHandler(Of String))
                 [AddHandler](ValueStringChangedEvent, value)
@@ -350,18 +428,19 @@ Namespace WindowsT.WPF.ControlsT
 #End Region
 
 #Region "Commands"
-
+        ''' <summary>Identifies command fro increasing <see cref="Value"/> by <see cref="Change"/></summary>
         Public Shared ReadOnly Property IncreaseCommand() As RoutedCommand
             Get
                 Return _increaseCommand
             End Get
         End Property
+        ''' <summary>Identifies command fro decreasing <see cref="Value"/> by <see cref="Change"/></summary>
         Public Shared ReadOnly Property DecreaseCommand() As RoutedCommand
             Get
                 Return _decreaseCommand
             End Get
         End Property
-
+        ''' <summary>Initializes comands</summary>
         Private Shared Sub InitializeCommands()
             _increaseCommand = New RoutedCommand("IncreaseCommand", GetType(NumericUpDown))
             CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_increaseCommand, AddressOf OnIncreaseCommand))
@@ -371,33 +450,41 @@ Namespace WindowsT.WPF.ControlsT
             CommandManager.RegisterClassCommandBinding(GetType(NumericUpDown), New CommandBinding(_decreaseCommand, AddressOf OnDecreaseCommand))
             CommandManager.RegisterClassInputBinding(GetType(NumericUpDown), New InputBinding(_decreaseCommand, New KeyGesture(Key.Down)))
         End Sub
-
+        ''' <summary>Handles the <see cref="IncreaseCommand"/> command</summary>
+        ''' <param name="sender">Event source. Must be <see cref="NumericUpDown"/></param>
+        ''' <param name="e">event arguments</param>
         Private Shared Sub OnIncreaseCommand(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs)
             Dim control As NumericUpDown = TryCast(sender, NumericUpDown)
             If control IsNot Nothing Then
                 control.OnIncrease()
             End If
         End Sub
+        ''' <summary>Handles the <see cref="DecreaseCommand"/> command</summary>
+        ''' <param name="sender">Event source. Must be <see cref="NumericUpDown"/></param>
+        ''' <param name="e">event arguments</param>
         Private Shared Sub OnDecreaseCommand(ByVal sender As Object, ByVal e As ExecutedRoutedEventArgs)
             Dim control As NumericUpDown = TryCast(sender, NumericUpDown)
             If control IsNot Nothing Then
                 control.OnDecrease()
             End If
         End Sub
-
+        ''' <summary>Handles increasing of value</summary>
         Protected Overridable Sub OnIncrease()
             Me.Value += Change
         End Sub
+        ''' <summary>Handles decreasing of value</summary>
         Protected Overridable Sub OnDecrease()
             Me.Value -= Change
         End Sub
-
+        ''' <summary>Contains value of the <see cref="IncreaseCommand"/> property</summary>
         Private Shared _increaseCommand As RoutedCommand
+        ''' <summary>Contains value of the <see cref="DecreaseCommand"/> property</summary>
         Private Shared _decreaseCommand As RoutedCommand
 #End Region
 
 #Region "Automation"
-        '<SnippetOnCreateAutomationPeer>
+        ''' <summary>Returns class-specific <see cref="T:System.Windows.Automation.Peers.AutomationPeer" /> implementations for the Windows Presentation Foundation (WPF) infrastructure.</summary>
+        ''' <returns>The type-specific <see cref="T:System.Windows.Automation.Peers.AutomationPeer" /> implementation.</returns>
         Protected Overloads Overrides Function OnCreateAutomationPeer() As AutomationPeer
             Return New NumericUpDownAutomationPeer(Me)
         End Function
@@ -420,8 +507,15 @@ Namespace WindowsT.WPF.ControlsT
                 e.Handled = control.Focus() OrElse e.Handled
             End If
         End Sub
-
-        Private Const DefaultMinValue As Decimal = 0, DefaultValue As Decimal = DefaultMinValue, DefaultMaxValue As Decimal = 100, DefaultChange As Decimal = 1
+        ''' <summary>Default value of the <see cref="Minimum"/> property</summary>
+        Private Const DefaultMinValue As Decimal = 0
+        ''' <summary>Default value of the <see cref="Value"/> property</summary>
+        Private Const DefaultValue As Decimal = DefaultMinValue
+        ''' <summary>Default value of the <see cref="Maximum"/> property</summary>
+        Private Const DefaultMaxValue As Decimal = 100
+        ''' <summary>Default value of the <see cref="Change"/> property</summary>
+        Private Const DefaultChange As Decimal = 1
+        ''' <summary>Default value of the <see cref="DecimalPlaces"/> property</summary>
         Private Const DefaultDecimalPlaces As Integer = 0
 
 #Region "TextBox Validation"
@@ -503,23 +597,35 @@ Namespace WindowsT.WPF.ControlsT
         End Function
 #End Region
     End Class
+    ''' <summary><see cref="AutomationPeer"/> for <see cref="NumericUpDown"/> control</summary>
+    ''' <version version="1.5.2" stage="Nightly">Documentation added</version>
+    ''' <version version="1.5.2"><see cref="EditorBrowsableAttribute"/> applied</version>
+    <EditorBrowsable(EditorBrowsableState.Advanced)> _
     Public Class NumericUpDownAutomationPeer
         Inherits FrameworkElementAutomationPeer
         Implements IRangeValueProvider
+        ''' <summary>CTor</summary>
+        ''' <param name="control">Control to attach to</param>
         Public Sub New(ByVal control As NumericUpDown)
             MyBase.New(control)
         End Sub
 
+        ''' <summary>Gets the name of the <see cref="T:System.Windows.UIElement" /> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer" />. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetClassName" />.</summary>
+        ''' <returns>An <see cref="F:System.String.Empty" /> string.</returns>
         Protected Overloads Overrides Function GetClassNameCore() As String
             Return "NumericUpDown"
         End Function
 
+        ''' <summary>Gets the control type for the <see cref="T:System.Windows.UIElement" /> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer" />. This method is called by <see cref="M:System.Windows.Automation.Peers.AutomationPeer.GetAutomationControlType" />.</summary>
+        ''' <returns>The <see cref="F:System.Windows.Automation.Peers.AutomationControlType.Custom" /> enumeration value.</returns>
         Protected Overloads Overrides Function GetAutomationControlTypeCore() As AutomationControlType
             Return AutomationControlType.Spinner
         End Function
 
 
-        '<SnippetGetPattern>
+        ''' <summary>Gets the control pattern for the <see cref="T:System.Windows.UIElement" /> that is associated with this <see cref="T:System.Windows.Automation.Peers.UIElementAutomationPeer" />.</summary>
+        ''' <returns>When <paramref name="patternInterface"/> is <see cref="PatternInterface.RangeValue"/> returns this instance; otherwise null.</returns>
+        ''' <param name="patternInterface">A value from the enumeration.</param>
         Public Overloads Overrides Function GetPattern(ByVal patternInterface As PatternInterface) As Object
             If patternInterface = patternInterface.RangeValue Then
                 Return Me
@@ -527,7 +633,8 @@ Namespace WindowsT.WPF.ControlsT
             Return MyBase.GetPattern(patternInterface)
         End Function
         '</SnippetGetPattern>
-
+        ''' <summary>Raises the event on value change</summary>
+        ''' <param name="oldValue">Old value</param><param name="newValue">New value</param>
         Friend Sub RaiseValueChangedEvent(ByVal oldValue As Decimal, ByVal newValue As Decimal)
             MyBase.RaisePropertyChangedEvent(RangeValuePatternIdentifiers.ValueProperty, CDbl(oldValue), CDbl(newValue))
         End Sub
@@ -538,30 +645,42 @@ Namespace WindowsT.WPF.ControlsT
 
 #Region "IRangeValueProvider Members"
 
+        ''' <summary>                    Gets a value that specifies whether the value of a control is read-only.                 </summary>
+        ''' <returns>true if the value is read-only; false if it can be modified.                 </returns>
         Private ReadOnly Property IsReadOnly() As Boolean Implements IRangeValueProvider.IsReadOnly
             Get
                 Return Not IsEnabled()
             End Get
         End Property
 
+        ''' <summary>                    Gets the value that is added to or subtracted from the <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.Value" /> property when a large change is made, such as with the PAGE DOWN key.                </summary>
+        ''' <returns>                    The large-change value supported by the control or null (Nothing in Microsoft Visual Basic .NET) if the control does not support <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.LargeChange" />.                 </returns>
         Private ReadOnly Property LargeChange() As Double Implements IRangeValueProvider.LargeChange
             Get
                 Return CDbl(MyOwner.Change)
             End Get
         End Property
 
+        ''' <summary>                    Gets the maximum range value supported by the control.                </summary>
+        ''' <returns>                    The maximum value supported by the control or null (Nothing in Microsoft Visual Basic .NET) if the control does not support <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.Maximum" />.                 </returns>
         Private ReadOnly Property Maximum() As Double Implements IRangeValueProvider.Maximum
             Get
                 Return CDbl(MyOwner.Maximum)
             End Get
         End Property
 
+        ''' <summary>                    Gets the minimum range value supported by the control.                </summary>
+        ''' <returns>                    The minimum value supported by the control or null (Nothing in Microsoft Visual Basic .NET) if the control does not support <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.Minimum" />.                 </returns>
         Private ReadOnly Property Minimum() As Double Implements IRangeValueProvider.Minimum
             Get
                 Return CDbl(MyOwner.Minimum)
             End Get
         End Property
 
+        ''' <summary>                    Sets the value of the control.                </summary>
+        ''' <param name="value">                    The value to set.                </param>
+        ''' <exception cref="T:System.ArgumentOutOfRangeException">                    When 
+        ''' <paramref name="value" /> is less than the minimum or greater than the maximum value of the control.                </exception>
         Private Sub SetValue(ByVal value As Double) Implements IRangeValueProvider.SetValue
             If Not IsEnabled() Then
                 Throw New ElementNotEnabledException()
@@ -575,12 +694,16 @@ Namespace WindowsT.WPF.ControlsT
             MyOwner.Value = val
         End Sub
 
+        ''' <summary>                    Gets the value that is added to or subtracted from the <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.Value" /> property when a small change is made, such as with an arrow key.                </summary>
+        ''' <returns>                    The small-change value or null (Nothing in Microsoft Visual Basic .NET) if the control does not support <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.SmallChange" />.                 </returns>
         Private ReadOnly Property SmallChange() As Double Implements IRangeValueProvider.SmallChange
             Get
                 Return CDbl(MyOwner.Change)
             End Get
         End Property
 
+        ''' <summary>                    Gets the value of the control.                </summary>
+        ''' <returns>                    The value of the control or null (Nothing in Microsoft Visual Basic .NET) if the control does not support <see cref="P:System.Windows.Automation.Provider.IRangeValueProvider.Value" />.                </returns>
         Private ReadOnly Property Value() As Double Implements IRangeValueProvider.Value
             Get
                 Return CDbl(MyOwner.Value)
@@ -588,7 +711,7 @@ Namespace WindowsT.WPF.ControlsT
         End Property
 
 #End Region
-
+        ''' <summary>Owner of this instance</summary>
         Private ReadOnly Property MyOwner() As NumericUpDown
             Get
                 Return DirectCast(MyBase.Owner, NumericUpDown)
@@ -597,8 +720,5 @@ Namespace WindowsT.WPF.ControlsT
         '<SnippetClose>
     End Class
     '</SnippetClose>
-
-
-
 End Namespace
 #End If

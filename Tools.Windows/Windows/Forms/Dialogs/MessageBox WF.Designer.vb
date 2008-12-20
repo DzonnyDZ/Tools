@@ -78,6 +78,7 @@ Namespace WindowsT.FormsT
             Me.lblPlhTop.Size = New System.Drawing.Size(88, 13)
             Me.lblPlhTop.TabIndex = 0
             Me.lblPlhTop.Text = "TOP Placeholder"
+            Me.lblPlhTop.Visible = False
             '
             'picPicture
             '
@@ -156,6 +157,7 @@ Namespace WindowsT.FormsT
             Me.lblPlhMid.Size = New System.Drawing.Size(86, 13)
             Me.lblPlhMid.TabIndex = 5
             Me.lblPlhMid.Text = "MID Placeholder"
+            Me.lblPlhMid.Visible = False
             '
             'flpButtons
             '
@@ -205,6 +207,7 @@ Namespace WindowsT.FormsT
             Me.lblPlhBottom.Size = New System.Drawing.Size(99, 13)
             Me.lblPlhBottom.TabIndex = 7
             Me.lblPlhBottom.Text = "Bottom Placeholder"
+            Me.lblPlhBottom.Visible = False
             '
             'flpChecks
             '

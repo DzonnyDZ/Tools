@@ -2,7 +2,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" 
     xmlns:local="clr-namespace:Tools.WindowsT.WPF.DialogsT"
-    Width="auto" Height="auto" ResizeMode="NoResize" WindowStyle="SingleBorderWindow"
+    Width="auto" Height="auto" ResizeMode="NoResize" WindowStyle="SingleBorderWindow" ShowInTaskbar="False" IsTabStop="False" Focusable="False"
         >
         <local:MessageBoxImplementationControl x:Name="MsgBoxControl" Width="auto" Height="auto" Margin="0" x:FieldModifier="Friend"/>
 </Window>

@@ -13,6 +13,8 @@ Namespace WindowsT.WPF.DialogsT
                 Me.Focus()
             End If
         End Sub
+        ''' <summary>Raises the <see cref="E:System.Windows.Window.Closing" /> event.</summary>
+        ''' <param name="e">A <see cref="T:System.ComponentModel.CancelEventArgs" /> that contains the event data.</param>
         Protected Overrides Sub OnClosing(ByVal e As System.ComponentModel.CancelEventArgs)
             If Not MsgBoxControl.MessageBox.AllowClose Then
                 e.Cancel = True
