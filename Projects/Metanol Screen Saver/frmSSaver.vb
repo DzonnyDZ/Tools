@@ -37,7 +37,7 @@ Partial Friend Class frmSSaver
         Name
         Format
     End Enum
-    Friend Shared Function ParseText(ByVal input As String, ByVal Exif As Exif.IFDExif, ByVal IPTC As IPTC, ByVal SysInfo As SysInfo) As String
+    Friend Shared Function ParseText(ByVal input As String, ByVal Exif As Tools.MetadataT.ExifT.IfdExif, ByVal IPTC As Tools.MetadataT.IptcT.Iptc, ByVal SysInfo As SysInfo) As String
         Dim ret As New System.Text.StringBuilder
         Dim State = ParseStates.Text
         Dim PrpName As System.Text.StringBuilder = Nothing
@@ -129,12 +129,12 @@ Partial Friend Class frmSSaver
         If path <> "" Then
             Try : picMain.Load(path) : Catch : End Try
             Try
-                Using JPEG As New Tools.DrawingT.IO.JPEG.JPEGReader(path, False)
-                    Dim IPTC As IPTC = Nothing
-                    Try : IPTC = New IPTC(JPEG) : Catch : End Try
-                    Dim Exif As Exif.IFDExif = Nothing
+                Using JPEG As New Tools.DrawingT.DrawingIOt.JPEG.JPEGReader(path, False)
+                    Dim IPTC As Tools.MetadataT.IptcT.Iptc = Nothing
+                    Try : IPTC = New Tools.MetadataT.IptcT.Iptc(JPEG) : Catch : End Try
+                    Dim Exif As Tools.MetadataT.ExifT.IfdExif = Nothing
                     Try
-                        Exif = New Exif.IFDExif(New Tools.DrawingT.MetadataT.ExifReader(JPEG).ExifSubIFD)
+                        Exif = New Tools.MetadataT.ExifT.IfdExif(New Tools.MetadataT.ExifT.ExifReader(JPEG).ExifSubIFD)
                     Catch : End Try
                     tlbInfo.AutoSize = True
                     'tlbInfo.Text = ParseText(My.Settings.InfoText, Exif, IPTC, New SysInfo(picMain.Image, path))

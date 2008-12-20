@@ -32,8 +32,8 @@ Partial Friend Class frmProperties
 
     Private Sub New()
         InitializeComponent()
-        If ExifProperties Is Nothing Then ExifProperties = PropertyInfoDisplay.GetProperties(GetType(Tools.DrawingT.MetadataT.Exif.IFDExif))
-        If IPTCProperties Is Nothing Then IPTCProperties = PropertyInfoDisplay.GetProperties(GetType(Tools.DrawingT.MetadataT.IPTC))
+        If ExifProperties Is Nothing Then ExifProperties = PropertyInfoDisplay.GetProperties(GetType(Tools.MetadataT.ExifT.IfdExif))
+        If IPTCProperties Is Nothing Then IPTCProperties = PropertyInfoDisplay.GetProperties(GetType(Tools.MetadataT.IptcT.Iptc))
         If SysProperties Is Nothing Then SysProperties = PropertyInfoDisplay.GetProperties(GetType(SysInfo))
         lstExif.Items.AddRange(ExifProperties.ToArray)
         lstIPTC.Items.AddRange(IPTCProperties.ToArray)

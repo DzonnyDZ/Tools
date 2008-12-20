@@ -3,7 +3,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProductVersion>9.0.21022</ProductVersion>
+    <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{88FEE481-A97F-4DD6-B206-5B33F777AD4D}</ProjectGuid>
     <OutputType>WinExe</OutputType>
@@ -219,6 +219,14 @@
     <ProjectReference Include="..\..\Tools Win\Tools Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools Win</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tools.Metadata\Tools.Metadata.vbproj">
+      <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
+      <Name>Tools.Metadata</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Tools.Windows\Tools.Windows.vbproj">
+      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
+      <Name>Tools.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
