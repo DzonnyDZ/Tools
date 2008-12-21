@@ -171,7 +171,7 @@ Namespace WindowsT.WPF.ConvertersT
             Return Binding.DoNothing
         End Function
     End Class
-    ''' <summary>One way converter: Converts null to <see cref="Windows.Visibility.Hidden"/> and non-null to <see cref="Windows.Visibility.Visible"/></summary>
+    ''' <summary>One way converter: Converts null to <see cref="Windows.Visibility.Collapsed"/> and non-null to <see cref="Windows.Visibility.Visible"/></summary>
     ''' <version stage="Alpha" version="1.5.2">Class introduced</version>
     Public NotInheritable Class NullInvisibleConverter
         Inherits StronglyTypedConverter(Of Object, System.Windows.Visibility)
@@ -179,18 +179,18 @@ Namespace WindowsT.WPF.ConvertersT
         ''' <param name="value">The value produced by the binding source.</param>
         ''' <param name="parameter">Ignored</param>
         ''' <param name="culture">Ignored</param>
-        ''' <returns>A converted value. <see cref="Windows.Visibility.Visible"/> when <paramref name="value"/> is not null; <see cref="Windows.Visibility.Hidden"/> otherwise.</returns>
+        ''' <returns>A converted value. <see cref="Windows.Visibility.Visible"/> when <paramref name="value"/> is not null; <see cref="Windows.Visibility.Collapsed"/> otherwise.</returns>
         Public Overrides Function Convert(ByVal value As Object, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As System.Windows.Visibility
-            If value Is Nothing Then Return Windows.Visibility.Hidden Else Return Windows.Visibility.Visible
+            If value Is Nothing Then Return Windows.Visibility.Collapsed Else Return Windows.Visibility.Visible
         End Function
         ''' <summary>Converts a value.</summary>
         ''' <param name="value">The value that is produced by the binding target.</param>
         ''' <param name="parameter">The converter parameter to use.</param>
         ''' <param name="culture">The culture to use in the converter.</param>
-        ''' <returns><see cref="Binding.DoNothing"/> unless <paramref name="value"/> is <see cref="Windows.Visibility.Hidden"/>; in such case returns null.</returns>
+        ''' <returns><see cref="Binding.DoNothing"/> unless <paramref name="value"/> is <see cref="Windows.Visibility.Collapsed"/>; in such case returns null.</returns>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Public Overrides Function ConvertBack(ByVal value As System.Windows.Visibility, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Object
-            If value = Windows.Visibility.Hidden Then Return Nothing Else Return Binding.DoNothing
+            If value = Windows.Visibility.Collapsed Then Return Nothing Else Return Binding.DoNothing
         End Function
     End Class
 
@@ -315,6 +315,28 @@ Namespace WindowsT.WPF.ConvertersT
         End Function
     End Class
 
+    ''' <summary>Converter that converts count of items to <see cref="Visibility"/>. Zero to <see cref="Visibility.Collapsed"/> anything else to <see cref="Visibility.Visible"/>.</summary>
+    Public NotInheritable Class CountVisibilityConverter
+        Inherits StronglyTypedConverter(Of Integer, Visibility)
+
+        ''' <summary>Converts count to <see cref="Visibility"/></summary>
+        ''' <param name="value">Count of items</param>
+        ''' <param name="parameter">ignored</param>
+        ''' <param name="culture">ignored</param>
+        ''' <returns><see cref="Visibility.Visible"/> whrn <paramref name="value"/> is greater than zero; <see cref="Visibility.Collapsed"/> otherwise.</returns>
+        Public Overrides Function Convert(ByVal value As Integer, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As System.Windows.Visibility
+            If value > 0 Then Return Visibility.Visible Else Return Visibility.Collapsed
+        End Function
+
+        ''' <summary>This way of conversion should not be used</summary>
+        ''' <param name="value">Value to be converted</param>
+        ''' <param name="parameter">ignored</param>
+        ''' <param name="culture">ignored</param>
+        ''' <returns>Zero when <paramref name="value"/> i<see cref="Visibility.Collapsed"/>; <see cref="Binding.DoNothing"/> otherwise.</returns>
+        Public Overrides Function ConvertBack(ByVal value As System.Windows.Visibility, ByVal parameter As Object, ByVal culture As System.Globalization.CultureInfo) As Integer
+            If value = Visibility.Collapsed Then Return 0 Else Return Binding.DoNothing
+        End Function
+    End Class
 End Namespace
 #End If
 

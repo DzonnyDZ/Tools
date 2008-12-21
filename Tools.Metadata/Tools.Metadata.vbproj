@@ -277,10 +277,10 @@
       <Visible>True</Visible>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\resx %28Friend%29\IPTCResources.resx">
-      <CustomToolNamespace>DrawingT.MetadataT.IptcT</CustomToolNamespace>
+      <CustomToolNamespace>MetadataT.IptcT</CustomToolNamespace>
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>IPTCResources.Designer.vb</LastGenOutput>
-      <LogicalName>Tools.DrawingT.MetadataT.IptcT.IptcResources.resources</LogicalName>
+      <LogicalName>Tools.MetadataT.IptcT.IptcResources.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>

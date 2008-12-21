@@ -1,5 +1,5 @@
 ﻿<Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-Partial Class ContentTree
+Partial Class ContentTreeWPF
     Inherits Tools.Tests.ContentTreeBase
 
     'Form overrides dispose to clean up the component list.
@@ -22,8 +22,8 @@ Partial Class ContentTree
     'Do not modify it using the code editor.
     <System.Diagnostics.DebuggerStepThrough()> _
     Private Sub InitializeComponent()
-       
+   
 
     End Sub
-   
+    
 End Class

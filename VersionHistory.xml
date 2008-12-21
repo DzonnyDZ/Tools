@@ -38,5 +38,8 @@
         <vh:i>Common base class for all <i:see cref="T:Tools.CollectionsT.GenericT.ListWithEvents`1"/> - <i:see cref="T:Tools.CollectionsT.GenericT.ListWithEventsBase"/>.</vh:i>
         <vh:i>Minor enhancements in <i:see cref="T:Tools.WindowsT.IndependentT.MessageBox"/>.</vh:i>
         <vh:i><i:see cref="T:Tools.CollectionsT.GenericT.ICollectionNotifyItem"/> and <i:see cref="T:Tools.CollectionsT.GenericT.ICollectionCancelItem"/> interfaces introduced.</vh:i>
+        <vh:i>Fixed some resources-localization-related issues.</vh:i>
+        <vh:i>New class <i:see cref="T:Tools.TestsT.StaticPropertiesTest"/>.</vh:i>
+        <vh:i>WPF implementation of message box.</vh:i>
     </vh:version>
 </vh:VersionHistory>

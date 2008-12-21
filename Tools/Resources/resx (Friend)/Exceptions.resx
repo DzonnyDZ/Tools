@@ -1233,4 +1233,10 @@
   <data name="The0MarkupExtensionRequiresAn1ServiceProvider" xml:space="preserve">
     <value>The {0} markup extension requires an {1} service provider</value>
   </data>
+  <data name="GivenInstanceWasNotCreatedFrom0" xml:space="preserve">
+    <value>Given instance was not created from {0}</value>
+  </data>
+  <data name="ThisInstanceWasCreatedFromSizeChangedEventArgsWhich" xml:space="preserve">
+    <value>This instance was created from SizeChangedEventArgs which's OriginalSource is not UIElement</value>
+  </data>
 </root>

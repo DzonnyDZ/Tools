@@ -191,6 +191,18 @@
     <Compile Include="ContentTree.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="ContentTreeWPF.Designer.vb">
+      <DependentUpon>ContentTreeWPF.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ContentTreeWPF.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ContentTreeBase.Designer.vb">
+      <DependentUpon>ContentTreeBase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="ContentTreeBase.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="DataStructures\Generic\T1orT2.vb" />
     <Compile Include="Devices\LowLevelKeyboardHook.designer.vb">
       <DependentUpon>LowLevelKeyboardHook.vb</DependentUpon>
@@ -349,6 +361,12 @@
     </Compile>
     <Compile Include="Special\TypeTools.vb" />
     <Compile Include="Tests\AttributeTest.vb" />
+    <Compile Include="Tests\StaticProperiesTest.Designer.vb">
+      <DependentUpon>StaticProperiesTest.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\StaticProperiesTest.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="VisualStudio\Generators\frmCustomToolBase.Designer.vb">
       <DependentUpon>frmCustomToolBase.vb</DependentUpon>
     </Compile>
@@ -490,6 +508,12 @@
     <EmbeddedResource Include="ContentTree.resx">
       <DependentUpon>ContentTree.vb</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ContentTreeWPF.resx">
+      <DependentUpon>ContentTreeWPF.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ContentTreeBase.resx">
+      <DependentUpon>ContentTreeBase.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Devices\LowLevelKeyboardHook.resx">
       <DependentUpon>LowLevelKeyboardHook.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -571,6 +595,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Reflection\ReflectionTools\frmFindBestFitCastOperator.resx">
       <DependentUpon>frmFindBestFitCastOperator.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Tests\StaticProperiesTest.resx">
+      <DependentUpon>StaticProperiesTest.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="VisualStudio\Generators\frmCustomToolBase.resx">
       <DependentUpon>frmCustomToolBase.vb</DependentUpon>

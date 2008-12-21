@@ -1,5 +1,5 @@
 ﻿'#If Config <= Nightly Then 'Set in project file
-Imports Tools.WindowsT
+Imports Tools.WindowsT, Tools.WindowsT.InteropT
 Imports iMsg = Tools.WindowsT.IndependentT.MessageBox
 Imports fMsg = Tools.WindowsT.FormsT.MessageBox
 Imports wMsg = Tools.WindowsT.WPF.DialogsT.MessageBox
@@ -118,12 +118,12 @@ Namespace WindowsT.FormsT
             ApplyState()
         End Sub
         ''' <summary>Floating visual tree and property grid for obserwong message box</summary>
-        Private WithEvents FloatingTree As ContentTree
+        Private WithEvents FloatingTree As ContentTreeBase
         Private Sub Box_Shown(ByVal sender As iMsg, ByVal e As System.EventArgs) Handles Box.Shown
             Log("Shown")
             ApplyState()
             If TypeOf sender Is fMsg Then
-                If FloatingTree IsNot Nothing Then
+                If TryCast(FloatingTree, ContentTree) IsNot Nothing Then
                     Dim NewTree As New ContentTree
                     NewTree.DesktopBounds = FloatingTree.DesktopBounds
                     NewTree.StartPosition = FormStartPosition.Manual
@@ -131,8 +131,20 @@ Namespace WindowsT.FormsT
                 Else : FloatingTree = New ContentTree
                 End If
                 With DirectCast(sender, fMsg)
-                    FloatingTree.Root = .Form
+                    DirectCast(FloatingTree, ContentTree).Root = .Form
                     FloatingTree.Show(.Form)
+                End With
+            ElseIf TypeOf sender Is wMsg Then
+                If TryCast(FloatingTree, ContentTreeWPF) IsNot Nothing Then
+                    Dim NewTree As New ContentTreeWPF
+                    NewTree.DesktopBounds = FloatingTree.DesktopBounds
+                    NewTree.StartPosition = FormStartPosition.Manual
+                    FloatingTree = NewTree
+                Else : FloatingTree = New ContentTreeWPF
+                End If
+                With DirectCast(sender, wMsg)
+                    DirectCast(FloatingTree, ContentTreeWPF).Root = .Window
+                    FloatingTree.Show(.Window)
                 End With
             End If
         End Sub

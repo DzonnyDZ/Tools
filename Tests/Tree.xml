@@ -61,6 +61,7 @@
         </node>
         <node name="TestsT" image="Namespace">
             <node name="AttributeTest" image="Class" tag="Tools.Tests.TestsT.AttributeTest.Test"/>
+            <node name="StaticPropertiesTest" image="Class" tag="Tools.Tests.TestsT.frmStaticProperiesTest.Test"/>
         </node> 
         <node name="TimesSpanFormattable" image="Structure" tag="Tools.Tests.frmTimeSpanFormattable.Test" />
         <node name="VisualBasicT" image="Namespace">

@@ -479,6 +479,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Components.resx</DependentUpon>
     </Compile>
+    <Compile Include="Tests\StaticPropertiesTest.vb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\DrawingIO\" />

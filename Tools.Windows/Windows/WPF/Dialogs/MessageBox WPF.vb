@@ -29,15 +29,14 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Gest or sets instance of <see cref="WindowsT.WPF.DialogsT.MessageBox"/> this instance is user interface for</summary>
         ''' <returns>Instance of <see cref="WindowsT.WPF.DialogsT.MessageBox"/> this instance is user interface for</returns>
         ''' <value>Set value to associate <see cref="MessageBoxImplementationControl"/> and <see cref="WindowsT.WPF.DialogsT.MessageBox"/></value>
-        ''' <exception cref="ArgumentNullException">Value being set is null</exception>
         ''' <exception cref="ArgumentException">Value being set has not <see cref="MessageBox.Control"/> property set to this instance.</exception>
         Public Property MessageBox() As MessageBox
             <DebuggerStepThrough()> Get
                 Return _MessageBox
             End Get
             Protected Friend Set(ByVal value As MessageBox)
-                If value Is Nothing Then Throw New ArgumentNullException("value")
-                If value.Control IsNot Me Then Throw New ArgumentException(ResourcesT.Exceptions.MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe)
+                'If value Is Nothing Then Throw New ArgumentNullException("value")
+                If value IsNot Nothing AndAlso value.Control IsNot Me Then Throw New ArgumentException(ResourcesT.Exceptions.MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe)
                 If _MessageBox IsNot Nothing AndAlso _MessageBox.Window IsNot Nothing Then RemoveHandler _MessageBox.Window.Closed, AddressOf Window_Closed
                 _MessageBox = value
                 If value IsNot Nothing AndAlso value.Window IsNot Nothing Then AddHandler value.Window.Closed, AddressOf Window_Closed
@@ -47,9 +46,16 @@ Namespace WindowsT.WPF.DialogsT
         ''' <summary>Initializer</summary>
         Shared Sub New()
             DefaultStyleKeyProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(GetType(MessageBoxImplementationControl)))
-            FlowDirectionProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(AddressOf OnFlowDirectionChanged))
+            FlowDirectionProperty.OverrideMetadata(GetType(MessageBoxImplementationControl), New FrameworkPropertyMetadata(PropertyChangedCallback:=AddressOf OnFlowDirectionChanged))
             InitializeCommands()
         End Sub
+        ''' <summary>Raises the <see cref="RenderSizeChanged"/> event</summary>
+        Protected Overrides Sub OnRenderSizeChanged(ByVal sizeInfo As System.Windows.SizeChangedInfo)
+            MyBase.OnRenderSizeChanged(sizeInfo)
+            RaiseEvent RenderSizeChanged(Me, sizeInfo)
+        End Sub
+        ''' <summary>Raised when value of <see cref="ActualHeight"/> or <see cref="ActualWidth"/> property changes</summary>
+        Public Event RenderSizeChanged As EventHandler(Of InteropT.SizeChangedInfoEventArgs)
 #Region "FlowDirection"
         ''' <summary>Callback called when the <see cref="FlowDirection"/> property is changed</summary>
         Private Shared Sub OnFlowDirectionChanged(ByVal d As DependencyObject, ByVal e As DependencyPropertyChangedEventArgs)
@@ -149,6 +155,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <exception cref="ObjectDisposedException">Value is being set and <see cref="IsDisposed"/> is true.</exception>
         Protected Overridable Property BottomControl() As UIElement
             Get
+                If Me.Template Is Nothing Then Return Nothing
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_BottomControlPlaceholder, Me), Controls.Panel)
                 If Placeholder Is Nothing Then Return Nothing
                 If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
@@ -160,6 +167,7 @@ Namespace WindowsT.WPF.DialogsT
                 If Placeholder Is Nothing Then Exit Property
                 Placeholder.Children.Clear()
                 If value IsNot Nothing Then Placeholder.Children.Add(value)
+                Placeholder.Visibility = If(value Is Nothing, Visibility.Collapsed, Visibility.Visible)
             End Set
         End Property
         ''' <summary>Gets or sets top additional control</summary>
@@ -169,6 +177,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <exception cref="ObjectDisposedException">Value is being set and <see cref="IsDisposed"/> is true.</exception>
         Protected Overridable Property TopControl() As UIElement
             Get
+                If Me.Template Is Nothing Then Return Nothing
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_TopControlPlaceholder, Me), Controls.Panel)
                 If Placeholder Is Nothing Then Return Nothing
                 If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
@@ -180,6 +189,7 @@ Namespace WindowsT.WPF.DialogsT
                 If Placeholder Is Nothing Then Exit Property
                 Placeholder.Children.Clear()
                 If value IsNot Nothing Then Placeholder.Children.Add(value)
+                Placeholder.Visibility = If(value Is Nothing, Visibility.Collapsed, Visibility.Visible)
             End Set
         End Property
         ''' <summary>Gets or sets middle additional control</summary>
@@ -189,6 +199,7 @@ Namespace WindowsT.WPF.DialogsT
         ''' <exception cref="ObjectDisposedException">Value is being set and <see cref="IsDisposed"/> is true.</exception>
         Protected Overridable Property MidControl() As UIElement
             Get
+                If Me.Template Is Nothing Then Return Nothing
                 Dim Placeholder = TryCast(Me.Template.FindName(PART_MiddleControlPlaceholder, Me), Controls.Panel)
                 If Placeholder Is Nothing Then Return Nothing
                 If Placeholder.Children.Count > 0 Then Return Placeholder.Children(0) Else Return Nothing
@@ -200,6 +211,7 @@ Namespace WindowsT.WPF.DialogsT
                 If Placeholder Is Nothing Then Exit Property
                 Placeholder.Children.Clear()
                 If value IsNot Nothing Then Placeholder.Children.Add(value)
+                Placeholder.Visibility = If(value Is Nothing, Visibility.Collapsed, Visibility.Visible)
             End Set
         End Property
 
@@ -275,6 +287,7 @@ Namespace WindowsT.WPF.DialogsT
         End Sub
 #End Region
     End Class
+
     ''' <summary>Implements <see cref="iMsg"/> for Windows Presentation Foundation</summary>
     ''' <remarks>Message box user interface is implemented by <see cref="MessageBoxImplementationControl"/>. To change style or template of message box, use that control.</remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>

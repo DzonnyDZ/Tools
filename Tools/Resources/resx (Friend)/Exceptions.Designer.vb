@@ -1032,6 +1032,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Given instance was not created from {0}'.
+        '''</summary>
+        Friend Shared ReadOnly Property GivenInstanceWasNotCreatedFrom0() As String
+            Get
+                Return ResourceManager.GetString("GivenInstanceWasNotCreatedFrom0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Given key is already present in the dictionary'.
         '''</summary>
         Friend Shared ReadOnly Property GivenKeyIsAlreadyPresentInTheDictionary() As String
@@ -2922,6 +2931,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'This instance was created from SizeChangedEventArgs which&apos;s OriginalSource is not UIElement'.
+        '''</summary>
+        Friend Shared ReadOnly Property ThisInstanceWasCreatedFromSizeChangedEventArgsWhich() As String
+            Get
+                Return ResourceManager.GetString("ThisInstanceWasCreatedFromSizeChangedEventArgsWhich", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'This instance was not created for updating'.
         '''</summary>
         Friend Shared ReadOnly Property ThisInstanceWasNotCreatedForUpdating() As String
@@ -4369,6 +4387,15 @@ Namespace ResourcesT
         '''<returns>The GivenIFDIsAlreadyInUse property value.</returns>
         Friend Shared Function GivenIFDIsAlreadyInUseFormat() As String
             Return GivenIFDIsAlreadyInUse
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Given instance was not created from {0}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function GivenInstanceWasNotCreatedFrom0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, GivenInstanceWasNotCreatedFrom0, arg0)
         End Function
         
         '''<summary>
@@ -6195,6 +6222,14 @@ Namespace ResourcesT
         '''<returns>The ThisInstanceIsLocked property value.</returns>
         Friend Shared Function ThisInstanceIsLockedFormat() As String
             Return ThisInstanceIsLocked
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ThisInstanceWasCreatedFromSizeChangedEventArgsWhich property value.
+        '''</summary>
+        '''<returns>The ThisInstanceWasCreatedFromSizeChangedEventArgsWhich property value.</returns>
+        Friend Shared Function ThisInstanceWasCreatedFromSizeChangedEventArgsWhichFormat() As String
+            Return ThisInstanceWasCreatedFromSizeChangedEventArgsWhich
         End Function
         
         '''<summary>
