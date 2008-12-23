@@ -1,10 +1,11 @@
 ﻿Imports System.Windows.Forms, System.Windows.Forms.VisualStyles, System.Drawing
 Imports Tools.DrawingT, Tools.ExtensionsT
-Imports System.Runtime.CompilerServices
-Imports Tools.ResourcesT
+Imports System.Runtime.CompilerServices, ps = System.Windows.Forms.VisualStyles.PushButtonState
+Imports Tools.ResourcesT, System.Linq, Tools.LinqT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace WindowsT.FormsT.VisualStylesT
+#Region "V1"
     ''' <summary>Abstract base class for visual style object renderers</summary>
     ''' <remarks>This class is intended as simplified encapsulation of <see cref="VisualStyleRenderer"/>, which can be replaced by another derived class.
     ''' <see cref="VisualStyleRenderer"/> is encapsulated by <see cref="UxThemeObject"/> class.</remarks>
@@ -636,6 +637,7 @@ Namespace WindowsT.FormsT.VisualStylesT
         End Enum
 #End Region
     End Class
+#End Region
     ''' <summary>Provides extension mehods related to <see cref="VisualStyles"/></summary>
     Public Module VisualStyleExtensions
         ''' <summary>Gets name of class from <see cref="UxThemeObject.VisualStyleClass"/> value</summary>
@@ -656,5 +658,965 @@ Namespace WindowsT.FormsT.VisualStylesT
             Return VisualStyleRenderer.IsElementDefined(Element)
         End Function
     End Module
+
+#Region "V2"
+    ''' <summary>Base class for themed and non-themed object rendereres</summary>
+    Public MustInherit Class ObjectRenderer
+        ''' <summary>When overriden in derived class draws element background</summary>
+        ''' <param name="g">rahics to draw onto</param>
+        ''' <param name="BackgroundRectangle">Rectangle of element area</param>
+        ''' <param name="ClipRectangle">Rectangle that was invalidate and needs to be repainted</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="g"/> is null</exception>
+        Public MustOverride Sub DrawBackground(ByVal g As Graphics, ByVal BackgroundRectangle As Rectangle, ByVal ClipRectangle As Rectangle)
+    End Class
+    ''' <summary>Safe renderer containing both, themed and non-themed renderer</summary>
+    Public Class SafeObjectRenderer
+        Inherits ObjectRenderer
+        ''' <summary>Holds themed renderer. May be null.</summary>
+        Private Themed As ThemedObjectRenderer
+        ''' <summary>Honlds non-themed renderer. Cannot be null.</summary>
+        Private NonThemed As NonThemedObejctRenderer
+        ''' <summary>CTor</summary>
+        ''' <param name="Themed">Themed renderer. Can be null.</param>
+        ''' <param name="NonThemed">Non-themed renderer</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="NonThemed"/> is null</exception>
+        Public Sub New(ByVal Themed As ThemedObjectRenderer, ByVal NonThemed As NonThemedObejctRenderer)
+            If NonThemed Is Nothing Then Throw New ArgumentNullException("NonThemed")
+            Me.Themed = Themed
+            Me.NonThemed = NonThemed
+        End Sub
+        ''' <summary>Contains value of the <see cref="UseThemes"/> property</summary>
+        Private _UseThemes As Boolean = True
+        ''' <summary>Gets or sets value indicatiing if themes hsould be used</summary>
+        ''' <remarks>True when themes are likely to be used</remarks>
+        ''' <value>True to use themes if possible; false to never use themes; default value is true</value>
+        <DefaultValue(True)> _
+        Public Property UseThemes() As Boolean
+            Get
+                Return _UseThemes
+            End Get
+            Set(ByVal value As Boolean)
+                _UseThemes = value
+            End Set
+        End Property
+        ''' <summary>Draws element background using either themed or untehemed renderer</summary>
+        ''' <param name="g">rahics to draw onto</param>
+        ''' <param name="BackgroundRectangle">Rectangle of element area</param>
+        ''' <param name="ClipRectangle">Rectangle that was invalidate and needs to be repainted</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="g"/> is null</exception>
+        Public Overrides Sub DrawBackground(ByVal g As System.Drawing.Graphics, ByVal BackgroundRectangle As System.Drawing.Rectangle, ByVal ClipRectangle As System.Drawing.Rectangle)
+            If UseThemes AndAlso Themed IsNot Nothing AndAlso Themed.Supported Then
+                Themed.DrawBackground(g, BackgroundRectangle, ClipRectangle)
+            Else
+                NonThemed.DrawBackground(g, BackgroundRectangle, ClipRectangle)
+            End If
+        End Sub
+    End Class
+#Region "Themed"
+    ''' <summary>Base class for themed renderers</summary>
+    Public MustInherit Class ThemedObjectRenderer
+        Inherits ObjectRenderer
+        ''' <summary>Gets value indicatioing if this renderer is supported now</summary>
+        ''' <returns>True if renderer can render its object; false if non-themed rendere must be used. This implementation returns <see cref="VisualStyleRenderer.IsSupported"/>.</returns>
+        ''' <remarks>Override this property to refine indication</remarks>
+        Public Overridable ReadOnly Property Supported() As Boolean
+            Get
+                Return VisualStyleRenderer.IsSupported
+            End Get
+        End Property
+    End Class
+    ''' <summary>Base class for themed renderers base on UxThemes</summary>
+    ''' <completionlist cref="UxThemeObjectRenderer"/>
+    Public MustInherit Class UxThemeObjectRenderer
+        Inherits ThemedObjectRenderer
+#Region "Implementation"
+        ''' <summary>Contains valkue of the <see cref="ClassName"/> property</summary>
+        Private ReadOnly _ClassName$
+        ''' <summary>Contains value of the <see cref="Part"/> property</summary>
+        Private _Part As Integer
+        ''' <summary>Gets class name this themed renderer renders</summary>
+        ''' <seelaso cref="VisualStyleElement.ClassName"/>
+        Public ReadOnly Property ClassName$()
+            Get
+                Return _ClassName
+            End Get
+        End Property
+        ''' <summary>Gets part number this themed renderer renders</summary>
+        ''' <seelaso cref="VisualStyleElement.Part"/>
+        Public Property Part() As Integer
+            Get
+                Return _Part
+            End Get
+            Protected Set(ByVal value As Integer)
+                _Part = value
+            End Set
+        End Property
+        ''' <summary>CTor</summary>
+        ''' <param name="ClassName">Class name to render</param>
+        ''' <param name="Part">Part number to render</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ClassName"/> is null</exception>
+        Public Sub New(ByVal ClassName$, ByVal Part%)
+            If ClassName Is Nothing Then Throw New ArgumentNullException("ClassName")
+            _ClassName = ClassName
+            _Part = Part
+        End Sub
+        ''' <summary>Contains value of the <see cref="State"/> property</summary>
+        Private _State As Integer
+        ''' <summary>Gets or sets state to be rendered</summary>
+        ''' <returns>Satate of object to be rendered</returns>
+        ''' <remarks>Use <see cref="GetStates"/> to get possible values of this property. When state cannot be rendered default state is used instead (<see cref="GetDefaultState"/>).</remarks>
+        Protected Property State() As Integer
+            Get
+                Return _State
+            End Get
+            Set(ByVal value As Integer)
+                _State = value
+            End Set
+        End Property
+        ''' <summary>When overriden in derived class gets lis of possible values of <see cref="State"/> property</summary>
+        ''' <remarks>All values of the <see cref="State"/> property. USage of another value may leed to fallback.</remarks>
+        Protected MustOverride Function GetStates() As IEnumerable(Of Integer)
+
+        ''' <summary>Gets value indicatioing if this renderer is supported now</summary>
+        ''' <returns>True if renderer can render its object; false if non-themed renderer must be used. This implementation returns <see cref="VisualStyleRenderer.IsSupported"/> and <see cref="VisualStyleRenderer.IsElementDefined"/> forelement of state <see cref="State"/> or default state.</returns>
+        Public Overrides ReadOnly Property Supported() As Boolean
+            Get
+                Return MyBase.Supported AndAlso (VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement(ClassName, Part, State)) OrElse VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement(ClassName, Part, GetDefaultState(State))))
+            End Get
+        End Property
+        ''' <summary>When overriden in derived class gets default state for goven state</summary>
+        ''' <param name="State">State to get default state of</param>
+        ''' <returns>Default state for state <paramref name="State"/></returns>
+        Protected MustOverride Function GetDefaultState(ByVal State As Integer) As Integer
+        ''' <summary>Draws element background using <see cref="State"/> or default state if current state is not supported</summary>
+        ''' <param name="g">Grahics to draw onto</param>
+        ''' <param name="BackgroundRectangle">Rectangle of element area</param>
+        ''' <param name="ClipRectangle">Rectangle that was invalidate and needs to be repainted</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="g"/> is null</exception>
+        ''' <exception cref="InvalidOperationException"><see cref="Supported"/> is false</exception>
+        Public Overrides Sub DrawBackground(ByVal g As System.Drawing.Graphics, ByVal BackgroundRectangle As System.Drawing.Rectangle, ByVal ClipRectangle As System.Drawing.Rectangle)
+            If g Is Nothing Then Throw New ArgumentNullException("g")
+            If Not Supported Then Throw New InvalidOperationException("This visual style element is not supported")
+            Dim r As VisualStyleRenderer
+            If Not VisualStyleRenderer.IsElementDefined(VisualStyleElement.CreateElement(ClassName, Part, State)) Then
+                r = New VisualStyleRenderer(ClassName, Part, GetDefaultState(State))
+            Else
+                r = New VisualStyleRenderer(ClassName, Part, State)
+            End If
+            r.DrawBackground(g, BackgroundRectangle, ClipRectangle)
+        End Sub
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+        Public Overrides Function ToString() As String
+            Return String.Format("{0} {1} {2}", ClassName, Part, State)
+        End Function
+#End Region
+#Region "Shared"
+        ''' <summary>Renderer of normal button</summary>
+        Public Shared ReadOnly Property PushButton() As SpecializedThemedRenderers.PushButton
+            Get
+                Return New SpecializedThemedRenderers.PushButton
+            End Get
+        End Property
+        ''' <summary>Renderer of radio (option) button</summary>
+        Public Shared ReadOnly Property RadioButton() As SpecializedThemedRenderers.RadioButton
+            Get
+                Return New SpecializedThemedRenderers.RadioButton
+            End Get
+        End Property
+        ''' <summary>Renderer of check box</summary>
+        Public Shared ReadOnly Property CheckBox() As SpecializedThemedRenderers.CheckBox
+            Get
+                Return New SpecializedThemedRenderers.CheckBox
+            End Get
+        End Property
+        ''' <summary>Renderer of combo box drop down button</summary>
+        Public Shared ReadOnly Property ComboBoxDropDownButton() As SpecializedThemedRenderers.ComboBoxDropDownButton
+            Get
+                Return New SpecializedThemedRenderers.ComboBoxDropDownButton
+            End Get
+        End Property
+        ''' <summary>Renderer of spin button</summary>
+        Public Shared ReadOnly Property Spin() As SpecializedThemedRenderers.Spin
+            Get
+                Return New SpecializedThemedRenderers.Spin
+            End Get
+        End Property
+        ''' <summary>Renderer of scroll bar arrow button</summary>
+        Public Shared ReadOnly Property ScrollBarArrow() As SpecializedThemedRenderers.ScrollBarArrow
+            Get
+                Return New SpecializedThemedRenderers.ScrollBarArrow
+            End Get
+        End Property
+        ''' <summary>Renderer of scroll bar thumb button</summary>
+        Public Shared ReadOnly Property ScrollBarThumbButton() As SpecializedThemedRenderers.ScrollBarThumbButton
+            Get
+                Return New SpecializedThemedRenderers.ScrollBarThumbButton
+            End Get
+        End Property
+        ''' <summary>Renderer of scroll bar track</summary>
+        Public Shared ReadOnly Property ScrollBarTrack() As SpecializedThemedRenderers.ScrollBarTrack
+            Get
+                Return New SpecializedThemedRenderers.ScrollBarTrack
+            End Get
+        End Property
+        ''' <summary>Renderer of scroll bar gripper</summary>
+        Public Shared ReadOnly Property ScrollBarGripper() As SpecializedThemedRenderers.ScrollBarGripper
+            Get
+                Return New SpecializedThemedRenderers.ScrollBarGripper
+            End Get
+        End Property
+        ''' <summary>Renderer of scroll bar size box</summary>
+        Public Shared ReadOnly Property ScrollBarSizeBox() As SpecializedThemedRenderers.ScrollBarSizeBox
+            Get
+                Return New SpecializedThemedRenderers.ScrollBarSizeBox
+            End Get
+        End Property
+        ''' <summary>Renderer of scroll tab item</summary>
+        Public Shared ReadOnly Property TabItem() As SpecializedThemedRenderers.TabItem
+            Get
+                Return New SpecializedThemedRenderers.TabItem
+            End Get
+        End Property
+        ''' <summary>Renderer of explorer bar header close</summary>
+        Public Shared ReadOnly Property ExplorerHeaderClose() As SpecializedThemedRenderers.ExplorerHeaderClose
+            Get
+                Return New SpecializedThemedRenderers.ExplorerHeaderClose
+            End Get
+        End Property
+        ''' <summary>Renderer of explorer bar header pin</summary>
+        Public Shared ReadOnly Property ExplorerPin() As SpecializedThemedRenderers.ExplorerPin
+            Get
+                Return New SpecializedThemedRenderers.ExplorerPin
+            End Get
+        End Property
+        ''' <summary>Renderer of explorer bar IE bar menu</summary>
+        Public Shared ReadOnly Property ExplorerDoubleArrow() As SpecializedThemedRenderers.ExplorerDoubleArrow
+            Get
+                Return New SpecializedThemedRenderers.ExplorerDoubleArrow
+            End Get
+        End Property
+        ''' <summary>Renderer of explorer bar IE bar menu</summary>
+        Public Shared ReadOnly Property ExplorerGroup() As SpecializedThemedRenderers.ExplorerGroup
+            Get
+                Return New SpecializedThemedRenderers.ExplorerGroup
+            End Get
+        End Property
+#End Region
+    End Class
+    'ASAP: NS Comment
+    Namespace SpecializedThemedRenderers
+#Region "BUTTON"
+        ''' <summary>Renders normal button</summary>
+        Public NotInheritable Class PushButton
+            Inherits SingleGroupUxButtonRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("BUTTON", 1, 1, 2, 3, 5, 4)
+            End Sub
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("PushButton {0}", State)
+            End Function
+        End Class
+        ''' <summary>Renders radio (option) button</summary>
+        Public NotInheritable Class RadioButton
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("BUTTON", 2, New Integer() {True, False}, _
+                    New Integer() {PushButtonState.Normal, 1, PushButtonState.Hot, 2, PushButtonState.Pressed, 3, PushButtonState.Disabled, 4}, _
+                    New Integer() {PushButtonState.Normal, 5, PushButtonState.Hot, 6, PushButtonState.Pressed, 7, PushButtonState.Disabled, 8})
+            End Sub
+            ''' <summary>Gets state group of this option button</summary>
+            ''' <returns>True for checked state group false for unchecked</returns>
+            ''' <value>True for checked state false for uncheckd</value>
+            Public Shadows Property StateGroup() As Boolean
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As Boolean)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("RadioButton {0} {1}", StateGroup, State)
+            End Function
+        End Class
+        ''' <summary>Renders check box</summary>
+        Public NotInheritable Class CheckBox
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("BUTTON", 3, New Integer() {CheckState.Unchecked, CheckState.Checked, CheckState.Indeterminate}, _
+                            New Integer() {ps.Normal, 1, ps.Hot, 2, ps.Pressed, 3, ps.Disabled, 4}, _
+                            New Integer() {ps.Normal, 5, ps.Hot, 6, ps.Pressed, 7, ps.Disabled, 8}, _
+                            New Integer() {ps.Normal, 9, ps.Hot, 10, ps.Pressed, 11, ps.Disabled, 12})
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As CheckState
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As CheckState)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("CheckBox {0} {1}", StateGroup, State)
+            End Function
+        End Class
+#End Region
+        ''' <summary>Renders combo box drop down button</summary>
+        Public NotInheritable Class ComboBoxDropDownButton
+            Inherits SingleGroupUxButtonRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("COMBOBOX", 1, 1, 2, 3, , 4)
+            End Sub
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ComboBoxDropDownButton {0}", State)
+            End Function
+        End Class
+        ''' <summary>Renders spin button</summary>
+        Public NotInheritable Class Spin
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("SPIN", 1, New Integer() {ArrowDirection.Up, ArrowDirection.Down, ArrowDirection.Right, ArrowDirection.Left}, _
+                            New Integer() {ps.Normal, 1, ps.Hot, 2, ps.Pressed, 3, ps.Disabled, 4}, _
+                            New Integer() {ps.Normal, 1, ps.Hot, 2, ps.Pressed, 3, ps.Disabled, 4}, _
+                            New Integer() {ps.Normal, 1, ps.Hot, 2, ps.Pressed, 3, ps.Disabled, 4})
+                Me.SetPartChanges(ArrangeDirection.Up, 1, ArrowDirection.Down, 2, ArrowDirection.Right, 3, ArrowDirection.Left, 4)
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As ArrowDirection
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As ArrowDirection)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("Spin {0} {1}", StateGroup, State)
+            End Function
+        End Class
+#Region "SCROLLBAR"
+        ''' <summary>Renders scroll bar arrow button</summary>
+        Public NotInheritable Class ScrollBarArrow
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("SCROLLBAR", 1, New Integer() {ArrowDirection.Up, ArrowDirection.Down, ArrowDirection.Left, ArrowDirection.Right}, _
+                            New Integer() {ps.Normal, 1, ps.Hot, 2, ps.Pressed, 3, ps.Disabled, 4}, _
+                            New Integer() {ps.Normal, 5, ps.Hot, 6, ps.Pressed, 7, ps.Disabled, 8}, _
+                            New Integer() {ps.Normal, 9, ps.Hot, 10, ps.Pressed, 11, ps.Disabled, 12}, _
+                            New Integer() {ps.Normal, 13, ps.Hot, 14, ps.Pressed, 15, ps.Disabled, 16})
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As ArrowDirection
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As ArrowDirection)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ScrollBbarArrow {0} {1}", StateGroup, State)
+            End Function
+        End Class
+        ''' <summary>Renders scroll bar thumb button</summary>
+        Public NotInheritable Class ScrollBarThumbButton
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("SCROLLBAR", 2, New Integer() {Orientation.Horizontal, Orientation.Vertical}, _
+                           New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                           New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4})
+                Me.SetPartChanges(Orientation.Horizontal, 2, Orientation.Vertical, 3)
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As Orientation
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As Orientation)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ScrollBarThumbButton {0} {1}", StateGroup, State)
+            End Function
+        End Class
+        ''' <summary>Renders scroll bar track</summary>
+        Public NotInheritable Class ScrollBarTrack
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("SCROLLBAR", 2, New Integer() {ArrowDirection.Right, ArrowDirection.Left, ArrowDirection.Down, ArrowDirection.Up}, _
+                           New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                           New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                           New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                           New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4})
+                Me.SetPartChanges(ArrowDirection.Right, 4, ArrowDirection.Left, 5, ArrowDirection.Down, 6, ArrowDirection.Up, 7)
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As ArrowDirection
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As ArrowDirection)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ScrollBarTrack {0} {1}", StateGroup, State)
+            End Function
+        End Class
+        ''' <summary>Renders scroll bar gropper</summary>
+        Public NotInheritable Class ScrollBarGripper
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("SCROLLBAR", 2, New Integer() {Orientation.Horizontal, Orientation.Vertical}, _
+                           New Integer() {ps.Normal = 0}, _
+                           New Integer() {ps.Normal = 0})
+                Me.SetPartChanges(Orientation.Horizontal, 8, Orientation.Vertical, 9)
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As Orientation
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As Orientation)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>This class recognizes only the <see cref="PushButtonState.Normal"/> state</summary>
+            <EditorBrowsable(EditorBrowsableState.Never)> _
+            Public Shadows Property State() As PushButtonState
+                Get
+                    Return MyBase.State
+                End Get
+                Set(ByVal value As PushButtonState)
+                    MyBase.State = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ScrollBarGripper {0}", StateGroup)
+            End Function
+        End Class
+        ''' <summary>Renders scroll bar size box</summary>
+        Public NotInheritable Class ScrollBarSizeBox
+            Inherits SingleGroupUxButtonRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("SCROLLBAR", 10, New Integer() {LeftRightAlignment.Left, 2, LeftRightAlignment.Right, 1})
+            End Sub
+            ''' <summary>Gets or sets current state within group <see cref="StateGroup"/></summary>
+            ''' <value>You can set state to any value, event when such value is not member of <see cref="GetStates"/> for curent group. BUt using undefined state is likely to casuse fallabsck to <see cref="PushButtonState.Normal"/> when rendering.</value>
+            Public Shadows Property State() As LeftRightAlignment
+                Get
+                    Return MyBase.State
+                End Get
+                Set(ByVal value As LeftRightAlignment)
+                    MyBase.State = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ScrollBarSizeBox {0}", State)
+            End Function
+        End Class
+#End Region
+        ''' <summary>Renders tab item</summary>
+        Public NotInheritable Class TabItem
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("TAB", 4, New Integer() {TabItemType.Normal, TabItemType.LeftEdge, TabItemType.RightEdge, TabItemType.BothEdges, TabItemType.Top, TabItemType.TopLeftEdge, TabItemType.TopRightEdge, TabItemType.TopBothEdges}, _
+                            New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                            New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                            New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                            New Integer() {ps.Normal = 1}, _
+                            New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                            New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                            New Integer() {ps.Normal = 1, ps.Hot = 2, ps.Pressed = 3, ps.Disabled = 4}, _
+                            New Integer() {ps.Normal = 1})
+                Me.SetPartChanges(TabItemType.Normal, TabItemType.Normal, _
+                                   TabItemType.LeftEdge, TabItemType.LeftEdge, _
+                                   TabItemType.RightEdge, TabItemType.RightEdge, _
+                                   TabItemType.BothEdges, TabItemType.BothEdges, _
+                                   TabItemType.Top, TabItemType.Top, _
+                                   TabItemType.TopLeftEdge, TabItemType.TopLeftEdge, _
+                                   TabItemType.TopRightEdge, TabItemType.TopRightEdge, _
+                                   TabItemType.TopBothEdges, TabItemType.TopBothEdges)
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As TabItemType
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As TabItemType)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Tab item type</summary>
+            Public Enum TabItemType
+                ''' <summary>Default</summary>
+                Normal = 1
+                ''' <summary>Left edge</summary>
+                LeftEdge = 2
+                ''' <summary>Right edge</summary>
+                RightEdge = 3
+                ''' <summary>Both edges</summary>
+                BothEdges = 4
+                ''' <summary>Top</summary>
+                Top = 5
+                ''' <summary>Top, left edge</summary>
+                TopLeftEdge = 6
+                ''' <summary>Top, right edge</summary>
+                TopRightEdge = 7
+                ''' <summary>Top, both edges</summary>
+                TopBothEdges = 8
+            End Enum
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ScrollBbarArrow {0} {1}", StateGroup, State)
+            End Function
+        End Class
+#Region "EXPLORERBAR"
+        ''' <summary>Renders explorer bar header close</summary>
+        Public NotInheritable Class ExplorerHeaderClose
+            Inherits SingleGroupUxButtonRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("EXPLORERBAR", 2, 1, 2, 3)
+            End Sub
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ExplorerHeaderClose {0}", State)
+            End Function
+        End Class
+        ''' <summary>Renders explorer bar header pin</summary>
+        Public NotInheritable Class ExplorerPin
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("EXPLORERBAR", 3, New Integer() {True, False}, _
+                    New Integer() {PushButtonState.Normal, 1, PushButtonState.Hot, 2, PushButtonState.Pressed, 3}, _
+                    New Integer() {PushButtonState.Normal, 4, PushButtonState.Hot, 5, PushButtonState.Pressed, 6})
+            End Sub
+            ''' <summary>Gets state group of this option button</summary>
+            ''' <returns>True for checked state group false for unchecked</returns>
+            ''' <value>True for checked state false for uncheckd</value>
+            Public Shadows Property StateGroup() As Boolean
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As Boolean)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ExplorerPin {0} {1}", StateGroup, State)
+            End Function
+        End Class
+        ''' <summary>Renders explorer bar IE bar menu</summary>
+        Public NotInheritable Class ExplorerDoubleArrow
+            Inherits SingleGroupUxButtonRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("EXPLORERBAR", 4, 1, 2, 3)
+            End Sub
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ExplorerDoubleArrow {0}", State)
+            End Function
+        End Class
+        ''' <summary>Renders explorer bar header pin</summary>
+        Public NotInheritable Class ExplorerGroup
+            Inherits TypedButtonUxThemeRenderer
+            ''' <summary>CTor</summary>
+            Public Sub New()
+                MyBase.New("EXPLORERBAR", 6, New Integer() {GroupType.NormalCollapse, GroupType.NormalExpand, GroupType.SpecialCollapse, GroupType.SpecialExpand}, _
+                    New Integer() {PushButtonState.Normal, 1, PushButtonState.Hot, 2, PushButtonState.Pressed, 3}, _
+                    New Integer() {PushButtonState.Normal, 1, PushButtonState.Hot, 2, PushButtonState.Pressed, 3}, _
+                    New Integer() {PushButtonState.Normal, 1, PushButtonState.Hot, 2, PushButtonState.Pressed, 3}, _
+                    New Integer() {PushButtonState.Normal, 1, PushButtonState.Hot, 2, PushButtonState.Pressed, 3})
+                Me.SetPartChanges(GroupType.NormalCollapse, GroupType.NormalCollapse, GroupType.NormalExpand, GroupType.NormalExpand, GroupType.SpecialCollapse, GroupType.SpecialCollapse, GroupType.SpecialExpand, GroupType.SpecialExpand)
+            End Sub
+            ''' <summary>Gets or sets group of states state is being selected from</summary>
+            ''' <returns>Current group of states state is slecdted from</returns>
+            ''' <value>Changes group of states</value>
+            ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+            Public Shadows Property StateGroup() As GroupType
+                Get
+                    Return MyBase.StateGroup
+                End Get
+                Set(ByVal value As GroupType)
+                    MyBase.StateGroup = value
+                End Set
+            End Property
+            ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+            Public Overrides Function ToString() As String
+                Return String.Format("ExplorerPin {0} {1}", StateGroup, State)
+            End Function
+            ''' <summary>Group types</summary>
+            Public Enum GroupType
+                ''' <summary>Norlam collapse</summary>
+                NormalCollapse = 6
+                ''' <summary>Normal expand</summary>
+                NormalExpand = 7
+                ''' <summary>Special collapse</summary>
+                SpecialCollapse = 10
+                ''' <summary>Special expand</summary>
+                SpecialExpand = 11
+            End Enum
+        End Class
+#End Region
+    End Namespace
+    ''' <summary>Renderer of button-like control which state is specified by state group and sub-state</summary>
+    Public Class TypedButtonUxThemeRenderer
+        Inherits UxThemeObjectRenderer
+        ''' <summary>CTor</summary>
+        ''' <param name="ClassName">CLass name to render</param>
+        ''' <param name="Part">Part number to render</param>
+        ''' <param name="GroupMap">Group map. Key contains numbers of groups, values contains group definitions. In group definition, keys are logical states (any integral value can be used but <see cref="PushButtonState.Normal"/> must be always present) and values are physical styles for renderer.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ClassName"/> or <paramref name="GroupMap"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="GroupMap"/> is empty -or- Group does not contain deifinition for <see cref="PushButtonState.Normal"/>.</exception>
+        Public Sub New(ByVal ClassName$, ByVal Part%, ByVal GroupMap As IDictionary(Of Integer, IDictionary(Of PushButtonState, Integer)))
+            MyBase.New(ClassName, Part)
+            If GroupMap Is Nothing Then Throw New ArgumentNullException("GroupMap")
+            If GroupMap.Count = 0 Then Throw New ArgumentException("Group map cannot be empty.")
+            GroupMap = New Dictionary(Of Integer, Dictionary(Of PushButtonState, Integer))
+            For Each group In GroupMap
+                If Not group.Value.ContainsKey(PushButtonState.Normal) Then Throw New ArgumentNullException("Each group must contain definition for Normal state")
+                GroupMap.Add(group.Key, New Dictionary(Of PushButtonState, Integer)(group.Value))
+            Next
+            StateGroup = GroupMap.First.Key
+            State = PushButtonState.Normal
+        End Sub
+        ''' <summary>CTor from group codes and groups in separate arrays</summary>
+        ''' <param name="ClassName">CLass name to render</param>
+        ''' <param name="Part">Part number to render</param>
+        ''' <param name="GroupCodes">Codes of groups. Must have same lenght as <paramref name="GroupContent"/></param>
+        ''' <param name="GroupContent">Group definitions. Must have same lenght as <paramref name="GroupCodes"/>. Must have even lengh. First item is logical group code (preferrably one of <see cref="PushButtonState"/> values), second value is physical grou code for renderer etc. Each grooup must contain definition for <see cref="PushButtonState.Normal"/>.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ClassName"/>, <paramref name="GroupCodes"/> or <paramref name="GroupContent"/> is null</exception>
+        ''' <exception cref="ArgumentException">Length of <paramref name="GroupContent"/> is zero or length of <paramref name="GroupCodes"/> is zero or length of <paramref name="GroupCodes"/> difers from length of <paramref name="GroupContent"/>.
+        ''' -or- Group is empty or null -or- Group does not have even number of elements
+        ''' -or- Group does not contain deifinition for <see cref="PushButtonState.Normal"/>.</exception>
+        Public Sub New(ByVal ClassName$, ByVal Part%, ByVal GroupCodes%(), ByVal ParamArray GroupContent%()())
+            Me.New(ClassName, Part, GetGroupMap(GroupCodes, GroupContent))
+        End Sub
+        ''' <summary>Converts group sepcification in arrays to group map dictionary.</summary>
+        ''' <param name="GroupCodes">Codes of groups. Must have same lenght as <paramref name="GroupContent"/></param>
+        ''' <param name="GroupContent">Group definitions. Must have same lenght as <paramref name="GroupCodes"/>. Must have even lengh. First item is logical group code (preferrably one of <see cref="PushButtonState"/> values), second value is physical grou code for renderer etc. Each grooup must contain definition for <see cref="PushButtonState.Normal"/>.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="GroupCodes"/> or <paramref name="GroupContent"/> is null</exception>
+        ''' <exception cref="ArgumentException">Length of <paramref name="GroupContent"/> is zero or length of <paramref name="GroupCodes"/> is zero or length of <paramref name="GroupCodes"/> difers from length of <paramref name="GroupContent"/>.
+        ''' -or- Group is empty or null -or- Group does not have even number of elements</exception>
+        Private Shared Function GetGroupMap(ByVal GroupCodes%(), ByVal GroupContent%()()) As Dictionary(Of Integer, Dictionary(Of PushButtonState, Integer))
+            If GroupCodes Is Nothing Then Throw New ArgumentNullException("GroupCodes")
+            If GroupContent Is Nothing Then Throw New ArgumentNullException("GroupContent")
+            If GroupCodes.Length <> GroupCodes.Length Then Throw New ArgumentException("Lengths of GroupCOdes and GroupContent arrays must be same")
+            If GroupCodes.Length = 0 Then Throw New ArgumentException("At least one group must be specified")
+            Dim ret As New Dictionary(Of Integer, Dictionary(Of PushButtonState, Integer))
+            For i As Integer = 0 To GroupCodes.Length - 1
+                If GroupContent(i) Is Nothing OrElse GroupContent(i).Length = 0 Then Throw New ArgumentException("Group cannot be empty")
+                If GroupCodes(i) Mod 2 <> 0 Then Throw New ArgumentException("Group content must have even number of elemnts")
+                Dim idic As New Dictionary(Of PushButtonState, Integer)
+                For j As Integer = 0 To GroupContent(i).Length - 1 Step 2
+                    idic.Add(GroupContent(i)(j), GroupContent(i)(j + 1))
+                Next
+                ret.Add(GroupCodes(i), idic)
+            Next
+            Return ret
+        End Function
+        ''' <summary>Contains value of the <see cref="GroupMap"/> property</summary>
+        Private ReadOnly _GroupMap As Dictionary(Of Integer, Dictionary(Of PushButtonState, Integer))
+        ''' <summary>Gets group map</summary>
+        ''' <remarks>Do not change content of group map</remarks>
+        Protected ReadOnly Property GroupMap() As Dictionary(Of Integer, Dictionary(Of PushButtonState, Integer))
+            Get
+                Return _GroupMap
+            End Get
+        End Property
+        ''' <summary>Contains value of the <see cref="StateGroup"/> property</summary>
+        Private _StateGroup As Integer
+        ''' <summary>Gets or sets group of states state is being selected from</summary>
+        ''' <returns>Current group of states state is slecdted from</returns>
+        ''' <value>Changes group of states</value>
+        ''' <exception cref="ArgumentException">Value being set is not one of <see cref="GetGroups"/> values</exception>
+        Public Overridable Property StateGroup() As Integer
+            Get
+                Return _StateGroup
+            End Get
+            Set(ByVal value As Integer)
+                If Not GroupMap.ContainsKey(value) Then Throw New ArgumentException("Given group is not defined")
+                _StateGroup = value
+                SetState()
+            End Set
+        End Property
+        ''' <summary>Contains value of the <see cref="PartChanges"/> property</summary>
+        Private _StateGroupPartChange As Dictionary(Of Integer, Integer)
+        ''' <summary>Gets or sets map of <see cref="StateGroup"/> value to <see cref="Part"/></summary>
+        ''' <value>Dictionary, keys are value of the <see cref="StateGroup"/> property; values are value for <see cref="Part"/> property.</value>
+        ''' <remarks>When this property is set and <see cref="StateGroup"/> changes, it changes <see cref="Part"/> to corresponding value</remarks>
+        ''' <exception cref="InvalidOperationException">Attemt to change value of this property when it was already et to non-null.</exception>
+        Protected Property PartChanges() As Dictionary(Of Integer, Integer)
+            Get
+                Return _StateGroupPartChange
+            End Get
+            Set(ByVal value As Dictionary(Of Integer, Integer))
+                If value Is _StateGroupPartChange Then Exit Property
+                If _StateGroupPartChange IsNot Nothing Then Throw New InvalidOperationException("Property was already set")
+                _StateGroupPartChange = value
+            End Set
+        End Property
+        ''' <summary>Sets value of the <see cref="PartChanges"/> property from array</summary>
+        ''' <param name="Values">Map of <see cref="StateGroup"/> to <see cref="Part"/>. 1st, 2nd, etc. are keys (<see cref="StateGroup"/> values), 2nd, 4th etc. are values (correctponding <see cref="Part"/> values).</param>
+        ''' <exception cref="ArgumentException"><paramref name="Values"/> does not contain even number of items</exception>
+        ''' <exception cref="InvalidOperationException">Value of the <see cref="PartChanges"/> property not null and <paramref name="Values"/> is not null.</exception>
+        Public Sub SetPartChanges(ByVal ParamArray Values As Integer())
+            If Values Is Nothing Then PartChanges = Nothing
+            If Values.Length Mod 2 <> 0 Then Throw New ArgumentException("Values must have even  number of items")
+            Dim dic As New Dictionary(Of Integer, Integer)
+            For i As Integer = 0 To Values.Length - 1 Step 2
+                dic.Add(Values(i), Values(i + 1))
+            Next
+            PartChanges = dic
+        End Sub
+
+        ''' <summary>Contains value of <see cref="State"/> property</summary>
+        Private _State As PushButtonState
+        ''' <summary>Gets or sets current state within group <see cref="StateGroup"/></summary>
+        ''' <value>You can set state to any value, event when such value is not member of <see cref="GetStates"/> for curent group. BUt using undefined state is likely to casuse fallabsck to <see cref="PushButtonState.Normal"/> when rendering.</value>
+        Public Shadows Property State() As PushButtonState
+            Get
+                Return _State
+            End Get
+            Set(ByVal value As PushButtonState)
+                _State = value
+                If PartChanges IsNot Nothing AndAlso PartChanges.ContainsKey(value) Then Part = PartChanges(value)
+                SetState()
+            End Set
+        End Property
+        ''' <summary>Gets or sets value of the <see cref="UxThemeObjectRenderer.State"/> property</summary>
+        ''' <remarks>Use this property only when you need to manipulate physical state rather than logical stored in <see cref="State"/></remarks>
+        Protected Property PhysicalState() As Integer
+            Get
+                Return MyBase.State
+            End Get
+            Set(ByVal value As Integer)
+                MyBase.State = value
+            End Set
+        End Property
+        ''' <summary>Applies changes in <see cref="StateGroup"/> and <see cref="State"/> properties</summary>
+        Private Sub SetState()
+            Dim group = GroupMap(StateGroup)
+            If group.ContainsKey(State) Then MyBase.State = group(State) Else MyBase.State = group(PushButtonState.Normal)
+        End Sub
+        ''' <summary>Gets default state for given state</summary>
+        ''' <param name="State">State to get default state of</param>
+        ''' <returns>Default state for state <paramref name="State"/>. If state is defined, returns <see cref="PushButtonState.Normal"/> for group of <paramref name="State"/>. If it is not defined, returns <see cref="PushButtonState.Normal"/> ofr current group.</returns>
+        Protected Overrides Function GetDefaultState(ByVal State As Integer) As Integer
+            For Each Item In GroupMap
+                For Each Subitem In Item.Value
+                    If Subitem.Value = State Then Return Item.Value(PushButtonState.Normal)
+                Next
+            Next
+            Return GroupMap(StateGroup)(PushButtonState.Normal)
+        End Function
+        ''' <summary>Gets possible value of <see cref="StateGroup"/> property</summary>
+        ''' <remarks>Possible value for <see cref="StateGroup"/> property</remarks>
+        Public Overridable Function GetGroups() As IEnumerable(Of Integer)
+            Return GroupMap.Keys
+        End Function
+        ''' <summary>Gets possible values of <see cref="State"/> property for given group</summary>
+        ''' <param name="Group">Group to get values for</param>
+        ''' <returns>Possible value of <see cref="State"/> property when <see cref="StateGroup"/> is <paramref name="Group"/></returns>
+        ''' <exception cref="KeyNotFoundException"><paramref name="Group"/> is not defined</exception>
+        Public Overridable Overloads Function GetStates(ByVal Group%) As IEnumerable(Of PushButtonState)
+            Return GroupMap(Group).Keys
+        End Function
+        ''' <summary>Gest possible value of the <see cref="UxThemeObjectRenderer.State"/> property</summary>
+        Protected Overloads Overrides Function GetStates() As System.Collections.Generic.IEnumerable(Of Integer)
+            Return (From g In GroupMap Select gv = g.Value Select From s In gv Select s.Value).UnionAll.Distinct
+        End Function
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+        Public Overrides Function ToString() As String
+            Return String.Format("{0} {1} {2} {3}", ClassName, Part, StateGroup, State)
+        End Function
+    End Class
+    ''' <summary>Renderer that can render any button-like control based on UxThemes</summary>
+    Public Class SingleGroupUxButtonRenderer
+        Inherits TypedButtonUxThemeRenderer
+        ''' <summary>CTor</summary>
+        ''' <param name="ClassName">CLass name to render</param>
+        ''' <param name="Part">Part number to render</param>
+        ''' <param name="Map">State map. Key contains logical states (<see cref="PushButtonState.Normal"/> must be defined; any other integers can be used); values contains physical states for renderer. This is map of single group for <see cref="TypedButtonUxThemeRenderer"/>.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ClassName"/> is null or <paramref name="Map"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Map"/> does not contain definition for <see cref="PushButtonState.Normal"/></exception>
+        Public Sub New(ByVal ClassName$, ByVal Part%, ByVal Map As IDictionary(Of PushButtonState, Integer))
+            MyBase.New(ClassName, Part, GetDefaultGroupMap(Map))
+            State = PushButtonState.Normal
+        End Sub
+        ''' <summary>Gets or sets group of states state is being selected from</summary>
+        ''' <returns>0</returns>
+        ''' <value>Can be only 0</value>
+        ''' <exception cref="ArgumentException">Value being set is not 0.</exception>
+        <EditorBrowsable(EditorBrowsableState.Never)> _
+        Public Overrides Property StateGroup() As Integer
+            Get
+                Return MyBase.StateGroup
+            End Get
+            Set(ByVal value As Integer)
+                MyBase.StateGroup = value
+            End Set
+        End Property
+        ''' <summary>Gets group map from state map</summary>
+        ''' <param name="Map">Group map</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Map"/> is null</exception>
+        ''' <returns>Dictionary containing <paramref name="Map"/> at key 0.</returns>
+        Private Shared Function GetDefaultGroupMap(ByVal Map As IDictionary(Of PushButtonState, Integer)) As IDictionary(Of Integer, IDictionary(Of PushButtonState, Integer))
+            If Map Is Nothing Then Throw New ArgumentNullException("Map")
+            Dim ret As New Dictionary(Of Integer, IDictionary(Of PushButtonState, Integer))
+            ret.Add(0, Map)
+            Return ret
+        End Function
+        ''' <summary>CTor with <see cref="PushButtonState"/> values mapping</summary>
+        ''' <param name="ClassName">CLass name to render</param>
+        ''' <param name="Part">Part number to render</param>
+        ''' <param name="Normal">Mapping for <see cref="PushButtonState.Normal"/>. Cannot be ommitted</param>
+        ''' <param name="Hot">Mapping for <see cref="PushButtonState.Hot"/>. -1 to ommit</param>
+        ''' <param name="Pressed">Mapping for <see cref="PushButtonState.Pressed"/>. -1 to ommit</param>
+        ''' <param name="Default">Mapping for <see cref="PushButtonState.[Default]"/>. -1 to ommit</param>
+        ''' <param name="Disabled">Mapping for <see cref="PushButtonState.Disabled"/>. -1 to ommit</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ClassName"/> is null</exception>
+        Public Sub New(ByVal ClassName$, ByVal Part%, ByVal Normal%, Optional ByVal Hot% = -1, Optional ByVal Pressed% = -1, Optional ByVal Default% = -1, Optional ByVal Disabled% = -1)
+            Me.New(ClassName, Part, GetDictionary(0, PushButtonState.Normal, Normal, PushButtonState.Hot, Hot, PushButtonState.Pressed, Pressed, PushButtonState.Default, [Default], PushButtonState.Disabled, Disabled))
+        End Sub
+        ''' <summary>CTor from map in array</summary>
+        ''' <param name="ClassName">CLass name to render</param>
+        ''' <param name="Part">Part number to render</param>
+        ''' <param name="Map">Map. Keys are first, third, fifth etc. Values are second, fourth, sixth, etc. Must have even number of items. <see cref="PushButtonState.Normal"/> must be one of keys, other keys can be any integers, but <see cref="PushButtonState"/> prefferably. When value is -1 it is skipped.</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="ClassName"/> or <paramref name="Map"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Map"/> has not even number of items, is empty (or contains only -1 values) or does not contain <see cref="PushButtonState.Normal"/> as one of keys (or corresponding value is -1).</exception>
+        Public Sub New(ByVal ClassName$, ByVal Part%, ByVal ParamArray Map%())
+            Me.New(ClassName, Part, GetDictionary(-1, Map))
+        End Sub
+        ''' <summary>Gets dictionary map from map in array</summary>
+        ''' <param name="NonIgnoreIndex">Index of key in array to inclue even if following value is -1</param>
+        ''' <param name="Map">Map in array. Odd indexes are kays, even are values</param>
+        ''' <returns>Map as dictionary. For value which's key index is <paramref name="NonIgnoreIndex"/> it is included even when value is -1; otherwise -1s are skiped.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Map"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Map"/> has odd number of items</exception>
+        Private Shared Function GetDictionary(ByVal NonIgnoreIndex%, ByVal ParamArray Map%()) As IDictionary(Of PushButtonState, Integer)
+            If Map Is Nothing Then Throw New ArgumentNullException("Map")
+            Dim ret As New Dictionary(Of PushButtonState, Integer)
+            If Map.Length Mod 2 <> 0 Then Throw New ArgumentException("Even number of items must be passed")
+            For i As Integer = 0 To Map.Length / 2 - 1
+                If i = NonIgnoreIndex OrElse Map(i * 2 + 1) <> -1 Then ret.Add(Map(i * 2), Map(i * 2 + 1))
+            Next
+            Return ret
+        End Function
+        ''' <summary>Gets state map</summary>
+        ''' <returns>Group map with key 0</returns>
+        Private ReadOnly Property StateMap() As Dictionary(Of PushButtonState, Integer)
+            Get
+                Return GroupMap(0)
+            End Get
+        End Property
+
+        ''' <summary>Gets default state for given state</summary>
+        ''' <param name="State">Ignored</param>
+        ''' <returns>Physical state for<see cref="PushButtonState.Normal"/></returns>
+        Protected Overrides Function GetDefaultState(ByVal State As Integer) As Integer
+            Return StateMap(PushButtonState.Normal)
+        End Function
+        ''' <summary>Gest possible values of the <see cref="UxThemeObjectRenderer.State"/> property</summary>
+        Protected NotOverridable Overrides Function GetStates() As System.Collections.Generic.IEnumerable(Of Integer)
+            Return StateMap.Values
+        End Function
+        ''' <summary>Gets possible value of <see cref="StateGroup"/> property</summary>
+        ''' <returns>aray containing only 0</returns>
+        Public NotOverridable Overrides Function GetGroups() As System.Collections.Generic.IEnumerable(Of Integer)
+            Return New Integer() {0}
+        End Function
+        ''' <summary>Gets possible values of <see cref="State"/> property for given group</summary>
+        ''' <param name="Group">Ignored. Should be 0.</param>
+        ''' <returns><see cref="GetPossibleStates"/></returns>
+        ''' <exception cref="KeyNotFoundException"><paramref name="Group"/> is not defined</exception>
+        Public NotOverridable Overrides Function GetStates(ByVal Group As Integer) As System.Collections.Generic.IEnumerable(Of System.Windows.Forms.VisualStyles.PushButtonState)
+            Return GetPossibleStates()
+        End Function
+        ''' <summary>Gets possible value of the <see cref="State"/> property</summary>
+        ''' <returns>Possible value of the <see cref="State"/> property</returns>
+        Public Function GetPossibleStates() As IEnumerable(Of PushButtonState)
+            Return StateMap.Keys
+        End Function
+        ''' <summary>Returns a <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</summary>
+        ''' <returns>A <see cref="T:System.String" /> that represents the current <see cref="T:System.Object" />.</returns>
+        Public Overrides Function ToString() As String
+            Return String.Format("{0} {1} {3}", ClassName, Part, State)
+        End Function
+    End Class
+#End Region
+#Region "Non-themed"
+    ''' <summary>Base class for non-themed renderers</summary>
+    Public MustInherit Class NonThemedObejctRenderer
+        Inherits ObjectRenderer
+        'TODO:
+    End Class
+#End Region
+#End Region
 End Namespace
 #End If
