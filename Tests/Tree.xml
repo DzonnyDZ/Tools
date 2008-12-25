@@ -102,8 +102,8 @@
                 <node name="TransparentLabel" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentLabel.Test" />
                 <node name="TransparentTextBox" image="Class" tag="Tools.Tests.WindowsT.FormsT.frmTransparentTextBox.Test" />
                 <node name="VisualStylesT" image="Namespace">
-                    <node name="VisualStyleSafeObject" image="Class">
-                        <node name="SafeButonRenderer" image="Class" tag="Tools.Tests.WindowsT.FormsT.VisualStylesT.frmSafeButtonRenderer.Test"/>
+                    <node name="SpecializedSafeRenderers" image="Namespace">
+                        <node name="PushButton" image="Class" tag="Tools.Tests.WindowsT.FormsT.VisualStylesT.SpecializedSafeRenderers.frmPushButton.Test"/>
                     </node>
                 </node>
             </node>

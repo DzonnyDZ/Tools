@@ -1,8 +1,8 @@
-﻿Namespace WindowsT.FormsT.VisualStylesT
-    Public Class frmSafeButtonRenderer
+﻿Namespace WindowsT.FormsT.VisualStylesT.SpecializedSafeRenderers
+    Public Class frmPushButton
         ''' <summary>Show test form</summary>
         Public Shared Sub Test()
-            Dim frm As New frmSafeButtonRenderer
+            Dim frm As New frmPushButton
             frm.ShowDialog()
         End Sub
         ''' <summary>CTor</summary>
@@ -23,13 +23,13 @@
         End Sub
 
         Private Class CustomButton : Inherits ButtonBase
-            Private Renderer As Tools.WindowsT.FormsT.VisualStylesT.VisualStyleSafeObject.SafeButtonRenderer = Tools.WindowsT.FormsT.VisualStylesT.VisualStyleSafeObject.CreateButton(VisualStyles.PushButtonState.Normal)
+            Private Renderer As Tools.WindowsT.FormsT.VisualStylesT.SpecializedSafeRenderers.PushButton = Tools.WindowsT.FormsT.VisualStylesT.SafeObjectRenderer.PushButton
             Public Property UseVisualStyle() As Boolean
                 Get
-                    Return Renderer.UseVisualStyle
+                    Return Renderer.UseThemes
                 End Get
                 Set(ByVal value As Boolean)
-                    Renderer.UseVisualStyle = value
+                    Renderer.UseThemes = value
                     Me.Invalidate()
                 End Set
             End Property
@@ -55,11 +55,11 @@
             End Sub
 
             Protected Overrides Sub WndProc(ByRef m As System.Windows.Forms.Message)
-                If m.Msg = API.Messages.WindowMessages.WM_THEMECHANGE Then
-                    Renderer = Tools.WindowsT.FormsT.VisualStylesT.VisualStyleSafeObject.CreateButton(VisualStyles.PushButtonState.Normal)
-                    ChangeState()
-                    m.Result = 0
-                End If
+                'If m.Msg = API.Messages.WindowMessages.WM_THEMECHANGE Then
+                '    Renderer = Tools.WindowsT.FormsT.VisualStylesT.VisualStyleSafeObject.CreateButton(VisualStyles.PushButtonState.Normal)
+                '    ChangeState()
+                '    m.Result = 0
+                'End If
                 MyBase.WndProc(m)
                 If m.Msg = API.Messages.WindowMessages.WM_THEMECHANGE Then
                     RaiseEvent ThemeChanged(Me, New API.Messages.WindowMessage(m))
@@ -67,16 +67,20 @@
             End Sub
 
             Public Event ThemeChanged As EventHandler
-            
+
             Protected Overrides Sub OnPaint(ByVal pevent As System.Windows.Forms.PaintEventArgs)
+                MyBase.OnPaintBackground(pevent)
                 Renderer.DrawBackground(pevent.Graphics, New Rectangle(0, 0, Me.Width, Me.Height), pevent.ClipRectangle)
                 If Me.Focused Then
-                    Renderer.DrawFocusRectangle(pevent.Graphics, New Rectangle(0, 0, Me.Width, Me.Height))
+                    Renderer.DrawContentFocusRectangle(pevent.Graphics, New Rectangle(0, 0, Me.Width, Me.Height))
                 End If
                 Dim f As New StringFormat
                 f.Alignment = StringAlignment.Center
                 f.LineAlignment = StringAlignment.Center
                 pevent.Graphics.DrawString(Me.Text, Me.Font, New SolidBrush(Me.ForeColor), Renderer.GetContentRectangle(pevent.Graphics, New Rectangle(0, 0, Me.Width, Me.Height)), f)
+            End Sub
+            Protected Overrides Sub OnPaintBackground(ByVal pevent As System.Windows.Forms.PaintEventArgs)
+                MyBase.OnPaintBackground(pevent)
             End Sub
 
             Private Sub ChangeState()

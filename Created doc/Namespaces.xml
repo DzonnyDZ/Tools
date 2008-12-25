@@ -283,5 +283,18 @@
             <summary>Provides types to support serialization and Extensible Application Markup Language (XAML) in Windows Presentation Foundation (WPF). In particular, contains classes to support XAML markup extensions and other language concepts that are defined by the XAML specification, reader/writer implementation classes, serializers, and attributes that report XAML characteristics to reflection-based analysis.</summary>
             <version stage="Nightly" version="1.5.2">Namespace introduced</version>
         </member>
+        <member name="N:Tools.WindowsT.FormsT.VisualStylesT.SpecializedSafeRenderers">
+            <summary>Contains specialized classes for rendeting controls both with and without visual styles</summary>
+            <version version="1.5.2">Namespace introduced</version>
+        </member>
+        <member name="N:Tools.WindowsT.FormsT.VisualStylesT.SpecializedThemedRenderers">
+            <summary>Contains specialized classes for rendering controls with visual styles.</summary>
+            <remarks>These classes does not work when Visual Styles are not available.</remarks>
+            <version version="1.5.2">Namespace introduced</version>
+        </member>
+        <member name="N:Tools.WindowsT.FormsT.VisualStylesT.SpecializedNonThemedRenderers">
+            <summary>Contains specialized classes for rendeting controls without visual styles</summary>
+            <version version="1.5.2">Namespace introduced</version>
+        </member>
     </members>    
 </doc>
