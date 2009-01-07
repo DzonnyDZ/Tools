@@ -780,6 +780,20 @@ Namespace WindowsT.FormsT
                 Form.Show(Owner)
             End If
         End Sub
+        ''' <summary>Shows dialog in sync with thread ow given control modally to give control</summary>
+        ''' <param name="Owner">Control to show dialog on thread of and modally to (null to ignore)</param>
+        ''' <returns>Dialog result</returns>
+        Public Function ShowDialogOn(ByVal Owner As Control) As DialogResult
+            If Owner Is Nothing Then
+                PerformDialog(True, Nothing)
+                Return Me.DialogResult
+            ElseIf Owner.InvokeRequired Then
+                Return Owner.Invoke(New Func(Of Control, DialogResult)(AddressOf ShowDialogOn), Owner)
+            Else
+                PerformDialog(True, Owner)
+                Return Me.DialogResult
+            End If
+        End Function
         ''' <summary>gets <see cref="Control"/> representation of <see cref="TopControl"/> if possible</summary>
         ''' <returns><see cref="Control"/> which represents <see cref="TopControl"/> if possible, null otherwise</returns>
         ''' <seealso cref="GetControl"/><seealso cref="MidControlControl"/><seealso cref="BottomControlControl"/>

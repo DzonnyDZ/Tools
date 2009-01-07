@@ -1,4 +1,4 @@
-﻿Namespace GUI
+﻿Namespace WindowsT.FormsT
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
     Partial Class Wizard
         Inherits System.Windows.Forms.Form
@@ -23,6 +23,7 @@
         'Do not modify it using the code editor.
         <System.Diagnostics.DebuggerStepThrough()> _
         Private Sub InitializeComponent()
+            Dim resources As System.ComponentModel.ComponentResourceManager = New System.ComponentModel.ComponentResourceManager(GetType(Wizard))
             Me.tlpMain = New System.Windows.Forms.TableLayoutPanel
             Me.panControlHost = New System.Windows.Forms.Panel
             Me.cmdBack = New System.Windows.Forms.Button
@@ -33,81 +34,71 @@
             '
             'tlpMain
             '
-            Me.tlpMain.ColumnCount = 3
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
-            Me.tlpMain.ColumnStyles.Add(New System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 33.33333!))
+            Me.tlpMain.AccessibleDescription = Nothing
+            Me.tlpMain.AccessibleName = Nothing
+            resources.ApplyResources(Me.tlpMain, "tlpMain")
+            Me.tlpMain.BackgroundImage = Nothing
             Me.tlpMain.Controls.Add(Me.panControlHost, 0, 0)
             Me.tlpMain.Controls.Add(Me.cmdBack, 0, 1)
             Me.tlpMain.Controls.Add(Me.cmdCancel, 1, 1)
             Me.tlpMain.Controls.Add(Me.cmdNext, 2, 1)
-            Me.tlpMain.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.tlpMain.Location = New System.Drawing.Point(0, 0)
-            Me.tlpMain.Margin = New System.Windows.Forms.Padding(0)
+            Me.tlpMain.Font = Nothing
             Me.tlpMain.Name = "tlpMain"
-            Me.tlpMain.RowCount = 2
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100.0!))
-            Me.tlpMain.RowStyles.Add(New System.Windows.Forms.RowStyle)
-            Me.tlpMain.Size = New System.Drawing.Size(470, 279)
-            Me.tlpMain.TabIndex = 0
             '
             'panControlHost
             '
+            Me.panControlHost.AccessibleDescription = Nothing
+            Me.panControlHost.AccessibleName = Nothing
+            resources.ApplyResources(Me.panControlHost, "panControlHost")
+            Me.panControlHost.BackgroundImage = Nothing
             Me.tlpMain.SetColumnSpan(Me.panControlHost, 3)
-            Me.panControlHost.Dock = System.Windows.Forms.DockStyle.Fill
-            Me.panControlHost.Location = New System.Drawing.Point(0, 0)
-            Me.panControlHost.Margin = New System.Windows.Forms.Padding(0)
+            Me.panControlHost.Font = Nothing
             Me.panControlHost.Name = "panControlHost"
-            Me.panControlHost.Size = New System.Drawing.Size(470, 250)
-            Me.panControlHost.TabIndex = 0
             '
             'cmdBack
             '
-            Me.cmdBack.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdBack.AutoSize = True
-            Me.cmdBack.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdBack.Location = New System.Drawing.Point(54, 253)
+            Me.cmdBack.AccessibleDescription = Nothing
+            Me.cmdBack.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdBack, "cmdBack")
+            Me.cmdBack.BackgroundImage = Nothing
+            Me.cmdBack.Font = Nothing
             Me.cmdBack.Name = "cmdBack"
-            Me.cmdBack.Size = New System.Drawing.Size(48, 23)
-            Me.cmdBack.TabIndex = 1
-            Me.cmdBack.Text = "< &Zpět"
             Me.cmdBack.UseVisualStyleBackColor = True
             '
             'cmdCancel
             '
-            Me.cmdCancel.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdCancel.AutoSize = True
-            Me.cmdCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdCancel.AccessibleDescription = Nothing
+            Me.cmdCancel.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdCancel, "cmdCancel")
+            Me.cmdCancel.BackgroundImage = Nothing
             Me.cmdCancel.DialogResult = System.Windows.Forms.DialogResult.Cancel
-            Me.cmdCancel.Location = New System.Drawing.Point(210, 253)
+            Me.cmdCancel.Font = Nothing
             Me.cmdCancel.Name = "cmdCancel"
-            Me.cmdCancel.Size = New System.Drawing.Size(48, 23)
-            Me.cmdCancel.TabIndex = 2
-            Me.cmdCancel.Text = "&Storno"
             Me.cmdCancel.UseVisualStyleBackColor = True
             '
             'cmdNext
             '
-            Me.cmdNext.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.cmdNext.AutoSize = True
-            Me.cmdNext.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
-            Me.cmdNext.Location = New System.Drawing.Point(365, 253)
+            Me.cmdNext.AccessibleDescription = Nothing
+            Me.cmdNext.AccessibleName = Nothing
+            resources.ApplyResources(Me.cmdNext, "cmdNext")
+            Me.cmdNext.BackgroundImage = Nothing
+            Me.cmdNext.Font = Nothing
             Me.cmdNext.Name = "cmdNext"
-            Me.cmdNext.Size = New System.Drawing.Size(51, 23)
-            Me.cmdNext.TabIndex = 3
-            Me.cmdNext.Text = "&Další >"
             Me.cmdNext.UseVisualStyleBackColor = True
             '
             'Wizard
             '
             Me.AcceptButton = Me.cmdNext
-            Me.AutoScaleDimensions = New System.Drawing.SizeF(6.0!, 13.0!)
+            Me.AccessibleDescription = Nothing
+            Me.AccessibleName = Nothing
+            resources.ApplyResources(Me, "$this")
             Me.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font
+            Me.BackgroundImage = Nothing
             Me.CancelButton = Me.cmdCancel
-            Me.ClientSize = New System.Drawing.Size(470, 279)
             Me.Controls.Add(Me.tlpMain)
+            Me.Font = Nothing
+            Me.Icon = Nothing
             Me.Name = "Wizard"
-            Me.Text = "Wizard"
             Me.tlpMain.ResumeLayout(False)
             Me.tlpMain.PerformLayout()
             Me.ResumeLayout(False)

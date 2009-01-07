@@ -12,9 +12,14 @@ Namespace MetadataT.ExifT
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     ''' <version version="1.5.2">Methods <see cref="Exif.Load"/>, <see cref="Exif.LoadForUpdating"/>, <see cref="Exif.Save"/> and <see cref="Exif.Update"/> added.</version>
     ''' <version version="1.5.2">Added implementation of <see cref="IReportsChange"/></version>
+    ''' <version version="1.5.2">The <see cref="IMetadata"/> interface implemented</version>
     <Serializable()> _
     Public Class Exif
         Implements IReportsChange, Runtime.Serialization.ISerializable
+        Implements IMetadata
+        ''' <summary>Name used to identify Exif metadata in <see cref="IMetadataProvider"/></summary>
+        ''' <version version="1.5.2">Constant introduced</version>
+        Public Const ExifName$ = "Exif"
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()
         End Sub
@@ -378,6 +383,78 @@ Namespace MetadataT.ExifT
         Protected Sub New(ByVal information As Runtime.Serialization.SerializationInfo, ByVal context As Runtime.Serialization.StreamingContext)
             Me.New(New ExifReader(New IO.MemoryStream(DirectCast(information.ThrowIfNull("information").GetValue("data", GetType(Byte())), Byte()))))
         End Sub
+#Region "IMetadata"
+        'Proposed format: IFDNumber:Tag (ie. 0:124, 1:124); E:Tag (Exif sub-IFD); G:Tag (GPS), I:Tag (Interop)
+        'TODO: Implement, version
+        Public Function ContainsKey(ByVal Key As String) As Boolean Implements IMetadata.ContainsKey
+            Throw New NotImplementedException
+        End Function
+
+        Public Function GetContainedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetContainedKeys
+            Dim ret As New List(Of String)
+            Dim IFD As Ifd = IFD0
+            Dim i% = 0
+            While IFD IsNot Nothing
+                ret.AddRange(From tag In IFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "{0}:{1}", i, tag))
+                IFD = IFD.Following
+                i += 1
+            End While
+            If IFD0 IsNot Nothing AndAlso IFD0.ExifSubIFD IsNot Nothing Then
+                ret.AddRange(From tag In IFD0.ExifSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "E:{0}", tag))
+                If IFD0.ExifSubIFD.InteropSubIFD IsNot Nothing Then
+                    ret.AddRange(From tag In IFD0.ExifSubIFD.InteropSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "I:{0}", tag))
+                End If
+            End If
+            If IFD0 IsNot Nothing AndAlso IFD0.GPSSubIFD IsNot Nothing Then
+                ret.AddRange(From tag In IFD0.GPSSubIFD.GetRecordKeys Select String.Format(Globalization.CultureInfo.InvariantCulture, "G:{0}", tag))
+            End If
+            Return ret
+        End Function
+
+        Public Function GetDescription(ByVal Key As String) As String Implements IMetadata.GetDescription
+            Throw New NotImplementedException
+        End Function
+
+        Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
+            Throw New NotImplementedException
+        End Function
+
+        Public Function GetKeyOfName(ByVal Name As String) As String Implements IMetadata.GetKeyOfName
+            Throw New NotImplementedException
+        End Function
+
+        Public Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
+            Throw New NotImplementedException
+        End Function
+
+        Public Function GetPredefinedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedKeys
+            Dim ret As New List(Of String)
+            ret.AddRange(From val As IfdMain.Tags In [Enum].GetValues(GetType(IfdMain.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "0:{0:d}", val))
+            ret.AddRange(From val As IfdExif.Tags In [Enum].GetValues(GetType(IfdExif.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "E:{0:d}", val))
+            ret.AddRange(From val As IfdGps.Tags In [Enum].GetValues(GetType(IfdGps.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "G:{0:d}", val))
+            ret.AddRange(From val As IfdInterop.Tags In [Enum].GetValues(GetType(IfdInterop.Tags)) Select String.Format(Globalization.CultureInfo.InvariantCulture, "I:{0:d}", val))
+            Return ret
+        End Function
+
+        Public Function GetPredefinedNames() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedNames
+            Throw New NotImplementedException
+        End Function
+
+        ''' <summary>Gets name of metadata format represented by implementation</summary>
+        ''' <returns><see cref="ExifName"/></returns>
+        ''' <remarks>All <see cref="IMetadataProvider">IMetadataProviders</see> returning Exif format should identify the format by this name.</remarks>
+        Private ReadOnly Property Name() As String Implements IMetadata.Name
+            Get
+                Return ExifName
+            End Get
+        End Property
+
+        Default Public ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
+            Get
+                Throw New NotImplementedException
+            End Get
+        End Property
+#End Region
     End Class
 
     ''' <summary>Describes one Exif record</summary>

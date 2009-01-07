@@ -1,6 +1,6 @@
-﻿Namespace WindowsT.FormsT.VisualStylesT
+﻿Namespace WindowsT.FormsT.VisualStylesT.SpecializedSafeRenderers
     <Global.Microsoft.VisualBasic.CompilerServices.DesignerGenerated()> _
-    Partial Class frmSafeButtonRenderer
+    Partial Class frmPushButton
         Inherits System.Windows.Forms.Form
 
         'Form overrides dispose to clean up the component list.

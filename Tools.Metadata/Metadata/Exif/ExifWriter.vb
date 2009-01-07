@@ -5,6 +5,7 @@ Namespace MetadataT.ExifT
     ''' <summary>This class provides low-level writer of Exif matadata</summary>
     ''' <version stage="Nightly" version="1.5.2">Class accessibility changed from Firend to Public</version>
     ''' <version version="1.5.2">New overloaded method <see cref="ExifWriter.Save"/> introduced.</version>
+    ''' <version version="1.5.2">ASCII-type data are automatically appended with nullchar when required (missing)</version>
     Public Class ExifWriter
 #Region "Common"
         ''' <summary>Contains value of the <see cref="Writer"/> property</summary>
@@ -249,6 +250,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="TypeMismatchException"><paramref name="Data"/> is of different type then reported by <paramref name="DataType"/>. Acceptable types are scalars and 1D array of type reported by <paramref name="DataType"/>.</exception>
         ''' <exception cref="ArgumentException"><paramref name="NumberOfComponets"/> differs from number of items in <paramref name="Data"/></exception>
         ''' <remarks>This method is not CLS-compliant, but CLS-compliant overload with <see cref="DirectoryEntry"/> as parameter is available.</remarks>
+        ''' <version version="1.5.2">ASCII data are automatically appended with nullchar when missing.</version>
         <CLSCompliant(False)> _
         Public Function WriteRecord(ByVal TagNumber As UShort, ByVal DataType As ExifDataTypes, ByVal NumberOfComponets As UInteger, ByVal Data As Object) As Integer
             If Data Is Nothing Then Throw New ArgumentNullException("Date")
@@ -259,11 +261,11 @@ Namespace MetadataT.ExifT
             Writer.Seek(Position, IO.SeekOrigin.Begin)
             Writer.Write(TagNumber)
             Writer.Write(DataType)
-            Writer.Write(NumberOfComponets)
             Dim DataNormalized = NormalizeData(Data, DataType)
+            Writer.Write(DataNormalized.Length)
             If DataNormalized Is Nothing Then Throw New TypeMismatchException("Data", Data, Nothing, ResourcesT.Exceptions.Type0IsNotAcceptableForDataType1.f(Data.GetType.Name, DataType))
-            If DataNormalized.Length <> NumberOfComponets Then Throw New ArgumentException(ResourcesT.Exceptions.NumberOfItemsOf0DiffersFrom1.f("Data", "NumberOfComponents"))
-            Dim Size As Integer = DirectoryEntry.BytesPerComponent(DataType) * NumberOfComponets
+            If DataNormalized.Length <> NumberOfComponets AndAlso (DataType <> ExifDataTypes.ASCII OrElse DataNormalized.Length <> NumberOfComponets + 1) Then Throw New ArgumentException(ResourcesT.Exceptions.NumberOfItemsOf0DiffersFrom1.f("Data", "NumberOfComponents"))
+            Dim Size As Integer = DirectoryEntry.BytesPerComponent(DataType) * DataNormalized.Length
             Dim DataPosition As Integer
             If Size > 4 Then
                 DataPosition = FindFreeSpace(Size)
@@ -359,19 +361,28 @@ Namespace MetadataT.ExifT
         ''' <summary>Converts Exif data to array type</summary>
         ''' <param name="Data">Data to be converted</param>
         ''' <param name="DataType">Type of data</param>
-        ''' <returns>Array of items of given type, if <paramref name="Data"/> was of array of <paramref name="DataType"/> or <paramref name="DataType"/>; otherwise null</returns>
+        ''' <returns>Array of items of given type, if <paramref name="Data"/> was of array of <paramref name="DataType"/> or <paramref name="DataType"/>; otherwise null. For ASCII data last char is ensured to be nullchar (appended if not present).</returns>
         ''' <version version="1.5.2">Marked as CLS-incompliant</version>
+        ''' <version version="1.5.2">Data of type ASCII are appended with nullchar if it is not already last char of data.</version>
         <CLSCompliant(False)> _
         Protected Shared Function NormalizeData(ByVal Data As Object, ByVal DataType As ExifDataTypes) As Array
             Select Case DataType
                 Case ExifDataTypes.ASCII
+                    Dim ret As Char() = Nothing
                     If TypeOf Data Is Char() Then
-                        Return Data
+                        ret = Data
                     ElseIf TypeOf Data Is Char Then
-                        Return New Char() {Data}
+                        ret = New Char() {Data}
                     ElseIf TypeOf Data Is String Then
-                        Return CType(DirectCast(Data, String), Char())
+                        ret = CType(DirectCast(Data, String), Char())
                     End If
+                    If ret.Length <> 0 AndAlso ret(ret.Length - 1) <> vbNullChar Then
+                        ReDim Preserve ret(ret.Length)
+                        ret(ret.Length - 1) = vbNullChar
+                    ElseIf ret.Length = 0 Then
+                        ret = New Char() {vbNullChar}
+                    End If
+                    If ret IsNot Nothing Then Return ret
                 Case ExifDataTypes.Byte, ExifDataTypes.NA
                     If TypeOf Data Is Byte() Then
                         Return Data

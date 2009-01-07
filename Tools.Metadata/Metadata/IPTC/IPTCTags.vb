@@ -300,7 +300,7 @@ Namespace MetadataT.IptcT
 			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
 			Public Shared ReadOnly Property ModelVersion As DataSetIdentification
 				<DebuggerStepThrough()> Get
-					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ModelVersion, "ModelVersion", "Model Version")
+                Return New DataSetIdentification(RecordNumbers.Envelope, EnvelopeTags.ModelVersion, "ModelVersion", "Model Version")
 				End Get
 			End Property
 			''' <summary>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</summary>

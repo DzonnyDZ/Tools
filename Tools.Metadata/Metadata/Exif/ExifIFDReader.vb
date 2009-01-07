@@ -4,6 +4,7 @@ Namespace MetadataT.ExifT
     ''' <summary>Provides low level access to stream containing exif IFD (Image File Directory) or SubIFD</summary>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="Nightly"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
+    ''' <version version="1.5.2">ASCII Exif data are required to end with nullchar and the nullchar is trimmed</version>
     Public Class ExifIfdReader
         ''' <summary>Settings that apply to reading</summary>
         <EditorBrowsable(EditorBrowsableState.Advanced)> _
@@ -14,7 +15,7 @@ Namespace MetadataT.ExifT
         ''' <exception cref="System.IO.IOException">An I/O error occurs.</exception>
         ''' <exception cref="System.IO.EndOfStreamException">The end of the Exif stream is reached unexpectedly.</exception>
         ''' <exception cref="InvalidEnumArgumentException">Directory entry of unknown data type found</exception>
-        ''' <exception cref="InvalidDataException">Tag data of some are placed outside the tag and cannot be read</exception>
+        ''' <exception cref="InvalidDataException">Tag data of some are placed outside the tag and cannot be read -or- (recoverable) ASCII data does not end with nullchar</exception>
         ''' <exception cref="ArgumentNullException"><paramref name="Context"/> is null.</exception>
         ''' <param name="Context">Contains context and event handlers for this reading</param>
         ''' <param name="Cancelled">Output parameter. Is set to true when handler cancells reading of whole IFD body</param>
@@ -201,8 +202,9 @@ Namespace MetadataT.ExifT
         ''' <param name="Exif"><see cref="ExifReader"/> to obtain data from when <paramref name="Data"/> doesn't contain data but offset to data</param>
         ''' <param name="Context">Setting which takes effect on reading.</param>
         ''' <exception cref="InvalidEnumArgumentException"><paramref name="Kind"/> is not member of <see cref="ExifDataTypes"/></exception>
-        ''' <exception cref="InvalidDataException">Tag data are placed otside the tag and cannot be read</exception>
+        ''' <exception cref="InvalidDataException">Tag data are placed otside the tag and cannot be read -or- <paramref name="Kind"/> is <see cref="ExifDataTypes.ASCII"/> and ASCII string is not ended with nullchar. Not thrown when exception is recoverable via <paramref name="Context"/></exception>
         ''' <exception cref="ArgumentnullException"><paramref name="Context"/> is null</exception>
+        ''' <version version="1.5.2"><see cref="InvalidDataException"/> is thrown when <paramref name="Kind"/> is <see cref="ExifDataTypes.ASCII"/> and string does not end with nullchar.</version>
         <CLSCompliant(False), EditorBrowsable(EditorBrowsableState.Advanced)> _
         Public Sub New(ByVal Tag As UShort, ByVal Kind As ExifDataTypes, ByVal Components As UInt32, ByVal Data As Byte(), ByVal Exif As ExifReader, ByVal Context As ExifReader.ExifReaderContext)
             _Tag = Tag
@@ -261,8 +263,11 @@ Namespace MetadataT.ExifT
         ''' <param name="Buffer">Buffer to read data from</param>
         ''' <param name="Components">Number of components to be read</param>
         ''' <returns>Data read from buffer. If <paramref name="Components"/> is 1 scalar of specified type is returned, <see cref="Array"/> otherwise with exceptions: 1 component of type <see cref="ExifDataTypes.ASCII"/> resuts to <see cref="Char"/>, more components results to <see cref="String"/>; <see cref="ExifDataTypes.NA"/> always results to <see cref="Array"/> of <see cref="Byte"/>s</returns>
-        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/></exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Type"/> is not member of <see cref="ExifDataTypes"/> (and error recovery is not allowed).</exception>
+        ''' <exception cref="InvalidDataException"><paramref name="Type"/> is <see cref="ExifDataTypes.ASCII"/> and string is not terminated with nullchar  (and error recovery is not allowed).</exception>
+        ''' <param name="Context">Setting which takes effect on reading.</param>
         ''' <version version="1.5.2">Updated to use 2×32 bits <see cref="SRational"/> and <see cref="URational"/> instead fo 2×16 bits.</version>
+        ''' <version version="1.5.2">ASCII values are required to end with nullchar, it's trimmed and <see cref="InvalidDataException"/> is thrown when they don't end.</version>
         Private Shared Function ReadData(ByVal Type As ExifDataTypes, ByVal Buffer As Byte(), ByVal Components As Integer, ByVal Align As Tools.IOt.BinaryReader.ByteAlign, ByVal Context As ExifReader.ExifReaderContext) As Object
             Dim Str As New MemoryStream(Buffer, False)
             Str.Position = 0
@@ -272,9 +277,19 @@ Namespace MetadataT.ExifT
                     If Components = 1 Then Return CByte(Buffer(0)) Else Return Buffer.Clone
                 Case ExifDataTypes.ASCII
                     If Components = 1 Then
-                        Return r.ReadChar()
+                        Dim ret = r.ReadChar()
+                        If ret <> vbNullChar Then
+                            Context.OnError(New InvalidDataException(ResourcesT.Exceptions.ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith)) 'Throw
+                        End If
+                        Return ret
                     Else
-                        Return New String(r.ReadChars(Buffer.Length))
+                        Dim ret As New String(r.ReadChars(Buffer.Length))
+                        If ret(ret.Length - 1) = vbNullChar Then
+                            Return ret.Substring(0, ret.Length - 1)
+                        Else
+                            Context.OnError(New InvalidDataException(ResourcesT.Exceptions.ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith)) 'Throw
+                            Return ret
+                        End If
                     End If
                 Case ExifDataTypes.UInt16
                     If Components = 1 Then

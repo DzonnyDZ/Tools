@@ -1,4 +1,4 @@
-﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileTystemTools, Tools.CollectionsT.GenericT
+﻿Imports System.Linq, Tools.DrawingT, Tools.DataStructuresT.GenericT, Tools.CollectionsT.SpecializedT, Tools.IOt.FileSystemTools, Tools.CollectionsT.GenericT
 Imports System.ComponentModel, Tools.WindowsT, Tools.ExtensionsT
 Imports Tools.MetadataT.IptcT, Tools.MetadataT, Tools.DrawingT.DrawingIOt, Tools.LinqT
 Imports System.Reflection
@@ -279,7 +279,7 @@ Public Class frmMain
                 Else Throw
             Catch
                 Try
-                    Dim icon = IOt.FileTystemTools.GetIcon(path, True).ToBitmap
+                    Dim icon = IOt.FileSystemTools.GetIcon(path, True).ToBitmap
                     Dim thicon = icon.GetThumbnail(My.Settings.ThumbSize, Color.Transparent, Function() sender.CancellationPending)
                     bgwImages.ReportProgress(i / Paths.Count * 100, New Pair(Of String, Image)(System.IO.Path.GetFileName(path), thicon))
                 Catch : End Try
@@ -500,9 +500,20 @@ Public Class frmMain
             Next
             ShowIPTCValues(From item In SelectedMetadata Select item.IPTC)
             prgIPTC.SelectedObjects = (From mtd In SelectedMetadata Select mtd.IPTC).ToArray
+            SetExifPropertyGrids(From mtd In SelectedMetadata Select mtd.Exif)
         Else
             prgIPTC.SelectedObjects = New Object() {}
+            SetExifPropertyGrids(New ExifInternal() {})
         End If
+    End Sub
+    ''' <summary>Sets Exif selected objects</summary>
+    ''' <param name="Exifs">Objects to select</param>
+    Private Sub SetExifPropertyGrids(ByVal Exifs As IEnumerable(Of ExifInternal))
+        prgExifMain.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.IFD0 IsNot Nothing Select CObj(Exif.IFD0)).ToArray
+        prgExifExif.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.IFD0 IsNot Nothing AndAlso Exif.IFD0.ExifSubIFD IsNot Nothing Select CObj(Exif.IFD0.ExifSubIFD)).ToArray
+        prgExifGPS.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.IFD0 IsNot Nothing AndAlso Exif.IFD0.GPSSubIFD IsNot Nothing Select CObj(Exif.IFD0.GPSSubIFD)).ToArray
+        prgExifInterop.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.IFD0 IsNot Nothing AndAlso Exif.IFD0.ExifSubIFD IsNot Nothing AndAlso Exif.IFD0.ExifSubIFD.InteropSubIFD IsNot Nothing Select CObj(Exif.IFD0.ExifSubIFD.InteropSubIFD)).ToArray
+        prgExifThumbnail.SelectedObjects = (From Exif In Exifs Where Exif IsNot Nothing AndAlso Exif.ThumbnailIFD IsNot Nothing Select CObj(Exif.ThumbnailIFD)).ToArray
     End Sub
     ''' <summary>Shows common values</summary>
     ''' <param name="IPTCs">IPTCs to load values from</param>
@@ -1016,6 +1027,24 @@ Retry:              item.Save()
             i += 1
         Loop While CurrentString IsNot Nothing
         HTMLDialog.ShowModal(d.ToString, Me)
+    End Sub
+
+    Private Sub lvwImages_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lvwImages.SelectedIndexChanged
+
+    End Sub
+
+    Private Sub lvwImages_DrawItem(ByVal sender As System.Object, ByVal e As System.Windows.Forms.DrawListViewItemEventArgs) Handles lvwImages.DrawItem
+
+    End Sub
+
+    Private Sub tmiSynchronizeWithDatabase_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles tmiSynchronizeWithDatabase.Click
+        SynchronizeWithDatabase()
+    End Sub
+    ''' <summary>Launches the "Synchronize with database" wizard</summary>
+    Public Sub SynchronizeWithDatabase()
+        Dim Wizard As New Wizard(Of Data.SelectDatabaseStep)
+        Wizard.Text = My.Resources.SynchronizeWithDatabase
+        Wizard.ShowDialog(Me)
     End Sub
 End Class
 

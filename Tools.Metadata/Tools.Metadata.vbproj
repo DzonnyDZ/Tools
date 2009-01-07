@@ -266,6 +266,7 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Metadata\IMetadataProvider.vb" />
     <Compile Include="Resources\resx %28Friend%29\IPTCResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

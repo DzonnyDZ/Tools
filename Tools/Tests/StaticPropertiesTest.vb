@@ -149,7 +149,7 @@ Namespace TestsT
             NonAbstract = 512
             ''' <summary>Sealed (NotInheritable in Visual Basic) class (<see cref="TypeAttributes.Sealed"/>)</summary>
             Sealed = 1024
-            ''' <summary>All possible virtualization flags (virtual mask). Specifying this has the same effect as leaving virtual group at zero. (or-combination of <see cref="Abstract"/>, <see cref="NonAbstract"/> and <see cref="Virtual"/>)</summary>
+            ''' <summary>All possible virtualization flags (virtual mask). Specifying this has the same effect as leaving virtual group at zero. (or-combination of <see cref="Abstract"/>, <see cref="NonAbstract"/> and <see cref="VirtualAll"/>)</summary>
             VirtualAll = Abstract Or NonAbstract Or Sealed
 
             ''' <summary>Class (reference type; <see cref="TypeAttributes.[Class]"/>)</summary>

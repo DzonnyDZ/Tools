@@ -1249,6 +1249,53 @@ Namespace MetadataT.ExifT
                 Exit Sub
             End If
         End Sub
+        ''' <summary>Date-time format used by Exif for storing date-time values as <see cref="DateTimeDigitized"/> or <see cref="DateTimeOriginal"/>.</summary>
+        ''' <version version="1.5.2">Constant introduced</version>
+        <EditorBrowsable(EditorBrowsableState.Advanced)> _
+        Public Const ExifDateFormat$ = "yyyy':'MM':'dd HH':'mm':'ss"
+        ''' <summary>Gets or sets value of the <see cref="DateTimeDigitized"/> as <see cref="DateTime"/></summary>
+        ''' <returns>Date and time when image was digitized or null when property is not set</returns>
+        ''' <value>Date and time when image was digitized or null to unset the property</value>
+        ''' <seelaso cref="DateTimeOriginalDate"/><seelaso cref="DateTimeDigitized"/>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public Property DateTimeDigitizedDate() As Date?
+            Get
+                If Me.DateTimeDigitized <> "" Then
+                    Return Date.ParseExact(Me.DateTimeDigitized, ExifDateFormat, Globalization.CultureInfo.InvariantCulture)
+                Else
+                    Return Nothing
+                End If
+            End Get
+            Set(ByVal value As Date?)
+                If value.HasValue Then
+                    Me.DateTimeDigitized = value.Value.ToString(ExifDateFormat, Globalization.CultureInfo.InvariantCulture)
+                Else
+                    Me.DateTimeDigitized = Nothing
+                End If
+            End Set
+        End Property
+        ''' <summary>Gets or sets value of the <see cref="DateTimeOriginal"/> as <see cref="DateTime"/></summary>
+        ''' <returns>Date and time when image was created or null when property is not set</returns>
+        ''' <value>Date and time when image was created or null to unset the property</value>
+        ''' <remarks>In case the image was not originally taken as digital, this date should be prior to <see cref="DateTimeDigitizedDate"/></remarks>
+        ''' <seelaso cref="DateTimeDigitizedDate"/><seelaso cref="DateTimeOriginal"/>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public Property DateTimeOriginalDate() As Date?
+            Get
+                If Me.DateTimeOriginal <> "" Then
+                    Return Date.ParseExact(Me.DateTimeOriginal, ExifDateFormat, Globalization.CultureInfo.InvariantCulture)
+                Else
+                    Return Nothing
+                End If
+            End Get
+            Set(ByVal value As Date?)
+                If value.HasValue Then
+                    Me.DateTimeOriginal = value.Value.ToString(ExifDateFormat, Globalization.CultureInfo.InvariantCulture)
+                Else
+                    Me.DateTimeOriginal = Nothing
+                End If
+            End Set
+        End Property
     End Class
     ''' <summary>Exif GPS IFD</summary>
     Partial Class IfdGps : Inherits SubIfd

@@ -238,101 +238,48 @@
   <data name="tapCommon.Text" xml:space="preserve">
     <value>Obvyklé</value>
   </data>
+  <data name="tapExifMain.Text" xml:space="preserve">
+    <value>Obrázek</value>
+  </data>
+  <data name="prgExifExif.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 36</value>
+  </data>
+  <data name="tapExifExif.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 42</value>
+  </data>
+  <data name="prgExifGPS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 36</value>
+  </data>
+  <data name="tapExifGPS.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 42</value>
+  </data>
+  <data name="prgExifInterop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 36</value>
+  </data>
+  <data name="tapExifInterop.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 42</value>
+  </data>
+  <data name="prgExifThumbnail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>172, 36</value>
+  </data>
+  <data name="tapExifThumbnail.Size" type="System.Drawing.Size, System.Drawing">
+    <value>178, 42</value>
+  </data>
+  <data name="tapExifThumbnail.Text" xml:space="preserve">
+    <value>Miniatura</value>
+  </data>
   <data name="tpbLoading.ToolTipText" xml:space="preserve">
     <value>Načítání obrázků</value>
   </data>
   <data name="tslNoFiles.Size" type="System.Drawing.Size, System.Drawing">
-    <value>55, 17</value>
+    <value>60, 17</value>
   </data>
   <data name="tslNoFiles.Text" xml:space="preserve">
     <value>0 souborů</value>
   </data>
-  <data name="tmiBrowse.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 22</value>
-  </data>
-  <data name="tmiBrowse.Text" xml:space="preserve">
-    <value>&amp;Najít složku ...</value>
-  </data>
-  <data name="tmiGoTo.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 22</value>
-  </data>
-  <data name="tmiGoTo.Text" xml:space="preserve">
-    <value>&amp;Jít ke složce ...</value>
-  </data>
-  <data name="tmiSaveAll.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 22</value>
-  </data>
-  <data name="tmiSaveAll.Text" xml:space="preserve">
-    <value>&amp;Uložit vše</value>
-  </data>
-  <data name="tssFileSep1.Size" type="System.Drawing.Size, System.Drawing">
-    <value>180, 6</value>
-  </data>
-  <data name="tmiExit.Size" type="System.Drawing.Size, System.Drawing">
-    <value>183, 22</value>
-  </data>
-  <data name="tmiExit.Text" xml:space="preserve">
-    <value>&amp;Konec</value>
-  </data>
-  <data name="tmiFile.Size" type="System.Drawing.Size, System.Drawing">
-    <value>53, 20</value>
-  </data>
-  <data name="tmiFile.Text" xml:space="preserve">
-    <value>&amp;Soubor</value>
-  </data>
-  <data name="tmiRefresh.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 22</value>
-  </data>
-  <data name="tmiRefresh.Text" xml:space="preserve">
-    <value>&amp;Obnovit</value>
-  </data>
-  <data name="tmiNext.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 22</value>
-  </data>
-  <data name="tmiNext.Text" xml:space="preserve">
-    <value>Vybrat &amp;další</value>
-  </data>
-  <data name="tmiPrevious.Size" type="System.Drawing.Size, System.Drawing">
-    <value>202, 22</value>
-  </data>
-  <data name="tmiPrevious.Text" xml:space="preserve">
-    <value>Vybrat &amp;předchozí</value>
-  </data>
-  <data name="tmiView.Size" type="System.Drawing.Size, System.Drawing">
-    <value>58, 20</value>
-  </data>
-  <data name="tmiView.Text" xml:space="preserve">
-    <value>Zo&amp;brazit</value>
-  </data>
-  <data name="tmiOptions.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="tmiOptions.Text" xml:space="preserve">
-    <value>&amp;Nastavení ...</value>
-  </data>
-  <data name="tmiTools.Size" type="System.Drawing.Size, System.Drawing">
-    <value>60, 20</value>
-  </data>
-  <data name="tmiTools.Text" xml:space="preserve">
-    <value>&amp;Nástroje</value>
-  </data>
-  <data name="tmiAbout.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="tmiAbout.Text" xml:space="preserve">
-    <value>&amp;O aplikaci ...</value>
-  </data>
-  <data name="tmiVersionHistory.Size" type="System.Drawing.Size, System.Drawing">
-    <value>152, 22</value>
-  </data>
-  <data name="tmiVersionHistory.Text" xml:space="preserve">
-    <value>&amp;Historie verzí...</value>
-  </data>
-  <data name="tmiHelp.Size" type="System.Drawing.Size, System.Drawing">
-    <value>68, 20</value>
-  </data>
-  <data name="tmiHelp.Text" xml:space="preserve">
-    <value>Nápo&amp;věda</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="tosMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
   </data>
   <data name="tsbBack.Text" xml:space="preserve">
     <value>Jít zpět</value>
@@ -345,6 +292,102 @@
   </data>
   <data name="tsbSaveAll.Text" xml:space="preserve">
     <value>Uložit vše</value>
+  </data>
+  <data name="msnMain.Dock" type="System.Windows.Forms.DockStyle, System.Windows.Forms">
+    <value>None</value>
+  </data>
+  <data name="tmiBrowse.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 22</value>
+  </data>
+  <data name="tmiBrowse.Text" xml:space="preserve">
+    <value>&amp;Najít složku ...</value>
+  </data>
+  <data name="tmiGoTo.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 22</value>
+  </data>
+  <data name="tmiGoTo.Text" xml:space="preserve">
+    <value>&amp;Jít ke složce ...</value>
+  </data>
+  <data name="tmiSaveAll.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 22</value>
+  </data>
+  <data name="tmiSaveAll.Text" xml:space="preserve">
+    <value>&amp;Uložit vše</value>
+  </data>
+  <data name="tssFileSep1.Size" type="System.Drawing.Size, System.Drawing">
+    <value>187, 6</value>
+  </data>
+  <data name="tmiExit.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 22</value>
+  </data>
+  <data name="tmiExit.Text" xml:space="preserve">
+    <value>&amp;Konec</value>
+  </data>
+  <data name="tmiFile.Size" type="System.Drawing.Size, System.Drawing">
+    <value>57, 20</value>
+  </data>
+  <data name="tmiFile.Text" xml:space="preserve">
+    <value>&amp;Soubor</value>
+  </data>
+  <data name="tmiRefresh.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="tmiRefresh.Text" xml:space="preserve">
+    <value>&amp;Obnovit</value>
+  </data>
+  <data name="tmiNext.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="tmiNext.Text" xml:space="preserve">
+    <value>Vybrat &amp;další</value>
+  </data>
+  <data name="tmiPrevious.Size" type="System.Drawing.Size, System.Drawing">
+    <value>213, 22</value>
+  </data>
+  <data name="tmiPrevious.Text" xml:space="preserve">
+    <value>Vybrat &amp;předchozí</value>
+  </data>
+  <data name="tmiView.Size" type="System.Drawing.Size, System.Drawing">
+    <value>62, 20</value>
+  </data>
+  <data name="tmiView.Text" xml:space="preserve">
+    <value>Zo&amp;brazit</value>
+  </data>
+  <data name="tmiOptions.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 22</value>
+  </data>
+  <data name="tmiOptions.Text" xml:space="preserve">
+    <value>&amp;Nastavení ...</value>
+  </data>
+  <data name="SynchronizeWithDatabaseToolStripMenuItem.Size" type="System.Drawing.Size, System.Drawing">
+    <value>222, 22</value>
+  </data>
+  <data name="SynchronizeWithDatabaseToolStripMenuItem.Text" xml:space="preserve">
+    <value>&amp;Synchronizovat s databází ...</value>
+  </data>
+  <data name="tmiTools.Size" type="System.Drawing.Size, System.Drawing">
+    <value>63, 20</value>
+  </data>
+  <data name="tmiTools.Text" xml:space="preserve">
+    <value>&amp;Nástroje</value>
+  </data>
+  <data name="tmiAbout.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
+  </data>
+  <data name="tmiAbout.Text" xml:space="preserve">
+    <value>&amp;O aplikaci ...</value>
+  </data>
+  <data name="tmiVersionHistory.Size" type="System.Drawing.Size, System.Drawing">
+    <value>151, 22</value>
+  </data>
+  <data name="tmiVersionHistory.Text" xml:space="preserve">
+    <value>&amp;Historie verzí...</value>
+  </data>
+  <data name="tmiHelp.Size" type="System.Drawing.Size, System.Drawing">
+    <value>73, 20</value>
+  </data>
+  <data name="tmiHelp.Text" xml:space="preserve">
+    <value>Nápo&amp;věda</value>
   </data>
   <data name="$this.Icon" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>

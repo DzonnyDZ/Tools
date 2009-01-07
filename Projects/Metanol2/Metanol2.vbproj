@@ -46,6 +46,9 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
+    <Reference Include="System.Data.Linq">
+      <RequiredTargetFramework>3.5</RequiredTargetFramework>
+    </Reference>
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
@@ -74,6 +77,36 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ApplicationEvents.vb" />
+    <Compile Include="Database\DatabaseAccess.designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DatabaseAccess.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Database\DatabaseTools.vb" />
+    <Compile Include="Database\Synchronization\1 - SelectDatabase.Designer.vb">
+      <DependentUpon>1 - SelectDatabase.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Synchronization\1 - SelectDatabase.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Database\Synchronization\2 - Select folders.Designer.vb">
+      <DependentUpon>2 - Select folders.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Synchronization\2 - Select folders.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Database\Synchronization\3 - SynchronizeStep.Designer.vb">
+      <DependentUpon>3 - SynchronizeStep.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Synchronization\3 - SynchronizeStep.vb">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Database\Synchronization\ConnectionStringEditor.Designer.vb">
+      <DependentUpon>ConnectionStringEditor.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Database\Synchronization\ConnectionStringEditor.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="ExifInternal.vb" />
     <Compile Include="FolderDialog.Designer.vb">
       <DependentUpon>FolderDialog.vb</DependentUpon>
@@ -130,6 +163,33 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Database\DatabaseAccess.dbml.layout">
+      <DependentUpon>DatabaseAccess.dbml</DependentUpon>
+    </None>
+    <EmbeddedResource Include="Database\Synchronization\1 - SelectDatabase.cs.resx">
+      <DependentUpon>1 - SelectDatabase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\1 - SelectDatabase.resx">
+      <DependentUpon>1 - SelectDatabase.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\2 - Select folders.cs.resx">
+      <DependentUpon>2 - Select folders.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\2 - Select folders.resx">
+      <DependentUpon>2 - Select folders.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\3 - SynchronizeStep.cs.resx">
+      <DependentUpon>3 - SynchronizeStep.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\3 - SynchronizeStep.resx">
+      <DependentUpon>3 - SynchronizeStep.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\ConnectionStringEditor.cs.resx">
+      <DependentUpon>ConnectionStringEditor.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Database\Synchronization\ConnectionStringEditor.resx">
+      <DependentUpon>ConnectionStringEditor.vb</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FolderDialog.cs.resx">
       <DependentUpon>FolderDialog.vb</DependentUpon>
       <SubType>Designer</SubType>
@@ -216,6 +276,12 @@
     <None Include="..\..\SharedFiles\Tools.snk">
       <Link>Tools.snk</Link>
     </None>
+    <None Include="Database\DatabaseAccess.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DatabaseAccess.designer.vb</LastGenOutput>
+      <SubType>Designer</SubType>
+      <CustomToolNamespace>Data</CustomToolNamespace>
+    </None>
     <None Include="Resources\NavBack.png" />
     <None Include="Resources\NavForward.png" />
     <None Include="Resources\Net 31.ico" />
@@ -229,6 +295,9 @@
     <None Include="Resources\Files\VersionHistory_3.htm" />
     <None Include="Resources\Files\VersionHistory_2.htm" />
     <None Include="Resources\Files\VersionHistory_1.htm" />
+    <Content Include="Database\Metanol.mdf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Files\VersionHistoryEnvelope.cs.htm" />
     <Content Include="Resources\Files\VersionHistory_1.cs.htm" />
     <Content Include="Resources\Files\VersionHistory_2.cs.htm" />
@@ -238,6 +307,9 @@
     <Content Include="Shortcuts.txt" />
     <Content Include="TODO.txt" />
     <None Include="Resources\Files\VersionHistoryEnvelope.htm" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{3259AA49-8AA1-44D3-9025-A0B520596A8C}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

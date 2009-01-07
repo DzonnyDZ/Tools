@@ -105,7 +105,7 @@ Public Class ContentTree : Inherits ContentTreeBase
         Return Nothing
     End Function
 
-    Private Sub tvwTree_AfterSelect(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) Handles tvwTree.AfterSelect
+    Protected Overrides Sub tvwTree_AfterSelect(ByVal sender As Object, ByVal e As System.Windows.Forms.TreeViewEventArgs) 'Handles tvwTree.AfterSelect
         If tvwTree.SelectedNode Is Nothing Then
             prgProperty.SelectedObject = Nothing
             Exit Sub

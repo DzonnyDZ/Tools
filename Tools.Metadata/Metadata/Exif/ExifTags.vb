@@ -3175,7 +3175,7 @@ Namespace MetadataT.ExifT
 				Get
 					Const any As ushort=0
 					Select Case Tag
-						Case Tags.GPSVersionID : Return New ExifTagFormat(4, &h0, "GPSVersionID", ExifDataTypes.Byte)
+                    Case Tags.GPSVersionID : Return New ExifTagFormat(4, &H0, "GPSVersionID", ExifDataTypes.Byte)
 						Case Tags.GPSLatitudeRef : Return New ExifTagFormat(2, &h1, "GPSLatitudeRef", ExifDataTypes.ASCII)
 						Case Tags.GPSLatitude : Return New ExifTagFormat(3, &h2, "GPSLatitude", ExifDataTypes.URational)
 						Case Tags.GPSLongitudeRef : Return New ExifTagFormat(2, &h3, "GPSLongitudeRef", ExifDataTypes.ASCII)

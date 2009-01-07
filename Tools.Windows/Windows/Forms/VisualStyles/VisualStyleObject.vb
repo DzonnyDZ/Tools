@@ -871,7 +871,7 @@ Namespace WindowsT.FormsT.VisualStylesT
         Private _State As Integer
         ''' <summary>Gets or sets state to be rendered</summary>
         ''' <returns>Satate of object to be rendered</returns>
-        ''' <remarks>Use <see cref="GetStates"/> to get possible values of this property. When state cannot be rendered default state is used instead (<see cref="GetDefaultState"/>).</remarks>
+        ''' <remarks>Use <see cref="GetStates"/> to get possible values of this property. When state cannot be rendered default state is used instead (<see cref="GetFallback1"/>, <see cref="GetFallBack2"/>, <see cref="GetFallBack3"/>).</remarks>
         Protected Property State() As Integer
             Get
                 Return _State

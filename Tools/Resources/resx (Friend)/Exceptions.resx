@@ -1239,4 +1239,13 @@
   <data name="ThisInstanceWasCreatedFromSizeChangedEventArgsWhich" xml:space="preserve">
     <value>This instance was created from SizeChangedEventArgs which's OriginalSource is not UIElement</value>
   </data>
+  <data name="ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith" xml:space="preserve">
+    <value>Value is invalid ASCII value because it is not terminated with nullchar.</value>
+  </data>
+  <data name="String0IsNotValid1" xml:space="preserve">
+    <value>String "{0}" is not valid {1}</value>
+  </data>
+  <data name="KeyIsInvalidForIPTCMetadata" xml:space="preserve">
+    <value>Key is invalid for IPTC metadata.</value>
+  </data>
 </root>

@@ -3,7 +3,7 @@ Imports Tools.VisualBasicT, System.IO, System.Linq, Tools.LinqT
 Namespace IOt
     ''' <summary>Wraps <see cref="String"/> into separet class representing path and allows operation with it</summary>
     ''' <remarks>There are no check of validity of paths in current file system during operations, so you can operate with nonexisting paths (unless specified otherwise).</remarks>
-    ''' <seelaso cref="M:Tools.IOt.FileTystemTools.GetIcon(Tools.IOt.Path,System.Boolean,System.Boolean)"/>
+    ''' <seelaso cref="M:Tools.IOt.FileSystemTools.GetIcon(Tools.IOt.Path,System.Boolean,System.Boolean)"/>
     ''' <author www="http://dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2" stage="RC"><see cref="VersionAttribute"/> and <see cref="AuthorAttribute"/> removed</version>
     <DebuggerDisplay("{Path}")> _

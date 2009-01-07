@@ -1,0 +1,66 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Database Name="Metanol" Class="DatabaseAccessDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=.\SQLEXPRESS2008;AttachDbFilename=|DataDirectory|\Database\Metanol.mdf;Integrated Security=True;Connect Timeout=30;User Instance=True" SettingsObjectName="Tools.Metanol.My.MySettings" SettingsPropertyName="MetanolConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Exif" Member="Exifs">
+    <Type Name="Exif">
+      <Column Name="PictureID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="Digitized" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Association Name="Picture_Exif" Member="Picture" ThisKey="PictureID" OtherKey="ID" Type="Picture" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.IPTC" Member="IPTCs">
+    <Type Name="IPTC">
+      <Column Name="PictureID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ObjectName" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="CountryCode" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Province" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Sublocation" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Keywords" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Copyright" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Credit" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="EditStatus" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Urgence" Type="System.Decimal" DbType="Decimal(1,0)" CanBeNull="true" />
+      <Association Name="Picture_IPTC" Member="Picture" ThisKey="PictureID" OtherKey="ID" Type="Picture" IsForeignKey="true" DeleteRule="CASCADE" DeleteOnNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Picture" Member="Pictures">
+    <Type Name="Picture">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Folder" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="x" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="y" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LastSync" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Picture_Exif" Member="Exif" ThisKey="ID" OtherKey="PictureID" Type="Exif" Cardinality="One" />
+      <Association Name="Picture_IPTC" Member="IPTC" ThisKey="ID" OtherKey="PictureID" Type="IPTC" Cardinality="One" />
+    </Type>
+  </Table>
+  <Table Name="dbo.PictureMetadata" Member="PictureMetadatas">
+    <Type Name="PictureMetadata">
+      <Column Name="ID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="FileName" Type="System.String" DbType="VarChar(256) NOT NULL" CanBeNull="false" />
+      <Column Name="Folder" Type="System.String" DbType="VarChar(512) NOT NULL" CanBeNull="false" />
+      <Column Name="x" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="y" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="LastSync" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="Model" Type="System.String" DbType="NVarChar(1024)" CanBeNull="true" />
+      <Column Name="Digitized" Type="System.DateTime" DbType="DateTime" CanBeNull="true" />
+      <Column Name="ObjectName" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Text" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="City" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="CountryCode" Type="System.String" DbType="Char(3)" CanBeNull="true" />
+      <Column Name="Country" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Province" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Sublocation" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Keywords" Type="System.String" DbType="VarChar(MAX)" CanBeNull="true" />
+      <Column Name="Copyright" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Credit" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="EditStatus" Type="System.String" DbType="VarChar(1024)" CanBeNull="true" />
+      <Column Name="Urgence" Type="System.Decimal" DbType="Decimal(1,0)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

@@ -254,4 +254,67 @@
   <data name="MetanolBig" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\MetanolBig.png;System.Drawing.Bitmap, System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="SynchronizeWithDatabase" xml:space="preserve">
+    <value>Synchronize With Database</value>
+  </data>
+  <data name="FileSuccessfullyCreated" xml:space="preserve">
+    <value>File successfully created.</value>
+  </data>
+  <data name="CreateNewdatabaseFile" xml:space="preserve">
+    <value>Create newdatabase file</value>
+  </data>
+  <data name="TestConnectionFailed" xml:space="preserve">
+    <value>Test connection failed</value>
+  </data>
+  <data name="Folder0DoesNotExists" xml:space="preserve">
+    <value>Folder {0} does not exists.</value>
+  </data>
+  <data name="BadFolder" xml:space="preserve">
+    <value>Bad folder</value>
+  </data>
+  <data name="ChildFolder0Of1IsAlreadySelected" xml:space="preserve">
+    <value>Child folder {0} of {1} is already selected.</value>
+  </data>
+  <data name="ParentFolder0Of1IsAlreadySelected" xml:space="preserve">
+    <value>Parent folder {0} of {1} is already selected.</value>
+  </data>
+  <data name="Path0IsAlreadySelected" xml:space="preserve">
+    <value>Path {0} is already selected.</value>
+  </data>
+  <data name="Counting" xml:space="preserve">
+    <value>Counting</value>
+  </data>
+  <data name="PleaseWait" xml:space="preserve">
+    <value>please wait ...</value>
+  </data>
+  <data name="ThereWasAnErrorProcessingFolder012" xml:space="preserve">
+    <value>There was an error processing folder {0}:{1}{2}</value>
+  </data>
+  <data name="IgnoreAll" xml:space="preserve">
+    <value>Ignore all</value>
+  </data>
+  <data name="IgnoreAll_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
+    <value>a</value>
+  </data>
+  <data name="ImageInDatabase" xml:space="preserve">
+    <value>Image in database</value>
+  </data>
+  <data name="DoNotShowThisDialogAgain" xml:space="preserve">
+    <value>Do not show this dialog again.</value>
+  </data>
+  <data name="TheFileWithSameNameAs0AlreadyExistsInDatabaseInThe1" xml:space="preserve">
+    <value>The file with same name as {0} already exists in database in the {1} folder.</value>
+  </data>
+  <data name="Relocate" xml:space="preserve">
+    <value>Relocate</value>
+  </data>
+  <data name="Relocate_AccessKey" type="System.Char, mscorlib" xml:space="preserve">
+    <value>R</value>
+  </data>
+  <data name="TestSucceeded" xml:space="preserve">
+    <value>Test succeeded.</value>
+  </data>
+  <data name="TestConnection" xml:space="preserve">
+    <value>Test connection</value>
+  </data>
 </root>

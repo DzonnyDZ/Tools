@@ -1,17 +1,20 @@
 ﻿Imports System.ComponentModel
 Imports System.Windows.Forms
-
-Namespace GUI
+#If Config <= Nightly Then 'Stage: Nightly
+Namespace WindowsT.FormsT
     ''' <summary>Wizard form</summary>
-    ''' <remarks>Tipically you implement wizard steps as <see cref="Control">Controls</see> which implements <see cref="IWizardControl"/>.
+    ''' <remarks>Typically you implement wizard steps as <see cref="Control">Controls</see> which implements <see cref="IWizardControl"/>.
     ''' However step of wizard can be any <see cref="Control"/>. In such case you can obtain wizard as YourControl.<see cref="Control.FindForm">FindForm</see>.</remarks>
+    ''' <version version="1.5.2" stage="Nightly">Class moved from experimental (namespace <see cref="N:Tools.Experimental.GUI"/>)</version>
     Public Class Wizard
         Inherits Form
-
+        ''' <summary>Default text for previos step button</summary>
         Public Shared ReadOnly DefaultPrevButtonText$
+        ''' <summary>Default text for next step button</summary>
         Public Shared ReadOnly DefaultNextButtonText$
+        ''' <summary>Default text for cancel button</summary>
         Public Shared ReadOnly DefaultCancelButtonText$
-
+        ''' <summary>Initializer</summary>
         Shared Sub New()
             Dim Temp As New Wizard(New Control)
             DefaultPrevButtonText = Temp.PrevButton.Text
@@ -380,6 +383,7 @@ Namespace GUI
     End Class
 
     ''' <summary>Arguments of wizard events related to spets</summary>
+    ''' <version version="1.5.2" stage="Nightly">Class moved from experimental (namespace <see cref="N:Tools.Experimental.GUI"/>)</version>
     Public Class StepEventArgs : Inherits EventArgs
         ''' <summary>CTor</summary>
         ''' <param name="Control">Contro of the step</param>
@@ -391,22 +395,16 @@ Namespace GUI
     End Class
 
     ''' <summary>Provides basic interface for wizard steps of <see cref="Wizard"/>.</summary>
+    ''' <version version="1.5.2" stage="Nightly">Interface moved from experimental (namespace <see cref="N:Tools.Experimental.GUI"/>)</version>
     Public Interface IWizardControl
         ''' <summary>This property is being set by <see cref="Wizard"/> when control is added to <see cref="Wizard"/>.</summary>
+        ''' <returns>Owning wizard of this instance</returns>
+        ''' <value>Owning wizard initializes this property</value>
         ''' <remarks>In setter of this property the wizard control should subscribe to wizard events.</remarks>
         Property Wizard() As Wizard
         ''' <summary>Asks wizard control for control that follows after it.</summary>
         ''' <remarks>Control returned by this function should implement <see cref="IWizardControl"/>.</remarks>
         Function GetNext() As Control
     End Interface
-
-    ''' <summary>Implements <see cref="Wizard"/> with specific first-step control</summary>
-    ''' <typeparam name="T">Type of control of firts step</typeparam>
-    Public Class Wizard(Of T As {Control, New, IWizardControl})
-        Inherits Wizard
-        ''' <summary>CTor</summary>
-        Public Sub New()
-            MyBase.New(New T)
-        End Sub
-    End Class
 End Namespace
+#End If

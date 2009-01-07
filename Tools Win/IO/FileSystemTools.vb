@@ -5,7 +5,8 @@ Imports System.Runtime.InteropServices
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace IOt
     ''' <summary>Contains file system-related methods and extension methods</summary>
-    Public Module FileTystemTools
+    ''' <version version="1.5.2">Renamed from FileTystemTools to FileSystemTools</version>
+    Public Module FileSystemTools
         ''' <summary>Gets icon for given file or folder</summary>
         ''' <param name="PathP">Provides path to get icon for</param>
         ''' <param name="Large">True to get large icon (false to get small icon)</param>

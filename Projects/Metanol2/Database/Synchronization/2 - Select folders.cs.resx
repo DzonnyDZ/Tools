@@ -117,4 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
+  <data name="lblName.Location" type="System.Drawing.Point, System.Drawing">
+    <value>169, 0</value>
+  </data>
+  <data name="lblName.Size" type="System.Drawing.Size, System.Drawing">
+    <value>190, 31</value>
+  </data>
+  <data name="lblName.Text" xml:space="preserve">
+    <value>Vybrat složky</value>
+  </data>
+  <data name="lblFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>39, 13</value>
+  </data>
+  <data name="lblFolder.Text" xml:space="preserve">
+    <value>&amp;Složka</value>
+  </data>
+  <data name="cmdFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>449, 60</value>
+  </data>
+  <data name="txtFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>48, 61</value>
+  </data>
+  <data name="txtFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>395, 20</value>
+  </data>
+  <data name="cmdAddFolder.Location" type="System.Drawing.Point, System.Drawing">
+    <value>481, 60</value>
+  </data>
+  <data name="cmdAddFolder.Size" type="System.Drawing.Size, System.Drawing">
+    <value>45, 23</value>
+  </data>
+  <data name="cmdAddFolder.Text" xml:space="preserve">
+    <value>&amp;Přidat</value>
+  </data>
+  <data name="fraFolders.Text" xml:space="preserve">
+    <value>&amp;Vybrané složky</value>
+  </data>
+  <data name="lblI.Location" type="System.Drawing.Point, System.Drawing">
+    <value>38, 31</value>
+  </data>
+  <data name="lblI.Size" type="System.Drawing.Size, System.Drawing">
+    <value>452, 26</value>
+  </data>
+  <data name="lblI.Text" xml:space="preserve">
+    <value>Vyberte složky k synchronizaci s databází. Metadata obrázků JPEG z vybraných složek budou synchronizovna s databází.</value>
+  </data>
 </root>

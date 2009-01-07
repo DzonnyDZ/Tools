@@ -488,6 +488,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>CompositeControls.resx</DependentUpon>
     </Compile>
+    <Compile Include="Windows\Forms\Dialogs\Wizard.Designer.vb">
+      <DependentUpon>Wizard.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\Wizard.vb">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\Forms\Dialogs\Wizard`1.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Windows\Interop\DependencyPropertyChangedEventArgsEventArgs.vb" />
     <Compile Include="Windows\Interop\InteropConverters.vb" />
     <Compile Include="Windows\Interop\SizeInfoEventArgs.vb" />
@@ -535,6 +544,12 @@
       <LastGenOutput>WindowsT.FormsT.CompositeControls.Designer.vb</LastGenOutput>
       <LogicalName>Tools.WindowsT.FormsT.CompositeControls.resources</LogicalName>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\Wizard.cs.resx">
+      <DependentUpon>Wizard.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\Forms\Dialogs\Wizard.resx">
+      <DependentUpon>Wizard.vb</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,11 +1,17 @@
-Imports Tools.CollectionsT.GenericT
+Imports Tools.CollectionsT.GenericT, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
 Imports Tools.DataStructuresT.GenericT
 Namespace MetadataT.IptcT
 #If Congig <= Alpha Then 'Stage: Alpha
+    ''' <summary>Provides IPTC metadata</summary>
+    ''' <remarks>Value key format for this <see cref="IMetadata"/> is "RecordNumber:DatasetNumber".</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
-    <Version(1, 1, GetType(IPTC), LastChange:="10/03/2007")> _
-    <FirstVersion("06/01/2007")> _
+    ''' <version version="1.5.2">The <see cref="IMetadata"/> interface implemented</version>
+    ''' <version version="1.5.2">The <see cref="AuthorAttribute"/>, <see cref="VersionAttribute"/> and <see cref="FirstVersionAttribute"/> attributes removed</version>
     Partial Public Class Iptc
+        Implements IMetadata
+        ''' <summary>Name identifiying IPTC metadata in <see cref="IMetadataProvider"/></summary>
+        ''' <version version="1.5.2">Constant introduced</version>
+        Public Const IptcName$ = "IPTC"
         ''' <summary>Do nothing CTor</summary>
         Public Sub New()
             AddHandler _Tags.Adding, AddressOf _Tags_Change
@@ -28,7 +34,7 @@ Namespace MetadataT.IptcT
 
         ''' <summary>CTor from <see cref="IPTCReader"/></summary>
         ''' <param name="Reader"><see cref="IPTCReader"/> to read all tags from</param>
-        Public Sub New(ByVal Reader As IPTCReader)
+        Public Sub New(ByVal Reader As IptcReader)
             Me.New()
             For Each t As IptcRecord In Reader.Records
                 Tags.Add(New KeyValuePair(Of DataSetIdentification, Byte())(DataSetIdentification.GetKnownDataSet(t.RecordNumber, t.Tag), t.Data))
@@ -39,7 +45,7 @@ Namespace MetadataT.IptcT
         ''' <param name="TagNumber">Number of tag within <paramref name="Record"></paramref></param>
         ''' <exception cref="InvalidEnumArgumentException">
         ''' <paramref name="Record"></paramref> is not member of <see cref="RecordNumbers"></see> -or- <paramref name="TagNumber"></paramref> is not tag within <paramref name="record"></paramref></exception>
-        Public Shared Function GetTag(ByVal Record As RecordNumbers, ByVal TagNumber As Byte) As IPTCTag
+        Public Shared Function GetTag(ByVal Record As RecordNumbers, ByVal TagNumber As Byte) As IptcTag
             Dim lUseThisGroup As GroupInfo = Nothing
             Return GetTag(Record, TagNumber, lUseThisGroup)
         End Function
@@ -189,10 +195,134 @@ Namespace MetadataT.IptcT
             str.Position = 0
             Return New System.IO.BinaryReader(str).ReadBytes(pos)
         End Function
+#Region "IMetadata"
+        ''' <summary>Parses key from its string value or predefined name</summary>
+        ''' <param name="Key">Key to parse</param>
+        ''' <param name="TryPredefined">True to try get predefined dataset identification by name; false to use code only.</param>
+        ''' <returns>Parsed key</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> is not predefined key (or <paramref name="TryPredefined"/> is false) and is in invalid format for <see cref="DataSetIdentification"/>.</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        Private Function ParseKey(ByVal Key As String, Optional ByVal TryPredefined As Boolean = True) As DataSetIdentification
+            If TryPredefined Then
+                Dim Ret As DataSetIdentification? = KeyFromPredefinedName(Key)
+                If Ret.HasValue Then Return Ret.Value
+            End If
+            Try
+                Return New DataSetIdentification(Key)
+            Catch ex As Exception
+                Throw New ArgumentException(ResourcesT.Exceptions.KeyIsInvalidForIPTCMetadata, ex)
+            End Try
+        End Function
+        ''' <summary>Gets <see cref="DataSetIdentification"/> from <see cref="DataSetIdentification.PropertyName"/></summary>
+        ''' <param name="Key">Name of dataset identification to get</param>
+        ''' <returns>Dataset identification or null if no dataset identification with given <see cref="DataSetIdentification.PropertyName"/> is in <see cref="DataSetIdentification.KnownDataSets"/>.</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        Private Function KeyFromPredefinedName(ByVal Key$) As DataSetIdentification?
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = Key Select New DataSetIdentification?(dsi)).FirstOrDefault
+        End Function
 
+        ''' <summary>Gets value indicating wheather metadata value with given key is present in current instance</summary>
+        ''' <param name="Key">Key (or name) to check presence of (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>True when value for given key is present; false otherwise</returns>
+        ''' <remarks>The <paramref name="Key"/> parameter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function ContainsKey(ByVal Key As String) As Boolean Implements IMetadata.ContainsKey
+            Return Me.Contains(ParseKey(Key))
+        End Function
 
+        ''' <summary>Gets keys of all the metadata present in curent instance</summary>
+        ''' <returns>Keys in metadata-specific format of all the metadata present in curent instance. Never returns null; may return anempt enumeration.</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetContainedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetContainedKeys
+            Return From tag In Me.Tags Select Key = tag.Key.ToString
+        End Function
 
+        ''' <summary>Gets localized description for given key (or name)</summary>
+        ''' <param name="Key">Key (or name) to get description of</param>
+        ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; nul when description is not available.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetDescription(ByVal Key As String) As String Implements IMetadata.GetDescription
+            Dim KeyDsi = ParseKey(Key)
+            Dim PropertyName = GetNameOfKey(KeyDsi.ToString)
+            If PropertyName Is Nothing Then Return Nothing
+            Dim Prp = GetType(Iptc).GetProperty(PropertyName)
+            If Prp Is Nothing Then Return Nothing
+            Dim DescA = Prp.GetAttribute(Of DescriptionAttribute)()
+            If DescA Is Nothing Then Return Nothing
+            Return DescA.Description
+        End Function
 
+        ''' <summary>Gets localized human-readable name for given key (or name)</summary>
+        ''' <param name="Key">Key (or name) to get name for</param>
+        ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid formar or it is not one of predefined names.</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
+            Dim KeyDsi = ParseKey(Key)
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.DatasetNumber Select dsi.DisplayName).FirstOrDefault
+        End Function
+
+        ''' <summary>Gets key for predefined name</summary>
+        ''' <param name="Name">Name to get key for</param>
+        ''' <returns>Key in metadata-specific format for given predefined metadata item name</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Name"/> is not one of predefined names retuened by <see cref="GetPredefinedNames"/>.</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetKeyOfName(ByVal Name As String) As String Implements IMetadata.GetKeyOfName
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.PropertyName = Name Select Key = dsi.ToString).FirstOrDefault
+        End Function
+
+        ''' <summary>Gets name for key</summary>
+        ''' <param name="Key">Key to get name for</param>
+        ''' <returns>One of predefined names to use instead of <paramref name="Key"/>; null when given key has no corresponding name.</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
+            Dim KeyDsi = ParseKey(Key, False)
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.DatasetNumber Select dsi.PropertyName).FirstOrDefault
+        End Function
+
+        ''' <summary>Gets all keys predefined for curent metadata format</summary>
+        ''' <returns>Eumeration containing all predefined (well-known) keys of metadata for this metadata format. Returns always the same enumeration event when values for some keys are not present. Never returns null; may return an empty enumeration.</returns>
+        ''' <remarks>Not all predefined keys are required to have corresponding names obtainable via <see cref="GetNameOfKey"/>.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetPredefinedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedKeys
+            Return From k In DataSetIdentification.KnownDataSets(True) Select Key = k.ToString
+        End Function
+
+        ''' <summary>Gets all predefined names for metadata keys</summary>
+        ''' <returns>Enumeration containing all predefined names of metadata items for this metadada format. Never returns null; may return an empty enumeration.</returns>
+        ''' <remarks>Metadata format may support 2 formats of retrieving of metadata values: By key and by name. The by-name format is optional.
+        ''' Keys are typically computer-friendly strings (like tag numbers or addresses) and metedata format may support values with non-predefined keys.
+        ''' Names are typically human-friendly (not-localized) string (like names) and only predefined names are supported (if any). Each name must have its corresponding key. Names are only aliases to certain important keys.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetPredefinedNames() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetPredefinedNames
+            Return From k In DataSetIdentification.KnownDataSets(True) Select Key = k.PropertyName
+        End Function
+
+        ''' <summary>Gets name of metadata format represented by implementation</summary>
+        ''' <returns><see cref="IptcName"/></returns>
+        ''' <remarks>All <see cref="IMetadataProvider">IMetadataProviders</see> returning IPTC format should identify the format by this name.</remarks>
+        ''' <version version="1.5.2">Property introduced</version>
+        Private ReadOnly Property Name() As String Implements IMetadata.Name
+            Get
+                Return IptcName
+            End Get
+        End Property
+
+        ''' <summary>Gets medata value with given key</summary>
+        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>Value of metadata item with given key; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.2">Property introduced</version>
+        Public Overloads ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
+            Get
+                Return Me(ParseKey(Key))
+            End Get
+        End Property
+#End Region
     End Class
     ''' <summary>Represents common base for <see cref="IPTCGetException"/> and <see cref="IPTCSetException"/></summary>
     Public MustInherit Class IptcException : Inherits Exception
@@ -203,7 +333,7 @@ Namespace MetadataT.IptcT
         End Sub
     End Class
     ''' <summary>Thrown when an error occurs when geting IPTC tag value</summary>
-    Public Class IptcGetException : Inherits IPTCException
+    Public Class IptcGetException : Inherits IptcException
         ''' <summary>CTor</summary>
         ''' <param name="InnerException">Inner exception</param>
         Public Sub New(ByVal InnerException As Exception)
@@ -223,6 +353,54 @@ Namespace MetadataT.IptcT
     ''' <completionlist cref="DataSetIdentification"/>
     <DebuggerDisplay("{RecordNumber}:{DatasetNumber} {DisplayName}")> _
     Partial Public Structure DataSetIdentification : Implements IPair(Of RecordNumbers, Byte), IEquatable(Of IPair(Of RecordNumbers, Byte)), ICloneable(Of DataSetIdentification)
+#Region "Parse"
+        ''' <summary>CTor form string representation</summary>
+        ''' <param name="RecordAndDataSet">String representation in format "RecordNumber:DatasetNumber"</param>
+        ''' <exception cref="argumentnullexception"><paramref name="RecordAndDataSet"/> is null</exception>
+        ''' <exception cref="formatexception"><paramref name="RecordAndDataSet"/> does not contain 2 :-separated parts -or- any part of <paramref name="RecordAndDataSet"/> is not in correct format for <see cref="Int32.Parse"/> in invariant culture.</exception>
+        ''' <exception cref="overflowexception">Any part of <paramref name="RecordAndDataSet"/> does not fit to <see cref="Int32"/> data type or to <see cref="Byte"/> data type.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">RecordNumber-part is greater than 9</exception> 
+        ''' <seelaso cref="Parse"/>
+        ''' <version version="1.5.2">Constructor introduced</version>
+        Public Sub New(ByVal RecordAndDataSet As String)
+            If RecordAndDataSet Is Nothing Then Throw New ArgumentNullException("RecordAndDataSet")
+            Dim parts = RecordAndDataSet.Split(":"c)
+            If parts.Length <> 2 Then Throw New FormatException(ResourcesT.Exceptions.String0IsNotValid1.f(RecordAndDataSet, GetType(DataSetIdentification).Name))
+            Me.RecordNumber = Integer.Parse(parts(0), System.Globalization.CultureInfo.InvariantCulture)
+            Me.DatasetNumber = Integer.Parse(parts(1), System.Globalization.CultureInfo.InvariantCulture)
+        End Sub
+        ''' <summary>Parses <see cref="DataSetIdentification"/> from string representation</summary>
+        ''' <param name="Value">String representation in format "RecordNumber:DatasetNumber"</param>
+        ''' <exception cref="argumentnullexception"><paramref name="Value"/> is null</exception>
+        ''' <exception cref="formatexception"><paramref name="Value"/> does not contain 2 :-separated parts -or- any part of <paramref name="Value"/> is not in correct format for <see cref="Int32.Parse"/> in invariant culture.</exception>
+        ''' <exception cref="overflowexception">Any part of <paramref name="Value"/> does not fit to <see cref="Int32"/> data type or to <see cref="Byte"/> data type.</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">RecordNumber-part is greater than 9</exception> 
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <seelaso cref="TryParse"/>
+        Public Shared Function Parse(ByVal Value As String) As DataSetIdentification
+            Return New DataSetIdentification(Value)
+        End Function
+        ''' <summary>Attempts to parse <see cref="DataSetIdentification"/> from string representation</summary>
+        ''' <param name="Value">String representation in format "RecordNumber:DatasetNumber"</param>
+        ''' <param name="ParsedValue">When successfull contains parsed value when function returns</param>
+        ''' <returns>True when successfull; false when <paramref name="Value"/> is invalid.</returns>
+        ''' <seelaso cref="Parse"/>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Shared Function TryParse(ByVal Value$, ByRef ParsedValue As DataSetIdentification) As Boolean
+            Try
+                ParsedValue = Parse(Value)
+                Return True
+            Catch ex As Exception When TypeOf ex Is ArgumentNullException OrElse TypeOf ex Is FormatException OrElse TypeOf ex Is OverflowException OrElse TypeOf ex Is ArgumentOutOfRangeException
+                Return False
+            End Try
+        End Function
+        ''' <summary>Gets string representation of current <see cref="DataSetIdentification"/></summary>
+        ''' <returns>String in format "RecordNumber:DatasetNumber" in invariant culture</returns>
+        ''' <version version="1.5.2">Override introduced</version>
+        Public Overrides Function ToString() As String
+            Return String.Format(Globalization.CultureInfo.InvariantCulture, "{0}:{1}", RecordNumber, DatasetNumber)
+        End Function
+#End Region
         ''' <summary>Contains value of the <see cref="RecordNumber"/> property</summary>
         <EditorBrowsable(EditorBrowsableState.Never)> _
         Private _RecordNumber As RecordNumbers

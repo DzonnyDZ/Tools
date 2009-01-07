@@ -1172,7 +1172,7 @@ Namespace WindowsT.IndependentT
                     Return New MessageBoxButton(My.Resources.OK, DialogResult.OK, My.Resources.OK_access)
                 End Get
             End Property
-            ''' <summary>Default Cancle button</summary>
+            ''' <summary>Default Cancel button</summary>
             ''' <returns>On each call retirns another (newly created instance) of button</returns>
             Public Shared ReadOnly Property Cancel() As MessageBoxButton
                 Get
