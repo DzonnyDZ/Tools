@@ -2,7 +2,7 @@ Imports Tools.CollectionsT.GenericT, Tools.ExtensionsT, System.Linq, Tools.Refle
 Imports Tools.DataStructuresT.GenericT
 Namespace MetadataT.IptcT
 #If Congig <= Alpha Then 'Stage: Alpha
-    ''' <summary>Provides IPTC metadata</summary>
+    ''' <summary>Provides high-level access to IPTC metadata</summary>
     ''' <remarks>Value key format for this <see cref="IMetadata"/> is "RecordNumber:DatasetNumber".</remarks>
     ''' <author web="http://dzonny.cz" mail="dzonny@dzonny.cz">Ðonny</author>
     ''' <version version="1.5.2">The <see cref="IMetadata"/> interface implemented</version>

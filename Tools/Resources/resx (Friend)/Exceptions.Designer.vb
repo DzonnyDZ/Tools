@@ -933,6 +933,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Exif m,etadata key must contain 2 :-separated parts.'.
+        '''</summary>
+        Friend Shared ReadOnly Property ExifMEtadataKeyMustContain2SeparatedParts() As String
+            Get
+                Return ResourceManager.GetString("ExifMEtadataKeyMustContain2SeparatedParts", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '&quot;Exif pof subIFD being added/replaced must be either null or same as Exif of parent IFD'.
         '''</summary>
         Friend Shared ReadOnly Property ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD() As String
@@ -1109,6 +1118,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent() As String
             Get
                 Return ResourceManager.GetString("IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'IFD identification part of Exif metadata key is invalid. It must be either E, G, I or number.'.
+        '''</summary>
+        Friend Shared ReadOnly Property IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust() As String
+            Get
+                Return ResourceManager.GetString("IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust", _resourceCulture)
             End Get
         End Property
         
@@ -2076,6 +2094,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property RecordMustBeFrom0To9() As String
             Get
                 Return ResourceManager.GetString("RecordMustBeFrom0To9", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Record number part of Exif metadata identification is invalid.'.
+        '''</summary>
+        Friend Shared ReadOnly Property RecordNumberPartOfExifMetadataIdentificationIsInvalid() As String
+            Get
+                Return ResourceManager.GetString("RecordNumberPartOfExifMetadataIdentificationIsInvalid", _resourceCulture)
             End Get
         End Property
         
@@ -3153,6 +3180,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property UnknownISO2022EncodingType0() As String
             Get
                 Return ResourceManager.GetString("UnknownISO2022EncodingType0", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Unknown predefined name &quot;{0}&quot;.'.
+        '''</summary>
+        Friend Shared ReadOnly Property UnknownPredefinedName0() As String
+            Get
+                Return ResourceManager.GetString("UnknownPredefinedName0", _resourceCulture)
             End Get
         End Property
         
@@ -4326,6 +4362,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the ExifMEtadataKeyMustContain2SeparatedParts property value.
+        '''</summary>
+        '''<returns>The ExifMEtadataKeyMustContain2SeparatedParts property value.</returns>
+        Friend Shared Function ExifMEtadataKeyMustContain2SeparatedPartsFormat() As String
+            Return ExifMEtadataKeyMustContain2SeparatedParts
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD property value.
         '''</summary>
         '''<returns>The ExifPofSubIFDBeingAddedReplacedMustBeEitherNullOrSameAsExifOfParentIFD property value.</returns>
@@ -4488,6 +4532,14 @@ Namespace ResourcesT
         '''<returns>The IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent property value.</returns>
         Friend Shared Function IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponentFormat() As String
             Return IFDBeingSavedIsInvalidPointerToSubIFDMustHaveOneComponent
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust property value.
+        '''</summary>
+        '''<returns>The IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust property value.</returns>
+        Friend Shared Function IFDIdentificationPartOfExifMetadataKeyIsInvalidItMustFormat() As String
+            Return IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust
         End Function
         
         '''<summary>
@@ -5434,6 +5486,14 @@ Namespace ResourcesT
         '''<returns>The RecordMustBeFrom0To9 property value.</returns>
         Friend Shared Function RecordMustBeFrom0To9Format() As String
             Return RecordMustBeFrom0To9
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the RecordNumberPartOfExifMetadataIdentificationIsInvalid property value.
+        '''</summary>
+        '''<returns>The RecordNumberPartOfExifMetadataIdentificationIsInvalid property value.</returns>
+        Friend Shared Function RecordNumberPartOfExifMetadataIdentificationIsInvalidFormat() As String
+            Return RecordNumberPartOfExifMetadataIdentificationIsInvalid
         End Function
         
         '''<summary>
@@ -6464,6 +6524,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function UnknownISO2022EncodingType0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnknownISO2022EncodingType0, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unknown predefined name &quot;{0}&quot;.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function UnknownPredefinedName0Format(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnknownPredefinedName0, arg0)
         End Function
         
         '''<summary>

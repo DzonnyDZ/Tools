@@ -6,95 +6,130 @@
 '
 ' Generated code from "ExifTags.xml"
 '
-' Created: 26. listopadu 2008
+' Created: 8. ledna 2009
 ' By:BigBook\Honza
 '
 'Localize: This auto-generated file was skipped during localization
 #If Config <= Nightly 'Stage: Nightly
 #Region "Generated code"
+Imports Tools.ComponentModelT
 Namespace MetadataT.ExifT
 		Partial Public Class IfdMain
 			''' <summary>Tag numbers used in IFD0 and IFD1</summary>
+			''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added for enum items.</version>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Sub IFD pointers"
 				''' <summary>Exif IFD Pointer</summary>
-				<Category("PointersMain")>ExifIFD = &h8769
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exif IFD"), Category("PointersMain")>ExifIFD = &h8769
 				''' <summary>GPS Info IFD Pointer</summary>
-				<Category("PointersMain")>GPSIFD = &h8825
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS IFD"), Category("PointersMain")>GPSIFD = &h8825
 #End Region
 #Region "Tags relating to image data structure"
 				''' <summary>Image width</summary>
-				<Category("ImageDataStructure")>ImageWidth = &h100
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Image width"), Category("ImageDataStructure")>ImageWidth = &h100
 				''' <summary>Image height</summary>
-				<Category("ImageDataStructure")>ImageLength = &h101
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Image lenght"), Category("ImageDataStructure")>ImageLength = &h101
 				''' <summary>Number of bits per component</summary>
-				<Category("ImageDataStructure")>BitsPerSample = &h102
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Bits per sample"), Category("ImageDataStructure")>BitsPerSample = &h102
 				''' <summary>Compression scheme</summary>
-				<Category("ImageDataStructure")>Compression = &h103
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Compression"), Category("ImageDataStructure")>Compression = &h103
 				''' <summary>Pixel composition</summary>
-				<Category("ImageDataStructure")>PhotometricInterpretation = &h106
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Photometric interpretation"), Category("ImageDataStructure")>PhotometricInterpretation = &h106
 				''' <summary>Orientation of image</summary>
-				<Category("ImageDataStructure")>Orientation = &h112
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Orientation"), Category("ImageDataStructure")>Orientation = &h112
 				''' <summary>Number of components</summary>
-				<Category("ImageDataStructure")>SamplesPerPixel = &h115
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Samples per pixel"), Category("ImageDataStructure")>SamplesPerPixel = &h115
 				''' <summary>Image data arrangement</summary>
-				<Category("ImageDataStructure")>PlanarConfiguration = &h11C
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Planar configuration"), Category("ImageDataStructure")>PlanarConfiguration = &h11C
 				''' <summary>Subsampling ratio of Y to C</summary>
-				<Category("ImageDataStructure")>YCbCrSubSampling = &h212
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("YCbCr sub-sampling"), Category("ImageDataStructure")>YCbCrSubSampling = &h212
 				''' <summary>Y and C positioning</summary>
-				<Category("ImageDataStructure")>YCbCrPositioning = &h213
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("YCbCr positioning"), Category("ImageDataStructure")>YCbCrPositioning = &h213
 				''' <summary>Image resolution in width direction</summary>
-				<Category("ImageDataStructure")>XResolution = &h11A
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("X-resolution"), Category("ImageDataStructure")>XResolution = &h11A
 				''' <summary>Image resolution in height direction</summary>
-				<Category("ImageDataStructure")>YResolution = &h11B
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Y-resolution"), Category("ImageDataStructure")>YResolution = &h11B
 				''' <summary>Unit of X and Y resolution</summary>
-				<Category("ImageDataStructure")>ResolutionUnit = &h128
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Resolution unit"), Category("ImageDataStructure")>ResolutionUnit = &h128
 #End Region
 #Region "Tags relating to recording offset"
 				''' <summary>Image data location</summary>
-				<Category("RecordingOffset")>StripOffsets = &h111
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Strip offsets"), Category("RecordingOffset")>StripOffsets = &h111
 				''' <summary>Number of rows per strip</summary>
-				<Category("RecordingOffset")>RowsPerStrip = &h116
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Rows per strip"), Category("RecordingOffset")>RowsPerStrip = &h116
 				''' <summary>Bytes per compressed strip</summary>
-				<Category("RecordingOffset")>StripByteCounts = &h117
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Strip byte counts"), Category("RecordingOffset")>StripByteCounts = &h117
 				''' <summary>Offset to JPEG SOI</summary>
-				<Category("RecordingOffset")>JPEGInterchangeFormat = &h201
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("JPEG interchange format"), Category("RecordingOffset")>JPEGInterchangeFormat = &h201
 				''' <summary>Bytes of JPEG data</summary>
-				<Category("RecordingOffset")>JPEGInterchangeFormatLength = &h202
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("JPEG interchange format length"), Category("RecordingOffset")>JPEGInterchangeFormatLength = &h202
 #End Region
 #Region "Tags relating to image data characteristics"
 				''' <summary>Transfer function</summary>
-				<Category("ImageDataCharacteristicsMain")>TransferFunction = &h12D
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Transfer function"), Category("ImageDataCharacteristicsMain")>TransferFunction = &h12D
 				''' <summary>White point chromaticity</summary>
-				<Category("ImageDataCharacteristicsMain")>WhitePoint = &h13E
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("White point"), Category("ImageDataCharacteristicsMain")>WhitePoint = &h13E
 				''' <summary>Chromaticities of primaries</summary>
-				<Category("ImageDataCharacteristicsMain")>PrimaryChromaticities = &h13F
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Primnary chromacities"), Category("ImageDataCharacteristicsMain")>PrimaryChromaticities = &h13F
 				''' <summary>Color space transformation matrix coefficients</summary>
-				<Category("ImageDataCharacteristicsMain")>YCbCrCoefficients = &h211
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("YCbCr coeficients"), Category("ImageDataCharacteristicsMain")>YCbCrCoefficients = &h211
 				''' <summary>Pair of black and white reference values</summary>
-				<Category("ImageDataCharacteristicsMain")>ReferenceBlackWhite = &h214
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Reference black/white"), Category("ImageDataCharacteristicsMain")>ReferenceBlackWhite = &h214
 #End Region
 #Region "Other tags"
 				''' <summary>File change date and time</summary>
-				<Category("IFDOther")>DateTime = &h132
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Date-time"), Category("IFDOther")>DateTime = &h132
 				''' <summary>Image title</summary>
-				<Category("IFDOther")>ImageDescription = &h10E
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Image description"), Category("IFDOther")>ImageDescription = &h10E
 				''' <summary>Image input equipment manufacturer</summary>
-				<Category("IFDOther")>Make = &h10F
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Make"), Category("IFDOther")>Make = &h10F
 				''' <summary>Image input equipment model</summary>
-				<Category("IFDOther")>Model = &h110
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Model"), Category("IFDOther")>Model = &h110
 				''' <summary>Software used</summary>
-				<Category("IFDOther")>Software = &h131
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Software"), Category("IFDOther")>Software = &h131
 				''' <summary>Person who created the image</summary>
-				<Category("IFDOther")>Artist = &h13B
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Artist"), Category("IFDOther")>Artist = &h13B
 				''' <summary>Copyright holder</summary>
-				<Category("IFDOther")>Copyright = &h8298
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Copyright"), Category("IFDOther")>Copyright = &h8298
 #End Region
 			End Enum
 #Region "Properties"
 #Region "PointersMain"
 			''' <summary>Exif IFD Pointer</summary>
-			<Category("PointersMain"), Description("Exif IFD Pointer")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exif IFD"), Category("PointersMain"), Description("Exif IFD Pointer")> _
 			<CLSCompliant(False)> _
 			Public Property ExifIFD As Nullable(Of UInt32)
 				Get
@@ -112,7 +147,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS Info IFD Pointer</summary>
-			<Category("PointersMain"), Description("GPS Info IFD Pointer")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS IFD"), Category("PointersMain"), Description("GPS Info IFD Pointer")> _
 			<CLSCompliant(False)> _
 			Public Property GPSIFD As Nullable(Of UInt32)
 				Get
@@ -132,7 +168,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "ImageDataStructure"
 			''' <summary>Image width</summary>
-			<Category("ImageDataStructure"), Description("Image width")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Image width"), Category("ImageDataStructure"), Description("Image width")> _
 			<CLSCompliant(False)> _
 			Public Property ImageWidth As Nullable(Of UInt32)
 				Get
@@ -150,7 +187,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image height</summary>
-			<Category("ImageDataStructure"), Description("Image height")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Image lenght"), Category("ImageDataStructure"), Description("Image height")> _
 			<CLSCompliant(False)> _
 			Public Property ImageLength As Nullable(Of UInt32)
 				Get
@@ -168,7 +206,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Number of bits per component</summary>
-			<Category("ImageDataStructure"), Description("Number of bits per component")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Bits per sample"), Category("ImageDataStructure"), Description("Number of bits per component")> _
 			<CLSCompliant(False)> _
 			Public Property BitsPerSample As UInt16()
 				Get
@@ -203,7 +242,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Compression scheme</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="CompressionValues"/></exception>
-			<Category("ImageDataStructure"), Description("Compression scheme")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Compression"), Category("ImageDataStructure"), Description("Compression scheme")> _
 			<CLSCompliant(False)> _
 			Public Property Compression As Nullable(Of CompressionValues)
 				Get
@@ -231,7 +271,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Pixel composition</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="PhotometricInterpretationValues"/></exception>
-			<Category("ImageDataStructure"), Description("Pixel composition")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Photometric interpretation"), Category("ImageDataStructure"), Description("Pixel composition")> _
 			<CLSCompliant(False)> _
 			Public Property PhotometricInterpretation As Nullable(Of PhotometricInterpretationValues)
 				Get
@@ -271,7 +312,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Orientation of image</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="OrientationValues"/></exception>
-			<Category("ImageDataStructure"), Description("Orientation of image")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Orientation"), Category("ImageDataStructure"), Description("Orientation of image")> _
 			<CLSCompliant(False)> _
 			Public Property Orientation As Nullable(Of OrientationValues)
 				Get
@@ -290,7 +332,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Number of components</summary>
-			<Category("ImageDataStructure"), Description("Number of components")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Samples per pixel"), Category("ImageDataStructure"), Description("Number of components")> _
 			<CLSCompliant(False)> _
 			Public Property SamplesPerPixel As Nullable(Of UInt16)
 				Get
@@ -317,7 +360,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Image data arrangement</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="PlanarConfigurationValues"/></exception>
-			<Category("ImageDataStructure"), Description("Image data arrangement")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Planar configuration"), Category("ImageDataStructure"), Description("Image data arrangement")> _
 			<CLSCompliant(False)> _
 			Public Property PlanarConfiguration As Nullable(Of PlanarConfigurationValues)
 				Get
@@ -336,7 +380,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Subsampling ratio of Y to C</summary>
-			<Category("ImageDataStructure"), Description("Subsampling ratio of Y to C")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("YCbCr sub-sampling"), Category("ImageDataStructure"), Description("Subsampling ratio of Y to C")> _
 			<CLSCompliant(False)> _
 			Public Property YCbCrSubSampling As UInt16()
 				Get
@@ -371,7 +416,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Y and C positioning</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="YCbCrPositioningValues"/></exception>
-			<Category("ImageDataStructure"), Description("Y and C positioning")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("YCbCr positioning"), Category("ImageDataStructure"), Description("Y and C positioning")> _
 			<CLSCompliant(False)> _
 			Public Property YCbCrPositioning As Nullable(Of YCbCrPositioningValues)
 				Get
@@ -390,7 +436,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image resolution in width direction</summary>
-			<Category("ImageDataStructure"), Description("Image resolution in width direction")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("X-resolution"), Category("ImageDataStructure"), Description("Image resolution in width direction")> _
 			<CLSCompliant(False)> _
 			Public Property XResolution As Nullable(Of URational)
 				Get
@@ -404,7 +451,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image resolution in height direction</summary>
-			<Category("ImageDataStructure"), Description("Image resolution in height direction")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Y-resolution"), Category("ImageDataStructure"), Description("Image resolution in height direction")> _
 			<CLSCompliant(False)> _
 			Public Property YResolution As Nullable(Of URational)
 				Get
@@ -418,7 +466,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Unit of X and Y resolution</summary>
-			<Category("ImageDataStructure"), Description("Unit of X and Y resolution")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Resolution unit"), Category("ImageDataStructure"), Description("Unit of X and Y resolution")> _
 			<CLSCompliant(False)> _
 			Public Property ResolutionUnit As Nullable(Of UInt16)
 				Get
@@ -438,7 +487,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "RecordingOffset"
 			''' <summary>Image data location</summary>
-			<Category("RecordingOffset"), Description("Image data location")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Strip offsets"), Category("RecordingOffset"), Description("Image data location")> _
 			<CLSCompliant(False)> _
 			Public Property StripOffsets As UInt32()
 				Get
@@ -464,7 +514,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Number of rows per strip</summary>
-			<Category("RecordingOffset"), Description("Number of rows per strip")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Rows per strip"), Category("RecordingOffset"), Description("Number of rows per strip")> _
 			<CLSCompliant(False)> _
 			Public Property RowsPerStrip As Nullable(Of UInt32)
 				Get
@@ -482,7 +533,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Bytes per compressed strip</summary>
-			<Category("RecordingOffset"), Description("Bytes per compressed strip")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Strip byte counts"), Category("RecordingOffset"), Description("Bytes per compressed strip")> _
 			<CLSCompliant(False)> _
 			Public Property StripByteCounts As UInt32()
 				Get
@@ -508,7 +560,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Offset to JPEG SOI</summary>
-			<Category("RecordingOffset"), Description("Offset to JPEG SOI")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("JPEG interchange format"), Category("RecordingOffset"), Description("Offset to JPEG SOI")> _
 			<CLSCompliant(False)> _
 			Public Property JPEGInterchangeFormat As Nullable(Of UInt32)
 				Get
@@ -526,7 +579,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Bytes of JPEG data</summary>
-			<Category("RecordingOffset"), Description("Bytes of JPEG data")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("JPEG interchange format length"), Category("RecordingOffset"), Description("Bytes of JPEG data")> _
 			<CLSCompliant(False)> _
 			Public Property JPEGInterchangeFormatLength As Nullable(Of UInt32)
 				Get
@@ -546,7 +600,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "ImageDataCharacteristicsMain"
 			''' <summary>Transfer function</summary>
-			<Category("ImageDataCharacteristicsMain"), Description("Transfer function")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Transfer function"), Category("ImageDataCharacteristicsMain"), Description("Transfer function")> _
 			<CLSCompliant(False)> _
 			Public Property TransferFunction As UInt16()
 				Get
@@ -572,7 +627,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>White point chromaticity</summary>
-			<Category("ImageDataCharacteristicsMain"), Description("White point chromaticity")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("White point"), Category("ImageDataCharacteristicsMain"), Description("White point chromaticity")> _
 			<CLSCompliant(False)> _
 			Public Property WhitePoint As URational()
 				Get
@@ -598,7 +654,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Chromaticities of primaries</summary>
-			<Category("ImageDataCharacteristicsMain"), Description("Chromaticities of primaries")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Primnary chromacities"), Category("ImageDataCharacteristicsMain"), Description("Chromaticities of primaries")> _
 			<CLSCompliant(False)> _
 			Public Property PrimaryChromaticities As URational()
 				Get
@@ -624,7 +681,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Color space transformation matrix coefficients</summary>
-			<Category("ImageDataCharacteristicsMain"), Description("Color space transformation matrix coefficients")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("YCbCr coeficients"), Category("ImageDataCharacteristicsMain"), Description("Color space transformation matrix coefficients")> _
 			<CLSCompliant(False)> _
 			Public Property YCbCrCoefficients As URational()
 				Get
@@ -650,7 +708,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Pair of black and white reference values</summary>
-			<Category("ImageDataCharacteristicsMain"), Description("Pair of black and white reference values")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Reference black/white"), Category("ImageDataCharacteristicsMain"), Description("Pair of black and white reference values")> _
 			<CLSCompliant(False)> _
 			Public Property ReferenceBlackWhite As URational()
 				Get
@@ -678,7 +737,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "IFDOther"
 			''' <summary>File change date and time</summary>
-			<Category("IFDOther"), Description("File change date and time")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Date-time"), Category("IFDOther"), Description("File change date and time")> _
 			Public Property DateTime As String
 				Get
 					Dim value As ExifRecord = Record(Tags.DateTime)
@@ -691,7 +751,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image title</summary>
-			<Category("IFDOther"), Description("Image title")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Image description"), Category("IFDOther"), Description("Image title")> _
 			Public Property ImageDescription As String
 				Get
 					Dim value As ExifRecord = Record(Tags.ImageDescription)
@@ -704,7 +765,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image input equipment manufacturer</summary>
-			<Category("IFDOther"), Description("Image input equipment manufacturer")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Make"), Category("IFDOther"), Description("Image input equipment manufacturer")> _
 			Public Property Make As String
 				Get
 					Dim value As ExifRecord = Record(Tags.Make)
@@ -717,7 +779,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image input equipment model</summary>
-			<Category("IFDOther"), Description("Image input equipment model")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Model"), Category("IFDOther"), Description("Image input equipment model")> _
 			Public Property Model As String
 				Get
 					Dim value As ExifRecord = Record(Tags.Model)
@@ -730,7 +793,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Software used</summary>
-			<Category("IFDOther"), Description("Software used")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Software"), Category("IFDOther"), Description("Software used")> _
 			Public Property Software As String
 				Get
 					Dim value As ExifRecord = Record(Tags.Software)
@@ -743,7 +807,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Person who created the image</summary>
-			<Category("IFDOther"), Description("Person who created the image")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Artist"), Category("IFDOther"), Description("Person who created the image")> _
 			Public Property Artist As String
 				Get
 					Dim value As ExifRecord = Record(Tags.Artist)
@@ -756,7 +821,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Copyright holder</summary>
-			<Category("IFDOther"), Description("Copyright holder")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Copyright"), Category("IFDOther"), Description("Copyright holder")> _
 			Public Property Copyright As String
 				Get
 					Dim value As ExifRecord = Record(Tags.Copyright)
@@ -815,144 +881,203 @@ Namespace MetadataT.ExifT
 		End Class
 		Partial Public Class IfdExif
 			''' <summary>Tag numbers used in Exif Sub IFD</summary>
+			''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added for enum items.</version>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Sub IFD pointers"
 				''' <summary>Interoperability IFD Pointer</summary>
-				<Category("PointersExif")>InteroperabilityIFD = &hA005
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Interoperability IFD"), Category("PointersExif")>InteroperabilityIFD = &hA005
 #End Region
 #Region "Tags Relating to Version"
 				''' <summary>Exif version</summary>
-				<Category("Version")>ExifVersion = &h9000
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exif version"), Category("Version")>ExifVersion = &h9000
 				''' <summary>Supported Flashpix version</summary>
-				<Category("Version")>FlashpixVersion = &hA000
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Flashpix version"), Category("Version")>FlashpixVersion = &hA000
 #End Region
 #Region "Tag Relating to Image Data Characteristics"
 				''' <summary>Color space information</summary>
-				<Category("ImageDataCharacteristicsExif")>ColorSpace = &hA001
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Color space"), Category("ImageDataCharacteristicsExif")>ColorSpace = &hA001
 #End Region
 #Region "Tags Relating to Image Configuration"
 				''' <summary>Meaning of each component</summary>
-				<Category("ImageConfiguration")>ComponentsConfiguration = &h9101
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Components configuration"), Category("ImageConfiguration")>ComponentsConfiguration = &h9101
 				''' <summary>Image compression mode</summary>
-				<Category("ImageConfiguration")>CompressedBitsPerPixel = &h9102
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Compressed bits per pixel"), Category("ImageConfiguration")>CompressedBitsPerPixel = &h9102
 				''' <summary>Valid image width</summary>
-				<Category("ImageConfiguration")>PixelXDimension = &hA002
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Pixel X-dimension"), Category("ImageConfiguration")>PixelXDimension = &hA002
 				''' <summary>Valid image height</summary>
-				<Category("ImageConfiguration")>PixelYDimension = &hA003
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Pixel Y-dimension"), Category("ImageConfiguration")>PixelYDimension = &hA003
 #End Region
 #Region "Tags Relating to User Information"
 				''' <summary>Manufacturer notes</summary>
-				<Category("UserInformation")>MakerNote = &h927C
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Maker note"), Category("UserInformation")>MakerNote = &h927C
 				''' <summary>User comments</summary>
-				<Category("UserInformation")>UserComment = &h9286
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("User comment"), Category("UserInformation")>UserComment = &h9286
 #End Region
 #Region "Tag Relating to Related File Information"
 				''' <summary>Related audio file</summary>
-				<Category("FileInformation")>RelatedSoundFile = &hA004
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Relate sound file"), Category("FileInformation")>RelatedSoundFile = &hA004
 #End Region
 #Region "Tags Relating to Date and Time"
 				''' <summary>Date and time of original data generation</summary>
-				<Category("DateAndTime")>DateTimeOriginal = &h9003
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Date-time original"), Category("DateAndTime")>DateTimeOriginal = &h9003
 				''' <summary>Date and time of digital data generation</summary>
-				<Category("DateAndTime")>DateTimeDigitized = &h9004
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Date-time digitized"), Category("DateAndTime")>DateTimeDigitized = &h9004
 				''' <summary>DateTime subseconds</summary>
-				<Category("DateAndTime")>SubSecTime = &h9290
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Sub-sec time"), Category("DateAndTime")>SubSecTime = &h9290
 				''' <summary>DateTimeOriginal subseconds</summary>
-				<Category("DateAndTime")>SubSecTimeOriginal = &h9291
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Sub-sec time oroginal"), Category("DateAndTime")>SubSecTimeOriginal = &h9291
 				''' <summary>DateTimeDigitized subseconds</summary>
-				<Category("DateAndTime")>SubSecTimeDigitized = &h9292
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Sub-sec time digitized"), Category("DateAndTime")>SubSecTimeDigitized = &h9292
 #End Region
 #Region "Tags Relating to Picture-Taking Conditions"
 				''' <summary>Exposure time</summary>
-				<Category("PictureTakingConditions")>ExposureTime = &h829A
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exposure time"), Category("PictureTakingConditions")>ExposureTime = &h829A
 				''' <summary>F number</summary>
-				<Category("PictureTakingConditions")>FNumber = &h829D
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("F number"), Category("PictureTakingConditions")>FNumber = &h829D
 				''' <summary>Exposure program</summary>
-				<Category("PictureTakingConditions")>ExposureProgram = &h8822
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exposure program"), Category("PictureTakingConditions")>ExposureProgram = &h8822
 				''' <summary>Spectral sensitivity</summary>
-				<Category("PictureTakingConditions")>SpectralSensitivity = &h8824
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Spectral sensitivity"), Category("PictureTakingConditions")>SpectralSensitivity = &h8824
 				''' <summary>ISO speed rating</summary>
-				<Category("PictureTakingConditions")>ISOSpeedRatings = &h8827
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("ISO speed ratings"), Category("PictureTakingConditions")>ISOSpeedRatings = &h8827
 				''' <summary>Optoelectric conversion factor</summary>
-				<Category("PictureTakingConditions")>OECF = &h8828
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("OECF"), Category("PictureTakingConditions")>OECF = &h8828
 				''' <summary>Shutter speed</summary>
-				<Category("PictureTakingConditions")>ShutterSpeedValue = &h9201
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Shutter speed value"), Category("PictureTakingConditions")>ShutterSpeedValue = &h9201
 				''' <summary>Aperture</summary>
-				<Category("PictureTakingConditions")>ApertureValue = &h9202
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Aperture value"), Category("PictureTakingConditions")>ApertureValue = &h9202
 				''' <summary>Brightness</summary>
-				<Category("PictureTakingConditions")>BrightnessValue = &h9203
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Brightness value"), Category("PictureTakingConditions")>BrightnessValue = &h9203
 				''' <summary>Exposure bias</summary>
-				<Category("PictureTakingConditions")>ExposureBiasValue = &h9204
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exposure bias value"), Category("PictureTakingConditions")>ExposureBiasValue = &h9204
 				''' <summary>Maximum lens aperture</summary>
-				<Category("PictureTakingConditions")>MaxApertureValue = &h9205
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Max. aperture value"), Category("PictureTakingConditions")>MaxApertureValue = &h9205
 				''' <summary>Subject distance</summary>
-				<Category("PictureTakingConditions")>SubjectDistance = &h9206
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Subject distance"), Category("PictureTakingConditions")>SubjectDistance = &h9206
 				''' <summary>Metering mode</summary>
-				<Category("PictureTakingConditions")>MeteringMode = &h9207
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Metering mode"), Category("PictureTakingConditions")>MeteringMode = &h9207
 				''' <summary>Light source</summary>
-				<Category("PictureTakingConditions")>LightSource = &h9208
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Light source"), Category("PictureTakingConditions")>LightSource = &h9208
 				''' <summary>Flash</summary>
-				<Category("PictureTakingConditions")>Flash = &h9209
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Flash"), Category("PictureTakingConditions")>Flash = &h9209
 				''' <summary>Lens focal length</summary>
-				<Category("PictureTakingConditions")>FocalLength = &h920A
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Focla length"), Category("PictureTakingConditions")>FocalLength = &h920A
 				''' <summary>Subject area</summary>
-				<Category("PictureTakingConditions")>SubjectArea = &h9214
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Subject area"), Category("PictureTakingConditions")>SubjectArea = &h9214
 				''' <summary>Flash energy</summary>
-				<Category("PictureTakingConditions")>FlashEnergy = &hA20B
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Flash energy"), Category("PictureTakingConditions")>FlashEnergy = &hA20B
 				''' <summary>Spatial frequency response</summary>
-				<Category("PictureTakingConditions")>SpatialFrequencyResponse = &hA20C
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Spatial frequency response"), Category("PictureTakingConditions")>SpatialFrequencyResponse = &hA20C
 				''' <summary>Focal plane X resolution</summary>
-				<Category("PictureTakingConditions")>FocalPlaneXResolution = &hA20E
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Focal plane X-resolution"), Category("PictureTakingConditions")>FocalPlaneXResolution = &hA20E
 				''' <summary>Focal plane Y resolution</summary>
-				<Category("PictureTakingConditions")>FocalPlaneYResolution = &hA20F
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Focal plane Y-resolution"), Category("PictureTakingConditions")>FocalPlaneYResolution = &hA20F
 				''' <summary>Focal plane resolution unit</summary>
-				<Category("PictureTakingConditions")>FocalPlaneResolutionUnit = &hA210
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Focal plane resolution unit"), Category("PictureTakingConditions")>FocalPlaneResolutionUnit = &hA210
 				''' <summary>Subject location</summary>
-				<Category("PictureTakingConditions")>SubjectLocation = &hA214
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Subject location"), Category("PictureTakingConditions")>SubjectLocation = &hA214
 				''' <summary>Exposure index</summary>
-				<Category("PictureTakingConditions")>ExposureIndex = &hA215
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exposure index"), Category("PictureTakingConditions")>ExposureIndex = &hA215
 				''' <summary>Sensing method</summary>
-				<Category("PictureTakingConditions")>SensingMethod = &hA217
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Sensing method"), Category("PictureTakingConditions")>SensingMethod = &hA217
 				''' <summary>File source</summary>
-				<Category("PictureTakingConditions")>FileSource = &hA300
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("File Source"), Category("PictureTakingConditions")>FileSource = &hA300
 				''' <summary>Scene type</summary>
-				<Category("PictureTakingConditions")>SceneType = &hA301
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Scene type"), Category("PictureTakingConditions")>SceneType = &hA301
 				''' <summary>CFA pattern</summary>
-				<Category("PictureTakingConditions")>CFAPattern = &hA302
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("CFA pattern"), Category("PictureTakingConditions")>CFAPattern = &hA302
 				''' <summary>Custom image processing</summary>
-				<Category("PictureTakingConditions")>CustomRendered = &hA401
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Custom rendered"), Category("PictureTakingConditions")>CustomRendered = &hA401
 				''' <summary>Exposure mode</summary>
-				<Category("PictureTakingConditions")>ExposureMode = &hA402
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Exposure mode"), Category("PictureTakingConditions")>ExposureMode = &hA402
 				''' <summary>White balance</summary>
-				<Category("PictureTakingConditions")>WhiteBalance = &hA403
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("White balance"), Category("PictureTakingConditions")>WhiteBalance = &hA403
 				''' <summary>Digital zoom ratio</summary>
-				<Category("PictureTakingConditions")>DigitalZoomRatio = &hA404
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Digital zoom ratio"), Category("PictureTakingConditions")>DigitalZoomRatio = &hA404
 				''' <summary>Focal length in 35 mm film</summary>
-				<Category("PictureTakingConditions")>FocalLengthIn35mmFilm = &hA405
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Focal length in 35mm film"), Category("PictureTakingConditions")>FocalLengthIn35mmFilm = &hA405
 				''' <summary>Scene capture type</summary>
-				<Category("PictureTakingConditions")>SceneCaptureType = &hA406
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Scene capture type"), Category("PictureTakingConditions")>SceneCaptureType = &hA406
 				''' <summary>Gain control</summary>
-				<Category("PictureTakingConditions")>GainControl = &hA407
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Gain control"), Category("PictureTakingConditions")>GainControl = &hA407
 				''' <summary>Contrast</summary>
-				<Category("PictureTakingConditions")>Contrast = &hA408
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Contrast"), Category("PictureTakingConditions")>Contrast = &hA408
 				''' <summary>Saturation</summary>
-				<Category("PictureTakingConditions")>Saturation = &hA409
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Saturation"), Category("PictureTakingConditions")>Saturation = &hA409
 				''' <summary>Sharpness</summary>
-				<Category("PictureTakingConditions")>Sharpness = &hA40A
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Sharpness"), Category("PictureTakingConditions")>Sharpness = &hA40A
 				''' <summary>Device settings description</summary>
-				<Category("PictureTakingConditions")>DeviceSettingDescription = &hA40B
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Device setting description"), Category("PictureTakingConditions")>DeviceSettingDescription = &hA40B
 				''' <summary>Subject distance range</summary>
-				<Category("PictureTakingConditions")>SubjectDistanceRange = &hA40C
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Subject distance range"), Category("PictureTakingConditions")>SubjectDistanceRange = &hA40C
 #End Region
 #Region "Other tags"
 				''' <summary>Unique image ID</summary>
-				<Category("OtherExif")>ImageUniqueID = &hA420
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Image unique ID"), Category("OtherExif")>ImageUniqueID = &hA420
 #End Region
 			End Enum
 #Region "Properties"
 #Region "PointersExif"
 			''' <summary>Interoperability IFD Pointer</summary>
-			<Category("PointersExif"), Description("Interoperability IFD Pointer")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Interoperability IFD"), Category("PointersExif"), Description("Interoperability IFD Pointer")> _
 			<CLSCompliant(False)> _
 			Public Property InteroperabilityIFD As Nullable(Of UInt32)
 				Get
@@ -972,7 +1097,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "Version"
 			''' <summary>Exif version</summary>
-			<Category("Version"), Description("Exif version")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exif version"), Category("Version"), Description("Exif version")> _
 			Public Property ExifVersion As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.ExifVersion)
@@ -1003,7 +1129,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Supported Flashpix version</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="FlashpixVersionValues"/></exception>
-			<Category("Version"), Description("Supported Flashpix version")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Flashpix version"), Category("Version"), Description("Supported Flashpix version")> _
 			Public Property FlashpixVersion As FlashpixVersionValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.FlashpixVersion)
@@ -1044,7 +1171,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Color space information</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="ColorSpaceValues"/></exception>
-			<Category("ImageDataCharacteristicsExif"), Description("Color space information")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Color space"), Category("ImageDataCharacteristicsExif"), Description("Color space information")> _
 			<CLSCompliant(False)> _
 			Public Property ColorSpace As Nullable(Of ColorSpaceValues)
 				Get
@@ -1083,7 +1211,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Meaning of each component</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="ComponentsConfigurationValues"/></exception>
-			<Category("ImageConfiguration"), Description("Meaning of each component")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Components configuration"), Category("ImageConfiguration"), Description("Meaning of each component")> _
 			Public Property ComponentsConfiguration As ComponentsConfigurationValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.ComponentsConfiguration)
@@ -1113,7 +1242,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Image compression mode</summary>
-			<Category("ImageConfiguration"), Description("Image compression mode")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Compressed bits per pixel"), Category("ImageConfiguration"), Description("Image compression mode")> _
 			<CLSCompliant(False)> _
 			Public Property CompressedBitsPerPixel As Nullable(Of URational)
 				Get
@@ -1127,7 +1257,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Valid image width</summary>
-			<Category("ImageConfiguration"), Description("Valid image width")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Pixel X-dimension"), Category("ImageConfiguration"), Description("Valid image width")> _
 			<CLSCompliant(False)> _
 			Public Property PixelXDimension As Nullable(Of UInt32)
 				Get
@@ -1145,7 +1276,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Valid image height</summary>
-			<Category("ImageConfiguration"), Description("Valid image height")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Pixel Y-dimension"), Category("ImageConfiguration"), Description("Valid image height")> _
 			<CLSCompliant(False)> _
 			Public Property PixelYDimension As Nullable(Of UInt32)
 				Get
@@ -1165,7 +1297,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "UserInformation"
 			''' <summary>Manufacturer notes</summary>
-			<Category("UserInformation"), Description("Manufacturer notes")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Maker note"), Category("UserInformation"), Description("Manufacturer notes")> _
 			Public Property MakerNote As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.MakerNote)
@@ -1190,7 +1323,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>User comments</summary>
-			<Category("UserInformation"), Description("User comments")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("User comment"), Category("UserInformation"), Description("User comments")> _
 			Public Property UserComment As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.UserComment)
@@ -1217,7 +1351,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "FileInformation"
 			''' <summary>Related audio file</summary>
-			<Category("FileInformation"), Description("Related audio file")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Relate sound file"), Category("FileInformation"), Description("Related audio file")> _
 			Public Property RelatedSoundFile As String
 				Get
 					Dim value As ExifRecord = Record(Tags.RelatedSoundFile)
@@ -1232,7 +1367,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "DateAndTime"
 			''' <summary>Date and time of original data generation</summary>
-			<Category("DateAndTime"), Description("Date and time of original data generation")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Date-time original"), Category("DateAndTime"), Description("Date and time of original data generation")> _
 			Public Property DateTimeOriginal As String
 				Get
 					Dim value As ExifRecord = Record(Tags.DateTimeOriginal)
@@ -1245,7 +1381,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Date and time of digital data generation</summary>
-			<Category("DateAndTime"), Description("Date and time of digital data generation")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Date-time digitized"), Category("DateAndTime"), Description("Date and time of digital data generation")> _
 			Public Property DateTimeDigitized As String
 				Get
 					Dim value As ExifRecord = Record(Tags.DateTimeDigitized)
@@ -1258,7 +1395,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>DateTime subseconds</summary>
-			<Category("DateAndTime"), Description("DateTime subseconds")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Sub-sec time"), Category("DateAndTime"), Description("DateTime subseconds")> _
 			Public Property SubSecTime As String
 				Get
 					Dim value As ExifRecord = Record(Tags.SubSecTime)
@@ -1271,7 +1409,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>DateTimeOriginal subseconds</summary>
-			<Category("DateAndTime"), Description("DateTimeOriginal subseconds")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Sub-sec time oroginal"), Category("DateAndTime"), Description("DateTimeOriginal subseconds")> _
 			Public Property SubSecTimeOriginal As String
 				Get
 					Dim value As ExifRecord = Record(Tags.SubSecTimeOriginal)
@@ -1284,7 +1423,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>DateTimeDigitized subseconds</summary>
-			<Category("DateAndTime"), Description("DateTimeDigitized subseconds")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Sub-sec time digitized"), Category("DateAndTime"), Description("DateTimeDigitized subseconds")> _
 			Public Property SubSecTimeDigitized As String
 				Get
 					Dim value As ExifRecord = Record(Tags.SubSecTimeDigitized)
@@ -1299,7 +1439,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "PictureTakingConditions"
 			''' <summary>Exposure time</summary>
-			<Category("PictureTakingConditions"), Description("Exposure time")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exposure time"), Category("PictureTakingConditions"), Description("Exposure time")> _
 			<CLSCompliant(False)> _
 			Public Property ExposureTime As Nullable(Of URational)
 				Get
@@ -1313,7 +1454,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>F number</summary>
-			<Category("PictureTakingConditions"), Description("F number")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("F number"), Category("PictureTakingConditions"), Description("F number")> _
 			<CLSCompliant(False)> _
 			Public Property FNumber As Nullable(Of URational)
 				Get
@@ -1350,7 +1492,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Exposure program</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="ExposureProgramValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Exposure program")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exposure program"), Category("PictureTakingConditions"), Description("Exposure program")> _
 			<CLSCompliant(False)> _
 			Public Property ExposureProgram As Nullable(Of ExposureProgramValues)
 				Get
@@ -1369,7 +1512,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Spectral sensitivity</summary>
-			<Category("PictureTakingConditions"), Description("Spectral sensitivity")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Spectral sensitivity"), Category("PictureTakingConditions"), Description("Spectral sensitivity")> _
 			<CLSCompliant(False)> _
 			Public Property SpectralSensitivity As URational()
 				Get
@@ -1395,7 +1539,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>ISO speed rating</summary>
-			<Category("PictureTakingConditions"), Description("ISO speed rating")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("ISO speed ratings"), Category("PictureTakingConditions"), Description("ISO speed rating")> _
 			<CLSCompliant(False)> _
 			Public Property ISOSpeedRatings As UInt16()
 				Get
@@ -1421,7 +1566,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Optoelectric conversion factor</summary>
-			<Category("PictureTakingConditions"), Description("Optoelectric conversion factor")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("OECF"), Category("PictureTakingConditions"), Description("Optoelectric conversion factor")> _
 			Public Property OECF As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.OECF)
@@ -1446,7 +1592,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Shutter speed</summary>
-			<Category("PictureTakingConditions"), Description("Shutter speed")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Shutter speed value"), Category("PictureTakingConditions"), Description("Shutter speed")> _
 			Public Property ShutterSpeedValue As Nullable(Of SRational)
 				Get
 					Dim value As ExifRecord = Record(Tags.ShutterSpeedValue)
@@ -1459,7 +1606,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Aperture</summary>
-			<Category("PictureTakingConditions"), Description("Aperture")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Aperture value"), Category("PictureTakingConditions"), Description("Aperture")> _
 			<CLSCompliant(False)> _
 			Public Property ApertureValue As Nullable(Of URational)
 				Get
@@ -1473,7 +1621,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Brightness</summary>
-			<Category("PictureTakingConditions"), Description("Brightness")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Brightness value"), Category("PictureTakingConditions"), Description("Brightness")> _
 			Public Property BrightnessValue As Nullable(Of SRational)
 				Get
 					Dim value As ExifRecord = Record(Tags.BrightnessValue)
@@ -1486,7 +1635,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Exposure bias</summary>
-			<Category("PictureTakingConditions"), Description("Exposure bias")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exposure bias value"), Category("PictureTakingConditions"), Description("Exposure bias")> _
 			Public Property ExposureBiasValue As Nullable(Of SRational)
 				Get
 					Dim value As ExifRecord = Record(Tags.ExposureBiasValue)
@@ -1499,7 +1649,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Maximum lens aperture</summary>
-			<Category("PictureTakingConditions"), Description("Maximum lens aperture")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Max. aperture value"), Category("PictureTakingConditions"), Description("Maximum lens aperture")> _
 			Public Property MaxApertureValue As Nullable(Of SRational)
 				Get
 					Dim value As ExifRecord = Record(Tags.MaxApertureValue)
@@ -1512,7 +1663,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Subject distance</summary>
-			<Category("PictureTakingConditions"), Description("Subject distance")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Subject distance"), Category("PictureTakingConditions"), Description("Subject distance")> _
 			<CLSCompliant(False)> _
 			Public Property SubjectDistance As Nullable(Of URational)
 				Get
@@ -1547,7 +1699,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Metering mode</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="MeteringModeValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Metering mode")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Metering mode"), Category("PictureTakingConditions"), Description("Metering mode")> _
 			<CLSCompliant(False)> _
 			Public Property MeteringMode As Nullable(Of MeteringModeValues)
 				Get
@@ -1613,7 +1766,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Light source</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="LightSourceValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Light source")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Light source"), Category("PictureTakingConditions"), Description("Light source")> _
 			<CLSCompliant(False)> _
 			Public Property LightSource As Nullable(Of LightSourceValues)
 				Get
@@ -1632,7 +1786,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Flash</summary>
-			<Category("PictureTakingConditions"), Description("Flash")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Flash"), Category("PictureTakingConditions"), Description("Flash")> _
 			<CLSCompliant(False)> _
 			Public Property Flash As Nullable(Of UInt16)
 				Get
@@ -1650,7 +1805,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Lens focal length</summary>
-			<Category("PictureTakingConditions"), Description("Lens focal length")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Focla length"), Category("PictureTakingConditions"), Description("Lens focal length")> _
 			<CLSCompliant(False)> _
 			Public Property FocalLength As Nullable(Of URational)
 				Get
@@ -1664,7 +1820,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Subject area</summary>
-			<Category("PictureTakingConditions"), Description("Subject area")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Subject area"), Category("PictureTakingConditions"), Description("Subject area")> _
 			<CLSCompliant(False)> _
 			Public Property SubjectArea As UInt16()
 				Get
@@ -1690,7 +1847,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Flash energy</summary>
-			<Category("PictureTakingConditions"), Description("Flash energy")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Flash energy"), Category("PictureTakingConditions"), Description("Flash energy")> _
 			<CLSCompliant(False)> _
 			Public Property FlashEnergy As Nullable(Of URational)
 				Get
@@ -1704,7 +1862,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Spatial frequency response</summary>
-			<Category("PictureTakingConditions"), Description("Spatial frequency response")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Spatial frequency response"), Category("PictureTakingConditions"), Description("Spatial frequency response")> _
 			Public Property SpatialFrequencyResponse As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.SpatialFrequencyResponse)
@@ -1729,7 +1888,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Focal plane X resolution</summary>
-			<Category("PictureTakingConditions"), Description("Focal plane X resolution")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Focal plane X-resolution"), Category("PictureTakingConditions"), Description("Focal plane X resolution")> _
 			<CLSCompliant(False)> _
 			Public Property FocalPlaneXResolution As Nullable(Of URational)
 				Get
@@ -1743,7 +1903,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Focal plane Y resolution</summary>
-			<Category("PictureTakingConditions"), Description("Focal plane Y resolution")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Focal plane Y-resolution"), Category("PictureTakingConditions"), Description("Focal plane Y resolution")> _
 			<CLSCompliant(False)> _
 			Public Property FocalPlaneYResolution As Nullable(Of URational)
 				Get
@@ -1757,7 +1918,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Focal plane resolution unit</summary>
-			<Category("PictureTakingConditions"), Description("Focal plane resolution unit")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Focal plane resolution unit"), Category("PictureTakingConditions"), Description("Focal plane resolution unit")> _
 			<CLSCompliant(False)> _
 			Public Property FocalPlaneResolutionUnit As Nullable(Of UInt16)
 				Get
@@ -1775,7 +1937,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Subject location</summary>
-			<Category("PictureTakingConditions"), Description("Subject location")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Subject location"), Category("PictureTakingConditions"), Description("Subject location")> _
 			<CLSCompliant(False)> _
 			Public Property SubjectLocation As UInt16()
 				Get
@@ -1801,7 +1964,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Exposure index</summary>
-			<Category("PictureTakingConditions"), Description("Exposure index")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exposure index"), Category("PictureTakingConditions"), Description("Exposure index")> _
 			<CLSCompliant(False)> _
 			Public Property ExposureIndex As Nullable(Of URational)
 				Get
@@ -1833,7 +1997,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Sensing method</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="SensingMethodValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Sensing method")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Sensing method"), Category("PictureTakingConditions"), Description("Sensing method")> _
 			Public Property SensingMethod As Nullable(Of SensingMethodValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.SensingMethod)
@@ -1857,7 +2022,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>File source</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="FileSourceValues"/></exception>
-			<Category("PictureTakingConditions"), Description("File source")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("File Source"), Category("PictureTakingConditions"), Description("File source")> _
 			Public Property FileSource As Nullable(Of FileSourceValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.FileSource)
@@ -1871,7 +2037,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Scene type</summary>
-			<Category("PictureTakingConditions"), Description("Scene type")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Scene type"), Category("PictureTakingConditions"), Description("Scene type")> _
 			Public Property SceneType As Nullable(Of Byte)
 				Get
 					Dim value As ExifRecord = Record(Tags.SceneType)
@@ -1884,7 +2051,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>CFA pattern</summary>
-			<Category("PictureTakingConditions"), Description("CFA pattern")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("CFA pattern"), Category("PictureTakingConditions"), Description("CFA pattern")> _
 			Public Property CFAPattern As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.CFAPattern)
@@ -1918,7 +2086,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Custom image processing</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="CustomRenderedValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Custom image processing")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Custom rendered"), Category("PictureTakingConditions"), Description("Custom image processing")> _
 			<CLSCompliant(False)> _
 			Public Property CustomRendered As Nullable(Of CustomRenderedValues)
 				Get
@@ -1948,7 +2117,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Exposure mode</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="ExposureModeValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Exposure mode")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Exposure mode"), Category("PictureTakingConditions"), Description("Exposure mode")> _
 			<CLSCompliant(False)> _
 			Public Property ExposureMode As Nullable(Of ExposureModeValues)
 				Get
@@ -1976,7 +2146,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>White balance</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="WhiteBalanceValues"/></exception>
-			<Category("PictureTakingConditions"), Description("White balance")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("White balance"), Category("PictureTakingConditions"), Description("White balance")> _
 			<CLSCompliant(False)> _
 			Public Property WhiteBalance As Nullable(Of WhiteBalanceValues)
 				Get
@@ -1995,7 +2166,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Digital zoom ratio</summary>
-			<Category("PictureTakingConditions"), Description("Digital zoom ratio")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Digital zoom ratio"), Category("PictureTakingConditions"), Description("Digital zoom ratio")> _
 			<CLSCompliant(False)> _
 			Public Property DigitalZoomRatio As Nullable(Of URational)
 				Get
@@ -2022,7 +2194,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Focal length in 35 mm film</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="FocalLengthIn35mmFilmValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Focal length in 35 mm film")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Focal length in 35mm film"), Category("PictureTakingConditions"), Description("Focal length in 35 mm film")> _
 			<CLSCompliant(False)> _
 			Public Property FocalLengthIn35mmFilm As Nullable(Of FocalLengthIn35mmFilmValues)
 				Get
@@ -2041,7 +2214,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Scene capture type</summary>
-			<Category("PictureTakingConditions"), Description("Scene capture type")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Scene capture type"), Category("PictureTakingConditions"), Description("Scene capture type")> _
 			<CLSCompliant(False)> _
 			Public Property SceneCaptureType As Nullable(Of UInt16)
 				Get
@@ -2074,7 +2248,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Gain control</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GainControlValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Gain control")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Gain control"), Category("PictureTakingConditions"), Description("Gain control")> _
 			<CLSCompliant(False)> _
 			Public Property GainControl As Nullable(Of GainControlValues)
 				Get
@@ -2104,7 +2279,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Contrast</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="ContrastValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Contrast")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Contrast"), Category("PictureTakingConditions"), Description("Contrast")> _
 			<CLSCompliant(False)> _
 			Public Property Contrast As Nullable(Of ContrastValues)
 				Get
@@ -2134,7 +2310,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Saturation</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="SaturationValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Saturation")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Saturation"), Category("PictureTakingConditions"), Description("Saturation")> _
 			<CLSCompliant(False)> _
 			Public Property Saturation As Nullable(Of SaturationValues)
 				Get
@@ -2164,7 +2341,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Sharpness</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="SharpnessValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Sharpness")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Sharpness"), Category("PictureTakingConditions"), Description("Sharpness")> _
 			<CLSCompliant(False)> _
 			Public Property Sharpness As Nullable(Of SharpnessValues)
 				Get
@@ -2183,7 +2361,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Device settings description</summary>
-			<Category("PictureTakingConditions"), Description("Device settings description")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Device setting description"), Category("PictureTakingConditions"), Description("Device settings description")> _
 			Public Property DeviceSettingDescription As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.DeviceSettingDescription)
@@ -2221,7 +2400,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Subject distance range</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="SubjectDistanceRangeValues"/></exception>
-			<Category("PictureTakingConditions"), Description("Subject distance range")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Subject distance range"), Category("PictureTakingConditions"), Description("Subject distance range")> _
 			<CLSCompliant(False)> _
 			Public Property SubjectDistanceRange As Nullable(Of SubjectDistanceRangeValues)
 				Get
@@ -2242,7 +2422,8 @@ Namespace MetadataT.ExifT
 #End Region
 #Region "OtherExif"
 			''' <summary>Unique image ID</summary>
-			<Category("OtherExif"), Description("Unique image ID")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Image unique ID"), Category("OtherExif"), Description("Unique image ID")> _
 			Public Property ImageUniqueID As String
 				Get
 					Dim value As ExifRecord = Record(Tags.ImageUniqueID)
@@ -2326,76 +2507,109 @@ Namespace MetadataT.ExifT
 		End Class
 		Partial Public Class IfdGps
 			''' <summary>Tag numbers used in GPS Sub IFD</summary>
+			''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added for enum items.</version>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Tags Relating to GPS"
 				''' <summary>GPS tag version</summary>
-				<Category("GPS")>GPSVersionID = &h0
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS version ID"), Category("GPS")>GPSVersionID = &h0
 				''' <summary>North or South Latitude</summary>
-				<Category("GPS")>GPSLatitudeRef = &h1
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS Latitude ref"), Category("GPS")>GPSLatitudeRef = &h1
 				''' <summary>Latitude</summary>
-				<Category("GPS")>GPSLatitude = &h2
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS latitude"), Category("GPS")>GPSLatitude = &h2
 				''' <summary>East or West Longitude</summary>
-				<Category("GPS")>GPSLongitudeRef = &h3
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS longitude ref"), Category("GPS")>GPSLongitudeRef = &h3
 				''' <summary>Longitude</summary>
-				<Category("GPS")>GPSLongitude = &h4
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS longitude"), Category("GPS")>GPSLongitude = &h4
 				''' <summary>Altitude reference</summary>
-				<Category("GPS")>GPSAltitudeRef = &h5
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS altitude ref"), Category("GPS")>GPSAltitudeRef = &h5
 				''' <summary>Altitude</summary>
-				<Category("GPS")>GPSAltitude = &h6
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS altitude"), Category("GPS")>GPSAltitude = &h6
 				''' <summary>GPS time (atomic clock)</summary>
-				<Category("GPS")>GPSTimeStamp = &h7
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS time-stamp"), Category("GPS")>GPSTimeStamp = &h7
 				''' <summary>GPS satellites used for measurement</summary>
-				<Category("GPS")>GPSSatellites = &h8
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS satellites"), Category("GPS")>GPSSatellites = &h8
 				''' <summary>GPS receiver status</summary>
-				<Category("GPS")>GPSStatus = &h9
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS status"), Category("GPS")>GPSStatus = &h9
 				''' <summary>GPS measurement mode</summary>
-				<Category("GPS")>GPSMeasureMode = &hA
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS measure mode"), Category("GPS")>GPSMeasureMode = &hA
 				''' <summary>Measurement precision</summary>
-				<Category("GPS")>GPSDOP = &hB
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS DOP"), Category("GPS")>GPSDOP = &hB
 				''' <summary>Speed unit</summary>
-				<Category("GPS")>GPSSpeedRef = &hC
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS speed ref"), Category("GPS")>GPSSpeedRef = &hC
 				''' <summary>Speed of GPS receiver</summary>
-				<Category("GPS")>GPSSpeed = &hD
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS speed"), Category("GPS")>GPSSpeed = &hD
 				''' <summary>Reference for direction of movement</summary>
-				<Category("GPS")>GPSTrackRef = &hE
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS track ref"), Category("GPS")>GPSTrackRef = &hE
 				''' <summary>Direction of movement</summary>
-				<Category("GPS")>GPSTrack = &hF
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS track"), Category("GPS")>GPSTrack = &hF
 				''' <summary>Reference for direction of image</summary>
-				<Category("GPS")>GPSImgDirectionRef = &h10
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS img. derection ref"), Category("GPS")>GPSImgDirectionRef = &h10
 				''' <summary>Direction of image</summary>
-				<Category("GPS")>GPSImgDirection = &h11
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS img. direction"), Category("GPS")>GPSImgDirection = &h11
 				''' <summary>Geodetic survey data used</summary>
-				<Category("GPS")>GPSMapDatum = &h12
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS map datum"), Category("GPS")>GPSMapDatum = &h12
 				''' <summary>Reference for latitude of destination</summary>
-				<Category("GPS")>GPSDestLatitudeRef = &h13
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. latitude ref"), Category("GPS")>GPSDestLatitudeRef = &h13
 				''' <summary>Latitude of destination</summary>
-				<Category("GPS")>GPSDestLatitude = &h14
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. latitude"), Category("GPS")>GPSDestLatitude = &h14
 				''' <summary>Reference for longitude of destination</summary>
-				<Category("GPS")>GPSDestLongitudeRef = &h15
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. longitude ref"), Category("GPS")>GPSDestLongitudeRef = &h15
 				''' <summary>Longitude of destination</summary>
-				<Category("GPS")>GPSDestLongitude = &h16
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. longitude"), Category("GPS")>GPSDestLongitude = &h16
 				''' <summary>Reference for bearing of destination</summary>
-				<Category("GPS")>GPSDestBearingRef = &h17
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. bearing ref"), Category("GPS")>GPSDestBearingRef = &h17
 				''' <summary>Bearing of destination</summary>
-				<Category("GPS")>GPSDestBearing = &h18
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. bearing"), Category("GPS")>GPSDestBearing = &h18
 				''' <summary>Reference for distance to destination</summary>
-				<Category("GPS")>GPSDestDistanceRef = &h19
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. distance ref"), Category("GPS")>GPSDestDistanceRef = &h19
 				''' <summary>Distance to destination</summary>
-				<Category("GPS")>GPSDestDistance = &h1A
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS dest. distance"), Category("GPS")>GPSDestDistance = &h1A
 				''' <summary>Name of GPS processing method</summary>
-				<Category("GPS")>GPSProcessingMethod = &h1B
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS processing method"), Category("GPS")>GPSProcessingMethod = &h1B
 				''' <summary>Name of GPS area</summary>
-				<Category("GPS")>GPSAreaInformation = &h1C
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS area information"), Category("GPS")>GPSAreaInformation = &h1C
 				''' <summary>GPS date</summary>
-				<Category("GPS")>GPSDateStamp = &h1D
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS date stamp"), Category("GPS")>GPSDateStamp = &h1D
 				''' <summary>GPS differential correction</summary>
-				<Category("GPS")>GPSDifferential = &h1E
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("GPS differential"), Category("GPS")>GPSDifferential = &h1E
 #End Region
 			End Enum
 #Region "Properties"
 #Region "GPS"
 			''' <summary>GPS tag version</summary>
-			<Category("GPS"), Description("GPS tag version")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS version ID"), Category("GPS"), Description("GPS tag version")> _
 			Public Property GPSVersionID As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSVersionID)
@@ -2428,7 +2642,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>North or South Latitude</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLatitudeRefValues"/></exception>
-			<Category("GPS"), Description("North or South Latitude")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS Latitude ref"), Category("GPS"), Description("North or South Latitude")> _
 			Public Property GPSLatitudeRef As GPSLatitudeRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSLatitudeRef)
@@ -2460,7 +2675,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Latitude</summary>
-			<Category("GPS"), Description("Latitude")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS latitude"), Category("GPS"), Description("Latitude")> _
 			<CLSCompliant(False)> _
 			Public Property GPSLatitude As URational()
 				Get
@@ -2494,7 +2710,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>East or West Longitude</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLongitudeRefValues"/></exception>
-			<Category("GPS"), Description("East or West Longitude")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS longitude ref"), Category("GPS"), Description("East or West Longitude")> _
 			Public Property GPSLongitudeRef As GPSLongitudeRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSLongitudeRef)
@@ -2526,7 +2743,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Longitude</summary>
-			<Category("GPS"), Description("Longitude")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS longitude"), Category("GPS"), Description("Longitude")> _
 			<CLSCompliant(False)> _
 			Public Property GPSLongitude As URational()
 				Get
@@ -2560,7 +2778,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Altitude reference</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSAltitudeRefValues"/></exception>
-			<Category("GPS"), Description("Altitude reference")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS altitude ref"), Category("GPS"), Description("Altitude reference")> _
 			Public Property GPSAltitudeRef As Nullable(Of GPSAltitudeRefValues)
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSAltitudeRef)
@@ -2578,7 +2797,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Altitude</summary>
-			<Category("GPS"), Description("Altitude")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS altitude"), Category("GPS"), Description("Altitude")> _
 			<CLSCompliant(False)> _
 			Public Property GPSAltitude As Nullable(Of URational)
 				Get
@@ -2592,7 +2812,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS time (atomic clock)</summary>
-			<Category("GPS"), Description("GPS time (atomic clock)")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS time-stamp"), Category("GPS"), Description("GPS time (atomic clock)")> _
 			<CLSCompliant(False)> _
 			Public Property GPSTimeStamp As URational()
 				Get
@@ -2618,7 +2839,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS satellites used for measurement</summary>
-			<Category("GPS"), Description("GPS satellites used for measurement")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS satellites"), Category("GPS"), Description("GPS satellites used for measurement")> _
 			Public Property GPSSatellites As String
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSSatellites)
@@ -2639,7 +2861,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>GPS receiver status</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSStatusValues"/></exception>
-			<Category("GPS"), Description("GPS receiver status")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS status"), Category("GPS"), Description("GPS receiver status")> _
 			Public Property GPSStatus As GPSStatusValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSStatus)
@@ -2679,7 +2902,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>GPS measurement mode</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSMeasureModeValues"/></exception>
-			<Category("GPS"), Description("GPS measurement mode")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS measure mode"), Category("GPS"), Description("GPS measurement mode")> _
 			Public Property GPSMeasureMode As GPSMeasureModeValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSMeasureMode)
@@ -2711,7 +2935,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Measurement precision</summary>
-			<Category("GPS"), Description("Measurement precision")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS DOP"), Category("GPS"), Description("Measurement precision")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDOP As Nullable(Of URational)
 				Get
@@ -2735,7 +2960,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Speed unit</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSSpeedRefValues"/></exception>
-			<Category("GPS"), Description("Speed unit")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS speed ref"), Category("GPS"), Description("Speed unit")> _
 			Public Property GPSSpeedRef As GPSSpeedRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSSpeedRef)
@@ -2767,7 +2993,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Speed of GPS receiver</summary>
-			<Category("GPS"), Description("Speed of GPS receiver")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS speed"), Category("GPS"), Description("Speed of GPS receiver")> _
 			<CLSCompliant(False)> _
 			Public Property GPSSpeed As Nullable(Of URational)
 				Get
@@ -2789,7 +3016,8 @@ Namespace MetadataT.ExifT
 			End Enum
 			''' <summary>Reference for direction of movement</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSTrackRefValues"/></exception>
-			<Category("GPS"), Description("Reference for direction of movement")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS track ref"), Category("GPS"), Description("Reference for direction of movement")> _
 			Public Property GPSTrackRef As GPSTrackRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSTrackRef)
@@ -2821,7 +3049,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Direction of movement</summary>
-			<Category("GPS"), Description("Direction of movement")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS track"), Category("GPS"), Description("Direction of movement")> _
 			<CLSCompliant(False)> _
 			Public Property GPSTrack As Nullable(Of URational)
 				Get
@@ -2836,7 +3065,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Reference for direction of image</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSTrackRefValues"/></exception>
-			<Category("GPS"), Description("Reference for direction of image")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS img. derection ref"), Category("GPS"), Description("Reference for direction of image")> _
 			Public Property GPSImgDirectionRef As GPSTrackRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSImgDirectionRef)
@@ -2868,7 +3098,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Direction of image</summary>
-			<Category("GPS"), Description("Direction of image")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS img. direction"), Category("GPS"), Description("Direction of image")> _
 			<CLSCompliant(False)> _
 			Public Property GPSImgDirection As Nullable(Of URational)
 				Get
@@ -2882,7 +3113,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Geodetic survey data used</summary>
-			<Category("GPS"), Description("Geodetic survey data used")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS map datum"), Category("GPS"), Description("Geodetic survey data used")> _
 			Public Property GPSMapDatum As String
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSMapDatum)
@@ -2896,7 +3128,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Reference for latitude of destination</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLatitudeRefValues"/></exception>
-			<Category("GPS"), Description("Reference for latitude of destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. latitude ref"), Category("GPS"), Description("Reference for latitude of destination")> _
 			Public Property GPSDestLatitudeRef As GPSLatitudeRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestLatitudeRef)
@@ -2928,7 +3161,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Latitude of destination</summary>
-			<Category("GPS"), Description("Latitude of destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. latitude"), Category("GPS"), Description("Latitude of destination")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDestLatitude As URational()
 				Get
@@ -2955,7 +3189,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Reference for longitude of destination</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSLongitudeRefValues"/></exception>
-			<Category("GPS"), Description("Reference for longitude of destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. longitude ref"), Category("GPS"), Description("Reference for longitude of destination")> _
 			Public Property GPSDestLongitudeRef As GPSLongitudeRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestLongitudeRef)
@@ -2987,7 +3222,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Longitude of destination</summary>
-			<Category("GPS"), Description("Longitude of destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. longitude"), Category("GPS"), Description("Longitude of destination")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDestLongitude As URational()
 				Get
@@ -3014,7 +3250,8 @@ Namespace MetadataT.ExifT
 			End Property
 			''' <summary>Reference for bearing of destination</summary>
 			''' <exception cref="InvalidEnumArgumentException">Value of item of <paramref name="value"/> is not member of <see cref="GPSTrackRefValues"/></exception>
-			<Category("GPS"), Description("Reference for bearing of destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. bearing ref"), Category("GPS"), Description("Reference for bearing of destination")> _
 			Public Property GPSDestBearingRef As GPSTrackRefValues()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestBearingRef)
@@ -3046,7 +3283,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Bearing of destination</summary>
-			<Category("GPS"), Description("Bearing of destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. bearing"), Category("GPS"), Description("Bearing of destination")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDestBearing As Nullable(Of URational)
 				Get
@@ -3060,7 +3298,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Reference for distance to destination</summary>
-			<Category("GPS"), Description("Reference for distance to destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. distance ref"), Category("GPS"), Description("Reference for distance to destination")> _
 			Public Property GPSDestDistanceRef As String
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDestDistanceRef)
@@ -3073,7 +3312,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Distance to destination</summary>
-			<Category("GPS"), Description("Distance to destination")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS dest. distance"), Category("GPS"), Description("Distance to destination")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDestDistance As Nullable(Of URational)
 				Get
@@ -3087,7 +3327,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Name of GPS processing method</summary>
-			<Category("GPS"), Description("Name of GPS processing method")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS processing method"), Category("GPS"), Description("Name of GPS processing method")> _
 			Public Property GPSProcessingMethod As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSProcessingMethod)
@@ -3112,7 +3353,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>Name of GPS area</summary>
-			<Category("GPS"), Description("Name of GPS area")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS area information"), Category("GPS"), Description("Name of GPS area")> _
 			Public Property GPSAreaInformation As Byte()
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSAreaInformation)
@@ -3137,7 +3379,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS date</summary>
-			<Category("GPS"), Description("GPS date")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS date stamp"), Category("GPS"), Description("GPS date")> _
 			Public Property GPSDateStamp As String
 				Get
 					Dim value As ExifRecord = Record(Tags.GPSDateStamp)
@@ -3150,7 +3393,8 @@ Namespace MetadataT.ExifT
 				End Set
 			End Property
 			''' <summary>GPS differential correction</summary>
-			<Category("GPS"), Description("GPS differential correction")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("GPS differential"), Category("GPS"), Description("GPS differential correction")> _
 			<CLSCompliant(False)> _
 			Public Property GPSDifferential As Nullable(Of UInt16)
 				Get
@@ -3175,7 +3419,7 @@ Namespace MetadataT.ExifT
 				Get
 					Const any As ushort=0
 					Select Case Tag
-                    Case Tags.GPSVersionID : Return New ExifTagFormat(4, &H0, "GPSVersionID", ExifDataTypes.Byte)
+						Case Tags.GPSVersionID : Return New ExifTagFormat(4, &h0, "GPSVersionID", ExifDataTypes.Byte)
 						Case Tags.GPSLatitudeRef : Return New ExifTagFormat(2, &h1, "GPSLatitudeRef", ExifDataTypes.ASCII)
 						Case Tags.GPSLatitude : Return New ExifTagFormat(3, &h2, "GPSLatitude", ExifDataTypes.URational)
 						Case Tags.GPSLongitudeRef : Return New ExifTagFormat(2, &h3, "GPSLongitudeRef", ExifDataTypes.ASCII)
@@ -3213,16 +3457,19 @@ Namespace MetadataT.ExifT
 		End Class
 		Partial Public Class IfdInterop
 			''' <summary>Tag numbers used in Exif Interoperability IFD</summary>
+			''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added for enum items.</version>
 			<CLSCompliant(False)> Public Enum Tags As UShort
 #Region "Ineroperability Tags"
 				''' <summary>Indicates the identification of the Interoperability rule.</summary>
-				<Category("Interop")>InteroperabilityIndex = &h1
+				''' <version version="1.5.2"><see cref="FieldDisplayNameAttribute"/> added</version>
+				<FieldDisplayName("Interoperability index"), Category("Interop")>InteroperabilityIndex = &h1
 #End Region
 			End Enum
 #Region "Properties"
 #Region "Interop"
 			''' <summary>Indicates the identification of the Interoperability rule.</summary>
-			<Category("Interop"), Description("Indicates the identification of the Interoperability rule.")> _
+			''' <version version="1.5.2"><see cref="DisplayNameAttribute"/> added</version>
+			<DisplayName("Interoperability index"), Category("Interop"), Description("Indicates the identification of the Interoperability rule.")> _
 			Public Property InteroperabilityIndex As String
 				Get
 					Dim value As ExifRecord = Record(Tags.InteroperabilityIndex)

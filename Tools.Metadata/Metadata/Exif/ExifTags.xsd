@@ -164,7 +164,12 @@
             </xs:sequence>
             <xs:attribute name="Name" use="required" type="name">
                 <xs:annotation>
-                    <xs:documentation>Officila name of tag according to Exif documentation (no spaces)</xs:documentation>
+                    <xs:documentation>Official name of tag according to Exif documentation (no spaces)</xs:documentation>
+                </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="DisplayName" use="required" type="xs:string">
+                <xs:annotation>
+                    <xs:documentation>Human-readable name of tag</xs:documentation>
                 </xs:annotation>
             </xs:attribute>
             <xs:attribute name="Tag" use="required" type="hexa">

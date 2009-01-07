@@ -25,6 +25,7 @@
         </xsl:if>
         <xsl:call-template name="nl"/>
         <xsl:text>#Region "Generated code"&#xD;&#xA;</xsl:text>
+        <xsl:text>Imports Tools.ComponentModelT&#xD;&#xA;</xsl:text>
         <xsl:if test="$namespace!=''">
             <xsl:text>Namespace </xsl:text>
             <xsl:value-of select="$namespace"/>
@@ -91,6 +92,7 @@
         <xsl:if test="/et:Root/et:Group[@IFD='IFD']">
             <xsl:text>&#9;&#9;Partial Public Class IfdMain&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in IFD0 and IFD1&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='IFD']">
                 <xsl:call-template name="Tag-enum-content"/>
@@ -111,6 +113,7 @@
         <xsl:if test="/et:Root/et:Group[@IFD='Exif']">
             <xsl:text>&#9;&#9;Partial Public Class IfdExif&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in Exif Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='Exif']">
                 <xsl:call-template name="Tag-enum-content"/>
@@ -131,6 +134,7 @@
         <xsl:if test="/et:Root/et:Group[@IFD='GPS']">
             <xsl:text>&#9;&#9;Partial Public Class IfdGps&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in GPS Sub IFD&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='GPS']">
                 <xsl:call-template name="Tag-enum-content"/>
@@ -151,6 +155,7 @@
         <xsl:if test="/et:Root/et:Group[@IFD='Interop']">
             <xsl:text>&#9;&#9;Partial Public Class IfdInterop&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;''' &lt;summary>Tag numbers used in Exif Interoperability IFD&lt;/summary>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added for enum items.&lt;/version>&#xD;&#xA;</xsl:text>
             <xsl:text>&#9;&#9;&#9;&lt;CLSCompliant(False)> Public Enum Tags As UShort&#xD;&#xA;</xsl:text>
             <xsl:for-each select="/et:Root/et:Group[@IFD='Interop']">
                 <xsl:call-template name="Tag-enum-content"/>
@@ -178,7 +183,10 @@
             <xsl:text>&#9;&#9;&#9;&#9;''' &lt;summary></xsl:text>
             <xsl:value-of select="et:summary"/>
             <xsl:text>&lt;/summary>&#xD;&#xA;</xsl:text>
-            <xsl:text>&#9;&#9;&#9;&#9;&lt;Category("</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="FieldDisplayNameAttribute"/> added&lt;/version>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&#9;&lt;FieldDisplayName("</xsl:text>
+            <xsl:value-of select="@DisplayName"/>
+            <xsl:text>"), Category("</xsl:text>
             <xsl:value-of select="../@ShortName"/>
             <xsl:text>")></xsl:text>
             <xsl:value-of select="@Name"/>
@@ -290,7 +298,10 @@
                 <xsl:text>"/>&lt;/exception>&#xD;&#xA;</xsl:text>
             </xsl:when>
             </xsl:choose>
-            <xsl:text>&#9;&#9;&#9;&lt;Category("</xsl:text>
+            <xsl:text>&#9;&#9;&#9;''' &lt;version version="1.5.2">&lt;see cref="DisplayNameAttribute"/> added&lt;/version>&#xD;&#xA;</xsl:text>
+            <xsl:text>&#9;&#9;&#9;&lt;DisplayName("</xsl:text>
+            <xsl:value-of select="@DisplayName"/>
+            <xsl:text>"), Category("</xsl:text>
             <xsl:value-of select="../@ShortName"/>
             <xsl:text>"), Description("</xsl:text>
             <xsl:value-of select="et:summary"/>
