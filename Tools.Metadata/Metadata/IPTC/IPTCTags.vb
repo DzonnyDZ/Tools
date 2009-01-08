@@ -6,7 +6,7 @@
 '
 ' Generated code from "IPTCTags.xml"
 '
-' Created: 17. prosince 2008
+' Created: 8. ledna 2009
 ' By:BigBook\Honza
 '
 'Localize: IPTC needs localization of Decriptions, DisplayNames and error messages
@@ -300,7 +300,7 @@ Namespace MetadataT.IptcT
 			''' <remarks>Version numbers are assigned by IPTC and NAA. The version number of this record is four (4).</remarks>
 			Public Shared ReadOnly Property ModelVersion As DataSetIdentification
 				<DebuggerStepThrough()> Get
-                Return New DataSetIdentification(RecordNumbers.Envelope, EnvelopeTags.ModelVersion, "ModelVersion", "Model Version")
+					Return New DataSetIdentification(RecordNumbers.Envelope, Envelopetags.ModelVersion, "ModelVersion", "Model Version")
 				End Get
 			End Property
 			''' <summary>This DataSet is to accommodate some providers who require routing information above the appropriate OSI layers.</summary>
@@ -4691,6 +4691,103 @@ Namespace MetadataT.IptcT
 			End Set
 		End Property
 #End Region
+	End Class
+#End Region
+#Region "GetTypedValue"
+	Partial Class Iptc
+		''' <summary>Gets value of given dataset in expected type for that dataset</summary>
+		''' <param name="Item">Identifies data set by its record number and data set number</param>
+		''' <returns>Value of property identified by <paramref name="Item"/>. If there is not property appropriate for <paramref name="item"/> value is returned as string. If there is no such value, null is returned.</returns>
+		''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid according to its type (if it is know tag) or as string (if it is unknown tag).</exception>
+		''' <version version="1.5.2">Function introduced</version>
+		Public Function GetTypedValue(Item as DataSetIdentification) As Object
+            If Me.Contains(Item) = 0 Then Return Nothing
+			Select Case Item
+				Case DataSetIdentification.ModelVersion : Return Me.ModelVersion
+				Case DataSetIdentification.Destination : Return Me.Destination
+				Case DataSetIdentification.FileFormat : Return Me.FileFormat
+				Case DataSetIdentification.FileFormatVersion : Return Me.FileFormatVersion
+				Case DataSetIdentification.ServiceIdentifier : Return Me.ServiceIdentifier
+				Case DataSetIdentification.EnvelopeNumber : Return Me.EnvelopeNumber
+				Case DataSetIdentification.ProductID : Return Me.ProductID
+				Case DataSetIdentification.EnvelopePriority : Return Me.EnvelopePriority
+				Case DataSetIdentification.DateSent : Return Me.DateSent
+				Case DataSetIdentification.TimeSent : Return Me.TimeSent
+				Case DataSetIdentification.CodedCharacterSet : Return Me.CodedCharacterSet
+				Case DataSetIdentification.UNO : Return Me.UNO
+				Case DataSetIdentification.ARMIdentifier : Return Me.ARMIdentifier
+				Case DataSetIdentification.ARMVersion : Return Me.ARMVersion
+				Case DataSetIdentification.RecordVersion : Return Me.RecordVersion
+				Case DataSetIdentification.ObjectTypeReference : Return Me.ObjectTypeReference
+				Case DataSetIdentification.ObjectAttributeReference : Return Me.ObjectAttributeReference
+				Case DataSetIdentification.ObjectName : Return Me.ObjectName
+				Case DataSetIdentification.EditStatus : Return Me.EditStatus
+				Case DataSetIdentification.EditorialUpdate : Return Me.EditorialUpdate
+				Case DataSetIdentification.Urgency : Return Me.Urgency
+				Case DataSetIdentification.SubjectReference : Return Me.SubjectReference
+				Case DataSetIdentification.Category : Return Me.Category
+				Case DataSetIdentification.SupplementalCategory : Return Me.SupplementalCategory
+				Case DataSetIdentification.FixtureIdentifier : Return Me.FixtureIdentifier
+				Case DataSetIdentification.Keywords : Return Me.Keywords
+				Case DataSetIdentification.ContentLocationCode : Return Me.ContentLocationCode
+				Case DataSetIdentification.ContentLocationName : Return Me.ContentLocationName
+				Case DataSetIdentification.ReleaseDate : Return Me.ReleaseDate
+				Case DataSetIdentification.ReleaseTime : Return Me.ReleaseTime
+				Case DataSetIdentification.ExpirationDate : Return Me.ExpirationDate
+				Case DataSetIdentification.ExpirationTime : Return Me.ExpirationTime
+				Case DataSetIdentification.SpecialInstructions : Return Me.SpecialInstructions
+				Case DataSetIdentification.ActionAdvised : Return Me.ActionAdvised
+				Case DataSetIdentification.ReferenceService : Return Me.ReferenceService
+				Case DataSetIdentification.ReferenceDate : Return Me.ReferenceDate
+				Case DataSetIdentification.ReferenceNumber : Return Me.ReferenceNumber
+				Case DataSetIdentification.DateCreated : Return Me.DateCreated
+				Case DataSetIdentification.TimeCreated : Return Me.TimeCreated
+				Case DataSetIdentification.DigitalCreationDate : Return Me.DigitalCreationDate
+				Case DataSetIdentification.DigitalCreationTime : Return Me.DigitalCreationTime
+				Case DataSetIdentification.OriginatingProgram : Return Me.OriginatingProgram
+				Case DataSetIdentification.ProgramVersion : Return Me.ProgramVersion
+				Case DataSetIdentification.ObjectCycle : Return Me.ObjectCycle
+				Case DataSetIdentification.ByLine : Return Me.ByLine
+				Case DataSetIdentification.ByLineTitle : Return Me.ByLineTitle
+				Case DataSetIdentification.City : Return Me.City
+				Case DataSetIdentification.SubLocation : Return Me.SubLocation
+				Case DataSetIdentification.ProvinceState : Return Me.ProvinceState
+				Case DataSetIdentification.CountryPrimaryLocationCode : Return Me.CountryPrimaryLocationCode
+				Case DataSetIdentification.CountryPrimaryLocationName : Return Me.CountryPrimaryLocationName
+				Case DataSetIdentification.OriginalTransmissionReference : Return Me.OriginalTransmissionReference
+				Case DataSetIdentification.Headline : Return Me.Headline
+				Case DataSetIdentification.Credit : Return Me.Credit
+				Case DataSetIdentification.Source : Return Me.Source
+				Case DataSetIdentification.CopyrightNotice : Return Me.CopyrightNotice
+				Case DataSetIdentification.Contact : Return Me.Contact
+				Case DataSetIdentification.CaptionAbstract : Return Me.CaptionAbstract
+				Case DataSetIdentification.WriterEditor : Return Me.WriterEditor
+				Case DataSetIdentification.RasterizedeCaption : Return Me.RasterizedeCaption
+				Case DataSetIdentification.ImageType : Return Me.ImageType
+				Case DataSetIdentification.ImageOrientation : Return Me.ImageOrientation
+				Case DataSetIdentification.LanguageIdentifier : Return Me.LanguageIdentifier
+				Case DataSetIdentification.AudioType : Return Me.AudioType
+				Case DataSetIdentification.AudioSamplingRate : Return Me.AudioSamplingRate
+				Case DataSetIdentification.AudioSamplingResolution : Return Me.AudioSamplingResolution
+				Case DataSetIdentification.AudioDuration : Return Me.AudioDuration
+				Case DataSetIdentification.AudioOutcue : Return Me.AudioOutcue
+				Case DataSetIdentification.ObjectDataPreviewFileFormat : Return Me.ObjectDataPreviewFileFormat
+				Case DataSetIdentification.ObjectDataPreviewFileFormatVersion : Return Me.ObjectDataPreviewFileFormatVersion
+				Case DataSetIdentification.ObjectDataPreviewData : Return Me.ObjectDataPreviewData
+				Case DataSetIdentification.SizeMode : Return Me.SizeMode
+				Case DataSetIdentification.MaxSubfileSize : Return Me.MaxSubfileSize
+				Case DataSetIdentification.ObjectDataSizeAnnounced : Return Me.ObjectDataSizeAnnounced
+				Case DataSetIdentification.MaximumObjectDataSize : Return Me.MaximumObjectDataSize
+				Case DataSetIdentification.Subfile : Return Me.Subfile
+				Case DataSetIdentification.ConfirmedObjectDataSize : Return Me.ConfirmedObjectDataSize
+			End Select
+			Try
+			    Dim AllValues As List(Of String) = Text_Value(Item)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			Catch ex As Exception
+				Throw New IPTCGetException(ex)
+			End Try
+		End Function
 	End Class
 #End Region
 #End If

@@ -41,5 +41,6 @@
         <vh:i>Fixed some resources-localization-related issues.</vh:i>
         <vh:i>New class <i:see cref="T:Tools.TestsT.StaticPropertiesTest"/>.</vh:i>
         <vh:i>WPF implementation of message box.</vh:i>
+        <vh:i>New metadata querying interfaces <i:see cref="T:Tools.MetadataT.IMetadataProvider"/> and <i:see cref="T:Tools.MetadataT.IMetadata"/> implemented by <i:see cref="T:Tools.MetadataT.ExifT.Exif"/> and <i:see cref="T:Tools.MetadataT.IptcT.IPTC"/>.</vh:i>
     </vh:version>
 </vh:VersionHistory>

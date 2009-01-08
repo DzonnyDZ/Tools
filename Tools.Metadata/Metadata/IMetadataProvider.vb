@@ -74,6 +74,12 @@
         ''' <returns>Localized description of purpose of metadata item identified by <paramref name="Key"/>; nul when description is not available.</returns>
         ''' <exception cref="ArgumentException"><paramref name="Key"/> is in invalid format or it is not one of predefined names.</exception>
         Function GetDescription$(ByVal Key$)
+        ''' <summary>Gets metadata value with given key as string</summary>
+        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        Function GetStringValue$(ByVal Key$)
     End Interface
 #End If
 End Namespace

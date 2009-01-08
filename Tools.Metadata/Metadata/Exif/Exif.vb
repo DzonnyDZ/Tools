@@ -436,7 +436,7 @@ Namespace MetadataT.ExifT
         ''' <summary>Gets IFD identified by <see cref="IFDIndexes"/></summary>
         ''' <param name="Index">Index identifiying the IFD</param>
         ''' <returns>IFD identified by index, if exists; null otherwise</returns>
-       ''' <version version="1.5.2">Property added</version>
+        ''' <version version="1.5.2">Property added</version>
         Private ReadOnly Property IFD(ByVal Index As IFDIndexes) As Ifd
             Get
                 Select Case Index
@@ -504,7 +504,7 @@ Namespace MetadataT.ExifT
             If attr Is Nothing Then Return Nothing
             Return attr.Description
         End Function
-       
+
         ''' <summary>Gets localized human-readable name for given key (or name)</summary>
         ''' <param name="Key">Key (or name) to get name for</param>
         ''' <returns>Human-readable descriptive name of metadata item identified by <paramref name="Key"/>; null when no such name is defined/known.</returns>
@@ -640,7 +640,34 @@ Namespace MetadataT.ExifT
                 Return IFDObject.Records(RecordNumber).Data
             End Get
         End Property
+        ''' <summary>Gets metadata value with given key as string</summary>
+        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.2">Method added</version>
+        Public Function GetStringValue(ByVal Key As String) As String Implements IMetadata.GetStringValue
+            Dim ret = Value(Key)
+            If ret Is Nothing Then Return Nothing
+            If TypeOf ret Is IEnumerable(Of Byte) Then
+                Dim r2 As New System.Text.StringBuilder
+                For Each b In DirectCast(ret, IEnumerable(Of Byte))
+                    r2.Append(b.ToString("x2"))
+                Next
+                Return r2.ToString
+            ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
+                Dim r2 As New System.Text.StringBuilder
+                For Each item In DirectCast(ret, IEnumerable)
+                    If r2.Length <> 0 Then r2.Append(Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator & " ")
+                    r2.Append(item.ToString)
+                Next
+                Return r2.ToString
+            End If
+            Return ret.ToString
+        End Function
 #End Region
+
+        
     End Class
 
     ''' <summary>Describes one Exif record</summary>

@@ -87,6 +87,7 @@
             <node name="IptcT" image="Namespace">
                 <node name="Iptc" image="Class" tag="Tools.Tests.MetadataT.IptcT.frmIPTC.test" />
             </node>
+            <node name="IMetadataProvider" image="Interface" tag="Tools.Tests.MetadataT.frmMetadataProvider.test" />
         </node>
     </node>
     <node name="Tools.Windows" image="Assembly">

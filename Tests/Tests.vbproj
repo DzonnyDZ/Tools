@@ -232,6 +232,12 @@
     <Compile Include="Drawing\DrawingIO\frmJPEG.vb">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="Metadata\frmMetadataProvider.Designer.vb">
+      <DependentUpon>frmMetadataProvider.vb</DependentUpon>
+    </Compile>
+    <Compile Include="Metadata\frmMetadataProvider.vb">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Metadata\frmExif.Designer.vb">
       <DependentUpon>frmExif.vb</DependentUpon>
     </Compile>
@@ -528,6 +534,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Drawing\DrawingIO\frmJPEG.resx">
       <DependentUpon>frmJPEG.vb</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Metadata\frmMetadataProvider.resx">
+      <DependentUpon>frmMetadataProvider.vb</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Metadata\frmExif.resx">
       <DependentUpon>frmExif.vb</DependentUpon>

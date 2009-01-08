@@ -235,7 +235,7 @@ Namespace MetadataT.IptcT
         ''' <returns>Keys in metadata-specific format of all the metadata present in curent instance. Never returns null; may return anempt enumeration.</returns>
         ''' <version version="1.5.2">Function introduced</version>
         Public Function GetContainedKeys() As System.Collections.Generic.IEnumerable(Of String) Implements IMetadata.GetContainedKeys
-            Return From tag In Me.Tags Select Key = tag.Key.ToString
+            Return (From tag In Me.Tags Select Key = tag.Key.ToString).Distinct
         End Function
 
         ''' <summary>Gets localized description for given key (or name)</summary>
@@ -261,7 +261,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         Public Function GetHumanName(ByVal Key As String) As String Implements IMetadata.GetHumanName
             Dim KeyDsi = ParseKey(Key)
-            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.DatasetNumber Select dsi.DisplayName).FirstOrDefault
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.RecordNumber Select dsi.DisplayName).FirstOrDefault
         End Function
 
         ''' <summary>Gets key for predefined name</summary>
@@ -280,7 +280,7 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Function introduced</version>
         Public Function GetNameOfKey(ByVal Key As String) As String Implements IMetadata.GetNameOfKey
             Dim KeyDsi = ParseKey(Key, False)
-            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.DatasetNumber Select dsi.PropertyName).FirstOrDefault
+            Return (From dsi In DataSetIdentification.KnownDataSets(True) Where dsi.DatasetNumber = KeyDsi.DatasetNumber AndAlso dsi.RecordNumber = KeyDsi.RecordNumber Select dsi.PropertyName).FirstOrDefault
         End Function
 
         ''' <summary>Gets all keys predefined for curent metadata format</summary>
@@ -319,10 +319,37 @@ Namespace MetadataT.IptcT
         ''' <version version="1.5.2">Property introduced</version>
         Public Overloads ReadOnly Property Value(ByVal Key As String) As Object Implements IMetadata.Value
             Get
-                Return Me(ParseKey(Key))
+                Return Me.GetTypedValue(ParseKey(Key))
             End Get
         End Property
+        ''' <summary>Gets metadata value with given key as string</summary>
+        ''' <param name="Key">Key (or name) to get vaue for (see <see cref="GetPredefinedKeys"/> for possible values)</param>
+        ''' <returns>Value of metadata item with given key as string; or null if given metadata value is not supported</returns>
+        ''' <exception cref="ArgumentException"><paramref name="Key"/> has invalid format and it is not one of predefined names</exception>
+        ''' <remarks>The <paramref name="Key"/> peremeter can be either key in metadata-specific format or predefined name of metadata item (if predefined names are supported).</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        Public Function GetStringValue(ByVal Key As String) As String Implements IMetadata.GetStringValue
+            Dim ret = Value(Key)
+            If ret Is Nothing Then Return Nothing
+            If TypeOf ret Is IEnumerable(Of Byte) Then
+                Dim r2 As New System.Text.StringBuilder
+                For Each b In DirectCast(ret, IEnumerable(Of Byte))
+                    r2.Append(b.ToString("x2"))
+                Next
+                Return r2.ToString
+            ElseIf TypeOf ret Is IEnumerable AndAlso Not TypeOf ret Is String Then
+                Dim r2 As New System.Text.StringBuilder
+                For Each item In DirectCast(ret, IEnumerable)
+                    If r2.Length <> 0 Then r2.Append(Globalization.CultureInfo.CurrentCulture.TextInfo.ListSeparator & " ")
+                    r2.Append(item.ToString)
+                Next
+                Return r2.ToString
+            End If
+            Return ret.ToString
+        End Function
 #End Region
+
+       
     End Class
     ''' <summary>Represents common base for <see cref="IPTCGetException"/> and <see cref="IPTCSetException"/></summary>
     Public MustInherit Class IptcException : Inherits Exception
@@ -398,7 +425,7 @@ Namespace MetadataT.IptcT
         ''' <returns>String in format "RecordNumber:DatasetNumber" in invariant culture</returns>
         ''' <version version="1.5.2">Override introduced</version>
         Public Overrides Function ToString() As String
-            Return String.Format(Globalization.CultureInfo.InvariantCulture, "{0}:{1}", RecordNumber, DatasetNumber)
+            Return String.Format(Globalization.CultureInfo.InvariantCulture, "{0:d}:{1}", RecordNumber, DatasetNumber)
         End Function
 #End Region
         ''' <summary>Contains value of the <see cref="RecordNumber"/> property</summary>

@@ -80,6 +80,7 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
         <xsl:call-template name="TagTypes"/>
         <xsl:call-template name="Groups"/>
         <xsl:call-template name="Properties"/>
+        <xsl:call-template name="GetTypedValue"/>
         <!--<xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>-->
     </xsl:template>
     <!--Generates imports-->
@@ -1548,6 +1549,36 @@ This should be tested and should work with current IPTCTags.xml, but it cannot b
                 </xsl:otherwise>
             </xsl:choose>
         </xsl:element>
+    </xsl:template>
+
+    <xsl:template name="GetTypedValue">
+        <xsl:text>#Region "GetTypedValue"&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;Partial Class Iptc&#xD;&#xA;</xsl:text>
+        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <summary>Gets value of given dataset in expected type for that dataset</summary>]]>&#xD;&#xA;</xsl:text>
+        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <param name="Item">Identifies data set by its record number and data set number</param>]]>&#xD;&#xA;</xsl:text>
+        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <returns>Value of property identified by <paramref name="Item"/>. If there is not property appropriate for <paramref name="item"/> value is returned as string. If there is no such value, null is returned.</returns>]]>&#xD;&#xA;</xsl:text>
+        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <exception cref="IPTCGetException">Tag exists in this instance but it's value is invalid according to its type (if it is know tag) or as string (if it is unknown tag).</exception>]]>&#xD;&#xA;</xsl:text>
+        <xsl:text xml:space="preserve">&#9;&#9;<![CDATA[''' <version version="1.5.2">Function introduced</version>]]>&#xD;&#xA;</xsl:text>        
+        <xsl:text>&#9;&#9;Public Function GetTypedValue(Item as DataSetIdentification) As Object&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;If Me.Contains(Item) = 0 Then Return Nothing&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;&#9;Select Case Item&#xD;&#xA;</xsl:text>
+        <xsl:for-each select="/I:Root/I:record/I:tag | /I:Root/I:record/I:group/I:tag">
+            <xsl:text>&#9;&#9;&#9;&#9;Case DataSetIdentification.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text> : Return Me.</xsl:text>
+            <xsl:value-of select="@name"/>
+            <xsl:text xml:space="preserve">&#xD;&#xA;</xsl:text>
+        </xsl:for-each>
+        <xsl:text>&#9;&#9;&#9;End Select&#xD;&#xA;</xsl:text>
+        <xsl:text xml:space="preserve">&#9;&#9;&#9;<![CDATA[Try
+			    Dim AllValues As List(Of String) = Text_Value(Item)
+				If AllValues IsNot Nothing AndAlso AllValues.Count <> 0 Then Return AllValues(0) Else Return Nothing
+			Catch ex As Exception
+				Throw New IPTCGetException(ex)
+			End Try]]>&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;&#9;End Function&#xD;&#xA;</xsl:text>
+        <xsl:text>&#9;End Class&#xD;&#xA;</xsl:text>
+        <xsl:text>#End Region&#xD;&#xA;</xsl:text>
     </xsl:template>
     
     <!--Supporting templates (common):-->
