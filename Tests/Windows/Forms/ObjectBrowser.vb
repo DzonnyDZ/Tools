@@ -64,5 +64,23 @@ Namespace WindowsT.FormsT
             Dim frm As New FloatingPropertyGrid(obTest)
             frm.Show(Me)
         End Sub
+
+        
+        Private Sub cmdBrowse_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdBrowse.Click
+            If ofdBrowse.ShowDialog = Windows.Forms.DialogResult.OK Then
+                For Each file In ofdBrowse.FileNames
+Retry:              Try
+                        Dim asm = Assembly.LoadFile(file)
+                        obTest.Objects.Add(asm)
+                    Catch ex As Exception
+                        Select Case MsgBox(String.Format("Error while loading assembly {0}:{1}{2}", file, vbCrLf, ex.Message), MsgBoxStyle.Critical Or MsgBoxStyle.AbortRetryIgnore, ex.GetType.Name)
+                            Case MsgBoxResult.Retry : GoTo Retry
+                            Case MsgBoxResult.Ignore : Continue For
+                            Case Else : Exit For
+                        End Select
+                    End Try
+                Next
+            End If
+        End Sub
     End Class
 End Namespace

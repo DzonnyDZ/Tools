@@ -35,7 +35,9 @@ Namespace WindowsT.FormsT
             Me.cmdShow = New System.Windows.Forms.Button
             Me.picSmall = New System.Windows.Forms.PictureBox
             Me.txtKey = New System.Windows.Forms.TextBox
+            Me.cmdBrowse = New System.Windows.Forms.Button
             Me.picBig = New System.Windows.Forms.PictureBox
+            Me.ofdBrowse = New System.Windows.Forms.OpenFileDialog
             Me.splMain.Panel1.SuspendLayout()
             Me.splMain.Panel2.SuspendLayout()
             Me.splMain.SuspendLayout()
@@ -85,6 +87,7 @@ Namespace WindowsT.FormsT
             Me.flpBottom.Controls.Add(Me.cmdShow)
             Me.flpBottom.Controls.Add(Me.picSmall)
             Me.flpBottom.Controls.Add(Me.txtKey)
+            Me.flpBottom.Controls.Add(Me.cmdBrowse)
             Me.flpBottom.Dock = System.Windows.Forms.DockStyle.Fill
             Me.flpBottom.Location = New System.Drawing.Point(0, 0)
             Me.flpBottom.Name = "flpBottom"
@@ -187,12 +190,24 @@ Namespace WindowsT.FormsT
             'txtKey
             '
             Me.txtKey.Anchor = System.Windows.Forms.AnchorStyles.None
-            Me.txtKey.Location = New System.Drawing.Point(0, 23)
+            Me.flpBottom.SetFlowBreak(Me.txtKey, True)
+            Me.txtKey.Location = New System.Drawing.Point(0, 27)
             Me.txtKey.Margin = New System.Windows.Forms.Padding(0)
             Me.txtKey.Name = "txtKey"
             Me.txtKey.ReadOnly = True
             Me.txtKey.Size = New System.Drawing.Size(76, 20)
             Me.txtKey.TabIndex = 8
+            '
+            'cmdBrowse
+            '
+            Me.cmdBrowse.AutoSize = True
+            Me.cmdBrowse.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink
+            Me.cmdBrowse.Location = New System.Drawing.Point(3, 55)
+            Me.cmdBrowse.Name = "cmdBrowse"
+            Me.cmdBrowse.Size = New System.Drawing.Size(26, 23)
+            Me.cmdBrowse.TabIndex = 10
+            Me.cmdBrowse.Text = "..."
+            Me.cmdBrowse.UseVisualStyleBackColor = True
             '
             'picBig
             '
@@ -205,6 +220,13 @@ Namespace WindowsT.FormsT
             Me.picBig.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom
             Me.picBig.TabIndex = 6
             Me.picBig.TabStop = False
+            '
+            'ofdBrowse
+            '
+            Me.ofdBrowse.DefaultExt = "dll"
+            Me.ofdBrowse.Filter = "Assemblies (*.dll, *.exe)|*.dll;*.exe|Dynamic link libraries (*.dll)|*.dll|Execut" & _
+                "able files (*.exe)|*.exe|Screen savers (*.scr)|*.scr"
+            Me.ofdBrowse.Multiselect = True
             '
             'frmObjectBrowser
             '
@@ -237,5 +259,7 @@ Namespace WindowsT.FormsT
         Friend WithEvents picSmall As System.Windows.Forms.PictureBox
         Friend WithEvents txtKey As System.Windows.Forms.TextBox
         Friend WithEvents chkExtension As System.Windows.Forms.CheckBox
+        Friend WithEvents cmdBrowse As System.Windows.Forms.Button
+        Friend WithEvents ofdBrowse As System.Windows.Forms.OpenFileDialog
     End Class
 End Namespace
