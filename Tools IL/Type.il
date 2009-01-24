@@ -32,7 +32,7 @@
     
     .method public static class [mscorlib]System.Reflection.FieldInfo GetConstant <([mscorlib]System.Enum) T>(!!T 'value') cil managed{
         .custom instance void [mscorlib]System.CLSCompliantAttribute::.ctor(bool) = { bool(false) }
-        .maxstack 3
+        .maxstack 4
         ldtoken !!T
         call class [mscorlib]System.Type [mscorlib]System.Type::GetTypeFromHandle(valuetype [mscorlib]System.RuntimeTypeHandle)
         ldtoken !!T
@@ -40,7 +40,14 @@
         ldarg.0 
         box !!T
         call string [mscorlib]System.Enum::GetName(class [mscorlib]System.Type, object)
+        dup
+        brnull.s isnull
         callvirt instance class [mscorlib]System.Reflection.FieldInfo [mscorlib]System.Type::GetField(string)
-        ret 
+        ret
+isnull:
+        pop
+        pop
+        ldnull
+        ret         
     }
 }

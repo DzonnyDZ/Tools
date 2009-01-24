@@ -113,6 +113,7 @@
     </Compile>
     <Compile Include="Generators\CustomToolAttribute.cs" />
     <Compile Include="Generators\CustomToolBase.cs" />
+    <Compile Include="misc.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Generators\Visual Studio\BaseCodeGenerator.cs" />
     <Compile Include="Generators\Visual Studio\BaseCodeGeneratorWithSite.cs" />

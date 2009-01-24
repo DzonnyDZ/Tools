@@ -23,9 +23,10 @@
         <member name="M:Tools.SpecialT.TypeTools.GetConstant``1(``0)">
             <summary>Gets <see cref="T:System.Reflection.FieldInfo"/> that represent given constant within an enum</summary>
             <param name="value">Constant to be found</param>
-            <returns><see cref="T:System.Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <typeparamref name="T"/></returns>
+            <returns><see cref="T:System.Reflection.FieldInfo"/> of given <paramref name="value"/> if <paramref name="value"/> is member of <typeparamref name="T"/>; null instead</returns>
             <typeparam name="T"><see cref="T:System.Enum"/> to found constant within</typeparam>
             <exception cref="ArgumentNullException"><paramref name="value"/> is not member of <paramref name="T"/></exception>
+            <version version="1.5.2">Removed <see cref="ArgumentNullException"/> thrown when <paramref name="value"/> is not member of enumeration <typeparamref name="T"/>. Null is returned in such case.</version>
         </member>
     </members>
 </doc>
