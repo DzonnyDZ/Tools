@@ -92,6 +92,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Accessibility" />
+    <Reference Include="Microsoft.VisualBasic.Compatibility" />
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=9.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="PresentationCore">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
@@ -143,6 +144,8 @@
     <Compile Include="..\SharedFiles\Version.vb">
       <Link>Version.vb</Link>
     </Compile>
+    <Compile Include="API\HelpersU.vb" />
+    <Compile Include="IO\FileSystemToolsU.vb" />
     <Compile Include="Special\TypeToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -153,7 +156,11 @@
   <ItemGroup>
     <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
       <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
-      <Name>Tools IL</Name>
+      <Name>Tools.IL</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools Win\Tools.Win.vbproj">
+      <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
+      <Name>Tools.Win</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>

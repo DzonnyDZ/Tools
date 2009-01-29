@@ -834,6 +834,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'EntryPoint must be specified'.
+        '''</summary>
+        Friend Shared ReadOnly Property EntryPointMustBeSpecified() As String
+            Get
+                Return ResourceManager.GetString("EntryPointMustBeSpecified", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Enumeration does not allow negative values'.
         '''</summary>
         Friend Shared ReadOnly Property EnumerationDoesNotAllowNegativeValues() As String
@@ -1241,6 +1250,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Invocation list of delegate must have exactly one item.'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvocationListOfDelegateMustHaveExactlyOneItem() As String
+            Get
+                Return ResourceManager.GetString("InvocationListOfDelegateMustHaveExactlyOneItem", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'IPTC DataSets longer that 32767 bytes are not supported'.
         '''</summary>
         Friend Shared ReadOnly Property IPTCDataSetsLongerThat32767BytesAreNotSupported() As String
@@ -1626,6 +1644,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property MustBe1Dimensional() As String
             Get
                 Return ResourceManager.GetString("MustBe1Dimensional", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to '{0} must be decorated with {1}'.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeDecoratedWith1() As String
+            Get
+                Return ResourceManager.GetString("MustBeDecoratedWith1", _resourceCulture)
             End Get
         End Property
         
@@ -4268,6 +4295,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the EntryPointMustBeSpecified property value.
+        '''</summary>
+        '''<returns>The EntryPointMustBeSpecified property value.</returns>
+        Friend Shared Function EntryPointMustBeSpecifiedFormat() As String
+            Return EntryPointMustBeSpecified
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the EnumerationDoesNotAllowNegativeValues property value.
         '''</summary>
         '''<returns>The EnumerationDoesNotAllowNegativeValues property value.</returns>
@@ -4641,6 +4676,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the InvocationListOfDelegateMustHaveExactlyOneItem property value.
+        '''</summary>
+        '''<returns>The InvocationListOfDelegateMustHaveExactlyOneItem property value.</returns>
+        Friend Shared Function InvocationListOfDelegateMustHaveExactlyOneItemFormat() As String
+            Return InvocationListOfDelegateMustHaveExactlyOneItem
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the IPTCDataSetsLongerThat32767BytesAreNotSupported property value.
         '''</summary>
         '''<returns>The IPTCDataSetsLongerThat32767BytesAreNotSupported property value.</returns>
@@ -5005,6 +5048,16 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function MustBe1DimensionalFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, MustBe1Dimensional, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} must be decorated with {1}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function MustBeDecoratedWith1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, MustBeDecoratedWith1, arg0, arg1)
         End Function
         
         '''<summary>

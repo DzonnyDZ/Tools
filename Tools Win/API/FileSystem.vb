@@ -1,6 +1,7 @@
 ﻿Imports System.Runtime.InteropServices
 Imports System.ComponentModel
 Imports Microsoft.Win32.SafeHandles
+Imports System.Text
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace API
@@ -224,6 +225,16 @@ Namespace API
             ''' <summary>The server process can impersonate the client's security context on remote systems. </summary>
             SecurityDelegation
         End Enum
+        ''' <summary>Retrieves the localized name of a file in a Shell folder.</summary>
+        ''' <param name="pszPath">[in] A pointer to a string that specifies the fully qualified path of the file.</param>
+        ''' <param name="pszResModule">[out] When this function returns, contains a pointer to a string resource that specifies the localized version of the file name.</param>
+        ''' <param name="cch">[out] When this function returns, contains the size of the string, in WCHARs, at <paramref name="pszResModule"/>.</param>
+        ''' <param name="pidsRes">When this function returns, contains a pointer to the ID of the localized file name in the resource file.</param>
+        ''' <returns>N/A</returns>
+        <DllImport("shell32.dll", CallingConvention:=CallingConvention.Winapi, CharSet:=CharSet.Unicode, EntryPoint:="SHGetLocalizedName", ExactSpelling:=True)> _
+        Public Function SHGetLocalizedName(ByVal pszPath As String, ByVal pszResModule As StringBuilder, ByRef cch%, <Out()> ByRef pidsRes As Integer) As Integer
+        End Function
+        Public Delegate Function dSHGetLocalizedName(ByVal pszPath As String, ByVal pszResModule As StringBuilder, ByRef cch%, ByRef pidsRes As Integer) As Integer
 
 #End Region
 #Region "Enumerations"

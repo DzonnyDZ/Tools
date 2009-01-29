@@ -1,6 +1,7 @@
 ﻿Imports Tools.IOt, Tools.API, System.Drawing, Tools.ExtensionsT.StringExtensions
 Imports System.Runtime.CompilerServices
 Imports System.Runtime.InteropServices
+Imports System.Text
 
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace IOt
@@ -39,6 +40,26 @@ Namespace IOt
             If Path Is Nothing Then Throw New ArgumentNullException("Path")
             Return GetIcon(DirectCast(New Path(Path), IPathProvider), Large)
         End Function
+        '''' <summary>Gets localized name for file or folder</summary>
+        '''' <param name="Path">Path to get loclized name of</param>
+        '''' <returns>Localized name of given path; or file name part of path if localized name is not available</returns>
+        '''' <remarks>Localized name is available at Windows Vista and later. On systems before Vista <see cref="Path.FileName"/> is always returned.</remarks>
+        '''' <exception cref="ArgumentNullException"><paramref name="Path"/> is null</exception>
+        '<Extension()> _
+        'Public Function GetLocalizedName(ByVal Path As Path) As String
+        '    If Path Is Nothing Then Throw New ArgumentNullException("Path")
+        '    Dim dExists As New API.FileSystem.dSHGetLocalizedName(AddressOf API.FileSystem.SHGetLocalizedName)
+        '    If Not API.Helpers.IsFunctionExported(dExists) Then _
+        '        Return Path.FileName
+        '    Dim pszResModule As New StringBuilder(1024), cch%
+        '    Dim pidsRes As IntPtr
+        '    Dim result = API.FileSystem.SHGetLocalizedName(Path.Path, pszResModule, cch, pidsRes)
+        '    If result <> 0 Then Throw New API.Win32APIException
+        '    'Dim Name = Marshal.PtrToStringBSTR(pszResModule)
+        '    'Marshal.FreeBSTR(pszResModule)
+        '    Return pszResModule.ToString
+        'End Function
+        'TODO: GetLocalizedName (reliable!)
     End Module
 End Namespace
 #End If

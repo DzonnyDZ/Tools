@@ -183,4 +183,7 @@
   <data name="LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize" xml:space="preserve">
     <value>Lenght of Original.RawItemsCount must be 1 and Original.RawItemSize must be 2 or 3.</value>
   </data>
+  <data name="InstanceAPIMethodsAreNotAllowed" xml:space="preserve">
+    <value>Instance API methods are not allowed.</value>
+  </data>
 </root>

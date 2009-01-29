@@ -1260,4 +1260,13 @@
   <data name="UnknownPredefinedName0" xml:space="preserve">
     <value>Unknown predefined name "{0}".</value>
   </data>
+  <data name="EntryPointMustBeSpecified" xml:space="preserve">
+    <value>EntryPoint must be specified</value>
+  </data>
+  <data name="MustBeDecoratedWith1" xml:space="preserve">
+    <value>{0} must be decorated with {1}</value>
+  </data>
+  <data name="InvocationListOfDelegateMustHaveExactlyOneItem" xml:space="preserve">
+    <value>Invocation list of delegate must have exactly one item.</value>
+  </data>
 </root>
