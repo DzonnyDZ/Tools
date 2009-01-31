@@ -7,6 +7,8 @@ Namespace LinqT
         ''' <param name="collections">Collections to create union of</param>
         ''' <typeparam name="T">Type of items in collection(s)</typeparam>
         ''' <returns>Collection that contains members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
+        ''' <remarks>Unification is done immediatelly.</remarks>
+        ''' <seelaso cref="FlatAllDeffered"/>
         Public Function UnionAll(Of T)(ByVal ParamArray collections As IEnumerable(Of T)()) As IEnumerable(Of T)
             Return UnionAll(DirectCast(collections, IEnumerable(Of IEnumerable(Of T))))
         End Function
@@ -14,6 +16,8 @@ Namespace LinqT
         ''' <param name="collections">Collections to create union of</param>
         ''' <typeparam name="T">Type of items in collection(s)</typeparam>
         ''' <returns>Collection that contains all members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
+        ''' <remarks>Unification is done immediatelly.</remarks>
+        ''' <seelaso cref="FlatAllDeffered"/>
         <Extension()> Public Function UnionAll(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             Dim ret As IEnumerable(Of T) = New List(Of T)
             If collections Is Nothing Then Return ret
@@ -26,9 +30,21 @@ Namespace LinqT
         ''' <param name="collections">Collections to create union of</param>
         ''' <typeparam name="T">Type of items in collection(s)</typeparam>
         ''' <returns>Collection that contains all members of all collections in <paramref name="collections"/>. If <paramref name="collections"/> is null returns an emlty collection.</returns>
-        ''' <remarks>This is alias of <see cref="UnionAll"/> which takes one parameter.</remarks>
+        ''' <remarks>This is alias of <see cref="UnionAll"/> which takes one parameter.
+        ''' <para>Unification is done immediatelly.</para></remarks>
+        ''' <seelaso cref="FlatAllDeffered"/>
+        ''' <seelaso cref="UnionAll"/>
         <Extension()> Public Function FlatAll(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
             Return UnionAll(collections)
+        End Function
+        ''' <summary>Creates union of all geiven colections</summary>
+        ''' <param name="collections">Collections to create union of</param>
+        ''' <typeparam name="T">Type of items in collections</typeparam>
+        ''' <returns><see cref="UnionEnumerable(Of T)"/> over <paramref name="collections"/></returns>
+        ''' <remarks>Unioning is deffered to time when collections are iterated</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Public Function FlatAllDeffered(Of T)(ByVal collections As IEnumerable(Of IEnumerable(Of T))) As IEnumerable(Of T)
+            Return New UnionEnumerable(Of T)(collections)
         End Function
         ''' <summary>Unions all unique items in given collections to one collection</summary>
         ''' <param name="collections">Collections to create union of</param>

@@ -1,7 +1,7 @@
 <?xml version="1.0" ?>
 <doc>
     <assembly>
-        <name>Tools IL</name>
+        <name>Tools.IL</name>
     </assembly>
     <members>
         <member name="N:Tools">

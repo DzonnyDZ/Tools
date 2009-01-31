@@ -2,8 +2,8 @@
     .ver 2:0:0:0
     .publickeytoken = (B7 7A 5C 56 19 34 E0 89)
 }
-.assembly 'Tools IL'{
-    .ver 1:5:1:1
+.assembly 'Tools.IL'{
+    .ver 1:5:1:2
     .custom instance void [mscorlib]System.CLSCompliantAttribute::.ctor(bool) = { bool(true) }
 }
 .assembly extern System.Core{
@@ -32,6 +32,7 @@
     
     .method public static class [mscorlib]System.Reflection.FieldInfo GetConstant <([mscorlib]System.Enum) T>(!!T 'value') cil managed{
         .custom instance void [mscorlib]System.CLSCompliantAttribute::.ctor(bool) = { bool(false) }
+        .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor()
         .maxstack 4
         ldtoken !!T
         call class [mscorlib]System.Type [mscorlib]System.Type::GetTypeFromHandle(valuetype [mscorlib]System.RuntimeTypeHandle)

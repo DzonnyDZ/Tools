@@ -44,5 +44,7 @@
         <vh:i>New metadata querying interfaces <i:see cref="T:Tools.MetadataT.IMetadataProvider"/> and <i:see cref="T:Tools.MetadataT.IMetadata"/> implemented by <i:see cref="T:Tools.MetadataT.ExifT.Exif"/> and <i:see cref="T:Tools.MetadataT.IptcT.IPTC"/>.</vh:i>
         <vh:i>Assembly Tools Win renamed to Tools.Win</vh:i>
         <vh:i>Assembly Tools IL renamed to Tols.IL</vh:i>
+        <vh:i>New class <i:see cref="T:Tools.CollectionsT.GenericT.PriorityQueue"/></vh:i>
+        <vh:i>New class <i:see cref="T:Tools.DataStructuresT.GenericT.Graph"/></vh:i>
     </vh:version>
 </vh:VersionHistory>

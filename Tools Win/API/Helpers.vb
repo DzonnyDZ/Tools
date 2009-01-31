@@ -91,7 +91,7 @@ Namespace API
                     lpProc = GetProcAddress(hModule, ProcName)
                     If lpProc <> 0 Then Return True
                 End If
-                If CharSet = Runtime.InteropServices.CharSet.Ansi Or CharSet = Runtime.InteropServices.CharSet.Unicode Then
+                If CharSet = Runtime.InteropServices.CharSet.Ansi Or CharSet = Runtime.InteropServices.CharSet.Unicode Or CharSet = Runtime.InteropServices.CharSet.Auto Then
                     ProcName = ProcName.Substring(0, ProcName.Length - 1)
                     Return GetProcAddress(hModule, ProcName) <> 0
                 End If

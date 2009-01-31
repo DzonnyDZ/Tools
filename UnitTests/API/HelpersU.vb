@@ -32,8 +32,8 @@ Namespace APIUT
             Assert.IsFalse(Helpers.IsFunctionExported("Kernel32.dll", "LoadLibrary", Runtime.InteropServices.CharSet.None), "LoadLibrary is not defined in Kernel32.dll (none)")
 
             Assert.IsTrue(Helpers.IsFunctionExported("Kernel32.dll", "FreeLibrary", Runtime.InteropServices.CharSet.Auto), "FreeLibrary is defined in Kernel32.dll (auto)")
-            Assert.IsFalse(Helpers.IsFunctionExported("Kernel32.dll", "FreeLibrary", Runtime.InteropServices.CharSet.Ansi), "FreeLibrary is not defined in Kernel32.dll (ansi)")
-            Assert.IsFalse(Helpers.IsFunctionExported("Kernel32.dll", "FreeLibrary", Runtime.InteropServices.CharSet.Unicode), "FreeLibrary is not defined in Kernel32.dll (unicode)")
+            Assert.IsTrue(Helpers.IsFunctionExported("Kernel32.dll", "FreeLibrary", Runtime.InteropServices.CharSet.Ansi), "FreeLibrary is not defined in Kernel32.dll (ansi)")
+            Assert.IsTrue(Helpers.IsFunctionExported("Kernel32.dll", "FreeLibrary", Runtime.InteropServices.CharSet.Unicode), "FreeLibrary is not defined in Kernel32.dll (unicode)")
             Assert.IsTrue(Helpers.IsFunctionExported("Kernel32.dll", "FreeLibrary", Runtime.InteropServices.CharSet.None), "FreeLibrary is defined in Kernel32.dll (none)")
         End Sub
         <TestMethod()> _

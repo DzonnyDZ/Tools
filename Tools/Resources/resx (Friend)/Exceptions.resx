@@ -1269,4 +1269,19 @@
   <data name="InvocationListOfDelegateMustHaveExactlyOneItem" xml:space="preserve">
     <value>Invocation list of delegate must have exactly one item.</value>
   </data>
+  <data name="AllEdgesValuesMustBePositive" xml:space="preserve">
+    <value>All edges' values must be positive</value>
+  </data>
+  <data name="NumeralCharactersMustBeDistinct" xml:space="preserve">
+    <value>Numeral characters must be distinct</value>
+  </data>
+  <data name="String0RepresentsHigherNumberThanMaximum1" xml:space="preserve">
+    <value>String {0} represents higher number than maximum {1}</value>
+  </data>
+  <data name="UnexpectedCharacter0InRomanNumeral" xml:space="preserve">
+    <value>Unexpected character {0} in Roman numeral.</value>
+  </data>
+  <data name="InvalidRomanNumeralSequenceInvalidSubtraction" xml:space="preserve">
+    <value>Invalid Roman numeral sequence - invalid subtraction. Only allowed subtractions are IV, IX, XL, XC, CD and CM</value>
+  </data>
 </root>

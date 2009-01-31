@@ -12,7 +12,9 @@ Namespace CollectionsT.GenericT
         Private Enumerables As IEnumerable(Of IEnumerable(Of T))
         ''' <summary>CTor</summary>
         ''' <param name="Enumerables"><see cref="IEnumerable(Of T)"/>s to be unionized</param>
+        ''' <version version="1.5.2">Now it is sfe to pass null to <paramref name="Enumerables"/>.</version>
         Public Sub New(ByVal Enumerables As IEnumerable(Of IEnumerable(Of T)))
+            If Enumerables Is Nothing Then Enumerables = New List(Of IEnumerable(Of T))
             Me.Enumerables = Enumerables
         End Sub
         ''' <summary>CTor</summary>

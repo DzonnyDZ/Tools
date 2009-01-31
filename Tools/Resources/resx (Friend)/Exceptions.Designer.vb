@@ -84,6 +84,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'All edges&apos; values must be positive'.
+        '''</summary>
+        Friend Shared ReadOnly Property AllEdgesValuesMustBePositive() As String
+            Get
+                Return ResourceManager.GetString("AllEdgesValuesMustBePositive", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'AllowAddCancelableEventsHandlers  can be changed only from True to False'.
         '''</summary>
         Friend Shared ReadOnly Property AllowAddCancelableEventsHandlersCanBeChangedOnlyFromTrueToFalse() As String
@@ -1241,6 +1250,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Invalid Roman numeral sequence - invalid subtraction. Only allowed subtractions are IV, IX, XL, XC, CD and CM'.
+        '''</summary>
+        Friend Shared ReadOnly Property InvalidRomanNumeralSequenceInvalidSubtraction() As String
+            Get
+                Return ResourceManager.GetString("InvalidRomanNumeralSequenceInvalidSubtraction", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Invalid value for byte order test at Exif header '.
         '''</summary>
         Friend Shared ReadOnly Property InvalidValueForByteOrderTestAtExifHeader() As String
@@ -1945,6 +1963,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Numeral characters must be distinct'.
+        '''</summary>
+        Friend Shared ReadOnly Property NumeralCharactersMustBeDistinct() As String
+            Get
+                Return ResourceManager.GetString("NumeralCharactersMustBeDistinct", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Object of type {0} cannot be serialized as primitive object.'.
         '''</summary>
         Friend Shared ReadOnly Property ObjectOfType0CannotBeSerializedAsPrimitiveObject() As String
@@ -2364,6 +2391,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property String0IsNotValid1() As String
             Get
                 Return ResourceManager.GetString("String0IsNotValid1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'String {0} represents higher number than maximum {1}'.
+        '''</summary>
+        Friend Shared ReadOnly Property String0RepresentsHigherNumberThanMaximum1() As String
+            Get
+                Return ResourceManager.GetString("String0RepresentsHigherNumberThanMaximum1", _resourceCulture)
             End Get
         End Property
         
@@ -3175,6 +3211,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unexpected character {0} in Roman numeral.'.
+        '''</summary>
+        Friend Shared ReadOnly Property UnexpectedCharacter0InRomanNumeral() As String
+            Get
+                Return ResourceManager.GetString("UnexpectedCharacter0InRomanNumeral", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unknown base type of enum'.
         '''</summary>
         Friend Shared ReadOnly Property UnknownBaseTypeOfEnum() As String
@@ -3566,6 +3611,14 @@ Namespace ResourcesT
                         "dMustBeOfTypeUInt16WithOneElementFixedLength", _resourceCulture)
             End Get
         End Property
+        
+        '''<summary>
+        '''The stub formatting method returning the AllEdgesValuesMustBePositive property value.
+        '''</summary>
+        '''<returns>The AllEdgesValuesMustBePositive property value.</returns>
+        Friend Shared Function AllEdgesValuesMustBePositiveFormat() As String
+            Return AllEdgesValuesMustBePositive
+        End Function
         
         '''<summary>
         '''The stub formatting method returning the AllowAddCancelableEventsHandlersCanBeChangedOnlyFromTrueToFalse property value.
@@ -4668,6 +4721,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the InvalidRomanNumeralSequenceInvalidSubtraction property value.
+        '''</summary>
+        '''<returns>The InvalidRomanNumeralSequenceInvalidSubtraction property value.</returns>
+        Friend Shared Function InvalidRomanNumeralSequenceInvalidSubtractionFormat() As String
+            Return InvalidRomanNumeralSequenceInvalidSubtraction
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the InvalidValueForByteOrderTestAtExifHeader property value.
         '''</summary>
         '''<returns>The InvalidValueForByteOrderTestAtExifHeader property value.</returns>
@@ -5374,6 +5435,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the NumeralCharactersMustBeDistinct property value.
+        '''</summary>
+        '''<returns>The NumeralCharactersMustBeDistinct property value.</returns>
+        Friend Shared Function NumeralCharactersMustBeDistinctFormat() As String
+            Return NumeralCharactersMustBeDistinct
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Object of type {0} cannot be serialized as primitive object.'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -5766,6 +5835,16 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function String0IsNotValid1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, String0IsNotValid1, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'String {0} represents higher number than maximum {1}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function String0RepresentsHigherNumberThanMaximum1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, String0RepresentsHigherNumberThanMaximum1, arg0, arg1)
         End Function
         
         '''<summary>
@@ -6544,6 +6623,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function UnexpectedCharacter0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnexpectedCharacter0, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unexpected character {0} in Roman numeral.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function UnexpectedCharacter0InRomanNumeralFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnexpectedCharacter0InRomanNumeral, arg0)
         End Function
         
         '''<summary>

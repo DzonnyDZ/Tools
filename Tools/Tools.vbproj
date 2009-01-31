@@ -187,7 +187,6 @@
     <Compile Include="ComponentModel\SuppresHandledEventArgs.vb" />
     <Compile Include="ComponentModel\TypeConverter.vb" />
     <Compile Include="ComponentModel\ValuesFromRangeAreValidAttribute.vb" />
-    <Compile Include="DataStructures\Generic\Graph.vb" />
     <Compile Include="DataStructures\Generic\Pair.vb" />
     <Compile Include="DataStructures\Generic\T1OrT2.vb" />
     <Compile Include="DataStructures\Generic\Tree.vb" />
@@ -470,10 +469,16 @@
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <Compile Include="Collections\Generic\GenericComparer.vb" />
+    <Compile Include="Collections\Generic\UnwrapEnumerator.vb" />
     <Compile Include="ComponentModel\CancelItemEventArgs.vb" />
     <Compile Include="ComponentModel\EnumDefaultValueAttribute.vb" />
     <Compile Include="ComponentModel\MultipleException.vb">
     </Compile>
+    <Compile Include="Collections\Generic\PriorityQueue.vb" />
+    <Compile Include="DataStructures\Graph.vb" />
+    <Compile Include="Globalization\NumberingSystem.vb" />
+    <Compile Include="Globalization\NumberingSystems\Roman.vb" />
     <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>

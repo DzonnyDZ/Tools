@@ -145,7 +145,11 @@
       <Link>Version.vb</Link>
     </Compile>
     <Compile Include="API\HelpersU.vb" />
+    <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
+    <Compile Include="Collections\Generic\GenericComparerUT.vb" />
+    <Compile Include="Globalization\NumberingSystems\RomanUT.vb" />
     <Compile Include="IO\FileSystemToolsU.vb" />
+    <Compile Include="Collections\Generic\PriorityQueueU.vb" />
     <Compile Include="Special\TypeToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -157,6 +161,7 @@
     <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
       <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
       <Name>Tools.IL</Name>
+      <Private>True</Private>
     </ProjectReference>
     <ProjectReference Include="..\Tools Win\Tools.Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
@@ -169,6 +174,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Tools.snk" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="DataStructures\" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.VisualBasic.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
