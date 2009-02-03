@@ -148,6 +148,7 @@
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
     <Compile Include="Globalization\NumberingSystems\RomanUT.vb" />
+    <Compile Include="Globalization\NumberingSystemUT.vb" />
     <Compile Include="IO\FileSystemToolsU.vb" />
     <Compile Include="Collections\Generic\PriorityQueueU.vb" />
     <Compile Include="Special\TypeToolsU.vb" />

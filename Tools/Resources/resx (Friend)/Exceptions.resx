@@ -1284,4 +1284,10 @@
   <data name="InvalidRomanNumeralSequenceInvalidSubtraction" xml:space="preserve">
     <value>Invalid Roman numeral sequence - invalid subtraction. Only allowed subtractions are IV, IX, XL, XC, CD and CM</value>
   </data>
+  <data name="UnknownState0" xml:space="preserve">
+    <value>Unknown state {0}</value>
+  </data>
+  <data name="ThousandMultiplicationSuffixMustDifferFromNumerals" xml:space="preserve">
+    <value>Thousand multiplication suffix must differ from numerals.</value>
+  </data>
 </root>

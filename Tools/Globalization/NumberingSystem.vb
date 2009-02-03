@@ -3,6 +3,7 @@
 #If Config <= Nightly Then 'Stage: Nighly
 Namespace GlobalizationT
     ''' <summary>Bsae class for numbering systems</summary>
+    ''' <version version="1.5.2">Class introduced</version>
     ''' <completionlist cref="NumberingSystem"/>
     Public MustInherit Class NumberingSystem
         ''' <summary>When overiden in derived class gets representation of given number in curent numbering system</summary>
@@ -70,23 +71,48 @@ Namespace GlobalizationT
             Return TryParseInternal(value, result) Is Nothing
         End Function
 
+        ''' <summary>Converts value in one numbering system to another</summary>
+        ''' <param name="Value">Value to convert</param>
+        ''' <param name="Source">Source numbering system (that one <paramref name="Value"/> is in)</param>
+        ''' <param name="Target">Target numbering system (that one return value will be in)</param>
+        ''' <returns><paramref name="Value"/> converted from <paramref name="Source"/> numbering system to <paramref name="Target"/> numbering system</returns>
+        ''' <exception cref="NotSupportedException"><paramref name="Source"/>.<see cref="NumberingSystem.SupportsParse"/> is false</exception>
+        ''' <exception cref="FormatException"><paramref name="Value"/> has invalid format accoring to <paramref name="Source"/></exception>
+        ''' <exception cref="OverflowException"><paramref name="Value"/> represents number lower than <paramref name="Source"/>.<see cref="NumberingSystem.Minimum">Minimum</see> or greater than <paramref name="Source"/>.<see cref="NumberingSystem.Maximum">Maximum</see>.</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Value"/> is null or an empty string an <paramref name="Source"/> cannot interpret such value.
+        ''' -or- <paramref name="Source"/> or <paramref name="Target"/> is null</exception>
+        ''' <exception cref="ArgumentOutOfRangeException">Integral representation of <paramref name="Value"/> provided by <paramref name="Source"/> is lower than <paramref name="Target"/>.<see cref="NumberingSystem.Minimum">Minimum</see> or greater than <paramref name="Target"/>.<see cref="NumberingSystem.Maximum">Maximum.</see></exception>
+        ''' <exception cref="Exception"><paramref name="Source"/>.<see cref="NumberingSystem.Parse">Parse</see> may throw any exception.</exception>
+        Public Shared Function Convert(ByVal Value As String, ByVal Source As NumberingSystem, ByVal Target As NumberingSystem) As String
+            If Source Is Nothing Then Throw New ArgumentNullException("Source")
+            If Target Is Nothing Then Throw New ArgumentNullException("Target")
+            Return Target.GetValue(Source.Parse(Value))
+        End Function
 #Region "Systems"
-        Public ReadOnly Property RomanUpperCase() As NumberingSystemsT.RomanNumberingSystem
+        ''' <summary>Gets default instance of numbering system based on upper case Roman numerals</summary>
+        ''' <seelaso cref="NumberingSystemsT.RomanNumberingSystem.UpperCase"/>
+        Public Shared ReadOnly Property RomanUpperCase() As NumberingSystemsT.RomanNumberingSystem
             Get
                 Return NumberingSystemsT.RomanNumberingSystem.UpperCase
             End Get
         End Property
-        Public ReadOnly Property RomanLowerCase() As NumberingSystemsT.RomanNumberingSystem
+        ''' <summary>Gets default instance of numbering system based on lower case Roman numerals</summary>
+        ''' <seelaso cref="NumberingSystemsT.RomanNumberingSystem.LowerCase"/>
+        Public Shared ReadOnly Property RomanLowerCase() As NumberingSystemsT.RomanNumberingSystem
             Get
                 Return NumberingSystemsT.RomanNumberingSystem.LowerCase
             End Get
         End Property
-        Public ReadOnly Property RomanUnicodeUpperCase() As NumberingSystemsT.RomanNumberingSystemUnicode
+        ''' <summary>Gets default instance of numbering system based on upper case Unicode Roman numerals</summary>
+        ''' <seelaso cref="NumberingSystemsT.RomanNumberingSystemUnicode.UpperCase"/>
+        Public Shared ReadOnly Property RomanUnicodeUpperCase() As NumberingSystemsT.RomanNumberingSystemUnicode
             Get
                 Return NumberingSystemsT.RomanNumberingSystemUnicode.UpperCase
             End Get
         End Property
-        Public ReadOnly Property RomanUnicodeLowerCase() As NumberingSystemsT.RomanNumberingSystemUnicode
+        ''' <summary>Gets default instance of numbering system based on lower case Unicode Roman numerals</summary>
+        ''' <seelaso cref="NumberingSystemsT.RomanNumberingSystemUnicode.LowerCase"/>
+        Public Shared ReadOnly Property RomanUnicodeLowerCase() As NumberingSystemsT.RomanNumberingSystemUnicode
             Get
                 Return NumberingSystemsT.RomanNumberingSystemUnicode.LowerCase
             End Get
