@@ -1290,4 +1290,19 @@
   <data name="ThousandMultiplicationSuffixMustDifferFromNumerals" xml:space="preserve">
     <value>Thousand multiplication suffix must differ from numerals.</value>
   </data>
+  <data name="UnexpectedCharacters0InRomanNumeral" xml:space="preserve">
+    <value>Unexpected characters {0} in Roman numeral</value>
+  </data>
+  <data name="ArrayCannotBeEmpty" xml:space="preserve">
+    <value>Array cannot be empty.</value>
+  </data>
+  <data name="NumberCannotConsistOfSignOnly" xml:space="preserve">
+    <value>Number cannot consist of sign only.</value>
+  </data>
+  <data name="CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting" xml:space="preserve">
+    <value>Character represnting numeral cannot be same as character representing negavive sign</value>
+  </data>
+  <data name="CharactersRepreentingNumeralsMustBeDifferent" xml:space="preserve">
+    <value>Characters repreenting numerals must be different</value>
+  </data>
 </root>

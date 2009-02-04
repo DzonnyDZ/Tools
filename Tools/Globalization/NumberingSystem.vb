@@ -117,6 +117,56 @@ Namespace GlobalizationT
                 Return NumberingSystemsT.RomanNumberingSystemUnicode.LowerCase
             End Get
         End Property
+        ''' <summary>Gets default instance of numbering system based on upper case Unicode Roman numerals with support fro numerals over 1000</summary>
+        ''' <seelaso cref="NumberingSystemsT.RomanNumberingSystemBig.UpperCase"/>
+        Public Shared ReadOnly Property RomanUnicodeBigUpperCase() As NumberingSystemsT.RomanNumberingSystemUnicode
+            Get
+                Return NumberingSystemsT.RomanNumberingSystemBig.UpperCase
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system based on lower case Unicode Roman numerals with support fro numerals over 1000</summary>
+        ''' <seelaso cref="NumberingSystemsT.RomanNumberingSystemBig.LowerCase"/>
+        Public Shared ReadOnly Property RomanUnicodeBigLowerCase() As NumberingSystemsT.RomanNumberingSystemUnicode
+            Get
+                Return NumberingSystemsT.RomanNumberingSystemBig.LowerCase
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system based on octal system</summary>
+        Public Shared ReadOnly Property Octal() As NumberingSystemsT.PositionalNumberingSystem
+            Get
+                Return NumberingSystemsT.PositionalNumberingSystem.Octal
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system based on decimal system</summary>
+        Public Shared ReadOnly Property [Decimal]() As NumberingSystemsT.PositionalNumberingSystem
+            Get
+                Return NumberingSystemsT.PositionalNumberingSystem.Decimal
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system based on hexadecimal system (lower case)</summary>
+        Public Shared ReadOnly Property HexadecimalLowerCase() As NumberingSystemsT.PositionalNumberingSystem
+            Get
+                Return NumberingSystemsT.PositionalNumberingSystem.HexadecimalLowerCase
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system based on hexadecimal system (upper case)</summary>
+        Public Shared ReadOnly Property HexadecimalUpperCase() As NumberingSystemsT.PositionalNumberingSystem
+            Get
+                Return NumberingSystemsT.PositionalNumberingSystem.HexadecimalUperCase
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system based on binary system</summary>
+        Public Shared ReadOnly Property Binary() As NumberingSystemsT.PositionalNumberingSystem
+            Get
+                Return NumberingSystemsT.PositionalNumberingSystem.Binary
+            End Get
+        End Property
+        ''' <summary>Gets default instance of numbering system for Excel (and other spreadsheets) columns names</summary>
+        Public Shared ReadOnly Property Excel() As NumberingSystemsT.ExcelColumnNumberingSystem
+            Get
+                Return NumberingSystemsT.ExcelColumnNumberingSystem.Default
+            End Get
+        End Property
 #End Region
     End Class
 End Namespace

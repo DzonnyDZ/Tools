@@ -2,8 +2,7 @@
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace GlobalizationT.NumberingSystemsT
     ''' <summary>Roman numbering system defines uppercase and lowercase roman numerals like I, X, L, C, D, M or i, x, l, c, d, m</summary>
-    ''' <remarks>This roman numeral system follows rules stated at <a href="http://en.wikipedia.org/wiki/Roman_numerals#XCIX_vs._IC">Wikipedia</a> stating that shortcut numbers like IC (instead of XCIX) etc. are not allowed. This implementation neither produce such numbers nor can parse them.
-    ''' <para>Speial numerals for 11 (Ⅺ or ⅺ) and 12 (Ⅻ or ⅻ) are used only in numbers like 11, 12, 111, 12, 211, 212, 511, 512, 1011, 1012 etc. not in numbers like 21, 22, 61, 62, 121, 122 etc.  - only when the "spoken" meaning is eleven or twelve.</para></remarks>
+    ''' <remarks>This roman numeral system follows rules stated at <a href="http://en.wikipedia.org/wiki/Roman_numerals#XCIX_vs._IC">Wikipedia</a> stating that shortcut numbers like IC (instead of XCIX) etc. are not allowed. This implementation neither produce such numbers nor can parse them.</remarks>
     ''' <version version="1.5.2">Class introduced</version>
     Public Class RomanNumberingSystem
         Inherits NumberingSystem
@@ -17,7 +16,8 @@ Namespace GlobalizationT.NumberingSystemsT
         ''' <param name="M">Letter for 1000</param>
         ''' <exception cref="ArgumentException">Any two of numerals are same</exception>
         ''' <exception cref="ArgumentNullException">Any numeral is null-char</exception>
-        Protected Sub New(ByVal I As Char, ByVal V As Char, ByVal X As Char, ByVal L As Char, ByVal C As Char, ByVal D As Char, ByVal M As Char)
+        ''' <remarks>Usually it is possible to use <see cref="UpperCase"/> or <see cref="LowerCase"/> instead of creating instance of this class.</remarks>
+        Public Sub New(ByVal I As Char, ByVal V As Char, ByVal X As Char, ByVal L As Char, ByVal C As Char, ByVal D As Char, ByVal M As Char)
             If I = V OrElse I = X OrElse I = L OrElse I = C OrElse I = D OrElse I = M OrElse V = X OrElse V = L OrElse V = C OrElse V = D OrElse V = M OrElse X = L OrElse X = C OrElse X = D OrElse X = M OrElse L = C OrElse L = D OrElse L = M OrElse C = D OrElse C = M OrElse D = M Then Throw New ArgumentException(ResourcesT.Exceptions.NumeralCharactersMustBeDistinct)
             If I = vbNullChar Then Throw New ArgumentException("I")
             If V = vbNullChar Then Throw New ArgumentException("V")
@@ -144,7 +144,7 @@ Namespace GlobalizationT.NumberingSystemsT
                     If ((val = 5 OrElse val = 10) AndAlso RetVal <> 1) OrElse _
                        ((val = 50 OrElse val = 100) AndAlso RetVal <> 10) OrElse _
                        ((val = 500 OrElse val = 1000) AndAlso RetVal <> 100) Then _
-                       Throw New FormatException(ResourcesT.Exceptions.InvalidRomanNumeralSequenceInvalidSubtraction)
+                       Return New FormatException(ResourcesT.Exceptions.InvalidRomanNumeralSequenceInvalidSubtraction)
                     RetVal = val - RetVal
                 Else
                     RetVal += val
@@ -196,8 +196,10 @@ Namespace GlobalizationT.NumberingSystemsT
             Return ret.ToString
         End Function
     End Class
+
     ''' <summary>Roman numbering system based on Unicode character instead of latin letters</summary>
-    ''' <remarks>Unicode characters differs in such way that they have single code-points for II, III, IV, VI, VII, VII IX, XI, and XII.</remarks>
+    ''' <remarks>Unicode characters differs in such way that they have single code-points for II, III, IV, VI, VII, VII IX, XI, and XII.
+    ''' <para>Special numerals for 11 (Ⅺ or ⅺ) and 12 (Ⅻ or ⅻ) are used only in numbers like 11, 12, 111, 12, 211, 212, 511, 512, 1011, 1012 etc. not in numbers like 21, 22, 61, 62, 121, 122 etc.  - only when the "spoken" meaning is eleven or twelve.</para></remarks>
     ''' <version version="1.5.2">Class introduced</version>
     Public Class RomanNumberingSystemUnicode
         Inherits RomanNumberingSystem
@@ -220,7 +222,8 @@ Namespace GlobalizationT.NumberingSystemsT
         ''' <param name="M">Letter for 1000</param>
         ''' <exception cref="ArgumentException">Any two of numerals are same</exception>
         ''' <exception cref="ArgumentNullException">Any numeral is null-char</exception>
-        Protected Sub New(ByVal I As Char, ByVal II As Char, ByVal III As Char, ByVal IV As Char, ByVal V As Char, ByVal VI As Char, ByVal VII As Char, ByVal VIII As Char, ByVal IX As Char, ByVal X As Char, ByVal XI As Char, ByVal XII As Char, ByVal L As Char, ByVal C As Char, ByVal D As Char, ByVal M As Char)
+        ''' <remarks>Usually it is possible to use <see cref="UpperCase"/> or <see cref="LowerCase"/> instead of creating instance of this class.</remarks>
+        Public Sub New(ByVal I As Char, ByVal II As Char, ByVal III As Char, ByVal IV As Char, ByVal V As Char, ByVal VI As Char, ByVal VII As Char, ByVal VIII As Char, ByVal IX As Char, ByVal X As Char, ByVal XI As Char, ByVal XII As Char, ByVal L As Char, ByVal C As Char, ByVal D As Char, ByVal M As Char)
             MyBase.New(I, V, X, L, C, D, M)
             If II = I OrElse II = V OrElse II = X OrElse II = L OrElse II = C OrElse II = D OrElse II = M OrElse _
                     III = I OrElse III = V OrElse III = X OrElse III = L OrElse III = C OrElse III = D OrElse III = M OrElse _
@@ -539,6 +542,8 @@ Namespace GlobalizationT.NumberingSystemsT
     End Class
 
     ''' <summary>Roman umbering system based on Unicode characters with support for numbers up to 4999999</summary>
+    ''' <remarks>This class is almost the same as <see cref="RomanNumberingSystemUnicode"/>, but it supports numerals up to 1000000. Numerals bigger than 1000 are denoted using 1000-multiplication suffix (combining overline (unicode 0x305) by default).</remarks>
+    ''' <version version="1.5.2">Class introduced</version>
     Public NotInheritable Class RomanNumberingSystemBig
         Inherits RomanNumberingSystemUnicode
         ''' <summary>Creates instance of roman numeral numbering system with given letter for each basic numeral</summary>
@@ -560,7 +565,8 @@ Namespace GlobalizationT.NumberingSystemsT
         ''' <param name="M">Letter for 1000</param>
         ''' <exception cref="ArgumentException">Any two of numerals are same -or- <paramref name="ThousandMultiplySuffix"/> is same as any of neumerals.</exception>
         ''' <exception cref="ArgumentNullException">Any numeral is null-char -or- <paramref name="ThousandMultiplySuffix"/> is nullchar</exception>
-        Protected Sub New(ByVal I As Char, ByVal II As Char, ByVal III As Char, ByVal IV As Char, ByVal V As Char, ByVal VI As Char, ByVal VII As Char, ByVal VIII As Char, ByVal IX As Char, ByVal X As Char, ByVal XI As Char, ByVal XII As Char, ByVal L As Char, ByVal C As Char, ByVal D As Char, ByVal M As Char, ByVal ThousandMultiplySuffix As Char)
+        ''' <remarks>Usually it is possible to use <see cref="UpperCase"/> or <see cref="LowerCase"/> instead of creating instance of this class.</remarks>
+        Public Sub New(ByVal I As Char, ByVal II As Char, ByVal III As Char, ByVal IV As Char, ByVal V As Char, ByVal VI As Char, ByVal VII As Char, ByVal VIII As Char, ByVal IX As Char, ByVal X As Char, ByVal XI As Char, ByVal XII As Char, ByVal L As Char, ByVal C As Char, ByVal D As Char, ByVal M As Char, ByVal ThousandMultiplySuffix As Char)
             MyBase.New(I, II, III, IV, V, VI, VII, VIII, IX, X, XI, XII, L, C, D, M)
             If ThousandMultiplySuffix = vbNullChar Then Throw New ArgumentNullException("ThousandMultiplySuffix")
             If ThousandMultiplySuffix = I OrElse ThousandMultiplySuffix = II OrElse ThousandMultiplySuffix = III OrElse ThousandMultiplySuffix = IV OrElse ThousandMultiplySuffix = V OrElse ThousandMultiplySuffix = VI OrElse ThousandMultiplySuffix = VII OrElse ThousandMultiplySuffix = VIII OrElse ThousandMultiplySuffix = IX OrElse ThousandMultiplySuffix = X OrElse ThousandMultiplySuffix = XI OrElse ThousandMultiplySuffix = XII OrElse ThousandMultiplySuffix = L OrElse ThousandMultiplySuffix = C OrElse ThousandMultiplySuffix = D OrElse ThousandMultiplySuffix = M Then _
@@ -719,7 +725,196 @@ Namespace GlobalizationT.NumberingSystemsT
         ''' <see cref="FormatException"/> when unexpected character is reached or unexpected sequence is reached. Note that only alloved subtractings are IV, IX, XL, XC, CD and CM. -and-
         ''' <see cref="ArgumentNullException"/> whan <paramref name="value"/> is null or an empty string</returns>
         Protected Overrides Function TryParseInternal(ByVal value As String, ByRef result As Integer) As System.Exception
-            'TODO:
+            'Dim retval As Integer = 0
+            'Dim expected As Expectations = Expectations.all
+            'Dim idx As Integer = 0
+            'Dim Last As String = ""
+            'While idx < value.Length
+            '    Dim curr = If(idx < value.Length - 1 AndAlso value(idx + 1) = ThousandMultiplySuffix, value.Substring(idx, 2), value.Substring(idx, 1))
+            '    Select Case curr
+            '        Case I : If (expected And Expectations.I) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 1
+            '            expected = Expectations.I Or Expectations.V Or Expectations.X
+            '        Case II : If (expected And Expectations.I) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 2
+            '            expected = Expectations.I
+            '        Case III : If (expected And Expectations.I) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 3
+            '            expected = Expectations.I
+            '        Case IV : If (expected And Expectations.I) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 4
+            '            expected = Expectations.none
+            '        Case V : If (expected And Expectations.V) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            If Last = I Then
+            '                expected = Expectations.none
+            '                retval += 3
+            '            Else
+            '                retval += 5
+            '                expected = Expectations.I
+            '            End If
+            '        Case VI : If (expected And Expectations.V) = 0 OrElse Last = I Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 6
+            '            expected = Expectations.I
+            '        Case VII : If (expected And Expectations.V) = 0 OrElse Last = I Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 7
+            '            expected = Expectations.I
+            '        Case VIII : If (expected And Expectations.V) = 0 OrElse Last = I Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 8
+            '            expected = Expectations.I
+            '        Case IX : If (expected And Expectations.I) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 9
+            '            expected = Expectations.none
+            '        Case X : If (expected And Expectations.X) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            If Last = I Then
+            '                expected = Expectations.none
+            '                retval += 8
+            '            Else
+            '                retval += 10
+            '                expected = Expectations.I Or Expectations.V Or Expectations.X Or If(Last <> X, (expected And Expectations.C) Or (expected And Expectations.L), Expectations.none) or if(Last > = c
+            '            End If
+            '        Case XI : If (expected And Expectations.X) = 0 Or Last = I Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 11
+            '            expected = Expectations.I
+            '        Case XII : If (expected And Expectations.X) = 0 Or Last = I Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            retval += 12
+            '            expected = Expectations.I
+            '        Case L : If (expected And Expectations.L) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            If Last = X Then
+            '                retval += 30
+            '                expected = Expectations.I Or Expectations.V
+            '            Else
+            '                retval += 50
+            '                expected = Expectations.X Or Expectations.V Or Expectations.I
+            '            End If
+            '        Case C : If (expected And Expectations.C) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            If Last = X Then
+            '                retval += 80
+            '                expected = Expectations.I Or Expectations.V
+            '            Else
+            '                retval += 100
+            '                expected = Expectations.C Or Expectations.L Or Expectations.X Or Expectations.V Or Expectations.I Or If(Last <> C, (expected And Expectations.D) Or (expected And Expectations.M), Expectations.none)
+            '            End If
+            '        Case D : If (expected And Expectations.D) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            If Last = C Then
+            '                retval += 300
+            '                expected = Expectations.L Or Expectations.X Or Expectations.V Or Expectations.I
+            '            Else
+            '                retval += 500
+            '                expected = Expectations.C Or Expectations.L Or Expectations.X Or Expectations.V Or Expectations.I
+            '            End If
+            '        Case M : If (expected And Expectations.M) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeralFormat(curr))
+            '            If Last = C Then
+            '                retval += 800
+            '                expected = Expectations.I Or Expectations.V Or Expectations.X Or Expectations.L
+            '            Else
+            '                retval += 1000
+            '                expected = Expectations.C Or Expectations.L Or Expectations.V Or Expectations.I Or Expectations.M Or Expectations.D Or If(Last <> M, (expected And Expectations.V2) Or (expected And Expectations.X2), Expectations.none)
+            '            End If
+            '        Case V & ThousandMultiplySuffix : If (expected And Expectations.V2) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacters0InRomanNumeralFormat(curr))
+            '            If Last = C Then
+            '                retval += 3000
+            '                expected = Expectations.small And Not Expectations.M
+            '            Else
+            '                retval += 500
+            '                expected = Expectations.small
+            '            End If
+            '        Case X & ThousandMultiplySuffix : If (expected And Expectations.X2) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacters0InRomanNumeralFormat(curr))
+            '            If Last = M Then
+            '                expected = Expectations.none
+            '                retval += 8000
+            '            Else
+            '                retval += 10000
+            '                expected = Expectations.small Or Expectations.V2 Or If(Last <> X & ThousandMultiplySuffix, (expected And Expectations.C2) Or (expected And Expectations.L2), Expectations.none)
+            '            End If
+            '        Case L & ThousandMultiplySuffix : If (expected And Expectations.L2) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacters0InRomanNumeralFormat(curr))
+            '            If Last = X & ThousandMultiplySuffix Then
+            '                retval += 30000
+            '                expected = Expectations.V2 Or Expectations.small
+            '            Else
+            '                retval += 50000
+            '                expected = Expectations.X2 Or Expectations.V2 Or Expectations.small
+            '            End If
+            '        Case C & ThousandMultiplySuffix : If (expected And Expectations.C2) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacters0InRomanNumeralFormat(curr))
+            '            If Last = X & ThousandMultiplySuffix Then
+            '                retval += 80000
+            '                expected = Expectations.V2 Or Expectations.small
+            '            Else
+            '                retval += 100000
+            '                expected = Expectations.C2 Or Expectations.L2 Or Expectations.V2 Or Expectations.small Or If(Last <> C & ThousandMultiplySuffix, (expected And Expectations.D2) Or (expected And Expectations.M2), Expectations.none)
+            '            End If
+            '        Case D & ThousandMultiplySuffix : If (expected And Expectations.D2) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacters0InRomanNumeralFormat(curr))
+            '            If Last = C & ThousandMultiplySuffix Then
+            '                retval += 300000
+            '                expected = Expectations.L2 Or Expectations.X2 Or Expectations.V2 Or Expectations.small
+            '            Else
+            '                retval += 500000
+            '                expected = Expectations.C2 Or Expectations.L2 Or Expectations.X2 Or Expectations.V2 Or Expectations.small
+            '            End If
+            '        Case M & ThousandMultiplySuffix : If (expected And Expectations.M2) = 0 Then Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacters0InRomanNumeralFormat(curr))
+            '            If Last = C Then
+            '                retval += 800000
+            '                expected = Expectations.V2 Or Expectations.X2 Or Expectations.L2 Or Expectations.small
+            '            Else
+            '                retval += 1000000
+            '                expected = Expectations.C2 Or Expectations.L2 Or Expectations.V2 Or Expectations.M2 Or Expectations.D2 Or Expectations.small
+            '            End If
+            '    End Select
+            '    Last = curr
+            '    idx += curr.Length
+            '    If retval > Maximum Then Throw New OverflowException(ResourcesT.Exceptions.String0RepresentsHigherNumberThanMaximum1.f(value, Maximum))
+            'End While
+            'result = retval
+            'Return Nothing
+            If value = "" Then Return New ArgumentNullException("value")
+            value = Expand(value)
+            Dim RetVal% = 0
+            Dim prev As Char = vbNullChar
+            Dim idx As Integer = 0
+            While idx < value.Length
+                Dim ch = If(idx + 1 < value.Length AndAlso value(idx + 1) = ThousandMultiplySuffix, value(idx) & value(idx + 1), value(idx))
+                Dim val%
+                Select Case ch
+                    Case I : val = 1
+                    Case V : val = 5
+                    Case X : val = 10
+                    Case L : val = 50
+                    Case C : val = 100
+                    Case D : val = 500
+                    Case M : val = 1000
+                    Case V & ThousandMultiplySuffix : val = 5000
+                    Case X & ThousandMultiplySuffix : val = 10000
+                    Case L & ThousandMultiplySuffix : val = 50000
+                    Case C & ThousandMultiplySuffix : val = 100000
+                    Case D & ThousandMultiplySuffix : val = 500000
+                    Case M & ThousandMultiplySuffix : val = 1000000
+                    Case Else : Return New FormatException(ResourcesT.Exceptions.UnexpectedCharacter0InRomanNumeral.f(ch))
+                End Select
+                prev = ch
+                If RetVal > val Then
+                    Dim iresult%
+                    Dim ex = TryParseInternal(value.Substring(idx), iresult)
+                    If ex IsNot Nothing Then Return ex
+                    RetVal += iresult
+                    If RetVal > Me.Maximum Then Return New OverflowException(ResourcesT.Exceptions.String0RepresentsHigherNumberThanMaximum1.f(value, Maximum))
+                    result = RetVal
+                    Return Nothing
+                ElseIf RetVal > 0 AndAlso RetVal < val Then
+                    If ((val = 5 OrElse val = 10) AndAlso RetVal <> 1) OrElse _
+                       ((val = 50 OrElse val = 100) AndAlso RetVal <> 10) OrElse _
+                       ((val = 500 OrElse val = 1000) AndAlso RetVal <> 100) OrElse _
+                       ((val = 5000 OrElse val = 10000) AndAlso RetVal <> 1000) OrElse _
+                       ((val = 50000 OrElse val = 100000) AndAlso RetVal <> 10000) OrElse _
+                       ((val = 500000 OrElse val = 1000000) AndAlso RetVal <> 100000) Then _
+                       Return New FormatException(ResourcesT.Exceptions.InvalidRomanNumeralSequenceInvalidSubtraction)
+                    RetVal = val - RetVal
+                Else
+                    RetVal += val
+                End If
+                If RetVal > Me.Maximum Then Return New OverflowException(ResourcesT.Exceptions.String0RepresentsHigherNumberThanMaximum1.f(value, Maximum))
+                idx += ch.Length
+            End While
+            result = RetVal
+            Return Nothing
         End Function
     End Class
 End Namespace

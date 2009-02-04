@@ -89,6 +89,20 @@ Namespace ExtensionsT
             Next
             Return ret.ToArray
         End Function
+        ''' <summary>Reverses a string</summary>
+        ''' <param name="value">String to reverse</param>
+        ''' <returns><paramref name="value"/> with reversed order of characters. Null when <paramref name="value"/> is null.</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> _
+        Public Function Reverse(ByVal value As String) As String
+            If value Is Nothing Then Return Nothing
+            If value = "" Then Return ""
+            Dim ret As New System.Text.StringBuilder(value.Length)
+            For i As Integer = value.Length - 1 To 0 Step -1
+                ret.Append(value(i))
+            Next
+            Return ret.ToString
+        End Function
     End Module
 End Namespace
 #End If

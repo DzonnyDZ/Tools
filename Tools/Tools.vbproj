@@ -478,6 +478,8 @@
     <Compile Include="Collections\Generic\PriorityQueue.vb" />
     <Compile Include="DataStructures\Graph.vb" />
     <Compile Include="Globalization\NumberingSystem.vb" />
+    <Compile Include="Globalization\NumberingSystems\ExcelColumnNumberingSystem.vb" />
+    <Compile Include="Globalization\NumberingSystems\PositionalNumberingSystem.vb" />
     <Compile Include="Globalization\NumberingSystems\Roman.vb" />
     <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -485,6 +487,7 @@
       <DependentUpon>Components.resx</DependentUpon>
     </Compile>
     <Compile Include="Tests\StaticPropertiesTest.vb" />
+    <Compile Include="Text\Casing.vb" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Drawing\DrawingIO\" />

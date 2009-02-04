@@ -120,6 +120,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Array cannot be empty.'.
+        '''</summary>
+        Friend Shared ReadOnly Property ArrayCannotBeEmpty() As String
+            Get
+                Return ResourceManager.GetString("ArrayCannotBeEmpty", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Attempt to create cyclic linked-list of IFDs'.
         '''</summary>
         Friend Shared ReadOnly Property AttemptToCreateCyclicLinkedListOfIFDs() As String
@@ -658,6 +667,24 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property ChangingWasCanceledInEventhandler() As String
             Get
                 Return ResourceManager.GetString("ChangingWasCanceledInEventhandler", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Character represnting numeral cannot be same as character representing negavive sign'.
+        '''</summary>
+        Friend Shared ReadOnly Property CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting() As String
+            Get
+                Return ResourceManager.GetString("CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Characters repreenting numerals must be different'.
+        '''</summary>
+        Friend Shared ReadOnly Property CharactersRepreentingNumeralsMustBeDifferent() As String
+            Get
+                Return ResourceManager.GetString("CharactersRepreentingNumeralsMustBeDifferent", _resourceCulture)
             End Get
         End Property
         
@@ -1923,6 +1950,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property Number0CannotBeStoredIn1Bytes() As String
             Get
                 Return ResourceManager.GetString("Number0CannotBeStoredIn1Bytes", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Number cannot consist of sign only.'.
+        '''</summary>
+        Friend Shared ReadOnly Property NumberCannotConsistOfSignOnly() As String
+            Get
+                Return ResourceManager.GetString("NumberCannotConsistOfSignOnly", _resourceCulture)
             End Get
         End Property
         
@@ -3229,6 +3265,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Unexpected characters {0} in Roman numeral'.
+        '''</summary>
+        Friend Shared ReadOnly Property UnexpectedCharacters0InRomanNumeral() As String
+            Get
+                Return ResourceManager.GetString("UnexpectedCharacters0InRomanNumeral", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Unknown base type of enum'.
         '''</summary>
         Friend Shared ReadOnly Property UnknownBaseTypeOfEnum() As String
@@ -3661,6 +3706,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function AllTypesIn0MustInheritFrom0Format(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, AllTypesIn0MustInheritFrom0, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ArrayCannotBeEmpty property value.
+        '''</summary>
+        '''<returns>The ArrayCannotBeEmpty property value.</returns>
+        Friend Shared Function ArrayCannotBeEmptyFormat() As String
+            Return ArrayCannotBeEmpty
         End Function
         
         '''<summary>
@@ -4195,6 +4248,22 @@ Namespace ResourcesT
         '''<returns>The ChangingWasCanceledInEventhandler property value.</returns>
         Friend Shared Function ChangingWasCanceledInEventhandlerFormat() As String
             Return ChangingWasCanceledInEventhandler
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting property value.
+        '''</summary>
+        '''<returns>The CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting property value.</returns>
+        Friend Shared Function CharacterRepresntingNumeralCannotBeSameAsCharacterRepresentingFormat() As String
+            Return CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the CharactersRepreentingNumeralsMustBeDifferent property value.
+        '''</summary>
+        '''<returns>The CharactersRepreentingNumeralsMustBeDifferent property value.</returns>
+        Friend Shared Function CharactersRepreentingNumeralsMustBeDifferentFormat() As String
+            Return CharactersRepreentingNumeralsMustBeDifferent
         End Function
         
         '''<summary>
@@ -5411,6 +5480,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function Number0CannotBeStoredIn1BytesFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, Number0CannotBeStoredIn1Bytes, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the NumberCannotConsistOfSignOnly property value.
+        '''</summary>
+        '''<returns>The NumberCannotConsistOfSignOnly property value.</returns>
+        Friend Shared Function NumberCannotConsistOfSignOnlyFormat() As String
+            Return NumberCannotConsistOfSignOnly
         End Function
         
         '''<summary>
@@ -6658,6 +6735,15 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function UnexpectedCharacter0InRomanNumeralFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, UnexpectedCharacter0InRomanNumeral, arg0)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Unexpected characters {0} in Roman numeral'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function UnexpectedCharacters0InRomanNumeralFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, UnexpectedCharacters0InRomanNumeral, arg0)
         End Function
         
         '''<summary>
