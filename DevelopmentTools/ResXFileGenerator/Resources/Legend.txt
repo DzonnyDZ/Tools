@@ -1,0 +1,24 @@
+﻿Usage:
+    {0} parameters
+Parameters:
+    /in <infile> - required, path of input resx file
+    /out <outfile> - required, path of output file
+    /lang <language> - optional, name of output lanuage. If not specified inferred form outfile extension
+        supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
+        cpp.7 and cpp.vs are two alternative C++ providers
+        c, cpp and h have same meaning (C++)
+        java and jsl jave same meaning (J#)
+    /nologo - optional, do not show version and copyright info
+    /internal - optional, if specified internal (friend) class is generated; public otherwise
+    /ns <namespace> - optional, namespace of class
+    /name <resource_name> - optional, name of resource as it is embdeded to assembly.
+        If ommitted inferred from infile name (likely incorrectly, so /name should be used always)
+    /firstline <text> - optional, adds text to first line of generated file (in combination with /spliton works only on first part)
+    /l <part> <line> <text> - optional, can be multiple times, inserts given text at given line
+        part is a for first, b for second part of splitted file;  b is valid only when /spliton is used
+    /spliton <text> - optional (required for /out2), splits text to two files on given string
+        Escape sequences allowed: \\, \n, \r
+        <text> goes to part b 
+    /out2 <outfile> - optional (required for spliton), Same as /out, but for part b of source splitted by /spliton
+/spliton and /out2 allows to split C++ output to *.h and *.cpp file     
+Note: If value of argument contains space, it must be quoted.    

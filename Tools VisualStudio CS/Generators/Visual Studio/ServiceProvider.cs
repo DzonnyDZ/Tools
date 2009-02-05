@@ -1,5 +1,5 @@
 #if Nightly || Alpha || Beta || RC || Release
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
 
     using System;
     using System.Diagnostics;
@@ -10,6 +10,7 @@ namespace Tools.GeneratorsT {
     ///     This wraps the <see cref="IOleServiceProvider"/> interface and provides an easy COM+ way to get at
     ///     services.
     /// </summary>
+    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
     public class ServiceProvider:IServiceProvider, Microsoft.VisualStudio.OLE.Interop.IObjectWithSite {
         /// <summary>GUID of IUnknown</summary>
         private static Guid IID_IUnknown = new Guid("{00000000-0000-0000-C000-000000000046}");

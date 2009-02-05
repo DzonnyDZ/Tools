@@ -137,6 +137,7 @@ namespace DMKSoftware.CodeGenerators
                 base.CodeGeneratorProgress.Progress(0x4b, 100);
             
             ICodeGenerator codeGenerator = this.CodeProvider.CreateGenerator();
+            BeforeGenerateText(codeGenerator);
             codeGenerator.GenerateCodeFromCompileUnit(codeCompileUnit, streamWriter, null);
             if (base.CodeGeneratorProgress != null)
                 NativeMethods.ThrowOnFailure(base.CodeGeneratorProgress.Progress(100, 100));
@@ -146,8 +147,18 @@ namespace DMKSoftware.CodeGenerators
             return base.StreamToBytes(streamWriter.BaseStream);
         }
 
+        /// <summary>Use when this tool is used from outside of VS to set resource namespace. When null resource namespace is inferred standard way.</summary>
+        public string ResourceNamespace{get;set;}//Added by Ðonny
+
+        /// <summary>Fired before <see cref="ICodeGenerator"/> is used to generate actual text</summary>
+        public event System.Action<ICodeGenerator> BeforeGenerateText;//Added by Ðonny
+
+        /// <summary>Gets namespace of resource</summary>
+        /// <param name="forLogicalName">Use logical name; ignored when <see cref="ResourceNamespace"/> is not null</param>
+        /// <returns>Resource namespace</returns>
         protected string GetResourcesNamespace(bool forLogicalName)//forLogicalName added by Ðonny
         {
+            if (this.ResourceNamespace != null) return ResourceNamespace;
             string resourcesNamespace = null;
 
             try

@@ -1,5 +1,5 @@
 #if Nightly || Alpha || Beta || RC || Release
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
 
     using System;
     using System.CodeDom;
@@ -15,6 +15,7 @@ namespace Tools.GeneratorsT {
     /// <summary>
     ///     This class exists to be cocreated a in a preprocessor build step.
     /// </summary>
+    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
     public abstract class BaseCodeGeneratorWithSite:BaseCodeGenerator, IObjectWithSite {
         /// <summary>Error HRESULT for a generic failure.</summary>
         private const int E_FAIL = unchecked((int)0x80004005);

@@ -8,7 +8,7 @@
     <ProjectGuid>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Tools</RootNamespace>
+    <RootNamespace>Tools.VisualStudioT</RootNamespace>
     <AssemblyName>Tools.VisualStudio.CS</AssemblyName>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

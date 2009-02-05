@@ -60,7 +60,7 @@ Namespace GlobalizationT.NumberingSystemsT
         ''' <list type="table">
         ''' <item><term><see cref="FormatException"/></term><description>Uexpected character (non A-Z) reached</description></item>
         ''' <item><term><see cref="ArgumentNullException"/></term><description><paramref name="value"/> is null or an empty string.</description></item>
-        ''' <item><term><see cref="OverflowException"/></term><description><paramref name="value"/> represents number greater than <see cref="Maximum"/></paramref></description></item>
+        ''' <item><term><see cref="OverflowException"/></term><description><paramref name="value"/> represents number greater than <see cref="Maximum"/></description></item>
         ''' </list>
         ''' </returns>
         Protected Overrides Function TryParseInternal(ByVal value As String, ByRef result As Integer) As System.Exception

@@ -1,9 +1,10 @@
 #if Nightly || Alpha || Beta || RC || Release
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
 
     using System;
     using System.Runtime.InteropServices;
     /// <summary>OLE Service provider</summary>
+    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
     [
     ComImport,
     Guid("6D5140C1-7436-11CE-8034-00AA006009FA"),

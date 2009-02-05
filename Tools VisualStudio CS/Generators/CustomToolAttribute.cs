@@ -3,13 +3,14 @@
  * Copyright (C) 2006 Chris Stefano
  *       cnjs@mweb.co.za
  */
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
     using System;
     using System.Runtime.InteropServices;
 
     /// <summary>
     /// Marks class as cutom tool
     /// </summary>
+    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
     [AttributeUsage(AttributeTargets.Class, AllowMultiple = false, Inherited = false)]
     public class CustomToolAttribute:Attribute {
         /// <summary>Contains value of the <see cref="Name"/> property</summary>

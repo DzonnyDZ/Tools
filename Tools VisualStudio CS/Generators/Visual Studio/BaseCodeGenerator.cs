@@ -1,5 +1,5 @@
 #if Nightly || Alpha || Beta || RC || Release
-namespace Tools.GeneratorsT {
+namespace Tools.VisualStudioT.GeneratorsT {
 
     using System;
     using System.Diagnostics;
@@ -12,6 +12,7 @@ namespace Tools.GeneratorsT {
     /// a custom tool invoked during the build which can take any file as an input
     /// and provide a compilable code file as output.
     /// </summary>
+    /// <version version="1.5.2">Moved from namespace Tools.GeneratorsT to Tools.VisualStudioT.GeneratorsT</version>
     public abstract class BaseCodeGenerator:IVsSingleFileGenerator {
         /// <summary>Contains value of the <see cref="CodeGeneratorProgress"/> property</summary>
         private IVsGeneratorProgress codeGeneratorProgress;
