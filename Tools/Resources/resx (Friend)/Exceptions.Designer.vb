@@ -3166,6 +3166,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'To many CLSCompliant attributes'.
+        '''</summary>
+        Friend Shared ReadOnly Property ToManyCLSCompliantAttributes() As String
+            Get
+                Return ResourceManager.GetString("ToManyCLSCompliantAttributes", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Type {0} is not acceptable for data type {1}.'.
         '''</summary>
         Friend Shared ReadOnly Property Type0IsNotAcceptableForDataType1() As String
@@ -6636,6 +6645,14 @@ Namespace ResourcesT
         '''<returns>The TimeMustBeNonNegativeAndLessThen1Day property value.</returns>
         Friend Shared Function TimeMustBeNonNegativeAndLessThen1DayFormat() As String
             Return TimeMustBeNonNegativeAndLessThen1Day
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the ToManyCLSCompliantAttributes property value.
+        '''</summary>
+        '''<returns>The ToManyCLSCompliantAttributes property value.</returns>
+        Friend Shared Function ToManyCLSCompliantAttributesFormat() As String
+            Return ToManyCLSCompliantAttributes
         End Function
         
         '''<summary>

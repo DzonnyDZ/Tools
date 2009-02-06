@@ -1305,4 +1305,7 @@
   <data name="CharactersRepreentingNumeralsMustBeDifferent" xml:space="preserve">
     <value>Characters repreenting numerals must be different</value>
   </data>
+  <data name="ToManyCLSCompliantAttributes" xml:space="preserve">
+    <value>To many CLSCompliant attributes</value>
+  </data>
 </root>

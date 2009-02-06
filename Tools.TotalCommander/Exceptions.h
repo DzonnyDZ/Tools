@@ -58,6 +58,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to '{0} cannot be represented as {1}, use {2} and {3} instead.'.
+        /// </summary>
+        public: static property System::String^  CannotBeRepresented {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'Default text is too long.'.
         /// </summary>
         public: static property System::String^  DefaultTextTooLong {
@@ -77,6 +84,18 @@ namespace Tools {
         public: static property System::String^  PluginNotInitialized {
             System::String^  get();
         }
+        
+        /// <summary>
+        /// Formats a localized string similar to '{0} cannot be represented as {1}, use {2} and {3} instead.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <param name="arg2">An object (2) to format.</param>
+        /// <param name="arg3">An object (3) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        public: [System::Diagnostics::CodeAnalysis::SuppressMessageAttribute(L"Microsoft.Design", L"CA1025:ReplaceRepetitiveArgumentsWithParamsArray")]
+        static System::String^  CannotBeRepresentedFormat(System::Object^  arg0, System::Object^  arg1, System::Object^  arg2, 
+                    System::Object^  arg3);
         
         /// <summary>
         /// The stub formatting method returning the DefaultTextTooLong property value.

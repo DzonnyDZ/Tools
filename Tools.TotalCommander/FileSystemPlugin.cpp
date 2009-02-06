@@ -21,6 +21,7 @@ namespace Tools{namespace TotalCommanderT{
         return ret;
     }
     //RemoteInfo
+#pragma region "RemoteInfo"
     RemoteInfo::RemoteInfo(const RemoteInfoStruct &ri){
         this->SizeLow = ri.SizeLow;
         this->SizeHigh = ri.SizeHigh;
@@ -32,12 +33,31 @@ namespace Tools{namespace TotalCommanderT{
         this->SizeHigh = Numbers::High(value);
         this->SizeHigh = Numbers::Low(value);
     }
-
+    __int64 RemoteInfo::GetSize(){
+        if(this->Size > Int64::MaxValue) throw gcnew InvalidOperationException(Exceptions::CannotBeRepresentedFormat("Size","Int64","GetSizeLow","GetSizeHigh"));
+        return (__int64) this->Size;
+    }
+    void RemoteInfo::SetSize(__int64 value){
+        if(value < 0) throw gcnew ArgumentOutOfRangeException("value");
+        this->Size = (QWORD) value;
+    }
+    inline __int64 RemoteInfo::GetSizeLow(){return (__int64)this->SizeLow;}
+    void RemoteInfo::SetSizeLow(__int64 value){
+        if(value < 0 || value > (__int64)Int32::MaxValue) throw gcnew ArgumentOutOfRangeException("value");
+        this->SizeLow = (DWORD) value;
+    }
+    inline __int64 RemoteInfo::GetSizeHigh(){return (__int64)this->SizeHigh;}
+    void RemoteInfo::SetSizeHigh(__int64 value){
+        if(value < 0 || value > (__int64)Int32::MaxValue) throw gcnew ArgumentOutOfRangeException("value");
+        this->SizeHigh = (DWORD) value;
+    }
+#pragma endregion
     //FileSystemPlugin
 #pragma region "FileSystemPlugin"
     FileSystemPlugin::FileSystemPlugin(){
          this->handleDictionary = gcnew Collections::Generic::Dictionary<int,Object^>();
          this->MaxHandle = 0;
+         this->HandleSyncObj = gcnew Object();
     }
 #pragma region "TC functions"
     int FileSystemPlugin::FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
@@ -48,6 +68,21 @@ namespace Tools{namespace TotalCommanderT{
         this->initialized = true;
         this->OnInit();
         return 0;
+    }
+    void FileSystemPlugin::InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request){
+        if(progress == nullptr) throw gcnew ArgumentNullException("progress");
+        if(log == nullptr) throw gcnew ArgumentNullException("log");
+        if(request == nullptr) throw gcnew ArgumentNullException("request");
+        this->pluginNr = PluginNr;
+        this->dProgressProc = progress;
+        this->dLogProc  = log;
+        this->dRequestProc = request;
+        this->initialized = true;
+        this->OnInit();
+    }
+    bool FileSystemPlugin::IsInTotalCommander::get(){
+        if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
+        return this->dProgressProc == nullptr;
     }
     HANDLE FileSystemPlugin::FsFindFirst(char* Path,WIN32_FIND_DATA *FindData){
         Tools::TotalCommanderT::FindData% findData = *gcnew Tools::TotalCommanderT::FindData(*FindData);
@@ -66,15 +101,14 @@ namespace Tools{namespace TotalCommanderT{
             SetLastError(ERROR_NO_MORE_FILES);
             return INVALID_HANDLE_VALUE;
         }else{
-            int handle = this->GetNextHandle();
-            this->HandleDictionary->Add(handle, object);
+            int handle = this->HandleAdd(object);
             findData.Populate(*FindData);
             return (HANDLE)handle;
         }
     }
     BOOL FileSystemPlugin::FsFindNext(HANDLE Hdl,WIN32_FIND_DATA *FindData){
         Tools::TotalCommanderT::FindData% findData = *gcnew Tools::TotalCommanderT::FindData(*FindData);
-        Object^ object = this->HandleDictionary->ContainsKey((int)Hdl) ? this->HandleDictionary[(int)Hdl] : nullptr;
+        Object^ object = this->HandleGet((int) Hdl);
         Exception^ exception = nullptr;
         bool ret;
         try{
@@ -90,9 +124,9 @@ namespace Tools{namespace TotalCommanderT{
         }
     }
     int FileSystemPlugin::FsFindClose(HANDLE Hdl){
-        Object^ object = this->HandleDictionary->ContainsKey((int)Hdl) ? this->HandleDictionary[(int)Hdl] : nullptr;
+        Object^ object = this->HandleGet((int) Hdl);
         this->FindClose(object);
-        if(this->HandleDictionary->ContainsKey((int)Hdl)) this->HandleDictionary->Remove((int) Hdl);
+        this->HandleRemove((int) Hdl);
         return 0;
     }
 #pragma endregion
@@ -103,43 +137,109 @@ namespace Tools{namespace TotalCommanderT{
     }
     void FileSystemPlugin::OnInit(){/*do nothing*/}
     inline Collections::Generic::Dictionary<int,Object^>^ FileSystemPlugin::HandleDictionary::get(){ return this->handleDictionary; }
-    inline int FileSystemPlugin::GetNextHandle(){ return ++this->MaxHandle; }
+#pragma region "Handles"
+    int FileSystemPlugin::GetNextHandle(){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            return ++this->MaxHandle;
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+    int FileSystemPlugin::HandleAdd(Object^ object){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            this->HandleDictionary->Add(++this->MaxHandle, object);
+            return this->MaxHandle;
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+    bool FileSystemPlugin::HandleRemove(Object^ object){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            for each(Collections::Generic::KeyValuePair<int,Object^> item in this->HandleDictionary)
+                if(item.Value->Equals(object)){
+                    this->HandleDictionary->Remove(item.Key);
+                    return true;
+                }
+            return false;   
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+    bool FileSystemPlugin::HandleRemove(int handle){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            if(this->HandleDictionary->ContainsKey(handle)){
+                this->HandleDictionary->Remove(handle);
+                return true;
+            }else return false;
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+    Object^ FileSystemPlugin::HandleGet(int handle){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            return this->HandleDictionary->ContainsKey(handle) ? this->HandleDictionary[handle] : nullptr;
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+    int FileSystemPlugin::HandleGetHandle(Object^ object){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            for each(Collections::Generic::KeyValuePair<int, Object^> item in this->HandleDictionary)
+                if(item.Value->Equals(object)) return item.Key;
+            return -1;
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+    void FileSystemPlugin::HandleReplace(int handle, Object^ object){
+        System::Threading::Monitor::Enter(this->HandleSyncObj);
+        try{
+            this->HandleDictionary[handle] = object;    
+        }finally{ System::Threading::Monitor::Exit(this->HandleSyncObj); }
+    }
+#pragma endregion
     inline bool FileSystemPlugin::Initialized::get(){return this->initialized;}
 #pragma region "Callbacks"
     bool FileSystemPlugin::ProgressProc(String^ SourceName, String^ TargetName,int PercentDone){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        char* sourceName = (char*)(void*)Marshal::StringToHGlobalAnsi(SourceName);
-        char* targetName = (char*)(void*)Marshal::StringToHGlobalAnsi(TargetName);
-        bool ret = this->pProgressProc(this->PluginNr,sourceName,targetName,PercentDone) == 1 ? true : false;
-        Marshal::FreeHGlobal((IntPtr)sourceName);
-        Marshal::FreeHGlobal((IntPtr)targetName);
-        return ret;
+        if(this->IsInTotalCommander){
+            char* sourceName = (char*)(void*)Marshal::StringToHGlobalAnsi(SourceName);
+            char* targetName = (char*)(void*)Marshal::StringToHGlobalAnsi(TargetName);
+            bool ret = this->pProgressProc(this->PluginNr,sourceName,targetName,PercentDone) == 1 ? true : false;
+            Marshal::FreeHGlobal((IntPtr)sourceName);
+            Marshal::FreeHGlobal((IntPtr)targetName);
+            return ret;
+        }else{
+            return this->dProgressProc(this, SourceName, TargetName, PercentDone);
+        }
     }
     void FileSystemPlugin::LogProc(LogKind MsgType,String^ LogString){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        char* logString = (char*)(void*)Marshal::StringToHGlobalAnsi(LogString);
-        this->pLogProc(this->PluginNr,(int)MsgType,logString);
-        Marshal::FreeHGlobal((IntPtr)logString);
+        if(this->IsInTotalCommander){
+            char* logString = (char*)(void*)Marshal::StringToHGlobalAnsi(LogString);
+            this->pLogProc(this->PluginNr,(int)MsgType,logString);
+            Marshal::FreeHGlobal((IntPtr)logString);
+        }else{
+            this->dLogProc(this, MsgType, LogString);
+        }
     }
     String^ FileSystemPlugin::RequestProc(InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen){
         if(!this->Initialized) throw gcnew InvalidOperationException(Exceptions::PluginNotInitialized);
-        if(DefaultText->Length > maxlen) throw gcnew ArgumentException(Exceptions::DefaultTextTooLong);
-        if(maxlen < 1) throw gcnew ArgumentOutOfRangeException("maxlen");
-        char* customTitle = (char*)(void*)Marshal::StringToHGlobalAnsi(CustomTitle);
-        char* customText = (char*)(void*)Marshal::StringToHGlobalAnsi(CustomText);
-        char* defaultText = new char[maxlen];
-        if(DefaultText != nullptr)
-            for(int i = 0; i < DefaultText->Length; i++)
-                defaultText[i] = (char)DefaultText[i];
-        Marshal::FreeHGlobal((IntPtr)customTitle);
-        Marshal::FreeHGlobal((IntPtr)customText);
-        if(this->pRequestProc(this->PluginNr, (int)RequestType, customTitle, customText, defaultText, maxlen)){
-            String^ ret = gcnew String(defaultText);
+        if(this->IsInTotalCommander){
+            if(DefaultText->Length > maxlen) throw gcnew ArgumentException(Exceptions::DefaultTextTooLong);
+            if(maxlen < 1) throw gcnew ArgumentOutOfRangeException("maxlen");
+            char* customTitle = (char*)(void*)Marshal::StringToHGlobalAnsi(CustomTitle);
+            char* customText = (char*)(void*)Marshal::StringToHGlobalAnsi(CustomText);
+            char* defaultText = new char[maxlen];
+            if(DefaultText != nullptr)
+                for(int i = 0; i < DefaultText->Length; i++)
+                    defaultText[i] = (char)DefaultText[i];
+            Marshal::FreeHGlobal((IntPtr)customTitle);
+            Marshal::FreeHGlobal((IntPtr)customText);
+            if(this->pRequestProc(this->PluginNr, (int)RequestType, customTitle, customText, defaultText, maxlen)){
+                String^ ret = gcnew String(defaultText);
+                delete defaultText;
+                return ret;
+            }
             delete defaultText;
-            return ret;
+            return nullptr;
+        }else{
+            return this->dRequestProc(this, RequestType, CustomTitle, CustomText, DefaultText, maxlen);
         }
-        delete defaultText;
-        return nullptr;
     }
 #pragma endregion
     inline void FileSystemPlugin::FindClose(Object^ Status){/*do nothing*/}
@@ -269,7 +369,10 @@ namespace Tools{namespace TotalCommanderT{
     inline void FileSystemPlugin::SetTime(String^ RemoteName, Nullable<DateTime> CreationTime, Nullable<DateTime> LastAccessTime, Nullable<DateTime> LastWriteTime){ throw gcnew NotSupportedException(); }
     //StatusInfo
     void FileSystemPlugin::FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation){
-        OperationEventArgs^ e = gcnew OperationEventArgs(gcnew String(RemoteDir),(OperationKind)InfoOperation, (OperationStatus)InfoStartEnd);
+        this->StatusInfo(gcnew String(RemoteDir),(OperationStatus)InfoStartEnd,(OperationKind)InfoOperation);     
+    }
+    void FileSystemPlugin::StatusInfo(String^ RemoteDir,OperationStatus InfoStartEnd,OperationKind InfoOperation){
+        OperationEventArgs^ e = gcnew OperationEventArgs(RemoteDir,InfoOperation, InfoStartEnd);
         if(e->Status == OperationStatus::Start) this->OnOperationStarting(e);
         else if(e->Status == OperationStatus::End) this->OnOperationFinished(e);
         this->OnOperationStatusChanged(e);
@@ -284,6 +387,22 @@ namespace Tools{namespace TotalCommanderT{
         strcpy_s(DefRootName,Math::Min(name->Length,maxlen-1),namech);
         DefRootName[Math::Min(name->Length,maxlen-1)] = 0;
         Marshal::FreeHGlobal((IntPtr)(void*)namech);
+    }
+
+    int FileSystemPlugin::FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon){
+        throw gcnew NotImplementedException();
+    }
+    void FileSystemPlugin::FsSetDefaultParams(FsDefaultParamStruct* dps){
+        throw gcnew NotImplementedException();
+    }
+    int FileSystemPlugin::FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap){
+        throw gcnew NotImplementedException();
+    }
+    BOOL FileSystemPlugin::FsLinksToLocalFiles(void){
+        throw gcnew NotImplementedException();
+    }
+    BOOL FileSystemPlugin::FsGetLocalName(char* RemoteName,int maxlen){
+        throw gcnew NotImplementedException();
     }
 #pragma endregion
 #pragma endregion
@@ -350,6 +469,32 @@ namespace Tools{namespace TotalCommanderT{
         if(value->Length > 14) throw gcnew ArgumentException(Exceptions::NameTooLongFormat(14));
         this->cFileName = value;
     }
+
+    __int64 FindData::GetFileSize(){
+        if(this->FileSize > Int64::MaxValue) throw gcnew InvalidOperationException(Exceptions::CannotBeRepresentedFormat("FileSize","Int64","GetFileSizeLow","GetFileSizeHigh"));
+        return (__int64) this->FileSize;
+    }
+    void FindData::SetFileSize(__int64 value){
+        if(value < 0) throw gcnew ArgumentOutOfRangeException("value");
+        this->FileSize = (QWORD) value;
+    }
+    inline __int64 FindData::GetFileSizeLow(){return (__int64)this->nFileSizeLow;}
+    void FindData::SetFileSizeLow(__int64 value){
+        if(value < 0 || value > (__int64)Int32::MaxValue) throw gcnew ArgumentOutOfRangeException("value");
+        this->nFileSizeLow = (DWORD) value;
+    }
+    inline __int64 FindData::GetFileSizeHigh(){return (__int64)this->nFileSizeHigh;}
+    void FindData::SetFileSizeHigh(__int64 value){
+        if(value < 0 || value > (__int64)Int32::MaxValue) throw gcnew ArgumentOutOfRangeException("value");
+        this->nFileSizeHigh = (DWORD) value;
+    }
+
+    inline Int32 FindData::GetAttributes(){return Numbers::BitwiseSame((UInt32)this->Attributes);}
+    inline void FindData::SetAttributes(Int32 value){this->Attributes = (FileAttributes)Numbers::BitwiseSame(value);}
+    inline Int32 FindData::GetReserved1(){return Numbers::BitwiseSame((UInt32)this->Reserved1);}
+    inline void FindData::SetReserved1(Int32 value){this->Reserved1 = (DWORD)Numbers::BitwiseSame(value);}
+    inline Int32 FindData::GetReparsePointTag(){return Numbers::BitwiseSame((UInt32)this->ReparsePointTag);}
+    inline void FindData::SetReparsePointTag(Int32 value){this->ReparsePointTag = (ReparsePointTags)Numbers::BitwiseSame(value);}
 #pragma endregion
     //OperationEventArgs
 #pragma region "OperationEventArgs"

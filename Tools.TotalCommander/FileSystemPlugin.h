@@ -1,6 +1,7 @@
 #pragma once
 #include "fsplugin.h"
 #include "Common.h"
+#include "ContentPluginBase.h"
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -14,7 +15,7 @@ namespace Tools{namespace TotalCommanderT{
     /// <param name="value">A <see cref="DateTime"/></param>
     /// <returns>Corresponding <see cref="FILETIME"/></returns>
     FILETIME DateTimeToFileTime(DateTime value);
-
+   
     /// <summary>Result of file system operation</summary>
     public enum class FileSystemExitCode{
         /// <summary>The file was copied/moved OK</summary>
@@ -63,6 +64,7 @@ namespace Tools{namespace TotalCommanderT{
     };
     /// <summary>File attributes</summary>
     [FlagsAttribute]
+    [CLSCompliantAttribute(false)]
     public enum class FileAttributes : DWORD{
         /// <summary>The file or directory is an archive file or directory. Applications use this attribute to mark files for backup or removal.</summary>
         Archive = FILE_ATTRIBUTE_ARCHIVE,
@@ -114,6 +116,7 @@ namespace Tools{namespace TotalCommanderT{
 
     /// <summary>When you set a reparse point, you must tag the data to be placed in the reparse point. After the reparse point has been established, a new set operation fails if the tag for the new data does not match the tag for the existing data. If the tags match, the set operation overwrites the existing reparse point.</summary>
     [FlagsAttribute]
+    [CLSCompliantAttribute(false)]
     public enum class ReparsePointTags : DWORD{
         /// <summary>Microsoft-defined reparse tag</summary>
         DFS = IO_REPARSE_TAG_DFS,
@@ -168,6 +171,8 @@ namespace Tools{namespace TotalCommanderT{
         void Populate(WIN32_FIND_DATA& target);
     public:
         /// <summary>The file attributes of a file.</summary>
+        /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetAttributes"/> and <see cref="SetAttributes"/>.</remarks>
+        [CLSCompliantAttribute(false)]
         property FileAttributes Attributes{FileAttributes get();void set(FileAttributes);}
         /// <summary>Specifies when a file or directory was created.</summary>
         /// <remarks>If the underlying file system does not support creation time, this member is zero.</remarks>
@@ -180,11 +185,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.</remarks>
         property DateTime WriteTime{DateTime get(); void set(DateTime);}
         /// <summary>Size of file in bytes</summary>
+        /// <remarks>This property is not CLS-compliant. CLS-cmplant alternative is to use some of following functions: <see cref="SetFileSize"/>, <see cref="GetFileSize"/>, <see cref="SetFileSizeLow"/>, <see cref="SetFileSizeHigh"/>, <see cref="GetFileSizeLow"/>, <see cref="GetFileSizeHigh"/>.</remarks>
+        [CLSCompliantAttribute(false)]
         property QWORD FileSize{QWORD get(); void set(QWORD);}
         /// <summary>If the <see cref="Attributes"/> member includes the <see2 cref2="F:Tools.TotaCommanderT.FileAttributes.ReparsePoint"/> attribute, this member specifies the reparse point tag. Otherwise, this value is undefined and should not be used.</summary>
+        /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetReparsePointTag"/> and <see cref="SetReparsePointTag"/>.</remarks>
+        [CLSCompliantAttribute(false)]
         property ReparsePointTags ReparsePointTag{ReparsePointTags get(); void set(ReparsePointTags);}
         /// <summary>Reserved for future use.</summary>
+        /// <remarks>This property is not CLS-copliant. CLS-copliant alternatives are <see cref="GetReserved1"/> and <see cref="SetReserved1"/>.</remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         property DWORD Reserved1{DWORD get(); void set(DWORD);}
         /// <summary>The name of the file.</summary>
         /// <exception cref="ArgumentException">Value being set is longer than <see cref="MaxPath"/> characters</exception>
@@ -195,6 +206,63 @@ namespace Tools{namespace TotalCommanderT{
         property String^ AlternateFileName{String^ get(); void set(String^);}
         /// <summary>Maximal length of path in characters</summary>
         static const int MaxPath = MAX_PATH;
+#pragma region "CLS-compliance"
+        /// <summary>Gets bitwise same value as <see cref="ReparsePointTag"/> as CLS-compliant type</summary>
+        /// <returns>Bitwise same value as <see cref="ReparsePointTag"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        Int32 GetReparsePointTag();
+        /// <summary>Sets value of <see cref="ReparsePointTag"/> as CLS-compliant type</summary>
+        /// <param name="value">New value of the <see cref="ReparsePointTag"/> property. The property will be set to bitwise same value.</param>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetReparsePointTag(Int32 value);
+         
+        /// <summary>Gets bitwise same value as <see cref="Reserved1"/> as CLS-compliant type</summary>
+        /// <returns>Bitwise same value as <see cref="Reserved1"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        Int32 GetReserved1();
+        /// <summary>Sets value of <see cref="Reserved1"/> as CLS-compliant type</summary>
+        /// <param name="value">New value of the <see cref="Reserved1"/> property. The property will be set to bitwise same value.</param>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        void SetReserved1(Int32 value);
+ 
+        /// <summary>Gets bitwise same value as <see cref="Attributes"/> as CLS-compliant type</summary>
+        /// <returns>Bitwise same value as <see cref="Attributes"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        Int32 GetAttributes();
+        /// <summary>Sets value of <see cref="Attributes"/> as CLS-compliant type</summary>
+        /// <param name="value">New value of the <see cref="Attributes"/> property. The property will be set to bitwise same value.</param>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetAttributes(Int32 value);
+    
+        /// <summary>Sets <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <param name="value">New value of the <see cref="FileSize"/> property</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative</exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetFileSize(__int64 value);
+        /// <summary>Gets <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <returns><see cref="FileSize"/></returns>
+        /// <exception cref="InvalidOperationException"><see cref="FileSize"/> is greater than <see cref="__int64::MaxValue"/></exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        __int64 GetFileSize();
+        /// <summary>Sets low word <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <param name="value">New value of the <see cref="FileSize"/> property's low word</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetFileSizeLow(__int64 value);
+        /// <summary>Gets <see cref="FileSizeLow"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <returns>Low word of <see cref="FileSize"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        __int64 GetFileSizeLow();
+        /// <summary>Sets high word <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <param name="value">New value of the <see cref="FileSize"/> property's high word</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetFileSizeHigh(__int64 value);
+        /// <summary>Gets high word <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <returns>High word of <see cref="FileSize"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        __int64 GetFileSizeHigh();
+#pragma endregion
     };
 
    
@@ -277,7 +345,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Calculating size of subdir (user pressed SPACE)</summary>
         CalcSize = FS_STATUS_OP_CALCSIZE,
         /// <summary>Searching for file names only (using <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindFirst(System.String,Tools.TotalCommanderT.FindData@)"/>/<see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindNext(System.Object,Tools.TotalCommanderT.FindData@)"/>/<see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.FindNext(System.Object"/>)</summary>
-        Search = FS_STATUS_OP_SEARCH,	        /// <summary>Searching for file contents (using also <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.GetFile(System.String,System.String@,Tools.TotalCommanderT.CopyFlags,Tools.TotalCommanderT.RemoteInfo)"/> calls)</summary>        SerachText = FS_STATUS_OP_SEARCH_TEXT,	        /// <summary>Synchronize dirs searches subdirs for info</summary>        SyncSearch = FS_STATUS_OP_SYNC_SEARCH,	        /// <summary>Synchronize: Downloading files from plugin</summary>        SyncGet = FS_STATUS_OP_SYNC_GET,	        /// <summary>Synchronize: Uploading files to plugin</summary>        SyncPut = FS_STATUS_OP_SYNC_PUT,	        /// <summary>Synchronize: Deleting files from plugin</summary>        SyncDelete = FS_STATUS_OP_SYNC_DELETE	
+        Search = FS_STATUS_OP_SEARCH,	
+        /// <summary>Searching for file contents (using also <see2 cref2="M:Tools.TotalCommanderT.FileSystemPlugin.GetFile(System.String,System.String@,Tools.TotalCommanderT.CopyFlags,Tools.TotalCommanderT.RemoteInfo)"/> calls)</summary>
+        SerachText = FS_STATUS_OP_SEARCH_TEXT,	
+        /// <summary>Synchronize dirs searches subdirs for info</summary>
+        SyncSearch = FS_STATUS_OP_SYNC_SEARCH,	
+        /// <summary>Synchronize: Downloading files from plugin</summary>
+        SyncGet = FS_STATUS_OP_SYNC_GET,	
+        /// <summary>Synchronize: Uploading files to plugin</summary>
+        SyncPut = FS_STATUS_OP_SYNC_PUT,	
+        /// <summary>Synchronize: Deleting files from plugin</summary>
+        SyncDelete = FS_STATUS_OP_SYNC_DELETE	
     };
 
     /// <summary>Arguments of operation status notifications</summary>
@@ -308,25 +386,92 @@ namespace Tools{namespace TotalCommanderT{
     public value class RemoteInfo{
     public:
         /// <summary>Low DWORD of remote file size. Useful for a progress indicator.</summary>
+        /// <remarks>This property is not CLS-compliat. CLS-compliant alternative is to use <see cref="SetSizeLow"/> and <see cref="GetSizeLow"/>.</remarks>
+        [CLSCompliantAttribute(false)]
         property DWORD SizeLow;
         /// <summary>High DWORD of remote file size. Useful for a progress indicator.</summary>
+        /// <remarks>This property is not CLS-compliat. CLS-compliant alternative is to use <see cref="SetSizeHigh"/> and <see cref="GetSizeHigh"/>.</remarks>
+        [CLSCompliantAttribute(false)]
         property DWORD SizeHigh;
         /// <summary>Time stamp of the remote file - should be copied with the file.</summary>
         property DateTime LastWriteTime;
         /// <summary>Attributes of the remote file - should be copied with the file.</summary>
         property FileAttributes Attr;
         /// <summary>Remote file size. Useful for a progress indicator.</summary>
+        /// <remarks>This property is not CLS-compliant. CLS-compliant alternative is to use <see cref="SetSize"/> and <see cref="GetSize"/>.</remarks>
+        [CLSCompliantAttribute(false)]
         property QWORD Size{QWORD get();void set(QWORD);}
+#pragma region "CLS-compliance"
+        /// <summary>Sets <see cref="Size"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <param name="value">New value of the <see cref="Size"/> property</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative</exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetSize(__int64 value);
+        /// <summary>Gets <see cref="Size"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <returns><see cref="Size"/></returns>
+        /// <exception cref="InvalidOperationException"><see cref="Size"/> is greater than <see cref="__int64::MaxValue"/></exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        __int64 GetSize();
+        /// <summary>Sets <see cref="SizeLow"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <param name="value">New value of the <see cref="SizeLow"/> property</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetSizeLow(__int64 value);
+        /// <summary>Gets <see cref="SizeLow"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <returns><see cref="SizeLow"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        __int64 GetSizeLow();
+        /// <summary>Sets <see cref="SizeHigh"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <param name="value">New value of the <see cref="SizeHigh"/> property</param>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void SetSizeHigh(__int64 value);
+        /// <summary>Gets <see cref="SizeHigh"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <returns><see cref="SizeHigh"/></returns>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        __int64 GetSizeHigh();
+#pragma endregion
     internal:
         /// <summary>CTor from <see cref="RemoteInfoStruct"/></summary>
         /// <param name="ri"><see cref="RemoteInfoStruct"/> to initialize new instance with</param>
         RemoteInfo(const RemoteInfoStruct& ri);
     };
 
-    /// <summary>Abstract base class for Total Commander file-system plugins</summary>
-    public ref class FileSystemPlugin abstract{
+    
+    /// <summary>Abstract base class for Total Commander file-system plugins (wfx)</summary>
+    public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
         FileSystemPlugin();
+#pragma region "Delegates"
+    public:
+        /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
+        /// <param name="SourceName">Name of the source file being copied. Depending on the direction of the operation (Get, Put), this may be a local file name of a name in the plugin file system.</param>
+        /// <param name="TargetName">Name to which the file is copied.</param>
+        /// <param name="PercentDone">Percentage of THIS file being copied. Total Commander automatically shows a second percent bar if possible when multiple files are copied.</param>
+        /// <returns>Total Commander returns <c>true</c> if the user wants to abort copying, and <c>false</c> if the operation can continue.</returns>
+        /// <remarks>You should call this function at least twice in the copy functions <see cref="GetFile"/>, <see cref="PutFile"/> and <see cref="RenMovFile"/>, at the beginning and at the end. If you can't determine the progress, call it with 0% at the beginning and 100% at the end.
+        /// <para>During the <see cref="FindFirst"/>/<see cref="FindNext"/>/<see cref="FindClose"/> loop, the plugin may now call the <see cref="ProgressProc"/> to make a progess dialog appear. This is useful for very slow connections. Don't call <see cref="ProgressProc"/> for fast connections! The progress dialog will only be shown for normal dir changes, not for compound operations like get/put. The calls to <see cref="ProgressProc"/> will also be ignored during the first 5 seconds, so the user isn't bothered with a progress dialog on every dir change.</para></remarks>
+        delegate bool ProgressCallback(FileSystemPlugin^ sender, String^ SourceName, String^ TargetName,int PercentDone);
+        /// <summary>Callback function, which the plugin can call to show the FTP connections toolbar, and to pass log messages to it. Totalcmd can show these messages in the log window (ftp toolbar) and write them to a log file.</summary>
+        /// <param name="MsgType">Can be one of the <see cref="LogKind"/> flags</param>
+        /// <param name="LogString">String which should be logged.
+        /// <para>When <paramref name="MsgType"/>is <see2 cref2="F:Tools.TotaCommanderT.LogKind.Connect"/>, the string MUST have a specific format:</para>
+        /// <para><c>"CONNECT"</c> followed by a single whitespace, then the root of the file system which was connected, without trailing backslash. Example: <c>CONNECT \Filesystem</c></para>
+        /// <para>When <paramref name="MsgType"/> is <see2 cref2="F:Tools.TotaCommanderT.LogKind.TransferComplete"/>, this parameter should contain both the source and target names, separated by an arrow <c>" -> "</c>, e.g. <c>Download complete: \Filesystem\dir1\file1.txt -> c:\localdir\file1.txt</c></para></param>
+        /// <remarks>Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotaCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect! If you call it with <paramref name="MsgType"/> <see2 cref2="F:Tools.TotaCommanderT.LogKind.Connect"/>, the function <see cref="Disconnect"/> will be called (if defined) when the user presses the Disconnect button.</remarks>
+        delegate void LogCallback(FileSystemPlugin^ sender, LogKind MsgType,String^ LogString);
+        /// <summary>callback function, which the plugin can call to request input from the user. When using one of the standard parameters, the request will be in the selected language.</summary>
+        /// <param name="RequestType">Can be one of the <see cref="InputRequestKind"/> flags</param>
+        /// <param name="CustomTitle">Custom title for the dialog box. If NULL or empty, it will be "Total Commander"</param>
+        /// <param name="CustomText">Override the text defined with <paramref name="RequestType"/>. Set this to NULL or an empty string to use the default text. The default text will be translated to the language set in the calling program.</param>
+        /// <param name="DefaultText">This string contains the default text presented to the user. Set <paramref name="DefaultText"/>[0]=0 to have no default text.</param>
+        /// <param name="maxlen">Maximum length allowed for returned text.</param>
+        /// <returns>User-entered text if user clicked Yes or OK. Null otherwise</returns>
+        /// <remarks>Leave <paramref name="CustomText"/> empty if you want to use the (translated) default strings!</remarks>
+        /// <exception cref="ArgumentException"><paramref name="DefaultText"/> is longer than <paramref name="maxlen"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="maxlen"/> is less than 1</exception>
+        delegate String^ RequestCallback(FileSystemPlugin^ sender, InputRequestKind RequestType,String^ CustomTitle, String^ CustomText, String^ DefaultText, int maxlen);
+#pragma endregion
 #pragma region "TC functions"
     private:
         /// <summary>Pointer to progress procedure</summary>
@@ -335,15 +480,40 @@ namespace Tools{namespace TotalCommanderT{
         tLogProc pLogProc;
         /// <summary>Pointer to request procedure</summary>
         tRequestProc pRequestProc;
-    internal:
+        /// <summary>When plugin is used outside of Total Commander, used instead of <see cref="pProgressProc"/></summary>
+        ProgressCallback^ dProgressProc;
+        /// <summary>When plugin is used outside of Total Commander, used instead of <see cref="pLogProc"/></summary>
+        LogCallback^ dLogProc;
+        /// <summary>When plugin is used outside of Total Commander, used instead of <see cref="pRequestProc"/></summary>
+        RequestCallback^ dRequestProc;
+    public:
         /// <summary>Called when loading the plugin. The passed values should be stored in the plugin for later use.</summary>
         /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
         /// <param name="pProgressProc">Pointer to the progress callback function.</param>
         /// <param name="pLogProc">Pointer to the logging function</param>
         /// <param name="pRequestProc">Pointer to the request text proc</param>
         /// <returns>The return value is currently unused. You should return 0 when successful.</returns>
-        /// <remarks>FsInit is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.</remarks>
+        /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.
+        /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para></remarks>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         int FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc);
+        /// <summary>Called when loading the plugin outside of Total Comander environment instead of <see cref="FsInit"/>. The passed values should be stored in the plugin for later use.</summary>
+        /// <param name="PluginNr">Internal number this plugin was given in Total Commander. Has to be passed as the first parameter in all callback functions so Totalcmd knows which plugin has sent the request.</param>
+        /// <param name="progress">Delegate to the progress callback function.</param>
+        /// <param name="log">Delegate to the logging function</param>
+        /// <param name="request">Delegate to the request text proc</param>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="progress"/>, <paramref name="log"/> or <paramref name="request"/> is null</exception>
+        /// <remarks>Use this function to initialize the plugin when used outside of Total Commander</remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
+        /// <summary>When plugin is initialized, gets value indicating if it was initialiuzed by Total Commander or .NET application</summary>
+        /// <returns>True if plugin was initialized by Total Commander; false when it was initialized by .NET application</returns>
+        /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is false</exception>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        property bool IsInTotalCommander{bool get();}
         /// <summary>Called to retrieve the first file in a directory of the plugin's file system.</summary>
         /// <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
         /// <para>As root, a single backslash is passed to the plugin. The root items appear in the plugin base directory retrieved by <see cref="FsGetDefRootName"/> at installation time. This default root name is NOT part of the path passed to the plugin!</para>
@@ -353,16 +523,25 @@ namespace Tools{namespace TotalCommanderT{
         /// <para>When an error occurs, call <see cref="SetLastError"/> to set the reason of the error. Total Commander checks for the following two errors:</para>
         /// <list type="numbered"><item>ERROR_NO_MORE_FILES: The directory exists, but it's empty (Totalcmd can open it, e.g. to copy files to it)</item>
         /// <item>Any other error: The directory does not exist, and Total Commander will not try to open it.</item></list></returns>
-        /// <remarks><see cref="FsFindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.</remarks>
+        /// <remarks><see cref="FsFindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         HANDLE FsFindFirst(char* Path,WIN32_FIND_DATA *FindData);
         /// <summary>Called to retrieve the next file in a directory of the plugin's file system</summary>
         /// <param name="Hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
         /// <param name="FindData">A standard <see cref="WIN32_FIND_DATA"/> struct as defined in the Windows SDK, which contains the file or directory details. Use the dwFileAttributes field set to <see2 cref2="F:Tools.TotaCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the dwFileAttributes field with 0x80000000 and set the dwReserved0 parameter to the Unix file mode (permissions).</param>
         /// <returns>Return FALSE if an error occurs or if there are no more files, and TRUE otherwise. <see cref="SetLastError"/>() does not need to be called.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsFindNext(HANDLE Hdl,WIN32_FIND_DATA *FindData);
         /// <summary>Called to end a <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> loop, either after retrieving all files, or when the user aborts it</summary>
         /// <param name="Hdl">The find handle returned by <see cref="FsFindFirst"/>.</param>
         /// <returns>Currently unused, should return 0.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         int FsFindClose(HANDLE Hdl);
 #pragma endregion
 #pragma region ".NET Functions"
@@ -420,12 +599,59 @@ namespace Tools{namespace TotalCommanderT{
         Collections::Generic::Dictionary<int,Object^>^ handleDictionary ;
         /// <summary>Contains maximum key in <see cref="HandleDictionary"/></summary>
         int MaxHandle;
+        /// <summary>Used to synchronize access to <see cref="HandleDictionary"/></summary>
+        Object^ HandleSyncObj;
     protected:
-        ///<summary>Gets dictionary containing objects referenced by Total Commander by handles</summary>
+        /// <summary>Gets dictionary containing objects referenced by Total Commander by handles</summary>
+        /// <remarks>Do not add/remove items form this collection directly. Use dedicated Handle* functions instead (they are thread-safe).
+        /// <para>In rare occasions, your plugin is not utilized by Total Commander but by another .NET-based application, you cannot rely on objects being passed to <see cref="FindNext"/>/<see cref="FindClose"/> being present in this dictionary and object returned by <se cref="FindFirst"/> being added to this dictionary. It's because .NET application doesn't need to rely on integer handles - it can store objects itself.</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         property Collections::Generic::Dictionary<int,Object^>^ HandleDictionary{Collections::Generic::Dictionary<int,Object^>^ get();}
         /// <summary>Gets next free handle for <see cref="HandleDictionary"/></summary>
         /// <returns>Always returns value greater than zero</returns>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         int GetNextHandle();
+        /// <summary>Adds object to <see cref="HandleDictionary"/></summary>
+        /// <param name="object">Object to add and obtain handle for</param>
+        /// <returns>Handle assigned to object</returns>
+        /// <remarks>You can assign multiple handles to same object.</remarks>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        int HandleAdd(Object^ object);
+        /// <summary>Removes object from <see cref="HandleDictionary"/></summary>
+        /// <param name="object">Object to be removed</param>
+        /// <returns>True if object was present in <see cref="HandleDictionary"/> and it was removed; false if it was not present</returns>
+        /// <remarks>If object has multiple handles assigned only the first handle is destroyed</remarks>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        bool HandleRemove(Object^ object);
+        /// <summary>Removes object from <see cref="HandleDictionary"/> identified by integral handle</summary>
+        /// <param name="handle">Handle of object to be removed</param>
+        /// <returns>Ture if <paramref name="handle"/> was defined and it was removed; false if <paramref name="handle"/> was not defined (i.e. it was previously destroyed or never created)</returns>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        bool HandleRemove(int handle);
+        /// <summary>Gets object identified by handle</summary>
+        /// <param name="handle">Handle to get object for</param>
+        /// <returns>The object stored in <see cref="HandleDictionary"/> under key <paramref name="handle"/>; null where <paramref name="handle"/> is nod defined.</returns>
+        /// <remarks>In case you store null objects in <see cref="HandleDictionary"/> this function returns null either when <paramref name="handle"/> is invalid or objects stored under the handle is null. So, do not store null objects in <ses cref="HandleDictionary"/>.</remarks>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        Object^ HandleGet(int handle);
+        /// <summary>Gets handle of object in <see cref="HandleDictionary"/></summary>
+        /// <param name="object">Object to get handle of</param>
+        /// <returns>Handle of <paramref name="object"/>; of -1 if <paramref name="object"/> is not present in <see cref="HandleDictionary"/></returns>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        int HandleGetHandle(Object^ object);
+        /// <summary>Raplaces object in <see cref="HandleDictionary"/> with another one.</summary>
+        /// <param name="handle">Handle to replace object for</param>
+        /// <param name="object">New object to store with handle <paramref name="handle"/></param>
+        /// <exception cref="System::Collections::Generic::KeyNotFoundException"><paramref name="handle"/> is nod defined</exception>
+        /// <threadsafety>This function is tread-safe</threadsafety>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void HandleReplace(int handle, Object^ object);
     public:
         /// <summary>When overriden in derived class retrieves the first file in a directory of the plugin's file system.</summary>
         /// <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
@@ -457,10 +683,13 @@ namespace Tools{namespace TotalCommanderT{
         virtual void FindClose(Object^ Status);
 #pragma endregion
 #pragma region "Optional methods"
-    internal:
+    public:
         /// <summary>Create a directory on the plugin's file system.</summary>
         /// <param name="Path">Name of the directory to be created, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
         /// <returns>Return TRUE if the directory could be created, FALSE if not.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsMkDir(char* Path);
     public:
         /// <summary>When overriden in derived class creates a directory on the plugin's file system.</summary>
@@ -474,7 +703,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool MkDir(String^ Path);
-    internal:
+    public:
         /// <summary>Called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="MainWin">Parent window which can be used for showing a property sheet.</param>
         /// <param name="RemoteName">Name of the file to be executed, with full path.</param>
@@ -491,7 +720,10 @@ namespace Tools{namespace TotalCommanderT{
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FsFindFirst"/>/<see cref="FsFindNext"/></description></item>
         /// <item><term>quote commandline</term><description>Execute the command line entered by the user in the directory <paramref name="RemoteName"/> . This is called when the user enters a command in Totalcmd's command line, and presses ENTER. This is optional, and allows to send plugin-specific commands. It's up to the plugin writer what to support here. If the user entered e.g. a cd directory command, you can return the new path in RemoteName (max 259 characters), and give <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.Symlink"/> as return value. Return <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.OK"/> to cause a refresh (re-read) of the active panel.</description></item>
-        /// </list></remarks>
+        /// </list>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         int FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb);
     public:
         /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
@@ -520,7 +752,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual ExecExitCode ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb);
-    internal:
+    public:
         /// <summary>Called to transfer (copy or move) a file within the plugin's file system.</summary>
         /// <param name="OldName">Name of the remote source file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
         /// <param name="NewName">Name of the remote destination file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
@@ -532,7 +764,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <list tpe="bullet"><item>once with <paramref name="OverWrite"/>==false. If the remote file exists, return <see2 cref2="F:Tools.TotaCommanderT.FileSystem.ExitCode.FileExists"/>. If it doesn't exist, try to copy the file, and return an appropriate error code.</item>
         /// <item>a second time with <paramref name="OverWrite"/>==true, if the user chose to overwrite the file.</item></list>
         /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
-        /// </remarks>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         int FsRenMovFile(char* OldName,char* NewName,BOOL Move, BOOL OverWrite,RemoteInfoStruct* ri);
     public:
         /// <summary>When overriden in derived class called to transfer (copy or move) a file within the plugin's file system.</summary>
@@ -558,7 +792,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotaCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode RenMovFile(String^ OldName, String^ NewName, bool Move, bool OverWrite, RemoteInfo info);
-    internal:
+    public:
         /// <summary>Called to transfer a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
         /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
@@ -572,7 +806,10 @@ namespace Tools{namespace TotalCommanderT{
         /// <item><see2 cref2="F:Tools.TotaCommanderT.CopyFlags.ExitCode.SameCase"/> and <see2 cref2="F:Tools.TotaCommanderT.CopyFlags.ExitCode.DifferentCase"/> are NEVER passed to this function, because the plugin can easily determine whether a local file exists or not.</item>
         /// <item><see2 cref2="F:Tools.TotaCommanderT.CopyFlags.ExitCode.Move"/> is set, the plugin needs to delete the remote file after a successful download.</item>
         /// </list>
-        /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para></remarks>
+        /// <para>While copying the file, but at least at the beginning and the end, call <see cref="ProgressProc"/> to show the copy progress and allow the user to abort the operation.</para>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         int FsGetFile(char* RemoteName,char* LocalName,int CopyFlags, RemoteInfoStruct* ri);
     public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
@@ -601,7 +838,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotaCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode GetFile(String^ RemoteName, String^% LocalName, CopyFlags CopyFlags, RemoteInfo info);
-    internal:
+    public:
         /// <summary>Called to transfer a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
         /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
         /// <param name="RemoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
@@ -614,7 +851,10 @@ namespace Tools{namespace TotalCommanderT{
         /// <item>The flags <see2 cref2="F:Tools.TotaCommanderT.CopyFlags.ExitCode.SameCase"/> or <see2 cref2="F:Tools.TotaCommanderT.CopyFlags.ExitCode.DifferentCase"/> are added to CopyFlags when the remote file exists and needs to be overwritten. This is a hint to the plugin to allow optimizations: Depending on the plugin type, it may be very slow to check the server for every single file when uploading.</item>
         /// <item>If the flag <see2 cref2="F:Tools.TotaCommanderT.CopyFlags.ExitCode.Move"/> is set, the plugin needs to delete the local file after a successful upload.</item>
         /// </list>
-        /// <para>While copying the file, but at least at the beginning and the end, call ProgressProc to show the copy progress and allow the user to abort the operation.</para></remarks>
+        /// <para>While copying the file, but at least at the beginning and the end, call ProgressProc to show the copy progress and allow the user to abort the operation.</para>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         int FsPutFile(char* LocalName,char* RemoteName,int CopyFlags);
     public:
         /// <summary>When overriden in derived class transfers a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
@@ -642,10 +882,13 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotaCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
         virtual FileSystemExitCode PutFile(String^ LocalName, String^% RemoteName, CopyFlags CopyFlags);
-    internal:
+    public:
         /// <summary>Called to delete a file from the plugin's file system</summary>
         /// <param name="RemoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes</param>
         /// <returns>Return TRUE if the file could be deleted, FALSE if not.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsDeleteFile(char* RemoteName);
     public:
         /// <summary>When overriden in derived class deletes a file from the plugin's file system</summary>
@@ -659,15 +902,18 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool DeleteFile(String^ RemoteName);
-    internal:
+    public:
         /// <summary>Called to remove a directory from the plugin's file system.</summary>
         /// <param name="RemoteName">Name of the directory to be removed, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
-        /// <returs>Return TRUE if the directory could be removed, FALSE if not.</returns>
+        /// <returns>Return TRUE if the directory could be removed, FALSE if not.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsRemoveDir(char* RemoteName);
     public:
         /// <summary>When overriden in derived class removes a directory from the plugin's file system.</summary>
         /// <param name="RemoteName">Name of the directory to be removed, with full path. The name always starts with a backslash, then the names returned by <see cref="FsFindFirst"/>/<see cref="FsFindNext"/> separated by backslashes.</param>
-        /// <returs>Return true if the directory could be removed, false if not.</returns>
+        /// <returns>Return true if the directory could be removed, false if not.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
         /// <exception cref="IO:IOException">An IO error occured</exception>
@@ -676,7 +922,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool RemoveDir(String^ RemoteName);
-    internal:
+    public:
         /// <summary>Called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
         /// <param name="DisconnectRoot">This is the root dir which was passed to <see cref="LogProc"/> when connecting. It allows the plugin to have serveral open connections to different file systems (e.g. ftp servers). Should be either \ (for a single possible connection) or \Servername (e.g. when having multiple open connections).</param>
         /// <returns>Return TRUE if the connection was closed (or never open), FALSE if it couldn't be closed.</returns>
@@ -684,8 +930,10 @@ namespace Tools{namespace TotalCommanderT{
         /// Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect!
         /// <list><listheader>Examples</listheader>
         /// <item>FTP requires connect/disconnect. Connect can be done automatically when the user enters a subdir, disconnect when the user clicks the Disconnect button.</item>
-        /// <item>Access to local file systems (e.g. Linux EXT2) does not require connect/disconnect, so don't call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>.</item>
-        /// </remarks>
+        /// <item>Access to local file systems (e.g. Linux EXT2) does not require connect/disconnect, so don't call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>.</item></list>
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsDisconnect(char* DisconnectRoot);
     public:
         /// <summary>When overridden in derived class, called when the user presses the Disconnect button in the FTP connections toolbar. This toolbar is only shown if <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> is passed to <see cref="LogProc"/>.</summary>
@@ -695,18 +943,21 @@ namespace Tools{namespace TotalCommanderT{
         /// Do NOT call <see cref="LogProc"/> with <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/> if your plugin does not require connect/disconnect!
         /// <list><listheader>Examples</listheader>
         /// <item>FTP requires connect/disconnect. Connect can be done automatically when the user enters a subdir, disconnect when the user clicks the Disconnect button.</item>
-        /// <item>Access to local file systems (e.g. Linux EXT2) does not require connect/disconnect, so don't call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>.</item>
+        /// <item>Access to local file systems (e.g. Linux EXT2) does not require connect/disconnect, so don't call <see cref="LogProc"/> with the parameter <see2 cref2="F:Tools.TotalCommanderT.LogKind.Connect"/>.</item></list>
         /// </remarks>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual bool Disconnect(String^ DisconnectRoot);
-    internal:
+    public:
         /// <summary>Called to set the (Windows-Style) file attributes of a file/dir. <see cref="FsExecuteFile"/> is called for Unix-style attributes.</summary>
         /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
         /// <param name="NewAttr">New file attributes</param>
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsSetAttr(char* RemoteName,int NewAttr);
     public:
         /// <summary>When overriden in derived class sets the (Windows-Style) file attributes of a file/dir. <see cref="ExecuteFile"/> is called for Unix-style attributes.</summary>
@@ -720,13 +971,16 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual void SetAttr(String^ RemoteName, StandardFileAttributes NewAttr);
-    internal:
+    public:
         /// <summary>Called to set the (Windows-Style) file times of a file/dir.</summary>
         /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
         /// <param name="CreationTime">Creation time of the file. May be NULL to leave it unchanged.</param>
         /// <param name="LastAccessTime">Last access time of the file. May be NULL to leave it unchanged.</param>
         /// <param name="LastWriteTime">Last write time of the file. May be NULL to leave it unchanged. If your file system only supports one time, use this parameter!</param>
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
+        /// <remarks><para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         BOOL FsSetTime(char* RemoteName,FILETIME *CreationTime, FILETIME *LastAccessTime,FILETIME *LastWriteTime);
     public:
         /// <summary>When overriden in derived class sets the (Windows-Style) file times of a file/dir.</summary>
@@ -743,45 +997,69 @@ namespace Tools{namespace TotalCommanderT{
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         [MethodNotSupportedAttribute]
         virtual void SetTime(String^ RemoteName, Nullable<DateTime> CreationTime, Nullable<DateTime> LastAccessTime, Nullable<DateTime> LastWriteTime);
-    internal:
+    public:
         /// <summary>called just as an information to the plugin that a certain operation starts or ends. It can be used to allocate/free buffers, and/or to flush data from a cache. There is no need to implement this function if the plugin doesn't require it.</summary>
         /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
         /// <param name="InfoStartEnd">Information whether the operation starts or ends</param>
         /// <param name="InfoOperation">Information of which operaration starts/ends</param>
         /// <remarks>Please note that future versions of the framework may send additional values!
         /// <para>This function has been added for the convenience of plugin writers. All calls to plugin functions will be enclosed in a pair of <see cref="FsStatusInfo"/> calls: At the start, <see cref="FsStatusInfo"/>(...,FS_STATUS_START,...) and when the operation is done FsStatusInfo(...,FS_STATUS_END,...). Multiple plugin calls can be between these two calls. For example, a download may contain multiple calls to <see cref="FsGetFile"/>, and <see cref="FsFindFirst"/>, <see cref="FsFindNext"/>, <see cref="FsFindClose"/> (for copying subdirs).</para>
-        /// </remarks>
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         void FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation);
-    internal:
+    public:
+        /// <summary>Called instead of <see cref="FsStatusInfo"/> when plugin is used outside of Total Commander.</summary>
+        /// <param name="RemoteDir">This is the current source directory when the operation starts. May be used to find out which part of the file system is affected.</param>
+        /// <param name="InfoStartEnd">Information whether the operation starts or ends</param>
+        /// <param name="InfoOperation">Information of which operaration starts/ends</param>
+        /// <remarks>Please note that future versions of the framework may send additional values!</remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        void StatusInfo(String^ RemoteDir,OperationStatus InfoStartEnd,OperationKind InfoOperation);
         /// <summary>When overiden in derived class handles operation status change reported by Total Commaner</summary>
         /// <param name="e">Event arguments</param>
-        /// <remarks>Do not call this method from your code. It is called by Total Commander</remarks>
+        /// <remarks>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</remarks>
         virtual void OnOperationStatusChanged(OperationEventArgs^ e);
         /// <summary>When overriden in derived class handles start of operation reported by Total Commander</summary>
         /// <remarks>This method is called before operation sarts. Call of this method is always fololowed by call of <see cref="OnOperationStatusChanged"/>.
-        /// <para>Do not call this method from your code. It is called by Total Commander.</para></remarks>
+        /// <para>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</para></remarks>
         /// <param name="e">Event arguments</param>
         virtual void OnOperationStarting(OperationEventArgs^ e);
         /// <summary>When overriden in derived class handles end of operation reported by Total Commander</summary>
         /// <remarks>This method is called after operation finishes.  Call of this method is always fololowed by call of <see cref="OnOperationStatusChanged"/>.
-        /// <para>Do not call this method from your code. It is called by Total Commander.</para></remarks>
+        /// <para>Do not call this method from your code. It is called by Total Commander. In case you use plugin outside of Total Commander call <see cref="StatusInfo"/>.</para></remarks>
         /// <param name="e">Event arguments</param>
         virtual void OnOperationFinished(OperationEventArgs^ e);
-    internal:
+    public:
         /// <summary>Called only when the plugin is installed. It asks the plugin for the default root name which should appear in the Network Neighborhood. This root name is NOT part of the path passed to the plugin when Totalcmd accesses the plugin file system! The root will always be "\", and all subpaths will be built from the directory names returned by the plugin.</summary>
         /// <param name="DefRootName">Pointer to a buffer (allocated by the calling program) which can receive the root name.</param>
         /// <param name="maxlen">Maximum number of characters (including the final 0) which fit in the buffer."</param>
-        /// <remarks>Example: The root name may be "Linux file system" for a plugin which accesses Linux drives. If this function isn't implemented, Totalcmd will suggest the name of the DLL (without extension .DLL) as the plugin root. This function is called directly after loading the plugin (when the user installs it), <see cref="FsInit"/> is NOT called when installing the plugin.</remarks>
+        /// <remarks>Example: The root name may be "Linux file system" for a plugin which accesses Linux drives. If this function isn't implemented, Totalcmd will suggest the name of the DLL (without extension .DLL) as the plugin root. This function is called directly after loading the plugin (when the user installs it), <see cref="FsInit"/> is NOT called when installing the plugin.
+        /// <para>This function is called by Total Commander and is not intended for direct use</para></remarks>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
         void FsGetDefRootName(char* DefRootName,int maxlen);
     public:
-        /// <summary>Gets name of plugin</summary>
-        virtual property String^ Name{String^ get() abstract;}
-        //TODO: FsExtractCustomIcon
-        //TODO: FsSetDefaultParams
-        //TODO: FsGetPreviewBitmap
-        //TODO: FsLinksToLocalFiles
-        //TODO: FsGetLocalName
+        //TODO:
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        int FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        void FsSetDefaultParams(FsDefaultParamStruct* dps);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        int FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        BOOL FsLinksToLocalFiles(void);
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        BOOL FsGetLocalName(char* RemoteName,int maxlen);
         //TODO: custom columns
 #pragma endregion
     };
+
+    
+   
 }}

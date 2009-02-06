@@ -481,6 +481,7 @@
     <Compile Include="Globalization\NumberingSystems\ExcelColumnNumberingSystem.vb" />
     <Compile Include="Globalization\NumberingSystems\PositionalNumberingSystem.vb" />
     <Compile Include="Globalization\NumberingSystems\Roman.vb" />
+    <Compile Include="Reflection\CLSComplianceChecker.vb" />
     <Compile Include="Resources\resx %28Friend%29\Components.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
