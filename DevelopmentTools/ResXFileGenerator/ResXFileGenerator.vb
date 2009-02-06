@@ -89,6 +89,14 @@ Module ResXFileGenerator
         Dim Progress As New ProgressMonitor
         Try
             generator.Generate(Infile, My.Computer.FileSystem.ReadAllText(Infile), ns, pOutput, OutputSize, Progress)
+        Catch ex As IO.FileNotFoundException
+            Console.WriteLine(My.Resources.ErrorWhileGeneratingCode)
+            Console.WriteLine(ex.Message)
+            Environment.Exit(52)
+        Catch ex As IO.IOException
+            Console.WriteLine(My.Resources.ErrorWhileGeneratingCode)
+            Console.WriteLine(ex.Message)
+            Environment.Exit(52)
         Catch ex As Exception
             Console.WriteLine(My.Resources.ErrorWhileGeneratingCode)
             Console.WriteLine(ex.Message)
@@ -139,25 +147,39 @@ Module ResXFileGenerator
         For i As Integer = 0 To My.Application.CommandLineArgs.Count - 1
             If My.Application.CommandLineArgs(i) = "/l" AndAlso i + 3 < My.Application.CommandLineArgs.Count Then
                 Dim ab = My.Application.CommandLineArgs(i + 1)
-                Select Case ab
-                    Case "a"
-                        lines1.Insert(Integer.Parse(My.Application.CommandLineArgs(i + 2), System.Globalization.CultureInfo.InvariantCulture), My.Application.CommandLineArgs(i + 3))
-                    Case "b"
-                        lines2.Insert(Integer.Parse(My.Application.CommandLineArgs(i + 2), System.Globalization.CultureInfo.InvariantCulture), My.Application.CommandLineArgs(i + 3))
-                    Case Else
-                        Console.WriteLine(My.Resources.InvalidPartSpecifierForL0, ab)
-                End Select
+                Try
+                    Select Case ab
+                        Case "a"
+                            lines1.Insert(Integer.Parse(My.Application.CommandLineArgs(i + 2), System.Globalization.CultureInfo.InvariantCulture), My.Application.CommandLineArgs(i + 3))
+                        Case "b"
+                            lines2.Insert(Integer.Parse(My.Application.CommandLineArgs(i + 2), System.Globalization.CultureInfo.InvariantCulture), My.Application.CommandLineArgs(i + 3))
+                        Case Else
+                            Console.WriteLine(My.Resources.InvalidPartSpecifierForL0, ab)
+                    End Select
+                Catch ex As FormatException
+                    Console.WriteLine(ex.Message)
+                    Environment.Exit(53)
+                Catch ex As ArgumentOutOfRangeException
+                    Console.WriteLine(My.Resources.InvalidInsertIndex0, My.Application.CommandLineArgs(i + 2))
+                    Console.WriteLine(ex.Message)
+                    Environment.Exit(54)
+                End Try
                 i += 3
             ElseIf My.Application.CommandLineArgs(i) = "/l" Then
                 Console.WriteLine(My.Resources.WarningIncompleteLArgumentIgnored)
             End If
         Next
         str1 = String.Join(NL, lines1.ToArray)
-        My.Computer.FileSystem.WriteAllText(Outfile, str1, False)
-        If lines2 IsNot Nothing Then
-            str2 = String.Join(NL, lines2.ToArray)
-            My.Computer.FileSystem.WriteAllText(Outfile2, str2, False)
-        End If
+        Try
+            My.Computer.FileSystem.WriteAllText(Outfile, str1, False)
+            If lines2 IsNot Nothing Then
+                str2 = String.Join(NL, lines2.ToArray)
+                My.Computer.FileSystem.WriteAllText(Outfile2, str2, False)
+            End If
+        Catch ex As Exception When TypeOf ex Is IO.FileNotFoundException OrElse TypeOf ex Is IO.DirectoryNotFoundException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is IO.PathTooLongException OrElse TypeOf ex Is NotSupportedException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException
+            Console.WriteLine("{0}: {1}", ex.GetType.Name, ex.Message)
+            Environment.Exit(105)
+        End Try
     End Sub
 
     ''' <summary>Handles the <see cref="BaseResXFileCodeGeneratorEx.BeforeGenerateText"/> event of generator</summary>

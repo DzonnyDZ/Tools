@@ -1,4 +1,4 @@
-﻿Imports Tools.Tools.ComponentModelT
+﻿Imports Tools.ComponentModelT
 
 #If Config <= Nightly Then 'Stage: Nightly
 Imports System.Linq, Tools.LinqT

@@ -79,6 +79,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Invalid insert index {0}.
+        '''</summary>
+        Friend ReadOnly Property InvalidInsertIndex0() As String
+            Get
+                Return ResourceManager.GetString("InvalidInsertIndex0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Invalid part specifier for /l {0}.
         '''</summary>
         Friend ReadOnly Property InvalidPartSpecifierForL0() As String
@@ -94,10 +103,11 @@ Namespace My.Resources
         '''    /in &lt;infile&gt; - required, path of input resx file
         '''    /out &lt;outfile&gt; - required, path of output file
         '''    /lang &lt;language&gt; - optional, name of output lanuage. If not specified inferred form outfile extension
-        '''        supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, js, java, jsl
-        '''    /nologo - optional, do not show version and copyright info
-        '''    /internal - optional, if specified internal (friend) class is generated; public otherwise
-        '''    /ns &lt; [rest of string was truncated]&quot;;.
+        '''        supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
+        '''        cpp.7 and cpp.vs are two alternative C++ providers
+        '''        c, cpp and h have same meaning (C++)
+        '''        java and jsl jave same meaning (J#)
+        '''    /nolo [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Legend() As String
             Get

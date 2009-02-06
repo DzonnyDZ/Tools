@@ -58,11 +58,38 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'Default text is too long.'.
+        /// </summary>
+        public: static property System::String^  DefaultTextTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
+        /// Looks up a localized string similar to 'Name too long. Mamximum allowed length is {0}'.
+        /// </summary>
+        public: static property System::String^  NameTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'Plugin was not initialized.'.
         /// </summary>
         public: static property System::String^  PluginNotInitialized {
             System::String^  get();
         }
+        
+        /// <summary>
+        /// The stub formatting method returning the DefaultTextTooLong property value.
+        /// </summary>
+        /// <returns>The DefaultTextTooLong property value.</returns>
+        public: static System::String^  DefaultTextTooLongFormat();
+        
+        /// <summary>
+        /// Formats a localized string similar to 'Name too long. Mamximum allowed length is {0}'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        public: static System::String^  NameTooLongFormat(System::Object^  arg0);
         
         /// <summary>
         /// The stub formatting method returning the PluginNotInitialized property value.

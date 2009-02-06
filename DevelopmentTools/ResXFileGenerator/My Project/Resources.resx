@@ -160,4 +160,7 @@
   <data name="SplitonAndOut2MustBeSpecifiedBothOrNone" xml:space="preserve">
     <value>/spliton and /out2 must be specified both or none.</value>
   </data>
+  <data name="InvalidInsertIndex0" xml:space="preserve">
+    <value>Invalid insert index {0}</value>
+  </data>
 </root>
