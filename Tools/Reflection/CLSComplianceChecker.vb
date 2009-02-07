@@ -47,6 +47,7 @@ Namespace ReflectionT
             ''' <summary>2: Members of non-CLS compliant types shall not be marked CLS-compliant.</summary>
             NoCompliantMembersInIncompliantTypes = 2
             ''' <summary>3: Boxed value types are not CLS-compliant.</summary>
+            ''' <remarks>This rule si not checked because there is no wa hot to expose boxed type by name.</remarks>
             NoBoxedValueTypes = 3
             ''' <summary>4: Assemblies shall follow Annex 7 of Technical Report 15 of the Unicode Standard 3.0 governing the set of characters permitted to start and be included in identifiers, available on-line at http://www.unicode.org/unicode/reports/tr15/tr15-18.html. Identifiers shall be in the canonical format defined by Unicode Normalization Form C. For CLS purposes, two identifiers are the same if their lowercase mappings (as specified by the Unicode locale-insensitive, one-to-one lowercase mappings) are the same. That is, for two identifiers to be considered different under the CLS they shall differ in more than simply their case. However, in order to override an inherited definition the CLI requires the precise encoding of the original declaration be used.</summary>
             UnicodeIdentifiers = 4
@@ -121,6 +122,7 @@ Namespace ReflectionT
             ''' <summary>37: Only properties and methods can be overloaded.</summary>
             OverloadOnlyPropertiesAndMethods = 37
             ''' <summary>38: Properties and methods can be overloaded based only on the number and types of their parameters, except the conversion operators named op_Implicit and op_Explicit, which can also be overloaded based on their return type.</summary>
+            ''' <remarks>Violation of this rule is reported only for op_Implicit and op_Explicit otheriwise <see cref="DistingNames"/> (5) or <see cref="NoOverloadByReturnType"/> (6) is reported</remarks>
             OverloadingDistinction = 38
             ''' <summary>39: If either op_Implicit or op_Explicit is provided, an alternate means of providing the coercion shall be provided.</summary>
             ''' <remarks>Violation of this rule may be reported, but it does not mean tha the rule is not fullfilled in way chacker is unable to uncover</remarks>
@@ -152,28 +154,52 @@ Namespace ReflectionT
             ''' <summary>An error is encountered when checking certain item. This is not CLS rule.</summary>
             [Error] = -1000
         End Enum
-        '3,4,5,6,7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,262,2,29,30,31,32,33,34,35,6,7,38,39,40,41,42,3,44,45,47
+        '7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,40,41,42,3,44,45,47
+        ''' <summary>Raised when CLS rules is violated or internal check is violated or error in verified piece of code occurs</summary>
         Public Event Violation As EventHandler(Of CLSComplianceChecker, CLSViolationEventArgs)
+        ''' <summary>Raises the <see cref="Violation"/> event</summary>
+        ''' <param name="Message">Error message describint the problem</param>
+        ''' <param name="Rule">Identifies rule being broken or cause of error condition</param>
+        ''' <param name="Item">Item which caused the rule to be broken or error condition to be met</param>
+        ''' <param name="Exception">In case of error, contains exception that caused the error condition; null otherwise</param>
+        ''' <exception cref="ArgumentNullException"><paramref name="Message"/> or <paramref name="Item"/> is null</exception>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="Rule"/> is not member of <see cref="CLSRule"/></exception>
         Protected Overridable Sub OnViolation(ByVal Message$, ByVal Rule As CLSRule, ByVal Item As ICustomAttributeProvider, Optional ByVal Exception As Exception = Nothing)
             RaiseEvent Violation(Me, New CLSViolationEventArgs(Message, Rule, Item, Exception))
         End Sub
-
+        ''' <summary>Regulare expersssion to check if identifier name is valied</summary>
+        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("[{Lu}{Ll}{Lt}{Lm}{Lo}{Nl}]([{Lu}{Ll}{Lt}{Lm}{Lo}{Nl}]|[{Mn}{Mc}{Nd}{Pc}{Cf}])*", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
+        ''' <summary>Checks assemby for CLS compliance</summary>
+        ''' <param name="Assembly">Assebly to check</param>
+        ''' <returns>Ture if assembly meets CLS rules. Returns tur even when assembly is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Assembly"/> is null</exception>
+        ''' <remarks>Actual violations of CLS rules (if any) are reported via the <see cref="Violation"/> event.</remarks>
         Public Function Check(ByVal Assembly As Assembly) As Boolean
+            If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
             Dim Violated As Boolean
-            Violated = CheckAttributes(Assembly)
+            Violated = Not CheckAttributes(Assembly)
             Dim CLS = GetItemClsCompliance(Assembly)
             If CLS Then
-                Violated = Violated Or CLSAttributeCheck(Assembly)
+                Violated = Violated Or Not CLSAttributeCheck(Assembly)
                 'TODO: Do test on assembly
             End If
+            'Check uniqueness of type names
+            Dim types As IEnumerable(Of Type) = New Type() {}
+            Try
+                types = From type In Assembly.GetTypes() Where type.IsPublic AndAlso Not type.IsNested
+            Catch ex As Exception
+                OnViolation("Error while getting types in assembly. Some types weren't loaded.", CLSRule.Error, Assembly, ex) 'Localize: message
+            End Try
+            CheckTypeNames(types)
+            'Check modules
             Dim Modules() As [Module] = {}
             Try
-                Modules = Asseembly.GetModules
+                Modules = Assembly.GetModules
             Catch ex As Exception
-                OnViolation("Error while getting modules in assembly", CLSRule.Error, Asseembly, ex) 'Localize:Message
+                OnViolation("Error while getting modules in assembly", CLSRule.Error, Assembly, ex) 'Localize:Message
             End Try
             For Each [Module] In Modules
-                Violated = Violated Or Check([Module])
+                Violated = Violated Or Not CheckInternal([Module])
             Next
             Return Violated
         End Function
@@ -212,7 +238,7 @@ Namespace ReflectionT
             End If
 
         End Function
-         
+
         ''' <summary>Checks if attributes applied onto given item are valid for such item</summary>
         ''' <param name="Item">Item to check attributes of</param>
         ''' <returns>True if attribute usage was not violated; false if it was. Also returns true when part of chekc was skipped due to error.</returns>
@@ -287,12 +313,36 @@ Namespace ReflectionT
             Return Violated
         End Function
 
+        ''' <summary>Checks module for CLS compliance</summary>
+        ''' <param name="Module">Assebly to check</param>
+        ''' <returns>Ture if module meets CLS rules. Returns tur even when module is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Module"/> is null</exception>
+        ''' <remarks>Actual violations of CLS rules (if any) are reported via the <see cref="Violation"/> event.</remarks>
         Public Function Check(ByVal [Module] As [Module]) As Boolean
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
+            Dim violated As Boolean = False
+            Dim types As IEnumerable(Of Type) = New Type() {}
+            Try
+                types = From type In [Module].GetTypes() Where type.IsPublic AndAlso Not type.IsNested
+            Catch ex As Exception
+                OnViolation("Error while getting types in module. Some types weren't loaded.", CLSRule.Error, [Module], ex) 'Localize: message
+            End Try
+            CheckTypeNames(types)
+            violated = violated Or Not CheckInternal([Module])
+            Return Not violated
+        End Function
+        ''' <summary>Internally checks module for CLS compliance</summary>
+        ''' <param name="Module">Assebly to check</param>
+        ''' <returns>Ture if module meets CLS rules. Returns tur even when module is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Module"/> is null</exception>
+        ''' <remarks>Dufference from <see cref="Check"/> is that this function does not call <see cref="CheckTypeNames"/>.</remarks>
+        Private Function CheckInternal(ByVal [Module] As [Module]) As Boolean
+            If [Module] Is Nothing Then Throw New ArgumentNullException("Module")
             Dim Violated As Boolean
-            Violated = CheckAttributes([Module])
+            Violated = Not CheckAttributes([Module])
             Dim CLS = GetItemClsCompliance([Module])
             If CLS Then
-                Violated = Violated Or CLSAttributeCheck([Module])
+                Violated = Violated Or Not CLSAttributeCheck([Module])
                 'TODO: Do test on module
             End If
             'Types
@@ -305,8 +355,8 @@ Namespace ReflectionT
             Catch ex As Exception
                 OnViolation("Error while getting types in module.", CLSRule.Error, [Module], ex) 'Localize: Message
             End Try
-            For Each Type In types
-                If Type.IsPublic AndAlso Not Type.IsNested Then Violated = Violated Or Check(Type)
+            For Each Type In Types
+                If Type.IsPublic AndAlso Not Type.IsNested Then Violated = Violated Or Not Check(Type)
             Next
             'Global methods
             Dim Methods() As MethodInfo = {}
@@ -340,15 +390,21 @@ Namespace ReflectionT
                     End If
                 End If
             Next
-            Return Violated
+            Return Not Violated
         End Function
 
+        ''' <summary>Checks type for CLS compliance</summary>
+        ''' <param name="Type">TYpe to check</param>
+        ''' <returns>Ture if type meets CLS rules. Returns tur even when type is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        ''' <remarks>Actual violations of CLS rules (if any) are reported via the <see cref="Violation"/> event.</remarks>
         Public Function Check(ByVal Type As Type) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
             Dim Violated As Boolean
-            Violated = CheckAttributes(Type)
+            Violated = Not CheckAttributes(Type)
             Dim CLS = GetItemClsCompliance(Type)
             If CLS Then
-                Violated = Violated Or DoCommonTest(Type)
+                Violated = Violated Or Not DoCommonTest(Type)
                 'TODO: Do tests on type
                 Dim Members() As MemberInfo = {}
                 Try
@@ -358,23 +414,122 @@ Namespace ReflectionT
                     OnViolation("Error while geting members of type.", CLSRule.Error, Type, ex) 'Localize: Message
                     Return False
                 End Try
+                Dim MemberSignatures As New List(Of MemberCLSSignature)
                 For Each Member In Members
                     If Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly Then _
-                        Violated = Violated Or CheckInternal(Member)
+                        Violated = Violated Or Not CheckInternal(Member)
+                    If Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly AndAlso GetItemClsCompliance(Member) Then
+                        Dim ms As New MemberCLSSignature(Member)
+                        If MemberSignatures.Contains(ms) Then
+                            Violated = True
+                            Dim r = CLSRule.DistincNames
+                            If TypeOf Member Is FieldInfo OrElse TypeOf Member Is Type Then r = CLSRule.NoOverloadByReturnType
+                            Dim Original As MemberCLSSignature = Nothing
+                            For Each item In MemberSignatures
+                                If item.Equals(ms) Then Original = ms
+                            Next
+                            ms = ms.AddReturnType
+                            Original = ms.AddReturnType
+                            If Not Me.Equals(Original) Then : r = CLSRule.NoOverloadByReturnType
+                            ElseIf TypeOf Member Is MethodInfo AndAlso DirectCast(Member, MethodInfo).IsSpecialName AndAlso (Member.Name = "op_Implicit" OrElse Member.Name = "op_Explicit") Then
+                                r = CLSRule.OverloadingDistinction
+                            End If
+                            OnViolation("Member signature is not unique.", r, Member) 'Localize: Message
+                        Else
+                            MemberSignatures.Add(ms)
+                        End If
+                    End If
                 Next
             Else
-                Violated = SearchForCompliantMembers(Type)
+                Violated = Not SearchForCompliantMembers(Type)
             End If
-            Return Violated
+            Return Not Violated
         End Function
+        ''' <summary>Stores member singature and allows it comparison (via <see cref="MemberCLSSignature.Equals"/>) for CLS-uniqueness purposes</summary>
+        Private Class MemberCLSSignature
+            ''' <summary>Name of member</summary>
+            Private Name As String
+            ''' <summary>Types of atributes</summary>
+            Private Types As New List(Of Type)
+            ''' <summary>Type of return type. Only for instance CTor, op_Implicit and op_Explicit</summary>
+            Private ReturnType As Type
+            ''' <summary>Original meber</summary>
+            Private Original As MemberInfo
+            ''' <summary>CTor</summary>
+            ''' <param name="Member">Memer to create instance for</param>
+            ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+            Public Sub New(ByVal Member As MemberInfo)
+                If Member Is Nothing Then Throw New ArgumentNullException("Member")
+                Original = Member
+                Name = Member.Name
+                If TypeOf Member Is PropertyInfo Then
+                    For Each pparam In DirectCast(Member, PropertyInfo).GetIndexParameters
+                        Types.Add(pparam.ParameterType)
+                    Next
+                ElseIf TypeOf Member Is ConstructorInfo Then
+                    For Each pparam In DirectCast(Member, ConstructorInfo).GetParameters
+                        Types.Add(pparam.ParameterType)
+                    Next
+                    If Not DirectCast(Member, ConstructorInfo).IsStatic Then ReturnType = Member.DeclaringType
+                ElseIf TypeOf Member Is MethodInfo Then
+                    With DirectCast(Member, MethodInfo)
+                        For Each pparam In .GetParameters
+                            Types.Add(pparam.ParameterType)
+                        Next
+                        If .IsSpecialName AndAlso (.Name = "op_Explicit" OrElse .Name = "op_Implcit") Then ReturnType = .ReturnType
+                    End With
+                End If
+            End Sub
+            ''' <summary>Returns new instance created by adding return type to current instace (if applicable)</summary>
+            ''' <returns>Return-type-aware instance</returns>
+            Public Function AddReturnType() As MemberCLSSignature
+                Dim ret As New MemberCLSSignature(Original)
+                If TypeOf Original Is MethodInfo Then : ret.ReturnType = DirectCast(Original, MethodInfo).ReturnType
+                ElseIf TypeOf Original Is PropertyInfo Then : ret.ReturnType = DirectCast(Original, PropertyInfo).PropertyType
+                End If
+                Return ret
+            End Function
+            ''' <summary>Determines whether the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />.</summary>
+            ''' <returns>true if the specified <see cref="T:System.Object" /> is equal to the current <see cref="T:System.Object" />; otherwise, false.</returns>
+            ''' <param name="obj">The <see cref="T:System.Object" /> to compare with the current <see cref="T:System.Object" />.</param>
+            ''' <exception cref="T:System.NullReferenceException">The 
+            ''' <paramref name="obj" /> parameter is null.</exception>
+            ''' <filterpriority>2</filterpriority>
+            Public Overrides Function Equals(ByVal obj As Object) As Boolean
+                If TypeOf obj Is MemberCLSSignature Then
+                    With DirectCast(obj, MemberCLSSignature)
+                        If .Name.ToLowerInvariant <> Me.Name.ToLowerInvariant Then Return False
+                        If Me.ReturnType Is Nothing Xor .ReturnType Is Nothing Then Return False
+                        If Me.ReturnType IsNot Nothing AndAlso .ReturnType IsNot Nothing AndAlso Not .ReturnType.Equals(Me.ReturnType) Then Return False
+                        If .Types.Count <> Me.Types.Count Then Return False
+                        For i As Integer = 0 To Me.Types.Count - 1
+                            If Not .Types(i).Equals(Me.Types(i)) Then Return False
+                        Next
+                        Return True
+                    End With
+                Else
+                    Return MyBase.Equals(obj)
+                End If
+            End Function
+            ''' <summary>Serves as a hash function for a particular type.</summary>
+            ''' <returns>A hash code for the current <see cref="T:System.Object" />.</returns>
+            ''' <filterpriority>2</filterpriority>
+            Public Overrides Function GetHashCode() As Integer
+                Return Name.GetHashCode Or Types.Count
+            End Function
+        End Class
 
+        ''' <summary>Searches for CLS-compliant members</summary>
+        ''' <param name="Type">Type to search for CLS-compliant members in</param>
+        ''' <returns>Ture if any CLS-complaint-marked member is found; false otherwise</returns>
+        ''' <remarks>USe to search for CLS-compliant memberis in CLS-incompliant types</remarks>
         Private Function SearchForCompliantMembers(ByVal Type As Type) As Boolean
             Dim Members() As MemberInfo = {}
             Try
                 Members = Type.GetMembers(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.DeclaredOnly)
                 'TODO: Does it reurn Getters/Setters/Adders/...
             Catch ex As Exception
-                OnViolation("Error while gerring members of type.", CLSRule.Error, Type, ex)
+                OnViolation("Error while gerring members of type.", CLSRule.Error, Type, ex) 'Localize:Message
                 Return False
             End Try
             Dim Violated = False
@@ -384,21 +539,33 @@ Namespace ReflectionT
                         Violated = True
                         OnViolation("Member of CLS-incompliant type is marked as CLS-compliant", CLSRule.NoCompliantMembersInIncompliantTypes, Member) 'Localize: Message
                     ElseIf TypeOf Member Is Type Then
-                        Violated = Violated Or SearchForCompliantMembers(Member)
+                        Violated = Violated Or Not SearchForCompliantMembers(Member)
                     End If
-                    Violated = Violated = CheckAttributes(Member)
+                    Violated = Violated Or Not CheckAttributes(Member)
                 End If
             Next
-            Return Violated
+            Return Not Violated
         End Function
 
+        ''' <summary>Checks member for CLS compliance</summary>
+        ''' <param name="Member">Member to check</param>
+        ''' <returns>Ture if member meets CLS rules. Returns tur even when member is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <remarks>Actual violations of CLS rules (if any) are reported via the <see cref="Violation"/> event.</remarks>
         Public Function Check(ByVal Member As MemberInfo) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If TypeOf Member Is Type Then Return Check(DirectCast(Member, Type))
             If GetItemClsCompliance(Member) Then
                 Return CheckInternal(Member)
             Else : Return True
             End If
         End Function
+        ''' <summary>Interbally checks member for CLS compliance</summary>
+        ''' <param name="Member">Member to check</param>
+        ''' <returns>Ture if member meets CLS rules. Returns tur even when member is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
         Private Function CheckInternal(ByVal Member As MemberInfo) As Boolean
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
             If GetItemClsCompliance(Member) Then
                 If TypeOf Member Is Type Then : Return Check(DirectCast(Member, Type))
                 ElseIf TypeOf Member Is PropertyInfo Then : Return Check(DirectCast(Member, PropertyInfo))
@@ -410,46 +577,111 @@ Namespace ReflectionT
                 Return CheckAttributes(Member)
             End If
         End Function
+        ''' <summary>Interbally checks property for CLS compliance</summary>
+        ''' <param name="Property">Property to check</param>
+        ''' <returns>Ture if property meets CLS rules. Returns tur even when property is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Property"/> is null</exception>
         Private Function Check(ByVal [Property] As PropertyInfo) As Boolean
+            If [Property] Is Nothing Then Throw New ArgumentNullException("Property")
             Dim Violated As Boolean = CheckAttributes([Property])
             If GetItemClsCompliance([Property]) Then
-                Violated = Violated Or DoCommonTest([Property])
+                Violated = Violated Or Not DoCommonTest([Property])
                 'TODO:
             End If
-            Return Violated
+            Return Not Violated
         End Function
+        ''' <summary>Interbally checks Event for CLS compliance</summary>
+        ''' <param name="Event">Event to check</param>
+        ''' <returns>Ture if Event meets CLS rules. Returns tur even when Event is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Event"/> is null</exception>
         Private Function Check(ByVal [Event] As EventInfo) As Boolean
+            If [Event] Is Nothing Then Throw New ArgumentNullException("Event")
             Dim Violated As Boolean = CheckAttributes([Event])
             If GetItemClsCompliance([Event]) Then
-                Violated = Violated Or DoCommonTest([Event])
+                Violated = Violated Or Not DoCommonTest([Event])
                 'TODO:
             End If
-            Return Violated
+            Return Not Violated
         End Function
+        ''' <summary>Interbally checks Method for CLS compliance</summary>
+        ''' <param name="Method">Method to check</param>
+        ''' <returns>Ture if Method meets CLS rules. Returns tur even when Method is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
         Private Function Check(ByVal Method As MethodInfo) As Boolean
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
             Dim Violated As Boolean = CheckAttributes(Method)
             If GetItemClsCompliance(Method) Then
-                Violated = Violated Or DoCommonTest(Method)
+                Violated = Violated Or Not DoCommonTest(Method)
                 'TODO:
             End If
-            Return Violated
+            Return Not Violated
         End Function
+        ''' <summary>Interbally checks Field for CLS compliance</summary>
+        ''' <param name="Field">Field to check</param>
+        ''' <returns>Ture if Field meets CLS rules. Returns tur even when Field is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Field"/> is null</exception>
         Private Function Check(ByVal Field As FieldInfo) As Boolean
+            If Field Is Nothing Then Throw New ArgumentNullException("Field")
             Dim Violated As Boolean = CheckAttributes(Field)
             If GetItemClsCompliance(Field) Then
-                Violated = Violated Or DoCommonTest(Field)
+                Violated = Violated Or Not DoCommonTest(Field)
                 'TODO:
             End If
-            Return Violated
+            Return Not Violated
         End Function
-
+        ''' <summary>Checks if atributes applied on item are all CLS-compliant</summary>
+        ''' <param name="Item">Item to cehck attributes of</param>
+        ''' <returns>True if all the attributes are CLS-compliant; false otheriwise. Returns tru if there are no attributes.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Item"/> is null</exception>
         Private Function CLSAttributeCheck(ByVal Item As ICustomAttributeProvider) As Boolean
-
-        End Function
-        Private Function DoCommonTest(ByVal Item As MemberInfo) As Boolean
-            Dim violated = CLSAttributeCheck(Item)
+            If Item Is Nothing Then Throw New ArgumentNullException("Item")
             'TODO:
-            Return violated
+        End Function
+        ''' <summary>Peprforms common CLS-compliance test on member</summary>
+        ''' <param name="Item">Member to do tests on</param>
+        ''' <returns>True if no CLS-violation was detected; false otherwise.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Item"/> is null</exception>
+        Private Function DoCommonTest(ByVal Item As MemberInfo) As Boolean
+            If Item Is Nothing Then Throw New ArgumentNullException("Item")
+            Dim violated = Not CLSAttributeCheck(Item)
+            If Not TypeOf Item Is ConstructorInfo AndAlso Not IdentifierRegEx.IsMatch(Item.Name) Then
+                violated = True
+                OnViolation("Name ""{0}"" is not CLS-compliant.".f(Item.Name), CLSRule.UnicodeIdentifiers, Item) 'Localize: Message
+            End If
+            Dim Normalized = Item.Name.Normalize(Text.NormalizationForm.FormC)
+            If Normalized.Length <> Item.Name.Length Then
+                violated = True
+                OnViolation("Name ""{0}"" is not stored in Unicode Normalization Form C.", CLSRule.UnicodeIdentifiers, Item) 'Localize: Message
+            Else
+                For i As Integer = 0 To Normalized.Length - 1
+                    If AscW(Normalized(i)) <> AscW(Item.Name(i)) Then
+                        violated = True
+                        OnViolation("Name ""{0}"" is not stored in Unicode Normalization Form C.", CLSRule.UnicodeIdentifiers, Item) 'Localize: Message
+                        Exit For
+                    End If
+                Next
+            End If
+            'TODO:
+            Return Not violated
+        End Function
+        ''' <summary>Checks uniqueness of type names amongs given enumerations</summary>
+        ''' <param name="Types">Types to verify uniqueness of names of</param>
+        ''' <returns>True if names of all types are unique (in spicte of CLS)</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Types"/> is null</exception>
+        Private Function CheckTypeNames(ByVal Types As IEnumerable(Of Type)) As Boolean
+            If Types Is Nothing Then Throw New ArgumentNullException("Types")
+            Dim list As New List(Of String)
+            Dim Violated As Boolean
+            For Each Type In Types
+                If Not GetItemClsCompliance(Type) Then Continue For
+                If list.Contains(Type.Name.ToLowerInvariant, StringComparer.InvariantCultureIgnoreCase) Then
+                    Violated = True
+                    OnViolation("Culture-invariant lowercase representation of type name ""{0}"" is not unique.".f(Type.Name), CLSRule.UnicodeIdentifiers, Type) 'Localize:Message
+                Else
+                    list.Add(Type.Name.ToLowerInvariant)
+                End If
+            Next
+            Return Violated
         End Function
     End Class
 End Namespace
