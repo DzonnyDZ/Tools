@@ -148,12 +148,14 @@
     <Compile Include="Collections\Generic\UnwrapEnumeratorU.vb" />
     <Compile Include="Collections\Generic\GenericComparerUT.vb" />
     <Compile Include="Extensions\StringExtensions.vb" />
+    <Compile Include="General\GeneralTestsU.vb" />
     <Compile Include="Globalization\NumberingSystems\ExcelColumnNumberingSystemUT.vb" />
     <Compile Include="Globalization\NumberingSystems\PositionalUnmberingSystemUT.vb" />
     <Compile Include="Globalization\NumberingSystems\RomanUT.vb" />
     <Compile Include="Globalization\NumberingSystemUT.vb" />
-    <Compile Include="IO\FileSystemToolsU.vb" />
     <Compile Include="Collections\Generic\PriorityQueueU.vb" />
+    <Compile Include="IO\FileSystemToolsU.vb" />
+    <Compile Include="Reflection\FileSystemToolsU.vb" />
     <Compile Include="Special\TypeToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
@@ -162,14 +164,42 @@
     <Content Include="AuthoringTests.txt" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DevelopmentTools\Macros\Tools.VisualStudio.Macros.vbproj">
+      <Project>{23D753CD-127D-4DEB-8A4B-AB0E4F11E90C}</Project>
+      <Name>Tools.VisualStudio.Macros</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DevelopmentTools\TransformCodeGenerator\TransformCodeGenerator.csproj">
+      <Project>{43599321-D767-4BF7-A725-34850D057B4E}</Project>
+      <Name>TransformCodeGenerator</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools IL\Tools IL.vcproj">
       <Project>{C361ECDE-7940-4CB5-8FF3-106EDE0E2886}</Project>
       <Name>Tools.IL</Name>
       <Private>True</Private>
     </ProjectReference>
+    <ProjectReference Include="..\Tools Visual Studio\Tools.VisualStudio.vbproj">
+      <Project>{DCD6658E-6008-4668-BBDF-CCB0F0267759}</Project>
+      <Name>Tools.VisualStudio</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools VisualStudio CS\Tools.VisualStudio.CS.csproj">
+      <Project>{6904C0F4-0535-48EB-AFC1-CE1396418D00}</Project>
+      <Name>Tools.VisualStudio.CS</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Tools Win\Tools.Win.vbproj">
       <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
       <Name>Tools.Win</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.Metadata\Tools.Metadata.vbproj">
+      <Project>{F2E3DDFB-EEDB-4F85-8AE8-CBE6B18A5ED0}</Project>
+      <Name>Tools.Metadata</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.vcproj">
+      <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
+      <Name>Tools.TotalCommander</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
+      <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>
+      <Name>Tools.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>

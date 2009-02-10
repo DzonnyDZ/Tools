@@ -11,6 +11,7 @@ namespace Tools.GeneratorsT {
     using System.Xml.XPath;
     using System.Xml.Xsl;
     using System.Xml.Linq;
+    using Tools.VisualStudioT.GeneratorsT;
 
     /// <summary>
     /// This is a Code DOM XSLT custom tool for Visual Studio. It performs XSL transform as custom tool in Visual Studio and interprets its result as XML-serialuzed CodeDOM.

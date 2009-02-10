@@ -1,34 +1,50 @@
-﻿Imports System.Reflection, Tools.ExtensionsT, System.Linq
+﻿Imports System.Reflection, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
 'TODO: Implement
 #If Config <= Nightly Then 'Stage:Nightly
-Namespace ReflectionT
+Namespace TeststT
     ''' <summary>Allows to check if varios items of compiled code are CLS compliant</summary>
+    ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     Public Class CLSComplianceChecker
+        ''' <summary>Reports CLS rule viaolation</summary>
         Public Class CLSViolationEventArgs : Inherits EventArgs
+            ''' <summary>Contains value of the <see cref="Message"/> property</summary>
             Private ReadOnly _Message$
+            ''' <summary>Contains value of the <see cref="Rule"/> property</summary>
             Private ReadOnly _Rule As CLSRule
+            ''' <summary>Contains value of the <see cref="Member"/> property</summary>
             Private ReadOnly _Member As ICustomAttributeProvider
-            Private readonly _Exception As Exception 
+            ''' <summary>Contains value of the <see cref="Exception"/> property</summary>
+            Private ReadOnly _Exception As Exception
+            ''' <summary>Message describing the violation</summary>
             Public ReadOnly Property Message$()
                 Get
                     Return _Message
                 End Get
             End Property
+            ''' <summary>Identifies CLS-rule or internal rule that was violated</summary>
             Public ReadOnly Property Rule() As CLSRule
                 Get
                     Return _Rule
                 End Get
             End Property
+            ''' <summary>Gets member that caused the violation or error</summary>
             Public ReadOnly Property Member() As ICustomAttributeProvider
                 Get
                     Return _Member
                 End Get
             End Property
+            ''' <summary>Gets exception that caused event to be raied</summary>
+            ''' <returns>Exception that caused event to be raied (only when event reports error); null for violation of CLS-rule</returns>
             Public ReadOnly Property Exception() As Exception
                 Get
                     Return _Exception
                 End Get
             End Property
+            ''' <summary>CTor</summary>
+            ''' <param name="Message">Message describing the violation</param>
+            ''' <param name="Rule">Identifies rule that was violated</param>
+            ''' <param name="Member">Identifies member that caused the violation or error</param>
+            ''' <param name="Exception">When event is reaised because of error, exception associated with the error; null otherwise</param>
             Public Sub New(ByVal Message$, ByVal Rule As CLSRule, ByVal Member As ICustomAttributeProvider, Optional ByVal Exception As Exception = Nothing)
                 If Message Is Nothing Then Throw New ArgumentNullException("Message")
                 If Not Rule.IsDefined Then Throw New InvalidEnumArgumentException(Rule, "Rule", Rule.GetType)
@@ -154,7 +170,7 @@ Namespace ReflectionT
             ''' <summary>An error is encountered when checking certain item. This is not CLS rule.</summary>
             [Error] = -1000
         End Enum
-        '7,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,40,41,42,3,44,45,47
+        '11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,40,41,42,3,44,45,47
         ''' <summary>Raised when CLS rules is violated or internal check is violated or error in verified piece of code occurs</summary>
         Public Event Violation As EventHandler(Of CLSComplianceChecker, CLSViolationEventArgs)
         ''' <summary>Raises the <see cref="Violation"/> event</summary>
@@ -406,6 +422,7 @@ Namespace ReflectionT
             If CLS Then
                 Violated = Violated Or Not DoCommonTest(Type)
                 'TODO: Do tests on type
+                If Type.IsEnum Then Violated = Violated Or Not TestEnum(Type)
                 Dim Members() As MemberInfo = {}
                 Try
                     Members = Type.GetMembers(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.DeclaredOnly)
@@ -415,6 +432,7 @@ Namespace ReflectionT
                     Return False
                 End Try
                 Dim MemberSignatures As New List(Of MemberCLSSignature)
+                Dim ValueFound = False 'For enumes only
                 For Each Member In Members
                     If Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly Then _
                         Violated = Violated Or Not CheckInternal(Member)
@@ -438,13 +456,78 @@ Namespace ReflectionT
                         Else
                             MemberSignatures.Add(ms)
                         End If
+                        'Enum
+                        If Type.IsEnum Then
+                            If Not TypeOf Member Is FieldInfo Then
+                                Violated = True
+                                OnViolation("Enumeration can contain only fields.", CLSRule.EnumSructure, Member) 'Localize: Message
+                            Else
+                                With DirectCast(Member, FieldInfo)
+                                    If Not .IsLiteral Then
+                                        If Not .IsStatic OrElse .Name <> "value__" OrElse ((.Attributes And FieldAttributes.RTSpecialName) <> FieldAttributes.RTSpecialName) Then
+                                            Violated = True
+                                            OnViolation("Enum fields must be either static literals or instance field named ""value__"" marked RTSpecialName.", CLSRule.EnumSructure, Member) 'Localize: Message
+                                        ElseIf Not .FieldType.Equals([Enum].GetUnderlyingType(Type)) Then
+                                            Violated = True
+                                            OnViolation("Type of enumeration field value__ must be ebumeration underlying type.", CLSRule.EnumSructure, Member) 'Localize: Message
+                                        Else
+                                            ValueFound = True
+                                        End If
+                                    ElseIf Not .IsStatic Then
+                                        Violated = True
+                                        OnViolation("Enum member literals must be static.", CLSRule.EnumMembers, Member) 'Localize: Message
+                                    ElseIf Not .FieldType.Equals([Enum].GetUnderlyingType(Type)) Then
+                                        Violated = True
+                                        OnViolation("Enum member literals must be of same type sa is underlying type of enum.", CLSRule.EnumMembers, Member) 'Localize: Message
+                                    End If
+                                End With
+                            End If
+                        End If
+                        'Overriding
+                        If TypeOf Member Is MethodInfo Then
+                            With DirectCast(Member, MethodInfo)
+                                If Type.BaseType IsNot Nothing Then
+                                    Dim BaseMethod = .GetBaseClassMethod
+                                    If BaseMethod IsNot Nothing Then
+                                        Dim BaseAccess = BaseMethod.Attributes And MethodAttributes.MemberAccessMask
+                                        Dim MyAccess = .Attributes And MethodAttributes.MemberAccessMask
+                                        If BaseAccess <> MyAccess AndAlso Not (BaseAccess = MethodAttributes.FamORAssem AndAlso MyAccess = MethodAttributes.Family AndAlso Not .Module.Assembly.Equals(BaseMethod.Module.Assembly)) Then
+                                            Violated = True
+                                            OnViolation("Overriding method shall have same access level as method it overrides. Only familly-or-assembly accessibility can be changed to familly when overriding method is in different assembly then method it overrides.", CLSRule.NoChangeOfAccessWhenOverrideing, .self) 'Localize: Message
+                                        End If
+                                    End If
+                                End If
+                            End With
+                        End If
                     End If
                 Next
+                If Type.IsEnum AndAlso Not ValueFound Then
+                    Violated = True
+                    OnViolation("Enumeration is missing the value__ field.", CLSRule.EnumSructure, Type)
+                End If
             Else
                 Violated = Not SearchForCompliantMembers(Type)
             End If
             Return Not Violated
         End Function
+        ''' <summary>Tests if enumeration is CLS-compliant</summary>
+        ''' <param name="Type">Enum type to test</param>
+        ''' <returns>True if enumeration is CLS-compliant; false otherwise</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Type"/> is not enumeration</exception>
+        Private Function TestEnum(ByVal Type As Type) As Boolean
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            If Not Type.IsEnum Then Throw New ArgumentException(ResourcesT.Exceptions.TypeMustBeEnumeration, "Type")
+            'Rule 7:
+            Dim ut = [Enum].GetUnderlyingType(Type)
+            Dim violated As Boolean = False
+            If ut.Equals(GetType(Byte)) AndAlso Not ut.Equals(GetType(Short)) AndAlso Not ut.Equals(GetType(Integer)) OrElse Not ut.Equals(GetType(Long)) Then
+                violated = True
+                OnViolation("Enum underlying type is not built-in CLS-comliant integral type", CLSRule.EnumSructure, Type) 'Localize: Message
+            End If
+            Return Not violated
+        End Function
+
         ''' <summary>Stores member singature and allows it comparison (via <see cref="MemberCLSSignature.Equals"/>) for CLS-uniqueness purposes</summary>
         Private Class MemberCLSSignature
             ''' <summary>Name of member</summary>

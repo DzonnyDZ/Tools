@@ -10,6 +10,7 @@ namespace Tools.GeneratorsT {
     using System.Xml;
     using System.Xml.XPath;
     using System.Xml.Xsl;
+    using Tools.VisualStudioT.GeneratorsT;
 
     /// <summary>
     /// This is a XSLT custom tool for Visual Studio. It performs XSL transform as custom tool in Visual Studio.

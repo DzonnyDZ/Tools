@@ -13,9 +13,9 @@
 .class public auto ansi sealed Tools.SpecialT.TypeTools
     extends [mscorlib]System.Object
 {
-    .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor()
+    .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor() = {}
     .method public static bool IsDefined<([mscorlib]System.Enum) T>(!!T 'value') cil managed{
-        .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor()
+        .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor() = {}
         .maxstack  2
         ldtoken    !!T
         call       class [mscorlib]System.Type [mscorlib]System.Type::GetTypeFromHandle(valuetype [mscorlib]System.RuntimeTypeHandle)
@@ -32,7 +32,7 @@
     
     .method public static class [mscorlib]System.Reflection.FieldInfo GetConstant <([mscorlib]System.Enum) T>(!!T 'value') cil managed{
         .custom instance void [mscorlib]System.CLSCompliantAttribute::.ctor(bool) = { bool(false) }
-        .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor()
+        .custom instance void [System.Core]System.Runtime.CompilerServices.ExtensionAttribute::.ctor() = {}
         .maxstack 4
         ldtoken !!T
         call class [mscorlib]System.Type [mscorlib]System.Type::GetTypeFromHandle(valuetype [mscorlib]System.RuntimeTypeHandle)

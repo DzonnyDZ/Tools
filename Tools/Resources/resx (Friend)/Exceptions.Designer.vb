@@ -544,6 +544,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Cannot get base class method of global method'.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotGetBaseClassMethodOfGlobalMethod() As String
+            Get
+                Return ResourceManager.GetString("CannotGetBaseClassMethodOfGlobalMethod", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot interpret value &quot;{0}&quot; as {1}'.
         '''</summary>
         Friend Shared ReadOnly Property CannotInterpretValue0As1() As String
@@ -3211,6 +3220,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Type must be enumeration'.
+        '''</summary>
+        Friend Shared ReadOnly Property TypeMustBeEnumeration() As String
+            Get
+                Return ResourceManager.GetString("TypeMustBeEnumeration", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Type must inherit from MessageBox'.
         '''</summary>
         Friend Shared ReadOnly Property TypeMustInheritFromMessageBox() As String
@@ -4140,6 +4158,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstanceFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
             Return String.Format(_resourceCulture, CannotCreateInstanceOfType01WasThrownWhenObtainingNewInstance, arg0, arg1)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the CannotGetBaseClassMethodOfGlobalMethod property value.
+        '''</summary>
+        '''<returns>The CannotGetBaseClassMethodOfGlobalMethod property value.</returns>
+        Friend Shared Function CannotGetBaseClassMethodOfGlobalMethodFormat() As String
+            Return CannotGetBaseClassMethodOfGlobalMethod
         End Function
         
         '''<summary>
@@ -6689,6 +6715,14 @@ Namespace ResourcesT
         '''<returns>The TypeIsSpecifiedNeitherViaPropertyNorInValue property value.</returns>
         Friend Shared Function TypeIsSpecifiedNeitherViaPropertyNorInValueFormat() As String
             Return TypeIsSpecifiedNeitherViaPropertyNorInValue
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the TypeMustBeEnumeration property value.
+        '''</summary>
+        '''<returns>The TypeMustBeEnumeration property value.</returns>
+        Friend Shared Function TypeMustBeEnumerationFormat() As String
+            Return TypeMustBeEnumeration
         End Function
         
         '''<summary>

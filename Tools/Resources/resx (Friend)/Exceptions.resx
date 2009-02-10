@@ -1308,4 +1308,10 @@
   <data name="ToManyCLSCompliantAttributes" xml:space="preserve">
     <value>To many CLSCompliant attributes</value>
   </data>
+  <data name="TypeMustBeEnumeration" xml:space="preserve">
+    <value>Type must be enumeration</value>
+  </data>
+  <data name="CannotGetBaseClassMethodOfGlobalMethod" xml:space="preserve">
+    <value>Cannot get base class method of global method</value>
+  </data>
 </root>

@@ -8,6 +8,7 @@ using System.CodeDom;
 using Tools.CodeDomT;
 using System.Reflection;
 using System.Runtime.InteropServices;
+using Tools.VisualStudioT.GeneratorsT;
 
 namespace Tools.GeneratorsT {
     /// <summary>This is Code DOM generator. It performs code generation from XML-serialized Code DOM.</summary>

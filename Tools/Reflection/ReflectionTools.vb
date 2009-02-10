@@ -1,8 +1,11 @@
 ﻿Imports System.Runtime.CompilerServices, Tools.ExtensionsT
 Imports System.Reflection
 Imports System.Linq, Tools.LinqT
+Imports System.Runtime.InteropServices
+
 #If Config <= Nightly Then 'Stage: Nightly
 Namespace ReflectionT
+    'TODO: UnitTests
     ''' <summary>Various reflection tools</summary>
     ''' <author www="http://dzonny.cz">Đonny</author>
     ''' <version stage="Nightly" version="1.5.2">Added overloaded functions <see cref="ReflectionTools.GetOperators"/>.</version>
@@ -1075,6 +1078,111 @@ Namespace ReflectionT
             End Try
             Return ret.ToArray
         End Function
+
+        ''' <summary>Searches for method given method overrides</summary>
+        ''' <param name="Method">Method do find method it overrides</param>
+        ''' <returns>Method in base class (or base base class etc.) of class <paramref name="Method"/> is defined in <paramref name="Method"/> overrides; null when no such method is found</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Method"/> is global method (its <see cref="MethodInfo.DeclaringType"/> is null)</exception>
+        ''' <remarks>This function searches for method with same name and signature as <paramref name="Method"/> has. Search is done in base class of class <paramref name="Method"/> is defined in, if not found in base class of base class etc.</remarks>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> _
+        Public Function GetBaseClassMethod(ByVal Method As MethodInfo) As MethodInfo
+            'Unit test done
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            If Method.DeclaringType Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.CannotGetBaseClassMethodOfGlobalMethod)
+            Dim type As Type = Method.DeclaringType
+            Dim base As Type = type.BaseType
+            Dim ret As MethodInfo = Nothing
+            Do Until base Is Nothing
+                If base Is Nothing Then Return Nothing
+                If (Method.Attributes And MethodAttributes.NewSlot) = MethodAttributes.NewSlot Then Return Nothing 'Shadows
+                For Each BaseMethod In base.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.DeclaredOnly) '
+                    If BaseMethod.Name.Equals(Method.Name, StringComparison.InvariantCulture) AndAlso BaseMethod.IsVirtual AndAlso Not BaseMethod.IsFinal Then
+                        If HasSameSignature(Method, BaseMethod, SignatureComparisonStrictness.Strict) Then
+                            If ret IsNot Nothing Then Throw New AmbiguousMatchException()
+                            ret = BaseMethod
+                        End If
+                    End If
+                Next
+                base = base.BaseType
+                If ret IsNot Nothing Then Exit Do
+            Loop
+            Return ret
+        End Function
+        ''' <summary>Determines if two methods have same signatures. Several levels of signature comparison are available.</summary>
+        ''' <param name="a">A <see cref="MethodInfo"/></param>
+        ''' <param name="b">A <see cref="MethodInfo"/></param>
+        ''' <param name="Strictness">Defines level of comparison</param>
+        ''' <returns>True if <paramref name="a"/> and <paramref name="b"/> have same signature in meaning of <paramref name="Strictness"/>; false otherwise</returns>
+        ''' <remarks>Signature comparison does not include comparison of custom attributes (with exception of <see cref="InAttribute"/> and <see cref="OutAttribute"/>) and does not include comparison of method attributes (such as if it is private, public or specialname). Callig convention is ignored as well.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="a"/> or <paramref name="b"/> is null.</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> _
+        Public Function HasSameSignature(ByVal a As MethodInfo, ByVal b As MethodInfo, ByVal Strictness As SignatureComparisonStrictness) As Boolean
+            'Unt test done
+            If a Is Nothing Then Throw New ArgumentNullException("a")
+            If b Is Nothing Then Throw New ArgumentNullException("b")
+            Dim pa = a.GetParameters
+            Dim pb = b.GetParameters
+            If pa.Length <> pb.Length Then Return False
+            ReDim Preserve pa(pa.Length)
+            ReDim Preserve pb(pb.Length)
+            pa(pa.Length - 1) = a.ReturnParameter
+            pb(pb.Length - 1) = b.ReturnParameter
+            For i As Integer = 0 To pb.Length - 1
+                If i = pb.Length - 1 AndAlso (Strictness And SignatureComparisonStrictness.IgnoreReturn) Then Exit For
+                If Strictness And SignatureComparisonStrictness.IgnoreByRef Then
+                    If Not pa(i).ParameterType.Equals(pb(i).ParameterType) AndAlso _
+                       Not pa(i).ParameterType.MakeByRefType.Equals(pb(i).ParameterType) AndAlso _
+                       Not pa(i).ParameterType.Equals(pb(i).ParameterType.MakeByRefType) Then Return False
+                Else
+                    If Not pa(i).ParameterType.Equals(pb(i).ParameterType) Then Return False
+                End If
+                If (Strictness And SignatureComparisonStrictness.IgnoreDirection) = 0 Then
+                    If pa(i).IsOut <> pb(i).IsOut Then Return False
+                    If pa(i).IsIn <> pb(i).IsIn Then Return False
+                End If
+                If (Strictness And SignatureComparisonStrictness.IgnoreModReq) = 0 Then
+                    Dim moda = pa(i).GetRequiredCustomModifiers
+                    Dim modb = pb(i).GetRequiredCustomModifiers
+                    If moda.Length <> modb.Length Then Return False
+                    For Each [mod] In moda
+                        If Not modb.Contains([mod]) Then Return False
+                    Next
+                End If
+                If (Strictness And SignatureComparisonStrictness.IgnoreModOpt) = 0 Then
+                    Dim moda = pa(i).GetOptionalCustomModifiers
+                    Dim modb = pb(i).GetOptionalCustomModifiers
+                    If moda.Length <> modb.Length Then Return False
+                    For Each [mod] In moda
+                        If Not modb.Contains([mod]) Then Return False
+                    Next
+                End If
+            Next
+            Return True
+        End Function
+        ''' <summary>Defines how method signature comparison is performed</summary>
+        ''' <remarks>This enumeration is treaded as flags, each set or unset. Several predefined combinations of flags also exists.</remarks>
+        <Flags()> _
+        Public Enum SignatureComparisonStrictness
+            ''' <summary>Set this flag to ignore direction of method parameter. <see cref="InAttribute"/> and <see cref="OutAttribute"/> are ignored. Does not affect testing if parameter is passed by reference or by value.</summary>
+            IgnoreDirection = 1
+            ''' <summary>Ignore optional modifiers on parameters (modopts)</summary>
+            IgnoreModOpt = 2
+            ''' <summary>Ignore required modifiers on parameters (modreqs)</summary>
+            IgnoreModReq = 4
+            ''' <summary>Ignore return value completelly (ignores return type and return modopts and modreqs)</summary>
+            IgnoreReturn = 8
+            ''' <summary>Consider parameter passed by value and by reference to by of same type. Note: Physically the type of such parameters differs.</summary>
+            IgnoreByRef = 16
+            ''' <summary>Default. Comparison includes type of parameter, direction, custpm and optional modifiers and does consider parameters passed by value and by reference to be of different type.</summary>
+            Strict = 0
+            ''' <summary>This how method signatures are compared according to CLS-rules - direction, modopts, modreqs and retun type are ignored. Note: CLS doies not ignre return type for op_Implicit and op_Explicit operator methods.</summary>
+            CLS = IgnoreDirection Or IgnoreModOpt Or IgnoreModReq Or IgnoreReturn
+            ''' <summary>Ignore both - optional and required modifiers (modopts and modreqs)</summary>
+            IgnoreModifiers = IgnoreModOpt Or IgnoreModReq
+        End Enum
     End Module
 
     ''' <summary>Represents reflection namespace</summary>

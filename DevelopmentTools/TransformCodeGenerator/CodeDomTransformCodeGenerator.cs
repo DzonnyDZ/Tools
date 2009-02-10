@@ -7,6 +7,7 @@ namespace Tools.GeneratorsT {
     using System.Xml.XPath;
     using System.Xml.Xsl;
     using System.Xml.Linq;
+    using Tools.VisualStudioT.GeneratorsT;
 
     /// <summary>
     /// This is a Code DOM transform code generator. It performs XSL transform as custom tool in Visual Studio and interprets result of the transformation as XML-serialized CodeDOM

@@ -11,6 +11,7 @@ namespace Tools.GeneratorsT {
     using System.Xml;
     using System.Xml.XPath;
     using System.Xml.Xsl;
+    using Tools.VisualStudioT.GeneratorsT;
 
     /// <summary>
     /// This is a transform code generator. It performs XSL transform as custom tool in Visual Studio.
