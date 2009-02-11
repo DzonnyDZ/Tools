@@ -155,7 +155,7 @@
     <Compile Include="Globalization\NumberingSystemUT.vb" />
     <Compile Include="Collections\Generic\PriorityQueueU.vb" />
     <Compile Include="IO\FileSystemToolsU.vb" />
-    <Compile Include="Reflection\FileSystemToolsU.vb" />
+    <Compile Include="Reflection\ReflectionToolsU.vb" />
     <Compile Include="Special\TypeToolsU.vb" />
     <Compile Include="Collections\Generic\CollectionToolsU.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

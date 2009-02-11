@@ -1314,4 +1314,7 @@
   <data name="CannotGetBaseClassMethodOfGlobalMethod" xml:space="preserve">
     <value>Cannot get base class method of global method</value>
   </data>
+  <data name="MustBeGenericTypeInstance" xml:space="preserve">
+    <value>{0} must be generic type instance.</value>
+  </data>
 </root>

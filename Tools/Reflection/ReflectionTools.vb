@@ -1115,7 +1115,8 @@ Namespace ReflectionT
         ''' <param name="b">A <see cref="MethodInfo"/></param>
         ''' <param name="Strictness">Defines level of comparison</param>
         ''' <returns>True if <paramref name="a"/> and <paramref name="b"/> have same signature in meaning of <paramref name="Strictness"/>; false otherwise</returns>
-        ''' <remarks>Signature comparison does not include comparison of custom attributes (with exception of <see cref="InAttribute"/> and <see cref="OutAttribute"/>) and does not include comparison of method attributes (such as if it is private, public or specialname). Callig convention is ignored as well.</remarks>
+        ''' <remarks>Signature comparison does not include comparison of custom attributes (with exception of <see cref="InAttribute"/> and <see cref="OutAttribute"/>) and does not include comparison of method attributes (such as if it is private, public or specialname). Callig convention is ignored as well.
+        ''' <para>When comparing modreqs and modopts only first-level modifiers are taken in effect. Modifiers applied onto element-type of pointer, refernce or array and onto types of generic type are ignored. This is due to limitation of <see cref="ParameterInfo.GetOptionalCustomModifiers"/> and <see cref="ParameterInfo.GetRequiredCustomModifiers"/>.</para></remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="a"/> or <paramref name="b"/> is null.</exception>
         ''' <version version="1.5.2">Function introduced</version>
         <Extension()> _
@@ -1132,13 +1133,17 @@ Namespace ReflectionT
             pb(pb.Length - 1) = b.ReturnParameter
             For i As Integer = 0 To pb.Length - 1
                 If i = pb.Length - 1 AndAlso (Strictness And SignatureComparisonStrictness.IgnoreReturn) Then Exit For
-                If Strictness And SignatureComparisonStrictness.IgnoreByRef Then
-                    If Not pa(i).ParameterType.Equals(pb(i).ParameterType) AndAlso _
-                       Not pa(i).ParameterType.MakeByRefType.Equals(pb(i).ParameterType) AndAlso _
-                       Not pa(i).ParameterType.Equals(pb(i).ParameterType.MakeByRefType) Then Return False
-                Else
-                    If Not pa(i).ParameterType.Equals(pb(i).ParameterType) Then Return False
+                Dim patypefc = pa(i).ParameterType
+                Dim pbtypefc = pb(i).ParameterType
+                If Strictness And SignatureComparisonStrictness.TreatPointerAsReference Then
+                    If patypefc.IsPointer Then patypefc = patypefc.GetElementType.MakeByRefType
+                    If pbtypefc.IsPointer Then pbtypefc = pbtypefc.GetElementType.MakeByRefType
                 End If
+                If Strictness And SignatureComparisonStrictness.IgnoreByRef Then
+                    If patypefc.IsByRef Then patypefc = patypefc.GetElementType
+                    If pbtypefc.IsByRef Then pbtypefc = pbtypefc.GetElementType
+                End If
+                If Not patypefc.Equals(pbtypefc) Then Return False
                 If (Strictness And SignatureComparisonStrictness.IgnoreDirection) = 0 Then
                     If pa(i).IsOut <> pb(i).IsOut Then Return False
                     If pa(i).IsIn <> pb(i).IsIn Then Return False
@@ -1163,24 +1168,31 @@ Namespace ReflectionT
             Return True
         End Function
         ''' <summary>Defines how method signature comparison is performed</summary>
-        ''' <remarks>This enumeration is treaded as flags, each set or unset. Several predefined combinations of flags also exists.</remarks>
+        ''' <remarks>This enumeration is treaded as flags, each set or unset. Several predefined combinations of flags also exists.
+        ''' <para>When <see cref="SignatureComparisonStrictness.IgnoreByRef"/> and <see cref="SignatureComparisonStrictness.TreatPointerAsReference"/> are both set:
+        ''' Both - T* and T&amp; are treated as T. T*&amp; (reference to pointer) is treated as T* and T&amp;* (pointer to reference) is treated as T.</para></remarks>
         <Flags()> _
         Public Enum SignatureComparisonStrictness
             ''' <summary>Set this flag to ignore direction of method parameter. <see cref="InAttribute"/> and <see cref="OutAttribute"/> are ignored. Does not affect testing if parameter is passed by reference or by value.</summary>
             IgnoreDirection = 1
-            ''' <summary>Ignore optional modifiers on parameters (modopts)</summary>
+            ''' <summary>Ignore optional modifiers on parameters (modopts). Nested modopts are always ignored i.e. modopts on pointer/reference/array/generic internal type(s).</summary>
             IgnoreModOpt = 2
-            ''' <summary>Ignore required modifiers on parameters (modreqs)</summary>
+            ''' <summary>Ignore required modifiers on parameters (modreqs). Nested modreqs are always ignored i.e. modreqs on pointer/reference/array/generic internal type(s).</summary>
             IgnoreModReq = 4
             ''' <summary>Ignore return value completelly (ignores return type and return modopts and modreqs)</summary>
             IgnoreReturn = 8
             ''' <summary>Consider parameter passed by value and by reference to by of same type. Note: Physically the type of such parameters differs.</summary>
             IgnoreByRef = 16
+            ''' <summary>Treat pointer to type (*) in same way as reference to type (&amp;, ByRef) - see <see cref="Type.IsByRef"/> and <see cref="Type.IsPointer"/>.
+            ''' When combined with <see cref="IgnoreByRef"/>, pointer to type is treated as type itself.</summary>
+            TreatPointerAsReference = 32
             ''' <summary>Default. Comparison includes type of parameter, direction, custpm and optional modifiers and does consider parameters passed by value and by reference to be of different type.</summary>
             Strict = 0
-            ''' <summary>This how method signatures are compared according to CLS-rules - direction, modopts, modreqs and retun type are ignored. Note: CLS doies not ignre return type for op_Implicit and op_Explicit operator methods.</summary>
+            ''' <summary>This how method signatures are compared according to CLS-rules - direction, modopts, modreqs and retun type are ignored. Note: CLS does not ignore return type for op_Implicit and op_Explicit operator methods (use <see cref="CLS">CLS</see> AND NOT <see cref="IgnoreReturn">IgnoreReturn</see> for them).</summary>
+            ''' <seelaso cref="IgnoreDirection"/><seelaso cref="IgnoreModOpt"/><seelaso cref="IgnoreModReq"/> <seelaso cref="IgnoreReturn"/>
             CLS = IgnoreDirection Or IgnoreModOpt Or IgnoreModReq Or IgnoreReturn
             ''' <summary>Ignore both - optional and required modifiers (modopts and modreqs)</summary>
+            ''' <seelaso cref="IgnoreModOpt"/><seelaso cref="IgnoreModReq"/>
             IgnoreModifiers = IgnoreModOpt Or IgnoreModReq
         End Enum
     End Module

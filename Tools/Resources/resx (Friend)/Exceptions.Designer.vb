@@ -1738,6 +1738,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to '{0} must be generic type instance.'.
+        '''</summary>
+        Friend Shared ReadOnly Property MustBeGenericTypeInstance() As String
+            Get
+                Return ResourceManager.GetString("MustBeGenericTypeInstance", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to '{0} must be greater than or equal to {1}.'.
         '''</summary>
         Friend Shared ReadOnly Property MustBeGreaterThanOrEqualTo1() As String
@@ -5273,6 +5282,15 @@ Namespace ResourcesT
         <Global.System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Design", "CA1025:ReplaceRepetitiveArgumentsWithParamsArray")>  _
         Friend Shared Function MustBeFromRange12Or3IfUnknownFormat(ByVal arg0 As Object, ByVal arg1 As Object, ByVal arg2 As Object, ByVal arg3 As Object) As String
             Return String.Format(_resourceCulture, MustBeFromRange12Or3IfUnknown, arg0, arg1, arg2, arg3)
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to '{0} must be generic type instance.'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function MustBeGenericTypeInstanceFormat(ByVal arg0 As Object) As String
+            Return String.Format(_resourceCulture, MustBeGenericTypeInstance, arg0)
         End Function
         
         '''<summary>
