@@ -1,0 +1,387 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="e_TypeInAssembly" xml:space="preserve">
+    <value>Error while getting types in assembly. Some types weren't loaded.</value>
+  </data>
+  <data name="e_ModulesInAssembly" xml:space="preserve">
+    <value>Error while getting modules in assembly</value>
+  </data>
+  <data name="e_AttributeUsageAttribute" xml:space="preserve">
+    <value>Cannot get AttributeUsageAttribute</value>
+  </data>
+  <data name="AttributeUsage_AllowMultiple" xml:space="preserve">
+    <value>AttributeUsage.AllowMultiple violated, attribute {0} is used more than once.</value>
+  </data>
+  <data name="AttributeUsage_ValidOn" xml:space="preserve">
+    <value>AttributeUsage.ValidOn violated, attribute {0} cannot be applied to item of type {1}.</value>
+  </data>
+  <data name="e_TypesInModule_some" xml:space="preserve">
+    <value>Error while getting types in module. Some types weren't loaded.</value>
+  </data>
+  <data name="e_TypesInModule" xml:space="preserve">
+    <value>Error while getting types in module.</value>
+  </data>
+  <data name="e_MethodsInModule" xml:space="preserve">
+    <value>Error while getting methods in module.</value>
+  </data>
+  <data name="GlobalMethods" xml:space="preserve">
+    <value>Global methods are not CLS-compliant</value>
+  </data>
+  <data name="e_FieldsInModule" xml:space="preserve">
+    <value>Error while getting fields in module.</value>
+  </data>
+  <data name="GlobalFields" xml:space="preserve">
+    <value>Global fields are not CLS-compliant</value>
+  </data>
+  <data name="InheritCLSCompliant" xml:space="preserve">
+    <value>CLS-compliant type shall inherit only CLS-compliant type.</value>
+  </data>
+  <data name="NestedGenericTypeParametersCount" xml:space="preserve">
+    <value>Type nested in generic type shall have at least as many type parameters as declaring type.</value>
+  </data>
+  <data name="NameOfGenericType" xml:space="preserve">
+    <value>Name of generic type shall encode number of type parameters.</value>
+  </data>
+  <data name="NameOfNestedGenericType" xml:space="preserve">
+    <value>Name of nested type shall encode number of type parameters newly introdued by nested type.</value>
+  </data>
+  <data name="NestedGenericConstraint" xml:space="preserve">
+    <value>When type parameter specifies a constraint, corresponding parameter of nested type shall specify it as well. Parameter {0} of type {1} is missing constraint to type {2}.</value>
+  </data>
+  <data name="NestedGenericConstraint_New" xml:space="preserve">
+    <value>When type parameter specifies default constructor constraint, corresponding type parameters of nested type must specify it as well.</value>
+  </data>
+  <data name="NestedGenericConstraint_Struct" xml:space="preserve">
+    <value>When type parameter specifies value type (not nullable) constraint, corresponding type parameters of nested type must specify it as well.</value>
+  </data>
+  <data name="NestedGenericConstraint_Class" xml:space="preserve">
+    <value>When type parameter specifies reference type constraint, corresponding type parameters of nested type must specify it as well.</value>
+  </data>
+  <data name="e_MembersInType" xml:space="preserve">
+    <value>Error while geting members of type.</value>
+  </data>
+  <data name="UniqueSignature" xml:space="preserve">
+    <value>Member signature is not unique.</value>
+  </data>
+  <data name="EnumerationOnlyFields" xml:space="preserve">
+    <value>Enumeration can contain only fields.</value>
+  </data>
+  <data name="EnumerationFieldKind" xml:space="preserve">
+    <value>Enum fields must be either static literals or instance field named "value__" marked RTSpecialName.</value>
+  </data>
+  <data name="EnumerationValue__Type" xml:space="preserve">
+    <value>Type of enumeration field value__ must be ebumeration underlying type.</value>
+  </data>
+  <data name="EnumerationLiteralStatic" xml:space="preserve">
+    <value>Enum member literals must be static.</value>
+  </data>
+  <data name="TypeOfEnumMember" xml:space="preserve">
+    <value>Enum member literals must be of same type as is underlying type of enum.</value>
+  </data>
+  <data name="InterfaceCLSIncompliantMember" xml:space="preserve">
+    <value>Inerface shall not require CLS-incompliant members to be implemented in order to implement it.</value>
+  </data>
+  <data name="InterfaceStaticMethod" xml:space="preserve">
+    <value>Interface shall not declare static methods.</value>
+  </data>
+  <data name="InterfaceField" xml:space="preserve">
+    <value>Interface shall not declare fields.</value>
+  </data>
+  <data name="RequireImplementIncompliant" xml:space="preserve">
+    <value>CLS-compliant types shall  not require implementation of CLS-incompliant members.</value>
+  </data>
+  <data name="MissingValue__" xml:space="preserve">
+    <value>Enumeration is missing the value__ field.</value>
+  </data>
+  <data name="EnumType" xml:space="preserve">
+    <value>Enum underlying type is not built-in CLS-comliant integral type</value>
+  </data>
+  <data name="CLSCompliantInCLSIncompliant" xml:space="preserve">
+    <value>Member of CLS-incompliant type is marked as CLS-compliant</value>
+  </data>
+  <data name="PropertyType" xml:space="preserve">
+    <value>Property type is not CLS-compliant.</value>
+  </data>
+  <data name="e_IndexesInProperty" xml:space="preserve">
+    <value>Cannot get property index parameters.</value>
+  </data>
+  <data name="NoPropertyAccesor" xml:space="preserve">
+    <value>Property has no accessor.</value>
+  </data>
+  <data name="SetterSpecialName" xml:space="preserve">
+    <value>Property setter shall be marked specialname.</value>
+  </data>
+  <data name="GetterSetterStatic" xml:space="preserve">
+    <value>Property getter and setter must both be static or both be instance.</value>
+  </data>
+  <data name="GetterSetterVirtual" xml:space="preserve">
+    <value>Property getter and setter must both be virtual or both be non-virtual.</value>
+  </data>
+  <data name="GetterSpecialName" xml:space="preserve">
+    <value>Property getter shall be marked specialname.</value>
+  </data>
+  <data name="ParametersInGetter" xml:space="preserve">
+    <value>Cannot get parameters of property getter.</value>
+  </data>
+  <data name="GetterType" xml:space="preserve">
+    <value>Property getter return type shall be same as type of property.</value>
+  </data>
+  <data name="GetterParametersCount" xml:space="preserve">
+    <value>Number of parameters of property and of getter shall be same.</value>
+  </data>
+  <data name="GetterName" xml:space="preserve">
+    <value>Property getter name shall be get_&lt;property name&gt;.</value>
+  </data>
+  <data name="e_ParametersInSetter" xml:space="preserve">
+    <value>Cannot get parameters of property setter.</value>
+  </data>
+  <data name="SetterLastParam" xml:space="preserve">
+    <value>Type of last parameter of property setter shall be same as type of property.</value>
+  </data>
+  <data name="SetterParametersCount" xml:space="preserve">
+    <value>Property setter shall have exactly one more parameter than property itself.</value>
+  </data>
+  <data name="SetterName" xml:space="preserve">
+    <value>Property setter name shall be set_&lt;property name&gt;.</value>
+  </data>
+  <data name="IndexType" xml:space="preserve">
+    <value>Property index parameter type {0} is not CLS-compliant.</value>
+  </data>
+  <data name="PropertyByRef" xml:space="preserve">
+    <value>Property parameter shall not be passed by reference.</value>
+  </data>
+  <data name="PropertySetterParameters" xml:space="preserve">
+    <value>Property setter parameters shall be same as property parameters (except for last setter parameter).</value>
+  </data>
+  <data name="PropertyGetterParameters" xml:space="preserve">
+    <value>Property getter parameters shall be same as property parameters.</value>
+  </data>
+  <data name="Modreqs" xml:space="preserve">
+    <value>CLS does not allow required modifiers (modreqs).</value>
+  </data>
+  <data name="EventType" xml:space="preserve">
+    <value>Event delegate type is not CLS-compliant.</value>
+  </data>
+  <data name="AddRemoveBothOrNo" xml:space="preserve">
+    <value>Event methods add remove shall be both present or both absent.</value>
+  </data>
+  <data name="EventTypeDelegate" xml:space="preserve">
+    <value>Event type shall be delegate.</value>
+  </data>
+  <data name="AddSpecialName" xml:space="preserve">
+    <value>Event method add shall be marked specialname.</value>
+  </data>
+  <data name="AddParameters" xml:space="preserve">
+    <value>Event method add shall take exactly one parameters of type of type of event delegate.</value>
+  </data>
+  <data name="AddName" xml:space="preserve">
+    <value>Event method add shall be named add_&lt;event name&gt;.</value>
+  </data>
+  <data name="RemoveSpecialName" xml:space="preserve">
+    <value>Event method remove shall be marked specialname.</value>
+  </data>
+  <data name="EventAccessorsVisibility" xml:space="preserve">
+    <value>Event accessors shall have same accessibility.</value>
+  </data>
+  <data name="RemoveParameters" xml:space="preserve">
+    <value>Event method remove shall take exactly one parameters of type of type of event delegate.</value>
+  </data>
+  <data name="RemoveName" xml:space="preserve">
+    <value>Event method remove shall be named remove_&lt;event name&gt;.</value>
+  </data>
+  <data name="RaiseSpecialName" xml:space="preserve">
+    <value>Event method raise shall be marked specialname.</value>
+  </data>
+  <data name="RaiseName" xml:space="preserve">
+    <value>Event method raise shall be named raise_&lt;event name&gt;.</value>
+  </data>
+  <data name="OverrididedLevel" xml:space="preserve">
+    <value>Overriding method shall have same access level as method it overrides. Only familly-or-assembly accessibility can be changed to familly when overriding method is in different assembly then method it overrides.</value>
+  </data>
+  <data name="e_ParamsInMethod" xml:space="preserve">
+    <value>Error while getting parameters of method</value>
+  </data>
+  <data name="ParamType" xml:space="preserve">
+    <value>Parameter {0} is not of CLS-compliant type.</value>
+  </data>
+  <data name="ReturnType" xml:space="preserve">
+    <value>Return type of method is not CLS-compliant.</value>
+  </data>
+  <data name="StandardCallingConvention" xml:space="preserve">
+    <value>Only supported calling convention is standard.</value>
+  </data>
+  <data name="GenericParamType" xml:space="preserve">
+    <value>Type {0} passed to generic type is not CLS-compliant.</value>
+  </data>
+  <data name="IncompliantType" xml:space="preserve">
+    <value>Type {0} is not CLS-compliant.</value>
+  </data>
+  <data name="TypedReference" xml:space="preserve">
+    <value>TypedReference is noc CLS-compliant.</value>
+  </data>
+  <data name="Array0" xml:space="preserve">
+    <value>Array must have lower bound 0 in each dimension.</value>
+  </data>
+  <data name="Pointer" xml:space="preserve">
+    <value>Unmanaged pointer are not CLS-compliant.</value>
+  </data>
+  <data name="FieldType" xml:space="preserve">
+    <value>Field type is not CLS-compliant.</value>
+  </data>
+  <data name="ConstantValue" xml:space="preserve">
+    <value>Constant value specified in metadata is not of same type as is type of the field.</value>
+  </data>
+  <data name="e_CustomAttributes" xml:space="preserve">
+    <value>Cannot get custom attributes.</value>
+  </data>
+  <data name="NoAttributeAttribute" xml:space="preserve">
+    <value>Attribute type {0} does not derive from System.Attribute.</value>
+  </data>
+  <data name="CLSInclompliantAttribute" xml:space="preserve">
+    <value>CLS-inclompliant attribute {0} used.</value>
+  </data>
+  <data name="CustomAttributeDataInaccessible" xml:space="preserve">
+    <value>Cannot check custom attribute data on {0}, becasue it does not provide access to custom attribute data.</value>
+  </data>
+  <data name="AttributeParamType" xml:space="preserve">
+    <value>Custom attribute {0} constructor value is encoded using CLS-unsupported type {1}.</value>
+  </data>
+  <data name="AttributeNamedParamType" xml:space="preserve">
+    <value>Custom attribute {0} named parameter value for {1} is encoded using CLS-unsupported type {2}.</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name "{0}" is not CLS-compliant.</value>
+  </data>
+  <data name="NameC" xml:space="preserve">
+    <value>Name "{0}" is not stored in Unicode Normalization Form C.</value>
+  </data>
+  <data name="UniqueName" xml:space="preserve">
+    <value>Culture-invariant lowercase representation of type name "{0}" is not unique.</value>
+  </data>
+  <data name="ExposeFriend" xml:space="preserve">
+    <value>{0} exposes type {1}, which is not accessible from outside of assembly.</value>
+  </data>
+  <data name="ExposeNested" xml:space="preserve">
+    <value>{0} exposes type {1}, which is not accessible from outisde of type {2}.</value>
+  </data>
+  <data name="e_GenericParametersInType" xml:space="preserve">
+    <value>Cannot get generic parameters of type {0}.</value>
+  </data>
+</root>

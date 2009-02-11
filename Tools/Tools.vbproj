@@ -469,6 +469,12 @@
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
+    <EmbeddedResource Include="Tests\CLSComplianceCheckerResources.resx">
+      <CustomToolNamespace>ResourcesT</CustomToolNamespace>
+      <Generator>InternalResXFileCodeGeneratorEx</Generator>
+      <LastGenOutput>CLSComplianceCheckerResources.Designer.vb</LastGenOutput>
+      <LogicalName>Tools.ResourcesT.CLSComplianceCheckerResources.resources</LogicalName>
+    </EmbeddedResource>
     <Compile Include="Collections\Generic\GenericComparer.vb" />
     <Compile Include="Collections\Generic\UnwrapEnumerator.vb" />
     <Compile Include="ComponentModel\CancelItemEventArgs.vb" />
@@ -486,6 +492,11 @@
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Components.resx</DependentUpon>
+    </Compile>
+    <Compile Include="Tests\CLSComplianceCheckerResources.Designer.vb">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CLSComplianceCheckerResources.resx</DependentUpon>
     </Compile>
     <Compile Include="Tests\StaticPropertiesTest.vb" />
     <Compile Include="Text\Casing.vb" />

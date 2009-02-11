@@ -1,5 +1,4 @@
 ﻿Imports System.Reflection, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
-'TODO: Implement
 #If Config <= Nightly Then 'Stage:Nightly
 Namespace TeststT
     ''' <summary>Allows to check if varios items of compiled code are CLS compliant</summary>
@@ -217,14 +216,13 @@ Namespace TeststT
             Dim CLS = GetItemClsCompliance(Assembly)
             If CLS Then
                 Violated = Violated Or Not CLSAttributeCheck(Assembly)
-                'TODO: Do test on assembly
             End If
             'Check uniqueness of type names
             Dim types As IEnumerable(Of Type) = New Type() {}
             Try
                 types = From type In Assembly.GetTypes() Where type.IsPublic AndAlso Not type.IsNested
             Catch ex As Exception
-                OnViolation("Error while getting types in assembly. Some types weren't loaded.", CLSRule.Error, Assembly, ex) 'Localize: message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypeInAssembly, CLSRule.Error, Assembly, ex)
             End Try
             CheckTypeNames(types)
             'Check modules
@@ -232,7 +230,7 @@ Namespace TeststT
             Try
                 Modules = Assembly.GetModules
             Catch ex As Exception
-                OnViolation("Error while getting modules in assembly", CLSRule.Error, Assembly, ex) 'Localize:Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_ModulesInAssembly, CLSRule.Error, Assembly, ex)
             End Try
             For Each [Module] In Modules
                 Violated = Violated Or Not CheckInternal([Module])
@@ -292,7 +290,7 @@ Namespace TeststT
             Try
                 attrs = Item.GetCustomAttributes(False)
             Catch ex As Exception
-                OnViolation("Cannot get custom attributes", CLSRule.Error, Item, ex) 'Localize message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_CustomAttributes, CLSRule.Error, Item, ex)
                 Return False
             End Try
             Dim Types As New List(Of Type)
@@ -321,7 +319,7 @@ Namespace TeststT
                 Try
                     attributeattributes = attrType.GetAttributes(Of AttributeUsageAttribute)(False)
                 Catch ex As Exception
-                    OnViolation("Cannot get AttributeUsageAttribute", CLSRule.Error, attrType, ex) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_AttributeUsageAttribute, CLSRule.Error, attrType, ex)
                 End Try
                 Dim AllowMultiple As Boolean = False
                 If AllowMultipleDic.ContainsKey(attrType) Then
@@ -337,7 +335,7 @@ Namespace TeststT
                     AllowMultipleDic.Add(attrType, AllowMultiple)
                 End If
                 If Not AllowMultiple AndAlso Types.Contains(attrType) Then
-                    OnViolation("AttributeUsage.AllowMultiple violated, attribute {0} is used more than once.".f(attrType.FullName), CLSRule.AttributeUsageViolation, Item) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeUsage_AllowMultiple.f(attrType.FullName), CLSRule.AttributeUsageViolation, Item)
                     Violated = True
                 End If
                 If Not Types.Contains(attrType) Then Types.Add(attrType)
@@ -347,7 +345,7 @@ Namespace TeststT
                         If (attributeattr.ValidOn And Check) = Check Then valid = True : Exit For
                     Next
                     If Not valid Then
-                        OnViolation("AttributeUsage.ValidOn violated, attribute {0} cannot be applied to item of type {1}.".f(attrType.FullName, Check), CLSRule.AttributeUsageViolation, Item) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeUsage_ValidOn.f(attrType.FullName, Check), CLSRule.AttributeUsageViolation, Item)
                         Violated = True
                     End If
                 End If
@@ -367,7 +365,7 @@ Namespace TeststT
             Try
                 types = From type In [Module].GetTypes() Where type.IsPublic AndAlso Not type.IsNested
             Catch ex As Exception
-                OnViolation("Error while getting types in module. Some types weren't loaded.", CLSRule.Error, [Module], ex) 'Localize: message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypesInModule_some, CLSRule.Error, [Module], ex)
             End Try
             CheckTypeNames(types)
             violated = violated Or Not CheckInternal([Module])
@@ -385,7 +383,6 @@ Namespace TeststT
             Dim CLS = GetItemClsCompliance([Module])
             If CLS Then
                 Violated = Violated Or Not CLSAttributeCheck([Module])
-                'TODO: Do test on module
             End If
             'Types
             Dim Types() As Type = {}
@@ -393,9 +390,9 @@ Namespace TeststT
                 Types = [Module].GetTypes()
             Catch ex As ReflectionTypeLoadException
                 Types = From type In ex.Types Where type IsNot Nothing
-                OnViolation("Error while getting types in module. Some types weren't loaded.", CLSRule.Error, [Module], ex) 'Localize: message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypesInModule_some, CLSRule.Error, [Module], ex)
             Catch ex As Exception
-                OnViolation("Error while getting types in module.", CLSRule.Error, [Module], ex) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypesInModule, CLSRule.Error, [Module], ex)
             End Try
             For Each Type In Types
                 If Type.IsPublic AndAlso Not Type.IsNested Then Violated = Violated Or Not Check(Type)
@@ -405,14 +402,14 @@ Namespace TeststT
             Try
                 Methods = [Module].GetMethods
             Catch ex As Exception
-                OnViolation("Error while getting methods in module.", CLSRule.Error, [Module], ex) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_MethodsInModule, CLSRule.Error, [Module], ex)
             End Try
             For Each Method In Methods
                 If Method.IsPublic Then
                     Dim MethodCLSCompliant = GetItemClsCompliance(Method)
                     If MethodCLSCompliant Then
                         Violated = True
-                        OnViolation("Global methods are not CLS-compliant", CLSRule.NoGlobalMembers, Method) 'Localize:Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GlobalMethods, CLSRule.NoGlobalMembers, Method)
                     End If
                 End If
             Next
@@ -421,14 +418,14 @@ Namespace TeststT
             Try
                 Fields = [Module].GetFields
             Catch ex As Exception
-                OnViolation("Error while getting fields in module.", CLSRule.Error, [Module], ex) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_FieldsInModule, CLSRule.Error, [Module], ex)
             End Try
             For Each Field In Fields
                 If Field.IsPublic Then
                     Dim MethodCLSCompliant = GetItemClsCompliance(Field)
                     If MethodCLSCompliant Then
                         Violated = True
-                        OnViolation("Global fields are not CLS-compliant", CLSRule.NoGlobalMembers, Field) 'Localize:Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GlobalFields, CLSRule.NoGlobalMembers, Field)
                     End If
                 End If
             Next
@@ -451,17 +448,17 @@ Namespace TeststT
                 'Base type
                 If Type.BaseType IsNot Nothing AndAlso Not GetItemClsCompliance(Type.BaseType) Then
                     Violated = True
-                    OnViolation("CLS-compliant type shall inherit only CLS-compliant type.", CLSRule.NoIncompliantBase, Type) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.InheritCLSCompliant, CLSRule.NoIncompliantBase, Type)
                 End If
                 'Generics
                 If Type.IsNested AndAlso Type.DeclaringType.IsGenericTypeDefinition AndAlso Type.GetGenericArguments.Length < Type.DeclaringType.GetGenericArguments.Length Then
                     Violated = True
-                    OnViolation("Type nested in generic type shall have at leas as many type parameters as declaring type.", CLSRule.NestedGenericTypes, Type)  'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericTypeParametersCount, CLSRule.NestedGenericTypes, Type)
                 End If
                 If Type.IsGenericTypeDefinition AndAlso Not Type.IsNested Then
                     If Not Type.Name.EndsWith(String.Format("`{0}", Globalization.CultureInfo.InvariantCulture, Type.GetGenericArguments.Count)) Then
                         Violated = True
-                        OnViolation("Name of generic type shall encode number of type parameters.", CLSRule.GenericTypeName, Type)   'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.NameOfGenericType, CLSRule.GenericTypeName, Type)
                     End If
                 End If
                 If Type.IsGenericType AndAlso Type.IsNested Then
@@ -469,7 +466,7 @@ Namespace TeststT
                     Dim MyGA = Type.GetGenericArguments
                     If MyGA.Length > DGA.Length AndAlso Not Type.Name.EndsWith(String.Format("`{0}", Globalization.CultureInfo.InvariantCulture, MyGA.Length - DGA.Length)) Then
                         Violated = True
-                        OnViolation("Name of nested type shall encode number of type parameters newly introdued by nested type.", CLSRule.GenericTypeName, Type) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.NameOfNestedGenericType, CLSRule.GenericTypeName, Type)
                     End If
                 End If
                 'Nested generic constraints
@@ -483,28 +480,28 @@ Namespace TeststT
                             For Each DGC In DGCs
                                 If Not MyGCs.Contains(DGC) Then
                                     Violated = True
-                                    OnViolation("When type parameter specifies a constraint, corresponding parameter of nested type shall specify it as well. Parameter {0} of type {1} is missing constraint to type {2}.".f(MyGA(i).FullName, Type.FullName, DGC.FullName), CLSRule.NestedGenricTypeConstraints, MyGA(i)) 'Localize: Message
+                                    OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericConstraint.f(MyGA(i).FullName, Type.FullName, DGC.FullName), CLSRule.NestedGenricTypeConstraints, MyGA(i))
                                 End If
                             Next
                         End If
                         If (DGA(i).GenericParameterAttributes And GenericParameterAttributes.DefaultConstructorConstraint) = GenericParameterAttributes.DefaultConstructorConstraint AndAlso Not (MyGA(i).GenericParameterAttributes And GenericParameterAttributes.DefaultConstructorConstraint) = GenericParameterAttributes.DefaultConstructorConstraint Then
                             Violated = True
-                            OnViolation("When type parameter specifies default constructor constraint, corresponding type parameters of nested type must specify it as well.", CLSRule.NestedGenricTypeConstraints, MyGA(i)) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericConstraint_New, CLSRule.NestedGenricTypeConstraints, MyGA(i))
                         End If
                         If (DGA(i).GenericParameterAttributes And GenericParameterAttributes.NotNullableValueTypeConstraint) = GenericParameterAttributes.NotNullableValueTypeConstraint AndAlso Not (MyGA(i).GenericParameterAttributes And GenericParameterAttributes.NotNullableValueTypeConstraint) = GenericParameterAttributes.NotNullableValueTypeConstraint Then
                             Violated = True
-                            OnViolation("When type parameter specifies value type (not nullable) constraint, corresponding type parameters of nested type must specify it as well.", CLSRule.NestedGenricTypeConstraints, MyGA(i))            'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericConstraint_Struct, CLSRule.NestedGenricTypeConstraints, MyGA(i))
                         End If
                         If (DGA(i).GenericParameterAttributes And GenericParameterAttributes.ReferenceTypeConstraint) = GenericParameterAttributes.ReferenceTypeConstraint AndAlso Not (MyGA(i).GenericParameterAttributes And GenericParameterAttributes.ReferenceTypeConstraint) = GenericParameterAttributes.ReferenceTypeConstraint Then
                             Violated = True
-                            OnViolation("When type parameter specifies reference type constraint, corresponding type parameters of nested type must specify it as well.", CLSRule.NestedGenricTypeConstraints, MyGA(i)) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericConstraint_Class, CLSRule.NestedGenricTypeConstraints, MyGA(i))
                         End If
                     Next
                 End If
                 'Generic constraints
                 If Type.IsGenericType Then
                     For Each MyGA In Type.GetGenericArguments
-                        For Each MyGC In MyG.GetGenericParameterConstraints
+                        For Each MyGC In MyGA.GetGenericParameterConstraints
                             CheckTypeReference(MyGC, MyGA, True, CLSRule.NoClsIncompliantConstraints)
                         Next
                     Next
@@ -514,7 +511,7 @@ Namespace TeststT
                 Try
                     Members = Type.GetMembers(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.DeclaredOnly)
                 Catch ex As Exception
-                    OnViolation("Error while geting members of type.", CLSRule.Error, Type, ex) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_MembersInType, CLSRule.Error, Type, ex)
                     Return False
                 End Try
                 Dim MemberSignatures As New List(Of MemberCLSSignature)
@@ -540,7 +537,7 @@ Namespace TeststT
                             ElseIf (TypeOf Member Is EventInfo OrElse TypeOf Member Is EventInfo) AndAlso Not ms.Equals(Original) Then
                                 r = CLSRule.OverloadOnlyPropertiesAndMethods
                             End If
-                            OnViolation("Member signature is not unique.", r, Member) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.UniqueSignature, r, Member)
                         Else
                             MemberSignatures.Add(ms)
                         End If
@@ -548,25 +545,25 @@ Namespace TeststT
                         If Type.IsEnum Then
                             If Not TypeOf Member Is FieldInfo Then
                                 Violated = True
-                                OnViolation("Enumeration can contain only fields.", CLSRule.EnumSructure, Member) 'Localize: Message
+                                OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumerationOnlyFields, CLSRule.EnumSructure, Member)
                             Else
                                 With DirectCast(Member, FieldInfo)
                                     If Not .IsLiteral Then
                                         If Not .IsStatic OrElse .Name <> "value__" OrElse ((.Attributes And FieldAttributes.RTSpecialName) <> FieldAttributes.RTSpecialName) Then
                                             Violated = True
-                                            OnViolation("Enum fields must be either static literals or instance field named ""value__"" marked RTSpecialName.", CLSRule.EnumSructure, Member) 'Localize: Message
+                                            OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumerationFieldKind, CLSRule.EnumSructure, Member)
                                         ElseIf Not .FieldType.Equals([Enum].GetUnderlyingType(Type)) Then
                                             Violated = True
-                                            OnViolation("Type of enumeration field value__ must be ebumeration underlying type.", CLSRule.EnumSructure, Member) 'Localize: Message
+                                            OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumerationValue__Type, CLSRule.EnumSructure, Member)
                                         Else
                                             ValueFound = True
                                         End If
                                     ElseIf Not .IsStatic Then
                                         Violated = True
-                                        OnViolation("Enum member literals must be static.", CLSRule.EnumMembers, Member) 'Localize: Message
+                                        OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumerationLiteralStatic, CLSRule.EnumMembers, Member)
                                     ElseIf Not .FieldType.Equals([Enum].GetUnderlyingType(Type)) Then
                                         Violated = True
-                                        OnViolation("Enum member literals must be of same type sa is underlying type of enum.", CLSRule.EnumMembers, Member) 'Localize: Message
+                                        OnViolation(ResourcesT.CLSComplianceCheckerResources.TypeOfEnumMember, CLSRule.EnumMembers, Member)
                                     End If
                                 End With
                             End If
@@ -577,25 +574,25 @@ Namespace TeststT
                     If Type.IsInterface AndAlso (Member.MemberType = MemberTypes.Method OrElse Member.MemberType = MemberTypes.Property OrElse Member.MemberType = MemberTypes.Event) AndAlso Not Member.IsStatic Then
                         If Not GetItemClsCompliance(Member) Then
                             Violated = True
-                            OnViolation("Inerface shall not require CLS-incompliant members to be implemented in order to implement it.", CLSRule.NoIncompliantMembersInInterfaces, Member) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.InterfaceCLSIncompliantMember, CLSRule.NoIncompliantMembersInInterfaces, Member)
                         End If
                     End If
                     If Type.IsInterface AndAlso Member.IsStatic AndAlso Member.MemberType = MemberTypes.Method AndAlso GetItemClsCompliance(Member) Then
                         Violated = True
-                        OnViolation("Interface shall not declare static methods.", CLSRule.NoStaticMembersAndFieldsInInterfaces, Member)   'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.InterfaceStaticMethod, CLSRule.NoStaticMembersAndFieldsInInterfaces, Member)
                     End If
                     If Type.IsInterface AndAlso Member.MemberType = MemberTypes.Field AndAlso GetItemClsCompliance(Member) Then
                         Violated = True
-                        OnViolation("Interface shall not declare fields.", CLSRule.NoStaticMembersAndFieldsInInterfaces, Member) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.InterfaceField, CLSRule.NoStaticMembersAndFieldsInInterfaces, Member)
                     End If
                     If Type.IsClass AndAlso Type.IsAbstract AndAlso Member.MemberType = MemberTypes.Method AndAlso DirectCast(Member, MethodInfo).IsAbstract AndAlso Not GetItemClsCompliance(Member) Then
                         Violated = True
-                        OnViolation("CLS-compliant types shall  not require implementation of CLS-incompliant members.", CLSRule.NoNeedToImplementIncompliantMember, Member)  'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.RequireImplementIncompliant, CLSRule.NoNeedToImplementIncompliantMember, Member)
                     End If
                 Next
                 If Type.IsEnum AndAlso Not ValueFound Then
                     Violated = True
-                    OnViolation("Enumeration is missing the value__ field.", CLSRule.EnumSructure, Type) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.MissingValue__, CLSRule.EnumSructure, Type)
                 End If
             Else
                 Violated = Not SearchForCompliantMembers(Type)
@@ -615,7 +612,7 @@ Namespace TeststT
             Dim violated As Boolean = False
             If ut.Equals(GetType(Byte)) AndAlso Not ut.Equals(GetType(Short)) AndAlso Not ut.Equals(GetType(Integer)) OrElse Not ut.Equals(GetType(Long)) Then
                 violated = True
-                OnViolation("Enum underlying type is not built-in CLS-comliant integral type", CLSRule.EnumSructure, Type) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumType, CLSRule.EnumSructure, Type)
             End If
             Return Not violated
         End Function
@@ -704,9 +701,8 @@ Namespace TeststT
             Dim Members() As MemberInfo = {}
             Try
                 Members = Type.GetMembers(BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.DeclaredOnly)
-                'TODO: Does it reurn Getters/Setters/Adders/...
             Catch ex As Exception
-                OnViolation("Error while gerring members of type.", CLSRule.Error, Type, ex) 'Localize:Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_MembersInType, CLSRule.Error, Type, ex)
                 Return False
             End Try
             Dim Violated = False
@@ -714,7 +710,7 @@ Namespace TeststT
                 If Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly Then
                     If GetItemClsCompliance(Member) Then
                         Violated = True
-                        OnViolation("Member of CLS-incompliant type is marked as CLS-compliant", CLSRule.NoCompliantMembersInIncompliantTypes, Member) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.CLSCompliantInCLSIncompliant, CLSRule.NoCompliantMembersInIncompliantTypes, Member)
                     ElseIf TypeOf Member Is Type Then
                         Violated = Violated Or Not SearchForCompliantMembers(Member)
                     End If
@@ -765,7 +761,7 @@ Namespace TeststT
                 Violated = Violated Or Not DoCommonTest([Property])
                 If Not GetItemClsCompliance([Property].PropertyType) Then
                     Violated = True
-                    OnViolation("Property type is not CLS-compliant.", CLSRule.Signature, [Property]) 'Localize: Messa
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.PropertyType, CLSRule.Signature, [Property])
                 End If
                 Violated = Violated Or Not CheckTypeReference([Property].PropertyType, [Property], False)
                 If [Property].PropertyType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance([Property].PropertyType, [Property])
@@ -775,28 +771,28 @@ Namespace TeststT
                 Try
                     Params = [Property].GetIndexParameters
                 Catch ex As Exception
-                    OnViolation("Cannot get property index parameters.", CLSRule.Error, [Property], ex) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_IndexesInProperty, CLSRule.Error, [Property], ex)
                 End Try
                 'Get getter and setter
                 Dim Getter = [Property].GetGetMethod(False)
                 Dim Setter = [Property].GetSetMethod(False)
                 If Getter Is Nothing AndAlso Setter Is Nothing Then
                     Violated = True
-                    OnViolation("Property has no accessor.", CLSRule.PropertyNaming, [Property]) 'Localize:Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.NoPropertyAccesor, CLSRule.PropertyNaming, [Property])
                 End If
                 'Check setter vs. getter
                 If Setter IsNot Nothing AndAlso Getter IsNot Nothing Then
                     If Not Setter.IsSpecialName Then
                         Violated = True
-                        OnViolation("Property setter shall be marked specialname.", CLSRule.SpecialNameGetterAndSetter, Setter)  'Localize: Messa
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterSpecialName, CLSRule.SpecialNameGetterAndSetter, Setter)
                     End If
                     If Setter.IsStatic <> Getter.IsStatic Then
                         Violated = True
-                        OnViolation("Property getter and setter must both be static or both be instance.", CLSRule.SameKindOfGetterAndSetter, [Property]) 'Localize:Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterSetterStatic, CLSRule.SameKindOfGetterAndSetter, [Property])
                     End If
                     If Setter.IsVirtual <> Getter.IsVirtual Then
                         Violated = True
-                        OnViolation("Property getter and setter must both be virtual or both be non-virtual.", CLSRule.SameKindOfGetterAndSetter, [Property]) 'Localize:Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterSetterVirtual, CLSRule.SameKindOfGetterAndSetter, [Property])
                     End If
                 End If
                 'Check getter
@@ -804,25 +800,25 @@ Namespace TeststT
                 If Getter IsNot Nothing Then
                     If Not Getter.IsSpecialName Then
                         Violated = True
-                        OnViolation("Property getter shall be marked specialname.", CLSRule.SpecialNameGetterAndSetter, Getter) 'Localize: Messa
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterSpecialName, CLSRule.SpecialNameGetterAndSetter, Getter)
                     End If
                     gpars = New ParameterInfo() {}
                     Try
                         gpars = Setter.GetParameters
                     Catch ex As Exception
-                        OnViolation("Cannot get parameters of property getter.", CLSRule.Error, Getter)   'Localize: message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.ParametersInGetter, CLSRule.Error, Getter)
                     End Try
                     If Not Getter.ReturnType.Equals([Property].PropertyType) Then
                         Violated = True
-                        OnViolation("Property getter return type shall be same as type of property.", CLSRule.PropertyType, Getter) 'Localize: message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterType, CLSRule.PropertyType, Getter)
                     End If
                     If gpars.Length <> Params.Length Then
                         Violated = True
-                        OnViolation("Number of parameters of property and of getter shall be same.", CLSRule.PropertyType, Getter) 'Localize message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterParametersCount, CLSRule.PropertyType, Getter)
                     End If
                     If Getter.Name <> "get_" & [Property].Name Then
                         Violated = True
-                        OnViolation("Property getter name shall be get_<property name>.", CLSRule.PropertyNaming, Getter) 'Localize message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterName, CLSRule.PropertyNaming, Getter)
                     End If
                 End If
                 'Check setter
@@ -832,19 +828,19 @@ Namespace TeststT
                     Try
                         spars = Setter.GetParameters
                     Catch ex As Exception
-                        OnViolation("Cannot get parameters of property setter.", CLSRule.Error, Setter)   'Localize: message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.e_ParametersInSetter, CLSRule.Error, Setter)
                     End Try
                     If spars.Length = 0 OrElse Not spars(spars.Length - 1).Equals([Property].PropertyType) Then
                         Violated = True
-                        OnViolation("Type of last parameters of property setter shall be same as type of property.", CLSRule.PropertyType, Setter) 'LOcalize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterLastParam, CLSRule.PropertyType, Setter)
                     End If
                     If spars.Length - 1 <> Params.Length Then
                         Violated = True
-                        OnViolation("Property setter shall have exactly one more parameter than property itself.", CLSRule.PropertyType, Setter) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterParametersCount, CLSRule.PropertyType, Setter)
                     End If
                     If Getter.Name <> "set_" & [Property].Name Then
                         Violated = True
-                        OnViolation("Property setter name shall be set_<property name>.", CLSRule.PropertyNaming, Setter) 'Localize message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterName, CLSRule.PropertyNaming, Setter)
                     End If
                 End If
                 'Check params
@@ -852,28 +848,28 @@ Namespace TeststT
                 For Each Param In Params
                     If Not GetItemClsCompliance(Param.ParameterType) Then
                         Violated = True
-                        OnViolation("Property index parameter type {0} is not CLS-compliant.".f(Param.ParameterType.FullName), CLSRule.Signature, Param) 'Localize: Mesage
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.IndexType.f(Param.ParameterType.FullName), CLSRule.Signature, Param)
                     End If
                     Violated = Violated Or Not CheckTypeReference(Param.ParameterType, [Property], False)
                     If Param.ParameterType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Param.ParameterType, Param)
                     Violated = Violated Or Not CheckTypeAcessibility([Property], Param.ParameterType)
                     If Param.ParameterType.IsByRef Then
                         Violated = True
-                        OnViolation("Property parameter shall not be passed by reference.", CLSRule.PropertyType, Param) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.PropertyByRef, CLSRule.PropertyType, Param)
                     End If
                     If spars IsNot Nothing AndAlso spars.Length - 1 = Params.Length AndAlso Not spars(i).ParameterType.Equals(Param.ParameterType) Then
                         Violated = True
-                        OnViolation("Property setter parameters shall be same as property parameters (except for last setter parameter).", CLSRule.PropertyType, spars(i)) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.PropertySetterParameters, CLSRule.PropertyType, spars(i))
                     End If
                     If gpars IsNot Nothing AndAlso gpars.Length = Params.Length AndAlso Not gpars(i).ParameterType.Equals(Param.ParameterType) Then
                         Violated = True
-                        OnViolation("Property getter parameters shall be same as property parameters.", CLSRule.PropertyType, gpars(i)) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.PropertyGetterParameters, CLSRule.PropertyType, gpars(i))
                     End If
                     i += 1
                 Next
                 If [Property].GetRequiredCustomModifiers.Length > 0 Then
                     Violated = True
-                    OnViolation("CLS does not allow required modifiers (modreqs).", CLSRule.NoModReq, [Property]) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.Modreqs, CLSRule.NoModReq, [Property])
                 End If
             End If
             Return Not Violated
@@ -889,7 +885,7 @@ Namespace TeststT
                 Violated = Violated Or Not DoCommonTest([Event])
                 If Not GetItemClsCompliance([Event].EventHandlerType) Then
                     Violated = True
-                    OnViolation("Event delegate type is not CLS-compliant.", CLSRule.Signature, [Event]) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.EventType, CLSRule.Signature, [Event])
                 End If
                 Violated = Violated Or Not CheckTypeReference([Event].EventHandlerType, [Event], False)
                 If [Event].EventHandlerType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance([Event].EventHandlerType, [Event])
@@ -901,65 +897,65 @@ Namespace TeststT
                 'All methods
                 If (Add Is Nothing) <> (Remove Is Nothing) Then
                     Violated = True
-                    OnViolation("Event methods add remove shall be both present or both absent.", CLSRule.AddAndRemove, [Event]) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.AddRemoveBothOrNo, CLSRule.AddAndRemove, [Event])
                 End If
                 If Not GetType([Delegate]).IsAssignableFrom([Event].EventHandlerType) Then
                     Violated = True
-                    OnViolation("Event type shall be delegate.", CLSRule.AddAndRemoveParameters, [Event]) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.EventTypeDelegate, CLSRule.AddAndRemoveParameters, [Event])
                 End If
                 Dim Accessibility As MethodAttributes?
                 'Add
                 If Add IsNot Nothing Then
                     If Not Add.IsSpecialName Then
                         Violated = True
-                        OnViolation("Event method add shall be marked specialname.", CLSRule.SpecialNameEvent, Add) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.AddSpecialName, CLSRule.SpecialNameEvent, Add)
                     End If
                     Accessibility = Add.Attributes And MethodAttributes.MemberAccessMask
                     If Not Add.GetParameters.Length = 1 OrElse Not Add.GetParameters()(0).ParameterType.Equals([Event].EventHandlerType) Then
                         Violated = True
-                        OnViolation("Event method add shall take exactly one parameters of type of type of event delegate.", CLSRule.AddAndRemoveParameters, Add) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.AddParameters, CLSRule.AddAndRemoveParameters, Add)
                     End If
                     If Add.Name <> "add_" & [Event].Name Then
                         Violated = True
-                        OnViolation("Event method add shall be named add_<event name>.", CLSRule.EventNaming, Add) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.AddName, CLSRule.EventNaming, Add)
                     End If
                 End If
                 'Remove
                 If Remove IsNot Nothing Then
                     If Not Remove.IsSpecialName Then
                         Violated = True
-                        OnViolation("Event method remove shall be marked specialname.", CLSRule.SpecialNameEvent, Remove) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.RemoveSpecialName, CLSRule.SpecialNameEvent, Remove)
                     End If
                     If Not Accessibility.HasValue Then
                         Accessibility = Remove.Attributes And MethodAttributes.MemberAccessMask
                     ElseIf Accessibility <> (Remove.Attributes And MethodAttributes.MemberAccessMask) Then
                         Violated = True
-                        OnViolation("Event accessors shall have same accessibility.", CLSRule.EventAccessibility, [Event]) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.EventAccessorsVisibility, CLSRule.EventAccessibility, [Event])
                     End If
                     If Not Remove.GetParameters.Length = 1 OrElse Not Remove.GetParameters()(0).ParameterType.Equals([Event].EventHandlerType) Then
                         Violated = True
-                        OnViolation("Event method remove shall take exactly one parameters of type of type of event delegate.", CLSRule.AddAndRemoveParameters, Add) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.RemoveParameters, CLSRule.AddAndRemoveParameters, Add)
                     End If
                     If Remove.Name <> "remove_" & [Event].Name Then
                         Violated = True
-                        OnViolation("Event method remove shall be named remove_<event name>.", CLSRule.EventNaming, Remove) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.RemoveName, CLSRule.EventNaming, Remove)
                     End If
                 End If
                 'Raise
                 If Raise IsNot Nothing Then
                     If Not Raise.IsSpecialName Then
                         Violated = True
-                        OnViolation("Event method raise shall be marked specialname.", CLSRule.SpecialNameEvent, Raise)  'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.RaiseSpecialName, CLSRule.SpecialNameEvent, Raise)
                     End If
                     If Not Accessibility.HasValue Then
                         Accessibility = Raise.Attributes And MethodAttributes.MemberAccessMask
                     ElseIf Accessibility <> (Raise.Attributes And MethodAttributes.MemberAccessMask) Then
                         Violated = True
-                        OnViolation("Event accessors shall have same accessibility.", CLSRule.EventAccessibility, [Event]) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.EventAccessorsVisibility, CLSRule.EventAccessibility, [Event])
                     End If
                     If Raise.Name <> "raise_" & [Event].Name Then
                         Violated = True
-                        OnViolation("Event method raise shall be named raise_<event name>.", CLSRule.EventNaming, Raise) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.RaiseName, CLSRule.EventNaming, Raise)
                     End If
                 End If
 
@@ -982,7 +978,7 @@ Namespace TeststT
                         Dim MyAccess = Method.Attributes And MethodAttributes.MemberAccessMask
                         If BaseAccess <> MyAccess AndAlso Not (BaseAccess = MethodAttributes.FamORAssem AndAlso MyAccess = MethodAttributes.Family AndAlso Not Method.Module.Assembly.Equals(BaseMethod.Module.Assembly)) Then
                             Violated = True
-                            OnViolation("Overriding method shall have same access level as method it overrides. Only familly-or-assembly accessibility can be changed to familly when overriding method is in different assembly then method it overrides.", CLSRule.NoChangeOfAccessWhenOverrideing, Method) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.OverrididedLevel, CLSRule.NoChangeOfAccessWhenOverrideing, Method)
                         End If
                     End If
                 End If
@@ -990,35 +986,35 @@ Namespace TeststT
                 Try
                     Params = Method.GetParameters
                 Catch ex As Exception
-                    OnViolation("Error while getting parameters of method", CLSRule.Error, Method, ex) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_ParamsInMethod, CLSRule.Error, Method, ex)
                 End Try
                 For Each param In Params
                     If Not GetItemClsCompliance(param.ParameterType) Then
                         Violated = True
-                        OnViolation("Parameter {0} is not of CLS-compliant type.".f(param.Name), CLSRule.Signature, param) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.ParamType.f(param.Name), CLSRule.Signature, param)
                     End If
                     Violated = Violated Or Not CheckTypeReference(param.ParameterType, Method, False)
                     If param.ParameterType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(param.ParameterType, param)
                     Violated = Violated Or Not CheckTypeAcessibility(Method, param.ParameterType)
                     If param.GetRequiredCustomModifiers.Length > 0 Then
                         Violated = True
-                        OnViolation("CLS does not allow required modifiers (modreqs).", CLSRule.NoModReq, param) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.Modreqs, CLSRule.NoModReq, param)
                     End If
                 Next
                 If Not GetItemClsCompliance(Method.ReturnType) Then
                     Violated = True
-                    OnViolation("Return type of method is not CLS-compliant.", CLSRule.Signature, Method.ReturnParameter) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ReturnType, CLSRule.Signature, Method.ReturnParameter)
                 End If
                 Violated = Violated Or Not CheckTypeReference(Method.ReturnType, Method, False)
                 If Method.ReturnType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Method.ReturnType, Method.ReturnParameter)
                 Violated = Violated Or Not CheckTypeAcessibility(Method, Method.ReturnType)
                 If Method.CallingConvention <> CallingConventions.Standard Then
                     Violated = True
-                    OnViolation("Only supported calling convention is standard.", CLSRule.CallingConvention, Method) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.StandardCallingConvention, CLSRule.CallingConvention, Method)
                 End If
                 If Method.ReturnParameter.GetRequiredCustomModifiers.Length > 0 Then
                     Violated = True
-                    OnViolation("CLS does not allow required modifiers (modreqs).", CLSRule.NoModReq, Method.ReturnParameter) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.Modreqs, CLSRule.NoModReq, Method.ReturnParameter)
                 End If
             End If
             Return Not Violated
@@ -1044,7 +1040,7 @@ Namespace TeststT
             For Each gparam In inst.GetGenericArguments
                 If Not GetItemClsCompliance(gparam) Then
                     violated = True
-                    OnViolation("Type {0} passed to generic type is not CLS-compliant.".f(gparam.FullName), Rule, [On]) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.GenericParamType.f(gparam.FullName), Rule, [On])
                 End If
                 If gparam.IsGenericType Then violated = violated Or Not CheckTypeReference(gparam, [On], True, Rule)
             Next
@@ -1061,25 +1057,25 @@ Namespace TeststT
             Dim Violated As Boolean = False
             If Not GetItemClsCompliance(Type) Then
                 Violated = True
-                If ReportGetItemClsCompliance Then OnViolation("Type {0} is not CLS-compliant.".f(Type.FullName), If(Rule = Integer.MinValue, CLSRule.Signature, Rule), [On]) 'Localize: Message
+                If ReportGetItemClsCompliance Then OnViolation(ResourcesT.CLSComplianceCheckerResources.IncompliantType.f(Type.FullName), If(Rule = Integer.MinValue, CLSRule.Signature, Rule), [On])
             End If
             If Type.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Type, [On])
             If Type.Equals(GetType(TypedReference)) Then
                 Violated = True
-                OnViolation("TypedReference is noc CLS-compliant.", If(Rule = Integer.MinValue, CLSRule.NoTypedReferences, Rule), [On]) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.TypedReference, If(Rule = Integer.MinValue, CLSRule.NoTypedReferences, Rule), [On])
             End If
             If Type.IsArray Then
                 Dim a As Array = Type.CreateInstance
                 For i As Integer = 0 To a.Rank - 1
                     If a.GetLowerBound(i) <> 0 Then
                         Violated = True
-                        OnViolation("Array must have lower bound 0 in each dimension.", If(Rule = Integer.MinValue, CLSRule.Arrays, Rule), [On]) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.Array0, If(Rule = Integer.MinValue, CLSRule.Arrays, Rule), [On])
                     End If
                 Next
             End If
             If Type.IsPointer Then
                 Violated = True
-                OnViolation("Unmanaged pointer are not CLS-compliant.", If(Rule = Integer.MinValue, CLSRule.NoUnmanagedPointer, Rule), [On]) 'LOcalize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.Pointer, If(Rule = Integer.MinValue, CLSRule.NoUnmanagedPointer, Rule), [On])
             End If
             Return Not Violated
         End Function
@@ -1095,7 +1091,7 @@ Namespace TeststT
                 Violated = Violated Or Not DoCommonTest(Field)
                 If Not GetItemClsCompliance(Field.FieldType) Then
                     Violated = True
-                    OnViolation("Field type is not CLS-compliant.", CLSRule.Signature, Field) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.FieldType, CLSRule.Signature, Field)
                 End If
                 Violated = Violated Or Not CheckTypeReference(Field.FieldType, Field, False)
                 If Field.FieldType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Field.FieldType, Field)
@@ -1107,13 +1103,13 @@ Namespace TeststT
                         Dim FieldType = Field.GetType
                         If Not FieldType.Equals(LiteralType) AndAlso Not (FieldType.IsEnum AndAlso [Enum].GetUnderlyingType(FieldType).Equals(LiteralType)) Then
                             Violated = True
-                            OnViolation("Constant value specified in metadata is not of same type as is type of the field.", CLSRule.ValueOfLiteral, Field) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.ConstantValue, CLSRule.ValueOfLiteral, Field)
                         End If
                     End If
                 End If
                 If Field.GetRequiredCustomModifiers.Length > 0 Then
                     Violated = True
-                    OnViolation("CLS does not allow required modifiers (modreqs).", CLSRule.NoModReq, Field) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.Modreqs, CLSRule.NoModReq, Field)
                 End If
             End If
             Return Not Violated
@@ -1129,16 +1125,16 @@ Namespace TeststT
             Try
                 attrs = Item.GetCustomAttributes(False)
             Catch ex As Exception
-                OnViolation("Cannot get custom attributes.", CLSRule.Error, Item, ex) 'LOcalize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.e_CustomAttributes, CLSRule.Error, Item, ex)
             End Try
             For Each attr In attrs
                 If Not TypeOf attr Is Attribute Then
                     Violated = True
-                    OnViolation("Attribute type {0} does not derive from System.Attribute.".f(attr.GetType.FullName), CLSRule.AttributeType, Item) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.NoAttributeAttribute.f(attr.GetType.FullName), CLSRule.AttributeType, Item)
                 End If
                 If Not GetItemClsCompliance(attr.GetType) Then
                     Violated = True
-                    OnViolation("CLS-inclompliant attribute {0} used.".f(attr.GetType.FullName), CLSRule.CLSIncompliantAttribute, Item) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.CLSInclompliantAttribute.f(attr.GetType.FullName), CLSRule.CLSIncompliantAttribute, Item)
                 End If
                 If attr.GetType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(attr.GetType, Item, CLSRule.CLSIncompliantAttribute)
             Next
@@ -1152,7 +1148,7 @@ Namespace TeststT
             ElseIf TypeOf Item Is ParameterInfo Then
                 cad = CustomAttributeData.GetCustomAttributes(DirectCast(Item, ParameterInfo))
             Else
-                OnViolation("Cannot check custom attribute data on {0}, becasue it does not provide access to custom attribute data.".f(Item), CLSRule.CannotAccessCustomAttributeData, Item) 'Localize: Exception
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.CustomAttributeDataInaccessible.f(Item), CLSRule.CannotAccessCustomAttributeData, Item)
             End If
             If cad IsNot Nothing Then
                 For Each cadata In cad
@@ -1161,7 +1157,7 @@ Namespace TeststT
                                 Not (param.ArgumentType.IsEnum AndAlso ( _
                                      [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Byte)) OrElse [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Int16)) OrElse [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Int32)) OrElse [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Int64)))) Then
                             Violated = True
-                            OnViolation("Custom attribute {0} constructor value is encoded using CLS-unsupported type {1}.".f(cadata.Constructor.DeclaringType.FullName, param.ArgumentType.FullName), CLSRule.AttributeValues, Item) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeParamType.f(cadata.Constructor.DeclaringType.FullName, param.ArgumentType.FullName), CLSRule.AttributeValues, Item)
                         End If
                     Next
                     For Each param In cadata.NamedArguments
@@ -1169,7 +1165,7 @@ Namespace TeststT
                               Not (param.TypedValue.ArgumentType.IsEnum AndAlso ( _
                                    [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Byte)) OrElse [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Int16)) OrElse [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Int32)) OrElse [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Int64)))) Then
                             Violated = True
-                            OnViolation("Custom attribute {0} named parameter value for {1} is encoded using CLS-unsupported type {2}.".f(cadata.Constructor.DeclaringType.FullName, param.MemberInfo.Name, param.TypedValue.ArgumentType.FullName), CLSRule.AttributeValues, Item) 'Localize: Message
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeNamedParamType.f(cadata.Constructor.DeclaringType.FullName, param.MemberInfo.Name, param.TypedValue.ArgumentType.FullName), CLSRule.AttributeValues, Item)
                         End If
                     Next
                 Next
@@ -1185,22 +1181,21 @@ Namespace TeststT
             Dim violated = Not CLSAttributeCheck(Item)
             If Not TypeOf Item Is ConstructorInfo AndAlso Not IdentifierRegEx.IsMatch(Item.Name) Then
                 violated = True
-                OnViolation("Name ""{0}"" is not CLS-compliant.".f(Item.Name), CLSRule.UnicodeIdentifiers, Item) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(Item.Name), CLSRule.UnicodeIdentifiers, Item)
             End If
             Dim Normalized = Item.Name.Normalize(Text.NormalizationForm.FormC)
             If Normalized.Length <> Item.Name.Length Then
                 violated = True
-                OnViolation("Name ""{0}"" is not stored in Unicode Normalization Form C.", CLSRule.UnicodeIdentifiers, Item) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.NameC, CLSRule.UnicodeIdentifiers, Item)
             Else
                 For i As Integer = 0 To Normalized.Length - 1
                     If AscW(Normalized(i)) <> AscW(Item.Name(i)) Then
                         violated = True
-                        OnViolation("Name ""{0}"" is not stored in Unicode Normalization Form C.", CLSRule.UnicodeIdentifiers, Item) 'Localize: Message
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.NameC, CLSRule.UnicodeIdentifiers, Item)
                         Exit For
                     End If
                 Next
             End If
-            'TODO:
             Return Not violated
         End Function
         ''' <summary>Checks uniqueness of type names amongs given enumerations</summary>
@@ -1215,7 +1210,7 @@ Namespace TeststT
                 If Not GetItemClsCompliance(Type) Then Continue For
                 If list.Contains(Type.Name.ToLowerInvariant, StringComparer.InvariantCultureIgnoreCase) Then
                     Violated = True
-                    OnViolation("Culture-invariant lowercase representation of type name ""{0}"" is not unique.".f(Type.Name), CLSRule.UnicodeIdentifiers, Type) 'Localize:Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.UniqueName.f(Type.Name), CLSRule.UnicodeIdentifiers, Type)
                 Else
                     list.Add(Type.Name.ToLowerInvariant)
                 End If
@@ -1249,11 +1244,11 @@ Namespace TeststT
 
             If Type.IsAssembly OrElse Type.IsNestedAssembly OrElse Type.IsNestedFamANDAssem OrElse Type.IsNestedPrivate Then
                 Violated = True
-                OnViolation("{0} exposes type {1}, which is not accessible from outside of assembly.", CLSRule.Visibility, Member) 'Localize: Message
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeFriend, CLSRule.Visibility, Member)
             ElseIf Type.IsNestedFamORAssem OrElse Type.IsNestedFamily Then
                 If Not Member.IsMemberOf(Type.DeclaringType) Then
                     Violated = True
-                    OnViolation("{0} exposes type {1}, which is not accessible from outisde of type {2}.".f(Member.Name, Type.FullName, Type.DeclaringType.FullName), CLSRule.Visibility, Member) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeNested.f(Member.Name, Type.FullName, Type.DeclaringType.FullName), CLSRule.Visibility, Member)
                 End If
             End If
 
@@ -1262,7 +1257,7 @@ Namespace TeststT
                 Try
                     gPars = Type.GetGenericArguments
                 Catch ex As Exception
-                    OnViolation("Cannot get generic parameters of type {0}.".f(Type), CLSRule.Error, Member, ex) 'Localize: Message
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_GenericParametersInType.f(Type), CLSRule.Error, Member, ex)
                 End Try
                 For Each gPar In gPars
                     Violated = Violated Or Not CheckTypeAcessibility(Member, gPar)
