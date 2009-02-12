@@ -367,6 +367,7 @@
     </Compile>
     <Compile Include="Special\TypeTools.vb" />
     <Compile Include="Tests\AttributeTest.vb" />
+    <Compile Include="Tests\CLSComplianceChecker.vb" />
     <Compile Include="Tests\StaticProperiesTest.Designer.vb">
       <DependentUpon>StaticProperiesTest.vb</DependentUpon>
     </Compile>

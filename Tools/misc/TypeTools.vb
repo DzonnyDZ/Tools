@@ -672,6 +672,28 @@ Public Module TypeTools
         If NullableType Is Nothing Then Throw New ArgumentNullException("NullableType")
         Return NullableType.IsGenericCreatedFrom(GetType(Nullable(Of )))
     End Function
+    ''' <summary>Gets value indicating if type is vector</summary>
+    ''' <param name="Type">Type to test</param>
+    ''' <returns>True if type represents vector (SzArray) - that is 1-dimensional array with lower bound zero.</returns>
+    ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is nul</exception>
+    ''' <version version="1.5.2">Function added</version>
+    <Extension()> Public Function IsVector(ByVal Type As Type) As Boolean
+        If Type Is Nothing Then Throw New ArgumentNullException("Type")
+        Static Method As MethodInfo
+        Static get_IsSzArray As Func(Of Type, Boolean)
+        If get_IsSzArray Is Nothing Then
+            Try
+                Method = GetType(Type).GetProperty("IsSzArray", BindingFlags.NonPublic Or BindingFlags.Instance).GetGetMethod(True)
+            Catch ex As NullReferenceException : Catch ex As Security.SecurityException : Catch ex As AmbiguousMatchException
+            End Try
+            If Method IsNot Nothing Then
+                get_IsSzArray = Function(t) Method.Invoke(t, New Object() {})
+            Else
+                get_IsSzArray = Function(t) t.IsArray AndAlso t.FullName.EndsWith("[*]")
+            End If
+        End If
+        Return get_IsSzArray.Invoke(Type)
+    End Function
 End Module
 
 

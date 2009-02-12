@@ -2,7 +2,7 @@
 Imports Tools.TestsT
 Imports System.Collections.Generic
 Imports System.Reflection
-
+''' <summary>Those tests are not unit tests at all, those tests are some additional tests verifying assembly correctness and structure etc.</summary>
 <TestClass()> _
 Public Class GeneralTestsUT
 
@@ -21,7 +21,7 @@ Public Class GeneralTestsUT
             testContextInstance = value
         End Set
     End Property
-
+#Region "Attributes"
     <TestMethod()> Public Sub AttributeTest()
         Dim at As New AttributeTest
         at.CreateStatistic = False
@@ -68,4 +68,12 @@ Public Class GeneralTestsUT
             Return obj.ToString
         End If
     End Function
+#End Region
+#Region "CLS"
+    <TestMethod()> Public Sub CLSTest()
+        'TODO:
+        Assert.Inconclusive()
+    End Sub
+
+#End Region
 End Class

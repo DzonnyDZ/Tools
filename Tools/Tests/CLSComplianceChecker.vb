@@ -1,12 +1,13 @@
 ﻿Imports System.Reflection, Tools.ExtensionsT, System.Linq, Tools.ReflectionT
 #If Config <= Nightly Then 'Stage:Nightly
-Namespace TeststT
+Namespace TestsT
     ''' <summary>Allows to check if varios items of compiled code are CLS compliant</summary>
     ''' <remarks><see cref="CLSComplianceChecker"/> does not check following CLS rules:
     ''' <list type="table"><listheader><term>Rule</term><description>How it is (not) checked</description></listheader>
     ''' <item><term>1 - <see cref="CLSComplianceChecker.CLSRule.OnlyVisible"/></term><description>Not checked - only informative.</description></item>
     ''' <item><term>3 - <see cref="CLSComplianceChecker.CLSRule.NoBoxedValueTypes"/></term><description>Not checked - there is nor way how to expose boxed type by name.</description></item>
     ''' <item><term>8 - <see cref="CLSComplianceChecker.CLSRule.Flags"/></term><description>Not checked - only informative.</description></item>
+    ''' <item><term>16 - <see cref="CLSComplianceChecker.CLSRule.Arrays"/></term><description>Checked only for 1-dimensional arrays because 2+-deimsional arrays are physicaly same type not depending on if they are 0-based or anything-other-based while 1-dimensional array type is different when it is 0-based and anytheing-else-based.</description></item>
     ''' <item><term>21 - <see cref="CLSComplianceChecker.CLSRule.CallBaseClassCTor"/></term><description>Not checked - requires eaxmining of method body</description></item>
     ''' <item><term>22 - <see cref="CLSComplianceChecker.CLSRule.NoCallsToCTor"/></term><description>Not checkd - requires examining of method body</description></item>
     ''' <item><term>23 - <see cref="CLSComplianceChecker.CLSRule.GetterAndSetterSameAccess"/></term><description>Not checked - this rule was removed from actual version of CLS</description></item>
@@ -105,6 +106,7 @@ Namespace TeststT
             ''' <summary>15: The vararg constraint is not part of the CLS, and the only calling convention supported by the CLS is the standard managed calling convention.</summary>
             CallingConvention = 15
             ''' <summary>16: Arrays shall have elements with a CLS-compliant type, and all dimensions of the array shall have lower bounds of zero. Only the fact that an item is an array and the element type of the array shall be required to distinguish between overloads. When overloading is based on two or more array types the element types shall be named types.</summary>
+            ''' <remarks>This rule is checked only for 1-dimensional arrays</remarks>
             Arrays = 16
             ''' <summary>17: Unmanaged pointer types are not CLS-compliant.</summary>
             NoUnmanagedPointer = 17
@@ -203,7 +205,7 @@ Namespace TeststT
             RaiseEvent Violation(Me, New CLSViolationEventArgs(Message, Rule, Item, Exception))
         End Sub
         ''' <summary>Regulare expersssion to check if identifier name is valied</summary>
-        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("[{Lu}{Ll}{Lt}{Lm}{Lo}{Nl}]([{Lu}{Ll}{Lt}{Lm}{Lo}{Nl}]|[{Mn}{Mc}{Nd}{Pc}{Cf}])*", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
+        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*$", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
         ''' <summary>Checks assemby for CLS compliance</summary>
         ''' <param name="Assembly">Assebly to check</param>
         ''' <returns>Ture if assembly meets CLS rules. Returns tur even when assembly is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
@@ -237,6 +239,22 @@ Namespace TeststT
             Next
             Return Violated
         End Function
+        ''' <summary>Calls <see cref="[Object].Equals"/> in exception-safe way</summary>
+        ''' <typeparam name="T">Type of objects to compare</typeparam>
+        ''' <param name="a">An object</param>
+        ''' <param name="b">An object</param>
+        ''' <returns><paramref name="a"/>.<see cref="[Object].Equals">Equals</see>(<paramref name="b"/>); false whrn it throws an exception; true when both - <paramref name="a"/> and <paramref name="b"/> are null; false when only <paramref name="a"/> is null.</returns>
+        ''' <remarks>When <paramref name="b"/> is null, it is passed to <paramref name="a"/>.<see cref="[Object].Equals">Equals</see></remarks>
+        <DebuggerStepThrough()> _
+        Private Function SafeEquals(Of T)(ByVal a As T, ByVal b As T) As Boolean
+            If a Is Nothing AndAlso b Is Nothing Then Return True
+            If a Is Nothing Then Return False
+            Try
+                Return a.Equals(b)
+            Catch
+                Return False
+            End Try
+        End Function
 
         ''' <summary>Test if item is CLS - Compliant</summary>
         ''' <param name="Item">Item to test. Should be <see cref="Assembly"/>, <see cref="[Module]"/> or <see cref="MemberInfo"/></param>
@@ -249,7 +267,7 @@ Namespace TeststT
             While TypeOf Item Is Type AndAlso (DirectCast(Item, Type).IsArray OrElse DirectCast(Item, Type).IsByRef OrElse DirectCast(Item, Type).IsPointer)
                 Item = DirectCast(Item, Type).GetElementType
             End While
-            If Item.Equals(GetType(TypedReference)) Then Return False
+            If SafeEquals(Item, GetType(TypedReference)) Then Return False
             Dim attrs As CLSCompliantAttribute()
             Try
                 attrs = Item.GetAttributes(Of CLSCompliantAttribute)(False)
@@ -286,7 +304,7 @@ Namespace TeststT
         ''' <exception cref="ArgumentNullException"><paramref name="Item"/> is null</exception>
         Public Function CheckAttributes(ByVal Item As ICustomAttributeProvider) As Boolean
             If Item Is Nothing Then Throw New ArgumentNullException("Item")
-            Dim attrs As Attribute()
+            Dim attrs As Object()
             Try
                 attrs = Item.GetCustomAttributes(False)
             Catch ex As Exception
@@ -804,7 +822,7 @@ Namespace TeststT
                     End If
                     gpars = New ParameterInfo() {}
                     Try
-                        gpars = Setter.GetParameters
+                        gpars = Getter.GetParameters
                     Catch ex As Exception
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.ParametersInGetter, CLSRule.Error, Getter)
                     End Try
@@ -1064,14 +1082,9 @@ Namespace TeststT
                 Violated = True
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.TypedReference, If(Rule = Integer.MinValue, CLSRule.NoTypedReferences, Rule), [On])
             End If
-            If Type.IsArray Then
-                Dim a As Array = Type.CreateInstance
-                For i As Integer = 0 To a.Rank - 1
-                    If a.GetLowerBound(i) <> 0 Then
-                        Violated = True
-                        OnViolation(ResourcesT.CLSComplianceCheckerResources.Array0, If(Rule = Integer.MinValue, CLSRule.Arrays, Rule), [On])
-                    End If
-                Next
+            If Type.IsArray AndAlso Type.GetArrayRank > 1 AndAlso Not Type.IsVector Then
+                Violated = True
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.Array0, If(Rule = Integer.MinValue, CLSRule.Arrays, Rule), [On])
             End If
             If Type.IsPointer Then
                 Violated = True
