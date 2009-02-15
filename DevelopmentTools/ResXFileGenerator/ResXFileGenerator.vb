@@ -102,7 +102,7 @@ Module ResXFileGenerator
             Console.WriteLine(ex.Message)
             Environment.Exit(51)
         End Try
-        'Write
+        'Alter result
         If pOutput(0) = IntPtr.Zero Then
             Console.WriteLine(My.Resources.NoOutputWasGenerated)
             Environment.Exit(101)
@@ -135,8 +135,6 @@ Module ResXFileGenerator
             str1 = str
             str2 = Nothing
         End If
-
-
         Dim lines1 As List(Of String)
         Dim lines2 As List(Of String) = Nothing
         lines1 = New List(Of String)(str1.Split(New String() {NL}, StringSplitOptions.None))
@@ -170,12 +168,26 @@ Module ResXFileGenerator
             End If
         Next
         str1 = String.Join(NL, lines1.ToArray)
+        'Compare
+        Dim Write1 As Boolean = False
+        Dim Write2 As Boolean = False
+        If IO.File.Exists(Outfile) Then
+            Try : Write1 = My.Computer.FileSystem.ReadAllText(Outfile) <> str1
+            Catch : Write1 = True
+            End Try
+        Else : Write1 = True
+        End If
+        If lines2 IsNot Nothing Then str2 = String.Join(NL, lines2.ToArray)
+        If str2 IsNot Nothing AndAlso IO.File.Exists(Outfile2) Then
+            Try : Write2 = My.Computer.FileSystem.ReadAllText(Outfile2) <> str2
+            Catch : Write2 = True
+            End Try
+        Else : Write2 = str2 IsNot Nothing
+        End If
+        'Write
         Try
-            My.Computer.FileSystem.WriteAllText(Outfile, str1, False)
-            If lines2 IsNot Nothing Then
-                str2 = String.Join(NL, lines2.ToArray)
-                My.Computer.FileSystem.WriteAllText(Outfile2, str2, False)
-            End If
+            If Write1 Then My.Computer.FileSystem.WriteAllText(Outfile, str1, False)
+            If Write2 Then My.Computer.FileSystem.WriteAllText(Outfile2, str2, False)
         Catch ex As Exception When TypeOf ex Is IO.FileNotFoundException OrElse TypeOf ex Is IO.DirectoryNotFoundException OrElse TypeOf ex Is IO.IOException OrElse TypeOf ex Is IO.PathTooLongException OrElse TypeOf ex Is NotSupportedException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is UnauthorizedAccessException
             Console.WriteLine("{0}: {1}", ex.GetType.Name, ex.Message)
             Environment.Exit(105)
@@ -196,17 +208,17 @@ Module ResXFileGenerator
     Private Class MyTypeResolutionService
         Implements ITypeResolutionService
 
-        ''' <summary>                    Gets the requested assembly.                </summary>
-        ''' <returns>                    An instance of the requested assembly, or null if no assembly can be located.                </returns>
-        ''' <param name="name">                    The name of the assembly to retrieve.                 </param>
+        ''' <summary>Gets the requested assembly.</summary>
+        ''' <returns>An instance of the requested assembly, or null if no assembly can be located.</returns>
+        ''' <param name="name">The name of the assembly to retrieve.</param>
         Public Function GetAssembly(ByVal name As System.Reflection.AssemblyName) As System.Reflection.Assembly Implements System.ComponentModel.Design.ITypeResolutionService.GetAssembly
             Return GetAssembly(name, True)
         End Function
 
-        ''' <summary>                    Gets the requested assembly.                </summary>
-        ''' <returns>                    An instance of the requested assembly, or null if no assembly can be located.                </returns>
-        ''' <param name="name">                    The name of the assembly to retrieve.                 </param>
-        ''' <param name="throwOnError">true if this method should throw an exception if the assembly cannot be located; otherwise, false, and this method returns null if the assembly cannot be located.                 </param>
+        ''' <summary>Gets the requested assembly.</summary>
+        ''' <returns>An instance of the requested assembly, or null if no assembly can be located.</returns>
+        ''' <param name="name">The name of the assembly to retrieve.</param>
+        ''' <param name="throwOnError">true if this method should throw an exception if the assembly cannot be located; otherwise, false, and this method returns null if the assembly cannot be located.</param>
         Public Function GetAssembly(ByVal name As System.Reflection.AssemblyName, ByVal throwOnError As Boolean) As System.Reflection.Assembly Implements System.ComponentModel.Design.ITypeResolutionService.GetAssembly
             Try
                 Return Assembly.Load(name)
@@ -216,39 +228,39 @@ Module ResXFileGenerator
             End Try
         End Function
 
-        ''' <summary>                    Gets the path to the file from which the assembly was loaded.                </summary>
-        ''' <returns>                    The path to the file from which the assembly was loaded.                </returns>
-        ''' <param name="name">                    The name of the assembly.                 </param>
+        ''' <summary>Gets the path to the file from which the assembly was loaded.</summary>
+        ''' <returns>The path to the file from which the assembly was loaded.</returns>
+        ''' <param name="name">The name of the assembly.</param>
         Public Function GetPathOfAssembly(ByVal name As System.Reflection.AssemblyName) As String Implements System.ComponentModel.Design.ITypeResolutionService.GetPathOfAssembly
             Return Assembly.Load(name).ManifestModule.FullyQualifiedName
         End Function
 
-        ''' <summary>                    Loads a type with the specified name.                </summary>
-        ''' <returns>                    An instance of <see cref="T:System.Type" /> that corresponds to the specified name, or null if no type can be found.                </returns>
-        ''' <param name="name">                    The name of the type. If the type name is not a fully qualified name that indicates an assembly, this service will search its internal set of referenced assemblies.                 </param>
+        ''' <summary>Loads a type with the specified name.</summary>
+        ''' <returns>An instance of <see cref="T:System.Type" /> that corresponds to the specified name, or null if no type can be found.</returns>
+        ''' <param name="name">The name of the type. If the type name is not a fully qualified name that indicates an assembly, this service will search its internal set of referenced assemblies.</param>
         Public Overloads Function [GetType](ByVal name As String) As System.Type Implements System.ComponentModel.Design.ITypeResolutionService.GetType
             Return Type.GetType(name)
         End Function
 
-        ''' <summary>                    Loads a type with the specified name.                </summary>
-        ''' <returns>                    An instance of <see cref="T:System.Type" /> that corresponds to the specified name, or null if no type can be found.                </returns>
-        ''' <param name="name">                    The name of the type. If the type name is not a fully qualified name that indicates an assembly, this service will search its internal set of referenced assemblies.                 </param>
-        ''' <param name="throwOnError">true if this method should throw an exception if the assembly cannot be located; otherwise, false, and this method returns null if the assembly cannot be located.                 </param>
+        ''' <summary>Loads a type with the specified name.</summary>
+        ''' <returns>An instance of <see cref="T:System.Type" /> that corresponds to the specified name, or null if no type can be found.</returns>
+        ''' <param name="name">The name of the type. If the type name is not a fully qualified name that indicates an assembly, this service will search its internal set of referenced assemblies.</param>
+        ''' <param name="throwOnError">true if this method should throw an exception if the assembly cannot be located; otherwise, false, and this method returns null if the assembly cannot be located.</param>
         Public Overloads Function [GetType](ByVal name As String, ByVal throwOnError As Boolean) As System.Type Implements System.ComponentModel.Design.ITypeResolutionService.GetType
             Return Type.GetType(name, throwOnError)
         End Function
 
-        ''' <summary>                    Loads a type with the specified name.                </summary>
-        ''' <returns>                    An instance of <see cref="T:System.Type" /> that corresponds to the specified name, or null if no type can be found.                </returns>
-        ''' <param name="name">                    The name of the type. If the type name is not a fully qualified name that indicates an assembly, this service will search its internal set of referenced assemblies.                 </param>
-        ''' <param name="throwOnError">true if this method should throw an exception if the assembly cannot be located; otherwise, false, and this method returns null if the assembly cannot be located.                 </param>
-        ''' <param name="ignoreCase">true to ignore case when searching for types; otherwise, false.                 </param>
+        ''' <summary>Loads a type with the specified name.</summary>
+        ''' <returns>An instance of <see cref="T:System.Type" /> that corresponds to the specified name, or null if no type can be found.</returns>
+        ''' <param name="name">The name of the type. If the type name is not a fully qualified name that indicates an assembly, this service will search its internal set of referenced assemblies.</param>
+        ''' <param name="throwOnError">true if this method should throw an exception if the assembly cannot be located; otherwise, false, and this method returns null if the assembly cannot be located.</param>
+        ''' <param name="ignoreCase">true to ignore case when searching for types; otherwise, false.</param>
         Public Overloads Function [GetType](ByVal name As String, ByVal throwOnError As Boolean, ByVal ignoreCase As Boolean) As System.Type Implements System.ComponentModel.Design.ITypeResolutionService.GetType
             Return Type.GetType(name, throwOnError, ignoreCase)
         End Function
 
-        ''' <summary>                    Adds a reference to the specified assembly.                </summary>
-        ''' <param name="name">                    An <see cref="T:System.Reflection.AssemblyName" /> that indicates the assembly to reference.                 </param>
+        ''' <summary>Adds a reference to the specified assembly.</summary>
+        ''' <param name="name">An <see cref="T:System.Reflection.AssemblyName" /> that indicates the assembly to reference.</param>
         ''' <remarks>Does  nothing</remarks>
         Public Sub ReferenceAssembly(ByVal name As System.Reflection.AssemblyName) Implements System.ComponentModel.Design.ITypeResolutionService.ReferenceAssembly
             'Do nothing

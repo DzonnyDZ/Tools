@@ -1317,4 +1317,7 @@
   <data name="MustBeGenericTypeInstance" xml:space="preserve">
     <value>{0} must be generic type instance.</value>
   </data>
+  <data name="ParentTypeOf0MustBe1" xml:space="preserve">
+    <value>Parent type of {0} must be {1}</value>
+  </data>
 </root>

@@ -36,14 +36,15 @@ Public Module TypeTools
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing OrElse attrs.Length = 0 Then Return Nothing Else Return attrs(0)
     End Function
+    'TODO: There is more than one attribute of type attributeType defined on this member.
     ''' <summary>Gets all <see cref="Attribute"/>s of specified type from specified <see cref="Reflection.ICustomAttributeProvider"/></summary>
     ''' <param name="From"><see cref="Reflection.ICustomAttributeProvider"/> to get <see cref="Attribute"/> from</param>
     ''' <param name="Inherit">When true, look up the hierarchy chain for the inherited custom attribute.</param>
     ''' <returns>All attributes returned by <see cref="Reflection.ICustomAttributeProvider.GetCustomAttributes"/> or null if no attribute is returned</returns>
     ''' <typeparam name="T">Type of <see cref="Attribute"/> to get</typeparam>
+    ''' <exception cref="TypeLoadException">The custom attribute type cannot be loaded.</exception>
     <Extension()> _
     Public Function GetAttributes(Of T As Attribute)(ByVal From As Reflection.ICustomAttributeProvider, Optional ByVal Inherit As Boolean = True) As T()
-
         Dim attrs As Object() = From.GetCustomAttributes(GetType(T), Inherit)
         If attrs Is Nothing Then Return Nothing
         Return (From Attr In attrs Select DirectCast(Attr, T)).ToArray

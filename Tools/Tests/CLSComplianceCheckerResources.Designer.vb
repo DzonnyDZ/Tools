@@ -858,7 +858,7 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Enum member literals must be of same type as is underlying type of enum.'.
+        '''Looks up a localized string similar to 'Enum member literals must be of same type as is enum itself.'.
         '''</summary>
         Friend Shared ReadOnly Property TypeOfEnumMember() As String
             Get
@@ -881,6 +881,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property UniqueSignature() As String
             Get
                 Return ResourceManager.GetString("UniqueSignature", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'VarArgs are not CLS-compliant.'.
+        '''</summary>
+        Friend Shared ReadOnly Property VarArgsAreNotCLSCompliant() As String
+            Get
+                Return ResourceManager.GetString("VarArgsAreNotCLSCompliant", _resourceCulture)
             End Get
         End Property
         
@@ -1621,6 +1630,14 @@ Namespace ResourcesT
         '''<returns>The UniqueSignature property value.</returns>
         Friend Shared Function UniqueSignatureFormat() As String
             Return UniqueSignature
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the VarArgsAreNotCLSCompliant property value.
+        '''</summary>
+        '''<returns>The VarArgsAreNotCLSCompliant property value.</returns>
+        Friend Shared Function VarArgsAreNotCLSCompliantFormat() As String
+            Return VarArgsAreNotCLSCompliant
         End Function
     End Class
 End Namespace

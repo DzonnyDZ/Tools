@@ -193,7 +193,7 @@
     <value>Enum member literals must be static.</value>
   </data>
   <data name="TypeOfEnumMember" xml:space="preserve">
-    <value>Enum member literals must be of same type as is underlying type of enum.</value>
+    <value>Enum member literals must be of same type as is enum itself.</value>
   </data>
   <data name="InterfaceCLSIncompliantMember" xml:space="preserve">
     <value>Inerface shall not require CLS-incompliant members to be implemented in order to implement it.</value>
@@ -383,5 +383,8 @@
   </data>
   <data name="e_GenericParametersInType" xml:space="preserve">
     <value>Cannot get generic parameters of type {0}.</value>
+  </data>
+  <data name="VarArgsAreNotCLSCompliant" xml:space="preserve">
+    <value>VarArgs are not CLS-compliant.</value>
   </data>
 </root>

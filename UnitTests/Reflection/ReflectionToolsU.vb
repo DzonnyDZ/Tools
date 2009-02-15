@@ -94,6 +94,10 @@ Namespace ReflectionUT
                 Get
                 End Get
             End Property
+            Protected Sub MethodProtected()
+            End Sub
+            Private Sub MethodPrivate()
+            End Sub
         End Class
         Private Class DerivedClass1
             Inherits BaseClass
@@ -127,7 +131,7 @@ Namespace ReflectionUT
         End Class
 
 
-        <TestMethod()> Public Sub GetBaseClassMethodU() 'TODO: IMplements test
+        <TestMethod()> Public Sub GetBaseClassMethodU()
             Dim BaseClass = GetType(BaseClass)
             Dim DerivedClass1 = GetType(DerivedClass1)
             Dim DerivedClass2 = GetType(DerivedClass2)
@@ -169,5 +173,434 @@ Namespace ReflectionUT
 
         End Sub
 
+        Private Interface Interface1
+        End Interface
+        Private Class Class1 : Implements Interface1
+        End Class
+        Private Enum Enum1 As Byte
+            [__]
+        End Enum
+        Private Class GenericBaseClass(Of T As BaseClass)
+        End Class
+        Private Class GenericDerivedClass(Of T As BaseClass) : Inherits GenericBaseClass(Of T)
+        End Class
+
+        Private Class GenericBaseClass(Of T1, T2, T3)
+        End Class
+        Private Class GenericDerivedClass(Of T1, T2, T3)
+            Inherits GenericBaseClass(Of T3, Long, T2)
+        End Class
+        Private Class NonGenericDerivedClass
+            Inherits GenericDerivedClass(Of Long, Long, GenericBaseClass(Of Long(,,,,), IntPtr, Char?))
+        End Class
+
+        Private Class AnotherGenericBaseClass(Of T1, T2)
+        End Class
+        Private Class AnotherGenericDerivedClass(Of T1, T2) : Inherits AnotherGenericBaseClass(Of T1, T2)
+        End Class
+
+        <TestMethod()> _
+        Public Sub IsBaseClassOfU()
+            Assert.IsTrue(GetType(BaseClass).IsBaseClassOf(GetType(DerivedClass3)))
+            Assert.IsTrue(GetType(BaseClass).IsBaseClassOf(GetType(DerivedClass2)))
+            Assert.IsTrue(GetType(BaseClass).IsBaseClassOf(GetType(DerivedClass1)))
+            Assert.IsTrue(GetType(Object).IsBaseClassOf(GetType(DerivedClass2)))
+            Assert.IsFalse(GetType(DerivedClass2).IsBaseClassOf(GetType(DerivedClass1)))
+            Assert.IsFalse(GetType(ReflectionToolsUT).IsBaseClassOf(GetType(BaseClass)))
+            Assert.IsFalse(GetType(Interface1).IsBaseClassOf(GetType(Class1)))
+            Assert.IsFalse(GetType(Byte).IsBaseClassOf(GetType(Enum1)))
+            Assert.IsTrue(GetType([Enum]).IsBaseClassOf(GetType(Enum1)))
+            Assert.IsTrue(GetType(ValueType).IsBaseClassOf(GetType([Enum])))
+            Assert.IsTrue(GetType(BaseClass).IsBaseClassOf(GetType(GenericBaseClass(Of )).GetGenericArguments()(0)))
+            Assert.IsFalse(GetType(BaseClass).IsBaseClassOf(GetType(BaseClass)))
+            Assert.IsTrue(GetType(GenericBaseClass(Of )).IsBaseClassOf(GetType(GenericDerivedClass(Of ))))
+            Assert.IsTrue(GetType(GenericBaseClass(Of DerivedClass3)).IsBaseClassOf(GetType(GenericDerivedClass(Of DerivedClass3))))
+            Assert.IsTrue(GetType(GenericBaseClass(Of )).IsBaseClassOf(GetType(GenericDerivedClass(Of DerivedClass3))))
+            Assert.IsFalse(GetType(GenericBaseClass(Of DerivedClass3)).IsBaseClassOf(GetType(GenericDerivedClass(Of ))))
+
+            Assert.IsTrue(GetType(GenericBaseClass(Of ,,)).IsBaseClassOf(GetType(GenericDerivedClass(Of ,,))))
+            Assert.IsTrue(GetType(GenericBaseClass(Of ,,)).IsBaseClassOf(GetType(GenericDerivedClass(Of Long, String, TimeSpan))))
+            Assert.IsFalse(GetType(GenericDerivedClass(Of Long, String, TimeSpan)).IsBaseClassOf(GetType(GenericBaseClass(Of ,,))))
+            Assert.IsTrue(GetType(GenericBaseClass(Of ,,)).IsBaseClassOf(GetType(NonGenericDerivedClass)))
+            Assert.IsTrue(GetType(GenericDerivedClass(Of ,,)).IsBaseClassOf(GetType(NonGenericDerivedClass)))
+            Assert.IsTrue(GetType(GenericDerivedClass(Of Long, Long, GenericBaseClass(Of Long(,,,,), IntPtr, Char?))).IsBaseClassOf(GetType(NonGenericDerivedClass)))
+            Assert.IsTrue(GetType(GenericBaseClass(Of GenericBaseClass(Of Long(,,,,), IntPtr, Char?), Long, Long)).IsBaseClassOf(GetType(NonGenericDerivedClass)))
+            Assert.IsTrue(GetType(AnotherGenericBaseClass(Of ,)).MakeGenericType(GetType(AnotherGenericBaseClass(Of ,)).GetGenericArguments(0), GetType(Integer)).IsBaseClassOf(GetType(AnotherGenericDerivedClass(Of Byte, Integer))))
+        End Sub
+
+        <TestMethod()> _
+        Public Sub IsDerivedFromU()
+            Assert.IsTrue(GetType(DerivedClass3).IsDerivedFrom(GetType(BaseClass)))
+            Assert.IsTrue(GetType(DerivedClass2).IsDerivedFrom(GetType(BaseClass)))
+            Assert.IsTrue(GetType(DerivedClass1).IsDerivedFrom(GetType(BaseClass)))
+            Assert.IsTrue(GetType(DerivedClass2).IsDerivedFrom(GetType(Object)))
+            Assert.IsFalse(GetType(DerivedClass1).IsDerivedFrom(GetType(DerivedClass2)))
+            Assert.IsFalse(GetType(BaseClass).IsDerivedFrom(GetType(ReflectionToolsUT)))
+            Assert.IsFalse(GetType(Class1).IsDerivedFrom(GetType(Interface1)))
+            Assert.IsFalse(GetType(Enum1).IsDerivedFrom(GetType(Byte)))
+            Assert.IsTrue(GetType(Enum1).IsDerivedFrom(GetType([Enum])))
+            Assert.IsTrue(GetType([Enum]).IsDerivedFrom(GetType(ValueType)))
+            Assert.IsTrue(GetType(GenericBaseClass(Of )).GetGenericArguments()(0).IsDerivedFrom(GetType(BaseClass)))
+            Assert.IsFalse(GetType(BaseClass).IsDerivedFrom(GetType(BaseClass)))
+            Assert.IsTrue(GetType(GenericDerivedClass(Of )).IsDerivedFrom(GetType(GenericBaseClass(Of ))))
+            Assert.IsTrue(GetType(GenericDerivedClass(Of DerivedClass3)).IsDerivedFrom(GetType(GenericBaseClass(Of DerivedClass3))))
+            Assert.IsTrue(GetType(GenericDerivedClass(Of DerivedClass3)).IsDerivedFrom(GetType(GenericBaseClass(Of ))))
+            Assert.IsFalse(GetType(GenericDerivedClass(Of )).IsDerivedFrom(GetType(GenericBaseClass(Of DerivedClass3))))
+        End Sub
+
+        Private MustInherit Class TestClass
+            Private Sub PrivateSub()
+            End Sub
+            Protected MustOverride Sub ProtectedSub()
+            Public MustOverride Sub PublicSub()
+            Friend MustOverride Sub FriendSub()
+            Protected Friend MustOverride Sub ProtectedFriendSub()
+
+            Private Property PrivateProperty() As Object
+                Get
+                    Return Nothing
+                End Get
+                Set(ByVal value As Object)
+                End Set
+            End Property
+            Protected MustOverride Property ProtectedProperty() As Object
+            Public MustOverride Property PublicProperty() As Object
+            Friend MustOverride Property FriendProperty() As Object
+            Protected Friend MustOverride Property ProtectedFriendProperty() As Object
+
+            Private Event PrivateEvent()
+            Protected Event ProtectedEvent()
+            Public Event PublicEvent()
+            Friend Event FriendEvent()
+            Protected Friend Event ProtectedFriendEvent()
+
+            Private PrivateField%
+            Protected ProtectedField%
+            Public PublicField%
+            Friend FriendField%
+            Protected Friend ProtectedFriendField%
+
+            Private Delegate Sub PrivateType()
+            Protected Delegate Sub ProtectedType()
+            Public Delegate Sub PublicType()
+            Friend Delegate Sub FriendType()
+            Protected Friend Delegate Sub ProtectedFriendType()
+        End Class
+
+    End Class
+    <CLSCompliant(False), ComponentModel.EditorBrowsable(ComponentModel.EditorBrowsableState.Never)> _
+    Public Delegate Sub _TestDelegate_Public()
+    <ComponentModel.EditorBrowsable(ComponentModel.EditorBrowsableState.Never)> _
+    Friend Delegate Sub _TestDelegate_Friend()
+End Namespace
+Namespace ReflectionUT
+    Partial Class ReflectionToolsUT
+        <TestMethod()> _
+        Public Sub VisibilityU()
+            Assert.AreEqual(Visibility.Private, GetType(TestClass).GetMember("PrivateSub", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Family, GetType(TestClass).GetMember("ProtectedSub", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Public, GetType(TestClass).GetMember("PublicSub", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClass).GetMember("FriendSub", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClass).GetMember("ProtectedFriendSub", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+
+            Assert.AreEqual(Visibility.Private, GetType(TestClass).GetMember("PrivateProperty", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Family, GetType(TestClass).GetMember("ProtectedProperty", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Public, GetType(TestClass).GetMember("PublicProperty", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClass).GetMember("FriendProperty", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClass).GetMember("ProtectedFriendProperty", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+
+            Assert.AreEqual(Visibility.Private, GetType(TestClass).GetMember("PrivateEvent", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Family, GetType(TestClass).GetMember("ProtectedEvent", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Public, GetType(TestClass).GetMember("PublicEvent", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClass).GetMember("FriendEvent", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClass).GetMember("ProtectedFriendEvent", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+
+            Assert.AreEqual(Visibility.Private, GetType(TestClass).GetMember("PrivateField", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Family, GetType(TestClass).GetMember("ProtectedField", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Public, GetType(TestClass).GetMember("PublicField", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClass).GetMember("FriendField", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClass).GetMember("ProtectedFriendField", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+
+            Assert.AreEqual(Visibility.Private, GetType(TestClass).GetMember("PrivateType", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Family, GetType(TestClass).GetMember("ProtectedType", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Public, GetType(TestClass).GetMember("PublicType", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClass).GetMember("FriendType", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClass).GetMember("ProtectedFriendType", Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)(0).Visibility)
+            Assert.AreEqual(Visibility.Public, GetType(_TestDelegate_Public).Visibility)
+            Assert.AreEqual(Visibility.Assembly, GetType(_TestDelegate_Friend).Visibility)
+        End Sub
+        <ComponentModel.EditorBrowsable(ComponentModel.EditorBrowsableState.Never)> _
+        Public Class TestClassWithManyMembers
+            Partial Private Class PrivateClass
+                Private PrivateField%
+                Protected FamilyField%
+                Public PublicField%
+                Friend AssemblyField%
+                Protected Friend FamORAssemField%
+                Private Class ClassInPrivateClass
+                End Class
+            End Class
+            Partial Protected Class FamilyClass
+                Private PrivateField%
+                Protected FamilyField%
+                Public PublicField%
+                Friend AssemblyField%
+                Protected Friend FamORAssemField%
+            End Class
+            Partial Public Class PublicClass
+                Private PrivateField%
+                Protected FamilyField%
+                Public PublicField%
+                Friend AssemblyField%
+                Protected Friend FamORAssemField%
+            End Class
+            Partial Friend Class AssemblyClass
+                Private PrivateField%
+                Protected FamilyField%
+                Public PublicField%
+                Friend AssemblyField%
+                Protected Friend FamORAssemField%
+            End Class
+            Partial Protected Friend Class FamORAssemClass
+                Private PrivateField%
+                Protected FamilyField%
+                Public PublicField%
+                Friend AssemblyField%
+                Protected Friend FamORAssemField%
+            End Class
+        End Class
+
+        <TestMethod()> Public Sub HowIsSeenBy()
+            'Private    Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Private    Family
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Private    Public
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Private    Assembly
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Private    FamORAssem
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Family     Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Family     Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Family     Public
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Family     Assembly
+            Assert.AreEqual(Visibility.FamANDAssem, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Family     FamORAssem
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Public     Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Public     Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Public     Public
+            Assert.AreEqual(Visibility.Public, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Public     Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Public     FamORAssem
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Assembly   Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Assembly   Family
+            Assert.AreEqual(Visibility.FamANDAssem, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Assembly   Public
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Assembly   Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'Assembly   FamORAssem
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'FamORAssem Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'FamORAssem Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'FamORAssem Public
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'FamORAssem Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+            'FamORAssem FamORAssem
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(Nothing))
+
+            'Private    Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Private    Family
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Private    Public
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Private    Assembly
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Private    FamORAssem
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Family     Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Family     Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Family     Public
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Family     Assembly
+            Assert.AreEqual(Visibility.FamANDAssem, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Family     FamORAssem
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Public     Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Public     Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Public     Public
+            Assert.AreEqual(Visibility.Public, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Public     Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Public     FamORAssem
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Assembly   Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Assembly   Family
+            Assert.AreEqual(Visibility.FamANDAssem, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Assembly   Public
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Assembly   Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'Assembly   FamORAssem
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'FamORAssem Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'FamORAssem Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'FamORAssem Public
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'FamORAssem Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+            'FamORAssem FamORAssem
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers)))
+
+            'Private    Private
+            Assert.AreEqual(Visibility.Private, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    Family
+            Assert.AreEqual(Visibility.Family, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    Public
+            Assert.AreEqual(Visibility.Public, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    Assembly
+            Assert.AreEqual(Visibility.Assembly, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    FamORAssem
+            Assert.AreEqual(Visibility.FamORAssem, GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).HowIsSeenBy(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+        End Sub
+
+        <TestMethod()> Public Sub CanBeSeenFrom()
+            'Private    Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Private    Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Private    Public
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Private    Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Private    FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Family     Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Family     Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Family     Public
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Family     Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Family     FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Public     Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Public     Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Public     Public
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Public     Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Public     FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Assembly   Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Assembly   Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Assembly   Public
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Assembly   Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'Assembly   FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'FamORAssem Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'FamORAssem Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'FamORAssem Public
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'FamORAssem Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+            'FamORAssem FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(Nothing))
+
+            'Private    Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Private    Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Private    Public
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Private    Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Private    FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Family     Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Family     Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Family     Public
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Family     Assembly
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Family     FamORAssem
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamilyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Public     Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Public     Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Public     Public
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Public     Assembly
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Public     FamORAssem
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PublicClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Assembly   Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Assembly   Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Assembly   Public
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Assembly   Assembly
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'Assembly   FamORAssem
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("AssemblyClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'FamORAssem Private
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'FamORAssem Family
+            Assert.IsFalse(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'FamORAssem Public
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'FamORAssem Assembly
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+            'FamORAssem FamORAssem
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("FamORAssemClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers)))
+
+            'Private    Private
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PrivateField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    Family
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamilyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    Public
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("PublicField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    Assembly
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("AssemblyField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+            'Private    FamORAssem
+            Assert.IsTrue(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetField("FamORAssemField", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Static).CanBeSeenFrom(GetType(TestClassWithManyMembers).GetNestedType("PrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic).GetNestedType("ClassInPrivateClass", Reflection.BindingFlags.Public Or Reflection.BindingFlags.NonPublic)))
+
+            Assert.IsTrue(GetType(BaseClass).GetMethod("MethodProtected", Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Static Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public).CanBeSeenFrom(GetType(DerivedClass3)))
+            Assert.IsFalse(GetType(BaseClass).GetMethod("MethodPrivate", Reflection.BindingFlags.NonPublic Or Reflection.BindingFlags.Static Or Reflection.BindingFlags.Instance Or Reflection.BindingFlags.Public).CanBeSeenFrom(GetType(DerivedClass3)))
+        End Sub
     End Class
 End Namespace

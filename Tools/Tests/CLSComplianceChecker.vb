@@ -226,7 +226,7 @@ Namespace TestsT
             Catch ex As Exception
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypeInAssembly, CLSRule.Error, Assembly, ex)
             End Try
-            CheckTypeNames(types)
+            CheckTypeNames(types, True)
             'Check modules
             Dim Modules() As [Module] = {}
             Try
@@ -385,7 +385,7 @@ Namespace TestsT
             Catch ex As Exception
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypesInModule_some, CLSRule.Error, [Module], ex)
             End Try
-            CheckTypeNames(types)
+            CheckTypeNames(types, True)
             violated = violated Or Not CheckInternal([Module])
             Return Not violated
         End Function
@@ -407,7 +407,7 @@ Namespace TestsT
             Try
                 Types = [Module].GetTypes()
             Catch ex As ReflectionTypeLoadException
-                Types = From type In ex.Types Where type IsNot Nothing
+                Types = (From type In ex.Types Where type IsNot Nothing).ToArray
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypesInModule_some, CLSRule.Error, [Module], ex)
             Catch ex As Exception
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.e_TypesInModule, CLSRule.Error, [Module], ex)
@@ -474,7 +474,7 @@ Namespace TestsT
                     OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericTypeParametersCount, CLSRule.NestedGenericTypes, Type)
                 End If
                 If Type.IsGenericTypeDefinition AndAlso Not Type.IsNested Then
-                    If Not Type.Name.EndsWith(String.Format("`{0}", Globalization.CultureInfo.InvariantCulture, Type.GetGenericArguments.Count)) Then
+                    If Not Type.Name.EndsWith(String.Format(Globalization.CultureInfo.InvariantCulture, "`{0}", Type.GetGenericArguments.Count)) Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.NameOfGenericType, CLSRule.GenericTypeName, Type)
                     End If
@@ -482,7 +482,7 @@ Namespace TestsT
                 If Type.IsGenericType AndAlso Type.IsNested Then
                     Dim DGA = Type.DeclaringType.GetGenericArguments
                     Dim MyGA = Type.GetGenericArguments
-                    If MyGA.Length > DGA.Length AndAlso Not Type.Name.EndsWith(String.Format("`{0}", Globalization.CultureInfo.InvariantCulture, MyGA.Length - DGA.Length)) Then
+                    If MyGA.Length > DGA.Length AndAlso Not Type.Name.EndsWith(String.Format(Globalization.CultureInfo.InvariantCulture, "`{0}", MyGA.Length - DGA.Length)) Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.NameOfNestedGenericType, CLSRule.GenericTypeName, Type)
                     End If
@@ -493,12 +493,12 @@ Namespace TestsT
                     Dim MyGA = Type.GetGenericArguments
                     For i As Integer = 0 To DGA.Length - 1
                         Dim DGCs = DGA(i).GetGenericParameterConstraints
-                        Dim MyGCs = DGCs(i).GetGenericParameterConstraints
+                        Dim MyGCs = MyGA(i).GetGenericParameterConstraints
                         If DGCs.Length > 0 Then
                             For Each DGC In DGCs
-                                If Not MyGCs.Contains(DGC) Then
+                                If Not MyGCs.Contains(GenericConstraintFromParentToNested(DGC, Type.DeclaringType, Type)) Then
                                     Violated = True
-                                    OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericConstraint.f(MyGA(i).FullName, Type.FullName, DGC.FullName), CLSRule.NestedGenricTypeConstraints, MyGA(i))
+                                    OnViolation(ResourcesT.CLSComplianceCheckerResources.NestedGenericConstraint.f(If(MyGA(i).FullName, MyGA(i).Name), If(Type.FullName, Type.Name), If(DGC.FullName, DGC.Name)), CLSRule.NestedGenricTypeConstraints, MyGA(i))
                                 End If
                             Next
                         End If
@@ -535,9 +535,11 @@ Namespace TestsT
                 Dim MemberSignatures As New List(Of MemberCLSSignature)
                 Dim ValueFound = False 'For enums only
                 For Each Member In Members
-                    If Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly Then _
+                    Dim MemberVisible = Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly
+                    Dim MemberCompliant = GetItemClsCompliance(Member)
+                    If MemberVisible Then _
                         Violated = Violated Or Not CheckInternal(Member)
-                    If Member.IsPublic OrElse Member.IsFamily OrElse Member.IsFamilyOrAssembly AndAlso GetItemClsCompliance(Member) Then
+                    If MemberVisible AndAlso MemberCompliant Then
                         Dim ms As New MemberCLSSignature(Member)
                         If MemberSignatures.Contains(ms) Then
                             Violated = True
@@ -567,7 +569,7 @@ Namespace TestsT
                             Else
                                 With DirectCast(Member, FieldInfo)
                                     If Not .IsLiteral Then
-                                        If Not .IsStatic OrElse .Name <> "value__" OrElse ((.Attributes And FieldAttributes.RTSpecialName) <> FieldAttributes.RTSpecialName) Then
+                                        If .IsStatic OrElse .Name <> "value__" OrElse ((.Attributes And FieldAttributes.RTSpecialName) <> FieldAttributes.RTSpecialName) Then
                                             Violated = True
                                             OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumerationFieldKind, CLSRule.EnumSructure, Member)
                                         ElseIf Not .FieldType.Equals([Enum].GetUnderlyingType(Type)) Then
@@ -579,31 +581,31 @@ Namespace TestsT
                                     ElseIf Not .IsStatic Then
                                         Violated = True
                                         OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumerationLiteralStatic, CLSRule.EnumMembers, Member)
-                                    ElseIf Not .FieldType.Equals([Enum].GetUnderlyingType(Type)) Then
+                                    ElseIf Not .FieldType.Equals(Type) Then
                                         Violated = True
                                         OnViolation(ResourcesT.CLSComplianceCheckerResources.TypeOfEnumMember, CLSRule.EnumMembers, Member)
                                     End If
                                 End With
                             End If
                         End If
+                        'special member rules
+                        Violated = Violated Or Not CheckInternal(Member)
                     End If
-                    'special member rules
-                    Violated = Violated Or Not CheckInternal(Member)
-                    If Type.IsInterface AndAlso (Member.MemberType = MemberTypes.Method OrElse Member.MemberType = MemberTypes.Property OrElse Member.MemberType = MemberTypes.Event) AndAlso Not Member.IsStatic Then
-                        If Not GetItemClsCompliance(Member) Then
+                    If MemberVisible AndAlso Type.IsInterface AndAlso (Member.MemberType = MemberTypes.Method OrElse Member.MemberType = MemberTypes.Property OrElse Member.MemberType = MemberTypes.Event) AndAlso Not Member.IsStatic Then
+                        If Not MemberCompliant Then
                             Violated = True
                             OnViolation(ResourcesT.CLSComplianceCheckerResources.InterfaceCLSIncompliantMember, CLSRule.NoIncompliantMembersInInterfaces, Member)
                         End If
                     End If
-                    If Type.IsInterface AndAlso Member.IsStatic AndAlso Member.MemberType = MemberTypes.Method AndAlso GetItemClsCompliance(Member) Then
+                    If Type.IsInterface AndAlso Member.IsStatic AndAlso Member.MemberType = MemberTypes.Method AndAlso MemberCompliant AndAlso MemberVisible Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.InterfaceStaticMethod, CLSRule.NoStaticMembersAndFieldsInInterfaces, Member)
                     End If
-                    If Type.IsInterface AndAlso Member.MemberType = MemberTypes.Field AndAlso GetItemClsCompliance(Member) Then
+                    If Type.IsInterface AndAlso Member.MemberType = MemberTypes.Field AndAlso MemberCompliant AndAlso MemberVisible Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.InterfaceField, CLSRule.NoStaticMembersAndFieldsInInterfaces, Member)
                     End If
-                    If Type.IsClass AndAlso Type.IsAbstract AndAlso Member.MemberType = MemberTypes.Method AndAlso DirectCast(Member, MethodInfo).IsAbstract AndAlso Not GetItemClsCompliance(Member) Then
+                    If Type.IsClass AndAlso Type.IsAbstract AndAlso Member.MemberType = MemberTypes.Method AndAlso DirectCast(Member, MethodInfo).IsAbstract AndAlso Not MemberCompliant AndAlso MemberVisible Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.RequireImplementIncompliant, CLSRule.NoNeedToImplementIncompliantMember, Member)
                     End If
@@ -617,6 +619,35 @@ Namespace TestsT
             End If
             Return Not Violated
         End Function
+        ''' <summary>Gets generic type type argument constraint and replaces all references (including <paramref name="ConstraintType"/> itself) to any type parameter of parent type with reference to corresponding type parameter of nested type</summary>
+        ''' <param name="ConstraintType">Type constraint to replace. It is constraint specified on <paramref name="ParentType"/></param>
+        ''' <param name="ParentType">Parent type of <paramref name="NestedType"/></param>
+        ''' <param name="NestedType">Nested type <paramref name="ConstraintType"/> comes from</param>
+        ''' <returns><paramref name="ConstraintType"/> transferred form <paramref name="ParentType"/> to <paramref name="NestedType"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="ConstraintType"/>, <paramref name="ParentType"/> or <paramref name="NestedType"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="NestedType"/>.<see cref="Type.DeclaringType">DeclaringType</see> is not <paramref name="ParentType"/>.</exception>
+        Private Function GenericConstraintFromParentToNested(ByVal ConstraintType As Type, ByVal ParentType As Type, ByVal NestedType As Type) As Type
+            If ConstraintType Is Nothing Then Throw New ArgumentNullException("ConstraintType")
+            If ParentType Is Nothing Then Throw New ArgumentNullException("ParentType")
+            If NestedType Is Nothing Then Throw New ArgumentNullException("NestedType")
+            If NestedType.DeclaringType IsNot ParentType Then Throw New ArgumentException(ResourcesT.Exceptions.ParentTypeOf0MustBe1.f("NestedType", "ParentType"))
+            If ConstraintType.IsPointer Then
+                Return GenericConstraintFromParentToNested(ConstraintType.GetElementType, ParentType, NestedType).MakePointerType
+            ElseIf ConstraintType.IsByRef Then
+                Return GenericConstraintFromParentToNested(ConstraintType.GetElementType, ParentType, NestedType).MakeByRefType
+            ElseIf ConstraintType.IsVector Then
+                Return GenericConstraintFromParentToNested(ConstraintType.GetElementType, ParentType, NestedType).MakeArrayType
+            ElseIf ConstraintType.IsArray Then
+                Return GenericConstraintFromParentToNested(ConstraintType.GetElementType, ParentType, NestedType).MakeArrayType(ConstraintType.GetArrayRank)
+            ElseIf ConstraintType.IsGenericType Then
+                Return ConstraintType.GetGenericTypeDefinition.MakeGenericType((From garg In ConstraintType.GetGenericArguments Select GenericConstraintFromParentToNested(garg, ParentType, NestedType)).ToArray)
+            ElseIf ParentType.GetGenericArguments.Contains(ConstraintType) Then
+                Return NestedType.GetGenericArguments()(Array.IndexOf(ParentType.GetGenericArguments, ConstraintType))
+            Else
+                Return ConstraintType
+            End If
+        End Function
+
         ''' <summary>Tests if enumeration is CLS-compliant</summary>
         ''' <param name="Type">Enum type to test</param>
         ''' <returns>True if enumeration is CLS-compliant; false otherwise</returns>
@@ -628,7 +659,7 @@ Namespace TestsT
             'Rule 7:
             Dim ut = [Enum].GetUnderlyingType(Type)
             Dim violated As Boolean = False
-            If ut.Equals(GetType(Byte)) AndAlso Not ut.Equals(GetType(Short)) AndAlso Not ut.Equals(GetType(Integer)) OrElse Not ut.Equals(GetType(Long)) Then
+            If Not ut.Equals(GetType(Byte)) AndAlso Not ut.Equals(GetType(Short)) AndAlso Not ut.Equals(GetType(Integer)) AndAlso Not ut.Equals(GetType(Long)) Then
                 violated = True
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.EnumType, CLSRule.EnumSructure, Type)
             End If
@@ -792,8 +823,8 @@ Namespace TestsT
                     OnViolation(ResourcesT.CLSComplianceCheckerResources.e_IndexesInProperty, CLSRule.Error, [Property], ex)
                 End Try
                 'Get getter and setter
-                Dim Getter = [Property].GetGetMethod(False)
-                Dim Setter = [Property].GetSetMethod(False)
+                Dim Getter = [Property].GetGetMethod(True)
+                Dim Setter = [Property].GetSetMethod(True)
                 If Getter Is Nothing AndAlso Setter Is Nothing Then
                     Violated = True
                     OnViolation(ResourcesT.CLSComplianceCheckerResources.NoPropertyAccesor, CLSRule.PropertyNaming, [Property])
@@ -848,7 +879,7 @@ Namespace TestsT
                     Catch ex As Exception
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.e_ParametersInSetter, CLSRule.Error, Setter)
                     End Try
-                    If spars.Length = 0 OrElse Not spars(spars.Length - 1).Equals([Property].PropertyType) Then
+                    If spars.Length = 0 OrElse Not spars(spars.Length - 1).ParameterType.Equals([Property].PropertyType) Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterLastParam, CLSRule.PropertyType, Setter)
                     End If
@@ -856,7 +887,7 @@ Namespace TestsT
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterParametersCount, CLSRule.PropertyType, Setter)
                     End If
-                    If Getter.Name <> "set_" & [Property].Name Then
+                    If Setter.Name <> "set_" & [Property].Name Then
                         Violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterName, CLSRule.PropertyNaming, Setter)
                     End If
@@ -866,7 +897,7 @@ Namespace TestsT
                 For Each Param In Params
                     If Not GetItemClsCompliance(Param.ParameterType) Then
                         Violated = True
-                        OnViolation(ResourcesT.CLSComplianceCheckerResources.IndexType.f(Param.ParameterType.FullName), CLSRule.Signature, Param)
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.IndexType.f(If(Param.ParameterType.FullName, Param.ParameterType.Name)), CLSRule.Signature, Param)
                     End If
                     Violated = Violated Or Not CheckTypeReference(Param.ParameterType, [Property], False)
                     If Param.ParameterType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Param.ParameterType, Param)
@@ -1026,9 +1057,13 @@ Namespace TestsT
                 Violated = Violated Or Not CheckTypeReference(Method.ReturnType, Method, False)
                 If Method.ReturnType.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Method.ReturnType, Method.ReturnParameter)
                 Violated = Violated Or Not CheckTypeAcessibility(Method, Method.ReturnType)
-                If Method.CallingConvention <> CallingConventions.Standard Then
+                If (Method.CallingConvention And CallingConventions.Standard) <> CallingConventions.Standard Then
                     Violated = True
                     OnViolation(ResourcesT.CLSComplianceCheckerResources.StandardCallingConvention, CLSRule.CallingConvention, Method)
+                End If
+                If (Method.CallingConvention And CallingConventions.VarArgs) = CallingConventions.VarArgs Then
+                    Violated = True
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.VarArgsAreNotCLSCompliant, CLSRule.CallingConvention, Method)
                 End If
                 If Method.ReturnParameter.GetRequiredCustomModifiers.Length > 0 Then
                     Violated = True
@@ -1058,7 +1093,7 @@ Namespace TestsT
             For Each gparam In inst.GetGenericArguments
                 If Not GetItemClsCompliance(gparam) Then
                     violated = True
-                    OnViolation(ResourcesT.CLSComplianceCheckerResources.GenericParamType.f(gparam.FullName), Rule, [On])
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.GenericParamType.f(If(gparam.FullName, gparam.Name)), Rule, [On])
                 End If
                 If gparam.IsGenericType Then violated = violated Or Not CheckTypeReference(gparam, [On], True, Rule)
             Next
@@ -1075,7 +1110,7 @@ Namespace TestsT
             Dim Violated As Boolean = False
             If Not GetItemClsCompliance(Type) Then
                 Violated = True
-                If ReportGetItemClsCompliance Then OnViolation(ResourcesT.CLSComplianceCheckerResources.IncompliantType.f(Type.FullName), If(Rule = Integer.MinValue, CLSRule.Signature, Rule), [On])
+                If ReportGetItemClsCompliance Then OnViolation(ResourcesT.CLSComplianceCheckerResources.IncompliantType.f(If(Type.FullName, Type.Name)), If(Rule = Integer.MinValue, CLSRule.Signature, Rule), [On])
             End If
             If Type.IsGenericType Then Violated = Violated Or Not CheckGenericInstance(Type, [On])
             If Type.Equals(GetType(TypedReference)) Then
@@ -1113,7 +1148,7 @@ Namespace TestsT
                     Dim LiteralValue = Field.GetRawConstantValue
                     If LiteralValue IsNot Nothing Then
                         Dim LiteralType = LiteralValue.GetType
-                        Dim FieldType = Field.GetType
+                        Dim FieldType = Field.FieldType
                         If Not FieldType.Equals(LiteralType) AndAlso Not (FieldType.IsEnum AndAlso [Enum].GetUnderlyingType(FieldType).Equals(LiteralType)) Then
                             Violated = True
                             OnViolation(ResourcesT.CLSComplianceCheckerResources.ConstantValue, CLSRule.ValueOfLiteral, Field)
@@ -1170,7 +1205,7 @@ Namespace TestsT
                                 Not (param.ArgumentType.IsEnum AndAlso ( _
                                      [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Byte)) OrElse [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Int16)) OrElse [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Int32)) OrElse [Enum].GetUnderlyingType(param.ArgumentType).Equals(GetType(Int64)))) Then
                             Violated = True
-                            OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeParamType.f(cadata.Constructor.DeclaringType.FullName, param.ArgumentType.FullName), CLSRule.AttributeValues, Item)
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeParamType.f(cadata.Constructor.DeclaringType.FullName, If(param.ArgumentType.FullName, param.ArgumentType.Name)), CLSRule.AttributeValues, Item)
                         End If
                     Next
                     For Each param In cadata.NamedArguments
@@ -1178,13 +1213,16 @@ Namespace TestsT
                               Not (param.TypedValue.ArgumentType.IsEnum AndAlso ( _
                                    [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Byte)) OrElse [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Int16)) OrElse [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Int32)) OrElse [Enum].GetUnderlyingType(param.TypedValue.ArgumentType).Equals(GetType(Int64)))) Then
                             Violated = True
-                            OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeNamedParamType.f(cadata.Constructor.DeclaringType.FullName, param.MemberInfo.Name, param.TypedValue.ArgumentType.FullName), CLSRule.AttributeValues, Item)
+                            OnViolation(ResourcesT.CLSComplianceCheckerResources.AttributeNamedParamType.f(cadata.Constructor.DeclaringType.FullName, param.MemberInfo.Name, If(param.TypedValue.ArgumentType.FullName, param.TypedValue.ArgumentType.Name)), CLSRule.AttributeValues, Item)
                         End If
                     Next
                 Next
             End If
             Return Not Violated
         End Function
+
+        Private gTypeNameRegEx As New Text.RegularExpressions.Regex("`\d+$", Text.RegularExpressions.RegexOptions.Compiled Or Text.RegularExpressions.RegexOptions.CultureInvariant)
+
         ''' <summary>Peprforms common CLS-compliance test on member</summary>
         ''' <param name="Item">Member to do tests on</param>
         ''' <returns>True if no CLS-violation was detected; false otherwise.</returns>
@@ -1192,9 +1230,22 @@ Namespace TestsT
         Private Function DoCommonTest(ByVal Item As MemberInfo) As Boolean
             If Item Is Nothing Then Throw New ArgumentNullException("Item")
             Dim violated = Not CLSAttributeCheck(Item)
-            If Not TypeOf Item Is ConstructorInfo AndAlso Not IdentifierRegEx.IsMatch(Item.Name) Then
+            If Not TypeOf Item Is ConstructorInfo AndAlso Not TypeOf Item Is Type AndAlso Not IdentifierRegEx.IsMatch(Item.Name) Then
                 violated = True
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(Item.Name), CLSRule.UnicodeIdentifiers, Item)
+            ElseIf TypeOf Item Is Type Then
+                With DirectCast(Item, Type)
+                    Dim vio As Boolean
+                    If (.IsGenericType OrElse .IsGenericTypeDefinition) AndAlso gTypeNameRegEx.IsMatch(.Name) Then
+                        vio = Not IdentifierRegEx.IsMatch(.Name.Substring(0, .Name.LastIndexOf("`")))
+                    Else
+                        vio = Not IdentifierRegEx.IsMatch(.Name)
+                    End If
+                    If vio Then
+                        violated = True
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(Item.Name), CLSRule.UnicodeIdentifiers, Item)
+                    End If
+                End With
             End If
             Dim Normalized = Item.Name.Normalize(Text.NormalizationForm.FormC)
             If Normalized.Length <> Item.Name.Length Then
@@ -1213,19 +1264,20 @@ Namespace TestsT
         End Function
         ''' <summary>Checks uniqueness of type names amongs given enumerations</summary>
         ''' <param name="Types">Types to verify uniqueness of names of</param>
+        ''' <param name="fullname">True to use <see cref="Type.FullName"/>, false to use <see cref="Type.Name"/>. Set true for types in assemblies/modules; false otherwise. When true, but <see cref="Type.FullName"/> is null, <see cref="Type.Name"/> is used instead.</param>
         ''' <returns>True if names of all types are unique (in spicte of CLS)</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Types"/> is null</exception>
-        Private Function CheckTypeNames(ByVal Types As IEnumerable(Of Type)) As Boolean
+        Private Function CheckTypeNames(ByVal Types As IEnumerable(Of Type), ByVal FullName As Boolean) As Boolean
             If Types Is Nothing Then Throw New ArgumentNullException("Types")
             Dim list As New List(Of String)
             Dim Violated As Boolean
             For Each Type In Types
                 If Not GetItemClsCompliance(Type) Then Continue For
-                If list.Contains(Type.Name.ToLowerInvariant, StringComparer.InvariantCultureIgnoreCase) Then
+                If list.Contains(If(FullName, If(Type.FullName, Type.Name), Type.Name).ToLowerInvariant, StringComparer.InvariantCultureIgnoreCase) Then
                     Violated = True
-                    OnViolation(ResourcesT.CLSComplianceCheckerResources.UniqueName.f(Type.Name), CLSRule.UnicodeIdentifiers, Type)
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.UniqueName.f(If(FullName, If(Type.FullName, Type.Name), Type.Name)), CLSRule.UnicodeIdentifiers, Type)
                 Else
-                    list.Add(Type.Name.ToLowerInvariant)
+                    list.Add(If(FullName, If(Type.FullName, Type.Name), Type.Name).ToLowerInvariant)
                 End If
             Next
             Return Violated
@@ -1235,7 +1287,7 @@ Namespace TestsT
         ''' <param name="Member">Member exposing <paramref name="Type"/></param>
         ''' <param name="Type">Type exposed by <paramref name="Member"/></param>
         ''' <returns>True if <paramref name="Type"/> has enough accessibility to be exposed by <paramref name="Member"/>; false otherwise</returns>
-        ''' <remarks>Does not check exporure rules wiolations inside single assembly. Check array/pointer/reference/generic elements as well.</remarks>
+        ''' <remarks>Does not check exporure rules violations inside single assembly. Check array/pointer/reference/generic elements as well.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> or <paramref name="Type"/> is null</exception>
         Private Function CheckTypeAcessibility(ByVal Member As MemberInfo, ByVal Type As Type) As Boolean
             If Member Is Nothing Then Throw New ArgumentNullException("Member")
@@ -1255,28 +1307,35 @@ Namespace TestsT
             '    End While
             'End If
 
-            If Type.IsAssembly OrElse Type.IsNestedAssembly OrElse Type.IsNestedFamANDAssem OrElse Type.IsNestedPrivate Then
-                Violated = True
-                OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeFriend, CLSRule.Visibility, Member)
-            ElseIf Type.IsNestedFamORAssem OrElse Type.IsNestedFamily Then
-                If Not Member.IsMemberOf(Type.DeclaringType) Then
-                    Violated = True
-                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeNested.f(Member.Name, Type.FullName, Type.DeclaringType.FullName), CLSRule.Visibility, Member)
-                End If
-            End If
+            If Not Type.IsGenericParameter Then
+                Dim TypePublicVisibility = Type.HowIsSeenBy(Nothing)
+                Dim TypeContextVisibility = Type.HowIsSeenBy(Member.DeclaringType)
+                Dim MemberPublicVisibility = Member.HowIsSeenBy(Nothing)
 
-            If Type.IsGenericType Then
-                Dim gPars As Type() = {}
-                Try
-                    gPars = Type.GetGenericArguments
-                Catch ex As Exception
-                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_GenericParametersInType.f(Type), CLSRule.Error, Member, ex)
-                End Try
-                For Each gPar In gPars
-                    Violated = Violated Or Not CheckTypeAcessibility(Member, gPar)
+                If TypePublicVisibility = Visibility.Assembly OrElse TypePublicVisibility = Visibility.FamANDAssem OrElse TypePublicVisibility = Visibility.Private Then
+                    Violated = True
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeFriend, CLSRule.Visibility, Member)
+                ElseIf (TypePublicVisibility = Visibility.Family OrElse TypePublicVisibility = Visibility.FamORAssem) AndAlso MemberPublicVisibility = Visibility.Public Then
+                    Violated = True
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeNested.f(Member.Name, If(Type.FullName, Type.Name), If(Type.DeclaringType.FullName, Type.DeclaringType.Name)), CLSRule.Visibility, Member)
+                End If
+
+                If Type.IsGenericType OrElse Type.IsGenericTypeDefinition Then
+                    Dim gPars As Type() = {}
+                    Try
+                        gPars = Type.GetGenericArguments
+                    Catch ex As Exception
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.e_GenericParametersInType.f(Type), CLSRule.Error, Member, ex)
+                    End Try
+                    For Each gPar In gPars
+                        Violated = Violated Or Not CheckTypeAcessibility(Member, gPar)
+                    Next
+                End If
+            Else
+                For Each cons In Type.GetGenericParameterConstraints
+                    Violated = Violated Or Not CheckTypeAcessibility(Member, cons)
                 Next
             End If
-
             Return Not Violated
         End Function
     End Class

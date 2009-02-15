@@ -11,6 +11,7 @@ Namespace ReflectionT
     ''' <version stage="Nightly" version="1.5.2">Added overloaded functions <see cref="ReflectionTools.GetOperators"/>.</version>
     ''' <version version="1.5.2">Added <see cref="ReflectionTools.IsMemberOf"/> overloaded methods.</version>
     Public Module ReflectionTools
+#Region "Namespaces"
         ''' <summary>Gets namespaces in given module</summary>
         ''' <param name="Module">Module to get namespaces in</param>
         ''' <returns>Array of namespaces in <paramref name="Module"/></returns>
@@ -78,7 +79,42 @@ Namespace ReflectionT
             If FromNamespaces Then Return [Module].GetTypes
             Return (From Type In [Module].GetTypes Where Type.Namespace = "" Select Type).ToArray
         End Function
-#Region "Is..."
+        ''' <summary>Gets declaring namespace of global method</summary>
+        ''' <param name="Method">Global method to get namespace of</param>
+        ''' <returns>Namespace <paramref name="Method"/> contains in its name; or null when <paramref name="Method"/> is not global method</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Public Function GetNamespace(ByVal Method As MethodInfo) As NamespaceInfo
+            If Method Is Nothing Then Throw New ArgumentNullException("Method")
+            If Method.DeclaringType IsNot Nothing Then Return Nothing
+            Dim NameParts = Method.Name.Split("."c)
+            If NameParts.Length = 1 Then Return New NamespaceInfo(Method.[Module], "")
+            Return New NamespaceInfo(Method.Module, String.Join("."c, NameParts, 0, NameParts.Length - 2))
+        End Function
+        ''' <summary>Gets declaring namespace of global field</summary>
+        ''' <param name="Field">Global field to get namespace of</param>
+        ''' <returns>Namespace <paramref name="Field"/> contains in its name; or null when <paramref name="Field"/> is not global field</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Field"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Public Function GetNamespace(ByVal Field As FieldInfo) As NamespaceInfo
+            If Field Is Nothing Then Throw New ArgumentNullException("Field")
+            If Field.DeclaringType IsNot Nothing Then Return Nothing
+            Dim NameParts = Field.Name.Split("."c)
+            If NameParts.Length = 1 Then Return New NamespaceInfo(Field.[Module], "")
+            Return New NamespaceInfo(Field.Module, String.Join("."c, NameParts, 0, NameParts.Length - 2))
+        End Function
+        ''' <summary>Gets namespace of given <see cref="System.Type"/> as instance of <see cref="NamespaceInfo"/></summary>
+        ''' <param name="Type">Type to get namespace of</param>
+        ''' <returns><see cref="NamespaceInfo"/> constructed from <paramref name="Type"/>.<see cref="Type.[Module]">Module</see> and <paramref name="Type"/>.<see cref="Type.[Namespace]">Namespace</see>.</returns>
+        ''' <remarks>Each type has namespace even when name of the namespace is an empty <see cref="String"/>.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
+        ''' <version version="1.5.2">Added <see cref="ArgumentNullException"/></version>
+        <Extension()> Public Function GetNamespace(ByVal Type As Type) As NamespaceInfo
+            If Type Is Nothing Then Throw New ArgumentNullException("Type")
+            Return New NamespaceInfo(Type.Module, Type.Namespace)
+        End Function
+#End Region
+#Region "Visibility/Accessibility, Is..."
         ''' <summary>For <see cref="Type"/>, <see cref="MethodBase"/> (<see cref="MethodInfo"/> or <see cref="ConstructorInfo"/>), <see cref="PropertyInfo"/>, <see cref="EventInfo"/> or <see cref="FieldInfo"/> indicates its accessibility</summary>
         ''' <param name="Member">Member to indicate accesibility of</param>
         ''' <returns>True if accessibility of member is public</returns>
@@ -172,6 +208,7 @@ Namespace ReflectionT
         ''' <returns>True if accessibility of member is family-or-assembly (protected friend)</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
         ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
+        ''' <version version="1.5.2">Fixed: For <paramref name="Member"/> being <see cref="MethodBase"/> behaves like <see cref="IsFamilyAndAssembly"/></version>
         <Extension()> Public Function IsFamilyOrAssembly(ByVal Member As MemberInfo) As Boolean
             If Member Is Nothing Then Throw New ArgumentNullException("Member")
             Select Case Member.MemberType
@@ -180,7 +217,7 @@ Namespace ReflectionT
                         Return (.IsNested AndAlso .IsNestedFamORAssem)
                     End With
                 Case MemberTypes.Constructor, MemberTypes.Method
-                    Return DirectCast(Member, MethodBase).IsFamilyAndAssembly
+                    Return DirectCast(Member, MethodBase).IsFamilyOrAssembly
                 Case MemberTypes.Event
                     Return DirectCast(Member, EventInfo).GetAccessibility = MethodAttributes.FamORAssem
                 Case MemberTypes.Field : Return DirectCast(Member, FieldInfo).IsFamilyOrAssembly
@@ -233,6 +270,7 @@ Namespace ReflectionT
         ''' <summary>Gets maximum visibility from visibilities of methods</summary>
         ''' <param name="Visibility">Array of visibilities to test (it can contain any valid value of <see cref="MethodAttributes"/>, non-visibity part will be ignored)</param>
         ''' <returns>Maximum visibility as union of all visibilities in <paramref name="Visibility"/></returns>
+        ''' <version version="1.5.2">Fixed: <see cref="MethodAttributes.Assembly"/>, <see cref="MethodAttributes.Assembly"/> returns <see cref="MethodAttributes.FamORAssem"/> (now returns correctly <see cref="MethodAttributes.Assembly"/>)</version>
         Private Function MaxVisibility(ByVal ParamArray Visibility As MethodAttributes()) As MethodAttributes
             Dim ret As MethodAttributes = 0
             For Each vis In Visibility
@@ -261,8 +299,8 @@ Namespace ReflectionT
                         End Select
                     Case MethodAttributes.Assembly
                         Select Case vis And MethodAttributes.MemberAccessMask
-                            Case MethodAttributes.FamORAssem, MethodAttributes.Assembly
-                                ret = MethodAttributes.FamORAssem
+                            Case MethodAttributes.FamORAssem : ret = MethodAttributes.FamORAssem
+                            Case MethodAttributes.Assembly : ret = MethodAttributes.Assembly
                             Case MethodAttributes.Public : ret = MethodAttributes.Public
                         End Select
                     Case Else
@@ -330,7 +368,181 @@ Namespace ReflectionT
                 Case Else : Return True
             End Select
         End Function
+
+        ''' <summary>Indicates which access has member of given type of another member</summary>
+        ''' <param name="Member">Member to be accessed</param>
+        ''' <param name="Observer">Type at which level the call to <paramref name="Member"/> is about to be done; when null visibility is reported for any type not nedted in <paramref name="Member"/>, not derived form <paramref name="Member"/> and not in same assembly as <paramref name="Member"/>.</param>
+        ''' <remarks>Visibility of <paramref name="Member"/> form context inside <paramref name="Observer"/>. If <paramref name="Member"/> can be really called from context inside <paramref name="Observer"/> depends on relation of <paramref name="Observer"/> and <paramref name="Member"/><see cref="MemberInfo.DeclaringType">DeclaringType</see>. Wheather one is nested to another, one is derived by another and one is in same assembly as another.</remarks>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Public Function HowIsSeenBy(ByVal Member As MemberInfo, ByVal Observer As Type) As Visibility
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If Member.DeclaringType Is Nothing Then Return Member.Visibility 'Member is global
+            If Observer IsNot Nothing AndAlso Member.DeclaringType.Equals(Observer) Then Return Member.Visibility 'Siblings
+            If Observer IsNot Nothing AndAlso Observer.IsMemberOf(Member.DeclaringType) Then Return Member.Visibility 'Looking up in nesting hierarchy
+            If Observer IsNot Nothing AndAlso Observer.IsDerivedFrom(Member.DeclaringType) Then Return Member.Visibility 'Looking up inheritence hierarchy
+            Return CombineVisibility(Member.Visibility, Member.DeclaringType.HowIsSeenBy(Observer))
+        End Function
+        ''' <summary>Indicates if member can be accessed from context of given <see cref="Type"/></summary>
+        ''' <param name="Member">Mmeber to be accessed</param>
+        ''' <param name="Observer">Type at which level the call to <paramref name="Member"/> is about to be done; when null visibility is reported for any type not nedted in <paramref name="Member"/>, not derived form <paramref name="Member"/> and not in same assembly as <paramref name="Member"/> (so tru is returned only when <paramref name="Member"/> is publicly accessible).</param>
+        ''' <remarks>This method takes visibility of <paramref name="Member"/> by <paramref name="Observer"/> indicated by <see cref="HowIsSeenBy"/> and applies interrelation of <paramref name="Member"/>.<see cref="MemberInfo.DeclaringType">DeclaringType</see> and <paramref name="Observer"/>.</remarks>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Public Function CanBeSeenFrom(ByVal Member As MemberInfo, ByVal Observer As Type) As Boolean
+            Dim Visibility = Member.HowIsSeenBy(Observer)
+            If Observer Is Nothing Then Return Visibility = ReflectionT.Visibility.Public
+            Return Visibility = ReflectionT.Visibility.Public OrElse _
+                ((Visibility = ReflectionT.Visibility.Assembly OrElse Visibility = ReflectionT.Visibility.FamORAssem) AndAlso Member.IsMemberOf(Observer.Assembly)) OrElse _
+                ((Visibility = ReflectionT.Visibility.Family OrElse Visibility = ReflectionT.Visibility.FamORAssem) AndAlso Member.DeclaringType IsNot Nothing AndAlso (Member.DeclaringType.Equals(Observer) OrElse Member.DeclaringType.IsBaseClassOf(Observer))) OrElse _
+                (Visibility = ReflectionT.Visibility.FamANDAssem AndAlso Member.IsMemberOf(Observer.Assembly) AndAlso Member.DeclaringType IsNot Nothing AndAlso (Member.DeclaringType.Equals(Observer) OrElse Member.DeclaringType.IsBaseClassOf(Observer))) OrElse _
+                (Visibility = ReflectionT.Visibility.Private AndAlso Observer.Equals(Member.DeclaringType) OrElse Observer.IsMemberOf(Member.DeclaringType))
+        End Function
+        ''' <summary>Indicates if given type is base class of another type</summary>
+        ''' <param name="Base">Proposed base class of <paramref name="Derived"/></param>
+        ''' <param name="Derived">Type proposedly derived from <paramref name="Base"/></param>
+        ''' <returns>True if <paramref name="Derived"/> derives (inherits) from <paramref name="Base"/>; false othervise</returns>
+        ''' <remarks>Test only inheritance hierarchy. Does not test following conditions that can make  assignemnt <paramref name="Base"/> ← <paramref name="Derived"/> possible:
+        ''' <list type="bullet">
+        ''' <item><paramref name="Derived"/> implements <paramref name="Base"/></item>
+        ''' <item><paramref name="Base"/> is underlying type of <paramref name="Derived"/> and <paramref name="Derived"/> is enumeration</item>
+        ''' </list>
+        ''' In addtion to simple base class test, it also test and returns true in followig conditions:
+        ''' <list type="bullet">
+        ''' <item><paramref name="Base"/> is generic type constraint of <paramref name="Derived"/> or base of the constraint.</item>
+        ''' <item><paramref name="Base"/> is open generic type and  <paramref name="Derived"/> derived derives from <paramref name="Base"/> (in either geneir-open, generic-closed or generic-half-open-half-closed way).</item>
+        ''' </list></remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Base"/> or <paramref name="Derived"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Public Function IsBaseClassOf(ByVal Base As Type, ByVal Derived As Type) As Boolean
+            If Base Is Nothing Then Throw New ArgumentNullException("Base")
+            If Derived Is Nothing Then Throw New ArgumentException("Derived")
+            Dim CurrentBase = Derived.BaseType
+            Dim BagargsOpen As Type() = Nothing
+            Dim Bagargs As Type() = Nothing
+            While CurrentBase IsNot Nothing
+                If CurrentBase.Equals(Base) Then Return True
+                If Base.IsGenericTypeDefinition AndAlso CurrentBase.IsGenericType Then
+                    'Note Class BaseClass(Of T); Class DerivedClass(Of T) : Inherits BaseClass(Of T) => GetType(DerivedClass(Of T)).BaseType.IsGenericTypeDefinition = False!
+                    'This is correct behavior (see https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=95768, http://blogs.msdn.com/weitao/archive/2008/03/19/formal-type-parameters-of-generic-types.aspx)
+                    Dim WouldBeBaseClass = Base.MakeGenericType(CurrentBase.GetGenericArguments)
+                    If CurrentBase.Equals(WouldBeBaseClass) Then Return True
+                ElseIf Base.IsGenericType AndAlso CurrentBase.IsGenericType AndAlso Base.GetGenericTypeDefinition.Equals(CurrentBase.GetGenericTypeDefinition) Then
+                    'semi-open base
+                    'Replace generic arguments that are from open definition with those from currentbase, leave those that does not come from generic type definition
+                    If Bagargs Is Nothing Then Bagargs = Base.GetGenericArguments
+                    If BagargsOpen Is Nothing Then BagargsOpen = Base.GetGenericTypeDefinition.GetGenericArguments
+                    Dim Cargs = CurrentBase.GetGenericArguments
+                    Dim Params(Bagargs.Length - 1) As Type
+                    For i As Integer = 0 To Bagargs.Length - 1
+                        Params(i) = If(Bagargs(i).Equals(BagargsOpen(i)), Cargs(i), Bagargs(i))
+                    Next
+                    If CurrentBase.Equals(Base.GetGenericTypeDefinition.MakeGenericType(Params)) Then Return True
+                End If
+                CurrentBase = CurrentBase.BaseType
+            End While
+            Return False
+        End Function
+        ''' <summary>Idicates if given type is derived form another type</summary>
+        ''' <param name="Base">Proposed base class of <paramref name="Derived"/></param>
+        ''' <param name="Derived">Type proposedly derived from <paramref name="Base"/></param>
+        ''' <returns>True if <paramref name="Derived"/> derives (inherits) from <paramref name="Base"/>; false othervise</returns>
+        ''' <remarks>Test only inheritance hierarchy. Does not test following conditions that can make  assignemnt <paramref name="Base"/> ← <paramref name="Derived"/> possible:
+        ''' <list type="bullet"><item><paramref name="Derived"/> implements <paramref name="Base"/></item>
+        ''' <item><paramref name="Base"/> is underlying type of <paramref name="Derived"/> and <paramref name="Derived"/> is enumeration</item></list>
+        ''' In addtion to simple base class test, it also test and returns true when <paramref name="Base"/> is generic type constraint of <paramref name="Derived"/> or base of the constraint.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Base"/> or <paramref name="Derived"/> is null</exception>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Public Function IsDerivedFrom(ByVal Derived As Type, ByVal Base As Type) As Boolean
+            Return Base.IsBaseClassOf(Derived)
+        End Function
+
+
+        ''' <summary>Gets member-type-independent visibility of member</summary>
+        ''' <param name="Member">Member to get visibility of</param>
+        ''' <returns>Visibility of member</returns>
+        ''' <version version="1.5.2">Function introduced</version>
+        ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
+        ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
+        <Extension()> Public Function Visibility(ByVal Member As MemberInfo) As Visibility
+            If Member Is Nothing Then Throw New ArgumentNullException("Member")
+            If Member.IsPublic Then : Return ReflectionT.Visibility.Public
+            ElseIf Member.IsFamilyAndAssembly Then : Return ReflectionT.Visibility.FamANDAssem
+            ElseIf Member.IsFamilyOrAssembly Then : Return ReflectionT.Visibility.FamORAssem
+            ElseIf Member.IsFamily Then : Return ReflectionT.Visibility.Family
+            ElseIf Member.IsPrivate Then : Return ReflectionT.Visibility.Private
+            ElseIf Member.IsAssembly Then : Return ReflectionT.Visibility.Assembly
+            End If
+        End Function
+        ''' <summary>Combines visibility of parent and member as seen from outside of parent</summary>
+        ''' <param name="ParentVisibility">Visibility of parent</param>
+        ''' <param name="MemberVisibility">Visibility of member</param>
+        ''' <returns>Visibility of member how it is seen form outside of parent. Indicates who can access the member if the "who" is otside of parent.</returns>
+        ''' <exception cref="InvalidEnumArgumentException"><paramref name="MemberVisibility"/> or <paramref name="ParentVisibility"/> is not member of <see cref="Visibility"/></exception>
+        Private Function CombineVisibility(ByVal MemberVisibility As Visibility, ByVal ParentVisibility As Visibility) As Visibility
+            If Not IsDefined(MemberVisibility) Then Throw New InvalidEnumArgumentException("MemberVisibility", MemberVisibility, MemberVisibility.GetType)
+            If Not IsDefined(ParentVisibility) Then Throw New InvalidEnumArgumentException("ParentVisibility", ParentVisibility, ParentVisibility.GetType)
+            Select Case ParentVisibility
+                Case ReflectionT.Visibility.Public
+                    Select Case MemberVisibility
+                        Case ReflectionT.Visibility.Public : Return ReflectionT.Visibility.Public
+                        Case ReflectionT.Visibility.FamORAssem : Return ReflectionT.Visibility.FamORAssem
+                        Case ReflectionT.Visibility.Assembly : Return ReflectionT.Visibility.Assembly
+                        Case ReflectionT.Visibility.Family : Return ReflectionT.Visibility.Family
+                        Case ReflectionT.Visibility.FamANDAssem : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
+                    End Select
+                Case ReflectionT.Visibility.FamORAssem
+                    Select Case MemberVisibility
+                        Case ReflectionT.Visibility.Public : Return ReflectionT.Visibility.FamORAssem
+                        Case ReflectionT.Visibility.FamORAssem : Return ReflectionT.Visibility.FamORAssem
+                        Case ReflectionT.Visibility.Assembly : Return ReflectionT.Visibility.Assembly
+                        Case ReflectionT.Visibility.Family : Return ReflectionT.Visibility.Family
+                        Case ReflectionT.Visibility.FamANDAssem : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
+                    End Select
+                Case ReflectionT.Visibility.Assembly
+                    Select Case MemberVisibility
+                        Case ReflectionT.Visibility.Public : Return ReflectionT.Visibility.Assembly
+                        Case ReflectionT.Visibility.FamORAssem : Return ReflectionT.Visibility.Assembly
+                        Case ReflectionT.Visibility.Assembly : Return ReflectionT.Visibility.Assembly
+                        Case ReflectionT.Visibility.Family : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.FamANDAssem : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
+                    End Select
+                Case ReflectionT.Visibility.Family
+                    Select Case MemberVisibility
+                        Case ReflectionT.Visibility.Public : Return ReflectionT.Visibility.Family
+                        Case ReflectionT.Visibility.FamORAssem : Return ReflectionT.Visibility.Family
+                        Case ReflectionT.Visibility.Assembly : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Family : Return ReflectionT.Visibility.Family
+                        Case ReflectionT.Visibility.FamANDAssem : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
+                    End Select
+                Case ReflectionT.Visibility.FamANDAssem
+                    Select Case MemberVisibility
+                        Case ReflectionT.Visibility.Public : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.FamORAssem : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Assembly : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Family : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.FamANDAssem : Return ReflectionT.Visibility.FamANDAssem
+                        Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
+                    End Select
+                Case ReflectionT.Visibility.Private
+                    Select Case MemberVisibility
+                        Case ReflectionT.Visibility.Public : Return ReflectionT.Visibility.Private
+                        Case ReflectionT.Visibility.FamORAssem : Return ReflectionT.Visibility.Private
+                        Case ReflectionT.Visibility.Assembly : Return ReflectionT.Visibility.Private
+                        Case ReflectionT.Visibility.Family : Return ReflectionT.Visibility.Private
+                        Case ReflectionT.Visibility.FamANDAssem : Return ReflectionT.Visibility.Private
+                        Case ReflectionT.Visibility.Private : Return ReflectionT.Visibility.Private
+                    End Select
+            End Select
+        End Function
 #End Region
+#Region "Events and properties"
         ''' <summary>Searches for property given method belongs to</summary>
         ''' <param name="Method">Method to search property for</param>
         ''' <param name="GetSetOnly">Search only for getters and setters</param>
@@ -375,6 +587,28 @@ Namespace ReflectionT
             Next ev
             Return Nothing
         End Function
+        ''' <summary>Gtes all accessors of given event</summary>
+        ''' <param name="Event">Event to get accessors of</param>
+        ''' <param name="NonPublic">True to get non-public accessors as well as public</param>
+        ''' <returns>Array of all accessors of <paramref name="Event"/></returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Event"/> is null</exception>
+        ''' <exception cref="MethodAccessException"><paramref name="NonPublic"/> is true, event accessor is non-public, and the caller does not have permission to reflect on non-public methods. </exception>
+        ''' <remarks>If <paramref name="Event"/> does not support <see cref="M:System.Reflection.EventInfo.GetOtherMethods(System.Boolean)"/>, <see cref="M:System.Reflection.EventInfo.GetOtherMethods()"/> is used.</remarks>
+        <Extension()> Function GetAccessors(ByVal [Event] As EventInfo, Optional ByVal NonPublic As Boolean = False) As MethodInfo()
+            If [Event] Is Nothing Then Throw New ArgumentNullException("Event")
+            Dim ret As New List(Of MethodInfo)
+            If [Event].GetAddMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetAddMethod(NonPublic))
+            If [Event].GetRemoveMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetRemoveMethod(NonPublic))
+            If [Event].GetRaiseMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetRaiseMethod(NonPublic))
+            Try
+                ret.AddRange([Event].GetOtherMethods(NonPublic))
+            Catch ex As NotImplementedException
+                ret.AddRange([Event].GetOtherMethods())
+            End Try
+            Return ret.ToArray
+        End Function
+#End Region
+#Region "Operators"
         ''' <summary>Gets value indicating whether and if which the function is operator</summary>
         ''' <param name="Method">Method to investigate</param>
         ''' <param name="NonStandard">Also include operators that are not part of CLI standard (currently VB \, ^ and &amp; operators are supported)</param>
@@ -409,6 +643,7 @@ Namespace ReflectionT
         <Extension()> Function IsAssignment(ByVal [Operator] As Operators) As Boolean
             Return [Operator] And Operators_masks.Assignment
         End Function
+#End Region
         ''' <summary>Gets interfaces implemented by given type</summary>
         ''' <param name="Type">Type to get interfaces from</param>
         ''' <param name="Inherit">True to get all interfaces, false to get only interfaces implemented by this type directly</param>
@@ -422,16 +657,7 @@ Namespace ReflectionT
                     ).Contains(MyInterface) _
                 Select MyInterface
         End Function
-        ''' <summary>Gets namespace of given <see cref="System.Type"/> as instance of <see cref="NamespaceInfo"/></summary>
-        ''' <param name="Type">Type to get namespace of</param>
-        ''' <returns><see cref="NamespaceInfo"/> constructed from <paramref name="Type"/>.<see cref="Type.[Module]">Module</see> and <paramref name="Type"/>.<see cref="Type.[Namespace]">Namespace</see>.</returns>
-        ''' <remarks>Each type has namespace even when name of the namespace is an empty <see cref="String"/>.</remarks>
-        ''' <exception cref="ArgumentNullException"><paramref name="Type"/> is null</exception>
-        ''' <version version="1.5.2">Added <see cref="ArgumentNullException"/></version>
-        <Extension()> Public Function GetNamespace(ByVal Type As Type) As NamespaceInfo
-            If Type Is Nothing Then Throw New ArgumentNullException("Type")
-            Return New NamespaceInfo(Type.Module, Type.Namespace)
-        End Function
+
         ''' <summary>Gets value indicating if method is global method</summary>
         ''' <param name="Method">Method to test is it is global</param>
         ''' <returns>True when <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is null</returns>
@@ -450,30 +676,7 @@ Namespace ReflectionT
             If Field Is Nothing Then Throw New ArgumentNullException("Field")
             Return Field.DeclaringType Is Nothing
         End Function
-        ''' <summary>Gets declaring namespace of global method</summary>
-        ''' <param name="Method">Global method to get namespace of</param>
-        ''' <returns>Namespace <paramref name="Method"/> contains in its name; or null when <paramref name="Method"/> is not global method</returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
-        ''' <version version="1.5.2">Function introduced</version>
-        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Public Function GetNamespace(ByVal Method As MethodInfo) As NamespaceInfo
-            If Method Is Nothing Then Throw New ArgumentNullException("Method")
-            If Method.DeclaringType IsNot Nothing Then Return Nothing
-            Dim NameParts = Method.Name.Split("."c)
-            If NameParts.Length = 1 Then Return New NamespaceInfo(Method.[Module], "")
-            Return New NamespaceInfo(Method.Module, String.Join("."c, NameParts, 0, NameParts.Length - 2))
-        End Function
-        ''' <summary>Gets declaring namespace of global field</summary>
-        ''' <param name="Field">Global field to get namespace of</param>
-        ''' <returns>Namespace <paramref name="Field"/> contains in its name; or null when <paramref name="Field"/> is not global field</returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="Field"/> is null</exception>
-        ''' <version version="1.5.2">Function introduced</version>
-        <Extension(), EditorBrowsable(EditorBrowsableState.Advanced)> Public Function GetNamespace(ByVal Field As FieldInfo) As NamespaceInfo
-            If Field Is Nothing Then Throw New ArgumentNullException("Field")
-            If Field.DeclaringType IsNot Nothing Then Return Nothing
-            Dim NameParts = Field.Name.Split("."c)
-            If NameParts.Length = 1 Then Return New NamespaceInfo(Field.[Module], "")
-            Return New NamespaceInfo(Field.Module, String.Join("."c, NameParts, 0, NameParts.Length - 2))
-        End Function
+
 #Region "Operators"
         ''' <summary>Gets operators of given kind defined by given type</summary>
         ''' <param name="Type">Type to look for operators on</param>
@@ -751,7 +954,7 @@ Namespace ReflectionT
             Return [Module].Assembly.Equals(Assembly)
         End Function
 #Region "IsMemberOf"
-        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on is member of given <see cref="Type"/></summary>
+        ''' <summary>Gets value indicating if given <see cref="MemberInfo"/> or object it is declared on or is member of given <see cref="Type"/></summary>
         ''' <param name="Member"><see cref="MemberInfo"/> to observe parent of</param>
         ''' <param name="Type"><see cref="Type"/> to test if it is parent of <paramref name="Member"/></param>
         ''' <returns>True if <paramref name="Type"/> is declared inside <paramref name="Member"/></returns>
@@ -810,7 +1013,6 @@ Namespace ReflectionT
             Next
             Return False
         End Function
-#End Region
         ''' <summary>Gets value indicating if given <see cref="NamespaceInfo"/> or object it is declared on is member of given <see cref="[Module]"/></summary>
         ''' <param name="Namespace"><see cref="NamespaceInfo"/> to observe parent of</param>
         ''' <param name="Module"><see cref="[Module]"/> to test if it is parent of <paramref name="Namespace"/></param>
@@ -987,6 +1189,7 @@ Namespace ReflectionT
             If Assembly Is Nothing Then Throw New ArgumentNullException("Assembly")
             Return Param.Member.IsMemberOf(Assembly)
         End Function
+#End Region
 #Region "Generic"
         ''' <summary>Gets value indicating if given <see cref="ParameterInfo"/> or object it is declared on is member of given CLI object</summary>
         ''' <param name="Param"><see cref="ParameterInfo"/> to observe parent of</param>
@@ -1058,27 +1261,6 @@ Namespace ReflectionT
         End Function
 #End Region
 #End Region
-        ''' <summary>Gtes all accessors of given event</summary>
-        ''' <param name="Event">Event to get accessors of</param>
-        ''' <param name="NonPublic">True to get non-public accessors as well as public</param>
-        ''' <returns>Array of all accessors of <paramref name="Event"/></returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="Event"/> is null</exception>
-        ''' <exception cref="MethodAccessException"><paramref name="NonPublic"/> is true, event accessor is non-public, and the caller does not have permission to reflect on non-public methods. </exception>
-        ''' <remarks>If <paramref name="Event"/> does not support <see cref="M:System.Reflection.EventInfo.GetOtherMethods(System.Boolean)"/>, <see cref="M:System.Reflection.EventInfo.GetOtherMethods()"/> is used.</remarks>
-        <Extension()> Function GetAccessors(ByVal [Event] As EventInfo, Optional ByVal NonPublic As Boolean = False) As MethodInfo()
-            If [Event] Is Nothing Then Throw New ArgumentNullException("Event")
-            Dim ret As New List(Of MethodInfo)
-            If [Event].GetAddMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetAddMethod(NonPublic))
-            If [Event].GetRemoveMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetRemoveMethod(NonPublic))
-            If [Event].GetRaiseMethod(NonPublic) IsNot Nothing Then ret.Add([Event].GetRaiseMethod(NonPublic))
-            Try
-                ret.AddRange([Event].GetOtherMethods(NonPublic))
-            Catch ex As NotImplementedException
-                ret.AddRange([Event].GetOtherMethods())
-            End Try
-            Return ret.ToArray
-        End Function
-
         ''' <summary>Searches for method given method overrides</summary>
         ''' <param name="Method">Method do find method it overrides</param>
         ''' <returns>Method in base class (or base base class etc.) of class <paramref name="Method"/> is defined in <paramref name="Method"/> overrides; null when no such method is found</returns>
@@ -1167,35 +1349,33 @@ Namespace ReflectionT
             Next
             Return True
         End Function
-        ''' <summary>Defines how method signature comparison is performed</summary>
-        ''' <remarks>This enumeration is treaded as flags, each set or unset. Several predefined combinations of flags also exists.
-        ''' <para>When <see cref="SignatureComparisonStrictness.IgnoreByRef"/> and <see cref="SignatureComparisonStrictness.TreatPointerAsReference"/> are both set:
-        ''' Both - T* and T&amp; are treated as T. T*&amp; (reference to pointer) is treated as T* and T&amp;* (pointer to reference) is treated as T.</para></remarks>
-        <Flags()> _
-        Public Enum SignatureComparisonStrictness
-            ''' <summary>Set this flag to ignore direction of method parameter. <see cref="InAttribute"/> and <see cref="OutAttribute"/> are ignored. Does not affect testing if parameter is passed by reference or by value.</summary>
-            IgnoreDirection = 1
-            ''' <summary>Ignore optional modifiers on parameters (modopts). Nested modopts are always ignored i.e. modopts on pointer/reference/array/generic internal type(s).</summary>
-            IgnoreModOpt = 2
-            ''' <summary>Ignore required modifiers on parameters (modreqs). Nested modreqs are always ignored i.e. modreqs on pointer/reference/array/generic internal type(s).</summary>
-            IgnoreModReq = 4
-            ''' <summary>Ignore return value completelly (ignores return type and return modopts and modreqs)</summary>
-            IgnoreReturn = 8
-            ''' <summary>Consider parameter passed by value and by reference to by of same type. Note: Physically the type of such parameters differs.</summary>
-            IgnoreByRef = 16
-            ''' <summary>Treat pointer to type (*) in same way as reference to type (&amp;, ByRef) - see <see cref="Type.IsByRef"/> and <see cref="Type.IsPointer"/>.
-            ''' When combined with <see cref="IgnoreByRef"/>, pointer to type is treated as type itself.</summary>
-            TreatPointerAsReference = 32
-            ''' <summary>Default. Comparison includes type of parameter, direction, custpm and optional modifiers and does consider parameters passed by value and by reference to be of different type.</summary>
-            Strict = 0
-            ''' <summary>This how method signatures are compared according to CLS-rules - direction, modopts, modreqs and retun type are ignored. Note: CLS does not ignore return type for op_Implicit and op_Explicit operator methods (use <see cref="CLS">CLS</see> AND NOT <see cref="IgnoreReturn">IgnoreReturn</see> for them).</summary>
-            ''' <seelaso cref="IgnoreDirection"/><seelaso cref="IgnoreModOpt"/><seelaso cref="IgnoreModReq"/> <seelaso cref="IgnoreReturn"/>
-            CLS = IgnoreDirection Or IgnoreModOpt Or IgnoreModReq Or IgnoreReturn
-            ''' <summary>Ignore both - optional and required modifiers (modopts and modreqs)</summary>
-            ''' <seelaso cref="IgnoreModOpt"/><seelaso cref="IgnoreModReq"/>
-            IgnoreModifiers = IgnoreModOpt Or IgnoreModReq
-        End Enum
+
     End Module
+    ''' <summary>Any member visibility</summary>
+    ''' <seelaso cref="MethodAttributes"/><seelaso cref="TypeAttributes"/>
+    ''' <remarks>Values of members of this enumeration are same as values of corresponding members of <see cref="MethodAttributes"/>.</remarks>
+    Public Enum Visibility
+        ''' <summary>Indicates that the mmeber is accessible only to the current class.</summary>
+        ''' <seelaso cref="MethodAttributes.[Private]"/><seelaso cref="TypeAttributes.NestedPrivate"/>
+        [Private] = MethodAttributes.Private '1
+        ''' <summary>Indicates that the member is accessible to any object for which this object is in scope.</summary>
+        ''' <seelaso cref="MethodAttributes.[Public]"/><seelaso cref="TypeAttributes.[Public]"/><seelaso cref="TypeAttributes.NestedPublic"/>
+        ''' <remarks>For <see cref="Type"/> includes <see cref="TypeAttributes.[Public]"/> and <see cref="TypeAttributes.NestedPublic"/></remarks>
+        [Public] = MethodAttributes.Public '6
+        ''' <summary>Indicates that the member is accessible only to members of this class and its derived classes.</summary>
+        ''' <seelaso cref="MethodAttributes.Family "/><seelaso cref="TypeAttributes.NestedFamily"/>
+        Family = MethodAttributes.Family '4
+        ''' <summary>Indicates that the member is accessible to derived classes anywhere, as well as to any class in the assembly.</summary>
+        ''' <seelaso cref="MethodAttributes.FamORAssem"/><seelaso cref="TypeAttributes.NestedFamORAssem"/>
+        FamORAssem = MethodAttributes.FamORAssem  '5
+        ''' <summary>Indicates that the member is accessible to members of this type and its derived types that are in this assembly only.</summary>
+        ''' <seelaso cref="MethodAttributes.FamANDAssem"/><seelaso cref="TypeAttributes.NestedFamANDAssem"/>
+        FamANDAssem = MethodAttributes.FamANDAssem  '2
+        ''' <summary>Indicates that the member is accessible to any class of this assembly.</summary>
+        ''' <seelaso cref="MethodAttributes.Assembly"/><seelaso cref="TypeAttributes.NotPublic"/><seelaso cref="TypeAttributes.NestedAssembly"/>
+        ''' <remarks>For <see cref="Type"/> includes <see cref="TypeAttributes.NotPublic"/> and <see cref="TypeAttributes.NestedAssembly"/></remarks>
+        Assembly = MethodAttributes.Assembly '3
+    End Enum
 
     ''' <summary>Represents reflection namespace</summary>
     ''' <version version="1.5.2" stage="Nightly">Added implementation of <see cref="IEquatable(Of NamespaceInfo)"/></version>
@@ -1472,6 +1652,36 @@ Namespace ReflectionT
         NonStandard = &H80
         ''' <summary>Masks if operator is assignment (1) or not (0)</summary>
         Assignment = &H10
+    End Enum
+
+    ''' <summary>Defines how method signature comparison is performed</summary>
+    ''' <remarks>This enumeration is treaded as flags, each set or unset. Several predefined combinations of flags also exists.
+    ''' <para>When <see cref="SignatureComparisonStrictness.IgnoreByRef"/> and <see cref="SignatureComparisonStrictness.TreatPointerAsReference"/> are both set:
+    ''' Both - T* and T&amp; are treated as T. T*&amp; (reference to pointer) is treated as T* and T&amp;* (pointer to reference) is treated as T.</para></remarks>
+    ''' <version version="1.5.2">Enumeration intorduced</version>
+    <Flags()> _
+    Public Enum SignatureComparisonStrictness
+        ''' <summary>Set this flag to ignore direction of method parameter. <see cref="InAttribute"/> and <see cref="OutAttribute"/> are ignored. Does not affect testing if parameter is passed by reference or by value.</summary>
+        IgnoreDirection = 1
+        ''' <summary>Ignore optional modifiers on parameters (modopts). Nested modopts are always ignored i.e. modopts on pointer/reference/array/generic internal type(s).</summary>
+        IgnoreModOpt = 2
+        ''' <summary>Ignore required modifiers on parameters (modreqs). Nested modreqs are always ignored i.e. modreqs on pointer/reference/array/generic internal type(s).</summary>
+        IgnoreModReq = 4
+        ''' <summary>Ignore return value completelly (ignores return type and return modopts and modreqs)</summary>
+        IgnoreReturn = 8
+        ''' <summary>Consider parameter passed by value and by reference to by of same type. Note: Physically the type of such parameters differs.</summary>
+        IgnoreByRef = 16
+        ''' <summary>Treat pointer to type (*) in same way as reference to type (&amp;, ByRef) - see <see cref="Type.IsByRef"/> and <see cref="Type.IsPointer"/>.
+        ''' When combined with <see cref="IgnoreByRef"/>, pointer to type is treated as type itself.</summary>
+        TreatPointerAsReference = 32
+        ''' <summary>Default. Comparison includes type of parameter, direction, custpm and optional modifiers and does consider parameters passed by value and by reference to be of different type.</summary>
+        Strict = 0
+        ''' <summary>This how method signatures are compared according to CLS-rules - direction, modopts, modreqs and retun type are ignored. Note: CLS does not ignore return type for op_Implicit and op_Explicit operator methods (use <see cref="CLS">CLS</see> AND NOT <see cref="IgnoreReturn">IgnoreReturn</see> for them).</summary>
+        ''' <seelaso cref="IgnoreDirection"/><seelaso cref="IgnoreModOpt"/><seelaso cref="IgnoreModReq"/> <seelaso cref="IgnoreReturn"/>
+        CLS = IgnoreDirection Or IgnoreModOpt Or IgnoreModReq Or IgnoreReturn
+        ''' <summary>Ignore both - optional and required modifiers (modopts and modreqs)</summary>
+        ''' <seelaso cref="IgnoreModOpt"/><seelaso cref="IgnoreModReq"/>
+        IgnoreModifiers = IgnoreModOpt Or IgnoreModReq
     End Enum
 End Namespace
 #End If

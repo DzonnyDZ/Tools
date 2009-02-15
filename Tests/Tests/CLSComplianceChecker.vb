@@ -34,13 +34,13 @@ Namespace TestsT
                 Console.WriteLine("==========")
                 Dim CLS% = 0, Errors% = 0, Other% = 0
                 Try
-                    For Each kwp In From item In Statistic Order By item.Key
+                    For Each kwp In From item In Statistic Order By item.Value Descending
                         Select Case kwp.Key
                             Case Is <= -1000 : Console.ForegroundColor = ConsoleColor.DarkRed : Errors += kwp.Value
                             Case Is < 0 : Console.ForegroundColor = ConsoleColor.Yellow : Other += kwp.Value
                             Case Else : Console.ForegroundColor = ConsoleColor.Red : CLS += kwp.Value
                         End Select
-                        Console.WriteLine("{0:d} {0:f} {1}", kwp.Key, kwp.Value)
+                        Console.WriteLine("{0:d}" & vbTab & "{0:f} {1}", kwp.Key, kwp.Value)
                     Next
                     Console.ForegroundColor = OFC
                     Console.WriteLine("Total:")
@@ -88,13 +88,13 @@ Namespace TestsT
                     If .IsGenericParameter Then
                         Type = "Generic parameter"
                         If .DeclaringMethod IsNot Nothing Then
-                            Name = .FullName & If(AsParam, "", " of " & GetMemberString(.DeclaringMethod, False))
+                            Name = If(.FullName, .Name) & If(AsParam, "", " of " & GetMemberString(.DeclaringMethod, False))
                         Else
-                            Name = .FullName & If(AsParam, "", " of " & GetMemberString(.DeclaringType, False))
+                            Name = If(.FullName, .Name) & If(AsParam, "", " of " & GetMemberString(.DeclaringType, False))
                         End If
                     ElseIf .IsGenericType Then
                         Type = "Type"
-                        Name = .FullName & "<"
+                        Name = If(.FullName, .Name) & "["
                         Dim i% = 0
                         For Each gpar In .GetGenericArguments
                             If i > 0 Then Name &= ","
@@ -113,7 +113,7 @@ Namespace TestsT
                         Name = GetMemberString(.GetElementType, False, False) & "*"
                     Else
                         Type = "Type"
-                        Name = .FullName
+                        Name = If(.FullName, .Name)
                     End If
                 End With
             ElseIf TypeOf member Is PropertyInfo Then
@@ -121,7 +121,7 @@ Namespace TestsT
                 Name = GetMemberString(DirectCast(member, MemberInfo).DeclaringType, False) & "." & DirectCast(member, MemberInfo).Name
             ElseIf TypeOf member Is FieldInfo Then
                 Type = "Field"
-                Name = GetMemberString(DirectCast(member, MemberInfo).DeclaringType, False) & "." & DirectCast(member, MemberInfo).Name
+                Name = If(DirectCast(member, MemberInfo).DeclaringType IsNot Nothing, GetMemberString(DirectCast(member, MemberInfo).DeclaringType, False) & ".", "") & DirectCast(member, MemberInfo).Name
             ElseIf TypeOf member Is EventInfo Then
                 Type = "Event"
                 Name = GetMemberString(DirectCast(member, MemberInfo).DeclaringType, False) & "." & DirectCast(member, MemberInfo).Name
@@ -134,7 +134,7 @@ Namespace TestsT
                     Else
                         Type = "Method"
                     End If
-                    Name = GetMemberString(DirectCast(member, MemberInfo).DeclaringType, False) & "." & DirectCast(member, MemberInfo).Name & "("
+                    Name = If(DirectCast(member, MemberInfo).DeclaringType IsNot Nothing, GetMemberString(DirectCast(member, MemberInfo).DeclaringType, False) & ".", "") & DirectCast(member, MemberInfo).Name & "("
                     Dim i% = 0
                     For Each param In .GetParameters
                         If i > 0 Then Name &= ","

@@ -2134,6 +2134,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Parent type of {0} must be {1}'.
+        '''</summary>
+        Friend Shared ReadOnly Property ParentTypeOf0MustBe1() As String
+            Get
+                Return ResourceManager.GetString("ParentTypeOf0MustBe1", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Path {0} does not exist.'.
         '''</summary>
         Friend Shared ReadOnly Property Path0DoesNotExist() As String
@@ -5689,6 +5698,16 @@ Namespace ResourcesT
         '''<returns>The ParentIFDOfSubIFDBeingAddedReplacedMustMeNull property value.</returns>
         Friend Shared Function ParentIFDOfSubIFDBeingAddedReplacedMustMeNullFormat() As String
             Return ParentIFDOfSubIFDBeingAddedReplacedMustMeNull
+        End Function
+        
+        '''<summary>
+        '''Formats a localized string similar to 'Parent type of {0} must be {1}'.
+        '''</summary>
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function ParentTypeOf0MustBe1Format(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, ParentTypeOf0MustBe1, arg0, arg1)
         End Function
         
         '''<summary>
