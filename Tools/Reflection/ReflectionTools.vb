@@ -120,12 +120,13 @@ Namespace ReflectionT
         ''' <returns>True if accessibility of member is public</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Member"/> is null</exception>
         ''' <exception cref="System.MethodAccessException">The caller does not have permission to reflect on non-public methods and <paramref name="Member"/> is either <see cref="EventInfo"/> or <see cref="PropertyInfo"/>.</exception>
+        ''' <version version="1.5.2">Fixed: When <paramref name="Member"/> is <see cref="Type"/> with <see cref="Type.IsNested"/> = True, <see cref="Type.IsNestedPublic"/> = False and <see cref="Type.IsPublic"/> = True function returns false (now it returns true - for type it simply returns <see cref="Type.IsNestedPublic"/> OR <see cref="Type.IsPublic"/>)</version>
         <Extension()> Public Function IsPublic(ByVal Member As MemberInfo) As Boolean
             If Member Is Nothing Then Throw New ArgumentNullException("Member")
             Select Case Member.MemberType
                 Case MemberTypes.TypeInfo, MemberTypes.NestedType
                     With DirectCast(Member, Type)
-                        Return (Not .IsNested AndAlso .IsPublic) OrElse (.IsNested AndAlso .IsNestedPublic)
+                        Return .IsNestedPublic OrElse .IsPublic
                     End With
                 Case MemberTypes.Constructor, MemberTypes.Method
                     Return DirectCast(Member, MethodBase).IsPublic
@@ -576,9 +577,12 @@ Namespace ReflectionT
             If Method Is Nothing Then Throw New ArgumentNullException("Method")
             If Method.DeclaringType Is Nothing Then Return Nothing
             For Each ev In Method.DeclaringType.GetEvents(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Static Or BindingFlags.Instance Or If(Inherit, BindingFlags.Default, BindingFlags.DeclaredOnly))
-                If Method.Equals(ev.GetAddMethod(Not Method.IsPublic)) Then Return ev
-                If Method.Equals(ev.GetRemoveMethod(Not Method.IsPublic)) Then Return ev
-                If Method.Equals(ev.GetRaiseMethod(Not Method.IsPublic)) Then Return ev
+                Dim add = ev.GetAddMethod(Not Method.IsPublic)
+                Dim remove = ev.GetRemoveMethod(Not Method.IsPublic)
+                Dim raise = ev.GetRaiseMethod(Not Method.IsPublic)
+                If add IsNot Nothing AndAlso Method.Equals(add) Then Return ev
+                If remove IsNot Nothing AndAlso Method.Equals(remove) Then Return ev
+                If raise IsNot Nothing AndAlso Method.Equals(raise) Then Return ev
                 If Not StandardOnly Then
                     For Each other In ev.GetOtherMethods(Not Method.IsPublic)
                         If Method.Equals(other) Then Return ev

@@ -117,49 +117,50 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull" xml:space="preserve">
-    <value>Získání rozhraní CodeDOMProvideru selhalo. GetService(QueryService(CodeDomProvider) vrátil null.</value>
+  <data name="NoOutputWasGenerated" xml:space="preserve">
+    <value>Žádný výstup nebyl generován</value>
   </data>
-  <data name="UnableToGetIOleServiceProviderFromSiteObject" xml:space="preserve">
-    <value>Nemohu získat IOleServiceProvider z objektu stanoviště.</value>
+  <data name="MissingOutfileSpecification" xml:space="preserve">
+    <value>Chybí zadání výstupního souboru</value>
   </data>
-  <data name="CodeDomProviderIsNULL" xml:space="preserve">
-    <value>CodeDomProvider je null.</value>
+  <data name="MissingParameterOut" xml:space="preserve">
+    <value>Chybí parametr /out</value>
   </data>
-  <data name="ArrayMustHaveAtLeast1Member" xml:space="preserve">
-    <value>Pole {0} musí mít alespoň jednu položku</value>
+  <data name="MissingInfileSpecification" xml:space="preserve">
+    <value>Chybí zadání vstupního souboru</value>
   </data>
-  <data name="ObjectIsNotSited" xml:space="preserve">
-    <value>objekt není zastanovišťován</value>
+  <data name="MissingParameterIn" xml:space="preserve">
+    <value>Chybí parametr /in</value>
   </data>
-  <data name="SiteDoesNotSupportRequestedInterface" xml:space="preserve">
-    <value>stanoviště nepodporuje požadované rozhraní</value>
+  <data name="Warning0" xml:space="preserve">
+    <value>Varování: {0}</value>
   </data>
-  <data name="UnableToGetProjectItem" xml:space="preserve">
-    <value>Nemohu získat položku projektu</value>
+  <data name="Error0" xml:space="preserve">
+    <value>Chyba: {0}</value>
   </data>
-  <data name="UnableToAddDLLToProjectReferences0PleaseAddThemManually" xml:space="preserve">
-    <value>Nemohu přidat DLL do referencí proketu: {0}. Prosím, předejte ji ručně.</value>
+  <data name="UnknownLanguage0" xml:space="preserve">
+    <value>Neznámý jazyk {0}</value>
   </data>
-  <data name="GetServiceTypeofProjectReturnNull" xml:space="preserve">
-    <value>GetService(typeof(Project)) vrátila null.</value>
+  <data name="ErrorWhileGeneratingCode" xml:space="preserve">
+    <value>Chyba při generování kódu:</value>
   </data>
-  <data name="UnableToADDDLLToCurrentProjectProjectObjectDoesNotImplementVSProject" xml:space="preserve">
-    <value>Nemohu přidat DLL do aktuálního projektu. Project.Object neimplementuje VSProject.</value>
+  <data name="WarningIncompleteLArgumentIgnored" xml:space="preserve">
+    <value>Varování: Nekompletní argument /l ignorován</value>
   </data>
-  <data name="ERRORVsProjReferencesAddThrowsException" xml:space="preserve">
-    <value>*** CHYBA: vsProj.References.Add() vyhodila výjimku:</value>
+  <data name="UnableToSplitGeneratedText" xml:space="preserve">
+    <value>Nemohu rozdělit generovaný text</value>
   </data>
-  <data name="Class0DoesNotProvideA1Attribute" xml:space="preserve">
-    <value>Třída '{0}' neposkytuje atribut '{1}'.</value>
+  <data name="InvalidPartSpecifierForL0" xml:space="preserve">
+    <value>Neplatný specifikároe části pro /l {0}</value>
   </data>
-  <data name="CustomToolClassMustHave0Applied" xml:space="preserve">
-    <value>CustomToolClass musí mýt aplikován {0}.</value>
+  <data name="SplitonAndOut2MustBeSpecifiedBothOrNone" xml:space="preserve">
+    <value>/spliton a /out2 musí být buď použity oba nebo žádný.</value>
   </data>
-  <data name="CustomToolMustInheritFromCustomToolBase" xml:space="preserve">
-    <value>Uživatelský nástroj musí dědit od CustomToolBase.</value>
+  <data name="InvalidInsertIndex0" xml:space="preserve">
+    <value>Neplatný index vložení {0}</value>
   </data>
-  <data name="GuidCannotBeEmpty" xml:space="preserve">
-    <value>Guid nesmý být prázdný.</value>
+  <assembly alias="System.Windows.Forms" name="System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" />
+  <data name="Legend" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\resources\legend.cs.txt;System.String, mscorlib, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089;utf-8</value>
   </data>
 </root>

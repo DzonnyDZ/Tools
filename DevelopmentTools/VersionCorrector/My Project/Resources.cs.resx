@@ -117,49 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull" xml:space="preserve">
-    <value>Získání rozhraní CodeDOMProvideru selhalo. GetService(QueryService(CodeDomProvider) vrátil null.</value>
+  <data name="Usage1" xml:space="preserve">
+    <value>Nalezne špatně verzované reference na zadané sestavení v něm samém a opraví je.</value>
   </data>
-  <data name="UnableToGetIOleServiceProviderFromSiteObject" xml:space="preserve">
-    <value>Nemohu získat IOleServiceProvider z objektu stanoviště.</value>
+  <data name="Usage2" xml:space="preserve">
+    <value>Použití: {0} &lt;sestavení&gt; [&lt;soubor snk&gt;]</value>
   </data>
-  <data name="CodeDomProviderIsNULL" xml:space="preserve">
-    <value>CodeDomProvider je null.</value>
+  <data name="Usage3" xml:space="preserve">
+    <value>Název sestavení může obsahovat divé znaky (*)</value>
   </data>
-  <data name="ArrayMustHaveAtLeast1Member" xml:space="preserve">
-    <value>Pole {0} musí mít alespoň jednu položku</value>
+  <data name="Usage4" xml:space="preserve">
+    <value>Řetězec ".dllexe" na konci je brán jako oboje, ".dll" a ".exe"</value>
   </data>
-  <data name="ObjectIsNotSited" xml:space="preserve">
-    <value>objekt není zastanovišťován</value>
+  <data name="Usage5" xml:space="preserve">
+    <value>Sestavení, která nemají silné jméno nejsou znovu podepisována i když je snk soubor zadán.</value>
   </data>
-  <data name="SiteDoesNotSupportRequestedInterface" xml:space="preserve">
-    <value>stanoviště nepodporuje požadované rozhraní</value>
+  <data name="Usage6" xml:space="preserve">
+    <value>Soubory "*.vshost.exe" jsou vždy přeskočeny</value>
   </data>
-  <data name="UnableToGetProjectItem" xml:space="preserve">
-    <value>Nemohu získat položku projektu</value>
+  <data name="Logo" xml:space="preserve">
+    <value>• {0} {1}</value>
   </data>
-  <data name="UnableToAddDLLToProjectReferences0PleaseAddThemManually" xml:space="preserve">
-    <value>Nemohu přidat DLL do referencí proketu: {0}. Prosím, předejte ji ručně.</value>
+  <data name="LookingFor" xml:space="preserve">
+    <value>Hledám {0}, hanrazuji za {1}</value>
   </data>
-  <data name="GetServiceTypeofProjectReturnNull" xml:space="preserve">
-    <value>GetService(typeof(Project)) vrátila null.</value>
+  <data name="CannotUpdate" xml:space="preserve">
+    <value>    Nemohu aktualizovat sestavení. Verze mají různou délku. Zkus rebuild. Původní {2}.{3}.{0}, nové {2}.{3}.{1}</value>
   </data>
-  <data name="UnableToADDDLLToCurrentProjectProjectObjectDoesNotImplementVSProject" xml:space="preserve">
-    <value>Nemohu přidat DLL do aktuálního projektu. Project.Object neimplementuje VSProject.</value>
+  <data name="ChangeAdvertisement" xml:space="preserve">
+    <value>    Pozice {0} (&amp;h{0:X}), se změní z {1}.{2}.{3} na {1}.{2}.{4}</value>
   </data>
-  <data name="ERRORVsProjReferencesAddThrowsException" xml:space="preserve">
-    <value>*** CHYBA: vsProj.References.Add() vyhodila výjimku:</value>
+  <data name="NoChangeNeeded" xml:space="preserve">
+    <value>    Pozice {0} (&amp;h{0:X}) nepotřebuje změnu z {1}.{2}.{3} na {1}.{2}.{4}</value>
   </data>
-  <data name="Class0DoesNotProvideA1Attribute" xml:space="preserve">
-    <value>Třída '{0}' neposkytuje atribut '{1}'.</value>
+  <data name="PerformingWrites" xml:space="preserve">
+    <value>    &gt; Provádím {0} zápisů</value>
   </data>
-  <data name="CustomToolClassMustHave0Applied" xml:space="preserve">
-    <value>CustomToolClass musí mýt aplikován {0}.</value>
+  <data name="NoChangesNeeded" xml:space="preserve">
+    <value>    &gt; Žádná změna není potřeba</value>
   </data>
-  <data name="CustomToolMustInheritFromCustomToolBase" xml:space="preserve">
-    <value>Uživatelský nástroj musí dědit od CustomToolBase.</value>
+  <data name="snError" xml:space="preserve">
+    <value>Chyba v sn.exe</value>
   </data>
-  <data name="GuidCannotBeEmpty" xml:space="preserve">
-    <value>Guid nesmý být prázdný.</value>
+  <data name="CanotStartSn" xml:space="preserve">
+    <value>Nemohu spustit sn.exe. Cesta k sn.exe může být změněna v konfiguračním souboru.</value>
   </data>
 </root>

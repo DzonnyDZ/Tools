@@ -1,0 +1,24 @@
+﻿Použití:
+    {0} parametry
+Parametry:
+    /in <vstup> - požadováno, cesta ke vstupnímu resx souboru
+    /out <výstup> - požadováno, cesta k výstupnímu souboru
+    /lang <jazyk> - volitené, název výstupního jazyka. Pokud neudáno odvozena z přípony výstupního souboru
+        pdoporvané hodnoty (case-insensitive): vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
+        cpp.7 a cpp.vs jsou alternativní C++ providery
+        c, cpp a h znamenají to samé (C++)
+        java a jsl znamenají to samé (J#)
+    /nologo - volitelné, nezobrazovat informaci o verzi a copyrightu
+    /internal - volitené, pokud specifikováno je generovnána interní (přítelská) třída; jinak veřejná
+    /ns <namespace> - volitelné, jmenný prostor třídy
+    /name <název_zdroje> - volitelné, název zdroje tak jak je vložen do sestavení.
+        Pokud vynecháno odvozen z názvu vstupního souboru (nejspíš špatně, takže /name by se mělo vždy použít)
+    /firstline <text> - volitelné, vloží text na první řádek generovaného souboru (v kombinaci se /spliton pracuje jen s první částí)
+    /l <část> <řádek> <text> - volitelné, lze použít vícekrát, vloží text na zadaný řádek
+        část je a pro první, b pro druhou část rozděleného souboru;  b je platné jen pokud je použito /spliton
+    /spliton <text> - volitené (potřeba pro /out2), rozdělí text na dva soubory podle zadaného řetězce
+        Povolené escape sekvence: \\, \n, \r
+        <text> jde do části b 
+    /out2 <výstup> - volitelné (potřeba pro /spliton), Stejné jako /out, lape pro část b zdroje rozpůleného /spliton
+/spliton a /out2 umožňují rozdělit C++ výstup na *.h a *.cpp soubor     
+Poznámka: Pokud hodnota argumentu obsahuje mezeru musí být zauvozovkována.    

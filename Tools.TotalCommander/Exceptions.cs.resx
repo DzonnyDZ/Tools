@@ -117,49 +117,16 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="GetCodeDomProviderInterfaceFailedGetServiceQueryServiceCodeDomProviderReturnedNull" xml:space="preserve">
-    <value>Získání rozhraní CodeDOMProvideru selhalo. GetService(QueryService(CodeDomProvider) vrátil null.</value>
+  <data name="CannotBeRepresented" xml:space="preserve">
+    <value>{0} nelze reprezentovat jako {1}, použijte {2} a {3} namísto toho.</value>
   </data>
-  <data name="UnableToGetIOleServiceProviderFromSiteObject" xml:space="preserve">
-    <value>Nemohu získat IOleServiceProvider z objektu stanoviště.</value>
+  <data name="DefaultTextTooLong" xml:space="preserve">
+    <value>Výchozí text je příliš dlouhý.</value>
   </data>
-  <data name="CodeDomProviderIsNULL" xml:space="preserve">
-    <value>CodeDomProvider je null.</value>
+  <data name="NameTooLong" xml:space="preserve">
+    <value>Jméno je příliš dlouhé. Maximální povolená délka je {0}</value>
   </data>
-  <data name="ArrayMustHaveAtLeast1Member" xml:space="preserve">
-    <value>Pole {0} musí mít alespoň jednu položku</value>
-  </data>
-  <data name="ObjectIsNotSited" xml:space="preserve">
-    <value>objekt není zastanovišťován</value>
-  </data>
-  <data name="SiteDoesNotSupportRequestedInterface" xml:space="preserve">
-    <value>stanoviště nepodporuje požadované rozhraní</value>
-  </data>
-  <data name="UnableToGetProjectItem" xml:space="preserve">
-    <value>Nemohu získat položku projektu</value>
-  </data>
-  <data name="UnableToAddDLLToProjectReferences0PleaseAddThemManually" xml:space="preserve">
-    <value>Nemohu přidat DLL do referencí proketu: {0}. Prosím, předejte ji ručně.</value>
-  </data>
-  <data name="GetServiceTypeofProjectReturnNull" xml:space="preserve">
-    <value>GetService(typeof(Project)) vrátila null.</value>
-  </data>
-  <data name="UnableToADDDLLToCurrentProjectProjectObjectDoesNotImplementVSProject" xml:space="preserve">
-    <value>Nemohu přidat DLL do aktuálního projektu. Project.Object neimplementuje VSProject.</value>
-  </data>
-  <data name="ERRORVsProjReferencesAddThrowsException" xml:space="preserve">
-    <value>*** CHYBA: vsProj.References.Add() vyhodila výjimku:</value>
-  </data>
-  <data name="Class0DoesNotProvideA1Attribute" xml:space="preserve">
-    <value>Třída '{0}' neposkytuje atribut '{1}'.</value>
-  </data>
-  <data name="CustomToolClassMustHave0Applied" xml:space="preserve">
-    <value>CustomToolClass musí mýt aplikován {0}.</value>
-  </data>
-  <data name="CustomToolMustInheritFromCustomToolBase" xml:space="preserve">
-    <value>Uživatelský nástroj musí dědit od CustomToolBase.</value>
-  </data>
-  <data name="GuidCannotBeEmpty" xml:space="preserve">
-    <value>Guid nesmý být prázdný.</value>
+  <data name="PluginNotInitialized" xml:space="preserve">
+    <value>Plugin nebyl inicializován.</value>
   </data>
 </root>

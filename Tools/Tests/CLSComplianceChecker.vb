@@ -17,7 +17,9 @@ Namespace TestsT
     ''' <item><term>46 - <see cref="CLSComplianceChecker.CLSRule.GenericInstanceVisibilityAndAccessibility"/></term><description>Not checked - this is guideline for compiler.</description></item>
     ''' <item><term>47 - <see cref="CLSComplianceChecker.CLSRule.GenericAbstractMethodsHaveDefaultImplementation"/></term><description>Not checked - this is guideline for developpers and its hard to avoid false-positives or detect which implementation is default and which is special.</description></item>
     ''' <item><term>48 - <see cref="CLSComplianceChecker.CLSRule.GenericMethodsThatBecomeIndistinguishable"/></term><description>Not checked - cannot check semantics</description></item>
-    ''' </list></remarks>
+    ''' </list>
+    ''' When any method has no <see cref="CLSCompliantAttribute"/> attached and it belong to event or property in same class, declarative CLS-compliance of the method is taken from the event or the property.
+    ''' </remarks>
     ''' <version version="1.5.2" stage="Nightly">Class introduced</version>
     Public Class CLSComplianceChecker
         ''' <summary>Reports CLS rule viaolation</summary>
@@ -261,6 +263,7 @@ Namespace TestsT
         ''' <returns>True if <paramref name="Item"/> is declared to be CLS-compliant; false if it is not. It has either attached <see cref="CLSCompliantAttribute"/> or information is inherited; false is also returned when information cannot be got due to error while obtaining attributes. For <see cref="TypedReference"/> returns alawys false.</returns>
         ''' <remarks>When more <see cref="CLSCompliantAttribute">CLSCompliantAttributes</see> are attached to single item they are and-ed.
         ''' <para>In case <paramref name="Item"/> is <see cref="Type"/> and it is pointer, array or reference, examines its element instead (for pointer to pointer, array of array, array of pointers etc. examines element instead).</para>
+        ''' <para>When <paramref name="Item"/> is <see cref="MethodInfo"/>, has no <see cref="CLSCompliantAttribute"/> attached and belongs to property or event, CLS-compliance of the property or the event is returned.</para>
         ''' </remarks>
         Private Function GetItemClsCompliance(ByVal Item As ICustomAttributeProvider) As Boolean
             If Item Is Nothing Then Throw New ArgumentNullException("Item")
@@ -282,6 +285,14 @@ Namespace TestsT
                 Next
                 Return True
             Else 'attrs.Length=0
+                If TypeOf Item Is MethodInfo Then
+                    With DirectCast(Item, MethodInfo)
+                        Dim MethodProperty = .GetProperty
+                        If MethodProperty IsNot Nothing Then Return GetItemClsCompliance(MethodProperty)
+                        Dim MethodEvent = .GetEvent
+                        If MethodEvent IsNot Nothing Then Return GetItemClsCompliance(MethodEvent)
+                    End With
+                End If
                 If TypeOf Item Is Assembly Then
                     Return False
                 ElseIf TypeOf Item Is [Module] Then
@@ -672,6 +683,9 @@ Namespace TestsT
             Private Name As String
             ''' <summary>Types of atributes</summary>
             Private Types As New List(Of Type)
+            ''' <summary>Number fo generic parameters</summary>
+            ''' <remarks>Only for generic methods</remarks>
+            Private nGpars% = 0
             ''' <summary>Type of return type. Only for instance CTor, op_Implicit and op_Explicit</summary>
             Private ReturnType As Type
             ''' <summary>Original meber</summary>
@@ -697,7 +711,8 @@ Namespace TestsT
                         For Each pparam In .GetParameters
                             Types.Add(pparam.ParameterType)
                         Next
-                        If .IsSpecialName AndAlso (.Name = "op_Explicit" OrElse .Name = "op_Implcit") Then ReturnType = .ReturnType
+                        If .IsSpecialName AndAlso (.Name = "op_Explicit" OrElse .Name = "op_Implicit") Then ReturnType = .ReturnType
+                        If .IsGenericMethod Then Me.nGpars = .GetGenericArguments.Length
                     End With
                 End If
             End Sub
@@ -725,6 +740,7 @@ Namespace TestsT
                         If Me.ReturnType Is Nothing Xor .ReturnType Is Nothing Then Return False
                         If Me.ReturnType IsNot Nothing AndAlso .ReturnType IsNot Nothing AndAlso Not .ReturnType.Equals(Me.ReturnType) Then Return False
                         If .Types.Count <> Me.Types.Count Then Return False
+                        If Me.nGpars <> .nGpars Then Return False
                         For i As Integer = 0 To Me.Types.Count - 1
                             If Not .Types(i).Equals(Me.Types(i)) Then Return False
                         Next
@@ -867,7 +883,7 @@ Namespace TestsT
                     End If
                     If Getter.Name <> "get_" & [Property].Name Then
                         Violated = True
-                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterName, CLSRule.PropertyNaming, Getter)
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.GetterNameFormat("get_" & [Property].Name, Getter.Name), CLSRule.PropertyNaming, Getter)
                     End If
                 End If
                 'Check setter
@@ -889,7 +905,7 @@ Namespace TestsT
                     End If
                     If Setter.Name <> "set_" & [Property].Name Then
                         Violated = True
-                        OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterName, CLSRule.PropertyNaming, Setter)
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.SetterNameFormat("set_" & [Property].Name, Setter.Name), CLSRule.PropertyNaming, Setter)
                     End If
                 End If
                 'Check params
@@ -1294,46 +1310,33 @@ Namespace TestsT
             If Type Is Nothing Then Throw New ArgumentNullException("Type")
             If Type.IsPointer OrElse Type.IsByRef OrElse Type.IsArray Then Type = Type.GetElementType
             Dim Violated As Boolean = False
-            'Dim IsProtecedWithin As Type = Nothing
-            'If Member.IsFamily OrElse Member.IsFamilyOrAssembly Then
-            '    IsProtecedWithin = Member.DeclaringType
-            'Else
-            '    Dim DeclaringType = Member.DeclaringType
-            '    While DeclaringType IsNot Nothing
-            '        If DeclaringType.IsNestedFamORAssem OrElse DeclaringType.IsNestedFamily Then
-            '            IsProtecedWithin = DeclaringType.DeclaringType
-            '        End If
-            '        DeclaringType = DeclaringType.DeclaringType
-            '    End While
-            'End If
-
-            If Not Type.IsGenericParameter Then
-                Dim TypePublicVisibility = Type.HowIsSeenBy(Nothing)
-                Dim TypeContextVisibility = Type.HowIsSeenBy(Member.DeclaringType)
-                Dim MemberPublicVisibility = Member.HowIsSeenBy(Nothing)
-
-                If TypePublicVisibility = Visibility.Assembly OrElse TypePublicVisibility = Visibility.FamANDAssem OrElse TypePublicVisibility = Visibility.Private Then
-                    Violated = True
-                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeFriend, CLSRule.Visibility, Member)
-                ElseIf (TypePublicVisibility = Visibility.Family OrElse TypePublicVisibility = Visibility.FamORAssem) AndAlso MemberPublicVisibility = Visibility.Public Then
-                    Violated = True
-                    OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeNested.f(Member.Name, If(Type.FullName, Type.Name), If(Type.DeclaringType.FullName, Type.DeclaringType.Name)), CLSRule.Visibility, Member)
-                End If
-
-                If Type.IsGenericType OrElse Type.IsGenericTypeDefinition Then
-                    Dim gPars As Type() = {}
-                    Try
-                        gPars = Type.GetGenericArguments
-                    Catch ex As Exception
-                        OnViolation(ResourcesT.CLSComplianceCheckerResources.e_GenericParametersInType.f(Type), CLSRule.Error, Member, ex)
-                    End Try
-                    For Each gPar In gPars
+            Dim TypePublicVisibility = Type.HowIsSeenBy(Nothing)
+            Dim TypeContextVisibility = Type.HowIsSeenBy(Member.DeclaringType)
+            Dim MemberPublicVisibility = Member.HowIsSeenBy(Nothing)
+            'Check
+            If TypePublicVisibility = Visibility.Assembly OrElse TypePublicVisibility = Visibility.FamANDAssem OrElse TypePublicVisibility = Visibility.Private Then
+                Violated = True
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeFriend, CLSRule.Visibility, Member)
+            ElseIf (TypePublicVisibility = Visibility.Family OrElse TypePublicVisibility = Visibility.FamORAssem) AndAlso MemberPublicVisibility = Visibility.Public Then
+                Violated = True
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.ExposeNested.f(Member.Name, If(Type.FullName, Type.Name), If(Type.DeclaringType.FullName, Type.DeclaringType.Name)), CLSRule.Visibility, Member)
+            End If
+            'Check accessibility of generic parameters and constraints
+            If Type.IsGenericType OrElse Type.IsGenericTypeDefinition Then
+                Dim gPars As Type() = {}
+                Try
+                    gPars = Type.GetGenericArguments
+                Catch ex As Exception
+                    OnViolation(ResourcesT.CLSComplianceCheckerResources.e_GenericParametersInType.f(Type), CLSRule.Error, Member, ex)
+                End Try
+                For Each gPar In gPars
+                    If gPar.IsGenericParameter AndAlso Member.DeclaringType.Equals(Type) Then 'Open generic type
+                        For Each cons In gPar.GetGenericParameterConstraints
+                            Violated = Violated Or Not CheckTypeAcessibility(Member, cons)
+                        Next
+                    ElseIf Not gPar.IsGenericParameter Then  'Constructed generic type
                         Violated = Violated Or Not CheckTypeAcessibility(Member, gPar)
-                    Next
-                End If
-            Else
-                For Each cons In Type.GetGenericParameterConstraints
-                    Violated = Violated Or Not CheckTypeAcessibility(Member, cons)
+                    End If
                 Next
             End If
             Return Not Violated

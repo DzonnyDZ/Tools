@@ -4,19 +4,19 @@ Module VersionCorrector
     ''' <summary>Performs the correction</summary>
     Public Sub Main()
         If My.Application.CommandLineArgs.Count < 1 Then
-            Console.WriteLine("Finds misversioned references to given assembly in the same asembly and corrects them.")
-            Console.WriteLine("Usage: {0} <assembly> [<snk file>]", IO.Path.GetFileNameWithoutExtension(GetType(VersionCorrector).Assembly.Location))
-            Console.WriteLine("Assembly name can contain wildchars (*)")
-            Console.WriteLine("String "".dllexe"" at end is treated as both, "".dll"" and "".exe""")
-            Console.WriteLine("Assembiles that are not strongly named are not re-signed event when snk file is specified.")
-            Console.WriteLine("Files ""*.vshost.exe"" are always skipped")
+            Console.WriteLine(My.Resources.Usage1)
+            Console.WriteLine(My.Resources.Usage2, IO.Path.GetFileNameWithoutExtension(GetType(VersionCorrector).Assembly.Location))
+            Console.WriteLine(My.Resources.Usage3)
+            Console.WriteLine(My.Resources.Usage4)
+            Console.WriteLine(My.Resources.Usage5)
+            Console.WriteLine(My.Resources.Usage6)
             Environment.Exit(1)
             Return
         End If
         Dim path = My.Application.CommandLineArgs(0)
         Dim Directory = IO.Path.GetDirectoryName(path)
         Dim mask = IO.Path.GetFileName(path)
-        Console.WriteLine("• {0} {1}", My.Application.Info.Title, My.Application.Info.Version)
+        Console.WriteLine(My.Resources.Logo, My.Application.Info.Title, My.Application.Info.Version)
         If mask.EndsWith(".dllexe") Then
             For Each file In IO.Directory.GetFiles(Directory, mask.Substring(0, mask.Length - 6) & "dll")
                 CorrectAssembly(file)
@@ -38,7 +38,7 @@ Module VersionCorrector
         'clr-namespace:Tools.Tests.WindowsT.WPF;assembly=Tools.Tests,Version=1.5.
         Dim LookFor As String
         LookFor = String.Format(invc, "{0}, Version={1}.{2}.", Name.Name, Name.Version.Major, Name.Version.Minor)
-        Console.WriteLine("  Looking for {0}, replace with {1}", LookFor, Name.Version)
+        Console.WriteLine(My.Resources.LookingFor, LookFor, Name.Version)
         Dim sn As Boolean = False
         Using str = IO.File.Open(path, IO.FileMode.Open, IO.FileAccess.ReadWrite, IO.FileShare.Read)
             Dim b = str.ReadByte
@@ -88,15 +88,15 @@ Module VersionCorrector
                         If n2 <> "" AndAlso OldPart <> ToWrite Then
                             If OldPart.Length <> ToWrite.Length Then
                                 'Cannot risk shifting data as it may break offsets but *-generated versions usually have same lengths
-                                Console.WriteLine("    Canot update assembly. Versions have different lenght. Try rebuilding. Old {2}.{3}.{0}, new {2}.{3}.{1}", ToWrite, OldPart, Name.Version.Major, Name.Version.Minor)
+                                Console.WriteLine(My.Resources.CannotUpdate, ToWrite, OldPart, Name.Version.Major, Name.Version.Minor)
                                 Environment.Exit(2)
                                 Return
                             End If
                             Dim wPosition As Long = str.Position - OldPart.Length - 1
-                            Console.WriteLine("    Position {0} (&h{0:X}), will change {1}.{2}.{3} to {1}.{2}.{4}", wPosition, Name.Version.Major, Name.Version.Minor, OldPart, ToWrite)
+                            Console.WriteLine(My.Resources.ChangeAdvertisement, wPosition, Name.Version.Major, Name.Version.Minor, OldPart, ToWrite)
                             WritePositions.Add(wPosition) 'Remember the position
                         Else
-                            Console.WriteLine("    Position {0} (&h{0:X}) no change needed from {1}.{2}.{3} to {1}.{2}.{4}", str.Position - OldPart.Length - 1, Name.Version.Major, Name.Version.Minor, OldPart, ToWrite)
+                            Console.WriteLine(My.Resources.NoChangeNeeded, str.Position - OldPart.Length - 1, Name.Version.Major, Name.Version.Minor, OldPart, ToWrite)
                         End If
                     End If
                     index = 0
@@ -109,7 +109,7 @@ Module VersionCorrector
             End While
             If WritePositions.Count <> 0 Then
                 'Do the write
-                Console.WriteLine("    > Performing {0} writes", WritePositions.Count)
+                Console.WriteLine(My.Resources.PerformingWrites, WritePositions.Count)
                 For Each pos In WritePositions
                     str.Position = pos
                     For Each ch In ToWrite
@@ -118,7 +118,7 @@ Module VersionCorrector
                 Next
                 sn = True
             Else
-                Console.WriteLine("    > No changes needed")
+                Console.WriteLine(My.Resources.NoChangesNeeded)
             End If
         End Using
         If sn AndAlso My.Application.CommandLineArgs.Count >= 2 AndAlso Name.GetPublicKeyToken IsNot Nothing Then
@@ -133,12 +133,12 @@ Module VersionCorrector
                 p.Start()
                 p.WaitForExit()
                 If p.ExitCode <> 0 Then
-                    Console.WriteLine("Error in sn.exe")
+                    Console.WriteLine(My.Resources.snError)
                     Environment.Exit(p.ExitCode)
                     Return
                 End If
             Catch ex As Exception
-                Console.WriteLine("Canot start sn.exe. You can change path to sn.exe in configuration file.")
+                Console.WriteLine(My.Resources.CanotStartSn)
                 Environment.Exit(3)
                 Return
             End Try

@@ -177,4 +177,13 @@
   <data name="LenghtOfOriginalRawItemsCountMustBe1AndOriginalRawItemSize" xml:space="preserve">
     <value>Délka Original.RawItemsCOunt musí být 1 a délka Original.RawItemSize 2 nebo 3.</value>
   </data>
+  <data name="IsUnknownRegistryBaseKey" xml:space="preserve">
+    <value>{0} je neplatný základní klíč registru</value>
+  </data>
+  <data name="OwherHandleHasChanged" xml:space="preserve">
+    <value>Handle vlastníka se změnil.</value>
+  </data>
+  <data name="InstanceAPIMethodsAreNotAllowed" xml:space="preserve">
+    <value>Instanční API metody najsou povoleny.</value>
+  </data>
 </root>

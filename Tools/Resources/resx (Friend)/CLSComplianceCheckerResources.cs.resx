@@ -118,273 +118,273 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="e_TypeInAssembly" xml:space="preserve">
-    <value>Error while getting types in assembly. Some types weren't loaded.</value>
+    <value>Chyba při získávání typů v sestavení. Některý typy nebyly načteny.</value>
   </data>
   <data name="e_ModulesInAssembly" xml:space="preserve">
-    <value>Error while getting modules in assembly</value>
+    <value>Chyba při získávání modulů v sestavení.</value>
   </data>
   <data name="e_AttributeUsageAttribute" xml:space="preserve">
-    <value>Cannot get AttributeUsageAttribute</value>
+    <value>Nemohu získat atribut AttributeUsageAttribute.</value>
   </data>
   <data name="AttributeUsage_AllowMultiple" xml:space="preserve">
-    <value>AttributeUsage.AllowMultiple violated, attribute {0} is used more than once.</value>
+    <value>Porušení AttributeUSage.AllowMultiple, atribute {0} je použit vícekrát.</value>
   </data>
   <data name="AttributeUsage_ValidOn" xml:space="preserve">
-    <value>AttributeUsage.ValidOn violated, attribute {0} cannot be applied to item of type {1}.</value>
+    <value>Porušení AttributeUsage.ValidOn, atribut {0} nemůže být aplikován na položku typu {1}.</value>
   </data>
   <data name="e_TypesInModule_some" xml:space="preserve">
-    <value>Error while getting types in module. Some types weren't loaded.</value>
+    <value>Chyba při získávání typů v modulu. Některé typy nebyly načteny.</value>
   </data>
   <data name="e_TypesInModule" xml:space="preserve">
-    <value>Error while getting types in module.</value>
+    <value>CHyba při získávání typů v modulu.</value>
   </data>
   <data name="e_MethodsInModule" xml:space="preserve">
-    <value>Error while getting methods in module.</value>
+    <value>Chyba při získávání metod v modulu.</value>
   </data>
   <data name="GlobalMethods" xml:space="preserve">
-    <value>Global methods are not CLS-compliant</value>
+    <value>Globální metody nejsou CLS-kompatibilní.</value>
   </data>
   <data name="e_FieldsInModule" xml:space="preserve">
-    <value>Error while getting fields in module.</value>
+    <value>Chyba při získávání proměnných v modulu.</value>
   </data>
   <data name="GlobalFields" xml:space="preserve">
-    <value>Global fields are not CLS-compliant</value>
+    <value>Globální proměnné nejsou CLS-kompatibilní.</value>
   </data>
   <data name="InheritCLSCompliant" xml:space="preserve">
-    <value>CLS-compliant type shall inherit only CLS-compliant type.</value>
+    <value>CLS-kompatibilní typ může dědit jen od CLS-kompatibilního typu.</value>
   </data>
   <data name="NestedGenericTypeParametersCount" xml:space="preserve">
-    <value>Type nested in generic type shall have at least as many type parameters as declaring type.</value>
+    <value>Typ vnořený do generického typu musí mít nejméně tolik typových parametrů jako typ, do něhož je vnořen.</value>
   </data>
   <data name="NameOfGenericType" xml:space="preserve">
-    <value>Name of generic type shall encode number of type parameters.</value>
+    <value>Název generického typu musí obsahovat určení počtu generických parametrů.</value>
   </data>
   <data name="NameOfNestedGenericType" xml:space="preserve">
-    <value>Name of nested type shall encode number of type parameters newly introdued by nested type.</value>
+    <value>Název vnořeného typu musí obsahovat počet typových parametrů přidaných vnořeným typem oproti typu, ve kterém je vnořen.</value>
   </data>
   <data name="NestedGenericConstraint" xml:space="preserve">
-    <value>When type parameter specifies a constraint, corresponding parameter of nested type shall specify it as well. Parameter {0} of type {1} is missing constraint to type {2}.</value>
+    <value>Pokud typový parametr specifikuje omezení, odpovídající parametr vnořeného typu jej musí specifikovat také. Parametr {0} typu {1} postrádá ometení na typ {2}.</value>
   </data>
   <data name="NestedGenericConstraint_New" xml:space="preserve">
-    <value>When type parameter specifies default constructor constraint, corresponding type parameters of nested type must specify it as well.</value>
+    <value>Pokud typový parametr specifikuje omezení výchozí konstruktor, odpovídající parametr vnořeného typu jej musí specifikovat také.</value>
   </data>
   <data name="NestedGenericConstraint_Struct" xml:space="preserve">
-    <value>When type parameter specifies value type (not nullable) constraint, corresponding type parameters of nested type must specify it as well.</value>
+    <value>Pokud typový parametr specifikuje omezení hodnotový typ (nenullovatelný), odpovídající parametr vnořeného typu jej musí specifikovat také.</value>
   </data>
   <data name="NestedGenericConstraint_Class" xml:space="preserve">
-    <value>When type parameter specifies reference type constraint, corresponding type parameters of nested type must specify it as well.</value>
+    <value>Pokud typový parametr specifikuje omezení referenční typ, odpovídající parametr vnořeného typu jej musí specifikovat také.</value>
   </data>
   <data name="e_MembersInType" xml:space="preserve">
-    <value>Error while geting members of type.</value>
+    <value>Chyba při získávání členů typu.</value>
   </data>
   <data name="UniqueSignature" xml:space="preserve">
-    <value>Member signature is not unique.</value>
+    <value>Signatura člena není unikátní.</value>
   </data>
   <data name="EnumerationOnlyFields" xml:space="preserve">
-    <value>Enumeration can contain only fields.</value>
+    <value>Výčet smí obsahovat je proměnné.</value>
   </data>
   <data name="EnumerationFieldKind" xml:space="preserve">
-    <value>Enum fields must be either static literals or instance field named "value__" marked RTSpecialName.</value>
+    <value>Proměnné ve výčtu musí být buďto statické literály nebo instanční proměnná s názvem "value__" označená RTSpecialName.</value>
   </data>
   <data name="EnumerationValue__Type" xml:space="preserve">
-    <value>Type of enumeration field value__ must be ebumeration underlying type.</value>
+    <value>Typ proměnné výčtu value__ musí být typu, na němž je výčet postaven.</value>
   </data>
   <data name="EnumerationLiteralStatic" xml:space="preserve">
-    <value>Enum member literals must be static.</value>
+    <value>Členské literály výčtu musí být statické.</value>
   </data>
   <data name="TypeOfEnumMember" xml:space="preserve">
-    <value>Enum member literals must be of same type as is enum itself.</value>
+    <value>Členské literály výčtu musí být stejného typu jako výčet.</value>
   </data>
   <data name="InterfaceCLSIncompliantMember" xml:space="preserve">
-    <value>Inerface shall not require CLS-incompliant members to be implemented in order to implement it.</value>
+    <value>Rozhraní nesmí vyžadovat implementaci CLS-nekompatibilních členů ke své implementaci.</value>
   </data>
   <data name="InterfaceStaticMethod" xml:space="preserve">
-    <value>Interface shall not declare static methods.</value>
+    <value>Rozhraní nesmí deklarovat statické metody.</value>
   </data>
   <data name="InterfaceField" xml:space="preserve">
-    <value>Interface shall not declare fields.</value>
+    <value>Rozhraní nesmí deklarovat proměnné.</value>
   </data>
   <data name="RequireImplementIncompliant" xml:space="preserve">
-    <value>CLS-compliant types shall  not require implementation of CLS-incompliant members.</value>
+    <value>CLS-kompatibilní typ nesmí vyžadovat implementaci CLS-nekompatibilních členů.</value>
   </data>
   <data name="MissingValue__" xml:space="preserve">
-    <value>Enumeration is missing the value__ field.</value>
+    <value>Výčet postrádá proměnnou value__.</value>
   </data>
   <data name="EnumType" xml:space="preserve">
-    <value>Enum underlying type is not built-in CLS-comliant integral type</value>
+    <value>Výčet není postaven na vestavěném CLS-kompatibilním celočíselném typu.</value>
   </data>
   <data name="CLSCompliantInCLSIncompliant" xml:space="preserve">
-    <value>Member of CLS-incompliant type is marked as CLS-compliant</value>
+    <value>Člem CLS-nekompatibilního typu označen jako CLS-kompatibilní.</value>
   </data>
   <data name="PropertyType" xml:space="preserve">
-    <value>Property type is not CLS-compliant.</value>
+    <value>Typ vlastnosti není CLS-kompatibilní.</value>
   </data>
   <data name="e_IndexesInProperty" xml:space="preserve">
-    <value>Cannot get property index parameters.</value>
+    <value>Nemohu zístak indexové paramery vlastnosti.</value>
   </data>
   <data name="NoPropertyAccesor" xml:space="preserve">
-    <value>Property has no accessor.</value>
+    <value>Vlastnost nemá žádné metody.</value>
   </data>
   <data name="SetterSpecialName" xml:space="preserve">
-    <value>Property setter shall be marked specialname.</value>
+    <value>Setter vlastnosti musí být označen specialname.</value>
   </data>
   <data name="GetterSetterStatic" xml:space="preserve">
-    <value>Property getter and setter must both be static or both be instance.</value>
+    <value>Setter i getter vlastnosti musí být oba buď statické nebo instanční.</value>
   </data>
   <data name="GetterSetterVirtual" xml:space="preserve">
-    <value>Property getter and setter must both be virtual or both be non-virtual.</value>
+    <value>Setter i getter vlastnosti musí být oba buď virtuální nebo nevirtuální.</value>
   </data>
   <data name="GetterSpecialName" xml:space="preserve">
-    <value>Property getter shall be marked specialname.</value>
+    <value>Getter vlastnosti musí být označen spacialname.</value>
   </data>
   <data name="ParametersInGetter" xml:space="preserve">
-    <value>Cannot get parameters of property getter.</value>
+    <value>Nemohu získat parametry getteru vlastnosti.</value>
   </data>
   <data name="GetterType" xml:space="preserve">
-    <value>Property getter return type shall be same as type of property.</value>
+    <value>Návratový typ getteru vlastnosti musí být stejný jako typ vlastnosti.</value>
   </data>
   <data name="GetterParametersCount" xml:space="preserve">
-    <value>Number of parameters of property and of getter shall be same.</value>
+    <value>Počet parametrů vlastnosti a getteru musí být stejný.</value>
   </data>
   <data name="GetterName" xml:space="preserve">
-    <value>Property getter name shall be get_&lt;property name&gt;.</value>
+    <value>Název getteru vlastnosti musí být get_&lt;název vlastnosti&gt; (očekáváno "{0}", skutečně "{1}").</value>
   </data>
   <data name="e_ParametersInSetter" xml:space="preserve">
-    <value>Cannot get parameters of property setter.</value>
+    <value>Nemohu získat paremetry getteru vlastnosti.</value>
   </data>
   <data name="SetterLastParam" xml:space="preserve">
-    <value>Type of last parameter of property setter shall be same as type of property.</value>
+    <value>Typ posledního parametru setteru vlastnosti musí být stejný jako typ vlastnosti.</value>
   </data>
   <data name="SetterParametersCount" xml:space="preserve">
-    <value>Property setter shall have exactly one more parameter than property itself.</value>
+    <value>Setter vlastnosti musí mít přesně o jeden parametry více než vlastnost.</value>
   </data>
   <data name="SetterName" xml:space="preserve">
-    <value>Property setter name shall be set_&lt;property name&gt;.</value>
+    <value>Název setteru vlastnosti musí být set_&lt;název vlastnosti&gt; (očekáváno "{0}", skutečně "{1}").</value>
   </data>
   <data name="IndexType" xml:space="preserve">
-    <value>Property index parameter type {0} is not CLS-compliant.</value>
+    <value>Indexový parametry proměnné {0} není CLS-kompatibilní.</value>
   </data>
   <data name="PropertyByRef" xml:space="preserve">
-    <value>Property parameter shall not be passed by reference.</value>
+    <value>Parametry vlasnosti nesmí být předáván referencí.</value>
   </data>
   <data name="PropertySetterParameters" xml:space="preserve">
-    <value>Property setter parameters shall be same as property parameters (except for last setter parameter).</value>
+    <value>Parametry setteru vlastnosti musí být stejných typů jako parametry vlastnosti (až na poslední parametr setteru).</value>
   </data>
   <data name="PropertyGetterParameters" xml:space="preserve">
-    <value>Property getter parameters shall be same as property parameters.</value>
+    <value>Parametry getteru vlastnosti musí být stejné jako parametry vlastnosti.</value>
   </data>
   <data name="Modreqs" xml:space="preserve">
-    <value>CLS does not allow required modifiers (modreqs).</value>
+    <value>CLS nepovoluje povinné uživatelské modifikátory (modreq).</value>
   </data>
   <data name="EventType" xml:space="preserve">
-    <value>Event delegate type is not CLS-compliant.</value>
+    <value>Type delegáta události není CLS-kompatibilní.</value>
   </data>
   <data name="AddRemoveBothOrNo" xml:space="preserve">
-    <value>Event methods add remove shall be both present or both absent.</value>
+    <value>Metody události add a remove musí být buď obě přítomny nebo obě nepřítomny.</value>
   </data>
   <data name="EventTypeDelegate" xml:space="preserve">
-    <value>Event type shall be delegate.</value>
+    <value>Type události musí být delegát.</value>
   </data>
   <data name="AddSpecialName" xml:space="preserve">
-    <value>Event method add shall be marked specialname.</value>
+    <value>Metoda události add musí být označena jako specialname.</value>
   </data>
   <data name="AddParameters" xml:space="preserve">
-    <value>Event method add shall take exactly one parameters of type of type of event delegate.</value>
+    <value>Metoda události add musí přijímat právě jeden parametry typu delegáta události.</value>
   </data>
   <data name="AddName" xml:space="preserve">
-    <value>Event method add shall be named add_&lt;event name&gt;.</value>
+    <value>Název metody události add musí být pojmenována add_&lt;název události&gt;.</value>
   </data>
   <data name="RemoveSpecialName" xml:space="preserve">
-    <value>Event method remove shall be marked specialname.</value>
+    <value>Metoda události remove musí být označena jako specialname.</value>
   </data>
   <data name="EventAccessorsVisibility" xml:space="preserve">
-    <value>Event accessors shall have same accessibility.</value>
+    <value>Metody události musí mít stejnou úroveň přístupu.</value>
   </data>
   <data name="RemoveParameters" xml:space="preserve">
-    <value>Event method remove shall take exactly one parameters of type of type of event delegate.</value>
+    <value>Metoda události remova musí přijímat právě jeden parametr typu delegáta události.</value>
   </data>
   <data name="RemoveName" xml:space="preserve">
-    <value>Event method remove shall be named remove_&lt;event name&gt;.</value>
+    <value>Metoda události remove musí být pojmenována remove_&lt;neázev události&gt;.</value>
   </data>
   <data name="RaiseSpecialName" xml:space="preserve">
-    <value>Event method raise shall be marked specialname.</value>
+    <value>Metoda události raise musí být označena jako specialname.</value>
   </data>
   <data name="RaiseName" xml:space="preserve">
-    <value>Event method raise shall be named raise_&lt;event name&gt;.</value>
+    <value>Metoda události raise musí být pojmenována raise_&lt;název události&gt;.</value>
   </data>
   <data name="OverrididedLevel" xml:space="preserve">
-    <value>Overriding method shall have same access level as method it overrides. Only familly-or-assembly accessibility can be changed to familly when overriding method is in different assembly then method it overrides.</value>
+    <value>Přepisující metoda musí mýt stejnou úroveň přístupnosti jako metoda, kterou přepisuje. Jen dostupnost sestavení nebo rodina může být změněna na dostupnost rodina, pokud je přepisující metoda v jiném sestavení, než metoda, kterou přepisuje.</value>
   </data>
   <data name="e_ParamsInMethod" xml:space="preserve">
-    <value>Error while getting parameters of method</value>
+    <value>Chyba při získávání parametrů metody.</value>
   </data>
   <data name="ParamType" xml:space="preserve">
-    <value>Parameter {0} is not of CLS-compliant type.</value>
+    <value>Parametr {0} není CLS-kompatibilního typu.</value>
   </data>
   <data name="ReturnType" xml:space="preserve">
-    <value>Return type of method is not CLS-compliant.</value>
+    <value>Návratový typ metody není CLS-kompatibilní.</value>
   </data>
   <data name="StandardCallingConvention" xml:space="preserve">
-    <value>Only supported calling convention is standard.</value>
+    <value>Jediná podporovaná volací konvence je standardní.</value>
   </data>
   <data name="GenericParamType" xml:space="preserve">
-    <value>Type {0} passed to generic type is not CLS-compliant.</value>
+    <value>Typ {0} předaný do generického typu není CLS-kompatibilní.</value>
   </data>
   <data name="IncompliantType" xml:space="preserve">
-    <value>Type {0} is not CLS-compliant.</value>
+    <value>Typ {0} není CLS-kompatibilní.</value>
   </data>
   <data name="TypedReference" xml:space="preserve">
-    <value>TypedReference is noc CLS-compliant.</value>
+    <value>TypedReference není CLS-kompatibilní.</value>
   </data>
   <data name="Array0" xml:space="preserve">
-    <value>Array must have lower bound 0 in each dimension.</value>
+    <value>Pole musí mít spodní mez 0 ve vešech rozměrech.</value>
   </data>
   <data name="Pointer" xml:space="preserve">
-    <value>Unmanaged pointer are not CLS-compliant.</value>
+    <value>Nespravované ukazatele nejsou CLS-kompatibilní.</value>
   </data>
   <data name="FieldType" xml:space="preserve">
-    <value>Field type is not CLS-compliant.</value>
+    <value>Typ proměnné není CLS-kompatibilní.</value>
   </data>
   <data name="ConstantValue" xml:space="preserve">
-    <value>Constant value specified in metadata is not of same type as is type of the field.</value>
+    <value>Konstantní hodnota specifikovaná v metadatech není stejného typu jako je typ proměnné.</value>
   </data>
   <data name="e_CustomAttributes" xml:space="preserve">
-    <value>Cannot get custom attributes.</value>
+    <value>Nemohu získat uživatelské atributy.</value>
   </data>
   <data name="NoAttributeAttribute" xml:space="preserve">
-    <value>Attribute type {0} does not derive from System.Attribute.</value>
+    <value>Typ atributu {0} nedědí od System.Attribute.</value>
   </data>
   <data name="CLSInclompliantAttribute" xml:space="preserve">
-    <value>CLS-inclompliant attribute {0} used.</value>
+    <value>Použití CLS-nekompatibilního atributu {0}.</value>
   </data>
   <data name="CustomAttributeDataInaccessible" xml:space="preserve">
-    <value>Cannot check custom attribute data on {0}, becasue it does not provide access to custom attribute data.</value>
+    <value>Nemohu ověřit data uživatelských atributů pro {0}, protože {0} neposkytuje přístup k datům uživatelských atributů.</value>
   </data>
   <data name="AttributeParamType" xml:space="preserve">
-    <value>Custom attribute {0} constructor value is encoded using CLS-unsupported type {1}.</value>
+    <value>Hodnota konstruktoru uživatelského atributu {0} je kódována za použití CLS-nekompatibilního typu {1}.</value>
   </data>
   <data name="AttributeNamedParamType" xml:space="preserve">
-    <value>Custom attribute {0} named parameter value for {1} is encoded using CLS-unsupported type {2}.</value>
+    <value>Hodnota pojmenovaného parametru {0} uživatelského atributu {1} je kódována za použití CLS-nekompatibilního typu {2}.</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name "{0}" is not CLS-compliant.</value>
+    <value>Název "{0}" není CLS-kompatibilní.</value>
   </data>
   <data name="NameC" xml:space="preserve">
-    <value>Name "{0}" is not stored in Unicode Normalization Form C.</value>
+    <value>Název "{0}" není uložen v Unicode normalizační formě C.</value>
   </data>
   <data name="UniqueName" xml:space="preserve">
-    <value>Culture-invariant lowercase representation of type name "{0}" is not unique.</value>
+    <value>Kulturně invariantní reprezentace názvu typu "{0}" malými písmeny není unikátní.</value>
   </data>
   <data name="ExposeFriend" xml:space="preserve">
-    <value>{0} exposes type {1}, which is not accessible from outside of assembly.</value>
+    <value>{0} vystavuje typ {1}, který není dostupný zvenčí sestavení.</value>
   </data>
   <data name="ExposeNested" xml:space="preserve">
-    <value>{0} exposes type {1}, which is not accessible from outisde of type {2}.</value>
+    <value>{0} vystavuje typ {1}, který není dostupný z venčí typu {2}.</value>
   </data>
   <data name="e_GenericParametersInType" xml:space="preserve">
-    <value>Cannot get generic parameters of type {0}.</value>
+    <value>Nemohu získat generické parametry typu {0}.</value>
   </data>
   <data name="VarArgsAreNotCLSCompliant" xml:space="preserve">
-    <value>VarArgs are not CLS-compliant.</value>
+    <value>VarArgs nejsou CLS-kompatibilní.</value>
   </data>
 </root>

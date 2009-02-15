@@ -7,7 +7,7 @@ Parameters:
         supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
         cpp.7 and cpp.vs are two alternative C++ providers
         c, cpp and h have same meaning (C++)
-        java and jsl jave same meaning (J#)
+        java and jsl have same meaning (J#)
     /nologo - optional, do not show version and copyright info
     /internal - optional, if specified internal (friend) class is generated; public otherwise
     /ns <namespace> - optional, namespace of class
@@ -19,6 +19,6 @@ Parameters:
     /spliton <text> - optional (required for /out2), splits text to two files on given string
         Escape sequences allowed: \\, \n, \r
         <text> goes to part b 
-    /out2 <outfile> - optional (required for spliton), Same as /out, but for part b of source splitted by /spliton
+    /out2 <outfile> - optional (required for /spliton), Same as /out, but for part b of source splitted by /spliton
 /spliton and /out2 allows to split C++ output to *.h and *.cpp file     
 Note: If value of argument contains space, it must be quoted.    

@@ -457,6 +457,7 @@
     <Service Include="{94E38DFF-614B-4CBD-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CLSComplianceCheckerResources.cs.resx" />
     <EmbeddedResource Include="Resources\resx %28Friend%29\Components.cs.resx">
       <DependentUpon>Components.resx</DependentUpon>
       <SubType>Designer</SubType>
@@ -469,7 +470,7 @@
       <LogicalName>Tools.ResourcesT.Components.resources</LogicalName>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="Tests\CLSComplianceCheckerResources.resx">
+    <EmbeddedResource Include="Resources\resx %28Friend%29\CLSComplianceCheckerResources.resx">
       <CustomToolNamespace>ResourcesT</CustomToolNamespace>
       <Generator>InternalResXFileCodeGeneratorEx</Generator>
       <LastGenOutput>CLSComplianceCheckerResources.Designer.vb</LastGenOutput>
@@ -493,7 +494,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Components.resx</DependentUpon>
     </Compile>
-    <Compile Include="Tests\CLSComplianceCheckerResources.Designer.vb">
+    <Compile Include="Resources\resx %28Friend%29\CLSComplianceCheckerResources.Designer.vb">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>CLSComplianceCheckerResources.resx</DependentUpon>

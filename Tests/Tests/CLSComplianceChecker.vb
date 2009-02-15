@@ -68,6 +68,7 @@ Namespace TestsT
             Try
                 Dim ms = GetMemberString(e.Member, True)
                 Console.WriteLine("{0:d} {0:f} {1} {2}{3}", e.Rule, ms, e.Message, If(e.Exception IsNot Nothing, " (" & e.Exception.Message & ")", ""))
+                Debug.Print("{0:d} {0:f} {1} {2}{3}", e.Rule, ms, e.Message, If(e.Exception IsNot Nothing, " (" & e.Exception.Message & ")", ""))
             Finally : Console.ForegroundColor = OFC : End Try
             If Statistic.ContainsKey(e.Rule) Then Statistic(e.Rule) += 1 Else Statistic.Add(e.Rule, 1)
         End Sub

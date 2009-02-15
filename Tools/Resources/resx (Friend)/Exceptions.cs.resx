@@ -1215,4 +1215,112 @@
   <data name="When0Is1ThenTypeOfThisInstanceMustBe2" xml:space="preserve">
     <value>Když {0} je {1} tak typ této instance musí být {2}</value>
   </data>
+  <data name="ThisConverterCanConvertOnlyBetweenTypes0And1" xml:space="preserve">
+    <value>Tento konverter může konvertovat jen mezi typy {0} a {1}</value>
+  </data>
+  <data name="CannotChangeValueOfThe0PropertyWhen1IsTrue" xml:space="preserve">
+    <value>Nemohu změnit hodnotu vlastnosti {0} když {1} je true</value>
+  </data>
+  <data name="ListOfExceptionsCannotBeEmpty" xml:space="preserve">
+    <value>Seznam výjimek nemůže být prázdný.</value>
+  </data>
+  <data name="MultipleExceptionClassRequiresAtLeast2Excptions" xml:space="preserve">
+    <value>Třída MultipleException požaduje alespoň dvě výjimky.</value>
+  </data>
+  <data name="MultipleExceptionsHaveOccured" xml:space="preserve">
+    <value>Došlo k více výjimkám.</value>
+  </data>
+  <data name="ThisControlIsAlreadyUsedByMessageBoxItCannotBeUsedTwice" xml:space="preserve">
+    <value>Tento ovládací prvek již je použit messageboxem. Nelze jej použít dvakrát.</value>
+  </data>
+  <data name="The0MarkupExtensionRequiresAn1ServiceProvider" xml:space="preserve">
+    <value>Značkovací rozšíření {0} potřebuje poskytovatele služby {1}.</value>
+  </data>
+  <data name="GivenInstanceWasNotCreatedFrom0" xml:space="preserve">
+    <value>Předaná instance nebyla vytvořena z {0}</value>
+  </data>
+  <data name="ThisInstanceWasCreatedFromSizeChangedEventArgsWhich" xml:space="preserve">
+    <value>Tato instance byla vytvořena ze SizeChangedEventArgs, jejichž OriginalSource není UIElement.</value>
+  </data>
+  <data name="ValueIsInvalidASCIIValueBecauseItIsNotTerminatedWith" xml:space="preserve">
+    <value>Hodnota je neplatná ASCII hodnota, protože není ukončena nullcharem.</value>
+  </data>
+  <data name="String0IsNotValid1" xml:space="preserve">
+    <value>Řetězec "{0}" není platný {1}</value>
+  </data>
+  <data name="KeyIsInvalidForIPTCMetadata" xml:space="preserve">
+    <value>Klíč není platný pro IPTC metadata.</value>
+  </data>
+  <data name="ExifMEtadataKeyMustContain2SeparatedParts" xml:space="preserve">
+    <value>Klíč Exif metadat musí obsahovat 2 dvojtečkou oddělené části.</value>
+  </data>
+  <data name="IFDIdentificationPartOfExifMetadataKeyIsInvalidItMust" xml:space="preserve">
+    <value>Část identifikace IFD klíče Exif metadat je neplatná. Musí být buď E, G, I nebo číslo.</value>
+  </data>
+  <data name="RecordNumberPartOfExifMetadataIdentificationIsInvalid" xml:space="preserve">
+    <value>Část číslo záznamu identifikace Exif metadat je neplatná.</value>
+  </data>
+  <data name="UnknownPredefinedName0" xml:space="preserve">
+    <value>Neznámé předdefinované jméno "{0}".</value>
+  </data>
+  <data name="EntryPointMustBeSpecified" xml:space="preserve">
+    <value>EntryPoint musí být zadán</value>
+  </data>
+  <data name="MustBeDecoratedWith1" xml:space="preserve">
+    <value>{0} musí být ověnčeno {1}</value>
+  </data>
+  <data name="InvocationListOfDelegateMustHaveExactlyOneItem" xml:space="preserve">
+    <value>List volání delegáta musí mít přesně jednu položku.</value>
+  </data>
+  <data name="AllEdgesValuesMustBePositive" xml:space="preserve">
+    <value>Hodnoty všech hran musí být kladné</value>
+  </data>
+  <data name="NumeralCharactersMustBeDistinct" xml:space="preserve">
+    <value>Znaky číslisc musí být různé</value>
+  </data>
+  <data name="String0RepresentsHigherNumberThanMaximum1" xml:space="preserve">
+    <value>Řetězec {0} reprezentuje číslo větčí než maximum {1}</value>
+  </data>
+  <data name="UnexpectedCharacter0InRomanNumeral" xml:space="preserve">
+    <value>Neočekávaný znak {0} v římském čísle.</value>
+  </data>
+  <data name="InvalidRomanNumeralSequenceInvalidSubtraction" xml:space="preserve">
+    <value>Neplatná sekvence římských číslic - neplatné odčítání. Jediná povolená odčítání jsou IV, IX, XL, XC, CD a CM.</value>
+  </data>
+  <data name="UnknownState0" xml:space="preserve">
+    <value>Neznámý stav {0}</value>
+  </data>
+  <data name="ThousandMultiplicationSuffixMustDifferFromNumerals" xml:space="preserve">
+    <value>Přípona tisícínásobku musí být jiná než jsou číslice.</value>
+  </data>
+  <data name="UnexpectedCharacters0InRomanNumeral" xml:space="preserve">
+    <value>Neočekávané znaky {0} v římském čísle</value>
+  </data>
+  <data name="ArrayCannotBeEmpty" xml:space="preserve">
+    <value>Pole nesmí být prázdné</value>
+  </data>
+  <data name="NumberCannotConsistOfSignOnly" xml:space="preserve">
+    <value>Číslo se nemůže sestávat jen ze znaménka.</value>
+  </data>
+  <data name="CharacterRepresntingNumeralCannotBeSameAsCharacterRepresenting" xml:space="preserve">
+    <value>Znak reprezentující číslo nemůže být stejný jako znak reprezentující záporné znaménko.</value>
+  </data>
+  <data name="CharactersRepreentingNumeralsMustBeDifferent" xml:space="preserve">
+    <value>Znaky reprezentující číslice musí být různé</value>
+  </data>
+  <data name="ToManyCLSCompliantAttributes" xml:space="preserve">
+    <value>Příliš mnoho atributů CLSCompliantAttribute</value>
+  </data>
+  <data name="TypeMustBeEnumeration" xml:space="preserve">
+    <value>Typ musí být výčet</value>
+  </data>
+  <data name="CannotGetBaseClassMethodOfGlobalMethod" xml:space="preserve">
+    <value>Nemohu rčit metodu rodičovské třídy pro globální metodu</value>
+  </data>
+  <data name="MustBeGenericTypeInstance" xml:space="preserve">
+    <value>{0} musí být instance generického typu.</value>
+  </data>
+  <data name="ParentTypeOf0MustBe1" xml:space="preserve">
+    <value>Rodič typu {0} musí být {1}</value>
+  </data>
 </root>

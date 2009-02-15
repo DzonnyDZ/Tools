@@ -150,4 +150,16 @@
   <data name="OKClicked_d" xml:space="preserve">
     <value>Vyvolána po té co uživatel klikne na tlačítko OK a dialog mu dovolí vybrat kódování</value>
   </data>
+  <data name="ValueIndicatingBidirectionlFlowDirection" xml:space="preserve">
+    <value>Hodnota určující směr dvojsměrného toku</value>
+  </data>
+  <data name="TextAlignmentOfPrompt" xml:space="preserve">
+    <value>Zarovnání textu dotazu</value>
+  </data>
+  <data name="WindowChanged_d" xml:space="preserve">
+    <value>Vyvolána, když se zmení hodnota vlastnosti Window</value>
+  </data>
+  <data name="PropertyChanged_d" xml:space="preserve">
+    <value>Vyvolána, když se změní hodnota vlastnosti</value>
+  </data>
 </root>

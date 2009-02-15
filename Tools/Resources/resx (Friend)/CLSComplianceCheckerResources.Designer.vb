@@ -426,7 +426,7 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Property getter name shall be get_&lt;property name&gt;.'.
+        '''Looks up a localized string similar to 'Property getter name shall be get_&lt;property name&gt; (expected &quot;{0}&quot;, actual &quot;{1}&quot;).'.
         '''</summary>
         Friend Shared ReadOnly Property GetterName() As String
             Get
@@ -813,7 +813,7 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Property setter name shall be set_&lt;property name&gt;.'.
+        '''Looks up a localized string similar to 'Property setter name shall be set_&lt;property name&gt; (expected &quot;{0}&quot;, actual &quot;{1}&quot;).'.
         '''</summary>
         Friend Shared ReadOnly Property SetterName() As String
             Get
@@ -1215,11 +1215,13 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''The stub formatting method returning the GetterName property value.
+        '''Formats a localized string similar to 'Property getter name shall be get_&lt;property name&gt; (expected &quot;{0}&quot;, actual &quot;{1}&quot;).'.
         '''</summary>
-        '''<returns>The GetterName property value.</returns>
-        Friend Shared Function GetterNameFormat() As String
-            Return GetterName
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function GetterNameFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, GetterName, arg0, arg1)
         End Function
         
         '''<summary>
@@ -1568,11 +1570,13 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''The stub formatting method returning the SetterName property value.
+        '''Formats a localized string similar to 'Property setter name shall be set_&lt;property name&gt; (expected &quot;{0}&quot;, actual &quot;{1}&quot;).'.
         '''</summary>
-        '''<returns>The SetterName property value.</returns>
-        Friend Shared Function SetterNameFormat() As String
-            Return SetterName
+        '''<param name="arg0">An object (0) to format.</param>
+        '''<param name="arg1">An object (1) to format.</param>
+        '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        Friend Shared Function SetterNameFormat(ByVal arg0 As Object, ByVal arg1 As Object) As String
+            Return String.Format(_resourceCulture, SetterName, arg0, arg1)
         End Function
         
         '''<summary>

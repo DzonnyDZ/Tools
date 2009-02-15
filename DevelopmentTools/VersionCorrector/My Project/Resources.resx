@@ -46,7 +46,7 @@
     
     mimetype: application/x-microsoft.net.object.binary.base64
     value   : The object must be serialized with 
-            : System.Serialization.Formatters.Binary.BinaryFormatter
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
@@ -60,6 +60,7 @@
             : and then encoded with base64 encoding.
     -->
   <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
     <xsd:element name="root" msdata:IsDataSet="true">
       <xsd:complexType>
         <xsd:choice maxOccurs="unbounded">
@@ -68,9 +69,10 @@
               <xsd:sequence>
                 <xsd:element name="value" type="xsd:string" minOccurs="0" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" />
+              <xsd:attribute name="name" use="required" type="xsd:string" />
               <xsd:attribute name="type" type="xsd:string" />
               <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="assembly">
@@ -85,9 +87,10 @@
                 <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
                 <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
               </xsd:sequence>
-              <xsd:attribute name="name" type="xsd:string" msdata:Ordinal="1" />
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
               <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
               <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
             </xsd:complexType>
           </xsd:element>
           <xsd:element name="resheader">
@@ -114,4 +117,49 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Usage1" xml:space="preserve">
+    <value>Finds misversioned references to given assembly in the same asembly and corrects them.</value>
+  </data>
+  <data name="Usage2" xml:space="preserve">
+    <value>Usage: {0} &lt;assembly&gt; [&lt;snk file&gt;]</value>
+  </data>
+  <data name="Usage3" xml:space="preserve">
+    <value>Assembly name can contain wildchars (*)</value>
+  </data>
+  <data name="Usage4" xml:space="preserve">
+    <value>String ".dllexe" at end is treated as both, ".dll" and ".exe"</value>
+  </data>
+  <data name="Usage5" xml:space="preserve">
+    <value>Assembiles that are not strongly named are not re-signed event when snk file is specified.</value>
+  </data>
+  <data name="Usage6" xml:space="preserve">
+    <value>Files "*.vshost.exe" are always skipped</value>
+  </data>
+  <data name="Logo" xml:space="preserve">
+    <value>• {0} {1}</value>
+  </data>
+  <data name="LookingFor" xml:space="preserve">
+    <value>  Looking for {0}, replace with {1}</value>
+  </data>
+  <data name="CannotUpdate" xml:space="preserve">
+    <value>    Canot update assembly. Versions have different lenght. Try rebuilding. Old {2}.{3}.{0}, new {2}.{3}.{1}</value>
+  </data>
+  <data name="ChangeAdvertisement" xml:space="preserve">
+    <value>    Position {0} (&amp;h{0:X}), will change {1}.{2}.{3} to {1}.{2}.{4}</value>
+  </data>
+  <data name="NoChangeNeeded" xml:space="preserve">
+    <value>    Position {0} (&amp;h{0:X}) no change needed from {1}.{2}.{3} to {1}.{2}.{4}</value>
+  </data>
+  <data name="PerformingWrites" xml:space="preserve">
+    <value>    &gt; Performing {0} writes</value>
+  </data>
+  <data name="NoChangesNeeded" xml:space="preserve">
+    <value>    &gt; No changes needed</value>
+  </data>
+  <data name="snError" xml:space="preserve">
+    <value>Error in sn.exe</value>
+  </data>
+  <data name="CanotStartSn" xml:space="preserve">
+    <value>Canot start sn.exe. You can change path to sn.exe in configuration file.</value>
+  </data>
 </root>

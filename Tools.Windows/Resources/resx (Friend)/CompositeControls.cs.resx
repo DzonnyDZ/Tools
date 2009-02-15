@@ -352,4 +352,19 @@
   <data name="ShortcutsEnabled_d" xml:space="preserve">
     <value>Určuje jestli klávesové zkratky pro manipulaci se schránkou jsou povoleny</value>
   </data>
+  <data name="DisplayMemberList_d" xml:space="preserve">
+    <value>Určuje jestli je zobrazen seznam členů</value>
+  </data>
+  <data name="DisplayProperties_d" xml:space="preserve">
+    <value>Indikuje jestli mřížka vlastností je zobrazena</value>
+  </data>
+  <data name="DisplayDescription_d" xml:space="preserve">
+    <value>Indikuje jestli je zobrazena oblast popisu</value>
+  </data>
+  <data name="DisplayChanged_d" xml:space="preserve">
+    <value>Vyvolána, když hodnota kterékoliv z vlastností indikujících, která část uživatelského rozhraní má být zobrazena, se změní.</value>
+  </data>
+  <data name="ItemFiltering_d" xml:space="preserve">
+    <value>Vyvolána když položka má být zobrazena uživateli. Operaci lze stornovat.</value>
+  </data>
 </root>
