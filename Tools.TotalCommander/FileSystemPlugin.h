@@ -528,35 +528,35 @@ namespace Tools{namespace TotalCommanderT{
         BitmapResult(String^ ImagePath, bool Temporary);
         /// <summary>CTor - creates new instance of the <see cref="BitmapResult"/> class from miniature image</summary>
         /// <param name="Bitmap">Miniature image</param>
-        /// <exception cref="ArgumentNullException"/><paramref name="Bitmap"/> is null</exception">
+        /// <exception cref="ArgumentNullException"><paramref name="Bitmap"/> is null</exception>
         BitmapResult(Drawing::Bitmap^ Bitmap);
         /// <summary>CTor - creates new instance of the <see cref="BitmapResult"/> class from miniature image and caching key</summary>
         /// <param name="Bitmap">Miniature image</param>
         /// <param name="ImageKey">Key that uniquelly identifies the image. Total Commander will internally cache the image using this key. Null to prevent chaching (i.e. the plugin caches the image)</param>
-        /// <exception cref="ArgumentNullException"/><paramref name="Bitmap"/> is null</exception">
+        /// <exception cref="ArgumentNullException"><paramref name="Bitmap"/> is null</exception>
         BitmapResult(Drawing::Bitmap^ Bitmap, String^ ImageKey);
         /// <summary>Gets or sets the miniature image</summary>
         /// <returns>The miniature image</returns>
         /// <value>When value of this property is non-null the image will be passed to Total Commander.
-        /// <para>When value of this property is null, Total Commander will be instructed to extract miniature image from file at path <see cref="ImageKey"/>.</param>
+        /// <para>When value of this property is null, Total Commander will be instructed to extract miniature image from file at path <see cref="ImageKey"/>.</para></value>
         /// <remarks>Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</remarks>
         property Drawing::Bitmap^ Image;
         /// <summary>Gets or sets image key - it can be either path to image file Total Commander should extract miniature from or unique key of image or null</summary>
-        /// <returs>Image key</returns>
-        /// <value>When <see cref="Bitmap"/> is null this property represents path to image file containing miniature image.
-        /// <para>When <see cref="Bitmap"/> is not null this property represents unique image key. Total Commander then caches the image under that key.</value>
+        /// <returns>Image key</returns>
+        /// <value>When <see cref="Image"/> is null this property represents path to image file containing miniature image.
+        /// <para>When <see cref="Image"/> is not null this property represents unique image key. Total Commander then caches the image under that key.</para></value>
         /// <exception cref="IO::PathTooLongException">Value longer than <see ctef="FindData::MaxPath"/> - 1 is set</exception>
-        /// <remarks>When both - <see cref="Bitmap"/> and <see cref="ImageKey"/> are null, Total Commander will be left with original image path as path to load miniature from. But the path targets to plugin file system space - so it is invalid from Total Commmander perspective. So, do not set both <see cref="Bitmap"/> and <see cref="ImageKey"/> to null.</remarks>
+        /// <remarks>When both - <see cref="Image"/> and <see cref="ImageKey"/> are null, Total Commander will be left with original image path as path to load miniature from. But the path targets to plugin file system space - so it is invalid from Total Commmander perspective. So, do not set both <see cref="Image"/> and <see cref="ImageKey"/> to null.</remarks>
         property String^ ImageKey{String^ get(); void set(String^);}
         /// <summary>Indicates if image should be cahced by Total Commander</summary>
-        /// <value>Set this property to true to make Total Commander cahce the image under <see cref="ImageKey"/>. Do not set this property to true when you cahce the image in plugin.</summary>
-        /// <remarks>If value of this property is true Total Commander will chache the image under key <see cref="ImageKey"/>. Ignored when <see cref="Bitmap"/> is not null.
+        /// <value>Set this property to true to make Total Commander cahce the image under <see cref="ImageKey"/>. Do not set this property to true when you cahce the image in plugin.</value>
+        /// <remarks>If value of this property is true Total Commander will chache the image under key <see cref="ImageKey"/>. Ignored when <see cref="Image"/> is not null.
         /// <para>When <see cref="Cache"/> is true and <see cref="ImageKey"/> is null, image is cached under key of its original path in plugin file system space by Total Commander.</para></remarks>
         property bool Cache;
         /// <summary>Indicates that image file pointer by path stored in <see cref="ImageKey"/> is temporary and should be deleted by Total Commander when it is no longer necessary.</summary>
         /// <returns>True when image will be deleted by Total Commander; false if not</returns>
         /// <value>True to make Total Commander delete the image when no longer necessary; false to make sure that image file will not be deleted by Total Commander.</value>
-        /// <remarks>Ignored when <see cref="Bitmap"/> is not null</remarks>
+        /// <remarks>Ignored when <see cref="Image"/> is not null</remarks>
         property bool Temporary;
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         /// <summary>Gets <see cref="BitmapHandling"/> represented by this instance</summary>
@@ -689,7 +689,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>When overriden in derived class provides custom code invoked when plugin is initialized.</summary>
         /// <remarks>When this method is called the <see cref="Initialized"/> property has value true and <see cref="PluginNr"/> is already set.
         /// <para>Default implementation of this method does nothing.</para>
-        /// <para>This method implements plugin function <see cref="FsInit"/> (alternatively <see cref="InitializePlugin"/>)</remarks>
+        /// <para>This method implements plugin function <see cref="FsInit"/> (alternatively <see cref="InitializePlugin"/>)</para></remarks>
         virtual void OnInit();
 #pragma region "Callbacks"
         /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
@@ -1090,7 +1090,7 @@ namespace Tools{namespace TotalCommanderT{
         [MethodNotSupportedAttribute]
         virtual bool Disconnect(String^ DisconnectRoot);
     public:
-        /// <summary>Called to set the (Windows-Style) file attributes of a file/dir. <see cref="FsExecuteFile"/> is called for Unix-style attributes.</summary>
+        /// <summary>Called to set the (Windows-Style) file attributes of a file/dir. <see cref="FsExecuteFile(HWND,char*,char*)"/> is called for Unix-style attributes.</summary>
         /// <param name="RemoteName">Name of the file/directory whose attributes have to be set</param>
         /// <param name="NewAttr">New file attributes</param>
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
@@ -1224,7 +1224,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="ReturnedBitmap">Here you need to return the bitmap handle.</param>
-        /// <returns>The <see cref="BitmapHandling"> value</returns>
+        /// <returns>The <see cref="BitmapHandling"/> value</returns>
         /// <remarks>This function is new in version 1.4. It requires Total Commander >=7.0, but is ignored by older versions.
         /// <para>Inportant notes</para>
         /// <list type="numbered">
@@ -1241,18 +1241,17 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved.</param>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
-        /// <returns>The <see cref="BitmapResult"> indicating where to obtain the bitmap or the bitmap itself; null when default image shuld be used.</returns>
+        /// <returns>The <see cref="BitmapResult"/> indicating where to obtain the bitmap or the bitmap itself; null when default image shuld be used.</returns>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>
         /// <para>Inportant notes</para>
         /// <list type="numbered">
         /// <item>This function is only called in Total Commander 7.0 and later. The reported plugin version will be >= 1.4.</item>
-        /// <item>The bitmap handle goes into possession of Total Commander, which will delete it after using it. The plugin must not delete the bitmap handle! (when <see cref="BitmapResult::Bitmap"/> is set.</item>
+        /// <item>The bitmap handle goes into possession of Total Commander, which will delete it after using it. The plugin must not delete the bitmap handle! (when <see2 cref2="F:Tools.TotalCommanderT.BitmapResult.Bitmap"/> is set.</item>
         /// <item>Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</item>
         /// </list>
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
-        /// </remarks>
         [MethodNotSupportedAttribute]
         virtual BitmapResult^ GetPreviewBitmap(String^ RemoteName, int width, int height);
 
@@ -1269,7 +1268,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </list>
         /// <para>This means that when uploading subdirectories from your plugin to FTP in the background, Total Commander will call these functions in a background thread. If the user continues to work in the foreground, calls to <see cref="FsFindFirst"/> and <see cref="FsFindNext"/> may be occuring at the same time! Therefore it's very important to use the search handle to keep temporary information about the search.</para>
         /// <para><see cref="FsStatusInfo"/> will NOT be called from the background thread!</para>
-        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToFiles"/> property.</para>
+        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToLocalFiles"/> property.</para>
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
@@ -1304,9 +1303,9 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="maxlen">Maximum number of characters you can return in <paramref name="RemoteName"/>, including the final 0.</param>
         /// <returns>True if the name points to a local file, which is returned in <paramref name="RemoteName"/>. False if the name does not point to a local file, <paramref name="RemoteName"/> is left unchanged.</returns>
         /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
-        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToFiles"/> property.</para></remarks>
+        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToLocalFiles"/> property.</para></remarks>
         /// <seelaso cref="FsLinksToLocalFiles"/>
-        /// <exception cref="IO:PathTooLongException"/>String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
+        /// <exception cref="IO:PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         BOOL FsGetLocalName(char* RemoteName,int maxlen);

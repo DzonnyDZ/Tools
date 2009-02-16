@@ -18,7 +18,7 @@ using namespace System::Security::Permissions;
 [assembly:AssemblyProductAttribute("ÐTools")];
 [assembly:AssemblyCopyrightAttribute("© Ðonny 2009")];
 [assembly:AssemblyTrademarkAttribute("")];
-[assembly:AssemblyCultureAttribute("en")];
+[assembly:Resources::NeutralResourcesLanguageAttribute("en")]
 
 #include "..\SharedFiles\Version.cpp"
 

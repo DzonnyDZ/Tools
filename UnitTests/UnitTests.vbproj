@@ -195,7 +195,7 @@
     </ProjectReference>
     <ProjectReference Include="..\Tools.TotalCommander\Tools.TotalCommander.vcproj">
       <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
-      <Name>Tools.TotalCommander</Name>
+      <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
     </ProjectReference>
     <ProjectReference Include="..\Tools.Windows\Tools.Windows.vbproj">
       <Project>{452A48B6-DBD2-43C0-9D4B-3834E2EA135A}</Project>

@@ -1,0 +1,19 @@
+﻿Usage:
+{0} <assembly> <parameters>
+assembly    A DLL assembly containing plugin definition
+parameters:
+/out <outdir> Output directory. Optional. Not set = same as assembly directory
+/t <type>     Type name. Optional. Multiple.
+              If specified at leas once only types specified will be used (otherwise all the types that qaulify to be TC plugin are used).
+              Use name for Assembly.GetType().
+/-wfx         Excludes wfx plugins
+/-wlx         Excludes wlx plugins
+/-wcx         Excludes wcx plugins
+/-wdx         Excludes wdx plugins
+              Plugin exclusions excludes plugins not depending on if /t is specified.
+/n <type> <name> Name of plugin for type. Optional. Multiple. Independent of /t. Sets name (without extension) of plugin file.
+              For types without /n set, type name is used (may be changed a little when contains characters like <, >, *, |, ?, : etc.).
+              Type must be name of type as reported by Type.FullName. Name shan't contain special characters.
+              Naming behavior chan be changed also by TotalCommanderPluginAttribute. /n takes precedence.
+/int <path>   Path to intermediate directory. Optional. When not specified temporary is used.
+/keepint      Keep files in intermediate directory after execution. Valid only when /int is set. Optional.              
