@@ -255,6 +255,10 @@
             <summary>Contains classes for performing various general-purpose tests.</summary>
             <remarks>Unlike namespace <see cref="N:Tools.Tests"/>, which contains tests of classes created in the tools project, this namespace contains general- purpose test.</remarks>
         </member>
+        <member name="N:Tools.TotalCommander">
+            <summary>Contains classes for working with Total Commander file manager and implementing extensions for it.</summary>
+            <version version="1.5.2">Namespace introduced</version>
+        </member>
         <member name="N:Tools.DevicesT">
             <summary>Contains classes for working with hardware devices such as keyboard</summary>
         </member>

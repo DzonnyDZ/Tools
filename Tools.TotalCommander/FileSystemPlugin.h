@@ -1,7 +1,15 @@
 #pragma once
+
 #include "fsplugin.h"
 #include "Common.h"
 #include "ContentPluginBase.h"
+
+#pragma make_public(WIN32_FIND_DATA)
+#pragma make_public(RemoteInfoStruct)
+#pragma make_public(FILETIME)
+#pragma make_public(HICON__)
+#pragma make_public(FsDefaultParamStruct)
+#pragma make_public(HBITMAP__)
 
 namespace Tools{namespace TotalCommanderT{
     using namespace System;
@@ -234,31 +242,31 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetAttributes(Int32 value);
     
-        /// <summary>Sets <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Sets <see cref="FileSize"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <param name="value">New value of the <see cref="FileSize"/> property</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetFileSize(__int64 value);
-        /// <summary>Gets <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Gets <see cref="FileSize"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <returns><see cref="FileSize"/></returns>
-        /// <exception cref="InvalidOperationException"><see cref="FileSize"/> is greater than <see cref="__int64::MaxValue"/></exception>
+        /// <exception cref="InvalidOperationException"><see cref="FileSize"/> is greater than <see cref="Int64::MaxValue"/></exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetFileSize();
-        /// <summary>Sets low word <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Sets low word <see cref="FileSize"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <param name="value">New value of the <see cref="FileSize"/> property's low word</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="Int32::MaxValue"/></exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetFileSizeLow(__int64 value);
-        /// <summary>Gets <see cref="FileSizeLow"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Gets low word <see cref="FileSize"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <returns>Low word of <see cref="FileSize"/></returns>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetFileSizeLow();
-        /// <summary>Sets high word <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Sets high word <see cref="FileSize"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <param name="value">New value of the <see cref="FileSize"/> property's high word</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="Int32::MaxValue"/></exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetFileSizeHigh(__int64 value);
-        /// <summary>Gets high word <see cref="FileSize"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Gets high word <see cref="FileSize"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <returns>High word of <see cref="FileSize"/></returns>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetFileSizeHigh();
@@ -396,37 +404,44 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Time stamp of the remote file - should be copied with the file.</summary>
         property DateTime LastWriteTime;
         /// <summary>Attributes of the remote file - should be copied with the file.</summary>
+        /// <remarks>This property is not CLS-comliant. CLS-compliant alternative is <see cref="Attributes"/>.</remarks>
+        [CLSCompliant(false)]
         property FileAttributes Attr;
         /// <summary>Remote file size. Useful for a progress indicator.</summary>
         /// <remarks>This property is not CLS-compliant. CLS-compliant alternative is to use <see cref="SetSize"/> and <see cref="GetSize"/>.</remarks>
         [CLSCompliantAttribute(false)]
         property QWORD Size{QWORD get();void set(QWORD);}
 #pragma region "CLS-compliance"
-        /// <summary>Sets <see cref="Size"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>CLS-comliant alternative to the <see cref="Attr"/> property - gets or sets file attributes.</summary>
+        /// <returns>Bitwise-same value as <see cref="Attr"/> representing file attrbutes</returns>
+        /// <value>Value of the <see cref="Attr"/> property (bitwise same)</value>
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        property Int32 Attributes{Int32 get(); void set(Int32);}
+        /// <summary>Sets <see cref="Size"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <param name="value">New value of the <see cref="Size"/> property</param>
         /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetSize(__int64 value);
-        /// <summary>Gets <see cref="Size"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Gets <see cref="Size"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <returns><see cref="Size"/></returns>
-        /// <exception cref="InvalidOperationException"><see cref="Size"/> is greater than <see cref="__int64::MaxValue"/></exception>
+        /// <exception cref="InvalidOperationException"><see cref="Size"/> is greater than <see cref="Int64::MaxValue"/></exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetSize();
-        /// <summary>Sets <see cref="SizeLow"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Sets <see cref="SizeLow"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <param name="value">New value of the <see cref="SizeLow"/> property</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="Int32::MaxValue"/></exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetSizeLow(__int64 value);
-        /// <summary>Gets <see cref="SizeLow"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Gets <see cref="SizeLow"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <returns><see cref="SizeLow"/></returns>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetSizeLow();
-        /// <summary>Sets <see cref="SizeHigh"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Sets <see cref="SizeHigh"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <param name="value">New value of the <see cref="SizeHigh"/> property</param>
-        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="__int32::MaxValue"/></exception>
+        /// <exception cref="ArgumentOutOfRangeException"><paramref name="value"/> is negative or greater than <see cref="Int32::MaxValue"/></exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void SetSizeHigh(__int64 value);
-        /// <summary>Gets <see cref="SizeHigh"/> as CLS-compliant <see cref="__int64"/></summary>
+        /// <summary>Gets <see cref="SizeHigh"/> as CLS-compliant <see cref="Int64"/></summary>
         /// <returns><see cref="SizeHigh"/></returns>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         __int64 GetSizeHigh();
@@ -437,7 +452,118 @@ namespace Tools{namespace TotalCommanderT{
         RemoteInfo(const RemoteInfoStruct& ri);
     };
 
-    
+    /// <summary>File system icon extraction flags</summary>
+    [FlagsAttribute]
+    public enum class IconExtractFlags : int{
+        /// <summary>Requests the small 16x16 icon</summary>
+        SmallIcon = FS_ICONFLAG_SMALL,
+        /// <summary>The function is called from the background thread</summary>
+        BackgroundThread = FS_ICONFLAG_BACKGROUND
+    };
+
+    /// <summary>Identifies result of icon-obtaining</summary>
+    public enum class IconExtractResult : int{
+        /// <summary>No icon is returned. The calling app should show the default icon for this file type.</summary>
+        UseDefault = FS_ICON_USEDEFAULT,
+        /// <summary>An icon was returned in TheIcon. The icon must NOT be freed by the calling app, e.g. because it was loaded with LoadIcon Win32 API, or the DLL handles destruction of the icon.</summary>
+        Extracted = FS_ICON_EXTRACTED,
+        /// <summary>An icon was returned in TheIcon. The icon MUST be destroyed by the calling app, e.g. because it was created with CreateIcon Win32 API, or extracted with ExtractIconEx Win32 API.</summary>
+        ExtractedDestroy = FS_ICON_EXTRACTED_DESTROY,
+        /// <summary>This return value is only valid when icon was NOT obtained at background. It tells the calling app to show a default icon, and request the true icon in a background thread.</summary>
+        Delayed = FS_ICON_DELAYED
+    };
+
+    /// <summary>Contains information about current plugin interface version and ini location</summary>
+    public value class DefaultParams{
+    private:
+        /// <summary>Contains value of the <see cref="Version"/> property</summary>
+        System::Version^ version;
+        /// <summary>Contains value of the <see cref="DefaultIniName"/> property</summary>
+        String^ defaultIniName;
+    internal:
+        /// <summary>CTor - populates new instance with data from <see cref="FsDefaultParamStruct"/></summary>
+        /// <param name="from">The <see cref="FsDefaultParamStruct"/></param>
+        DefaultParams(FsDefaultParamStruct& from);
+    public:
+        /// <summary>Gets the plugin interface version</summary>
+        /// <returns>Version of plugin intercase consisifting of Major.Minor.0.0</returns>
+        property System::Version^ Version{System::Version^ get();}
+        /// <summary>Suggested location+name of the ini file where the plugin could store its data.</summary>
+        /// <returns>A fully qualified path+file name, in the same directory as the wincmd.ini. It's recommended to store the plugin data in this file or at least in this directory, because the plugin directory or the Windows directory may not be writable!</returns>
+        property String^ DefaultIniName{String^ get();}
+    };
+
+    /// <summary>Contains instructions for Total Commander how to handle extracted bitmap</summary>
+    public enum class BitmapHandling{
+        /// <summary>There is no preview bitmap.</summary>
+        None = FS_BITMAP_NONE,
+        /// <summary>The image was extracted and is returned in ReturnedBitmap parameter</summary>
+        Extracted = FS_BITMAP_EXTRACTED,	
+        /// <summary>Tells the caller to extract the image by itself. The full local path to the file needs to be returned in RemoteName parameter. The returned bitmap name must not be longer than <see cref="FindData::MaxPath"/>.</summary>
+        ExtractYourself = FS_BITMAP_EXTRACT_YOURSELF,	
+        /// <summary>Tells the caller to extract the image by itself, and then delete the temporary image file. The full local path to the temporary image file needs to be returned in RemoteName parameter. The returned bitmap name must not be longer than <see cref="FindData::MaxPath"/>. In this case, the plugin downloads the file to TEMP and then asks TC to extract the image.</summary>
+        ExtractAndDelete = FS_BITMAP_EXTRACT_YOURSELF_ANDDELETE,	
+        /// <summary>This value must be ADDED to one of the above values if the caller should cache the image. Do NOT add this image if you will cache the image yourself!</summary>
+        Cache = FS_BITMAP_CACHE
+    };
+
+    /// <summary>Implements tha += operator for <see cref="BitmapHandling"/> enumeration</summary>
+    /// <param name="a">Reference to <see cref="BitmapHandling"/> to be updated</param>
+    /// <param name="b">Value to be added to <paramref name="b"/></param>
+    /// <returns>a + b</returns>
+    BitmapHandling& operator += (BitmapHandling& a, const BitmapHandling& b);
+
+    /// <summary>Holds reference to file miniature bitmap</summary>
+    /// <remarks>If you do not provide bitmap for certain file/directory return null instead of instance of this class</remarks>
+    public ref class BitmapResult{
+    private:
+        /// <summary>Contains value of the <see cref="ImageKey"/> property</summary>
+        String^ imagekey;
+    public:
+        /// <summary>CTor - creates new instance of the <see cref="BitmapResult"/> class from image path</summary>
+        /// <param name="ImagePath">Path to image preview bitmap is stored in.</param>
+        /// <para name="Temporary">True if <paramref name="ImagePath"/> points to temporary file Total Commander shall delete whan it is no longer needed (after bitmap is read)</para>
+        /// <exception cref="IO::PathTooLongException">The length of <paramref name="ImagePath"/> is greater than <see cref="FindData::MaxPath"/> - 1</exception>
+        /// <exception cref="ArgumentNullException"><paramref name="ImagePath"/> is null</exception>
+        BitmapResult(String^ ImagePath, bool Temporary);
+        /// <summary>CTor - creates new instance of the <see cref="BitmapResult"/> class from miniature image</summary>
+        /// <param name="Bitmap">Miniature image</param>
+        /// <exception cref="ArgumentNullException"/><paramref name="Bitmap"/> is null</exception">
+        BitmapResult(Drawing::Bitmap^ Bitmap);
+        /// <summary>CTor - creates new instance of the <see cref="BitmapResult"/> class from miniature image and caching key</summary>
+        /// <param name="Bitmap">Miniature image</param>
+        /// <param name="ImageKey">Key that uniquelly identifies the image. Total Commander will internally cache the image using this key. Null to prevent chaching (i.e. the plugin caches the image)</param>
+        /// <exception cref="ArgumentNullException"/><paramref name="Bitmap"/> is null</exception">
+        BitmapResult(Drawing::Bitmap^ Bitmap, String^ ImageKey);
+        /// <summary>Gets or sets the miniature image</summary>
+        /// <returns>The miniature image</returns>
+        /// <value>When value of this property is non-null the image will be passed to Total Commander.
+        /// <para>When value of this property is null, Total Commander will be instructed to extract miniature image from file at path <see cref="ImageKey"/>.</param>
+        /// <remarks>Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</remarks>
+        property Drawing::Bitmap^ Image;
+        /// <summary>Gets or sets image key - it can be either path to image file Total Commander should extract miniature from or unique key of image or null</summary>
+        /// <returs>Image key</returns>
+        /// <value>When <see cref="Bitmap"/> is null this property represents path to image file containing miniature image.
+        /// <para>When <see cref="Bitmap"/> is not null this property represents unique image key. Total Commander then caches the image under that key.</value>
+        /// <exception cref="IO::PathTooLongException">Value longer than <see ctef="FindData::MaxPath"/> - 1 is set</exception>
+        /// <remarks>When both - <see cref="Bitmap"/> and <see cref="ImageKey"/> are null, Total Commander will be left with original image path as path to load miniature from. But the path targets to plugin file system space - so it is invalid from Total Commmander perspective. So, do not set both <see cref="Bitmap"/> and <see cref="ImageKey"/> to null.</remarks>
+        property String^ ImageKey{String^ get(); void set(String^);}
+        /// <summary>Indicates if image should be cahced by Total Commander</summary>
+        /// <value>Set this property to true to make Total Commander cahce the image under <see cref="ImageKey"/>. Do not set this property to true when you cahce the image in plugin.</summary>
+        /// <remarks>If value of this property is true Total Commander will chache the image under key <see cref="ImageKey"/>. Ignored when <see cref="Bitmap"/> is not null.
+        /// <para>When <see cref="Cache"/> is true and <see cref="ImageKey"/> is null, image is cached under key of its original path in plugin file system space by Total Commander.</para></remarks>
+        property bool Cache;
+        /// <summary>Indicates that image file pointer by path stored in <see cref="ImageKey"/> is temporary and should be deleted by Total Commander when it is no longer necessary.</summary>
+        /// <returns>True when image will be deleted by Total Commander; false if not</returns>
+        /// <value>True to make Total Commander delete the image when no longer necessary; false to make sure that image file will not be deleted by Total Commander.</value>
+        /// <remarks>Ignored when <see cref="Bitmap"/> is not null</remarks>
+        property bool Temporary;
+        [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
+        /// <summary>Gets <see cref="BitmapHandling"/> represented by this instance</summary>
+        /// <returns>A <see cref="BitmapHandling"/> value to pass to Total Commander</returns>
+        BitmapHandling GetFlag();
+    };
+
     /// <summary>Abstract base class for Total Commander file-system plugins (wfx)</summary>
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
@@ -494,7 +620,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="pRequestProc">Pointer to the request text proc</param>
         /// <returns>The return value is currently unused. You should return 0 when successful.</returns>
         /// <remarks><see cref="FsInit"/> is NOT called when the user initially installs the plugin. Only <se cref="FsGetDefRootName"/>.is called in this case, and then the plugin DLL is unloaded again. The plugin DLL is loaded when the user enters the plugin root in Network Neighborhood.
-        /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para></remarks>
+        /// <para>This function is called by Total Commander and is not intended for direct use. If you need use plugin outside of Total Commander use <see cref="InitializePlugin"/> instead.</para>
+        /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para></remarks>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
@@ -506,7 +633,8 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="request">Delegate to the request text proc</param>
         /// <exception cref="InvalidOperationException"><see cref="Initialized"/> is true</exception>
         /// <exception cref="ArgumentNullException"><paramref name="progress"/>, <paramref name="log"/> or <paramref name="request"/> is null</exception>
-        /// <remarks>Use this function to initialize the plugin when used outside of Total Commander</remarks>
+        /// <remarks>Use this function to initialize the plugin when used outside of Total Commander.
+        /// <para>This plugin function is implemented by <see cref="OnInit"/>.</para></remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Advanced)]
         void InitializePlugin(int PluginNr, ProgressCallback^ progress, LogCallback^ log, RequestCallback^ request);
         /// <summary>When plugin is initialized, gets value indicating if it was initialiuzed by Total Commander or .NET application</summary>
@@ -560,7 +688,8 @@ namespace Tools{namespace TotalCommanderT{
     protected:
         /// <summary>When overriden in derived class provides custom code invoked when plugin is initialized.</summary>
         /// <remarks>When this method is called the <see cref="Initialized"/> property has value true and <see cref="PluginNr"/> is already set.
-        /// <para>Default implementation of this method does nothing</para></remarks>
+        /// <para>Default implementation of this method does nothing.</para>
+        /// <para>This method implements plugin function <see cref="FsInit"/> (alternatively <see cref="InitializePlugin"/>)</remarks>
         virtual void OnInit();
 #pragma region "Callbacks"
         /// <summary>Callback function, which the plugin can call to show copy progress.</summary>
@@ -725,6 +854,16 @@ namespace Tools{namespace TotalCommanderT{
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         int FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb);
+        /// <summary>Alternative function to <see cref="FsExecuteFile(HWND,char*,char*)"/> because ha have problems with exposing HWND type to managed code</summary>
+        /// <param name="MainWin">Parent window which can be used for showing a property sheet.</param>
+        /// <param name="RemoteName">Name of the file to be executed, with full path.</param>
+        /// <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
+        /// <returns>Return <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotaCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
+        /// <remarks>This function is called by Total Commander and is not intended for direct use</remarks>
+        /// <seelaso cref="FsExecuteFile(HWND,char*,char*)"/>
+        [EditorBrowsableAttribute(EditorBrowsableState::Never)]
+        [CLSCompliantAttribute(false)]
+        int FsExecuteFile(HANDLE MainWin,char* RemoteName,char* Verb);        
     public:
         /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
@@ -1040,26 +1179,147 @@ namespace Tools{namespace TotalCommanderT{
         [CLSCompliantAttribute(false)]
         void FsGetDefRootName(char* DefRootName,int maxlen);
     public:
-        //TODO:
+        /// <summary>Called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
+        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The icon handle must still be returned in <paramref name="TheIcon"/>!</param>
+        /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
+        /// <param name="TheIcon">Here you need to return the icon handle.</param>
+        /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
+        /// <remarks>If you return <see2 cref2="F:Tools.TotalCommander.IconExtractResult.Delayed"/>, <see cref="FsExtractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="FsExtractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommander.IconExtractFlags.BackgroundThread"/> flag.
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// <para>This function is new in wfx version 1.1. It requires Total Commander >=5.51, but is ignored by older versions.</para></remarks>
+        /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="RemoteName"/> is longer than <see cref="FindData::MaxPath"/> - 1.</exception> 
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         int FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon);
+        /// <summary>When overriden in derived class, called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
+        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO:PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
+        /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
+        /// <param name="TheIcon">Here you need to return the icon, unless return value is <see2 cref2="F:Tools.TotalCommander.IconExtractResult.Delayed"/> or <see2 cref2="F:Tools.TotalCommander.IconExtractResult.UseDefault"/></param>
+        /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
+        /// <remarks>If you return <see2 cref2="F:Tools.TotalCommander.IconExtractResult.Delayed"/>, <see cref="FsExtractCustomIcon"/> will be called again from a background thread at a later time. A critical section is used by the calling app to ensure that <see cref="FsExtractCustomIcon"/> is never entered twice at the same time. This return value should be used for icons which take a while to extract, e.g. EXE icons. If the user turns off background loading of icons, the function will be called in the foreground with the <see2 cref2="F:Tools.TotalCommander.IconExtractFlags.BackgroundThread"/> flag.
+        /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        [MethodNotSupportedAttribute]
+        virtual IconExtractResult ExctractCustomIcon(String^% RemoteName, IconExtractFlags ExtractFlags, Drawing::Icon^% TheIcon);
+        /// <summary>Called immediately after <see cref="FsInit"/>.</summary>
+        /// <param name="dps">This structure of type <see cref="FsDefaultParamStruct"/> currently contains the version number of the plugin interface, and the suggested location for the settings file (ini file). It is recommended to store any plugin-specific information either directly in that file, or in that directory under a different name. Make sure to use a unique header when storing data in this file, because it is shared by other file system plugins! If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.</param>
+        /// <remarks>
+        /// <para>This function is new in wfx version 1.3. It requires Total Commander >=5.51, but is ignored by older versions.</para>
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         void FsSetDefaultParams(FsDefaultParamStruct* dps);
+        /// <summary>When overriden in derived class called immediately after <see cref="OnInit"/>.</summary>
+        /// <param name="dps">This sctructure curently contains version number of the Total Commander plugin interface (not this managed interface) and suggested location of settings file. It is recommended to store any plugin-specific information either directly in that file or in that directory under a different name.</param>
+        /// <remarks>Make sure to use a unique header when storing data in this file, because it is shared by other file system plugins! If your plugin needs more than 1kbyte of data, you should use your own ini file because ini files are limited to 64k.
+        /// <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        [MethodNotSupportedAttribute]
+        virtual void SetDefaultParams(DefaultParams dps);
+        /// <summary>Called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
+        /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved. When extracting a bitmap, you can return a bitmap name here - this ensures that the icon is only cached once in the calling program. The returned bitmap name must not be longer than <see cref="FindData::MaxPath"/> characters (including terminating 0!). The bitmap handle must still be returned in <paramref name="ReturnedBitmap"/>!</param>
+        /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
+        /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
+        /// <param name="ReturnedBitmap">Here you need to return the bitmap handle.</param>
+        /// <returns>The <see cref="BitmapHandling"> value</returns>
+        /// <remarks>This function is new in version 1.4. It requires Total Commander >=7.0, but is ignored by older versions.
+        /// <para>Inportant notes</para>
+        /// <list type="numbered">
+        /// <item>This function is only called in Total Commander 7.0 and later. The reported plugin version will be >= 1.4.</item>
+        /// <item>The bitmap handle goes into possession of Total Commander, which will delete it after using it. The plugin must not delete the bitmap handle!</item>
+        /// <item>Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</item>
+        /// </list>
+        /// <para>This function is called by Total Commander and is not intended for direct use.</para>
+        /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         int FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap);
+        /// <summary>When overriden in derved class called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
+        /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved.</param>
+        /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
+        /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
+        /// <returns>The <see cref="BitmapResult"> indicating where to obtain the bitmap or the bitmap itself; null when default image shuld be used.</returns>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <remarks>
+        /// <para>Inportant notes</para>
+        /// <list type="numbered">
+        /// <item>This function is only called in Total Commander 7.0 and later. The reported plugin version will be >= 1.4.</item>
+        /// <item>The bitmap handle goes into possession of Total Commander, which will delete it after using it. The plugin must not delete the bitmap handle! (when <see cref="BitmapResult::Bitmap"/> is set.</item>
+        /// <item>Make sure you scale your image correctly to the desired maximum width+height! Do not fill the rest of the bitmap - instead, create a bitmap which is SMALLER than requested! This way, Total Commander can center your image and fill the rest with the default background color.</item>
+        /// </list>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// </remarks>
+        [MethodNotSupportedAttribute]
+        virtual BitmapResult^ GetPreviewBitmap(String^ RemoteName, int width, int height);
+
+        /// <summary>Indicates if plugin is temporary panel-style plugin</summary>
+        /// <returns>True if the plugin is a temporary panel-style plugin; false if the plugin is a normal file system plugin</returns>
+        /// <remarks><see cref="FsLinksToLocalFiles"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
+        /// <para>If your plugin is a temporary panel plugin, the following functions MUST be thread-safe (can be called from background transfer manager):</para>
+        /// <list type="bullet">
+        /// <item><see cref="FsLinksToLocalFiles"/></item>
+        /// <item><see cref="FsFindFirst"/></item>
+        /// <item><see cref="FsFindNext"/></item>
+        /// <item><see cref="FsFindClose"/></item>
+        /// <item><see cref="FsGetLocalName"/></item>
+        /// </list>
+        /// <para>This means that when uploading subdirectories from your plugin to FTP in the background, Total Commander will call these functions in a background thread. If the user continues to work in the foreground, calls to <see cref="FsFindFirst"/> and <see cref="FsFindNext"/> may be occuring at the same time! Therefore it's very important to use the search handle to keep temporary information about the search.</para>
+        /// <para><see cref="FsStatusInfo"/> will NOT be called from the background thread!</para>
+        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToFiles"/> property.</para>
+        /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         BOOL FsLinksToLocalFiles(void);
+        /// <summary>When overriden in derived class gets valud indicating if plugin is temporary panel-style plugin.</summary>
+        /// <returns>True if the plugin is a temporary panel-style plugin; false if the plugin is a normal file system plugin</returns>
+        /// <exception cref="NotSupportedException">The actual implementation of getter is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <remarks><see cref="LinksToLocalFiles"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
+        /// <para>If your plugin is a temporary panel plugin, the following functions MUST be thread-safe (can be called from background transfer manager):</para>
+        /// <list type="bullet">
+        /// <item><see cref="LinksToLocalFiles"/></item>
+        /// <item><see cref="FindFirst"/></item>
+        /// <item><see cref="FindNext"/></item>
+        /// <item><see cref="FindClose"/></item>
+        /// <item><see cref="GetLocalName"/></item>
+        /// </list>
+        /// <para>This means that when uploading subdirectories from your plugin to FTP in the background, Total Commander will call these functions in a background thread. If the user continues to work in the foreground, calls to <see cref="FsFindFirst"/> and <see cref="FsFindNext"/> may be occuring at the same time! Therefore it's very important to use the search handle to keep temporary information about the search.</para>
+        /// <para><see cref="StatusInfo"/> will NOT be called from the background thread!</para>
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note>
+        /// <para>Unlike in case of methods, this is property. But the possible <see cref="MethodNotSupportedAttribute"/> must be applied onto method - this is the getter of this property.</para>
+        /// <para>This property implements plugin function <see cref="FsLinksToLocalFiles"/></para>.
+        /// </remarks>
+        virtual property bool LinksToLocalFiles{
+            [MethodNotSupportedAttribute]
+            virtual bool get();
+        }
+        /// <summary>Gets local name of plugin file</summary>
+        /// <param name="RemoteName">
+        /// <para>In: Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</para>
+        /// <para>Out: Return the path of the file on the local file system, e.g. c:\windows\file.ext</para>
+        /// </param>
+        /// <param name="maxlen">Maximum number of characters you can return in <paramref name="RemoteName"/>, including the final 0.</param>
+        /// <returns>True if the name points to a local file, which is returned in <paramref name="RemoteName"/>. False if the name does not point to a local file, <paramref name="RemoteName"/> is left unchanged.</returns>
+        /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
+        /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToFiles"/> property.</para></remarks>
+        /// <seelaso cref="FsLinksToLocalFiles"/>
+        /// <exception cref="IO:PathTooLongException"/>String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         BOOL FsGetLocalName(char* RemoteName,int maxlen);
+        /// <summary>When overriden in derved class gets local name of plugin file</summary>
+        /// <param name="RemoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
+        /// <param name="maxlen">Maximum number of characters you can return. Do not return longer strings because uncatchable <see cref="IO:PathTooLongException"/> will be throw by <see cref="FsGetLocalName"/>.</param>
+        /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file</returns>
+        /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+        /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
+        /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+        [MethodNotSupportedAttribute]
+        virtual String^ GetLocalName(String^ RemoteName, int maxlen);
         //TODO: custom columns
 #pragma endregion
     };
-
-    
-   
 }}

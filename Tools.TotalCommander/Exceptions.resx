@@ -126,6 +126,9 @@
   <data name="NameTooLong" xml:space="preserve">
     <value>Name too long. Mamximum allowed length is {0}</value>
   </data>
+  <data name="PathTooLong" xml:space="preserve">
+    <value>String returned by plugin is longer than maximal path length alowed.</value>
+  </data>
   <data name="PluginNotInitialized" xml:space="preserve">
     <value>Plugin was not initialized.</value>
   </data>

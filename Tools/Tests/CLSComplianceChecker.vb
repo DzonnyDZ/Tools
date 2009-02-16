@@ -206,9 +206,7 @@ Namespace TestsT
         Protected Overridable Sub OnViolation(ByVal Message$, ByVal Rule As CLSRule, ByVal Item As ICustomAttributeProvider, Optional ByVal Exception As Exception = Nothing)
             RaiseEvent Violation(Me, New CLSViolationEventArgs(Message, Rule, Item, Exception))
         End Sub
-        ''' <summary>Regulare expersssion to check if identifier name is valied</summary>
-        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*$", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
-        ''' <summary>Checks assemby for CLS compliance</summary>
+         ''' <summary>Checks assemby for CLS compliance</summary>
         ''' <param name="Assembly">Assebly to check</param>
         ''' <returns>Ture if assembly meets CLS rules. Returns tur even when assembly is marked as CLS-incompliant, because this does not mean CLS-rules violation.</returns>
         ''' <exception cref="ArgumentNullException"><paramref name="Assembly"/> is null</exception>
@@ -1237,6 +1235,11 @@ Namespace TestsT
             Return Not Violated
         End Function
 
+        ''' <summary>Regulare expersssion to check if identifier name is valid</summary>
+        Private Shared ReadOnly IdentifierRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*$", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
+        ''' <summary>Regulare expersssion to check if identifier name including namespace is valid</summary>
+        Private Shared ReadOnly IdentifierNsRegEx As New System.Text.RegularExpressions.Regex("^[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*(\.[\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}][\p{Lu}\p{Ll}\p{Lt}\p{Lm}\p{Lo}\p{Nl}\p{Mn}\p{Mc}\p{Nd}\p{Pc}\p{Cf}]*)*$", Text.RegularExpressions.RegexOptions.CultureInvariant Or Text.RegularExpressions.RegexOptions.Compiled)
+        ''' <summary>Regular expression if type name seems to encode generic arguments</summary>
         Private gTypeNameRegEx As New Text.RegularExpressions.Regex("`\d+$", Text.RegularExpressions.RegexOptions.Compiled Or Text.RegularExpressions.RegexOptions.CultureInvariant)
 
         ''' <summary>Peprforms common CLS-compliance test on member</summary>
@@ -1246,30 +1249,33 @@ Namespace TestsT
         Private Function DoCommonTest(ByVal Item As MemberInfo) As Boolean
             If Item Is Nothing Then Throw New ArgumentNullException("Item")
             Dim violated = Not CLSAttributeCheck(Item)
-            If Not TypeOf Item Is ConstructorInfo AndAlso Not TypeOf Item Is Type AndAlso Not IdentifierRegEx.IsMatch(Item.Name) Then
+            Dim glb = Item.DeclaringType Is Nothing
+            Dim ItemName = If(glb AndAlso TypeOf Item Is Type, DirectCast(Item, Type).FullName, Item.Name)
+            Dim RegEx = If(glb, IdentifierNsRegEx, IdentifierRegEx)
+            If Not TypeOf Item Is ConstructorInfo AndAlso Not TypeOf Item Is Type AndAlso Not regex.IsMatch(ItemName) Then
                 violated = True
-                OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(Item.Name), CLSRule.UnicodeIdentifiers, Item)
+                OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(ItemName), CLSRule.UnicodeIdentifiers, Item)
             ElseIf TypeOf Item Is Type Then
                 With DirectCast(Item, Type)
                     Dim vio As Boolean
-                    If (.IsGenericType OrElse .IsGenericTypeDefinition) AndAlso gTypeNameRegEx.IsMatch(.Name) Then
-                        vio = Not IdentifierRegEx.IsMatch(.Name.Substring(0, .Name.LastIndexOf("`")))
+                    If (.IsGenericType OrElse .IsGenericTypeDefinition) AndAlso gTypeNameRegEx.IsMatch(ItemName) Then
+                        vio = Not RegEx.IsMatch(ItemName.Substring(0, ItemName.LastIndexOf("`")))
                     Else
-                        vio = Not IdentifierRegEx.IsMatch(.Name)
+                        vio = Not RegEx.IsMatch(ItemName)
                     End If
                     If vio Then
                         violated = True
-                        OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(Item.Name), CLSRule.UnicodeIdentifiers, Item)
+                        OnViolation(ResourcesT.CLSComplianceCheckerResources.Name.f(ItemName), CLSRule.UnicodeIdentifiers, Item)
                     End If
                 End With
             End If
-            Dim Normalized = Item.Name.Normalize(Text.NormalizationForm.FormC)
-            If Normalized.Length <> Item.Name.Length Then
+            Dim Normalized = ItemName.Normalize(Text.NormalizationForm.FormC)
+            If Normalized.Length <> ItemName.Length Then
                 violated = True
                 OnViolation(ResourcesT.CLSComplianceCheckerResources.NameC, CLSRule.UnicodeIdentifiers, Item)
             Else
                 For i As Integer = 0 To Normalized.Length - 1
-                    If AscW(Normalized(i)) <> AscW(Item.Name(i)) Then
+                    If AscW(Normalized(i)) <> AscW(ItemName(i)) Then
                         violated = True
                         OnViolation(ResourcesT.CLSComplianceCheckerResources.NameC, CLSRule.UnicodeIdentifiers, Item)
                         Exit For

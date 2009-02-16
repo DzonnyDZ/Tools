@@ -51,6 +51,8 @@ namespace Tools{namespace TotalCommanderT{
         if(value < 0 || value > (__int64)Int32::MaxValue) throw gcnew ArgumentOutOfRangeException("value");
         this->SizeHigh = (DWORD) value;
     }
+    inline Int32 RemoteInfo::Attributes::get(){return Numbers::BitwiseSame((UInt32)this->Attr);}
+    inline void RemoteInfo::Attributes::set(Int32 value){this->Attr = (FileAttributes)Numbers::BitwiseSame(value);}
 #pragma endregion
     //FileSystemPlugin
 #pragma region "FileSystemPlugin"
@@ -266,12 +268,14 @@ namespace Tools{namespace TotalCommanderT{
             String^ old = gcnew String(RemoteName);
             IntPtr ptr;
             if(old != remoteName) strcpy_s(RemoteName, remoteName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(remoteName)));
+            RemoteName[remoteName->Length] = 0;
             Marshal::FreeHGlobal(ptr);
             return (int) ret;
         }catch(InvalidOperationException^ ex__){ ex=ex__;
         }catch(IO::IOException^ ex__){ex=ex__;}catch(Security::SecurityException^ ex__){ex=ex__;}catch(UnauthorizedAccessException^ ex__){ex=ex__;} if(ex!=nullptr){}
         return (int) ExecExitCode::Error;
     }
+    inline int FileSystemPlugin::FsExecuteFile(HANDLE MainWin,char* RemoteName,char* Verb){return this->FsExecuteFile((HWND)MainWin, RemoteName, Verb);}
     inline ExecExitCode FileSystemPlugin::ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb){ throw gcnew NotSupportedException(); }
     //RenMovFile
     int FileSystemPlugin::FsRenMovFile(char* OldName,char* NewName,BOOL Move, BOOL OverWrite,RemoteInfoStruct* ri){
@@ -293,6 +297,7 @@ namespace Tools{namespace TotalCommanderT{
             String^ old = gcnew String(LocalName);
             IntPtr ptr;
             if(old != localName) strcpy_s(LocalName, localName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(localName)));
+            LocalName[localName->Length] = 0;
             Marshal::FreeHGlobal(ptr);
             return (int) ret;
         }catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
@@ -311,6 +316,7 @@ namespace Tools{namespace TotalCommanderT{
             String^ old = gcnew String(RemoteName);
             IntPtr ptr;
             if(old != remoteName) strcpy_s(RemoteName, remoteName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(remoteName)));
+            RemoteName[remoteName->Length] = 0;
             Marshal::FreeHGlobal(ptr);
             return (int) ret;
         }catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
@@ -390,20 +396,57 @@ namespace Tools{namespace TotalCommanderT{
     }
 
     int FileSystemPlugin::FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon){
-        throw gcnew NotImplementedException();
+        String^ remoteName = gcnew String(RemoteName);
+        Drawing::Icon^ icon = nullptr;
+        IconExtractResult ret = this->ExctractCustomIcon(remoteName, (IconExtractFlags)ExtractFlags, icon);
+        String^ old = gcnew String(RemoteName);
+        if(old != remoteName){
+            if(remoteName->Length > FindData::MaxPath - 1) throw gcnew IO::PathTooLongException(ResourcesT::Exceptions::PathTooLong);
+            IntPtr ptr;
+            strcpy_s(RemoteName, remoteName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(remoteName)));
+            RemoteName[remoteName->Length] = 0;
+            Marshal::FreeHGlobal(ptr);
+        }
+        if(icon != nullptr) TheIcon[0] = (HICON)(Int32)icon->Handle; else TheIcon[0] = NULL;
+        return (int)ret;
     }
-    void FileSystemPlugin::FsSetDefaultParams(FsDefaultParamStruct* dps){
-        throw gcnew NotImplementedException();
+    inline IconExtractResult FileSystemPlugin::ExctractCustomIcon(String^% RemoteName, IconExtractFlags ExtractFlags, Drawing::Icon^% TheIcon){ throw gcnew NotSupportedException(); }
+
+    inline void FileSystemPlugin::FsSetDefaultParams(FsDefaultParamStruct* dps){
+        this->SetDefaultParams(DefaultParams(*dps));
     }
+    inline void FileSystemPlugin::SetDefaultParams(DefaultParams dps){throw gcnew NotSupportedException();}
+
     int FileSystemPlugin::FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap){
-        throw gcnew NotImplementedException();
+        BitmapResult^ bmp = this->GetPreviewBitmap(gcnew String(RemoteName), width, height);
+        if(bmp->ImageKey != nullptr){
+            IntPtr ptr;
+            strcpy_s(RemoteName, bmp->ImageKey->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(bmp->ImageKey)));
+            RemoteName[bmp->ImageKey->Length] = 0;
+            Marshal::FreeHGlobal(ptr);
+        }
+        if(bmp->Image != nullptr) 
+            ReturnedBitmap[0] = (HBITMAP)(int)bmp->Image->GetHbitmap();
+        else ReturnedBitmap[0] = nullptr;
+        return (int)bmp->GetFlag();
     }
-    BOOL FileSystemPlugin::FsLinksToLocalFiles(void){
-        throw gcnew NotImplementedException();
-    }
+    inline BitmapResult^ FileSystemPlugin::GetPreviewBitmap(String^ RemoteName, int width, int height){throw gcnew NotSupportedException();}
+    
+    inline BOOL FileSystemPlugin::FsLinksToLocalFiles(void){ return this->LinksToLocalFiles ? 1 : 0;}
+    inline bool FileSystemPlugin::LinksToLocalFiles::get(){throw gcnew NotSupportedException();} 
+
     BOOL FileSystemPlugin::FsGetLocalName(char* RemoteName,int maxlen){
-        throw gcnew NotImplementedException();
+        String^ ret = this->GetLocalName(gcnew String(RemoteName), maxlen - 1);
+        if(ret != nullptr){
+            IntPtr ptr;
+            strcpy_s(RemoteName, ret->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(ret)));
+            RemoteName[ret->Length] = 0;
+            Marshal::FreeHGlobal(ptr);
+            return TRUE;
+        }
+        return FALSE;
     }
+    inline String^ FileSystemPlugin::GetLocalName(String^ RemoteName, int maxlen){throw gcnew NotSupportedException();}
 #pragma endregion
 #pragma endregion
 
@@ -507,5 +550,50 @@ namespace Tools{namespace TotalCommanderT{
     inline String^ OperationEventArgs::RemoteDir::get(){return this->remoteDir;}
     inline OperationKind OperationEventArgs::Kind::get(){return this->kind;}
     inline OperationStatus OperationEventArgs::Status::get(){return this->status;}
+#pragma endregion
+    //DefaultParams
+#pragma region "DefaultParams"
+    DefaultParams::DefaultParams(FsDefaultParamStruct& from){
+        this->defaultIniName = gcnew String(from.DefaultIniName);
+        this->version = gcnew System::Version(from.PluginInterfaceVersionHi,from.PluginInterfaceVersionLow,0,0);
+    }
+    inline System::Version^ DefaultParams::Version::get(){return this->version;}
+    inline String^ DefaultParams::DefaultIniName::get(){return this->defaultIniName;}
+#pragma endregion
+    //BitmapResult
+#pragma region "BitmapResult"
+     BitmapResult::BitmapResult(String^ ImagePath, bool Temporary){
+        if(ImagePath == nullptr) throw gcnew ArgumentNullException("ImagePath");
+        this->ImageKey = ImagePath;
+        this->Temporary = Temporary;
+    }
+   inline BitmapResult::BitmapResult(Drawing::Bitmap^ Bitmap) {BitmapResult(Bitmap,nullptr);}
+   BitmapResult::BitmapResult(Drawing::Bitmap^ Bitmap, String^ ImageKey){
+        if(Bitmap == nullptr)  throw gcnew ArgumentNullException("Bitmap"); 
+        this->Image = Bitmap;
+        this->ImageKey = ImageKey;
+    }
+   inline String^ BitmapResult::ImageKey::get(){return this->imagekey;}
+   void BitmapResult::ImageKey::set(String^ value){
+       if(value != nullptr && value->Length > FindData::MaxPath - 1) throw gcnew IO::PathTooLongException(ResourcesT::Exceptions::PathTooLong);
+       this->imagekey=value;
+   }
+   BitmapHandling BitmapResult::GetFlag(){
+       BitmapHandling ret;
+       if(this->Image == nullptr && this->Temporary)
+           ret = BitmapHandling::ExtractAndDelete;
+       else if (this->Image == nullptr)
+        ret = BitmapHandling::ExtractYourself;
+       else
+           ret = BitmapHandling::Extracted;
+       if(this->Cache) ret += BitmapHandling::Cache;
+       return ret;
+   }
+#pragma endregion
+#pragma region "BitmapHandling"
+    BitmapHandling& operator += (BitmapHandling& a, const BitmapHandling& b){
+        (&a)[0] = (BitmapHandling)((int)a + (int)b);
+        return a;
+    }
 #pragma endregion
 }}
