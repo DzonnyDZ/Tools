@@ -61,6 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Cannot generate plugin for abstract type {0}..
+        '''</summary>
+        Friend ReadOnly Property e_Abstract() As String
+            Get
+                Return ResourceManager.GetString("e_Abstract", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Duplicit name {0} scpecified for renaming..
         '''</summary>
         Friend ReadOnly Property e_DuplicitRenameName() As String
@@ -102,6 +111,42 @@ Namespace My.Resources
         Friend ReadOnly Property e_LoadType() As String
             Get
                 Return ResourceManager.GetString("e_LoadType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cannot generate plugin for type {0} which has not default constructor..
+        '''</summary>
+        Friend ReadOnly Property e_NoDefaultCTor() As String
+            Get
+                Return ResourceManager.GetString("e_NoDefaultCTor", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cannot gerenrate plugin for type {0}, which does not derive from supported plugin type..
+        '''</summary>
+        Friend ReadOnly Property e_NotAPluginType() As String
+            Get
+                Return ResourceManager.GetString("e_NotAPluginType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cannot generate plugin for non-public type {0}..
+        '''</summary>
+        Friend ReadOnly Property e_NotPublic() As String
+            Get
+                Return ResourceManager.GetString("e_NotPublic", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Cannot generate plugin for open generic type {0}..
+        '''</summary>
+        Friend ReadOnly Property e_OpenGeneric() As String
+            Get
+                Return ResourceManager.GetString("e_OpenGeneric", resourceCulture)
             End Get
         End Property
         

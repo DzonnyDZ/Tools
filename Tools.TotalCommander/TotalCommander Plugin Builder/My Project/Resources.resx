@@ -139,4 +139,19 @@
   <data name="XcannotbeYwhenZisW" xml:space="preserve">
     <value>{0} cannot be {1} when {2} is {3}.</value>
   </data>
+  <data name="e_NotAPluginType" xml:space="preserve">
+    <value>Cannot gerenrate plugin for type {0}, which does not derive from supported plugin type.</value>
+  </data>
+  <data name="e_OpenGeneric" xml:space="preserve">
+    <value>Cannot generate plugin for open generic type {0}.</value>
+  </data>
+  <data name="e_Abstract" xml:space="preserve">
+    <value>Cannot generate plugin for abstract type {0}.</value>
+  </data>
+  <data name="e_NoDefaultCTor" xml:space="preserve">
+    <value>Cannot generate plugin for type {0} which has not default constructor.</value>
+  </data>
+  <data name="e_NotPublic" xml:space="preserve">
+    <value>Cannot generate plugin for non-public type {0}.</value>
+  </data>
 </root>

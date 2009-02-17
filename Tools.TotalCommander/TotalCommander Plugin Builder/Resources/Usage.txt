@@ -17,3 +17,4 @@ parameters:
               Naming behavior chan be changed also by TotalCommanderPluginAttribute. /n takes precedence.
 /int <path>   Path to intermediate directory. Optional. When not specified temporary is used.
 /keepint      Keep files in intermediate directory after execution. Valid only when /int is set. Optional.              
+/templ <path> Project template directory. Optional. Use this template instead of buil-in one.

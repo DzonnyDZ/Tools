@@ -482,6 +482,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\FileSystemPlugin helpers.h"
+				>
+			</File>
+			<File
 				RelativePath=".\FileSystemPlugin.h"
 				>
 			</File>

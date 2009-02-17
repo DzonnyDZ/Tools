@@ -16,6 +16,34 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>CTor - creates new instance of the <see cref="MethodNotSupportedAttribute"/> class</summary>
         MethodNotSupportedAttribute();
     };
+    
+    /// <summary>When applied onto method, identifies the method as part of plugin contract</summary>
+    /// <remarks>All plugin methods (from Total Commander point of view - not the methods derived class implements) must me marked with this attribute. Do not use this attribute of multiple methods serving same purpose (i.e. when method is overloaded to be calable from outside of assembly).</remarks>
+    [AttributeUsageAttribute(AttributeTargets::Method, Inherited=false)]
+    private ref class PluginMethodAttribute : Attribute{ 
+    private:
+        /// <summary>Contains value of the <see cref="DefinedBy"/> property</summary>
+        String^ definedBy;
+        /// <summary>Contains value of the <see cref="ImplementedBy"/> property</summary>
+        String^ implementedBy;
+    public:
+        /// <summary>CTor for always-present method</summary>
+        /// <param name="DefinedBy">Name of macro to be set method to be compiled into plugin wrapper. Generator must define this macro always.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="DefinedBy"/> is null</exception>
+        /// <exception cref="FormatException"><paramref name="DefinedBy"/> has invalid format for macro name</exception>
+        PluginMethodAttribute(String^ DefinedBy);
+        /// <summary>CTor for always-present method</summary>
+        /// <param name="DefinedBy">Name of macro to be set method to be compiled into plugin wrapper. Generator must define this macro when method indicated by <paramref name="ImplementedBy"/> has not <see cref="MethodNotSupportedAttribute"/>.</param>
+        /// <param name="ImplementedBy">Name of corresponding derived-class implemeneted method, to check for <see cref="MethodNotSupportedAttribute"/> to identify if this method should be included in plugin. See <see cref="ImplementedBy"/> for details.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="DefinedBy"/> is null</exception>
+        /// <exception cref="ArgumentException"><paramref name="DefinedBy"/> has invalid format for macro name</exception>
+        PluginMethodAttribute(String^ ImplementedBy, String^ DefinedBy);
+        /// <summary>Gets name of macro that must be defined (using #define) the method to be compiled in plugin wrapper project</summary>
+        property String^ DefinedBy{String^ get();}
+        /// <summary>Gets name of corresponding derived-class implemeneted method, to check for <see cref="MethodNotSupportedAttribute"/> to identify if this method should be included in plugin (by definin macro which name is defined by <see cref="DefinedBy"/>.</summary>
+        /// <remarks>The method with this name must exist. It must not be overloaded in plugin abstract base class. When null, method will be compiled always.</remarks>
+        property String^ ImplementedBy{String^ get();}
+    };
 
     /// <summary>Recognized Total Commander plugin types</summary>
     [FlagsAttribute]

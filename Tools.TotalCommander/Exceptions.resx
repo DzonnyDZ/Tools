@@ -123,6 +123,9 @@
   <data name="DefaultTextTooLong" xml:space="preserve">
     <value>Default text is too long.</value>
   </data>
+  <data name="InvalidMacroName" xml:space="preserve">
+    <value>Macor name "{0}" is invalid.</value>
+  </data>
   <data name="NameTooLong" xml:space="preserve">
     <value>Name too long. Mamximum allowed length is {0}</value>
   </data>

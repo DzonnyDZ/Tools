@@ -10,7 +10,7 @@ using namespace Tools::TotalCommanderT;
 /// <summary>Gets plugin class instance</summary>
 /// <returns>Plugin class instance</returns>
 inline FileSystemPlugin^ GetWfx(){
-    return new TC_WFX();
+    return TC_WFX;
 }
 
 /// <summary>Plugin instance</summary>

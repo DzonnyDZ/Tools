@@ -44,6 +44,8 @@ Module Builder
         Dim IntDir$ = Nothing
         If My.Application.CommandLineArgs.IndexOf("/int") < My.Application.CommandLineArgs.Count - 1 Then IntDir = My.Application.CommandLineArgs(My.Application.CommandLineArgs.IndexOf("/int") + 1)
         Dim KeepInt As Boolean = IntDir IsNot Nothing AndAlso My.Application.CommandLineArgs.Contains("/keepint")
+        Dim TemplateDir$ = Nothing
+        If My.Application.CommandLineArgs.IndexOf("/templ") < My.Application.CommandLineArgs.Count - 1 Then TemplateDir = My.Application.CommandLineArgs(My.Application.CommandLineArgs.IndexOf("/templ") + 1)
         'Load assembly
         Dim LoadedAssembly As System.Reflection.Assembly
         Try
@@ -67,7 +69,7 @@ Module Builder
                 End Try
             Next
         End If
-        'Generate
+        'Prepare generator
         Dim Generator As New Generator(LoadedAssembly, OutDir)
         Generator.Filer = PluginTypes
         For Each item In NamingDictionary
@@ -75,7 +77,9 @@ Module Builder
         Next
         Generator.IntermediateDirectory = IntDir
         Generator.CleanIntermediateDirectory = Not KeepInt
+        Generator.ProjectTemplateDirectory = TemplateDir
 
+        'Generate
         Try
             Generator.Generate()
         Catch ex As Exception
