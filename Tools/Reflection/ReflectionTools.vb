@@ -416,20 +416,34 @@ Namespace ReflectionT
         ''' <item><paramref name="Base"/> is open generic type and  <paramref name="Derived"/> derived derives from <paramref name="Base"/> (in either geneir-open, generic-closed or generic-half-open-half-closed way).</item>
         ''' </list></remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="Base"/> or <paramref name="Derived"/> is null</exception>
+        ''' <seelaso cref="IsDerivedFrom"/>
         ''' <version version="1.5.2">Function introduced</version>
         <Extension()> Public Function IsBaseClassOf(ByVal Base As Type, ByVal Derived As Type) As Boolean
+            Return GetMeAsBaseClassOf(Base, Derived) IsNot Nothing
+        End Function
+        ''' <summary>For generic type gets constructed generic type that is base class of given (non)generic type</summary>
+        ''' <param name="Base">Type representing base class of <paramref name="Derived"/></param>
+        ''' <param name="Derived">Type derived from <paramref name="Base"/></param>
+        ''' <returns>Null when <paramref name="Derived"/> does not derived from <paramref name="Base"/>;
+        ''' <paramref name="Base"/> when <paramref name="Base"/> is not generic or it is closed generic type type and <paramref name="Derived"/> derives from <paramref name="Base"/>;
+        ''' Constructed generic type constructed from <paramref name="Base"/> when <paramref name="Base"/> is open generic type or semi-constructed generic type and <paramref name="Derived"/> derives from it.</returns>
+        ''' <remarks>When <paramref name="Base"/> is semi-constructed generic type, <paramref name="Derived"/> is only considered to derive form it when no change is needed for specified type parameters of <paramref name="Base"/>.</remarks>
+        ''' <exception cref="ArgumentNullException"><paramref name="Base"/> or <paramref name="Derived"/> is null</exception>
+        ''' <seelaso cref="IsBaseClassOf"/><seelaso cref="IsDerivedFrom"/>
+        ''' <version version="1.5.2">Function introduced</version>
+        <Extension()> Public Function GetMeAsBaseClassOf(ByVal Base As Type, ByVal Derived As Type) As Type
             If Base Is Nothing Then Throw New ArgumentNullException("Base")
             If Derived Is Nothing Then Throw New ArgumentException("Derived")
             Dim CurrentBase = Derived.BaseType
             Dim BagargsOpen As Type() = Nothing
             Dim Bagargs As Type() = Nothing
             While CurrentBase IsNot Nothing
-                If CurrentBase.Equals(Base) Then Return True
+                If CurrentBase.Equals(Base) Then Return CurrentBase
                 If Base.IsGenericTypeDefinition AndAlso CurrentBase.IsGenericType Then
                     'Note Class BaseClass(Of T); Class DerivedClass(Of T) : Inherits BaseClass(Of T) => GetType(DerivedClass(Of T)).BaseType.IsGenericTypeDefinition = False!
                     'This is correct behavior (see https://connect.microsoft.com/VisualStudio/feedback/ViewFeedback.aspx?FeedbackID=95768, http://blogs.msdn.com/weitao/archive/2008/03/19/formal-type-parameters-of-generic-types.aspx)
                     Dim WouldBeBaseClass = Base.MakeGenericType(CurrentBase.GetGenericArguments)
-                    If CurrentBase.Equals(WouldBeBaseClass) Then Return True
+                    If CurrentBase.Equals(WouldBeBaseClass) Then Return CurrentBase
                 ElseIf Base.IsGenericType AndAlso CurrentBase.IsGenericType AndAlso Base.GetGenericTypeDefinition.Equals(CurrentBase.GetGenericTypeDefinition) Then
                     'semi-open base
                     'Replace generic arguments that are from open definition with those from currentbase, leave those that does not come from generic type definition
@@ -440,12 +454,13 @@ Namespace ReflectionT
                     For i As Integer = 0 To Bagargs.Length - 1
                         Params(i) = If(Bagargs(i).Equals(BagargsOpen(i)), Cargs(i), Bagargs(i))
                     Next
-                    If CurrentBase.Equals(Base.GetGenericTypeDefinition.MakeGenericType(Params)) Then Return True
+                    If CurrentBase.Equals(Base.GetGenericTypeDefinition.MakeGenericType(Params)) Then Return CurrentBase
                 End If
                 CurrentBase = CurrentBase.BaseType
             End While
-            Return False
+            Return Nothing
         End Function
+
         ''' <summary>Idicates if given type is derived form another type</summary>
         ''' <param name="Base">Proposed base class of <paramref name="Derived"/></param>
         ''' <param name="Derived">Type proposedly derived from <paramref name="Base"/></param>
@@ -455,6 +470,7 @@ Namespace ReflectionT
         ''' <item><paramref name="Base"/> is underlying type of <paramref name="Derived"/> and <paramref name="Derived"/> is enumeration</item></list>
         ''' In addtion to simple base class test, it also test and returns true when <paramref name="Base"/> is generic type constraint of <paramref name="Derived"/> or base of the constraint.</remarks>
         ''' <exception cref="ArgumentNullException"><paramref name="Base"/> or <paramref name="Derived"/> is null</exception>
+        ''' <seelaso cref="IsBaseClassOf"/>
         ''' <version version="1.5.2">Function introduced</version>
         <Extension()> Public Function IsDerivedFrom(ByVal Derived As Type, ByVal Base As Type) As Boolean
             Return Base.IsBaseClassOf(Derived)
@@ -1265,37 +1281,112 @@ Namespace ReflectionT
         End Function
 #End Region
 #End Region
-        ''' <summary>Searches for method given method overrides</summary>
-        ''' <param name="Method">Method do find method it overrides</param>
-        ''' <returns>Method in base class (or base base class etc.) of class <paramref name="Method"/> is defined in <paramref name="Method"/> overrides; null when no such method is found</returns>
-        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
-        ''' <exception cref="ArgumentException"><paramref name="Method"/> is global method (its <see cref="MethodInfo.DeclaringType"/> is null)</exception>
-        ''' <remarks>This function searches for method with same name and signature as <paramref name="Method"/> has. Search is done in base class of class <paramref name="Method"/> is defined in, if not found in base class of base class etc.</remarks>
-        ''' <version version="1.5.2">Function introduced</version>
+        'Note: This method was commented because it has equivalent in Type.GetBaseDefinition. It was tested to work in exactly same way as that mehod. It was not tested to work with generic methods (it was tested to work with generic types).
+        '''' <summary>Searches for method given method overrides</summary>
+        '''' <param name="Method">Method do find method it overrides</param>
+        '''' <returns>Method in base class (or base base class etc.) of class <paramref name="Method"/> is defined in <paramref name="Method"/> overrides; null when no such method is found</returns>
+        '''' <exception cref="ArgumentNullException"><paramref name="Method"/> is null</exception>
+        '''' <exception cref="ArgumentException"><paramref name="Method"/> is global method (its <see cref="MethodInfo.DeclaringType"/> is null)</exception>
+        '''' <remarks>This function searches for method with same name and signature as <paramref name="Method"/> has. Search is done in base class of class <paramref name="Method"/> is defined in, if not found in base class of base class etc.</remarks>
+        '''' <seelaso cref="MethodInfo.GetBaseDefinition"/>
+        '''' <version version="1.5.2">Function introduced</version>
+        '<Extension()> _
+        'Public Function GetBaseClassMethod(ByVal Method As MethodInfo) As MethodInfo
+        '    'Unit test done
+        '    If Method Is Nothing Then Throw New ArgumentNullException("Method")
+        '    If Method.DeclaringType Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.CannotGetBaseClassMethodOfGlobalMethod)
+        '    Dim type As Type = Method.DeclaringType
+        '    Dim base As Type = type.BaseType
+        '    Dim ret As MethodInfo = Nothing
+        '    If (Method.Attributes And MethodAttributes.NewSlot) = MethodAttributes.NewSlot Then Return Nothing 'Shadows
+        '    If Method.IsStatic Then Return Nothing
+        '    Do Until base Is Nothing
+        '        If base Is Nothing Then Return Nothing
+        '        For Each BaseMethod In base.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.DeclaredOnly) '
+        '            If BaseMethod.Name.Equals(Method.Name, StringComparison.InvariantCulture) AndAlso BaseMethod.IsVirtual AndAlso Not BaseMethod.IsFinal Then
+        '                If HasSameSignature(Method, BaseMethod, SignatureComparisonStrictness.Strict) Then
+        '                    If ret IsNot Nothing Then Throw New AmbiguousMatchException()
+        '                    ret = BaseMethod
+        '                End If
+        '            End If
+        '        Next
+        '        base = base.BaseType
+        '        If ret IsNot Nothing Then Exit Do
+        '    Loop
+        '    Return ret
+        'End Function
+        ''' <summary>Gets method that overrides given method in given type</summary>
+        ''' <param name="Method">Method to get overriding method for</param>
+        ''' <param name="DerivedType">Type derived from <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> to get method of (or base of)</param>
+        ''' <returns><paramref name="Method"/> when <paramref name="Method"/> is not overriden in <paramref name=" DerivedType"/> or one of its base classed between <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> and <paramref name="DerivedType"/>;
+        ''' Overriding method of <paramref name="DerivedType"/> or one of its base types (between <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> and <paramref name="DerivedType"/> otherwise.</returns>
+        ''' <exception cref="ArgumentNullException"><paramref name="Method"/> or <paramref name="DerivedType"/> is null</exception>
+        ''' <exception cref="ArgumentException"><paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is null (it is global method) -or-
+        ''' <paramref name="DerivedType"/> does not derive from <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see>.</exception>
         <Extension()> _
-        Public Function GetBaseClassMethod(ByVal Method As MethodInfo) As MethodInfo
-            'Unit test done
+        Public Function GetOverridingMethod(ByVal Method As MethodInfo, ByVal DerivedType As Type) As MethodInfo 'TODO: Test
             If Method Is Nothing Then Throw New ArgumentNullException("Method")
-            If Method.DeclaringType Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.CannotGetBaseClassMethodOfGlobalMethod)
-            Dim type As Type = Method.DeclaringType
-            Dim base As Type = type.BaseType
-            Dim ret As MethodInfo = Nothing
-            Do Until base Is Nothing
-                If base Is Nothing Then Return Nothing
-                If (Method.Attributes And MethodAttributes.NewSlot) = MethodAttributes.NewSlot Then Return Nothing 'Shadows
-                For Each BaseMethod In base.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.DeclaredOnly) '
-                    If BaseMethod.Name.Equals(Method.Name, StringComparison.InvariantCulture) AndAlso BaseMethod.IsVirtual AndAlso Not BaseMethod.IsFinal Then
-                        If HasSameSignature(Method, BaseMethod, SignatureComparisonStrictness.Strict) Then
-                            If ret IsNot Nothing Then Throw New AmbiguousMatchException()
-                            ret = BaseMethod
-                        End If
-                    End If
-                Next
-                base = base.BaseType
-                If ret IsNot Nothing Then Exit Do
-            Loop
-            Return ret
+            If DerivedType Is Nothing Then Throw New ArgumentNullException("DerivedType")
+            If Method.DeclaringType Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.CannotGetDerivedClassMethodForGlobalMethod)
+            Dim TrueBase = Method.DeclaringType.GetMeAsBaseClassOf(DerivedType)
+            If TrueBase Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.DerivedTypeDoesNotDeriveFromMethodDeclatingType)
+            If Method.IsStatic OrElse Not Method.IsVirtual Then Return Method
+            Dim MethodParameters = Method.GetParameters
+            Dim MethodGenericParameters = Method.GetGenericArguments
+            For Each dmethod In DerivedType.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.DeclaredOnly)
+                If dmethod.GetParameters.Length <> MethodParameters.Length Then Continue For
+                If dmethod.GetGenericArguments.Length <> MethodGenericParameters.Length Then Continue For
+                Dim BaseMethod = dmethod.GetBaseDefinition
+                If dmethod.Equals(BaseMethod) Then Continue For
+                If BaseMethod.DeclaringType.Equals(Method.DeclaringType) Then Return dmethod
+                If (BaseMethod.DeclaringType.IsGenericTypeDefinition OrElse BaseMethod.DeclaringType.IsGenericType) AndAlso (Method.DeclaringType.IsGenericTypeDefinition OrElse Method.DeclaringType.IsGenericType) AndAlso Method.DeclaringType.GetGenericTypeDefinition.Equals(BaseMethod.DeclaringType.GetGenericTypeDefinition) Then
+                    If BaseMethod.DeclaringType.IsCreatedFrom(Method.DeclaringType) Then Return dmethod
+                End If
+            Next
+            If DerivedType.BaseType.Equals(TrueBase) Then Return Method
+            Return GetOverridingMethod(Method, DerivedType.BaseType)
         End Function
+        ''' <summary>Gets value indicationg if constructed or semi-constructed generic type is constructed from given open semi-constructed generic type</summary>
+        ''' <param name="Instance">Constructed or semi-constructed generic type</param>
+        ''' <param name="Definition">Open or semi-constructed generict type</param>
+        ''' <returns>True when <paramref name="Instance"/> represents closed or semi-constructed generic type created from <paramref name="Definition"/> by replacing all not-yet-replaced type arguments by corresponding arguments of <paramref name="Instance"/>.</returns>
+        ''' <remarks>
+        ''' Terminology note:
+        ''' <list type="table"><listheader><term>term</term><description>description</description></listheader>
+        ''' <item><term>Generic type</term><description>Type that accepts one or more generic arguments, such as <see cref="List(Of T)"/></description></item>
+        ''' <item><term>Open generic type</term><description>Generic type without type arguments supplied. In Visual Basic you can obtain such type by <c>GetType(List(Of ))</c> or <c>GetType(Dictionary(Of ,))</c></description></item>
+        ''' <item><term>Closed generic type</term><description>Generic type with all the type arguments suplied. Note: Supplied types can be generic arguments of another (even open) generic type, such as derived class. So, base class of derived class is never open generic type, it's always closed generic type with appropriate type arguments supplied.</description></item>
+        ''' <item><term>Constructed generic type</term><description>Same meaning as closed generic type</description></item>
+        ''' <item><term>Semi-constucted generic type</term><description>Generic type with some type arguments supplied and some not supplied. E.g. declaring type of nested generic type (with own type arguments of nested type) is semi-constructed.</description></item>
+        ''' <item><term>Generic type definition</term><description>Generic type definition is open generic type</description></item>
+        ''' <item><term>Generic type instance</term><description>Generic type instance is constructed generic type</description></item>
+        ''' </list>
+        ''' This method returns true when <paramref name="Definition"/> open generic type and <paramref name="Instance"/> is any closed or semi-constructed generic type made form it.
+        ''' Or it returns tru when <paramref name="Definition"/> is semi-constructed generic type and <paramref name="Instance"/> is "more" constructed generic type which has all specified type arguments of <paramref name="Definition"/> passed (and at leas one more).
+        ''' This method returns false when <paramref name="Definition"/> and <paramref name="Instance"/> represents same types.
+        ''' </remarks>
+        ''' <version version="1.5.2">Method introduced</version>
+        <Extension()> Public Function IsCreatedFrom(ByVal Instance As Type, ByVal Definition As Type) As Boolean 'TODO:Test
+            If Instance Is Nothing Then Throw New ArgumentNullException("Instance")
+            If Definition Is Nothing Then Throw New ArgumentNullException("Definition")
+            If Instance.IsArray AndAlso Definition.GetType.Equals(GetType(Array)) Then Return True
+            If Not Instance.IsGenericType Then Return False
+            If Not Definition.IsGenericTypeDefinition AndAlso Not Definition.IsGenericType Then Return False
+            If Not Instance.GetGenericTypeDefinition.Equals(Definition.GetGenericTypeDefinition) Then Return False
+            If Instance.Equals(Definition) Then Return False
+            If Definition.IsGenericTypeDefinition Then
+                Return Definition.Equals(Instance.GetGenericTypeDefinition)
+            Else
+                Dim gargs = Definition.GetGenericArguments
+                Dim ogargs = Definition.GetGenericTypeDefinition.GetGenericArguments
+                Dim cgargs = Instance.GetGenericArguments
+                For i As Integer = 0 To gargs.Length - 1
+                    If gargs(i).Equals(ogargs(i)) Then gargs(i) = cgargs(i)
+                Next
+                Return Definition.GetGenericTypeDefinition.MakeGenericType(gargs).Equals(Instance)
+            End If
+        End Function
+
         ''' <summary>Determines if two methods have same signatures. Several levels of signature comparison are available.</summary>
         ''' <param name="a">A <see cref="MethodInfo"/></param>
         ''' <param name="b">A <see cref="MethodInfo"/></param>

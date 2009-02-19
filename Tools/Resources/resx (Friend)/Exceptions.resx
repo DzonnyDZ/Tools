@@ -1320,4 +1320,10 @@
   <data name="ParentTypeOf0MustBe1" xml:space="preserve">
     <value>Parent type of {0} must be {1}</value>
   </data>
+  <data name="CannotGetDerivedClassMethodForGlobalMethod" xml:space="preserve">
+    <value>Cannot get derived class method for global method.</value>
+  </data>
+  <data name="DerivedTypeDoesNotDeriveFromMethodDeclatingType" xml:space="preserve">
+    <value>Derived type does not derive from method declating type</value>
+  </data>
 </root>

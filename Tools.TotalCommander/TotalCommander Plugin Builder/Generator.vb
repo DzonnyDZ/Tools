@@ -221,6 +221,7 @@ Public Class Generator
         Try
             'Copy template
             Dim ProjectDirectory = IO.Path.Combine(IntermediateDirectory, "Project")
+            Dim binDirectory = IO.Path.Combine(ProjectDirectory, "bin")
             Log("Create project directory {0}", ProjectDirectory)
             IO.Directory.CreateDirectory(ProjectDirectory)
             If Me.ProjectTemplateDirectory IsNot Nothing Then
@@ -231,6 +232,8 @@ Public Class Generator
                 'TODO: Template
                 Throw New NotImplementedException("Currently project template directory must be set. Feature versions will be able to operate wizthout given template directory.")
             End If
+            Log("Copy assembly file {0}", Assembly.Location)
+            IO.File.Copy(Assembly.Location, IO.Path.Combine(ProjectDirectory, IO.Path.GetFileName(Assembly.Location)))
             'Prepare projet
             If GetType(FileSystemPlugin).IsAssignableFrom(Type) Then
                 Log("Plugin type: File System Plugin (wfx)")
@@ -286,6 +289,7 @@ Public Class Generator
                     w.WriteLine("#define " & attr.DefinedBy)
                 End If
             Next
+            w.WriteLine("#using ""{0}""", IO.Path.GetFileName(Assembly.Location))
         End Using
     End Sub
     ''' <summary>C++ code provider</summary>

@@ -1035,7 +1035,7 @@ Namespace TestsT
             If GetItemClsCompliance(Method) Then
                 Violated = Violated Or Not DoCommonTest(Method)
                 If Not Method.DeclaringType IsNot Nothing AndAlso Not Method.DeclaringType.BaseType IsNot Nothing Then
-                    Dim BaseMethod = Method.GetBaseClassMethod
+                    Dim BaseMethod = Method.GetBaseDefinition
                     If BaseMethod IsNot Nothing Then
                         Dim BaseAccess = BaseMethod.Attributes And MethodAttributes.MemberAccessMask
                         Dim MyAccess = Method.Attributes And MethodAttributes.MemberAccessMask

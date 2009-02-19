@@ -553,6 +553,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Cannot get derived class method for global method.'.
+        '''</summary>
+        Friend Shared ReadOnly Property CannotGetDerivedClassMethodForGlobalMethod() As String
+            Get
+                Return ResourceManager.GetString("CannotGetDerivedClassMethodForGlobalMethod", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Cannot interpret value &quot;{0}&quot; as {1}'.
         '''</summary>
         Friend Shared ReadOnly Property CannotInterpretValue0As1() As String
@@ -839,6 +848,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property DefaultMessageBoxImplementationCannotBeGenericTypeDefinition() As String
             Get
                 Return ResourceManager.GetString("DefaultMessageBoxImplementationCannotBeGenericTypeDefinition", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Derived type does not derive from method declating type'.
+        '''</summary>
+        Friend Shared ReadOnly Property DerivedTypeDoesNotDeriveFromMethodDeclatingType() As String
+            Get
+                Return ResourceManager.GetString("DerivedTypeDoesNotDeriveFromMethodDeclatingType", _resourceCulture)
             End Get
         End Property
         
@@ -4187,6 +4205,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the CannotGetDerivedClassMethodForGlobalMethod property value.
+        '''</summary>
+        '''<returns>The CannotGetDerivedClassMethodForGlobalMethod property value.</returns>
+        Friend Shared Function CannotGetDerivedClassMethodForGlobalMethodFormat() As String
+            Return CannotGetDerivedClassMethodForGlobalMethod
+        End Function
+        
+        '''<summary>
         '''Formats a localized string similar to 'Cannot interpret value &quot;{0}&quot; as {1}'.
         '''</summary>
         '''<param name="arg0">An object (0) to format.</param>
@@ -4450,6 +4476,14 @@ Namespace ResourcesT
         '''<returns>The DefaultMessageBoxImplementationCannotBeGenericTypeDefinition property value.</returns>
         Friend Shared Function DefaultMessageBoxImplementationCannotBeGenericTypeDefinitionFormat() As String
             Return DefaultMessageBoxImplementationCannotBeGenericTypeDefinition
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the DerivedTypeDoesNotDeriveFromMethodDeclatingType property value.
+        '''</summary>
+        '''<returns>The DerivedTypeDoesNotDeriveFromMethodDeclatingType property value.</returns>
+        Friend Shared Function DerivedTypeDoesNotDeriveFromMethodDeclatingTypeFormat() As String
+            Return DerivedTypeDoesNotDeriveFromMethodDeclatingType
         End Function
         
         '''<summary>

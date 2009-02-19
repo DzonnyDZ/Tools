@@ -98,6 +98,12 @@ Namespace ReflectionUT
             End Sub
             Private Sub MethodPrivate()
             End Sub
+            Public Overridable Sub GMethod(Of T)(ByVal a As T)
+            End Sub
+            Public Overridable Sub GMethod(Of T)(ByVal a As Action(Of T))
+            End Sub
+            Overridable Sub GMethod(Of T)(ByVal a As Long, ByVal b As Long)
+            End Sub
         End Class
         Private Class DerivedClass1
             Inherits BaseClass
@@ -114,6 +120,12 @@ Namespace ReflectionUT
                     Return MyBase.SomeProperty
                 End Get
             End Property
+            Public Overrides Sub GMethod(Of T)(ByVal a As T)
+            End Sub
+            Public Overrides Sub GMethod(Of T)(ByVal a As Long, ByVal b As Long)
+            End Sub
+            Public Overrides Sub GMethod(Of T)(ByVal a As System.Action(Of T))
+            End Sub
         End Class
         Private Class DerivedClass2
             Inherits DerivedClass1
@@ -129,49 +141,163 @@ Namespace ReflectionUT
                 MyBase.Method(a, b)
             End Sub
         End Class
+        Private Class MAttribute : Inherits Attribute
+            Public ReadOnly n%
+            Public Sub New(ByVal n%)
+                Me.n = n
+            End Sub
+        End Class
+
+        Private Class CGenericBase1(Of T, U)
+            <M(1)> Public Overridable Sub Method(ByVal a As T, ByVal b As Long)
+            End Sub
+            <M(2)> Public Overridable Sub Method(ByVal a As Long)
+            End Sub
+            <M(3)> Public Overridable Sub Method(ByVal a As Action(Of T))
+            End Sub
+        End Class
+        Private Class CGenericDerived1(Of T, U) : Inherits CGenericBase1(Of T, u)
+            <M(1)> Public Overrides Sub Method(ByVal a As T, ByVal b As Long)
+            End Sub
+            <M(2)> Public Overrides Sub Method(ByVal a As Long)
+            End Sub
+            <M(3)> Public Overrides Sub Method(ByVal a As System.Action(Of T))
+            End Sub
+            <M(4)> Public Overloads Sub Method(ByVal a As U)
+            End Sub
+        End Class
+        Private Class CGenericDerived2(Of X, Y) : Inherits CGenericBase1(Of Y, Integer)
+            <M(1)> Public Overrides Sub Method(ByVal a As Y, ByVal b As Long)
+            End Sub
+            <M(2)> Public Overrides Sub Method(ByVal a As Long)
+            End Sub
+            <M(3)> Public Overrides Sub Method(ByVal a As System.Action(Of Y))
+            End Sub
+            <M(4)> Public Overloads Sub Method(ByVal a As Integer)
+            End Sub
+        End Class
+        Private Class CGenericDerived3(Of X) : Inherits CGenericBase1(Of Action(Of X), CGenericDerived3(Of X))
+            <M(1)> Public Overrides Sub Method(ByVal a As Action(Of X), ByVal b As Long)
+            End Sub
+            <M(2)> Public Overrides Sub Method(ByVal a As Long)
+            End Sub
+            <M(3)> Public Overrides Sub Method(ByVal a As System.Action(Of Action(Of X)))
+            End Sub
+            <M(4)> Public Overloads Sub Method(ByVal a As Integer)
+            End Sub
+        End Class
+        Private Class CGenericDerived4(Of T) : Inherits CGenericBase1(Of CGenericDerived3(Of Action(Of T)), Activator)
+            <M(1)> Public Overrides Sub Method(ByVal a As CGenericDerived3(Of System.Action(Of T)), ByVal b As Long)
+            End Sub
+            <M(2)> Public Overrides Sub Method(ByVal a As Long)
+            End Sub
+            <M(3)> Public Overrides Sub Method(ByVal a As System.Action(Of CGenericDerived3(Of System.Action(Of T))))
+            End Sub
+            <M(4)> Public Overloads Sub Method(ByVal a As Integer)
+            End Sub
+        End Class
+        Private Class CGenericDerived5 : Inherits CGenericBase1(Of Long, Long)
+            <M(1)> Public Overrides Sub Method(ByVal a As Long, ByVal b As Long)
+            End Sub
+            <M(2)> Public Overrides Sub Method(ByVal a As Long)
+            End Sub
+            <M(3)> Public Overrides Sub Method(ByVal a As System.Action(Of Long))
+            End Sub
+            <M(4)> Public Overloads Sub Method(ByVal a As Integer)
+            End Sub
+        End Class
 
 
-        <TestMethod()> Public Sub GetBaseClassMethodU()
-            Dim BaseClass = GetType(BaseClass)
-            Dim DerivedClass1 = GetType(DerivedClass1)
-            Dim DerivedClass2 = GetType(DerivedClass2)
-            Dim DerivedClass3 = GetType(DerivedClass3)
+        '<TestMethod()> Public Sub GetBaseClassMethodU()
+        '    Dim BaseClass = GetType(BaseClass)
+        '    Dim DerivedClass1 = GetType(DerivedClass1)
+        '    Dim DerivedClass2 = GetType(DerivedClass2)
+        '    Dim DerivedClass3 = GetType(DerivedClass3)
 
-            Dim Integer_Long As Type() = New Type() {GetType(Integer), GetType(Long)}
-            Dim Char_Integer As Type() = New Type() {GetType(Char), GetType(Integer)}
-            Dim Integer_Integer As Type() = New Type() {GetType(Integer), GetType(Integer)}
-            Dim String_SByte As Type() = New Type() {GetType(String), GetType(SByte)}
+        '    Dim Integer_Long As Type() = New Type() {GetType(Integer), GetType(Long)}
+        '    Dim Char_Integer As Type() = New Type() {GetType(Char), GetType(Integer)}
+        '    Dim Integer_Integer As Type() = New Type() {GetType(Integer), GetType(Integer)}
+        '    Dim String_SByte As Type() = New Type() {GetType(String), GetType(SByte)}
 
-            Dim BaseClass_Method_Integer_Long = BaseClass.GetMethod("Method", Integer_Long)
-            Dim BaseClass_Method_Integer_Integer = BaseClass.GetMethod("Method", Integer_Integer)
-            Dim BaseClass_Method_Char_Integer = BaseClass.GetMethod("Method", Char_Integer)
-            Dim BaseClass_SomeProperty_Get = BaseClass.GetProperty("SomeProperty").GetGetMethod
-            Dim DerivedClass1_Method_Integer_Integer = DerivedClass1.GetMethod("Method", Integer_Integer)
-            Dim DerivedClass1_Method_Integer_Long = DerivedClass1.GetMethod("Method", Integer_Long)
-            Dim DerivedClass1_SomeProperty_Get = DerivedClass1.GetProperty("SomeProperty").GetGetMethod
-            Dim DerivedClass1_Method_String_SByte = DerivedClass1.GetMethod("Method", String_SByte)
-            Dim DerivedClass2_Method_Integer_Long = DerivedClass2.GetMethod("Method", Integer_Long)
-            Dim DerivedClass2_Method_Char_Integer = DerivedClass2.GetMethod("Method", Char_Integer)
-            Dim DerivedClass3_Method_Integer_Long = DerivedClass3.GetMethod("Method", Integer_Long)
+        '    Dim BaseClass_Method_Integer_Long = BaseClass.GetMethod("Method", Integer_Long)
+        '    Dim BaseClass_Method_Integer_Integer = BaseClass.GetMethod("Method", Integer_Integer)
+        '    Dim BaseClass_Method_Char_Integer = BaseClass.GetMethod("Method", Char_Integer)
+        '    Dim BaseClass_SomeProperty_Get = BaseClass.GetProperty("SomeProperty").GetGetMethod
+        '    Dim DerivedClass1_Method_Integer_Integer = DerivedClass1.GetMethod("Method", Integer_Integer)
+        '    Dim DerivedClass1_Method_Integer_Long = DerivedClass1.GetMethod("Method", Integer_Long)
+        '    Dim DerivedClass1_SomeProperty_Get = DerivedClass1.GetProperty("SomeProperty").GetGetMethod
+        '    Dim DerivedClass1_Method_String_SByte = DerivedClass1.GetMethod("Method", String_SByte)
+        '    Dim DerivedClass2_Method_Integer_Long = DerivedClass2.GetMethod("Method", Integer_Long)
+        '    Dim DerivedClass2_Method_Char_Integer = DerivedClass2.GetMethod("Method", Char_Integer)
+        '    Dim DerivedClass3_Method_Integer_Long = DerivedClass3.GetMethod("Method", Integer_Long)
 
-            If Not DerivedClass1_Method_Integer_Integer.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
-            If Not DerivedClass1_Method_Integer_Long.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
-            If Not DerivedClass1_SomeProperty_Get.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
-            If Not DerivedClass1_Method_String_SByte.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
-            If Not DerivedClass2_Method_Char_Integer.DeclaringType.Equals(DerivedClass2) Then Throw New InternalTestFailureException
-            If Not DerivedClass2_Method_Integer_Long.DeclaringType.Equals(DerivedClass2) Then Throw New InternalTestFailureException
-            If Not DerivedClass3_Method_Integer_Long.DeclaringType.Equals(DerivedClass3) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass1_Method_Integer_Integer.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass1_Method_Integer_Long.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass1_SomeProperty_Get.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass1_Method_String_SByte.DeclaringType.Equals(DerivedClass1) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass2_Method_Char_Integer.DeclaringType.Equals(DerivedClass2) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass2_Method_Integer_Long.DeclaringType.Equals(DerivedClass2) Then Throw New InternalTestFailureException
+        '    If Not DerivedClass3_Method_Integer_Long.DeclaringType.Equals(DerivedClass3) Then Throw New InternalTestFailureException
 
-            Assert.AreEqual(BaseClass_Method_Integer_Integer, DerivedClass1_Method_Integer_Integer.GetBaseClassMethod)
-            Assert.AreEqual(BaseClass_Method_Integer_Long, DerivedClass1_Method_Integer_Long.GetBaseClassMethod)
-            Assert.AreEqual(BaseClass_SomeProperty_Get, DerivedClass1_SomeProperty_Get.GetBaseClassMethod)
-            Assert.IsNull(DerivedClass1_Method_String_SByte.GetBaseClassMethod)
+        '    Assert.AreEqual(BaseClass_Method_Integer_Integer, DerivedClass1_Method_Integer_Integer.GetBaseClassMethod)
+        '    Assert.AreEqual(DerivedClass1_Method_Integer_Integer.GetBaseDefinition, DerivedClass1_Method_Integer_Integer.GetBaseClassMethod)
+        '    Assert.AreEqual(BaseClass_Method_Integer_Long, DerivedClass1_Method_Integer_Long.GetBaseClassMethod)
+        '    Assert.AreEqual(DerivedClass1_Method_Integer_Long.GetBaseDefinition, DerivedClass1_Method_Integer_Long.GetBaseClassMethod)
+        '    Assert.AreEqual(BaseClass_SomeProperty_Get, DerivedClass1_SomeProperty_Get.GetBaseClassMethod)
+        '    Assert.AreEqual(DerivedClass1_SomeProperty_Get.GetBaseDefinition, DerivedClass1_SomeProperty_Get.GetBaseClassMethod)
+        '    Assert.IsNull(DerivedClass1_Method_String_SByte.GetBaseClassMethod)
 
-            Assert.IsNull(DerivedClass2_Method_Integer_Long.GetBaseClassMethod)
-            Assert.AreEqual(BaseClass_Method_Char_Integer, DerivedClass2_Method_Char_Integer.GetBaseClassMethod)
-            Assert.AreEqual(DerivedClass2_Method_Integer_Long, DerivedClass3_Method_Integer_Long.GetBaseClassMethod)
+        '    Assert.IsNull(DerivedClass2_Method_Integer_Long.GetBaseClassMethod)
+        '    Assert.AreEqual(BaseClass_Method_Char_Integer, DerivedClass2_Method_Char_Integer.GetBaseClassMethod)
+        '    Assert.AreEqual(DerivedClass2_Method_Char_Integer.GetBaseDefinition, DerivedClass2_Method_Char_Integer.GetBaseClassMethod)
+        '    Assert.AreEqual(DerivedClass2_Method_Integer_Long, DerivedClass3_Method_Integer_Long.GetBaseClassMethod)
+        '    Assert.AreEqual(DerivedClass3_Method_Integer_Long.GetBaseDefinition, DerivedClass3_Method_Integer_Long.GetBaseClassMethod)
 
-        End Sub
+        '    'Generic classes
+        '    Dim GenericBaseClass = GetType(CGenericBase1(Of ,))
+        '    Dim GBCParams = GenericBaseClass.GetGenericArguments
+        '    Dim GBC_M1 = GenericBaseClass.GetMethod("Method", New Type() {GBCParams(0), GetType(Long)})
+        '    Dim GBC_M2 = GenericBaseClass.GetMethod("Method", New Type() {GetType(Long)})
+        '    Dim GBC_M3 = GenericBaseClass.GetMethod("Method", New Type() {GetType(Action(Of )).MakeGenericType(GBCParams(0))})
+        '    Dim GDC1 = GetType(CGenericDerived1(Of ,))
+        '    Dim GDC2 = GetType(CGenericDerived2(Of ,))
+        '    Dim GDC3 = GetType(CGenericDerived3(Of ))
+        '    Dim GDC4 = GetType(CGenericDerived4(Of ))
+        '    Dim GDC5 = GetType(CGenericDerived5)
+        '    Dim GDC1Params = GDC1.GetGenericArguments
+        '    Dim GDC2Params = GDC2.GetGenericArguments
+        '    Dim GDC3Params = GDC3.GetGenericArguments
+        '    Dim GDC4Params = GDC4.GetGenericArguments
+        '    Dim GDC1a = GetType(CGenericDerived1(Of Long, Short))
+        '    Dim GDC2a = GetType(CGenericDerived2(Of Object, [Enum]))
+        '    Dim GDC1b = GetType(CGenericDerived1(Of ,)).MakeGenericType(GetType(String), GDC1Params(1))
+        '    Dim dTypes As Type() = {GDC1, GDC2, GDC3, GDC4, GDC5, GDC1a, GDC2a, GDC1b}
+        '    Dim bases As Type() = {GenericBaseClass.MakeGenericType(GDC1Params(0), GDC1Params(1)), _
+        '                          GenericBaseClass.MakeGenericType(GDC2Params(1), GetType(Integer)), _
+        '                          GenericBaseClass.MakeGenericType(GetType(Action(Of )).MakeGenericType(GDC3Params(0)), GDC3.MakeGenericType(GDC3Params(0))), _
+        '                          GenericBaseClass.MakeGenericType(GDC3.MakeGenericType(GetType(Action(Of )).MakeGenericType(GDC4Params(0))), GetType(Activator)), _
+        '                          GenericBaseClass.MakeGenericType(GetType(Long), GetType(Long)), _
+        '                          GenericBaseClass.MakeGenericType(GetType(Long), GetType(Short)), _
+        '                          GenericBaseClass.MakeGenericType(GetType([Enum]), GetType(Integer)), _
+        '                          GenericBaseClass.MakeGenericType(GetType(String), GDC1Params(1))}
+        '    Dim i% = 0
+        '    For Each dType In dTypes
+        '        For Each m In dType.GetMethods
+        '            If Not m.Name = "Method" Then Continue For
+        '            Dim mattr = m.GetAttribute(Of MAttribute)()
+        '            If mattr.n = 4 Then
+        '                Assert.IsNull(m.GetBaseClassMethod)
+        '            Else
+        '                Dim bm = m.GetBaseClassMethod
+        '                Assert.AreEqual(mattr.n, bm.GetAttribute(Of MAttribute).n)
+        '                Assert.AreEqual(bases(i), bm.DeclaringType)
+        '                Assert.AreEqual(m.GetBaseDefinition, bm)
+        '            End If
+        '        Next
+        '        i += 1
+        '    Next
+
+        'End Sub
 
         Private Interface Interface1
         End Interface
