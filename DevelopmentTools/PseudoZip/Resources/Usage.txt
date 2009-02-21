@@ -1,0 +1,14 @@
+﻿Usage: {0} command archive folder [-r] [masks]
+Commands:
+    a - create archive
+    e - extract archive
+Archive: Path to pseudo zip file to compress files to | extract files from
+Folder: Path to folder to compres files from | extract files to
+-r  Only with command a.
+    Pack files recursivelly from folder.
+Macks: Only with command a.
+       Masks of files to include in archive. When ommitted * is used.
+       
+Note: This tool uses ZIP compresion, but does not use ZIP format.
+Created archive can be read by any ZIP tool, but this tool can read only archives created by tools based on System.IO.Packaging.ZipPackage.
+This tool is as stupid as System.IO.Packaging.ZipPackage, don't blame me. I simply needed lightweight packaking tool that can be used from command line and from code.       

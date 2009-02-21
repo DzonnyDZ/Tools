@@ -1,4 +1,5 @@
-// Define plugin options here
+//This file is overwritten by plugin generator
+/*// Define plugin options here
 //WFX (file system)
 #define TC_WFX SamplePlugin
 #define TC_FS_INIT
@@ -21,4 +22,14 @@
 #define TC_FS_SETDEFAULTPARAMS
 #define TC_FS_GETPREVIEWBITMAP
 #define TC_FS_LINKSTOLOCALFILES
-#define TC_FS_GETLOCALNAME
+#define TC_FS_GETLOCALNAME*/
+
+#define TC_WFX (gcnew Tools::TotalCommanderT::WfxSample::SampleFileSystemPlugin())
+#define TC_FS_INIT
+#define TC_FS_FINDFIRST
+#define TC_FS_FINDNEXT
+#define TC_FS_FINDCLOSE
+#define TC_FS_STATUSINFO
+#define TC_FS_GETDEFROOTNAME
+#using "wfx sample.dll"
+

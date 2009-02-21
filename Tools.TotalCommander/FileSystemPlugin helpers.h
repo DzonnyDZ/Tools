@@ -1,6 +1,6 @@
 #pragma once
 
-#include "fsplugin.h"
+#include "Plugin\fsplugin.h"
 #include "Common.h"
 #include "ContentPluginBase.h"
 

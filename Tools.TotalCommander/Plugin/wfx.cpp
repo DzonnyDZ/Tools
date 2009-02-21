@@ -1,7 +1,7 @@
 #include "define.h"
 #ifdef TC_WFX
 #define TCPLUGF __declspec(dllexport)
-#include "..\fsplugin.h"
+#include "fsplugin.h"
 #include <vcclr.h>
 
 using namespace System;

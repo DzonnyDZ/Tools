@@ -1323,29 +1323,57 @@ Namespace ReflectionT
         ''' <exception cref="ArgumentNullException"><paramref name="Method"/> or <paramref name="DerivedType"/> is null</exception>
         ''' <exception cref="ArgumentException"><paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is null (it is global method) -or-
         ''' <paramref name="DerivedType"/> does not derive from <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see>.</exception>
+        ''' <remarks>Note that no type really derives from open generic type. <see cref="Type.BaseType"/> for type deriving from open generict type always returns closed generic type with generic parameters passed from deriving type to base type. This means that determining overriding method for member method of open generic type is impossible - <see cref="ArgumentException"/> is thrown when <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is open or semi-constructed generic type, because <paramref name="DerivedType"/>.<see cref="Type.BaseType">BaseType</see> never returns such type.</remarks>
         <Extension()> _
-        Public Function GetOverridingMethod(ByVal Method As MethodInfo, ByVal DerivedType As Type) As MethodInfo 'TODO: Test
+        Public Function GetOverridingMethod(ByVal Method As MethodInfo, ByVal DerivedType As Type) As MethodInfo
             If Method Is Nothing Then Throw New ArgumentNullException("Method")
             If DerivedType Is Nothing Then Throw New ArgumentNullException("DerivedType")
             If Method.DeclaringType Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.CannotGetDerivedClassMethodForGlobalMethod)
-            Dim TrueBase = Method.DeclaringType.GetMeAsBaseClassOf(DerivedType)
-            If TrueBase Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.DerivedTypeDoesNotDeriveFromMethodDeclatingType)
+            If Method.DeclaringType.Equals(DerivedType) Then Return Method
+            Dim base = DerivedType.BaseType
+            Do Until base Is Nothing OrElse base.Equals(Method.DeclaringType)
+                base = base.BaseType
+            Loop
+            If base Is Nothing Then Throw New ArgumentException(ResourcesT.Exceptions.DerivedTypeDoesNotDeriveFromMethodDeclaringType)
             If Method.IsStatic OrElse Not Method.IsVirtual Then Return Method
-            Dim MethodParameters = Method.GetParameters
-            Dim MethodGenericParameters = Method.GetGenericArguments
-            For Each dmethod In DerivedType.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.DeclaredOnly)
-                If dmethod.GetParameters.Length <> MethodParameters.Length Then Continue For
-                If dmethod.GetGenericArguments.Length <> MethodGenericParameters.Length Then Continue For
-                Dim BaseMethod = dmethod.GetBaseDefinition
-                If dmethod.Equals(BaseMethod) Then Continue For
-                If BaseMethod.DeclaringType.Equals(Method.DeclaringType) Then Return dmethod
-                If (BaseMethod.DeclaringType.IsGenericTypeDefinition OrElse BaseMethod.DeclaringType.IsGenericType) AndAlso (Method.DeclaringType.IsGenericTypeDefinition OrElse Method.DeclaringType.IsGenericType) AndAlso Method.DeclaringType.GetGenericTypeDefinition.Equals(BaseMethod.DeclaringType.GetGenericTypeDefinition) Then
-                    If BaseMethod.DeclaringType.IsCreatedFrom(Method.DeclaringType) Then Return dmethod
-                End If
-            Next
-            If DerivedType.BaseType.Equals(TrueBase) Then Return Method
-            Return GetOverridingMethod(Method, DerivedType.BaseType)
+            Dim MethodParams = Method.GetParameters
+            Dim MethodGParams = Method.GetGenericArguments
+            Dim dtype = DerivedType
+            Do Until dType.equals(Method.DeclaringType)
+                For Each dMethod In dtype.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.DeclaredOnly)
+                    If dMethod.Name.Equals(Method.Name, StringComparison.InvariantCultureIgnoreCase) AndAlso dMethod.GetParameters.Length = MethodParams.Length AndAlso dMethod.GetGenericArguments.Length = MethodGParams.Length Then
+                        Dim BaseDefinition = dMethod.GetBaseDefinition
+                        Do
+                            If BaseDefinition.Equals(Method) Then Return dMethod
+                            Dim newBaseDefinition = BaseDefinition.GetBaseDefinition
+                            If newBaseDefinition.Equals(BaseDefinition) Then Exit Do
+                            BaseDefinition = newBaseDefinition
+                        Loop
+                    End If
+                Next
+                dtype = dtype.BaseType
+            Loop
+            Return Method
         End Function
+
+        '''' <summary>Gets method that is physically impemented by the same method as given method in another incarnation of same generic type as method declaring type</summary>
+        '''' <param name="Method">Method to get corresponding method of</param>
+        '''' <param name="Type">Type to get method of. The type must be either open generic type, <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is constructed from; or it must be (semi-)constructed generic type constructed from the same open generic type as <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see>; or it must be same type as <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> (in this case this method returns <paramref name="Method"/>).</param>
+        '''' <returns>Method that is physically implemented by the same method as <paramref name="Method"/>, but on another genric incarnation of <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> represented by <paramref name="Type"/></returns>
+        '''' <exception cref="ArgumentNullException"><paramref name="Method"/> or <paramref name="Type"/> is null</exception>
+        '''' <exception cref="ArgumentException"><paramref name="Type"/> or <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> is not generic type (open, constructed or semi-constructed) -or- <paramref name="Type"/> and <paramref name="Method"/>.<see cref="MethodInfo.DeclaringType">DeclaringType</see> are generic type created from different open generic types.</exception>
+        '''' <version version="1.5.2">Function introduced</version>
+        '<Extension()> Function GetSameMethod(ByVal Method As MethodInfo, ByVal Type As Type) As MethodInfo
+        '    If Method Is Nothing Then Throw New ArgumentNullException("Method")
+        '    If Type Is Nothing Then Throw New ArgumentNullException("Type")
+        '    If Not Method.DeclaringType.IsGenericTypeDefinition AndAlso Not Method.DeclaringType.IsGenericType Then Throw New ArgumentException(ResourcesT.Exceptions.DeclaringTypeOfMethodIsNotGeneric, "Method")
+        '    If Not Type.IsGenericTypeDefinition AndAlso Not Type.IsGenericType Then Throw New ArgumentException(ResourcesT.Exceptions.TypeIsNotGeneric, "Type")
+        '    If Not Type.GetGenericTypeDefinition.Equals(Method.DeclaringType.GetGenericTypeDefinition) Then Throw New ArgumentException(ResourcesT.Exceptions.MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated)
+        '    For Each tmethod In Type.GetMethods(BindingFlags.Public Or BindingFlags.NonPublic Or BindingFlags.Instance Or BindingFlags.Static Or BindingFlags.DeclaredOnly)
+        '        'TODO: COmpare signatures
+        '    Next
+        'End Function
+
         ''' <summary>Gets value indicationg if constructed or semi-constructed generic type is constructed from given open semi-constructed generic type</summary>
         ''' <param name="Instance">Constructed or semi-constructed generic type</param>
         ''' <param name="Definition">Open or semi-constructed generict type</param>

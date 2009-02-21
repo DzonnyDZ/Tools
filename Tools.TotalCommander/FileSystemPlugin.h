@@ -1,6 +1,6 @@
 #pragma once
 
-#include "fsplugin.h"
+#include "Plugin\fsplugin.h"
 #include "Common.h"
 #include "ContentPluginBase.h"
 #include "FileSystemPlugin helpers.h"
@@ -627,7 +627,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <exception cref="IO::PathTooLongException">String passed by plugin function <see cref="ExctractCustomIcon"/> to <paramref name="RemoteName"/> is longer than <see cref="FindData::MaxPath"/> - 1.</exception> 
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("IconExtractResult","TC_FS_EXTRACTCUSTOMICON")]
+        [PluginMethod("ExctractCustomIcon","TC_FS_EXTRACTCUSTOMICON")]
         int FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon);
         /// <summary>When overriden in derived class, called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
         /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO:PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
@@ -711,7 +711,7 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
-        [PluginMethod("LinksToLocalFiles_get","TC_FS_LINKSTOLOCALFILES")]
+        [PluginMethod("get_LinksToLocalFiles","TC_FS_LINKSTOLOCALFILES")]
         BOOL FsLinksToLocalFiles(void);
         /// <summary>When overriden in derived class gets valud indicating if plugin is temporary panel-style plugin.</summary>
         /// <returns>True if the plugin is a temporary panel-style plugin; false if the plugin is a normal file system plugin</returns>

@@ -1,6 +1,6 @@
 typedef unsigned __int64 QWORD; 
 #pragma once
-#include "fsplugin.h"
+#include "Plugin\fsplugin.h"
 #include "Common.h"
 
 namespace Tools{namespace TotalCommanderT{
@@ -26,6 +26,11 @@ namespace Tools{namespace TotalCommanderT{
         String^ definedBy;
         /// <summary>Contains value of the <see cref="ImplementedBy"/> property</summary>
         String^ implementedBy;
+        /// <summary>Initializes newly created instance</sumary>
+        /// <param name="DefinedBy">Name of macro to be set method to be compiled into plugin wrapper. Generator must define this macro always.</param>
+        /// <exception cref="ArgumentNullException"><paramref name="DefinedBy"/> is null</exception>
+        /// <exception cref="FormatException"><paramref name="DefinedBy"/> has invalid format for macro name</exception>
+        void init(String^ DefinedBy);
     public:
         /// <summary>CTor for always-present method</summary>
         /// <param name="DefinedBy">Name of macro to be set method to be compiled into plugin wrapper. Generator must define this macro always.</param>
@@ -70,5 +75,14 @@ namespace Tools{namespace TotalCommanderT{
         TotalCommanderPluginAttribute(String^ Name);
         /// <summary>Gets name (without extension) of plugin when it is generated. Ignored when null.</summary>
         property String^ Name{String^ get();}
+        /// <summary>When set to non-null value serves as value of the <see cref="AssemblyDescriptionAttribute"/> applied to plugin wrapper assembly.</summary>
+        /// <remarks>When null, <see cref="AssemblyDescriptionAttribute"/> from type's assembly is used.</remarks> 
+        property String^ AssemblyDescription;
+        /// <summary>When set to non-null value serves as value of the <see cref="AssemblyTitleAttribute"/> applied to plugin wrapper assembly.</summary>
+        /// <remarks>When null, <see cref="AssemblyTitleAttribute"/> from type's assembly is used.</remarks>
+        property String^ AssemblyTitle;
+        /// <summary>When set to non-null value serves as value of the <see cref="AssemblyGuidAttribute"/> applied to plugin wrapper assembly.</summary>
+        /// <remarks>When null, no  <see cref="AssemblyGuidAttribute"/> is attached</remarks>
+        property String^ AssemblyGuid;
     };
 }}

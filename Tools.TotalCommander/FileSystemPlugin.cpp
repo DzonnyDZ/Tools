@@ -1,6 +1,6 @@
-#include "stdafx.h"
+//#include "stdafx.h"
 #include "FileSystemPlugin.h"
-#include "fsplugin.h"
+#include "Plugin\fsplugin.h"
 #include "Exceptions.h"
 #include <vcclr.h>
 

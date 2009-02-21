@@ -1,4 +1,4 @@
-#include "Stdafx.h"
+//#include "Stdafx.h"
 #include "Common.h"
 #include <vcclr.h>
 #include "Exceptions.h"
@@ -15,13 +15,16 @@ namespace Tools{namespace TotalCommanderT{
 
     gcroot<Regex^> MacroRegex = gcnew Regex("^[A-Za-z_][A-Za-z_0-9]*$", RegexOptions::Compiled | RegexOptions::CultureInvariant);
     
-    PluginMethodAttribute::PluginMethodAttribute(String^ DefinedBy){
+    inline PluginMethodAttribute::PluginMethodAttribute(String^ DefinedBy){
+        this->init(DefinedBy);    
+    }
+    void PluginMethodAttribute::init(String^ DefinedBy){
         if(DefinedBy == nullptr) throw gcnew ArgumentNullException("DefinedBy");
         if(!MacroRegex->IsMatch(DefinedBy)) throw gcnew FormatException(Exceptions::InvalidMacroNameFormat(DefinedBy));
         this->definedBy = DefinedBy;
     }
     PluginMethodAttribute::PluginMethodAttribute(String^ ImplementedBy, String^ DefinedBy){
-        PluginMethodAttribute::PluginMethodAttribute(DefinedBy);
+        this->init(DefinedBy);
         this->implementedBy = ImplementedBy;
     }
     inline String^ PluginMethodAttribute::DefinedBy::get(){return this->definedBy;}

@@ -18,3 +18,7 @@ parameters:
 /int <path>   Path to intermediate directory. Optional. When not specified temporary is used.
 /keepint      Keep files in intermediate directory after execution. Valid only when /int is set. Optional.              
 /templ <path> Project template directory. Optional. Use this template instead of buil-in one.
+/vcbuild <path> Overrides path of vcbuild.exe. Optional. Overrides value from settings.
+/pdb          Copy plugin pdb file to outdir. Optional.
+
+All the operations can be done programatically as well. {0} as reference to your project.

@@ -1323,7 +1323,16 @@
   <data name="CannotGetDerivedClassMethodForGlobalMethod" xml:space="preserve">
     <value>Cannot get derived class method for global method.</value>
   </data>
-  <data name="DerivedTypeDoesNotDeriveFromMethodDeclatingType" xml:space="preserve">
-    <value>Derived type does not derive from method declating type</value>
+  <data name="DerivedTypeDoesNotDeriveFromMethodDeclaringType" xml:space="preserve">
+    <value>Derived type does not derive from method decrating type</value>
+  </data>
+  <data name="DeclaringTypeOfMethodIsNotGeneric" xml:space="preserve">
+    <value>Declaring type of method is not generic.</value>
+  </data>
+  <data name="TypeIsNotGeneric" xml:space="preserve">
+    <value>Type is not generic.</value>
+  </data>
+  <data name="MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated" xml:space="preserve">
+    <value>Method declaring type and type to get method of must be created from the same generic type.</value>
   </data>
 </root>

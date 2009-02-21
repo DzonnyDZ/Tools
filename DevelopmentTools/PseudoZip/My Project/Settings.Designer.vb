@@ -53,18 +53,6 @@ Namespace My
                 Return defaultInstance
             End Get
         End Property
-        
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
-         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
-         Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe")>  _
-        Public Property vcbuild() As String
-            Get
-                Return CType(Me("vcbuild"),String)
-            End Get
-            Set
-                Me("vcbuild") = value
-            End Set
-        End Property
     End Class
 End Namespace
 
@@ -76,9 +64,9 @@ Namespace My
     Friend Module MySettingsProperty
         
         <Global.System.ComponentModel.Design.HelpKeywordAttribute("My.Settings")>  _
-        Friend ReadOnly Property Settings() As Global.Tools.TotalCommanderT.PluginBuilder.My.MySettings
+        Friend ReadOnly Property Settings() As Global.Tools.IOt.PackagingT.My.MySettings
             Get
-                Return Global.Tools.TotalCommanderT.PluginBuilder.My.MySettings.Default
+                Return Global.Tools.IOt.PackagingT.My.MySettings.Default
             End Get
         End Property
     End Module

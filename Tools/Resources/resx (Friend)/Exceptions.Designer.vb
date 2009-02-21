@@ -834,6 +834,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Declaring type of method is not generic.'.
+        '''</summary>
+        Friend Shared ReadOnly Property DeclaringTypeOfMethodIsNotGeneric() As String
+            Get
+                Return ResourceManager.GetString("DeclaringTypeOfMethodIsNotGeneric", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Default MessageBox implementation cannot be abstract type.'.
         '''</summary>
         Friend Shared ReadOnly Property DefaultMessageBoxImplementationCannotBeAbstractType() As String
@@ -852,11 +861,11 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
-        '''Looks up a localized string similar to 'Derived type does not derive from method declating type'.
+        '''Looks up a localized string similar to 'Derived type does not derive from method decrating type'.
         '''</summary>
-        Friend Shared ReadOnly Property DerivedTypeDoesNotDeriveFromMethodDeclatingType() As String
+        Friend Shared ReadOnly Property DerivedTypeDoesNotDeriveFromMethodDeclaringType() As String
             Get
-                Return ResourceManager.GetString("DerivedTypeDoesNotDeriveFromMethodDeclatingType", _resourceCulture)
+                Return ResourceManager.GetString("DerivedTypeDoesNotDeriveFromMethodDeclaringType", _resourceCulture)
             End Get
         End Property
         
@@ -1680,6 +1689,15 @@ Namespace ResourcesT
         Friend Shared ReadOnly Property MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe() As String
             Get
                 Return ResourceManager.GetString("MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''Looks up a localized string similar to 'Method declaring type and type to get method of must be created from the same generic type.'.
+        '''</summary>
+        Friend Shared ReadOnly Property MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated() As String
+            Get
+                Return ResourceManager.GetString("MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated", _resourceCulture)
             End Get
         End Property
         
@@ -3247,6 +3265,15 @@ Namespace ResourcesT
         End Property
         
         '''<summary>
+        '''Looks up a localized string similar to 'Type is not generic.'.
+        '''</summary>
+        Friend Shared ReadOnly Property TypeIsNotGeneric() As String
+            Get
+                Return ResourceManager.GetString("TypeIsNotGeneric", _resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''Looks up a localized string similar to 'Type is specified neither via property nor in value'.
         '''</summary>
         Friend Shared ReadOnly Property TypeIsSpecifiedNeitherViaPropertyNorInValue() As String
@@ -4463,6 +4490,14 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
+        '''The stub formatting method returning the DeclaringTypeOfMethodIsNotGeneric property value.
+        '''</summary>
+        '''<returns>The DeclaringTypeOfMethodIsNotGeneric property value.</returns>
+        Friend Shared Function DeclaringTypeOfMethodIsNotGenericFormat() As String
+            Return DeclaringTypeOfMethodIsNotGeneric
+        End Function
+        
+        '''<summary>
         '''The stub formatting method returning the DefaultMessageBoxImplementationCannotBeAbstractType property value.
         '''</summary>
         '''<returns>The DefaultMessageBoxImplementationCannotBeAbstractType property value.</returns>
@@ -4479,11 +4514,11 @@ Namespace ResourcesT
         End Function
         
         '''<summary>
-        '''The stub formatting method returning the DerivedTypeDoesNotDeriveFromMethodDeclatingType property value.
+        '''The stub formatting method returning the DerivedTypeDoesNotDeriveFromMethodDeclaringType property value.
         '''</summary>
-        '''<returns>The DerivedTypeDoesNotDeriveFromMethodDeclatingType property value.</returns>
-        Friend Shared Function DerivedTypeDoesNotDeriveFromMethodDeclatingTypeFormat() As String
-            Return DerivedTypeDoesNotDeriveFromMethodDeclatingType
+        '''<returns>The DerivedTypeDoesNotDeriveFromMethodDeclaringType property value.</returns>
+        Friend Shared Function DerivedTypeDoesNotDeriveFromMethodDeclaringTypeFormat() As String
+            Return DerivedTypeDoesNotDeriveFromMethodDeclaringType
         End Function
         
         '''<summary>
@@ -5248,6 +5283,14 @@ Namespace ResourcesT
         '''<returns>The MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe property value.</returns>
         Friend Shared Function MessageBoxMustOwnThisInstanceInOrderThisInstanceToBeFormat() As String
             Return MessageBoxMustOwnThisInstanceInOrderThisInstanceToBe
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated property value.
+        '''</summary>
+        '''<returns>The MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated property value.</returns>
+        Friend Shared Function MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreatedFormat() As String
+            Return MethodDeclaringTypeAndTypeToGetMethodOfMustBeCreated
         End Function
         
         '''<summary>
@@ -6778,6 +6821,14 @@ Namespace ResourcesT
         '''<returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         Friend Shared Function Type0IsNotSupportedAsValueOfStatusedControlPropertyFormat(ByVal arg0 As Object) As String
             Return String.Format(_resourceCulture, Type0IsNotSupportedAsValueOfStatusedControlProperty, arg0)
+        End Function
+        
+        '''<summary>
+        '''The stub formatting method returning the TypeIsNotGeneric property value.
+        '''</summary>
+        '''<returns>The TypeIsNotGeneric property value.</returns>
+        Friend Shared Function TypeIsNotGenericFormat() As String
+            Return TypeIsNotGeneric
         End Function
         
         '''<summary>

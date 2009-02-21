@@ -1,5 +1,9 @@
-#include "stdafx.h"
 #pragma once
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#include <stdlib.h>
+#include <shellapi.h>
+
 // contents of fsplugin.h  version 1.5 (21.Nov.2005)
 
 #ifndef TCPLUGF

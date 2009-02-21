@@ -5,13 +5,12 @@
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProductVersion>9.0.30729</ProductVersion>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>{D8000EE2-BBD5-4E10-97E2-B1CF562753EF}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <StartupObject>Tools.TotalCommanderT.PluginBuilder.Builder</StartupObject>
-    <RootNamespace>Tools.TotalCommanderT.PluginBuilder</RootNamespace>
-    <AssemblyName>TCPluginBuilder</AssemblyName>
+    <ProjectGuid>{C3B940DA-5325-43D8-94E1-CF87255DA471}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>Tools.TotalCommanderT.WfxSample</RootNamespace>
+    <AssemblyName>wfx sample</AssemblyName>
     <FileAlignment>512</FileAlignment>
-    <MyType>Console</MyType>
+    <MyType>Windows</MyType>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <OptionExplicit>On</OptionExplicit>
     <OptionCompare>Binary</OptionCompare>
@@ -21,9 +20,6 @@
     <SccLocalPath>SAK</SccLocalPath>
     <SccAuxPath>SAK</SccAuxPath>
     <SccProvider>SAK</SccProvider>
-    <ApplicationIcon>Resources\TotalCommander.ico</ApplicationIcon>
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>..\..\SharedFiles\Tools.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,7 +27,7 @@
     <DefineDebug>true</DefineDebug>
     <DefineTrace>true</DefineTrace>
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile>TCPluginBuilder.xml</DocumentationFile>
+    <DocumentationFile>wfx sample.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -40,14 +36,12 @@
     <DefineTrace>true</DefineTrace>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DocumentationFile>TCPluginBuilder.xml</DocumentationFile>
+    <DocumentationFile>wfx sample.xml</DocumentationFile>
     <NoWarn>41999,42016</NoWarn>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="CppCodeProvider, Version=8.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
     <Reference Include="System.Xml" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -57,9 +51,6 @@
     </Reference>
     <Reference Include="System.Data.DataSetExtensions">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
-    </Reference>
-    <Reference Include="WindowsBase">
-      <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
@@ -73,11 +64,7 @@
     <Import Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\SharedFiles\Version.vb">
-      <Link>Version.vb</Link>
-    </Compile>
-    <Compile Include="Generator.vb" />
-    <Compile Include="Builder.vb" />
+    <Compile Include="SampleFileSystemPlugin.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />
     <Compile Include="My Project\Application.Designer.vb">
       <AutoGen>True</AutoGen>
@@ -114,24 +101,13 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\SharedFiles\Tools.snk">
-      <Link>Tools.snk</Link>
-    </None>
-    <None Include="Resources\TotalCommander.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="app.config" />
-    <EmbeddedResource Include="Resources\Template.pseudozip" />
-    <None Include="Resources\Usage.txt" />
-  </ItemGroup>
-  <ItemGroup>
+    <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcproj">
+      <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
+      <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Tools\Tools.vbproj">
       <Project>{FCF346AC-D1C3-42DB-9026-9144240FB766}</Project>
       <Name>Tools</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Tools.TotalCommander.vcproj">
-      <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
-      <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.VisualBasic.targets" />
@@ -143,6 +119,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcproj</PreBuildEvent>
+    <PostBuildEvent>"$(SolutionDir)Tools.TotalCommander\TotalCommander Plugin Builder\bin\debug\TCPluginBuilder.exe" "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint /pdb</PostBuildEvent>
   </PropertyGroup>
 </Project>

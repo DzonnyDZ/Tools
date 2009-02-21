@@ -9,8 +9,9 @@ Module Builder
         'Parameters
         Dim Assembly = My.Application.CommandLineArgs(0)
         Dim OutDir$
-        If My.Application.CommandLineArgs.Contains("/out") AndAlso My.Application.CommandLineArgs.IndexOf("/out") < My.Application.CommandLineArgs.Count - 1 Then
-            OutDir = My.Application.CommandLineArgs(My.Application.CommandLineArgs.IndexOf("/out") + 1)
+        Dim _OutIndex = My.Application.CommandLineArgs.IndexOf("/out")
+        If _OutIndex >= 0 AndAlso _OutIndex < My.Application.CommandLineArgs.Count - 1 Then
+            OutDir = My.Application.CommandLineArgs(_OutIndex + 1)
         Else
             OutDir = IO.Path.GetDirectoryName(Assembly)
         End If
@@ -42,12 +43,15 @@ Module Builder
             End If
         Next
         Dim IntDir$ = Nothing
-        If My.Application.CommandLineArgs.IndexOf("/int") < My.Application.CommandLineArgs.Count - 1 Then IntDir = My.Application.CommandLineArgs(My.Application.CommandLineArgs.IndexOf("/int") + 1)
+        Dim _IntDirIndex% = My.Application.CommandLineArgs.IndexOf("/int")
+        If _IntDirIndex >= 0 AndAlso _IntDirIndex < My.Application.CommandLineArgs.Count - 1 Then IntDir = My.Application.CommandLineArgs(_IntDirIndex + 1)
         Dim KeepInt As Boolean = IntDir IsNot Nothing AndAlso My.Application.CommandLineArgs.Contains("/keepint")
         Dim TemplateDir$ = Nothing
-        If My.Application.CommandLineArgs.IndexOf("/templ") < My.Application.CommandLineArgs.Count - 1 Then TemplateDir = My.Application.CommandLineArgs(My.Application.CommandLineArgs.IndexOf("/templ") + 1)
+        Dim _TemplIndex% = My.Application.CommandLineArgs.IndexOf("/templ")
+        If _TemplIndex >= 0 AndAlso _TemplIndex < My.Application.CommandLineArgs.Count - 1 Then TemplateDir = My.Application.CommandLineArgs(_TemplIndex + 1)
         'Load assembly
         Dim LoadedAssembly As System.Reflection.Assembly
+        If Not IO.Path.IsPathRooted(Assembly) Then Assembly = IO.Path.Combine(My.Computer.FileSystem.CurrentDirectory, Assembly)
         Try
             LoadedAssembly = Reflection.Assembly.LoadFile(Assembly)
         Catch ex As Exception
@@ -78,7 +82,10 @@ Module Builder
         Generator.IntermediateDirectory = IntDir
         Generator.CleanIntermediateDirectory = Not KeepInt
         Generator.ProjectTemplateDirectory = TemplateDir
-
+        Generator.LogToConsole = True
+        Generator.CopyPDB = My.Application.CommandLineArgs.Contains("/pdb")
+        Dim vcbuild% = My.Application.CommandLineArgs.IndexOf("/vcbuild")
+        If vcbuild >= 0 AndAlso vcbuild < My.Application.CommandLineArgs.Count - 1 Then Generator.VCBuild = My.Application.CommandLineArgs(vcbuild + 1)
         'Generate
         Try
             Generator.Generate()
