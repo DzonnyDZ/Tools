@@ -29,4 +29,6 @@ namespace Tools{namespace TotalCommanderT{
     }
     inline String^ PluginMethodAttribute::DefinedBy::get(){return this->definedBy;}
     inline String^ PluginMethodAttribute::ImplementedBy::get(){return this->implementedBy;}
+
+    inline NotAPluginAttribute::NotAPluginAttribute(){/*do nothing*/}
 }}

@@ -7,8 +7,8 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{833877EA-2CEA-46EE-B475-14051B77D9F0}</ProjectGuid>
     <OutputType>Exe</OutputType>
-    <StartupObject>Tools.VIsualStudioT.GeneratorsT.ResXFileGenerator.ResXFileGenerator</StartupObject>
-    <RootNamespace>Tools.VIsualStudioT.GeneratorsT.ResXFileGenerator</RootNamespace>
+    <StartupObject>Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.ResXFileGenerator</StartupObject>
+    <RootNamespace>Tools.VisualStudioT.GeneratorsT.ResXFileGenerator</RootNamespace>
     <AssemblyName>ResXFileGenerator</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MyType>Console</MyType>

@@ -49,6 +49,8 @@ Module Builder
         Dim TemplateDir$ = Nothing
         Dim _TemplIndex% = My.Application.CommandLineArgs.IndexOf("/templ")
         If _TemplIndex >= 0 AndAlso _TemplIndex < My.Application.CommandLineArgs.Count - 1 Then TemplateDir = My.Application.CommandLineArgs(_TemplIndex + 1)
+        Dim _Snk% = My.Application.CommandLineArgs.IndexOf("/key"), Snk$ = Nothing
+        If _Snk >= 0 AndAlso _Snk < My.Application.CommandLineArgs.Count - 1 Then Snk = My.Application.CommandLineArgs(_Snk + 1)
         'Load assembly
         Dim LoadedAssembly As System.Reflection.Assembly
         If Not IO.Path.IsPathRooted(Assembly) Then Assembly = IO.Path.Combine(My.Computer.FileSystem.CurrentDirectory, Assembly)
@@ -83,6 +85,7 @@ Module Builder
         Generator.CleanIntermediateDirectory = Not KeepInt
         Generator.ProjectTemplateDirectory = TemplateDir
         Generator.LogToConsole = True
+        Generator.SnkPath = Snk
         Generator.CopyPDB = My.Application.CommandLineArgs.Contains("/pdb")
         Dim vcbuild% = My.Application.CommandLineArgs.IndexOf("/vcbuild")
         If vcbuild >= 0 AndAlso vcbuild < My.Application.CommandLineArgs.Count - 1 Then Generator.VCBuild = My.Application.CommandLineArgs(vcbuild + 1)

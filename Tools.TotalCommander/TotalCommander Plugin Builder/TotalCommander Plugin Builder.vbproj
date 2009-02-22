@@ -143,6 +143,6 @@
   </Target>
   -->
   <PropertyGroup>
-    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcproj</PreBuildEvent>
+    <PreBuildEvent>"$(SolutionDir)DevelopmentTools\PseudoZip\bin\Debug\PseudoZip.exe" a "$(ProjectDir)Resources\Template.pseudozip" "$(ProjectDir)..\Plugin" *.h *.cpp *.vcproj *.def</PreBuildEvent>
   </PropertyGroup>
 </Project>

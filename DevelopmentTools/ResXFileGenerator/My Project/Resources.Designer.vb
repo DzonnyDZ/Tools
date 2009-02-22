@@ -39,7 +39,7 @@ Namespace My.Resources
         Friend ReadOnly Property ResourceManager() As Global.System.Resources.ResourceManager
             Get
                 If Object.ReferenceEquals(resourceMan, Nothing) Then
-                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Tools.VIsualStudioT.GeneratorsT.ResXFileGenerator.Resources", GetType(Resources).Assembly)
+                    Dim temp As Global.System.Resources.ResourceManager = New Global.System.Resources.ResourceManager("Tools.VisualStudioT.GeneratorsT.ResXFileGenerator.Resources", GetType(Resources).Assembly)
                     resourceMan = temp
                 End If
                 Return resourceMan
@@ -106,7 +106,7 @@ Namespace My.Resources
         '''        supported values (case-insensitive) are: vb, cs, c, cpp, h, cpp.7, cpp.vs, js, java, jsl
         '''        cpp.7 and cpp.vs are two alternative C++ providers
         '''        c, cpp and h have same meaning (C++)
-        '''        java and jsl jave same meaning (J#)
+        '''        java and jsl have same meaning (J#)
         '''    /nolo [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Legend() As String

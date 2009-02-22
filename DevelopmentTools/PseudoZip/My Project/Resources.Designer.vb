@@ -61,6 +61,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Error: {0}.
+        '''</summary>
+        Friend ReadOnly Property Error0() As String
+            Get
+                Return ResourceManager.GetString("Error0", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to {0} files extracted..
         '''</summary>
         Friend ReadOnly Property FilesExtracted() As String
@@ -97,7 +106,10 @@ Namespace My.Resources
         '''-r  Only with command a.
         '''    Pack files recursivelly from folder.
         '''Macks: Only with command a.
-        '''       Masks of files to include in archive. When ommitted * is used..
+        '''       Masks of files to include in archive. When ommitted * is used.
+        '''       
+        '''Note: This tool uses ZIP compresion, but does not use ZIP format.
+        '''Created archive can [rest of string was truncated]&quot;;.
         '''</summary>
         Friend ReadOnly Property Usage() As String
             Get

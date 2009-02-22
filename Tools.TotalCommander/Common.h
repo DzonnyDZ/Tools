@@ -85,4 +85,13 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks>When null, no  <see cref="AssemblyGuidAttribute"/> is attached</remarks>
         property String^ AssemblyGuid;
     };
+
+    /// <summary>Apply this attribute to Total Commander plugin class to make plugin generator ignore it</summary>
+    /// <remarks>This attribute may be usefull when you have non-abstract base class that you don't wan't plugin to be generated for</remarks>
+    [AttributeUsage(AttributeTargets::Class, Inherited=false)]
+    public ref class NotAPluginAttribute : Attribute{
+    public:
+        /// <summary>CTor - creates new instance of the <see cref="NotAPluginAttribute"/> class</summary>
+        NotAPluginAttribute();
+    };
 }}

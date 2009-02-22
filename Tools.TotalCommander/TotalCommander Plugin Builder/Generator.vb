@@ -2,9 +2,48 @@
 Imports System.IO.Packaging
 
 ''' <summary>Generates a plugin</summary>
+''' <remarks>
+''' This class generates one or more Total Commander pluggin wrappers from given assembly/types.
+''' Wrapper generation process can be invoked from command line or programatically using <see cref="Generator"/> API.
+''' Separate wrapper is generated for each plugin class.
+''' Wrapper generation consists of following steps:
+''' <list type="number">
+''' <item>Prepare wrapper template - Template is copied to intermediate directory (either from specified template directory or from built-in template)</item>
+''' <item>Configure tamplate - Type wraper is being generated for is inspected to detect plugin type and which methods the plugin implements. Appropriate settings are generated to template files. Namely: Conditional compilation is set up to generate only those functions supported by plugin; Module export definition is written; Assembly info is generated.</item>
+''' <item>Invoke compiler - C++ compiler vcbuild.exe is executed to compile the wrapper. You need to have Visual Studio with C++ support to be installed on your machine. See <see cref="Generator.VCBuild"/>.</item>
+''' </list>
+''' Following rules apply to plugin being generated:
+''' <list type="bullet">
+''' <item>Plugin class must be non-abstract, must have defualt (parameter-less) constructor and must notbe open generic type. When class that looks like plugin class is found, but does not meet these requirements it is ignored.</item>
+''' <item>Plugin class must derive from one of plugin types like <see cref="FileSystemPlugin"/>.</item>
+''' <item>Plugin class overrides its's base class methods to define plugin functionality. A few methods must be overriden. Majority of methods is optional.</item>
+''' <item>When non-compulsory method is overriden in derived class, wrapped generator examines it. When it is decorated with <see cref="MethodNotSupportedAttribute"/> it is NOT generated for the plugin; otherwise it is.</item>
+''' <item>Plugin class can, of course, define as many as you want additional methoda, but those methods are not part of plugin contract. When a new version of Total Commander is issued that defines more plugin API functions, those functions are not automatically supported by the generator. A new version of generator must be issued as well.</item>
+''' <item>When plugin class is decorated with <see cref="NotAPluginAttribute"/>, it is skipped from plugin generation.</item>
+''' <item>Optionaly plugin class can be decorated with <see cref="TotalCommanderPluginAttribute"/> to precise plugin generation.</item>
+''' <item>Plugin assembly is given correct plugin extension by plugin type.</item>
+''' <item>Plugin assembly inherits certain attributes from assembly plugin type is defined in or from plugin type istelf. Namely:
+''' <list type="table">
+''' <item><term><see cref="AssemblyVersionAttribute"/></term><description>Got from assembly's <see cref="AssemblyVersionAttribute"/> (when defined); otherwise from <see cref="AssemblyName.Version"/>.</description></item>
+''' <item><term><see cref="AssemblyTrademarkAttribute"/>, <see cref="AssemblyCopyrightAttribute"/>, <see cref="AssemblyProductAttribute"/>, <see cref="AssemblyCompanyAttribute"/>, <see cref="AssemblyConfigurationAttribute"/>, <see cref="Resources.NeutralResourcesLanguageAttribute"/>, <see cref="AssemblyFileVersionAttribute"/>, <see cref="AssemblyInformationalVersionAttribute"/></term><description>Derived from assembly attributes (when set; ignored when not set)</description></item>
+''' <item><term><see cref="Runtime.InteropServices.GuidAttribute"/></term><description>Got from <see cref="TotalCommanderPluginAttribute.AssemblyGuid"/> of plugin type (when set; ignored when not set)</description></item>
+''' <item><term><see cref="AssemblyTitleAttribute"/>, <see cref="AssemblyDescriptionAttribute"/></term><description>Got from <see cref="TotalCommanderPluginAttribute.AssemblyTitle"/> and <see cref="TotalCommanderPluginAttribute.AssemblyDescription"/> of plugin type when set; otherwise got from appropriate assembly attributes when set; otherwise ignored.</description></item>
+''' <item><term><see cref="AssemblyKeyFileAttribute"/></term>Can be only set by <see cref="Generator.SnkPath"/> property (or the /key command line switch).</item>
+''' </list>
+''' </item>
+''' <item>When giving wrapper asembly a string name (using <see cref="Generator.SnkPath"/>) the assembly plugin is defined in must have string name as well.</item>
+''' <item>Wrapper name is specified by (in order of presedence): <see cref="Generator.RenamingDictionary"/>, <see cref="TotalCommanderPluginAttribute.Name"/>, <see cref="Type.FullName"/>.</item>
+''' </list>
+''' Wrapped debugging info is copied to target only when <see cref="Generator.CopyPDB"/> is set. Do not set this to true when name of your plugin DLL and plugin wrapper are same but the extension. (Your debugging info will be overwritten with almost useless debugging info of wrapper.)
+''' <para>To genereta plugin wraper for your plugin from Visual Stuidio environment as part of build process, simply add plugin generator tool TCPluginBuilder.exe as post-build event. Example post-build event:</para>
+''' <example>This command line invokes TCPluginBuilder.exe and generates plugin(s) from output of project, places the w?x files into project output directory and uses project obj directory as its intermediate directory. Intermediate files are not deleted. Built-in template is used. w?x assembly is not signed.
+''' <code>TCPluginBuilder.exe "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint</code>
+''' </example>
+''' </remarks>
 Public Class Generator
     ''' <summary>Name of resource that contains embdeded template</summary>
     Public Const TemplateResourcename$ = "Tools.TotalCommanderT.PluginBuilder.Template.pseudozip"
+#Region "CTor"
     ''' <summary>CTor from assembly</summary>
     ''' <param name="Assembly">Assembly to generate plugin for</param>
     ''' <exception cref="ArgumentNullException"><paramref name="Assembly"/> is null</exception>
@@ -35,15 +74,17 @@ Public Class Generator
         Types = New Type() {Type}
         OutputDirectory = OutputDirectory
     End Sub
+#End Region
+#Region "Properties"
     ''' <summary>Contains value of the <see cref="Assembly"> property</see></summary>
     Private _Assembly As Assembly
     ''' <summary>Gets or sets assembly to generate plugin for</summary>
     ''' <exception cref="ArgumentNullException">Value beign set is null</exception>
     Public Property Assembly() As Assembly
-        Get
+        <DebuggerStepThrough()> Get
             Return _Assembly
         End Get
-        Set(ByVal value As Assembly)
+        <DebuggerStepThrough()> Set(ByVal value As Assembly)
             If value Is Nothing Then Throw New ArgumentNullException("value")
             _Assembly = value
         End Set
@@ -53,10 +94,10 @@ Public Class Generator
     ''' <summary>Gets or sets directory to use project template from</summary>
     ''' <remarks>When null, build-in template is used</remarks>
     Public Property ProjectTemplateDirectory() As String
-        Get
+        <DebuggerStepThrough()> Get
             Return _ProjectTemplateDirectory
         End Get
-        Set(ByVal value As String)
+        <DebuggerStepThrough()> Set(ByVal value As String)
             _ProjectTemplateDirectory = value
         End Set
     End Property
@@ -65,10 +106,10 @@ Public Class Generator
     ''' <summary>Gets or sets output directory to wtire plugin into</summary>
     ''' <exception cref="ArgumentNullException">Value being set is null</exception>
     Public Property OutputDirectory() As String
-        Get
+        <DebuggerStepThrough()> Get
             Return _OutputDirectory
         End Get
-        Set(ByVal value As String)
+        <DebuggerStepThrough()> Set(ByVal value As String)
             If value Is Nothing Then Throw New ArgumentNullException("value")
             _OutputDirectory = value
         End Set
@@ -80,10 +121,10 @@ Public Class Generator
     ''' <value>Intermediate directory to store temporary files in. Null to chose directory automatically</value>
     ''' <remarks>{0} is replaced by plugin name. When such directory does not exist, it is created. Setting this property to null, sets <see cref="CleanIntermediateDirectory"/> to true.</remarks>
     Public Property IntermediateDirectory() As String
-        Get
+        <DebuggerStepThrough()> Get
             Return _IntermediateDirectory
         End Get
-        Set(ByVal value As String)
+        <DebuggerStepThrough()> Set(ByVal value As String)
             _IntermediateDirectory = value
             If value Is Nothing Then CleanIntermediateDirectory = True
         End Set
@@ -95,10 +136,10 @@ Public Class Generator
     ''' <value>True to ensure that intermediate directory is deleted after compile, false to let files in intermediate directory. This property cannot be false when <see cref="IntermediateDirectory"/> is null.</value>
     ''' <exception cref="InvalidOperationException">Value is being set to false when <see cref="IntermediateDirectory"/> is null</exception>
     Public Property CleanIntermediateDirectory() As Boolean
-        Get
+        <DebuggerStepThrough()> Get
             Return _CleanIntermediateDirectory
         End Get
-        Set(ByVal value As Boolean)
+        <DebuggerStepThrough()> Set(ByVal value As Boolean)
             If Not value AndAlso IntermediateDirectory Is Nothing Then Throw New ArgumentNullException(String.Format(My.Resources.XcannotbeYwhenZisW, "CleanIntermediateDirectory", "false", "IntermediateDirectory", "null"))
             _CleanIntermediateDirectory = value
         End Set
@@ -111,10 +152,10 @@ Public Class Generator
     ''' <remarks>When null, this property is set during generation process to actual types plugins are generated for.
     ''' <para>Passing constructed generic type here is only way to generate plugin of generic type. Otherwise plugin generator skips generic types.</para></remarks>
     Public Property Types() As Type()
-        Get
+        <DebuggerStepThrough()> Get
             Return _Types
         End Get
-        Set(ByVal value As Type())
+        <DebuggerStepThrough()> Set(ByVal value As Type())
             _Types = value
         End Set
     End Property
@@ -124,10 +165,10 @@ Public Class Generator
     ''' <returns>OR-ed values of <see cref="PluginType"/> type indicating which plugin types are generated</returns>
     ''' <value>Set plugin types to generate plugins for. By default all the plugin types are generated.</value>
     Public Property Filer() As PluginType
-        Get
+        <DebuggerStepThrough()> Get
             Return _Filer
         End Get
-        Set(ByVal value As PluginType)
+        <DebuggerStepThrough()> Set(ByVal value As PluginType)
             _Filer = value
         End Set
     End Property
@@ -137,18 +178,71 @@ Public Class Generator
     ''' <remarks>Generated plugin files are named according to this dictionary. When dictionary entry for any type is missing, plugin is named according to full name of type.
     ''' <para><see cref="RenamingDictionary"/> takes precedence to <see cref="TotalCommanderPluginAttribute.Name"/>.</para></remarks>
     Public ReadOnly Property RenamingDictionary() As Dictionary(Of String, String)
-        Get
+        <DebuggerStepThrough()> Get
             Return _RenamingDictionary
         End Get
     End Property
-
+    ''' <summary>Contains value of the <see cref="LogToConsole"/> property</summary>
+    Private _LogToConsole As Boolean = False
+    ''' <summary>Gets or sets value indicationg if generator will log its progress to console</summary>
+    Friend Property LogToConsole() As Boolean
+        <DebuggerStepThrough()> Get
+            Return _LogToConsole
+        End Get
+        <DebuggerStepThrough()> Set(ByVal value As Boolean)
+            _LogToConsole = value
+        End Set
+    End Property
+    ''' <summary>COntains value of the <see cref="CopyPDB"/> property</summary>
+    Private _CopyPDB As Boolean
+    ''' <summary>Gets or sets value indicating if pdb file for plugin will be copied to outpud directory</summary>
+    Public Property CopyPDB() As Boolean
+        Get
+            Return _CopyPDB
+        End Get
+        Set(ByVal value As Boolean)
+            _CopyPDB = value
+        End Set
+    End Property
+    ''' <summary>Contains value of the <see cref="SnkPath"/> property</summary>
+    Private _SnkPath$
+    ''' <summary>Gets or sets path to snk (strong name key) file to sign wrapper assembly with</summary>
+    Public Property SnkPath$()
+        <DebuggerStepThrough()> Get
+            Return _SnkPath
+        End Get
+        <DebuggerStepThrough()> Set(ByVal value$)
+            _SnkPath = value
+        End Set
+    End Property
+#Region "Paths"
+    ''' <summary>Contains value of the <see cref="VCBuild"/></summary>
+    Private _vcbuild$ = My.Settings.vcbuild
+    ''' <summary>Gets to sets path to vcbuild.exe</summary>
+    ''' <remarks>Default value is stored in settings</remarks>
+    Public Property VCBuild$()
+        <DebuggerStepThrough()> Get
+            Return _vcbuild
+        End Get
+        <DebuggerStepThrough()> Set(ByVal value$)
+            _vcbuild = value
+        End Set
+    End Property
+#End Region
+#End Region
+#Region "Generation"
     ''' <summary>Generates plugins</summary>
     Public Sub Generate()
         If Types Is Nothing Then
             Dim iTypes As New List(Of Type)
-            For Each Type In Assembly.GetTypes                       'TODO: All plugin types
-                If Type.IsPublic OrElse Type.IsNestedPublic AndAlso GetType(FileSystemPlugin).IsAssignableFrom(Type) AndAlso Not Type.IsAbstract AndAlso Not Type.IsGenericTypeDefinition AndAlso Type.HasDefaultCTor Then
-                    iTypes.Add(Type)
+            'TODO: All plugin types
+            For Each Type In Assembly.GetTypes
+                If (Type.IsPublic OrElse Type.IsNestedPublic) AndAlso Not Type.IsAbstract AndAlso Not Type.IsGenericTypeDefinition AndAlso Type.HasDefaultCTor Then
+                    Dim Ignore = Type.GetAttribute(Of NotAPluginAttribute)()
+                    If Ignore IsNot Nothing Then Continue For
+                    If GetType(FileSystemPlugin).IsAssignableFrom(Type) Then
+                        iTypes.Add(Type)
+                    End If
                 End If
             Next
             Types = iTypes.ToArray
@@ -158,26 +252,6 @@ Public Class Generator
             Generate(Type)
         Next
     End Sub
-    ''' <summary>Contains value of the <see cref="LogToConsole"/> property</summary>
-    Private _LogToConsole As Boolean = False
-    ''' <summary>Gets or sets value indicationg if generator will log its progress to console</summary>
-    Friend Property LogToConsole() As Boolean
-        Get
-            Return _LogToConsole
-        End Get
-        Set(ByVal value As Boolean)
-            _LogToConsole = value
-        End Set
-    End Property
-
-    ''' <summary>Log a log information</summary>
-    ''' <param name="Text">Formating string</param>
-    ''' <param name="Obj">Format patameters</param>
-    ''' <seelaso cref="System.String.Format"/>
-    Private Sub Log(ByVal Text$, ByVal ParamArray Obj As Object())
-        If LogToConsole Then Console.WriteLine(Text, Obj)
-    End Sub
-
     ''' <summary>Generates plugin from type</summary>
     ''' <param name="Type">Type to generate plugin for</param>
     ''' <returns>Path to generated plugin file</returns>
@@ -187,7 +261,7 @@ Public Class Generator
     ''' <exception cref="AmbiguousMatchException">Plugin base type declares method with <see cref="PluginMethodAttribute"/> pointing to method that is overloaded on that type.</exception>
     Private Function Generate(ByVal Type As Type) As String
         Dim Thrown As Exception = Nothing
-        Log("Creating plugin for type {0}.", Type.Name)
+        Log(My.Resources.i_CreatingPluginForType, Type.Name)
         If Type Is Nothing Then Throw New ArgumentNullException("Type")
         If Type.IsGenericTypeDefinition Then Throw New ArgumentException(My.Resources.e_OpenGeneric.f(Type.FullName))
         If Type.IsAbstract Then Throw New ArgumentException(My.Resources.e_Abstract.f(Type.FullName))
@@ -195,7 +269,9 @@ Public Class Generator
         If Not Type.IsPublic AndAlso Not Type.IsNestedPublic Then Throw New ArgumentException(My.Resources.e_NotPublic.f(Type.FullName))
         Dim Attr = Type.GetAttribute(Of TotalCommanderPluginAttribute)()
         Dim name$
-        If Attr Is Nothing OrElse Attr.Name Is Nothing Then
+        If RenamingDictionary.ContainsKey(Type.FullName) Then
+            name = RenamingDictionary(Type.FullName)
+        ElseIf Attr Is Nothing OrElse Attr.Name Is Nothing Then
             name = GetSafeName(Type.FullName)
         Else
             name = Attr.Name
@@ -210,25 +286,25 @@ Public Class Generator
                 i += 1
             Loop While IO.Directory.Exists(TempPath) OrElse IO.File.Exists(TempPath)
             IntermediateDirectory = TempPath
-            Log("Creating temporary intermediate directory {0}", IntermediateDirectory)
+            Log(My.Resources.i_TempIntermediateDir, IntermediateDirectory)
         Else
             IntermediateDirectory = String.Format(Me.IntermediateDirectory, GetSafeName(Type.FullName))
             If IO.File.Exists(IntermediateDirectory) Then IO.File.Delete(IntermediateDirectory)
             If IO.Directory.Exists(IntermediateDirectory) Then
-                Log("Using predefined intermediate directory {0}.", IntermediateDirectory)
+                Log(My.Resources.i_PredefinedIntermediateDir, IntermediateDirectory)
                 Try
                     For Each file In IO.Directory.GetFiles(IntermediateDirectory)
                         IO.File.Delete(file)
                     Next
                     For Each SubDir In IO.Directory.GetDirectories(IntermediateDirectory)
-                        IO.Directory.Delete(SubDir, True)
+                        DeleteDir(SubDir)
                     Next
                 Catch ex As Exception
-                    Log("Error while clening intermediate directory.")
+                    Log(My.Resources.e_CleanIntermediate)
                     Throw
                 End Try
             Else
-                Log("Creating user-defined intermediate directory {0}", IntermediateDirectory)
+                Log(My.Resources.i_CeateUserDefinedIntermediateDir, IntermediateDirectory)
             End If
         End If
         If Not IO.Directory.Exists(IntermediateDirectory) Then IO.Directory.CreateDirectory(IntermediateDirectory)
@@ -238,13 +314,13 @@ Public Class Generator
             Dim ProjectFile = IO.Path.Combine(ProjectDirectory, "Tools.TotalCommander.Plugin.vcproj")
             Dim binDirectory = IO.Path.Combine(ProjectDirectory, "bin")
             Dim objDirectory = IO.Path.Combine(ProjectDirectory, "obj")
-            Log("Create project directory {0}", ProjectDirectory)
+            Log(My.Resources.I_CreateProjectDir, ProjectDirectory)
             IO.Directory.CreateDirectory(ProjectDirectory)
             If Me.ProjectTemplateDirectory IsNot Nothing Then 'Copy
-                Log("Copy template from {0}", Me.ProjectTemplateDirectory)
+                Log(My.Resources.i_CopyTemplate, Me.ProjectTemplateDirectory)
                 My.Computer.FileSystem.CopyDirectory(Me.ProjectTemplateDirectory, ProjectDirectory)
             Else 'Extract
-                Log("Extract built-in template", Me.ProjectTemplateDirectory)
+                Log(My.Resources.i_ExtractTemplate, Me.ProjectTemplateDirectory)
                 Using zip = ZipPackage.Open(GetType(Generator).Assembly.GetManifestResourceStream(TemplateResourcename), IO.FileMode.Open, IO.FileAccess.Read)
                     For Each part In zip.GetParts
                         Dim PartPath = IO.Path.Combine(ProjectDirectory, part.Uri.OriginalString.Substring(1))
@@ -262,36 +338,36 @@ Public Class Generator
                 End Using
             End If
             MakeWriteable(IntermediateDirectory)
-            Log("Copy assembly file {0}", Assembly.Location)
+            Log(My.Resources.i_CopyAssembly, Assembly.Location)
             IO.File.Copy(Assembly.Location, IO.Path.Combine(ProjectDirectory, IO.Path.GetFileName(Assembly.Location)), True)
             'Prepare projet
             Dim ext$
             If GetType(FileSystemPlugin).IsAssignableFrom(Type) Then
                 ext = "wfx"
-                Log("Plugin type: File System Plugin (wfx)")
+                Log(My.Resources.i_PluginType_wfx)
                 PreparePlugin(Type, ProjectDirectory, GetType(FileSystemPlugin), "TC_WFX")
             Else 'TODO: Support all plugin types
                 Throw New ArgumentException(My.Resources.e_NotAPluginType.f(Type.FullName))
             End If
             Dim OutFile = IO.Path.Combine(binDirectory, name & "." & ext)
-            Log("Generating assembly info")
+            Log(My.Resources.i_GeneratingAssemblyInfo)
             MakeAssemblyInfo(Type, ProjectDirectory)
             'Excute compiler
             Dim ec%
             Dim dic As New Dictionary(Of String, String)
             dic.Add("PluginOutputExtension", ext)
             dic.Add("PluginOutputName", name)
-            Log("Invoking compiler {0}", IO.Path.GetFileName(VCBuild))
+            Log(My.Resources.i_InvokingCompiler, IO.Path.GetFileName(VCBuild))
             ec = Exec(VCBuild, String.Format("/r ""{0}""", ProjectFile), dic)
             If ec <> 0 Then Throw New ExitCodeException(ec, IO.Path.GetFileName(VCBuild))
             'Copy result
             Dim TargetFile = IO.Path.Combine(Me.OutputDirectory, name & "." & ext)
-            Log("Copying output from {0} to {1}", OutFile, TargetFile)
+            Log(My.Resources.i_CopyOutput, OutFile, TargetFile)
             IO.File.Copy(OutFile, TargetFile, True)
             Dim PdbFile = IO.Path.Combine(binDirectory, name & ".pdb")
             If CopyPDB AndAlso IO.File.Exists(PdbFile) Then
                 Dim PdbTarget As String = IO.Path.Combine(Me.OutputDirectory, name & ".pdb")
-                Log("Copying pdb file from {0} to {1}", PdbFile, PdbTarget)
+                Log(My.Resources.i_CopyPDB, PdbFile, PdbTarget)
                 IO.File.Copy(PdbFile, PdbTarget, True)
             End If
             Return name & "." & ext
@@ -300,44 +376,126 @@ Public Class Generator
             Throw
         Finally
             If CleanIntermediateDirectory Then
-                Log("Removing intermediate directory {0}", IntermediateDirectory)
+                Log(My.Resources.i_RemoveIntermediate, IntermediateDirectory)
                 Try
                     IO.Directory.Delete(IntermediateDirectory, True)
                 Catch ex As Exception
-                    Log("Error while removing intermediate directory {0}", ex.Message)
+                    Log(My.Resources.e_RemoveIntermediate, ex.Message)
                     If Thrown Is Nothing Then Throw
                 End Try
             End If
         End Try
     End Function
-    ''' <summary>COntains value of the <see cref="CopyPDB"/> property</summary>
-    Private _CopyPDB As Boolean
-    ''' <summary>Gets or sets value indicating if pdb file for plugin will be copied to outpud directory</summary>
-    Public Property CopyPDB() As Boolean
-        Get
-            Return _CopyPDB
-        End Get
-        Set(ByVal value As Boolean)
-            _CopyPDB = value
-        End Set
-    End Property
-#Region "Paths"
-    ''' <summary>Contains value of the <see cref="VCBuild"/></summary>
-    Private _vcbuild$ = My.Settings.vcbuild
-    ''' <summary>Gets to sets path to vcbuild.exe</summary>
-    ''' <remarks>Default value is stored in settings</remarks>
-    Public Property VCBuild$()
-        Get
-            Return _vcbuild
-        End Get
-        Set(ByVal value$)
-            _vcbuild = value
-        End Set
-    End Property
+    ''' <summary>Prepares files for wfx plugin</summary>
+    ''' <param name="Type">Type to prepare project for</param>
+    ''' <param name="ProjectDirectory">Directory peoject is stored in</param>
+    ''' <param name="PluginType">Plugin base class</param>
+    ''' <param name="DefinedBy">C++ #define to define call of CTOr of plugin</param>
+    ''' <exception cref="MissingMethodException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is not member of <paramref name="PluginType"/>.</exception>
+    ''' <exception cref="AmbiguousMatchException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is overloaded on <paramref name="PluginType"/>.</exception>
+    Private Sub PreparePlugin(ByVal Type As Type, ByVal ProjectDirectory$, ByVal PluginType As Type, ByVal DefinedBy As String)
+        Using defineh = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
+                w As New IO.StreamWriter(defineh, System.Text.Encoding.Default), _
+                exports = IO.File.Open(IO.Path.Combine(ProjectDirectory, "Exports.def"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
+                ew As New IO.StreamWriter(exports, System.Text.Encoding.Default)
+            w.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
+            ew.WriteLine("EXPORTS")
+            For Each method In PluginType.GetMethods(BindingFlags.Instance Or BindingFlags.Public)
+                Dim attr = method.GetAttribute(Of PluginMethodAttribute)(False)
+                If attr Is Nothing Then Continue For
+                Dim Define As Boolean
+                If attr.ImplementedBy Is Nothing Then
+                    Define = True
+                Else
+                    Dim ImplementingMethod = PluginType.GetMethod(attr.ImplementedBy)
+                    If ImplementingMethod Is Nothing Then Throw New MissingMethodException(My.Resources.e_MissingPluginMethod.f(PluginType.FullName, attr.ImplementedBy, attr.GetType.FullName, method.Name))
+                    Dim DerivedMethod = ImplementingMethod.GetOverridingMethod(Type)
+                    Dim NotSupported = DerivedMethod.GetAttribute(Of MethodNotSupportedAttribute)()
+                    Define = NotSupported Is Nothing
+                End If
+                If Define Then
+                    w.WriteLine("#define " & attr.DefinedBy)
+                    ew.WriteLine(vbTab & method.Name)
+                End If
+            Next
+            w.WriteLine("#using ""{0}""", Assembly.Location)
+            w.Write("#using ""{0}""", Assembly.Load("Tools.TotalCommander, PublicKeyToken=373c02ac923768e6").Location)
+        End Using
+    End Sub
+    ''' <summary>Writes the AssemblyInfo2.cpp file</summary>
+    ''' <param name="Type">Plugin type</param>
+    ''' <param name="ProjectDirectory">Project directory</param>
+    Private Sub MakeAssemblyInfo(ByVal Type As Type, ByVal ProjectDirectory$)
+        Using file = IO.File.Open(IO.Path.Combine(ProjectDirectory, "AssemblyInfo2.cpp"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
+                w As New IO.StreamWriter(file, System.Text.Encoding.Default)
+            w.WriteLine("using namespace System;")
+            w.WriteLine("using namespace System::Reflection;")
+            w.WriteLine("using namespace System::Runtime::CompilerServices;")
+            w.WriteLine("using namespace System::Runtime::InteropServices;")
+            w.WriteLine("using namespace System::Security::Permissions;")
+
+            Dim tAsm = Type.Assembly
+            Dim Version = tAsm.GetAttribute(Of AssemblyVersionAttribute)()
+            If Version IsNot Nothing Then
+                w.WriteLine("[assembly:AssemblyVersionAttribute(""{0}"")];", Version.Version.Replace("\", "\\").Replace("""", "\"""))
+            Else
+                w.WriteLine("[assembly:AssemblyVersionAttribute(""{0}"")];", tAsm.GetName.Version.ToString)
+            End If
+            'Dim Culture = tAsm.GetAttribute(Of AssemblyCultureAttribute)()
+            'If Culture IsNot Nothing Then w.WriteLine("[assembly:AssemblyCultureAttribute(""{0}"")];", Culture.Culture.Replace("\", "\\").Replace("""", "\"""))
+            Dim Trademark = tAsm.GetAttribute(Of AssemblyTrademarkAttribute)()
+            If Trademark IsNot Nothing Then w.WriteLine("[assembly:AssemblyTrademarkAttribute(""{0}"")];", Trademark.Trademark.Replace("\", "\\").Replace("""", "\"""))
+            Dim Copyright = tAsm.GetAttribute(Of AssemblyCopyrightAttribute)()
+            If Copyright IsNot Nothing Then w.WriteLine("[assembly:AssemblyCopyrightAttribute(""{0}"")];", Copyright.Copyright.Replace("\", "\\").Replace("""", "\"""))
+            Dim Product = tAsm.GetAttribute(Of AssemblyProductAttribute)()
+            If Product IsNot Nothing Then w.WriteLine("[assembly:AssemblyProductAttribute(""{0}"")];", Product.Product.Replace("\", "\\").Replace("""", "\"""))
+            Dim Company = tAsm.GetAttribute(Of AssemblyCompanyAttribute)()
+            If Company IsNot Nothing Then w.WriteLine("[assembly:AssemblyCompanyAttribute(""{0}"")];", Company.Company.Replace("\", "\\").Replace("""", "\"""))
+            Dim Configuration = tAsm.GetAttribute(Of AssemblyConfigurationAttribute)()
+            If Configuration IsNot Nothing Then w.WriteLine("[assembly:AssemblyConfigurationAttribute(""{0}"")];", Configuration.Configuration.Replace("\", "\\").Replace("""", "\"""))
+            Dim NeutralResourcesLanguage = tAsm.GetAttribute(Of Resources.NeutralResourcesLanguageAttribute)()
+            If NeutralResourcesLanguage IsNot Nothing Then w.WriteLine("[assembly:Resources::NeutralResourcesLanguageAttribute(""{0}"",Resources::UltimateResourceFallbackLocation::{1:F})];", NeutralResourcesLanguage.CultureName, NeutralResourcesLanguage.Location)
+            Dim FileVersion = tAsm.GetAttribute(Of AssemblyFileVersionAttribute)()
+            If FileVersion IsNot Nothing Then w.WriteLine("[assembly:AssemblyFileVersionAttribute(""{0}"")];", FileVersion.Version.Replace("\", "\\").Replace("""", "\"""))
+            Dim InformationVersion = tAsm.GetAttribute(Of AssemblyInformationalVersionAttribute)()
+            If InformationVersion IsNot Nothing Then w.WriteLine("[assembly:AssemblyInformationalVersionAttribute(""{0}"")];", InformationVersion.InformationalVersion.Replace("\", "\\").Replace("""", "\"""))
+
+            Dim PluginInfo = Type.GetAttribute(Of TotalCommanderPluginAttribute)()
+            Dim Guid$ = Nothing, Title$ = Nothing, Description$ = Nothing
+            If PluginInfo IsNot Nothing Then
+                If PluginInfo.AssemblyGuid IsNot Nothing Then Guid = PluginInfo.AssemblyGuid
+                If PluginInfo.AssemblyTitle IsNot Nothing Then Title = PluginInfo.AssemblyTitle
+                If PluginInfo.AssemblyDescription IsNot Nothing Then Description = PluginInfo.AssemblyDescription
+            End If
+            If Title Is Nothing Then
+                Dim TitleA = tAsm.GetAttribute(Of AssemblyTitleAttribute)()
+                If TitleA IsNot Nothing Then Title = TitleA.Title
+            End If
+            If Description Is Nothing Then
+                Dim DescriptionA = tAsm.GetAttribute(Of AssemblyDescriptionAttribute)()
+                If DescriptionA IsNot Nothing Then Description = DescriptionA.Description
+            End If
+            If Guid IsNot Nothing Then w.WriteLine("[assembly:Runtime::InteropServices::GuidAttribute(""{0}"")];", Guid.Replace("\", "\\").Replace("""", "\"""))
+            If Title IsNot Nothing Then w.WriteLine("[assembly:AssemblyTitleAttribute(""{0}"")];", Title.Replace("\", "\\").Replace("""", "\"""))
+            If Description IsNot Nothing Then w.WriteLine("[assembly:AssemblyDescriptionAttribute(""{0}"")];", Description.Replace("\", "\\").Replace("""", "\"""))
+
+            If SnkPath IsNot Nothing Then w.WriteLine("[assembly:AssemblyKeyFileAttribute (""{0}"")];", SnkPath.Replace("\", "\\").Replace("""", "\"""))
+        End Using
+    End Sub
 #End Region
+#Region "Utility"
+    ''' <summary>Log a log information</summary>
+    ''' <param name="Text">Formating string</param>
+    ''' <param name="Obj">Format patameters</param>
+    ''' <seelaso cref="System.String.Format"/>
+    <DebuggerStepThrough()> _
+    Private Sub Log(ByVal Text$, ByVal ParamArray Obj As Object())
+        If LogToConsole Then Console.WriteLine(Text, Obj)
+    End Sub
+
     ''' <summary>Executes a process and waits for it to terminate</summary>
     ''' <param name="Program">Program to execute</param>
-    ''' <param name="ComandLine">Program arguments</param>
+    ''' <param name="CommandLine">Program arguments</param>
     ''' <returns>Program exit code</returns>
     Private Function Exec%(ByVal Program$, ByVal CommandLine$, Optional ByVal Env As Dictionary(Of String, String) = Nothing) ', ByVal setenv As Boolean, ByVal objDir$) As Integer
         Dim p As New Process
@@ -349,10 +507,10 @@ Public Class Generator
                 p.StartInfo.EnvironmentVariables.Add(ev.Key, ev.Value)
             Next
         End If
-        Log("Executing {0} {1}", Program, CommandLine)
+        Log(My.Resources.i_Executing, Program, CommandLine)
         p.Start()
         p.WaitForExit()
-        Log("{0}> Exict code {1}.", vbTab, p.ExitCode)
+        Log(My.Resources.i_ExitCode, vbTab, p.ExitCode)
         Return p.ExitCode
         'End If
     End Function
@@ -375,38 +533,6 @@ Public Class Generator
         Next
         Return Name
     End Function
-    ''' <summary>Prepares files for wfx plugin</summary>
-    ''' <param name="Type">Type to prepare project for</param>
-    ''' <param name="ProjectDirectory">Directory peoject is stored in</param>
-    ''' <param name="PluginType">Plugin base class</param>
-    ''' <param name="DefinedBy">C++ #define to define call of CTOr of plugin</param>
-    ''' <exception cref="MissingMethodException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is not member of <paramref name="PluginType"/>.</exception>
-    ''' <exception cref="AmbiguousMatchException"><paramref name="PluginType"/> has method decorated with <see cref="PluginMethodAttribute"/> with <see cref="PluginMethodAttribute.ImplementedBy"/> pointing to method that is overloaded on <paramref name="PluginType"/>.</exception>
-    Private Sub PreparePlugin(ByVal Type As Type, ByVal ProjectDirectory$, ByVal PluginType As Type, ByVal DefinedBy As String)
-        Using defineh = IO.File.Open(IO.Path.Combine(ProjectDirectory, "define.h"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
-                w As New IO.StreamWriter(defineh, System.Text.Encoding.Default)
-            w.WriteLine("#define {0} {1}", DefinedBy, GetTypeSignature(Type))
-            For Each method In PluginType.GetMethods(BindingFlags.Instance Or BindingFlags.Public)
-                Dim attr = method.GetAttribute(Of PluginMethodAttribute)(False)
-                If attr Is Nothing Then Continue For
-                Dim Define As Boolean
-                If attr.ImplementedBy Is Nothing Then
-                    Define = True
-                Else
-                    Dim ImplementingMethod = PluginType.GetMethod(attr.ImplementedBy)
-                    If ImplementingMethod Is Nothing Then Throw New MissingMethodException("Type {0} does not implement method {1} required by {2} applied onto method {3}.".f(PluginType.FullName, attr.ImplementedBy, attr.GetType.FullName, method.Name))
-                    Dim DerivedMethod = ImplementingMethod.GetOverridingMethod(Type)
-                    Dim NotSupported = DerivedMethod.GetAttribute(Of MethodNotSupportedAttribute)()
-                    Define = NotSupported Is Nothing
-                End If
-                If Define Then
-                    w.WriteLine("#define " & attr.DefinedBy)
-                End If
-            Next
-            w.WriteLine("#using ""{0}""", Assembly.Location)
-            w.Write("#using ""{0}""", Assembly.Load("Tools.TotalCommander, PublicKeyToken=373c02ac923768e6").Location)
-        End Using
-    End Sub
     ''' <summary>C++ code provider</summary>
     Private Provider As New Microsoft.VisualC.CppCodeProvider
     ''' <summary>Gets expression to ceate instance of type in C++</summary>
@@ -418,60 +544,23 @@ Public Class Generator
         w.Flush()
         Return b.ToString
     End Function
-    ''' <summary>Writes the AssemblyInfo2.cpp file</summary>
-    ''' <param name="Type">Plugin type</param>
-    ''' <param name="ProjectDirectory">Project directory</param>
-    Private Sub MakeAssemblyInfo(ByVal Type As Type, ByVal ProjectDirectory$)
-        Using file = IO.File.Open(IO.Path.Combine(ProjectDirectory, "AssemblyInfo2.cpp"), IO.FileMode.Create, IO.FileAccess.Write, IO.FileShare.Read), _
-                w As New IO.StreamWriter(file)
-            w.WriteLine("using namespace System;")
-            w.WriteLine("using namespace System::Reflection;")
-            w.WriteLine("using namespace System::Runtime::CompilerServices;")
-            w.WriteLine("using namespace System::Runtime::InteropServices;")
-            w.WriteLine("using namespace System::Security::Permissions;")
-
-            Dim tAsm = Type.Assembly
-            Dim Version = tAsm.GetAttribute(Of AssemblyVersionAttribute)()
-            If Version IsNot Nothing Then w.WriteLine("[assembly:AssemblyVersionAttribute(""{0}"")]", Version.Version.Replace("\", "\\").Replace("""", "\"""))
-            Dim Culture = tAsm.GetAttribute(Of AssemblyCultureAttribute)()
-            If Culture IsNot Nothing Then w.WriteLine("[assembly:AssemblyCultureAttribute(""{0}"")];", Culture.Culture.Replace("\", "\\").Replace("""", "\"""))
-            Dim Trademark = tAsm.GetAttribute(Of AssemblyTrademarkAttribute)()
-            If Trademark IsNot Nothing Then w.WriteLine("[assembly:AssemblyTrademarkAttribute(""{0}"")];", Trademark.Trademark.Replace("\", "\\").Replace("""", "\"""))
-            Dim Copyright = tAsm.GetAttribute(Of AssemblyCopyrightAttribute)()
-            If Copyright IsNot Nothing Then w.WriteLine("[assembly:AssemblyCopyrightAttribute(""{0}"")];", Copyright.Copyright.Replace("\", "\\").Replace("""", "\"""))
-            Dim Product = tAsm.GetAttribute(Of AssemblyProductAttribute)()
-            If Product IsNot Nothing Then w.WriteLine("[assembly:AssemblyProductAttribute(""{0}"")];", Product.Product.Replace("\", "\\").Replace("""", "\"""))
-            Dim Company = tAsm.GetAttribute(Of AssemblyCompanyAttribute)()
-            If Company IsNot Nothing Then w.WriteLine("[assembly:AssemblyCompanyAttribute(""{0}"")];", Company.Company.Replace("\", "\\").Replace("""", "\"""))
-            Dim Configuration = tAsm.GetAttribute(Of AssemblyConfigurationAttribute)()
-            If Configuration IsNot Nothing Then w.WriteLine("[assembly:AssemblyConfigurationAttribute(""{0}"")];", Configuration.Configuration.Replace("\", "\\").Replace("""", "\"""))
-            Dim NeutralResourcesLanguage = tAsm.GetAttribute(Of Resources.NeutralResourcesLanguageAttribute)()
-            If NeutralResourcesLanguage IsNot Nothing Then w.WriteLine("[assembly:Resources::NeutralResourcesLanguageAttribute(""{0}"",Resources::UltimateResourceFallbackLocation::{1:F}];", NeutralResourcesLanguage.CultureName, NeutralResourcesLanguage.Location)
-            Dim FileVersion = tAsm.GetAttribute(Of AssemblyFileVersionAttribute)()
-            If FileVersion IsNot Nothing Then w.WriteLine("[assembly:AssemblyFileVersionAttribute(""{0}"")];", FileVersion.Version.Replace("\", "\\").Replace("""", "\"""))
-            Dim InformationVersion = tAsm.GetAttribute(Of AssemblyInformationalVersionAttribute)()
-            If InformationVersion IsNot Nothing Then w.WriteLine("[assembly:AssemblyInformationalVersionAttribute(""{0}"")];", InformationVersion.InformationalVersion.Replace("\", "\\").Replace("""", "\"""))
-
-            Dim PluginInfo = Type.GetAttribute(Of TotalCommanderPluginAttribute)()
-            Dim Guid$ = Nothing, Title$ = Nothing, Description$ = Nothing
-            If PluginInfo IsNot Nothing Then
-                If PluginInfo.AssemblyGuid IsNot Nothing Then Guid = PluginInfo.AssemblyGuid
-                If PluginInfo.AssemblyTitle IsNot Nothing Then Title = PluginInfo.AssemblyTitle
-                If PluginInfo.AssemblyDescription IsNot Nothing Then Description = PluginInfo.AssemblyDescription
-            End If
-            If Title Is Nothing Then
-                Dim TitleA = tAsm.GetAttribute(Of AssemblyTitleAttribute)()
-                If TitleA IsNot Nothing Then Title = TitleA.Title
-            End If
-            If Description Is Nothing Then
-                Dim DescriptionA = tAsm.GetAttribute(Of AssemblyDescriptionAttribute)()
-                If DescriptionA IsNot Nothing Then Description = DescriptionA.Description
-            End If
-            If Guid IsNot Nothing Then w.WriteLine("[assembly:AssemblyGuidAttribute(""{0}"")];", Guid)
-            If Title IsNot Nothing Then w.WriteLine("[assembly:AssemblyTitleAttribute(""{0}"")];", Title)
-            If Description IsNot Nothing Then w.WriteLine("[assembly:AssemblyDescriptionAttribute(""{0}"")];", Description)
-        End Using
+    ''' <summary>Attempts to recursivelly delete directory</summary>
+    ''' <param name="Dir">Directory to be deleted</param>
+    ''' <remarks>Skips subdirectories than cannot be deleted, throws an exception when file cannot be deleted</remarks>
+    Private Sub DeleteDir(ByVal Dir$)
+        For Each file In IO.Directory.GetFiles(Dir)
+            IO.File.Delete(file)
+        Next
+        For Each SubDir In IO.Directory.GetDirectories(Dir)
+            DeleteDir(SubDir)
+        Next
+        Try
+            IO.Directory.Delete(Dir, True)
+        Catch ex As Exception
+            Log(My.Resources.w_DelDir, Dir, ex.Message)
+        End Try
     End Sub
+#End Region
 End Class
 
 ''' <summary>Exception thrown when process exited with unecpedted exit code</summary>
@@ -480,7 +569,7 @@ Public Class ExitCodeException : Inherits Exception
     ''' <param name="ExitCode">Process exit code</param>
     ''' <param name="process">Process name</param>
     Public Sub New(ByVal ExitCode As Integer, ByVal process As String)
-        MyBase.New("Process {0} exited with code {1}.".f(process, ExitCode))
+        MyBase.New(My.Resources.e_ExitCode.f(process, ExitCode))
         _Process = process
         _ExicTode = ExitCode
     End Sub

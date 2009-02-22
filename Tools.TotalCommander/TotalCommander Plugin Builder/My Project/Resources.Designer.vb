@@ -70,6 +70,15 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Error while clening intermediate directory..
+        '''</summary>
+        Friend ReadOnly Property e_CleanIntermediate() As String
+            Get
+                Return ResourceManager.GetString("e_CleanIntermediate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Duplicit name {0} scpecified for renaming..
         '''</summary>
         Friend ReadOnly Property e_DuplicitRenameName() As String
@@ -84,6 +93,15 @@ Namespace My.Resources
         Friend ReadOnly Property e_DuplicitRenameType() As String
             Get
                 Return ResourceManager.GetString("e_DuplicitRenameType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Process {0} exited with code {1}..
+        '''</summary>
+        Friend ReadOnly Property e_ExitCode() As String
+            Get
+                Return ResourceManager.GetString("e_ExitCode", resourceCulture)
             End Get
         End Property
         
@@ -111,6 +129,15 @@ Namespace My.Resources
         Friend ReadOnly Property e_LoadType() As String
             Get
                 Return ResourceManager.GetString("e_LoadType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Type {0} does not implement method {1} required by {2} applied onto method {3}..
+        '''</summary>
+        Friend ReadOnly Property e_MissingPluginMethod() As String
+            Get
+                Return ResourceManager.GetString("e_MissingPluginMethod", resourceCulture)
             End Get
         End Property
         
@@ -151,6 +178,159 @@ Namespace My.Resources
         End Property
         
         '''<summary>
+        '''  Looks up a localized string similar to Error while removing intermediate directory {0}.
+        '''</summary>
+        Friend ReadOnly Property e_RemoveIntermediate() As String
+            Get
+                Return ResourceManager.GetString("e_RemoveIntermediate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Creating user-defined intermediate directory {0}.
+        '''</summary>
+        Friend ReadOnly Property i_CeateUserDefinedIntermediateDir() As String
+            Get
+                Return ResourceManager.GetString("i_CeateUserDefinedIntermediateDir", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Copy assembly file {0}.
+        '''</summary>
+        Friend ReadOnly Property i_CopyAssembly() As String
+            Get
+                Return ResourceManager.GetString("i_CopyAssembly", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Copying output from {0} to {1}.
+        '''</summary>
+        Friend ReadOnly Property i_CopyOutput() As String
+            Get
+                Return ResourceManager.GetString("i_CopyOutput", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Copying pdb file from {0} to {1}.
+        '''</summary>
+        Friend ReadOnly Property i_CopyPDB() As String
+            Get
+                Return ResourceManager.GetString("i_CopyPDB", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Copy template from {0}.
+        '''</summary>
+        Friend ReadOnly Property i_CopyTemplate() As String
+            Get
+                Return ResourceManager.GetString("i_CopyTemplate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Create project directory {0}.
+        '''</summary>
+        Friend ReadOnly Property I_CreateProjectDir() As String
+            Get
+                Return ResourceManager.GetString("I_CreateProjectDir", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Creating plugin for type {0}..
+        '''</summary>
+        Friend ReadOnly Property i_CreatingPluginForType() As String
+            Get
+                Return ResourceManager.GetString("i_CreatingPluginForType", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Executing {0} {1}.
+        '''</summary>
+        Friend ReadOnly Property i_Executing() As String
+            Get
+                Return ResourceManager.GetString("i_Executing", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to {0}&gt; Exict code {1}..
+        '''</summary>
+        Friend ReadOnly Property i_ExitCode() As String
+            Get
+                Return ResourceManager.GetString("i_ExitCode", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Extract built-in template.
+        '''</summary>
+        Friend ReadOnly Property i_ExtractTemplate() As String
+            Get
+                Return ResourceManager.GetString("i_ExtractTemplate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Generating assembly info.
+        '''</summary>
+        Friend ReadOnly Property i_GeneratingAssemblyInfo() As String
+            Get
+                Return ResourceManager.GetString("i_GeneratingAssemblyInfo", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Invoking compiler {0}.
+        '''</summary>
+        Friend ReadOnly Property i_InvokingCompiler() As String
+            Get
+                Return ResourceManager.GetString("i_InvokingCompiler", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Plugin type: File System Plugin (wfx).
+        '''</summary>
+        Friend ReadOnly Property i_PluginType_wfx() As String
+            Get
+                Return ResourceManager.GetString("i_PluginType_wfx", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Using predefined intermediate directory {0}..
+        '''</summary>
+        Friend ReadOnly Property i_PredefinedIntermediateDir() As String
+            Get
+                Return ResourceManager.GetString("i_PredefinedIntermediateDir", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Removing intermediate directory {0}.
+        '''</summary>
+        Friend ReadOnly Property i_RemoveIntermediate() As String
+            Get
+                Return ResourceManager.GetString("i_RemoveIntermediate", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Creating temporary intermediate directory {0}.
+        '''</summary>
+        Friend ReadOnly Property i_TempIntermediateDir() As String
+            Get
+                Return ResourceManager.GetString("i_TempIntermediateDir", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
         '''  Looks up a localized string similar to Usage:
         '''{0} &lt;assembly&gt; &lt;parameters&gt;
         '''assembly    A DLL assembly containing plugin definition
@@ -166,6 +346,15 @@ Namespace My.Resources
         Friend ReadOnly Property Usage() As String
             Get
                 Return ResourceManager.GetString("Usage", resourceCulture)
+            End Get
+        End Property
+        
+        '''<summary>
+        '''  Looks up a localized string similar to Warning: Cannot delete directory {0}: {1}.
+        '''</summary>
+        Friend ReadOnly Property w_DelDir() As String
+            Get
+                Return ResourceManager.GetString("w_DelDir", resourceCulture)
             End Get
         End Property
         

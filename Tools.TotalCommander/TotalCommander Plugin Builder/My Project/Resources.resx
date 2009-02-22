@@ -154,4 +154,67 @@
   <data name="e_NotPublic" xml:space="preserve">
     <value>Cannot generate plugin for non-public type {0}.</value>
   </data>
+  <data name="i_CreatingPluginForType" xml:space="preserve">
+    <value>Creating plugin for type {0}.</value>
+  </data>
+  <data name="i_TempIntermediateDir" xml:space="preserve">
+    <value>Creating temporary intermediate directory {0}</value>
+  </data>
+  <data name="i_PredefinedIntermediateDir" xml:space="preserve">
+    <value>Using predefined intermediate directory {0}.</value>
+  </data>
+  <data name="e_CleanIntermediate" xml:space="preserve">
+    <value>Error while clening intermediate directory.</value>
+  </data>
+  <data name="i_CeateUserDefinedIntermediateDir" xml:space="preserve">
+    <value>Creating user-defined intermediate directory {0}</value>
+  </data>
+  <data name="I_CreateProjectDir" xml:space="preserve">
+    <value>Create project directory {0}</value>
+  </data>
+  <data name="i_CopyTemplate" xml:space="preserve">
+    <value>Copy template from {0}</value>
+  </data>
+  <data name="i_ExtractTemplate" xml:space="preserve">
+    <value>Extract built-in template</value>
+  </data>
+  <data name="i_CopyAssembly" xml:space="preserve">
+    <value>Copy assembly file {0}</value>
+  </data>
+  <data name="i_PluginType_wfx" xml:space="preserve">
+    <value>Plugin type: File System Plugin (wfx)</value>
+  </data>
+  <data name="i_GeneratingAssemblyInfo" xml:space="preserve">
+    <value>Generating assembly info</value>
+  </data>
+  <data name="i_InvokingCompiler" xml:space="preserve">
+    <value>Invoking compiler {0}</value>
+  </data>
+  <data name="i_CopyOutput" xml:space="preserve">
+    <value>Copying output from {0} to {1}</value>
+  </data>
+  <data name="i_CopyPDB" xml:space="preserve">
+    <value>Copying pdb file from {0} to {1}</value>
+  </data>
+  <data name="i_RemoveIntermediate" xml:space="preserve">
+    <value>Removing intermediate directory {0}</value>
+  </data>
+  <data name="e_RemoveIntermediate" xml:space="preserve">
+    <value>Error while removing intermediate directory {0}</value>
+  </data>
+  <data name="e_MissingPluginMethod" xml:space="preserve">
+    <value>Type {0} does not implement method {1} required by {2} applied onto method {3}.</value>
+  </data>
+  <data name="i_Executing" xml:space="preserve">
+    <value>Executing {0} {1}</value>
+  </data>
+  <data name="i_ExitCode" xml:space="preserve">
+    <value>{0}&gt; Exict code {1}.</value>
+  </data>
+  <data name="w_DelDir" xml:space="preserve">
+    <value>Warning: Cannot delete directory {0}: {1}</value>
+  </data>
+  <data name="e_ExitCode" xml:space="preserve">
+    <value>Process {0} exited with code {1}.</value>
+  </data>
 </root>

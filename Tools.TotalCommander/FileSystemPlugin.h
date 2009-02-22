@@ -16,6 +16,7 @@ namespace Tools{namespace TotalCommanderT{
     using namespace System;
     using namespace System::ComponentModel;
     /// <summary>Abstract base class for Total Commander file-system plugins (wfx)</summary>
+    /// <remarks>See <see2 cref2="T:Tools.TotalCommanderT.PluginBuilder.Generator"/> for more information about how to generate Total Commander plugin from .NET</remarks>
     public ref class FileSystemPlugin abstract : ContentPluginBase {
     protected:
         FileSystemPlugin();

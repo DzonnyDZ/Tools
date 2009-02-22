@@ -130,4 +130,7 @@
   <data name="UnknownCommand0" xml:space="preserve">
     <value>Unknown command {0}</value>
   </data>
+  <data name="Error0" xml:space="preserve">
+    <value>Error: {0}</value>
+  </data>
 </root>
