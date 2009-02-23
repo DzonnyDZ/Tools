@@ -4,6 +4,7 @@
 //__declspec(dllexport)
 #include "fsplugin.h"
 #include <vcclr.h>
+#include "AssemblyResolver.h"
 
 using namespace System;
 using namespace Tools::TotalCommanderT;
@@ -13,18 +14,37 @@ using namespace Tools::TotalCommanderT;
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved){return TRUE;}
 #pragma managed
 
-/// <summary>Gets plugin class instance</summary>
-/// <returns>Plugin class instance</returns>
-inline FileSystemPlugin^ GetWfx(){
-    return TC_WFX;
+/// <summary>FileSystem plugin helper class - holds file system plugin instance</summary>
+private ref struct FSHelper{
+    /// <summary>Gets plugin class instance</summary>
+    /// <returns>Plugin class instance</returns>
+    /// <remarks>Called only once</remarks>
+    inline static void EnsureWfx(){ wfx = TC_WFX; }
+    /// <summary>Instance of file system plugin class</summary>
+    static FileSystemPlugin^ wfx;
+};
+/// <summary>Helper class - holds value indicating if <see cref="FSHelper"/> was initialized</summary>
+private ref struct Helper{
+    /// <summary>Holds value indicating if <see cref="FSHelper"/> was initialized</summary>
+    static bool done = false;
+};
+/// <summary>Calls <see cref="FSHelper::EnsureWfx"/></summary>
+void SetupWfx(){ FSHelper::EnsureWfx(); }
+/// <summary>Gets <see cref="FSHelper::wfx"/> as <see cref="Object"/></summary>
+Object^ GetWfx(){ return FSHelper::wfx; }
+/// <summary>Ensures assembly loader and plugin instance</summary>
+/// <returns><se cref="GetWfx"/></returns>
+Object^ Ensure(){
+    if(!Helper::done){
+        AssemblyResolver::Setup();
+        SetupWfx();
+    }
+    return GetWfx();
 }
-
-/// <summary>Plugin instance</summary>
-gcroot<FileSystemPlugin^> wfx;
 
 
 //Ensure plugin class instance
-#define WFX (!wfx ? wfx = GetWfx() : wfx)
+#define WFX ((FileSystemPlugin^) Ensure())
  
 #ifdef TC_FS_INIT
     TCPLUGF int __stdcall FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){return WFX->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);}
@@ -72,7 +92,15 @@ gcroot<FileSystemPlugin^> wfx;
     TCPLUGF void __stdcall FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation){return WFX->FsStatusInfo(RemoteDir, InfoStartEnd, InfoOperation);}
 #endif
 #ifdef TC_FS_GETDEFROOTNAME
-    TCPLUGF void __stdcall FsGetDefRootName(char* DefRootName,int maxlen){return WFX->FsGetDefRootName(DefRootName, maxlen);}
+    TCPLUGF void __stdcall FsGetDefRootName(char* DefRootName,int maxlen){
+        /*return WFX->FsGetDefRootName(DefRootName, maxlen);*/
+        WFX;
+        DefRootName[0]='T';
+        DefRootName[1]='e';
+        DefRootName[2]='s';
+        DefRootName[3]='t';
+        DefRootName[4]=0;
+    }
 #endif
 #ifdef TC_FS_EXTRACTCUSTOMICON
     TCPLUGF int __stdcall FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon){return WFX->FsExtractCustomIcon(RemoteName, ExtractFlags, TheIcon);}
