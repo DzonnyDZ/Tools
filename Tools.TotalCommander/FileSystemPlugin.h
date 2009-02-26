@@ -210,27 +210,27 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>When overriden in derived class retrieves the first file in a directory of the plugin's file system.</summary>
         /// <param name="Path">Full path to the directory for which the directory listing has to be retrieved. Important: no wildcards are passed to the plugin! All separators will be backslashes, so you will need to convert them to forward slashes if your file system uses them!
-        /// <para>As root, a single backslash is passed to the plugin. The root items appear in the plugin base directory retrieved by <see cref="FsGetDefRootName"/> at installation time. This default root name is NOT part of the path passed to the plugin!</para>
+        /// <para>As root, a single backslash is passed to the plugin. The root items appear in the plugin base directory retrieved by <see cref="Name"/> at installation time. This default root name is NOT part of the path passed to the plugin!</para>
         /// <para>All subdirs are built from the directory names the plugin returns through <see cref="FindFirst"/> and <see cref="FindNext"/>, separated by single backslashes, e.g. \Some server\c:\subdir</para></param>
         /// <param name="FindData">A <see cref="FindData"/> struct (mimics WIN32_FIND_DATA as defined in the Windows SDK) to be pupulated with the file or directory details. Use the <see cref="FindData::Attributes"/> field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the <see cref="FindData::Attributes"/> field with 0x80000000 and set the <see cref="FindData::ReparsePointTag"/> parameter to the Unix file mode (permissions).</param>
         /// <returns>Any object. It is recommended to return object that represents current state of the search. This will allow recursive directory searches needed for copying whole trees. This object will be passed to <see cref="FindNext"/> by the calling program.
         /// Returned object is added to <see cref="HandleDictionary"/>
         /// <para>Null if there are no more files.</para></returns>
-        /// <exception cref="IO:DirectoryNotFoundException">Directory does not exists</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Directory does not exists</exception>
         /// <exception cref="UnauthorizedAccessException">The user does not have access to the directory</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">Another error occured</exception>
-        /// <remarks><see cref="FsFindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.
+        /// <exception cref="IO::IOException">Another error occured</exception>
+        /// <remarks><see cref="FindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         virtual Object^ FindFirst(String^ Path,FindData% FindData) abstract;
         /// <summary>When overriden in derived class retrieves the next file in a directory of the plugin's file system</summary>
         /// <param name="Status">The object returned by <see cref="FindFirst"/>; null when Total Commander supplied handle that is  not in <see cref="HandleDictionary"/></param>
         /// <param name="FindData">A <see cref="FindData"/> struct (mimics WIN32_FIND_DATA as defined in the Windows SDK) to be pupulated with the file or directory details. Use the <see cref="FindData::Attributes"/> field set to <see2 cref2="F:Tools.TotalCommanderT.FileAttributes.Directory"/> to distinguish files from directories. On Unix systems, you can | (or) the <see cref="FindData::Attributes"/> field with 0x80000000 and set the <see cref="FindData::ReparsePointTag"/> parameter to the Unix file mode (permissions).</param>
         /// <returns>Return false if there are no more files, and true otherwise. <see cref="SetLastError"/>() does not need to be called.</returns>
-        /// <exception cref="IO:DirectoryNotFoundException">Directory does not exists</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Directory does not exists</exception>
         /// <exception cref="UnauthorizedAccessException">The user does not have access to the directory</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">Another error occured</exception>
+        /// <exception cref="IO::IOException">Another error occured</exception>
         /// <remarks><note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
         virtual bool FindNext(Object^ Status, FindData% FindData) abstract;
         /// <summary>When overriden in derived class performs custom clenup at end of a <see cref="FindFirst"/>/<see cref="FindNext"/> loop, either after retrieving all files, or when the user aborts it.</summary>
@@ -295,7 +295,7 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
-        /// <param name="RemoteName">Name of the file to be executed, with full path.</param>
+        /// <param name="RemoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO:PathTooLongException"/> will be thrown.</param>
         /// <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
@@ -309,7 +309,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <list type="bulet">
         /// <item>For internal commands like "Add new connection", execute it in the plugin and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/></item>
         /// <item>Let Total Commander download the file and execute it locally: return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/></item>
-        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is MAX_PATH-1 = 259 characters!</item>
+        /// <item>If the file is a (symbolic) link, set <paramref name="RemoteName"/> to the location to which the link points (including the full plugin path), and return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/>. Total Commander will then switch to that directory. You can also switch to a directory on the local harddisk! To do this, return a path starting either with a drive letter, or an UNC location (\\server\share). The maximum allowed length of such a path is <see cref="FindData::MaxPath"/>-1 (= 259) characters!</item>
         /// </list></description></item>
         /// <item><term>properties</term><description>Show a property sheet for the file (optional). Currently not handled by internal Totalcmd functions if <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> is returned, so the plugin needs to do it internally.</description></item>
         /// <item><term>chmod xxx</term><description>The xxx stands for the new Unix mode (attributes) to be applied to the file <paramref name="RemoteName"/>. This verb is only used when returning Unix attributes through <see cref="FindFirst"/>/<see cref="FindNext"/></description></item>
@@ -383,7 +383,7 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>When overriden in derived class transfers a file from the plugin's file system to the normal file system (drive letters or UNC).</summary>
         /// <param name="RemoteName">Name of the file to be retrieved, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes.</param>
-        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
+        /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign strings longer than <see cref="FindData::MaxPath"/> or uncatchable <see cref="IO::PathTooLOngExceptioin"/> will be thrown.</param>
         /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values</param>
         /// <param name="info">This parameter contains information about the remote file which was previously retrieved via <see cref="FindFirst"/>/<see cref="FindNext"/>: The size, date/time, and attributes of the remote file. May be useful to copy the attributes with the file, and for displaying a progress dialog.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns> 
@@ -429,7 +429,7 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>When overriden in derived class transfers a file from the normal file system (drive letters or UNC) to the plugin's file system.</summary>
         /// <param name="LocalName">Local file name with full path, either with a drive letter or UNC path (\\Server\Share\filename). This file needs to be uploaded to the plugin's file system.</param>
-        /// <param name="RemoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path!</param>
+        /// <param name="RemoteName">Name of the remote file, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes. The plugin may change the NAME/EXTENSION of the file (e.g. when file conversion is done), but not the path! Do not assign string longer than <see cref="FindData::MaxPath"/> to this parameter or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="CopyFlags">Can be combination of the <see cref="CopyFlags"/> values.</param>
         /// <returns>One of the <see cref="FileSystemExitCode"/> values</returns>
         /// <remarks>Total Commander usually calls this function twice, with the following parameters in <paramref name="CopyFlags"/>:
@@ -679,7 +679,6 @@ namespace Tools{namespace TotalCommanderT{
         [PluginMethod("GetPreviewBitmap","TC_FS_GETPREVIEWBITMAP")]
         int FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap);
         /// <summary>When overriden in derved class called when a file/directory is displayed in thumbnail view. It can be used to return a custom bitmap for that file/directory.</summary>
-        /// <param name="RemoteName">This is the full path to the file or directory whose bitmap is to be retrieved.</param>
         /// <param name="width">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <param name="height">The maximum dimensions of the preview bitmap. If your image is smaller, or has a different side ratio, then you need to return an image which is smaller than these dimensions!</param>
         /// <returns>The <see cref="BitmapResult"/> indicating where to obtain the bitmap or the bitmap itself; null when default image shuld be used.</returns>
@@ -754,7 +753,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>When overriden in derved class gets local name of plugin file</summary>
         /// <param name="RemoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
         /// <param name="maxlen">Maximum number of characters you can return. Do not return longer strings because uncatchable <see cref="IO:PathTooLongException"/> will be throw by <see cref="FsGetLocalName"/>.</param>
-        /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file</returns>
+        /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file. Do not return paths longer than <see cref="FindData::MaxPath"/> - 1 otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</returns>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>

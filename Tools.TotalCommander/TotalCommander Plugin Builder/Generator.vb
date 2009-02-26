@@ -28,7 +28,6 @@ Imports System.IO.Packaging
 ''' <item><term><see cref="AssemblyTrademarkAttribute"/>, <see cref="AssemblyCopyrightAttribute"/>, <see cref="AssemblyProductAttribute"/>, <see cref="AssemblyCompanyAttribute"/>, <see cref="AssemblyConfigurationAttribute"/>, <see cref="Resources.NeutralResourcesLanguageAttribute"/>, <see cref="AssemblyFileVersionAttribute"/>, <see cref="AssemblyInformationalVersionAttribute"/></term><description>Derived from assembly attributes (when set; ignored when not set)</description></item>
 ''' <item><term><see cref="Runtime.InteropServices.GuidAttribute"/></term><description>Got from <see cref="TotalCommanderPluginAttribute.AssemblyGuid"/> of plugin type (when set; ignored when not set)</description></item>
 ''' <item><term><see cref="AssemblyTitleAttribute"/>, <see cref="AssemblyDescriptionAttribute"/></term><description>Got from <see cref="TotalCommanderPluginAttribute.AssemblyTitle"/> and <see cref="TotalCommanderPluginAttribute.AssemblyDescription"/> of plugin type when set; otherwise got from appropriate assembly attributes when set; otherwise ignored.</description></item>
-''' <item><term><see cref="AssemblyKeyFileAttribute"/></term>Can be only set by <see cref="Generator.SnkPath"/> property (or the /key command line switch).</item>
 ''' </list>
 ''' </item>
 ''' <item>When giving wrapper asembly a string name (using <see cref="Generator.SnkPath"/>) the assembly plugin is defined in must have string name as well.</item>
@@ -39,6 +38,13 @@ Imports System.IO.Packaging
 ''' <example>This command line invokes TCPluginBuilder.exe and generates plugin(s) from output of project, places the w?x files into project output directory and uses project obj directory as its intermediate directory. Intermediate files are not deleted. Built-in template is used. w?x assembly is not signed.
 ''' <code>TCPluginBuilder.exe "$(TargetPath)" /out "$(TargetDir)\" /int "$(ProjectDir)obj\$(ConfigurationName)" /keepint</code>
 ''' </example>
+''' <para><b>Deploying the plugin:</b></para>
+''' <para>When Total Commander refuses to load your plugin try following troubleshoting tips:</para>
+''' <list type="bullet">
+''' <item>Place plugin files inside the same directory as TOTALCMD.EXE or one of subdirectories.</item>
+''' <item>Windows Vista: If you are ceating subdirectory inside Total Commander directory you will copy plugin for testing during development and you are changing rights on the directory in order to get rid of UAC, do not make yourself owner of the directory.</item>
+''' <item>Restart Total Commander in order to test a new version of your plugin.</item>
+''' </list>
 ''' </remarks>
 Public Class Generator
     ''' <summary>Name of resource that contains embdeded template</summary>
@@ -207,6 +213,7 @@ Public Class Generator
     ''' <summary>Contains value of the <see cref="SnkPath"/> property</summary>
     Private _SnkPath$
     ''' <summary>Gets or sets path to snk (strong name key) file to sign wrapper assembly with</summary>
+    ''' <remarks>When this property is non-null plugin wrapper assembly is given <see cref="AssemblyKeyFileAttribute"/> and it is signed using the sn.exe utility.</remarks>
     Public Property SnkPath$()
         <DebuggerStepThrough()> Get
             Return _SnkPath
@@ -226,6 +233,18 @@ Public Class Generator
         End Get
         <DebuggerStepThrough()> Set(ByVal value$)
             _vcbuild = value
+        End Set
+    End Property
+    ''' <summary>Contains value of the <see cref="SN"/> property</summary>
+    Private _SN$ = My.Settings.sn
+    ''' <summary>Gets or sets path to the sn.exe utility used fro signing assemblies</summary>
+    ''' <remarks>Used only when <see cref="SnkPath"/> is non-null</remarks>
+    Public Property SN$()
+        <DebuggerStepThrough()> Get
+            Return _SN
+        End Get
+        <DebuggerStepThrough()> Set(ByVal value$)
+            _SN = value
         End Set
     End Property
 #End Region
@@ -297,7 +316,7 @@ Public Class Generator
                         IO.File.Delete(file)
                     Next
                     For Each SubDir In IO.Directory.GetDirectories(IntermediateDirectory)
-                        DeleteDir(SubDir)
+                        DeleteDir(SubDir, Me)
                     Next
                 Catch ex As Exception
                     Log(My.Resources.e_CleanIntermediate)
@@ -360,6 +379,11 @@ Public Class Generator
             Log(My.Resources.i_InvokingCompiler, IO.Path.GetFileName(VCBuild))
             ec = Exec(VCBuild, String.Format("/r ""{0}""", ProjectFile), dic)
             If ec <> 0 Then Throw New ExitCodeException(ec, IO.Path.GetFileName(VCBuild))
+            'Sign
+            If SnkPath IsNot Nothing Then
+                Log("Sign wrapper assembly")
+                Exec(SN, String.Format("-q -Ra ""{0}"" ""{1}""", OutFile, SnkPath))
+            End If
             'Copy result
             Dim TargetFile = IO.Path.Combine(Me.OutputDirectory, name & "." & ext)
             Log(My.Resources.i_CopyOutput, OutFile, TargetFile)
@@ -547,17 +571,20 @@ Public Class Generator
     ''' <summary>Attempts to recursivelly delete directory</summary>
     ''' <param name="Dir">Directory to be deleted</param>
     ''' <remarks>Skips subdirectories than cannot be deleted, throws an exception when file cannot be deleted</remarks>
-    Private Sub DeleteDir(ByVal Dir$)
+    ''' <param name="Instance">Instance of the <see cref="Generator"/> class. Used only for warning logging. Can be null.</param>
+    ''' <param name="ContentOnly">Does not delete the <paramref name="Dir"/> directory, only deletes all its content.</param>
+    Friend Shared Sub DeleteDir(ByVal Dir$, ByVal Instance As Generator, Optional ByVal ContentOnly As Boolean = False)
         For Each file In IO.Directory.GetFiles(Dir)
             IO.File.Delete(file)
         Next
         For Each SubDir In IO.Directory.GetDirectories(Dir)
-            DeleteDir(SubDir)
+            DeleteDir(SubDir, Instance)
         Next
+        If ContentOnly Then Exit Sub
         Try
             IO.Directory.Delete(Dir, True)
         Catch ex As Exception
-            Log(My.Resources.w_DelDir, Dir, ex.Message)
+            If Instance IsNot Nothing Then Instance.Log(My.Resources.w_DelDir, Dir, ex.Message)
         End Try
     End Sub
 #End Region

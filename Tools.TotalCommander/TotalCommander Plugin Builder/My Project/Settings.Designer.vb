@@ -54,16 +54,22 @@ Namespace My
             End Get
         End Property
         
-        <Global.System.Configuration.UserScopedSettingAttribute(),  _
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
          Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
          Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files\Microsoft Visual Studio 9.0\VC\vcpackages\vcbuild.exe")>  _
-        Public Property vcbuild() As String
+        Public ReadOnly Property vcbuild() As String
             Get
                 Return CType(Me("vcbuild"),String)
             End Get
-            Set
-                Me("vcbuild") = value
-            End Set
+        End Property
+        
+        <Global.System.Configuration.ApplicationScopedSettingAttribute(),  _
+         Global.System.Diagnostics.DebuggerNonUserCodeAttribute(),  _
+         Global.System.Configuration.DefaultSettingValueAttribute("C:\Program Files\Microsoft Visual Studio 8\SDK\v2.0\Bin\sn.exe")>  _
+        Public ReadOnly Property sn() As String
+            Get
+                Return CType(Me("sn"),String)
+            End Get
         End Property
     End Class
 End Namespace

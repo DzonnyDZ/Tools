@@ -14,6 +14,7 @@ namespace Tools{namespace TotalCommanderT{
         PluginBase();
     public:
         /// <summary>Gets name of plugin</summary>
+        /// <remarks>If this returns null or an empty string Total Commander uses file name. Do not include nullchars in name, Total Commander will utilize only pert of name before first nullchar.</remarks>
         virtual property String^ Name{String^ get() abstract;}
     };
 }}

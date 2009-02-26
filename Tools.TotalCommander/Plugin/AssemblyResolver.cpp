@@ -31,6 +31,7 @@ namespace Tools{namespace TotalCommanderT{
         if(!AssemblyName::ReferenceMatchesDefinition(name,afname)) return false;//This comparison is remomended by http://msdn.microsoft.com/en-us/library/system.reflection.assemblyname.referencematchesdefinition.aspx
 
         assembly = Assembly::LoadFile(path);
+        return true;
     }
 
     inline void AssemblyResolver::Setup(){

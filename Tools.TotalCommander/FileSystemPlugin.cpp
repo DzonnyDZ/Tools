@@ -11,13 +11,19 @@ using namespace Tools::ExtensionsT;
 
 namespace Tools{namespace TotalCommanderT{
     //Global functions
-    inline DateTime FileTimeToDateTime(::FILETIME value){
-        return DateTime::FromFileTime((__int64) value.dwHighDateTime << 32 | (__int64) value.dwLowDateTime);
+    inline Nullable<DateTime> FileTimeToDateTime(::FILETIME value){
+        if(value.dwHighDateTime == 0xFFFFFFFF && value.dwLowDateTime == 0xFFFFFFFE) return Nullable<DateTime>();
+        return DateTime(1601,1,1).AddTicks(*(__int64*)(void*)&value);
     }
-    ::FILETIME DateTimeToFileTime(DateTime value){
+    ::FILETIME DateTimeToFileTime(Nullable<DateTime> value){
         ::FILETIME ret;
-        ret.dwLowDateTime = Numbers::Low(value.ToFileTime());
-        ret.dwHighDateTime = Numbers::High(value.ToFileTime());
+        if(value.HasValue){
+            ret.dwLowDateTime = Numbers::Low(value.Value.ToFileTime());
+            ret.dwHighDateTime = Numbers::High(value.Value.ToFileTime());
+        }else{
+            ret.dwLowDateTime = 0xFFFFFFFE;
+            ret.dwHighDateTime = 0xFFFFFFFF;
+        }
         return ret;
     }
     //RemoteInfo
@@ -87,7 +93,7 @@ namespace Tools{namespace TotalCommanderT{
         return this->dProgressProc == nullptr;
     }
     HANDLE FileSystemPlugin::FsFindFirst(char* Path,WIN32_FIND_DATA *FindData){
-        Tools::TotalCommanderT::FindData% findData = *gcnew Tools::TotalCommanderT::FindData(*FindData);
+        Tools::TotalCommanderT::FindData% findData = Tools::TotalCommanderT::FindData();// *gcnew Tools::TotalCommanderT::FindData(*FindData);
         Object^ object;
         Exception^ exception = nullptr;
         try{
@@ -266,10 +272,10 @@ namespace Tools{namespace TotalCommanderT{
         try{
             ExecExitCode ret =  this->ExecuteFile((IntPtr)MainWin, remoteName, gcnew String(Verb));
             String^ old = gcnew String(RemoteName);
-            IntPtr ptr;
-            if(old != remoteName) strcpy_s(RemoteName, remoteName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(remoteName)));
-            RemoteName[remoteName->Length] = 0;
-            Marshal::FreeHGlobal(ptr);
+            if(old != remoteName) {
+                if(remoteName->Length > FindData::MaxPath-1) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("RemoteName","ExecuteFile"));
+                StringCopy(remoteName,RemoteName,FindData::MaxPath);
+            }
             return (int) ret;
         }catch(InvalidOperationException^ ex__){ ex=ex__;
         }catch(IO::IOException^ ex__){ex=ex__;}catch(Security::SecurityException^ ex__){ex=ex__;}catch(UnauthorizedAccessException^ ex__){ex=ex__;} if(ex!=nullptr){}
@@ -295,10 +301,10 @@ namespace Tools{namespace TotalCommanderT{
         try{
             FileSystemExitCode ret = this->GetFile(gcnew String(RemoteName), localName, (Tools::TotalCommanderT::CopyFlags)CopyFlags, RemoteInfo(*ri));
             String^ old = gcnew String(LocalName);
-            IntPtr ptr;
-            if(old != localName) strcpy_s(LocalName, localName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(localName)));
-            LocalName[localName->Length] = 0;
-            Marshal::FreeHGlobal(ptr);
+            if(old != localName){
+                if(localName->Length >= FindData::MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("LocalName","GetFile"));
+                StringCopy(localName,LocalName,FindData::MaxPath);
+            }
             return (int) ret;
         }catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
         catch(Security::SecurityException^){ return (int)FileSystemExitCode::ReadError; }
@@ -314,10 +320,10 @@ namespace Tools{namespace TotalCommanderT{
         try{
             FileSystemExitCode ret = this->PutFile(gcnew String(LocalName), remoteName, (Tools::TotalCommanderT::CopyFlags)CopyFlags);
             String^ old = gcnew String(RemoteName);
-            IntPtr ptr;
-            if(old != remoteName) strcpy_s(RemoteName, remoteName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(remoteName)));
-            RemoteName[remoteName->Length] = 0;
-            Marshal::FreeHGlobal(ptr);
+            if(old != remoteName){
+                if(remoteName->Length >= FindData::MaxPath) throw gcnew IO::PathTooLongException(Exceptions::ParamAssignedTooLongFormat("RemoteName","PutFile"));
+                StringCopy(remoteName,RemoteName, FindData::MaxPath);
+            }
             return (int) ret;
         }catch(UnauthorizedAccessException^){ return (int)FileSystemExitCode::ReadError; }
         catch(Security::SecurityException^){ return (int)FileSystemExitCode::ReadError; }
@@ -388,11 +394,7 @@ namespace Tools{namespace TotalCommanderT{
     void FileSystemPlugin::OnOperationFinished(OperationEventArgs^ e){/*Do nothing*/}
     //GetDefRootName
     void FileSystemPlugin::FsGetDefRootName(char* DefRootName,int maxlen){
-        String^ name = this->Name;
-        char* namech = (char*)(void*)Marshal::StringToHGlobalAnsi(name);
-        strcpy_s(DefRootName,Math::Min(name->Length,maxlen-1),namech);
-        DefRootName[Math::Min(name->Length,maxlen-1)] = 0;
-        Marshal::FreeHGlobal((IntPtr)(void*)namech);
+        StringCopy(this->Name,DefRootName,maxlen);
     }
 
     int FileSystemPlugin::FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon){
@@ -402,10 +404,7 @@ namespace Tools{namespace TotalCommanderT{
         String^ old = gcnew String(RemoteName);
         if(old != remoteName){
             if(remoteName->Length > FindData::MaxPath - 1) throw gcnew IO::PathTooLongException(ResourcesT::Exceptions::PathTooLong);
-            IntPtr ptr;
-            strcpy_s(RemoteName, remoteName->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(remoteName)));
-            RemoteName[remoteName->Length] = 0;
-            Marshal::FreeHGlobal(ptr);
+            StringCopy(remoteName,RemoteName,FindData::MaxPath);
         }
         if(icon != nullptr) TheIcon[0] = (HICON)(Int32)icon->Handle; else TheIcon[0] = NULL;
         return (int)ret;
@@ -420,10 +419,7 @@ namespace Tools{namespace TotalCommanderT{
     int FileSystemPlugin::FsGetPreviewBitmap(char* RemoteName,int width,int height, HBITMAP* ReturnedBitmap){
         BitmapResult^ bmp = this->GetPreviewBitmap(gcnew String(RemoteName), width, height);
         if(bmp->ImageKey != nullptr){
-            IntPtr ptr;
-            strcpy_s(RemoteName, bmp->ImageKey->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(bmp->ImageKey)));
-            RemoteName[bmp->ImageKey->Length] = 0;
-            Marshal::FreeHGlobal(ptr);
+            StringCopy(bmp->ImageKey,RemoteName,FindData::MaxPath);
         }
         if(bmp->Image != nullptr) 
             ReturnedBitmap[0] = (HBITMAP)(int)bmp->Image->GetHbitmap();
@@ -438,10 +434,8 @@ namespace Tools{namespace TotalCommanderT{
     BOOL FileSystemPlugin::FsGetLocalName(char* RemoteName,int maxlen){
         String^ ret = this->GetLocalName(gcnew String(RemoteName), maxlen - 1);
         if(ret != nullptr){
-            IntPtr ptr;
-            strcpy_s(RemoteName, ret->Length, (char*)(void*) (ptr = Marshal::StringToHGlobalAnsi(ret)));
-            RemoteName[ret->Length] = 0;
-            Marshal::FreeHGlobal(ptr);
+            if(ret->Length > FindData::MaxPath-1) throw gcnew IO::PathTooLongException(Exceptions::PathTooLong);
+            StringCopy(ret,RemoteName, FindData::MaxPath);
             return TRUE;
         }
         return FALSE;
@@ -465,10 +459,14 @@ namespace Tools{namespace TotalCommanderT{
         this->nFileSizeHigh = Original.nFileSizeHigh;
     }
     void FindData::Populate(WIN32_FIND_DATA &target){
-        for(int i = 0; i < this->cFileName->Length; i++) target.cFileName[i] = this->cFileName[i];
+        StringCopy(this->FileName,target.cFileName,FindData::MaxPath);
+        for(int i=(this->FileName==nullptr?0:this->FileName->Length); i<FindData::MaxPath; i++)target.cFileName[i]=0;
+        StringCopy(this->AlternateFileName,target.cAlternateFileName,14);
+        for(int i=(this->AlternateFileName==nullptr?0:this->AlternateFileName->Length); i<14; i++)target.cAlternateFileName[i]=0;
+       /* for(int i = 0; i < this->cFileName->Length; i++) target.cFileName[i] = this->cFileName[i];
         for(int i = this->cFileName->Length; i < MaxPath; i++) target.cFileName[i] = 0;
         for(int i = 0; i < this->cAlternateFileName->Length; i++) target.cAlternateFileName[i] = this->cAlternateFileName[i];
-        for(int i = this->cAlternateFileName->Length; i < 14; i++) target.cAlternateFileName[i] = 0;
+        for(int i = this->cAlternateFileName->Length; i < 14; i++) target.cAlternateFileName[i] = 0;*/
         target.dwFileAttributes = (DWORD) this->dwFileAttributes;
         target.dwReserved0 = (DWORD) this->dwReserved0;
         target.dwReserved1 = this->dwReserved1;
@@ -486,12 +484,12 @@ namespace Tools{namespace TotalCommanderT{
     }
     inline FileAttributes FindData::Attributes::get(){ return this->dwFileAttributes; }
     void FindData::Attributes::set(FileAttributes value){ this->dwFileAttributes = value; }
-    inline DateTime FindData::CreationTime::get(){ return this->ftCreationTime; }
-    inline void FindData::CreationTime::set(DateTime value){ this->ftCreationTime = value; }
-    inline DateTime FindData::AccessTime::get(){ return this->ftLastAccessTime; }
-    inline void FindData::AccessTime::set(DateTime value){ this->ftLastAccessTime = value; }
-    inline DateTime FindData::WriteTime::get(){ return this->ftLastWriteTime; }
-    inline void FindData::WriteTime::set(DateTime value){this->ftLastWriteTime = value; }
+    inline Nullable<DateTime> FindData::CreationTime::get(){ return this->ftCreationTime; }
+    inline void FindData::CreationTime::set(Nullable<DateTime> value){ this->ftCreationTime = value; }
+    inline Nullable<DateTime> FindData::AccessTime::get(){ return this->ftLastAccessTime; }
+    inline void FindData::AccessTime::set(Nullable<DateTime> value){ this->ftLastAccessTime = value; }
+    inline Nullable<DateTime> FindData::WriteTime::get(){ return this->ftLastWriteTime; }
+    inline void FindData::WriteTime::set(Nullable<DateTime> value){this->ftLastWriteTime = value; }
     inline QWORD FindData::FileSize::get(){ return (QWORD)this->nFileSizeHigh <<32 | (QWORD)this->nFileSizeLow; }
     void FindData::FileSize::set(QWORD value){
         this->nFileSizeHigh = Numbers::High(value);
@@ -504,12 +502,12 @@ namespace Tools{namespace TotalCommanderT{
     inline void FindData::Reserved1::set(DWORD value){ this->dwReserved1 = value;}
     inline String^ FindData::FileName::get(){ return this->cFileName;}
     void FindData::FileName::set(String^ value){
-        if(value->Length > MaxPath) throw gcnew ArgumentException(Exceptions::NameTooLongFormat(MaxPath));
+        if(value->Length > MaxPath-1) throw gcnew ArgumentException(Exceptions::NameTooLongFormat(MaxPath-1));
         this->cFileName = value;
     }
     inline String^ FindData::AlternateFileName::get(){ return this->cAlternateFileName; }
     void FindData::AlternateFileName::set(String^ value){
-        if(value->Length > 14) throw gcnew ArgumentException(Exceptions::NameTooLongFormat(14));
+        if(value->Length > 14-1) throw gcnew ArgumentException(Exceptions::NameTooLongFormat(14-1));
         this->cFileName = value;
     }
 
@@ -596,4 +594,23 @@ namespace Tools{namespace TotalCommanderT{
         return a;
     }
 #pragma endregion
+    void StringCopy(String^ source, char* target, int maxlen){
+        if(source == nullptr)
+            target[0]=0;
+        else{
+            for(int i = 0; i < source->Length && i < maxlen-1; i++)
+                target[i]=source[i];
+            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
+        }
+    }
+    void StringCopy(String^ source, wchar_t* target, int maxlen){
+        StringCopy(source,(char*)(void*)target,maxlen);
+        /*if(source == nullptr)
+            target[0]=0;
+        else{
+            for(int i = 0; i < source->Length && i < maxlen-1; i++)
+                target[i]=source[i];
+            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
+        }*/
+    }
 }}

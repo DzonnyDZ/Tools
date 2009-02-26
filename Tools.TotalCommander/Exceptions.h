@@ -86,6 +86,13 @@ namespace Tools {
         }
         
         /// <summary>
+        /// Looks up a localized string similar to 'The {0} parameter of the {1} method was assigned to long string.'.
+        /// </summary>
+        internal: static property System::String^  ParamAssignedTooLong {
+            System::String^  get();
+        }
+        
+        /// <summary>
         /// Looks up a localized string similar to 'String returned by plugin is longer than maximal path length alowed.'.
         /// </summary>
         internal: static property System::String^  PathTooLong {
@@ -130,6 +137,14 @@ namespace Tools {
         /// <param name="arg0">An object (0) to format.</param>
         /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
         internal: static System::String^  NameTooLongFormat(System::Object^  arg0);
+        
+        /// <summary>
+        /// Formats a localized string similar to 'The {0} parameter of the {1} method was assigned to long string.'.
+        /// </summary>
+        /// <param name="arg0">An object (0) to format.</param>
+        /// <param name="arg1">An object (1) to format.</param>
+        /// <returns>A copy of format string in which the format items have been replaced by the String equivalent of the corresponding instances of Object in arguments.</returns>
+        internal: static System::String^  ParamAssignedTooLongFormat(System::Object^  arg0, System::Object^  arg1);
         
         /// <summary>
         /// The stub formatting method returning the PathTooLong property value.

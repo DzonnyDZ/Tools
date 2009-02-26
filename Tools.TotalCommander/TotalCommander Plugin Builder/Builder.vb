@@ -93,10 +93,25 @@ Module Builder
         Try
             Generator.Generate()
         Catch ex As Exception
-            Console.WriteLine(My.Resources.e_Generating, ex.Message)
+            Console.Error.WriteLine(My.Resources.e_Generating, ex.Message)
             Environment.Exit(10)
             End
         End Try
+        'Copy
+        Dim _cou = My.Application.CommandLineArgs.IndexOf("/cou")
+        If _cou >= 0 AndAlso _cou < My.Application.CommandLineArgs.Count - 1 Then
+            Try
+                Console.WriteLine("Clean copy directory {0}", My.Application.CommandLineArgs(_cou + 1))
+                If IO.Directory.Exists(My.Application.CommandLineArgs(_cou + 1)) Then Generator.DeleteDir(My.Application.CommandLineArgs(_cou + 1), Generator, True)
+                Console.WriteLine("Copy output to {0}", My.Application.CommandLineArgs(_cou + 1))
+                If Not IO.Directory.Exists(My.Application.CommandLineArgs(_cou + 1)) Then IO.Directory.CreateDirectory(My.Application.CommandLineArgs(_cou + 1))
+                My.Computer.FileSystem.CopyDirectory(Generator.OutputDirectory, My.Application.CommandLineArgs(_cou + 1))
+            Catch ex As Exception
+                Console.Error.WriteLine(ex.Message)
+                Environment.Exit(11)
+                End
+            End Try
+        End If
     End Sub
 
 End Module

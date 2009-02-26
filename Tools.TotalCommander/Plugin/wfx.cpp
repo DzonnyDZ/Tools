@@ -8,46 +8,40 @@
 
 using namespace System;
 using namespace Tools::TotalCommanderT;
+using namespace System::Reflection;
+using namespace System::Runtime::Remoting;
 
 
 #pragma unmanaged
+/// <summary>Inmanaged DLL entry point. This method canot contain calls to managed code.</summary>
 BOOL APIENTRY DllMain( HANDLE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved){return TRUE;}
 #pragma managed
+/// <summary>Contains value indicationg if it is necessary to initialize runtime environment and plugin instance</summary>
+bool RequireInitialize = true;
 
 /// <summary>FileSystem plugin helper class - holds file system plugin instance</summary>
 private ref struct FSHelper{
-    /// <summary>Gets plugin class instance</summary>
-    /// <returns>Plugin class instance</returns>
-    /// <remarks>Called only once</remarks>
-    inline static void EnsureWfx(){ wfx = TC_WFX; }
     /// <summary>Instance of file system plugin class</summary>
     static FileSystemPlugin^ wfx;
 };
-/// <summary>Helper class - holds value indicating if <see cref="FSHelper"/> was initialized</summary>
-private ref struct Helper{
-    /// <summary>Holds value indicating if <see cref="FSHelper"/> was initialized</summary>
-    static bool done = false;
-};
-/// <summary>Calls <see cref="FSHelper::EnsureWfx"/></summary>
-void SetupWfx(){ FSHelper::EnsureWfx(); }
-/// <summary>Gets <see cref="FSHelper::wfx"/> as <see cref="Object"/></summary>
-Object^ GetWfx(){ return FSHelper::wfx; }
-/// <summary>Ensures assembly loader and plugin instance</summary>
-/// <returns><se cref="GetWfx"/></returns>
-Object^ Ensure(){
-    if(!Helper::done){
-        AssemblyResolver::Setup();
-        SetupWfx();
-    }
-    return GetWfx();
-}
-
+/// <summary>Backs the <see cref="FsGetDefRootName"/> method</summary>
+void GetDefRootName(char* DefRootName,int maxlen);
+/// <summary>Initializes managed environment</summary>
+void Initialize();
+/// <summary>Bactsk the <see ctef="FsInit"/> function</summary>
+int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc);
 
 //Ensure plugin class instance
-#define WFX ((FileSystemPlugin^) Ensure())
+#define WFX (FSHelper::wfx)
  
 #ifdef TC_FS_INIT
-    TCPLUGF int __stdcall FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){return WFX->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);}
+    TCPLUGF int __stdcall FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+        Initialize();
+        return Init(PluginNr,pProgressProc,pLogProc,pRequestProc);
+    }
+    int Init(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
+        return WFX->FsInit(PluginNr,pProgressProc,pLogProc,pRequestProc);
+    }
 #endif
 #ifdef TC_FS_FINDFIRST
     TCPLUGF HANDLE __stdcall FsFindFirst(char* Path,WIN32_FIND_DATA *FindData){return WFX->FsFindFirst(Path, FindData);}
@@ -89,17 +83,15 @@ Object^ Ensure(){
     TCPLUGF BOOL __stdcall FsSetTime(char* RemoteName,FILETIME *CreationTime,FILETIME *LastAccessTime,FILETIME *LastWriteTime){return WFX->FsSetTime(RemoteName, CreationTime, LastAccessTime, LastWriteTime);}
 #endif
 #ifdef TC_FS_STATUSINFO
-    TCPLUGF void __stdcall FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation){return WFX->FsStatusInfo(RemoteDir, InfoStartEnd, InfoOperation);}
+    TCPLUGF void __stdcall FsStatusInfo(char* RemoteDir,int InfoStartEnd,int InfoOperation){WFX->FsStatusInfo(RemoteDir, InfoStartEnd, InfoOperation);}
 #endif
 #ifdef TC_FS_GETDEFROOTNAME
     TCPLUGF void __stdcall FsGetDefRootName(char* DefRootName,int maxlen){
-        /*return WFX->FsGetDefRootName(DefRootName, maxlen);*/
-        WFX;
-        DefRootName[0]='T';
-        DefRootName[1]='e';
-        DefRootName[2]='s';
-        DefRootName[3]='t';
-        DefRootName[4]=0;
+        Initialize();
+        return GetDefRootName(DefRootName,maxlen);
+    }
+    void GetDefRootName(char* DefRootName,int maxlen){
+        return WFX->FsGetDefRootName(DefRootName, maxlen);    
     }
 #endif
 #ifdef TC_FS_EXTRACTCUSTOMICON
@@ -117,4 +109,17 @@ Object^ Ensure(){
 #ifdef TC_FS_GETLOCALNAME
     TCPLUGF BOOL __stdcall FsGetLocalName(char* RemoteName,int maxlen){return WFX->FsGetLocalName(RemoteName, maxlen);}
 #endif
+
+#pragma region "Initialization"
+    /// <summary>Initializes the plugin instance</summary>
+    void InitializePlugin(){
+        FSHelper::wfx = TC_WFX;
+    }
+    void Initialize(){
+        if(!RequireInitialize) return;
+        RequireInitialize = false;
+        AssemblyResolver::Setup();
+        InitializePlugin();
+    }
+#pragma endregion
 #endif

@@ -11,11 +11,23 @@ namespace Tools{namespace TotalCommanderT{
     /// <summary>Converts <see cref="FILETIME"/> to <see cref="DateTime"/></summary>
     /// <param name="value">A <see cref="FILETIME"/></param>
     /// <returns>Corresponding <see cref="DateTime"/></returns>
-    DateTime FileTimeToDateTime(FILETIME value);
+    Nullable<DateTime> FileTimeToDateTime(FILETIME value);
     /// <summary>Converts <see cref="DateTime"/> to <see cref="FILETIME"/></summary>
     /// <param name="value">A <see cref="DateTime"/></param>
     /// <returns>Corresponding <see cref="FILETIME"/></returns>
-    FILETIME DateTimeToFileTime(DateTime value);
+    FILETIME DateTimeToFileTime(Nullable<DateTime> value);
+    /// <summary>Copies ANSI characters from string to character array</summary>
+    /// <param name="source"><see cref="String"/> to copy characters from</param>
+    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to</param>
+    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char</param>
+    /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
+    void StringCopy(String^ source, char* target, int maxlen);
+    /// <summary>Copies Unicode characters from string to character array</summary>
+    /// <param name="source"><see cref="String"/> to copy characters from</param>
+    /// <param name="target">Pointer to first character of unmanaged character array to copy charatcers to</param>
+    /// <param name="maxlen">Maximum capacity of the <paramref name="target"/> character array, including terminating null char</param>
+    /// <remarks>No more than <paramref name="maxlen"/> - 1 characters are copied</remarks>
+    void StringCopy(String^ source, wchar_t* target, int maxlen);
    
     /// <summary>Result of file system operation</summary>
     public enum class FileSystemExitCode{
@@ -141,11 +153,11 @@ namespace Tools{namespace TotalCommanderT{
         /// <summary>Contains value of the <see cref="FileAttributes"/> property</summary>
         FileAttributes dwFileAttributes;
         /// <summary>Contains value of the <see cref="CreationTime"/> property</summary>
-        DateTime ftCreationTime;
+        Nullable<DateTime> ftCreationTime;
         /// <summary>Contains value of the <see cref="AccessTime"/> property</summary>
-        DateTime ftLastAccessTime;
+        Nullable<DateTime> ftLastAccessTime;
         /// <summary>Contains value of the <see cref="WriteTime"/> property</summary>
-        DateTime ftLastWriteTime;
+        Nullable<DateTime> ftLastWriteTime;
         /// <summary>Contains value of the high-order part of the <see cref="FileSize"/> property</summary>
         /// <remarks>This value is zero (0) unless the file size is greater than MAXDWORD.
         /// <para>The size of the file is equal to (<see cref="nFileSizeHigh"/> * (MAXDWORD+1)) + <see cref="nFileSizeLow"/>.</para></remarks>
@@ -177,14 +189,14 @@ namespace Tools{namespace TotalCommanderT{
         property FileAttributes Attributes{FileAttributes get();void set(FileAttributes);}
         /// <summary>Specifies when a file or directory was created.</summary>
         /// <remarks>If the underlying file system does not support creation time, this member is zero.</remarks>
-        property DateTime CreationTime{DateTime get(); void set(DateTime);}
+        property Nullable<DateTime> CreationTime{Nullable<DateTime> get(); void set(Nullable<DateTime>);}
         /// <summary>For a file, the structure specifies when the file was last read from, written to, or for executable files, run.</summary>
         /// <remarks>For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
         /// <para>On the FAT file system, the specified date for both files and directories is correct, but the time of day is always set to midnight.</para></remarks>
-        property DateTime AccessTime{DateTime get(); void set(DateTime);}
+        property Nullable<DateTime> AccessTime{Nullable<DateTime> get(); void set(Nullable<DateTime>);}
         /// <summary>For a file, the structure specifies when the file was last written to, truncated, or overwritten. The date and time are not updated when file attributes or security descriptors are changed.</summary>
         /// <remarks>For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.</remarks>
-        property DateTime WriteTime{DateTime get(); void set(DateTime);}
+        property Nullable<DateTime> WriteTime{Nullable<DateTime> get(); void set(Nullable<DateTime>);}
         /// <summary>Size of file in bytes</summary>
         /// <remarks>This property is not CLS-compliant. CLS-cmplant alternative is to use some of following functions: <see cref="SetFileSize"/>, <see cref="GetFileSize"/>, <see cref="SetFileSizeLow"/>, <see cref="SetFileSizeHigh"/>, <see cref="GetFileSizeLow"/>, <see cref="GetFileSizeHigh"/>.</remarks>
         [CLSCompliantAttribute(false)]
@@ -395,7 +407,7 @@ namespace Tools{namespace TotalCommanderT{
         [CLSCompliantAttribute(false)]
         property DWORD SizeHigh;
         /// <summary>Time stamp of the remote file - should be copied with the file.</summary>
-        property DateTime LastWriteTime;
+        property Nullable<DateTime> LastWriteTime;
         /// <summary>Attributes of the remote file - should be copied with the file.</summary>
         /// <remarks>This property is not CLS-comliant. CLS-compliant alternative is <see cref="Attributes"/>.</remarks>
         [CLSCompliant(false)]
