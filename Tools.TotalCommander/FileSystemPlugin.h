@@ -253,7 +253,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Return true if the directory could be created, false if not.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">An IO error occured</exception>
+        /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
@@ -295,12 +295,12 @@ namespace Tools{namespace TotalCommanderT{
     public:
         /// <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
         /// <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
-        /// <param name="RemoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO:PathTooLongException"/> will be thrown.</param>
+        /// <param name="RemoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData::MaxPath"/>-1 or uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</param>
         /// <param name="Verb">This can be either "<c>open</c>", "<c>properties</c>", "<c>chmod</c>" or "<c>quote</c>" (case-insensitive).</param>
         /// <returns>Return <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Yourself"/> if Total Commander should download the file and execute it locally, <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.OK"/> if the command was executed successfully in the plugin (or if the command isn't applicable and no further action is needed), <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Error"/> if execution failed, or <see2 cref2="F:Tools.TotalCommanderT.ExecExitCode.Symlink"/> if this was a (symbolic) link or .lnk file pointing to a different directory.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">An IO error occured</exception>
+        /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>Meaning of verbs:
@@ -353,9 +353,9 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
         /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO:IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO:FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-        /// <exception cref="IO:DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
+        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
         /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
@@ -400,9 +400,9 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
         /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO:IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO:FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-        /// <exception cref="IO:DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
+        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
         /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
@@ -445,9 +445,9 @@ namespace Tools{namespace TotalCommanderT{
         /// </remarks>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access.  ame effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
         /// <exception cref="Security::SecurityException">Security error detected. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO:IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
-        /// <exception cref="IO:FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
-        /// <exception cref="IO:DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
+        /// <exception cref="IO::IOException">An IO error occured. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.ReadError"/>.</exception>
+        /// <exception cref="IO::FileNotFoundException">Source file was not found. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.FileNotFound"/>.</exception>
+        /// <exception cref="IO::DirectoryNotFoundException">Cannot locate parent directory of target file. Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.WriteError"/>.</exception>
         /// <exception cref="InvalidOperationException">Requested operation is not supported (e.g. resume). Same effect as returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/>.</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method. Do not confuse with returning <see2 cref2="F:Tools.TotalCommanderT.FileSystem.ExitCode.NotSupported"/> - it has completelly different effect.</exception>
         [MethodNotSupportedAttribute]
@@ -467,7 +467,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Return true if the file could be deleted, false if not.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">An IO error occured</exception>
+        /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
@@ -488,7 +488,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Return true if the directory could be removed, false if not.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">An IO error occured</exception>
+        /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
@@ -539,7 +539,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <param name="NewAttr">New file attributes</param>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">An IO error occured</exception>
+        /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
@@ -566,7 +566,7 @@ namespace Tools{namespace TotalCommanderT{
         /// <returns>Return TRUE if successful, FALSE if the function failed.</returns>
         /// <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
         /// <exception cref="Security::SecurityException">Security error detected</exception>
-        /// <exception cref="IO:IOException">An IO error occured</exception>
+        /// <exception cref="IO::IOException">An IO error occured</exception>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
         /// <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
@@ -631,7 +631,7 @@ namespace Tools{namespace TotalCommanderT{
         [PluginMethod("ExctractCustomIcon","TC_FS_EXTRACTCUSTOMICON")]
         int FsExtractCustomIcon(char* RemoteName,int ExtractFlags,HICON* TheIcon);
         /// <summary>When overriden in derived class, called when a file/directory is displayed in the file list. It can be used to specify a custom icon for that file/directory.</summary>
-        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO:PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
+        /// <param name="RemoteName">This is the full path to the file or directory whose icon is to be retrieved. When extracting an icon, you can return an icon name here - this ensures that the icon is only cached once in the calling program. The returned icon name must not be longer than <see cref="FindData::MaxPath"/> - 1 characters (otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown by <see cref="FsExtractCustomIcon"/>). The icon itself must still be returned in <paramref name="TheIcon"/>!</param>
         /// <param name="ExtractFlags">Flags for the extract operation. A combination of <see cref="IconExtractFlags"/>.</param>
         /// <param name="TheIcon">Here you need to return the icon, unless return value is <see2 cref2="F:Tools.TotalCommander.IconExtractResult.Delayed"/> or <see2 cref2="F:Tools.TotalCommander.IconExtractResult.UseDefault"/></param>
         /// <returns>One of the <see cref="IconExtractResult"/> values</returns> 
@@ -745,14 +745,14 @@ namespace Tools{namespace TotalCommanderT{
         /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.
         /// <para>This function is called by Total Commander and is not intended for direct use. Plugin implements this function via the <see cref="LinksToLocalFiles"/> property.</para></remarks>
         /// <seelaso cref="FsLinksToLocalFiles"/>
-        /// <exception cref="IO:PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
+        /// <exception cref="IO::PathTooLongException">String longer than <paramref name="maxlen"/> - 1 is returned by <see cref="FsGetLocalName"/>.</exception>
         [EditorBrowsableAttribute(EditorBrowsableState::Never)]
         [CLSCompliantAttribute(false)]
         [PluginMethod("GetLocalName","TC_FS_GETLOCALNAME")]
         BOOL FsGetLocalName(char* RemoteName,int maxlen);
         /// <summary>When overriden in derved class gets local name of plugin file</summary>
         /// <param name="RemoteName">Full path to the file name in the plugin namespace, e.g. \somedir\file.ext</param>
-        /// <param name="maxlen">Maximum number of characters you can return. Do not return longer strings because uncatchable <see cref="IO:PathTooLongException"/> will be throw by <see cref="FsGetLocalName"/>.</param>
+        /// <param name="maxlen">Maximum number of characters you can return. Do not return longer strings because uncatchable <see cref="IO::PathTooLongException"/> will be throw by <see cref="FsGetLocalName"/>.</param>
         /// <returns>Return the path of the file on the local file system, e.g. c:\windows\file.ext; null if the name does not point to a local file. Do not return paths longer than <see cref="FindData::MaxPath"/> - 1 otherwise uncatchable <see cref="IO::PathTooLongException"/> will be thrown.</returns>
         /// <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
         /// <remarks><see cref="FsGetLocalName"/> must not be implemented unless your plugin is a temporary file panel plugin! Temporary file panels just hold links to files on the local file system.

@@ -1,4 +1,5 @@
-﻿<TotalCommanderPlugin("wfxSample")> _
+﻿''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
+<TotalCommanderPlugin("wfxSample")> _
 Public Class SampleFileSystemPlugin
     Inherits FileSystemPlugin
 
@@ -36,14 +37,17 @@ Public Class SampleFileSystemPlugin
             End If
         End If
     End Function
-
+    ''' <summary>Gets real local path from path reported by Total Commander</summary>
+    ''' <param name="Path">UNC path corresponding to geiven Total Commander plugin rooted (\-starting) path</param>
     Private Function GetRealPath(ByVal Path$) As String
         If Path = "\" Then Return ""
         Dim ret = Path.Substring(1)
         If ret.Length = 2 AndAlso ret.EndsWith(":") Then ret &= "\"
         Return ret
     End Function
-
+    ''' <summary>Gets <see cref="FindData"/> for given file or directory</summary>
+    ''' <param name="Path">Path to get data for</param>
+    ''' <returns><see cref="FindData"/> filled by information relevant for <paramref name="Path"/></returns>
     Private Function GetFindData(ByVal Path As String) As FindData
         Dim ret As New FindData
         Dim oinfo As IO.FileSystemInfo
@@ -114,10 +118,29 @@ Public Class SampleFileSystemPlugin
         Dim disp = TryCast(Status, IDisposable)
         If disp IsNot Nothing Then disp.Dispose()
     End Sub
-
+    ''' <summary>Gets name of the plugin</summary>
     Public Overrides ReadOnly Property Name() As String
         Get
             Return "WFX Sample"
         End Get
     End Property
+    ''' <summary>When overriden in derived class deletes a file from the plugin's file system</summary>
+    ''' <param name="RemoteName">Name of the file to be deleted, with full path. The name always starts with a backslash, then the names returned by <see cref="FindFirst"/>/<see cref="FindNext"/> separated by backslashes</param>
+    ''' <returns>Return true if the file could be deleted, false if not.</returns>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected</exception>
+    ''' <exception cref="IO.IOException">An IO error occured</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method.</exception>
+    ''' <remarks>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.
+    ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
+    Public Overrides Function DeleteFile(ByVal RemoteName As String) As Boolean
+        Try
+            IO.File.Delete(GetRealPath(RemoteName))
+            Return True
+        Catch ex As Exception When TypeOf ex Is UnauthorizedAccessException OrElse TypeOf ex Is Security.SecurityException OrElse TypeOf ex Is IO.IOException
+            Throw
+        Catch ex As Exception
+            Return False
+        End Try
+    End Function
 End Class
