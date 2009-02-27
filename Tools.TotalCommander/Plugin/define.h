@@ -31,5 +31,6 @@
 #define TC_FS_FINDCLOSE
 #define TC_FS_STATUSINFO
 #define TC_FS_GETDEFROOTNAME
+#define PLUGIN_NAME "xxx"
 #using "wfx sample.dll"
 
