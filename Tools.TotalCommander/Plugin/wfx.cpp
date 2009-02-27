@@ -11,7 +11,7 @@
 using namespace System;
 using namespace Tools::TotalCommanderT;
 
-#define FUNCTION_TARGET holder 
+#define FUNCTION_TARGET Tools::TotalCommanderT::holder 
 
 #pragma unmanaged
 /// <summary>Inmanaged DLL entry point. This method canot contain calls to managed code.</summary>

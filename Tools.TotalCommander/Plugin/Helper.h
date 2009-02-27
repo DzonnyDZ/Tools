@@ -19,7 +19,6 @@ namespace Tools{namespace TotalCommanderT{
     /// <summary>Initializes application domain</summary>
     void Initialize();
     /// <summary>Holds plugin instance. Instantiated in plugin application domain.</summary>
-    [Serializable]
     private ref struct PluginInstanceHolder{
         /// <summary>CTor</summary>
         PluginInstanceHolder();
@@ -29,8 +28,7 @@ namespace Tools{namespace TotalCommanderT{
         #endif//TODO:Other plugin types
         #include "FunctionPrototypes.h"
     };
-    [Serializable]
-    private ref struct AppDomainHolder{
+    private ref struct AppDomainHolder : MarshalByRefObject {
         /// <summary>CTor</summary>
         AppDomainHolder();
         /// <summary>Holds instance of the <see cref="PluginInstanceHolder"/> class</summary>

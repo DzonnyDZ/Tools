@@ -443,7 +443,8 @@ Public Class Generator
                 End If
             Next
             w.WriteLine("#using ""{0}""", Assembly.Location)
-            w.Write("#using ""{0}""", Assembly.Load("Tools.TotalCommander, PublicKeyToken=373c02ac923768e6").Location)
+            w.WriteLine("#using ""{0}""", Assembly.Load("Tools.TotalCommander, PublicKeyToken=373c02ac923768e6").Location)
+            w.WriteLine("#define PLUGIN_NAME ""{0}""", Assembly.GetName.Name.Replace("\", "\\").Replace("""", "\"""))
         End Using
     End Sub
     ''' <summary>Writes the AssemblyInfo2.cpp file</summary>
