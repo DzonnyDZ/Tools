@@ -112,6 +112,10 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Tools Win\Tools.Win.vbproj">
+      <Project>{9E0E6221-AD3B-47C8-B528-C9941BBFD663}</Project>
+      <Name>Tools.Win</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Tools.TotalCommander\Tools.TotalCommander.vcproj">
       <Project>{7F278F32-47B4-4F4E-85B2-BAEAA406951B}</Project>
       <Name>Tools.TotalCommander %28Tools.TotalCommander\Tools.TotalCommander%29</Name>

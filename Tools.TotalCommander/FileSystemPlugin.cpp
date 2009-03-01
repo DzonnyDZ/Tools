@@ -8,6 +8,7 @@ using namespace System;
 using namespace System::Runtime::InteropServices;
 using namespace Tools::TotalCommanderT::ResourcesT;
 using namespace Tools::ExtensionsT;
+using namespace Microsoft::VisualBasic;
 
 namespace Tools{namespace TotalCommanderT{
     //Global functions
@@ -66,6 +67,12 @@ namespace Tools{namespace TotalCommanderT{
          this->handleDictionary = gcnew Collections::Generic::Dictionary<int,Object^>();
          this->MaxHandle = 0;
          this->HandleSyncObj = gcnew Object();
+         const Reflection::BindingFlags flags = Reflection::BindingFlags::Instance | Reflection::BindingFlags::Public | Reflection::BindingFlags::NonPublic;
+         this->ExecuteFileImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteFile", flags),this->GetType()),false) == nullptr;
+         this->FtpModeAdvertisementImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("FtpModeAdvertisement", flags),this->GetType()),false) == nullptr;
+         this->OpenFileImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("OpenFile", flags),this->GetType()),false) == nullptr;
+         this->ShowFileInfoImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ShowFileInfo",flags),this->GetType()),false) == nullptr;
+         this->ExecuteCommandImplemented = Tools::TypeTools::GetAttribute<MethodNotSupportedAttribute^>(Tools::ReflectionT::ReflectionTools::GetOverridingMethod(FileSystemPlugin::typeid->GetMethod("ExecuteCommand", flags),this->GetType()),false) == nullptr;
     }
 #pragma region "TC functions"
     int FileSystemPlugin::FsInit(int PluginNr,tProgressProc pProgressProc, tLogProc pLogProc,tRequestProc pRequestProc){
@@ -282,7 +289,24 @@ namespace Tools{namespace TotalCommanderT{
         return (int) ExecExitCode::Error;
     }
     inline int FileSystemPlugin::FsExecuteFile(HANDLE MainWin,char* RemoteName,char* Verb){return this->FsExecuteFile((HWND)MainWin, RemoteName, Verb);}
-    inline ExecExitCode FileSystemPlugin::ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb){ throw gcnew NotSupportedException(); }
+    inline ExecExitCode FileSystemPlugin::ExecuteFile(IntPtr hMainWin, String^% RemoteName, String^ Verb){
+        if(!ExecuteFileImplemented || (!FtpModeAdvertisementImplemented && !OpenFileImplemented && !ShowFileInfoImplemented && !ExecuteCommandImplemented)) throw gcnew NotSupportedException();
+        if(Verb->ToLower()->StartsWith("mode ") && FtpModeAdvertisementImplemented){
+            return this->FtpModeAdvertisement(hMainWin,RemoteName,Verb->Substring(5));
+        }else if(Verb->ToLower() == "open" && OpenFileImplemented){
+            return this->OpenFile(hMainWin,RemoteName);
+        }else if(Verb->ToLower() == "properties" && ShowFileInfoImplemented){
+            return this->ShowFileInfo(hMainWin, RemoteName);
+        }else if(Verb->ToLower()->StartsWith("quote ") && ExecuteCommandImplemented){
+            return this->ExecuteCommand(hMainWin, RemoteName, Verb->Substring(6));
+        }else return ExecExitCode::Error;
+    }
+#pragma region "ExecuteFile helper methods"
+        ExecExitCode FileSystemPlugin::FtpModeAdvertisement(IntPtr hMainWin, String^ RemoteName, String^ mode){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::OpenFile(IntPtr hMainWin, String^% RemoteName){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::ShowFileInfo(IntPtr hMainWin, String^ RemoteName){throw gcnew NotSupportedException();}
+        ExecExitCode FileSystemPlugin::ExecuteCommand(IntPtr hMainWin, String^% RemoteName, String^ command){throw gcnew NotSupportedException();}
+#pragma endregion
     //RenMovFile
     int FileSystemPlugin::FsRenMovFile(char* OldName,char* NewName,BOOL Move, BOOL OverWrite,RemoteInfoStruct* ri){
         try{
@@ -595,16 +619,6 @@ namespace Tools{namespace TotalCommanderT{
     }
 #pragma endregion
     void StringCopy(String^ source, char* target, int maxlen){
-        if(source == nullptr)
-            target[0]=0;
-        else{
-            for(int i = 0; i < source->Length && i < maxlen-1; i++)
-                target[i]=source[i];
-            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
-        }
-    }
-    void StringCopy(String^ source, wchar_t* target, int maxlen){
-        StringCopy(source,(char*)(void*)target,maxlen);
         /*if(source == nullptr)
             target[0]=0;
         else{
@@ -612,5 +626,17 @@ namespace Tools{namespace TotalCommanderT{
                 target[i]=source[i];
             target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
         }*/
+        if(source == nullptr)
+            target[0]=0;
+        else{
+            System::Text::Encoding^ enc = System::Text::Encoding::Default;
+            cli::array<unsigned char>^ bytes = enc->GetBytes(source);
+            for(int i = 0; i < bytes->Length && i < maxlen-1; i++)
+                target[i]= bytes[i];
+            target[source->Length > maxlen-1 ? maxlen-1 : source->Length] = 0;
+        }
+    }
+    void StringCopy(String^ source, wchar_t* target, int maxlen){
+        StringCopy(source,(char*)(void*)target,maxlen);
     }
 }}

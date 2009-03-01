@@ -15,7 +15,7 @@
     TCPLUGF BOOL FUNC_MODIF FsMkDir(char* Path){return FUNCTION_TARGET->FsMkDir(Path);}
 #endif
 #ifdef TC_FS_EXECUTEFILE
-    TCPLUGF int FUNC_MODIF FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb){return FUNCTION_TARGET->FsExecuteFile((HANDLE)MainWin, RemoteName, Verb);}
+    TCPLUGF int FUNC_MODIF FsExecuteFile(HWND MainWin,char* RemoteName,char* Verb){return FUNCTION_TARGET->FsExecuteFile(/*(HANDLE)*/MainWin, RemoteName, Verb);}
 #endif
 #ifdef TC_FS_RENMOVFILE
     TCPLUGF int FUNC_MODIF FsRenMovFile(char* OldName,char* NewName,BOOL Move,  BOOL OverWrite,RemoteInfoStruct* ri){return FUNCTION_TARGET->FsRenMovFile(OldName, NewName, Move, OverWrite, ri);}

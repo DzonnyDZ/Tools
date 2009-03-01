@@ -211,6 +211,7 @@ namespace Tools{namespace TotalCommanderT{
         [CLSCompliantAttribute(false)]
         property DWORD Reserved1{DWORD get(); void set(DWORD);}
         /// <summary>The name of the file.</summary>
+        /// <remarks>Currently all string are marshalled between plugin and Total Commander using <see cref="System::Text::Encoding::Default"/>, so not all the Unicode characters are supported.</remarks>
         /// <exception cref="ArgumentException">Value being set is longer than <see cref="MaxPath"/> characters</exception>
         property String^ FileName{String^ get(); void set(String^);}
         /// <summary>An alternative name for the file.</summary>
