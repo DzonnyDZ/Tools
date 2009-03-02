@@ -1,4 +1,5 @@
-﻿''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
+﻿Imports Tools.ExtensionsT
+''' <summary>Sample Total Commander file system plugin (just works over local file system)</summary>
 <TotalCommanderPlugin("wfxSample")> _
 Public Class SampleFileSystemPlugin
     Inherits FileSystemPlugin
@@ -18,6 +19,7 @@ Public Class SampleFileSystemPlugin
     ''' <remarks><see cref="FindFirst"/> may be called directly with a subdirectory of the plugin! You cannot rely on it being called with the root \ after it is loaded. Reason: Users may have saved a subdirectory to the plugin in the Ctrl+D directory hotlist in a previous session with the plugin.
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function FindFirst(ByVal Path As String, ByRef FindData As FindData) As Object
+        Dim RealPath = GetRealPath(Path)
         If Path = "\" Then
             Dim ContentEnumerator = (From drv In IO.DriveInfo.GetDrives).GetEnumerator
             If ContentEnumerator.MoveNext Then
@@ -26,8 +28,21 @@ Public Class SampleFileSystemPlugin
             Else
                 Return Nothing
             End If
+        ElseIf RealPath.StartsWith("\\") AndAlso RealPath.IndexOf("\", 2) < 0 Then
+            Dim NetFolders As String()
+            Try
+                NetFolders = IOt.SharedFolders.GetSharedFolders(RealPath.Substring(2))
+            Catch ex As API.Win32APIException
+                Throw New IO.IOException(ex.Message, ex)
+            End Try
+            Dim en = (From itm In NetFolders Select RealPath & "\" & itm).GetEnumerator
+            If en.MoveNext Then
+                FindData = GetFindData(en.Current)
+                Return en
+            Else
+                Return Nothing
+            End If
         Else
-            Dim RealPath = GetRealPath(Path)
             Dim ContentEnumerator As IEnumerator(Of String)
             Try
                 ContentEnumerator = (From itm In IO.Directory.GetFileSystemEntries(RealPath)).GetEnumerator
@@ -74,6 +89,10 @@ Public Class SampleFileSystemPlugin
         ElseIf Path.Length = 3 AndAlso Path.EndsWith(":\") Then 'I.E. empty CD-ROM drive
             Dim info As New IO.DriveInfo(Path(0))
             ret.FileName = Path.Substring(0, 2)
+            ret.Attributes = FileAttributes.Directory Or FileAttributes.Normal
+            Return ret
+        ElseIf Path.StartsWith("\\") AndAlso Path.Count(Function(a) a = "\"c) = 3 Then
+            ret.FileName = IO.Path.GetFileName(Path)
             ret.Attributes = FileAttributes.Directory Or FileAttributes.Normal
             Return ret
         Else
@@ -189,7 +208,7 @@ Public Class SampleFileSystemPlugin
         End Try
         Return True
     End Function
-
+#Region "Exec"
     ''' <summary>When overiden in derived class called to execute a file on the plugin's file system, or show its property sheet. It is also called to show a plugin configuration dialog when the user right clicks on the plugin root and chooses 'properties'. The plugin is then called with <paramref name="RemoteName"/>="\" and <paramref name="Verb"/>="properties" (requires TC>=5.51).</summary>
     ''' <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
     ''' <param name="RemoteName">Name of the file to be executed, with full path. Do not assign string longer than <see cref="FindData.MaxPath"/>-1 or uncatchable <see cref="IO.PathTooLongException"/> will be thrown.</param>
@@ -215,7 +234,7 @@ Public Class SampleFileSystemPlugin
     ''' <para>When most-derived method implementation is marked with <see cref="MethodNotSupportedAttribute"/>, it means that the most derived plugin implementation does not support operation provided by the method.</para>
     ''' <note type="inheritinfo">Do not thow any other exceptions. Such exception will be passed to Total Commander which cannot handle it.</note></remarks>
     Public Overrides Function ExecuteFile(ByVal hMainWin As System.IntPtr, ByRef RemoteName As String, ByVal Verb As String) As ExecExitCode
-        Return MyBase.ExecuteFile(hMainWin, RemoteName, Verb)
+        Return MyBase.ExecuteFile(hMainWin, RemoteName, Verb)  'This enables other functions in this #Region
     End Function
     ''' <summary>Opens or executes given file.</summary>
     ''' <param name="hMainWin">Handle to Total Commander window.</param>
@@ -313,4 +332,24 @@ ExecFile:   Dim p As New Process
             Return ExecExitCode.OK
         End If
     End Function
+    ''' <summary>Shows file properties for given file or directory.</summary>
+    ''' <param name="hMainWin">Handle to parent window which can be used for showing a property sheet.</param>
+    ''' <param name="RemoteName">Full path of file or directory to show properties of</param>
+    ''' <returns>One of <see cref="ExecExitCode"/> values.</returns>
+    ''' <remarks><note type="inheritinfo">This method is called only when plugin implements <see cref="ExecuteFile"/> function and thah function calls base class method.</note></remarks>
+    ''' <exception cref="UnauthorizedAccessException">The user does not have required access</exception>
+    ''' <exception cref="Security.SecurityException">Security error detected</exception>
+    ''' <exception cref="IO.IOException">An IO error occured</exception>
+    ''' <exception cref="InvalidOperationException">Excution cannot be done from other reason</exception>
+    ''' <exception cref="NotSupportedException">The actual implementation is marked with <see cref="MethodNotSupportedAttribute"/> which means that the plugin doesnot support operation provided by the method and all most derived implementations of following methods are marked with <see cref="MethodNotSupportedAttribute"/> as well: <see cref="FtpModeAdvertisement"/>, <see cref="OpenFile"/>, <see cref="ShowFileInfo"/>, <see cref="ExecuteCommand"/></exception>
+    Protected Overrides Function ShowFileInfo(ByVal hMainWin As System.IntPtr, ByVal RemoteName As String) As ExecExitCode
+        Dim Path = GetRealPath(RemoteName)
+        Try
+            IOt.FileSystemTools.ShowProperties(Path, New WindowsT.NativeT.Win32Window(hMainWin))
+        Catch ex As API.Win32APIException
+            Return ExecExitCode.Error
+        End Try
+        Return ExecExitCode.OK
+    End Function
+#End Region
 End Class

@@ -153,6 +153,7 @@
     <Compile Include="Devices\LowLevelKeyboardHook.vb" />
     <Compile Include="IO\FileSystemTools.vb" />
     <Compile Include="Devices\Keyboard.vb" />
+    <Compile Include="IO\SharedFolders.vb" />
     <Compile Include="IO\ShellLink.vb" />
     <Compile Include="misc.vb" />
     <Compile Include="My Project\AssemblyInfo.vb" />

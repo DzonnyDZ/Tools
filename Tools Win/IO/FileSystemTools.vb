@@ -60,6 +60,41 @@ Namespace IOt
         '    Return pszResModule.ToString
         'End Function
         'TODO: GetLocalizedName (reliable!)
+        ''' <summary>Shows system file properties dialog for given file or directory</summary>
+        ''' <param name="Path">Path to file or directory to show dialog for</param>
+        ''' <param name="Owner">Owning window. May be null.</param>
+        ''' <param name="WaitForClose">Wait for property dialog to be closed. Note: DIalog is not displayed modally.</param>
+        ''' <exception cref="IO.FileNotFoundException">File or directory specified by <paramref name="Path"/> cannot be found</exception>
+        ''' <exception cref="IO.DirectoryNotFoundException">Part of path of file or directory specified by <paramref name="Path"/> cannot be found</exception>
+        ''' <exception cref="UnauthorizedAccessException">Assecc to file or directory specified by <paramref name="Path"/> is denied</exception>
+        ''' <exception cref="API.Win32APIException">Another Win32 error occured</exception>
+        ''' <version version="1.5.2">Method added</version>
+        <Extension()> _
+        Public Sub ShowProperties(ByVal Path As Path, Optional ByVal Owner As IWin32Window = Nothing, Optional ByVal WaitForClose As Boolean = False)
+            Dim SEI As New SHELLEXECUTEINFO
+            With SEI
+                .cbSize = Marshal.SizeOf(SEI)
+                .fMask = ShellExecuteInfoFlags.SEE_MASK_INVOKEIDLIST Or ShellExecuteInfoFlags.SEE_MASK_FLAG_NO_UI Or ShellExecuteInfoFlags.SEE_MASK_UNICODE
+                If WaitForClose Then .fMask = .fMask Or ShellExecuteInfoFlags.SEE_MASK_NOCLOSEPROCESS Or ShellExecuteInfoFlags.SEE_MASK_NOASYNC
+                .lpVerb = "properties"
+                .lpFile = Path.Path
+                .lpParameters = vbNullString
+                .lpDirectory = vbNullString
+                .nShow = 0
+                .hInstApp = 0
+                .lpIDList = 0
+                If Owner IsNot Nothing Then .hwnd = Owner.Handle.ToInt32
+            End With
+            If ShellExecuteEx(SEI) = 0 Then
+                Dim LastWin32 = New Win32APIException
+                Select Case CType(Marshal.GetLastWin32Error, API.Errors)
+                    Case Errors.ERROR_FILE_NOT_FOUND : Throw New IO.FileNotFoundException(LastWin32.Message, LastWin32)
+                    Case Errors.ERROR_PATH_NOT_FOUND : Throw New IO.DirectoryNotFoundException(LastWin32.Message, LastWin32)
+                    Case Errors.ERROR_ACCESS_DENIED : Throw New UnauthorizedAccessException(LastWin32.Message, LastWin32)
+                    Case Else : Throw LastWin32
+                End Select
+            End If
+        End Sub
     End Module
 End Namespace
 #End If

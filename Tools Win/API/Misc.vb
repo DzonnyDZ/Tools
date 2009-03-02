@@ -134,6 +134,26 @@ Namespace API
             ERROR_FILE_NOT_FOUND = 2I
             ''' <summary>File exists</summary>
             ERROR_FILE_EXISTS = 80I
+            ''' <summary>The specified path was not found.</summary>
+            ERROR_PATH_NOT_FOUND = 3I
+            ''' <summary>The Dynamic Data Exchange (DDE) transaction failed.</summary>
+            ERROR_DDE_FAIL = 1156I
+            ''' <summary>There is no application associated with the given file name extension.</summary>
+            ERROR_NO_ASSOCIATION = 1155I
+            ''' <summary>Access to the specified file is denied.</summary>
+            ERROR_ACCESS_DENIED = 5I
+            ''' <summary>One of the library files necessary to run the application can't be found.</summary>
+            ERROR_DLL_NOT_FOUND = 1157I
+            ''' <summary>The function prompted the user for additional information, but the user canceled the request.</summary>
+            ERROR_CANCELLED = 1223I
+            ''' <summary>There is not enough memory to perform the specified action.</summary>
+            ERROR_NOT_ENOUGH_MEMORY = 8
+            ''' <summary>A sharing violation occurred.</summary>
+            ERROR_SHARING_VIOLATION = 32I
+            ''' <summary>Operation succeeded - no error</summary>
+            NERR_Success = 0
+            ''' <summary>More data available. Enumeration should continue.</summary>
+            ERROR_MORE_DATA = 234
         End Enum
 #Region "IsFunctionAvalibable"
         ''' <summary>Loads the specified module into the address space of the calling process. The specified module may cause other modules to be loaded.</summary>
